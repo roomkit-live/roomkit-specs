@@ -6,7 +6,7 @@
 | **Author** | Sylvain Boily |
 | **Contributions** | TchatNSign, Angany AI |
 | **Created** | 2026-01-27 |
-| **Last Updated** | 2026-02-05 |
+| **Last Updated** | 2026-02-06 |
 | **Supersedes** | roomkit-rfc.md (v12 Draft) |
 
 ---
@@ -76,6 +76,7 @@ interpreted as described in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
 | **Integrator** | The developer building an application on top of a RoomKit implementation. |
 | **Broadcast** | The act of routing an event to all eligible channels in a Room. |
 | **Transcoding** | Converting event content from one format to another for cross-channel delivery. |
+| **Audio Pipeline** | A configurable chain of audio processing stages (denoiser, VAD, diarization) between the transport and the conversation engine. |
 
 ### 1.3 Notation
 
@@ -143,6 +144,7 @@ Provider abstraction               Which provider to use
 Identity resolution interface      Resolution strategy
 Storage interface                  Storage implementation
 Event chain depth limit            Turn budgets and orchestration
+Audio pipeline stages              Which denoiser, VAD, diarization to use
 ```
 
 ---
@@ -215,6 +217,7 @@ A conforming RoomKit implementation consists of the following layers:
 1. **Channel type and Provider are separate.** SMS is a channel type. Twilio is a provider. Swap providers without changing room logic.
 2. **Core and Integration Surfaces are separate.** Core has no web framework dependency. REST/MCP/WebSocket are thin wrappers.
 3. **Framework and Business Logic are separate.** Framework provides primitives. Integrator registers hooks and configures channels.
+4. **Transport and Audio Processing are separate.** The transport delivers raw audio frames. The audio pipeline (denoiser, VAD, diarization) is a distinct layer with pluggable providers, independent of the transport choice.
 
 ---
 
@@ -1223,16 +1226,17 @@ Hooks MAY be registered globally (apply to all rooms) or per-room.
 | ON_TASK_CREATED | ASYNC | A task was created |
 | ON_DELIVERY_STATUS | ASYNC | Delivery status webhook from provider |
 | ON_ERROR | ASYNC | An error occurred in the pipeline |
-| ON_SPEECH_START | ASYNC | VAD detected speech start (voice) |
-| ON_SPEECH_END | ASYNC | VAD detected speech end (voice) |
+| ON_SPEECH_START | ASYNC | Audio pipeline detected speech start (voice) |
+| ON_SPEECH_END | ASYNC | Audio pipeline detected speech end (voice) |
 | ON_TRANSCRIPTION | SYNC | After STT transcription (voice) — can modify |
 | BEFORE_TTS | SYNC | Before TTS synthesis (voice) — can modify text/voice |
 | AFTER_TTS | ASYNC | After TTS synthesis (voice) |
 | ON_BARGE_IN | ASYNC | User interrupted TTS playback (voice) |
 | ON_TTS_CANCELLED | ASYNC | TTS was cancelled (voice) |
 | ON_PARTIAL_TRANSCRIPTION | ASYNC | Streaming partial STT result (voice) |
-| ON_VAD_SILENCE | ASYNC | VAD detected silence (voice) |
-| ON_VAD_AUDIO_LEVEL | ASYNC | VAD audio level update (voice) |
+| ON_VAD_SILENCE | ASYNC | Audio pipeline detected silence (voice) |
+| ON_VAD_AUDIO_LEVEL | ASYNC | Audio pipeline audio level update (voice) |
+| ON_SPEAKER_CHANGE | ASYNC | Audio pipeline detected speaker change (diarization) |
 | ON_REALTIME_TOOL_CALL | SYNC | Speech-to-speech API requests a tool call |
 | ON_REALTIME_TEXT_INJECTED | ASYNC | Text injected into realtime session |
 
@@ -1654,10 +1658,11 @@ RoomKit supports two voice architectures:
 
 ```
 Architecture 1: STT/TTS Pipeline (VoiceChannel)
-┌──────────┐     ┌─────┐     ┌──────────┐     ┌─────┐     ┌──────────┐
-│ Client   │────→│ VAD │────→│   STT    │────→│Room │────→│   TTS    │────→ Client
-│ (audio)  │     │     │     │Provider  │     │Kit  │     │Provider  │
-└──────────┘     └─────┘     └──────────┘     └─────┘     └──────────┘
+┌──────────┐     ┌──────────────┐     ┌──────────┐     ┌─────┐     ┌──────────┐
+│ Client   │────→│Audio Pipeline│────→│   STT    │────→│Room │────→│   TTS    │────→ Client
+│ (audio)  │     │(denoise/VAD/ │     │Provider  │     │Kit  │     │Provider  │
+└──────────┘     │ diarization) │     └──────────┘     └─────┘     └──────────┘
+                 └──────────────┘
 
 Architecture 2: Speech-to-Speech (RealtimeVoiceChannel)
 ┌──────────┐     ┌──────────────────────────────────┐     ┌──────────┐
@@ -1697,27 +1702,28 @@ VoiceBackend (interface)
 ├── send_audio(session, audio_chunks) → void
 ├── cancel_audio(session) → void            # Cancel current playback (if supported)
 │
-│   # VAD callback registration:
-├── on_speech_start(callback) → void
-├── on_speech_end(callback) → void          # Receives captured audio
-├── on_partial_transcription(callback) → void
-├── on_vad_silence(callback) → void
-├── on_vad_audio_level(callback) → void
-├── on_barge_in(callback) → void
+│   # Raw audio callback:
+├── on_audio_received(callback) → void      # Raw inbound audio frames from client
+│
+│   # Barge-in (transport-level detection):
+├── on_barge_in(callback) → void            # Client audio detected during playback
 │
 ├── capabilities() → VoiceCapability        # What the backend supports
 └── close() → void
 ```
+
+**Note:** `on_speech_start`, `on_speech_end`, `on_vad_silence`, and
+`on_vad_audio_level` are removed from VoiceBackend. These events are now emitted
+by the audio pipeline's VAD provider (Section 12.3). `on_partial_transcription`
+is emitted by the STT provider. `on_barge_in` remains on VoiceBackend as it is a
+transport-level concern (detecting client audio during active playback).
 
 **VoiceCapability** flags:
 
 | Flag | Description |
 |---|---|
 | INTERRUPTION | Can cancel TTS playback |
-| PARTIAL_STT | Provides streaming transcription |
-| VAD_SILENCE | Silence duration detection |
-| VAD_AUDIO_LEVEL | Audio level events |
-| BARGE_IN | Detect user interrupting TTS |
+| BARGE_IN | Detect user audio during TTS playback |
 
 **VoiceSession:**
 
@@ -1760,18 +1766,223 @@ TTSProvider (interface)
 
 ```
 1. Client sends audio stream → VoiceBackend
-2. VAD detects speech end → on_speech_end(audio_bytes)
-3. STT transcribes audio → TranscriptionResult
-4. Fire ON_TRANSCRIPTION hook (can modify transcript)
-5. Create RoomEvent with TextContent or AudioContent
-6. Route through normal inbound pipeline
-7. Room broadcasts → AI or other channels respond
-8. Response event arrives at Voice channel via deliver()
-9. If TextContent → Fire BEFORE_TTS hook → TTS synthesizes → stream audio back
-10. If AudioContent → stream audio directly back
+2. VoiceBackend emits raw frames → Audio Pipeline (Section 12.3)
+3. Pipeline: [Denoiser] → [VAD] → [Diarization]
+4. VAD detects speech end → ON_SPEECH_END hook fires
+5. STT transcribes captured audio → TranscriptionResult
+6. Fire ON_TRANSCRIPTION hook (can modify transcript)
+7. Create RoomEvent with TextContent or AudioContent
+8. Route through normal inbound pipeline
+9. Room broadcasts → AI or other channels respond
+10. Response event arrives at Voice channel via deliver()
+11. If TextContent → Fire BEFORE_TTS hook → TTS synthesizes → audio frames
+12. Audio frames → [AudioPostProcessor(s)] → stream to client via VoiceBackend
+13. If AudioContent → [AudioPostProcessor(s)] → stream directly to client
 ```
 
-### 12.3 Realtime Voice Channel (Speech-to-Speech)
+### 12.3 Audio Processing Pipeline
+
+The audio processing pipeline is a configurable layer between the transport and
+the conversation engine. The transport delivers raw audio frames; the pipeline
+processes them before they reach STT or speech-to-speech providers. A symmetric
+outbound pipeline processes audio before it reaches the transport.
+
+This design ensures that audio processing capabilities (VAD, denoising,
+diarization) are available regardless of the transport choice (FastRTC, WebSocket,
+SIP, or any custom transport).
+
+**Inbound (preprocessing):**
+
+```
+Transport → [Denoiser] → [VAD] → [Diarization] → STT / Speech-to-Speech Provider
+              (clean)    (detect)   (who speaks)
+```
+
+**Outbound (postprocessing):**
+
+```
+TTS / Speech-to-Speech Provider → [AudioPostProcessor(s)] → Transport
+                                    (normalize, log, watermark)
+```
+
+**Pipeline symmetry with text hooks:**
+
+| Text Pipeline | Audio Pipeline |
+|---|---|
+| BEFORE_BROADCAST (sync hooks) | Inbound audio preprocessing |
+| AFTER_BROADCAST (async hooks) | Outbound audio postprocessing |
+| ON_TRANSCRIPTION hook | Post-STT hook (exists in Section 12.5) |
+| BEFORE_TTS hook | Pre-synthesis hook (exists in Section 12.5) |
+
+#### 12.3.1 Pipeline Configuration
+
+```
+AudioPipelineConfig
+├── denoiser: DenoiserProvider | null        # OPTIONAL noise reduction
+├── vad: VADProvider                         # REQUIRED for voice channels
+├── diarization: DiarizationProvider | null  # OPTIONAL speaker identification
+├── postprocessors: list<AudioPostProcessor> # OPTIONAL outbound processing chain
+└── vad_config: VADConfig                    # VAD tuning parameters
+```
+
+```
+VADConfig
+├── silence_threshold_ms: int = 500          # Silence duration to trigger speech_end
+├── speech_pad_ms: int = 300                 # Padding around speech segments
+└── min_speech_duration_ms: int = 250        # Minimum speech duration to emit event
+```
+
+The audio pipeline is configured per Voice Channel or per Realtime Voice Channel.
+Different channels in the same room MAY have different pipeline configurations.
+
+#### 12.3.2 Denoiser Provider
+
+The denoiser removes background noise from inbound audio before VAD and STT
+process it. Running the denoiser first improves accuracy of all downstream stages.
+
+```
+DenoiserProvider (interface)
+├── name: string                             # Provider name (e.g., "sherpa_onnx", "rnnoise")
+├── process(audio_frame: AudioFrame) → AudioFrame
+│       # Process a single audio frame, return cleaned frame
+└── close() → void
+        # Release resources
+```
+
+Implementations SHOULD provide at least one built-in denoiser (e.g., sherpa-onnx).
+
+#### 12.3.3 VAD Provider
+
+The VAD provider detects speech activity in audio frames and emits events that
+drive the voice pipeline. VAD events are the source for the ON_SPEECH_START,
+ON_SPEECH_END, ON_VAD_SILENCE, and ON_VAD_AUDIO_LEVEL hooks defined in
+Section 9.2.
+
+```
+VADProvider (interface)
+├── name: string                             # Provider name (e.g., "silero", "ten_vad", "webrtc")
+├── process(audio_frame: AudioFrame) → VADEvent | null
+│       # Process a frame, return event if state changed, null otherwise
+├── reset() → void
+│       # Reset internal state (e.g., on session start)
+└── close() → void
+        # Release resources
+```
+
+```
+VADEvent
+├── type: VADEventType                       # What was detected
+├── audio_bytes: bytes | null                # Captured speech audio (on SPEECH_END)
+├── confidence: float | null                 # Detection confidence [0.0, 1.0]
+├── duration_ms: float | null                # Duration of speech or silence
+└── level_db: float | null                   # Audio level in dB (on AUDIO_LEVEL)
+```
+
+**VADEventType** enumeration:
+
+| Value | Description |
+|---|---|
+| SPEECH_START | Speech activity began |
+| SPEECH_END | Speech activity ended — `audio_bytes` contains captured segment |
+| SILENCE | Silence duration exceeded `silence_threshold_ms` |
+| AUDIO_LEVEL | Periodic audio level report |
+
+**Relationship with speech-to-speech providers:**
+
+When using a speech-to-speech provider (Section 12.4), the provider manages its
+own turn detection internally. The audio pipeline's VAD still runs independently
+to support application-level features such as barge-in detection, activity
+logging, and metrics. The VAD does NOT control turn-taking in speech-to-speech
+mode — that responsibility belongs to the provider.
+
+#### 12.3.4 Diarization Provider
+
+The diarization provider identifies which speaker produced each audio segment.
+This is particularly relevant in multi-participant voice rooms or when multiple
+speakers share a single audio stream (e.g., speakerphone).
+
+```
+DiarizationProvider (interface)
+├── name: string                             # Provider name
+├── process(audio_frame: AudioFrame) → DiarizationResult | null
+│       # Identify speaker, return result if determined, null otherwise
+├── reset() → void
+│       # Reset speaker models (e.g., on session start)
+└── close() → void
+        # Release resources
+```
+
+```
+DiarizationResult
+├── speaker_id: string                       # Identified speaker label
+├── confidence: float | null                 # Identification confidence [0.0, 1.0]
+└── is_new_speaker: bool                     # True if this speaker was not previously seen
+```
+
+When diarization detects a speaker change, the framework MUST fire the
+ON_SPEAKER_CHANGE hook (Section 9.2).
+
+#### 12.3.5 Audio Post-Processor
+
+Audio post-processors form an ordered chain on the outbound path. Each processor
+receives an audio frame and returns a (possibly modified) frame. Common use cases
+include volume normalization, audio watermarking (for compliance), and recording.
+
+```
+AudioPostProcessor (interface)
+├── name: string                             # Processor name
+├── process(audio_frame: AudioFrame) → AudioFrame
+│       # Process outbound audio frame
+└── close() → void
+        # Release resources
+```
+
+Multiple post-processors are executed in the order they appear in the
+`postprocessors` list. Each processor receives the output of the previous one.
+
+#### 12.3.6 Audio Frame
+
+The common data structure passed through the pipeline:
+
+```
+AudioFrame
+├── data: bytes                              # Raw audio samples
+├── sample_rate: int                         # Sample rate in Hz (e.g., 16000, 48000)
+├── channels: int                            # Number of audio channels (1 = mono, 2 = stereo)
+├── sample_width: int                        # Bytes per sample (2 = 16-bit)
+├── timestamp_ms: float | null               # Frame timestamp relative to session start
+└── metadata: map<string, any>               # Pipeline metadata (accumulated by stages)
+```
+
+#### 12.3.7 Pipeline Execution Flow
+
+**Inbound flow (per audio frame):**
+
+```
+1. Transport emits raw AudioFrame
+2. IF denoiser configured:
+   └── frame = denoiser.process(frame)
+3. vad_event = vad.process(frame)
+4. IF vad_event is not null:
+   ├── Fire corresponding hook (ON_SPEECH_START, ON_SPEECH_END, etc.)
+   └── IF vad_event.type == SPEECH_END:
+       └── Pass audio_bytes to STT or accumulate for speech-to-speech
+5. IF diarization configured:
+   ├── result = diarization.process(frame)
+   └── IF result.is_new_speaker:
+       └── Fire ON_SPEAKER_CHANGE hook
+```
+
+**Outbound flow (per audio frame):**
+
+```
+1. TTS or speech-to-speech provider emits AudioFrame
+2. FOR EACH postprocessor in order:
+   └── frame = postprocessor.process(frame)
+3. Transport sends processed frame to client
+```
+
+### 12.4 Realtime Voice Channel (Speech-to-Speech)
 
 The Realtime Voice Channel wraps speech-to-speech APIs (e.g., OpenAI Realtime,
 Gemini Live) that handle audio processing natively, bypassing STT/TTS.
@@ -1822,26 +2033,42 @@ RealtimeAudioTransport (interface)
 6. end_session() → disconnect provider and transport
 ```
 
-### 12.4 Voice Hooks
+**Audio pipeline in speech-to-speech mode:**
+
+When using a speech-to-speech provider, the audio pipeline (Section 12.3) still
+processes inbound audio independently. The VAD runs in parallel to the provider's
+internal turn detection. This enables:
+
+- **Barge-in detection** at the application level
+- **Audio level monitoring** for UI indicators
+- **Activity logging and metrics** for observability
+- **Diarization** for multi-speaker scenarios
+
+The audio pipeline does NOT control when the speech-to-speech provider responds —
+turn-taking is fully managed by the provider. The pipeline is informational and
+event-driven in this mode.
+
+### 12.5 Voice Hooks
 
 Voice-specific hooks allow integrators to customize the voice pipeline:
 
-| Hook | Type | Use Case |
-|---|---|---|
-| ON_SPEECH_START | ASYNC | Show "listening" indicator |
-| ON_SPEECH_END | ASYNC | Log speech duration |
-| ON_TRANSCRIPTION | SYNC | Fix STT errors, redact content |
-| BEFORE_TTS | SYNC | Select voice, modify text |
-| AFTER_TTS | ASYNC | Log synthesis metrics, cache |
-| ON_BARGE_IN | ASYNC | Track interruptions |
-| ON_TTS_CANCELLED | ASYNC | Log cancellation reason |
-| ON_PARTIAL_TRANSCRIPTION | ASYNC | Show real-time captions |
-| ON_VAD_SILENCE | ASYNC | Trigger silence timeout |
-| ON_VAD_AUDIO_LEVEL | ASYNC | Audio level visualization |
-| ON_REALTIME_TOOL_CALL | SYNC | Execute tool and return result |
-| ON_REALTIME_TEXT_INJECTED | ASYNC | Log text injections |
+| Hook | Type | Use Case | Source |
+|---|---|---|---|
+| ON_SPEECH_START | ASYNC | Show "listening" indicator | Audio Pipeline (VAD) |
+| ON_SPEECH_END | ASYNC | Log speech duration | Audio Pipeline (VAD) |
+| ON_TRANSCRIPTION | SYNC | Fix STT errors, redact content | STT Provider |
+| BEFORE_TTS | SYNC | Select voice, modify text | Voice Channel |
+| AFTER_TTS | ASYNC | Log synthesis metrics, cache | Voice Channel |
+| ON_BARGE_IN | ASYNC | Track interruptions | VoiceBackend (transport) |
+| ON_TTS_CANCELLED | ASYNC | Log cancellation reason | Voice Channel |
+| ON_PARTIAL_TRANSCRIPTION | ASYNC | Show real-time captions | STT Provider |
+| ON_VAD_SILENCE | ASYNC | Trigger silence timeout | Audio Pipeline (VAD) |
+| ON_VAD_AUDIO_LEVEL | ASYNC | Audio level visualization | Audio Pipeline (VAD) |
+| ON_SPEAKER_CHANGE | ASYNC | Identify speaker switch | Audio Pipeline (Diarization) |
+| ON_REALTIME_TOOL_CALL | SYNC | Execute tool and return result | Realtime Provider |
+| ON_REALTIME_TEXT_INJECTED | ASYNC | Log text injections | Realtime Voice Channel |
 
-### 12.5 Barge-In
+### 12.6 Barge-In
 
 Barge-in occurs when a user speaks while TTS is playing. When detected:
 
@@ -2267,6 +2494,11 @@ These principles define the conceptual architecture of RoomKit:
 16. **Framework-agnostic core.** No web framework dependency. Integration surfaces
     are thin wrappers. Any language, any framework.
 
+17. **Audio pipeline is transport-independent.** Denoiser, VAD, and diarization
+    run as a pluggable pipeline between transport and conversation engine. The
+    transport delivers raw frames. The pipeline processes them. Same pattern as
+    text hooks: preprocessing inbound, postprocessing outbound.
+
 ---
 
 ## 19. Conformance Levels
@@ -2333,11 +2565,18 @@ A Level 2 implementation MAY additionally support:
 
 A Level 3 implementation MAY additionally support:
 
+- Audio Processing Pipeline with:
+  - VADProvider interface with at least one implementation (e.g., Silero)
+  - DenoiserProvider interface (OPTIONAL, at least one implementation e.g., sherpa-onnx)
+  - DiarizationProvider interface (OPTIONAL)
+  - AudioPostProcessor interface (OPTIONAL)
+  - AudioFrame data model
+  - AudioPipelineConfig
 - Voice channel (STT/TTS pipeline)
 - VoiceBackend interface with at least one implementation
 - STTProvider interface with at least one implementation
 - TTSProvider interface with at least one implementation
-- Voice hooks (ON_SPEECH_START through ON_VAD_AUDIO_LEVEL)
+- Voice hooks (ON_SPEECH_START through ON_SPEAKER_CHANGE)
 - Barge-in detection
 - Realtime Voice channel (speech-to-speech)
 - RealtimeVoiceProvider interface
@@ -2594,7 +2833,8 @@ VoiceChannel
 ├── requires:
 │   ├── stt: STTProvider
 │   ├── tts: TTSProvider
-│   └── backend: VoiceBackend
+│   ├── backend: VoiceBackend
+│   └── audio_pipeline: AudioPipelineConfig
 ├── configuration:
 │   ├── streaming: bool (default true)
 │   ├── enable_barge_in: bool (default false)
@@ -2603,8 +2843,8 @@ VoiceChannel
 │   ├── bind_session(session, room_id, binding)
 │   └── unbind_session(session)
 └── delivery:
-    ├── AudioContent → stream directly
-    ├── TextContent → synthesize via TTS, then stream
+    ├── AudioContent → [postprocessors] → stream directly
+    ├── TextContent → synthesize via TTS → [postprocessors] → stream
     └── Other → error
 ```
 
@@ -2618,7 +2858,8 @@ RealtimeVoiceChannel
 ├── media_types: [AUDIO]
 ├── requires:
 │   ├── provider: RealtimeVoiceProvider
-│   └── transport: RealtimeAudioTransport
+│   ├── transport: RealtimeAudioTransport
+│   └── audio_pipeline: AudioPipelineConfig | null  # OPTIONAL in speech-to-speech mode
 ├── configuration:
 │   ├── system_prompt: string | null
 │   ├── voice: string | null
