@@ -520,6 +520,32 @@ TemplateContent
 └── fallback: EventContent | null           # Content for channels without template support
 ```
 
+**EditContent** — Edit of a previously sent message:
+
+```
+EditContent
+├── target_event_id: string                # The event being edited
+├── new_content: EventContent              # The replacement content
+└── edit_source: string | null             # "sender" or "system" (e.g., auto-moderation)
+```
+
+**DeleteContent** — Deletion of a previously sent message:
+
+```
+DeleteContent
+├── target_event_id: string                # The event being deleted
+├── delete_type: DeleteType                # SENDER, SYSTEM, or ADMIN
+└── reason: string | null                  # Optional reason
+```
+
+**DeleteType** enumeration: SENDER | SYSTEM | ADMIN
+
+| Value | Description |
+|---|---|
+| SENDER | The original message author deleted their own message |
+| SYSTEM | Automated deletion (e.g., auto-moderation, policy enforcement) |
+| ADMIN | Administrative deletion by a room administrator or operator |
+
 ### 5.4 Channel Data (Typed, Per-Channel)
 
 Each channel type MAY define a typed ChannelData structure to carry
@@ -675,6 +701,8 @@ ChannelCapabilities
 ├── supports_typing: bool
 ├── supports_read_receipts: bool
 ├── supports_reactions: bool
+├── supports_edit: bool
+├── supports_delete: bool
 ├── delivery_mode: DeliveryMode
 ├── rate_limit: RateLimit | null
 │
@@ -847,12 +875,12 @@ reference capabilities:
 |---|---|---|---|
 | SMS | TEXT, MEDIA | 1,600 | Read receipts |
 | Email | TEXT, RICH, MEDIA | unlimited | Threading, rich HTML |
-| WhatsApp | TEXT, RICH, MEDIA, LOCATION, TEMPLATE | 4,096 | Reactions, templates, buttons |
-| WhatsApp Personal | TEXT, RICH, MEDIA, AUDIO, VIDEO, LOCATION | 4,096 | Typing, reactions, audio/video |
-| Messenger | TEXT, RICH, MEDIA, TEMPLATE | 2,000 | Buttons, quick replies |
-| Teams | TEXT, RICH | 28,000 | Threading, reactions, rich text |
+| WhatsApp | TEXT, RICH, MEDIA, LOCATION, TEMPLATE | 4,096 | Reactions, templates, buttons, edit, delete |
+| WhatsApp Personal | TEXT, RICH, MEDIA, AUDIO, VIDEO, LOCATION | 4,096 | Typing, reactions, audio/video, edit, delete |
+| Messenger | TEXT, RICH, MEDIA, TEMPLATE | 2,000 | Buttons, quick replies, delete |
+| Teams | TEXT, RICH | 28,000 | Threading, reactions, rich text, edit, delete |
 | RCS | TEXT, RICH, MEDIA | 8,000 | Buttons, cards, SMS fallback |
-| WebSocket | TEXT, RICH, MEDIA, AUDIO, VIDEO, LOCATION | unlimited | All features, real-time |
+| WebSocket | TEXT, RICH, MEDIA, AUDIO, VIDEO, LOCATION | unlimited | All features, real-time, edit, delete |
 | Voice | AUDIO | — | Streaming audio, STT/TTS |
 | Realtime Voice | AUDIO | — | Speech-to-speech, tool calling |
 | Webhook | TEXT, RICH | unlimited | Generic HTTP POST |
@@ -930,6 +958,14 @@ MUST transcode content to match each target channel's supported media types.
 | LocationContent | TEXT only | TextContent ("[Location] lat, lon - label") |
 | CompositeContent | varies | Filter parts to target's supported types |
 | TemplateContent | no templates | Use fallback content, or transcode to RichContent/TextContent |
+| EditContent | no edit support | TextContent ("Correction: {new text}") |
+| DeleteContent | no delete support | TextContent ("[Message deleted]") or SystemContent |
+
+When the target channel supports edits or deletes natively (i.e.,
+`capabilities.supports_edit` or `capabilities.supports_delete` is true), the
+framework MUST deliver the EDIT or DELETE event without transcoding. When the
+target channel does NOT support the operation, the framework MUST transcode to
+the fallback representation shown above.
 
 **Max length enforcement:** After transcoding, if the target channel declares a
 `max_length`, the framework MUST truncate TextContent to that limit.
@@ -1461,7 +1497,45 @@ BroadcastResult
 └── errors: map<string, string>                 # Per-channel error messages
 ```
 
-### 10.3 Inbound Room Routing
+### 10.3 Edit and Delete Processing
+
+When an inbound event has type EDIT or DELETE, the framework MUST perform
+additional validation and state updates before broadcasting.
+
+**Validation:**
+
+1. The framework MUST verify that `target_event_id` (from `EditContent` or
+   `DeleteContent`) references an existing event in the same room.
+2. For `DeleteContent` with `delete_type = SENDER` or `EditContent` with
+   `edit_source = "sender"`, the framework MUST verify that the inbound sender
+   is the original author of the target event.
+3. For `DeleteContent` with `delete_type = ADMIN`, the framework MUST verify
+   that the sender has administrative authority (e.g., via permissions or role).
+4. For `DeleteContent` with `delete_type = SYSTEM`, the event SHOULD originate
+   from a SYSTEM channel or a hook.
+5. If validation fails, the framework MUST reject the event and SHOULD return
+   an error to the source channel.
+
+**State updates:**
+
+1. On successful EDIT: the framework SHOULD call `update_event()` to replace the
+   original event's content with `EditContent.new_content` and set
+   `metadata.edited = true`. The EDIT event itself MUST be stored in the timeline.
+2. On successful DELETE: the framework SHOULD call `update_event()` to set
+   `metadata.deleted = true` on the original event. The DELETE event itself MUST
+   be stored in the timeline.
+
+**Broadcast behavior:**
+
+During broadcast, for each target channel:
+
+1. If the target channel's `capabilities.supports_edit` is true (for EDIT events)
+   or `capabilities.supports_delete` is true (for DELETE events), the framework
+   SHOULD deliver the event natively.
+2. If the target channel does NOT support the operation, the framework MUST
+   apply transcoding fallback (see Section 6.6).
+
+### 10.4 Inbound Room Routing
 
 When an inbound message arrives without a pre-determined room_id, the framework
 MUST route it to an appropriate room.
@@ -1480,7 +1554,7 @@ InboundRoomRouter (interface)
 
 Implementations MUST allow integrators to provide a custom routing strategy.
 
-### 10.4 Direct Event Injection
+### 10.5 Direct Event Injection
 
 Integrators MAY inject events into a room without going through the inbound
 pipeline (e.g., from a REST API or MCP tool call):
@@ -2286,7 +2360,9 @@ SMSChannel
 │   ├── max_length: 1600
 │   ├── supports_read_receipts: true
 │   ├── supports_media: true
-│   └── supported_media_types: ["image/jpeg", "image/png", "image/gif"]
+│   ├── supported_media_types: ["image/jpeg", "image/png", "image/gif"]
+│   ├── supports_edit: false
+│   └── supports_delete: false
 ├── provider_interface: SMSProvider
 │   ├── send(event, to, from) → ProviderResult
 │   ├── parse_webhook(payload) → InboundMessage
@@ -2307,7 +2383,9 @@ EmailChannel
 │   ├── max_length: null (unlimited)
 │   ├── supports_threading: true
 │   ├── supports_rich_text: true
-│   └── supports_media: true
+│   ├── supports_media: true
+│   ├── supports_edit: false
+│   └── supports_delete: false
 ├── provider_interface: EmailProvider
 │   ├── send(event, to, from, subject) → ProviderResult
 │   └── parse_inbound(payload) → InboundMessage
@@ -2331,7 +2409,9 @@ WhatsAppChannel
 │   ├── supports_buttons: true (max 3)
 │   ├── supports_quick_replies: true
 │   ├── supports_read_receipts: true
-│   └── supports_media: true
+│   ├── supports_media: true
+│   ├── supports_edit: true
+│   └── supports_delete: true
 ├── provider_interface: WhatsAppProvider
 │   ├── send(event, to) → ProviderResult
 │   ├── send_template(template, to) → ProviderResult
@@ -2355,7 +2435,9 @@ WhatsAppPersonalChannel
 │   ├── supports_read_receipts: true
 │   ├── supports_audio: true
 │   ├── supports_video: true
-│   └── supports_media: true
+│   ├── supports_media: true
+│   ├── supports_edit: true
+│   └── supports_delete: true
 ├── source: WhatsAppPersonalSourceProvider
 │   └── Persistent multidevice connection via neonize or equivalent
 ├── provider_interface: WhatsAppPersonalProvider
@@ -2383,7 +2465,9 @@ MessengerChannel
 │   ├── supports_buttons: true (max 3)
 │   ├── supports_quick_replies: true
 │   ├── supports_read_receipts: true
-│   └── supports_media: true
+│   ├── supports_media: true
+│   ├── supports_edit: false
+│   └── supports_delete: true
 ├── provider_interface: MessengerProvider
 │   ├── send(event, recipient_id) → ProviderResult
 │   └── parse_webhook(payload) → InboundMessage
@@ -2404,7 +2488,9 @@ TeamsChannel
 │   ├── supports_threading: true
 │   ├── supports_reactions: true
 │   ├── supports_read_receipts: true
-│   └── supports_rich_text: true
+│   ├── supports_rich_text: true
+│   ├── supports_edit: true
+│   └── supports_delete: true
 ├── provider_interface: TeamsProvider
 │   ├── send(event, conversation_reference) → ProviderResult
 │   ├── parse_webhook(activity) → InboundMessage
@@ -2429,7 +2515,9 @@ RCSChannel
 │   ├── supports_quick_replies: true
 │   ├── supports_read_receipts: true
 │   ├── supports_typing: true
-│   └── supports_media: true
+│   ├── supports_media: true
+│   ├── supports_edit: false
+│   └── supports_delete: false
 ├── provider_interface: RCSProvider
 │   ├── send(event, to) → RCSDeliveryResult
 │   ├── check_capability(phone) → bool
@@ -2456,7 +2544,9 @@ WebSocketChannel
 │   ├── supports_quick_replies: true
 │   ├── supports_audio: true
 │   ├── supports_video: true
-│   └── supports_media: true
+│   ├── supports_media: true
+│   ├── supports_edit: true
+│   └── supports_delete: true
 ├── connection_registry: map<connection_id, send_function>
 │   ├── register_connection(id, send_fn) → void
 │   └── unregister_connection(id) → void
@@ -2472,7 +2562,9 @@ AIChannel
 ├── direction: BIDIRECTIONAL
 ├── media_types: [TEXT]
 ├── capabilities:
-│   └── supports_rich_text: true (provider-dependent)
+│   ├── supports_rich_text: true (provider-dependent)
+│   ├── supports_edit: false
+│   └── supports_delete: false
 ├── configuration:
 │   ├── provider: AIProvider
 │   ├── system_prompt: string | null
@@ -2743,6 +2835,97 @@ Timeline of a room with SMS customer + AI:
 [12] customer→   "What documents do I need?"          (chain_depth=0)
 [13] ai→         "You'll need: 1. ID 2. Income..."    (visibility: all)
                   ↑ customer sees this directly
+```
+
+### B.6 Message Edit — Cross-Channel with Fallback
+
+```
+1. WhatsApp user edits message [index=3] from "I need 5000$" to "I need 50000$"
+   │
+   ▼
+2. WhatsApp webhook → parse_webhook() → InboundMessage
+   {channel_id: "wa_customer", sender_id: "+15551234567",
+    content: EditContent{
+      target_event_id: "evt_003",
+      new_content: TextContent{text: "I need 50000$"},
+      edit_source: "sender"
+    },
+    event_type: EDIT}
+   │
+   ▼
+3. process_inbound(message)
+   │
+   ├── Validate: evt_003 exists in room → ✓
+   ├── Validate: sender is original author → ✓
+   │
+   ├── Update original event via update_event():
+   │   evt_003.content = TextContent{text: "I need 50000$"}
+   │   evt_003.metadata.edited = true
+   │
+   ├── Store EDIT event {
+   │     type: EDIT, content: EditContent{...},
+   │     source: {channel_id: "wa_customer"},
+   │     index: 7
+   │   }
+   │
+   ├── Broadcast to channels:
+   │   │
+   │   ├── WebSocket (supports_edit: true)
+   │   │   └── deliver() native edit → client updates message in-place
+   │   │
+   │   ├── SMS (supports_edit: false)
+   │   │   └── Transcode → TextContent{text: "Correction: I need 50000$"}
+   │   │       └── deliver() → SMS sent as new message
+   │   │
+   │   └── AI channel.on_event()
+   │       └── Updates conversation history with corrected text
+   │
+   └── AFTER_BROADCAST hooks → audit log
+```
+
+### B.7 Message Delete — Cross-Channel with Fallback
+
+```
+1. WhatsApp user deletes message [index=5]
+   │
+   ▼
+2. WhatsApp webhook → parse_webhook() → InboundMessage
+   {channel_id: "wa_customer", sender_id: "+15551234567",
+    content: DeleteContent{
+      target_event_id: "evt_005",
+      delete_type: SENDER,
+      reason: null
+    },
+    event_type: DELETE}
+   │
+   ▼
+3. process_inbound(message)
+   │
+   ├── Validate: evt_005 exists in room → ✓
+   ├── Validate: sender is original author (SENDER type) → ✓
+   │
+   ├── Mark original event as deleted via update_event():
+   │   evt_005.metadata.deleted = true
+   │
+   ├── Store DELETE event {
+   │     type: DELETE, content: DeleteContent{...},
+   │     source: {channel_id: "wa_customer"},
+   │     index: 8
+   │   }
+   │
+   ├── Broadcast to channels:
+   │   │
+   │   ├── WebSocket (supports_delete: true)
+   │   │   └── deliver() native delete → client removes message
+   │   │
+   │   ├── SMS (supports_delete: false)
+   │   │   └── Transcode → TextContent{text: "[Message deleted]"}
+   │   │       └── deliver() → SMS sent as new message
+   │   │
+   │   └── AI channel.on_event()
+   │       └── Updates conversation history (removes or marks deleted)
+   │
+   └── AFTER_BROADCAST hooks → audit log
 ```
 
 ---
