@@ -1665,19 +1665,19 @@ Architecture 1: STT/TTS Pipeline (VoiceChannel)
                  └──────────────┘
 
 Architecture 2: Speech-to-Speech (RealtimeVoiceChannel)
-┌──────────┐     ┌──────────────────────────────────┐     ┌──────────┐
-│ Client   │────→│ Speech-to-Speech API             │────→│ Client   │
-│ (audio)  │     │ (OpenAI Realtime, Gemini Live)   │     │ (audio)  │
-└──────────┘     └────────────────┬─────────────────┘     └──────────┘
-                                  │
-                            transcriptions
-                            tool calls
-                                  │
-                                  ▼
-                             ┌─────────┐
-                             │ RoomKit │
-                             │ (events)│
-                             └─────────┘
+┌──────────┐     ┌──────────────┐     ┌──────────────────────────┐     ┌──────────┐
+│ Client   │────→│Audio Pipeline│────→│ Speech-to-Speech API     │────→│ Client   │
+│ (audio)  │     │  (optional)  │     │ (OpenAI Realtime, etc.)  │     │ (audio)  │
+└──────────┘     └──────────────┘     └────────────┬─────────────┘     └──────────┘
+                  denoise, diarize                  │
+                                              transcriptions
+                                              tool calls
+                                                    │
+                                                    ▼
+                                               ┌─────────┐
+                                               │ RoomKit │
+                                               │ (events)│
+                                               └─────────┘
 ```
 
 ### 12.2 Voice Channel (STT/TTS Pipeline)
@@ -1784,12 +1784,14 @@ TTSProvider (interface)
 
 The audio processing pipeline is a configurable layer between the transport and
 the conversation engine. The transport delivers raw audio frames; the pipeline
-processes them before they reach STT or speech-to-speech providers. A symmetric
-outbound pipeline processes audio before it reaches the transport.
+processes them before they reach STT or speech-to-speech providers. All stages
+are optional — configure what the use case requires. A symmetric outbound
+pipeline processes audio before it reaches the transport.
 
 This design ensures that audio processing capabilities (VAD, denoising,
 diarization) are available regardless of the transport choice (FastRTC, WebSocket,
-SIP, or any custom transport).
+SIP, or any custom transport) and regardless of the voice architecture
+(STT/TTS or speech-to-speech).
 
 **Inbound (preprocessing):**
 
@@ -1819,11 +1821,19 @@ TTS / Speech-to-Speech Provider → [AudioPostProcessor(s)] → Transport
 ```
 AudioPipelineConfig
 ├── denoiser: DenoiserProvider | null        # OPTIONAL noise reduction
-├── vad: VADProvider                         # REQUIRED for voice channels
+├── vad: VADProvider | null                  # OPTIONAL voice activity detection
 ├── diarization: DiarizationProvider | null  # OPTIONAL speaker identification
 ├── postprocessors: list<AudioPostProcessor> # OPTIONAL outbound processing chain
-└── vad_config: VADConfig                    # VAD tuning parameters
+└── vad_config: VADConfig | null             # OPTIONAL VAD tuning parameters
 ```
+
+All stages are OPTIONAL. At least one provider SHOULD be configured for the
+pipeline to be useful. Typical configurations:
+
+- **Voice Channel (STT/TTS):** VAD (required for speech detection) + optional
+  denoiser and diarization.
+- **Realtime Voice Channel (speech-to-speech):** Denoiser and/or diarization
+  only — the AI provider handles turn detection, so VAD is not needed.
 
 ```
 VADConfig
@@ -1890,10 +1900,11 @@ VADEvent
 **Relationship with speech-to-speech providers:**
 
 When using a speech-to-speech provider (Section 12.4), the provider manages its
-own turn detection internally. The audio pipeline's VAD still runs independently
-to support application-level features such as barge-in detection, activity
-logging, and metrics. The VAD does NOT control turn-taking in speech-to-speech
-mode — that responsibility belongs to the provider.
+own turn detection internally. The audio pipeline acts as a **preprocessor** —
+denoising audio before it reaches the provider and running diarization to
+identify speakers. VAD MAY be configured for observational purposes (activity
+logging, audio level monitoring for UI) but does NOT control turn-taking — that
+responsibility belongs to the provider.
 
 #### 12.3.4 Diarization Provider
 
@@ -1962,12 +1973,13 @@ AudioFrame
 1. Transport emits raw AudioFrame
 2. IF denoiser configured:
    └── frame = denoiser.process(frame)
-3. vad_event = vad.process(frame)
-4. IF vad_event is not null:
-   ├── Fire corresponding hook (ON_SPEECH_START, ON_SPEECH_END, etc.)
-   └── IF vad_event.type == SPEECH_END:
-       └── Pass audio_bytes to STT or accumulate for speech-to-speech
-5. IF diarization configured:
+3. IF vad configured:
+   ├── vad_event = vad.process(frame)
+   └── IF vad_event is not null:
+       ├── Fire corresponding hook (ON_SPEECH_START, ON_SPEECH_END, etc.)
+       └── IF vad_event.type == SPEECH_END:
+           └── Pass audio_bytes to STT or accumulate for speech-to-speech
+4. IF diarization configured:
    ├── result = diarization.process(frame)
    └── IF result.is_new_speaker:
        └── Fire ON_SPEAKER_CHANGE hook
@@ -2035,18 +2047,28 @@ RealtimeAudioTransport (interface)
 
 **Audio pipeline in speech-to-speech mode:**
 
-When using a speech-to-speech provider, the audio pipeline (Section 12.3) still
-processes inbound audio independently. The VAD runs in parallel to the provider's
-internal turn detection. This enables:
+When using a speech-to-speech provider, the audio pipeline (Section 12.3) MAY be
+configured as an optional preprocessor. In this mode the pipeline sits between
+the transport and the provider:
 
-- **Barge-in detection** at the application level
-- **Audio level monitoring** for UI indicators
-- **Activity logging and metrics** for observability
-- **Diarization** for multi-speaker scenarios
+```
+Client → Transport → [Denoiser] → [Diarization] → Provider (Gemini/OpenAI)
+```
 
-The audio pipeline does NOT control when the speech-to-speech provider responds —
-turn-taking is fully managed by the provider. The pipeline is informational and
-event-driven in this mode.
+Typical use cases:
+
+- **Denoising** — cleaner audio improves AI recognition accuracy
+- **Diarization** — identify which speaker is talking in multi-party calls
+- **Audio level monitoring** (via optional VAD) — for UI indicators
+- **Activity logging and metrics** — for observability
+
+VAD is OPTIONAL in this mode. When configured, it runs purely for observation —
+it does NOT control when the speech-to-speech provider responds. Turn-taking is
+fully managed by the provider.
+
+The `RealtimeVoiceChannel` accepts an `AudioPipelineConfig` in the same way as
+`VoiceChannel`. When a pipeline is configured, inbound audio frames are processed
+through the pipeline before being forwarded to the provider.
 
 ### 12.5 Voice Hooks
 
