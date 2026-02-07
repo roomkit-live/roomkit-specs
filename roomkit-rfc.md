@@ -1830,9 +1830,15 @@ TranscriptionResult
 ```
 TTSProvider (interface)
 ├── name: string
-├── synthesize(text, voice: string | null) → audio_bytes
+├── synthesize(text, voice: string | null) → AudioContent
+│       # Returns AudioContent (Section 5) with url, mime_type, transcript, duration_seconds
 └── synthesize_stream(text, voice: string | null) → async_iterator<AudioChunk>
 ```
+
+`synthesize()` returns an `AudioContent` (Section 5) rather than raw bytes.
+This allows the result to carry metadata (transcript, duration, MIME type) and
+supports both inline data URLs and remote storage URLs. For streaming,
+`synthesize_stream()` yields `AudioChunk` objects as they become available.
 
 **Audio processing flow:**
 
@@ -2048,9 +2054,8 @@ causing false speech detections and feedback loops.
 ```
 AECProvider (interface)
 ├── name: string                             # Provider name (e.g., "speex_aec", "webrtc_aec3")
-├── process(audio_frame: AudioFrame, reference: AudioFrame | null) → AudioFrame
-│       # Remove echo using reference (outbound) signal
-│       # If reference is null, pass through unchanged
+├── process(audio_frame: AudioFrame) → AudioFrame
+│       # Remove echo from the inbound frame using internally buffered reference
 ├── feed_reference(audio_frame: AudioFrame) → void
 │       # Feed outbound audio as echo reference (called on outbound path)
 ├── reset() → void
@@ -2063,11 +2068,14 @@ AECProvider (interface)
 
 The AEC requires a reference signal — the audio being played back to the user.
 The pipeline MUST feed outbound audio frames to `AECProvider.feed_reference()`
-before they are sent to the transport. This creates a bidirectional dependency:
+before they are sent to the transport. The AEC provider manages the reference
+internally, so `process()` operates on the inbound frame alone — this avoids
+callers having to track and pass the reference signal. The bidirectional
+dependency is:
 
 ```
 Outbound: TTS → [postprocessors] → AEC.feed_reference(frame) → [resampler] → Transport
-Inbound:  Transport → [resampler] → AEC.process(frame, reference) → [AGC] → ...
+Inbound:  Transport → [resampler] → AEC.process(frame) → [AGC] → ...
 ```
 
 **Important considerations:**
@@ -2104,7 +2112,7 @@ AGCProvider (interface)
 
 ```
 AGCConfig
-├── target_level_dbfs: float = -20.0        # Target audio level in dBFS
+├── target_level_dbfs: float = -3.0         # Target audio level in dBFS
 ├── max_gain_db: float = 30.0               # Maximum gain to apply
 ├── attack_ms: float = 10.0                 # Attack time (how fast gain increases)
 └── release_ms: float = 100.0               # Release time (how fast gain decreases)
@@ -2595,7 +2603,7 @@ Check InterruptionStrategy:
    └── IF dtmf_event is not null:
        └── Fire ON_DTMF hook
 5. IF aec configured AND NOT backend.NATIVE_AEC:
-   └── frame = aec.process(frame, reference)
+   └── frame = aec.process(frame)
 6. IF agc configured AND NOT backend.NATIVE_AGC:
    └── frame = agc.process(frame)
 7. IF denoiser configured:
@@ -2650,6 +2658,10 @@ RealtimeVoiceProvider (interface)
 ├── connect(session, system_prompt, voice, tools, temperature) → void
 ├── disconnect(session) → void
 ├── send_audio(session, audio_chunk) → void
+├── inject_text(session, text, role) → void  # Insert text into conversation context
+├── submit_tool_result(session, call_id, result) → void  # Return tool result to provider
+├── interrupt(session) → void               # Signal user interruption to provider
+├── close() → void                          # Release all resources
 │
 │   # Callback registration:
 ├── on_audio(callback) → void               # AI-generated audio
@@ -2692,12 +2704,20 @@ after such an injection, allowing integrators to log or react to context changes
 
 ```
 RealtimeAudioTransport (interface)
+├── name: string                             # Transport name (e.g., "websocket", "webrtc")
 ├── accept(session, connection) → void
 ├── send_audio(session, audio_chunk) → void
-├── receive_audio(session) → async_iterator<AudioChunk>
-├── on_audio_received(callback) → void
-└── on_client_disconnected(callback) → void
+├── send_message(session, message) → void   # Send control/data message to client
+├── on_audio_received(callback) → void      # Push-based audio reception
+├── on_client_disconnected(callback) → void
+├── disconnect(session) → void              # Disconnect a client session
+└── close() → void                          # Release resources
 ```
+
+Audio reception uses a push-based model via `on_audio_received(callback)` rather
+than a pull-based async iterator. This aligns with the transport pattern used by
+`VoiceBackend` and avoids the complexity of managing iterator lifecycles across
+session boundaries.
 
 **Session lifecycle:**
 
