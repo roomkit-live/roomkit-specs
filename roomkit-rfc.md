@@ -1943,7 +1943,8 @@ AudioPipelineConfig
 ├── recorder: AudioRecorder | null           # OPTIONAL bidirectional recording
 ├── postprocessors: list<AudioPostProcessor> # OPTIONAL outbound processing chain
 ├── vad_config: VADConfig | null             # OPTIONAL VAD tuning parameters
-└── interruption: InterruptionConfig | null  # OPTIONAL barge-in behavior (default: CONFIRMED)
+├── interruption: InterruptionConfig | null  # OPTIONAL barge-in behavior (default: CONFIRMED)
+└── debug_taps: PipelineDebugTaps | null     # OPTIONAL diagnostic stage capture (Section 12.3.15)
 ```
 
 All stages are OPTIONAL. At least one provider SHOULD be configured for the
@@ -2646,6 +2647,120 @@ Check InterruptionStrategy:
 6. Transport sends processed frame to client
 ```
 
+#### 12.3.15 Pipeline Debug Taps
+
+Pipeline Debug Taps provide lightweight diagnostic audio capture at every
+stage boundary in the processing pipeline. Unlike the production AudioRecorder
+(Section 12.3.7) — which captures raw audio for compliance and audit — debug
+taps capture audio at every processing stage, allowing developers to compare
+the signal before and after each transformation.
+
+This is invaluable for debugging audio quality issues: "Is the denoiser
+removing too much signal?", "What does the VAD actually hear?", "Is AEC
+effective?". Without debug taps, these questions require custom instrumentation.
+
+**Configuration:**
+
+```
+PipelineDebugTaps
+├── output_dir: string                      # Directory for debug WAV files (REQUIRED)
+├── stages: list<string> | "all" = "all"    # Which stages to capture
+├── session_scoped: bool = true             # Prefix files with session ID + timestamp
+└── sample_rate: int | null                 # Override sample rate for output files (null = use internal format)
+```
+
+When `stages` is `"all"`, taps are inserted at every stage boundary. When a
+list is provided, only the named stages are captured. Valid stage names:
+
+| Stage name | Capture point | What it reveals |
+|---|---|---|
+| `raw` | After resampler, before AEC | What the pipeline receives from transport |
+| `post_aec` | After AEC | Echo cancellation effectiveness |
+| `post_agc` | After AGC | Volume normalization result |
+| `post_denoiser` | After denoiser | Noise reduction quality — what VAD sees |
+| `post_vad_speech` | On SPEECH_END event | Accumulated speech audio bytes sent to STT |
+| `outbound_raw` | Before postprocessors | TTS output before processing |
+| `outbound_final` | After postprocessors, before resampler | Final audio sent to transport |
+
+**Output files:**
+
+Files are named with a numeric prefix reflecting pipeline order, making it
+easy to compare stages side by side in any audio editor:
+
+```
+{output_dir}/
+  {session_id}_01_raw.wav
+  {session_id}_02_post_aec.wav
+  {session_id}_03_post_agc.wav
+  {session_id}_04_post_denoiser.wav
+  {session_id}_05_post_vad_speech.wav
+  {session_id}_06_outbound_raw.wav
+  {session_id}_07_outbound_final.wav
+```
+
+When `session_scoped` is false, files omit the session prefix (useful for
+quick single-session debugging).
+
+Files are opened lazily on first write and closed on session end. Each file
+uses the pipeline's internal AudioFormat (from the AudioPipelineContract),
+unless `sample_rate` is overridden.
+
+**Integration with pipeline config:**
+
+```
+AudioPipelineConfig
+├── ... (existing fields)
+└── debug_taps: PipelineDebugTaps | null    # OPTIONAL diagnostic capture (default: null)
+```
+
+**Behavior:**
+
+- Debug taps MUST NOT modify audio frames — they are read-only observers.
+  Tap processing is a non-blocking copy of the frame data.
+- Tap writes SHOULD be non-blocking. Implementations MAY buffer frames and
+  flush to disk asynchronously to avoid adding latency to the audio pipeline.
+- When `debug_taps` is null, the pipeline MUST NOT perform any tap-related
+  processing (zero overhead when disabled).
+- The `post_vad_speech` tap captures the `vad_event.audio_bytes` blob — the
+  accumulated speech segment that would be sent to STT. This is written as a
+  separate WAV file per speech segment (appending a segment counter:
+  `{session_id}_05_post_vad_speech_001.wav`, etc.).
+- Implementations SHOULD log a warning at startup when debug taps are enabled,
+  as the disk I/O and storage cost is not intended for production.
+
+**Session lifecycle:**
+
+```
+1. On session_active:
+   ├── Create output_dir if it does not exist
+   └── Initialize per-stage WAV writers (lazily, on first frame)
+
+2. On each inbound/outbound frame:
+   └── IF stage is in configured stages:
+       └── writer.write(frame.data)  # non-blocking copy
+
+3. On SPEECH_END event (for post_vad_speech stage):
+   └── Write audio_bytes to a new segment file
+
+4. On session_ended:
+   ├── Flush and close all WAV writers
+   └── Finalize WAV headers with correct data sizes
+```
+
+**Relationship to AudioRecorder:**
+
+Pipeline Debug Taps and AudioRecorder serve different purposes and MAY be
+used simultaneously:
+
+| | AudioRecorder | PipelineDebugTaps |
+|---|---|---|
+| Purpose | Compliance, audit, QA | Development and debugging |
+| Capture points | Raw inbound + final outbound | Every stage boundary |
+| Production use | Yes | No (SHOULD warn) |
+| Modifies frames | No | No |
+| Output | Single/stereo recording file | Multiple per-stage WAV files |
+| Configuration | `recorder` + `recording_config` | `debug_taps` |
+
 ### 12.4 Realtime Voice Channel (Speech-to-Speech)
 
 The Realtime Voice Channel wraps speech-to-speech APIs (e.g., OpenAI Realtime,
@@ -3072,6 +3187,7 @@ debugging. The following metrics are RECOMMENDED:
 | `pipeline.turn_detector_latency_ms` | TurnDetector | Time to reach turn decision |
 | `pipeline.backchannel_rate` | BackchannelDetector | Ratio of backchannels to interruptions |
 | `pipeline.barge_in_count` | InterruptionConfig | Count of barge-in events per session |
+| `pipeline.debug_tap_bytes_written` | PipelineDebugTaps | Total bytes written to debug tap files |
 
 Voice pipeline logs SHOULD use the `roomkit.channels.voice.pipeline` logger
 with the following structured context fields: `session_id`, `room_id`,
