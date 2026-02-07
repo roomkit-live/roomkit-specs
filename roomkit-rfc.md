@@ -7,7 +7,7 @@
 | **Contributions** | TchatNSign, Angany AI |
 | **Created** | 2026-01-27 |
 | **Last Updated** | 2026-02-06 |
-| **Supersedes** | roomkit-rfc.md (v12 Draft) |
+| **Supersedes** | roomkit-rfc.md (v12 Draft, Audio Pipeline v1) |
 
 ---
 
@@ -76,7 +76,12 @@ interpreted as described in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
 | **Integrator** | The developer building an application on top of a RoomKit implementation. |
 | **Broadcast** | The act of routing an event to all eligible channels in a Room. |
 | **Transcoding** | Converting event content from one format to another for cross-channel delivery. |
-| **Audio Pipeline** | A configurable chain of audio processing stages (denoiser, VAD, diarization) between the transport and the conversation engine. |
+| **Audio Pipeline** | A configurable chain of audio processing stages (resampler, AEC, AGC, denoiser, VAD, diarization, DTMF, recording) between the transport and the conversation engine. |
+| **AEC** | Acoustic Echo Cancellation — removes the bot's own audio from the inbound stream to prevent self-triggering. |
+| **AGC** | Automatic Gain Control — normalizes audio volume to a consistent level regardless of input device or distance. |
+| **DTMF** | Dual-Tone Multi-Frequency — telephone keypad tones used for IVR navigation and call control. |
+| **Turn Detection** | The process of determining whether a speaker has finished their conversational turn, using acoustic and/or semantic signals. |
+| **Backchannel** | Short verbal acknowledgments ("mmhmm", "ok", "yes") that signal attention without requesting a turn change. |
 
 ### 1.3 Notation
 
@@ -144,7 +149,7 @@ Provider abstraction               Which provider to use
 Identity resolution interface      Resolution strategy
 Storage interface                  Storage implementation
 Event chain depth limit            Turn budgets and orchestration
-Audio pipeline stages              Which denoiser, VAD, diarization to use
+Audio pipeline stages              Which resampler, AEC, AGC, denoiser, VAD, etc. to use
 ```
 
 ---
@@ -217,7 +222,7 @@ A conforming RoomKit implementation consists of the following layers:
 1. **Channel type and Provider are separate.** SMS is a channel type. Twilio is a provider. Swap providers without changing room logic.
 2. **Core and Integration Surfaces are separate.** Core has no web framework dependency. REST/MCP/WebSocket are thin wrappers.
 3. **Framework and Business Logic are separate.** Framework provides primitives. Integrator registers hooks and configures channels.
-4. **Transport and Audio Processing are separate.** The transport delivers raw audio frames. The audio pipeline (denoiser, VAD, diarization) is a distinct layer with pluggable providers, independent of the transport choice.
+4. **Transport and Audio Processing are separate.** The transport delivers raw audio frames. The audio pipeline (resampler, AEC, AGC, denoiser, VAD, diarization, DTMF, recording) is a distinct layer with pluggable providers, independent of the transport choice.
 
 ---
 
@@ -397,6 +402,9 @@ RoomEvent
 | CHANNEL_MUTED | Lifecycle | Channel was muted |
 | CHANNEL_UNMUTED | Lifecycle | Channel was unmuted |
 | CHANNEL_UPDATED | Lifecycle | Channel binding was modified (access/visibility) |
+| DTMF | Voice | DTMF tone detected (keypad digit) |
+| RECORDING_STARTED | Voice | Audio recording started for a session |
+| RECORDING_STOPPED | Voice | Audio recording stopped, result available |
 | TASK_CREATED | Side effect | A task was created |
 | OBSERVATION | Side effect | An observation was recorded |
 
@@ -1141,6 +1149,12 @@ They are NOT stored in any room timeline.
 | hook_timeout | Hook exceeded its timeout | hook_name, trigger, timeout_ms |
 | circuit_breaker_opened | Channel circuit breaker tripped | channel_id, failure_count |
 | circuit_breaker_closed | Channel circuit breaker recovered | channel_id |
+| voice_session_started | Voice session transitioned to ACTIVE | session_id, room_id, channel_id |
+| voice_session_ended | Voice session transitioned to ENDED | session_id, room_id, duration_ms |
+| recording_started | Audio recording started | session_id, room_id, recording_id |
+| recording_stopped | Audio recording stopped | session_id, room_id, recording_id, duration_s |
+| stt_error | STT transcription failed | session_id, provider, error |
+| tts_error | TTS synthesis failed | session_id, provider, error |
 
 Implementations MUST emit these events. Integrators subscribe to framework
 events for monitoring and integration purposes.
@@ -1237,6 +1251,12 @@ Hooks MAY be registered globally (apply to all rooms) or per-room.
 | ON_VAD_SILENCE | ASYNC | Audio pipeline detected silence (voice) |
 | ON_VAD_AUDIO_LEVEL | ASYNC | Audio pipeline audio level update (voice) |
 | ON_SPEAKER_CHANGE | ASYNC | Audio pipeline detected speaker change (diarization) |
+| ON_DTMF | ASYNC | Audio pipeline detected a DTMF tone |
+| ON_TURN_COMPLETE | ASYNC | Turn detector determined user turn is complete |
+| ON_TURN_INCOMPLETE | ASYNC | Turn detector determined user is still speaking (for logging) |
+| ON_BACKCHANNEL | ASYNC | Backchannel detector classified speech as backchannel |
+| ON_RECORDING_STARTED | ASYNC | Audio recording started for a voice session |
+| ON_RECORDING_STOPPED | ASYNC | Audio recording stopped, result available |
 | ON_REALTIME_TOOL_CALL | SYNC | Speech-to-speech API requests a tool call |
 | ON_REALTIME_TEXT_INJECTED | ASYNC | Text injected into realtime session |
 
@@ -1680,6 +1700,24 @@ Architecture 2: Speech-to-Speech (RealtimeVoiceChannel)
                                                └─────────┘
 ```
 
+**Choosing between architectures:**
+
+| Criterion | VoiceChannel (STT/TTS) | RealtimeVoiceChannel (Speech-to-Speech) |
+|---|---|---|
+| **Latency** | Higher — audio → STT → LLM → TTS → audio | Lower — end-to-end streaming, no text roundtrip |
+| **Control** | Full — choose STT, LLM, and TTS independently | Limited — provider bundles recognition + generation |
+| **Text access** | Always — every utterance becomes a RoomEvent | Optional — transcriptions emitted if configured |
+| **Multi-channel** | Native — text responses route to any channel | Requires transcription to feed non-audio channels |
+| **Tool calling** | Via LLM tool use (standard) | Via provider-specific tool protocol |
+| **Voice quality** | Depends on TTS provider | Often higher — native speech generation |
+| **Pipeline control** | Full audio pipeline (all stages) | Pipeline optional (preprocessing only) |
+| **Cost** | Pay for STT + LLM + TTS separately | Pay for single API (may be cheaper or more expensive) |
+| **Use when** | You need text in the loop, multi-channel routing, or independent provider choice | You need lowest latency, natural voice, and can accept provider lock-in |
+
+Both architectures MAY coexist in the same room. For example, a room could have
+a VoiceChannel for a human participant (PSTN/SIP) and a RealtimeVoiceChannel
+for the AI agent, with text events bridging them.
+
 ### 12.2 Voice Channel (STT/TTS Pipeline)
 
 The Voice Channel processes audio through a pipeline of STT and TTS providers,
@@ -1724,6 +1762,19 @@ transport-level concern (detecting client audio during active playback).
 |---|---|
 | INTERRUPTION | Can cancel TTS playback |
 | BARGE_IN | Detect user audio during TTS playback |
+| NATIVE_AEC | Backend provides built-in echo cancellation (skip pipeline AEC) |
+| NATIVE_AGC | Backend provides built-in gain control (skip pipeline AGC) |
+| DTMF_INBAND | Backend receives in-band DTMF tones in audio stream |
+| DTMF_SIGNALING | Backend receives DTMF via signaling (SIP INFO, RFC 2833) |
+
+When a VoiceBackend declares `NATIVE_AEC` or `NATIVE_AGC`, the pipeline MUST
+skip the corresponding stage automatically, even if a provider is configured in
+`AudioPipelineConfig`. This prevents double processing.
+
+When a VoiceBackend declares `DTMF_SIGNALING`, DTMF events arrive via the
+signaling layer (not the audio stream). The pipeline's DTMFDetector handles
+in-band detection only. Implementations MUST merge both sources into the same
+ON_DTMF hook.
 
 **VoiceSession:**
 
@@ -1733,10 +1784,31 @@ VoiceSession
 ├── room_id: string                         # Associated room
 ├── participant_id: string                  # Associated participant
 ├── channel_id: string                      # Associated voice channel
-├── state: VoiceSessionState                # CONNECTING, ACTIVE, PAUSED, ENDED
+├── state: VoiceSessionState                # Current session state
 ├── created_at: datetime                    # Session start time
 └── metadata: map<string, any>              # Session-specific data
 ```
+
+**VoiceSessionState** enumeration:
+
+| Value | Meaning |
+|---|---|
+| CONNECTING | Session is being established (transport handshake, provider init) |
+| ACTIVE | Audio is flowing bidirectionally |
+| PAUSED | Session temporarily suspended (e.g., hold, mute) |
+| ENDED | Session terminated — no further audio |
+
+**Transitions:**
+
+- CONNECTING → ACTIVE: Transport connected and provider ready.
+- ACTIVE → PAUSED: Integrator pauses session (e.g., call hold).
+- PAUSED → ACTIVE: Integrator resumes session.
+- ACTIVE → ENDED: Session terminated (user hangup, timeout, integrator call).
+- CONNECTING → ENDED: Connection failed.
+- PAUSED → ENDED: Session terminated while paused.
+
+Implementations MUST NOT allow transitions from ENDED to any other state. A new
+session MUST be created if the participant reconnects.
 
 **STTProvider interface:**
 
@@ -1767,17 +1839,22 @@ TTSProvider (interface)
 ```
 1. Client sends audio stream → VoiceBackend
 2. VoiceBackend emits raw frames → Audio Pipeline (Section 12.3)
-3. Pipeline: [Denoiser] → [VAD] → [Diarization]
+3. Pipeline: [Resampler] → [AEC] → [AGC] → [Denoiser] → [VAD] → [Diarization]
+   (DTMF detection runs in parallel from resampled stream)
+   (Recorder captures inbound after resampler)
 4. VAD detects speech end → ON_SPEECH_END hook fires
 5. STT transcribes captured audio → TranscriptionResult
 6. Fire ON_TRANSCRIPTION hook (can modify transcript)
-7. Create RoomEvent with TextContent or AudioContent
+7. If TurnDetector configured → evaluate turn completion
+   ├── Complete → Create RoomEvent
+   └── Incomplete → accumulate, wait for next speech
 8. Route through normal inbound pipeline
 9. Room broadcasts → AI or other channels respond
 10. Response event arrives at Voice channel via deliver()
 11. If TextContent → Fire BEFORE_TTS hook → TTS synthesizes → audio frames
-12. Audio frames → [AudioPostProcessor(s)] → stream to client via VoiceBackend
-13. If AudioContent → [AudioPostProcessor(s)] → stream directly to client
+12. Audio frames → [PostProcessors] → [Recorder] → [AEC ref] → [Resampler] → client
+13. If AudioContent → [PostProcessors] → [Recorder] → [AEC ref] → [Resampler] → stream
+14. If barge-in detected → InterruptionConfig determines response
 ```
 
 ### 12.3 Audio Processing Pipeline
@@ -1796,44 +1873,81 @@ SIP, or any custom transport) and regardless of the voice architecture
 **Inbound (preprocessing):**
 
 ```
-Transport → [Denoiser] → [VAD] → [Diarization] → STT / Speech-to-Speech Provider
-              (clean)    (detect)   (who speaks)
+Transport → [Resampler] → [Recorder ◉] → [AEC] → [AGC] → [Denoiser] → [VAD] → [Diarization] → STT
+             (normalize)   (capture raw)  (echo)  (volume)   (clean)    (detect)  (who speaks)
+                                 │
+                           [DTMF Detector]
+                           (parallel from resampled stream)
+
+◉ Recorder taps the stream (non-blocking copy), does not modify frames.
 ```
+
+**Note on ordering rationale:**
+
+| Position | Stage | Why here |
+|---|---|---|
+| 1 | Resampler | All downstream stages expect a consistent format (e.g., 16kHz mono PCM). Must run first. |
+| 1b | Recorder (inbound tap) | Capture raw user audio in consistent format before any processing — compliance requires unmodified signal. |
+| 2 | AEC | Needs clean format but must run before denoiser — echo is not "noise", it's a known reference signal. |
+| 3 | AGC | Normalize volume before denoiser and VAD — both are amplitude-sensitive. |
+| 4 | Denoiser | Remove environmental noise from volume-normalized, echo-cancelled audio. |
+| 5 | VAD | Detect speech in clean audio. |
+| 6 | Diarization | Identify speaker from clean speech segments. |
+| — | DTMF | Runs in parallel on the resampled stream — DTMF tones would be destroyed by denoiser/AGC. |
 
 **Outbound (postprocessing):**
 
 ```
-TTS / Speech-to-Speech Provider → [AudioPostProcessor(s)] → Transport
-                                    (normalize, log, watermark)
+TTS / Speech-to-Speech Provider → [PostProcessors] → [Recorder ◉] → [AEC ref] → [Resampler] → Transport
+                                   (normalize, etc.)  (capture final) (feed AEC)  (match format)
+
+◉ Recorder taps outbound stream after postprocessors (what the user actually hears).
+  AEC reference feed occurs after recorder to ensure echo subtraction uses the final signal.
 ```
 
 **Pipeline symmetry with text hooks:**
 
 | Text Pipeline | Audio Pipeline |
 |---|---|
-| BEFORE_BROADCAST (sync hooks) | Inbound audio preprocessing |
-| AFTER_BROADCAST (async hooks) | Outbound audio postprocessing |
+| BEFORE_BROADCAST (sync hooks) | Inbound audio preprocessing (resampler → AEC → AGC → denoiser → VAD) |
+| AFTER_BROADCAST (async hooks) | Outbound audio postprocessing (postprocessors → recorder → resampler) |
 | ON_TRANSCRIPTION hook | Post-STT hook (exists in Section 12.5) |
 | BEFORE_TTS hook | Pre-synthesis hook (exists in Section 12.5) |
+| — | Turn detection (post-STT, pre-room event) |
+| — | Interruption handling (barge-in → backchannel detection) |
+
+**Note on subsection ordering:** The subsections below (12.3.1–12.3.14) are
+organized by concern (configuration, then inbound stages, then outbound stages,
+then frame format, then post-STT stages, then execution flow) — NOT by pipeline
+execution order. For execution order, see the inbound/outbound diagrams above
+and the Pipeline Execution Flow (Section 12.3.14).
 
 #### 12.3.1 Pipeline Configuration
 
 ```
 AudioPipelineConfig
+├── resampler: ResamplerConfig | null        # OPTIONAL format normalization (RECOMMENDED)
+├── aec: AECProvider | null                  # OPTIONAL echo cancellation
+├── agc: AGCProvider | null                   # OPTIONAL automatic gain control
 ├── denoiser: DenoiserProvider | null        # OPTIONAL noise reduction
 ├── vad: VADProvider | null                  # OPTIONAL voice activity detection
 ├── diarization: DiarizationProvider | null  # OPTIONAL speaker identification
+├── dtmf: DTMFDetector | null               # OPTIONAL DTMF tone detection
+├── turn_detector: TurnDetector | null       # OPTIONAL semantic turn detection (post-STT)
+├── recorder: AudioRecorder | null           # OPTIONAL bidirectional recording
 ├── postprocessors: list<AudioPostProcessor> # OPTIONAL outbound processing chain
-└── vad_config: VADConfig | null             # OPTIONAL VAD tuning parameters
+├── vad_config: VADConfig | null             # OPTIONAL VAD tuning parameters
+└── interruption: InterruptionConfig | null  # OPTIONAL barge-in behavior (default: CONFIRMED)
 ```
 
 All stages are OPTIONAL. At least one provider SHOULD be configured for the
 pipeline to be useful. Typical configurations:
 
 - **Voice Channel (STT/TTS):** VAD (required for speech detection) + optional
-  denoiser and diarization.
-- **Realtime Voice Channel (speech-to-speech):** Denoiser and/or diarization
+  denoiser, AEC, AGC, and diarization.
+- **Realtime Voice Channel (speech-to-speech):** Denoiser, AEC, and/or diarization
   only — the AI provider handles turn detection, so VAD is not needed.
+- **PSTN/SIP integration:** Resampler (RECOMMENDED) + DTMF + recorder + VAD.
 
 ```
 VADConfig
@@ -1845,6 +1959,36 @@ VADConfig
 The audio pipeline is configured per Voice Channel or per Realtime Voice Channel.
 Different channels in the same room MAY have different pipeline configurations.
 
+**Pipeline format contract:**
+
+```
+AudioPipelineContract
+├── internal_format: AudioFormat             # All stages operate on this format
+├── transport_inbound_format: AudioFormat    # Format received from transport
+└── transport_outbound_format: AudioFormat   # Format expected by transport
+
+AudioFormat
+├── sample_rate: int                         # Sample rate in Hz
+├── channels: int                            # Channel count
+├── sample_width: int                        # Bytes per sample
+└── codec: string                            # Encoding (e.g., "pcm_s16le", "opus", "mulaw")
+```
+
+When the pipeline starts, implementations MUST validate that all configured
+stages are compatible with the internal format. If a stage requires a different
+format (e.g., a specific VAD requires 16kHz), the implementation MUST either:
+- Configure the resampler to match, or
+- Raise a configuration error at startup (fail fast).
+
+**Session lifecycle contract:**
+
+All pipeline stage providers that expose a `reset()` method MUST have it called
+when a new VoiceSession transitions to ACTIVE. This clears adaptive state
+(denoiser filter coefficients, VAD speech buffers, AGC gain history, diarization
+speaker models, etc.) to prevent bleed-over between sessions. Implementations
+MUST call `reset()` on all configured stages in pipeline order before the first
+audio frame of a new session is processed.
+
 #### 12.3.2 Denoiser Provider
 
 The denoiser removes background noise from inbound audio before VAD and STT
@@ -1855,18 +1999,279 @@ DenoiserProvider (interface)
 ├── name: string                             # Provider name (e.g., "sherpa_onnx", "rnnoise")
 ├── process(audio_frame: AudioFrame) → AudioFrame
 │       # Process a single audio frame, return cleaned frame
+├── reset() → void
+│       # Reset internal state (e.g., on session start)
 └── close() → void
         # Release resources
 ```
 
 Implementations SHOULD provide at least one built-in denoiser (e.g., sherpa-onnx).
 
-#### 12.3.3 VAD Provider
+#### 12.3.3 Resampler
+
+The resampler normalizes audio format at pipeline entry (inbound) and exit
+(outbound). All pipeline stages operate on a consistent internal format,
+eliminating format mismatches between transport, STT, TTS, and VAD.
+
+```
+ResamplerConfig
+├── internal_sample_rate: int = 16000       # Pipeline-internal sample rate (Hz)
+├── internal_channels: int = 1              # Pipeline-internal channel count (mono)
+├── internal_sample_width: int = 2          # Pipeline-internal bytes per sample (16-bit)
+└── codec: string | null                    # Codec hint for transport negotiation (e.g., "opus", "pcm")
+```
+
+**Behavior:**
+
+- **Inbound:** After receiving a raw AudioFrame from transport, the resampler
+  converts it to the internal format before passing to downstream stages.
+- **Outbound:** After postprocessors, the resampler converts from internal format
+  to the transport's expected format (sample rate, channels, codec).
+
+The resampler MUST preserve `AudioFrame.timestamp_ms` accurately through
+conversion. The resampler MUST add `metadata.original_sample_rate` and
+`metadata.original_channels` to the frame for audit purposes.
+
+Implementations SHOULD use high-quality resampling (e.g., libsamplerate,
+sox-quality) to avoid introducing artifacts that degrade VAD and STT accuracy.
+
+When no resampler is configured, all pipeline stages MUST accept the transport's
+native format. Implementations SHOULD log a warning if the transport format
+differs from the expected format of downstream stages.
+
+#### 12.3.4 Echo Canceller (AEC)
+
+The echo canceller removes acoustic echo — the bot's own TTS audio picked up
+by the user's microphone. Without AEC, the VAD triggers on the bot's speech,
+causing false speech detections and feedback loops.
+
+```
+AECProvider (interface)
+├── name: string                             # Provider name (e.g., "speex_aec", "webrtc_aec3")
+├── process(audio_frame: AudioFrame, reference: AudioFrame | null) → AudioFrame
+│       # Remove echo using reference (outbound) signal
+│       # If reference is null, pass through unchanged
+├── feed_reference(audio_frame: AudioFrame) → void
+│       # Feed outbound audio as echo reference (called on outbound path)
+├── reset() → void
+│       # Reset internal state (e.g., on session start)
+└── close() → void
+        # Release resources
+```
+
+**Integration with outbound path:**
+
+The AEC requires a reference signal — the audio being played back to the user.
+The pipeline MUST feed outbound audio frames to `AECProvider.feed_reference()`
+before they are sent to the transport. This creates a bidirectional dependency:
+
+```
+Outbound: TTS → [postprocessors] → AEC.feed_reference(frame) → [resampler] → Transport
+Inbound:  Transport → [resampler] → AEC.process(frame, reference) → [AGC] → ...
+```
+
+**Important considerations:**
+
+- AEC effectiveness depends on accurate time alignment between the reference
+  signal and the echo in the inbound stream. Implementations MUST account for
+  playback latency.
+- When the VoiceBackend declares `NATIVE_AEC` capability, the pipeline MUST skip
+  the AEC stage automatically, even if an AECProvider is configured, to avoid
+  double processing.
+- AEC MUST run before the denoiser — echo is a known signal to subtract, not
+  random noise to filter.
+
+AEC SHOULD add `metadata.echo_cancelled = true` to processed frames for
+observability.
+
+#### 12.3.5 Automatic Gain Control (AGC)
+
+The AGC normalizes input audio volume to a consistent level. Users on different
+devices, at different distances from their microphone, or in different
+environments produce widely varying audio levels. AGC ensures that the VAD
+and STT receive audio at a predictable amplitude.
+
+```
+AGCProvider (interface)
+├── name: string                             # Provider name (e.g., "webrtc_agc", "simple_agc")
+├── process(audio_frame: AudioFrame) → AudioFrame
+│       # Apply gain control, return normalized frame
+├── reset() → void
+│       # Reset internal state (adaptive gain history)
+└── close() → void
+        # Release resources
+```
+
+```
+AGCConfig
+├── target_level_dbfs: float = -20.0        # Target audio level in dBFS
+├── max_gain_db: float = 30.0               # Maximum gain to apply
+├── attack_ms: float = 10.0                 # Attack time (how fast gain increases)
+└── release_ms: float = 100.0               # Release time (how fast gain decreases)
+```
+
+The AGC algorithm is well-standardized. Implementations MUST provide at least
+one built-in AGCProvider (e.g., based on WebRTC's AGC). Custom AGCProvider
+implementations MAY be registered for specialized requirements.
+
+AGC MUST run after AEC (to avoid amplifying echo) and before the denoiser
+(to give the denoiser consistent input levels).
+
+When the VoiceBackend declares `NATIVE_AGC` capability, the pipeline MUST skip
+the AGC stage automatically, even if an AGCProvider is configured.
+
+AGC SHOULD add `metadata.gain_applied_db` to processed frames for observability.
+
+#### 12.3.6 DTMF Detector
+
+The DTMF detector identifies telephone keypad tones (0-9, *, #, A-D) in the
+audio stream. This is essential for IVR (Interactive Voice Response) scenarios,
+call transfers, and PSTN/SIP integrations where users interact via keypad.
+
+```
+DTMFDetector (interface)
+├── name: string                             # Provider name (e.g., "goertzel", "webrtc_dtmf")
+├── process(audio_frame: AudioFrame) → DTMFEvent | null
+│       # Detect DTMF tone, return event if detected, null otherwise
+├── reset() → void
+│       # Reset internal state
+└── close() → void
+        # Release resources
+```
+
+```
+DTMFEvent
+├── digit: string                            # Detected digit ("0"-"9", "*", "#", "A"-"D")
+├── duration_ms: float                       # Tone duration
+└── confidence: float | null                 # Detection confidence [0.0, 1.0]
+```
+
+**Critical: DTMF runs in parallel, not in series.**
+
+DTMF tones are sinusoidal signals that would be destroyed or distorted by the
+denoiser, AGC, or AEC. The DTMF detector MUST process audio from the resampled
+stream *before* AEC/AGC/denoiser stages, in parallel with the main pipeline:
+
+```
+Transport → [Resampler] → ┬─→ [AEC] → [AGC] → [Denoiser] → [VAD] → ...
+                           │
+                           └─→ [DTMF Detector] (parallel)
+```
+
+Implementations MAY alternatively run DTMF detection on the raw (pre-resampler)
+stream if the detector supports the transport's native format, since the Goertzel
+algorithm does not require a specific sample rate.
+
+When a DTMF tone is detected, the framework MUST fire the ON_DTMF hook
+(Section 9.2). Implementations MAY optionally suppress the DTMF audio from the
+main pipeline to prevent the tone from being transcribed as speech.
+
+#### 12.3.7 Audio Recorder
+
+The audio recorder captures bidirectional audio for compliance, audit, quality
+assurance, and training purposes. In regulated industries (financial services,
+healthcare), call recording is often mandatory.
+
+```
+AudioRecorder (interface)
+├── name: string                             # Recorder name
+├── start(session: VoiceSession, config: RecordingConfig) → RecordingHandle
+│       # Start recording for a voice session
+├── record_inbound(handle: RecordingHandle, frame: AudioFrame) → void
+│       # Record an inbound (user) audio frame
+├── record_outbound(handle: RecordingHandle, frame: AudioFrame) → void
+│       # Record an outbound (bot/TTS) audio frame
+├── stop(handle: RecordingHandle) → RecordingResult
+│       # Stop recording, finalize file(s)
+└── close() → void
+        # Release resources
+```
+
+```
+RecordingHandle
+├── id: string                               # Unique handle identifier
+├── session_id: string                       # Associated VoiceSession
+├── started_at: datetime                     # When recording started
+└── state: string                            # "recording" or "stopped"
+```
+
+The `RecordingHandle` is an opaque token returned by `start()` and passed to
+all subsequent recorder calls. Implementations MAY extend it with
+provider-specific fields.
+
+```
+RecordingConfig
+├── format: string = "wav"                   # Output format ("wav", "mp3", "ogg", "flac")
+├── mode: RecordingMode                      # What to record
+├── channels: RecordingChannelMode           # How to mix audio
+├── storage: string                          # Storage backend identifier (integrator-defined)
+├── retention_days: int | null               # Auto-delete after N days (null = indefinite)
+└── metadata: map<string, any>               # Recording metadata (room_id, participant_id, etc.)
+```
+
+The `storage` field is an integrator-defined identifier resolved by the
+implementation at runtime — similar to how provider names reference registered
+providers. Implementations MUST document which storage backends they support
+(e.g., "local", "s3", "gcs") and MUST raise a configuration error if an
+unknown identifier is provided.
+
+**RecordingMode** enumeration:
+
+| Value | Description |
+|---|---|
+| INBOUND_ONLY | Record user audio only |
+| OUTBOUND_ONLY | Record bot/TTS audio only |
+| BOTH | Record both directions |
+
+**RecordingChannelMode** enumeration:
+
+| Value | Description |
+|---|---|
+| MIXED | Single file, both directions mixed |
+| STEREO | Single file, user on left channel, bot on right channel |
+| SEPARATE | Two separate files, one per direction |
+
+```
+RecordingResult
+├── recording_id: string                     # Unique recording identifier
+├── urls: list<string>                       # Storage URLs for recording file(s)
+├── duration_seconds: float                  # Total recording duration
+├── format: string                           # Output format used
+├── mode: RecordingChannelMode               # Channel mode used
+└── metadata: map<string, any>               # Recording metadata
+```
+
+**Recording position in the pipeline:**
+
+The recorder captures audio at two points:
+- **Inbound:** After resampler (raw user audio, consistent format) — before any
+  processing, to preserve the original signal for compliance.
+- **Outbound:** After postprocessors (final bot audio) — what the user actually
+  heard.
+
+Implementations MAY provide a configuration option to record at different
+pipeline positions (e.g., after denoiser for cleaner recordings).
+
+```
+Inbound:  Transport → [Resampler] → recorder.record_inbound() → [AEC] → [AGC] → ...
+Outbound: [PostProcessors] → recorder.record_outbound() → [Resampler] → Transport
+```
+
+When recording starts, the framework SHOULD fire ON_RECORDING_STARTED hook.
+When recording stops, the framework SHOULD fire ON_RECORDING_STOPPED hook with
+the RecordingResult.
+
+#### 12.3.8 VAD Provider
 
 The VAD provider detects speech activity in audio frames and emits events that
 drive the voice pipeline. VAD events are the source for the ON_SPEECH_START,
 ON_SPEECH_END, ON_VAD_SILENCE, and ON_VAD_AUDIO_LEVEL hooks defined in
 Section 9.2.
+
+**Note:** VAD is OPTIONAL in the `AudioPipelineConfig` schema to support
+speech-to-speech architectures where the AI provider handles turn detection.
+However, for Voice Channels (STT/TTS pipeline), VAD is effectively required —
+without it, the pipeline has no way to detect speech boundaries for STT.
 
 ```
 VADProvider (interface)
@@ -1906,7 +2311,7 @@ identify speakers. VAD MAY be configured for observational purposes (activity
 logging, audio level monitoring for UI) but does NOT control turn-taking — that
 responsibility belongs to the provider.
 
-#### 12.3.4 Diarization Provider
+#### 12.3.9 Diarization Provider
 
 The diarization provider identifies which speaker produced each audio segment.
 This is particularly relevant in multi-participant voice rooms or when multiple
@@ -1933,7 +2338,15 @@ DiarizationResult
 When diarization detects a speaker change, the framework MUST fire the
 ON_SPEAKER_CHANGE hook (Section 9.2).
 
-#### 12.3.5 Audio Post-Processor
+**Speaker-to-Participant mapping:** `DiarizationResult.speaker_id` is a
+provider-assigned label (e.g., "speaker_0", "speaker_1"), not a RoomKit
+`Participant.id`. Mapping diarization labels to participants is an
+integrator concern — typically resolved via the ON_SPEAKER_CHANGE hook,
+where the integrator can match speaker labels to known participants using
+voice enrollment, channel metadata, or heuristics (e.g., the participant
+who owns the voice channel is always "speaker_0").
+
+#### 12.3.10 Audio Post-Processor
 
 Audio post-processors form an ordered chain on the outbound path. Each processor
 receives an audio frame and returns a (possibly modified) frame. Common use cases
@@ -1944,6 +2357,8 @@ AudioPostProcessor (interface)
 ├── name: string                             # Processor name
 ├── process(audio_frame: AudioFrame) → AudioFrame
 │       # Process outbound audio frame
+├── reset() → void
+│       # Reset internal state (e.g., on session start)
 └── close() → void
         # Release resources
 ```
@@ -1951,7 +2366,7 @@ AudioPostProcessor (interface)
 Multiple post-processors are executed in the order they appear in the
 `postprocessors` list. Each processor receives the output of the previous one.
 
-#### 12.3.6 Audio Frame
+#### 12.3.11 Audio Frame
 
 The common data structure passed through the pipeline:
 
@@ -1965,21 +2380,244 @@ AudioFrame
 └── metadata: map<string, any>               # Pipeline metadata (accumulated by stages)
 ```
 
-#### 12.3.7 Pipeline Execution Flow
+**AudioChunk** is an alias for `AudioFrame`. The two names exist because
+`AudioFrame` is used within the pipeline (where metadata accumulates through
+stages) and `AudioChunk` is used at the transport and provider boundaries
+(TTSProvider, RealtimeAudioTransport) where pipeline metadata is not yet
+present. Implementations SHOULD use a single type for both.
+
+#### 12.3.12 Turn Detector
+
+The turn detector determines whether the user has finished their conversational
+turn. This is distinct from VAD, which detects acoustic silence. A user may
+pause mid-sentence (VAD triggers silence) but not be done speaking. Conversely,
+a user may finish a question without a long pause.
+
+**Note:** Unlike the frame-level stages above (denoiser, AEC, AGC, VAD), the
+turn detector operates on **transcripts** (text from STT), not audio frames.
+It does not implement `process(AudioFrame)`. It sits between STT output and the
+room event pipeline, making it a post-STT stage rather than an audio-frame
+processor. It is included in the audio pipeline configuration for convenience,
+as it is integral to the voice processing flow.
+
+```
+TurnDetector (interface)
+├── name: string                             # Detector name (e.g., "llm_turn", "heuristic", "hybrid")
+├── evaluate(context: TurnContext) → TurnDecision
+│       # Evaluate whether the user's turn is complete
+├── reset() → void
+│       # Reset internal state
+└── close() → void
+        # Release resources
+```
+
+```
+TurnContext
+├── transcript: string                       # Current accumulated transcript (from STT)
+├── is_final: bool                           # Whether STT transcript is final
+├── silence_duration_ms: float               # Current silence duration (from VAD)
+├── speech_duration_ms: float                # Duration of the speech segment
+├── conversation_history: list<TurnEntry> | null  # Recent turns for context
+└── metadata: map<string, any>               # Additional context
+
+TurnEntry
+├── role: string                             # "user" or "assistant"
+└── text: string                             # Transcript text of the turn
+```
+
+```
+TurnDecision
+├── is_complete: bool                        # Whether the turn is considered complete
+├── confidence: float                        # Decision confidence [0.0, 1.0]
+├── reason: string | null                    # Why (e.g., "question_mark", "long_pause", "semantic_complete")
+└── suggested_wait_ms: float | null          # If not complete, how long to wait before re-evaluating
+```
+
+**Turn detection modes:**
+
+| Mode | Description | Latency | Accuracy |
+|---|---|---|---|
+| VAD-only | Use VAD silence threshold (current behavior) | Low | Low — triggers on pauses |
+| Heuristic | Punctuation, sentence structure, silence combo | Low | Medium |
+| LLM-based | Send transcript to fast LLM for completion check | Medium | High |
+| Hybrid | VAD for fast path, LLM for ambiguous cases | Adaptive | High |
+
+**Integration point:**
+
+The turn detector sits between STT and the room event pipeline. It replaces the
+simple "VAD silence → send to STT → route event" flow with a more nuanced path:
+
+```
+VAD SPEECH_END → STT transcribes → TurnDetector.evaluate(context)
+                                          │
+                                    is_complete?
+                                    ├── YES → Create RoomEvent, route normally
+                                    └── NO  → Wait (suggested_wait_ms), accumulate
+                                              next speech, re-evaluate
+```
+
+When no TurnDetector is configured, the pipeline falls back to VAD-only behavior
+(current default).
+
+The turn detector MUST NOT add more than 200ms latency in the fast path. For
+LLM-based detection, implementations SHOULD use a small, fast model or cache
+common patterns.
+
+#### 12.3.13 Interruption Strategy
+
+When the user speaks while the bot is responding (barge-in), the framework needs
+a configurable strategy to handle the interruption. Not all speech during bot
+playback is a genuine interruption — backchannels ("mmhmm", "ok", "yes") are
+acknowledgments, not requests to stop.
+
+```
+InterruptionConfig
+├── strategy: InterruptionStrategy = CONFIRMED  # How to handle barge-in
+├── min_speech_ms: int = 300                 # Minimum user speech duration to trigger interruption
+├── backchannel_detector: BackchannelDetector | null  # OPTIONAL backchannel filter
+├── flush_partial_tts: bool = true           # Whether to discard unplayed TTS audio on interrupt
+└── keep_partial_transcript: bool = true     # Whether to store bot's partial response in timeline
+```
+
+**InterruptionStrategy** enumeration:
+
+| Value | Description |
+|---|---|
+| IMMEDIATE | Cancel TTS as soon as VAD detects speech (v1 behavior). Fast but aggressive. |
+| CONFIRMED | Wait for `min_speech_ms` of sustained speech before cancelling. Tolerates brief sounds. Default. |
+| SEMANTIC | Use backchannel detector to decide — only interrupt on non-backchannel speech. Most natural. |
+| DISABLED | Never interrupt — user speech is queued until bot finishes. For non-interactive playback. |
+
+**BackchannelDetector interface:**
+
+```
+BackchannelDetector (interface)
+├── name: string                             # Detector name
+├── classify(context: BackchannelContext) → BackchannelDecision
+│       # Classify whether speech is a backchannel or genuine interruption
+├── reset() → void
+│       # Reset internal state (e.g., on session start)
+└── close() → void
+        # Release resources
+```
+
+```
+BackchannelContext
+├── audio_bytes: bytes | null                # Short audio segment (if available)
+├── transcript: string | null                # Partial transcript of the speech (if STT fast enough)
+├── speech_duration_ms: float                # How long the user has been speaking
+├── bot_speech_progress: float               # How far into the bot's response (0.0 to 1.0)
+└── metadata: map<string, any>               # Additional context
+```
+
+```
+BackchannelDecision
+├── is_backchannel: bool                     # True = acknowledgment, False = real interruption
+├── confidence: float                        # Decision confidence [0.0, 1.0]
+└── label: string | null                     # Classification label (e.g., "agreement", "filler", "question")
+```
+
+**Timing constraint:** In the SEMANTIC strategy, the `BackchannelContext.transcript`
+field may be null or incomplete if STT has not yet produced a result for the
+speech segment. In practice, the classifier will often operate on `audio_bytes`
+and `speech_duration_ms` alone, falling back to transcript-based classification
+only when streaming STT provides partial results fast enough. Implementations
+SHOULD design backchannel detectors to work with audio features alone and treat
+transcript availability as a bonus signal.
+
+**Interruption flow:**
+
+```
+User speaks during TTS playback
+      │
+      ▼
+VoiceBackend fires on_barge_in
+      │
+      ▼
+Check InterruptionStrategy:
+      │
+      ├── IMMEDIATE → Cancel TTS immediately
+      │
+      ├── CONFIRMED → Start timer
+      │   ├── Speech continues > min_speech_ms → Cancel TTS
+      │   └── Speech stops before threshold → Ignore, resume TTS
+      │
+      ├── SEMANTIC → Run BackchannelDetector
+      │   ├── is_backchannel = true → Ignore, resume TTS
+      │   │   └── Fire ON_BACKCHANNEL hook (async)
+      │   └── is_backchannel = false → Cancel TTS
+      │       └── Fire ON_BARGE_IN hook (async)
+      │
+      └── DISABLED → Ignore speech, queue for after TTS completes
+```
+
+**When TTS is cancelled:**
+
+1. If `flush_partial_tts = true`: discard all unplayed audio in the TTS buffer.
+2. If `keep_partial_transcript = true`: store the bot's partial response in the
+   timeline with `metadata.interrupted = true` and `metadata.played_percentage`.
+3. Process the user's speech normally through the inbound pipeline.
+
+#### 12.3.14 Pipeline Execution Flow
+
+**Session start (once per VoiceSession):**
+
+```
+1. VoiceSession transitions to ACTIVE
+2. Call reset() on all configured pipeline stages (in pipeline order)
+3. IF recorder configured:
+   ├── handle = recorder.start(session, recording_config)
+   └── Fire ON_RECORDING_STARTED hook
+```
+
+**Session end (once per VoiceSession):**
+
+```
+1. VoiceSession transitions to ENDED
+2. IF recorder configured AND recording active:
+   ├── result = recorder.stop(handle)
+   └── Fire ON_RECORDING_STOPPED hook with RecordingResult
+3. Call close() on pipeline stages only if the channel is being destroyed
+   (not on session end — stages are reused across sessions)
+```
 
 **Inbound flow (per audio frame):**
 
 ```
 1. Transport emits raw AudioFrame
-2. IF denoiser configured:
+2. IF resampler configured:
+   └── frame = resample(frame, internal_format)
+       └── frame.metadata.original_sample_rate = original_rate
+3. IF recorder configured:
+   └── recorder.record_inbound(handle, frame)
+4. IF dtmf configured (PARALLEL with steps 5-9):
+   ├── dtmf_event = dtmf.process(frame)
+   └── IF dtmf_event is not null:
+       └── Fire ON_DTMF hook
+5. IF aec configured AND NOT backend.NATIVE_AEC:
+   └── frame = aec.process(frame, reference)
+6. IF agc configured AND NOT backend.NATIVE_AGC:
+   └── frame = agc.process(frame)
+7. IF denoiser configured:
    └── frame = denoiser.process(frame)
-3. IF vad configured:
+8. IF vad configured:
    ├── vad_event = vad.process(frame)
    └── IF vad_event is not null:
        ├── Fire corresponding hook (ON_SPEECH_START, ON_SPEECH_END, etc.)
        └── IF vad_event.type == SPEECH_END:
-           └── Pass audio_bytes to STT or accumulate for speech-to-speech
-4. IF diarization configured:
+           ├── STT transcribes audio_bytes → TranscriptionResult
+           ├── Fire ON_TRANSCRIPTION hook (can modify transcript)
+           └── IF turn_detector configured:
+               ├── decision = turn_detector.evaluate(context)
+               ├── IF decision.is_complete:
+               │   ├── Fire ON_TURN_COMPLETE hook
+               │   └── Create RoomEvent, route to Room
+               └── ELSE:
+                   ├── Fire ON_TURN_INCOMPLETE hook
+                   └── Accumulate, wait for next speech segment
+           └── ELSE (no turn detector):
+               └── Create RoomEvent, route to Room (v1 behavior)
+9. IF diarization configured:
    ├── result = diarization.process(frame)
    └── IF result.is_new_speaker:
        └── Fire ON_SPEAKER_CHANGE hook
@@ -1991,7 +2629,13 @@ AudioFrame
 1. TTS or speech-to-speech provider emits AudioFrame
 2. FOR EACH postprocessor in order:
    └── frame = postprocessor.process(frame)
-3. Transport sends processed frame to client
+3. IF recorder configured:
+   └── recorder.record_outbound(handle, frame)
+4. IF aec configured:
+   └── aec.feed_reference(frame)
+5. IF resampler configured:
+   └── frame = resample(frame, transport_format)
+6. Transport sends processed frame to client
 ```
 
 ### 12.4 Realtime Voice Channel (Speech-to-Speech)
@@ -2017,6 +2661,32 @@ RealtimeVoiceProvider (interface)
 ├── on_response_end(callback) → void
 └── on_error(callback) → void
 ```
+
+**RealtimeVoiceProvider callback → hook mapping:**
+
+| Provider Callback | Hook Fired | Notes |
+|---|---|---|
+| `on_audio` | — | Audio frames routed to transport; no hook (too high frequency) |
+| `on_transcription` | ON_TRANSCRIPTION | User and AI transcripts emitted as RoomEvents |
+| `on_speech_start` | ON_SPEECH_START | Provider-detected speech start |
+| `on_speech_end` | ON_SPEECH_END | Provider-detected speech end |
+| `on_tool_call` | ON_REALTIME_TOOL_CALL | Tool execution request from AI |
+| `on_response_start` | — | Internal lifecycle; no hook (use ON_SPEECH_START for AI speech) |
+| `on_response_end` | — | Internal lifecycle; no hook (use AFTER_BROADCAST for response tracking) |
+| `on_error` | ON_ERROR | Mapped to the global ON_ERROR hook (Section 9.2) |
+
+**Note:** `on_response_start` and `on_response_end` are internal provider
+lifecycle callbacks used for audio routing and session bookkeeping. They do not
+map to hooks because they don't represent events the integrator needs to act on.
+Integrators who need response-level tracking SHOULD use AFTER_BROADCAST on the
+transcription events emitted by the provider.
+
+**Text injection** refers to programmatically inserting text into a realtime
+session's conversation context (e.g., system messages, tool results, or context
+updates) rather than sending audio. This is provider-specific: for OpenAI
+Realtime, this maps to `conversation.item.create` with text content; for Gemini
+Live, this maps to injecting text turns. The ON_REALTIME_TEXT_INJECTED hook fires
+after such an injection, allowing integrators to log or react to context changes.
 
 **RealtimeAudioTransport interface:**
 
@@ -2052,11 +2722,14 @@ configured as an optional preprocessor. In this mode the pipeline sits between
 the transport and the provider:
 
 ```
-Client → Transport → [Denoiser] → [Diarization] → Provider (Gemini/OpenAI)
+Client → Transport → [Resampler] → [AEC] → [AGC] → [Denoiser] → [Diarization] → Provider
 ```
 
 Typical use cases:
 
+- **Resampling** — normalize format for the provider's expected input
+- **AEC** — prevent the provider from hearing its own output
+- **AGC** — consistent volume for the provider's speech detection
 - **Denoising** — cleaner audio improves AI recognition accuracy
 - **Diarization** — identify which speaker is talking in multi-party calls
 - **Audio level monitoring** (via optional VAD) — for UI indicators
@@ -2087,20 +2760,71 @@ Voice-specific hooks allow integrators to customize the voice pipeline:
 | ON_VAD_SILENCE | ASYNC | Trigger silence timeout | Audio Pipeline (VAD) |
 | ON_VAD_AUDIO_LEVEL | ASYNC | Audio level visualization | Audio Pipeline (VAD) |
 | ON_SPEAKER_CHANGE | ASYNC | Identify speaker switch | Audio Pipeline (Diarization) |
+| ON_DTMF | ASYNC | IVR navigation, call transfer | Audio Pipeline (DTMF Detector) |
+| ON_TURN_COMPLETE | ASYNC | Log turn-taking metrics | Audio Pipeline (Turn Detector) |
+| ON_TURN_INCOMPLETE | ASYNC | Debug turn detection | Audio Pipeline (Turn Detector) |
+| ON_BACKCHANNEL | ASYNC | Track user engagement | Audio Pipeline (Backchannel Detector) |
+| ON_RECORDING_STARTED | ASYNC | Notify participants of recording | Audio Pipeline (Recorder) |
+| ON_RECORDING_STOPPED | ASYNC | Store recording reference in timeline | Audio Pipeline (Recorder) |
 | ON_REALTIME_TOOL_CALL | SYNC | Execute tool and return result | Realtime Provider |
 | ON_REALTIME_TEXT_INJECTED | ASYNC | Log text injections | Realtime Voice Channel |
 
-### 12.6 Barge-In
+### 12.6 Barge-In and Interruption Handling
 
-Barge-in occurs when a user speaks while TTS is playing. When detected:
+Barge-in occurs when a user speaks while TTS is playing. The framework supports
+configurable interruption strategies (Section 12.3.13 — InterruptionConfig)
+ranging from immediate cancellation to semantic backchannel detection.
+
+**Default behavior (CONFIRMED strategy):**
 
 1. The VoiceBackend fires `on_barge_in` callback.
-2. Current TTS playback is cancelled (if backend supports INTERRUPTION).
-3. The Voice Channel fires ON_BARGE_IN hook.
-4. The user's new speech is processed normally.
+2. The pipeline checks `InterruptionConfig.strategy`:
+   - IMMEDIATE: Cancel TTS immediately.
+   - CONFIRMED: Wait for `min_speech_ms` of sustained speech.
+   - SEMANTIC: Run BackchannelDetector to classify.
+   - DISABLED: Ignore, queue speech for after TTS completes.
+3. If interruption is confirmed:
+   a. Cancel current TTS playback (if backend supports INTERRUPTION).
+   b. If `flush_partial_tts = true`: discard unplayed audio buffer.
+   c. If `keep_partial_transcript = true`: store partial bot response in timeline
+      with `metadata.interrupted = true`.
+   d. Fire ON_BARGE_IN hook.
+4. If classified as backchannel:
+   a. Fire ON_BACKCHANNEL hook.
+   b. TTS continues uninterrupted.
+5. The user's speech is processed normally through the audio pipeline.
 
 Implementations SHOULD support a configurable `barge_in_threshold_ms` — minimum
-TTS playback duration before barge-in detection activates.
+TTS playback duration before barge-in detection activates. This prevents
+interruption at the very start of a response.
+
+**Relationship between VoiceBackend barge-in and VAD:**
+
+`VoiceBackend.on_barge_in` and VAD are two separate detection systems:
+
+- **`on_barge_in`** is a transport-level signal — the backend detects that the
+  client is sending audio while outbound audio is playing. It fires immediately
+  and is the entry point for the interruption strategy. Not all backends support
+  this (requires `BARGE_IN` capability).
+- **VAD** is a pipeline-level signal — it detects speech activity in the audio
+  stream regardless of whether TTS is playing. VAD continues to process inbound
+  frames during TTS playback.
+
+When both are active during TTS playback:
+
+1. `on_barge_in` fires first (transport-level, lowest latency).
+2. The interruption strategy determines whether to act on the barge-in.
+3. Meanwhile, VAD processes the same audio through the pipeline normally.
+4. If the interruption is confirmed, the voice channel cancels TTS and the VAD's
+   speech segment is routed to STT as usual.
+5. If the interruption is rejected (backchannel or too short), the VAD speech
+   segment is still captured but the pipeline SHOULD discard it (or queue it
+   if `InterruptionStrategy = DISABLED`).
+
+When the backend does NOT support `BARGE_IN`, the pipeline MAY use VAD's
+`SPEECH_START` event during TTS playback as a fallback barge-in trigger. In this
+mode, the VAD effectively replaces the transport-level detection, but with higher
+latency (audio must traverse the full inbound pipeline before VAD fires).
 
 ---
 
@@ -2275,9 +2999,11 @@ roomkit
 ├── roomkit.channels.ai
 ├── roomkit.channels.whatsapp
 ├── roomkit.channels.voice
+├── roomkit.channels.voice.pipeline
 ├── roomkit.providers.sms.*
 ├── roomkit.providers.email.*
 ├── roomkit.providers.ai.*
+├── roomkit.providers.voice.*
 ├── roomkit.identity
 └── roomkit.store
 ```
@@ -2307,7 +3033,31 @@ Each log entry SHOULD include structured context:
 }
 ```
 
-### 15.4 Framework Events for Monitoring
+### 15.4 Voice Pipeline Observability
+
+Voice pipeline stages SHOULD emit structured metrics for monitoring and
+debugging. The following metrics are RECOMMENDED:
+
+| Metric | Source | Description |
+|---|---|---|
+| `pipeline.stage_latency_ms` | All stages | Processing time per stage per frame |
+| `pipeline.stt_latency_ms` | STTProvider | Time from speech end to final transcript |
+| `pipeline.tts_latency_ms` | TTSProvider | Time from text to first audio frame |
+| `pipeline.vad_speech_duration_ms` | VAD | Duration of detected speech segments |
+| `pipeline.vad_false_positive_rate` | VAD | Speech detections that produced no transcript |
+| `pipeline.aec_convergence` | AEC | Echo cancellation effectiveness (0.0 to 1.0) |
+| `pipeline.agc_gain_db` | AGC | Current applied gain |
+| `pipeline.dtmf_detected` | DTMF | Count of DTMF digits detected per session |
+| `pipeline.recording_duration_s` | Recorder | Active recording duration |
+| `pipeline.turn_detector_latency_ms` | TurnDetector | Time to reach turn decision |
+| `pipeline.backchannel_rate` | BackchannelDetector | Ratio of backchannels to interruptions |
+| `pipeline.barge_in_count` | InterruptionConfig | Count of barge-in events per session |
+
+Voice pipeline logs SHOULD use the `roomkit.channels.voice.pipeline` logger
+with the following structured context fields: `session_id`, `room_id`,
+`stage_name`, `latency_ms`, and `frame_timestamp_ms`.
+
+### 15.5 Framework Events for Monitoring
 
 See Section 8.2 for the complete list of framework events. These MUST be
 emittable and subscribable by integrators for monitoring dashboards, alerting,
@@ -2462,6 +3212,48 @@ should live in the integration surface layer.
 - The chain depth limit prevents resource exhaustion from unbounded AI ↔ AI loops.
 - Implementations MUST enforce the limit and MUST NOT allow it to be disabled.
 
+### 17.6 Voice and Audio Security
+
+**Recording consent and compliance:**
+
+- Implementations that support audio recording MUST provide a mechanism for
+  recording consent management. In many jurisdictions (TCPA, GDPR, PIPEDA),
+  recording requires explicit consent from all parties.
+- The framework SHOULD fire ON_RECORDING_STARTED before any audio is captured,
+  giving integrators the opportunity to notify participants.
+- Implementations SHOULD support configurable consent modes: `SINGLE_PARTY`
+  (one party consents), `ALL_PARTY` (all parties must consent), or `NONE`
+  (integrator manages consent externally).
+
+**Audio data handling:**
+
+- Audio recordings MUST be encrypted at rest. Implementations MUST support
+  configurable encryption for stored recordings.
+- Audio streams in transit SHOULD use encrypted transport (TLS, SRTP, DTLS).
+- STT and TTS provider calls transmit audio to external services.
+  Implementations SHOULD document which providers receive audio data and
+  SHOULD support configurable provider selection based on data residency
+  requirements.
+- Voice session metadata (transcripts, recordings, DTMF digits) MUST follow
+  the same data retention and redaction policies as other room events.
+
+**DTMF sensitivity:**
+
+- DTMF digits MAY contain sensitive data (credit card numbers, PINs, account
+  numbers). Implementations MUST support configurable DTMF redaction — the
+  ability to mask DTMF digits in stored events and logs (e.g., replacing
+  "4111111111111111" with "4111********1111").
+- When DTMF redaction is enabled, raw digits MUST NOT appear in `raw_payload`,
+  transcripts, or log output.
+
+**Voice model privacy:**
+
+- Audio recordings and transcripts MUST NOT be used for model training without
+  explicit integrator and end-user consent.
+- Implementations SHOULD provide a configuration flag to disable any data
+  sharing with STT/TTS/speech-to-speech providers beyond what is required for
+  the API call.
+
 ---
 
 ## 18. Design Principles
@@ -2516,10 +3308,11 @@ These principles define the conceptual architecture of RoomKit:
 16. **Framework-agnostic core.** No web framework dependency. Integration surfaces
     are thin wrappers. Any language, any framework.
 
-17. **Audio pipeline is transport-independent.** Denoiser, VAD, and diarization
-    run as a pluggable pipeline between transport and conversation engine. The
-    transport delivers raw frames. The pipeline processes them. Same pattern as
-    text hooks: preprocessing inbound, postprocessing outbound.
+17. **Audio pipeline is transport-independent.** Resampler, AEC, AGC, denoiser,
+    VAD, diarization, DTMF, turn detection, and recording run as a pluggable
+    pipeline between transport and conversation engine. The transport delivers
+    raw frames. The pipeline processes them. Stages are optional and composable.
+    Same pattern as text hooks: preprocessing inbound, postprocessing outbound.
 
 ---
 
@@ -2588,18 +3381,26 @@ A Level 2 implementation MAY additionally support:
 A Level 3 implementation MAY additionally support:
 
 - Audio Processing Pipeline with:
-  - VADProvider interface with at least one implementation (e.g., Silero)
-  - DenoiserProvider interface (OPTIONAL, at least one implementation e.g., sherpa-onnx)
+  - AudioFrame and AudioFormat data models
+  - AudioPipelineConfig with pipeline format contract
+  - ResamplerConfig (RECOMMENDED)
+  - VADProvider interface with at least one implementation (e.g., Silero) — REQUIRED for VoiceChannel, OPTIONAL for RealtimeVoiceChannel
+  - DenoiserProvider interface (OPTIONAL, e.g., sherpa-onnx)
+  - AECProvider interface (OPTIONAL, RECOMMENDED for non-WebRTC transports)
+  - AGCProvider interface (OPTIONAL, built-in implementation REQUIRED)
+  - DTMFDetector interface (OPTIONAL, RECOMMENDED for SIP/PSTN)
   - DiarizationProvider interface (OPTIONAL)
+  - TurnDetector interface (OPTIONAL)
+  - BackchannelDetector interface (OPTIONAL)
+  - AudioRecorder interface (OPTIONAL, RECOMMENDED for regulated industries)
   - AudioPostProcessor interface (OPTIONAL)
-  - AudioFrame data model
-  - AudioPipelineConfig
+  - InterruptionConfig
 - Voice channel (STT/TTS pipeline)
 - VoiceBackend interface with at least one implementation
 - STTProvider interface with at least one implementation
 - TTSProvider interface with at least one implementation
-- Voice hooks (ON_SPEECH_START through ON_SPEAKER_CHANGE)
-- Barge-in detection
+- Voice hooks (ON_SPEECH_START through ON_RECORDING_STOPPED)
+- Barge-in and interruption handling (InterruptionStrategy)
 - Realtime Voice channel (speech-to-speech)
 - RealtimeVoiceProvider interface
 - RealtimeAudioTransport interface
@@ -2865,8 +3666,8 @@ VoiceChannel
 │   ├── bind_session(session, room_id, binding)
 │   └── unbind_session(session)
 └── delivery:
-    ├── AudioContent → [postprocessors] → stream directly
-    ├── TextContent → synthesize via TTS → [postprocessors] → stream
+    ├── AudioContent → [postprocessors] → [recorder] → [AEC ref] → [resampler] → stream
+    ├── TextContent → TTS → [postprocessors] → [recorder] → [AEC ref] → [resampler] → stream
     └── Other → error
 ```
 
