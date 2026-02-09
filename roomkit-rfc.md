@@ -834,6 +834,13 @@ Channel (interface)
 ├── on_event(event: RoomEvent, binding: ChannelBinding, context: RoomContext) → ChannelOutput
 │       # React to a room event (default: no-op)
 │
+├── supports_streaming_delivery: bool (default false)
+│       # Whether this channel accepts streaming text delivery
+│
+├── deliver_stream(text_stream, event, binding, context) → ChannelOutput
+│       # Deliver streaming text to this channel
+│       # Default: accumulate text, deliver as complete event via deliver()
+│
 ├── capabilities() → ChannelCapabilities
 │       # Declare supported features
 │
@@ -849,6 +856,9 @@ Channel (interface)
 ```
 ChannelOutput
 ├── events: list<RoomEvent>                 # Response events (subject to permissions)
+├── response_stream: async_iterator<str>    # Streaming response (mutually exclusive with events)
+│       # When set, framework pipes stream to streaming-capable channels,
+│       # accumulates full text, stores event, and re-broadcasts to others.
 ├── tasks: list<Task>                       # Side effects (always allowed)
 ├── observations: list<Observation>         # Side effects (always allowed)
 └── metadata_updates: map<string, any>      # Room metadata to update
@@ -994,9 +1004,14 @@ including AI.
 AIProvider (interface)
 ├── name: string                            # Provider name (e.g., "anthropic", "openai")
 ├── model_name: string                      # Model identifier (e.g., "claude-sonnet-4-5")
+├── supports_streaming: bool (default false) # Whether provider supports streaming generation
 │
-└── generate(messages: list<AIMessage>, context: AIContext) → AIResponse
-        # Generate a response given conversation history and context
+├── generate(messages: list<AIMessage>, context: AIContext) → AIResponse
+│       # Generate a response given conversation history and context
+│
+└── generate_stream(context: AIContext) → async_iterator<string>
+        # Yield text deltas as they arrive (requires supports_streaming = true)
+        # Used by VoiceChannel for streaming AI → TTS (Section 12.2)
 
 AIMessage
 ├── role: string                            # "user", "assistant", "system"
@@ -1704,7 +1719,7 @@ Architecture 2: Speech-to-Speech (RealtimeVoiceChannel)
 
 | Criterion | VoiceChannel (STT/TTS) | RealtimeVoiceChannel (Speech-to-Speech) |
 |---|---|---|
-| **Latency** | Higher — audio → STT → LLM → TTS → audio | Lower — end-to-end streaming, no text roundtrip |
+| **Latency** | Moderate — with streaming AI→TTS ~500-800ms TTFA; without streaming ~2-3s (full LLM response before TTS) | Lower — end-to-end streaming, no text roundtrip |
 | **Control** | Full — choose STT, LLM, and TTS independently | Limited — provider bundles recognition + generation |
 | **Text access** | Always — every utterance becomes a RoomEvent | Optional — transcriptions emitted if configured |
 | **Multi-channel** | Native — text responses route to any channel | Requires transcription to feed non-audio channels |
@@ -1830,15 +1845,26 @@ TranscriptionResult
 ```
 TTSProvider (interface)
 ├── name: string
+├── supports_streaming_input: bool (default false)
+│       # Whether this TTS accepts streaming text input
 ├── synthesize(text, voice: string | null) → AudioContent
 │       # Returns AudioContent (Section 5) with url, mime_type, transcript, duration_seconds
-└── synthesize_stream(text, voice: string | null) → async_iterator<AudioChunk>
+├── synthesize_stream(text, voice: string | null) → async_iterator<AudioChunk>
+│       # Stream audio from a complete text string
+└── synthesize_stream_input(text_stream, voice: string | null) → async_iterator<AudioChunk>
+        # Stream audio from streaming text chunks (requires supports_streaming_input = true)
+        # Accepts an async iterator of text strings (e.g., sentences from a sentence splitter)
+        # Used by VoiceChannel for streaming AI → TTS
 ```
 
 `synthesize()` returns an `AudioContent` (Section 5) rather than raw bytes.
 This allows the result to carry metadata (transcript, duration, MIME type) and
 supports both inline data URLs and remote storage URLs. For streaming,
 `synthesize_stream()` yields `AudioChunk` objects as they become available.
+`synthesize_stream_input()` is the streaming-input variant: it accepts an async
+iterator of text chunks (typically sentences) and yields audio as each chunk is
+synthesized. This enables the streaming AI → TTS pipeline where LLM tokens are
+buffered into sentences and fed to TTS incrementally.
 
 **Audio processing flow:**
 
@@ -1854,14 +1880,43 @@ supports both inline data URLs and remote storage URLs. For streaming,
 7. If TurnDetector configured → evaluate turn completion
    ├── Complete → Create RoomEvent
    └── Incomplete → accumulate, wait for next speech
+
+--- Standard path (non-streaming) ---
 8. Route through normal inbound pipeline
 9. Room broadcasts → AI or other channels respond
 10. Response event arrives at Voice channel via deliver()
-11. If TextContent → Fire BEFORE_TTS hook → TTS synthesizes → audio frames
-12. Audio frames → [PostProcessors] → [Recorder] → [AEC ref] → [Resampler] → client
-13. If AudioContent → [PostProcessors] → [Recorder] → [AEC ref] → [Resampler] → stream
+11. If TextContent → Fire BEFORE_TTS hook → TTS synthesizes → AudioChunk stream
+
+--- Streaming AI → TTS path (framework-native, when AIProvider supports streaming) ---
+8s. Route through normal inbound pipeline → Room broadcasts to AIChannel
+9s. AIChannel.on_event() returns ChannelOutput(response_stream=generate_stream())
+10s. Framework detects response_stream in broadcast result
+11s. Framework finds streaming delivery targets (channels with supports_streaming_delivery)
+12s. Framework pipes stream → VoiceChannel.deliver_stream():
+     a. Sentence splitter buffers tokens → yields at sentence boundaries (.!?)
+        (min_chunk_chars threshold prevents very short TTS fragments)
+     b. tts.synthesize_stream_input(sentences) → AudioChunk stream (~200ms TTS TTFB)
+        First audio reaches speaker ~500-800ms after speech end (vs ~2-3s standard)
+13s. Framework accumulates full text from stream → stores AI response event
+14s. Framework re-broadcasts complete event to non-streaming channels (exclude_delivery
+     skips channels that already received streaming content)
+15s. Fire AFTER_TTS hook (BEFORE_TTS skipped — cannot block mid-stream)
+
+--- Common outbound path ---
+12. AudioChunk stream → [PostProcessors] → [Recorder] → [Resampler] → Transport
+    (TTS emits variable-size AudioChunks; pipeline stages that require fixed-size
+     AudioFrames MUST buffer and re-chunk the stream internally)
+13. AEC reference: Transport feeds AEC.feed_reference() at playback time (local hw)
+    or pipeline feeds it in the outbound path (network transports) — see 12.3.4
 14. If barge-in detected → InterruptionConfig determines response
 ```
+
+The streaming path flows through the framework's normal routing infrastructure.
+AIChannel returns a streaming handle, the framework pipes it to streaming-capable
+transport channels, accumulates the full text, stores the complete event, and
+re-broadcasts to non-streaming channels. This preserves multi-channel delivery,
+hooks, tool calling (falls back to non-streaming), and keeps VoiceChannel as
+pure transport with no AIProvider reference.
 
 ### 12.3 Audio Processing Pipeline
 
@@ -1904,11 +1959,15 @@ Transport → [Resampler] → [Recorder ◉] → [AEC] → [AGC] → [Denoiser] 
 **Outbound (postprocessing):**
 
 ```
-TTS / Speech-to-Speech Provider → [PostProcessors] → [Recorder ◉] → [AEC ref] → [Resampler] → Transport
-                                   (normalize, etc.)  (capture final) (feed AEC)  (match format)
+TTS / Speech-to-Speech Provider → [PostProcessors] → [Recorder ◉] → [AEC ref †] → [Resampler] → Transport
+                                   (normalize, etc.)  (capture final)  (feed AEC)   (match format)
 
 ◉ Recorder taps outbound stream after postprocessors (what the user actually hears).
-  AEC reference feed occurs after recorder to ensure echo subtraction uses the final signal.
+
+† AEC reference feeding: for network transports, the pipeline feeds AEC.feed_reference() here.
+  For local hardware transports, the transport itself feeds reference from the speaker output
+  callback for precise time alignment (see Section 12.3.4). The pipeline skips this step when
+  the transport handles AEC reference feeding directly.
 ```
 
 **Pipeline symmetry with text hooks:**
@@ -2068,22 +2127,53 @@ AECProvider (interface)
 **Integration with outbound path:**
 
 The AEC requires a reference signal — the audio being played back to the user.
-The pipeline MUST feed outbound audio frames to `AECProvider.feed_reference()`
-before they are sent to the transport. The AEC provider manages the reference
-internally, so `process()` operates on the inbound frame alone — this avoids
-callers having to track and pass the reference signal. The bidirectional
-dependency is:
+The AEC provider manages the reference internally via `feed_reference()`, so
+`process()` operates on the inbound frame alone — this avoids callers having to
+track and pass the reference signal. The bidirectional dependency is:
 
 ```
-Outbound: TTS → [postprocessors] → AEC.feed_reference(frame) → [resampler] → Transport
-Inbound:  Transport → [resampler] → AEC.process(frame) → [AGC] → ...
+Reference: Speaker output → AEC.feed_reference(frame)
+Inbound:   Transport → [resampler] → AEC.process(frame) → [AGC] → ...
 ```
+
+**Reference feeding strategies:**
+
+Implementations MUST call `AECProvider.feed_reference()` with the outbound audio.
+The point at which this call is made has a critical impact on echo cancellation
+quality. Two strategies are defined:
+
+1. **Transport-level feeding (RECOMMENDED for local hardware).** When the
+   transport has direct access to the playback hardware (e.g., a local speaker
+   via PortAudio), the transport SHOULD feed reference audio from within the
+   speaker output callback — at the exact moment audio is written to the DAC.
+   This provides the best time alignment between reference and echo. The
+   `VoiceBackend` accepts an optional `AECProvider` and feeds reference
+   internally; the pipeline's outbound path does not call `feed_reference()`.
+
+2. **Pipeline-level feeding (for network transports).** When the transport sends
+   audio over a network (WebRTC, SIP, WebSocket), the pipeline's outbound path
+   calls `AECProvider.feed_reference()` after postprocessors and recorder:
+
+   ```
+   TTS → [postprocessors] → [recorder] → AEC.feed_reference(frame) → [resampler] → Transport
+   ```
+
+   In this scenario the remote client's playback latency is handled by the AEC
+   provider's internal ring buffer (e.g., SpeexDSP's split API).
+
+Implementations MUST NOT feed reference from both levels simultaneously for the
+same AEC instance — this would double-feed and corrupt the adaptive filter.
 
 **Important considerations:**
 
 - AEC effectiveness depends on accurate time alignment between the reference
-  signal and the echo in the inbound stream. Implementations MUST account for
-  playback latency.
+  signal and the echo in the inbound stream. Transport-level feeding provides
+  the best alignment for local hardware; pipeline-level feeding is sufficient
+  for network transports where latency is inherently variable.
+- The reference and capture (inbound) audio MUST have the same sample rate and
+  frame size. When the transport uses different sample rates for input and
+  output, the implementation MUST either resample the reference to match the
+  inbound rate, or require matching rates when AEC is enabled.
 - When the VoiceBackend declares `NATIVE_AEC` capability, the pipeline MUST skip
   the AEC stage automatically, even if an AECProvider is configured, to avoid
   double processing.
@@ -2632,19 +2722,25 @@ Check InterruptionStrategy:
        └── Fire ON_SPEAKER_CHANGE hook
 ```
 
-**Outbound flow (per audio frame):**
+**Outbound flow (per audio frame / chunk):**
 
 ```
-1. TTS or speech-to-speech provider emits AudioFrame
+1. TTS emits AudioChunk stream (variable-size); speech-to-speech emits AudioFrame
+   (Stages that require fixed-size AudioFrames MUST buffer and re-chunk internally)
 2. FOR EACH postprocessor in order:
    └── frame = postprocessor.process(frame)
 3. IF recorder configured:
    └── recorder.record_outbound(handle, frame)
-4. IF aec configured:
+4. IF aec configured AND transport does NOT handle AEC reference feeding:
    └── aec.feed_reference(frame)
+   (When the transport feeds reference from its speaker output callback — e.g.,
+    local audio hardware — the pipeline MUST skip this step to avoid double-feeding.
+    See Section 12.3.4 for reference feeding strategies.)
 5. IF resampler configured:
    └── frame = resample(frame, transport_format)
 6. Transport sends processed frame to client
+   (For local hardware transports, the speaker output callback feeds
+    aec.feed_reference() here, time-aligned with actual playback.)
 ```
 
 #### 12.3.15 Pipeline Debug Taps
@@ -3798,13 +3894,24 @@ VoiceChannel
 │   ├── streaming: bool (default true)
 │   ├── enable_barge_in: bool (default false)
 │   └── barge_in_threshold_ms: int (default 500)
+├── streaming_delivery:
+│   ├── supports_streaming_delivery: bool
+│   │   # True when TTS supports streaming input AND backend is configured
+│   └── deliver_stream(text_stream, event, binding, context) → ChannelOutput
+│       # Pipes text stream → sentence_splitter → synthesize_stream_input → outbound → transport
+│       # Fires AFTER_TTS hook after stream completes
 ├── session_management:
 │   ├── bind_session(session, room_id, binding)
 │   └── unbind_session(session)
 └── delivery:
-    ├── AudioContent → [postprocessors] → [recorder] → [AEC ref] → [resampler] → stream
-    ├── TextContent → TTS → [postprocessors] → [recorder] → [AEC ref] → [resampler] → stream
-    └── Other → error
+    ├── Standard path:
+    │   ├── AudioContent → [postprocessors] → [recorder] → [resampler] → transport → [AEC ref †]
+    │   ├── TextContent → TTS → AudioChunk stream → outbound pipeline → transport → [AEC ref †]
+    │   └── Other → error
+    ├── Streaming AI → TTS path (framework-native):
+    │   └── Framework pipes AIChannel.response_stream → deliver_stream()
+    │       → sentence_splitter → synthesize_stream_input() → outbound pipeline → transport
+    └── † AEC ref fed at transport level (local hw) or pipeline level (network) — see 12.3.4
 ```
 
 ### A.11 Realtime Voice Channel
