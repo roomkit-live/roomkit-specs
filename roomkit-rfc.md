@@ -6,8 +6,8 @@
 | **Author** | Sylvain Boily |
 | **Contributions** | TchatNSign, Angany AI |
 | **Created** | 2026-01-27 |
-| **Last Updated** | 2026-02-06 |
-| **Supersedes** | roomkit-rfc.md (v12 Draft, Audio Pipeline v1) |
+| **Last Updated** | 2026-02-10 |
+| **Supersedes** | v13 Draft |
 
 ---
 
@@ -82,6 +82,7 @@ interpreted as described in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
 | **DTMF** | Dual-Tone Multi-Frequency — telephone keypad tones used for IVR navigation and call control. |
 | **Turn Detection** | The process of determining whether a speaker has finished their conversational turn, using acoustic and/or semantic signals. |
 | **Backchannel** | Short verbal acknowledgments ("mmhmm", "ok", "yes") that signal attention without requesting a turn change. |
+| **Protocol Trace** | An immutable record of a transport-level protocol exchange (e.g., SIP INVITE, 200 OK, BYE) emitted by a channel for observability and debugging. |
 
 ### 1.3 Notation
 
@@ -427,13 +428,21 @@ EventSource
 ├── direction: ChannelDirection             # INBOUND or OUTBOUND
 ├── participant_id: string | null           # Which human, if applicable
 ├── external_id: string | null              # External system reference
-├── provider: string | null                 # Provider name (twilio, anthropic, etc.)
+├── provider: string | null                 # Provider/backend name for event attribution
 ├── raw_payload: map<string, any>           # Original provider payload — never lost
 └── provider_message_id: string | null      # Provider's message identifier
 ```
 
 Implementations MUST preserve `raw_payload` unmodified. This is the audit trail
 and the source of truth for provider-specific data.
+
+**EventSource.provider population:** Every channel MUST populate the `provider`
+field when constructing an EventSource. The value SHOULD be the name of the
+underlying provider or backend — for example, `"SIP"` for a SIP voice backend,
+`"SIPRealtimeTransport"` for a SIP realtime transport, `"TwilioSMS"` for an SMS
+provider. The channel SHOULD expose a `provider_name` property that returns the
+appropriate name. System-generated events (`channel_id="system"`) MAY leave
+`provider` as null.
 
 ### 5.3 Event Content
 
@@ -791,7 +800,29 @@ InboundMessage
 ├── timestamp: datetime | null              # When originally sent
 ├── idempotency_key: string | null          # Duplicate prevention
 ├── room_id: string | null                  # Pre-determined room (if known)
+├── session: VoiceSession | null            # Voice session to connect after processing
 └── metadata: map<string, any>              # Extra data
+```
+
+**Unified voice inbound:** When the `session` field is set, `process_inbound()`
+connects the voice session to the channel after successful hook processing. This
+allows voice calls and text messages to flow through the same entry point, same
+hooks, and same pipeline. See Section 10.1 for the additional step.
+
+A convenience helper `parse_voice_session(session, channel_id)` SHOULD be
+provided to convert a `VoiceSession` into an `InboundMessage` with a
+`SystemContent(code="session_started")` body and the session pre-attached:
+
+```
+parse_voice_session(session: VoiceSession, channel_id: string) → InboundMessage
+    # Returns InboundMessage with:
+    #   channel_id = channel_id
+    #   channel_type = VOICE or REALTIME_VOICE
+    #   sender_id = session.participant_id
+    #   content = SystemContent(code="session_started", data={caller, callee, ...})
+    #   session = session
+    #   room_id = session.room_id (if set)
+    #   metadata = session.metadata
 ```
 
 ### 5.13 Delivery Result
@@ -809,6 +840,37 @@ DeliveryError
 ├── message: string                         # Human-readable description
 └── retryable: bool                         # Whether a retry may succeed
 ```
+
+### 5.14 Protocol Trace
+
+An immutable record of a transport-level protocol exchange, used for
+observability and debugging. Channels that interact with signaling protocols
+(SIP, RTP, SMTP, etc.) SHOULD emit traces for significant protocol events.
+
+```
+ProtocolTrace (frozen)
+├── channel_id: string                      # Which channel emitted this trace
+├── direction: string                       # "inbound" or "outbound"
+├── protocol: string                        # Protocol name ("sip", "rtp", "smtp", etc.)
+├── summary: string                         # Human-readable summary (e.g., "INVITE from +1555...")
+├── raw: bytes | string | null              # Full serialized protocol message (e.g., raw SIP request)
+├── metadata: map<string, any>              # Protocol-specific data (call_id, codec, etc.)
+├── session_id: string | null               # Voice session identifier (if applicable)
+├── room_id: string | null                  # Room identifier (if known at emission time)
+└── timestamp: datetime                     # When the trace was emitted (UTC, auto-populated)
+```
+
+**Immutability:** ProtocolTrace MUST be frozen (immutable) after construction.
+
+**Raw payloads:** When available, the `raw` field SHOULD contain the complete
+serialized protocol message. For SIP, this is the full SIP request/response as
+returned by the SIP library's `serialize()` method. For protocols where the raw
+payload is not available (e.g., outbound requests where the library does not
+expose the serialized form), `raw` MAY be null.
+
+**Trace emission and routing:** See Section 15.6 for the trace emission
+infrastructure, including channel-level APIs, framework hook wiring, and
+pre-room buffering.
 
 ---
 
@@ -840,6 +902,14 @@ Channel (interface)
 ├── deliver_stream(text_stream, event, binding, context) → ChannelOutput
 │       # Deliver streaming text to this channel
 │       # Default: accumulate text, deliver as complete event via deliver()
+│
+├── connect_session(session: VoiceSession, room_id: string, binding: ChannelBinding) → void
+│       # Connect a voice session to this channel (voice/realtime channels only)
+│       # Default: no-op for non-voice channels
+│
+├── provider_name: string | null
+│       # Provider or backend name for event attribution (see EventSource.provider)
+│       # Default: provider.name if provider has a name attribute, else null
 │
 ├── capabilities() → ChannelCapabilities
 │       # Declare supported features
@@ -1274,6 +1344,7 @@ Hooks MAY be registered globally (apply to all rooms) or per-room.
 | ON_RECORDING_STOPPED | ASYNC | Audio recording stopped, result available |
 | ON_REALTIME_TOOL_CALL | SYNC | Speech-to-speech API requests a tool call |
 | ON_REALTIME_TEXT_INJECTED | ASYNC | Text injected into realtime session |
+| ON_PROTOCOL_TRACE | ASYNC | Transport-level protocol trace emitted (SIP, RTP, etc.) |
 
 ### 9.3 Hook Execution Modes
 
@@ -1427,6 +1498,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     ├── Store event with status=DELIVERED
     ├── Deliver any injected events
     ├── Get source binding
+    ├── IF message.session is set:
+    │   └── Call channel.connect_session(session, room_id, binding)
+    │       # Connects the voice session (starts realtime AI, etc.)
     └── Call broadcast(event, source_binding, context)
 
 12. REENTRY DRAIN LOOP
@@ -1760,6 +1834,9 @@ VoiceBackend (interface)
 │
 │   # Barge-in (transport-level detection):
 ├── on_barge_in(callback) → void            # Client audio detected during playback
+│
+│   # Protocol tracing:
+├── set_trace_emitter(emitter | null) → void  # Set callback for emitting ProtocolTraces
 │
 ├── capabilities() → VoiceCapability        # What the backend supports
 └── close() → void
@@ -2921,6 +2998,7 @@ RealtimeAudioTransport (interface)
 ├── send_message(session, message) → void   # Send control/data message to client
 ├── on_audio_received(callback) → void      # Push-based audio reception
 ├── on_client_disconnected(callback) → void
+├── set_trace_emitter(emitter | null) → void  # Set callback for emitting ProtocolTraces
 ├── disconnect(session) → void              # Disconnect a client session
 └── close() → void                          # Release resources
 ```
@@ -2999,6 +3077,7 @@ Voice-specific hooks allow integrators to customize the voice pipeline:
 | ON_RECORDING_STOPPED | ASYNC | Store recording reference in timeline | Audio Pipeline (Recorder) |
 | ON_REALTIME_TOOL_CALL | SYNC | Execute tool and return result | Realtime Provider |
 | ON_REALTIME_TEXT_INJECTED | ASYNC | Log text injections | Realtime Voice Channel |
+| ON_PROTOCOL_TRACE | ASYNC | Log/inspect transport protocol traces (SIP, RTP) | Channel (via emit_trace) |
 
 ### 12.6 Barge-In and Interruption Handling
 
@@ -3294,6 +3373,97 @@ with the following structured context fields: `session_id`, `room_id`,
 See Section 8.2 for the complete list of framework events. These MUST be
 emittable and subscribable by integrators for monitoring dashboards, alerting,
 and integration purposes.
+
+### 15.6 Protocol Trace Infrastructure
+
+Channels that interact with transport-level protocols (SIP, RTP, SMTP, etc.)
+SHOULD emit `ProtocolTrace` records (Section 5.14) for significant protocol
+events. The framework provides a layered trace infrastructure that routes these
+traces to integrator-registered hooks at the room level.
+
+**Channel-level trace API:**
+
+```
+Channel (trace extensions)
+├── emit_trace(trace: ProtocolTrace) → void
+│       # Emit a trace to all registered handlers
+│       # Called by backend/transport implementations
+│
+├── on_trace(callback, protocols: list<string> | null) → void
+│       # Register a user-level trace callback
+│       # If protocols is set, only traces matching the filter are forwarded
+│
+├── trace_enabled: bool (read-only)
+│       # True if any trace handler is registered (user or framework)
+│
+└── resolve_trace_room(session_id: string | null) → string | null
+        # Resolve a room_id from a session_id via session bindings
+        # Default: null (override in voice channels)
+```
+
+`emit_trace()` invokes all registered handlers: user-level callbacks (registered
+via `on_trace()`), and the framework handler (set during `register_channel()`).
+Handlers MAY be sync or async — async handlers MUST be scheduled as tasks and
+MUST NOT block the caller.
+
+**Trace bridging for voice channels:**
+
+Voice channels (VoiceChannel, RealtimeVoiceChannel) bridge traces from their
+underlying backend or transport to the channel's `emit_trace()`. This is done via
+`set_trace_emitter()` on the backend/transport:
+
+```
+VoiceChannel:
+    # Calls backend.set_trace_emitter(self.emit_trace) when trace is enabled
+
+RealtimeVoiceChannel:
+    # Calls transport.set_trace_emitter(self.emit_trace) when trace is enabled
+    # Transport MAY forward to underlying backend (e.g., SIPRealtimeTransport → SIPVoiceBackend)
+```
+
+The bridge is activated lazily — only when `trace_enabled` becomes true (via
+`on_trace()` registration or framework handler assignment).
+
+**Framework-level trace routing:**
+
+When a channel is registered via `register_channel()`, the framework sets a
+framework trace handler on the channel. This handler:
+
+1. Resolves the `room_id` for the trace:
+   - Uses `trace.room_id` if set directly.
+   - Falls back to `channel.resolve_trace_room(trace.session_id)` to look up
+     the room via session bindings.
+2. Fires the `ON_PROTOCOL_TRACE` hook for the resolved room.
+
+**Pre-room trace buffering:**
+
+Transport-level traces (e.g., SIP INVITE) often fire before `process_inbound()`
+creates the room. Since hooks require a room context, these traces cannot be
+delivered immediately. The framework MUST buffer such traces and replay them
+when the room is created and the channel is attached:
+
+```
+1. Backend emits trace (e.g., SIP INVITE accepted)
+2. Framework handler tries to fire ON_PROTOCOL_TRACE hook
+3. Room does not exist yet → buffer trace in _pending_traces[room_id]
+4. process_inbound() creates room, attaches channel
+5. attach_channel() calls _flush_pending_traces(room_id)
+6. Buffered traces are replayed as ON_PROTOCOL_TRACE hooks
+```
+
+This ensures that no protocol traces are lost, even for the initial signaling
+messages that precede room creation.
+
+**SIP trace examples:**
+
+A SIP voice backend SHOULD emit the following traces:
+
+| Event | Direction | Protocol | Summary | Raw |
+|---|---|---|---|---|
+| Call received | inbound | sip | `INVITE from +1555... to +1666...` | Serialized SIP INVITE request |
+| Call accepted | outbound | sip | `200 OK (codec=16000Hz, ...)` | SDP answer body |
+| Remote hangup | inbound | sip | `BYE from +1555...` | Serialized SIP BYE request |
+| Local hangup | outbound | sip | `BYE (local hangup)` | null (library may not expose serialized form) |
 
 ---
 
@@ -3636,7 +3806,8 @@ A Level 3 implementation MAY additionally support:
 - Realtime Voice channel (speech-to-speech)
 - RealtimeVoiceProvider interface
 - RealtimeAudioTransport interface
-- Realtime voice hooks (ON_REALTIME_TOOL_CALL)
+- Realtime voice hooks (ON_REALTIME_TOOL_CALL, ON_PROTOCOL_TRACE)
+- Protocol trace infrastructure (ProtocolTrace, emit_trace, on_trace, pre-room buffering)
 
 ---
 
@@ -4233,6 +4404,91 @@ Timeline of a room with SMS customer + AI:
    │       └── Updates conversation history (removes or marks deleted)
    │
    └── AFTER_BROADCAST hooks → audit log
+```
+
+### B.8 SIP Call → Unified process_inbound with Protocol Traces
+
+```
+1. Incoming SIP INVITE from +15551234567
+   │
+   ├── SIPVoiceBackend auto-accepts, negotiates G.722 (16 kHz)
+   ├── Creates VoiceSession {id: "sess-42", room_id: "room-abc",
+   │     participant_id: "+15551234567", metadata: {caller, callee, ...}}
+   │
+   ├── Backend emits ProtocolTrace:
+   │     {direction: "inbound", protocol: "sip",
+   │      summary: "INVITE from +1555... to +1666...",
+   │      raw: <serialized SIP INVITE>, session_id: "sess-42",
+   │      room_id: "room-abc"}
+   │
+   ├── Backend emits ProtocolTrace:
+   │     {direction: "outbound", protocol: "sip",
+   │      summary: "200 OK (codec=16000Hz)",
+   │      raw: <SDP answer>, session_id: "sess-42",
+   │      room_id: "room-abc"}
+   │
+   │   Note: Both traces are BUFFERED — room does not exist yet
+   │
+   ▼
+2. on_call callback fires
+   │
+   ├── parse_voice_session(session, channel_id="realtime-voice")
+   │   → InboundMessage {
+   │       channel_id: "realtime-voice",
+   │       channel_type: REALTIME_VOICE,
+   │       sender_id: "+15551234567",
+   │       content: SystemContent{code: "session_started",
+   │                 data: {caller: "+1555...", callee: "+1666..."}},
+   │       session: <VoiceSession>,
+   │       room_id: "room-abc"
+   │     }
+   │
+   ▼
+3. kit.process_inbound(message, room_id="room-abc")
+   │
+   ├── Resolve channel → RealtimeVoiceChannel "realtime-voice"
+   ├── Route to room → create room "room-abc"
+   ├── Attach channel → triggers _flush_pending_traces("room-abc")
+   │   └── BUFFERED TRACES replayed as ON_PROTOCOL_TRACE hooks:
+   │       ├── Hook receives: INVITE trace (with room context)
+   │       └── Hook receives: 200 OK trace (with room context)
+   │
+   ├── channel.handle_inbound() → RoomEvent
+   │     {type: MESSAGE, source: {channel_id: "realtime-voice",
+   │      provider: "SIPRealtimeTransport"}, content: SystemContent{...}}
+   │
+   ├── BEFORE_BROADCAST hooks:
+   │   └── gate_incoming() checks caller against blocklist → ALLOW
+   │
+   ├── Store event (status=DELIVERED)
+   ├── channel.connect_session(session, room_id, binding)
+   │   └── Starts realtime AI session (Gemini Live, OpenAI Realtime, etc.)
+   │
+   ├── Broadcast (no other channels need delivery)
+   └── AFTER_BROADCAST hooks → log with provider="SIPRealtimeTransport"
+   │
+   ▼
+4. Audio flows bidirectionally
+   │
+   ├── Caller speaks → Transport → Provider → AI responds → Transport → Caller
+   ├── ON_TRANSCRIPTION hooks fire for user and AI speech
+   └── Events emitted with source.provider = "SIPRealtimeTransport"
+   │
+   ▼
+5. Remote hangup (SIP BYE)
+   │
+   ├── Backend emits ProtocolTrace:
+   │     {direction: "inbound", protocol: "sip",
+   │      summary: "BYE from +1555...",
+   │      raw: <serialized SIP BYE>, session_id: "sess-42"}
+   │
+   ├── ON_PROTOCOL_TRACE hook fires immediately (room exists)
+   │
+   ├── on_call_disconnected callback:
+   │   ├── realtime.end_session(session)
+   │   └── kit.close_room("room-abc")
+   │
+   └── Room closed, resources released
 ```
 
 ---
