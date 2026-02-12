@@ -1335,6 +1335,8 @@ Hooks MAY be registered globally (apply to all rooms) or per-room.
 | ON_PARTIAL_TRANSCRIPTION | ASYNC | Streaming partial STT result (voice) |
 | ON_VAD_SILENCE | ASYNC | Audio pipeline detected silence (voice) |
 | ON_VAD_AUDIO_LEVEL | ASYNC | Audio pipeline audio level update (voice) |
+| ON_INPUT_AUDIO_LEVEL | ASYNC | Per-frame inbound audio level, throttled to ~10/sec (voice) |
+| ON_OUTPUT_AUDIO_LEVEL | ASYNC | Per-frame outbound audio level, throttled to ~10/sec (voice) |
 | ON_SPEAKER_CHANGE | ASYNC | Audio pipeline detected speaker change (diarization) |
 | ON_DTMF | ASYNC | Audio pipeline detected a DTMF tone |
 | ON_TURN_COMPLETE | ASYNC | Turn detector determined user turn is complete |
@@ -3068,6 +3070,8 @@ Voice-specific hooks allow integrators to customize the voice pipeline:
 | ON_PARTIAL_TRANSCRIPTION | ASYNC | Show real-time captions | STT Provider |
 | ON_VAD_SILENCE | ASYNC | Trigger silence timeout | Audio Pipeline (VAD) |
 | ON_VAD_AUDIO_LEVEL | ASYNC | Audio level visualization | Audio Pipeline (VAD) |
+| ON_INPUT_AUDIO_LEVEL | ASYNC | VU meter for mic input | Audio Pipeline |
+| ON_OUTPUT_AUDIO_LEVEL | ASYNC | VU meter for speaker output | VoiceBackend |
 | ON_SPEAKER_CHANGE | ASYNC | Identify speaker switch | Audio Pipeline (Diarization) |
 | ON_DTMF | ASYNC | IVR navigation, call transfer | Audio Pipeline (DTMF Detector) |
 | ON_TURN_COMPLETE | ASYNC | Log turn-taking metrics | Audio Pipeline (Turn Detector) |
@@ -3078,6 +3082,20 @@ Voice-specific hooks allow integrators to customize the voice pipeline:
 | ON_REALTIME_TOOL_CALL | SYNC | Execute tool and return result | Realtime Provider |
 | ON_REALTIME_TEXT_INJECTED | ASYNC | Log text injections | Realtime Voice Channel |
 | ON_PROTOCOL_TRACE | ASYNC | Log/inspect transport protocol traces (SIP, RTP) | Channel (via emit_trace) |
+
+**Audio level hooks (ON_INPUT_AUDIO_LEVEL, ON_OUTPUT_AUDIO_LEVEL):**
+
+These hooks provide real-time audio level (RMS in dB) for building VU meters and
+audio visualizations. Unlike ON_VAD_AUDIO_LEVEL (which requires VAD and includes
+speech classification), these fire independently of VAD for all processed audio.
+
+Implementations SHOULD throttle ON_INPUT_AUDIO_LEVEL and ON_OUTPUT_AUDIO_LEVEL
+to at most 10 events per second per session (default interval: 100ms). Without
+throttling, per-frame firing at typical 20ms frame sizes would produce 50
+events/sec per direction, each requiring a context build and store query.
+
+The event payload is an `AudioLevelEvent` containing `session`, `level_db`
+(typically -60 to 0 dBFS), and `timestamp`.
 
 ### 12.6 Barge-In and Interruption Handling
 
