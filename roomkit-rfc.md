@@ -1240,6 +1240,7 @@ They are NOT stored in any room timeline.
 | recording_stopped | Audio recording stopped | session_id, room_id, recording_id, duration_s |
 | stt_error | STT transcription failed | session_id, provider, error |
 | tts_error | TTS synthesis failed | session_id, provider, error |
+| voice_session_ready | Voice session audio path is live and ready | session_id, room_id, channel_id |
 
 Implementations MUST emit these events. Integrators subscribe to framework
 events for monitoring and integration purposes.
@@ -1342,6 +1343,7 @@ Hooks MAY be registered globally (apply to all rooms) or per-room.
 | ON_TURN_COMPLETE | ASYNC | Turn detector determined user turn is complete |
 | ON_TURN_INCOMPLETE | ASYNC | Turn detector determined user is still speaking (for logging) |
 | ON_BACKCHANNEL | ASYNC | Backchannel detector classified speech as backchannel |
+| ON_SESSION_STARTED | ASYNC | Session started on any channel type (voice: audio path live; text: room auto-created) |
 | ON_RECORDING_STARTED | ASYNC | Audio recording started for a voice session |
 | ON_RECORDING_STOPPED | ASYNC | Audio recording stopped, result available |
 | ON_REALTIME_TOOL_CALL | SYNC | Speech-to-speech API requests a tool call |
@@ -1836,6 +1838,9 @@ VoiceBackend (interface)
 │
 │   # Barge-in (transport-level detection):
 ├── on_barge_in(callback) → void            # Client audio detected during playback
+│
+│   # Session lifecycle:
+├── on_session_ready(callback) → void       # Audio path is live, ready for send/receive
 │
 │   # Protocol tracing:
 ├── set_trace_emitter(emitter | null) → void  # Set callback for emitting ProtocolTraces
@@ -2743,7 +2748,10 @@ Check InterruptionStrategy:
 ```
 1. VoiceSession transitions to ACTIVE
 2. Call reset() on all configured pipeline stages (in pipeline order)
-3. IF recorder configured:
+3. Backend fires on_session_ready callback when audio path is live
+   └── VoiceChannel fires ON_SESSION_STARTED hook (dual-signal: requires
+       both bind_session() and backend ready, in either order)
+4. IF recorder configured:
    ├── handle = recorder.start(session, recording_config)
    └── Fire ON_RECORDING_STARTED hook
 ```
@@ -3077,6 +3085,7 @@ Voice-specific hooks allow integrators to customize the voice pipeline:
 | ON_TURN_COMPLETE | ASYNC | Log turn-taking metrics | Audio Pipeline (Turn Detector) |
 | ON_TURN_INCOMPLETE | ASYNC | Debug turn detection | Audio Pipeline (Turn Detector) |
 | ON_BACKCHANNEL | ASYNC | Track user engagement | Audio Pipeline (Backchannel Detector) |
+| ON_SESSION_STARTED | ASYNC | Send greeting, start telemetry | VoiceBackend / Inbound pipeline |
 | ON_RECORDING_STARTED | ASYNC | Notify participants of recording | Audio Pipeline (Recorder) |
 | ON_RECORDING_STOPPED | ASYNC | Store recording reference in timeline | Audio Pipeline (Recorder) |
 | ON_REALTIME_TOOL_CALL | SYNC | Execute tool and return result | Realtime Provider |
