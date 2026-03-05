@@ -1795,21 +1795,38 @@ Architecture 2: Speech-to-Speech (RealtimeVoiceChannel)
 
 **Choosing between architectures:**
 
-| Criterion | VoiceChannel (STT/TTS) | RealtimeVoiceChannel (Speech-to-Speech) |
-|---|---|---|
-| **Latency** | Moderate — with streaming AI→TTS ~500-800ms TTFA; without streaming ~2-3s (full LLM response before TTS) | Lower — end-to-end streaming, no text roundtrip |
-| **Control** | Full — choose STT, LLM, and TTS independently | Limited — provider bundles recognition + generation |
-| **Text access** | Always — every utterance becomes a RoomEvent | Optional — transcriptions emitted if configured |
-| **Multi-channel** | Native — text responses route to any channel | Requires transcription to feed non-audio channels |
-| **Tool calling** | Via LLM tool use (standard) | Via provider-specific tool protocol |
-| **Voice quality** | Depends on TTS provider | Often higher — native speech generation |
-| **Pipeline control** | Full audio pipeline (all stages) | Pipeline optional (preprocessing only) |
-| **Cost** | Pay for STT + LLM + TTS separately | Pay for single API (may be cheaper or more expensive) |
-| **Use when** | You need text in the loop, multi-channel routing, or independent provider choice | You need lowest latency, natural voice, and can accept provider lock-in |
+| Criterion | VoiceChannel (STT/TTS) | RealtimeVoiceChannel (Speech-to-Speech) | VoiceChannel (Bridge) |
+|---|---|---|---|
+| **Latency** | Moderate (~500-800ms TTFA with streaming) | Lower — end-to-end streaming | Lowest — direct audio forwarding |
+| **Control** | Full — choose STT, LLM, TTS | Limited — provider bundles all | Full pipeline, no AI required |
+| **Text access** | Always — utterances become RoomEvents | Optional — if transcription configured | Optional — if STT configured |
+| **Multi-channel** | Native — text routes to any channel | Requires transcription | Requires STT for text routing |
+| **AI involvement** | Required (generates responses) | Required (speech-to-speech) | Optional (observer/monitor) |
+| **Voice quality** | Depends on TTS provider | Native speech generation | Original voice preserved |
+| **Pipeline control** | Full audio pipeline (all stages) | Pipeline optional | Full pipeline (all stages) |
+| **Use when** | AI voice agent with text in the loop | Lowest latency AI with native voice | Human-to-human calls, conferencing, call center |
 
-Both architectures MAY coexist in the same room. For example, a room could have
-a VoiceChannel for a human participant (PSTN/SIP) and a RealtimeVoiceChannel
-for the AI agent, with text events bridging them.
+All three architectures MAY coexist in the same room. For example, a room could
+have a VoiceChannel for a human participant (PSTN/SIP) and a RealtimeVoiceChannel
+for the AI agent, with text events bridging them. Or two VoiceChannels in bridge
+mode for a human-to-human call with optional AI observation.
+
+```
+Architecture 3: Audio Bridge (VoiceChannel with bridge=True)
+┌──────────┐     ┌──────────────┐     ┌──────────────┐     ┌──────────────┐     ┌──────────┐
+│ Client A │────→│Audio Pipeline│────→│ Audio Bridge  │────→│Audio Pipeline│────→│ Client B │
+│ (audio)  │     │  (inbound)   │     │ (forward/mix) │     │  (outbound)  │     │ (audio)  │
+└──────────┘     └──────────────┘     └───────┬───────┘     └──────────────┘     └──────────┘
+                                              │
+                                         (optional)
+                                       STT transcription
+                                              │
+                                              ▼
+                                         ┌─────────┐
+                                         │ RoomKit │
+                                         │ (events)│
+                                         └─────────┘
+```
 
 ### 12.2 Voice Channel (STT/TTS Pipeline)
 
@@ -1866,6 +1883,7 @@ transport-level concern (detecting client audio during active playback).
 | NATIVE_AGC | Backend provides built-in gain control (skip pipeline AGC) |
 | DTMF_INBAND | Backend receives in-band DTMF tones in audio stream |
 | DTMF_SIGNALING | Backend sends and receives DTMF via signaling (RFC 4733) |
+| NATIVE_BRIDGE | Backend can bridge audio at the transport level (RTP relay) |
 
 When a VoiceBackend declares `NATIVE_AEC` or `NATIVE_AGC`, the pipeline MUST
 skip the corresponding stage automatically, even if a provider is configured in
@@ -3101,6 +3119,7 @@ Voice-specific hooks allow integrators to customize the voice pipeline:
 | ON_REALTIME_TOOL_CALL | SYNC | Execute tool and return result | Realtime Provider |
 | ON_REALTIME_TEXT_INJECTED | ASYNC | Log text injections | Realtime Voice Channel |
 | ON_PROTOCOL_TRACE | ASYNC | Log/inspect transport protocol traces (SIP, RTP) | Channel (via emit_trace) |
+| BEFORE_BRIDGE_AUDIO | SYNC | Filter/modify audio before bridging (mute, gain) | AudioBridge (Section 12.7) |
 
 **Audio level hooks (ON_INPUT_AUDIO_LEVEL, ON_OUTPUT_AUDIO_LEVEL):**
 
@@ -3172,6 +3191,226 @@ When the backend does NOT support `BARGE_IN`, the pipeline MAY use VAD's
 `SPEECH_START` event during TTS playback as a fallback barge-in trigger. In this
 mode, the VAD effectively replaces the transport-level detection, but with higher
 latency (audio must traverse the full inbound pipeline before VAD fires).
+
+### 12.7 Audio Bridging
+
+Audio bridging enables human-to-human voice communication within a room by
+forwarding audio frames directly between voice sessions, bypassing the
+STT → text → TTS roundtrip. This is essential for use cases like SIP/RTP
+phone calls between participants, call center agent bridging, and
+multi-party conferencing.
+
+#### 12.7.1 Design Principles
+
+1. **Audio bridging is a parallel path, not a replacement.** Bridge mode adds
+   a direct audio forwarding path alongside the existing STT/TTS path.
+   STT MAY still run concurrently for transcription, recording, or AI
+   monitoring. The two paths are independent.
+
+2. **Audio bypasses the RoomEvent broadcast system.** Real-time audio at 50
+   frames/second cannot traverse the async hook pipeline, store, and
+   broadcast loop without unacceptable latency. Bridged audio flows directly
+   from inbound pipeline output to outbound pipeline input, never becoming a
+   RoomEvent.
+
+3. **Pipeline stages still apply.** Inbound audio passes through the full
+   pipeline (resampler, AEC, AGC, denoiser) before being forwarded.
+   Outbound bridged audio passes through the outbound pipeline (resampler,
+   recorder tap, AEC reference feeding) before reaching the transport.
+
+4. **The bridge is a concrete component, not an ABC.** Unlike STT/TTS/VAD
+   providers, there are no genuinely different "bridge implementations" to
+   swap. Variations (2-party forwarding vs N-party mixing) are configuration
+   options on a single `AudioBridge` class.
+
+#### 12.7.2 AudioBridge
+
+```
+AudioBridge
+├── config: AudioBridgeConfig
+├── add_session(session, room_id, backend) → void
+│       # Register a session for bridging
+├── remove_session(session_id) → void
+│       # Unregister a session
+├── forward(session, audio_frame) → void
+│       # Forward audio from this session to all other sessions in the room
+│       # For 2 sessions: direct forwarding
+│       # For N>2 sessions: mix audio from all other sessions
+└── close() → void
+        # Clean up all sessions
+```
+
+```
+AudioBridgeConfig
+├── enabled: bool = true
+├── max_participants: int = 10         # Maximum sessions per room
+└── mixing_strategy: "forward" | "mix" = "forward"
+        # "forward": optimized 2-party direct forwarding (errors if >2)
+        # "mix": N-party additive mixing with clipping protection
+```
+
+**Session management:** Sessions are added and removed as participants join and
+leave the room. The bridge tracks sessions grouped by `room_id`. When a session
+is added and the room already has other bridged sessions, audio forwarding
+begins immediately.
+
+**Audio forwarding:** When `forward()` is called with an audio frame from
+session A, the bridge sends that frame to all other sessions in the same room
+via `VoiceBackend.send_audio()`. For the `"forward"` strategy (2-party), this
+is a direct send to the single other session. For the `"mix"` strategy
+(N-party), the bridge MUST mix audio from all other active sessions and send
+each participant a mix of everyone else's audio (excluding their own, to
+prevent echo).
+
+**Thread safety:** `forward()` is called from audio callback threads (same
+context as `on_audio_received`). All bridge operations MUST be thread-safe.
+
+#### 12.7.3 VoiceChannel Integration
+
+VoiceChannel gains an optional `bridge` parameter:
+
+```python
+VoiceChannel(
+    "voice",
+    backend=sip_backend,
+    pipeline=pipeline,
+    bridge=True,              # Enable bridging (AudioBridgeConfig defaults)
+    # bridge=AudioBridgeConfig(mixing_strategy="mix"),  # Explicit config
+    stt=deepgram,             # Optional: transcription alongside bridge
+)
+```
+
+**Inbound audio flow with bridge enabled:**
+
+```
+Backend → on_audio_received → Pipeline inbound chain
+    ├──→ AudioBridge.forward()       # Parallel: forward to other sessions
+    └──→ VAD → STT (if configured)  # Parallel: transcription path (optional)
+```
+
+When bridge mode is enabled and audio exits the inbound pipeline, the
+VoiceChannel MUST feed the processed frame to `AudioBridge.forward()` in
+addition to the normal VAD/STT path. The bridge path and the STT path
+operate in parallel — neither blocks the other.
+
+**Outbound bridged audio flow:**
+
+```
+AudioBridge.forward() → Pipeline outbound chain → Backend.send_audio()
+    [Recorder tap] → [AEC reference] → [Resampler] → Transport
+```
+
+Bridged audio sent to a session MUST pass through the outbound pipeline
+before reaching the transport. This ensures recording captures both sides
+and AEC reference is fed correctly.
+
+**Session lifecycle:**
+
+- When `bind_session()` is called with bridge enabled, the VoiceChannel
+  MUST register the session with the AudioBridge via `add_session()`.
+- When `unbind_session()` is called, the VoiceChannel MUST remove the
+  session via `remove_session()`.
+- The bridge does NOT manage session state transitions — that remains the
+  responsibility of VoiceBackend and VoiceChannel.
+
+**Interaction with STT/TTS:**
+
+| Configuration | Behavior |
+|---|---|
+| `bridge=True, stt=None, tts=None` | Pure audio bridge — human-to-human only |
+| `bridge=True, stt=provider` | Bridge + live transcription (for recording, compliance, AI monitoring) |
+| `bridge=True, stt=provider, tts=provider` | Bridge + AI can speak into the call via `say()` (TTS audio mixed with bridge audio) |
+| `bridge=False` (default) | Current behavior — STT/TTS pipeline only |
+
+When both bridge and TTS are active, TTS audio from AI responses and bridged
+audio from other participants are both sent to the session. The bridge does NOT
+suppress TTS — both audio streams coexist. If audio mixing is needed (e.g.,
+AI speaking while another participant is speaking), the backend handles
+concurrent `send_audio()` calls.
+
+#### 12.7.4 Sample Rate Handling
+
+Voice sessions MAY have different sample rates (e.g., SIP at 8kHz, WebRTC at
+48kHz). When forwarding audio between sessions with different rates, the
+outbound pipeline's resampler MUST convert the audio to the target session's
+native rate. Implementations SHOULD track each session's sample rate at
+registration time and apply resampling per-target in the outbound path.
+
+#### 12.7.5 N-Party Mixing
+
+For rooms with more than 2 voice sessions, the bridge MUST mix audio so each
+participant hears all others but not themselves.
+
+**Mixing algorithm (additive with clipping protection):**
+
+1. For each target session T, collect audio frames from all other sessions.
+2. Sum PCM samples (as signed 16-bit integers promoted to 32-bit to prevent
+   overflow).
+3. Apply soft clipping or normalization to prevent distortion:
+   - Simple: clamp to [-32768, 32767]
+   - Recommended: apply headroom scaling (e.g., divide by sqrt(N-1))
+4. Convert back to 16-bit PCM and forward to session T.
+
+**Silence handling:** If a session has no audio frame available in the current
+mixing window, it contributes silence (zero samples). The bridge SHOULD NOT
+forward silence-only mixes to save bandwidth.
+
+#### 12.7.6 Hooks
+
+Audio bridging introduces one new hook and reuses existing hooks:
+
+| Hook | Type | Use Case | Source |
+|---|---|---|---|
+| BEFORE_BRIDGE_AUDIO | SYNC | Filter or modify audio before forwarding (e.g., gain, muting) | AudioBridge |
+
+**BEFORE_BRIDGE_AUDIO** fires for each frame before it is forwarded to other
+sessions. The hook receives the audio frame and context (source session,
+target room). Returning `HookResult.block()` drops the frame (effectively
+muting the speaker for that frame). Returning a modified frame applies the
+modification before forwarding.
+
+Existing hooks that fire normally during bridge mode:
+- `ON_SPEECH_START`, `ON_SPEECH_END` — VAD still runs on bridged audio
+- `ON_TRANSCRIPTION` — if STT is configured
+- `ON_RECORDING_STARTED`, `ON_RECORDING_STOPPED` — recorder captures bridge audio
+- `ON_SESSION_STARTED` — session lifecycle unchanged
+
+**Note:** BEFORE_BRIDGE_AUDIO is a SYNC hook that runs in the audio callback
+path. Implementations MUST ensure hook handlers complete quickly (< 1ms) to
+avoid audio glitches. Long-running operations MUST NOT be performed in this
+hook.
+
+#### 12.7.7 Capability Flag
+
+```
+VoiceCapability.NATIVE_BRIDGE
+```
+
+When a VoiceBackend declares `NATIVE_BRIDGE`, it can bridge audio at the
+transport level (e.g., RTP relay, SIP re-INVITE for direct media). The
+VoiceChannel MAY delegate bridging to the backend instead of using the
+AudioBridge when this capability is present. Native bridging provides lower
+latency and reduced CPU usage but bypasses pipeline stages.
+
+Implementations that use native bridging MUST still fire session lifecycle
+hooks and MUST support fallback to AudioBridge when pipeline processing
+(recording, AEC, transcription) is required.
+
+#### 12.7.8 Conformance
+
+Audio bridging is part of **Conformance Level 3 (Voice)** and is OPTIONAL.
+
+Implementations that support audio bridging MUST:
+- Forward post-pipeline audio frames between sessions in the same room.
+- Support at least 2-party direct forwarding.
+- Apply outbound pipeline processing to bridged audio.
+- Register/unregister sessions on bind/unbind.
+- Ensure thread-safe operation of `forward()`.
+
+Implementations SHOULD:
+- Support N-party mixing for rooms with more than 2 voice sessions.
+- Handle cross-rate bridging via the outbound resampler.
+- Support concurrent bridge + STT operation.
 
 ---
 
