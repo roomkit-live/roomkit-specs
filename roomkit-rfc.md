@@ -1832,6 +1832,7 @@ VoiceBackend (interface)
 ├── disconnect(session) → void
 ├── send_audio(session, audio_chunks) → void
 ├── cancel_audio(session) → void            # Cancel current playback (if supported)
+├── send_dtmf(session, digit, duration_ms) → void  # Send outbound DTMF (RFC 4733)
 │
 │   # Raw audio callback:
 ├── on_audio_received(callback) → void      # Raw inbound audio frames from client
@@ -1864,7 +1865,7 @@ transport-level concern (detecting client audio during active playback).
 | NATIVE_AEC | Backend provides built-in echo cancellation (skip pipeline AEC) |
 | NATIVE_AGC | Backend provides built-in gain control (skip pipeline AGC) |
 | DTMF_INBAND | Backend receives in-band DTMF tones in audio stream |
-| DTMF_SIGNALING | Backend receives DTMF via signaling (SIP INFO, RFC 2833) |
+| DTMF_SIGNALING | Backend sends and receives DTMF via signaling (RFC 4733) |
 
 When a VoiceBackend declares `NATIVE_AEC` or `NATIVE_AGC`, the pipeline MUST
 skip the corresponding stage automatically, even if a provider is configured in
@@ -2348,6 +2349,15 @@ algorithm does not require a specific sample rate.
 When a DTMF tone is detected, the framework MUST fire the ON_DTMF hook
 (Section 9.2). Implementations MAY optionally suppress the DTMF audio from the
 main pipeline to prevent the tone from being transcribed as speech.
+
+**Outbound DTMF.** VoiceBackend exposes `send_dtmf(session, digit, duration_ms)`
+for sending DTMF digits to the remote party via RFC 4733 telephone-events. This
+is essential for AI agents navigating IVR menus, entering PINs, or interacting
+with phone systems programmatically. Valid digits are `'0'-'9'`, `'*'`, `'#'`,
+and `'A'-'D'`. The default duration is 160 ms. Only backends with the
+`DTMF_SIGNALING` capability support this method; others MUST raise
+`NotImplementedError`. VoiceChannel provides the public entry point with input
+validation (digit set, duration range 1–10000 ms, session state).
 
 #### 12.3.7 Audio Recorder
 
