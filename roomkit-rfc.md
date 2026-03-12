@@ -4054,9 +4054,11 @@ A Level 2 implementation MAY additionally support:
 - Realtime/ephemeral events backend
 - Per-room hooks
 
-### 19.4 Level 3: Voice (OPTIONAL)
+### 19.4 Level 3: Real-Time Media (OPTIONAL)
 
-A Level 3 implementation MAY additionally support:
+A Level 3 implementation MAY additionally support audio and/or video real-time media:
+
+#### Audio (Voice)
 
 - Audio Processing Pipeline with:
   - AudioFrame and AudioFormat data models
@@ -4084,6 +4086,26 @@ A Level 3 implementation MAY additionally support:
 - RealtimeAudioTransport interface
 - Realtime voice hooks (ON_REALTIME_TOOL_CALL, ON_PROTOCOL_TRACE)
 - Protocol trace infrastructure (ProtocolTrace, emit_trace, on_trace, pre-room buffering)
+
+#### Video
+
+- Video data models:
+  - VideoFrame — inbound frame container (encoded NAL units or raw pixels)
+  - VideoChunk — outbound encoded frame container
+  - VideoSession — active video connection state
+  - VideoCapability flags (SIMULCAST, SVC, SCREEN_SHARE, RECORDING, BANDWIDTH_ESTIMATION)
+- VideoBackend interface — transport abstraction (connect, disconnect, send_video, callbacks)
+- VideoChannel — session-based channel orchestrator:
+  - Session lifecycle with dual-signal ready mechanism (matching VoiceChannel pattern)
+  - Hook triggers: ON_VIDEO_SESSION_STARTED, ON_VIDEO_SESSION_ENDED, ON_VIDEO_TRACK_ADDED, ON_VIDEO_TRACK_REMOVED, ON_SCREEN_SHARE_STARTED, ON_SCREEN_SHARE_STOPPED
+  - Optional VisionProvider integration with configurable analysis interval
+  - Vision results emitted as framework events (video_vision_result)
+- VisionProvider interface — frame analysis abstraction:
+  - analyze_frame(frame) → VisionResult (description, labels, confidence, faces, OCR text)
+  - analyze_stream(frames, interval_ms) for streaming analysis
+  - Implementations: OpenAI-compatible (GPT-4o, Ollama, vLLM), Gemini, Mock
+- AI integration: setup_video_vision() wires vision descriptions into AIChannel system prompt
+- Video and voice channels operate independently in the same room, enabling combined audio+video sessions where the AI can both hear (via STT) and see (via VisionProvider)
 
 ---
 
@@ -4387,6 +4409,38 @@ RealtimeVoiceChannel
 └── tool_handling:
     ├── async handler function (priority)
     └── ON_REALTIME_TOOL_CALL hook (fallback)
+```
+
+### A.12 Video Channel
+
+```
+VideoChannel
+├── channel_type: VIDEO
+├── category: TRANSPORT
+├── direction: BIDIRECTIONAL
+├── requires:
+│   ├── backend: VideoBackend
+│   ├── vision: VisionProvider | null     # OPTIONAL
+│   └── vision_interval_ms: int           # default 2000
+├── session_lifecycle:
+│   ├── connect_video(room_id, participant_id, channel_id)
+│   ├── bind_session(session, room_id, binding)
+│   ├── unbind_session(session)
+│   └── disconnect_video(session)
+├── hooks:
+│   ├── ON_VIDEO_SESSION_STARTED — SessionStartedEvent
+│   └── ON_VIDEO_SESSION_ENDED — SessionStartedEvent
+├── framework_events:
+│   ├── video_session_started
+│   ├── video_session_ended
+│   └── video_vision_result (description, labels, confidence, text, faces)
+├── ai_integration:
+│   └── setup_video_vision(kit, room_id, ai_channel_id) — injects vision
+│       descriptions into AIChannel system prompt
+└── backends:
+    ├── LocalVideoBackend — OpenCV webcam capture (dev/testing)
+    ├── MockVideoBackend — Unit testing with call tracking
+    └── (future) WebRTC, SIP video backends
 ```
 
 ---
