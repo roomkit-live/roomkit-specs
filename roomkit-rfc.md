@@ -90,6 +90,21 @@ interpreted as described in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
 | **Turn Detection** | The process of determining whether a speaker has finished their conversational turn, using acoustic and/or semantic signals. |
 | **Backchannel** | Short verbal acknowledgments ("mmhmm", "ok", "yes") that signal attention without requesting a turn change. |
 | **Protocol Trace** | An immutable record of a transport-level protocol exchange (e.g., SIP INVITE, 200 OK, BYE) emitted by a channel for observability and debugging. |
+| **Agent** | An AIChannel subclass with structured identity metadata (role, description, scope, voice) for multi-agent orchestration. |
+| **Orchestration** | The system that routes events to the correct agent, manages conversation phases, and handles agent-to-agent handoffs. |
+| **Handoff** | The transfer of conversation responsibility from one agent to another, with context preservation. |
+| **ConversationState** | Per-room state tracking the current phase, active agent, and orchestration metadata. |
+| **Memory Provider** | A pluggable strategy for constructing AI conversation history (sliding window, summarization, retrieval, etc.). |
+| **Tool Policy** | Access control rules (allow/deny glob patterns with role overrides) governing which tools an AI agent can invoke. |
+| **Steering Directive** | A mid-generation instruction (Cancel, UpdateSystemPrompt, InjectMessage) injected into an active AI tool loop. |
+| **Delivery Strategy** | A strategy controlling when proactive content (task results, notifications) is delivered into a conversation (Immediate, WaitForIdle, Queued). |
+| **Delegation** | Dispatching background work to a specialized agent in an isolated child room, with result collection and delivery. |
+| **Skill** | A self-contained, discoverable package of agent instructions, reference materials, and scripts defined by a SKILL.md file. |
+| **Video Pipeline** | A configurable chain of video processing stages (decoder, resizer, transform, filter, overlay) between the transport and the vision/recording engine. |
+| **Vision Provider** | A pluggable service that analyzes video frames and produces structured results (descriptions, labels, faces, OCR text). |
+| **Avatar Provider** | A service that generates lip-synced video frames from TTS audio for visual agent embodiment. |
+| **Video Bridge** | A component that forwards video frames between sessions in the same room, with keyframe buffering and PLI requests. |
+| **StatusBus** | A shared event log for inter-agent coordination, allowing agents to post and subscribe to status updates without sending room events. |
 
 ### 1.3 Notation
 
