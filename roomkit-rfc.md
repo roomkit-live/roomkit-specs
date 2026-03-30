@@ -3477,6 +3477,496 @@ Implementations SHOULD:
 - Handle cross-rate bridging via the outbound resampler.
 - Support concurrent bridge + STT operation.
 
+### 12.8 Video Pipeline
+
+The video subsystem mirrors the audio pipeline in structure. Video processing
+uses the same pluggable stage architecture, session model, and hook pattern
+as audio.
+
+#### 12.8.1 Architecture Overview
+
+```
+┌────────┐     ┌──────────────────────────────────────┐     ┌────────────┐
+│ Video  │────→│          Video Pipeline               │────→│   Vision   │
+│Backend │     │ Decode → Resize → Transform → Filter  │     │  Provider  │
+└────────┘     └──────────────────────────────────────┘     └────────────┘
+                              │                                    │
+                         ┌────┴────┐                      ┌───────┴───────┐
+                         │Recorder │                      │ AI Integration│
+                         └─────────┘                      │ (inject into  │
+                              │                           │  AIChannel)   │
+                         ┌────┴─────┐                     └───────────────┘
+                         │  Bridge  │
+                         │(forward) │
+                         └──────────┘
+```
+
+**Three video channel variants:**
+
+| Channel | Base Class | Purpose |
+|---|---|---|
+| VideoChannel | (standalone) | Video-only with vision analysis |
+| AudioVideoChannel | VoiceChannel | Combined STT/TTS + video pipeline + avatar |
+| RealtimeAudioVideoChannel | RealtimeVoiceChannel | Speech-to-speech + video |
+
+#### 12.8.2 Video Data Models
+
+**VideoFrame** — inbound video frame:
+
+```
+VideoFrame
+├── data: bytes                             # Encoded NAL units OR raw pixels
+├── codec: string                           # h264, vp8, vp9, av1 (encoded) or raw_rgb24, raw_bgr24, raw_yuv420p, raw_nv12 (raw)
+├── width: int                              # Frame width in pixels
+├── height: int                             # Frame height in pixels
+├── timestamp_ms: float                     # Relative to session start
+├── keyframe: bool                          # Whether this is a keyframe
+├── sequence: int                           # Monotonically increasing per session
+├── metadata: map<string, any>              # Accumulated by pipeline stages
+│
+├── is_encoded: bool (derived)              # True when codec in {h264, vp8, vp9, av1}
+└── is_raw: bool (derived)                  # True when codec in {raw_rgb24, raw_bgr24, ...}
+```
+
+**VideoChunk** — outbound encoded video:
+
+```
+VideoChunk
+├── data: bytes                             # Encoded frame data
+├── codec: string                           # h264, vp8, vp9, av1 only
+├── width: int
+├── height: int
+├── timestamp_ms: float | null
+├── keyframe: bool
+└── is_final: bool                          # Signals end of stream
+```
+
+**VideoSession** — active video connection:
+
+```
+VideoSession
+├── id: string
+├── room_id: string
+├── participant_id: string
+├── channel_id: string
+├── state: VideoSessionState                # CONNECTING → ACTIVE → PAUSED → ENDED
+├── provider_session_id: string | null      # Backend-specific identifier
+├── created_at: datetime
+└── metadata: map<string, any>
+```
+
+**VideoCapability** flags:
+
+| Flag | Description |
+|---|---|
+| SIMULCAST | Multiple resolution streams |
+| SVC | Scalable Video Coding layers |
+| SCREEN_SHARE | Separate screen-share track |
+| RECORDING | Server-side recording support |
+| BANDWIDTH_ESTIMATION | Adaptive bitrate |
+
+#### 12.8.3 VideoBackend Interface
+
+```
+VideoBackend (interface)
+├── name: string (property)                 # Backend identifier
+│
+│   # Session lifecycle:
+├── connect(room_id, participant_id, channel_id, metadata) → VideoSession
+├── accept(request) → VideoSession          # Server-side session acceptance
+├── disconnect(session) → void
+├── get_session(session_id) → VideoSession | null
+├── list_sessions(room_id) → list<VideoSession>
+│
+│   # Video transport:
+├── send_video(session, video) → void       # Send VideoChunk or async stream
+├── send_video_sync(session, frame) → void  # Synchronous send (for callbacks)
+├── request_keyframe(session) → void        # Request PLI/FIR for keyframe recovery
+├── set_video_passthrough(session_id, enabled) → void  # Bridge mode toggle
+│
+│   # Callbacks:
+├── on_video_received(callback) → void      # Raw inbound video frames
+├── on_session_ready(callback) → void       # Video path is live
+├── on_client_disconnected(callback) → void # Transport disconnect
+│
+├── capabilities: VideoCapability           # What the backend supports
+└── close() → void
+```
+
+**Required implementations:**
+
+| Backend | Transport | Use Case |
+|---|---|---|
+| LocalVideoBackend | OpenCV webcam | Development, testing |
+| ScreenCaptureBackend | mss screen capture | Screen sharing, monitoring |
+
+**Optional backends:**
+
+Implementations MAY provide additional backends for WebRTC (FastRTC),
+RTP, SIP video, or WebSocket transport.
+
+#### 12.8.4 Video Processing Pipeline
+
+The video pipeline processes inbound frames through ordered stages:
+
+```
+VideoPipelineConfig
+├── decoder: VideoDecoderProvider | null     # Decode h264 → raw_rgb24
+├── resizer: VideoResizerProvider | null     # Scale to target dimensions
+├── transforms: list<VideoTransformProvider> # Pixel effects (chained)
+├── filters: list<VideoFilterProvider>       # Inspect/replace frames (chained)
+├── vision: VisionProvider | null            # Periodic frame analysis
+├── recorder: VideoRecorder | null           # Save to file
+└── recording_config: VideoRecordingConfig   # Recording parameters
+```
+
+**VideoPipeline** orchestrator:
+
+```
+VideoPipeline
+├── process_inbound(session_id, frame) → VideoFrame | null
+│       # Synchronous frame processing:
+│       # 1. Decode (if frame.is_encoded)
+│       # 2. Resize (if frame.is_raw and resizer configured)
+│       # 3. Transforms (chained, pixel modifications)
+│       # 4. Filters (chained, with FilterContext)
+│       # Returns processed frame or null (dropped)
+│
+├── process_vision(session_id, frame) → VisionResult | null
+│       # Async vision analysis (throttled by vision_interval_ms)
+│
+├── drain_events(session_id) → list<FilterEvent>
+│       # Collect filter events for hook dispatch
+│
+├── update_filter_context(session_id, result) → void
+│       # Sync vision results to active filter contexts
+│
+├── reset(session_id) → void
+└── close() → void
+```
+
+**Inbound processing flow:**
+
+```
+Backend emits VideoFrame
+  │
+  ├─ [1] Decoder (if frame.is_encoded)
+  │     VideoDecoderProvider.decode(frame) → raw_rgb24 frame
+  │
+  ├─ [2] Resizer (if frame.is_raw)
+  │     VideoResizerProvider.resize(frame) → scaled frame
+  │
+  ├─ [3] Transforms (chained)
+  │     For each VideoTransformProvider:
+  │       transform(frame) → modified frame
+  │     (grayscale, blur, color adjustment, etc.)
+  │
+  ├─ [4] Filters (chained, with FilterContext)
+  │     For each VideoFilterProvider:
+  │       filter(frame, context) → frame or replacement
+  │     (censor, watermark, YOLO detection, face detection)
+  │
+  ├─ Vision Analysis (async, periodic)
+  │     VisionProvider.analyze_frame(frame) → VisionResult
+  │     Updates FilterContext for subsequent frames
+  │     Fires ON_VISION_RESULT hook
+  │     Injects description into AI channel context
+  │
+  └─ Recorder tap (if recording active)
+```
+
+#### 12.8.5 Pipeline Stage Providers
+
+**VideoDecoderProvider:**
+
+```
+VideoDecoderProvider (interface)
+├── name: string
+├── decode(frame: VideoFrame) → VideoFrame | null  # Decode encoded → raw
+├── reset() → void
+└── close() → void
+```
+
+Implementations: PyAV (FFmpeg-based, H.264/VP8/VP9/AV1), Mock.
+
+**VideoResizerProvider:**
+
+```
+VideoResizerProvider (interface)
+├── name: string
+├── resize(frame: VideoFrame) → VideoFrame
+└── close() → void
+```
+
+Implementations: PyAV (FFmpeg scaling), Mock.
+
+**VideoEncoderProvider:**
+
+```
+VideoEncoderProvider (interface)
+├── name: string
+├── encode(frame: VideoFrame) → list<bytes>  # Raw → encoded NAL units
+├── flush() → list<bytes>                    # Drain buffered frames
+├── reset() → void
+└── close() → void
+```
+
+Implementations: PyAV (H.264/H.265, optional NVIDIA GPU acceleration).
+
+**VideoTransformProvider:**
+
+```
+VideoTransformProvider (interface)
+├── name: string
+├── transform(frame: VideoFrame) → VideoFrame
+├── reset() → void
+└── close() → void
+```
+
+Transforms modify pixels without changing frame dimensions. Multiple
+transforms are chained in order. Example: grayscale, blur, color effects.
+
+**VideoFilterProvider:**
+
+```
+VideoFilterProvider (interface)
+├── name: string
+├── filter(frame: VideoFrame, context: FilterContext) → VideoFrame
+├── reset() → void
+└── close() → void
+```
+
+Filters inspect frames (using vision context) and MAY replace them.
+They receive a `FilterContext` with the latest vision analysis results.
+
+**FilterContext:**
+
+```
+FilterContext
+├── session_id: string
+├── last_vision_result: VisionResult | null  # Updated by vision analysis
+├── labels_detected: set<string>             # Flattened from vision result
+├── censoring: bool                          # Whether active censoring
+├── metadata: map<string, any>               # Arbitrary state
+└── events: list<FilterEvent>                # Detection events for hook dispatch
+```
+
+**Built-in filter implementations:**
+
+| Filter | Purpose |
+|---|---|
+| CensorVideoFilter | Replaces frames when blocked labels detected (black/solid frame) |
+| YOLODetectorFilter | YOLO object detection, updates labels, optional bounding boxes |
+| WatermarkFilter | Adds watermark overlay to frames |
+| FaceDetectionFilter | Face detection with bounding boxes |
+
+#### 12.8.6 Overlay System
+
+Overlays render text, images, and rich content on top of video frames:
+
+```
+Overlay
+├── id: string                              # Unique overlay identifier
+├── content: string                         # Text, image URL, or markup
+├── overlay_type: string                    # "text", "image", "rich", "subtitle"
+├── position: OverlayPosition              # Predefined or CUSTOM with x/y
+├── x: int (default 0)                     # X offset (for CUSTOM position)
+├── y: int (default 0)                     # Y offset (for CUSTOM position)
+├── z_order: int (default 0)               # Stacking order (higher = on top)
+├── opacity: float (default 1.0)           # 0.0 to 1.0
+├── style: map<string, any>                # Renderer-specific styling
+└── version: int (default 0)               # Cache invalidation
+```
+
+**OverlayPosition** enumeration: TOP_LEFT, TOP_CENTER, TOP_RIGHT,
+CENTER_LEFT, CENTER, CENTER_RIGHT, BOTTOM_LEFT, BOTTOM_CENTER,
+BOTTOM_RIGHT, CUSTOM.
+
+**OverlayRenderer** (interface):
+
+```
+OverlayRenderer (interface)
+├── overlay_type: string (property)         # Which overlay type this renders
+├── render(canvas, overlay, frame_width, frame_height) → canvas
+├── invalidate_cache(overlay_id) → void
+└── clear_cache() → void
+```
+
+Implementations: TextOverlayRenderer, ImageOverlayRenderer,
+RichOverlayRenderer, SubtitleOverlayRenderer. The `OverlayFilterProvider`
+applies overlays to frames as a pipeline filter stage.
+
+#### 12.8.7 VisionProvider
+
+Vision providers analyze video frames and produce structured results:
+
+```
+VisionProvider (interface)
+├── name: string (property)
+├── analyze_frame(frame, prompt) → VisionResult
+│       # Analyze a single frame (async)
+│
+├── analyze_stream(frames, interval_ms, assumed_fps) → async_iterator<VisionResult>
+│       # Streaming analysis at configurable intervals
+│
+├── supports_streaming: bool (property)
+├── warmup() → void                         # Pre-load models
+└── close() → void
+```
+
+**VisionResult:**
+
+```
+VisionResult
+├── description: string                     # Natural language description
+├── labels: list<string>                    # Detected objects/scenes
+├── confidence: float                       # 0.0 to 1.0
+├── faces: list<FaceDetection>             # Detected faces with bounding boxes
+├── text: string | null                     # OCR text
+└── metadata: map<string, any>              # Provider-specific data
+```
+
+**FaceDetection:**
+
+```
+FaceDetection
+├── x: int                                  # Bounding box x
+├── y: int                                  # Bounding box y
+├── width: int
+├── height: int
+├── confidence: float
+└── label: string | null                    # Optional identity label
+```
+
+**Implementations:**
+
+| Provider | Backend | Description |
+|---|---|---|
+| OpenAIVisionProvider | GPT-4o, Ollama, vLLM | OpenAI-compatible vision API |
+| GeminiVisionProvider | Google Gemini | Google Gemini vision |
+| MockVisionProvider | — | Testing |
+
+**AI integration:** `setup_video_vision(kit, room_id, ai_channel_id)` wires
+vision results into the AIChannel's system prompt. On each VisionResult, the
+description is injected so the AI can "see" what the video shows.
+
+#### 12.8.8 AvatarProvider (Lip-Sync Video Generation)
+
+Avatar providers generate lip-synced video from TTS audio:
+
+```
+AvatarProvider (interface)
+├── name: string (property)
+├── fps: float (property)                   # Output frame rate
+├── is_async: bool (property)               # Whether delivery is callback-based
+│
+├── start(reference_image, width, height) → void
+│       # Initialize with a reference face image
+│
+├── feed_audio(pcm_data, sample_rate) → list<VideoFrame>
+│       # Feed TTS audio, return generated frames
+│       # Sync mode: returns frames immediately
+│       # Async mode: returns [], frames arrive via on_video() callback
+│
+├── on_video(callback) → void               # Register frame callback (async mode)
+├── end_turn() → void                       # Signal end of TTS response
+├── get_idle_frame() → VideoFrame | null    # Frame to display when TTS not playing
+├── flush() → list<VideoFrame>              # Drain buffered frames
+├── stop() → void
+└── close() → void
+```
+
+**Two delivery modes:**
+- **Synchronous** (local models): `feed_audio()` returns frames immediately.
+- **Asynchronous** (cloud APIs): `feed_audio()` returns empty list; frames
+  arrive via the `on_video()` callback.
+
+In AudioVideoChannel, the avatar is wired as an outbound audio tap.
+TTS audio chunks are fed to the avatar, and the resulting video frames are
+encoded and sent via the video backend.
+
+#### 12.8.9 VideoBridge
+
+The VideoBridge forwards video frames between sessions in the same room,
+mirroring the AudioBridge pattern:
+
+```
+VideoBridgeConfig
+├── enabled: bool (default true)
+├── max_participants: int (default 10)
+├── forwarding_strategy: "forward"          # Direct frame forwarding
+└── keyframe_interval_s: float (default 5.0)  # PLI request interval
+```
+
+```
+VideoBridge
+├── add_session(session, room_id, backend) → void
+├── remove_session(session_id) → void
+├── forward(session, frame) → void          # Forward to all other sessions in room
+├── set_frame_filter(fn) → void             # Optional pre-forward filter (can drop)
+├── set_frame_processor(fn) → void          # Optional per-target processor
+├── get_participant_count(room_id) → int
+├── get_bridged_sessions(room_id) → list<(VideoSession, VideoBackend)>
+└── close() → void
+```
+
+**Key behaviors:**
+- Keyframe buffering for late joiners.
+- Periodic PLI (Picture Loss Indication) requests to ensure keyframe delivery.
+- Delta frame gating — waits for a keyframe before forwarding delta frames
+  to a new session.
+- Thread-safe session registration and removal.
+- `BEFORE_BRIDGE_VIDEO` sync hook fires before forwarding (can block/modify).
+
+#### 12.8.10 Video Recording
+
+```
+VideoRecordingConfig
+├── storage: string                         # Output directory
+├── format: string (default "mp4")          # Container format
+├── codec: string (default "auto")          # Video codec
+├── fps: float (default 15.0)              # Output frame rate
+└── metadata: map<string, any>
+```
+
+```
+VideoRecorder (interface)
+├── name: string (property)
+├── start(session, config) → VideoRecordingHandle
+├── stop(handle) → VideoRecordingResult
+└── tap_frame(handle, frame) → void         # Feed frame to recorder
+```
+
+**VideoRecordingResult:**
+
+```
+VideoRecordingResult
+├── id: string
+├── url: string                             # File path or URL
+├── duration_seconds: float
+├── frame_count: int
+├── format: string
+├── size_bytes: int
+└── metadata: map<string, any>
+```
+
+**Implementations:** PyAVVideoRecorder (H.264/H.265, NVIDIA GPU),
+OpenCVVideoRecorder (MJPEG/XVID), MockVideoRecorder.
+
+#### 12.8.11 Video Hooks
+
+| Hook | Execution | When |
+|---|---|---|
+| ON_VIDEO_SESSION_STARTED | ASYNC | Video session became active |
+| ON_VIDEO_SESSION_ENDED | ASYNC | Video session ended |
+| ON_VIDEO_TRACK_ADDED | ASYNC | Video track added to session |
+| ON_VIDEO_TRACK_REMOVED | ASYNC | Video track removed from session |
+| ON_VISION_RESULT | ASYNC | VisionProvider returned analysis result |
+| ON_VIDEO_DETECTION | ASYNC | Filter emitted a detection event (YOLO, face, etc.) |
+| ON_SCREEN_SHARE_STARTED | ASYNC | Screen sharing started |
+| ON_SCREEN_SHARE_STOPPED | ASYNC | Screen sharing stopped |
+| BEFORE_BRIDGE_VIDEO | SYNC | Before frame forwarded via bridge — can block |
+
 ---
 
 ## 13. Resilience and Error Handling
