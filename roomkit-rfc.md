@@ -4730,15 +4730,31 @@ These principles define the conceptual architecture of RoomKit:
     raw frames. The pipeline processes them. Stages are optional and composable.
     Same pattern as text hooks: preprocessing inbound, postprocessing outbound.
 
-18. **Agents are channels.** Multi-agent orchestration uses the same
+18. **Video pipeline mirrors audio.** Decoder, resizer, transforms, filters,
+    overlays, vision, and recording run as a pluggable pipeline between the
+    video transport and the conversation engine. Same stage pattern as audio:
+    pluggable providers, optional stages, session-scoped state. Vision results
+    feed back into AI channels and filter contexts.
+
+20. **Agents are channels.** Multi-agent orchestration uses the same
     Room/Channel/Event model. Agents are intelligence channels with identity
     metadata. Routing, handoff, and coordination happen through existing
     primitives — no special agent API.
 
-19. **Memory is pluggable.** AI context construction is a swappable strategy,
+21. **Orchestration through primitives.** Multi-agent routing, handoff, and
+    state management are built on existing Room/Channel/Event/Hook primitives.
+    The router is a BEFORE_BROADCAST hook. State lives in room metadata.
+    Handoffs are tool calls. No new core abstractions required.
+
+22. **Memory is pluggable.** AI context construction is a swappable strategy,
     not a hardcoded sliding window. Implementations choose how to build
     conversation history: recent events, summarized history, vector retrieval,
     or token-budget-aware truncation.
+
+23. **Audit is two-tiered.** Tool auditing captures every tool call (input,
+    output, timing, status). Session auditing captures the full conversation
+    timeline (speech, tools, vision, interruptions). Both use pluggable
+    backends — same extensibility pattern as providers and stores.
 
 ---
 
