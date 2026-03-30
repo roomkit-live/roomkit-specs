@@ -5,9 +5,10 @@
 | **Status** | Draft |
 | **Author** | Sylvain Boily |
 | **Contributions** | TchatNSign, Angany AI |
+| **Version** | v15 Draft |
 | **Created** | 2026-01-27 |
-| **Last Updated** | 2026-02-10 |
-| **Supersedes** | v13 Draft |
+| **Last Updated** | 2026-03-30 |
+| **Supersedes** | v14 Draft |
 
 ---
 
@@ -44,9 +45,15 @@ programming language. All examples use pseudocode or structured notation.
 16. [Integration Surfaces](#16-integration-surfaces)
 17. [Security Considerations](#17-security-considerations)
 18. [Design Principles](#18-design-principles)
-19. [Conformance Levels](#19-conformance-levels)
-20. [Appendix A: Channel Reference](#appendix-a-channel-reference)
-21. [Appendix B: Complete Event Flow Examples](#appendix-b-complete-event-flow-examples)
+19. [Multi-Agent Orchestration](#19-multi-agent-orchestration)
+20. [Memory System](#20-memory-system)
+21. [Tool Access Control](#21-tool-access-control)
+22. [Delivery Strategies](#22-delivery-strategies)
+23. [Task Delegation](#23-task-delegation)
+24. [Skills Framework](#24-skills-framework)
+25. [Conformance Levels](#25-conformance-levels)
+26. [Appendix A: Channel Reference](#appendix-a-channel-reference)
+27. [Appendix B: Complete Event Flow Examples](#appendix-b-complete-event-flow-examples)
 
 ---
 
@@ -206,7 +213,11 @@ A conforming RoomKit implementation consists of the following layers:
  │Twilio  ││Elastic │          │Anthropic││ Deepgram │
  │Sinch   ││  Email │          │OpenAI   ││ElevenLabs│
  │Telnyx  ││SendGrid│          │Gemini   ││SherpaONNX│
- └────────┘└────────┘          └─────────┘└──────────┘
+ │VoiceMeUp│         │          │Mistral  ││ Google   │
+ └────────┘└────────┘          │XAI/Grok ││ OpenAI   │
+                               │Azure    ││ Gradium  │
+                               │vLLM     ││ Qwen     │
+                               └─────────┘└──────────┘
 ```
 
 ### 3.1 Layer Responsibilities
@@ -679,7 +690,8 @@ ChannelBinding
 ├── category: ChannelCategory               # TRANSPORT or INTELLIGENCE
 ├── direction: ChannelDirection             # INBOUND, OUTBOUND, BIDIRECTIONAL
 ├── access: Access                          # Permission level
-├── muted: bool                             # Temporarily silenced
+├── muted: bool                             # Temporarily silenced (suppress response events)
+├── output_muted: bool                      # Output-only muting (suppress deliver(), keep on_event())
 ├── visibility: string                      # Write visibility rule
 ├── participant_id: string | null           # Bound to a specific participant
 ├── last_read_index: int | null             # Read horizon for unread tracking
@@ -950,6 +962,12 @@ ChannelOutput
 | WEBHOOK | TRANSPORT | Generic HTTP webhook |
 | VOICE | TRANSPORT | Voice channel (STT/TTS pipeline) |
 | REALTIME_VOICE | TRANSPORT | Speech-to-speech API (e.g., OpenAI Realtime, Gemini Live) |
+| AUDIO_VIDEO | TRANSPORT | Combined voice + video channel (STT/TTS pipeline + video) |
+| REALTIME_AUDIO_VIDEO | TRANSPORT | Combined speech-to-speech + video channel |
+| VIDEO | TRANSPORT | Video-only channel |
+| TELEGRAM | TRANSPORT | Telegram Bot API |
+| CLI | TRANSPORT | Command-line interface (development/testing) |
+| PUSH | TRANSPORT | Push notification channel |
 | AI | INTELLIGENCE | AI/LLM agent |
 | SYSTEM | — | Framework-generated events |
 
@@ -974,6 +992,10 @@ reference capabilities:
 | WebSocket | TEXT, RICH, MEDIA, AUDIO, VIDEO, LOCATION | unlimited | All features, real-time, edit, delete |
 | Voice | AUDIO | — | Streaming audio, STT/TTS |
 | Realtime Voice | AUDIO | — | Speech-to-speech, tool calling |
+| Telegram | TEXT, RICH, MEDIA, LOCATION | 4,096 | Buttons, inline keyboards, edit, delete |
+| Audio/Video | AUDIO, VIDEO | — | Combined voice + video, STT/TTS + vision |
+| Realtime Audio/Video | AUDIO, VIDEO | — | Speech-to-speech + video, tool calling |
+| Video | VIDEO | — | Video-only, vision provider integration |
 | Webhook | TEXT, RICH | unlimited | Generic HTTP POST |
 
 ### 6.4 Intelligence Channels
@@ -1349,6 +1371,41 @@ Hooks MAY be registered globally (apply to all rooms) or per-room.
 | ON_REALTIME_TOOL_CALL | SYNC | Speech-to-speech API requests a tool call |
 | ON_REALTIME_TEXT_INJECTED | ASYNC | Text injected into realtime session |
 | ON_PROTOCOL_TRACE | ASYNC | Transport-level protocol trace emitted (SIP, RTP, etc.) |
+| | | |
+| **Delivery:** | | |
+| BEFORE_DELIVER | SYNC | Before proactive delivery strategy executes — can block/modify |
+| AFTER_DELIVER | ASYNC | After proactive delivery completes |
+| | | |
+| **AI Generation:** | | |
+| BEFORE_AI_GENERATION | SYNC | Before AI provider generate() — can modify context |
+| ON_AI_THINKING | ASYNC | AI model began extended thinking/reasoning |
+| ON_AI_RESPONSE | ASYNC | AI generation completed (observability) |
+| ON_TOOL_CALL | ASYNC | AI invoked a tool during generation |
+| | | |
+| **Orchestration:** | | |
+| ON_PHASE_TRANSITION | ASYNC | Conversation phase changed (e.g., triage → specialist) |
+| ON_HANDOFF | ASYNC | Agent handoff accepted and executed |
+| ON_HANDOFF_REJECTED | ASYNC | Agent handoff was rejected |
+| ON_STATUS_POSTED | ASYNC | Status posted to the inter-agent StatusBus |
+| | | |
+| **Delegation:** | | |
+| ON_TASK_DELEGATED | ASYNC | Background task delegated to a child room |
+| ON_TASK_COMPLETED | ASYNC | Delegated task completed with result |
+| | | |
+| **Video:** | | |
+| BEFORE_BRIDGE_VIDEO | SYNC | Before video frame is forwarded via bridge — can block/modify |
+| ON_VIDEO_SESSION_STARTED | ASYNC | Video session became active |
+| ON_VIDEO_SESSION_ENDED | ASYNC | Video session ended |
+| ON_VIDEO_TRACK_ADDED | ASYNC | Video track added to session |
+| ON_VIDEO_TRACK_REMOVED | ASYNC | Video track removed from session |
+| ON_VISION_RESULT | ASYNC | VisionProvider returned analysis result |
+| ON_SCREEN_SHARE_STARTED | ASYNC | Screen sharing started |
+| ON_SCREEN_SHARE_STOPPED | ASYNC | Screen sharing stopped |
+| ON_VIDEO_DETECTION | ASYNC | Video detection event (object, face, etc.) |
+| | | |
+| **Other:** | | |
+| ON_PLAN_UPDATED | ASYNC | Orchestration plan was updated |
+| ON_FEEDBACK | ASYNC | Feedback/scoring event emitted |
 
 ### 9.3 Hook Execution Modes
 
@@ -1859,9 +1916,17 @@ VoiceBackend (interface)
 │
 │   # Session lifecycle:
 ├── on_session_ready(callback) → void       # Audio path is live, ready for send/receive
+├── on_transport_disconnect(callback) → void  # Detect transport-level disconnect
+│
+│   # Server-side session acceptance:
+├── accept(request) → VoiceSession          # Accept an inbound session (SIP/PSTN/WebRTC offer)
 │
 │   # Protocol tracing:
 ├── set_trace_emitter(emitter | null) → void  # Set callback for emitting ProtocolTraces
+│
+│   # Properties:
+├── name: string                            # Backend identifier for attribution and logging
+├── auto_connect: bool                      # Auto-create session when channel is attached to a room
 │
 ├── capabilities() → VoiceCapability        # What the backend supports
 └── close() → void
@@ -3730,6 +3795,41 @@ when the room is created and the channel is attached:
 This ensures that no protocol traces are lost, even for the initial signaling
 messages that precede room creation.
 
+### 15.7 Telemetry Provider
+
+Implementations SHOULD provide a pluggable telemetry provider abstraction for
+distributed tracing and metrics collection:
+
+```
+TelemetryProvider (interface)
+├── start_span(name, attributes, parent) → Span
+│       # Begin a new trace span for an operation
+│
+├── record_metric(name, value, attributes) → void
+│       # Record a numeric metric value
+│
+├── record_event(name, attributes) → void
+│       # Record a discrete event within the current trace
+│
+└── close() → void
+        # Flush pending data and release resources
+```
+
+**Required implementations:**
+
+| Provider | Description |
+|---|---|
+| OpenTelemetryProvider | Industry-standard distributed tracing (OTLP export) |
+| ConsoleTelemetryProvider | Human-readable console output for development |
+| NoopTelemetryProvider | No-op implementation (telemetry disabled) |
+
+Implementations SHOULD instrument the following operations with spans:
+`process_inbound`, `broadcast`, `hook_execution`, `deliver`, `ai_generate`,
+`stt_transcribe`, `tts_synthesize`, `identity_resolve`, and `store_event`.
+
+Each span SHOULD include structured attributes: `room_id`, `channel_id`,
+`event_id`, `provider`, and `latency_ms`.
+
 **SIP trace examples:**
 
 A SIP voice backend SHOULD emit the following traces:
@@ -3992,11 +4092,553 @@ These principles define the conceptual architecture of RoomKit:
     raw frames. The pipeline processes them. Stages are optional and composable.
     Same pattern as text hooks: preprocessing inbound, postprocessing outbound.
 
+18. **Agents are channels.** Multi-agent orchestration uses the same
+    Room/Channel/Event model. Agents are intelligence channels with identity
+    metadata. Routing, handoff, and coordination happen through existing
+    primitives — no special agent API.
+
+19. **Memory is pluggable.** AI context construction is a swappable strategy,
+    not a hardcoded sliding window. Implementations choose how to build
+    conversation history: recent events, summarized history, vector retrieval,
+    or token-budget-aware truncation.
+
 ---
 
-## 19. Conformance Levels
+## 19. Multi-Agent Orchestration
 
-### 19.1 Level 0: Core (REQUIRED)
+Multi-agent orchestration enables multiple AI agents to collaborate within a
+single room. Agents are intelligence channels with identity metadata. Routing,
+handoff, and state management use existing Room/Channel/Event primitives.
+
+### 19.1 Overview
+
+An **Agent** is an AIChannel subclass with structured identity:
+
+```
+Agent (extends AIChannel)
+├── role: string | null                     # "Senior Engineer", "Triage Agent"
+├── description: string | null              # Agent capabilities description
+├── scope: string | null                    # "Backend systems", "Billing"
+├── voice: string | null                    # TTS voice identifier
+├── greeting: string | null                 # Auto-greeting text on session start
+├── language: string | null                 # Preferred language
+├── auto_greet: bool (default true)         # Play greeting on voice session start
+│
+├── is_config_only: bool (read-only)        # True when no AI provider (speech-to-speech mode)
+└── build_identity_block(language) → string # Generate identity context for system prompt
+```
+
+When `is_config_only` is true, the Agent has no AI provider and serves as a
+configuration container for speech-to-speech channels (voice, greeting, language
+metadata). A null provider MUST be accepted — no generation calls are made.
+
+Multiple Agents MAY be attached to a single room. The orchestration system
+determines which Agent handles each event.
+
+### 19.2 ConversationState
+
+Each room MAY have a `ConversationState` stored in room metadata:
+
+```
+ConversationState
+├── phase: string | null                    # Current conversation phase ("triage", "specialist")
+├── active_agent_id: string | null          # Agent currently handling the conversation
+├── language: string | null                 # Detected participant language
+└── metadata: map<string, any>              # Custom state (intent, escalation level, etc.)
+```
+
+Phase transitions MUST be explicit — either via handoff or programmatic update.
+The framework fires `ON_PHASE_TRANSITION` hooks on state changes.
+
+### 19.3 ConversationRouter
+
+The `ConversationRouter` selects which Agent processes each event. It is
+installed as a `BEFORE_BROADCAST` sync hook.
+
+```
+ConversationRouter
+├── rules: list<RoutingRule>                # Ordered by priority
+├── default_agent_id: string | null         # Fallback when no rule matches
+└── supervisor_id: string | null            # Always receives events (if set)
+```
+
+**RoutingRule:**
+
+```
+RoutingRule
+├── agent_id: string                        # Target agent
+├── conditions: RoutingConditions           # When this rule applies
+└── priority: int (default 0)               # Lower = evaluated first
+```
+
+**RoutingConditions:**
+
+```
+RoutingConditions
+├── phases: set<string> | null              # Match when ConversationState.phase is in set
+├── channel_types: set<ChannelType> | null  # Match when source channel type is in set
+├── intents: set<string> | null             # Match on detected intent
+├── source_channel_ids: set<string> | null  # Match on specific source channels
+└── custom: function | null                 # Arbitrary predicate (event, context, state) → bool
+```
+
+**Evaluation order:**
+
+1. If `ConversationState.active_agent_id` is set and no phase transition
+   occurred, route to the active agent (sticky affinity).
+2. Evaluate rules in priority order. First matching rule wins.
+3. If no rule matches, use `default_agent_id`.
+4. If `supervisor_id` is set, the supervisor ALWAYS receives the event
+   (in addition to the selected agent).
+
+The router stamps routing metadata on the event. The Event Router skips
+non-targeted intelligence channels during broadcast.
+
+### 19.4 ConversationPipeline
+
+A `ConversationPipeline` generates `RoutingRule` entries from a linear stage
+definition:
+
+```
+ConversationPipeline
+├── stages: list<PipelineStage>
+├── default_phase: string | null            # Initial phase (first stage if null)
+└── supervisor_id: string | null            # Supervisor for all stages
+```
+
+**PipelineStage:**
+
+```
+PipelineStage
+├── phase: string                           # Phase name ("triage", "specialist", "closing")
+├── agent_id: string                        # Agent handling this phase
+├── next: string | null                     # Next phase on handoff (null = terminal)
+├── can_return_to: set<string>              # Phases this stage can return to
+└── description: string | null              # Human-readable stage description
+```
+
+The pipeline generates one `RoutingRule` per stage with
+`conditions.phases = {stage.phase}`.
+
+**Allowed transitions:** An agent in phase P MAY hand off to:
+- `stage.next` (forward progression)
+- Any phase in `stage.can_return_to` (backward/lateral)
+- Transitions to other phases MUST be rejected.
+
+### 19.5 HandoffHandler
+
+Agents request handoffs by calling the `handoff_conversation` tool:
+
+**HandoffRequest:**
+
+```
+HandoffRequest
+├── target_agent_id: string                 # Agent to hand off to
+├── reason: string                          # Why the handoff is happening
+├── summary: string                         # Context summary for the target agent
+├── context: map<string, any>               # Additional handoff context
+├── channel_escalation: string | null       # "same", "voice", "email", "sms" (channel switch)
+└── urgent: bool (default false)            # Priority flag
+```
+
+**HandoffResult:**
+
+```
+HandoffResult
+├── accepted: bool                          # Whether the handoff was accepted
+├── new_agent_id: string | null             # Active agent after handoff
+├── new_phase: string | null                # Phase after handoff
+├── message: string                         # Human-readable result
+└── reason: string                          # Rejection reason (if not accepted)
+```
+
+**Handoff protocol:**
+
+1. Agent calls `handoff_conversation` tool with `HandoffRequest`.
+2. `HandoffHandler` validates:
+   - Target agent exists and is attached to the room.
+   - Phase transition is allowed (per pipeline rules, if applicable).
+3. If valid:
+   - Update `ConversationState.phase` and `active_agent_id`.
+   - Fire `ON_HANDOFF` hook.
+   - Fire `ON_PHASE_TRANSITION` hook.
+   - Return `HandoffResult(accepted=true)`.
+4. If invalid:
+   - Fire `ON_HANDOFF_REJECTED` hook.
+   - Return `HandoffResult(accepted=false, reason=...)`.
+
+The handoff summary is injected into the target agent's context so it
+has continuity.
+
+### 19.6 Orchestration Strategies
+
+The following strategies are common patterns built on router and pipeline
+primitives. Implementations SHOULD provide helpers for each.
+
+#### 19.6.1 Pipeline
+
+Agents are chained linearly. Each agent handles one phase and hands off to
+the next:
+
+```
+Triage → Specialist → Resolution → Closing
+```
+
+The first agent is the entry point. Only forward transitions (and explicitly
+allowed backward transitions) are permitted.
+
+#### 19.6.2 Swarm
+
+Every agent can hand off to every other agent. No linear ordering. Useful
+for collaborative agent pools where any agent may be most appropriate:
+
+```
+Agent A ⇄ Agent B ⇄ Agent C
+```
+
+Sticky affinity keeps the conversation with the current agent until an
+explicit handoff occurs.
+
+#### 19.6.3 Supervisor
+
+A supervisor agent talks to the user and delegates work to specialist agents.
+Specialists run in isolated **child rooms** — their output is collected and
+returned to the supervisor.
+
+```
+User ↔ Supervisor
+              ├── delegates to → Worker A (child room)
+              └── delegates to → Worker B (child room)
+```
+
+The supervisor MAY delegate sequentially or in parallel. Results are delivered
+back via the delivery strategy system (Section 23).
+
+#### 19.6.4 Loop
+
+A single agent handles the conversation indefinitely, looping back for
+refinement. Useful for iterative workflows (editing, code review, tutoring).
+
+### 19.7 StatusBus
+
+The `StatusBus` enables inter-agent coordination through status messages:
+
+```
+StatusBus (interface)
+├── post(room_id, agent_id, status, metadata) → void
+├── subscribe(room_id, callback) → unsubscribe_function
+└── get_latest(room_id, agent_id) → Status | null
+```
+
+Status posts fire `ON_STATUS_POSTED` hooks. Agents MAY use the StatusBus to
+signal completion, progress, or request attention without sending room events.
+
+---
+
+## 20. Memory System
+
+The Memory System provides pluggable AI context construction. Instead of
+always using a fixed sliding window of recent events, implementations MAY
+choose different strategies for building conversation history.
+
+### 20.1 MemoryProvider Interface
+
+```
+MemoryProvider (interface)
+├── retrieve(room_id, current_event, context, channel_id) → MemoryResult
+│       # Build conversation context for AI generation
+│       # Called by AIChannel before each generation
+│
+└── close() → void
+        # Release resources
+```
+
+### 20.2 MemoryResult
+
+```
+MemoryResult
+├── messages: list<AIMessage>               # Pre-built AI messages (summaries, instructions)
+└── events: list<RoomEvent>                 # Raw events for AIChannel to convert
+```
+
+When `messages` is non-empty, the AIChannel uses them directly as conversation
+history. When `events` is provided, the AIChannel converts them to AI messages
+using its standard conversion logic. Both MAY be combined — `messages` are
+prepended before converted `events`.
+
+### 20.3 Built-in Implementations
+
+| Implementation | Strategy | Use Case |
+|---|---|---|
+| SlidingWindowMemory | Last N events | Default, simple conversations |
+| CompactingMemory | Merges older events into compact summaries | Long conversations, reduce tokens |
+| SummarizingMemory | AI-powered summarization of history | Complex multi-topic conversations |
+| RetrievalMemory | Vector search for relevant past events | Large knowledge-heavy contexts |
+| BudgetAwareMemory | Token-based truncation with priorities | Strict token budget enforcement |
+
+**SlidingWindowMemory** is the default when no MemoryProvider is configured.
+It returns the most recent `max_context_events` from the room timeline.
+
+**SummarizingMemory** calls an AI provider to summarize older history,
+keeping recent events intact. The summary is cached and refreshed
+periodically or when the event count exceeds a threshold.
+
+**RetrievalMemory** embeds events using a vector store and retrieves the
+most semantically relevant past events for the current message. This enables
+recall of earlier conversation topics without carrying the full history.
+
+**BudgetAwareMemory** counts tokens and evicts oldest events when the total
+exceeds `evict_threshold_tokens`. It prioritizes keeping system messages,
+tool results, and recent events.
+
+---
+
+## 21. Tool Access Control
+
+### 21.1 ToolPolicy
+
+A `ToolPolicy` controls which tools an AI agent can invoke:
+
+```
+ToolPolicy
+├── allow: list<string>                     # Glob patterns for allowed tools
+├── deny: list<string>                      # Glob patterns for denied tools
+└── role_overrides: map<string, RoleOverride>  # Per-role policy adjustments
+```
+
+**Resolution rules:**
+
+1. If `deny` matches the tool name, the tool is DENIED (deny always wins).
+2. If `allow` is non-empty and the tool name does NOT match any allow pattern,
+   the tool is DENIED (whitelist mode).
+3. Otherwise, the tool is ALLOWED.
+
+Glob patterns support `*` (any characters) and `?` (single character).
+Example: `allow: ["search_*", "get_*"]` permits all search and get tools.
+
+**RoleOverride:**
+
+```
+RoleOverride
+├── allow: list<string> | null              # Additional allow patterns
+├── deny: list<string> | null               # Additional deny patterns
+└── mode: "restrict" | "replace"            # Merge with base or replace entirely
+```
+
+When `mode` is `"restrict"`, the override's allow/deny lists are merged with
+the base policy. When `"replace"`, the override completely replaces the base.
+
+### 21.2 MCP Tool Provider
+
+Implementations SHOULD support loading tools from MCP (Model Context Protocol)
+servers via an `MCPToolProvider`:
+
+```
+MCPToolProvider
+├── server_url: string                      # MCP server endpoint
+├── tools() → list<ToolDefinition>          # Discover available tools
+└── call(name, arguments) → string          # Execute a tool
+```
+
+MCP tools are subject to the same `ToolPolicy` as local tools.
+
+### 21.3 AI Steering Directives
+
+Steering directives allow dynamic mid-conversation control of AI behavior.
+They are injected into the AI generation context:
+
+| Directive | Effect |
+|---|---|
+| Cancel | Abort the current generation immediately |
+| UpdateSystemPrompt | Append additional instructions to the system prompt |
+| InjectMessage | Add a synthetic user or assistant message to the conversation history |
+
+Steering directives are typically issued by orchestration logic (e.g.,
+supervisor injecting context for a worker agent) or by hooks reacting to
+events.
+
+---
+
+## 22. Delivery Strategies
+
+Delivery strategies control how proactive content (background task results,
+delegated agent output, scheduled messages) is delivered into a conversation.
+
+### 22.1 DeliveryStrategy Interface
+
+```
+DeliveryStrategy (interface)
+└── deliver(context: DeliveryContext) → void
+```
+
+**DeliveryContext:**
+
+```
+DeliveryContext
+├── kit: RoomKit                            # Framework instance
+├── room_id: string                         # Target room
+├── content: EventContent                   # Content to deliver
+├── channel_id: string                      # Source channel for attribution
+└── metadata: map<string, any>              # Delivery metadata
+```
+
+### 22.2 Built-in Strategies
+
+| Strategy | Behavior |
+|---|---|
+| Immediate | Deliver synchronously. May interrupt active voice playback. |
+| WaitForIdle(buffer_seconds) | Wait until both AI generation and user input are idle for `buffer_seconds`, then deliver. Prevents interrupting active exchanges. |
+| Queued(buffer_seconds) | Batch multiple delivery items, then deliver together after `buffer_seconds` of inactivity. |
+
+**WaitForIdle** is RECOMMENDED for voice channels where interruptions are
+disruptive. It monitors both the AI generation state and user speech activity
+before injecting content.
+
+### 22.3 Delivery Hooks
+
+| Hook | Execution | When |
+|---|---|---|
+| BEFORE_DELIVER | SYNC | Before strategy executes — can block or modify content |
+| AFTER_DELIVER | ASYNC | After delivery completes |
+
+---
+
+## 23. Task Delegation
+
+Task delegation enables agents to offload background work to specialized
+agents running in isolated child rooms. Results are collected and delivered
+back to the parent conversation.
+
+### 23.1 TaskRunner Interface
+
+```
+TaskRunner (interface)
+├── run(task: DelegatedTask) → void
+│       # Execute the task asynchronously
+│
+└── close() → void
+        # Cancel in-flight tasks and release resources
+```
+
+Implementations MUST provide an `InMemoryTaskRunner` for single-process
+deployments.
+
+### 23.2 DelegatedTask
+
+```
+DelegatedTask
+├── id: string                              # Unique task identifier
+├── room_id: string                         # Parent room
+├── agent_id: string                        # Agent to execute the task
+├── task: string                            # Task description / instructions
+├── notify: string | null                   # Channel to notify on completion
+├── strategy: DeliveryStrategy | null       # How to deliver results (default: Immediate)
+├── status: TaskStatus                      # PENDING, IN_PROGRESS, COMPLETED, FAILED
+├── result: string | null                   # Task result (on completion)
+├── error: string | null                    # Error message (on failure)
+├── created_at: datetime
+└── completed_at: datetime | null
+```
+
+### 23.3 Delegation Protocol
+
+When `delegate(room_id, agent_id, task, notify, strategy)` is called:
+
+1. Create a **child room** linked to the parent room.
+2. Attach the specified agent as an INTELLIGENCE channel in the child room.
+3. Share relevant channels from the parent (for context access).
+4. Inject the task description as a system event in the child room.
+5. The agent processes the task and generates a response.
+6. Collect the agent's response as the task result.
+7. Fire `ON_TASK_COMPLETED` hook in the parent room.
+8. If `notify` is set, deliver the result to the specified channel using
+   the delivery strategy.
+
+### 23.4 Delegation Tools
+
+Implementations SHOULD provide helpers for AI-driven delegation:
+
+- `build_delegate_tool(agents)` — Creates an AI tool definition that lets
+  an agent delegate work to other agents. The `agents` parameter lists
+  available delegation targets with descriptions.
+
+- `setup_delegation(agent, handler, tool)` — Wires the delegation tool into
+  an agent, connecting it to the TaskRunner.
+
+### 23.5 Delegation Hooks
+
+| Hook | Execution | When |
+|---|---|---|
+| ON_TASK_DELEGATED | ASYNC | Task created and child room initialized |
+| ON_TASK_COMPLETED | ASYNC | Task completed with result (or failed with error) |
+
+---
+
+## 24. Skills Framework
+
+The Skills Framework enables agent capabilities to be defined as discoverable,
+self-contained packages.
+
+### 24.1 Skill Definition
+
+A Skill is defined by a `SKILL.md` file with YAML frontmatter:
+
+```
+---
+name: "web-search"
+description: "Search the web for current information"
+version: "1.0.0"
+license: "MIT"
+tools:
+  - search_web
+  - fetch_url
+allowed_tools:
+  - "search_*"
+  - "fetch_*"
+---
+
+## Instructions
+
+You are a web search specialist. When asked to find information...
+
+## References
+
+- [Search API docs](https://...)
+```
+
+### 24.2 SkillMetadata
+
+```
+SkillMetadata
+├── name: string                            # Unique skill identifier
+├── description: string                     # What the skill does
+├── version: string | null                  # Semantic version
+├── license: string | null                  # License identifier
+├── tools: list<string>                     # Tools this skill provides
+├── allowed_tools: list<string>             # Tool access patterns (ToolPolicy globs)
+└── path: string                            # Filesystem path to skill directory
+```
+
+### 24.3 SkillRegistry
+
+```
+SkillRegistry
+├── discover(*directories) → int            # Scan directories for SKILL.md files, return count
+├── register(skill_dir) → SkillMetadata     # Register a single skill
+├── get_metadata(name) → SkillMetadata | null  # Look up skill metadata
+├── get_skill(name) → Skill | null          # Load full skill (metadata + instructions)
+├── all_metadata() → list<SkillMetadata>    # List all registered skills
+└── to_prompt_xml() → string               # Generate <available_skills> XML for AI context
+```
+
+Skills are injected into the AI agent's system prompt via `to_prompt_xml()`.
+The agent can then select and apply skills based on the user's request.
+
+---
+
+## 25. Conformance Levels
+
+### 25.1 Level 0: Core (REQUIRED)
 
 A conforming implementation MUST support:
 
@@ -4022,7 +4664,7 @@ A conforming implementation MUST support:
 - Structured logging
 - Idempotency checking
 
-### 19.2 Level 1: Transport (RECOMMENDED)
+### 25.2 Level 1: Transport (RECOMMENDED)
 
 A Level 1 implementation SHOULD additionally support:
 
@@ -4031,30 +4673,45 @@ A Level 1 implementation SHOULD additionally support:
 - WebSocket channel
 - HTTP/Webhook channel
 - AI channel with at least one AI provider
+- Agent class (AIChannel subclass with identity metadata)
 - Provider abstraction (swappable per channel type)
 - Identity resolution pipeline
 - Identity hooks (ON_IDENTITY_AMBIGUOUS, ON_IDENTITY_UNKNOWN)
 - Participant model with identification status
+- Memory system with at least SlidingWindowMemory (Section 20)
 - Circuit breaker
 - Retry policy
 - Rate limiting
 - REST API (Section 16.1)
+- Telemetry provider abstraction (Section 15.7)
 
-### 19.3 Level 2: Rich (OPTIONAL)
+### 25.3 Level 2: Rich (OPTIONAL)
 
 A Level 2 implementation MAY additionally support:
 
 - WhatsApp channel (Business and/or Personal)
 - Messenger channel
 - Teams channel
+- Telegram channel
 - RCS channel with SMS fallback
 - Template content support
 - Source providers (persistent connections)
 - MCP Server (Section 16.2)
 - Realtime/ephemeral events backend
 - Per-room hooks
+- Multi-agent orchestration (Section 19):
+  - ConversationRouter with routing rules
+  - ConversationPipeline with stages
+  - HandoffHandler with tool-based handoff protocol
+  - At least Pipeline and Swarm strategies
+- Tool access control with ToolPolicy (Section 21)
+- Task delegation with child rooms (Section 23)
+- Delivery strategies: Immediate, WaitForIdle, Queued (Section 22)
+- Skills framework with SkillRegistry (Section 24)
+- AI steering directives (Section 21.3)
+- Advanced memory providers: Summarizing, Retrieval (Section 20)
 
-### 19.4 Level 3: Real-Time Media (OPTIONAL)
+### 25.4 Level 3: Real-Time Media (OPTIONAL)
 
 A Level 3 implementation MAY additionally support audio and/or video real-time media:
 
@@ -4333,16 +4990,33 @@ AIChannel
 │   ├── system_prompt: string | null
 │   ├── temperature: float | null
 │   ├── max_tokens: int | null
-│   └── max_context_events: int | null
+│   ├── max_context_events: int | null
+│   ├── thinking_budget: int | null         # Token budget for extended thinking/reasoning
+│   ├── max_tool_rounds: int (default 200)  # Maximum tool call iterations per generation
+│   ├── tool_loop_timeout_seconds: float | null (default 300)  # Timeout for entire tool loop
+│   ├── fallback_provider: AIProvider | null # Fallback if primary provider fails
+│   ├── evict_threshold_tokens: int (default 5000)  # Token threshold for context eviction
+│   ├── memory: MemoryProvider | null       # Pluggable context construction (Section 20)
+│   ├── tool_policy: ToolPolicy | null      # Tool access control (Section 21)
+│   └── skills: SkillRegistry | null        # Available skills (Section 24)
 ├── per_room_overrides (via binding metadata):
 │   ├── system_prompt
 │   ├── temperature
 │   ├── max_tokens
+│   ├── thinking_budget
 │   └── tools
+├── ai_response_model:
+│   │   # AI responses consist of ordered parts:
+│   ├── AITextPart                          # Generated text content
+│   ├── AIThinkingPart                      # Chain-of-thought reasoning (preserved in history)
+│   ├── AIToolCallPart                      # Function call with name and arguments
+│   └── AIToolResultPart                    # Tool execution result
 └── behavior:
     ├── on_event() builds conversation history + target capabilities
     ├── Calls provider.generate(messages, context)
+    ├── Runs tool loop: generate → call tools → feed results → re-generate (up to max_tool_rounds)
     ├── Skips events from self (loop prevention)
+    ├── Supports streaming via generate_stream() and deliver_stream()
     └── Returns ChannelOutput with response events + tasks + observations
 ```
 
@@ -4441,6 +5115,44 @@ VideoChannel
     ├── LocalVideoBackend — OpenCV webcam capture (dev/testing)
     ├── MockVideoBackend — Unit testing with call tracking
     └── (future) WebRTC, SIP video backends
+```
+
+### A.13 Telegram Channel
+
+```
+TelegramChannel
+├── type: TELEGRAM
+├── category: TRANSPORT
+├── direction: BIDIRECTIONAL
+├── media_types: [TEXT, RICH, MEDIA, LOCATION]
+├── capabilities:
+│   ├── max_length: 4096
+│   ├── supports_rich_text: true (HTML subset)
+│   ├── supports_buttons: true (inline keyboards)
+│   ├── supports_edit: true
+│   ├── supports_delete: true
+│   └── supports_typing: true
+├── provider: TelegramBotProvider
+│   ├── bot_token: string (secret)
+│   ├── webhook_url: string | null
+│   ├── parse_webhook(request) → InboundMessage
+│   ├── verify_signature(request) → bool
+│   └── send(chat_id, content, options) → DeliveryResult
+└── delivery: sends via Telegram Bot API (sendMessage, sendPhoto, etc.)
+```
+
+### A.14 CLI Channel
+
+```
+CLIChannel
+├── type: CLI
+├── category: TRANSPORT
+├── direction: BIDIRECTIONAL
+├── media_types: [TEXT]
+├── capabilities:
+│   ├── max_length: null (unlimited)
+│   └── supports_rich_text: false
+└── purpose: Development and testing via terminal stdin/stdout
 ```
 
 ---
@@ -4819,6 +5531,87 @@ Timeline of a room with SMS customer + AI:
    │   └── kit.close_room("room-abc")
    │
    └── Room closed, resources released
+```
+
+### B.9 Multi-Agent Pipeline — Triage → Specialist → Resolution
+
+```
+1. Customer sends SMS "My internet is down since yesterday"
+   │
+   ▼
+2. process_inbound(message)
+   │
+   ├── Route: create new room
+   ├── Attach channels:
+   │   ├── "sms_main" (TRANSPORT, customer)
+   │   ├── "triage" (INTELLIGENCE, Agent: role="Triage", phase="triage")
+   │   ├── "network-specialist" (INTELLIGENCE, Agent: role="Network Engineer", phase="specialist")
+   │   └── "closer" (INTELLIGENCE, Agent: role="Resolution", phase="closing")
+   │
+   ├── ConversationState initialized:
+   │     {phase: "triage", active_agent_id: "triage"}
+   │
+   ├── ConversationRouter installed as BEFORE_BROADCAST hook:
+   │     rules: [
+   │       {agent: "triage", conditions: {phases: {"triage"}}},
+   │       {agent: "network-specialist", conditions: {phases: {"specialist"}}},
+   │       {agent: "closer", conditions: {phases: {"closing"}}},
+   │     ]
+   │
+   ├── BEFORE_BROADCAST: router stamps event metadata → target: "triage"
+   ├── Broadcast: only "triage" agent processes event
+   │
+   └── Triage agent responds:
+       ├── Generates: "I'll connect you with our network specialist."
+       ├── Calls tool: handoff_conversation(target="network-specialist",
+       │     reason="network outage", summary="Customer reports internet down since yesterday")
+       │
+       ├── HandoffHandler processes:
+       │   ├── Validates: "triage" → "specialist" transition is allowed
+       │   ├── Updates ConversationState:
+       │   │     {phase: "specialist", active_agent_id: "network-specialist"}
+       │   ├── Fires ON_HANDOFF hook
+       │   └── Fires ON_PHASE_TRANSITION hook
+       │
+       └── Response events broadcast to SMS customer
+   │
+   ▼
+3. Customer sends "Yes, the router lights are blinking red"
+   │
+   ├── BEFORE_BROADCAST: router evaluates
+   │   ├── ConversationState.phase = "specialist"
+   │   ├── Route → "network-specialist"
+   │
+   ├── Network specialist agent processes:
+   │   ├── Has handoff context: original issue + triage summary
+   │   ├── Generates diagnostic steps
+   │   ├── Delegates background task:
+   │   │     kit.delegate(room_id, "diagnostics-bot",
+   │   │       task="Check network status for customer area",
+   │   │       notify="network-specialist",
+   │   │       strategy=WaitForIdle(buffer=5.0))
+   │   │
+   │   ├── ON_TASK_DELEGATED hook fires
+   │   └── Responds: "Let me check your area's network status..."
+   │
+   ▼
+4. Delegated task completes
+   │
+   ├── ON_TASK_COMPLETED hook fires
+   ├── WaitForIdle strategy waits for conversation pause
+   ├── BEFORE_DELIVER hook fires
+   ├── Result injected: "Network status: area outage confirmed, ETA 2 hours"
+   │
+   ▼
+5. Specialist resolves and hands off to closer
+   │
+   ├── Calls: handoff_conversation(target="closer",
+   │     reason="resolved", summary="Area outage confirmed, ETA communicated")
+   │
+   ├── ConversationState:
+   │     {phase: "closing", active_agent_id: "closer"}
+   │
+   └── Closer agent summarizes resolution, asks for satisfaction
 ```
 
 ---
