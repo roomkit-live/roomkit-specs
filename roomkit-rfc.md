@@ -105,6 +105,8 @@ interpreted as described in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
 | **Avatar Provider** | A service that generates lip-synced video frames from TTS audio for visual agent embodiment. |
 | **Video Bridge** | A component that forwards video frames between sessions in the same room, with keyframe buffering and PLI requests. |
 | **StatusBus** | A shared event log for inter-agent coordination, allowing agents to post and subscribe to status updates without sending room events. |
+| **Tool Auditor** | A pluggable recorder that captures every tool call (input, output, timing, status) for debugging and monitoring. |
+| **Session Auditor** | A pluggable recorder that captures the full conversation timeline (speech, tool calls, vision, interruptions) for compliance and replay. |
 
 ### 1.3 Notation
 
@@ -4345,6 +4347,137 @@ A SIP voice backend SHOULD emit the following traces:
 | Call accepted | outbound | sip | `200 OK (codec=16000Hz, ...)` | SDP answer body |
 | Remote hangup | inbound | sip | `BYE from +1555...` | Serialized SIP BYE request |
 | Local hangup | outbound | sip | `BYE (local hangup)` | null (library may not expose serialized form) |
+
+### 15.8 Audit System
+
+RoomKit provides a two-tier auditing architecture for compliance, debugging,
+and monitoring: **tool auditing** captures individual tool calls, and
+**session auditing** captures the full conversation timeline.
+
+#### 15.8.1 Tool Auditing
+
+Tool auditing records every tool call with input, output, timing, and status.
+
+**ToolAuditEntry:**
+
+```
+ToolAuditEntry
+├── ts: string                              # ISO 8601 timestamp
+├── agent_id: string                        # Which agent made the call
+├── tool_name: string                       # Tool function name
+├── arguments: map<string, any>             # Input arguments
+├── result: string                          # Tool output (truncated to 500 chars)
+├── status: string                          # "ok", "failed", or "error"
+├── duration_ms: float                      # Execution time in milliseconds
+└── metadata: map<string, any>              # Optional extra data
+```
+
+**Status detection:**
+- `"ok"` — default for successful execution.
+- `"failed"` — auto-detected if tool returns `{"status": "failed"}`.
+- `"error"` — set when the tool handler raises an exception.
+
+**ToolAuditor** (interface):
+
+```
+ToolAuditor (interface)
+├── record(entry: ToolAuditEntry) → void    # Record a tool execution
+├── entries: list<ToolAuditEntry> (property) # All recorded entries
+├── summary() → string                     # Human-readable summary
+└── print_summary() → void                 # Log summary via logger
+```
+
+**Built-in implementations:**
+
+| Implementation | Persistence | Description |
+|---|---|---|
+| JSONLToolAuditor | JSONL file | Appends one JSON line per call; maintains in-memory list |
+| ConsoleToolAuditor | Logger | Real-time logging via Python logging module |
+
+**Handler wrapper:**
+
+The `audit_tool_handler(handler, auditor, agent_id)` function wraps any tool
+handler to automatically record audit entries. It:
+
+1. Measures execution time.
+2. Catches exceptions and marks status as `"error"`.
+3. Auto-detects `"failed"` from JSON response.
+4. Truncates results to 500 characters.
+5. Returns the original handler result unchanged.
+
+Integrators MAY implement custom `ToolAuditor` backends (e.g., Datadog,
+Elasticsearch) by implementing the interface.
+
+#### 15.8.2 Session Auditing
+
+Session auditing captures the full conversation timeline: speech turns, tool
+calls, vision events, interruptions, and session lifecycle.
+
+**SessionAuditEntry:**
+
+```
+SessionAuditEntry
+├── ts: string                              # ISO 8601 timestamp
+├── type: string                            # Event type (see below)
+├── role: string | null                     # "user", "assistant", or "system"
+├── content: string                         # Text, transcription, or description
+├── duration_ms: float | null               # For timed events (tool calls)
+└── metadata: map<string, any>              # Extra data (tool_name, args, status, etc.)
+```
+
+**Session audit event types:**
+
+| Type | Role | Trigger | Content |
+|---|---|---|---|
+| speech | user/assistant | ON_TRANSCRIPTION hook | Transcribed speech text |
+| tool_call | assistant | Manual `record_tool()` | Tool result |
+| vision | system | ON_VISION_RESULT hook | Frame description |
+| barge_in | user | ON_BARGE_IN hook | "User interrupted" |
+| session | system | ON_SESSION_STARTED hook | "Session started" |
+| error | system | Application-specific | Error message |
+
+**SessionAuditor** (interface):
+
+```
+SessionAuditor (interface)
+├── record(entry: SessionAuditEntry) → void
+├── entries: list<SessionAuditEntry> (property)
+├── summary() → string
+├── print_summary() → void
+│
+│   # ToolAuditor compatibility bridge:
+├── record_tool(entry: ToolAuditEntry) → void  # Convert tool entry to session entry
+├── tool_auditor: ToolAuditor (property)        # Bridge adapter
+│
+│   # Hook auto-registration:
+└── attach(kit: RoomKit) → void                # Register hooks for automatic capture
+```
+
+**Hook auto-registration:** When `attach(kit)` is called, the session auditor
+registers hooks for `ON_TRANSCRIPTION`, `ON_BARGE_IN`, `ON_SESSION_STARTED`,
+and `ON_VISION_RESULT` to capture conversation events automatically.
+
+**ToolAuditor bridge:** The `tool_auditor` property returns a bridge adapter
+that converts `ToolAuditEntry` records into `SessionAuditEntry` records. This
+allows a single `SessionAuditor` to capture both tool calls and conversation
+events in a unified timeline.
+
+**Built-in implementation:** `JSONLSessionAuditor` — writes entries to a JSONL
+file and maintains an in-memory chronological list.
+
+#### 15.8.3 Audit Data Format
+
+Both auditors use JSONL (JSON Lines) for persistence — one JSON object per
+line, independently parseable:
+
+```
+{"ts":"...","agent_id":"exec","tool_name":"search","arguments":{"q":"roomkit"},"result":"...","status":"ok","duration_ms":1234.5,"metadata":{}}
+{"ts":"...","type":"speech","role":"user","content":"Open Chrome","duration_ms":null,"metadata":{}}
+```
+
+JSONL files are append-only. Implementations MUST create parent directories
+automatically. Write errors MUST be logged but MUST NOT propagate exceptions
+to the caller.
 
 ---
 
