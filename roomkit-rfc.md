@@ -84,6 +84,7 @@ interpreted as described in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
 | **Broadcast** | The act of routing an event to all eligible channels in a Room. |
 | **Transcoding** | Converting event content from one format to another for cross-channel delivery. |
 | **Audio Pipeline** | A configurable chain of audio processing stages (resampler, AEC, AGC, denoiser, VAD, diarization, DTMF, recording) between the transport and the conversation engine. |
+| **AI Pipeline** | A configurable chain of AI generation stages (pre-context gates, memory retrieval, tool resolution, prompt assembly, pre-generation gate, generation, post-generation, emission) between an AIChannel receiving an event and emitting a response. Peer abstraction to Audio Pipeline and Video Pipeline. |
 | **AEC** | Acoustic Echo Cancellation — removes the bot's own audio from the inbound stream to prevent self-triggering. |
 | **AGC** | Automatic Gain Control — normalizes audio volume to a consistent level regardless of input device or distance. |
 | **DTMF** | Dual-Tone Multi-Frequency — telephone keypad tones used for IVR navigation and call control. |
@@ -1394,6 +1395,7 @@ Hooks MAY be registered globally (apply to all rooms) or per-room.
 | AFTER_DELIVER | ASYNC | After proactive delivery completes |
 | | | |
 | **AI Generation:** | | |
+| BEFORE_AI_CONTEXT_BUILD | SYNC | Before AI context is built (pre-memory, pre-tool-resolution) — can block cheaply |
 | BEFORE_AI_GENERATION | SYNC | Before AI provider generate() — can modify context |
 | ON_AI_THINKING | ASYNC | AI model began extended thinking/reasoning |
 | ON_AI_RESPONSE | ASYNC | AI generation completed (observability) |
@@ -3983,6 +3985,288 @@ OpenCVVideoRecorder (MJPEG/XVID), MockVideoRecorder.
 | ON_SCREEN_SHARE_STARTED | ASYNC | Screen sharing started |
 | ON_SCREEN_SHARE_STOPPED | ASYNC | Screen sharing stopped |
 | BEFORE_BRIDGE_VIDEO | SYNC | Before frame forwarded via bridge — can block |
+
+### 12.9 AI Generation Pipeline
+
+The AI generation subsystem mirrors the audio and video pipelines in structure.
+Text generation by an AIChannel flows through a pluggable stage architecture using
+the same ABC + config composition pattern as Section 12.3 (Audio Pipeline) and
+Section 12.8 (Video Pipeline).
+
+This design ensures that cross-cutting generation concerns (gating, memory
+retrieval, tool resolution, prompt assembly, response validation, caching,
+content filtering) are expressed as composable stages rather than hardcoded
+sequences inside the channel. New generation-time features become new stages,
+not new hook triggers or new mixins.
+
+#### 12.9.1 Architecture Overview
+
+```
+Inbound RoomEvent (arrives at AIChannel.on_event)
+         │
+         ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                      AI Generation Pipeline                          │
+│                                                                      │
+│  PreContextGate  ──►  MemoryRetrieval  ──►  ToolResolution  ──►     │
+│  (cheap gates)        (history, RAG)         (skills, policy)        │
+│                                                                      │
+│  PromptAssembly  ──►  PreGeneration    ──►  Generation      ──►     │
+│  (system prompt)      (final gate)           (provider call)         │
+│                                                                      │
+│  PostGeneration  ──►  Emission                                       │
+│  (validate, cache)    (emit events)                                  │
+└─────────────────────────────────────────────────────────────────────┘
+         │
+         ▼
+Response events → conversation store + broadcast
+```
+
+**Choosing between hook and stage:**
+
+| Criterion | Hook | Stage |
+|---|---|---|
+| **Ad-hoc gate in one project** | Preferred | Overkill |
+| **Reusable logic across projects** | Hard to package | Preferred |
+| **Replaces a default behavior** | Cannot | Preferred |
+| **Needs fine-grained position** | Limited to trigger points | Any stage position |
+| **Modifies AIContext in place** | Supported (BEFORE_AI_GENERATION) | Supported (any stage) |
+| **Multiple instances at same point** | Supported via priority | Supported via list slots |
+
+Hooks remain the simpler mechanism for most cases. Stages are the right
+abstraction when logic is reusable, needs a specific position in the pipeline,
+or replaces a default behavior (e.g., a custom memory retrieval strategy).
+
+#### 12.9.2 Default Stage Ordering (NORMATIVE)
+
+Implementations MUST execute the default AI generation pipeline in the
+following order:
+
+```
+[*gates, memory, tool_resolution, prompt_assembly, pre_generation,
+ generation, *post_generation, emission]
+```
+
+**Stage positions:**
+
+| Position | Stage | Default Behavior | Hook Trigger |
+|---|---|---|---|
+| 1 | gates (list) | Fire BEFORE_AI_CONTEXT_BUILD hooks, respect block | BEFORE_AI_CONTEXT_BUILD |
+| 2 | memory | Call MemoryProvider.retrieve() | — |
+| 3 | tool_resolution | Resolve skills, apply ToolPolicy, apply eviction | — |
+| 4 | prompt_assembly | Compose system prompt (channel + binding + skill preambles) | — |
+| 5 | pre_generation | Fire BEFORE_AI_GENERATION hooks, respect block/modify | BEFORE_AI_GENERATION |
+| 6 | generation | Call AIProvider.generate() or generate_stream(); run tool loop | ON_AI_THINKING, ON_TOOL_CALL |
+| 7 | post_generation (list) | Response validation, caching, output filtering (default: no-op) | — |
+| 8 | emission | Emit response events, fire AFTER_RESPONSE | ON_AI_RESPONSE |
+
+**Ordering rationale:**
+
+| Position | Stage | Why here |
+|---|---|---|
+| 1 | gates | Cheapest gate point. Blocks before any expensive work (memory retrieval, summarization, tool resolution). Required for features with side effects that must not run when generation is blocked (e.g., observation queues, token accounting). |
+| 2 | memory | Needed before prompt assembly (memory contents affect prompt length and tool policy). Must run after gates to avoid wasted retrieval and possible summarization LLM calls. |
+| 3 | tool_resolution | Needs memory results to apply budget-aware policy (tools count against context budget). |
+| 4 | prompt_assembly | Combines channel defaults, binding overrides, skill preambles, sandbox preambles. Runs after tool resolution so tool descriptions are finalized. |
+| 5 | pre_generation | Final modification opportunity before provider call. Hooks can mutate AIContext in place (system prompt injection, dynamic tool addition). |
+| 6 | generation | Provider invocation + tool loop. The expensive step. |
+| 7 | post_generation | Inspect/modify the response before emission (caching lookup/store, output content filter, safety guardrails with optional regeneration). |
+| 8 | emission | Final step. Emit response events, fire AFTER_RESPONSE hook, trigger broadcast pipeline. |
+
+Stages MUST NOT be reordered by integrators. Insertion is allowed only at the
+multi-stage slots (`gates`, `post_generation`).
+
+#### 12.9.3 AIStage Interface
+
+```
+AIStage (interface)
+├── name: string (property)                  # Stage identifier (defaults to class name)
+├── process(ctx: AIPipelineContext)
+│     → AIPipelineContext                    # Transform context, return it
+└── close() → void                           # Release resources
+```
+
+**Abort semantics:**
+
+A stage MAY abort the pipeline by setting `ctx.aborted = True`, populating
+`ctx.abort_reason` and `ctx.abort_stage`, and returning the context. All
+subsequent stages MUST be skipped when `ctx.aborted` is true. Emission stage
+MUST NOT emit response events from an aborted pipeline.
+
+**Error handling:**
+
+If a stage raises an exception, the pipeline engine MUST treat this as an
+abort (set `ctx.aborted = True`, `ctx.abort_reason = "stage exception"`,
+`ctx.abort_stage = <failing stage name>`). Exceptions MUST NOT propagate out
+of the pipeline to AIChannel callers.
+
+#### 12.9.4 Position-Specific Stage ABCs
+
+Each stage position has a dedicated ABC subclass of AIStage:
+
+| ABC | Position | Multi-Stage | Default Exists |
+|---|---|---|---|
+| PreContextGateStage | 1 | Yes (list) | Yes (hook runner) |
+| MemoryRetrievalStage | 2 | No | Yes |
+| ToolResolutionStage | 3 | No | Yes |
+| PromptAssemblyStage | 4 | No | Yes |
+| PreGenerationStage | 5 | No | Yes (hook runner) |
+| GenerationStage | 6 | No | Yes |
+| PostGenerationStage | 7 | Yes (list) | Yes (no-op) |
+| EmissionStage | 8 | No | Yes |
+
+An integrator-provided stage at a single-stage position replaces the default.
+Integrator-provided stages at multi-stage positions are appended to the
+pipeline in registration order alongside any built-in defaults.
+
+#### 12.9.5 AIPipelineContext
+
+Accumulating state that flows through all stages:
+
+```
+AIPipelineContext
+├── event: RoomEvent                         # Triggering event
+├── binding: ChannelBinding                  # AIChannel's room binding
+├── room_context: RoomContext                # Room state (participants, recent events)
+├── channel_id: string                       # AIChannel identifier
+├── ai_context: AIContext | null             # Built by MemoryRetrievalStage + friends
+├── response: AIResponse | null              # Built by GenerationStage
+├── stage_metadata: map<string, any>         # Inter-stage communication
+├── aborted: bool                            # Set by any stage to abort pipeline
+├── abort_reason: string | null              # Human-readable abort reason
+└── abort_stage: string | null               # Name of stage that aborted
+```
+
+**Field population timeline:**
+
+- **Before stage 1:** only `event`, `binding`, `room_context`, `channel_id` are set
+- **After stage 2 (memory):** `ai_context` is populated with historical messages
+- **After stage 4 (prompt_assembly):** `ai_context.system_prompt` is finalized
+- **After stage 6 (generation):** `response` is populated
+- **After stage 8 (emission):** response events have been emitted
+
+Stages MAY read any populated field. Stages MUST NOT read fields that are not
+yet populated per the timeline above.
+
+#### 12.9.6 AIPipelineConfig
+
+Configuration model for composing an AI pipeline:
+
+```
+AIPipelineConfig
+├── gates: list<PreContextGateStage>         # Default: []
+├── memory: MemoryRetrievalStage | null      # Default: null → use built-in default
+├── tool_resolution: ToolResolutionStage | null
+├── prompt_assembly: PromptAssemblyStage | null
+├── pre_generation: PreGenerationStage | null
+├── generation: GenerationStage | null
+├── post_generation: list<PostGenerationStage>  # Default: []
+├── emission: EmissionStage | null
+└── telemetry: TelemetryProvider | null      # Optional per-stage telemetry
+```
+
+**Composition algorithm (NORMATIVE):**
+
+```
+def build_pipeline(config: AIPipelineConfig) -> list[AIStage]:
+    return [
+        *config.gates,
+        config.memory or DefaultMemoryRetrievalStage(),
+        config.tool_resolution or DefaultToolResolutionStage(),
+        config.prompt_assembly or DefaultPromptAssemblyStage(),
+        config.pre_generation or DefaultPreGenerationStage(),
+        config.generation or DefaultGenerationStage(),
+        *config.post_generation,
+        config.emission or DefaultEmissionStage(),
+    ]
+```
+
+Multi-stage slots (`gates`, `post_generation`) preserve registration order.
+Single-stage slots fall back to the built-in default when null.
+
+#### 12.9.7 AIChannel Integration
+
+AIChannel MUST accept an optional `pipeline: AIPipelineConfig | None` parameter,
+mirroring the voice and video channels:
+
+```
+AIChannel(..., pipeline: AIPipelineConfig | null = null)
+VoiceChannel(..., pipeline: AudioPipelineConfig | null = null)
+VideoChannel(..., pipeline: VideoPipelineConfig | null = null)
+```
+
+When `pipeline` is null, AIChannel MUST construct a default pipeline using
+`AIPipelineConfig()` (no custom stages; all slots use defaults).
+
+AIChannel's `on_event()` implementation MUST:
+1. Construct an AIPipelineContext from the event, binding, and room context
+2. Invoke `AIPipeline.process(ctx)`
+3. Return an empty ChannelOutput if `ctx.aborted` is true
+4. Return the ChannelOutput built by EmissionStage otherwise
+
+AIChannel MUST NOT call provider.generate() or memory.retrieve() directly
+when a pipeline is in use. All such work MUST flow through the pipeline.
+
+#### 12.9.8 Symmetry with Other Pipelines
+
+| Concept | Audio Pipeline | Video Pipeline | AI Pipeline |
+|---|---|---|---|
+| Config dataclass | AudioPipelineConfig | VideoPipelineConfig | AIPipelineConfig |
+| Engine | AudioPipeline | VideoPipeline | AIPipeline |
+| Stage ABC | (per-stage: VADProvider, AECProvider, ...) | (per-stage: Decoder, Resizer, ...) | AIStage + position-specific subclasses |
+| Channel param | `pipeline=` | `pipeline=` | `pipeline=` |
+| Default when null | Sensible defaults per stage | Sensible defaults per stage | Sensible defaults per stage |
+| Multi-stage slots | `postprocessors: list[...]` | `filters: list[...]` | `gates: list[...]`, `post_generation: list[...]` |
+| Normative ordering | Yes (12.3) | Yes (12.8.4) | Yes (12.9.2) |
+
+#### 12.9.9 Hook Trigger to Stage Mapping
+
+| Hook Trigger | Fires At Stage | Execution |
+|---|---|---|
+| BEFORE_AI_CONTEXT_BUILD | PreContextGateStage (default impl) | SYNC — can block |
+| BEFORE_AI_GENERATION | PreGenerationStage (default impl) | SYNC — can block/modify |
+| ON_AI_THINKING | GenerationStage | ASYNC — observability |
+| ON_TOOL_CALL | GenerationStage (during tool loop) | SYNC — can intercept |
+| ON_AI_RESPONSE | EmissionStage | ASYNC — observability |
+
+Hook triggers are preserved as callback points fired by their stages. Existing
+hook registrations MUST continue to function unchanged. Integrators MAY use
+either hooks or custom stages depending on their use case.
+
+#### 12.9.10 Observability
+
+Pipeline implementations SHOULD emit a framework event per stage completion:
+
+| Event | Payload |
+|---|---|
+| `ai_pipeline.stage_complete` | stage_name, latency_ms, aborted, abort_reason |
+| `ai_pipeline.aborted` | stage_name, abort_reason, total_latency_ms |
+| `ai_pipeline.completed` | stage_count, total_latency_ms |
+
+This provides per-stage timing and abort visibility consistent with the voice
+pipeline's `voice.pipeline.*` events.
+
+#### 12.9.11 Conformance
+
+**Level 0 (Core, REQUIRED):**
+- AIChannel MUST implement the default pipeline with all 8 stages
+- The normative stage ordering in Section 12.9.2 MUST be preserved
+- Abort semantics in Section 12.9.3 MUST be honored
+- `BEFORE_AI_CONTEXT_BUILD` and `BEFORE_AI_GENERATION` hook triggers MUST fire
+  at their documented stages
+
+**Level 1 (Extension, RECOMMENDED):**
+- AIChannel SHOULD accept a `pipeline: AIPipelineConfig | null` parameter
+- Integrators SHOULD be able to replace any single-stage slot with a custom
+  implementation
+- Integrators SHOULD be able to append to multi-stage slots (`gates`,
+  `post_generation`)
+
+**Level 2 (Advanced, OPTIONAL):**
+- Pipelines MAY support PostGenerationStage regenerating by looping back to
+  GenerationStage (e.g., safety guardrails retry)
+- Pipelines MAY support per-binding pipeline overrides (per-room customization)
+- Pipelines MAY expose per-stage telemetry via a TelemetryProvider
 
 ---
 
