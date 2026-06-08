@@ -1224,8 +1224,12 @@ Implementations MUST enforce these rules:
    includes this channel.
 2. **Writing:** A channel's response events are broadcast if and only if its
    binding has `access` ∈ {READ_WRITE, WRITE_ONLY} AND `muted = false`.
+   Likewise, an inbound or directly-injected event whose source binding cannot
+   write (`access` ∉ {READ_WRITE, WRITE_ONLY} OR `muted = true`) MUST be stored
+   with status `BLOCKED` (`blocked_by` = `source_read_only` or `source_muted`)
+   rather than `DELIVERED`, and MUST NOT be broadcast.
 3. **Side effects:** Tasks and observations are ALWAYS collected regardless of
-   access or mute status.
+   access or mute status — including for events blocked by rule 2.
 4. **Visibility filtering:** When broadcasting an event, the framework MUST
    check the source binding's visibility and deliver only to channels included
    in the visibility rule.
@@ -1566,36 +1570,44 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    ├── Execute hooks in priority order
    └── Collect result: allow / block / modify
 
-10. IF BLOCKED:
+10. IF BLOCKED BY HOOK:
     ├── Store event with status=BLOCKED, blocked_by=hook_name
     ├── Deliver injected events from hook result
     ├── Persist tasks and observations from hook result
     └── Return InboundResult(blocked=true)
 
-11. IF ALLOWED (possibly modified):
+11. CHECK SOURCE CAN WRITE
+    ├── If source_binding.access ∉ {READ_WRITE, WRITE_ONLY} OR source_binding.muted:
+    │   ├── Store event with status=BLOCKED,
+    │   │   blocked_by = source_read_only | source_muted
+    │   ├── Persist tasks and observations (side effects ALWAYS collected, §7.5)
+    │   └── Return InboundResult(blocked=true)
+    └── Otherwise → continue
+        # A source that cannot write MUST NOT inject a DELIVERED event.
+
+12. IF ALLOWED (possibly modified):
+    ├── For EDIT/DELETE: apply the target state update now (§10.3) — deferred
+    │   to this point so a hook that blocks the edit/delete leaves the target
+    │   unmutated
     ├── Store event with status=DELIVERED
     ├── Deliver any injected events
-    ├── Get source binding
     ├── IF message.session is set:
     │   └── Call channel.connect_session(session, room_id, binding)
     │       # Connects the voice session (starts realtime AI, etc.)
     └── Call broadcast(event, source_binding, context)
 
-12. REENTRY DRAIN LOOP
+13. REENTRY DRAIN LOOP
     ├── Collect response events from broadcast
     ├── For each response event:
-    │   ├── Assign index, store
+    │   ├── Assign index atomically, store
     │   ├── Check chain_depth < max_chain_depth
-    │   │   └── If exceeded → block, emit framework event
+    │   │   └── If exceeded → block (status=BLOCKED), emit framework event
     │   ├── Broadcast response event
     │   └── Collect further responses → queue for next iteration
     └── Repeat until no more responses
 
-13. PERSIST SIDE EFFECTS
+14. PERSIST SIDE EFFECTS
     └── Store all tasks and observations from hooks + channels
-
-14. RUN AFTER_BROADCAST ASYNC HOOKS
-    └── Fire and forget
 
 15. UPDATE ROOM STATE
     ├── room.latest_index = event.index
@@ -1604,10 +1616,14 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 
 16. RELEASE ROOM LOCK
 
-17. EMIT FRAMEWORK EVENTS
+17. RUN AFTER_BROADCAST ASYNC HOOKS
+    └── Dispatched after the lock is released; non-blocking, exceptions
+        swallowed (§9.3) — a slow observer hook MUST NOT hold the room lock
+
+18. EMIT FRAMEWORK EVENTS
     └── event_processed, delivery_succeeded/failed, etc.
 
-18. RETURN InboundResult
+19. RETURN InboundResult
 ```
 
 **InboundResult:**
@@ -1707,7 +1723,8 @@ additional validation and state updates before broadcasting.
 5. If validation fails, the framework MUST reject the event and SHOULD return
    an error to the source channel.
 
-**State updates:**
+**State updates** (applied only after BEFORE_BROADCAST hooks allow the event —
+a hook that blocks the EDIT/DELETE MUST leave the target event unmutated):
 
 1. On successful EDIT: the framework SHOULD call `update_event()` to replace the
    original event's content with `EditContent.new_content` and set
@@ -1747,15 +1764,18 @@ Implementations MUST allow integrators to provide a custom routing strategy.
 
 ### 10.5 Direct Event Injection
 
-Integrators MAY inject events into a room without going through the inbound
-pipeline (e.g., from a REST API or MCP tool call):
+Integrators MAY inject events into a room directly, without an inbound channel
+message (e.g., from a REST API or MCP tool call):
 
 ```
 send_event(room_id, channel_id, content, event_type, ...) → RoomEvent
 ```
 
-This creates an event with the specified source channel, stores it, and
-broadcasts it through the normal broadcast pipeline (including hooks).
+The injected event traverses the SAME locked pipeline as an inbound message
+(Section 10.1): index assignment, BEFORE_BROADCAST hooks, the source
+write-permission gate, EDIT/DELETE handling, persistence, broadcast, the
+reentry drain, and AFTER_BROADCAST hooks. A blocking hook therefore yields a
+`BLOCKED` event and suppresses delivery, exactly as for an inbound message.
 
 ---
 
