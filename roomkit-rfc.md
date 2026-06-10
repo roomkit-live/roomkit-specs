@@ -87,6 +87,7 @@ interpreted as described in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
 | **AEC** | Acoustic Echo Cancellation — removes the bot's own audio from the inbound stream to prevent self-triggering. |
 | **AGC** | Automatic Gain Control — normalizes audio volume to a consistent level regardless of input device or distance. |
 | **DTMF** | Dual-Tone Multi-Frequency — telephone keypad tones used for IVR navigation and call control. |
+| **PLC** | Packet Loss Concealment — synthesizing replacement audio for packets confirmed lost in transit, preserving the temporal continuity of the inbound stream. |
 | **Turn Detection** | The process of determining whether a speaker has finished their conversational turn, using acoustic and/or semantic signals. |
 | **Backchannel** | Short verbal acknowledgments ("mmhmm", "ok", "yes") that signal attention without requesting a turn change. |
 | **Protocol Trace** | An immutable record of a transport-level protocol exchange (e.g., SIP INVITE, 200 OK, BYE) emitted by a channel for observability and debugging. |
@@ -2122,6 +2123,53 @@ transport channels, accumulates the full text, stores the complete event, and
 re-broadcasts to non-streaming channels. This preserves multi-channel delivery,
 hooks, tool calling (falls back to non-streaming), and keeps VoiceChannel as
 pure transport with no AIProvider reference.
+
+#### 12.2.1 Packet Loss Handling (Lossy Transports)
+
+Backends carrying audio over lossy transports (RTP/SIP, datagram-based) are the
+only layer that can observe packet loss: sequence numbers exist at the
+transport, and the pipeline above sees only PCM frames. A backend that silently
+drops lost packets compresses the delivered timeline — recordings shorten, AEC
+reference alignment drifts — and no downstream stage can detect or repair it.
+
+Packet loss concealment (PLC) is OPTIONAL for Level 3 conformance and
+RECOMMENDED for RTP-based backends.
+
+**Detection.** A backend implementing PLC:
+
+- MUST distinguish packets that have not yet arrived (reordering) from packets
+  confirmed lost, using sequence-number analysis with a bounded reordering
+  window. Packets the jitter buffer can still deliver MUST NOT trigger
+  concealment.
+- MUST NOT treat sender-side transmission pauses as loss. Discontinuous
+  transmission (VAD suppression, comfort noise, RFC 4733 DTMF replacing audio)
+  advances the RTP timestamp without consuming sequence numbers; only
+  sequence-number gaps indicate loss.
+
+**Concealment.** On confirmed loss, the backend:
+
+- MUST deliver a temporally continuous stream: the lost duration is replaced
+  with concealment audio so the frames emitted to the pipeline preserve
+  timeline alignment. Downstream stages (AEC, recorder, STT) require no loss
+  awareness.
+- SHOULD use codec-native concealment when the negotiated codec provides it
+  (e.g., libopus PLC). For codecs without native concealment (G.711, G.722,
+  L16), the backend MUST fall back to a generic concealer that at minimum
+  repeats the last received frame with progressive attenuation.
+- MUST bound synthetic audio: a generic concealer MUST decay to silence within
+  `max_conceal_ms` (RECOMMENDED 60 ms) of consecutive concealment and fill the
+  remaining lost duration with silence. Codec-native concealment with built-in
+  energy decay (e.g., libopus PLC) satisfies this requirement as-is. Either
+  way, alignment is preserved without generating artifacts on long bursts.
+
+**Observability.** A backend implementing PLC MUST expose, per session:
+
+- `packets_lost` — count of packets confirmed lost.
+- `concealed_frames` — count of frames synthesized by concealment.
+
+Emitted concealed frames SHOULD be annotated (`metadata.concealed = true` on
+the AudioFrame) so that pipeline stages MAY treat them differently — e.g., the
+recorder journaling concealed ranges, or STT adjusting confidence.
 
 ### 12.3 Audio Processing Pipeline
 
@@ -4231,6 +4279,8 @@ debugging. The following metrics are RECOMMENDED:
 | `pipeline.backchannel_rate` | BackchannelDetector | Ratio of backchannels to interruptions |
 | `pipeline.barge_in_count` | InterruptionConfig | Count of barge-in events per session |
 | `pipeline.debug_tap_bytes_written` | PipelineDebugTaps | Total bytes written to debug tap files |
+| `transport.packets_lost` | VoiceBackend | Count of packets confirmed lost per session (Section 12.2.1) |
+| `transport.concealed_frames` | VoiceBackend | Count of frames synthesized by packet loss concealment per session |
 
 Voice pipeline logs SHOULD use the `roomkit.channels.voice.pipeline` logger
 with the following structured context fields: `session_id`, `room_id`,
@@ -5408,6 +5458,7 @@ A Level 3 implementation MAY additionally support audio and/or video real-time m
   - InterruptionConfig
 - Voice channel (STT/TTS pipeline)
 - VoiceBackend interface with at least one implementation
+- Packet loss concealment for lossy transports (OPTIONAL, RECOMMENDED for RTP backends — Section 12.2.1)
 - STTProvider interface with at least one implementation
 - TTSProvider interface with at least one implementation
 - Voice hooks (ON_SPEECH_START through ON_RECORDING_STOPPED)
