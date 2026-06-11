@@ -2142,9 +2142,13 @@ RECOMMENDED for RTP-based backends.
   window. Packets the jitter buffer can still deliver MUST NOT trigger
   concealment.
 - MUST NOT treat sender-side transmission pauses as loss. Discontinuous
-  transmission (VAD suppression, comfort noise, RFC 4733 DTMF replacing audio)
-  advances the RTP timestamp without consuming sequence numbers; only
-  sequence-number gaps indicate loss.
+  transmission (VAD suppression, comfort noise) advances the RTP timestamp
+  without consuming sequence numbers; only sequence-number gaps indicate loss.
+- MUST account for non-media packets filtered out of the audio path before
+  loss detection. RFC 4733 telephone-events consume sequence numbers from the
+  same RTP stream: a receiver that filters them upstream of its jitter buffer
+  MUST mark those sequence numbers as received, so the filtered slots are
+  neither confirmed as loss nor concealed.
 
 **Concealment.** On confirmed loss, the backend:
 
