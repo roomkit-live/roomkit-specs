@@ -5,10 +5,10 @@
 | **Status** | Draft |
 | **Author** | Sylvain Boily |
 | **Contributions** | TchatNSign, Angany AI |
-| **Version** | v15 Draft |
+| **Version** | v16 Draft |
 | **Created** | 2026-01-27 |
-| **Last Updated** | 2026-03-30 |
-| **Supersedes** | v14 Draft |
+| **Last Updated** | 2026-06-11 |
+| **Supersedes** | v15 Draft |
 
 ---
 
@@ -84,6 +84,7 @@ interpreted as described in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
 | **Broadcast** | The act of routing an event to all eligible channels in a Room. |
 | **Transcoding** | Converting event content from one format to another for cross-channel delivery. |
 | **Audio Pipeline** | A configurable chain of audio processing stages (resampler, AEC, AGC, denoiser, VAD, diarization, DTMF, recording) between the transport and the conversation engine. |
+| **AI Pipeline** | A configurable chain of AI generation stages (pre-context gates, memory retrieval, tool resolution, prompt assembly, pre-generation gate, generation, post-generation, emission) between an AIChannel receiving an event and emitting a response. Peer abstraction to Audio Pipeline and Video Pipeline. |
 | **AEC** | Acoustic Echo Cancellation — removes the bot's own audio from the inbound stream to prevent self-triggering. |
 | **AGC** | Automatic Gain Control — normalizes audio volume to a consistent level regardless of input device or distance. |
 | **DTMF** | Dual-Tone Multi-Frequency — telephone keypad tones used for IVR navigation and call control. |
@@ -108,6 +109,11 @@ interpreted as described in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
 | **StatusBus** | A shared event log for inter-agent coordination, allowing agents to post and subscribe to status updates without sending room events. |
 | **Tool Auditor** | A pluggable recorder that captures every tool call (input, output, timing, status) for debugging and monitoring. |
 | **Session Auditor** | A pluggable recorder that captures the full conversation timeline (speech, tool calls, vision, interruptions) for compliance and replay. |
+| **SFU** | Selective Forwarding Unit — a media server that routes encoded media streams between conference participants without decoding or mixing them. |
+| **Conference** | A multi-party real-time media session (audio, video, screen share) attached to a Room, whose media plane is owned by an external SFU. |
+| **Track** | A single media stream (audio, video, or screen share) published by a conference participant. The unit of media identity in a conference. |
+| **Bot Participant** | The framework's own server-side connection to a conference, used to subscribe to tracks (STT, vision, recording) and publish media (TTS, avatar). |
+| **Egress** | Server-side media export performed by the SFU (e.g., conference recording), as opposed to framework-side recording. |
 
 ### 1.3 Notation
 
@@ -983,6 +989,7 @@ ChannelOutput
 | AUDIO_VIDEO | TRANSPORT | Combined voice + video channel (STT/TTS pipeline + video) |
 | REALTIME_AUDIO_VIDEO | TRANSPORT | Combined speech-to-speech + video channel |
 | VIDEO | TRANSPORT | Video-only channel |
+| CONFERENCE | TRANSPORT | Multi-party SFU conference (audio + video + screen share) |
 | TELEGRAM | TRANSPORT | Telegram Bot API |
 | CLI | TRANSPORT | Command-line interface (development/testing) |
 | PUSH | TRANSPORT | Push notification channel |
@@ -1014,6 +1021,7 @@ reference capabilities:
 | Audio/Video | AUDIO, VIDEO | — | Combined voice + video, STT/TTS + vision |
 | Realtime Audio/Video | AUDIO, VIDEO | — | Speech-to-speech + video, tool calling |
 | Video | VIDEO | — | Video-only, vision provider integration |
+| Conference | AUDIO, VIDEO | — | Multi-party SFU, per-track STT, AI bot participant |
 | Webhook | TEXT, RICH | unlimited | Generic HTTP POST |
 
 ### 6.4 Intelligence Channels
@@ -1399,6 +1407,7 @@ Hooks MAY be registered globally (apply to all rooms) or per-room.
 | AFTER_DELIVER | ASYNC | After proactive delivery completes |
 | | | |
 | **AI Generation:** | | |
+| BEFORE_AI_CONTEXT_BUILD | SYNC | Before AI context is built (pre-memory, pre-tool-resolution) — can block cheaply |
 | BEFORE_AI_GENERATION | SYNC | Before AI provider generate() — can modify context |
 | ON_AI_THINKING | ASYNC | AI model began extended thinking/reasoning |
 | ON_AI_RESPONSE | ASYNC | AI generation completed (observability) |
@@ -1424,6 +1433,13 @@ Hooks MAY be registered globally (apply to all rooms) or per-room.
 | ON_SCREEN_SHARE_STARTED | ASYNC | Screen sharing started |
 | ON_SCREEN_SHARE_STOPPED | ASYNC | Screen sharing stopped |
 | ON_VIDEO_DETECTION | ASYNC | Video detection event (object, face, etc.) |
+| | | |
+| **Conference:** | | |
+| ON_CONFERENCE_PARTICIPANT_JOINED | ASYNC | Participant joined the conference media session |
+| ON_CONFERENCE_PARTICIPANT_LEFT | ASYNC | Participant left the conference media session |
+| ON_TRACK_PUBLISHED | ASYNC | Conference participant published a track (audio, video, screen share) |
+| ON_TRACK_UNPUBLISHED | ASYNC | Conference track unpublished |
+| ON_ACTIVE_SPEAKER_CHANGED | ASYNC | SFU reported a dominant-speaker change |
 | | | |
 | **Other:** | | |
 | ON_PLAN_UPDATED | ASYNC | Orchestration plan was updated |
@@ -1862,7 +1878,7 @@ If identity resolution exceeds the configured timeout, the implementation MUST:
 
 ### 12.1 Architecture Overview
 
-RoomKit supports two voice architectures:
+RoomKit supports four real-time media architectures:
 
 ```
 Architecture 1: STT/TTS Pipeline (VoiceChannel)
@@ -1890,18 +1906,18 @@ Architecture 2: Speech-to-Speech (RealtimeVoiceChannel)
 
 **Choosing between architectures:**
 
-| Criterion | VoiceChannel (STT/TTS) | RealtimeVoiceChannel (Speech-to-Speech) | VoiceChannel (Bridge) |
-|---|---|---|---|
-| **Latency** | Moderate (~500-800ms TTFA with streaming) | Lower — end-to-end streaming | Lowest — direct audio forwarding |
-| **Control** | Full — choose STT, LLM, TTS | Limited — provider bundles all | Full pipeline, no AI required |
-| **Text access** | Always — utterances become RoomEvents | Optional — if transcription configured | Optional — if STT configured |
-| **Multi-channel** | Native — text routes to any channel | Requires transcription | Requires STT for text routing |
-| **AI involvement** | Required (generates responses) | Required (speech-to-speech) | Optional (observer/monitor) |
-| **Voice quality** | Depends on TTS provider | Native speech generation | Original voice preserved |
-| **Pipeline control** | Full audio pipeline (all stages) | Pipeline optional | Full pipeline (all stages) |
-| **Use when** | AI voice agent with text in the loop | Lowest latency AI with native voice | Human-to-human calls, conferencing, call center |
+| Criterion | VoiceChannel (STT/TTS) | RealtimeVoiceChannel (Speech-to-Speech) | VoiceChannel (Bridge) | ConferenceChannel (SFU) |
+|---|---|---|---|---|
+| **Latency** | Moderate (~500-800ms TTFA with streaming) | Lower — end-to-end streaming | Lowest — direct audio forwarding | Low — SFU forwards media directly between clients |
+| **Control** | Full — choose STT, LLM, TTS | Limited — provider bundles all | Full pipeline, no AI required | Control plane only — media plane is external |
+| **Text access** | Always — utterances become RoomEvents | Optional — if transcription configured | Optional — if STT configured | Per-track STT, attributed per participant |
+| **Multi-channel** | Native — text routes to any channel | Requires transcription | Requires STT for text routing | Native — transcripts are RoomEvents |
+| **AI involvement** | Required (generates responses) | Required (speech-to-speech) | Optional (observer/monitor) | Optional (bot participant) |
+| **Voice quality** | Depends on TTS provider | Native speech generation | Original voice preserved | Original voice preserved |
+| **Pipeline control** | Full audio pipeline (all stages) | Pipeline optional | Full pipeline (all stages) | Per-track inbound lanes (no AEC/diarization) |
+| **Use when** | AI voice agent with text in the loop | Lowest latency AI with native voice | Human-to-human calls, conferencing, call center | Multi-party video conferences, AI in meetings |
 
-All three architectures MAY coexist in the same room. For example, a room could
+All four architectures MAY coexist in the same room. For example, a room could
 have a VoiceChannel for a human participant (PSTN/SIP) and a RealtimeVoiceChannel
 for the AI agent, with text events bridging them. Or two VoiceChannels in bridge
 mode for a human-to-human call with optional AI observation.
@@ -1921,6 +1937,24 @@ Architecture 3: Audio Bridge (VoiceChannel with bridge=True)
                                          │ RoomKit │
                                          │ (events)│
                                          └─────────┘
+```
+
+```
+Architecture 4: SFU Conference (ConferenceChannel — Section 12.10)
+┌──────────┐           ┌─────────────────┐           ┌──────────┐
+│ Client A │◄─────────►│                 │◄─────────►│ Client B │
+│ (browser)│   media   │  External SFU   │   media   │ (browser)│
+└──────────┘           │  (media plane)  │           └──────────┘
+                       └────────┬────────┘
+                                │ bot participant
+                                │ (subscribed tracks, published TTS)
+                                ▼
+                       ┌─────────────────┐
+                       │     RoomKit     │
+                       │ per-track STT,  │
+                       │ vision, TTS bot │
+                       │ (control plane) │
+                       └─────────────────┘
 ```
 
 ### 12.2 Voice Channel (STT/TTS Pipeline)
@@ -4056,6 +4090,705 @@ OpenCVVideoRecorder (MJPEG/XVID), MockVideoRecorder.
 | ON_SCREEN_SHARE_STOPPED | ASYNC | Screen sharing stopped |
 | BEFORE_BRIDGE_VIDEO | SYNC | Before frame forwarded via bridge — can block |
 
+### 12.9 AI Generation Pipeline
+
+The AI generation subsystem mirrors the audio and video pipelines in structure.
+Text generation by an AIChannel flows through a pluggable stage architecture using
+the same ABC + config composition pattern as Section 12.3 (Audio Pipeline) and
+Section 12.8 (Video Pipeline).
+
+This design ensures that cross-cutting generation concerns (gating, memory
+retrieval, tool resolution, prompt assembly, response validation, caching,
+content filtering) are expressed as composable stages rather than hardcoded
+sequences inside the channel. New generation-time features become new stages,
+not new hook triggers or new mixins.
+
+#### 12.9.1 Architecture Overview
+
+```
+Inbound RoomEvent (arrives at AIChannel.on_event)
+         │
+         ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                      AI Generation Pipeline                          │
+│                                                                      │
+│  PreContextGate  ──►  MemoryRetrieval  ──►  ToolResolution  ──►     │
+│  (cheap gates)        (history, RAG)         (skills, policy)        │
+│                                                                      │
+│  PromptAssembly  ──►  PreGeneration    ──►  Generation      ──►     │
+│  (system prompt)      (final gate)           (provider call)         │
+│                                                                      │
+│  PostGeneration  ──►  Emission                                       │
+│  (validate, cache)    (emit events)                                  │
+└─────────────────────────────────────────────────────────────────────┘
+         │
+         ▼
+Response events → conversation store + broadcast
+```
+
+**Choosing between hook and stage:**
+
+| Criterion | Hook | Stage |
+|---|---|---|
+| **Ad-hoc gate in one project** | Preferred | Overkill |
+| **Reusable logic across projects** | Hard to package | Preferred |
+| **Replaces a default behavior** | Cannot | Preferred |
+| **Needs fine-grained position** | Limited to trigger points | Any stage position |
+| **Modifies AIContext in place** | Supported (BEFORE_AI_GENERATION) | Supported (any stage) |
+| **Multiple instances at same point** | Supported via priority | Supported via list slots |
+
+Hooks remain the simpler mechanism for most cases. Stages are the right
+abstraction when logic is reusable, needs a specific position in the pipeline,
+or replaces a default behavior (e.g., a custom memory retrieval strategy).
+
+#### 12.9.2 Default Stage Ordering (NORMATIVE)
+
+Implementations MUST execute the default AI generation pipeline in the
+following order:
+
+```
+[*gates, memory, tool_resolution, prompt_assembly, pre_generation,
+ generation, *post_generation, emission]
+```
+
+**Stage positions:**
+
+| Position | Stage | Default Behavior | Hook Trigger |
+|---|---|---|---|
+| 1 | gates (list) | Fire BEFORE_AI_CONTEXT_BUILD hooks, respect block | BEFORE_AI_CONTEXT_BUILD |
+| 2 | memory | Call MemoryProvider.retrieve() | — |
+| 3 | tool_resolution | Resolve skills, apply ToolPolicy, apply eviction | — |
+| 4 | prompt_assembly | Compose system prompt (channel + binding + skill preambles) | — |
+| 5 | pre_generation | Fire BEFORE_AI_GENERATION hooks, respect block/modify | BEFORE_AI_GENERATION |
+| 6 | generation | Call AIProvider.generate() or generate_stream(); run tool loop | ON_AI_THINKING, ON_TOOL_CALL |
+| 7 | post_generation (list) | Response validation, caching, output filtering (default: no-op) | — |
+| 8 | emission | Emit response events, fire AFTER_RESPONSE | ON_AI_RESPONSE |
+
+**Ordering rationale:**
+
+| Position | Stage | Why here |
+|---|---|---|
+| 1 | gates | Cheapest gate point. Blocks before any expensive work (memory retrieval, summarization, tool resolution). Required for features with side effects that must not run when generation is blocked (e.g., observation queues, token accounting). |
+| 2 | memory | Needed before prompt assembly (memory contents affect prompt length and tool policy). Must run after gates to avoid wasted retrieval and possible summarization LLM calls. |
+| 3 | tool_resolution | Needs memory results to apply budget-aware policy (tools count against context budget). |
+| 4 | prompt_assembly | Combines channel defaults, binding overrides, skill preambles, sandbox preambles. Runs after tool resolution so tool descriptions are finalized. |
+| 5 | pre_generation | Final modification opportunity before provider call. Hooks can mutate AIContext in place (system prompt injection, dynamic tool addition). |
+| 6 | generation | Provider invocation + tool loop. The expensive step. |
+| 7 | post_generation | Inspect/modify the response before emission (caching lookup/store, output content filter, safety guardrails with optional regeneration). |
+| 8 | emission | Final step. Emit response events, fire AFTER_RESPONSE hook, trigger broadcast pipeline. |
+
+Stages MUST NOT be reordered by integrators. Insertion is allowed only at the
+multi-stage slots (`gates`, `post_generation`).
+
+#### 12.9.3 AIStage Interface
+
+```
+AIStage (interface)
+├── name: string (property)                  # Stage identifier (defaults to class name)
+├── process(ctx: AIPipelineContext)
+│     → AIPipelineContext                    # Transform context, return it
+└── close() → void                           # Release resources
+```
+
+**Abort semantics:**
+
+A stage MAY abort the pipeline by setting `ctx.aborted = True`, populating
+`ctx.abort_reason` and `ctx.abort_stage`, and returning the context. All
+subsequent stages MUST be skipped when `ctx.aborted` is true. Emission stage
+MUST NOT emit response events from an aborted pipeline.
+
+**Error handling:**
+
+If a stage raises an exception, the pipeline engine MUST treat this as an
+abort (set `ctx.aborted = True`, `ctx.abort_reason = "stage exception"`,
+`ctx.abort_stage = <failing stage name>`). Exceptions MUST NOT propagate out
+of the pipeline to AIChannel callers.
+
+#### 12.9.4 Position-Specific Stage ABCs
+
+Each stage position has a dedicated ABC subclass of AIStage:
+
+| ABC | Position | Multi-Stage | Default Exists |
+|---|---|---|---|
+| PreContextGateStage | 1 | Yes (list) | Yes (hook runner) |
+| MemoryRetrievalStage | 2 | No | Yes |
+| ToolResolutionStage | 3 | No | Yes |
+| PromptAssemblyStage | 4 | No | Yes |
+| PreGenerationStage | 5 | No | Yes (hook runner) |
+| GenerationStage | 6 | No | Yes |
+| PostGenerationStage | 7 | Yes (list) | Yes (no-op) |
+| EmissionStage | 8 | No | Yes |
+
+An integrator-provided stage at a single-stage position replaces the default.
+Integrator-provided stages at multi-stage positions are appended to the
+pipeline in registration order alongside any built-in defaults.
+
+#### 12.9.5 AIPipelineContext
+
+Accumulating state that flows through all stages:
+
+```
+AIPipelineContext
+├── event: RoomEvent                         # Triggering event
+├── binding: ChannelBinding                  # AIChannel's room binding
+├── room_context: RoomContext                # Room state (participants, recent events)
+├── channel_id: string                       # AIChannel identifier
+├── ai_context: AIContext | null             # Built by MemoryRetrievalStage + friends
+├── response: AIResponse | null              # Built by GenerationStage
+├── stage_metadata: map<string, any>         # Inter-stage communication
+├── aborted: bool                            # Set by any stage to abort pipeline
+├── abort_reason: string | null              # Human-readable abort reason
+└── abort_stage: string | null               # Name of stage that aborted
+```
+
+**Field population timeline:**
+
+- **Before stage 1:** only `event`, `binding`, `room_context`, `channel_id` are set
+- **After stage 2 (memory):** `ai_context` is populated with historical messages
+- **After stage 4 (prompt_assembly):** `ai_context.system_prompt` is finalized
+- **After stage 6 (generation):** `response` is populated
+- **After stage 8 (emission):** response events have been emitted
+
+Stages MAY read any populated field. Stages MUST NOT read fields that are not
+yet populated per the timeline above.
+
+#### 12.9.6 AIPipelineConfig
+
+Configuration model for composing an AI pipeline:
+
+```
+AIPipelineConfig
+├── gates: list<PreContextGateStage>         # Default: []
+├── memory: MemoryRetrievalStage | null      # Default: null → use built-in default
+├── tool_resolution: ToolResolutionStage | null
+├── prompt_assembly: PromptAssemblyStage | null
+├── pre_generation: PreGenerationStage | null
+├── generation: GenerationStage | null
+├── post_generation: list<PostGenerationStage>  # Default: []
+├── emission: EmissionStage | null
+└── telemetry: TelemetryProvider | null      # Optional per-stage telemetry
+```
+
+**Composition algorithm (NORMATIVE):**
+
+```
+def build_pipeline(config: AIPipelineConfig) -> list[AIStage]:
+    return [
+        *config.gates,
+        config.memory or DefaultMemoryRetrievalStage(),
+        config.tool_resolution or DefaultToolResolutionStage(),
+        config.prompt_assembly or DefaultPromptAssemblyStage(),
+        config.pre_generation or DefaultPreGenerationStage(),
+        config.generation or DefaultGenerationStage(),
+        *config.post_generation,
+        config.emission or DefaultEmissionStage(),
+    ]
+```
+
+Multi-stage slots (`gates`, `post_generation`) preserve registration order.
+Single-stage slots fall back to the built-in default when null.
+
+#### 12.9.7 AIChannel Integration
+
+AIChannel MUST accept an optional `pipeline: AIPipelineConfig | None` parameter,
+mirroring the voice and video channels:
+
+```
+AIChannel(..., pipeline: AIPipelineConfig | null = null)
+VoiceChannel(..., pipeline: AudioPipelineConfig | null = null)
+VideoChannel(..., pipeline: VideoPipelineConfig | null = null)
+```
+
+When `pipeline` is null, AIChannel MUST construct a default pipeline using
+`AIPipelineConfig()` (no custom stages; all slots use defaults).
+
+AIChannel's `on_event()` implementation MUST:
+1. Construct an AIPipelineContext from the event, binding, and room context
+2. Invoke `AIPipeline.process(ctx)`
+3. Return an empty ChannelOutput if `ctx.aborted` is true
+4. Return the ChannelOutput built by EmissionStage otherwise
+
+AIChannel MUST NOT call provider.generate() or memory.retrieve() directly
+when a pipeline is in use. All such work MUST flow through the pipeline.
+
+#### 12.9.8 Symmetry with Other Pipelines
+
+| Concept | Audio Pipeline | Video Pipeline | AI Pipeline |
+|---|---|---|---|
+| Config dataclass | AudioPipelineConfig | VideoPipelineConfig | AIPipelineConfig |
+| Engine | AudioPipeline | VideoPipeline | AIPipeline |
+| Stage ABC | (per-stage: VADProvider, AECProvider, ...) | (per-stage: Decoder, Resizer, ...) | AIStage + position-specific subclasses |
+| Channel param | `pipeline=` | `pipeline=` | `pipeline=` |
+| Default when null | Sensible defaults per stage | Sensible defaults per stage | Sensible defaults per stage |
+| Multi-stage slots | `postprocessors: list[...]` | `filters: list[...]` | `gates: list[...]`, `post_generation: list[...]` |
+| Normative ordering | Yes (12.3) | Yes (12.8.4) | Yes (12.9.2) |
+
+#### 12.9.9 Hook Trigger to Stage Mapping
+
+| Hook Trigger | Fires At Stage | Execution |
+|---|---|---|
+| BEFORE_AI_CONTEXT_BUILD | PreContextGateStage (default impl) | SYNC — can block |
+| BEFORE_AI_GENERATION | PreGenerationStage (default impl) | SYNC — can block/modify |
+| ON_AI_THINKING | GenerationStage | ASYNC — observability |
+| ON_TOOL_CALL | GenerationStage (during tool loop) | SYNC — can intercept |
+| ON_AI_RESPONSE | EmissionStage | ASYNC — observability |
+
+Hook triggers are preserved as callback points fired by their stages. Existing
+hook registrations MUST continue to function unchanged. Integrators MAY use
+either hooks or custom stages depending on their use case.
+
+#### 12.9.10 Observability
+
+Pipeline implementations SHOULD emit a framework event per stage completion:
+
+| Event | Payload |
+|---|---|
+| `ai_pipeline.stage_complete` | stage_name, latency_ms, aborted, abort_reason |
+| `ai_pipeline.aborted` | stage_name, abort_reason, total_latency_ms |
+| `ai_pipeline.completed` | stage_count, total_latency_ms |
+
+This provides per-stage timing and abort visibility consistent with the voice
+pipeline's `voice.pipeline.*` events.
+
+#### 12.9.11 Conformance
+
+**Level 0 (Core, REQUIRED):**
+- AIChannel MUST implement the default pipeline with all 8 stages
+- The normative stage ordering in Section 12.9.2 MUST be preserved
+- Abort semantics in Section 12.9.3 MUST be honored
+- `BEFORE_AI_CONTEXT_BUILD` and `BEFORE_AI_GENERATION` hook triggers MUST fire
+  at their documented stages
+
+**Level 1 (Extension, RECOMMENDED):**
+- AIChannel SHOULD accept a `pipeline: AIPipelineConfig | null` parameter
+- Integrators SHOULD be able to replace any single-stage slot with a custom
+  implementation
+- Integrators SHOULD be able to append to multi-stage slots (`gates`,
+  `post_generation`)
+
+**Level 2 (Advanced, OPTIONAL):**
+- Pipelines MAY support PostGenerationStage regenerating by looping back to
+  GenerationStage (e.g., safety guardrails retry)
+- Pipelines MAY support per-binding pipeline overrides (per-room customization)
+- Pipelines MAY expose per-stage telemetry via a TelemetryProvider
+
+### 12.10 Conference (SFU Orchestration)
+
+**Status: PROVISIONAL.** The interfaces in this section have been validated
+on paper against the published server APIs of multiple SFU implementations,
+but no production backend exists yet. Breaking revisions to this section are
+permitted until the first conforming SFU backend lands; afterward it follows
+normal stability rules. All other sections referencing conference concepts
+inherit this status for those references.
+
+A conference extends a Room with a multi-party real-time media session —
+audio, video, and screen share among N participants. The defining
+architectural decision is that **RoomKit does not own the conference media
+plane**. An external SFU (Selective Forwarding Unit) routes media between
+human participants; RoomKit orchestrates the conference and joins it as a
+participant to provide intelligence: transcription, vision, AI voice,
+recording, and cross-channel integration.
+
+#### 12.10.1 Design Principles
+
+1. **RoomKit orchestrates; the SFU transports.** Per-packet media routing
+   between human participants — codec negotiation, simulcast layer
+   selection, bandwidth estimation, NACK/PLI retransmission — is the SFU's
+   responsibility. RoomKit MUST NOT sit in the media path between human
+   participants. This is the scale boundary that the in-process AudioBridge
+   (Section 12.7) cannot cross.
+
+2. **The conference is the room.** Each conference maps 1:1 to a Room.
+   Conference participants are Room participants. Transcriptions are
+   RoomEvents. Hooks, permissions, and cross-channel broadcast apply with
+   no conference-specific exceptions.
+
+3. **Human clients connect directly to the SFU.** RoomKit mints access
+   credentials (Section 12.10.3) and observes participant lifecycle through
+   backend events; it never proxies client signaling or media. Client-side
+   SDKs are provider-specific and out of scope for this specification —
+   switching SFU providers implies switching the integrator's client SDK.
+
+4. **RoomKit joins as a bot participant.** The framework's media access
+   goes through one server-side connection per conference: subscribed
+   tracks feed the audio/video pipelines (STT, vision, recording), and the
+   AI's TTS output is published as a single bot track that the SFU
+   distributes to everyone.
+
+5. **Tracks are the unit of media identity.** Every media stream carries
+   the identity of its publishing participant. Speaker attribution comes
+   from track identity, so diarization is unnecessary. Server-side AEC is
+   likewise unnecessary: clients perform their own echo cancellation and
+   the SFU never mixes audio.
+
+6. **The backend boundary is decoded frames and opaque credentials.** The
+   ConferenceBackend delivers decoded PCM audio and raw (or encoded) video
+   frames, and mints credentials the framework never inspects. SDP, ICE,
+   codecs, simulcast layers, and bitrates do not appear in any framework
+   interface.
+
+#### 12.10.2 Data Models
+
+**TrackKind** enumeration:
+
+| Value | Description |
+|---|---|
+| AUDIO | Microphone audio |
+| VIDEO | Camera video |
+| SCREEN_SHARE | Screen share video |
+
+**ConferenceTrack** — a single published media stream:
+
+```
+ConferenceTrack
+├── id: string                          # Backend-scoped stable identifier
+├── participant_id: string              # Publishing participant
+├── kind: TrackKind
+├── muted: bool = false
+└── metadata: map<string, any>          # Provider-specific (sid, source, ...)
+```
+
+**ConferenceParticipant** — a participant's media presence:
+
+```
+ConferenceParticipant
+├── participant_id: string
+├── connected_at: datetime
+├── tracks: list<ConferenceTrack>
+└── metadata: map<string, any>
+```
+
+**ConferenceGrants** — least-privilege permissions encoded into access:
+
+```
+ConferenceGrants
+├── publish_audio: bool = true
+├── publish_video: bool = true
+├── publish_screen_share: bool = true
+├── subscribe: bool = true
+├── moderate: bool = false              # Can mute/remove other participants
+└── hidden: bool = false                # Invisible observer (bots, monitors)
+```
+
+**ConferenceAccess** — credentials for a human client to join:
+
+```
+ConferenceAccess
+├── url: string                         # Endpoint the client connects to
+├── token: string                       # Provider-specific credential
+├── expires_at: datetime | null
+└── provider_data: map<string, any>     # Additional provider-specific fields
+```
+
+The framework treats ConferenceAccess as **opaque**: the backend mints it,
+the integrator returns it to the client application (e.g., via the REST
+surface), and the provider's client SDK consumes it. Framework code MUST
+NOT depend on its internal structure beyond the fields above.
+
+**BotSession** — the framework's own connection to a conference:
+
+```
+BotSession
+├── id: string
+├── room_id: string
+├── identity: string                    # Display identity in the conference
+└── metadata: map<string, any>
+```
+
+**ConferenceCapability** flags:
+
+| Flag | Description |
+|---|---|
+| SCREEN_SHARE | Separate screen-share tracks |
+| EGRESS_RECORDING | Server-side (SFU) recording/export |
+| SIP_GATEWAY | PSTN/SIP participants can dial into the conference |
+| ACTIVE_SPEAKER | Dominant-speaker change events |
+| CONNECTION_QUALITY | Per-participant quality reports |
+| VIDEO_PUBLISH | Bot can publish video tracks (avatar) |
+| E2EE | End-to-end encryption between clients |
+
+#### 12.10.3 ConferenceBackend Interface
+
+```
+ConferenceBackend (interface)
+├── name: string (property)             # Backend identifier
+├── capabilities: ConferenceCapability
+│
+│   # Control plane:
+├── ensure_room(room_id, metadata) → void
+│       # Idempotent: create the conference room if absent
+├── close_room(room_id) → void
+├── mint_access(room_id, participant_id, grants) → ConferenceAccess
+├── list_participants(room_id) → list<ConferenceParticipant>
+├── remove_participant(room_id, participant_id) → void
+├── mute_track(room_id, track_id) → void   # Moderation mute
+│
+│   # Bot participant (framework media access):
+├── join_as_bot(room_id, identity) → BotSession
+├── leave(bot) → void
+├── publish_audio(bot, chunk: AudioChunk) → void
+├── publish_video(bot, chunk: VideoChunk) → void   # Requires VIDEO_PUBLISH
+│
+│   # Callbacks:
+├── on_participant_joined(callback)     # (room_id, ConferenceParticipant)
+├── on_participant_left(callback)       # (room_id, ConferenceParticipant)
+├── on_track_published(callback)        # (room_id, ConferenceTrack)
+├── on_track_unpublished(callback)      # (room_id, ConferenceTrack)
+├── on_track_audio(callback)            # (ConferenceTrack, AudioFrame)
+├── on_track_video(callback)            # (ConferenceTrack, VideoFrame)
+├── on_active_speaker_changed(callback) # (room_id, participant_id)
+├── on_connection_quality(callback)     # (room_id, participant_id, quality)
+└── close() → void
+```
+
+**Frame delivery requirements:**
+
+- `on_track_audio` MUST deliver decoded PCM as AudioFrames with a declared
+  sample rate. The backend owns decoding (Opus, etc.).
+- `on_track_video` SHOULD deliver raw frames. Backends MAY deliver encoded
+  frames; the channel's VideoPipeline decoder stage (Section 12.8.4) then
+  applies, reusing the existing `is_encoded` mechanic.
+- Frames MUST be attributable: the ConferenceTrack passed with each frame
+  carries the publishing `participant_id`.
+
+**Abstraction boundary (normative):** the interface deliberately omits SDP
+negotiation, ICE, codec selection, simulcast/SVC layer control, and bitrate
+management. A backend MUST NOT require the integrator or the framework to
+handle any of these; they are internal to the SFU and its client SDKs.
+
+**Required implementations:**
+
+| Backend | Purpose |
+|---|---|
+| MockConferenceBackend | Unit testing with scripted participant/track event sequences |
+
+Implementations MAY provide backends for any SFU whose server API can
+satisfy this interface (e.g., LiveKit, Janus, Daily — informative).
+
+#### 12.10.4 ConferenceChannel
+
+The ConferenceChannel orchestrates a conference for a room. It owns the
+ConferenceBackend, demultiplexes tracks into the existing audio and video
+pipelines, and represents the AI's voice in the conference.
+
+```
+ConferenceChannel
+├── channel_type: CONFERENCE
+├── category: TRANSPORT
+├── direction: BIDIRECTIONAL
+├── backend: ConferenceBackend
+├── stt: STTProvider | null             # Per-track transcription
+├── tts: TTSProvider | null             # AI voice via bot track
+├── vision: VisionProvider | null       # Video/screen-share analysis
+├── interruption: ConferenceInterruptionConfig
+└── speak_text_events: bool = false     # Voice cross-channel text events
+```
+
+**Lifecycle:**
+
+1. When the channel is attached to a room, the channel MUST call
+   `ensure_room()`. It SHOULD call `join_as_bot()` lazily — when the first
+   participant joins or the first delivery occurs — and MUST fire
+   `ON_SESSION_STARTED` once the bot connection is live.
+2. `on_participant_joined` MUST create or update the corresponding Room
+   Participant record (Section 5.5) and fire
+   `ON_CONFERENCE_PARTICIPANT_JOINED`.
+3. `on_track_published` MUST start a per-track processing lane (below) and
+   fire `ON_TRACK_PUBLISHED`. For SCREEN_SHARE tracks,
+   `ON_SCREEN_SHARE_STARTED` fires additionally.
+4. `on_track_unpublished` MUST tear down the lane and fire the
+   corresponding hooks.
+5. When the channel is detached, the channel MUST call `leave()` and MAY
+   call `close_room()` depending on configuration.
+
+**Per-track audio lanes:**
+
+```
+on_track_audio (one lane per AUDIO track)
+  → Resampler → [Denoiser] → VAD → STT (streaming)
+  → transcription RoomEvents attributed to the publishing participant
+```
+
+Each AUDIO track gets an independent pipeline lane with per-track stage
+state (mirroring per-session state in Section 12.3). Within a lane:
+
+- AEC MUST NOT be required (no server-side echo path — Section 12.10.1).
+- Diarization MUST NOT be required (track identity provides attribution).
+- AGC and Denoiser MAY apply per lane.
+- `ON_TRANSCRIPTION` fires per lane; the hook context identifies the track
+  and participant.
+
+**Per-track video lanes:**
+
+VIDEO and SCREEN_SHARE tracks route through the VideoPipeline (Section
+12.8.4) — decoder (if needed), transforms, filters, vision analysis.
+VisionResults are attributed to the publishing participant and feed
+`setup_video_vision()` AI integration unchanged.
+
+**Selective subscription:** the bot MUST only subscribe to tracks it
+consumes. AUDIO tracks are subscribed when STT, recording, or
+speech-to-speech composition is configured. VIDEO and SCREEN_SHARE tracks
+MUST NOT be subscribed unless a VisionProvider or framework-side video
+recording is configured — otherwise no video frame ever reaches the
+framework process. Backends MAY subscribe to a reduced simulcast layer for
+vision analysis; this is provider-internal.
+
+**Outbound (deliver):**
+
+When a broadcast event reaches the conference binding and TTS is
+configured, the channel MUST synthesize once (BEFORE_TTS / AFTER_TTS hooks
+apply) and publish the audio on the bot track via `publish_audio()`. The
+SFU distributes it to all participants. Targeted per-participant audio is
+NOT supported in this revision: one bot track, heard by all.
+
+By default only AI/agent responses are spoken. When `speak_text_events` is
+true, inbound text events from other channels (SMS, WebSocket, ...) are
+also spoken into the conference.
+
+#### 12.10.5 Multi-Party Interruption Policy
+
+In a 1:1 voice session, any user speech may interrupt TTS playback
+(Section 12.6). In a conference, *who* can interrupt the AI is policy:
+
+```
+ConferenceInterruptionConfig
+├── strategy: InterruptionStrategy = IMMEDIATE   # Section 12.6 semantics
+├── scope: "any" | "none" | "allowlist" = "any"
+└── allowlist: list<participant_id> = []
+```
+
+- `"any"` — speech detected (VAD) on any audio track interrupts bot
+  playback, subject to the configured InterruptionStrategy.
+- `"none"` — the bot always finishes speaking (presentation/IVR style).
+- `"allowlist"` — only listed participants can interrupt (moderator
+  pattern).
+
+Backchannel detection (Section 12.6) applies per track before
+interruption evaluation. `ON_BARGE_IN` fires with the interrupting
+participant identified.
+
+#### 12.10.6 AI Participation Patterns
+
+**STT/TTS (default).** Per-track STT lanes produce attributed
+transcription RoomEvents; an AIChannel in the room responds through the
+normal broadcast pipeline; the response is spoken via the bot track. The
+AI requires no conference-specific mechanics and sees a fully attributed
+multi-speaker transcript.
+
+**Speech-to-speech (OPTIONAL).** A RealtimeVoiceProvider (Section 12.4)
+may be composed with a conference: subscribe to all AUDIO tracks, mix
+N→1 using a MixerProvider (algorithm of Section 12.7.5), feed the provider,
+and publish its audio output on the bot track. Per-speaker attribution is
+lost at the provider boundary; implementations SHOULD run per-track STT
+lanes in parallel when transcripts are required.
+
+**Observer.** A bot with subscribe-only, `hidden` grants and STT lanes but
+no TTS — transcription, compliance monitoring, or meeting summarization
+without a voice presence.
+
+#### 12.10.7 Conference State Events
+
+**Hooks** (Section 9.2): `ON_CONFERENCE_PARTICIPANT_JOINED`,
+`ON_CONFERENCE_PARTICIPANT_LEFT`, `ON_TRACK_PUBLISHED`,
+`ON_TRACK_UNPUBLISHED`, `ON_ACTIVE_SPEAKER_CHANGED`. Screen-share track
+publication additionally fires the existing `ON_SCREEN_SHARE_STARTED` /
+`ON_SCREEN_SHARE_STOPPED`.
+
+**Ephemeral events** (Section 8.4): high-frequency media state MUST NOT be
+stored as RoomEvents; implementations SHOULD publish it via the
+RealtimeBackend instead:
+
+- `conference_track_muted` / `conference_track_unmuted`
+- `conference_active_speaker`
+- `conference_connection_quality`
+
+**Framework events** (Section 8.2): `conference_started`,
+`conference_ended`, `conference_participant_joined`,
+`conference_participant_left`.
+
+#### 12.10.8 Recording
+
+```
+ConferenceRecordingConfig
+├── mode: "egress" | "framework" = "egress"
+├── storage: string                     # Integrator-defined identifier
+├── format: string (default "mp4")
+└── metadata: map<string, any>
+```
+
+- **egress** — recording is delegated to the SFU (requires
+  EGRESS_RECORDING). The result MUST surface through the same contract as
+  framework recording: a RecordingResult and `ON_RECORDING_STOPPED`
+  (Section 12.3.7). Configuring egress mode on a backend without the
+  capability MUST raise a configuration error.
+- **framework** — bot-subscribed tracks are fed to AudioRecorder /
+  VideoRecorder providers, per track or mixed (channel modes of Section
+  12.3.7 apply).
+
+#### 12.10.9 Cross-Channel Integration
+
+Because the conference is a room, integration with other channels requires
+no new mechanism:
+
+- **Transcripts broadcast everywhere.** Transcription RoomEvents flow
+  through the broadcast pipeline (Section 10.2) to every bound channel — a
+  WebSocket or messaging binding receives a live, attributed meeting
+  transcript for free.
+- **Text can be voiced in.** With `speak_text_events`, a message arriving
+  from any channel is spoken into the conference by the bot.
+- **AI is just an AIChannel.** Responding to transcripts, summarizing on
+  close (ON_ROOM_CLOSED), or steering via hooks all use existing
+  primitives.
+- **SIP/PSTN interop (OPTIONAL).** Backends with SIP_GATEWAY MAY admit
+  phone participants directly. Alternatively, an implementation MAY bridge
+  an existing VoiceChannel SIP session into the conference by republishing
+  its audio as an additional bot participant (audio-only gateway).
+
+#### 12.10.10 Relationship to Audio Bridging (Section 12.7)
+
+| Criterion | AudioBridge (12.7) | Conference (12.10) |
+|---|---|---|
+| Media plane | In-process (framework forwards/mixes) | External SFU |
+| Media types | Audio only | Audio + video + screen share |
+| Scale | Small rooms (default max 10) | SFU-bound (typically dozens+) |
+| Infrastructure | None | SFU deployment required |
+| Participants | Any VoiceBackend session (SIP, RTP, ...) | SFU-native clients (+ SIP gateway) |
+| Use when | Phone bridging, call center, small audio conf | Video conferences, AI in meetings |
+
+Both MAY coexist in one implementation. They do not share interfaces:
+AudioBridge operates on VoiceSessions; conferences operate on
+ConferenceTracks.
+
+#### 12.10.11 Conformance
+
+Conference support is part of **Conformance Level 3 (Real-Time Media)**,
+is OPTIONAL, and is PROVISIONAL (see status note above).
+
+Implementations that support conferencing MUST:
+
+- Implement the ConferenceBackend interface with a Mock implementation.
+- Map each conference 1:1 to a Room.
+- Keep the framework out of the human-to-human media path.
+- Deliver decoded, participant-attributed PCM audio per track.
+- Run per-track STT lanes emitting attributed transcription RoomEvents.
+- Publish AI TTS as a single bot track (synthesize once, publish once).
+- Fire conference lifecycle hooks and create/update Participant records
+  from conference events.
+- Treat ConferenceAccess as opaque.
+
+Implementations SHOULD:
+
+- Support vision analysis on VIDEO and SCREEN_SHARE tracks.
+- Surface active speaker and connection quality as ephemeral events.
+- Support egress recording delegation with the RecordingResult contract.
+- Enforce ConferenceInterruptionConfig scope.
+
+Implementations MAY:
+
+- Publish bot video (avatar embodiment, requires VIDEO_PUBLISH).
+- Compose speech-to-speech providers via N→1 mixing.
+- Bridge SIP sessions into conferences.
+
 ---
 
 ## 13. Resilience and Error Handling
@@ -4746,6 +5479,21 @@ should live in the integration surface layer.
 
 ---
 
+### 17.7 Conference Access Security
+
+ConferenceAccess tokens are credentials:
+
+- Tokens MUST be minted per participant with least-privilege grants
+  (e.g., hidden observers receive subscribe-only grants).
+- Tokens SHOULD be short-lived (`expires_at`) and MUST NOT be logged.
+- Moderation operations (`remove_participant`, `mute_track`) MUST only be
+  reachable through integrator-controlled code paths, never exposed
+  unauthenticated.
+- Where recording or transcription is active, bot participants SHOULD be
+  visibly identifiable to human participants (regulatory disclosure).
+
+---
+
 ## 18. Design Principles
 
 These principles define the conceptual architecture of RoomKit:
@@ -4829,6 +5577,13 @@ These principles define the conceptual architecture of RoomKit:
     output, timing, status). Session auditing captures the full conversation
     timeline (speech, tools, vision, interruptions). Both use pluggable
     backends — same extensibility pattern as providers and stores.
+
+24. **The conference media plane is external.** RoomKit orchestrates
+    conferences — rooms, access, participant lifecycle, AI participation —
+    but never forwards media between human participants. An external SFU
+    owns packet routing; RoomKit joins it as one participant among many.
+    Same boundary as storage: the framework defines the interface, the
+    deployment provides the infrastructure.
 
 ---
 
@@ -5493,6 +6248,21 @@ A Level 3 implementation MAY additionally support audio and/or video real-time m
 - AI integration: setup_video_vision() wires vision descriptions into AIChannel system prompt
 - Video and voice channels operate independently in the same room, enabling combined audio+video sessions where the AI can both hear (via STT) and see (via VisionProvider)
 
+#### Conference (SFU) — PROVISIONAL
+
+- Conference data models (ConferenceTrack, TrackKind, ConferenceParticipant,
+  ConferenceGrants, ConferenceAccess, BotSession, ConferenceCapability)
+- ConferenceBackend interface with MockConferenceBackend (Section 12.10.3)
+- ConferenceChannel with per-track STT lanes and bot TTS publication
+  (Section 12.10.4)
+- Conference hooks (ON_CONFERENCE_PARTICIPANT_JOINED/LEFT,
+  ON_TRACK_PUBLISHED/UNPUBLISHED, ON_ACTIVE_SPEAKER_CHANGED)
+- Multi-party interruption policy (ConferenceInterruptionConfig)
+- Participant lifecycle integration (conference events create/update
+  Participant records)
+- Optional: vision on tracks, egress recording delegation, SIP gateway
+  interop, bot video publication (avatar), speech-to-speech composition
+
 ---
 
 ## Appendix A: Channel Reference
@@ -5885,6 +6655,40 @@ CLIChannel
 ```
 
 ---
+
+### A.15 Conference Channel
+
+```
+ConferenceChannel
+├── channel_type: CONFERENCE
+├── category: TRANSPORT
+├── direction: BIDIRECTIONAL
+├── requires:
+│   ├── backend: ConferenceBackend
+│   ├── stt: STTProvider | null           # Per-track transcription
+│   ├── tts: TTSProvider | null           # AI voice via bot track
+│   ├── vision: VisionProvider | null     # OPTIONAL — video/screen tracks
+│   ├── interruption: ConferenceInterruptionConfig
+│   └── speak_text_events: bool           # default false
+├── lifecycle:
+│   ├── attach → ensure_room() [+ lazy join_as_bot()]
+│   ├── on_participant_joined → Participant record + hook
+│   ├── on_track_published → per-track pipeline lane
+│   ├── on_track_unpublished → lane teardown
+│   └── detach → leave() [+ close_room()]
+├── hooks:
+│   ├── ON_CONFERENCE_PARTICIPANT_JOINED / LEFT
+│   ├── ON_TRACK_PUBLISHED / UNPUBLISHED
+│   ├── ON_ACTIVE_SPEAKER_CHANGED
+│   ├── ON_SCREEN_SHARE_STARTED / STOPPED
+│   └── ON_TRANSCRIPTION — per track, participant-attributed
+├── framework_events:
+│   ├── conference_started / conference_ended
+│   └── conference_participant_joined / conference_participant_left
+└── backends:
+    ├── MockConferenceBackend — unit testing with scripted event sequences
+    └── (future) SFU providers (e.g., LiveKit)
+```
 
 ## Appendix B: Complete Event Flow Examples
 
