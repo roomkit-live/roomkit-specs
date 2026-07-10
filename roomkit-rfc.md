@@ -1359,91 +1359,101 @@ Hooks MAY be registered globally (apply to all rooms) or per-room.
 
 ### 9.2 Hook Triggers
 
-**HookTrigger** enumeration:
+**HookTrigger** enumeration. The **Status** column distinguishes triggers the
+reference implementation emits today (**Implemented** — 65 as of this revision)
+from those specified for a forthcoming capability but not yet emitted
+(**Planned**), and from a trigger kept for historical reference whose behaviour
+has moved elsewhere (**Superseded**). Conformance targets the Implemented set;
+Planned rows are normative design intent for the named capability.
 
-| Trigger | Execution | When It Fires |
-|---|---|---|
-| BEFORE_BROADCAST | SYNC | Before event reaches channels — can block/modify |
-| AFTER_BROADCAST | ASYNC | After all channels have processed the event |
-| ON_CHANNEL_ATTACHED | ASYNC | Channel attached to a room |
-| ON_CHANNEL_DETACHED | ASYNC | Channel detached from a room |
-| ON_CHANNEL_MUTED | ASYNC | Channel muted in a room |
-| ON_CHANNEL_UNMUTED | ASYNC | Channel unmuted in a room |
-| ON_ROOM_CREATED | ASYNC | New room created |
-| ON_ROOM_PAUSED | ASYNC | Room transitioned to PAUSED |
-| ON_ROOM_CLOSED | ASYNC | Room transitioned to CLOSED |
-| ON_IDENTITY_AMBIGUOUS | SYNC | Multiple identity candidates found |
-| ON_IDENTITY_UNKNOWN | SYNC | No identity match found |
-| ON_PARTICIPANT_IDENTIFIED | ASYNC | Participant identity resolved |
-| ON_TASK_CREATED | ASYNC | A task was created |
-| ON_DELIVERY_STATUS | ASYNC | Delivery status webhook from provider |
-| ON_ERROR | ASYNC | An error occurred in the pipeline |
-| ON_SPEECH_START | ASYNC | Audio pipeline detected speech start (voice) |
-| ON_SPEECH_END | ASYNC | Audio pipeline detected speech end (voice) |
-| ON_TRANSCRIPTION | SYNC | After STT transcription (voice) — can modify |
-| BEFORE_TTS | SYNC | Before TTS synthesis (voice) — can modify text/voice |
-| AFTER_TTS | ASYNC | After TTS synthesis (voice) |
-| ON_BARGE_IN | ASYNC | User interrupted TTS playback (voice) |
-| ON_TTS_CANCELLED | ASYNC | TTS was cancelled (voice) |
-| ON_PARTIAL_TRANSCRIPTION | ASYNC | Streaming partial STT result (voice) |
-| ON_VAD_SILENCE | ASYNC | Audio pipeline detected silence (voice) |
-| ON_VAD_AUDIO_LEVEL | ASYNC | Audio pipeline audio level update (voice) |
-| ON_INPUT_AUDIO_LEVEL | ASYNC | Per-frame inbound audio level, throttled to ~10/sec (voice) |
-| ON_OUTPUT_AUDIO_LEVEL | ASYNC | Per-frame outbound audio level, throttled to ~10/sec (voice) |
-| ON_SPEAKER_CHANGE | ASYNC | Audio pipeline detected speaker change (diarization) |
-| ON_DTMF | ASYNC | Audio pipeline detected a DTMF tone |
-| ON_TURN_COMPLETE | ASYNC | Turn detector determined user turn is complete |
-| ON_TURN_INCOMPLETE | ASYNC | Turn detector determined user is still speaking (for logging) |
-| ON_BACKCHANNEL | ASYNC | Backchannel detector classified speech as backchannel |
-| ON_SESSION_STARTED | ASYNC | Session started on any channel type (voice: audio path live; text: room auto-created) |
-| ON_RECORDING_STARTED | ASYNC | Audio recording started for a voice session |
-| ON_RECORDING_STOPPED | ASYNC | Audio recording stopped, result available |
-| ON_REALTIME_TOOL_CALL | SYNC | Speech-to-speech API requests a tool call |
-| ON_REALTIME_TEXT_INJECTED | ASYNC | Text injected into realtime session |
-| ON_PROTOCOL_TRACE | ASYNC | Transport-level protocol trace emitted (SIP, RTP, etc.) |
-| | | |
-| **Delivery:** | | |
-| BEFORE_DELIVER | SYNC | Before proactive delivery strategy executes — can block/modify |
-| AFTER_DELIVER | ASYNC | After proactive delivery completes |
-| | | |
-| **AI Generation:** | | |
-| BEFORE_AI_CONTEXT_BUILD | SYNC | Before AI context is built (pre-memory, pre-tool-resolution) — can block cheaply |
-| BEFORE_AI_GENERATION | SYNC | Before AI provider generate() — can modify context |
-| ON_AI_THINKING | ASYNC | AI model began extended thinking/reasoning |
-| ON_AI_RESPONSE | ASYNC | AI generation completed (observability) |
-| ON_TOOL_CALL | ASYNC | AI invoked a tool during generation |
-| | | |
-| **Orchestration:** | | |
-| ON_PHASE_TRANSITION | ASYNC | Conversation phase changed (e.g., triage → specialist) |
-| ON_HANDOFF | ASYNC | Agent handoff accepted and executed |
-| ON_HANDOFF_REJECTED | ASYNC | Agent handoff was rejected |
-| ON_STATUS_POSTED | ASYNC | Status posted to the inter-agent StatusBus |
-| | | |
-| **Delegation:** | | |
-| ON_TASK_DELEGATED | ASYNC | Background task delegated to a child room |
-| ON_TASK_COMPLETED | ASYNC | Delegated task completed with result |
-| | | |
-| **Video:** | | |
-| BEFORE_BRIDGE_VIDEO | SYNC | Before video frame is forwarded via bridge — can block/modify |
-| ON_VIDEO_SESSION_STARTED | ASYNC | Video session became active |
-| ON_VIDEO_SESSION_ENDED | ASYNC | Video session ended |
-| ON_VIDEO_TRACK_ADDED | ASYNC | Video track added to session |
-| ON_VIDEO_TRACK_REMOVED | ASYNC | Video track removed from session |
-| ON_VISION_RESULT | ASYNC | VisionProvider returned analysis result |
-| ON_SCREEN_SHARE_STARTED | ASYNC | Screen sharing started |
-| ON_SCREEN_SHARE_STOPPED | ASYNC | Screen sharing stopped |
-| ON_VIDEO_DETECTION | ASYNC | Video detection event (object, face, etc.) |
-| | | |
-| **Conference:** | | |
-| ON_CONFERENCE_PARTICIPANT_JOINED | ASYNC | Participant joined the conference media session |
-| ON_CONFERENCE_PARTICIPANT_LEFT | ASYNC | Participant left the conference media session |
-| ON_TRACK_PUBLISHED | ASYNC | Conference participant published a track (audio, video, screen share) |
-| ON_TRACK_UNPUBLISHED | ASYNC | Conference track unpublished |
-| ON_ACTIVE_SPEAKER_CHANGED | ASYNC | SFU reported a dominant-speaker change |
-| | | |
-| **Other:** | | |
-| ON_PLAN_UPDATED | ASYNC | Orchestration plan was updated |
-| ON_FEEDBACK | ASYNC | Feedback/scoring event emitted |
+| Trigger | Execution | Status | When It Fires |
+|---|---|---|---|
+| BEFORE_BROADCAST | SYNC | Implemented | Before event reaches channels — can block/modify |
+| AFTER_BROADCAST | ASYNC | Implemented | After all channels have processed the event |
+| ON_CHANNEL_ATTACHED | ASYNC | Implemented | Channel attached to a room |
+| ON_CHANNEL_DETACHED | ASYNC | Implemented | Channel detached from a room |
+| ON_CHANNEL_MUTED | ASYNC | Implemented | Channel muted in a room |
+| ON_CHANNEL_UNMUTED | ASYNC | Implemented | Channel unmuted in a room |
+| ON_ROOM_CREATED | ASYNC | Implemented | New room created |
+| ON_ROOM_PAUSED | ASYNC | Implemented | Room transitioned to PAUSED |
+| ON_ROOM_CLOSED | ASYNC | Implemented | Room transitioned to CLOSED |
+| ON_IDENTITY_AMBIGUOUS | SYNC | Implemented | Multiple identity candidates found |
+| ON_IDENTITY_UNKNOWN | SYNC | Implemented | No identity match found |
+| ON_PARTICIPANT_IDENTIFIED | ASYNC | Implemented | Participant identity resolved |
+| ON_PARTICIPANT_JOINED | ASYNC | Implemented | Explicit member join via `add_member` |
+| ON_PARTICIPANT_LEFT | ASYNC | Implemented | Explicit member leave via `remove_member` |
+| ON_TASK_CREATED | ASYNC | Implemented | A task was created |
+| ON_DELIVERY_STATUS | ASYNC | Implemented | Delivery status webhook from provider |
+| ON_ERROR | ASYNC | Implemented | An error occurred in the pipeline |
+| ON_SPEECH_START | ASYNC | Implemented | Audio pipeline detected speech start (voice) |
+| ON_SPEECH_END | ASYNC | Implemented | Audio pipeline detected speech end (voice) |
+| ON_TRANSCRIPTION | SYNC | Implemented | After STT transcription (voice) — can modify |
+| BEFORE_TTS | SYNC | Implemented | Before TTS synthesis (voice) — can modify text/voice |
+| AFTER_TTS | ASYNC | Implemented | After TTS synthesis (voice) |
+| ON_BARGE_IN | ASYNC | Implemented | User interrupted TTS playback (voice) |
+| ON_TTS_CANCELLED | ASYNC | Implemented | TTS was cancelled (voice) |
+| ON_PARTIAL_TRANSCRIPTION | ASYNC | Implemented | Streaming partial STT result (voice) |
+| ON_VAD_SILENCE | ASYNC | Implemented | Audio pipeline detected silence (voice) |
+| ON_VAD_AUDIO_LEVEL | ASYNC | Implemented | Audio pipeline audio level update (voice) |
+| ON_INPUT_AUDIO_LEVEL | ASYNC | Implemented | Per-frame inbound audio level, throttled to ~10/sec (voice) |
+| ON_OUTPUT_AUDIO_LEVEL | ASYNC | Implemented | Per-frame outbound audio level, throttled to ~10/sec (voice) |
+| ON_SPEAKER_CHANGE | ASYNC | Implemented | Audio pipeline detected speaker change (diarization) |
+| ON_DTMF | ASYNC | Implemented | Audio pipeline detected a DTMF tone |
+| ON_TURN_COMPLETE | ASYNC | Implemented | Turn detector determined user turn is complete |
+| ON_TURN_INCOMPLETE | ASYNC | Implemented | Turn detector determined user is still speaking (for logging) |
+| ON_BACKCHANNEL | ASYNC | Implemented | Backchannel detector classified speech as backchannel |
+| ON_SESSION_STARTED | ASYNC | Implemented | Session started on any channel type (voice: audio path live; text: room auto-created) |
+| ON_RECORDING_STARTED | ASYNC | Implemented | Audio recording started for a voice session |
+| ON_RECORDING_STOPPED | ASYNC | Implemented | Audio recording stopped, result available |
+| ON_REALTIME_TOOL_CALL | SYNC | Superseded | Speech-to-speech tool call — superseded by `ON_TOOL_CALL` (unified across AI and realtime channels) |
+| ON_REALTIME_TEXT_INJECTED | ASYNC | Implemented | Text injected into realtime session |
+| ON_PROTOCOL_TRACE | ASYNC | Implemented | Transport-level protocol trace emitted (SIP, RTP, etc.) |
+| BEFORE_BRIDGE_AUDIO | SYNC | Implemented | Before an audio frame is forwarded via bridge — can block/modify (voice) |
+| | | | |
+| **Delivery:** | | | |
+| BEFORE_DELIVER | SYNC | Implemented | Before proactive delivery strategy executes — can block/modify |
+| AFTER_DELIVER | ASYNC | Implemented | After proactive delivery completes |
+| | | | |
+| **AI Generation:** | | | |
+| BEFORE_AI_CONTEXT_BUILD | SYNC | Planned | Before AI context is built (pre-memory, pre-tool-resolution) — can block cheaply |
+| BEFORE_AI_GENERATION | SYNC | Implemented | Before AI provider generate() — can modify context |
+| ON_AI_THINKING | ASYNC | Implemented | AI model began extended thinking/reasoning |
+| ON_AI_RESPONSE | ASYNC | Implemented | AI generation completed (observability) |
+| BEFORE_TOOL_USE | SYNC | Implemented | Before a tool executes — can block or override the call |
+| ON_TOOL_CALL | ASYNC | Implemented | A tool was invoked during generation (unified across AI and realtime channels) |
+| ON_USER_INPUT_REQUIRED | SYNC | Implemented | Human-in-the-loop: a tool paused, waiting for user input |
+| | | | |
+| **Orchestration:** | | | |
+| ON_PHASE_TRANSITION | ASYNC | Implemented | Conversation phase changed (e.g., triage → specialist) |
+| ON_HANDOFF | ASYNC | Implemented | Agent handoff accepted and executed |
+| ON_HANDOFF_REJECTED | ASYNC | Implemented | Agent handoff was rejected |
+| ON_STATUS_POSTED | ASYNC | Implemented | Status posted to the inter-agent StatusBus |
+| | | | |
+| **Delegation:** | | | |
+| ON_TASK_DELEGATED | ASYNC | Implemented | Background task delegated to a child room |
+| ON_TASK_COMPLETED | ASYNC | Implemented | Delegated task completed with result |
+| | | | |
+| **Video:** | | | |
+| BEFORE_BRIDGE_VIDEO | SYNC | Implemented | Before video frame is forwarded via bridge — can block/modify |
+| ON_VIDEO_SESSION_STARTED | ASYNC | Implemented | Video session became active |
+| ON_VIDEO_SESSION_ENDED | ASYNC | Implemented | Video session ended |
+| ON_VIDEO_TRACK_ADDED | ASYNC | Implemented | Video track added to session |
+| ON_VIDEO_TRACK_REMOVED | ASYNC | Implemented | Video track removed from session |
+| ON_VISION_RESULT | ASYNC | Implemented | VisionProvider returned analysis result |
+| ON_SCREEN_SHARE_STARTED | ASYNC | Implemented | Screen sharing started |
+| ON_SCREEN_SHARE_STOPPED | ASYNC | Implemented | Screen sharing stopped |
+| ON_VIDEO_DETECTION | ASYNC | Implemented | Video detection event (object, face, etc.) |
+| | | | |
+| **Conference:** (SFU — planned) | | | |
+| ON_CONFERENCE_PARTICIPANT_JOINED | ASYNC | Planned | Participant joined the conference media session |
+| ON_CONFERENCE_PARTICIPANT_LEFT | ASYNC | Planned | Participant left the conference media session |
+| ON_TRACK_PUBLISHED | ASYNC | Planned | Conference participant published a track (audio, video, screen share) |
+| ON_TRACK_UNPUBLISHED | ASYNC | Planned | Conference track unpublished |
+| ON_ACTIVE_SPEAKER_CHANGED | ASYNC | Planned | SFU reported a dominant-speaker change |
+| | | | |
+| **Other:** | | | |
+| ON_PLAN_UPDATED | ASYNC | Implemented | Orchestration plan was updated |
+| ON_FEEDBACK | ASYNC | Implemented | Feedback/scoring event emitted |
 
 ### 9.3 Hook Execution Modes
 
