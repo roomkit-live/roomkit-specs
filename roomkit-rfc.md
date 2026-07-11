@@ -1612,21 +1612,28 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     └── Otherwise → continue
         # A source that cannot write MUST NOT inject a DELIVERED event.
 
-12. IF ALLOWED (possibly modified):
+12. COMMIT EVENT — the commit point (§13.6, §14.3):
     ├── For EDIT/DELETE: apply the target state update now (§10.3) — deferred
     │   to this point so a hook that blocks the edit/delete leaves the target
     │   unmutated
-    ├── Store event with status=DELIVERED
+    ├── Commit atomically, as ONE logical transaction:
+    │   ├── Store event with status=DELIVERED
+    │   └── Update room state: latest_index = event.index; event_count += 1;
+    │       timers.last_activity_at = now
+    │   # After this transaction returns, the event is durably part of the
+    │   # timeline. It MUST NOT be retroactively re-marked BLOCKED or FAILED
+    │   # (e.g. by process_timeout, §13.6) — the timeline is authoritative.
     ├── Deliver any injected events
     ├── IF message.session is set:
     │   └── Call channel.connect_session(session, room_id, binding)
     │       # Connects the voice session (starts realtime AI, etc.)
-    └── Call broadcast(event, source_binding, context)
+    └── Call broadcast(event, source_binding, context)   # POST-COMMIT
 
 13. REENTRY DRAIN LOOP
     ├── Collect response events from broadcast
     ├── For each response event:
-    │   ├── Assign index atomically, store
+    │   ├── Commit atomically (same commit point as step 12): assign index,
+    │   │   store DELIVERED, bump room counters — one logical transaction
     │   ├── Check chain_depth < max_chain_depth
     │   │   └── If exceeded → block (status=BLOCKED), emit framework event
     │   ├── Broadcast response event
@@ -1636,10 +1643,11 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 14. PERSIST SIDE EFFECTS
     └── Store all tasks and observations from hooks + channels
 
-15. UPDATE ROOM STATE
-    ├── room.latest_index = event.index
-    ├── room.event_count += 1
-    └── room.timers.last_activity_at = now
+15. FINALIZE
+    └── Room counters (latest_index, event_count) and timers.last_activity_at
+        were already updated atomically with each event's DELIVERED commit
+        (steps 12–13). No separate, non-atomic room-state write occurs here —
+        the timeline and the counters can never diverge (§14.3).
 
 16. RELEASE ROOM LOCK
 
@@ -4880,9 +4888,36 @@ PostgreSQL advisory locks).
 
 ### 13.6 Processing Timeout
 
-Implementations SHOULD support a configurable `process_timeout` — maximum time
-for the entire inbound processing pipeline. If exceeded, the event SHOULD be
-stored as FAILED.
+Implementations SHOULD support a configurable `process_timeout`. Its semantics
+are defined **relative to the commit point** (§10.1 step 12) — the atomic
+transaction that stores the event as DELIVERED and updates the room counters:
+
+- **Pre-commit phase** (§10.1 steps 3–11: context build, identity resolution,
+  BEFORE_BROADCAST hooks, write-permission check, index assignment). This phase
+  performs no durable write of the inbound event. `process_timeout` MUST bound
+  this phase. On expiry the implementation MUST abort **before** the commit
+  point, leaving no partial durable state, and return
+  `InboundResult(blocked=true, reason=process_timeout)`. The event MUST NOT
+  appear in the timeline.
+
+- **Commit point** (§10.1 step 12). Once the DELIVERED transaction has
+  committed, the event is authoritative. `process_timeout` MUST NOT cancel,
+  block, or re-mark it. An implementation MUST NOT wrap the commit and the
+  subsequent broadcast in a single cancellable unit whose expiry could leave a
+  committed event reported as blocked/failed.
+
+- **Post-commit phase** (§10.1 steps 12–13: broadcast, reentry drain,
+  external delivery). Slowness here MUST NOT invalidate the committed event.
+  Bound external delivery with **per-operation** timeouts (§10.2) and report
+  failures per channel via `delivery_failed` framework events — never by
+  changing the source event's status or the returned result to blocked/failed.
+  A degraded broadcast SHOULD surface as `broadcast_partial_failure`, with the
+  source event remaining DELIVERED.
+
+Implementations MAY additionally model outbound delivery with an explicit
+`PENDING → COMMITTED | FAILED` state and an outbox, plus recovery of events
+left PENDING, so that a crash between commit and delivery is recoverable. Such
+a state applies to **delivery**, not to the committed timeline event.
 
 ---
 
@@ -4948,7 +4983,14 @@ ConversationStore (interface)
 ### 14.3 Consistency Requirements
 
 - Event index assignment MUST be atomic within a room.
-- Room state updates MUST be consistent with event storage.
+- Room state updates MUST be consistent with event storage. Specifically,
+  storing an event as DELIVERED and bumping the room's `event_count` /
+  `latest_index` form a **single atomic commit** (§10.1 step 12): an observer
+  MUST never see a DELIVERED event that is not reflected in the room counters,
+  nor counters that count an event absent from the timeline.
+- Once committed (DELIVERED), an event MUST NOT be retroactively re-marked
+  BLOCKED or FAILED. A processing timeout or a delivery failure after the
+  commit point (§13.6) MUST NOT alter the event's committed status.
 - Idempotency key checks MUST be performed under the room lock.
 
 ---
