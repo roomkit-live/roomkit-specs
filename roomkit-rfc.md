@@ -1257,7 +1257,16 @@ that is monotonically increasing within each room.
 
 - The `index` MUST start at 0 for the first event in a room.
 - Each subsequent event MUST have `index = previous_index + 1`.
-- The `index` MUST be assigned atomically under a room-level lock.
+- The `index` MUST be assigned atomically per room. A room-level lock (§13.5)
+  serializes assignment within a single process; it is **NOT** sufficient when a
+  persistent store is shared across processes (e.g. a load-balanced deployment),
+  because per-process locks do not coordinate. Such a store MUST make index
+  assignment authoritative at the storage layer: a `UNIQUE(room_id, index)`
+  constraint, with the index computed and the event inserted in a **single
+  storage transaction**, so concurrent writers serialize on the store rather
+  than on an in-process lock.
+- A duplicate `(room_id, index)` MUST be rejected by the store (the constraint
+  violation surfaced to the caller), never silently persisted.
 - The `index` enables pagination, read horizon tracking, and gap detection.
 
 ### 8.2 Framework Events
@@ -4883,8 +4892,15 @@ RoomLockManager (interface)
 ```
 
 For single-process deployments, an in-memory lock manager (per-room async mutex)
-is sufficient. Distributed deployments require a distributed lock (e.g., Redis,
-PostgreSQL advisory locks).
+is sufficient. When a persistent store is shared across multiple processes an
+in-memory lock manager is **NOT** sufficient — per-process locks do not
+coordinate, so concurrent writers on the same room can interleave. Such
+deployments MUST either use a distributed lock manager (e.g. Redis or a
+PostgreSQL advisory lock) or rely on storage-layer atomicity for the operations
+that require it (index assignment, §8.1). Implementations SHOULD ship at least
+one distributed lock manager, and SHOULD detect the unsafe combination of a
+shared persistent store with an in-memory lock manager and warn (or refuse) at
+initialization.
 
 ### 13.6 Processing Timeout
 
@@ -4982,7 +4998,10 @@ ConversationStore (interface)
 
 ### 14.3 Consistency Requirements
 
-- Event index assignment MUST be atomic within a room.
+- Event index assignment MUST be atomic within a room. For a persistent store
+  that may be accessed by more than one process, this atomicity MUST be enforced
+  at the storage layer — a single transaction plus a `UNIQUE(room_id, index)`
+  constraint (§8.1) — not by an in-process lock alone.
 - Room state updates MUST be consistent with event storage. Specifically,
   storing an event as DELIVERED and bumping the room's `event_count` /
   `latest_index` form a **single atomic commit** (§10.1 step 12): an observer
