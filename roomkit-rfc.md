@@ -1369,7 +1369,7 @@ Hooks MAY be registered globally (apply to all rooms) or per-room.
 ### 9.2 Hook Triggers
 
 **HookTrigger** enumeration. The **Status** column distinguishes triggers the
-reference implementation emits today (**Implemented** — 65 as of this revision)
+reference implementation emits today (**Implemented** — 67 as of this revision)
 from those specified for a forthcoming capability but not yet emitted
 (**Planned**), and from a trigger kept for historical reference whose behaviour
 has moved elsewhere (**Superseded**). Conformance targets the Implemented set;
@@ -1379,6 +1379,8 @@ Planned rows are normative design intent for the named capability.
 |---|---|---|---|
 | BEFORE_BROADCAST | SYNC | Implemented | Before event reaches channels — can block/modify |
 | AFTER_BROADCAST | ASYNC | Implemented | After all channels have processed the event |
+| ON_EVENT_UPDATED | ASYNC | Implemented | A persisted event's stored state was mutated (inbound EDIT, §10.3, or direct `update_event()`) |
+| ON_EVENT_DELETED | ASYNC | Implemented | A persisted event was deleted (inbound soft DELETE, §10.3, or direct hard `delete_event()`) |
 | ON_CHANNEL_ATTACHED | ASYNC | Implemented | Channel attached to a room |
 | ON_CHANNEL_DETACHED | ASYNC | Implemented | Channel detached from a room |
 | ON_CHANNEL_MUTED | ASYNC | Implemented | Channel muted in a room |
@@ -1776,6 +1778,25 @@ a hook that blocks the EDIT/DELETE MUST leave the target event unmutated):
 2. On successful DELETE: the framework SHOULD call `update_event()` to set
    `metadata.deleted = true` on the original event. The DELETE event itself MUST
    be stored in the timeline.
+
+**Mutation triggers:** After a successful EDIT the framework MUST fire
+`ON_EVENT_UPDATED` with the mutated target event; after a successful DELETE it
+MUST fire `ON_EVENT_DELETED`. Firings follow the async-hook locking rule of
+§10.1 (deferred until the room lock is released). A blocked EDIT/DELETE MUST
+NOT fire either trigger. These triggers let observers (e.g. maintainers of
+denormalized projections over the timeline) see every stored-state change
+regardless of origin.
+
+**Direct mutation (host-owned):** The framework SHOULD also expose direct
+APIs — `update_event(room_id, event_id, content|source|metadata)` and
+`delete_event(room_id, event_id, cascade_replies)` — for host applications
+that own authorization on their own surfaces. Direct `update_event()` replaces
+the provided fields wholesale and adds no `edited` marker; direct
+`delete_event()` is a HARD delete that MUST cascade to thread replies by
+default (no self-referential FK protects them) and MUST return the deleted
+event IDs. Both MUST serialise against inbound processing via the room lock
+and MUST fire the corresponding mutation trigger after the lock is released;
+a target that does not exist in the room MUST be a no-op that fires nothing.
 
 **Broadcast behavior:**
 
