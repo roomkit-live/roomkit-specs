@@ -7,7 +7,7 @@
 | **Contributions** | TchatNSign, Angany AI |
 | **Version** | v16 Draft |
 | **Created** | 2026-01-27 |
-| **Last Updated** | 2026-06-11 |
+| **Last Updated** | 2026-07-23 |
 | **Supersedes** | v15 Draft |
 
 ---
@@ -85,6 +85,7 @@ interpreted as described in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
 | **Transcoding** | Converting event content from one format to another for cross-channel delivery. |
 | **Audio Pipeline** | A configurable chain of audio processing stages (resampler, AEC, AGC, denoiser, VAD, diarization, DTMF, recording) between the transport and the conversation engine. |
 | **AI Pipeline** | A configurable chain of AI generation stages (pre-context gates, memory retrieval, tool resolution, prompt assembly, pre-generation gate, generation, post-generation, emission) between an AIChannel receiving an event and emitting a response. Peer abstraction to Audio Pipeline and Video Pipeline. |
+| **ACP** | Agent Client Protocol — a protocol for communication between code editors or conversation hosts (clients) and coding agents (servers). |
 | **AEC** | Acoustic Echo Cancellation — removes the bot's own audio from the inbound stream to prevent self-triggering. |
 | **AGC** | Automatic Gain Control — normalizes audio volume to a consistent level regardless of input device or distance. |
 | **DTMF** | Dual-Tone Multi-Frequency — telephone keypad tones used for IVR navigation and call control. |
@@ -1045,6 +1046,60 @@ The AI channel MUST skip events originating from itself to prevent infinite loop
 **Capability-aware generation:** The framework MUST provide the target transport
 channel's capabilities to the AI at generation time, NOT post-process the output.
 This allows the AI to tailor its response (e.g., short text for SMS, rich for Email).
+
+**ACP Agent Channel:**
+
+An ACP agent channel connects a Room to an external
+[Agent Client Protocol](https://agentclientprotocol.com/) agent. In this
+integration RoomKit is the ACP **client** and the coding agent is the ACP
+**server**. Exposing a RoomKit-built agent as an ACP server is a separate
+integration surface and is outside this channel's contract.
+
+An ACP agent channel:
+
+1. MUST use `ChannelType.AI`, category `INTELLIGENCE`, and direction
+   `BIDIRECTIONAL`;
+2. MUST initialize one ACP connection per channel instance and create a distinct
+   ACP session for each Room;
+3. MUST serialize prompts within an ACP session while allowing different Room
+   sessions to operate concurrently;
+4. MUST convert Room message content into ACP prompt content and map ACP agent
+   message chunks back to the normal RoomKit streaming output path;
+5. MUST map ACP tool-call lifecycle updates to RoomKit tool-call stream markers
+   and MUST map ACP plan updates to RoomKit realtime events;
+6. MUST skip events originating from itself and persisted tool-call activity
+   events, preventing duplicate prompts and agent loops;
+7. MUST support cancellation of an active Room turn and MUST release ACP
+   sessions and transport resources when the channel closes; and
+8. MUST NOT bypass the standard RoomKit persistence, visibility, chain-depth,
+   or re-broadcast behavior for generated text and tool activity.
+
+The stable ACP protocol version MUST be the default. Experimental protocol
+versions MAY be supported only behind explicit opt-in and MUST NOT silently
+replace the stable default. The channel MUST negotiate the protocol version
+during initialization and MUST fail clearly when no compatible version exists.
+
+The reference transport is ACP over stdio. A stdio implementation MUST launch
+the configured command as an argument vector without a shell. Alternate ACP
+transports MAY be implemented when standardized, but MUST preserve the lifecycle
+and permission requirements above.
+
+ACP sessions are process-local by default. An implementation MAY add persistent
+session resumption, but MUST scope resumed session identifiers to the associated
+Room and agent endpoint.
+
+ACP agents can request permission to execute tools and can request client-side
+filesystem or terminal operations. An ACP agent channel:
+
+- MUST advertise filesystem and terminal capabilities as unavailable unless the
+  integrator explicitly supplies conforming implementations;
+- MUST deny or cancel permission requests when no external tool handler is
+  configured;
+- MUST pass tool name, input, call identifier, ACP session identifier, and Room
+  identifier to the configured external tool handler;
+- MUST select only a permission option offered by the ACP agent; and
+- SHOULD expose tool and plan progress through the realtime backend without
+  persisting transient progress updates.
 
 ### 6.5 Source Providers
 
@@ -6272,6 +6327,7 @@ A Level 2 implementation MAY additionally support:
 - Template content support
 - Source providers (persistent connections)
 - MCP Server (Section 16.2)
+- ACP agent channel (Section 6.4)
 - Realtime/ephemeral events backend
 - Per-room hooks
 - Multi-agent orchestration (Section 19):
@@ -6609,6 +6665,43 @@ AIChannel
     ├── Skips events from self (loop prevention)
     ├── Supports streaming via generate_stream() and deliver_stream()
     └── Returns ChannelOutput with response events + tasks + observations
+```
+
+### A.9.1 ACP Agent Channel
+
+```
+ACPChannel
+├── type: AI
+├── category: INTELLIGENCE
+├── direction: BIDIRECTIONAL
+├── media_types: [TEXT, RICH]
+├── role: ACP client (external coding agent is the ACP server)
+├── transport:
+│   ├── stable default: stdio
+│   ├── command: argument vector (never shell-expanded)
+│   └── protocol_version: stable ACP version
+├── sessions:
+│   ├── one ACP connection per channel instance
+│   ├── one ACP session per Room
+│   └── prompts serialized per session
+├── configuration:
+│   ├── command: list<string>
+│   ├── cwd: absolute path
+│   ├── additional_directories: list<absolute path>
+│   ├── environment: map<string, string> | null
+│   ├── authentication_method: string | null
+│   ├── mcp_servers: list<ACP MCPServer>
+│   └── external_tool_handler: ExternalToolHandler | null
+├── update_mapping:
+│   ├── agent_message_chunk → text stream delta
+│   ├── agent_thought_chunk → thinking stream marker + ephemeral event
+│   ├── tool_call_start/progress → tool-call markers + ephemeral events
+│   └── agent_plan_update → ephemeral custom event
+└── safety:
+    ├── filesystem/terminal client capabilities disabled by default
+    ├── permission requests denied by default
+    ├── cancellation forwarded to ACP session
+    └── close releases sessions and process transport
 ```
 
 ### A.10 Voice Channel
