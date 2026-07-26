@@ -4569,8 +4569,16 @@ ConferenceParticipant
 ├── participant_id: string
 ├── connected_at: datetime
 ├── tracks: list<ConferenceTrack>
-└── metadata: map<string, any>
+└── metadata: map<string, any>     # Provider-supplied participant attributes
 ```
+
+A backend MUST surface the provider's own participant attributes in
+`metadata`. This is not decoration: for a participant the framework did not
+name, those attributes are where the resolvable address lives — a PSTN
+dial-in carries its caller number there, and that number is precisely what
+identity resolution consumes (Section 5.6, `channel_addresses`). Dropping
+them leaves the framework with an opaque identifier and no way to connect
+the caller to a known Identity.
 
 **ConferenceGrants** — least-privilege permissions encoded into access:
 
@@ -4614,9 +4622,13 @@ thing on both sides of the backend boundary. Therefore:
 3. For a participant the framework did not mint — SIP/PSTN dial-in
    (Section 12.10.9), or admission arranged out of band — the backend MUST
    surface its own stable identity for the lifetime of that participant's
-   connection. The channel MUST then create a Participant with that value
-   as `external_id` and `identification: UNKNOWN`; normal identity
-   resolution (Section 11) applies from there.
+   connection, and MUST populate `metadata` with the provider's participant
+   attributes. The channel MUST then create a Participant with that
+   identity as `external_id` and `identification: UNKNOWN`, and MUST pass
+   any resolvable address found in `metadata` — a caller number above all —
+   to identity resolution (Section 11) rather than resolving on the opaque
+   identity alone. A phone participant joining a conference SHOULD reach
+   the same Identity it would have reached over the SMS or Voice channel.
 4. Identities MUST NOT be reused across participants within a room's
    lifetime.
 
@@ -4640,7 +4652,13 @@ BotSession
 | ACTIVE_SPEAKER | Dominant-speaker change events |
 | CONNECTION_QUALITY | Per-participant quality reports |
 | VIDEO_PUBLISH | Bot can publish video tracks (avatar) |
+| REMOTE_UNMUTE | A moderator can unmute another participant's track |
 | E2EE | End-to-end encryption between clients |
+
+REMOTE_UNMUTE is a capability rather than an assumed operation because
+unmuting someone else's microphone is a privacy decision, not a technical
+one: SFUs commonly refuse it by default and require an explicit server-side
+opt-in. Muting is always available; unmuting is not.
 
 **E2EE and framework media access (normative).** E2EE is the one
 capability that constrains rather than extends what the framework can do:
@@ -4677,7 +4695,7 @@ ConferenceBackend (interface)
 ├── list_participants(room_id) → list<ConferenceParticipant>
 ├── remove_participant(room_id, participant_id) → void
 ├── mute_track(room_id, track_id) → void     # Moderation mute
-├── unmute_track(room_id, track_id) → void   # Moderation unmute
+├── unmute_track(room_id, track_id) → void   # Requires REMOTE_UNMUTE
 │
 │   # Bot participant (framework media access):
 ├── join_as_bot(room_id, identity, grants) → BotSession
@@ -4741,6 +4759,14 @@ does, because the bot's own permissions vary by AI participation pattern
 (Section 12.10.6): a speaking bot needs `publish_audio`, an Observer bot is
 `subscribe`-only with `hidden` set. A backend MUST apply them to the bot
 session rather than assuming full permissions.
+
+**Moderation:** `mute_track()` is always available. `unmute_track()` requires
+the REMOTE_UNMUTE capability; calling it on a backend without that
+capability MUST raise a configuration error rather than failing silently or
+appearing to succeed. Implementations MUST NOT assume the two operations
+are symmetric, and SHOULD surface the asymmetry to the integrator — a
+moderation UI that offers unmute against a backend that refuses it is a
+worse outcome than one that never offers it.
 
 **Abstraction boundary (normative):** the interface deliberately omits SDP
 negotiation, ICE, codec selection, simulcast/SVC layer control, and bitrate
@@ -5003,7 +5029,12 @@ no new mechanism:
 - **SIP/PSTN interop (OPTIONAL).** Backends with SIP_GATEWAY MAY admit
   phone participants directly. Alternatively, an implementation MAY bridge
   an existing VoiceChannel SIP session into the conference by republishing
-  its audio as an additional bot participant (audio-only gateway).
+  its audio as an additional bot participant (audio-only gateway). A phone
+  participant admitted by the SFU is the canonical case of a participant
+  the framework did not name: its caller number arrives in
+  `ConferenceParticipant.metadata` and MUST reach identity resolution
+  (Section 12.10.2), so that dialling into a conference identifies the
+  caller as reliably as messaging the room would.
 
 #### 12.10.10 Relationship to Audio Bridging (Section 12.7)
 
@@ -5034,7 +5065,10 @@ Implementations that support conferencing MUST:
   track.
 - Correlate `participant_id` across the backend boundary per Section
   12.10.2, including the `external_id` fallback for participants the
-  framework did not mint.
+  framework did not mint, and surface provider participant attributes so
+  their resolvable addresses reach identity resolution.
+- Gate `unmute_track()` on the REMOTE_UNMUTE capability, raising a
+  configuration error rather than failing silently where it is unsupported.
 - Subscribe explicitly: consume only tracks passed to `subscribe_track()`,
   and never auto-subscribe the bot session.
 - Exclude the bot's own participant and tracks from Participant records,
