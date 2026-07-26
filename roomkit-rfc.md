@@ -2886,11 +2886,39 @@ AudioFrame
 └── metadata: map<string, any>               # Pipeline metadata (accumulated by stages)
 ```
 
-**AudioChunk** is an alias for `AudioFrame`. The two names exist because
-`AudioFrame` is used within the pipeline (where metadata accumulates through
-stages) and `AudioChunk` is used at the transport and provider boundaries
-(TTSProvider, RealtimeAudioTransport) where pipeline metadata is not yet
-present. Implementations SHOULD use a single type for both.
+**AudioChunk** is a distinct type, not an alias:
+
+```
+AudioChunk
+├── data: bytes                              # Audio samples
+├── sample_rate: int                         # Sample rate in Hz
+├── channels: int                            # Number of audio channels
+├── format: string                           # Sample encoding (default "pcm_s16le")
+├── timestamp_ms: int | null                 # Chunk timestamp
+└── is_final: bool                           # Last chunk of the stream
+```
+
+The two exist because inbound and outbound audio are not the same problem.
+Inbound audio is a stream to be *analysed*: an AudioFrame is a standalone unit
+that accumulates stage annotations in `metadata` as it descends the pipeline —
+the VAD records that speech was present, diarization records which speaker —
+and it is validated on construction, because a misaligned frame breaks the
+stages that consume it.
+
+Outbound audio is a stream to be *finished*: TTS emits a sequence of chunks and
+must be able to say which one is last, so the transport knows when an utterance
+has ended, can drain its buffers, and can hand control back to barge-in
+handling. `is_final` carries that, and AudioFrame has no equivalent because a
+live microphone has no last frame. Nothing annotates an outbound chunk, so it
+carries no metadata and no validation.
+
+Implementations MUST NOT merge the two. Doing so means either dragging
+`is_final` and `format` into the pipeline type, where they are meaningless, or
+losing stream termination on the TTS path.
+
+Conversion is one-directional and lossy by design: an AudioFrame becomes an
+AudioChunk by dropping its pipeline metadata; the reverse requires validating
+alignment and starting a fresh annotation record.
 
 #### 12.3.12 Turn Detector
 
@@ -4729,8 +4757,12 @@ ConferenceBackend (interface)
 
 **Frame publishing requirements:**
 
-- `publish_audio` takes an AudioChunk, which is an alias of AudioFrame
-  (Section 12.3.11) — decoded PCM, not an encoded payload.
+- `publish_audio` takes an AudioChunk (Section 12.3.11) — the outbound stream
+  type, carrying decoded PCM rather than an encoded payload. AudioChunk names
+  its own encoding in `format`, and a conference backend MUST reject a chunk
+  that is not PCM rather than forwarding it to the SFU: encoding belongs to the
+  backend, and a caller choosing the wire format would defeat the abstraction
+  boundary below.
 - `publish_video` takes a **raw** VideoFrame (`is_raw` true). The backend
   owns encoding, symmetrically with the decoding it owns on the inbound
   side. A backend MUST NOT require the framework to supply an encoded
