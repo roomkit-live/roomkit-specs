@@ -1428,7 +1428,7 @@ Hooks MAY be registered globally (apply to all rooms) or per-room.
 ### 9.2 Hook Triggers
 
 **HookTrigger** enumeration. The **Status** column distinguishes triggers the
-reference implementation emits today (**Implemented** — 67 as of this revision)
+reference implementation emits today (**Implemented** — 72 as of this revision)
 from those specified for a forthcoming capability but not yet emitted
 (**Planned**), and from a trigger kept for historical reference whose behaviour
 has moved elsewhere (**Superseded**). Conformance targets the Implemented set;
@@ -1514,12 +1514,12 @@ Planned rows are normative design intent for the named capability.
 | ON_SCREEN_SHARE_STOPPED | ASYNC | Implemented | Screen sharing stopped |
 | ON_VIDEO_DETECTION | ASYNC | Implemented | Video detection event (object, face, etc.) |
 | | | | |
-| **Conference:** (SFU — planned) | | | |
-| ON_CONFERENCE_PARTICIPANT_JOINED | ASYNC | Planned | Participant joined the conference media session |
-| ON_CONFERENCE_PARTICIPANT_LEFT | ASYNC | Planned | Participant left the conference media session |
-| ON_CONFERENCE_TRACK_PUBLISHED | ASYNC | Planned | Conference participant published a track (audio, video, screen share) |
-| ON_CONFERENCE_TRACK_UNPUBLISHED | ASYNC | Planned | Conference track unpublished |
-| ON_ACTIVE_SPEAKER_CHANGED | ASYNC | Planned | SFU reported a dominant-speaker change |
+| **Conference:** (SFU) | | | |
+| ON_CONFERENCE_PARTICIPANT_JOINED | ASYNC | Implemented | Participant joined the conference media session |
+| ON_CONFERENCE_PARTICIPANT_LEFT | ASYNC | Implemented | Participant left the conference media session |
+| ON_CONFERENCE_TRACK_PUBLISHED | ASYNC | Implemented | Conference participant published a track (audio, video, screen share) |
+| ON_CONFERENCE_TRACK_UNPUBLISHED | ASYNC | Implemented | Conference track unpublished |
+| ON_ACTIVE_SPEAKER_CHANGED | ASYNC | Implemented | SFU reported a dominant-speaker change |
 | | | | |
 | **Other:** | | | |
 | ON_PLAN_UPDATED | ASYNC | Implemented | Orchestration plan was updated |
