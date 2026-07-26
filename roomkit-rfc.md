@@ -4997,20 +4997,46 @@ human participants MAY be conferring before the bot joins.
 
 ```
 ConferenceRecordingConfig
-├── mode: "egress" | "framework" = "egress"
+├── mode: "framework" | "egress" = "framework"
 ├── storage: string                     # Integrator-defined identifier
-├── format: string (default "mp4")
+├── format: string (default "wav" for audio, "mp4" for composed video)
 └── metadata: map<string, any>
 ```
 
-- **egress** — recording is delegated to the SFU (requires
-  EGRESS_RECORDING). The result MUST surface through the same contract as
-  framework recording: a RecordingResult and `ON_RECORDING_STOPPED`
-  (Section 12.3.7). Configuring egress mode on a backend without the
-  capability MUST raise a configuration error.
-- **framework** — bot-subscribed tracks are fed to AudioRecorder /
-  VideoRecorder providers, per track or mixed (channel modes of Section
-  12.3.7 apply).
+- **framework** (default) — bot-subscribed tracks are fed to AudioRecorder /
+  VideoRecorder providers. This is the path that always works: it needs no
+  backend capability, it functions against MockConferenceBackend, and the
+  recording is written wherever the implementation writes it, which matters
+  where data residency is constrained. Since audio tracks are already
+  subscribed for STT (Section 12.10.4), recording them adds a file write and
+  no additional media subscription.
+- **egress** (OPTIONAL) — recording is delegated to the SFU, and requires
+  EGRESS_RECORDING. Configuring it on a backend without the capability MUST
+  raise a configuration error. This mode exists for one reason: a
+  **composed** video recording — grid or active-speaker layout — cannot be
+  produced by the framework without subscribing every video track, decoding
+  all of them, compositing and re-encoding, which is exactly the media-plane
+  work Section 12.10.1 forbids. Delegating it is the only conforming way to
+  obtain it.
+
+Egress carries **no unified result contract**. The framework does not
+promise a RecordingResult or `ON_RECORDING_STOPPED` for a delegated
+recording: the SFU announces completion out of band — typically a webhook to
+an endpoint the framework does not host — and reaching back into that flow
+would require either provider-specific payloads inside the backend interface
+or polling the SFU's job API. An integrator that opts into egress collects
+its output through the provider's own mechanism. Switching between the two
+modes is therefore not a transparent configuration change, and
+implementations SHOULD document it as such.
+
+**Open: recorder shape for conferences.** AudioRecorder (Section 12.3.7) is
+specified around a VoiceSession, with `record_inbound` / `record_outbound`
+and an INBOUND_ONLY | OUTBOUND_ONLY | BOTH mode. A conference has neither a
+VoiceSession nor a single inbound direction — it has N attributed tracks
+plus one bot track. How conference recording binds to the recorder providers
+(a handle per track, a conference-shaped recorder, or per-track sessions) is
+not yet specified and MUST be settled before framework-mode conference
+recording is claimed as conforming.
 
 #### 12.10.9 Cross-Channel Integration
 
@@ -5090,7 +5116,9 @@ Implementations SHOULD:
 
 - Support vision analysis on VIDEO and SCREEN_SHARE tracks.
 - Surface active speaker and connection quality as ephemeral events.
-- Support egress recording delegation with the RecordingResult contract.
+- Record conferences through the framework recorder path by default,
+  treating SFU egress as an optional delegation with no result contract
+  (Section 12.10.8).
 - Enforce ConferenceInterruptionConfig scope.
 
 Implementations MAY:
