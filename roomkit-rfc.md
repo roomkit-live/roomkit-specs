@@ -7,7 +7,7 @@
 | **Contributions** | TchatNSign, Angany AI |
 | **Version** | v16 Draft |
 | **Created** | 2026-01-27 |
-| **Last Updated** | 2026-07-23 |
+| **Last Updated** | 2026-07-25 |
 | **Supersedes** | v15 Draft |
 
 ---
@@ -1357,6 +1357,10 @@ They are NOT stored in any room timeline.
 | stt_error | STT transcription failed | session_id, provider, error |
 | tts_error | TTS synthesis failed | session_id, provider, error |
 | voice_session_ready | Voice session audio path is live and ready | session_id, room_id, channel_id |
+| conference_started | Bot connection to the conference is live | room_id, channel_id, bot_session_id |
+| conference_ended | Bot left the conference | room_id, channel_id, duration_ms |
+| conference_participant_joined | Participant joined the media session | room_id, participant_id |
+| conference_participant_left | Participant left the media session | room_id, participant_id |
 
 Implementations MUST emit these events. Integrators subscribe to framework
 events for monitoring and integration purposes.
@@ -1513,8 +1517,8 @@ Planned rows are normative design intent for the named capability.
 | **Conference:** (SFU — planned) | | | |
 | ON_CONFERENCE_PARTICIPANT_JOINED | ASYNC | Planned | Participant joined the conference media session |
 | ON_CONFERENCE_PARTICIPANT_LEFT | ASYNC | Planned | Participant left the conference media session |
-| ON_TRACK_PUBLISHED | ASYNC | Planned | Conference participant published a track (audio, video, screen share) |
-| ON_TRACK_UNPUBLISHED | ASYNC | Planned | Conference track unpublished |
+| ON_CONFERENCE_TRACK_PUBLISHED | ASYNC | Planned | Conference participant published a track (audio, video, screen share) |
+| ON_CONFERENCE_TRACK_UNPUBLISHED | ASYNC | Planned | Conference track unpublished |
 | ON_ACTIVE_SPEAKER_CHANGED | ASYNC | Planned | SFU reported a dominant-speaker change |
 | | | | |
 | **Other:** | | | |
@@ -3689,7 +3693,8 @@ hooks and MUST support fallback to AudioBridge when pipeline processing
 
 #### 12.7.8 Conformance
 
-Audio bridging is part of **Conformance Level 3 (Voice)** and is OPTIONAL.
+Audio bridging is part of **Conformance Level 3 (Real-Time Media)** and is
+OPTIONAL.
 
 Implementations that support audio bridging MUST:
 - Forward post-pipeline audio frames between sessions in the same room.
@@ -4545,11 +4550,17 @@ recording, and cross-channel integration.
 ```
 ConferenceTrack
 ├── id: string                          # Backend-scoped stable identifier
+├── room_id: string                     # Owning conference room
 ├── participant_id: string              # Publishing participant
 ├── kind: TrackKind
 ├── muted: bool = false
 └── metadata: map<string, any>          # Provider-specific (sid, source, ...)
 ```
+
+`room_id` is what makes the frame callbacks routable: a single
+ConferenceBackend instance serves many rooms, and `on_track_audio` /
+`on_track_video` carry only a ConferenceTrack. Every ConferenceTrack a
+backend emits MUST carry the room it belongs to.
 
 **ConferenceParticipant** — a participant's media presence:
 
@@ -4588,6 +4599,27 @@ the integrator returns it to the client application (e.g., via the REST
 surface), and the provider's client SDK consumes it. Framework code MUST
 NOT depend on its internal structure beyond the fields above.
 
+**Participant identity correlation (normative).** Every attribution
+guarantee in this section — transcription RoomEvents, Participant records,
+interruption allowlists — depends on `participant_id` meaning the same
+thing on both sides of the backend boundary. Therefore:
+
+1. The framework MUST pass the Room `Participant.id` (Section 5.5) as the
+   `participant_id` argument to `mint_access()`.
+2. For a participant that joined with minted access, the backend MUST
+   surface that same value as `ConferenceParticipant.participant_id` and as
+   `ConferenceTrack.participant_id`. A backend whose SFU cannot carry a
+   caller-supplied identity MUST maintain the mapping internally and
+   translate at the boundary.
+3. For a participant the framework did not mint — SIP/PSTN dial-in
+   (Section 12.10.9), or admission arranged out of band — the backend MUST
+   surface its own stable identity for the lifetime of that participant's
+   connection. The channel MUST then create a Participant with that value
+   as `external_id` and `identification: UNKNOWN`; normal identity
+   resolution (Section 11) applies from there.
+4. Identities MUST NOT be reused across participants within a room's
+   lifetime.
+
 **BotSession** — the framework's own connection to a conference:
 
 ```
@@ -4610,6 +4642,26 @@ BotSession
 | VIDEO_PUBLISH | Bot can publish video tracks (avatar) |
 | E2EE | End-to-end encryption between clients |
 
+**E2EE and framework media access (normative).** E2EE is the one
+capability that constrains rather than extends what the framework can do:
+when it is active, the bot receives ciphertext it cannot decode, so STT
+lanes, vision analysis, framework recording, and SFU egress recording all
+become unavailable.
+
+The flag above states only that a backend *supports* E2EE. Whether a given
+conference *uses* it is per-conference state, requested through the
+channel's `e2ee` field (Section 12.10.4) and passed to `ensure_room()`;
+setting it on a backend without the E2EE capability MUST raise a
+configuration error. An implementation offering E2EE MUST then do one of:
+
+- admit the bot as a key holder in the conference's key exchange, so
+  subscribed tracks decode normally; or
+- run the conference without framework media intelligence, and raise a
+  configuration error when STT, vision, or recording is configured on a
+  channel with `e2ee` set.
+
+Silently delivering undecodable frames to a lane is NOT conforming.
+
 #### 12.10.3 ConferenceBackend Interface
 
 ```
@@ -4624,13 +4676,16 @@ ConferenceBackend (interface)
 ├── mint_access(room_id, participant_id, grants) → ConferenceAccess
 ├── list_participants(room_id) → list<ConferenceParticipant>
 ├── remove_participant(room_id, participant_id) → void
-├── mute_track(room_id, track_id) → void   # Moderation mute
+├── mute_track(room_id, track_id) → void     # Moderation mute
+├── unmute_track(room_id, track_id) → void   # Moderation unmute
 │
 │   # Bot participant (framework media access):
-├── join_as_bot(room_id, identity) → BotSession
+├── join_as_bot(room_id, identity, grants) → BotSession
 ├── leave(bot) → void
+├── subscribe_track(bot, track_id) → void
+├── unsubscribe_track(bot, track_id) → void
 ├── publish_audio(bot, chunk: AudioChunk) → void
-├── publish_video(bot, chunk: VideoChunk) → void   # Requires VIDEO_PUBLISH
+├── publish_video(bot, frame: VideoFrame) → void   # Requires VIDEO_PUBLISH
 │
 │   # Callbacks:
 ├── on_participant_joined(callback)     # (room_id, ConferenceParticipant)
@@ -4652,7 +4707,40 @@ ConferenceBackend (interface)
   frames; the channel's VideoPipeline decoder stage (Section 12.8.4) then
   applies, reusing the existing `is_encoded` mechanic.
 - Frames MUST be attributable: the ConferenceTrack passed with each frame
-  carries the publishing `participant_id`.
+  carries the publishing `participant_id` and `room_id`.
+
+**Frame publishing requirements:**
+
+- `publish_audio` takes an AudioChunk, which is an alias of AudioFrame
+  (Section 12.3.11) — decoded PCM, not an encoded payload.
+- `publish_video` takes a **raw** VideoFrame (`is_raw` true). The backend
+  owns encoding, symmetrically with the decoding it owns on the inbound
+  side. A backend MUST NOT require the framework to supply an encoded
+  VideoChunk: not because the framework cannot encode — VideoEncoderProvider
+  (Section 12.8.5) exists for VideoChannel's own transport path — but
+  because deciding *which* codec to hand an SFU would put codec selection
+  back into a framework interface, which the abstraction boundary below
+  forbids. Avatar and other bot-video producers therefore emit raw frames.
+
+Inbound tolerates encoded frames while outbound does not, and the asymmetry
+is deliberate: an encoded inbound frame is self-describing and the
+VideoPipeline decoder stage handles whatever arrives, whereas an encoded
+outbound frame requires choosing a codec the SFU will accept before any
+frame exists.
+
+**Track subscription:** the framework's subscription set is authoritative.
+`subscribe_track()` / `unsubscribe_track()` are the only mechanism by which
+the bot begins or stops receiving a track's frames, and a backend MUST NOT
+deliver `on_track_audio` / `on_track_video` for a track the bot has not
+subscribed to. Backends whose SDK auto-subscribes by default MUST disable
+that behaviour for the bot session. The channel's subscription policy is
+specified in Section 12.10.4.
+
+**Bot grants:** `join_as_bot()` takes ConferenceGrants like `mint_access()`
+does, because the bot's own permissions vary by AI participation pattern
+(Section 12.10.6): a speaking bot needs `publish_audio`, an Observer bot is
+`subscribe`-only with `hidden` set. A backend MUST apply them to the bot
+session rather than assuming full permissions.
 
 **Abstraction boundary (normative):** the interface deliberately omits SDP
 negotiation, ICE, codec selection, simulcast/SVC layer control, and bitrate
@@ -4684,33 +4772,67 @@ ConferenceChannel
 ├── tts: TTSProvider | null             # AI voice via bot track
 ├── vision: VisionProvider | null       # Video/screen-share analysis
 ├── interruption: ConferenceInterruptionConfig
-└── speak_text_events: bool = false     # Voice cross-channel text events
+├── recording: ConferenceRecordingConfig | null   # Section 12.10.8
+├── bot_identity: string                # Bot's display identity
+├── bot_grants: ConferenceGrants        # Grants for join_as_bot()
+├── default_grants: ConferenceGrants    # Grants minted for participants
+├── e2ee: bool = false                  # Request E2EE (requires E2EE capability)
+├── close_room_on_detach: bool = false  # Whether detach calls close_room()
+└── speak_text_events: bool = false     # Speak inbound text from other channels
 ```
 
 **Lifecycle:**
 
 1. When the channel is attached to a room, the channel MUST call
-   `ensure_room()`. It SHOULD call `join_as_bot()` lazily — when the first
-   participant joins or the first delivery occurs — and MUST fire
-   `ON_SESSION_STARTED` once the bot connection is live.
+   `ensure_room()`. It SHOULD call `join_as_bot(room_id, bot_identity,
+   bot_grants)` lazily — when the first participant joins or the first
+   delivery occurs — and MUST fire `ON_SESSION_STARTED` and emit
+   `conference_started` once the bot connection is live.
 2. `on_participant_joined` MUST create or update the corresponding Room
-   Participant record (Section 5.5) and fire
-   `ON_CONFERENCE_PARTICIPANT_JOINED`.
-3. `on_track_published` MUST start a per-track processing lane (below) and
-   fire `ON_TRACK_PUBLISHED`. For SCREEN_SHARE tracks,
+   Participant record (Section 5.5, correlated per Section 12.10.2) and
+   fire `ON_CONFERENCE_PARTICIPANT_JOINED`.
+3. `on_track_published` MUST fire `ON_CONFERENCE_TRACK_PUBLISHED`, and MUST
+   start a per-track processing lane (below) for tracks the channel
+   subscribes to — an unsubscribed track never yields a frame, so it gets
+   no lane (see **Selective subscription**). For SCREEN_SHARE tracks,
    `ON_SCREEN_SHARE_STARTED` fires additionally.
-4. `on_track_unpublished` MUST tear down the lane and fire the
-   corresponding hooks.
-5. When the channel is detached, the channel MUST call `leave()` and MAY
-   call `close_room()` depending on configuration.
+4. `on_track_unpublished` MUST tear down the lane, unsubscribe if
+   subscribed, and fire the corresponding hooks.
+5. When the channel is detached, the channel MUST call `leave()` and emit
+   `conference_ended` **if a bot session is active** — the lazy join of
+   step 1 may never have run — and MUST call `close_room()` when
+   `close_room_on_detach` is set, whether or not a bot ever joined.
+
+**Bot self-exclusion (normative):** the bot is itself a conference
+participant, and some backends report it back through
+`on_participant_joined` or echo its published track. The channel MUST
+ignore participant and track events whose participant identity matches the
+active BotSession, MUST NOT create a Participant record for it, and MUST
+NOT subscribe to a track it published. Without this rule the bot's own TTS
+returns through a lane, the STT transcribes the AI's own speech, and the
+AIChannel answers itself — a feedback loop the chain depth limit (Section
+8.3) would only bound, not prevent.
+
+**Admitting participants:** the channel exposes `mint_access()` for a
+participant of the room, applying `default_grants` unless the caller
+overrides them. The integrator delivers the resulting ConferenceAccess to
+the client application through its own surface (Section 16); the framework
+does not serve it. ConferenceGrants defaults are permissive so the common
+case works unconfigured; narrowing them is the integrator's call and is
+RECOMMENDED wherever a role does not need to publish — a listener-only
+attendee SHOULD receive grants without publish permissions (Section 17.7).
 
 **Per-track audio lanes:**
 
 ```
 on_track_audio (one lane per AUDIO track)
-  → Resampler → [Denoiser] → VAD → STT (streaming)
+  → Resampler → [AGC] → [Denoiser] → VAD → STT (streaming)
   → transcription RoomEvents attributed to the publishing participant
 ```
+
+The lane preserves the inbound stage ordering of Section 12.3, minus the
+stages a conference makes unnecessary: AEC (no server-side echo path) and
+Diarization (track identity already attributes speech).
 
 Each AUDIO track gets an independent pipeline lane with per-track stage
 state (mirroring per-session state in Section 12.3). Within a lane:
@@ -4728,13 +4850,20 @@ VIDEO and SCREEN_SHARE tracks route through the VideoPipeline (Section
 VisionResults are attributed to the publishing participant and feed
 `setup_video_vision()` AI integration unchanged.
 
-**Selective subscription:** the bot MUST only subscribe to tracks it
-consumes. AUDIO tracks are subscribed when STT, recording, or
+**Selective subscription:** the channel MUST call `subscribe_track()` only
+for tracks it consumes, and MUST NOT rely on backend auto-subscription
+(Section 12.10.3). AUDIO tracks are subscribed when STT, recording, or
 speech-to-speech composition is configured. VIDEO and SCREEN_SHARE tracks
 MUST NOT be subscribed unless a VisionProvider or framework-side video
 recording is configured — otherwise no video frame ever reaches the
-framework process. Backends MAY subscribe to a reduced simulcast layer for
-vision analysis; this is provider-internal.
+framework process. Tracks published by the bot itself are never subscribed
+(**Bot self-exclusion** above). Backends MAY subscribe to a reduced
+simulcast layer for vision analysis; this is provider-internal.
+
+Subscription is re-evaluated when configuration changes at runtime: adding
+a VisionProvider to a live conference MUST subscribe the already-published
+video tracks, and removing the last consumer of a track MUST
+`unsubscribe_track()` it.
 
 **Outbound (deliver):**
 
@@ -4747,6 +4876,14 @@ NOT supported in this revision: one bot track, heard by all.
 By default only AI/agent responses are spoken. When `speak_text_events` is
 true, inbound text events from other channels (SMS, WebSocket, ...) are
 also spoken into the conference.
+
+This default deliberately diverges from VoiceChannel, which speaks every
+TextContent it receives (Section 12.3). A 1:1 voice session has one
+listener who is the conversation's subject; a conference is a multi-party
+meeting where unrelated channel traffic read aloud is disruptive to
+everyone at once. The restrictive default is therefore normative, not a
+convention: implementations MUST NOT speak non-AI text events unless
+`speak_text_events` is set.
 
 #### 12.10.5 Multi-Party Interruption Policy
 
@@ -4780,22 +4917,34 @@ multi-speaker transcript.
 
 **Speech-to-speech (OPTIONAL).** A RealtimeVoiceProvider (Section 12.4)
 may be composed with a conference: subscribe to all AUDIO tracks, mix
-N→1 using a MixerProvider (algorithm of Section 12.7.5), feed the provider,
-and publish its audio output on the bot track. Per-speaker attribution is
-lost at the provider boundary; implementations SHOULD run per-track STT
-lanes in parallel when transcripts are required.
+N→1 using the additive mixing algorithm of Section 12.7.5, feed the
+provider, and publish its audio output on the bot track. The *algorithm*
+is reusable; the AudioBridge interface is not (Section 12.10.10), and this
+specification defines no mixer provider interface — an implementation MAY
+factor one out privately. Per-speaker attribution is lost at the provider
+boundary; implementations SHOULD run per-track STT lanes in parallel when
+transcripts are required.
 
-**Observer.** A bot with subscribe-only, `hidden` grants and STT lanes but
-no TTS — transcription, compliance monitoring, or meeting summarization
-without a voice presence.
+**Observer.** A bot joined with `bot_grants` set to subscribe-only and
+`hidden`, with STT lanes but no TTS — transcription, compliance
+monitoring, or meeting summarization without a voice presence. Whether a
+silent transcribing bot may stay invisible to participants is a legal
+question, not a framework one; this specification does not restrict
+`hidden`, and Section 17.7 sets out what the framework exposes so the
+integrator can meet the disclosure rules that apply to it.
 
 #### 12.10.7 Conference State Events
 
 **Hooks** (Section 9.2): `ON_CONFERENCE_PARTICIPANT_JOINED`,
-`ON_CONFERENCE_PARTICIPANT_LEFT`, `ON_TRACK_PUBLISHED`,
-`ON_TRACK_UNPUBLISHED`, `ON_ACTIVE_SPEAKER_CHANGED`. Screen-share track
-publication additionally fires the existing `ON_SCREEN_SHARE_STARTED` /
-`ON_SCREEN_SHARE_STOPPED`.
+`ON_CONFERENCE_PARTICIPANT_LEFT`, `ON_CONFERENCE_TRACK_PUBLISHED`,
+`ON_CONFERENCE_TRACK_UNPUBLISHED`, `ON_ACTIVE_SPEAKER_CHANGED`.
+Screen-share track publication additionally fires the existing
+`ON_SCREEN_SHARE_STARTED` / `ON_SCREEN_SHARE_STOPPED`.
+
+The track triggers carry the `CONFERENCE_` prefix to keep them distinct
+from `ON_VIDEO_TRACK_ADDED` / `ON_VIDEO_TRACK_REMOVED` (Section 12.8),
+which describe tracks within a single VideoChannel session rather than
+publications by other participants in a conference.
 
 **Ephemeral events** (Section 8.4): high-frequency media state MUST NOT be
 stored as RoomEvents; implementations SHOULD publish it via the
@@ -4805,9 +4954,18 @@ RealtimeBackend instead:
 - `conference_active_speaker`
 - `conference_connection_quality`
 
-**Framework events** (Section 8.2): `conference_started`,
-`conference_ended`, `conference_participant_joined`,
-`conference_participant_left`.
+**Framework events** (Section 8.2), with their emission points:
+
+| Event | Emitted when |
+|---|---|
+| `conference_started` | `join_as_bot()` completes and the bot connection is live — the same point as `ON_SESSION_STARTED` |
+| `conference_ended` | `leave()` completes on channel detach |
+| `conference_participant_joined` | A Participant record is created or reactivated from `on_participant_joined` |
+| `conference_participant_left` | `on_participant_left` is processed |
+
+`conference_started` tracks the framework's own media presence, not the
+existence of the SFU room: `ensure_room()` MAY have run much earlier, and
+human participants MAY be conferring before the bot joins.
 
 #### 12.10.8 Recording
 
@@ -4872,12 +5030,27 @@ Implementations that support conferencing MUST:
 - Implement the ConferenceBackend interface with a Mock implementation.
 - Map each conference 1:1 to a Room.
 - Keep the framework out of the human-to-human media path.
-- Deliver decoded, participant-attributed PCM audio per track.
+- Deliver decoded, participant-attributed, room-attributed PCM audio per
+  track.
+- Correlate `participant_id` across the backend boundary per Section
+  12.10.2, including the `external_id` fallback for participants the
+  framework did not mint.
+- Subscribe explicitly: consume only tracks passed to `subscribe_track()`,
+  and never auto-subscribe the bot session.
+- Exclude the bot's own participant and tracks from Participant records,
+  lanes, and subscriptions.
 - Run per-track STT lanes emitting attributed transcription RoomEvents.
 - Publish AI TTS as a single bot track (synthesize once, publish once).
+- Publish bot media as decoded frames — PCM AudioChunk, raw VideoFrame —
+  leaving encoding to the backend.
 - Fire conference lifecycle hooks and create/update Participant records
   from conference events.
 - Treat ConferenceAccess as opaque.
+- Either admit the bot to E2EE key exchange or refuse media-intelligence
+  configuration on E2EE conferences (Section 12.10.2).
+- Expose bot presence, `hidden` status, and whether STT/vision/recording is
+  active, so integrators can satisfy their own disclosure obligations
+  (Section 17.7). The specification mandates no disclosure policy.
 
 Implementations SHOULD:
 
@@ -5630,14 +5803,37 @@ should live in the integration surface layer.
 
 ConferenceAccess tokens are credentials:
 
-- Tokens MUST be minted per participant with least-privilege grants
-  (e.g., hidden observers receive subscribe-only grants).
+- Tokens SHOULD be minted per participant with least-privilege grants
+  (e.g., hidden observers receive subscribe-only grants). ConferenceGrants
+  (Section 12.10.2) defaults to permissive values so that the common case
+  works unconfigured; narrowing them for a given participant is the
+  integrator's call, and is RECOMMENDED wherever a role does not need to
+  publish.
 - Tokens SHOULD be short-lived (`expires_at`) and MUST NOT be logged.
-- Moderation operations (`remove_participant`, `mute_track`) MUST only be
-  reachable through integrator-controlled code paths, never exposed
-  unauthenticated.
-- Where recording or transcription is active, bot participants SHOULD be
-  visibly identifiable to human participants (regulatory disclosure).
+- Moderation operations (`remove_participant`, `mute_track`,
+  `unmute_track`) MUST only be reachable through integrator-controlled code
+  paths, never exposed unauthenticated.
+
+**Bot disclosure.** Whether a recording or transcribing bot must be
+announced to human participants — and how — is set by the jurisdiction the
+deployment operates in, and those rules differ by country and by sector.
+This specification therefore mandates no disclosure behaviour and no
+restriction on `hidden` observers (Section 12.10.6). It requires instead
+that the framework give the integrator what it needs to comply with
+whatever applies to it:
+
+- The bot's presence, its `identity`, and its `hidden` status MUST be
+  observable to integrator code.
+- Whether STT, vision, or recording is active on a conference MUST be
+  observable at any time, not only at configuration time.
+- `ON_CONFERENCE_PARTICIPANT_JOINED` MUST fire for every human participant,
+  giving the integrator the point at which to announce an active bot,
+  gate entry on consent, or record that disclosure was made.
+
+Implementations SHOULD document this responsibility rather than assume a
+default. Deployments in regulated sectors typically do need visible bot
+identification; the specification's role is to make that implementable, not
+to decide it.
 
 ---
 
@@ -6404,7 +6600,9 @@ A Level 3 implementation MAY additionally support audio and/or video real-time m
 - ConferenceChannel with per-track STT lanes and bot TTS publication
   (Section 12.10.4)
 - Conference hooks (ON_CONFERENCE_PARTICIPANT_JOINED/LEFT,
-  ON_TRACK_PUBLISHED/UNPUBLISHED, ON_ACTIVE_SPEAKER_CHANGED)
+  ON_CONFERENCE_TRACK_PUBLISHED/UNPUBLISHED, ON_ACTIVE_SPEAKER_CHANGED)
+- Explicit track subscription, participant identity correlation, and bot
+  self-exclusion (Sections 12.10.2–12.10.4)
 - Multi-party interruption policy (ConferenceInterruptionConfig)
 - Participant lifecycle integration (conference events create/update
   Participant records)
@@ -6854,16 +7052,22 @@ ConferenceChannel
 │   ├── tts: TTSProvider | null           # AI voice via bot track
 │   ├── vision: VisionProvider | null     # OPTIONAL — video/screen tracks
 │   ├── interruption: ConferenceInterruptionConfig
+│   ├── recording: ConferenceRecordingConfig | null
+│   ├── bot_identity: string              # Bot's display identity
+│   ├── bot_grants: ConferenceGrants      # Grants for join_as_bot()
+│   ├── default_grants: ConferenceGrants  # Grants minted for participants
+│   ├── e2ee: bool                        # default false — requires E2EE cap
+│   ├── close_room_on_detach: bool        # default false
 │   └── speak_text_events: bool           # default false
 ├── lifecycle:
-│   ├── attach → ensure_room() [+ lazy join_as_bot()]
-│   ├── on_participant_joined → Participant record + hook
-│   ├── on_track_published → per-track pipeline lane
-│   ├── on_track_unpublished → lane teardown
-│   └── detach → leave() [+ close_room()]
+│   ├── attach → ensure_room() [+ lazy join_as_bot(…, bot_grants)]
+│   ├── on_participant_joined → Participant record + hook (bot excluded)
+│   ├── on_track_published → subscribe_track() if consumed → pipeline lane
+│   ├── on_track_unpublished → lane teardown + unsubscribe_track()
+│   └── detach → leave() [+ close_room() if close_room_on_detach]
 ├── hooks:
 │   ├── ON_CONFERENCE_PARTICIPANT_JOINED / LEFT
-│   ├── ON_TRACK_PUBLISHED / UNPUBLISHED
+│   ├── ON_CONFERENCE_TRACK_PUBLISHED / UNPUBLISHED
 │   ├── ON_ACTIVE_SPEAKER_CHANGED
 │   ├── ON_SCREEN_SHARE_STARTED / STOPPED
 │   └── ON_TRANSCRIPTION — per track, participant-attributed
