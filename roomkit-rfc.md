@@ -1535,6 +1535,12 @@ Planned rows are normative design intent for the named capability.
 - A BLOCK result stops the pipeline — no further hooks run.
 - A MODIFY result replaces the event for subsequent hooks.
 - If the hook exceeds its timeout, it MUST be treated as ALLOW with an error logged.
+- A hook that raises MUST be treated as ALLOW with an error logged, so that a
+  broken hook cannot take a room down — **except** on triggers whose payload is
+  content the hook may exist to withhold, where it MUST block instead. BEFORE_TTS
+  and ON_TRANSCRIPTION are those triggers: a redaction hook that fails must not
+  publish what it was there to suppress, and allowing on error would do exactly
+  that. Implementations MUST document which triggers fail closed.
 
 **ASYNC hooks:**
 
@@ -1550,13 +1556,20 @@ Sync hooks MUST return a HookResult:
 ```
 HookResult
 ├── action: "allow" | "block" | "modify"
-├── event: RoomEvent | null                 # The modified event (for "modify" action)
+├── event: any | null                       # The replacement payload (for "modify" action)
 ├── reason: string | null                   # Why blocked or modified
 ├── injected_events: list<InjectedEvent>    # Events to inject when blocking
 ├── tasks: list<Task>                       # Tasks to create (side effects)
 ├── observations: list<Observation>         # Observations to record (side effects)
 └── metadata: map<string, any>              # Additional hook metadata
 ```
+
+`event` carries the replacement payload for a "modify" result, and its type is
+whatever the trigger passed in. Only BEFORE_BROADCAST passes a RoomEvent: the
+TTS trigger receives a string, the bridge triggers receive media frames, and the
+tool and generation triggers receive their own event types. Typing this field as
+a RoomEvent would make "modify" unusable for every trigger but one, so consumers
+MUST check the type they expect before substituting it.
 
 **InjectedEvent:**
 
