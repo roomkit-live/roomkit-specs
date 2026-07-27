@@ -4970,14 +4970,53 @@ The lane preserves the inbound stage ordering of Section 12.3, minus the
 stages a conference makes unnecessary: AEC (no server-side echo path) and
 Diarization (track identity already attributes speech).
 
-Each AUDIO track gets an independent pipeline lane with per-track stage
-state (mirroring per-session state in Section 12.3). Within a lane:
+Each AUDIO track gets its own lane, holding its stage state under the stream
+identity contract of Section 12.3 with the track as the stream key. That
+independence is a property of the **state**, not of the instances: one
+pipeline serves every lane. Instantiating a pipeline per track buys no
+isolation the stream key does not already provide, and costs a denoiser
+model loaded once per participant.
 
+Within a lane:
+
+- Format normalisation MUST run before the other stages. Participants
+  negotiate their own formats with the SFU, so tracks arrive in whatever
+  each publisher sent, while every stage downstream assumes one format.
+  This is the Resampler position of Section 12.3.
+- VAD MUST be present. It is what divides the stream into utterances, and
+  without it the lane has no utterance to speak of: it calls the recognizer
+  once per frame, spending a round trip per 20 ms and producing a transcript
+  cut at frame boundaries instead of at turns. An implementation given a
+  recognizer and no VAD MUST refuse the configuration rather than degrade to
+  per-frame recognition.
 - AEC MUST NOT be required (no server-side echo path — Section 12.10.1).
 - Diarization MUST NOT be required (track identity provides attribution).
 - AGC and Denoiser MAY apply per lane.
 - `ON_TRANSCRIPTION` fires per lane; the hook context identifies the track
   and participant.
+
+**Lane isolation:** processing one track MUST NOT delay frame delivery for
+any other. A backend hands frames to its subscribers in sequence, so a lane
+that does its work — speech recognition above all — inside the delivery
+callback makes one provider's latency into every participant's latency, and
+one slow track stalls the whole conference. A lane therefore accepts a frame
+and returns, doing its work on its own schedule.
+
+This is what separates a lane from a callback, and unlike the stage list it
+is observable from outside: an implementation can be checked by delaying
+recognition on one track and measuring frame delivery on another.
+
+**Overload:** a lane accepting frames faster than it processes them MUST
+bound what it holds. An unbounded backlog turns a slow recognizer into
+unbounded memory and a lag behind the live conversation that only grows.
+
+Which audio to discard is a genuine trade-off, and this specification does
+not settle it. Dropping the oldest frames keeps the lane near live at the
+cost of a gap mid-utterance; dropping the utterance in progress and
+resynchronising loses more audio but never emits a transcript stitched
+across a hole. Implementations MUST document which they do, and MUST expose
+how much was discarded — an integrator who cannot see the loss will read a
+damaged transcript as a bad recognizer.
 
 **Per-track video lanes:**
 
@@ -5209,7 +5248,12 @@ Implementations that support conferencing MUST:
   and never auto-subscribe the bot session.
 - Exclude the bot's own participant and tracks from Participant records,
   lanes, and subscriptions.
-- Run per-track STT lanes emitting attributed transcription RoomEvents.
+- Run per-track STT lanes emitting attributed transcription RoomEvents, one
+  per utterance rather than one per frame (Section 12.10.4).
+- Keep lanes independent: no track's processing delays frame delivery for
+  another.
+- Bound each lane's backlog, document what it discards under overload, and
+  expose how much it discarded.
 - Publish AI TTS as a single bot track (synthesize once, publish once).
 - Publish bot media as decoded frames — PCM AudioChunk, raw VideoFrame —
   leaving encoding to the backend.
