@@ -2465,14 +2465,58 @@ format (e.g., a specific VAD requires 16kHz), the implementation MUST either:
 - Configure the resampler to match, or
 - Raise a configuration error at startup (fail fast).
 
+**Stream identity contract:**
+
+One `AudioPipeline` serves many audio streams. A Voice Channel bridging
+participants carries one stream per session; a conference carries one per lane.
+These are different speakers sharing one set of stage instances.
+
+Every stage therefore receives a **stream key** and MUST keep its state under
+it:
+
+```
+process(audio_frame: AudioFrame, stream: string) → ...
+reset(stream: string) → void
+close() → void
+```
+
+The stream key is an opaque identifier chosen by the caller — a session id, a
+lane id — and is stable for the life of that stream. Implementations MUST NOT
+share adaptive state between streams: VAD hangover and speech buffers, denoiser
+history, AGC gain, AEC adaptive filters and delay estimates, and diarization
+accumulators are all per stream. Sharing them makes one speaker's silence close
+another speaker's utterance.
+
+`stream` MUST be a required parameter with **no default value**. A default
+would let an implementation accept the argument, ignore it, satisfy the
+interface, and mix streams silently — which is the failure this contract exists
+to prevent. A conformance check SHOULD verify that a stream's output sequence is
+unchanged when a second stream is interleaved with it.
+
+For providers backed by a native SDK, the model and the adaptive state
+typically live in the same object (SpeexDSP's `SpeexEchoState`, RNNoise's
+`DenoiseState`, WebRTC's `AudioProcessing`). Per-stream state then means one
+native instance per stream; these SDKs offer no way to share the model alone.
+Implementations SHOULD create it lazily on the stream's first frame.
+
+State that is **not** per stream stays on the instance: immutable
+configuration, process-level resources, and shared registries such as a
+diarization provider's enrolled-speaker set — enrolment belongs to the room, not
+to a speaker's current stream.
+
 **Session lifecycle contract:**
 
-All pipeline stage providers that expose a `reset()` method MUST have it called
-when a new VoiceSession transitions to ACTIVE. This clears adaptive state
-(denoiser filter coefficients, VAD speech buffers, AGC gain history, diarization
-speaker models, etc.) to prevent bleed-over between sessions. Implementations
-MUST call `reset()` on all configured stages in pipeline order before the first
-audio frame of a new session is processed.
+Implementations MUST call `reset(stream)` on every configured stage when that
+stream ends, releasing its state. Omitting this leaks one speaker's worth of
+buffers — and, for native providers, C memory — for every stream a long-running
+room ever had.
+
+Implementations MUST also call `reset(stream)` before the first audio frame of a
+new stream, so a reused key never inherits adaptive state (denoiser filter
+coefficients, VAD speech buffers, AGC gain history, diarization accumulators)
+from a previous stream with the same id.
+
+`close()` remains global and MUST release every stream's state.
 
 #### 12.3.2 Denoiser Provider
 
@@ -2482,10 +2526,10 @@ process it. Running the denoiser first improves accuracy of all downstream stage
 ```
 DenoiserProvider (interface)
 ├── name: string                             # Provider name (e.g., "sherpa_onnx", "rnnoise")
-├── process(audio_frame: AudioFrame) → AudioFrame
-│       # Process a single audio frame, return cleaned frame
-├── reset() → void
-│       # Reset internal state (e.g., on session start)
+├── process(audio_frame: AudioFrame, stream: string) → AudioFrame
+│       # Process one frame of `stream`, return cleaned frame
+├── reset(stream: string) → void
+│       # Drop this stream's state when the stream ends
 └── close() → void
         # Release resources
 ```
@@ -2533,12 +2577,12 @@ causing false speech detections and feedback loops.
 ```
 AECProvider (interface)
 ├── name: string                             # Provider name (e.g., "speex_aec", "webrtc_aec3")
-├── process(audio_frame: AudioFrame) → AudioFrame
-│       # Remove echo from the inbound frame using internally buffered reference
-├── feed_reference(audio_frame: AudioFrame) → void
-│       # Feed outbound audio as echo reference (called on outbound path)
-├── reset() → void
-│       # Reset internal state (e.g., on session start)
+├── process(audio_frame: AudioFrame, stream: string) → AudioFrame
+│       # Remove echo from `stream`'s inbound frame using its buffered reference
+├── feed_reference(audio_frame: AudioFrame, stream: string) → void
+│       # Feed `stream`'s outbound audio as its echo reference
+├── reset(stream: string) → void
+│       # Drop this stream's state when the stream ends
 └── close() → void
         # Release resources
 ```
@@ -2551,13 +2595,19 @@ The AEC provider manages the reference internally via `feed_reference()`, so
 track and pass the reference signal. The bidirectional dependency is:
 
 ```
-Reference: Speaker output → AEC.feed_reference(frame)
-Inbound:   Transport → [resampler] → AEC.process(frame) → [AGC] → ...
+Reference: Speaker output → AEC.feed_reference(frame, stream)
+Inbound:   Transport → [resampler] → AEC.process(frame, stream) → [AGC] → ...
 ```
+
+Both calls MUST carry the same stream key. Each stream owns its echo canceller,
+so an unkeyed reference could not reach the right one; in a conference every
+lane hears a different mix, and feeding one lane's output into another lane's
+canceller models an echo that never occurred.
 
 **Reference feeding strategies:**
 
-Implementations MUST call `AECProvider.feed_reference()` with the outbound audio.
+Implementations MUST call `AECProvider.feed_reference()` with the outbound audio
+and the stream key that audio is being played to.
 The point at which this call is made has a critical impact on echo cancellation
 quality. Two strategies are defined:
 
@@ -2574,7 +2624,7 @@ quality. Two strategies are defined:
    calls `AECProvider.feed_reference()` after postprocessors and recorder:
 
    ```
-   TTS → [postprocessors] → [recorder] → AEC.feed_reference(frame) → [resampler] → Transport
+   TTS → [postprocessors] → [recorder] → AEC.feed_reference(frame, stream) → [resampler] → Transport
    ```
 
    In this scenario the remote client's playback latency is handled by the AEC
@@ -2612,10 +2662,10 @@ and STT receive audio at a predictable amplitude.
 ```
 AGCProvider (interface)
 ├── name: string                             # Provider name (e.g., "webrtc_agc", "simple_agc")
-├── process(audio_frame: AudioFrame) → AudioFrame
-│       # Apply gain control, return normalized frame
-├── reset() → void
-│       # Reset internal state (adaptive gain history)
+├── process(audio_frame: AudioFrame, stream: string) → AudioFrame
+│       # Apply gain control to `stream`, return normalized frame
+├── reset(stream: string) → void
+│       # Drop this stream's state when the stream ends
 └── close() → void
         # Release resources
 ```
@@ -2649,10 +2699,10 @@ call transfers, and PSTN/SIP integrations where users interact via keypad.
 ```
 DTMFDetector (interface)
 ├── name: string                             # Provider name (e.g., "goertzel", "webrtc_dtmf")
-├── process(audio_frame: AudioFrame) → DTMFEvent | null
+├── process(audio_frame: AudioFrame, stream: string) → DTMFEvent | null
 │       # Detect DTMF tone, return event if detected, null otherwise
-├── reset() → void
-│       # Reset internal state
+├── reset(stream: string) → void
+│       # Drop this stream's state when the stream ends
 └── close() → void
         # Release resources
 ```
@@ -2803,10 +2853,10 @@ without it, the pipeline has no way to detect speech boundaries for STT.
 ```
 VADProvider (interface)
 ├── name: string                             # Provider name (e.g., "silero", "ten_vad", "webrtc")
-├── process(audio_frame: AudioFrame) → VADEvent | null
+├── process(audio_frame: AudioFrame, stream: string) → VADEvent | null
 │       # Process a frame, return event if state changed, null otherwise
-├── reset() → void
-│       # Reset internal state (e.g., on session start)
+├── reset(stream: string) → void
+│       # Drop this stream's state when the stream ends
 └── close() → void
         # Release resources
 ```
@@ -2847,10 +2897,10 @@ speakers share a single audio stream (e.g., speakerphone).
 ```
 DiarizationProvider (interface)
 ├── name: string                             # Provider name
-├── process(audio_frame: AudioFrame) → DiarizationResult | null
+├── process(audio_frame: AudioFrame, stream: string) → DiarizationResult | null
 │       # Identify speaker, return result if determined, null otherwise
-├── reset() → void
-│       # Reset speaker models (e.g., on session start)
+├── reset(stream: string) → void
+│       # Drop this stream's state when the stream ends
 └── close() → void
         # Release resources
 ```
@@ -2882,10 +2932,10 @@ include volume normalization, audio watermarking (for compliance), and recording
 ```
 AudioPostProcessor (interface)
 ├── name: string                             # Processor name
-├── process(audio_frame: AudioFrame) → AudioFrame
-│       # Process outbound audio frame
-├── reset() → void
-│       # Reset internal state (e.g., on session start)
+├── process(audio_frame: AudioFrame, stream: string) → AudioFrame
+│       # Process `stream`'s outbound audio frame
+├── reset(stream: string) → void
+│       # Drop this stream's state when the stream ends
 └── close() → void
         # Release resources
 ```
@@ -3142,24 +3192,25 @@ Check InterruptionStrategy:
 **Inbound flow (per audio frame):**
 
 ```
-1. Transport emits raw AudioFrame
+1. Transport emits raw AudioFrame for stream `stream` (session id, or lane id
+   in a conference)
 2. IF resampler configured:
    └── frame = resample(frame, internal_format)
        └── frame.metadata.original_sample_rate = original_rate
 3. IF recorder configured:
    └── recorder.record_inbound(handle, frame)
 4. IF dtmf configured (PARALLEL with steps 5-9):
-   ├── dtmf_event = dtmf.process(frame)
+   ├── dtmf_event = dtmf.process(frame, stream)
    └── IF dtmf_event is not null:
        └── Fire ON_DTMF hook
 5. IF aec configured AND NOT backend.NATIVE_AEC:
-   └── frame = aec.process(frame)
+   └── frame = aec.process(frame, stream)
 6. IF agc configured AND NOT backend.NATIVE_AGC:
-   └── frame = agc.process(frame)
+   └── frame = agc.process(frame, stream)
 7. IF denoiser configured:
-   └── frame = denoiser.process(frame)
+   └── frame = denoiser.process(frame, stream)
 8. IF vad configured:
-   ├── vad_event = vad.process(frame)
+   ├── vad_event = vad.process(frame, stream)
    └── IF vad_event is not null:
        ├── Fire corresponding hook (ON_SPEECH_START, ON_SPEECH_END, etc.)
        └── IF vad_event.type == SPEECH_END:
@@ -3176,9 +3227,14 @@ Check InterruptionStrategy:
            └── ELSE (no turn detector):
                └── Create RoomEvent, route to Room (v1 behavior)
 9. IF diarization configured:
-   ├── result = diarization.process(frame)
+   ├── result = diarization.process(frame, stream)
    └── IF result.is_new_speaker:
        └── Fire ON_SPEAKER_CHANGE hook
+
+10. WHEN the stream ends:
+   └── FOR EACH configured stage: stage.reset(stream)
+       (Releases that speaker's state. Skipping it leaks one stream's buffers —
+        and native memory for SDK-backed stages — per speaker the room ever had.)
 ```
 
 **Outbound flow (per audio frame / chunk):**
@@ -3187,11 +3243,11 @@ Check InterruptionStrategy:
 1. TTS emits AudioChunk stream (variable-size); speech-to-speech emits AudioFrame
    (Stages that require fixed-size AudioFrames MUST buffer and re-chunk internally)
 2. FOR EACH postprocessor in order:
-   └── frame = postprocessor.process(frame)
+   └── frame = postprocessor.process(frame, stream)
 3. IF recorder configured:
    └── recorder.record_outbound(handle, frame)
 4. IF aec configured AND transport does NOT handle AEC reference feeding:
-   └── aec.feed_reference(frame)
+   └── aec.feed_reference(frame, stream)
    (When the transport feeds reference from its speaker output callback — e.g.,
     local audio hardware — the pipeline MUST skip this step to avoid double-feeding.
     See Section 12.3.4 for reference feeding strategies.)
@@ -3199,7 +3255,8 @@ Check InterruptionStrategy:
    └── frame = resample(frame, transport_format)
 6. Transport sends processed frame to client
    (For local hardware transports, the speaker output callback feeds
-    aec.feed_reference() here, time-aligned with actual playback.)
+    aec.feed_reference() here with that stream's key, time-aligned with actual
+    playback.)
 ```
 
 #### 12.3.15 Pipeline Debug Taps
