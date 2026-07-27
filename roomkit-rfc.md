@@ -1533,14 +1533,22 @@ Planned rows are normative design intent for the named capability.
 - Each hook receives the event and room context.
 - Each hook MUST return a HookResult.
 - A BLOCK result stops the pipeline — no further hooks run.
-- A MODIFY result replaces the event for subsequent hooks.
-- If the hook exceeds its timeout, it MUST be treated as ALLOW with an error logged.
-- A hook that raises MUST be treated as ALLOW with an error logged, so that a
-  broken hook cannot take a room down — **except** on triggers whose payload is
-  content the hook may exist to withhold, where it MUST block instead. BEFORE_TTS
-  and ON_TRANSCRIPTION are those triggers: a redaction hook that fails must not
-  publish what it was there to suppress, and allowing on error would do exactly
-  that. Implementations MUST document which triggers fail closed.
+- A hook that does not produce a usable result MUST be treated as ALLOW with an
+  error logged, so that a broken hook cannot take a room down. This covers a
+  hook that raises, one that exceeds its timeout, one that returns something
+  other than a HookResult, and a MODIFY whose payload is not of the type the
+  trigger passed in.
+- **Except on triggers whose payload is content a hook may exist to withhold**,
+  where every one of those outcomes MUST block instead. BEFORE_TTS and
+  ON_TRANSCRIPTION are those triggers: a redaction hook that fails, times out,
+  or returns something unusable must not let the original through, and allowing
+  would publish exactly what the hook was there to suppress. A partial rule is
+  no rule — an implementation that blocks on exceptions but allows on timeouts
+  leaks through the timeout. Implementations MUST document which triggers fail
+  closed.
+- A MODIFY result replaces the payload whenever one is supplied, including a
+  falsy one. Redacting a string to empty is a modification; treating it as
+  absent would pass the original to the next hook.
 
 **ASYNC hooks:**
 
