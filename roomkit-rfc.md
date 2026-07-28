@@ -1666,7 +1666,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 4. CHANNEL PROCESSES INBOUND
    └── channel.handle_inbound(message, context) → RoomEvent
 
-5. IDENTITY RESOLUTION (if resolver configured)
+5. IDENTITY RESOLUTION (if resolver configured and the sender has an address
+   left to resolve — §11.6 skips a channel that names its own senders, and a
+   sender the room has already identified)
    ├── Call resolver.resolve(message, context) with timeout
    ├── Handle result:
    │   ├── IDENTIFIED → create/update identified participant
@@ -1999,6 +2001,37 @@ If identity resolution exceeds the configured timeout, the implementation MUST:
 1. Treat the result as UNKNOWN.
 2. Emit an `identity_timeout` framework event.
 3. Continue processing the inbound message (do not block).
+
+### 11.6 Senders With Nothing To Resolve
+
+A resolver maps an **address** — a number, an email, a handle — to an Identity.
+Two senders carry no such question, and an implementation MUST NOT run
+resolution for them:
+
+1. **The channel names its own senders.** A channel MAY declare that its
+   inbound `sender_id` is a room `Participant.id` rather than an address. A
+   conference is the case this exists for (Section 12.10.4): its utterances
+   carry the identity a track was published under, and resolving that is the
+   "resolve on the opaque identity" Section 12.10.2 rule 3 rules out.
+2. **The room has already identified the sender.** Where the event's
+   `participant_id` names a Participant of the room whose `identification` is
+   IDENTIFIED, the question has been answered and the answer is on the roster.
+
+`PENDING` and `AMBIGUOUS` participants are deliberately not in case 2: a
+participant the room *has* is not a participant the room has *identified*, a
+resolver may still be what settles it, and the identity hooks of Section 11.2
+may still want to challenge or refuse it.
+
+This is not an optimisation. Re-resolving a sender the room has already
+identified produces UNKNOWN — no resolver matches a framework identifier — so
+`ON_IDENTITY_UNKNOWN` fires per message, and the refusal pattern Section 11.2
+provides for (`reject`) then blocks every message from a participant the
+implementation itself identified. Skipping it is what keeps that pattern
+composable with channels that name their own participants.
+
+When resolution is skipped, the event's `participant_id` MUST be left as the
+channel set it, and no participant record is created or modified: the sender is
+either already a participant or deliberately unattributed.
 
 ---
 
@@ -5065,6 +5098,17 @@ on_track_audio (one lane per AUDIO track)
 The lane preserves the inbound stage ordering of Section 12.3, minus the
 stages a conference makes unnecessary: AEC (no server-side echo path) and
 Diarization (track identity already attributes speech).
+
+A transcription enters the inbound pipeline under the identity its track was
+published under, which is a room `Participant.id` and not an address. Identity
+resolution therefore MUST NOT run per utterance (Section 11.6, case 1): a
+conference resolves when a participant *arrives* and the address its provider
+attached is there to resolve (Section 12.10.2), and speaking again asks nothing
+new. Running it anyway resolves on the backend's opaque identity — what rule 3
+rules out — and fails as rule 3 says it would: UNKNOWN every time, so
+`ON_IDENTITY_UNKNOWN` fires per utterance and an implementation refusing
+unknown senders there discards the transcripts of a participant it identified
+on arrival.
 
 Each AUDIO track gets its own lane, holding its stage state under the stream
 identity contract of Section 12.3 with the track as the stream key. That
