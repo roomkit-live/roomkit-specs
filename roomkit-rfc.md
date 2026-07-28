@@ -4748,6 +4748,49 @@ thing on both sides of the backend boundary. Therefore:
 4. Identities MUST NOT be reused across participants within a room's
    lifetime.
 
+**Resolving the participant the framework did not name.** Rule 3 says the
+address must reach identity resolution; when it does so, and what becomes of
+the answer, decide whether the rest of the section still holds.
+
+Resolution MUST run when the participant **arrives**, not when it first
+speaks. A conference participant may listen for an hour without publishing a
+word, and one that stays unidentified until it does is unidentified to every
+hook, roster read and disclosure obligation in the meantime — which is the
+opposite of what rule 3 exists for. It also means resolution runs for a
+participant that never speaks at all.
+
+The answer MUST be recorded on the Participant rule 3 created, whose `id`
+remains the backend's identity: the resolved Identity is carried by
+`identity_id` (and `display_name`), and the participant MUST NOT be re-keyed
+to the Identity's own id. Re-keying would break rule 2 in the one place it
+matters most — transcription RoomEvents would be attributed to the Identity
+while the recording's `RecordingTrack.participant_id` (Section 12.10.8), the
+interruption allowlist (Section 12.10.5) and the roster stayed on the
+backend's identity, leaving one human under two identifiers in one room. One
+participant record, one identifier, an Identity linked to it.
+
+What counts as a resolvable address is provider-specific, so an
+implementation MUST document the participant-attribute keys it reads and
+SHOULD let an integrator override them — a provider whose key is not on the
+list is a configuration matter, not a reason to fork the framework. The
+number a caller *dialled* is not the caller: keys carrying the trunk or
+destination number (`sip.trunkPhoneNumber` and equivalents) MUST NOT be
+taken for the caller's address. Where no resolvable address is found, the
+channel MUST leave the participant `UNKNOWN` rather than resolving on the
+opaque identity, which is the case rule 3 rules out.
+
+An arrival is not an inbound message, and the parts of Section 11 that act
+on one do not apply to it: there is nothing to hold, nothing to reject and
+nowhere to inject a challenge, so an arrival MUST NOT fire the
+`ON_IDENTITY_*` hooks or run the challenge and rejection flows — those
+belong to the inbound pipeline, and the participant's first utterance
+reaches it normally. An AMBIGUOUS or PENDING result SHOULD be recorded as a
+pending identification carrying its candidates; UNKNOWN, REJECTED and
+CHALLENGE_SENT leave the participant `UNKNOWN`. Section 11.5 applies to the
+call: on timeout the implementation MUST treat the result as UNKNOWN, emit
+`identity_timeout`, and let the participant join regardless. A resolver that
+raises MUST NOT keep a participant out of the conference.
+
 **BotSession** — the framework's own connection to a conference:
 
 ```
@@ -5333,7 +5376,9 @@ Implementations that support conferencing MUST:
 - Correlate `participant_id` across the backend boundary per Section
   12.10.2, including the `external_id` fallback for participants the
   framework did not mint, and surface provider participant attributes so
-  their resolvable addresses reach identity resolution.
+  their resolvable addresses reach identity resolution — on arrival rather
+  than on first utterance, with the answer linked to the participant by
+  `identity_id` rather than re-keying it.
 - Gate `unmute_track()` on the REMOTE_UNMUTE capability, raising a
   configuration error rather than failing silently where it is unsupported.
 - Subscribe explicitly: consume only tracks passed to `subscribe_track()`,
