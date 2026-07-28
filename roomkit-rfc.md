@@ -1473,7 +1473,7 @@ Planned rows are normative design intent for the named capability.
 | ON_TURN_INCOMPLETE | ASYNC | Implemented | Turn detector determined user is still speaking (for logging) |
 | ON_BACKCHANNEL | ASYNC | Implemented | Backchannel detector classified speech as backchannel |
 | ON_SESSION_STARTED | ASYNC | Implemented | Session started on any channel type (voice: audio path live; text: room auto-created) |
-| ON_RECORDING_STARTED | ASYNC | Implemented | Audio recording started for a voice session |
+| ON_RECORDING_STARTED | ASYNC | Implemented | Audio recording started for a voice session, or for a conference track (Section 12.10.8) |
 | ON_RECORDING_STOPPED | ASYNC | Implemented | Audio recording stopped, result available |
 | ON_REALTIME_TOOL_CALL | SYNC | Superseded | Speech-to-speech tool call — superseded by `ON_TOOL_CALL` (unified across AI and realtime channels) |
 | ON_REALTIME_TEXT_INJECTED | ASYNC | Implemented | Text injected into realtime session |
@@ -3521,8 +3521,8 @@ Voice-specific hooks allow integrators to customize the voice pipeline:
 | ON_TURN_INCOMPLETE | ASYNC | Debug turn detection | Audio Pipeline (Turn Detector) |
 | ON_BACKCHANNEL | ASYNC | Track user engagement | Audio Pipeline (Backchannel Detector) |
 | ON_SESSION_STARTED | ASYNC | Send greeting, start telemetry | VoiceBackend / Inbound pipeline |
-| ON_RECORDING_STARTED | ASYNC | Notify participants of recording | Audio Pipeline (Recorder) |
-| ON_RECORDING_STOPPED | ASYNC | Store recording reference in timeline | Audio Pipeline (Recorder) |
+| ON_RECORDING_STARTED | ASYNC | Notify participants of recording | Audio Pipeline (Recorder) / Conference Channel |
+| ON_RECORDING_STOPPED | ASYNC | Store recording reference in timeline | Audio Pipeline (Recorder) / Conference Channel |
 | ON_REALTIME_TOOL_CALL | SYNC | Execute tool and return result | Realtime Provider |
 | ON_REALTIME_TEXT_INJECTED | ASYNC | Log text injections | Realtime Voice Channel |
 | ON_PROTOCOL_TRACE | ASYNC | Log/inspect transport protocol traces (SIP, RTP) | Channel (via emit_trace) |
@@ -5312,6 +5312,30 @@ An implementation recording a conference in framework mode MUST:
 - Stop recording when the room binding stops permitting collection, on the
   same gate as transcription (Section 12.10.4). Recording is collection.
 
+**Reporting the result.** A framework-mode recording ends with a
+`MediaRecordingResult` naming where it was written, and the framework SHOULD
+report it: `ON_RECORDING_STARTED` when a track's recording opens,
+`ON_RECORDING_STOPPED` when it ends, carrying that result — the same pair
+Section 12.3.7 fires for a session. Without it an integrator has files on a
+disk and no programmatic way to learn their paths: the recorder's return
+value stops inside the framework, and a log line is not an interface.
+
+Per track, not per conference. The recording *is* a track, and the tracks of
+one meeting do not end together — a participant who leaves halfway through
+has a finished recording while the meeting continues. A single report at the
+end would have to hold every earlier result until then, and would arrive
+after the point where an observer could have acted on it. An integrator
+wanting the meeting's full list accumulates it by room, which is state it
+was going to keep anyway.
+
+The report carries the attribution the result alone need not: the room, the
+track, and the participant publishing it as Section 12.10.2 resolved it.
+Both hooks are ASYNC — a recording already written is a fact, not a decision,
+and nothing about it is a hook's to block. A track subscribed but never
+published on reports nothing at all: the recording opens on the first frame,
+so silence produces no file and no pair of hooks describing one. Egress mode
+fires neither, for the reason given above — it promises no result contract.
+
 How many files come out is the recorder implementation's decision: the
 framework guarantees attribution, not file layout. A recorder MAY write one
 file per track or mux several — it is handed the tracks separately and
@@ -5413,6 +5437,9 @@ Implementations SHOULD:
 - Record conferences through the framework recorder path by default,
   treating SFU egress as an optional delegation with no result contract
   (Section 12.10.8).
+- Report each framework-mode recording where it opens and where it ends —
+  its result, its track and its participant — rather than leaving the
+  integrator to find the files (Section 12.10.8).
 - Enforce ConferenceInterruptionConfig scope.
 
 Implementations MAY:
