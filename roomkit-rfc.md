@@ -2749,6 +2749,12 @@ The audio recorder captures bidirectional audio for compliance, audit, quality
 assurance, and training purposes. In regulated industries (financial services,
 healthcare), call recording is often mandatory.
 
+**Scope.** This interface records a VoiceSession, and everything about it says
+so: the handle names a session, and both the mode and the channel mode are
+expressed in terms of two directions. That is the shape of a call, not of a
+meeting. Recording a room's many participants is Section 12.11, and a
+conference records through that (Section 12.10.8) rather than through this.
+
 ```
 AudioRecorder (interface)
 ├── name: string                             # Recorder name
@@ -4290,6 +4296,10 @@ VideoRecordingResult
 **Implementations:** PyAVVideoRecorder (H.264/H.265, NVIDIA GPU),
 OpenCVVideoRecorder (MJPEG/XVID), MockVideoRecorder.
 
+**Scope.** Like the audio recorder, this one records a session's video and is
+handed one — a conference publishes N attributed video tracks and no session,
+and records them through Section 12.11 instead (Section 12.10.8).
+
 #### 12.8.11 Video Hooks
 
 | Hook | Execution | When |
@@ -5203,8 +5213,9 @@ ConferenceRecordingConfig
 └── metadata: map<string, any>
 ```
 
-- **framework** (default) — bot-subscribed tracks are fed to AudioRecorder /
-  VideoRecorder providers. This is the path that always works: it needs no
+- **framework** (default) — bot-subscribed tracks are recorded through the
+  room media recorder interface (Section 12.11), one recording per track.
+  This is the path that always works: it needs no
   backend capability, it functions against MockConferenceBackend, and the
   recording is written wherever the implementation writes it, which matters
   where data residency is constrained. Since audio tracks are already
@@ -5229,14 +5240,44 @@ its output through the provider's own mechanism. Switching between the two
 modes is therefore not a transparent configuration change, and
 implementations SHOULD document it as such.
 
-**Open: recorder shape for conferences.** AudioRecorder (Section 12.3.7) is
-specified around a VoiceSession, with `record_inbound` / `record_outbound`
-and an INBOUND_ONLY | OUTBOUND_ONLY | BOTH mode. A conference has neither a
-VoiceSession nor a single inbound direction — it has N attributed tracks
-plus one bot track. How conference recording binds to the recorder providers
-(a handle per track, a conference-shaped recorder, or per-track sessions) is
-not yet specified and MUST be settled before framework-mode conference
-recording is claimed as conforming.
+**Recorder mapping.** AudioRecorder (Section 12.3.7) and VideoRecorder
+(Section 12.8.10) are specified around a session: `record_inbound` /
+`record_outbound`, an INBOUND_ONLY | OUTBOUND_ONLY | BOTH mode, a handle
+carrying a `session_id`. A conference has no session and no single inbound
+direction — it has N attributed tracks plus one bot track — so neither
+interface applies to it, and neither changes on its account. Framework-mode
+conference recording binds to MediaRecorder (Section 12.11) instead, which
+is addressed by track and already carries the attribution.
+
+An implementation recording a conference in framework mode MUST:
+
+- Open **one recording per subscribed track**: one `on_recording_start()`
+  carrying exactly that track. A conference gains participants while it
+  runs, and a recording that admits its tracks only at the start cannot
+  record a late arrival — MP4, the usual container, refuses a new stream
+  once muxing has begun. Per-track recordings also make "who said what" a
+  property of the output rather than of a mixing decision.
+- Attribute every track: `RecordingTrack.participant_id` carries the
+  publishing participant as Section 12.10.2 resolved it, and `channel_id`
+  the conference channel.
+- Record the bot's published track as **its own attributed track**, never
+  mixed into a participant's. The bot track is the only one that resembles
+  an outbound direction, and treating it as one would make the framework mix
+  media it was given separately. What the AI said is part of what was said.
+- End a track's recording when that track ends — unpublished, unsubscribed,
+  or the conference left — without ending the others.
+- Stop recording when the room binding stops permitting collection, on the
+  same gate as transcription (Section 12.10.4). Recording is collection.
+
+How many files come out is the recorder implementation's decision: the
+framework guarantees attribution, not file layout. A recorder MAY write one
+file per track or mux several — it is handed the tracks separately and
+attributed, so either remains open to it.
+
+Video tracks take the same shape where an implementation records them
+(`RecordingTrack.kind` distinguishes them), which is per-track and therefore
+never a composed recording. A grid or active-speaker layout stays egress
+territory, for the reason given above.
 
 #### 12.10.9 Cross-Channel Integration
 
@@ -5308,6 +5349,9 @@ Implementations that support conferencing MUST:
 - Publish AI TTS as a single bot track (synthesize once, publish once).
 - Publish bot media as decoded frames — PCM AudioChunk, raw VideoFrame —
   leaving encoding to the backend.
+- Where framework-mode recording is offered, record one attributed recording
+  per track — the bot's own included, unmixed — and stop it on the same
+  collection gate as transcription (Section 12.10.8).
 - Fire conference lifecycle hooks and create/update Participant records
   from conference events.
 - Treat ConferenceAccess as opaque.
@@ -5331,6 +5375,88 @@ Implementations MAY:
 - Publish bot video (avatar embodiment, requires VIDEO_PUBLISH).
 - Compose speech-to-speech providers via N→1 mixing.
 - Bridge SIP sessions into conferences.
+
+### 12.11 Room Media Recording
+
+Sections 12.3.7 and 12.8.10 each record a *session*: one participant, one
+medium, in the two directions a session has. A room is not a session. It holds
+several participants, each of which may publish more than one kind of media,
+and they arrive and leave across the room's lifetime rather than all at its
+start. Room media recording is the interface for that shape, and it is what
+conference recording binds to (Section 12.10.8).
+
+```
+MediaRecorder (interface)
+├── name: string                                          # Recorder name
+├── on_recording_start(config: MediaRecordingConfig) → MediaRecordingHandle
+│       # Open one recording
+├── on_track_added(handle, track: RecordingTrack) → void
+│       # Declare a track this recording carries
+├── on_track_removed(handle, track: RecordingTrack) → void
+│       # The track ended — flush what it holds
+├── on_data(handle, track: RecordingTrack, data: bytes,
+│           timestamp_ms: float | null) → void
+│       # Media for one of the recording's tracks
+├── on_recording_stop(handle) → MediaRecordingResult
+│       # Close the recording, finalize output
+└── close() → void
+        # Release resources
+```
+
+```
+RecordingTrack
+├── id: string                        # Track identifier
+├── kind: string                      # "audio" | "video" | "screen_share"
+├── channel_id: string                # Channel the media came through
+├── participant_id: string | null     # Who published it
+├── codec: string
+├── sample_rate: int | null           # Audio
+├── width: int | null                 # Video
+└── height: int | null                # Video
+```
+
+```
+MediaRecordingConfig                  MediaRecordingResult
+├── storage: string                   ├── id: string
+├── format: string = "mp4"            ├── url: string
+├── video_codec: string               ├── duration_seconds: float
+├── video_fps: int                    ├── tracks: list<RecordingTrack>
+├── audio_codec: string               ├── format: string
+└── audio_sample_rate: int            └── size_bytes: int
+```
+
+```
+MediaRecordingHandle                  RoomRecorderBinding
+├── id: string                        ├── recorder: MediaRecorder
+├── room_id: string                   ├── config: MediaRecordingConfig
+├── state: string                     ├── enabled: bool = true
+├── started_at: datetime              └── name: string
+└── path: string
+```
+
+The unit is the **handle**, not the room: a handle is one recording, and how
+many a room opens is the caller's decision. A room that records its channels
+into a single file opens one and adds every track to it; a conference opens
+one per track (Section 12.10.8). Both are the same interface used at
+different granularities, which is why the interface names a track on every
+call rather than assuming one.
+
+`participant_id` is what makes an output answerable to "who said what", and
+it is the recorder's only source for it: the interface carries no session and
+no direction. An implementation MUST populate it wherever the framework knows
+the publisher.
+
+`storage` is an integrator-defined identifier resolved by the implementation
+at runtime, as in Section 12.3.7. Implementations MUST document which storage
+backends they support and MUST raise a configuration error for an unknown
+identifier. A storage path MUST NOT be allowed to escape its configured
+directory.
+
+A recorder MAY refuse a track declared after it has begun writing — a
+container that fixes its streams at the first write cannot honour a late one
+— and MUST say so rather than silently dropping the media. A caller that
+cannot predict its tracks opens one recording per track instead, which is why
+a conference does.
 
 ---
 
