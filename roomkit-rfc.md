@@ -1358,7 +1358,7 @@ They are NOT stored in any room timeline.
 | tts_error | TTS synthesis failed | session_id, provider, error |
 | voice_session_ready | Voice session audio path is live and ready | session_id, room_id, channel_id |
 | conference_started | Bot connection to the conference is live | room_id, channel_id, bot_session_id |
-| conference_ended | Bot left the conference | room_id, channel_id, duration_ms |
+| conference_ended | Bot left the conference | room_id, channel_id, bot_session_id, duration_ms |
 | conference_participant_joined | Participant joined the media session | room_id, participant_id |
 | conference_participant_left | Participant left the media session | room_id, participant_id |
 
@@ -4745,8 +4745,20 @@ BotSession
 ├── id: string
 ├── room_id: string
 ├── identity: string                    # Display identity in the conference
+├── joined_at: timestamp                # When the bot connected; MUST be timezone-aware
 └── metadata: map<string, any>
 ```
+
+`joined_at` is what `conference_ended`'s `duration_ms` is measured from
+(Section 8.2). It defaults to the moment the session is constructed, which
+is when a backend builds the one it returns from `join_as_bot()`; a backend
+holding a more accurate figure — one the SFU reports — SHOULD set it
+instead. It MUST be timezone-aware: a naive value cannot be subtracted from
+an aware clock, and the failure surfaces during teardown where it costs the
+conference its end announcement rather than the duration alone.
+Implementations SHOULD settle the timezone when the session is recorded, so
+that a backend's omission is reported at the boundary it came from rather
+than raised from the teardown.
 
 **ConferenceCapability** flags:
 
@@ -4870,6 +4882,14 @@ does, because the bot's own permissions vary by AI participation pattern
 `subscribe`-only with `hidden` set. A backend MUST apply them to the bot
 session rather than assuming full permissions.
 
+Where the permissive ConferenceGrants defaults are right for humans — whose
+needs the framework cannot know — they are wrong for the bot, whose
+behaviour the framework configured and therefore knows. An implementation
+that derives the bot's grants SHOULD derive every one of them, `subscribe`
+included: a channel with nothing to consume the tracks it would receive
+subscribes to none (**Selective subscription**), and the grant is then
+permission to receive every participant's media for nobody to read.
+
 **Moderation:** `mute_track()` is always available. `unmute_track()` requires
 the REMOTE_UNMUTE capability; calling it on a backend without that
 capability MUST raise a configuration error rather than failing silently or
@@ -4957,6 +4977,29 @@ does not serve it. ConferenceGrants defaults are permissive so the common
 case works unconfigured; narrowing them is the integrator's call and is
 RECOMMENDED wherever a role does not need to publish — a listener-only
 attendee SHOULD receive grants without publish permissions (Section 17.7).
+
+`mint_access()` MUST NOT issue a credential for a room the channel is no
+longer attached to, and the check MUST hold across every await the call
+makes. Minting is not a read: the token is honoured by the SFU, the
+ConferenceBackend contract offers no revocation, and a check that was true
+before a roster lookup and false after it has already handed out admission
+to a conference the framework has left. Implementations MUST therefore
+treat the mint as work a detach cannot land in the middle of — the
+in-flight-work discipline of Section 12.10.4 — rather than as a precondition
+tested once.
+
+A bounded drain does not satisfy this on its own. Every other kind of
+in-flight work degrades gracefully past the deadline — a chunk arrives late,
+an event lands out of order — and a credential does not: it stays valid for
+as long as it says it does, against a conference the framework has left. So
+a mint still in flight when the deadline passes MUST be taken back rather
+than left behind: implementations MUST cancel the outstanding backend
+request, and MUST re-read the attachment when a request that survived
+cancellation returns, refusing to hand the credential on. Refusing is not
+revocation, and implementations SHOULD say so — the backend may have
+recorded a credential nobody received, and only the operator can decide
+whether it needs revoking there. `close()` carries the same obligation
+before it closes the backend.
 
 **Per-track audio lanes:**
 
@@ -5141,6 +5184,14 @@ RealtimeBackend instead:
 `conference_started` tracks the framework's own media presence, not the
 existence of the SFU room: `ensure_room()` MAY have run much earlier, and
 human participants MAY be conferring before the bot joins.
+
+`conference_ended` MUST carry the `bot_session_id` of the session that left.
+A detach whose destructive half is deferred (Section 12.10.4) can complete
+after the room has been re-attached and a second bot has been announced, so
+the end is not always the last conference event a room emits; without the
+session identifier an observer cannot tell which conference it is the end
+of. The same identifier appears on `conference_started`, and pairing them is
+the only ordering guarantee available in that case.
 
 #### 12.10.8 Recording
 
