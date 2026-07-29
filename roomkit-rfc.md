@@ -5385,6 +5385,30 @@ An implementation recording a conference in framework mode MUST:
 - Stop recording when the room binding stops permitting collection, on the
   same gate as transcription (Section 12.10.4). Recording is collection.
 
+**Writing is not the callback's work.** Recording a track MUST NOT delay
+frame delivery for any other. This is the lane isolation rule of Section
+12.10.4, and it applies to the recorder for the same reason it applies to
+the recogniser: the backend hands frames to its subscribers in sequence, so
+an encode and a file write performed where the frame arrives makes one
+track's storage latency into every participant's delivery latency. That the
+recorder interface is synchronous (Section 12.11) does not exempt it — it is
+what makes the obligation bite, since a caller cannot await its way out of a
+blocking write and MUST therefore get it off the delivery path altogether.
+
+An implementation MUST bound what it holds for a track whose writes fall
+behind, MUST document which audio it discards when that bound is reached, and
+MUST expose how much it discarded — the same three obligations Section
+12.10.4 places on a lane's backlog, and for the same reason: a recording with
+a hole in it that nothing reports reads as a defective recorder.
+
+What is still queued when a track's recording ends MUST be written before the
+recording is finalized, within a bounded budget. A container closed over
+frames that were still in flight is not a truncated recording but a
+misleading one — it ends early and says nothing about it — and a budget is
+what keeps a recorder that has stopped draining from holding the teardown, and
+with it the bot, in the conference. What the budget could not write is loss,
+and is reported as such.
+
 **Reporting the result.** A framework-mode recording ends with a
 `MediaRecordingResult` naming where it was written, and the framework SHOULD
 report it: `ON_RECORDING_STARTED` when a track's recording opens,
@@ -5494,6 +5518,10 @@ Implementations that support conferencing MUST:
 - Where framework-mode recording is offered, record one attributed recording
   per track — the bot's own included, unmixed — and stop it on the same
   collection gate as transcription (Section 12.10.8).
+- Keep those recordings off the delivery path: write outside the frame
+  callback, bound each track's write backlog, document what it discards and
+  expose how much, and flush what is queued before finalizing (Section
+  12.10.8).
 - Fire conference lifecycle hooks and create/update Participant records
   from conference events.
 - Treat ConferenceAccess as opaque.
@@ -5602,6 +5630,22 @@ container that fixes its streams at the first write cannot honour a late one
 — and MUST say so rather than silently dropping the media. A caller that
 cannot predict its tracks opens one recording per track instead, which is why
 a conference does.
+
+**Which thread calls it.** Every call in this interface is synchronous, and
+what they do — encode a frame, write a container, close a file — blocks for
+as long as the storage takes. An implementation MAY therefore call a recorder
+outside the thread its event loop runs on, and one recording media as it
+arrives will have to: Section 12.10.8 forbids a write that delays another
+track's delivery, and a blocking call made on the loop delays everything on
+it. A recorder MUST NOT assume it is called on the loop thread, and MUST NOT
+assume the calling thread is the same one across calls.
+
+What an implementation owes in return is serialization **per handle**: the
+calls belonging to one recording are ordered and never overlap, so a
+recorder's per-recording state needs no locking of its own and its media
+arrives in the order the framework received it. Different handles carry no
+such promise and may be written concurrently, which is what lets one track's
+slow storage stay one track's problem.
 
 ---
 
