@@ -5783,6 +5783,27 @@ and MUST report it when it does. Recorders are not asked to make that case
 safe; they are told it exists, because the alternative reading is that it
 cannot happen.
 
+**Every wait is bounded, the close included.** The budget of Section 12.10.8
+covers what a recording holds *before* it is finalized; `on_track_removed()`
+and `on_recording_stop()` are calls into the same recorder and block the same
+way, and a conference teardown waits for them before its bot leaves. An
+implementation MUST therefore bound the finalization too, and MUST report a
+recording it stopped waiting for — the result is unknown, so where the media
+was written goes unreported rather than guessed. Recorders MUST NOT read the
+absence of a further call as permission to discard: what they were told to
+close is still theirs to close.
+
+**A recorder is not released while a call is running in it.** `close()` frees
+whatever the recorder holds, and freeing the context a call is executing inside
+is not an error a recorder can return — for one wrapping a native muxer it is a
+crash. So an implementation MUST NOT call `close()` while any call it stopped
+waiting for is still outstanding, and this wait is separate from the ones
+above: those belong to a teardown with a bot waiting behind them, this one
+belongs to releasing a provider and has nothing queued behind it. An
+implementation that still cannot settle them MUST leave the recorder unreleased
+and MUST say so. Leaking a recorder is a bounded cost; calling into a freed one
+is not.
+
 ---
 
 ## 13. Resilience and Error Handling
