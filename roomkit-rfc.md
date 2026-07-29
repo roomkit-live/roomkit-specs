@@ -5198,6 +5198,25 @@ apply) and publish the audio on the bot track via `publish_audio()`. The
 SFU distributes it to all participants. Targeted per-participant audio is
 NOT supported in this revision: one bot track, heard by all.
 
+**One utterance at a time (normative):** the channel MUST NOT interleave the
+chunks of two utterances on the bot track. There is one track and the SFU
+mixes nothing for it, so two utterances published together do not arrive as
+two voices — they arrive as one stream that is intelligible as neither.
+Nothing upstream guarantees this on the channel's behalf: an implementation
+whose broadcast pipeline serialises per room (Section 10.1) may still
+consume a streaming response outside that serialisation, so the single track
+is the channel's own to protect. Whether a second utterance waits for the
+first or replaces it is left to the implementation — both are defensible, and
+they differ in whether an answer the AI produced may go unheard.
+
+Every utterance the channel publishes MUST end with a chunk whose `is_final`
+is set, **including one cut short by a barge-in** (Section 12.10.5). This is
+what makes `is_final` a boundary a backend can rely on rather than a hint:
+without it, an interrupted utterance leaves the SFU believing the bot is
+still mid-sentence, with no cancellation in this interface to say otherwise.
+The closing chunk MAY carry no audio (`data` empty) — there is nothing left
+to play, only an end to declare — and backends MUST accept one.
+
 By default only AI/agent responses are spoken. When `speak_text_events` is
 true, inbound text events from other channels (SMS, WebSocket, ...) are
 also spoken into the conference.
