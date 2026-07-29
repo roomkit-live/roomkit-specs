@@ -5647,6 +5647,16 @@ arrives in the order the framework received it. Different handles carry no
 such promise and may be written concurrently, which is what lets one track's
 slow storage stay one track's problem.
 
+There is one call that may overlap, and only one: a write that has exhausted
+the budget of Section 12.10.8 cannot be taken back — a call made on another
+thread runs to completion whatever the framework does about it — and holding
+the close until it returns would let a wedged recorder hold a teardown, and
+with it a bot, in a conference indefinitely. An implementation MAY therefore
+finalize a recording whose write has passed that budget and is still running,
+and MUST report it when it does. Recorders are not asked to make that case
+safe; they are told it exists, because the alternative reading is that it
+cannot happen.
+
 ---
 
 ## 13. Resilience and Error Handling
