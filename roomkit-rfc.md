@@ -5291,6 +5291,21 @@ still mid-sentence, with no cancellation in this interface to say otherwise.
 The closing chunk MAY carry no audio (`data` empty) — there is nothing left
 to play, only an end to declare — and backends MUST accept one.
 
+There is exactly one exception, and it is the end of the session rather than
+the end of an utterance: an utterance the channel abandons because it has
+**left the conference** — a detach, or the channel closing — MUST NOT be
+closed with a terminal chunk. The bot session that chunk would name is on its
+way out of the conference and may already be gone, so publishing into it is
+either a write to a session the framework has left or a race with `leave()`.
+The framework cannot honour the guarantee here in any case: the process may
+also have crashed, the network may have dropped, and no in-band marker
+survives either. So a backend MUST treat `leave()`, and a session's
+disconnection by any other means, as terminating whatever utterance was in
+flight on it — the same way it already has to treat the connection dropping.
+An utterance interrupted by a participant is not this case and is still
+closed: the conference is live, the bot is in it, and the turn genuinely
+ended.
+
 By default only AI/agent responses are spoken. When `speak_text_events` is
 true, inbound text events from other channels (SMS, WebSocket, ...) are
 also spoken into the conference.
