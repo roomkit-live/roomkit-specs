@@ -4728,7 +4728,8 @@ ConferenceParticipant
 ├── participant_id: string
 ├── connected_at: datetime
 ├── tracks: list<ConferenceTrack>
-└── metadata: map<string, any>     # Provider-supplied participant attributes
+├── metadata: map<string, any>                  # Provider-supplied participant attributes
+└── asserted_metadata: map<string, any> | null  # The subset the SFU itself asserts
 ```
 
 A backend MUST surface the provider's own participant attributes in
@@ -4738,6 +4739,36 @@ dial-in carries its caller number there, and that number is precisely what
 identity resolution consumes (Section 5.6, `channel_addresses`). Dropping
 them leaves the framework with an opaque identifier and no way to connect
 the caller to a known Identity.
+
+**Where those attributes came from (normative).** `metadata` says what the
+provider surfaced; it does not say who put it there. On most SFUs one
+attribute map carries two very different things: facts the server
+established — the caller number a SIP trunk reported, a claim in a token it
+authenticated, an attribute the integrator set through a server-side API —
+and values a participant's own client supplied when it joined. Nothing in
+the map's shape tells them apart, and the difference decides what may be
+believed.
+
+`asserted_metadata` is where a backend states the difference. It is the
+subset of `metadata` the SFU itself asserts. Therefore:
+
+1. A backend MUST NOT place an attribute in `asserted_metadata` unless its
+   value was established by the SFU or by a server-side call: the SIP trunk,
+   the admission it authenticated, its own API. Values a client supplied at
+   join — directly, or through a token it was free to populate — MUST NOT
+   appear there, whatever their key.
+2. A backend that cannot tell the two apart MUST leave `asserted_metadata`
+   null rather than fill it with everything it has. Null is a statement —
+   "this backend does not distinguish" — and a consumer can act on it. A
+   guess is indistinguishable from an assertion, and it is the assertion
+   that decisions get made on.
+3. An empty map is the other statement: this backend distinguishes, and the
+   SFU asserts nothing about this participant.
+
+The specification names the fact rather than the policy. What an
+implementation may do with each of the two sets is stated where it consumes
+them — for identity resolution, under *Resolving the participant the
+framework did not name* below.
 
 **ConferenceGrants** — least-privilege permissions encoded into access:
 
@@ -4784,8 +4815,8 @@ thing on both sides of the backend boundary. Therefore:
    connection, and MUST populate `metadata` with the provider's participant
    attributes. The channel MUST then create a Participant with that
    identity as `external_id` and `identification: UNKNOWN`, and MUST pass
-   any resolvable address found in `metadata` — a caller number above all —
-   to identity resolution (Section 11) rather than resolving on the opaque
+   any resolvable address the SFU asserts — a caller number above all — to
+   identity resolution (Section 11) rather than resolving on the opaque
    identity alone. A phone participant joining a conference SHOULD reach
    the same Identity it would have reached over the SMS or Voice channel.
 4. Identities MUST NOT be reused across participants within a room's
@@ -4822,8 +4853,51 @@ taken for the caller's address. Where no resolvable address is found, the
 channel MUST leave the participant `UNKNOWN` rather than resolving on the
 opaque identity, which is the case rule 3 rules out.
 
-An arrival is not an inbound message, and the parts of Section 11 that act
-on one do not apply to it: there is nothing to hold, nothing to reject and
+**An address is only as good as its provenance.** Which key carries the
+address is the second question; the first is who put the value there. An
+attribute a participant's own client supplied is a claim about itself: a
+caller that writes its own `phone_number` and is resolved on it reaches
+whatever Identity that number belongs to — someone else's — and the
+Participant then carries the victim's `identity_id`, on the record every
+later attribution reads. Therefore an implementation MUST resolve identity
+only on addresses found in `asserted_metadata`, and MUST NOT take an
+attribute the backend did not assert for an address. A null
+`asserted_metadata` asserts nothing: a backend that does not distinguish
+(preceding subsection, point 2) yields no resolvable address at all, and its
+participants stay `UNKNOWN`.
+
+Provenance outranks specificity. An asserted attribute on a generic key is
+believed over an unasserted one on the provider's own key, because the
+attacker chooses the key and never the provenance.
+
+This is a default, not a prohibition. An integrator whose deployment has its
+own reason to trust unasserted attributes — a closed client fleet, a backend
+whose provenance the integrator establishes elsewhere — MAY widen it, and an
+implementation SHOULD offer that as configuration rather than leave forking
+as the only route. What an implementation MUST NOT do is widen it silently:
+the safe reading is the one that holds unconfigured. Where an implementation
+carries the provider's attributes into resolution as context, the ones it
+did not vouch for MUST remain distinguishable from the ones it did, so that
+a resolver reading them does so knowingly.
+
+**What the Participant record keeps of them.** Provider attributes are worth
+persisting — they are how an integrator finds out that a participant dialled
+in, on what trunk, under which SIP call id. But a Participant's `metadata`
+(Section 5.5) is the integrator's own map, and a conference is a place where
+strangers write into it. An implementation that records provider attributes
+on a Participant MUST therefore:
+
+- keep them under a single dedicated key rather than merged flat, so that no
+  provider attribute can overwrite a field the integrator put there;
+- keep the provenance split of the preceding subsection intact in the
+  record, so that what an identity was founded on remains auditable after
+  the fact;
+- bound what is persisted — the number of attributes and the size of each —
+  since on a conference open to dial-in, their content is chosen by whoever
+  connects.
+
+**An arrival is not an inbound message**, and the parts of Section 11 that
+act on one do not apply to it: there is nothing to hold, nothing to reject and
 nowhere to inject a challenge, so an arrival MUST NOT fire the
 `ON_IDENTITY_*` hooks or run the challenge and rejection flows — those
 belong to the inbound pipeline, and the participant's first utterance
@@ -5479,7 +5553,11 @@ no new mechanism:
   the framework did not name: its caller number arrives in
   `ConferenceParticipant.metadata` and MUST reach identity resolution
   (Section 12.10.2), so that dialling into a conference identifies the
-  caller as reliably as messaging the room would.
+  caller as reliably as messaging the room would. A gateway is also where
+  the provenance rule earns its keep: the number the trunk reported is a
+  fact the SFU established, and a backend admitting phone participants
+  SHOULD say so through `asserted_metadata` — otherwise the one address the
+  framework can act on is indistinguishable from one a client typed.
 
 #### 12.10.10 Relationship to Audio Bridging (Section 12.7)
 
@@ -5514,6 +5592,13 @@ Implementations that support conferencing MUST:
   their resolvable addresses reach identity resolution — on arrival rather
   than on first utterance, with the answer linked to the participant by
   `identity_id` rather than re-keying it.
+- State which participant attributes the SFU itself asserts, leaving
+  `asserted_metadata` null where the backend cannot tell, and resolve
+  identity only on those — never on an attribute a client supplied, unless
+  an integrator configured that explicitly (Section 12.10.2).
+- Record provider attributes on the Participant under a dedicated key rather
+  than merged into the integrator's own `metadata`, keeping their provenance
+  and bounding what is persisted (Section 12.10.2).
 - Gate `unmute_track()` on the REMOTE_UNMUTE capability, raising a
   configuration error rather than failing silently where it is unsupported.
 - Subscribe explicitly: consume only tracks passed to `subscribe_track()`,
