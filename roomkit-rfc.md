@@ -5376,6 +5376,12 @@ An implementation recording a conference in framework mode MUST:
 - Attribute every track: `RecordingTrack.participant_id` carries the
   publishing participant as Section 12.10.2 resolved it, and `channel_id`
   the conference channel.
+- Declare the format that track actually carries — `codec`, `sample_rate` and
+  `channels` describing the frames the backend delivered, not the format the
+  framework normalizes to elsewhere. Section 12.10.3 obliges a backend to
+  deliver decoded PCM with a declared sample rate; it obliges no two
+  participants to agree, so a conference of three may carry three formats,
+  and the first frame of a track is where its own is known.
 - Record the bot's published track as **its own attributed track**, never
   mixed into a participant's. The bot track is the only one that resembles
   an outbound direction, and treating it as one would make the framework mix
@@ -5384,6 +5390,14 @@ An implementation recording a conference in framework mode MUST:
   or the conference left — without ending the others.
 - Stop recording when the room binding stops permitting collection, on the
   same gate as transcription (Section 12.10.4). Recording is collection.
+
+**A recording is opened on a format.** That declaration is made once, on the
+frame that opens the track's recording, and a container fixes its streams at
+the first write — so a later frame in another format has no honest place in
+it. An implementation MUST NOT write one anyway: it is discarded, reported
+through the same loss the overload bound owes below, and said in the log. A
+recording missing the seconds where a publisher renegotiated has a defect
+anyone can see; one that wrote them is a file that opens and lies.
 
 **Writing is not the callback's work.** Recording a track MUST NOT delay
 frame delivery for any other. This is the lane isolation rule of Section
@@ -5516,8 +5530,9 @@ Implementations that support conferencing MUST:
 - Publish bot media as decoded frames — PCM AudioChunk, raw VideoFrame —
   leaving encoding to the backend.
 - Where framework-mode recording is offered, record one attributed recording
-  per track — the bot's own included, unmixed — and stop it on the same
-  collection gate as transcription (Section 12.10.8).
+  per track — the bot's own included, unmixed — describing the format that
+  track actually carries, and stop it on the same collection gate as
+  transcription (Section 12.10.8).
 - Keep those recordings off the delivery path: write outside the frame
   callback, bound each track's write backlog, document what it discards and
   expose how much, and flush what is queued before finalizing (Section
@@ -5584,6 +5599,7 @@ RecordingTrack
 ├── participant_id: string | null     # Who published it
 ├── codec: string
 ├── sample_rate: int | null           # Audio
+├── channels: int | null              # Audio
 ├── width: int | null                 # Video
 └── height: int | null                # Video
 ```
@@ -5618,6 +5634,16 @@ call rather than assuming one.
 it is the recorder's only source for it: the interface carries no session and
 no direction. An implementation MUST populate it wherever the framework knows
 the publisher.
+
+**A track describes its own media.** `codec`, `sample_rate` and `channels`
+are how a recorder learns to interpret the bytes it is then handed: `on_data`
+carries none of it, and PCM in particular is indistinguishable from any other
+PCM by inspection. A caller MUST therefore describe what it will actually
+deliver rather than what the framework normally carries, and MUST NOT deliver
+media in a format other than the one it declared. The obligation is a caller's
+because the failure is silent: a recorder told 16-bit mono and handed stereo
+writes a file that opens, plays at the wrong speed, and reports no error at
+all. A recorder MAY refuse a declaration it cannot honour, and MUST say so.
 
 `storage` is an integrator-defined identifier resolved by the implementation
 at runtime, as in Section 12.3.7. Implementations MUST document which storage
