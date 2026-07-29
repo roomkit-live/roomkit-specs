@@ -2017,6 +2017,16 @@ resolution for them:
    `participant_id` names a Participant of the room whose `identification` is
    IDENTIFIED, the question has been answered and the answer is on the roster.
 
+Case 1 is not the conference alone. The test is where the `sender_id` comes
+from. A channel that reads it off the wire carries whatever the remote network
+put there, and is not this case. A channel the implementation itself names the
+sender of — an interactive terminal, whose sender is a Participant the
+implementation chose rather than a party that reached it from outside — is the
+same case as the conference, and declares it for the same reason. A channel
+whose `sender_id` is supplied by the integrator is neither: it may carry an
+address or it may not, which is why Section 11.4 leaves that one to
+configuration rather than to the channel.
+
 `PENDING` and `AMBIGUOUS` participants are deliberately not in case 2: a
 participant the room *has* is not a participant the room has *identified*, a
 resolver may still be what settles it, and the identity hooks of Section 11.2
