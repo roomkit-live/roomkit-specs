@@ -5080,6 +5080,7 @@ ConferenceBackend (interface)
 ├── subscribe_track(bot, track_id) → void
 ├── unsubscribe_track(bot, track_id) → void
 ├── publish_audio(bot, chunk: AudioChunk) → void
+├── stop_playback(bot) → void                      # Barge-in: discard queued bot audio
 ├── publish_video(bot, frame: VideoFrame) → void   # Requires VIDEO_PUBLISH
 │
 │   # Callbacks:
@@ -5171,6 +5172,33 @@ is deliberate: an encoded inbound frame is self-describing and the
 VideoPipeline decoder stage handles whatever arrives, whereas an encoded
 outbound frame requires choosing a codec the SFU will accept before any
 frame exists.
+
+**Stopping playback (normative):** `stop_playback()` is the barge-in
+gesture — the one call that says the room asked for silence *now*, rather
+than at the end of whatever the transport has buffered. A participant who
+cut the bot off is not asking for the queue to finish playing.
+
+- A backend MUST immediately discard the bot-track audio it has accepted
+  through `publish_audio()` but not yet delivered for playout. Audio that
+  has already left the backend — buffered in the SFU or at clients — is
+  beyond recall; a backend that queues locally SHOULD keep that queue
+  small enough that the residue still reads as responsive.
+- The call does NOT end the utterance. `is_final` remains the only
+  boundary (Section 12.10.4): the closing chunk still follows, and a
+  backend MUST accept it after the stop rather than treating the stop as
+  having closed the utterance itself.
+- The bot's track MUST remain usable: the next utterance publishes
+  normally.
+- A stop for a session the backend no longer holds — left, evicted,
+  dropped — is a no-op, not an error: the silence the call asks for is
+  already true of a session that is gone. This is deliberately unlike
+  `publish_audio`, which refuses media for a session that is out; a
+  refusal there protects a track from writes, and there is no track left
+  to protect.
+- There is deliberately no capability flag for this call. Every backend
+  can discard at least what it still holds, and one that holds nothing —
+  publishing synchronously into the SFU — simply returns. What varies
+  between backends is the residue, not the meaning of the call.
 
 **Track subscription:** the framework's subscription set is authoritative.
 `subscribe_track()` / `unsubscribe_track()` are the only mechanism by which
@@ -5535,9 +5563,22 @@ Every utterance the channel publishes MUST end with a chunk whose `is_final`
 is set, **including one cut short by a barge-in** (Section 12.10.5). This is
 what makes `is_final` a boundary a backend can rely on rather than a hint:
 without it, an interrupted utterance leaves the SFU believing the bot is
-still mid-sentence, with no cancellation in this interface to say otherwise.
-The closing chunk MAY carry no audio (`data` empty) — there is nothing left
-to play, only an end to declare — and backends MUST accept one.
+still mid-sentence. The closing chunk MAY carry no audio (`data` empty) —
+there is nothing left to play, only an end to declare — and backends MUST
+accept one.
+
+The closing chunk is a boundary, not a flush. An utterance cut short and
+one that ended by itself close identically, so a backend MUST NOT discard
+queued audio on `is_final` — a synthesizer whose real ending is already
+queued behind an empty final chunk would lose it. What silences the room is
+`stop_playback()` (Section 12.10.3): when an interruption lands, the
+channel MUST call it on the session the utterance is publishing on, so the
+audio the transport already holds is discarded rather than played out to
+the end of whatever buffer holds it. The call and the closing chunk are two
+different statements — the gesture that stops the sound, and the boundary
+that ends the turn — and the channel owes the backend both. No ordering is
+required between them: the closing chunk of an interrupted utterance
+carries nothing a flush could truncate.
 
 There is exactly one exception, and it is the end of the session rather than
 the end of an utterance: an utterance the channel abandons because it has
@@ -5585,8 +5626,11 @@ ConferenceInterruptionConfig
   pattern).
 
 Backchannel detection (Section 12.6) applies per track before
-interruption evaluation. `ON_BARGE_IN` fires with the interrupting
-participant identified.
+interruption evaluation. An interruption that lands is more than the chunk
+stream stopping: the channel calls `stop_playback()` so the audio the
+transport already holds is discarded instead of playing on over the
+participant (Sections 12.10.3 and 12.10.4). `ON_BARGE_IN` fires with the
+interrupting participant identified.
 
 #### 12.10.6 AI Participation Patterns
 
