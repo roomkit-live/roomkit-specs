@@ -5147,11 +5147,23 @@ close. That order faces both ways, and each direction carries an obligation.
 The channel's: `close()` MUST NOT wait without bound on anything the channel
 does not own. Its own media plane comes first — admission closed, playbacks
 stopped, the bot out of the conference, the backend closed — under bounded
-budgets throughout, and past them the bookkeeping is not the channel's to
-wait for. The framework closes channels in sequence, so a channel waiting
-without bound is not spending its own time: it is holding every channel
-behind it in its conference, which is the failure the budgets exist to
-prevent. For the same reason a channel whose `close()` fails MUST NOT
+budgets throughout, and the media calls are no exception: `leave()`, the
+backend's own close and a lane's recogniser all end in code the channel
+does not own, so each is cancelled past its budget, given a bounded grace
+to unwind, and then abandoned and reported rather than waited for again.
+Nothing an abandoned call was using is freed on its account, and past the
+budgets the bookkeeping is not the channel's to wait for either. The
+framework closes channels in sequence, so a channel waiting without bound
+is not spending its own time: it is holding every channel behind it in its
+conference, which is the failure the budgets exist to prevent.
+
+Failing to remove a session is failing to close. A session still on the
+channel's books when every step has run — a `leave()` the SFU refused, or
+one a budget had to cancel — MUST be raised, by name, at the very end of
+`close()`, not summarised into a log: a close that returns cleanly while a
+bot may still be listening to a meeting misstates the one thing the roster
+exists to answer. The channel goes on reporting the session, and removing
+it is an operator's task. For the same reason a channel whose `close()` fails MUST NOT
 prevent the channels after it from closing — and MUST NOT be reported as
 a success either. The failure is surfaced to the caller once the shutdown
 has run to completion: a channel that failed to close may still be
@@ -5169,6 +5181,19 @@ every channel's media is released, where a slow store costs the shutdown its
 latency and nothing else. There it is bounded by nothing, because there is
 no third option: giving up on the wait *is* releasing the resource under the
 operation.
+
+Two boundaries keep that promise finite. It covers the operations the
+framework and its channels start of their own accord — participant
+callbacks, roster bookkeeping, announcements — which never suspend in
+integrator code while holding the resources, so the wait terminates. An
+operation the *integrator* starts through the public API is the
+integrator's to order against `close()`, as with any resource-owning
+library: the framework does not hold its shutdown open for a call the
+caller left suspended across it. And the wait has an end: once it
+concludes, the resources are sealed. Work that was suspended somewhere the
+shutdown could not see — a callback parked in a backend past every closing
+budget — and that resumes afterwards MUST be refused with an error naming
+the shutdown, never run against a resource being released.
 
 **Admitting participants:** the channel exposes `mint_access()` for a
 participant of the room, applying `default_grants` unless the caller
