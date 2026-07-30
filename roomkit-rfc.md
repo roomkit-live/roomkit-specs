@@ -5110,6 +5110,35 @@ reports present forever and a conference that has silently lost its
 transcription; a backend that genuinely cannot observe the loss has
 nothing to report, and inherits that failure mode knowingly.
 
+The report is also the honest exit for a session whose *view* of the
+conference can no longer be trusted — an event bridge that overflowed, a
+state divergence the backend detects. A backend MUST NOT drop a
+participant or track lifecycle event silently: past whatever bound it
+keeps, it ends the session with a reason naming the loss instead. When
+the session being ended still has a live connection — an overflow is not
+a dropped link — the end MUST NOT be reported until the backend has
+actually disconnected it: the report empties the registry and seats a
+re-joined replacement, and issued early it puts two bots in one meeting.
+A session whose disconnect cannot be completed is kept — registered,
+reported present, refusing a replacement — and a later `leave()` retries.
+
+Such an end is a **reported discontinuity**, and this specification is
+explicit about what it does and does not recover. The events queued and
+undelivered at the end are discarded, counted, and named in the reason;
+the re-join's catch-up announces the conference's *current* state. What
+happened entirely inside the outage window — a participant who joined
+and left while the consumer was stalled — is not recoverable, by the
+catch-up or by anything else. The per-participant lifecycle obligations
+of this section apply to the events the backend delivered; across a
+reported discontinuity, an implementation with disclosure or admission
+obligations (Section 17.7) MUST treat the window as *unaccounted* rather
+than as observed-and-empty — the reason string is the signal to do so.
+
+A channel SHOULD attempt a bounded, backed-off re-join after any
+reported end while the room remains attached and collecting — the ended
+session was what received the frames and events, so nothing else can
+produce the lazy join's "next need".
+
 **Frame delivery requirements:**
 
 - `on_track_audio` MUST deliver decoded PCM as AudioFrames with a declared
@@ -5243,6 +5272,17 @@ and a second AI voice speaking the same deliveries — duplicates the
 roster, the transcript and the meeting have no way to express.
 Re-attaching the *same* conference channel is not a second conference; it
 remains an ordinary attach over a live attachment.
+
+The reservation outlives the binding. A detach removes the binding at its
+start and takes the bot out at its end, and a teardown can be deferred
+past the detach that asked for it — so a check that reads only the
+bindings admits a second conference while the first one's bot is still in
+the meeting. The refusal MUST therefore hold for as long as the previous
+conference channel still *holds* the room — a session active or on its
+books, a teardown still running — not merely while its binding exists.
+And it is a refusal, not a wait: the attach may be issued from inside the
+very announcement the teardown is deferred behind, where waiting is a
+deadlock. The caller retries once the teardown has ended.
 
 **Bot self-exclusion (normative):** the bot is itself a conference
 participant, and some backends report it back through
@@ -6774,9 +6814,14 @@ whatever applies to it:
   observable to integrator code.
 - Whether STT, vision, or recording is active on a conference MUST be
   observable at any time, not only at configuration time.
-- `ON_CONFERENCE_PARTICIPANT_JOINED` MUST fire for every human participant,
-  giving the integrator the point at which to announce an active bot,
-  gate entry on consent, or record that disclosure was made.
+- `ON_CONFERENCE_PARTICIPANT_JOINED` MUST fire for every human participant
+  the backend delivered, giving the integrator the point at which to
+  announce an active bot, gate entry on consent, or record that disclosure
+  was made. Across a *reported discontinuity* (Section 12.10.3) that
+  guarantee cannot reach the participants whose whole presence fell inside
+  the outage window: the discontinuity is the signal that the window is
+  unaccounted, and an integrator whose obligations require complete
+  attendance MUST treat it so rather than as observed-and-empty.
 
 Implementations SHOULD document this responsibility rather than assume a
 default. Deployments in regulated sectors typically do need visible bot
