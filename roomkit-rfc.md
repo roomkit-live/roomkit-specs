@@ -5096,6 +5096,32 @@ ConferenceBackend (interface)
 └── close() → void
 ```
 
+**Presence is observable only through a connection (normative):** the
+participant, track, audio and speaker callbacks describe a conference that
+a bot session of this backend is connected to. Before the first
+`join_as_bot()` — and between a reported end and a re-join — a backend is
+not required to deliver any of them, and against most SFUs it cannot: the
+server reports a room's events to the connections in it, and the framework
+does not hold one. A backend with a server-side view of its own — webhooks,
+a polling loop — MAY report presence for a room no session is connected to,
+but a channel MUST NOT depend on such reports for anything correctness
+rests on, the first join above all (Section 12.10.4): a channel whose only
+bootstrap is a presence callback waits on an event that only the join it
+is waiting to make would let the backend observe.
+
+What a newly joined session is owed is the present, not the past. A lazily
+joining bot enters a meeting already underway, and the participants and
+tracks it finds there may never have been reported — there was no
+connection to report them through. On `join_as_bot()`, a backend MUST
+therefore catch the channel up: every participant currently in the room
+and every track currently published that it has not already reported is
+delivered through the ordinary joined and published callbacks — the
+catch-up the reported-discontinuity rules below lean on. A backend that
+observed the room without a connection may have nothing left to say; one
+that could not observe it reports everything it finds. What ended before
+the join — an arrival that left again, a track unpublished — is not
+recoverable, exactly as across a reported discontinuity.
+
 **The bot's own connection (normative):** an SFU can end the bot's session
 without a `leave()` — the connection drops, a moderator evicts the bot, the
 room is deleted under it. A backend that observes such an end MUST report
@@ -5137,8 +5163,9 @@ than as observed-and-empty — the reason string is the signal to do so.
 
 A channel SHOULD attempt a bounded, backed-off re-join after any
 reported end while the room remains attached and collecting — the ended
-session was what received the frames and events, so nothing else can
-produce the lazy join's "next need".
+session was what received the frames and events, so no backend event can
+produce the lazy join's "next need"; a later mint or delivery could, but
+mid-meeting there may never be another of either.
 
 **Frame delivery requirements:**
 
@@ -5273,9 +5300,22 @@ ConferenceChannel
 
 1. When the channel is attached to a room, the channel MUST call
    `ensure_room()`. It SHOULD call `join_as_bot(room_id, bot_identity,
-   bot_grants)` lazily — when the first participant joins or the first
-   delivery occurs — and MUST fire `ON_SESSION_STARTED` and emit
-   `conference_started` once the bot connection is live.
+   bot_grants)` lazily — on the first successful `mint_access()`, the
+   first delivery, or the first participant or track event a backend able
+   to observe one reports — and MUST fire `ON_SESSION_STARTED` and emit
+   `conference_started` once the bot connection is live. Whatever the set
+   of triggers, it MUST include at least one signal that does not depend
+   on the backend's callbacks, and the first successful `mint_access()`
+   is that signal: presence is observable only through a connection
+   (Section 12.10.3), so a channel whose first join waits on an arrival
+   is waiting on a callback that only the join itself would unlock — the
+   bot never enters, and a meeting where humans speak and the AI is
+   meant to listen is never transcribed. A mint is the framework's own
+   advance notice that a human is about to connect, and it reaches the
+   channel without the backend's help. The join it starts MUST NOT delay
+   the mint's answer and MUST NOT fail the mint when the join itself
+   fails: the credential belongs to the participant regardless of
+   whether the framework got its own session into the room.
 2. `on_participant_joined` MUST create or update the corresponding Room
    Participant record (Section 5.5, correlated per Section 12.10.2) and
    fire `ON_CONFERENCE_PARTICIPANT_JOINED`.
