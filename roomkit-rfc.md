@@ -5139,6 +5139,37 @@ returns through a lane, the STT transcribes the AI's own speech, and the
 AIChannel answers itself — a feedback loop the chain depth limit (Section
 8.3) would only bound, not prevent.
 
+**Closing and shared state (normative):** a conference channel's bookkeeping
+lives in resources it does not own — the conversation store and the room lock
+manager belong to the framework, which releases them after the channels
+close. That order faces both ways, and each direction carries an obligation.
+
+The channel's: `close()` MUST NOT wait without bound on anything the channel
+does not own. Its own media plane comes first — admission closed, playbacks
+stopped, the bot out of the conference, the backend closed — under bounded
+budgets throughout, and past them the bookkeeping is not the channel's to
+wait for. The framework closes channels in sequence, so a channel waiting
+without bound is not spending its own time: it is holding every channel
+behind it in its conference, which is the failure the budgets exist to
+prevent. For the same reason a channel whose `close()` fails MUST NOT
+prevent the channels after it from closing — and MUST NOT be reported as
+a success either. The failure is surfaced to the caller once the shutdown
+has run to completion: a channel that failed to close may still be
+holding its media — a bot possibly still in a meeting, listening — and a
+shutdown that returns cleanly over that turns a logged error into an
+operational and disclosure risk.
+
+The framework's: `close()` MUST NOT release the store or the lock manager
+while an operation issued through them is still in flight. An operation a
+shared resource has been given cannot be taken back, and releasing the
+resource underneath it does not stop the work — it arranges a failure for a
+write that was already accepted. So the wait for such operations belongs to
+the owner of the resources, and it comes after every channel has closed and
+every channel's media is released, where a slow store costs the shutdown its
+latency and nothing else. There it is bounded by nothing, because there is
+no third option: giving up on the wait *is* releasing the resource under the
+operation.
+
 **Admitting participants:** the channel exposes `mint_access()` for a
 participant of the room, applying `default_grants` unless the caller
 overrides them. The integrator delivers the resulting ConferenceAccess to
