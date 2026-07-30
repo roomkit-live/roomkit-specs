@@ -397,6 +397,13 @@ SHOULD emit a framework event so the condition is observable — a room that has
 gone quiet because it closed is otherwise indistinguishable from one whose
 integration has broken.
 
+One exception, and only one: the framework's own record of the transition —
+the lifecycle hook, the framework event, and any timeline entry an
+implementation chooses to write to mark it — is produced by the transition
+itself rather than through the pipeline, and is not subject to this refusal.
+Closing a room MUST remain observable: a room that simply goes quiet, with no
+signal of why, is indistinguishable from one whose integration has broken.
+
 CLOSED and ARCHIVED refuse identically; they differ in intent. CLOSED is a
 conversation that has ended and that the integrator MAY reopen by returning
 the room to ACTIVE. ARCHIVED is a terminal storage state.
