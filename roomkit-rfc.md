@@ -5157,6 +5157,43 @@ framework closes channels in sequence, so a channel waiting without bound
 is not spending its own time: it is holding every channel behind it in its
 conference, which is the failure the budgets exist to prevent.
 
+There is one logical shutdown per channel. A `close()` that overlaps
+another MUST join the shutdown already running rather than start a second:
+concurrent callers await one shared attempt, and a caller being cancelled
+cancels only its own wait — never the shutdown, whose steps the other
+callers and the channel's own invariants still depend on. Once the
+shutdown reaches its terminal result, that result is the channel's answer
+for good: after a success, later calls MUST return immediately; after a
+failure, later calls MUST reproduce the same terminal failure rather than
+run the steps again. `close()` is a report of what the one shutdown
+achieved, not a retry of it — retrying what failed (removing a session an
+SFU refuses to release) is the operator's task the failure names.
+
+Departures are exact-once. A session has at most one `leave()` in flight,
+whatever path asked for it — a detach, an abandoned join, the channel's
+close: a path that finds a departure already running MUST join that
+attempt instead of issuing a second `leave()` for the same session. Two
+concurrent `leave()` calls for one session ask the backend to remove a
+participant twice, and whichever answer arrives second is about a session
+that no longer exists.
+
+An operation the shutdown abandons keeps what it was using. Every
+resource an abandoned operation holds — the backend under a `leave()`
+that swallowed its cancellation, the pipeline and recogniser under a
+lane's recogniser call, the recorder under a finalisation — MUST stay
+open until the operation has genuinely ended, however long past the
+budget that is; the resource is closed then, off the shutdown's clock.
+The current `close()` does not wait for it: the resource is reported as
+retained and the close fails explicitly, because a close that neither
+freed a resource nor said so has misreported the channel's state.
+
+A close has succeeded only when all of the following hold: no session
+remains on the channel's books; no operation the channel admitted is
+still running; every resource the channel owns is closed; and every
+failure met along the way was surfaced in the close's result rather than
+in a log alone. A close missing any of these MUST fail, whatever its
+steps individually reported.
+
 Failing to remove a session is failing to close. A session still on the
 channel's books when every step has run — a `leave()` the SFU refused, or
 one a budget had to cancel — MUST be raised, by name, at the very end of
