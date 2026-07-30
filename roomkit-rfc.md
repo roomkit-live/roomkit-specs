@@ -374,12 +374,41 @@ Room
 
 **RoomStatus** enumeration:
 
-| Value | Meaning |
-|---|---|
-| ACTIVE | Room is active; channels can send and receive |
-| PAUSED | Room is paused (e.g., after inactivity timer); can be resumed |
-| CLOSED | Room is closed; no new events accepted |
-| ARCHIVED | Room is archived; read-only historical access |
+| Value | Meaning | Accepts new events |
+|---|---|---|
+| ACTIVE | Room is active; channels can send and receive | Yes |
+| PAUSED | Room is paused (e.g., after inactivity timer); can be resumed | Yes |
+| CLOSED | Room is closed | **MUST be refused** |
+| ARCHIVED | Room is archived; read-only historical access | **MUST be refused** |
+
+A room's status governs whether it will accept another event, and
+implementations MUST enforce that at **every** point where the timeline can
+grow — an inbound message, direct injection (§10.5), a hook's injected event,
+and the framework's own re-injection alike. Enforcing it only where an
+inbound router happens to look is not conformant: a caller that names the room
+explicitly bypasses the router entirely, and so does the framework when it
+re-injects into a room it already knows.
+
+A refused event MUST NOT be appended to the timeline, MUST NOT be broadcast,
+and MUST NOT be stored as a `BLOCKED` event: a closed room accepts nothing,
+and an audit record written into it would be the very thing the status
+forbids. The framework MUST return a blocked result naming the refusal, and
+SHOULD emit a framework event so the condition is observable — a room that has
+gone quiet because it closed is otherwise indistinguishable from one whose
+integration has broken.
+
+CLOSED and ARCHIVED refuse identically; they differ in intent. CLOSED is a
+conversation that has ended and that the integrator MAY reopen by returning
+the room to ACTIVE. ARCHIVED is a terminal storage state.
+
+Reading is unaffected by status: history, participants and bindings remain
+readable at every status, and an implementation MUST NOT make a closed room
+unreadable.
+
+Closing a room does not, by itself, sever what is attached to it. Whether
+`close_room()` detaches channels, ends voice sessions or leaves them in place
+is an implementation's choice; what it MUST NOT do is leave a path by which a
+still-attached channel can append to the closed room.
 
 **RoomTimers:**
 
@@ -1298,6 +1327,22 @@ Implementations MUST enforce these rules:
    check the source binding's visibility and deliver only to channels included
    in the visibility rule.
 5. **Self-skip:** A channel MUST NOT receive its own events via `on_event()`.
+6. **A binding is never widened implicitly.** Wherever the framework creates a
+   binding from an existing one — sharing a channel into a delegated room
+   (§19), copying a template, re-attaching a channel it detached earlier — the
+   new binding MUST NOT grant more than the one it derives from. Carrying over
+   a binding's category and metadata while letting `access`, `visibility` and
+   `muted` fall back to defaults silently promotes a read-only observer into a
+   full participant, in a room the integrator never configured. Widening a
+   binding is an explicit act: it MUST come from an integrator call that says
+   so, never from a default filling a gap.
+7. **Attaching a channel is a decision, not a repair.** An implementation MAY
+   attach a channel automatically when a message arrives for a room the
+   channel is not yet bound to. It MUST NOT do so when the channel was
+   previously detached from that room, and MUST NOT use such an attach to
+   replace a binding that already exists — detaching is how an integrator
+   revokes a channel's access, and an automatic re-attach at default
+   permissions undoes exactly that.
 
 ---
 
@@ -1677,7 +1722,15 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   └── CHALLENGE_SENT → deliver challenge, block processing
    └── Stamp participant_id on event
 
-6. ACQUIRE ROOM LOCK
+6. ACQUIRE ROOM LOCK, THEN CHECK THE ROOM STILL ACCEPTS EVENTS
+   ├── Re-read the room's status under the lock (§5.1)
+   ├── If the status refuses new events (CLOSED, ARCHIVED):
+   │   └── Return InboundResult(blocked=true, reason=room_closed)
+   │       # Nothing is stored: a refused event is not appended to the
+   │       # timeline, not even as BLOCKED (§5.1)
+   └── Otherwise → continue
+       # Under the lock because close_room() takes the same one. Checked
+       # earlier, the answer can be stale by the time the event commits.
 
 7. IDEMPOTENCY CHECK
    ├── If idempotency_key exists and was seen → return blocked result
@@ -1905,7 +1958,35 @@ InboundRoomRouter (interface)
 1. Find the latest ACTIVE room where a participant with the same sender address
    is connected via the same channel type.
 2. If found → return that room.
-3. If not found → return null (framework creates a new room).
+3. Otherwise, if the channel is bound to exactly **one** ACTIVE room → return
+   that room.
+4. If not found → return null (framework creates a new room).
+
+Step 3 is what routes a channel dedicated to a single conversation, where no
+participant has spoken yet. It is deliberately narrower than "the channel is
+bound to some room".
+
+**A router MUST NOT guess.** When the inputs it was given match more than one
+ACTIVE room, it MUST return null rather than choose among them. Returning any
+one of several candidates delivers a message into a conversation it does not
+belong to, and — because the room it lands in is where the message is stored,
+broadcast to that room's channels, and read back as context by that room's
+agent — the disclosure is durable, not transient. Null is the safe answer: the
+framework creates a new room, which is recoverable, whereas a wrong room is
+not.
+
+This is not a hypothetical configuration. An implementation that lets a
+channel be shared across rooms (§19, delegation) creates it as a matter of
+course, and a channel re-attached after its room closed accumulates the same
+shape over time. An integrator whose deployment genuinely needs a shared
+channel routed by something else MUST name the room explicitly (§10.1 step 2)
+or supply a custom strategy.
+
+**Routing MUST be deterministic.** The same inputs against the same stored
+state MUST select the same room, whatever the storage backend. An
+implementation whose answer depends on insertion order in one store and on the
+query planner in another does not satisfy this, and its behaviour cannot be
+reasoned about from the specification.
 
 Implementations MUST allow integrators to provide a custom routing strategy.
 
@@ -7300,7 +7381,8 @@ The agent can then select and apply skills based on the user's request.
 
 A conforming implementation MUST support:
 
-- Room model with lifecycle (ACTIVE, PAUSED, CLOSED, ARCHIVED)
+- Room model with lifecycle (ACTIVE, PAUSED, CLOSED, ARCHIVED), including
+  refusing new events at every entry point once the status says so (Section 5.1)
 - Room timers (auto-pause, auto-close)
 - RoomEvent with all EventType values and all EventContent types
 - Sequential event indexing
