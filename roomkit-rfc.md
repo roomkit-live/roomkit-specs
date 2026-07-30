@@ -4729,12 +4729,13 @@ pipeline's `voice.pipeline.*` events.
 
 ### 12.10 Conference (SFU Orchestration)
 
-**Status: PROVISIONAL.** The interfaces in this section have been validated
-on paper against the published server APIs of multiple SFU implementations,
-but no production backend exists yet. Breaking revisions to this section are
-permitted until the first conforming SFU backend lands; afterward it follows
-normal stability rules. All other sections referencing conference concepts
-inherit this status for those references.
+**Status: STABLE.** The interfaces in this section were validated on paper
+against the published server APIs of multiple SFU implementations, then
+revised against the first conforming production backend (LiveKit) as its
+implementation landed — the revision window the PROVISIONAL status existed
+for, now closed. The section follows normal stability rules, and every
+other section referencing conference concepts follows them for those
+references too.
 
 A conference extends a Room with a multi-party real-time media session —
 audio, video, and screen share among N participants. The defining
@@ -5090,8 +5091,24 @@ ConferenceBackend (interface)
 ├── on_track_video(callback)            # (ConferenceTrack, VideoFrame)
 ├── on_active_speaker_changed(callback) # (room_id, participant_id)
 ├── on_connection_quality(callback)     # (room_id, participant_id, quality)
+├── on_bot_session_ended(callback)      # (BotSession, reason)
 └── close() → void
 ```
+
+**The bot's own connection (normative):** an SFU can end the bot's session
+without a `leave()` — the connection drops, a moderator evicts the bot, the
+room is deleted under it. A backend that observes such an end MUST report
+it through `on_bot_session_ended`, naming the session and a human-readable
+reason, MUST forget the session (a later `leave()` for it is a no-op), and
+MUST NOT accept further media calls for it. The channel MUST treat the
+report as the session's end in fact: the session comes off the books —
+`bot_present` stops answering yes for a connection that is gone —
+`conference_ended` is announced, the session's lanes are closed and its
+recordings finalized, and the next need re-joins lazily, exactly as the
+first one did. Without this report a dropped bot is a session the channel
+reports present forever and a conference that has silently lost its
+transcription; a backend that genuinely cannot observe the loss has
+nothing to report, and inherits that failure mode knowingly.
 
 **Frame delivery requirements:**
 
@@ -5216,6 +5233,16 @@ ConferenceChannel
    `conference_ended` **if a bot session is active** — the lazy join of
    step 1 may never have run — and MUST call `close_room()` when
    `close_room_on_detach` is set, whether or not a bot ever joined.
+
+**One conference per room (normative):** principle 2's mapping is 1:1 in
+both directions, and the attachment is where that is enforceable:
+implementations MUST refuse to attach a conference channel to a room that
+already has a channel of type CONFERENCE attached. A second conference
+channel is a second bot session, a second transcription of every utterance
+and a second AI voice speaking the same deliveries — duplicates the
+roster, the transcript and the meeting have no way to express.
+Re-attaching the *same* conference channel is not a second conference; it
+remains an ordinary attach over a live attachment.
 
 **Bot self-exclusion (normative):** the bot is itself a conference
 participant, and some backends report it back through
@@ -5892,7 +5919,8 @@ MediaRecordingConfig                  MediaRecordingResult
 ├── video_codec: string               ├── duration_seconds: float
 ├── video_fps: int                    ├── tracks: list<RecordingTrack>
 ├── audio_codec: string               ├── format: string
-└── audio_sample_rate: int            └── size_bytes: int
+├── audio_sample_rate: int            └── size_bytes: int
+└── metadata: map<string, any> = {}
 ```
 
 ```
