@@ -5298,6 +5298,16 @@ or appear to succeed — the `unmute_track()` rule, for the same reason. A
 backend MUST treat the grants it is given as the session's whole grant
 set, not a delta.
 
+`hidden` rides the grant set like every other field, and its two
+directions are not equals. A backend SHOULD deliver a session's
+hidden-to-visible transition to the clients already connected — LiveKit
+announces the participant to them as newly joined, which is the
+behaviour the channel's reveal path leans on (Section 12.10.4). No
+backend is expected to retract a participant its SFU already announced:
+there is no interface for un-telling a client, so the channel never
+asks — a visible-to-hidden transition replaces the session instead
+(Section 12.10.4).
+
 **Display names:** `mint_access()` MAY be given the participant's
 `display_name`, and a channel with a roster SHOULD pass the one on record.
 It is presentation, never identity: attribution rides `participant_id`
@@ -5800,6 +5810,59 @@ Explicit `bot_grants` are never rewritten by a plug or an unplug — the
 caller who set them took coverage on themselves (Section 12.10.3), and
 that holds at runtime exactly as at construction.
 
+**Runtime ownership of explicit grants (normative):** that the plugs
+never rewrite an explicit `bot_grants` does not make the grant set
+immutable — it makes it *owned*. The owner is the caller who set it, and
+implementations MUST give that caller a runtime operation that replaces
+the explicit grant set on a running channel, serialised with the plugs
+under the same configuration-change discipline. Replacing an explicit
+set with another explicit set carries the construction-time bargain
+forward unchanged: the caller took coverage of the configured needs on
+themselves, so a replacement that does not cover them — `subscribe`
+withdrawn under a plugged recognizer — is accepted exactly as
+construction would accept it, not refused. The coverage rule of this
+section binds *derived* grants only, at the setter as at the join.
+Replacing the explicit set with nothing returns the channel to
+derivation: from there the grants follow the configuration in force,
+exactly as on a channel that never had an explicit set — the round trip
+is available here as everywhere else in this section. Grants remain
+channel-wide in this revision, as the rest of the channel's
+configuration is; per-conference grants are not modelled. An explicit
+set still creates no need (step 1): a set on a channel with no consumer
+and no voice changes what the next session would be allowed, and joins
+nothing.
+
+The setter is an instruction, not a hint. Where the alignment a plug
+makes may leave a narrowing standing — an unused privilege traded for
+continuity — the setter's change MUST be applied in full: through
+`update_bot_grants()` where the backend declares BOT_GRANT_UPDATE, and
+by the announced re-join otherwise or when the in-place update fails,
+whatever the direction of the change. A privilege the caller asked to
+withdraw is not an unused privilege; it is an ignored order. A caller
+who prefers continuity to the change expresses that by not calling. An
+implementation MUST let the caller learn *before* calling whether the
+change will be applied in place or cost the event bridge a re-join —
+the capability is consultable on the backend, and the channel's
+disclosure surface SHOULD answer it directly.
+
+Visibility is the one grant the SFU's clients are told about, and it
+does not move symmetrically (verified against LiveKit): an SFU that can
+announce a newly visible participant to the clients already connected
+delivers a *reveal* in place, but no interface exists to un-tell them —
+a session re-hidden in place stays on the roster of every client that
+saw it. A hidden-to-visible transition is therefore applied like any
+other change: in place where the backend can (Section 12.10.3). A
+visible-to-hidden transition MUST be applied by replacing the session,
+whatever the backend's capabilities: the announced leave *is* the
+retraction, and it is the only one every backend can deliver.
+
+When a connected session's effective grants change — in place, or
+carried by the replacement session of the re-join — the implementation
+MUST emit `conference_bot_grants_changed` (Section 12.10.7): with an
+in-place update nothing else says anything happened, and the code that
+asked for the change and the code that renders the room are rarely the
+same component. A set that changes nothing emits nothing.
+
 The disclosure surface follows the configuration, not the constructor.
 Section 17.7 already requires that whether STT, vision or recording is
 active be observable at any time; with hot-plugging the *configured*
@@ -5955,6 +6018,7 @@ RealtimeBackend instead:
 | `conference_ended` | `leave()` completes on channel detach |
 | `conference_participant_joined` | A Participant record is created or reactivated from `on_participant_joined` |
 | `conference_participant_left` | `on_participant_left` is processed |
+| `conference_bot_grants_changed` | A connected session's effective grants changed (Section 12.10.4): replaced in place through `update_bot_grants()`, or carried in by the replacement session of the announced re-join. Carries `bot_session_id` and the session's `hidden` status |
 
 `conference_started` tracks the framework's own media presence, not the
 existence of the SFU room: `ensure_room()` MAY have run much earlier, and
@@ -7123,7 +7187,11 @@ that the framework give the integrator what it needs to comply with
 whatever applies to it:
 
 - The bot's presence, its `identity`, and its `hidden` status MUST be
-  observable to integrator code.
+  observable to integrator code — the status in force *on the session*,
+  not the one it was configured or admitted with: grants can change
+  while a session runs (Section 12.10.4), and a surface reporting the
+  construction answers a different question than the one a disclosure
+  obligation asks.
 - Whether STT, vision, or recording is active on a conference MUST be
   observable at any time, not only at configuration time.
 - `ON_CONFERENCE_PARTICIPANT_JOINED` MUST fire for every human participant
