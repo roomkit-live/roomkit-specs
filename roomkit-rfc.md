@@ -5973,13 +5973,12 @@ multi-speaker transcript.
 
 **Speech-to-speech (OPTIONAL).** A RealtimeVoiceProvider (Section 12.4)
 may be composed with a conference: subscribe to all AUDIO tracks, mix
-N→1 using the additive mixing algorithm of Section 12.7.5, feed the
-provider, and publish its audio output on the bot track. The *algorithm*
-is reusable; the AudioBridge interface is not (Section 12.10.10), and this
-specification defines no mixer provider interface — an implementation MAY
-factor one out privately. Per-speaker attribution is lost at the provider
-boundary; implementations SHOULD run per-track STT lanes in parallel when
-transcripts are required.
+N→1, feed the provider, and publish its audio output on the bot track.
+Section 12.10.12 specifies the composition — the mixing rule, where
+attribution ends, how the provider's voice meets the utterance contract,
+and how it crosses the interruption policy. Per-speaker attribution is
+lost at the provider boundary; implementations SHOULD run per-track STT
+lanes in parallel when transcripts are required.
 
 **Observer.** A bot joined with `bot_grants` set to subscribe-only and
 `hidden`, with STT lanes but no TTS — transcription, compliance
@@ -6215,8 +6214,8 @@ ConferenceTracks.
 
 #### 12.10.11 Conformance
 
-Conference support is part of **Conformance Level 3 (Real-Time Media)**,
-is OPTIONAL, and is PROVISIONAL (see status note above).
+Conference support is part of **Conformance Level 3 (Real-Time Media)**
+and is OPTIONAL. It is STABLE (see the status note above).
 
 Implementations that support conferencing MUST:
 
@@ -6285,8 +6284,155 @@ Implementations SHOULD:
 Implementations MAY:
 
 - Publish bot video (avatar embodiment, requires VIDEO_PUBLISH).
-- Compose speech-to-speech providers via N→1 mixing.
+- Compose speech-to-speech providers via N→1 mixing (Section 12.10.12).
 - Bridge SIP sessions into conferences.
+
+Implementations that compose speech-to-speech providers (Section
+12.10.12) MUST:
+
+- Feed the provider a single stream mixed per Section 12.7.5, and
+  forward no silence-only window.
+- Discard the provider's user-role transcriptions rather than store or
+  attribute them.
+- Emit the provider's final assistant transcriptions as RoomEvents
+  attributed to the channel, and never back into the conference's own
+  voice path.
+- Refuse a configuration holding both a synthesizer and a
+  speech-to-speech provider.
+- Publish provider audio under the utterance contract of Section
+  12.10.4, terminal chunk included.
+- Keep the per-lane VAD as the interruption sensor and enforce
+  ConferenceInterruptionConfig scope on it.
+- Run per-track VAD whenever a speech-to-speech provider is composed.
+
+#### 12.10.12 Speech-to-Speech Composition
+
+A conference MAY compose a RealtimeVoiceProvider (Section 12.4) as its
+intelligence: the participants' voices reach one realtime session, and
+the provider's voice is the bot's. This is the sub-second, natively
+turn-taking agent in a multi-party meeting — the speech-to-speech
+pattern of Section 12.10.6 — and it is OPTIONAL within Conformance
+Level 3. This section binds only implementations that offer it.
+
+The composition changes no boundary it crosses. The provider keeps the
+interface of Section 12.4 — one session, one audio input, no notion of
+a conference. The backend keeps the interface of Section 12.10.3 —
+tracks in, one bot track out. The channel between them keeps every
+contract of Sections 12.10.4 and 12.10.5. What this section specifies
+is the crossing itself.
+
+**N→1: the provider hears a mix (normative).** Implementations MUST
+feed the provider one stream mixed from every subscribed AUDIO track,
+using the additive algorithm of Section 12.7.5: samples promoted and
+summed per mixing window, headroom-scaled by the square root of the
+number of tracks contributing to that window, clamped back to the
+sample width. A track with no audio in the window contributes silence;
+a window to which no track contributed MUST NOT be forwarded. The
+mixed stream is resampled to the provider's declared input rate before
+it is sent.
+
+Routing the active speaker instead is not an admissible narrowing. It
+reads better on paper — the provider hears one clean voice — but
+ACTIVE_SPEAKER is an optional capability (Section 12.10.2), so the
+routing would not survive a backend change; the switch lands
+mid-syllable, so every hand-over chops a phoneme; and overlapping
+speech — the thing a meeting has that a 1:1 call does not — is audible
+in a mix and lost in a switch. The mix is the one complete signal every
+backend can produce. The mixer itself stays private: the *algorithm* of
+Section 12.7.5 is reusable, the AudioBridge interface is not (Section
+12.10.10), and this specification defines no mixer provider interface —
+an implementation MAY factor one out privately.
+
+**Attribution ends at the provider boundary (normative).** A mix
+carries no speaker identity, so nothing downstream of it can. The
+provider's user-role transcriptions MUST NOT be stored as RoomEvents
+and MUST NOT be attributed to a participant by inference — correlating
+them with active-speaker events or lane VAD timing is a guess wearing
+attribution's clothes, and principle 5 places identity on tracks
+precisely so that no component has to guess. Implementations MUST
+discard user-role transcriptions; they MAY surface them to
+observability, unattributed. The attributed transcript is the one the
+conference already has: per-track STT lanes (Section 12.10.4), running
+in parallel with the mix, each event carrying its speaker. A deployment
+that needs the meeting transcribed configures stt beside the provider;
+the two consume the same lanes and do not contend.
+
+The provider's assistant-role transcriptions are the other half, and
+they are kept: they are the only record of what the AI said, because
+no AIChannel generation stands behind this voice for the store to
+hold. Final assistant transcriptions MUST be emitted as RoomEvents
+attributed to the channel — no participant is their author — and MUST
+NOT be delivered back into the conference's own voice path: the words
+were already heard once, on the bot track.
+
+**One voice per bot (normative).** A channel MUST refuse a
+configuration holding both a synthesizer (tts) and a speech-to-speech
+provider, at construction and at the plugs alike. There is one bot
+track and one floor; two components that each answer the room would
+answer over each other, and no floor discipline turns two
+intelligences into one voice. A deployment that wants to trade the
+STT/TTS pattern for the realtime one does it through the plugs —
+unplug one, plug the other — and never holds both.
+
+**The provider's voice is an utterance (normative).** Provider audio
+reaches the conference through the outbound contract of Section
+12.10.4 unchanged: a response takes the floor and opens an utterance,
+its audio deltas are the utterance's chunks, and its end closes the
+utterance with `is_final` — as does a barge-in, and a leave abandons
+it with no terminal chunk, exactly as written there. One utterance at
+a time holds: a second response waits for the floor. BEFORE_TTS and
+AFTER_TTS do not fire — they are text-synthesis hooks and no text
+precedes this synthesis. ON_BARGE_IN fires as always, though its
+`interrupted_text` MAY be empty when the interruption lands before the
+first assistant transcript delta has arrived.
+
+**Interruption has one sensor and two effects (normative).** Section
+12.10.5 stays the policy authority, and the per-lane VAD stays its
+sensor: ON_BARGE_IN MUST identify the interrupting participant, and
+only track identity can — the provider's own speech detection hears
+the mix and can name no one, so it MUST NOT trigger the interruption
+path. An interruption that lands does what Section 12.10.5 says —
+`stop_playback()`, the latch, ON_BARGE_IN — and additionally SHOULD
+signal the provider to cancel the response in flight, where the
+provider can: cancellation is best-effort, since Section 12.4
+providers exist whose sessions cannot cancel a response, and it is
+`stop_playback()` that silences the room either way.
+
+The provider brings its own turn-taking, and the two authorities can
+disagree: a provider whose native detection halts generation on any
+speech in the mix will fall silent for a speaker the configured scope
+would not admit — no barge-in fires, the bot simply trails off.
+Implementations SHOULD align the provider's own interruption
+behaviour with the configured scope where the provider exposes it
+(Section 12.4 provider configuration), and MUST NOT substitute the
+provider's detection for the policy: scope enforcement,
+`stop_playback()` and ON_BARGE_IN remain the framework's, whatever the
+provider does with its generation.
+
+**The session follows the bot (normative).** One provider session
+serves one conference, scoped within the lifetime of the bot session
+whose track it speaks on. Speech-to-speech is a first need under
+Hot-plugging intelligence (Section 12.10.4): it consumes AUDIO tracks
+and it is a voice, so its derived grants carry both `subscribe` and
+`publish_audio`, and plugging and unplugging it follow every rule of
+that section — the occupancy probe re-runs at the plug, an occupied
+slot refuses a second provider, and unplugging the last need takes the
+bot out. Connecting the provider is lazy: the session is established
+when there is something for it to hear or say, and a connect failure
+MUST NOT fail the join or the plug, exactly as a lazy join's own
+failure does not (Section 12.10.4) — the configuration stands, and
+implementations SHOULD retry with a cooldown rather than on every
+mixing window. When the bot session ends — detach, unplug,
+backend-side loss, close — the provider session is disconnected with
+it.
+
+**The lanes stay on.** Composing a provider suspends none of the
+per-track machinery: VAD, speech edges, recording, and STT lanes where
+configured all run as before. The pipeline requirement of Section
+12.10.4 extends accordingly: a conference composing speech-to-speech
+MUST run per-track VAD even when no STT is configured — without it the
+interruption policy of Section 12.10.5 has no sensor, and the bot
+cannot be interrupted at all.
 
 ### 12.11 Room Media Recording
 
