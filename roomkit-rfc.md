@@ -5379,6 +5379,37 @@ ConferenceChannel
    over a running meeting leaves it unheard for as long as nobody new
    is admitted, and the unaccounted window of Section 17.7 stretches
    without bound.
+
+   The join exists for the intelligence. The bot's session is the
+   framework's media access (Section 12.10.1 principle 4): subscribed
+   tracks feed the pipelines through it, and the AI's voice is
+   published on it. First need is therefore only a need when something
+   configured on the channel consumes media — stt, vision, recording —
+   or can speak — tts. A channel configured with none of these MUST
+   NOT join on a mint, an arrival, or the occupancy probe, and SHOULD
+   NOT make the probe at all: the join is the only consequence a probe
+   can have. A delivery needs no guard of its own — without tts there
+   is nothing to speak it with. An explicit `bot_grants` creates no
+   need either: grants say what the SFU would let the bot do, not what
+   the channel was configured to do, and a session justified by its
+   privileges alone is a participant with no function — one server
+   connection per conference, an unexplained name on the meeting's
+   roster, and a Section 17.7 disclosure surface reporting a bot that
+   collects nothing. Everything that is not the join stands:
+   `ensure_room()` is still called, `mint_access()` still admits, and
+   the participant records of step 2 are still written — the channel
+   remains the room's admission gate and roster, which is exactly what
+   a pure-transport deployment asks of it. The price is stated rather
+   than hidden: the bot's connection is the event bridge (Section
+   12.10.3), so with a backend that observes presence only through a
+   connection, a conference this channel never joins produces no
+   participant, track, speaker or quality callbacks, and the
+   unaccounted window of Section 17.7 spans the whole meeting. An
+   integrator whose obligations require attendance MUST configure a
+   consumer or track attendance through its own client surface —
+   joining a bot with nothing to consume just to keep the callbacks is
+   the silent observer Section 17.7 exists to surface, and this
+   specification declines to make it a mode.
 2. `on_participant_joined` MUST create or update the corresponding Room
    Participant record (Section 5.5, correlated per Section 12.10.2) and
    fire `ON_CONFERENCE_PARTICIPANT_JOINED`.
