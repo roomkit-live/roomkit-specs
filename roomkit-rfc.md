@@ -5316,6 +5316,29 @@ ConferenceChannel
    the mint's answer and MUST NOT fail the mint when the join itself
    fails: the credential belongs to the participant regardless of
    whether the framework got its own session into the room.
+
+   The mint bootstraps a conference nobody has yet been admitted to; it
+   cannot resume one already underway. An attach can land over a live
+   conference — a channel restarted mid-meeting re-attaches above
+   participants an earlier life admitted — and every trigger above is
+   then out of reach: any re-join supervisor died with the process, no
+   callback can arrive without a connection, and the humans already in
+   the room may never mint again nor be delivered to. The trigger set
+   MUST therefore also cover the conference's present occupancy at
+   attach: after `ensure_room()`, the channel asks whether the
+   conference already holds participants other than its own bot —
+   `list_participants()` is the control-plane answer that requires no
+   connection (Section 12.10.3); a persistent roster whose conference
+   participants are still active MAY stand in for it or add to it — and
+   a non-empty answer is a first need like any other. The probe and the
+   join it may start MUST NOT delay the attach's answer, and their
+   failure MUST NOT fail an attach the backend accepted: the lazy join
+   remains behind them. Laziness is preserved — an empty conference
+   stays unjoined, and a room nobody confers in costs one control-plane
+   call per attach and nothing more. Without this trigger, a restart
+   over a running meeting leaves it unheard for as long as nobody new
+   is admitted, and the unaccounted window of Section 17.7 stretches
+   without bound.
 2. `on_participant_joined` MUST create or update the corresponding Room
    Participant record (Section 5.5, correlated per Section 12.10.2) and
    fire `ON_CONFERENCE_PARTICIPANT_JOINED`.
