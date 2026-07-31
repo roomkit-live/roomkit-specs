@@ -470,6 +470,7 @@ RoomEvent
 | PARTICIPANT_JOINED | Lifecycle | Participant entered the room |
 | PARTICIPANT_LEFT | Lifecycle | Participant left the room |
 | PARTICIPANT_IDENTIFIED | Lifecycle | Pending participant was identified |
+| PARTICIPANT_UPDATED | Lifecycle | Participant presentation changed (display name) |
 | CHANNEL_ATTACHED | Lifecycle | Channel was attached to room |
 | CHANNEL_DETACHED | Lifecycle | Channel was detached from room |
 | CHANNEL_MUTED | Lifecycle | Channel was muted |
@@ -725,6 +726,16 @@ Participant
 | UNKNOWN | No matching identity — may create new |
 | CHALLENGE_SENT | Verification challenge sent to participant |
 | REJECTED | Identity challenge failed or was rejected |
+
+**Renaming (normative):** a member's presentation can change while they are
+present — their display name above all. Implementations SHOULD provide an
+update operation (`rename_member`) that changes `display_name` in place,
+emits `PARTICIPANT_UPDATED` and fires `ON_PARTICIPANT_UPDATED`, so an
+interface reflecting the room learns of the change the same way it learned
+of the join. `id` and `identity_id` are not presentation and MUST NOT be
+changed through it: they are what attribution, correlation
+(Section 12.10.2) and moderation stand on. A rename that changes nothing
+is a no-op — no write, no event.
 
 ### 5.6 Identity
 
@@ -1504,11 +1515,12 @@ Planned rows are normative design intent for the named capability.
 | ON_PARTICIPANT_IDENTIFIED | ASYNC | Implemented | Participant identity resolved |
 | ON_PARTICIPANT_JOINED | ASYNC | Implemented | Explicit member join via `add_member` |
 | ON_PARTICIPANT_LEFT | ASYNC | Implemented | Explicit member leave via `remove_member` |
+| ON_PARTICIPANT_UPDATED | ASYNC | Implemented | Member presentation changed via `rename_member` |
 | ON_TASK_CREATED | ASYNC | Implemented | A task was created |
 | ON_DELIVERY_STATUS | ASYNC | Implemented | Delivery status webhook from provider |
 | ON_ERROR | ASYNC | Implemented | An error occurred in the pipeline |
-| ON_SPEECH_START | ASYNC | Implemented | Audio pipeline detected speech start (voice) |
-| ON_SPEECH_END | ASYNC | Implemented | Audio pipeline detected speech end (voice) |
+| ON_SPEECH_START | ASYNC | Implemented | Audio pipeline detected speech start (voice; per conference lane) |
+| ON_SPEECH_END | ASYNC | Implemented | Audio pipeline detected speech end (voice; per conference lane) |
 | ON_TRANSCRIPTION | SYNC | Implemented | After STT transcription (voice) — can modify |
 | BEFORE_TTS | SYNC | Implemented | Before TTS synthesis (voice) — can modify text/voice |
 | AFTER_TTS | ASYNC | Implemented | After TTS synthesis (voice) |
@@ -1572,6 +1584,7 @@ Planned rows are normative design intent for the named capability.
 | ON_CONFERENCE_TRACK_PUBLISHED | ASYNC | Implemented | Conference participant published a track (audio, video, screen share) |
 | ON_CONFERENCE_TRACK_UNPUBLISHED | ASYNC | Implemented | Conference track unpublished |
 | ON_ACTIVE_SPEAKER_CHANGED | ASYNC | Implemented | SFU reported a dominant-speaker change |
+| ON_CONNECTION_QUALITY_CHANGED | ASYNC | Implemented | SFU reported a participant's connection quality |
 | | | | |
 | **Other:** | | | |
 | ON_PLAN_UPDATED | ASYNC | Implemented | Orchestration plan was updated |
@@ -4815,6 +4828,7 @@ backend emits MUST carry the room it belongs to.
 ```
 ConferenceParticipant
 ├── participant_id: string
+├── display_name: string | null                 # Presentation, never identity
 ├── connected_at: datetime
 ├── tracks: list<ConferenceTrack>
 ├── metadata: map<string, any>                  # Provider-supplied participant attributes
@@ -5068,7 +5082,7 @@ ConferenceBackend (interface)
 ├── ensure_room(room_id, metadata) → void
 │       # Idempotent: create the conference room if absent
 ├── close_room(room_id) → void
-├── mint_access(room_id, participant_id, grants) → ConferenceAccess
+├── mint_access(room_id, participant_id, grants, display_name?) → ConferenceAccess
 ├── list_participants(room_id) → list<ConferenceParticipant>
 ├── remove_participant(room_id, participant_id) → void
 ├── mute_track(room_id, track_id) → void     # Moderation mute
@@ -5249,6 +5263,18 @@ included: a channel with nothing to consume the tracks it would receive
 subscribes to none (**Selective subscription**), and the grant is then
 permission to receive every participant's media for nobody to read.
 
+**Display names:** `mint_access()` MAY be given the participant's
+`display_name`, and a channel with a roster SHOULD pass the one on record.
+It is presentation, never identity: attribution rides `participant_id`
+alone, and a backend MUST NOT let a name stand in for it. A backend
+SHOULD carry the name into the credential so the SFU's own clients render
+the participant as the room named them, and SHOULD report it back on
+`ConferenceParticipant.display_name`. A channel SHOULD use a reported
+name to fill a roster record that has none — never to overwrite one the
+integrator set — which is what returns names to a roster rebuilt from the
+join's catch-up after a restart (Section 12.10.4 step 1): the credential
+outlives the process that minted it, and the name rides the credential.
+
 **Moderation:** `mute_track()` is always available. `unmute_track()` requires
 the REMOTE_UNMUTE capability; calling it on a backend without that
 capability MUST raise a configuration error rather than failing silently or
@@ -5353,6 +5379,13 @@ ConferenceChannel
    `conference_ended` **if a bot session is active** — the lazy join of
    step 1 may never have run — and MUST call `close_room()` when
    `close_room_on_detach` is set, whether or not a bot ever joined.
+
+The SFU's own signals about the conference are relayed on their hooks
+while the bot's session is connected: `on_active_speaker_changed` fires
+`ON_ACTIVE_SPEAKER_CHANGED` and `on_connection_quality` fires
+`ON_CONNECTION_QUALITY_CHANGED`, each naming the participant. Neither is
+collection — no media is read to relay them — so neither is gated by the
+binding's collection state.
 
 **One conference per room (normative):** principle 2's mapping is 1:1 in
 both directions, and the attachment is where that is enforceable:
@@ -5557,6 +5590,13 @@ Within a lane:
 - AGC and Denoiser MAY apply per lane.
 - `ON_TRANSCRIPTION` fires per lane; the hook context identifies the track
   and participant.
+- `ON_SPEECH_START` and `ON_SPEECH_END` fire per lane at the VAD's own
+  utterance boundaries, naming the publishing participant and track. They
+  are the real-time answer to "who is speaking right now": the
+  dominant-speaker signal cannot say that nobody is (its interface carries
+  one identity), and the transcription arrives only after the recognizer's
+  round trip. An unsubscribed track has no lane and therefore no speech
+  events — this is collection, and the binding's gate applies.
 
 **Lane isolation:** processing one track MUST NOT delay frame delivery for
 any other. A backend hands frames to its subscribers in sequence, so a lane
