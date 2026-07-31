@@ -5046,12 +5046,22 @@ than raised from the teardown.
 | CONNECTION_QUALITY | Per-participant quality reports |
 | VIDEO_PUBLISH | Bot can publish video tracks (avatar) |
 | REMOTE_UNMUTE | A moderator can unmute another participant's track |
+| BOT_GRANT_UPDATE | A connected bot session's grants can be changed in place |
 | E2EE | End-to-end encryption between clients |
 
 REMOTE_UNMUTE is a capability rather than an assumed operation because
 unmuting someone else's microphone is a privacy decision, not a technical
 one: SFUs commonly refuse it by default and require an explicit server-side
 opt-in. Muting is always available; unmuting is not.
+
+BOT_GRANT_UPDATE says the SFU can change what a *connected* session may
+do without reconnecting it — a server-side participant update (LiveKit's
+UpdateParticipant is the informative example). It is a capability because
+many SFUs can only set permissions at admission: against those, the one
+way to change a live bot's grants is to replace the session, and Section
+12.10.4 (**Hot-plugging intelligence**) specifies exactly that fallback.
+What the capability buys is continuity — a re-permission with the
+session, its subscriptions and the event bridge intact.
 
 **E2EE and framework media access (normative).** E2EE is the one
 capability that constrains rather than extends what the framework can do:
@@ -5093,6 +5103,7 @@ ConferenceBackend (interface)
 │   # Bot participant (framework media access):
 ├── join_as_bot(room_id, identity, grants) → BotSession
 ├── leave(bot) → void
+├── update_bot_grants(bot, grants) → void         # Requires BOT_GRANT_UPDATE
 ├── subscribe_track(bot, track_id) → void
 ├── unsubscribe_track(bot, track_id) → void
 ├── publish_audio(bot, chunk: AudioChunk) → void
@@ -5277,6 +5288,16 @@ included: a channel with nothing to consume the tracks it would receive
 subscribes to none (**Selective subscription**), and the grant is then
 permission to receive every participant's media for nobody to read.
 
+With BOT_GRANT_UPDATE, `update_bot_grants()` replaces a connected
+session's grants in place: same session, same connection, subscriptions
+and callbacks undisturbed — the SFU changes what the session may do,
+which is what lets a hot-plugged voice speak without a re-join (Section
+12.10.4, **Hot-plugging intelligence**). Calling it on a backend without
+the capability MUST raise a configuration error rather than fail silently
+or appear to succeed — the `unmute_track()` rule, for the same reason. A
+backend MUST treat the grants it is given as the session's whole grant
+set, not a delta.
+
 **Display names:** `mint_access()` MAY be given the participant's
 `display_name`, and a channel with a roster SHOULD pass the one on record.
 It is presentation, never identity: attribution rides `participant_id`
@@ -5409,7 +5430,11 @@ ConferenceChannel
    consumer or track attendance through its own client surface —
    joining a bot with nothing to consume just to keep the callbacks is
    the silent observer Section 17.7 exists to surface, and this
-   specification declines to make it a mode.
+   specification declines to make it a mode. The standing-down is a
+   state, not a sentence: the configuration it is read from can change
+   while the channel runs, and **Hot-plugging intelligence** (below) is
+   how a need arrives mid-meeting — bringing the join, the probe and the
+   grants with it.
 2. `on_participant_joined` MUST create or update the corresponding Room
    Participant record (Section 5.5, correlated per Section 12.10.2) and
    fire `ON_CONFERENCE_PARTICIPANT_JOINED`.
@@ -5692,6 +5717,96 @@ Subscription is re-evaluated when configuration changes at runtime: adding
 a VisionProvider to a live conference MUST subscribe the already-published
 video tracks, and removing the last consumer of a track MUST
 `unsubscribe_track()` it.
+
+**Hot-plugging intelligence (normative):** the configuration first need is
+read from — stt, tts, recording, and vision where an implementation
+carries it — is not fixed at construction. Implementations MUST let each
+be plugged into and unplugged from a running channel, as explicit
+per-kind operations rather than bare attribute assignment: a plug can put
+a bot into a live meeting and an unplug can take one out, and an
+operation with consequences of that order needs a surface whose refusals
+and effects have somewhere to land. This is principle 7 (Section 18)
+reaching the conference's intelligence, and it is the other half of the
+pure-transport contract of step 1: a meeting can begin purely human and
+gain its notetaker when the host asks for one — the explicit gesture a
+consent obligation wants (Section 17.7) — and lose it again the same
+way, without the channel being rebuilt around either.
+
+Plugging a need is a first need. The lazy-join triggers of step 1 answer
+"has the conference started to matter"; a plug answers "has the channel
+started to care", and the two compose: if the channel is attached and
+holds no session, the occupancy probe of step 1 MUST be re-run at the
+plug — the join is once more a consequence a probe can have, so the
+probe's justification returns with the need — and a conference already
+holding participants is joined at once. An empty conference stays
+unjoined: laziness is preserved, and the mint, delivery and arrival
+triggers stand ready as on any configured channel. The join a plug
+starts follows the discipline of every trigger before it: its failure
+MUST NOT fail the plug — the configuration stands, and the lazy join
+remains behind it. What a plug refuses, it refuses for the reasons
+construction does, held identically at runtime: the E2EE exclusions
+(Section 12.10.2) gate a plugged stt or recording exactly as a
+constructed one, and a recording plugged without a recorder is refused
+wherever it is asked. A plug into a slot already holding a provider MUST
+be refused rather than replace it: a swap of streaming intelligence is a
+teardown and a rebuild whatever single verb offers it, and the
+observation gap belongs in the open — unplug, then plug. Unplugging an
+empty slot is a no-op: the state the caller asked for already holds.
+Configuration changes are serialised per channel: implementations MUST
+NOT let two interleave, since everything below — the grants derived, the
+subscriptions re-evaluated, the join or leave decided — is read from the
+configuration as a whole.
+
+A plugged consumer reaches back. **Selective subscription**'s runtime
+clause is the mechanism: an stt or recording plugged mid-meeting MUST
+subscribe the already-published tracks it consumes, and their lanes open
+as for any subscription — the meeting is transcribed from the plug
+forward, not from the next publication. An unplug re-evaluates the same
+way: lanes close and tracks are unsubscribed when nothing else consumes
+them, recordings are finalized and announced exactly as a detach
+finalizes them, and an utterance in flight when the voice is unplugged
+is ended as a live conference ends one — `stop_playback()` and a
+terminal chunk (**One utterance at a time**), since the bot is still in
+the meeting and the turn genuinely ended. Who closes an unplugged
+provider follows the channel's one provider-ownership rule, the same
+that governs its `close()`.
+
+Unplugging the last need takes the bot out. A session kept past the last
+consumer and the last voice is the participant with no function step 1
+declines to admit — the silent observer of Section 17.7, now with a
+connection it was given back when it had a purpose — so the channel MUST
+leave, with `conference_ended` announced, and stand down exactly as a
+channel constructed pure-transport: triggers quiet, probe unmade, the
+admission gate and roster still on duty. The round trip is the point:
+transport-only to intelligent and back is a lifecycle the channel
+serves, not two deployments.
+
+The session's grants MUST cover the configured needs, at the join and
+across every change. Derived grants (Section 12.10.3, **Bot grants**)
+are derived from the configuration in force at the join, not at
+construction. A plug that widens what a live session must be able to
+do — a voice plugged onto a listening bot needs `publish_audio`; a
+consumer plugged onto a speaking bot needs `subscribe` — MUST bring the
+session's grants in line before reporting the plug complete: through
+`update_bot_grants()` where the backend declares BOT_GRANT_UPDATE — the
+session, its subscriptions and the event bridge all survive — and
+otherwise by re-joining, a `leave()` and a `join_as_bot()`, each
+announced as the session event it is, because a session the SFU will not
+re-permission can only be replaced. An unplug that narrows the needs
+SHOULD narrow the grants in place where the backend can, and MAY leave
+them standing where it cannot: an unused privilege against a cut in the
+event bridge is a trade this specification settles for continuity.
+Explicit `bot_grants` are never rewritten by a plug or an unplug — the
+caller who set them took coverage on themselves (Section 12.10.3), and
+that holds at runtime exactly as at construction.
+
+The disclosure surface follows the configuration, not the constructor.
+Section 17.7 already requires that whether STT, vision or recording is
+active be observable at any time; with hot-plugging the *configured*
+half of the answer moves too, and an implementation's surface MUST
+report the configuration in force, not the construction — a meeting that
+gained a transcriber mid-way reads as transcribed from that moment, and
+one that lost it reads as clean.
 
 **Outbound (deliver):**
 
