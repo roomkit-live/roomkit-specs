@@ -1583,6 +1583,8 @@ Planned rows are normative design intent for the named capability.
 | ON_CONFERENCE_PARTICIPANT_LEFT | ASYNC | Implemented | Participant left the conference media session |
 | ON_CONFERENCE_TRACK_PUBLISHED | ASYNC | Implemented | Conference participant published a track (audio, video, screen share) |
 | ON_CONFERENCE_TRACK_UNPUBLISHED | ASYNC | Implemented | Conference track unpublished |
+| ON_CONFERENCE_TRACK_MUTED | ASYNC | Implemented | Publisher muted their track — "camera off" included |
+| ON_CONFERENCE_TRACK_UNMUTED | ASYNC | Implemented | Publisher unmuted their track |
 | ON_ACTIVE_SPEAKER_CHANGED | ASYNC | Implemented | SFU reported a dominant-speaker change |
 | ON_CONNECTION_QUALITY_CHANGED | ASYNC | Implemented | SFU reported a participant's connection quality |
 | | | | |
@@ -5102,6 +5104,8 @@ ConferenceBackend (interface)
 ├── on_participant_left(callback)       # (room_id, ConferenceParticipant)
 ├── on_track_published(callback)        # (room_id, ConferenceTrack)
 ├── on_track_unpublished(callback)      # (room_id, ConferenceTrack)
+├── on_track_muted(callback)            # (room_id, ConferenceTrack)
+├── on_track_unmuted(callback)          # (room_id, ConferenceTrack)
 ├── on_track_audio(callback)            # (ConferenceTrack, AudioFrame)
 ├── on_track_video(callback)            # (ConferenceTrack, VideoFrame)
 ├── on_active_speaker_changed(callback) # (room_id, participant_id)
@@ -5240,6 +5244,16 @@ cut the bot off is not asking for the queue to finish playing.
   can discard at least what it still holds, and one that holds nothing —
   publishing synchronously into the SFU — simply returns. What varies
   between backends is the residue, not the meaning of the call.
+
+**Mute transitions (normative):** `ConferenceTrack.muted` is the
+publisher's own state, and a backend able to observe it change MUST keep
+the record true to it and SHOULD report each transition through
+`on_track_muted` / `on_track_unmuted`, with the record already updated
+when the callback runs. The transitions are presence, not media — most
+clients express "camera off" as a muted VIDEO track rather than an
+unpublish, so a mute is often the only signal a camera toggle produces —
+and they are subject to the same rule as every other callback here:
+observable only through a connection.
 
 **Track subscription:** the framework's subscription set is authoritative.
 `subscribe_track()` / `unsubscribe_track()` are the only mechanism by which
@@ -5382,10 +5396,15 @@ ConferenceChannel
 
 The SFU's own signals about the conference are relayed on their hooks
 while the bot's session is connected: `on_active_speaker_changed` fires
-`ON_ACTIVE_SPEAKER_CHANGED` and `on_connection_quality` fires
-`ON_CONNECTION_QUALITY_CHANGED`, each naming the participant. Neither is
-collection — no media is read to relay them — so neither is gated by the
-binding's collection state.
+`ON_ACTIVE_SPEAKER_CHANGED`, `on_connection_quality` fires
+`ON_CONNECTION_QUALITY_CHANGED`, and `on_track_muted` /
+`on_track_unmuted` fire `ON_CONFERENCE_TRACK_MUTED` /
+`ON_CONFERENCE_TRACK_UNMUTED` — each naming the participant, and the
+mute pair the track and its kind, since a muted VIDEO track is how most
+clients say "camera off". None of these is collection — no media is read
+to relay them — so none is gated by the binding's collection state, and
+the bot's own tracks are excluded exactly as they are from every other
+track event.
 
 **One conference per room (normative):** principle 2's mapping is 1:1 in
 both directions, and the attachment is where that is enforceable:
