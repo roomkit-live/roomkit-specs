@@ -1791,42 +1791,60 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   # After this transaction returns, the event is durably part of the
     │   # timeline. It MUST NOT be retroactively re-marked BLOCKED or FAILED
     │   # (e.g. by process_timeout, §13.6) — the timeline is authoritative.
+    │   # No separate, non-atomic room-state write ever follows this commit:
+    │   # the timeline and the counters can never diverge (§14.3).
     ├── Deliver any injected events
     ├── IF message.session is set:
     │   └── Call channel.connect_session(session, room_id, binding)
     │       # Connects the voice session (starts realtime AI, etc.)
-    └── Call broadcast(event, source_binding, context)   # POST-COMMIT
+    └── PLAN BROADCAST — resolve the event's delivery set under the lock:
+        └── Eligible target bindings (access, mute, visibility — §7) and
+            their capability snapshot, appended to the room's delivery
+            lane (§10.2). Planning reads bindings under the lock, so the
+            target set is consistent with the committed timeline;
+            EXECUTION does not require the lock.
 
-13. REENTRY DRAIN LOOP
-    ├── Collect response events from broadcast
-    ├── For each response event:
-    │   ├── Commit atomically (same commit point as step 12): assign index,
-    │   │   store DELIVERED, bump room counters — one logical transaction
-    │   ├── Check chain_depth < max_chain_depth
-    │   │   └── If exceeded → block (status=BLOCKED), emit framework event
-    │   ├── Broadcast response event
-    │   └── Collect further responses → queue for next iteration
-    └── Repeat until no more responses
+13. RELEASE ROOM LOCK
+    # The lock covers steps 6–12: room-status gate, idempotency, index
+    # assignment, hooks, permission, commit, broadcast planning. External
+    # delivery executes outside it (§10.2 delivery lanes) — a slow
+    # provider MUST NOT extend the room's critical section (§13.5).
 
-14. PERSIST SIDE EFFECTS
+14. EXECUTE DELIVERY LANE (§10.2) — per-room FIFO, after lock release:
+    ├── An event's delivery set MUST complete before the next event's
+    │   begins — per room, in index order. Executing delivery under the
+    │   room lock (the pre-lane behavior) trivially satisfies this
+    │   ordering and remains conformant.
+    ├── Each target: transcode → rate limit → on_event() / deliver()
+    │   with per-operation timeouts (§10.2)
+    └── REENTRY: response events emitted here (intelligence channels)
+        re-enter the pipeline's locked section (steps 6–12) as new
+        passes — each response takes the room lock for ITS OWN commit
+        (index assignment, chain depth §8.3, the same atomic shape as
+        step 12), and its delivery set joins the same lane in FIFO order.
+        # Relaxation vs pre-lane implementations: a concurrent inbound
+        # event MAY commit between a trigger and its response. Ordering
+        # guarantees are per-room index monotonicity and parent linkage —
+        # never timeline adjacency.
+
+15. PERSIST SIDE EFFECTS
     └── Store all tasks and observations from hooks + channels
 
-15. FINALIZE
-    └── Room counters (latest_index, event_count) and timers.last_activity_at
-        were already updated atomically with each event's DELIVERED commit
-        (steps 12–13). No separate, non-atomic room-state write occurs here —
-        the timeline and the counters can never diverge (§14.3).
+16. RUN AFTER_BROADCAST ASYNC HOOKS
+    └── After the event's delivery set completes — "all channels have
+        processed the event" (§9.2) is unchanged; only the timing may be
+        later than under pre-lane implementations. Non-blocking,
+        exceptions swallowed (§9.3) — a slow observer hook MUST NOT hold
+        the room lock.
 
-16. RELEASE ROOM LOCK
-
-17. RUN AFTER_BROADCAST ASYNC HOOKS
-    └── Dispatched after the lock is released; non-blocking, exceptions
-        swallowed (§9.3) — a slow observer hook MUST NOT hold the room lock
-
-18. EMIT FRAMEWORK EVENTS
+17. EMIT FRAMEWORK EVENTS
     └── event_processed, delivery_succeeded/failed, etc.
 
-19. RETURN InboundResult
+18. RETURN InboundResult
+    └── The caller observes its event's delivery-set completion, so
+        delivery_results reports executed deliveries. An implementation
+        MAY additionally offer detached completion; the outbox model
+        (§13.6) then governs crash recovery.
 ```
 
 **InboundResult:**
@@ -1846,6 +1864,20 @@ The broadcast pipeline routes an event to all eligible channels in a room.
 ```
 broadcast(event, source_binding, context) → BroadcastResult
 ```
+
+**Planning vs execution — delivery lanes.** Broadcast splits at the room
+lock boundary (§10.1 steps 12–14). *Planning* — resolving the delivery set
+(steps 1–2 below) — MUST run under the room lock, against binding state
+consistent with the committed timeline. *Execution* — the per-target work of
+step 3 — is NOT required to hold the room lock; it MUST instead preserve
+**per-room order**: events execute their delivery sets in index order, one
+event's set completing before the next event's begins (a *delivery lane*
+per room). Executing under the room lock trivially satisfies this ordering
+and remains conformant — the lane model exists so that a slow provider or a
+long AI generation does not extend the room's critical section (§13.5),
+which is what serializes multi-process deployments. Response events
+re-enter the pipeline as their own commit passes (§10.1 step 14) rather
+than being drained inside the trigger's lock tenure.
 
 **Step-by-step:**
 
@@ -2021,11 +2053,12 @@ message (e.g., from a REST API or MCP tool call):
 send_event(room_id, channel_id, content, event_type, ...) → RoomEvent
 ```
 
-The injected event traverses the SAME locked pipeline as an inbound message
+The injected event traverses the SAME pipeline as an inbound message
 (Section 10.1): index assignment, BEFORE_BROADCAST hooks, the source
-write-permission gate, EDIT/DELETE handling, persistence, broadcast, the
-reentry drain, and AFTER_BROADCAST hooks. A blocking hook therefore yields a
-`BLOCKED` event and suppresses delivery, exactly as for an inbound message.
+write-permission gate, EDIT/DELETE handling, persistence and broadcast
+planning under the room lock, then its delivery lane, reentry passes, and
+AFTER_BROADCAST hooks. A blocking hook therefore yields a `BLOCKED` event
+and suppresses delivery, exactly as for an inbound message.
 
 ---
 
@@ -6644,6 +6677,17 @@ All event processing within a room MUST be serialized. Implementations MUST
 provide a locking mechanism that prevents concurrent processing of events in
 the same room.
 
+**Serialization scope.** The room lock MUST cover the locked pre-commit
+section, the commit point, and broadcast planning (§10.1 steps 6–12):
+everything that reads room state to decide, assigns the index, writes the
+timeline, or resolves the delivery set. External delivery execution (§10.2 step 3) is
+NOT required to run under the room lock — it MUST preserve per-room order
+(the delivery lane, §10.2), which holding the lock trivially satisfies.
+Implementations SHOULD NOT extend the room's critical section with external
+I/O (provider calls, AI generation): under a distributed lock manager, lock
+tenure is what serializes the whole deployment, and every await spent under
+the lock is paid by every other worker waiting on that room.
+
 ```
 RoomLockManager (interface)
 ├── acquire(room_id) → lock
@@ -6681,8 +6725,9 @@ transaction that stores the event as DELIVERED and updates the room counters:
   subsequent broadcast in a single cancellable unit whose expiry could leave a
   committed event reported as blocked/failed.
 
-- **Post-commit phase** (§10.1 steps 12–13: broadcast, reentry drain,
-  external delivery). Slowness here MUST NOT invalidate the committed event.
+- **Post-commit phase** (§10.1 steps 14–17: delivery-lane execution,
+  reentry passes, side effects, async hooks). Slowness here MUST NOT
+  invalidate the committed event.
   Bound external delivery with **per-operation** timeouts (§10.2) and report
   failures per channel via `delivery_failed` framework events — never by
   changing the source event's status or the returned result to blocked/failed.
@@ -8018,7 +8063,7 @@ A conforming implementation MUST support:
 - Event chain depth tracking and limiting
 - Inbound processing pipeline (Section 10.1)
 - Broadcast pipeline (Section 10.2)
-- Reentry drain loop
+- Reentry passes (response events re-enter the pipeline as commit passes)
 - Inbound room routing (pluggable)
 - Room-level locking
 - ConversationStore interface with in-memory implementation
