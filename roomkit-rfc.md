@@ -6771,6 +6771,23 @@ ConversationStore (interface)
   commit point (§13.6) MUST NOT alter the event's committed status.
 - Idempotency key checks MUST be performed under the room lock.
 
+### 14.4 Returned-Object Ownership
+
+- Committed events are immutable (§4). An event object returned by a read
+  (`get_event`, `list_events`, conversation reads) is a snapshot of the
+  committed record: the caller MUST treat it as frozen and MUST NOT mutate
+  it. A store MAY return the same object to multiple readers (an in-memory
+  store sharing its stored objects) or a fresh object per read (a SQL store
+  deserialising rows) — both are conformant, and a portable caller can rely
+  on neither aliasing nor isolation.
+- A store MUST own its stored representation from the moment a write
+  returns: a caller's later mutation of an object it passed to `add_event` /
+  `update_event` MUST NOT alter stored state (copy-in and serialisation both
+  satisfy this).
+- Rooms, bindings and participants returned by reads are caller-owned:
+  mutating a returned object MUST NOT affect stored state — changes are
+  applied through the write interface.
+
 ---
 
 ## 15. Observability
