@@ -1314,6 +1314,11 @@ binding as a string value:
 | `"channel_a,channel_b"` | Comma-separated list of specific channel IDs |
 | `"channel_a"` | Single channel ID |
 
+"See" is not "be delivered to". `"none"` reads *stored in timeline only*, and it
+means it: an event a channel was not allowed to see at delivery MUST NOT reach
+that channel later through history the framework rebuilds for it either. Rule 8
+in §7.5 states that half.
+
 ### 7.4 Named Patterns
 
 These are vocabulary for common configurations, NOT framework concepts. The
@@ -1362,6 +1367,41 @@ Implementations MUST enforce these rules:
    replace a binding that already exists — detaching is how an integrator
    revokes a channel's access, and an automatic re-attach at default
    permissions undoes exactly that.
+8. **Reconstructed context obeys the same rule as delivery.** Rule 1 governs
+   `on_event()`; this one governs everything the implementation rebuilds from
+   the timeline *for* a channel — the history handed to a memory provider, the
+   turns assembled into a model prompt, any per-channel replay of what was said.
+   A channel MUST NOT obtain there an event visibility withheld from it at
+   delivery. Withholding an event at broadcast and returning it one turn later
+   as context is not a partial enforcement of visibility; it is none.
+
+   The filter is per reader, so it MUST be applied where the reader is known —
+   a single `RoomContext` shared by every channel of a broadcast cannot be
+   filtered once for all of them. An implementation MUST apply it before the
+   history reaches a component that can transform it (a summarizing or
+   compacting memory provider re-emits hidden content as a summary otherwise),
+   and SHOULD expose the per-reader view so host code can ask for it.
+
+   Three points the rule does NOT cover:
+
+   - **A channel always sees its own events.** Rule 5 skips a channel's own
+     event at delivery because it produced it, not because it may not know it.
+     A rule that dropped an agent's own turns from its own prompt would erase
+     the assistant pattern of §7.4 (`visibility="ws_advisor"`) from the inside.
+   - **Host code reads the timeline whole.** Hooks, scorers and framework
+     machinery run in the integrator's process and hold the store already;
+     filtering their `recent_events` would forbid nothing and would break
+     legitimate readers. Visibility is a rule between the room and its
+     channels.
+   - **Visibility is a live property of the binding.** An implementation that
+     resolves a source's visibility from its binding at read time MUST accept
+     that widening a binding widens its past too, and MUST document it. One
+     that stamps the effective visibility onto the event at commit gets a
+     replay-stable answer instead. Either is conformant; the choice MUST be
+     stated. When the source binding no longer exists, the event's own
+     `visibility` field is the whole answer — an implementation MUST NOT treat
+     an unresolvable source as a reason to hide ordinary history, which would
+     empty a room's context the moment a transport detaches.
 
 ---
 
@@ -7863,6 +7903,13 @@ MemoryProvider (interface)
 └── close() → void
         # Release resources
 ```
+
+A provider is handed history, it does not fetch it: the `context` it receives
+MUST already be the requesting channel's view of the room (§7.5 rule 8). Making
+each provider apply the visibility filter itself would put the rule in seven
+places and leave every third-party provider outside it; making the caller apply
+it once puts it in one, and a provider that summarizes what it is given can then
+never summarize something the channel was not allowed to read.
 
 ### 20.2 MemoryResult
 
