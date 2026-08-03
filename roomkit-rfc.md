@@ -443,6 +443,7 @@ RoomEvent
 ├── status: EventStatus                     # Delivery outcome
 ├── blocked_by: string | null               # Hook name if blocked
 ├── visibility: string                      # Who can see this event
+├── addressed_to: list<string> | null       # Intelligence channels asked to act (§19.3)
 ├── index: int >= 0                         # Sequential position in room timeline
 ├── chain_depth: int >= 0                   # Response chain depth (loop prevention)
 ├── parent_event_id: string | null          # Event this is responding to
@@ -1903,6 +1904,7 @@ than being drained inside the trigger's lock tenure.
    │      └── Truncate text if target.capabilities.max_length exceeded
    │
    ├── c. CALL on_event() (all readable channels)
+   │      ├── Intelligence channels: only those solicited (§19.3)
    │      └── Collect ChannelOutput (response events, tasks, observations)
    │
    ├── d. CALL deliver() (transport channels only)
@@ -1938,6 +1940,15 @@ BroadcastResult
 ├── blocked_events: list<RoomEvent>             # Chain-depth-blocked events
 └── errors: map<string, string>                 # Per-channel error messages
 ```
+
+**Solicitation.** Step 3c asks a channel to act. For transport channels that
+is unconditional; for intelligence channels the set is narrowed by the
+event's address and by the room's agent-response policy (§19.3). Narrowing
+solicitation MUST NOT narrow *visibility*: the two filters are independent,
+and an event hidden from a channel by §7.3 is hidden whether or not it was
+addressed to it. Whether an unsolicited intelligence channel is nevertheless
+called at step 3c — delivered without being asked — is left to the
+implementation by this version (§19.3.2).
 
 ### 10.3 Edit and Delete Processing
 
@@ -7540,7 +7551,8 @@ configuration container for speech-to-speech channels (voice, greeting, language
 metadata). A null provider MUST be accepted — no generation calls are made.
 
 Multiple Agents MAY be attached to a single room. The orchestration system
-determines which Agent handles each event.
+determines which Agent handles each event, unless the event names its
+recipients itself (§19.3).
 
 ### 19.2 ConversationState
 
@@ -7557,7 +7569,91 @@ ConversationState
 Phase transitions MUST be explicit — either via handoff or programmatic update.
 The framework fires `ON_PHASE_TRANSITION` hooks on state changes.
 
-### 19.3 ConversationRouter
+`active_agent_id` MAY be written by the host, not only by a handoff: a
+console that switches which agent it is talking to is a legitimate writer of
+this field. Implementations SHOULD expose a supported way to set it —
+reaching into room metadata from application code is not one.
+
+### 19.3 Addressing
+
+Routing rules answer *which agent handles this kind of event*. Addressing
+answers a different question, asked per message by whoever sends it:
+**which agents are being asked to act, right now**. A room where a human
+types `@codex review hello.py` needs the second question, and no rule
+expresses it.
+
+An event MAY carry an address:
+
+```
+RoomEvent
+└── addressed_to: list<channel_id> | null    # null = unaddressed
+```
+
+**Addressing is not visibility.** Visibility (§7.3) is configured on a
+binding and answers who may *see* what a source produces. Addressing is set
+on an event by its sender and answers who is *asked to act*. The two are
+orthogonal: addressing one agent MUST NOT hide the event from any channel
+visibility would have shown it to.
+
+Normative rules:
+
+1. Addressing constrains **intelligence** channels only. Delivery to
+   transport channels MUST NOT be affected — a message addressed to one
+   agent still reaches the humans in the room.
+2. When `addressed_to` is non-null, the channels it names are the only
+   intelligence channels solicited for that event. Named ids not bound to
+   the room are ignored; if none of them is bound, no intelligence channel
+   is solicited.
+3. An empty list addresses nobody: the event is stored and delivered, and no
+   agent is asked to respond.
+4. `addressed_to` is part of the stored event, so a transcript can show who
+   was asked and a replay reproduces the same solicitation.
+
+**Unaddressed events** (`addressed_to = null`) keep the behaviour of earlier
+versions: the router decides (§19.4), and with no router installed every
+eligible intelligence channel is solicited.
+
+**Conformance.** Addressing itself is Level 0 — the field exists on every
+event and MUST be honoured when set, which an implementation without
+intelligence channels satisfies trivially. The router precedence (§19.4,
+step 0) and the named policies below belong to Level 2 with the rest of this
+section.
+
+#### 19.3.1 Agent-sourced events
+
+An agent's own output is an event like any other, and by default it solicits
+the other agents in the room — the chaining Appendix B.4 describes, bounded
+by `max_chain_depth`. That is a feature for a pipeline (analyst → writer)
+and a hazard for a room of independent agents, where two agents answer each
+other until the depth limit stops them.
+
+Implementations MUST provide both policies, selectable per room:
+
+| Policy | An agent's output solicits |
+|---|---|
+| `AGENT_CHAIN` | every eligible intelligence channel — the behaviour of earlier versions |
+| `ADDRESSED_ONLY` | only the channels named in `addressed_to`, if any |
+
+`AGENT_CHAIN` MUST remain the default, so a room written against an earlier
+version behaves unchanged. Under either policy an explicit address is
+honoured: an agent MAY address another agent and be answered by it alone.
+
+#### 19.3.2 Delivered versus solicited
+
+A channel that is not solicited MUST NOT be asked to produce a response.
+Whether it is nonetheless *delivered* the event — told that it happened,
+without being asked to answer — is **not specified by this version**;
+implementations MAY skip such a channel entirely.
+
+The distinction is not academic. An agent whose context is rebuilt from the
+room's timeline on every turn loses nothing by being skipped. An agent that
+owns conversational state outside RoomKit — an ACP coding agent holding a
+session in its own process — permanently lacks whatever it was not
+delivered, so the two behaviours produce materially different rooms. A
+future amendment will specify this; until then an implementation MUST
+document which behaviour it provides.
+
+### 19.4 ConversationRouter
 
 The `ConversationRouter` selects which Agent processes each event. It is
 installed as a `BEFORE_BROADCAST` sync hook.
@@ -7591,17 +7687,25 @@ RoutingConditions
 
 **Evaluation order:**
 
+0. If the event is addressed (§19.3), the address decides. The router MUST
+   NOT override it, and steps 1–3 are skipped.
 1. If `ConversationState.active_agent_id` is set and no phase transition
    occurred, route to the active agent (sticky affinity).
 2. Evaluate rules in priority order. First matching rule wins.
 3. If no rule matches, use `default_agent_id`.
 4. If `supervisor_id` is set, the supervisor ALWAYS receives the event
-   (in addition to the selected agent).
+   (in addition to the selected agent, or to the addressed channels).
+
+Step 0 exists because sticky affinity would otherwise swallow every explicit
+request. With the active agent consulted first, a rule written to honour an
+address is unreachable for as long as any agent holds the conversation — the
+two mechanisms could not coexist. An address is a direct instruction from
+the sender and outranks both the affinity and the rules.
 
 The router stamps routing metadata on the event. The Event Router skips
 non-targeted intelligence channels during broadcast.
 
-### 19.4 ConversationPipeline
+### 19.5 ConversationPipeline
 
 A `ConversationPipeline` generates `RoutingRule` entries from a linear stage
 definition:
@@ -7632,7 +7736,7 @@ The pipeline generates one `RoutingRule` per stage with
 - Any phase in `stage.can_return_to` (backward/lateral)
 - Transitions to other phases MUST be rejected.
 
-### 19.5 HandoffHandler
+### 19.6 HandoffHandler
 
 Agents request handoffs by calling the `handoff_conversation` tool:
 
@@ -7677,12 +7781,12 @@ HandoffResult
 The handoff summary is injected into the target agent's context so it
 has continuity.
 
-### 19.6 Orchestration Strategies
+### 19.7 Orchestration Strategies
 
 The following strategies are common patterns built on router and pipeline
 primitives. Implementations SHOULD provide helpers for each.
 
-#### 19.6.1 Pipeline
+#### 19.7.1 Pipeline
 
 Agents are chained linearly. Each agent handles one phase and hands off to
 the next:
@@ -7694,7 +7798,7 @@ Triage → Specialist → Resolution → Closing
 The first agent is the entry point. Only forward transitions (and explicitly
 allowed backward transitions) are permitted.
 
-#### 19.6.2 Swarm
+#### 19.7.2 Swarm
 
 Every agent can hand off to every other agent. No linear ordering. Useful
 for collaborative agent pools where any agent may be most appropriate:
@@ -7706,7 +7810,7 @@ Agent A ⇄ Agent B ⇄ Agent C
 Sticky affinity keeps the conversation with the current agent until an
 explicit handoff occurs.
 
-#### 19.6.3 Supervisor
+#### 19.7.3 Supervisor
 
 A supervisor agent talks to the user and delegates work to specialist agents.
 Specialists run in isolated **child rooms** — their output is collected and
@@ -7721,12 +7825,12 @@ User ↔ Supervisor
 The supervisor MAY delegate sequentially or in parallel. Results are delivered
 back via the delivery strategy system (Section 23).
 
-#### 19.6.4 Loop
+#### 19.7.4 Loop
 
 A single agent handles the conversation indefinitely, looping back for
 refinement. Useful for iterative workflows (editing, code review, tutoring).
 
-### 19.7 StatusBus
+### 19.8 StatusBus
 
 The `StatusBus` enables inter-agent coordination through status messages:
 
@@ -8071,6 +8175,7 @@ A conforming implementation MUST support:
 - Framework events (Section 8.2)
 - Structured logging
 - Idempotency checking
+- Event addressing: `RoomEvent.addressed_to`, honoured when set (Section 19.3)
 
 ### 25.2 Level 1: Transport (RECOMMENDED)
 
@@ -8109,7 +8214,9 @@ A Level 2 implementation MAY additionally support:
 - Realtime/ephemeral events backend
 - Per-room hooks
 - Multi-agent orchestration (Section 19):
-  - ConversationRouter with routing rules
+  - ConversationRouter with routing rules, addresses taking precedence
+    (Section 19.4, step 0)
+  - Both agent-response policies, selectable per room (Section 19.3.1)
   - ConversationPipeline with stages
   - HandoffHandler with tool-based handoff protocol
   - At least Pipeline and Swarm strategies
@@ -8797,6 +8904,11 @@ ConferenceChannel
 ```
 
 ### B.4 AI ↔ AI Multi-Agent with Chain Depth
+
+This is the `AGENT_CHAIN` policy (§19.3.1), which is the default: an agent's
+output solicits the other agents, and only the chain-depth limit ends the
+exchange. A room of independent agents — each answering the human, none
+meant to answer the others — selects `ADDRESSED_ONLY` instead.
 
 ```
 1. Human sends message → Room with analyst_ai + writer_ai
