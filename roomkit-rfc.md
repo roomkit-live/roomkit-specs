@@ -1986,9 +1986,9 @@ is unconditional; for intelligence channels the set is narrowed by the
 event's address and by the room's agent-response policy (§19.3). Narrowing
 solicitation MUST NOT narrow *visibility*: the two filters are independent,
 and an event hidden from a channel by §7.3 is hidden whether or not it was
-addressed to it. Whether an unsolicited intelligence channel is nevertheless
-called at step 3c — delivered without being asked — is left to the
-implementation by this version (§19.3.2).
+addressed to it. An unsolicited intelligence channel is not called at step 3c
+at all — not asked, and not told — and rebuilds what it missed from the
+timeline when it is next solicited (§19.3.2).
 
 ### 10.3 Edit and Delete Processing
 
@@ -7680,18 +7680,41 @@ honoured: an agent MAY address another agent and be answered by it alone.
 
 #### 19.3.2 Delivered versus solicited
 
-A channel that is not solicited MUST NOT be asked to produce a response.
-Whether it is nonetheless *delivered* the event — told that it happened,
-without being asked to answer — is **not specified by this version**;
-implementations MAY skip such a channel entirely.
+A channel that is not solicited MUST NOT be asked to produce a response, and
+MUST NOT be delivered the event either — the implementation skips it. At step
+3c the two are one decision, not two.
 
-The distinction is not academic. An agent whose context is rebuilt from the
-room's timeline on every turn loses nothing by being skipped. An agent that
-owns conversational state outside RoomKit — an ACP coding agent holding a
-session in its own process — permanently lacks whatever it was not
-delivered, so the two behaviours produce materially different rooms. A
-future amendment will specify this; until then an implementation MUST
-document which behaviour it provides.
+Skipping alone would not settle the question, because the cost is not the
+same for every channel. An agent whose context is rebuilt from the room's
+timeline on every turn loses nothing by being skipped. An agent that owns
+conversational state outside RoomKit — an ACP coding agent holding a session
+in its own process — permanently lacks whatever it was not delivered. Left
+there, a room of such agents is not a shared conversation but a bundle of
+private threads, and nothing in the transcript says so: asked what was said
+earlier, an agent answers from the only history it has, in good faith, about
+something else.
+
+The counterpart is therefore normative. An implementation MUST make the
+room's timeline available to a channel at the moment it *is* solicited, so a
+channel that keeps its own state can rebuild what it missed instead of
+diverging from the room. That rebuilt history is subject to §7.5 rule 8
+without exception: it is filtered per reader, and a channel MUST NOT obtain
+through it an event visibility withheld from it at delivery. Catching up is
+not a second door into the room.
+
+The rebuild MAY be bounded — by a count of events, by a token budget, by
+whatever the channel can carry. When it is, the channel SHOULD be told that
+what it received is partial, and how much is missing. A bound the reader
+cannot see reproduces the same silent divergence one layer down: an agent
+that knows its history was truncated can say so, or ask for the rest; an
+agent that believes it holds the whole room cannot.
+
+Nothing here obliges a channel to read the timeline. An implementation whose
+channels all rebuild their context from storage each turn satisfies this
+section by construction — which is why the requirement is that the timeline
+be *available*, not that it be consumed.
+
+**Conformance.** Level 2, with the rest of §19.3.
 
 ### 19.4 ConversationRouter
 
