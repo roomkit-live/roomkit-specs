@@ -7678,6 +7678,16 @@ Implementations MUST provide both policies, selectable per room:
 version behaves unchanged. Under either policy an explicit address is
 honoured: an agent MAY address another agent and be answered by it alone.
 
+Per room means *for the life of the room*, not at its creation only. A room
+rarely knows when it is created how many agents it will end up holding: one
+that opens with a single assistant and gains a second when a human asks for
+it becomes a room of independent agents at that moment, and the policy it
+needs changes with it. Implementations MUST therefore allow the policy to be
+set on an existing room. A change applies to events processed after it; an
+event already broadcast is not reconsidered, because solicitation was
+decided when it was routed and reopening it would ask an agent to act on a
+turn that has already closed.
+
 #### 19.3.2 Delivered versus solicited
 
 A channel that is not solicited MUST NOT be asked to produce a response, and
