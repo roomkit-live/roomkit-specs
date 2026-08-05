@@ -1703,6 +1703,23 @@ Planned rows are normative design intent for the named capability.
 - Exceptions MUST be caught and logged, never propagated.
 - Used for observability, logging, side effects.
 
+**ON_USER_INPUT_REQUIRED, where the other party is a human:**
+
+- A human-input request MUST be answerable from the moment it is created. The
+  notification MUST NOT gate whether an answer can be recorded, and an answer
+  arriving while the notification is still running MUST be honoured. The human
+  is not inside the implementation's timing: they answer the question they were
+  shown, and a notification that fans out slowly, or a hook that spends its
+  whole timeout, is not a reason to lose their answer.
+- These hooks keep every SYNC property that matters to their authors — priority
+  order, and a BLOCK that rejects the request. What a BLOCK does not do is
+  retract an answer already recorded; a request that has been answered is
+  settled.
+- Implementations MUST NOT report an answer that was recorded as a failure to
+  the caller that asked for it. An outcome already delivered SHOULD stay
+  readable for long enough that a second read, or a caller that lost track of
+  the request, reads the outcome rather than an error.
+
 ### 9.4 HookResult
 
 Sync hooks MUST return a HookResult:
