@@ -738,6 +738,34 @@ changed through it: they are what attribution, correlation
 (Section 12.10.2) and moderation stand on. A rename that changes nothing
 is a no-op — no write, no event.
 
+**One record, several channels (normative):** a Participant is one record
+per (`room_id`, `id`). Section 4.4 says a participant is connected via one
+or more channels, and this is the record all of them share — the same
+person reached by SMS and then by email is one participant, not two.
+`channel_id` is their *primary* channel; `connected_via` is every channel
+the room has reached them through, the primary included.
+
+- A **lazy materialisation** — the get-or-create that materialises a sender
+  the first time they speak — MUST NOT re-home an existing record: the
+  `channel_id` it is given applies to a record being created, and to no
+  other. A **deliberate join** MAY set `channel_id` to the channel joined
+  through, which is what "primary channel used to join" means; the channel
+  it replaces MUST remain in `connected_via`.
+- Either way, the channel named by the caller MUST be added to
+  `connected_via` when absent from it, and implementations MUST persist
+  `connected_via`. A channel reached once and never recorded is a channel
+  the room cannot afterwards say it reached.
+- Being reached through a channel that is not the primary one is legitimate
+  and MUST NOT fail. It is, however, invisible in the record handed back,
+  whose `channel_id` still names another channel: implementations SHOULD
+  log it at warning level **naming both channels**, because a caller that
+  goes on to keep per-channel state on that record — a lifecycle, a
+  presence, a status — is driving another channel's record without having
+  been told. That silence is what lets one channel's departure erase
+  another channel's membership.
+- Recording a channel is bookkeeping, not presentation: it does not emit
+  `PARTICIPANT_UPDATED` and does not fire `ON_PARTICIPANT_UPDATED`.
+
 ### 5.6 Identity
 
 ```
