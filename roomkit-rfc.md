@@ -1153,9 +1153,12 @@ An ACP agent channel:
    turn produced, the number of tool calls it made, and its duration. A turn
    that ended in an error, or whose response stream was closed before its
    terminal update, MUST NOT fire it: no response was delivered to the Room.
-   Token counters reported as session totals MUST be differenced so that
-   `usage` describes the completed turn; the cumulative reading MAY be carried
-   alongside under a distinct key.
+   Token counters the agent reports MUST be relayed unaltered. ACP annotates
+   them as running session figures while agents are observed to report them per
+   prompt; a client cannot distinguish the two from a single reading, and
+   reinterpreting them silently corrupts an accounting figure. An
+   implementation MAY carry the session's context occupancy and running cost
+   alongside them under distinct keys.
 
 The stable ACP protocol version MUST be the default. Experimental protocol
 versions MAY be supported only behind explicit opt-in and MUST NOT silently
@@ -8738,7 +8741,7 @@ ACPChannel
 ├── end_of_turn:
 │   ├── completed turn → ON_AI_RESPONSE (text, tool count, duration, usage)
 │   ├── errored or abandoned turn → no trigger
-│   └── usage: per-turn difference of the session totals ACP reports
+│   └── usage: agent's token counters relayed unaltered, plus context and cost
 └── safety:
     ├── filesystem/terminal client capabilities disabled by default
     ├── permission requests denied by default
