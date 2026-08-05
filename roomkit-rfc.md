@@ -1146,9 +1146,16 @@ An ACP agent channel:
 6. MUST skip events originating from itself and persisted tool-call activity
    events, preventing duplicate prompts and agent loops;
 7. MUST support cancellation of an active Room turn and MUST release ACP
-   sessions and transport resources when the channel closes; and
+   sessions and transport resources when the channel closes;
 8. MUST NOT bypass the standard RoomKit persistence, visibility, chain-depth,
-   or re-broadcast behavior for generated text and tool activity.
+   or re-broadcast behavior for generated text and tool activity; and
+9. MUST fire `ON_AI_RESPONSE` when a Room turn completes, carrying the text the
+   turn produced, the number of tool calls it made, and its duration. A turn
+   that ended in an error, or whose response stream was closed before its
+   terminal update, MUST NOT fire it: no response was delivered to the Room.
+   Token counters reported as session totals MUST be differenced so that
+   `usage` describes the completed turn; the cumulative reading MAY be carried
+   alongside under a distinct key.
 
 The stable ACP protocol version MUST be the default. Experimental protocol
 versions MAY be supported only behind explicit opt-in and MUST NOT silently
@@ -1621,7 +1628,7 @@ Planned rows are normative design intent for the named capability.
 | BEFORE_AI_CONTEXT_BUILD | SYNC | Planned | Before AI context is built (pre-memory, pre-tool-resolution) — can block cheaply |
 | BEFORE_AI_GENERATION | SYNC | Implemented | Before AI provider generate() — can modify context |
 | ON_AI_THINKING | ASYNC | Implemented | AI model began extended thinking/reasoning |
-| ON_AI_RESPONSE | ASYNC | Implemented | AI generation completed (observability) |
+| ON_AI_RESPONSE | ASYNC | Implemented | A turn of intelligence completed (observability). Fired by any channel of category `INTELLIGENCE`, whether the turn ran in-process or in an external agent (Section 6.4) |
 | BEFORE_TOOL_USE | SYNC | Implemented | Before a tool executes — can block or override the call |
 | ON_TOOL_CALL | ASYNC | Implemented | A tool was invoked during generation (unified across AI and realtime channels) |
 | ON_USER_INPUT_REQUIRED | SYNC | Implemented | Human-in-the-loop: a tool paused, waiting for user input |
@@ -8728,6 +8735,10 @@ ACPChannel
 │   ├── agent_thought_chunk → thinking stream marker + ephemeral event
 │   ├── tool_call_start/progress → tool-call markers + ephemeral events
 │   └── agent_plan_update → ephemeral custom event
+├── end_of_turn:
+│   ├── completed turn → ON_AI_RESPONSE (text, tool count, duration, usage)
+│   ├── errored or abandoned turn → no trigger
+│   └── usage: per-turn difference of the session totals ACP reports
 └── safety:
     ├── filesystem/terminal client capabilities disabled by default
     ├── permission requests denied by default
