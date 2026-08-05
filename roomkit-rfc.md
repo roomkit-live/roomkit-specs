@@ -5206,7 +5206,7 @@ ConferenceBackend (interface)
 ├── ensure_room(room_id, metadata) → void
 │       # Idempotent: create the conference room if absent
 ├── close_room(room_id) → void
-├── mint_access(room_id, participant_id, grants, display_name?) → ConferenceAccess
+├── mint_access(room_id, participant_id, grants, display_name?, attributes?) → ConferenceAccess
 ├── list_participants(room_id) → list<ConferenceParticipant>
 ├── remove_participant(room_id, participant_id) → void
 ├── mute_track(room_id, track_id) → void     # Moderation mute
@@ -5431,6 +5431,39 @@ name to fill a roster record that has none — never to overwrite one the
 integrator set — which is what returns names to a roster rebuilt from the
 join's catch-up after a restart (Section 12.10.4 step 1): the credential
 outlives the process that minted it, and the name rides the credential.
+
+**Participant attributes:** `mint_access()` MAY be given `attributes`, a
+map of string keys to string values the caller wants carried on the
+participant it is admitting. It exists because the identity is otherwise
+the only field that travels, and an integrator whose clients must be told
+*who* is behind a channel identity has nowhere else to put it — which
+turns `participant_id` into a format to parse, and loses the separation
+Section 5.5 draws between a channel identity and the Identity linked to
+it. A backend whose SFU carries per-participant attributes SHOULD put
+them in the credential and MUST surface whatever the SFU then reports on
+`ConferenceParticipant.metadata`, by the same reading as any other
+attribute. One whose SFU carries none ignores them; nothing downstream
+depends on their arrival.
+
+They are surfaced, not vouched for. A backend MUST NOT place an attribute
+in `asserted_metadata` merely because it rode a credential that backend
+minted: the deployment may issue other credentials, and an SFU that lets
+a client rewrite its own attributes after joining leaves nothing to tell
+the two apart at read time. Rule 1 of Section 12.10.2 governs unchanged,
+and an implementation that cannot establish the value independently MUST
+leave it unasserted — where it can be read and rendered, but cannot found
+an identity.
+
+What is minted is the caller's decision, per mint. A channel MUST NOT
+derive attributes of its own from what it knows about the participant —
+an `identity_id` a channel added unasked would publish the platform
+identity of everyone in the room to every peer of a conference that may
+be pseudonymous. And a channel MUST bound what it accepts to emit by
+what it would accept to persist (Section 12.10.2, provider attributes):
+emitting what the same implementation would refuse to store is a
+credential whose contents cannot survive the round trip. Refusing is
+RECOMMENDED over truncating here — the caller is the integrator, which
+is the one party in this exchange that can be told.
 
 **Moderation:** `mute_track()` is always available. `unmute_track()` requires
 the REMOTE_UNMUTE capability; calling it on a backend without that
@@ -5716,6 +5749,9 @@ does not serve it. ConferenceGrants defaults are permissive so the common
 case works unconfigured; narrowing them is the integrator's call and is
 RECOMMENDED wherever a role does not need to publish — a listener-only
 attendee SHOULD receive grants without publish permissions (Section 17.7).
+The caller MAY also pass `attributes` for the backend to carry on the
+participant (Section 12.10.3); the channel passes them through, bounds them
+as it bounds the provider attributes it persists, and adds none of its own.
 
 `mint_access()` MUST NOT issue a credential for a room the channel is no
 longer attached to, and the check MUST hold across every await the call
