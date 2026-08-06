@@ -8316,6 +8316,46 @@ SkillRegistry
 Skills are injected into the AI agent's system prompt via `to_prompt_xml()`.
 The agent can then select and apply skills based on the user's request.
 
+### 24.4 Activation Lifecycle
+
+Loading a skill's body is an **activation**, and an activation is scoped to the
+**conversation**, not to the turn that made it. A model working across several
+turns on the same task is following the same rules throughout; a skill that
+silently stops applying between two turns is a skill the model cannot rely on.
+
+An implementation MUST keep an active skill's instructions reachable by the
+model for as long as the skill is active. It MUST NOT report a skill as active
+while its instructions are absent from the model's context.
+
+The instructions MAY travel through the system prompt rather than through the
+activation tool's result. This is RECOMMENDED where the context is rebuilt per
+turn from stored events: tool results that do not survive that rebuild force the
+model to re-activate — and re-pay the full body — on every turn, whereas the
+system prompt is composed fresh each turn and can carry the body once. Where the
+body is carried this way, the activation tool SHOULD answer subsequent calls with
+a short acknowledgement instead of the body, and that acknowledgement MUST state
+that the instructions are already in force.
+
+An active skill's instructions MUST NOT be truncated, evicted, or summarized by
+a large-result or context-compression mechanism. Such mechanisms exist for
+*data*, which can be paginated or condensed without changing what it means;
+binding rules reduced to a preview are no longer binding rules. Skill
+*references* are data and remain subject to those mechanisms.
+
+Activation state is per (implementation-defined) conversation scope — a room, a
+session — and is never global to a channel serving several conversations. An
+implementation MAY bound the number of simultaneously active skills; when it
+does, retiring a skill MUST be equivalent to it never having been activated, so
+that a later activation delivers the body again.
+
+An implementation whose activation record is lost (process restart, a channel
+object replaced) MUST fall back to delivering the body: losing the record and
+losing the prompt block are the same event, and the model is never left holding
+an acknowledgement without rules.
+
+Tool gating (Section 21) follows the same scope: tools revealed by activating a
+skill stay revealed while the skill is active.
+
 ---
 
 ## 25. Conformance Levels
