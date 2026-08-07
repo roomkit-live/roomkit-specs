@@ -180,6 +180,9 @@ other channel. It does not reason, and it does not decide what the agent is for.
 
 - A CPaaS provider (Twilio, Sinch, etc. own the transport)
 - An LLM runtime (inference, prompting, and reasoning belong to the model library)
+- A unified communications platform (no PBX, presence, directory, or end-user
+  client — RoomKit is a component that complements such a platform, not a
+  replacement for it and not the product)
 - A chat application (RoomKit provides primitives; integrators build apps)
 - Opinionated about when or why to use its primitives
 
