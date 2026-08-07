@@ -7,7 +7,7 @@
 | **Contributions** | TchatNSign, Angany AI |
 | **Version** | v17 Draft |
 | **Created** | 2026-01-27 |
-| **Last Updated** | 2026-08-06 |
+| **Last Updated** | 2026-08-07 |
 | **Supersedes** | v16 Draft |
 
 ---
@@ -22,8 +22,9 @@ abstractions, processing pipelines, permission model, hook engine, and identity
 resolution. It specifies the realtime media architecture — the voice pipeline,
 video, speech-to-speech, SFU-based conferencing, and recording — and the surfaces
 an AI agent is built on: multi-agent orchestration, memory, tool access control,
-task delegation, and skills. Storage, observability, resilience patterns, and
-conformance levels complete what constitutes a conforming implementation.
+task delegation, skills, and image generation. Storage, observability, resilience
+patterns, and conformance levels complete what constitutes a conforming
+implementation.
 
 The specification is language-agnostic. Implementations MAY be written in any
 programming language. All examples use pseudocode or structured notation.
@@ -56,9 +57,10 @@ programming language. All examples use pseudocode or structured notation.
 22. [Delivery Strategies](#22-delivery-strategies)
 23. [Task Delegation](#23-task-delegation)
 24. [Skills Framework](#24-skills-framework)
-25. [Conformance Levels](#25-conformance-levels)
-26. [Appendix A: Channel Reference](#appendix-a-channel-reference)
-27. [Appendix B: Complete Event Flow Examples](#appendix-b-complete-event-flow-examples)
+25. [Image Generation](#25-image-generation)
+26. [Conformance Levels](#26-conformance-levels)
+27. [Appendix A: Channel Reference](#appendix-a-channel-reference)
+28. [Appendix B: Complete Event Flow Examples](#appendix-b-complete-event-flow-examples)
 
 ---
 
@@ -8455,9 +8457,159 @@ integrator is expected to rediscover is a check some integrator will omit.
 
 ---
 
-## 25. Conformance Levels
+## 25. Image Generation
 
-### 25.1 Level 0: Core (REQUIRED)
+An agent that can describe a picture cannot draw one. Image synthesis is a
+capability a small number of models hold, and the model holding a conversation
+is rarely one of them — so it is specified here as its own provider surface,
+the way speech-to-text and text-to-speech already are, and not as an extension
+of the conversational response.
+
+### 25.1 A Surface of Its Own
+
+An implementation MUST expose image generation through a provider interface
+distinct from the AI provider interface, and MUST NOT require that the two be
+served by the same vendor, credential, or object. An agent conversing through
+one provider MUST be able to draw through another, exactly as it transcribes
+through a third.
+
+This is a normative requirement rather than an implementation preference. Image
+generation reached as a mode of the conversational response inherits that
+response's provider: the capability then exists only for the subset of
+conversations already held by a model that draws, and acquiring it means
+migrating the conversation. The decoupled form is what makes the capability
+available to every conversation, and it is the property this section protects.
+
+An implementation MUST NOT widen the conversational response type to carry
+generated images. `AIResponse.content` is read by every consumer of the
+framework; turning it into a union imposes a migration on all of them for a
+capability that two providers offer.
+
+### 25.2 ImageProvider
+
+```
+ImageProvider
+├── name → string                             # Provider identifier
+├── model_name → string                       # Active model id
+├── supports_editing → bool                   # Whether reference_images is honoured
+├── available_models() → list<ModelInfo>      # Offline catalogue (Section 25.6)
+├── generate(prompt, size, n, reference_images) → list<ImageResult>
+└── close()                                   # Release resources
+```
+
+`generate` MUST return exactly `n` results or raise. Returning fewer without
+error leaves the caller to discover the shortfall by indexing, which it will do
+in production and not in testing.
+
+`size` is a `"WIDTHxHEIGHT"` string, or null for the provider's default. A
+provider whose API expresses geometry differently — an aspect ratio and a
+resolution tier, say — MUST translate, and MUST NOT require the caller to know
+which form its vendor speaks. A provider that cannot honour a requested size
+MUST raise rather than silently substitute another: an image of the wrong
+geometry is a failure the caller can neither see nor correct.
+
+`n` greater than one MUST produce `n` distinct results. A provider whose API
+has no batch parameter satisfies this with concurrent calls; the vendor bills
+per image either way, so the alternative — refusing `n > 1` on some providers
+and honouring it on others — would make the parameter meaningless in the
+interface.
+
+### 25.3 ImageResult
+
+```
+ImageResult
+├── data: string                              # data:<mime_type>;base64,<payload>
+├── mime_type: string                         # Media type of the payload
+├── revised_prompt: string | null             # Prompt as the model rewrote it, if reported
+└── usage: map<string, any>                   # Token counters (Section 25.5)
+```
+
+`data` MUST be a data URI, always, and its media type MUST equal `mime_type`.
+The alternative — a field documented as "a data URI or bare base64" — forces
+every consumer to sniff the value before it can use it, and one consumer will
+sniff it wrong. The invariant also makes the result directly usable: a data URI
+is what image message content and image message parts already accept, so a
+generated image enters a room, or returns as a reference for a subsequent
+edit, without conversion.
+
+A provider whose API returns a fetchable URL rather than bytes MUST retrieve
+the bytes and encode them. Such URLs expire, and a result that decays into a
+dead link some time after it was returned is not a result.
+
+`revised_prompt` is null where the vendor reports none. An implementation MUST
+NOT substitute the original prompt for it: the field exists to show the caller
+what the model actually drew from, and echoing the input back conceals exactly
+the divergence it exists to reveal.
+
+### 25.4 Editing
+
+Editing — an image and a prompt in, an image out — is expressed through
+`reference_images` on `generate`, not through a second method.
+
+The distinction is the vendor's, not the caller's: one API takes reference
+images as ordinary content on the same endpoint, another routes them to a
+separate one. A provider MUST absorb that difference. A provider that cannot
+edit MUST report `supports_editing` as false and MUST raise when
+`reference_images` is non-empty, rather than generating from the prompt alone —
+a caller that asked for an edit and silently received a fresh image has no
+signal that the reference was dropped.
+
+### 25.5 Usage Accounting
+
+Image models are billed per token, with the tokens of a generated image
+counted and priced apart from text tokens. An implementation reporting usage
+for an image generation MUST keep the two disjoint:
+
+```
+usage
+├── input_tokens: int                         # Text input tokens
+├── input_image_tokens: int                   # Reference-image input tokens
+├── output_tokens: int                        # Text output tokens, where billed
+└── output_image_tokens: int                  # Generated-image tokens
+```
+
+Disjoint means a token appears under exactly one counter. Where a vendor
+reports image tokens as a subset of a total, an implementation MUST subtract
+them before reporting the text counter, so that summing the counters yields the
+billable total exactly once.
+
+Where the framework carries a per-model price list, it SHOULD represent the
+image rates alongside the text ones rather than in a parallel structure: the
+unit is the same — a price per million tokens — and a second structure carrying
+the same unit duplicates its currency, its verification date, and its
+arithmetic.
+
+### 25.6 Model Catalogue
+
+An image catalogue is a set disjoint from the conversational one: a model that
+draws is not a model that converses, and neither list contains an id belonging
+to the other.
+
+An implementation MUST NOT merge the two into the response of a single
+enumeration. Merging saves no maintenance — the entries are written once
+either way — while obliging every consumer of the conversational catalogue,
+including those populating a model field for a conversational agent, to filter
+a class of models it can never use. Entries SHOULD nevertheless carry a
+capability tag identifying them as image-generating, so a consumer that
+deliberately combines the lists can still tell them apart.
+
+### 25.7 Non-Goals
+
+Image generation is not a pipeline stage and defines no hook triggers. It is
+invoked by a caller — a tool handler, an application — and its result enters a
+room as ordinary message content, which the inbound and broadcast pipelines
+(Section 10) already govern. Introducing a parallel path for images would
+duplicate ordering, permission, and visibility rules that Section 7 and
+Section 10 state once.
+
+Video generation, image *understanding* (already covered by multimodal message
+parts) and avatar synthesis (Section 12) are outside this section.
+
+---
+
+## 26. Conformance Levels
+
+### 26.1 Level 0: Core (REQUIRED)
 
 A conforming implementation MUST support:
 
@@ -8485,7 +8637,7 @@ A conforming implementation MUST support:
 - Idempotency checking
 - Event addressing: `RoomEvent.addressed_to`, honoured when set (Section 19.3)
 
-### 25.2 Level 1: Transport (RECOMMENDED)
+### 26.2 Level 1: Transport (RECOMMENDED)
 
 A Level 1 implementation SHOULD additionally support:
 
@@ -8506,7 +8658,7 @@ A Level 1 implementation SHOULD additionally support:
 - REST API (Section 16.1)
 - Telemetry provider abstraction (Section 15.7)
 
-### 25.3 Level 2: Rich (OPTIONAL)
+### 26.3 Level 2: Rich (OPTIONAL)
 
 A Level 2 implementation MAY additionally support:
 
@@ -8532,10 +8684,12 @@ A Level 2 implementation MAY additionally support:
 - Task delegation with child rooms (Section 23)
 - Delivery strategies: Immediate, WaitForIdle, Queued (Section 22)
 - Skills framework with SkillRegistry (Section 24)
+- Image generation through an ImageProvider decoupled from the AI provider
+  (Section 25)
 - AI steering directives (Section 21.3)
 - Advanced memory providers: Summarizing, Retrieval (Section 20)
 
-### 25.4 Level 3: Real-Time Media (OPTIONAL)
+### 26.4 Level 3: Real-Time Media (OPTIONAL)
 
 A Level 3 implementation MAY additionally support audio and/or video real-time media:
 
