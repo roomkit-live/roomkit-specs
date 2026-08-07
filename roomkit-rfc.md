@@ -7558,6 +7558,16 @@ default. Deployments in regulated sectors typically do need visible bot
 identification; the specification's role is to make that implementable, not
 to decide it.
 
+### 17.8 Skill-Bundled Files
+
+- A skill's references and scripts are addressed by a name the model chooses,
+  which makes every such read or execution an untrusted-input boundary.
+- Resolution MUST be confined to the skill's own directory by resolving the
+  path and checking containment, never by filtering the name alone
+  (Section 24.6).
+- The same containment MUST apply to script execution, including where
+  execution policy is delegated to the integrator.
+
 ---
 
 ## 18. Design Principles
@@ -8355,6 +8365,67 @@ an acknowledgement without rules.
 
 Tool gating (Section 21) follows the same scope: tools revealed by activating a
 skill stay revealed while the skill is active.
+
+### 24.5 Loading Failures
+
+A skill that cannot be parsed, or whose metadata does not validate, is a
+deployment error rather than a runtime condition. The two have opposite
+remedies. A skill that exists but cannot be used in the present context is a
+fact the model can be told and can work around; a malformed `SKILL.md` is a
+mistake in what someone deployed, and nothing the model does at runtime will
+repair it.
+
+An implementation MUST NOT silently omit a skill it failed to load. Omission is
+the worst outcome available: the catalogue simply does not list the capability,
+the model is never told it was meant to exist, and the agent answers as though
+nothing were missing. Nobody reading the conversation sees a gap either. The
+error surfaces much later, as an agent that inexplicably cannot do the thing it
+was configured to do, by which point the frontmatter typo that caused it is far
+out of view.
+
+Discovery MUST therefore fail by default on the first skill it cannot load, and
+MUST report which skill failed and why. A directory that cannot be scanned is
+the same class of failure and MUST be reported the same way: returning an empty
+count for a path that does not exist is, to the caller, indistinguishable from a
+directory that is genuinely empty.
+
+An implementation MAY offer a mode that logs each failure and continues. It is
+the right behaviour where skills come from a source the deployment does not
+control and a partial catalogue beats no service at all. That mode MUST be
+requested explicitly by the caller and MUST NOT be the default, and every
+skipped skill MUST be logged with the reason it was skipped.
+
+Discovery MUST NOT leave the registry partially populated. Whatever the outcome,
+the registry a caller observes afterwards MUST be either the state that preceded
+the call or the state with every discovered skill present. A half-filled
+catalogue reproduces exactly the silent gap this section exists to prevent, and
+does so at the moment the caller has most reason to believe the opposite.
+
+### 24.6 Access to Bundled Files
+
+A skill's references and scripts are addressed by name, and the name is chosen
+by the model. Resolution MUST be confined to the skill's own directory.
+
+Filtering the name does not achieve that, and an implementation MUST NOT rely on
+name filtering alone. A name containing no traversal sequence, no separator and
+no drive letter still leaves the directory when a symbolic link bearing that
+name sits inside it. An implementation MUST resolve the candidate path, with
+links followed, and MUST verify that the result is still inside the skill
+directory, rejecting it otherwise. Containment is a property of where a path
+ends up, not of how it is spelled.
+
+Names MUST be normalized before they are inspected, so that a character which is
+not the ASCII separator but normalizes onto it cannot pass a check performed on
+the raw string. Absolute paths MUST be rejected, in every spelling the host
+platform recognises.
+
+The requirement does not lapse where execution policy — sandboxing, timeouts,
+permitted interpreters — is delegated to the integrator. *What* runs is part of
+the skill boundary; *how* it runs is not. An implementation that delegates
+execution MUST resolve the script name under these same rules and MUST reject a
+name that fails them before any integrator-supplied executor is invoked, and
+SHOULD make the resolved path available to that executor. A check every
+integrator is expected to rediscover is a check some integrator will omit.
 
 ---
 
