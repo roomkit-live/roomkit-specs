@@ -5,20 +5,25 @@
 | **Status** | Draft |
 | **Author** | Sylvain Boily |
 | **Contributions** | TchatNSign, Angany AI |
-| **Version** | v16 Draft |
+| **Version** | v17 Draft |
 | **Created** | 2026-01-27 |
-| **Last Updated** | 2026-07-25 |
-| **Supersedes** | v15 Draft |
+| **Last Updated** | 2026-08-06 |
+| **Supersedes** | v16 Draft |
 
 ---
 
 ## Abstract
 
 RoomKit is a specification for a multi-channel conversation framework that unifies
-humans, AI agents, and programs in shared conversation spaces called Rooms. This
-document defines the data models, processing pipelines, channel abstractions,
-permission system, hook engine, identity resolution, voice architecture, and
-resilience patterns that constitute a conforming RoomKit implementation.
+humans, AI agents, and programs in shared conversation spaces called Rooms.
+
+This document defines the core conversation machinery: data models, channel
+abstractions, processing pipelines, permission model, hook engine, and identity
+resolution. It specifies the realtime media architecture — the voice pipeline,
+video, speech-to-speech, SFU-based conferencing, and recording — and the surfaces
+an AI agent is built on: multi-agent orchestration, memory, tool access control,
+task delegation, and skills. Storage, observability, resilience patterns, and
+conformance levels complete what constitutes a conforming implementation.
 
 The specification is language-agnostic. Implementations MAY be written in any
 programming language. All examples use pseudocode or structured notation.
@@ -143,23 +148,38 @@ applications that manage these multi-channel conversations requires solving the 
 set of problems repeatedly: message routing, permission management, event ordering,
 identity resolution, and channel abstraction.
 
+Once an AI agent is one of the participants rather than a feature bolted onto the
+side, a second set of problems appears and is solved just as repeatedly: what the
+agent is allowed to see of a conversation it shares with humans, which tools it may
+reach and when, which instructions bind it and for how long, and how its turn
+interleaves with everyone else's.
+
 ### 2.2 Scope
 
 RoomKit provides **primitives for multi-channel conversations**, not business logic.
 
+Where an AI agent is one of the participants, RoomKit is the **harness around that
+agent**: it defines where the agent sits in a conversation, what it may see, what
+it may call, what rules bind it, and how its output reaches the humans on every
+other channel. It does not reason, and it does not decide what the agent is for.
+
 **RoomKit IS:**
 
 - A room-based conversation manager
-- A unified channel abstraction (SMS, Email, AI, Voice — same interface)
+- A unified channel abstraction (SMS, Email, AI, Voice, Video — same interface)
 - A permission system (access, mute, visibility)
 - A hook engine (intercept, block, modify, enrich)
 - A provider abstraction layer (channel type ≠ provider)
 - An identity resolution pipeline
+- A realtime media architecture (voice pipeline, speech-to-speech, SFU
+  conferencing, recording)
+- A harness for AI participation (orchestration, memory, tool access control,
+  task delegation, skills) — the surfaces an agent runs on, not its reasoning
 
 **RoomKit is NOT:**
 
 - A CPaaS provider (Twilio, Sinch, etc. own the transport)
-- An AI framework (LLM libraries handle agent logic)
+- An LLM runtime (inference, prompting, and reasoning belong to the model library)
 - A chat application (RoomKit provides primitives; integrators build apps)
 - Opinionated about when or why to use its primitives
 
@@ -183,6 +203,9 @@ Identity resolution interface      Resolution strategy
 Storage interface                  Storage implementation
 Event chain depth limit            Turn budgets and orchestration
 Audio pipeline stages              Which resampler, AEC, AGC, denoiser, VAD, etc. to use
+Tool policy and skill gating       Which tools and skills an agent gets
+Skill activation lifecycle         What a skill's instructions actually say
+Memory interface                   What is worth remembering
 ```
 
 ---
