@@ -8509,10 +8509,10 @@ MUST raise rather than silently substitute another: an image of the wrong
 geometry is a failure the caller can neither see nor correct.
 
 `n` greater than one MUST produce `n` distinct results. A provider whose API
-has no batch parameter satisfies this with concurrent calls; the vendor bills
-per image either way, so the alternative — refusing `n > 1` on some providers
-and honouring it on others — would make the parameter meaningless in the
-interface.
+has no batch parameter satisfies this with concurrent calls: the alternative —
+honouring `n` on some providers and refusing it on others — leaves a parameter
+in the interface that a caller cannot use without first knowing which provider
+is behind it, which is the coupling this section exists to remove.
 
 ### 25.3 ImageResult
 
@@ -8556,28 +8556,37 @@ signal that the reference was dropped.
 
 ### 25.5 Usage Accounting
 
-Image models are billed per token, with the tokens of a generated image
-counted and priced apart from text tokens. An implementation reporting usage
-for an image generation MUST keep the two disjoint:
+A generation reports what it consumed. An image and the text around it are
+metered separately by the vendors that meter them at all, so the counters stay
+apart rather than collapsing into one number:
 
 ```
 usage
 ├── input_tokens: int                         # Text input tokens
 ├── input_image_tokens: int                   # Reference-image input tokens
-├── output_tokens: int                        # Text output tokens, where billed
+├── output_tokens: int                        # Text output tokens, where the model emits any
 └── output_image_tokens: int                  # Generated-image tokens
 ```
 
-Disjoint means a token appears under exactly one counter. Where a vendor
-reports image tokens as a subset of a total, an implementation MUST subtract
-them before reporting the text counter, so that summing the counters yields the
-billable total exactly once.
+The counters MUST be disjoint: a token appears under exactly one of them.
+Where a vendor reports image tokens as a subset of a total, an implementation
+MUST subtract them before reporting the text counter, so a consumer summing
+the counters counts each token once. Without that guarantee the counters cannot
+be combined at all, and the breakdown is worth less than the single total it
+replaced.
 
-Where the framework carries a per-model price list, it SHOULD represent the
-image rates alongside the text ones rather than in a parallel structure: the
-unit is the same — a price per million tokens — and a second structure carrying
-the same unit duplicates its currency, its verification date, and its
-arithmetic.
+Counters a vendor does not report are absent, not zero: a reported zero and an
+unreported quantity are different claims, and only one of them is safe to add
+up.
+
+Usage is a report, not a price. What a generation costs depends on how its
+vendor meters it — per token in some lineups, a flat amount per image in
+others, varying by resolution or quality — and on commercial terms no
+specification can observe. An implementation MAY carry a price list and MAY
+derive a cost from these counters; neither the shape of such a list nor the
+arithmetic over it is specified here. What is specified is that the counters
+mean what they say, so that whatever does price them has something unambiguous
+to price.
 
 ### 25.6 Model Catalogue
 
