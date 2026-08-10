@@ -1101,8 +1101,15 @@ ChannelOutput
 | AI | INTELLIGENCE | AI/LLM agent |
 | SYSTEM | — | Framework-generated events |
 
-Implementations MAY define additional channel types. Custom channel types SHOULD
-use the format `custom:namespace` (e.g., `custom:slack`).
+Implementations MAY define additional channel types. A type added by the
+implementation itself — a new transport it ships — is an ordinary member of this
+table and needs no marking; the list above is expected to grow.
+
+This document does not define a registration mechanism for channel types added
+by a *third party*, and a naming convention alone would not be one: a closed
+enumeration is a legitimate implementation of the table, and a third party
+cannot add to it whatever it calls the value. An implementation that does want
+to admit external types owns both the mechanism and its naming.
 
 ### 6.3 Transport Channels
 
@@ -3802,9 +3809,22 @@ Typical use cases:
 - **Audio level monitoring** (via optional VAD) — for UI indicators
 - **Activity logging and metrics** — for observability
 
-VAD is OPTIONAL in this mode. When configured, it runs purely for observation —
-it does NOT control when the speech-to-speech provider responds. Turn-taking is
-fully managed by the provider.
+VAD is OPTIONAL in this mode, and a configured VAD may serve either of two
+roles. Which one is a deployment decision, and an implementation SHOULD make it
+explicit rather than infer it silently.
+
+**Observation (default).** The VAD feeds diarization, level metering and
+metrics; it does NOT control when the speech-to-speech provider responds.
+Turn-taking is fully managed by the provider's own endpointing.
+
+**Endpointing.** The pipeline VAD drives turn-taking and the provider's server
+VAD is disabled. This exists because a provider's endpointing is not always the
+right one: an integrator may have a VAD tuned to their acoustics, or need the
+same turn behaviour across several providers whose endpointing differs. In this
+role the implementation MUST signal activity start and end to the provider, and
+MUST NOT rely on provider-side speech events for turn boundaries.
+
+An implementation that supports only the observation role is conformant.
 
 The `RealtimeVoiceChannel` accepts an `AudioPipelineConfig` in the same way as
 `VoiceChannel`. When a pipeline is configured, inbound audio frames are processed
@@ -6190,7 +6210,14 @@ ConferenceInterruptionConfig
 - `"allowlist"` — only listed participants can interrupt (moderator
   pattern).
 
-Backchannel detection (Section 12.6) applies per track before
+`SEMANTIC` is NOT available here, and an implementation SHOULD refuse it at
+configuration time rather than degrade silently. The strategy classifies an
+utterance from its transcript, and a conference lane only has a transcript once
+the utterance has ended — by which point the interruption it would have
+authorised is moot. The remaining strategies apply unchanged; `scope` is the
+conference's own axis and composes with all of them.
+
+Backchannel detection (Section 12.6) otherwise applies per track before
 interruption evaluation. An interruption that lands is more than the chunk
 stream stopping: the channel calls `stop_playback()` so the audio the
 transport already holds is discarded instead of playing on over the
@@ -8046,6 +8073,15 @@ RoutingConditions
 4. If `supervisor_id` is set, the supervisor ALWAYS receives the event
    (in addition to the selected agent, or to the addressed channels).
 
+   This holds under every `AgentResponsePolicy`, `ADDRESSED_ONLY` included,
+   because the two rules answer different questions. A policy decides who is
+   **solicited to act**; the supervisor is not being asked to act, it is
+   watching. Reading `ADDRESSED_ONLY` as excluding it would blind a supervisor
+   to precisely the traffic it exists to oversee — every unaddressed
+   agent-to-agent exchange — and the role would be worth nothing in the
+   deployments that need it most. The policy table in Section 19.3.1 describes
+   solicitation, and it is not narrowed by this step.
+
 Step 0 exists because sticky affinity would otherwise swallow every explicit
 request. With the active agent consulted first, a rule written to honour an
 address is unreachable for as long as any agent holds the conversation — the
@@ -9230,8 +9266,9 @@ VoiceChannel
 │   └── audio_pipeline: AudioPipelineConfig
 ├── configuration:
 │   ├── streaming: bool (default true)
-│   ├── enable_barge_in: bool (default false)
-│   └── barge_in_threshold_ms: int (default 500)
+│   ├── interruption: InterruptionConfig | null   # Section 12.6 — the current surface
+│   ├── enable_barge_in: bool (default true)      # legacy; superseded by interruption
+│   └── barge_in_threshold_ms: int (default 200)  # legacy; maps to allow_during_first_ms
 ├── streaming_delivery:
 │   ├── supports_streaming_delivery: bool
 │   │   # True when TTS supports streaming input AND backend is configured
