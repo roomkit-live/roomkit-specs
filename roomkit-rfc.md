@@ -1656,7 +1656,7 @@ Planned rows are normative design intent for the named capability.
 | AFTER_DELIVER | ASYNC | Implemented | After proactive delivery completes |
 | | | | |
 | **AI Generation:** | | | |
-| BEFORE_AI_CONTEXT_BUILD | SYNC | Planned | Before AI context is built (pre-memory, pre-tool-resolution) — can block cheaply |
+| BEFORE_AI_CONTEXT_BUILD | SYNC | Planned | Before AI context is built (pre-memory, pre-tool-resolution) — can block cheaply. Arrives with the Section 12.9 pipeline, which is DRAFT; required by nothing today |
 | BEFORE_AI_GENERATION | SYNC | Implemented | Before AI provider generate() — can modify context |
 | ON_AI_THINKING | ASYNC | Implemented | AI model began extended thinking/reasoning |
 | ON_AI_RESPONSE | ASYNC | Implemented | A turn of intelligence completed (observability). Fired by any channel of category `INTELLIGENCE`, whether the turn ran in-process or in an external agent (Section 6.4) |
@@ -4629,6 +4629,27 @@ and records them through Section 12.11 instead (Section 12.10.8).
 
 ### 12.9 AI Generation Pipeline
 
+> **Status: DRAFT — not conformance-bearing.**
+>
+> This section describes a design no implementation carries yet. It is
+> published as the intended direction, not as a requirement: nothing in it
+> counts toward any conformance level, and an implementation is conformant
+> while its AI generation remains a hardcoded sequence.
+>
+> The goal is real — text generation should be composable the way Section 12.3
+> (audio) and Section 12.8 (video) already are, so that a cross-cutting
+> generation concern becomes a stage rather than another mixin. But this
+> section was merged ahead of the implementation, inverting the order this
+> document depends on: the specification leads and the code follows. Left
+> binding, it would make every implementation non-conformant at Level 0 for a
+> feature none had been asked for, and it contradicted itself doing so —
+> Section 9.2 marks `BEFORE_AI_CONTEXT_BUILD` "Planned" while
+> Section 12.9.11 made it conformance-blocking.
+>
+> The MUSTs below are kept verbatim so the design survives intact. They become
+> binding when this notice is removed. Until then read them as "will be
+> required", not "is required".
+
 The AI generation subsystem mirrors the audio and video pipelines in structure.
 Text generation by an AIChannel flows through a pluggable stage architecture using
 the same ABC + config composition pattern as Section 12.3 (Audio Pipeline) and
@@ -4889,7 +4910,17 @@ pipeline's `voice.pipeline.*` events.
 
 #### 12.9.11 Conformance
 
-**Level 0 (Core, REQUIRED):**
+**None of this section is conformance-bearing while it is DRAFT.** The levels
+below describe what will be required once the notice at the head of
+Section 12.9 is removed; today they bind nothing, and Section 26 lists no
+Level-0 item from here.
+
+One exception already holds on its own footing: `BEFORE_AI_GENERATION` is
+marked Implemented in Section 9.2 and is required by that section, not by
+this one. `BEFORE_AI_CONTEXT_BUILD` is Planned there and required nowhere —
+which is what this notice resolves.
+
+**Level 0 (Core, REQUIRED — once binding):**
 - AIChannel MUST implement the default pipeline with all 8 stages
 - The normative stage ordering in Section 12.9.2 MUST be preserved
 - Abort semantics in Section 12.9.3 MUST be honored
