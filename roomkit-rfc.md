@@ -1886,7 +1886,10 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
        # earlier, the answer can be stale by the time the event commits.
 
 7. IDEMPOTENCY CHECK
-   ├── If idempotency_key exists and was seen → return blocked result
+   ├── If idempotency_key exists and was seen → return the result the first
+   │   delivery produced, without reprocessing (§13.4). A store that cannot
+   │   resolve the key back to its committed event MAY return a blocked
+   │   result instead; neither answer reprocesses.
    └── Otherwise → continue
 
 8. ASSIGN EVENT INDEX
@@ -7015,6 +7018,18 @@ If an InboundMessage carries an `idempotency_key`, the framework MUST:
 1. Check under a room-level lock whether the key has been seen.
 2. If seen → return the original result without reprocessing.
 3. If not seen → process normally and record the key.
+
+The point of step 2 is that a sender retries because it never observed the
+first answer, not because it wants the message delivered twice. Reporting the
+redelivery as refused conflates "you already said this" with "this was not
+accepted", and leaves the sender unable to learn the event it committed.
+
+The original result is the committed event. A ConversationStore resolves it
+from the key it recorded at commit; the key SHOULD therefore be stored so it
+can be read back, not merely tested for presence. A store that can only answer
+"seen" MAY return a blocked result carrying the reason instead — a degraded but
+conforming answer, since the MUST that matters, *without reprocessing*, holds
+either way.
 
 ### 13.5 Room-Level Locking
 
