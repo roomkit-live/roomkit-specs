@@ -6780,6 +6780,123 @@ is not.
 
 ---
 
+### 12.12 Capture Sources
+
+Every transport in Section 12.1 acquires its capture device when a session
+starts and releases it when that session ends. That is the right lifetime for a
+call, and the wrong one for anything that must be listening *before* there is a
+session to listen for — a wake word, a hotkey that arms on speech, an
+always-on level meter. Such a consumer holds the device, must hand it back so
+the session can take it, and the reacquisition lands precisely while the person
+is still talking. No application buffer repairs a closed device.
+
+A **capture source** owns the device instead, and a session becomes one
+subscriber among several.
+
+```
+AudioCaptureSource (interface)
+├── sample_rate: int                                      # Format it emits
+├── channels: int
+├── sample_width: int
+├── start() → void                                        # Acquire the device
+├── stop() → void                                         # Release it
+├── close() → void                                        # Release all resources
+├── mark() → CaptureMark
+│       # Opaque token for the ring's current write position
+└── subscribe(callback: (AudioFrame) → void,
+              since: CaptureMark | null = null,
+              name: string | null = null) → CaptureSubscription
+```
+
+```
+CaptureSubscription                   CaptureMark
+├── name: string | null               └── (opaque)
+├── replayed_bytes: int
+├── truncated: bool
+└── unsubscribe() → void
+```
+
+A capture source is **not** a `VoiceBackend` and MUST NOT implement that
+interface. A backend is keyed by `VoiceSession` throughout; a source has no
+notion of a session, and conflating the two reintroduces the lifetime this
+section exists to break.
+
+**Lifetime is explicit and independent of subscribers.** `start()` and `stop()`
+are the only things that acquire and release the device. A source MUST NOT stop
+capturing because its subscriber count reached zero, and MUST NOT start
+because it became non-zero. A consumer may therefore unsubscribe at any moment
+without endangering another subscriber's audio — which is what makes it safe
+for a wake-word detector to detach for the duration of a session and reattach
+after.
+
+**Frames are raw.** A source emits what the device gave it. Echo cancellation
+is per-session — it needs the reference signal of what *that* session is
+playing — so it belongs downstream, applied by the backend after fan-out, not
+in the source. A subscriber that stays attached while a session is playing
+audio therefore hears the far end unattenuated, and MUST NOT assume otherwise.
+Sample-rate conversion is likewise the subscriber's concern: a source has one
+format, and a consumer that needs another resamples it.
+
+**Fan-out is synchronous on the capture thread.** This is what keeps the
+existing AEC invariant intact — capture and reference must stay in step, which
+they cannot do across a queue hop. The consequence is a contract every
+subscriber MUST honour:
+
+> A subscriber MUST NOT perform unbounded work inside the fan-out callback. It
+> enqueues the frame and returns. The source guarantees no isolation between
+> subscribers: one slow subscriber degrades capture for all of them.
+
+The bar is lower than it sounds. A block is typically 20 ms, and a wake-word
+subscriber running an ONNX encoder spends about that long per segment — enough
+on its own to starve the device. Implementations SHOULD make the breach
+observable rather than leaving it to be diagnosed from audio artifacts: timing
+each callback and logging a rate-limited warning past a fraction of the block
+duration turns "the audio crackles" into "this subscriber is slow". A
+subscriber that raises MUST be caught and logged; an exception MUST NOT
+propagate into the capture stream.
+
+**The backlog.** A source retains recent frames in a bounded ring — bounded by
+duration and by bytes, evicting oldest-first. `mark()` names a position in it;
+`subscribe(since=mark)` replays from there before delivering anything live.
+Ordering is total: every replayed frame reaches the subscriber before every
+live one, with no interleaving, even for frames captured during the replay
+itself. Replay MUST NOT hold the fan-out lock for its duration — seconds of
+audio delivered under that lock would stall the capture thread — so an
+implementation queues live frames for a catching-up subscriber and switches to
+direct delivery under the lock once the queue drains.
+
+A mark whose position has been evicted is **stale**. The source MUST replay
+what remains rather than fail: raising at the moment a session opens would
+discard the very utterance the backlog exists to preserve, and a partial phrase
+is worth more than none. It MUST report the degradation — `truncated` on the
+subscription, and a log line — so that silence is never mistaken for
+completeness. `replayed_bytes` is reported in every case.
+
+**Addressing by mark, not by duration.** A "replay the last N seconds" request
+forces the caller to guess: too short truncates the utterance, too long
+replays the tail of the previous conversation into the provider. A mark placed
+where the speech actually began has neither failure.
+
+**Composition with the realtime path.** The session-start sequence of Section
+12.4 already retains inbound audio across the provider handshake and flushes
+it in order once the handshake completes. Replayed frames enter through the
+transport's ordinary inbound callback, so they land in that same retention
+buffer and are flushed with it. A wake word therefore needs no new control
+point on the inbound path: the caller passes its mark in the session metadata,
+the transport subscribes with it, and the utterance that preceded the session
+arrives ahead of the audio that followed. If the handshake fails, the retained
+audio is discarded with the session and nothing reaches the provider.
+
+One consequence is worth stating plainly, because it is a design choice and not
+an oversight: **the replayed backlog contains the wake word itself.** Where the
+trigger phrase and the request share a single utterance — "hey jarvis what are
+you up to" — no boundary exists to split them on, and inventing one would
+require word-level timestamps the detector does not have. Providers handle the
+address form well. Implementations SHOULD treat the wake word's presence as
+intended rather than filter it.
+
+---
+
 ## 13. Resilience and Error Handling
 
 ### 13.1 Circuit Breaker
@@ -8721,6 +8838,7 @@ A Level 3 implementation MAY additionally support audio and/or video real-time m
   - InterruptionConfig
 - Voice channel (STT/TTS pipeline)
 - VoiceBackend interface with at least one implementation
+- AudioCaptureSource interface (OPTIONAL, REQUIRED for capture that outlives a session — Section 12.12)
 - Packet loss concealment for lossy transports (OPTIONAL, RECOMMENDED for RTP backends — Section 12.2.1)
 - STTProvider interface with at least one implementation
 - TTSProvider interface with at least one implementation
