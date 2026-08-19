@@ -3711,6 +3711,10 @@ Gemini Live) that handle audio processing natively, bypassing STT/TTS.
 
 ```
 RealtimeVoiceProvider (interface)
+├── name → string                           # Provider identifier
+├── model_name → string                     # Model behind the session; defaults to name
+├── available_voices() → VoiceInfo[]        # Curated offline catalog
+├── available_models() → ModelInfo[]        # Curated offline catalog (MAY be empty)
 ├── connect(session, system_prompt, voice, tools, temperature) → void
 ├── disconnect(session) → void
 ├── send_audio(session, audio_chunk) → void
@@ -3738,7 +3742,7 @@ RealtimeVoiceProvider (interface)
 | `on_transcription` | ON_TRANSCRIPTION | User and AI transcripts emitted as RoomEvents |
 | `on_speech_start` | ON_SPEECH_START | Provider-detected speech start |
 | `on_speech_end` | ON_SPEECH_END | Provider-detected speech end |
-| `on_tool_call` | ON_REALTIME_TOOL_CALL | Tool execution request from AI |
+| `on_tool_call` | ON_TOOL_CALL | Tool execution request from AI, behind the pre-execution gate below (ON_REALTIME_TOOL_CALL is superseded, Section 9.2) |
 | `on_response_start` | — | Internal lifecycle; no hook (use ON_SPEECH_START for AI speech) |
 | `on_response_end` | — | Internal lifecycle; no hook (use AFTER_BROADCAST for response tracking) |
 | `on_error` | ON_ERROR | Mapped to the global ON_ERROR hook (Section 9.2) |
@@ -3748,6 +3752,29 @@ lifecycle callbacks used for audio routing and session bookkeeping. They do not
 map to hooks because they don't represent events the integrator needs to act on.
 Integrators who need response-level tracking SHOULD use AFTER_BROADCAST on the
 transcription events emitted by the provider.
+
+**Tool call pre-execution gate:**
+
+Before a realtime tool call is routed to whatever serves it, the channel MUST
+apply, in this order: the declared-tool check (a name absent from a non-empty
+declared catalogue is refused), argument validation against the declared schema,
+skill gating (Section 24.2), and the BEFORE_TOOL_USE hook (Section 9.2).
+
+The gate's scope is the call, not its servant. It MUST apply identically whether
+the call is served by a tool handler, by an ON_TOOL_CALL hook, or by a channel
+infrastructure tool (Tool Search, skill activation) — otherwise a hook that
+denies a tool would deny it only under some configurations, and a host auditing
+tool use would not see every call. Infrastructure tools are declared by the
+channel rather than by the caller's catalogue, so the declared-tool check admits
+them; they remain exempt from skill gating, which they exist to operate.
+
+An implementation MAY additionally recover a tool call the model emitted as
+assistant *text* rather than through the provider's function calling API. Such a
+recovered call MUST pass the same gate — its arguments are reconstructed from
+free text and are therefore less trustworthy than a function call's, not more.
+Its outcome, result or refusal, MUST be returned as injected context rather than
+as a tool result, because the model issued no call and has no pending response
+to close.
 
 **Text injection** refers to programmatically inserting text into a realtime
 session's conversation context (e.g., system messages, tool results, or context
@@ -3786,9 +3813,9 @@ session boundaries.
    └── Wire callbacks: transport audio → provider, provider audio → transport
 3. Audio flows bidirectionally: Client ↔ Transport ↔ Provider
 4. Transcriptions emitted as RoomEvents (if configured)
-5. Tool calls handled via:
+5. Tool calls pass the pre-execution gate, then are handled via:
    ├── Async tool handler function (if provided)
-   └── ON_REALTIME_TOOL_CALL hook (fallback)
+   └── ON_TOOL_CALL hook (fallback)
 6. end_session() → disconnect provider and transport
 ```
 
@@ -3859,7 +3886,7 @@ Voice-specific hooks allow integrators to customize the voice pipeline:
 | ON_SESSION_STARTED | ASYNC | Send greeting, start telemetry | VoiceBackend / Inbound pipeline |
 | ON_RECORDING_STARTED | ASYNC | Notify participants of recording | Audio Pipeline (Recorder) / Conference Channel |
 | ON_RECORDING_STOPPED | ASYNC | Store recording reference in timeline | Audio Pipeline (Recorder) / Conference Channel |
-| ON_REALTIME_TOOL_CALL | SYNC | Execute tool and return result | Realtime Provider |
+| ON_TOOL_CALL | SYNC | Execute tool and return result | Realtime Provider (ON_REALTIME_TOOL_CALL is superseded, Section 9.2) |
 | ON_REALTIME_TEXT_INJECTED | ASYNC | Log text injections | Realtime Voice Channel |
 | ON_PROTOCOL_TRACE | ASYNC | Log/inspect transport protocol traces (SIP, RTP) | Channel (via emit_trace) |
 | BEFORE_BRIDGE_AUDIO | SYNC | Filter/modify audio before bridging (mute, gain) | AudioBridge (Section 12.7) |
