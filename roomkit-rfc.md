@@ -1316,7 +1316,8 @@ AIContext
 ├── target_capabilities: ChannelCapabilities | null
 ├── target_media_types: list<ChannelMediaType>
 ├── system_instructions: string | null
-└── metadata: map<string, any>
+├── metadata: map<string, any>
+└── response_metadata: ResponseMetadata     # The turn's one record, see below
 
 AIResponse
 ├── text: string                            # Generated text
@@ -1324,6 +1325,18 @@ AIResponse
 ├── observations: list<Observation>         # Observations to record
 └── provider_metadata: map<string, any>     # Provider-specific data (tokens, latency)
 ```
+
+**Response metadata is one record per turn.** `AIContext.response_metadata` is a
+dict-like mapping created with the turn and shared by identity by every
+extension point of that turn: a memory provider MAY write it while the context
+is built, a `BEFORE_AI_GENERATION` hook MAY write it through
+`event.ai_context.response_metadata`, and a tool handler MAY write it through
+`current_response_metadata()`. The framework MUST merge the record
+into the metadata of every MESSAGE event the turn produces, as the record
+stands when that event is created — a streamed segment persisted before a tool
+round carries what was known then, the final answer carries everything the
+turn learned. It is how a host attributes to the reply what the turn read
+(cited sources, say) without a post-hoc rewrite of persisted events.
 
 **SMS Provider interface:**
 
