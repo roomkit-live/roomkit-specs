@@ -7,7 +7,7 @@
 | **Contributions** | TchatNSign, Angany AI |
 | **Version** | v17 Draft |
 | **Created** | 2026-01-27 |
-| **Last Updated** | 2026-08-07 |
+| **Last Updated** | 2026-08-24 |
 | **Supersedes** | v16 Draft |
 
 ---
@@ -1978,7 +1978,14 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     └── The caller observes its event's delivery-set completion, so
         delivery_results reports executed deliveries. An implementation
         MAY additionally offer detached completion; the outbox model
-        (§13.6) then governs crash recovery.
+        (§13.6) then governs crash recovery. A detached-completion call
+        returns at the commit — blocking decisions (steps 9–11) stay
+        synchronous, the committed event is on the result — and the
+        result SHOULD then carry a completion handle covering the whole
+        deferred tail: the delivery set, the reentry passes it spawns
+        and any streamed responses. Waiting on the handle backfills
+        delivery_results, after which the result reports what step 18
+        reports on the waiting path.
 ```
 
 **InboundResult:**
@@ -1988,6 +1995,7 @@ InboundResult
 ├── event: RoomEvent | null                 # The processed event (null if blocked)
 ├── blocked: bool                           # Whether the event was blocked
 ├── reason: string | null                   # Block reason
+├── delivery: CompletionHandle | null       # Detached completion only (step 18)
 └── delivery_results: map<string, DeliveryResult>
 ```
 
