@@ -1985,7 +1985,11 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
         deferred tail: the delivery set, the reentry passes it spawns
         and any streamed responses. Waiting on the handle backfills
         delivery_results, after which the result reports what step 18
-        reports on the waiting path.
+        reports on the waiting path. A call refused before the locked
+        region reports the refusal alone — there is no deferred tail to
+        hand back. Waiting on the handle from a context the delivery
+        lane cannot progress past (§10.2) MUST NOT deadlock: it returns
+        unwaited, the same short-circuit the waiting path applies.
 ```
 
 **InboundResult:**
