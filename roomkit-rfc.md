@@ -1158,6 +1158,18 @@ The AI channel MUST skip events originating from itself to prevent infinite loop
 channel's capabilities to the AI at generation time, NOT post-process the output.
 This allows the AI to tailor its response (e.g., short text for SMS, rich for Email).
 
+**Tool-call composition events:** A provider whose structured stream exposes
+tool-call argument fragments MAY yield `StreamToolCallDelta` before the complete
+`StreamToolCall`. `AIChannel` SHOULD project those fragments onto the realtime bus
+as `TOOL_CALL_DELTA`, carrying the call id, name and cumulative argument character
+count, but MUST NOT carry the argument content. Each composition attempt that
+published a non-terminal frame MUST publish one terminal frame with an empty
+`tool_calls` list before that attempt ends. This includes successful completion,
+cancellation, provider failure, retry and fallback: a retry closes the abandoned
+attempt before the replacement attempt starts, so cumulative counts MUST NOT span
+two attempts. The complete `StreamToolCall` remains the unit of execution and
+persistence; composition events are ephemeral and MUST NOT be persisted.
+
 **ACP Agent Channel:**
 
 An ACP agent channel connects a Room to an external
@@ -1193,7 +1205,15 @@ An ACP agent channel:
    prompt; a client cannot distinguish the two from a single reading, and
    reinterpreting them silently corrupts an accounting figure. An
    implementation MAY carry the session's context occupancy and running cost
-   alongside them under distinct keys.
+   alongside them under distinct keys; and
+10. MUST expose an unclean prompt outcome on the turn's response-metadata record:
+    a returned ACP stop reason other than `end_turn` is written as
+    `response_metadata["acp"]["stop_reason"]`, while a prompt that exits before
+    returning a response is written as
+    `response_metadata["acp"]["interrupted"] = true`. A clean `end_turn` writes
+    neither marker. The same final record MUST reach the caller through
+    `InboundResult.response_metadata`, including when the turn produced no final
+    MESSAGE event.
 
 The stable ACP protocol version MUST be the default. Experimental protocol
 versions MAY be supported only behind explicit opt-in and MUST NOT silently
@@ -2012,9 +2032,21 @@ InboundResult
 ├── event: RoomEvent | null                 # The processed event (null if blocked)
 ├── blocked: bool                           # Whether the event was blocked
 ├── reason: string | null                   # Block reason
+├── error: Exception | null                 # Generation/stream failure, when observed
+├── response_metadata: ResponseMetadata     # Final records of root response turns
 ├── delivery: CompletionHandle | null       # Detached completion only (step 18)
 └── delivery_results: map<string, DeliveryResult>
 ```
+
+`response_metadata` MUST merge the response-metadata records produced by the
+intelligence channels in the caller's root delivery set. It is the final state
+of each record: the non-streaming path collects it after generation, and the
+streaming path after consuming the response stream. A deferred call MAY return
+with the record still empty, but `delivery.wait()` MUST backfill it together with
+`delivery_results` and `error`, so the waited result reads like the ordinary
+waiting path. A call that ran no response turn returns an empty record. When
+several channels contribute metadata they SHOULD namespace their top-level keys;
+the merge order for colliding keys is unspecified.
 
 ### 10.2 Broadcast Pipeline
 
