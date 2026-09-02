@@ -2578,15 +2578,33 @@ session MUST be created if the participant reconnects.
 ```
 STTProvider (interface)
 ├── name: string
-├── transcribe(audio_chunk) → TranscriptionResult
-└── transcribe_stream(audio_stream) → async_iterator<TranscriptionResult>
+├── supports_language_override: bool (default false)
+│       # Whether transcribe/transcribe_stream honour a per-call language
+├── transcribe(audio_chunk, language: string | null) → TranscriptionResult
+└── transcribe_stream(audio_stream, language: string | null) → async_iterator<TranscriptionResult>
 
 TranscriptionResult
 ├── text: string
 ├── is_final: bool
 ├── confidence: float | null
-└── language: string | null
+└── language: string | null                 # The language the provider reports for the text
 ```
+
+`language` on a call overrides the provider's configured language for that
+call only. A provider that cannot honour it MUST report
+`supports_language_override = false`, and a Voice Channel MUST NOT pass a
+language to such a provider. `TranscriptionResult.language` is what the
+provider reports — what it detected when it was asked to detect — and MUST NOT
+be back-filled from the request: null means the provider said nothing.
+
+A Voice Channel SHOULD let the STT language be chosen per session at runtime.
+The choice applies from the next stream opened for that session: a stream is
+opened per utterance (VAD mode) or per turn (continuous mode), and every
+streaming STT API RoomKit targets fixes the language for the life of a stream.
+The typical flow starts a session in a detecting mode (Deepgram `multi`), reads
+the reported language, and pins the following streams to it. An implementation
+MAY ship that flow as a policy; it MUST leave the primitive reachable from
+hooks.
 
 **TTSProvider interface:**
 
