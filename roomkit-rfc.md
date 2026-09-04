@@ -1488,8 +1488,9 @@ Implementations MUST enforce these rules:
 
    The same holds for an event delivered to nobody. An event stored `BLOCKED`
    — refused by a hook (§10.1 step 10), written by a source that could not
-   write (step 11), stopped by the chain-depth cap (§8.3) — MUST NOT reach
-   any channel's reconstructed context, its own source's included: the room
+   write, read-only or muted (step 11, rule 2), stopped by the chain-depth cap
+   or the reentry cap (§8.3) — MUST NOT reach any channel's reconstructed
+   context, its own source's included: the room
    refused that turn, and a model that reads its own refused answer as
    history continues from a turn nobody received. The record stays in the
    timeline for host code and audit (the point on host code below applies to
@@ -1504,10 +1505,13 @@ Implementations MUST enforce these rules:
 
    Three points the rule does NOT cover:
 
-   - **A channel always sees its own events.** Rule 5 skips a channel's own
-     event at delivery because it produced it, not because it may not know it.
-     A rule that dropped an agent's own turns from its own prompt would erase
-     the assistant pattern of §7.4 (`visibility="ws_advisor"`) from the inside.
+   - **A channel always sees its own accepted events.** Rule 5 skips a
+     channel's own event at delivery because it produced it, not because it
+     may not know it. A rule that dropped an agent's own turns from its own
+     prompt would erase the assistant pattern of §7.4
+     (`visibility="ws_advisor"`) from the inside. Its own *refused* turns are
+     the exception stated above: an answer nobody received, a muted channel's
+     included, is not history the channel may continue from.
    - **Host code reads the timeline whole.** Hooks, scorers and framework
      machinery run in the integrator's process and hold the store already;
      filtering their `recent_events` would forbid nothing and would break
