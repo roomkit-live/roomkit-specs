@@ -421,10 +421,14 @@ A refused event MUST NOT be appended to the timeline, MUST NOT be broadcast,
 and MUST NOT be stored as a `BLOCKED` event: a closed room accepts nothing,
 and an audit record written into it would be the very thing the status
 forbids. The framework MUST return a blocked result naming the refusal
-(`reason = room_closed`), and SHOULD emit the `room_refused_event` framework
-event (§8.2) so the condition is observable — a room that has gone quiet
-because it closed is otherwise indistinguishable from one whose integration
-has broken.
+(`reason = room_closed`) and, when what it turned away is an inbound event, a
+response re-entering the room or a regeneration, MUST emit the
+`room_refused_event` framework event (§8.2) so the condition is observable — a
+room that has gone quiet because it closed is otherwise indistinguishable from
+one whose integration has broken. The framework's own lifecycle records
+(`SystemContent`, §5.3) and the events an identity challenge injects (§11) MAY
+be refused without an event: neither is a message a subscriber could be
+waiting for.
 
 One exception, and only one: the framework's own record of the transition —
 the lifecycle hook, the framework event, and any timeline entry an
@@ -1591,15 +1595,16 @@ subscriber reads it without knowing which one did:
 
 - `status` — the room status that refused (`closed` or `archived`); null only
   when the room no longer exists.
-- `operation` — the path that met the gate: `inbound` for a message, a direct
-  injection or a hook's injected event refused at §10.1 step 6; `reentry` for
-  the framework's own re-injection of a response; `regenerate` for a
-  regeneration of the last answer.
+- `operation` — the path that met the gate: `inbound` for a message or a
+  direct injection refused at §10.1 step 6; `reentry` for the framework's own
+  re-injection of a response; `regenerate` for a regeneration of the last
+  answer.
 - `event_type` — the type of the refused event; null when a regenerate had
   nothing to replay.
 
-`event_id` is the refused event's id — for a regenerate, the message it would
-have replayed, or null when nothing qualified.
+`event_id` is the refused event's id — an id that names nothing in the store,
+since a refused event is never appended — or, for a regenerate, the message it
+would have replayed, null when nothing qualified.
 
 ### 8.3 Event Chain Depth
 
