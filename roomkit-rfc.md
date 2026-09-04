@@ -1482,6 +1482,15 @@ Implementations MUST enforce these rules:
    delivery. Withholding an event at broadcast and returning it one turn later
    as context is not a partial enforcement of visibility; it is none.
 
+   The same holds for an event delivered to nobody. An event stored `BLOCKED`
+   — refused by a hook (§10.1 step 10), written by a source that could not
+   write (step 11), stopped by the chain-depth cap (§8.3) — MUST NOT reach
+   any channel's reconstructed context, its own source's included: the room
+   refused that turn, and a model that reads its own refused answer as
+   history continues from a turn nobody received. The record stays in the
+   timeline for host code and audit (the point on host code below applies to
+   it unchanged).
+
    The filter is per reader, so it MUST be applied where the reader is known —
    a single `RoomContext` shared by every channel of a broadcast cannot be
    filtered once for all of them. An implementation MUST apply it before the
@@ -1951,6 +1960,8 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 
 10. IF BLOCKED BY HOOK:
     ├── Store event with status=BLOCKED, blocked_by=hook_name
+    │   # An audit record: it reaches no channel, at delivery or as
+    │   # reconstructed context one turn later (§7.5 rule 8)
     ├── Deliver injected events from hook result
     ├── Persist tasks and observations from hook result
     └── Return InboundResult(blocked=true)
