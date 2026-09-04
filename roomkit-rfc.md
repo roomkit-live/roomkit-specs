@@ -420,10 +420,11 @@ re-injects into a room it already knows.
 A refused event MUST NOT be appended to the timeline, MUST NOT be broadcast,
 and MUST NOT be stored as a `BLOCKED` event: a closed room accepts nothing,
 and an audit record written into it would be the very thing the status
-forbids. The framework MUST return a blocked result naming the refusal, and
-SHOULD emit a framework event so the condition is observable — a room that has
-gone quiet because it closed is otherwise indistinguishable from one whose
-integration has broken.
+forbids. The framework MUST return a blocked result naming the refusal
+(`reason = room_closed`), and SHOULD emit the `room_refused_event` framework
+event (§8.2) so the condition is observable — a room that has gone quiet
+because it closed is otherwise indistinguishable from one whose integration
+has broken.
 
 One exception, and only one: the framework's own record of the transition —
 the lifecycle hook, the framework event, and any timeline entry an
@@ -1545,6 +1546,7 @@ They are NOT stored in any room timeline.
 | room_paused | Room transitioned to PAUSED | room_id |
 | room_closed | Room transitioned to CLOSED | room_id |
 | room_archived | Room transitioned to ARCHIVED | room_id |
+| room_refused_event | A room whose status refuses new events turned one away (§5.1) | room_id, event_id, status, operation, event_type |
 | channel_registered | Channel registered with framework | channel_id, channel_type |
 | channel_unregistered | Channel unregistered | channel_id |
 | source_connected | Source provider connected | source_id |
@@ -1574,6 +1576,21 @@ They are NOT stored in any room timeline.
 
 Implementations MUST emit these events. Integrators subscribe to framework
 events for monitoring and integration purposes.
+
+`room_refused_event` carries one `data` shape whichever path refused, so a
+subscriber reads it without knowing which one did:
+
+- `status` — the room status that refused (`closed` or `archived`); null only
+  when the room no longer exists.
+- `operation` — the path that met the gate: `inbound` for a message, a direct
+  injection or a hook's injected event refused at §10.1 step 6; `reentry` for
+  the framework's own re-injection of a response; `regenerate` for a
+  regeneration of the last answer.
+- `event_type` — the type of the refused event; null when a regenerate had
+  nothing to replay.
+
+`event_id` is the refused event's id — for a regenerate, the message it would
+have replayed, or null when nothing qualified.
 
 ### 8.3 Event Chain Depth
 
