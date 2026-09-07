@@ -9405,6 +9405,28 @@ ACPChannel
     └── close releases sessions and process transport
 ```
 
+ACP response observations MAY include optional `usage_metadata` alongside the
+existing numeric `usage` map. This metadata identifies the native session,
+measurement source and scope, separately from the host room/channel/request.
+A session cost MUST remain a cumulative observation, not a prompt cost; context
+occupancy/capacity MUST NOT be treated as consumed-token counters. Missing
+measurements MUST remain absent and reported zero MUST remain zero.
+
+Transport-provided report/session/result identities and timestamps MUST be
+preserved across recovery and replay when available. A recovered terminal
+snapshot MUST NOT be combined with live observations from another session.
+An observation without a source prompt identity MUST NOT be assigned one from
+the currently active prompt. Locally assigned receipt identities MUST be
+identified as local and MUST NOT imply durable continuity across resets.
+A model observed at prompt start or report receipt MUST NOT be claimed as the
+model responsible for a whole cumulative session cost.
+
+The end-of-turn trigger remains unchanged: a consumed prompt response can
+report a non-success stop reason; an exception or abandoned stream is not a
+response. Intermediate usage observations MAY remain observable as ephemeral
+events in those cases, but do not establish successful completion or durable
+accounting. No tariff, credit policy or inferred cost delta is specified here.
+
 ### A.10 Voice Channel
 
 ```
