@@ -1675,7 +1675,7 @@ Hooks MAY be registered globally (apply to all rooms) or per-room.
 ### 9.2 Hook Triggers
 
 **HookTrigger** enumeration. The **Status** column distinguishes triggers the
-reference implementation emits today (**Implemented** — 72 as of this revision)
+reference implementation emits today (**Implemented** — 73 as of this revision)
 from those specified for a forthcoming capability but not yet emitted
 (**Planned**), and from a trigger kept for historical reference whose behaviour
 has moved elsewhere (**Superseded**). Conformance targets the Implemented set;
@@ -1725,7 +1725,7 @@ Planned rows are normative design intent for the named capability.
 | ON_RECORDING_STOPPED | ASYNC | Implemented | Audio recording stopped, result available |
 | ON_REALTIME_TOOL_CALL | SYNC | Superseded | Speech-to-speech tool call — superseded by `ON_TOOL_CALL` (unified across AI and realtime channels) |
 | ON_REALTIME_TEXT_INJECTED | ASYNC | Implemented | Text injected into realtime session |
-| ON_REALTIME_DELEGATION | ASYNC | Planned | Speech-to-speech model handed reasoning or tool use to a backend, hosted or integrator-side (Section 12.4.1); carries the delegation id and its target |
+| ON_REALTIME_DELEGATION | ASYNC | Implemented | Speech-to-speech model handed reasoning or tool use to a backend, hosted or integrator-side (Section 12.4.1); carries the delegation id and its target |
 | ON_PROTOCOL_TRACE | ASYNC | Implemented | Transport-level protocol trace emitted (SIP, RTP, etc.) |
 | BEFORE_BRIDGE_AUDIO | SYNC | Implemented | Before an audio frame is forwarded via bridge — can block/modify (voice) |
 | | | | |
@@ -3847,7 +3847,7 @@ RealtimeVoiceProvider (interface)
 ├── on_speech_start(callback) → void
 ├── on_speech_end(callback) → void
 ├── on_tool_call(callback) → void           # AI requests a tool call
-├── on_delegation(callback) → void          # Model handed reasoning to an integrator backend (Section 12.4.1)
+├── on_delegation(callback) → void          # (session, delegation_id, target): model handed reasoning to a backend (Section 12.4.1)
 ├── on_response_start(callback) → void
 ├── on_response_end(callback) → void
 └── on_error(callback) → void
@@ -3862,7 +3862,7 @@ RealtimeVoiceProvider (interface)
 | `on_speech_start` | ON_SPEECH_START | Provider-detected speech start |
 | `on_speech_end` | ON_SPEECH_END | Provider-detected speech end |
 | `on_tool_call` | ON_TOOL_CALL | Tool execution request from AI, behind the pre-execution gate below (ON_REALTIME_TOOL_CALL is superseded, Section 9.2) |
-| `on_delegation` | ON_REALTIME_DELEGATION | Model handed reasoning to an integrator backend; served by the ReasoningBackend (Section 12.4.1) |
+| `on_delegation` | ON_REALTIME_DELEGATION | Model handed reasoning to a backend, hosted or integrator; the integrator target is served by the ReasoningBackend (Section 12.4.1) |
 | `on_response_start` | — | Internal lifecycle; no hook (use ON_SPEECH_START for AI speech) |
 | `on_response_end` | — | Internal lifecycle; no hook (use AFTER_BROADCAST for response tracking) |
 | `on_error` | ON_ERROR | Mapped to the global ON_ERROR hook (Section 9.2) |
@@ -4039,8 +4039,10 @@ Section 12.10.12.
 
 The audio pipeline (Section 12.3) keeps its preprocessing role. Of the two VAD
 roles above, only observation is admissible: endpointing needs an activity
-signal the provider does not take, and an implementation MUST refuse that
-configuration rather than fall back silently.
+signal the provider does not take. An implementation MUST NOT drive
+endpointing or interruption from a pipeline VAD on such a session, and SHOULD
+say so where the VAD is configured — a notice at session start suffices —
+rather than demote it silently.
 
 **The output is a stream, not a burst (normative).** A full-duplex provider
 MAY emit output audio continuously at real-time pace, silence included, since
@@ -4083,21 +4085,27 @@ for any provider.
 
 **Reasoning delegation, integrator backend (normative).** In the integrator
 mode the model signals only that it is handing work over: the provider fires
-`on_delegation(session, delegation_id)`, and the request carries no task text.
-The channel MUST serve it through a configured **ReasoningBackend**:
+`on_delegation(session, delegation_id, target)` with `target = "integrator"`,
+and the request carries no task text. The hosted mode announces its
+delegations through the same callback with `target = "hosted"`, so that a
+channel can observe both while serving one. The channel MUST serve the
+integrator target through a configured **ReasoningBackend**:
 
 ```
 ReasoningBackend (interface)
 ├── run(request: ReasoningRequest) → async_iterator<ReasoningOutput>
 │       # Work out the request from the transcript and answer it, with the
 │       # backend's own model, context and tools
+├── session_ended(session_id) → void        # OPTIONAL: release state kept for a session; no-op by default
 └── close() → void
 
 ReasoningRequest
 ├── session: VoiceSession
 ├── delegation_id: string                   # Opaque; returned unchanged with every output
 ├── transcript: list<TranscriptLine>        # Both roles, since the previous request
-└── first: bool                             # First request of the session: the transcript is the whole conversation
+├── first: bool                             # First request of the session: the transcript is the whole conversation
+├── tools: list<ToolDefinition>             # The channel's declared catalogue, for the backend's model
+└── execute_tool(name, arguments) → string  # One call through the channel's pre-execution gate and handler
 
 TranscriptLine
 ├── role: "user" | "assistant"
@@ -4128,8 +4136,10 @@ The backend is the integrator's — an AIProvider (Section 6.7) driven through a
 tool loop, an AIChannel, an Agent (Section 19). This specification defines the
 contract, not the component. Whatever hosts it, the tool calls the backend
 makes are tool calls of the framework and MUST pass the pre-execution gate and
-the ToolPolicy (Section 21) as any other; a delegation is not a way around
-them.
+the ToolPolicy (Section 21) as any other: `execute_tool` on the request is
+that gate, followed by the channel's handler, ON_TOOL_CALL and result
+truncation, and a backend MUST route its calls through it. A delegation is
+not a way around them.
 
 **Observability.** ON_REALTIME_DELEGATION (Section 9.2) fires when the model
 hands work over, in either mode, with the delegation id and its target (hosted
@@ -9658,6 +9668,7 @@ RealtimeVoiceChannel
 │   ├── temperature: float | null
 │   ├── input_sample_rate: int
 │   ├── output_sample_rate: int
+│   ├── reasoning_timeout_s: float              # Bound on one delegation's run (Section 12.4.1)
 │   └── emit_transcription_events: bool
 ├── session_management:
 │   ├── start_session(room_id, participant_id, connection, metadata)
