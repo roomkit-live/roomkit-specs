@@ -99,6 +99,8 @@ interpreted as described in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
 | **PLC** | Packet Loss Concealment — synthesizing replacement audio for packets confirmed lost in transit, preserving the temporal continuity of the inbound stream. |
 | **Turn Detection** | The process of determining whether a speaker has finished their conversational turn, using acoustic and/or semantic signals. |
 | **Backchannel** | Short verbal acknowledgments ("mmhmm", "ok", "yes") that signal attention without requesting a turn change. |
+| **Full-Duplex Provider** | A speech-to-speech provider whose model listens and speaks at the same time, manages overlap itself, and exposes no response or speech boundaries on the wire (Section 12.4.1). |
+| **Reasoning Delegation** | A full-duplex provider's model handing reasoning and tool use to a backend model — hosted by the provider or supplied by the integrator — while it keeps the conversation going. Distinct from Task Delegation (Section 23). |
 | **Protocol Trace** | An immutable record of a transport-level protocol exchange (e.g., SIP INVITE, 200 OK, BYE) emitted by a channel for observability and debugging. |
 | **Agent** | An AIChannel subclass with structured identity metadata (role, description, scope, voice) for multi-agent orchestration. |
 | **Orchestration** | The system that routes events to the correct agent, manages conversation phases, and handles agent-to-agent handoffs. |
@@ -1723,6 +1725,7 @@ Planned rows are normative design intent for the named capability.
 | ON_RECORDING_STOPPED | ASYNC | Implemented | Audio recording stopped, result available |
 | ON_REALTIME_TOOL_CALL | SYNC | Superseded | Speech-to-speech tool call — superseded by `ON_TOOL_CALL` (unified across AI and realtime channels) |
 | ON_REALTIME_TEXT_INJECTED | ASYNC | Implemented | Text injected into realtime session |
+| ON_REALTIME_DELEGATION | ASYNC | Planned | Speech-to-speech model handed reasoning or tool use to a backend, hosted or integrator-side (Section 12.4.1); carries the delegation id and its target |
 | ON_PROTOCOL_TRACE | ASYNC | Implemented | Transport-level protocol trace emitted (SIP, RTP, etc.) |
 | BEFORE_BRIDGE_AUDIO | SYNC | Implemented | Before an audio frame is forwarded via bridge — can block/modify (voice) |
 | | | | |
@@ -2454,7 +2457,7 @@ Architecture 2: Speech-to-Speech (RealtimeVoiceChannel)
 | Criterion | VoiceChannel (STT/TTS) | RealtimeVoiceChannel (Speech-to-Speech) | VoiceChannel (Bridge) | ConferenceChannel (SFU) |
 |---|---|---|---|---|
 | **Latency** | Moderate (~500-800ms TTFA with streaming) | Lower — end-to-end streaming | Lowest — direct audio forwarding | Low — SFU forwards media directly between clients |
-| **Control** | Full — choose STT, LLM, TTS | Limited — provider bundles all | Full pipeline, no AI required | Control plane only — media plane is external |
+| **Control** | Full — choose STT, LLM, TTS | Limited — provider bundles all; with reasoning delegation (Section 12.4.1) the reasoning model is the integrator's | Full pipeline, no AI required | Control plane only — media plane is external |
 | **Text access** | Always — utterances become RoomEvents | Optional — if transcription configured | Optional — if STT configured | Per-track STT, attributed per participant |
 | **Multi-channel** | Native — text routes to any channel | Requires transcription | Requires STT for text routing | Native — transcripts are RoomEvents |
 | **AI involvement** | Required (generates responses) | Required (speech-to-speech) | Optional (observer/monitor) | Optional (bot participant) |
@@ -3825,6 +3828,7 @@ Gemini Live) that handle audio processing natively, bypassing STT/TTS.
 RealtimeVoiceProvider (interface)
 ├── name → string                           # Provider identifier
 ├── model_name → string                     # Model behind the session; defaults to name
+├── full_duplex: bool (default false)       # Model listens and speaks at once; no boundaries on the wire (Section 12.4.1)
 ├── available_voices() → VoiceInfo[]        # Curated offline catalog
 ├── available_models() → ModelInfo[]        # Curated offline catalog (MAY be empty)
 ├── connect(session, system_prompt, voice, tools, temperature) → void
@@ -3832,7 +3836,9 @@ RealtimeVoiceProvider (interface)
 ├── send_audio(session, audio_chunk) → void
 ├── inject_text(session, text, role) → void  # Insert text into conversation context
 ├── submit_tool_result(session, call_id, result) → void  # Return tool result to provider
+├── submit_delegation_output(session, delegation_id, text, spoken) → void  # Return a reasoning backend's output (Section 12.4.1)
 ├── interrupt(session) → void               # Signal user interruption to provider
+├── truncate_audio(session, audio_end_ms) → void  # OPTIONAL: drop the unheard tail from provider context after an interruption; no-op by default
 ├── close() → void                          # Release all resources
 │
 │   # Callback registration:
@@ -3841,6 +3847,7 @@ RealtimeVoiceProvider (interface)
 ├── on_speech_start(callback) → void
 ├── on_speech_end(callback) → void
 ├── on_tool_call(callback) → void           # AI requests a tool call
+├── on_delegation(callback) → void          # Model handed reasoning to an integrator backend (Section 12.4.1)
 ├── on_response_start(callback) → void
 ├── on_response_end(callback) → void
 └── on_error(callback) → void
@@ -3855,6 +3862,7 @@ RealtimeVoiceProvider (interface)
 | `on_speech_start` | ON_SPEECH_START | Provider-detected speech start |
 | `on_speech_end` | ON_SPEECH_END | Provider-detected speech end |
 | `on_tool_call` | ON_TOOL_CALL | Tool execution request from AI, behind the pre-execution gate below (ON_REALTIME_TOOL_CALL is superseded, Section 9.2) |
+| `on_delegation` | ON_REALTIME_DELEGATION | Model handed reasoning to an integrator backend; served by the ReasoningBackend (Section 12.4.1) |
 | `on_response_start` | — | Internal lifecycle; no hook (use ON_SPEECH_START for AI speech) |
 | `on_response_end` | — | Internal lifecycle; no hook (use AFTER_BROADCAST for response tracking) |
 | `on_error` | ON_ERROR | Mapped to the global ON_ERROR hook (Section 9.2) |
@@ -3863,7 +3871,8 @@ RealtimeVoiceProvider (interface)
 lifecycle callbacks used for audio routing and session bookkeeping. They do not
 map to hooks because they don't represent events the integrator needs to act on.
 Integrators who need response-level tracking SHOULD use AFTER_BROADCAST on the
-transcription events emitted by the provider.
+transcription events emitted by the provider. A full-duplex provider has no
+such events on its wire and synthesizes them (Section 12.4.1).
 
 **Tool call pre-execution gate:**
 
@@ -3892,8 +3901,11 @@ to close.
 session's conversation context (e.g., system messages, tool results, or context
 updates) rather than sending audio. This is provider-specific: for OpenAI
 Realtime, this maps to `conversation.item.create` with text content; for Gemini
-Live, this maps to injecting text turns. The ON_REALTIME_TEXT_INJECTED hook fires
-after such an injection, allowing integrators to log or react to context changes.
+Live, this maps to injecting text turns; for a full-duplex provider whose session
+takes only appends (OpenAI GPT-Live), a `system` role maps to an instructions
+append and a `user` role to a spoken-context append the model relays in its own
+words (Section 12.4.1). The ON_REALTIME_TEXT_INJECTED hook fires after such an
+injection, allowing integrators to log or react to context changes.
 
 **RealtimeAudioTransport interface:**
 
@@ -3966,11 +3978,165 @@ same turn behaviour across several providers whose endpointing differs. In this
 role the implementation MUST signal activity start and end to the provider, and
 MUST NOT rely on provider-side speech events for turn boundaries.
 
-An implementation that supports only the observation role is conformant.
+An implementation that supports only the observation role is conformant. A
+full-duplex provider admits only the observation role (Section 12.4.1).
 
 The `RealtimeVoiceChannel` accepts an `AudioPipelineConfig` in the same way as
 `VoiceChannel`. When a pipeline is configured, inbound audio frames are processed
 through the pipeline before being forwarded to the provider.
+
+#### 12.4.1 Full-Duplex Providers and Reasoning Delegation
+
+Some speech-to-speech providers do not take turns. A **full-duplex provider**
+(e.g., OpenAI GPT-Live) listens and speaks at the same time: it decides on its
+own when to answer, when to fall silent because the user spoke over it, and
+when to hold the floor with a backchannel. Its wire carries audio and
+transcript deltas in both directions and little else — no response start or
+end, no speech start or end, no request to respond, no interruption. The same
+providers hold no tools: the conversational model hands reasoning and tool use
+to a backend model, a **reasoning delegation**, and keeps talking while the
+backend works. A provider declares both traits with `full_duplex = true`, and
+this section binds only providers that declare it. Support is OPTIONAL within
+Conformance Level 3.
+
+Reasoning delegation is not Task Delegation (Section 23). Section 23 dispatches
+a described task to an agent in a child room and delivers a result into the
+conversation; a reasoning delegation is the provider's own model deferring the
+next thing it will say, inside the session, to a model that can think longer
+and call tools. The two compose: the backend of a reasoning delegation MAY
+itself delegate a task.
+
+**Boundaries are synthesized (normative).** The channel contracts of this
+section — idle tracking, end-of-response flushing, AEC activation, the floor
+of Section 12.10.12 — hold on `on_response_start` and `on_response_end`, and a
+full-duplex provider has neither on its wire. The provider MUST synthesize
+them: `on_response_start` when assistant output (audio or transcript) resumes
+after quiet, `on_response_end` when assistant output has been quiet for a
+configurable gap. The gap MUST exceed the provider's transcript frame
+granularity, or an ordinary pause inside a sentence would close the response;
+for a provider that emits transcript fragments on 200 ms frames a default in
+the order of 800 ms is RECOMMENDED. A provider MAY synthesize `on_speech_start`
+and `on_speech_end` from user-role transcript activity the same way, so that
+ON_SPEECH_START and ON_SPEECH_END keep firing; the channel MUST treat them as
+observation, never as the entry to the interruption path below. Synthesized
+boundaries lag the audio they describe by the gap, and a latency metric read
+from them MUST account for it.
+
+**Interruption belongs to the model (normative).** When the user speaks over a
+full-duplex provider, the model hears it and decides — it stops, or finishes
+its clause, or says "mhm" and carries on. The framework MUST NOT decide for
+it: on a full-duplex session the channel MUST NOT call `interrupt()` or
+`truncate_audio()`, MUST NOT flush or interrupt the transport's playback, and
+MUST NOT gate provider audio on user speech, whatever the sensor — provider
+speech events, pipeline VAD, or transport-level barge-in. Gating would cut the
+model's backchannels and its own recovery from being talked over, the very
+behaviour the provider was chosen for. The provider's `interrupt()` and
+`truncate_audio()` MUST be no-ops that neither fail nor log above debug level,
+so a channel that ignores the flag does no harm calling them. ON_BARGE_IN does
+not fire on a full-duplex 1:1 session: the framework interrupted nothing. A
+conference keeps its own authority over the bot track and is treated in
+Section 12.10.12.
+
+The audio pipeline (Section 12.3) keeps its preprocessing role. Of the two VAD
+roles above, only observation is admissible: endpointing needs an activity
+signal the provider does not take, and an implementation MUST refuse that
+configuration rather than fall back silently.
+
+**The output is a stream, not a burst (normative).** A full-duplex provider
+MAY emit output audio continuously at real-time pace, silence included, since
+it does not know in advance when it will speak. The outbound path MUST NOT
+rely on audio arriving faster than real time — a pacer that waits to prebuffer
+a response would wait for a burst that never comes — and a recorder (Section
+12.3.7) records the silence as such.
+
+**The session is fixed at start (normative).** Such a provider typically fixes
+model, instructions, voice, audio format, delegation mode and seeded history
+when the session starts, and takes only appends afterwards. The provider MUST
+expose that a mid-session reconfiguration replaces the session, so that the
+orchestration that changes a running agent — a handoff (Section 19.6), a skill
+activation (Section 24.4) — chooses an append where one exists and accepts the
+loss where it does not. A changed system prompt SHOULD be delivered as an
+instructions append where the provider offers one; a reconnect reseeds a
+text-only history and loses the audio context. Tools, in the hosted mode
+below, are the one field that MAY change after start and MUST be forwarded to
+the backend without replacing the session. A provider that takes one audio
+format for both directions MUST resample so that the channel's declared input
+and output rates hold at the channel boundary.
+
+**Text injection is paraphrased.** On these providers a spoken injection is
+context the model relays in its own words, not a script it reads; there is no
+verbatim primitive, and `inject_text` MUST document that. Where the provider
+bounds the size of one append, an implementation MUST split a longer text on
+sentence boundaries into as many appends as it takes, rather than truncate or
+refuse.
+
+**Reasoning delegation, hosted backend (normative).** In the hosted mode the
+provider's service runs the backend model, and the `tools` passed to
+`connect()` are that backend's tools. The channel sees nothing new: every
+function call the backend emits MUST reach `on_tool_call` and pass the
+pre-execution gate of this section unchanged, ON_TOOL_CALL fires as always,
+and the result returns through `submit_tool_result`. The provider MUST NOT
+resume the backend while any call of the same delegation is unanswered — the
+hosted service rejects a partial continuation — and MUST resume it once the
+last result is in. A result submitted after the session ended is dropped, as
+for any provider.
+
+**Reasoning delegation, integrator backend (normative).** In the integrator
+mode the model signals only that it is handing work over: the provider fires
+`on_delegation(session, delegation_id)`, and the request carries no task text.
+The channel MUST serve it through a configured **ReasoningBackend**:
+
+```
+ReasoningBackend (interface)
+├── run(request: ReasoningRequest) → async_iterator<ReasoningOutput>
+│       # Work out the request from the transcript and answer it, with the
+│       # backend's own model, context and tools
+└── close() → void
+
+ReasoningRequest
+├── session: VoiceSession
+├── delegation_id: string                   # Opaque; returned unchanged with every output
+├── transcript: list<TranscriptLine>        # Both roles, since the previous request
+└── first: bool                             # First request of the session: the transcript is the whole conversation
+
+TranscriptLine
+├── role: "user" | "assistant"
+└── text: string
+
+ReasoningOutput
+├── text: string
+├── spoken: bool                            # true: the model relays it in its own words; false: silent context it may draw on
+└── is_final: bool                          # The answer to the request, as opposed to progress toward it
+```
+
+The channel MUST hand the backend the transcript recorded since the previous
+request, user and assistant lines both — the backend has no other way to learn
+what was asked — and MUST return every output through
+`submit_delegation_output(session, delegation_id, text, spoken)` as it
+arrives, so that a backend working in steps can tell the user what it learned
+on the way. The transcript ledger is session state, not a RoomEvent: it MUST
+NOT be stored, and in a conference (Section 12.10.12) its user lines are
+unattributed, as that section requires. A backend that yields nothing, fails,
+or exceeds the bound the channel SHOULD place on its run MUST still be
+answered with one spoken output saying the work could not be completed — a
+full-duplex model otherwise keeps the conversation open for an answer that
+never comes. An output returned for a delegation the conversation has moved
+past is the model's to ignore, and the provider's instructions SHOULD tell it
+so.
+
+The backend is the integrator's — an AIProvider (Section 6.7) driven through a
+tool loop, an AIChannel, an Agent (Section 19). This specification defines the
+contract, not the component. Whatever hosts it, the tool calls the backend
+makes are tool calls of the framework and MUST pass the pre-execution gate and
+the ToolPolicy (Section 21) as any other; a delegation is not a way around
+them.
+
+**Observability.** ON_REALTIME_DELEGATION (Section 9.2) fires when the model
+hands work over, in either mode, with the delegation id and its target (hosted
+or integrator); the time from it to the first spoken output is the latency the
+user hears. A provider billed by session duration MUST report duration as its
+usage and MUST NOT restate it as tokens; backend token usage, where the
+provider surfaces it, is the backend model's and is attributed to it.
 
 ### 12.5 Voice Hooks
 
@@ -4000,6 +4166,7 @@ Voice-specific hooks allow integrators to customize the voice pipeline:
 | ON_RECORDING_STOPPED | ASYNC | Store recording reference in timeline | Audio Pipeline (Recorder) / Conference Channel |
 | ON_TOOL_CALL | SYNC | Execute tool and return result | Realtime Provider (ON_REALTIME_TOOL_CALL is superseded, Section 9.2) |
 | ON_REALTIME_TEXT_INJECTED | ASYNC | Log text injections | Realtime Voice Channel |
+| ON_REALTIME_DELEGATION | ASYNC | Measure delegation latency, log hand-offs to the backend | Realtime Provider (Section 12.4.1) |
 | ON_PROTOCOL_TRACE | ASYNC | Log/inspect transport protocol traces (SIP, RTP) | Channel (via emit_trace) |
 | BEFORE_BRIDGE_AUDIO | SYNC | Filter/modify audio before bridging (mute, gain) | AudioBridge (Section 12.7) |
 
@@ -6754,7 +6921,9 @@ them with active-speaker events or lane VAD timing is a guess wearing
 attribution's clothes, and principle 5 places identity on tracks
 precisely so that no component has to guess. Implementations MUST
 discard user-role transcriptions; they MAY surface them to
-observability, unattributed. The attributed transcript is the one the
+observability, unattributed, and MAY hand them, unattributed, to a
+reasoning backend (Section 12.4.1) as state the session drops with
+itself. The attributed transcript is the one the
 conference already has: per-track STT lanes (Section 12.10.4), running
 in parallel with the mix, each event carrying its speaker. A deployment
 that needs the meeting transcribed configures stt beside the provider;
@@ -6799,7 +6968,10 @@ path. An interruption that lands does what Section 12.10.5 says —
 signal the provider to cancel the response in flight, where the
 provider can: cancellation is best-effort, since Section 12.4
 providers exist whose sessions cannot cancel a response, and it is
-`stop_playback()` that silences the room either way.
+`stop_playback()` that silences the room either way. A full-duplex
+provider (Section 12.4.1) is the standing case: it has no cancel
+signal, and the mix carries the interruption to it; `stop_playback()`
+and ON_BARGE_IN remain the framework's.
 
 The provider brings its own turn-taking, and the two authorities can
 disagree: a provider whose native detection halts generation on any
@@ -9067,8 +9239,9 @@ A Level 3 implementation MAY additionally support audio and/or video real-time m
 - Barge-in and interruption handling (InterruptionStrategy)
 - Realtime Voice channel (speech-to-speech)
 - RealtimeVoiceProvider interface
+- Full-duplex providers and reasoning delegation (OPTIONAL — Section 12.4.1)
 - RealtimeAudioTransport interface
-- Realtime voice hooks (ON_REALTIME_TOOL_CALL, ON_PROTOCOL_TRACE)
+- Realtime voice hooks (ON_TOOL_CALL, ON_REALTIME_TEXT_INJECTED, ON_PROTOCOL_TRACE)
 - Protocol trace infrastructure (ProtocolTrace, emit_trace, on_trace, pre-room buffering)
 
 #### Video
@@ -9476,6 +9649,7 @@ RealtimeVoiceChannel
 ├── requires:
 │   ├── provider: RealtimeVoiceProvider
 │   ├── transport: RealtimeAudioTransport
+│   ├── reasoning_backend: ReasoningBackend | null  # OPTIONAL: serves integrator-side reasoning delegation (Section 12.4.1)
 │   └── audio_pipeline: AudioPipelineConfig | null  # OPTIONAL in speech-to-speech mode
 ├── configuration:
 │   ├── system_prompt: string | null
@@ -9488,9 +9662,12 @@ RealtimeVoiceChannel
 ├── session_management:
 │   ├── start_session(room_id, participant_id, connection, metadata)
 │   └── end_session(session)
-└── tool_handling:
-    ├── async handler function (priority)
-    └── ON_REALTIME_TOOL_CALL hook (fallback)
+├── tool_handling:
+│   ├── async handler function (priority)
+│   └── ON_TOOL_CALL hook (fallback)
+└── delegation_handling:                            # Section 12.4.1
+    ├── hosted backend → its function calls go through tool_handling
+    └── integrator backend → reasoning_backend, outputs returned via submit_delegation_output
 ```
 
 ### A.12 Video Channel
