@@ -2065,6 +2065,26 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
         unwaited, the same short-circuit the waiting path applies.
 ```
 
+**Explicit delivery cancellation:** An implementation MAY expose cancellation
+of a call's delivery cascade. Cancellation MUST NOT change the committed
+timeline event's status (§13.6). It MUST stop subsequent generation/tool rounds
+and reentry belonging to the cancelled cascade, join its running generation,
+tool handlers and stream consumers (including their finalizers), and report a
+terminal cancellation outcome before claiming cleanup has completed. Other
+cascades and shared providers MUST remain usable. The next call MAY resume
+after that cleanup. Cancellation cannot revoke external effects already
+committed by a handler, nor implicitly own tasks detached by application code.
+
+The awaited path SHOULD propagate caller cancellation after draining its own
+cascade. A detached-completion handle SHOULD provide explicit cancellation;
+cancelling a mere completion waiter SHOULD leave detached work running.
+Repeated cancellation MUST NOT interrupt cleanup already in progress. A
+bounded cleanup that expires MUST report incomplete drainage, not success;
+resources still in use MUST be retained. An implementation MUST refuse a drain
+from a context that its own delivery needs to progress, such as its room lock
+or delivery lane. These guarantees cover execution owned by the local process;
+cross-worker cancellation requires an explicit distributed contract.
+
 **InboundResult:**
 
 ```
