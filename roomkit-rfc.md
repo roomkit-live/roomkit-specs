@@ -8313,6 +8313,10 @@ Normative rules:
 versions: the router decides (§19.4), and with no router installed every
 eligible intelligence channel is solicited.
 
+Proactive `RoomKit.deliver()` calls carry the same intelligence address through
+the text publication pipeline (§22.1). A realtime session target is a separate
+transport selection, not an intelligence address.
+
 **Conformance.** Addressing itself is Level 0 — the field exists on every
 event and MUST be honoured when set, which an implementation without
 intelligence channels satisfies trivially. The router precedence (§19.4,
@@ -8728,7 +8732,7 @@ delegated agent output, scheduled messages) is delivered into a conversation.
 
 ```
 DeliveryStrategy (interface)
-└── deliver(context: DeliveryContext) → void
+└── deliver(context: DeliveryContext) → DeliveryOutcome | void
 ```
 
 **DeliveryContext:**
@@ -8738,9 +8742,66 @@ DeliveryContext
 ├── kit: RoomKit                            # Framework instance
 ├── room_id: string                         # Target room
 ├── content: EventContent                   # Content to deliver
-├── channel_id: string                      # Source channel for attribution
+├── channel_id: string | null               # Transport/source channel
+├── addressed_to: list<string> | null       # Intelligence solicitation (§19.3)
+├── idempotency_key: string | null          # Text publication key (§13.4)
+├── session_id: string | null               # Exact realtime voice session
 └── metadata: map<string, any>              # Delivery metadata
 ```
+
+`RoomKit.deliver()` MUST return an observable outcome. Built-in strategies
+MUST distinguish `queued` (accepted by the delivery backend), `sent`
+(published into the room or accepted by the voice provider), `blocked`
+(explicit refusal), `unavailable` (destination cannot be reached), and
+`failed` (execution error). Each unsuccessful outcome MUST carry a reason.
+Custom strategies returning no outcome MAY remain usable, but their outcome
+MUST be reported as `unknown`, never inferred as successful.
+
+The outcome SHOULD expose the queue item id, committed event id, duplicate
+indicator, unavailable target ids, injected session ids and structured error
+where applicable. `sent` MUST NOT imply that the agent completed its turn.
+An implementation MAY expose the existing inbound result and delivery handle
+to observe turn completion; replaying a committed event does not establish
+that its original turn completed.
+
+For synthetic text inbound, `addressed_to` MUST pass unchanged into the
+existing publication pipeline and stored event, with all of §19.3's rules.
+`null` retains routing, `[]` stores and broadcasts without soliciting an
+intelligence channel, and unknown targets MUST NOT select a substitute.
+An unavailable explicit target MUST be observable even if publication itself
+succeeded. Addressing MUST NOT change visibility or bypass permissions.
+
+`channel_id` selects a transport; naming an intelligence channel there MAY
+remain an alias for selecting the room's transport, but MUST NOT silently
+replace explicit `addressed_to`. Applications select intelligence channels
+with `addressed_to`, and realtime provider sessions with `channel_id` and
+`session_id`; the latter are not intelligence channel ids (§19.3).
+
+An explicit realtime destination MUST NOT expand to all sessions. Without
+`session_id`, an explicitly selected realtime channel requires one active
+session; multiple sessions are ambiguous. Strategies waiting for idle MUST
+pin the selected session before waiting and verify it is still active before
+injecting. Missing or replaced sessions and injection errors MUST NOT report
+success. Unaddressed calls without explicit destinations MAY retain room-wide
+realtime injection. A non-null intelligence address uses the text pipeline,
+not a direct realtime injection; combining it with `session_id` is invalid.
+
+**Idempotency boundary.** Text keys are scoped to the room and use the
+ConversationStore's existing locked publication and unique-key contract
+(§13.4). Replays, including concurrent ones, MUST NOT create a second trigger
+event while the key is retained. The same key identifies the same publication
+regardless of subsequent body or address changes. Retention follows the store:
+memory does not survive restart; durable stores retain committed keys until
+the corresponding event/key is removed. Distributed use requires a shared
+store and a lock manager appropriate to that store.
+
+Direct realtime injection has no atomic transaction with the ConversationStore
+or provider. A text idempotency key MUST NOT be advertised as deduplicating
+voice injection. Providers may accept a request before an error is observed;
+retrying can repeat speech. Queue delivery remains at-least-once, and neither
+a committed text event nor a queue acknowledgement proves exactly-once agent
+execution or resumes a turn interrupted after commit. A durable delivery-lane
+outbox and crash recovery of turns are separate capabilities.
 
 ### 22.2 Built-in Strategies
 
@@ -8754,12 +8815,29 @@ DeliveryContext
 disruptive. It monitors both the AI generation state and user speech activity
 before injecting content.
 
+`Queued` MUST keep incompatible rooms, transports, intelligence addresses,
+sessions and metadata separate. Keyed requests MUST preserve their individual
+publication keys and outcome attribution rather than merging into an event
+with a different key. Every waiting caller MUST receive its own outcome,
+including requests arriving while a batch is being delivered.
+
+Delivery backends MUST preserve addresses, keys and session targets in their
+serialized items and across retries. Enqueue acceptance is not transmission.
+Workers MUST distinguish a refusal from a retryable unavailable/failed target;
+an absent recipient MUST NOT be acknowledged as successful transmission.
+
 ### 22.3 Delivery Hooks
 
 | Hook | Execution | When |
 |---|---|---|
 | BEFORE_DELIVER | SYNC | Before strategy executes — can block or modify content |
 | AFTER_DELIVER | ASYNC | After delivery completes |
+
+`AFTER_DELIVER` MUST report the actual outcome, including explicit refusal,
+missing destination and duplicate publication. Its payload MUST include the
+effective content and targeting information; a rewrite in `BEFORE_DELIVER`
+must be reflected. Hook observation remains best-effort and MUST NOT change
+the delivery outcome.
 
 ---
 
