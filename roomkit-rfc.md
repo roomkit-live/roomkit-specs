@@ -8744,7 +8744,7 @@ DeliveryContext
 ├── content: EventContent                   # Content to deliver
 ├── channel_id: string | null               # Transport/source channel
 ├── addressed_to: list<string> | null       # Intelligence solicitation (§19.3)
-├── idempotency_key: string | null          # Text publication key (§13.4)
+├── idempotency_key: string | null          # Publication/injection identity
 ├── session_id: string | null               # Exact realtime voice session
 └── metadata: map<string, any>              # Delivery metadata
 ```
@@ -8795,13 +8795,52 @@ memory does not survive restart; durable stores retain committed keys until
 the corresponding event/key is removed. Distributed use requires a shared
 store and a lock manager appropriate to that store.
 
-Direct realtime injection has no atomic transaction with the ConversationStore
-or provider. A text idempotency key MUST NOT be advertised as deduplicating
-voice injection. Providers may accept a request before an error is observed;
-retrying can repeat speech. Queue delivery remains at-least-once, and neither
-a committed text event nor a queue acknowledgement proves exactly-once agent
-execution or resumes a turn interrupted after commit. A durable delivery-lane
-outbox and crash recovery of turns are separate capabilities.
+**Realtime injection identity.** A keyed proactive voice injection MUST reserve
+its attempt atomically in the ConversationStore before calling the provider.
+Its identity is the tuple `(room_id, channel_id, session_id, idempotency_key)`;
+different sessions are independent destinations. A repeated identity MUST reuse
+its recorded outcome without reinjection, unless the previous attempt explicitly
+established that nothing was submitted and that retry is allowed. Reusing a voice
+identity for different effective text MUST be refused as an idempotency conflict.
+This does not change the text publication replay semantics above.
+
+The store MUST persist the reservation, a unique attempt token and its outcome.
+Claiming a retry and completing an attempt MUST use atomic conditional writes;
+an old owner MUST NOT overwrite another attempt. The reservation MUST outlive
+queue acknowledgement. A process-local store provides process-local retention;
+durable stores MUST preserve reservations across restart until the room is deleted.
+A store without this capability MUST refuse keyed voice injection before sending.
+No expiry or abandoned-claim recovery may authorize an uncertain injection again.
+
+A reservation without a final outcome is an unresolved attempt. A concurrent
+caller MAY wait for its owner through the existing lock manager; if completion
+cannot be established, its result MUST be `unknown`, with no automatic reinjection.
+Cancellation during submission, an exception without proof of non-submission,
+or failure to persist the final outcome MUST preserve this conservative boundary.
+
+Realtime providers SHOULD report `sent` (their send operation completed),
+`not_sent` (no submission or pending submission exists), or `unknown` (acceptance
+cannot be established). Only an explicit retryable `not_sent` result permits
+automatic retry after invoking a provider. Returning no result MUST NOT be
+interpreted as proof of acceptance. Unsupported injection and missing connections
+MUST NOT return a successful result. Locally queued input whose remote submission
+is not known remains uncertain. An injection result does not prove that the peer
+heard audio or that the agent completed its turn.
+
+The delivery outcome MUST expose each selected session's result for a multi-session
+request, retaining successes and duplicates alongside failures or uncertainty.
+A retry MUST NOT inject again into a session with a successful or unresolved
+reservation. When `session_id` is omitted, selection still happens at execution;
+applications targeting one original call MUST supply that session's id. A known
+outcome for an explicit session MAY be replayed after that session has ended.
+
+Direct realtime injection has no atomic transaction with the remote service.
+Suppressing retries after uncertainty can leave an announcement undelivered;
+eliminating that tradeoff requires verified idempotency at the remote service.
+Unkeyed calls retain no deduplication guarantee. Queue delivery remains
+at-least-once, and neither a committed text event nor a queue acknowledgement
+proves exactly-once agent execution or resumes a turn interrupted after commit.
+A durable delivery-lane outbox and crash recovery of turns are separate capabilities.
 
 ### 22.2 Built-in Strategies
 
