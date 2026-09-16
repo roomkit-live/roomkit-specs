@@ -9171,6 +9171,22 @@ honouring `n` on some providers and refusing it on others — leaves a parameter
 in the interface that a caller cannot use without first knowing which provider
 is behind it, which is the coupling this section exists to remove.
 
+Implementations MAY accept an optional typed `options` argument for controls
+such as quality, output format, background, compression, aspect ratio and
+resolution tier. An explicit aspect ratio and tier are native geometry, not a
+promise of exact pixels. An implementation MUST reject incompatible or
+unsupported options before making a billable request. Omitted options inherit
+provider defaults; explicit values override them. Existing calls without
+options MUST remain valid. A mask MAY accompany references when supported.
+
+An error after a request has started MUST preserve every available result and
+usage report. A partial generation still raises, carrying successful results
+and the outcomes of individual vendor calls. An implementation MUST NOT mark
+an ambiguous network failure as unbilled or automatically retry a paid
+generation. Independent concurrent calls SHOULD settle so their outcomes can
+be collected. Cancellation MUST remain cancellation, with already received
+outcomes accessible through an optional asynchronous progress callback.
+
 ### 25.3 ImageResult
 
 ```
@@ -9198,6 +9214,17 @@ NOT substitute the original prompt for it: the field exists to show the caller
 what the model actually drew from, and echoing the input back conceals exactly
 the divergence it exists to reveal.
 
+Results MAY carry a vendor request or interaction identifier, the vendor's
+original usage report, effective parameters, actual dimensions where reported,
+and grounding attribution. Usage shared by a batch MUST be represented once,
+with its scope explicit; it MUST NOT be divided into invented per-image
+measurements. Original metadata MUST omit inline image payloads and secrets.
+
+A progress callback MAY receive individual call outcomes or preview images.
+Previews MUST be distinguished from final results. Callback delivery does not
+imply vendor cancellation or a refund, and failure to deliver an outcome MUST
+NOT trigger another generation.
+
 ### 25.4 Editing
 
 Editing — an image and a prompt in, an image out — is expressed through
@@ -9210,6 +9237,12 @@ edit MUST report `supports_editing` as false and MUST raise when
 `reference_images` is non-empty, rather than generating from the prompt alone —
 a caller that asked for an edit and silently received a fresh image has no
 signal that the reference was dropped.
+
+A provider MAY support continuity through a previous interaction identifier.
+The caller remains responsible for authorizing access to that interaction.
+Grounding with external search MAY be requested only on compatible models;
+available citations and search-suggestion metadata MUST be retained for the
+caller to display according to the provider's requirements.
 
 ### 25.5 Usage Accounting
 
@@ -9258,6 +9291,11 @@ including those populating a model field for a conversational agent, to filter
 a class of models it can never use. Entries SHOULD nevertheless carry a
 capability tag identifying them as image-generating, so a consumer that
 deliberately combines the lists can still tell them apart.
+
+Catalogue entries MAY carry structured image capabilities, including accepted
+controls and values, geometry constraints, reference limits, continuity,
+masking, search, and retirement dates. Unknown capabilities MUST remain unknown
+rather than being inferred from another model in the same vendor's lineup.
 
 ### 25.7 Non-Goals
 
