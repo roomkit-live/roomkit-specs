@@ -9240,6 +9240,9 @@ signal that the reference was dropped.
 
 A provider MAY support continuity through a previous interaction identifier.
 The caller remains responsible for authorizing access to that interaction.
+A stateful provider MUST expose an explicit storage choice so applications can
+disable remote history retention. Omitting this choice MAY preserve the
+provider default; applications MUST NOT assume that omitted means stateless.
 Grounding with external search MAY be requested only on compatible models;
 available citations and search-suggestion metadata MUST be retained for the
 caller to display according to the provider's requirements.
