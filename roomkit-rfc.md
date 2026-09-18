@@ -1739,7 +1739,7 @@ Planned rows are normative design intent for the named capability.
 | ON_AI_THINKING | ASYNC | Implemented | AI model began extended thinking/reasoning |
 | ON_AI_RESPONSE | ASYNC | Implemented | A turn of intelligence completed (observability). Fired by any channel of category `INTELLIGENCE`, whether the turn ran in-process or in an external agent (Section 6.4) |
 | BEFORE_TOOL_USE | SYNC | Implemented | Before a tool executes — can block or override the call |
-| ON_TOOL_CALL | ASYNC | Implemented | A tool was invoked during generation (unified across AI and realtime channels) |
+| ON_TOOL_CALL | ASYNC | Implemented | A tool call reached its outcome — served, refused before execution, or failed during it (unified across AI and realtime channels; Section 9.3) |
 | ON_USER_INPUT_REQUIRED | SYNC | Implemented | Human-in-the-loop: a tool paused, waiting for user input |
 | | | | |
 | **Orchestration:** | | | |
@@ -1808,6 +1808,46 @@ Planned rows are normative design intent for the named capability.
 - Cannot block or modify events.
 - Exceptions MUST be caught and logged, never propagated.
 - Used for observability, logging, side effects.
+
+**ON_TOOL_CALL, where the call was refused or failed:**
+
+- Every tool call MUST fire ON_TOOL_CALL with its outcome, whether it was
+  served, refused before execution (undeclared tool, invalid arguments, tool
+  policy, skill gating, a BLOCK from BEFORE_TOOL_USE), failed during execution
+  (a handler that raised), or reached no servant at all. A trigger that fires
+  only for the calls that succeeded cannot support an audit trail: a refused
+  agent and an idle one produce the same record, which is none.
+- Such a firing MUST NOT be able to serve the call. Where the trigger's SYNC
+  hooks do serve tools — the AI tool loop, the realtime channel — that means
+  dispatching to **the hooks registered ASYNC only**: a refused call reaching a
+  servant would let the refusal hide the side effect instead of preventing it,
+  and the pre-execution gate of Section 12.2 would hold under some
+  configurations and not others. Where the tool already ran outside the channel
+  and the firing is a report by construction — an external tool handler
+  relaying its provider's outcome — it MAY reach every hook, and any result
+  such a hook offers MUST be discarded.
+- The outcome MUST be carried on the event as a discrete marker, not left to
+  be inferred from the result body. A refusal's body is a body like any other:
+  one implementation's refusals are JSON error envelopes, another's are the
+  prose the model is meant to read, and an external provider's are whatever it
+  printed. An observer that has to recognise a failure in the text will read a
+  refused call as a completed one, and a tool whose own output resembles a
+  refusal as a failure.
+- That obligation covers every outcome the channel itself determines: a refusal
+  by the pre-execution gate, a handler that raised, a call nothing served, and
+  the verdict an external tool handler received from its provider. A handler
+  that instead *returns* a refusal has stated it in its body, where only its
+  own convention can be read — Section 15.8.1 governs that reading. A producer
+  that can state the outcome structurally SHOULD do so rather than leave it to
+  be recognised.
+- The body MUST travel verbatim beside that marker: it is what the model reads,
+  and its wording answers to that reader alone.
+- A result override supplied on such a firing MUST be ignored. Nothing ran, so
+  there is no result to correct.
+- A call that no handler and no hook served MUST report a failure, not a
+  success. Reporting one — `{"status": "ok"}` and its kin — tells the model
+  work was done that nobody did, and records a completed call for a tool that
+  was never reached.
 
 **ON_USER_INPUT_REQUIRED, where the other party is a human:**
 
@@ -3905,7 +3945,12 @@ The gate's scope is the call, not its servant. It MUST apply identically whether
 the call is served by a tool handler, by an ON_TOOL_CALL hook, or by a channel
 infrastructure tool (Tool Search, skill activation) — otherwise a hook that
 denies a tool would deny it only under some configurations, and a host auditing
-tool use would not see every call. Infrastructure tools are declared by the
+tool use would not see every call.
+
+A call the gate refuses MUST still be reported through ON_TOOL_CALL's observers
+(Section 9.3), and the report MUST NOT precede the refusal on the wire: the
+provider is holding a turn open on the result, and an observer must not stand in
+front of it. Infrastructure tools are declared by the
 channel rather than by the caller's catalogue, so the declared-tool check admits
 them; they remain exempt from skill gating, which they exist to operate.
 
@@ -4195,6 +4240,7 @@ Voice-specific hooks allow integrators to customize the voice pipeline:
 | ON_RECORDING_STARTED | ASYNC | Notify participants of recording | Audio Pipeline (Recorder) / Conference Channel |
 | ON_RECORDING_STOPPED | ASYNC | Store recording reference in timeline | Audio Pipeline (Recorder) / Conference Channel |
 | ON_TOOL_CALL | SYNC | Execute tool and return result | Realtime Provider (ON_REALTIME_TOOL_CALL is superseded, Section 9.2) |
+| ON_TOOL_CALL | ASYNC | Audit tool use, including calls refused or failed (Section 9.3) | Realtime Voice Channel |
 | ON_REALTIME_TEXT_INJECTED | ASYNC | Log text injections | Realtime Voice Channel |
 | ON_REALTIME_DELEGATION | ASYNC | Measure delegation latency, log hand-offs to the backend | Realtime Provider (Section 12.4.1) |
 | ON_PROTOCOL_TRACE | ASYNC | Log/inspect transport protocol traces (SIP, RTP) | Channel (via emit_trace) |
@@ -5247,7 +5293,7 @@ when a pipeline is in use. All such work MUST flow through the pipeline.
 | BEFORE_AI_CONTEXT_BUILD | PreContextGateStage (default impl) | SYNC — can block |
 | BEFORE_AI_GENERATION | PreGenerationStage (default impl) | SYNC — can block/modify |
 | ON_AI_THINKING | GenerationStage | ASYNC — observability |
-| ON_TOOL_CALL | GenerationStage (during tool loop) | SYNC — can intercept |
+| ON_TOOL_CALL | GenerationStage (during tool loop) | SYNC — can intercept; ASYNC — observes every call, refusals included (Section 9.3) |
 | ON_AI_RESPONSE | EmissionStage | ASYNC — observability |
 
 Hook triggers are preserved as callback points fired by their stages. Existing
@@ -7773,9 +7819,16 @@ ToolAuditEntry
 ```
 
 **Status detection:**
-- `"ok"` — default for successful execution.
-- `"failed"` — auto-detected if tool returns `{"status": "failed"}`.
 - `"error"` — set when the tool handler raises an exception.
+- `"failed"` — read from the result body, which MUST be inspected for every
+  failure envelope the implementation itself emits, not for one convention
+  only: `{"status": "failed"}`, the `{"error": ...}` envelope a refused call
+  and a wrapped MCP `isError` result return, and the `{"success": false}`
+  convention hosts commonly use. Recognising one shape and not the others
+  records a denied tool — the outcome an audit exists for — as `"ok"`.
+- `"ok"` — the default, and a degradation rather than a contract: it is what a
+  body outside every envelope reads as. A producer that can state its outcome
+  structurally SHOULD do so (Section 9.3) instead of relying on this reading.
 
 **ToolAuditor** (interface):
 
