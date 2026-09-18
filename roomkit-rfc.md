@@ -1853,7 +1853,8 @@ Planned rows are normative design intent for the named capability.
 
 - A speech-to-speech model interrupted while a call is outstanding MAY discard
   it (Gemini Live's `tool_call_cancellation`; a reconnect that orphans the
-  calls the previous connection issued). A provider that learns of it MUST
+  blocking calls the previous connection was waiting on). A provider that
+  learns of it MUST
   tell the channel (`on_tool_call_cancelled`, Section 12.4). A provider whose
   protocol carries no such event fires nothing: its calls stay in the
   conversation and their results are still read.
