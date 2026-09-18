@@ -1739,7 +1739,7 @@ Planned rows are normative design intent for the named capability.
 | ON_AI_THINKING | ASYNC | Implemented | AI model began extended thinking/reasoning |
 | ON_AI_RESPONSE | ASYNC | Implemented | A turn of intelligence completed (observability). Fired by any channel of category `INTELLIGENCE`, whether the turn ran in-process or in an external agent (Section 6.4) |
 | BEFORE_TOOL_USE | SYNC | Implemented | Before a tool executes — can block or override the call |
-| ON_TOOL_CALL | ASYNC | Implemented | A tool call reached its outcome — served, refused before execution, or failed during it (unified across AI and realtime channels; Section 9.3) |
+| ON_TOOL_CALL | ASYNC | Implemented | A tool call reached its outcome — served, refused before execution, failed during it, or abandoned by the model before its result (unified across AI and realtime channels; Section 9.3) |
 | ON_USER_INPUT_REQUIRED | SYNC | Implemented | Human-in-the-loop: a tool paused, waiting for user input |
 | | | | |
 | **Orchestration:** | | | |
@@ -1848,6 +1848,28 @@ Planned rows are normative design intent for the named capability.
   success. Reporting one — `{"status": "ok"}` and its kin — tells the model
   work was done that nobody did, and records a completed call for a tool that
   was never reached.
+
+**ON_TOOL_CALL, where the model abandoned the call:**
+
+- A speech-to-speech model interrupted while a call is outstanding MAY discard
+  it (Gemini Live's `tool_call_cancellation`; a reconnect that orphans the
+  calls the previous connection issued). A provider that learns of it MUST
+  tell the channel (`on_tool_call_cancelled`, Section 12.4). A provider whose
+  protocol carries no such event fires nothing: its calls stay in the
+  conversation and their results are still read.
+- The channel MUST interrupt the handler still running for such a call and
+  MUST NOT send its result. The model will not read it, and a result sent for
+  an id the provider no longer knows is an error the application never asked
+  for.
+- The call MUST fire ON_TOOL_CALL's observers with a discrete *cancelled*
+  marker beside the failure marker. An abandoned call is neither a refusal nor
+  a failure, and an audit counting refusals must not count it as one; it is
+  still not a served call, so a consumer reading the failure marker alone
+  reads it correctly as work that did not complete. The firing is
+  observational, as above.
+- A call the channel no longer holds when the cancellation arrives (its result
+  already left) has no outcome left to report: the provider drops the stale
+  result and the channel reports nothing.
 
 **ON_USER_INPUT_REQUIRED, where the other party is a human:**
 
@@ -3907,6 +3929,7 @@ RealtimeVoiceProvider (interface)
 ├── on_speech_start(callback) → void
 ├── on_speech_end(callback) → void
 ├── on_tool_call(callback) → void           # AI requests a tool call
+├── on_tool_call_cancelled(callback) → void # (session, call_ids): model abandoned outstanding calls; fired only by providers whose protocol says so (Section 9.3)
 ├── on_delegation(callback) → void          # (session, delegation_id, target): model handed reasoning to a backend (Section 12.4.1)
 ├── on_response_start(callback) → void
 ├── on_response_end(callback) → void
@@ -3922,6 +3945,7 @@ RealtimeVoiceProvider (interface)
 | `on_speech_start` | ON_SPEECH_START | Provider-detected speech start |
 | `on_speech_end` | ON_SPEECH_END | Provider-detected speech end |
 | `on_tool_call` | ON_TOOL_CALL | Tool execution request from AI, behind the pre-execution gate below (ON_REALTIME_TOOL_CALL is superseded, Section 9.2) |
+| `on_tool_call_cancelled` | ON_TOOL_CALL | Model abandoned outstanding calls; the channel interrupts their handlers, sends nothing back, and reports them to the observers with the cancelled marker (Section 9.3) |
 | `on_delegation` | ON_REALTIME_DELEGATION | Model handed reasoning to a backend, hosted or integrator; the integrator target is served by the ReasoningBackend (Section 12.4.1) |
 | `on_response_start` | — | Internal lifecycle; no hook (use ON_SPEECH_START for AI speech) |
 | `on_response_end` | — | Internal lifecycle; no hook (use AFTER_BROADCAST for response tracking) |
@@ -4240,7 +4264,7 @@ Voice-specific hooks allow integrators to customize the voice pipeline:
 | ON_RECORDING_STARTED | ASYNC | Notify participants of recording | Audio Pipeline (Recorder) / Conference Channel |
 | ON_RECORDING_STOPPED | ASYNC | Store recording reference in timeline | Audio Pipeline (Recorder) / Conference Channel |
 | ON_TOOL_CALL | SYNC | Execute tool and return result | Realtime Provider (ON_REALTIME_TOOL_CALL is superseded, Section 9.2) |
-| ON_TOOL_CALL | ASYNC | Audit tool use, including calls refused or failed (Section 9.3) | Realtime Voice Channel |
+| ON_TOOL_CALL | ASYNC | Audit tool use, including calls refused, failed, or abandoned by the model (Section 9.3) | Realtime Voice Channel |
 | ON_REALTIME_TEXT_INJECTED | ASYNC | Log text injections | Realtime Voice Channel |
 | ON_REALTIME_DELEGATION | ASYNC | Measure delegation latency, log hand-offs to the backend | Realtime Provider (Section 12.4.1) |
 | ON_PROTOCOL_TRACE | ASYNC | Log/inspect transport protocol traces (SIP, RTP) | Channel (via emit_trace) |
