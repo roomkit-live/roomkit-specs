@@ -1852,12 +1852,12 @@ Planned rows are normative design intent for the named capability.
 **ON_TOOL_CALL, where the model abandoned the call:**
 
 - A speech-to-speech model interrupted while a call is outstanding MAY discard
-  it (Gemini Live's `tool_call_cancellation`; a reconnect that orphans the
-  blocking calls the previous connection was waiting on). A provider that
-  learns of it MUST
-  tell the channel (`on_tool_call_cancelled`, Section 12.4). A provider whose
-  protocol carries no such event fires nothing: its calls stay in the
-  conversation and their results are still read.
+  it (Gemini Live's `tool_call_cancellation`; a reconnect that orphans every
+  call the previous connection issued, blocking or not, since call ids are
+  connection-scoped and the new socket never issued them). A provider that
+  learns of it MUST tell the channel (`on_tool_call_cancelled`, Section 12.4).
+  A provider whose protocol carries no such event fires nothing: its calls
+  stay in the conversation and their results are still read.
 - The channel MUST interrupt the handler still running for such a call and
   MUST NOT send its result. The model will not read it, and a result sent for
   an id the provider no longer knows is an error the application never asked
