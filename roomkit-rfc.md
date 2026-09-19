@@ -7617,6 +7617,16 @@ full whatever was refused around them. The conversation read that fills
 for channels. A refused row still consumes an index (§8.3), so the room's
 counters keep counting it.
 
+**A count follows the rule of the page it stands for.** `get_event_count`
+without a filter counts every committed row, the refused ones included: a
+refused row consumed an index (§8.3), and that count is the timeline's size,
+the exact twin of the room's maintained `event_count`. `get_event_count` with
+an `EventFilter` MUST count exactly the rows `list_events` would serve under
+that filter, with no page: the same criteria, and the same received-rows
+default lifted by `include_blocked`, so a host that needs the exact number of
+a subset (an agent's turns before an instant) never measures a page to get it
+and never inherits the page's cap.
+
 ### 14.2 Required Implementations
 
 | Implementation | Purpose | Conformance |
