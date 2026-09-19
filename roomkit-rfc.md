@@ -7565,6 +7565,20 @@ ConversationStore (interface)
     └── list_observations(room_id, filters) → list<Observation>
 ```
 
+**Reading a timeline (`list_events`).** Two pagination modes exist:
+offset-based (`offset` + `limit`) and cursor-based (`after_index` or
+`before_index`, mutually exclusive; `offset` is then ignored). *Which* events a
+page holds and the *order* they come back in are two different answers.
+`before_index`, and in offset mode the `newest_first` flag (ignored under a
+cursor), select the **window**: the `limit` events nearest the cursor, or the
+room's tail instead of its head. The page itself MUST always be rendered in
+ascending `index` order, whichever window was selected: its first element is
+the oldest event of the window and its last element the newest. A caller that
+wants the most recent event reads the last element, never the first; an
+implementation that fetches descending to find the window reverses the page
+before returning it. The conversation and timeline reads built on
+`list_events` inherit both halves of this rule.
+
 ### 14.2 Required Implementations
 
 | Implementation | Purpose | Conformance |
