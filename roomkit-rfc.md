@@ -8854,16 +8854,21 @@ direct call). The context carries at least:
 | `current_tool_call()` | The per-call record: the call's id, its channel, and the structured-result reverse channel |
 | `current_response_metadata()` | The turn's one response-metadata record (§6.7) |
 
-Two rules bind every value. **It names the turn; it does not authenticate
-it.** The actor is a room `Participant.id` that reads back the same whether
-the sender is identified, pending or unknown, and the room's organization is a
-fact of the room, not a grant: a handler that reaches a person's or a tenant's
-data resolves the participant (§11) and applies the host's own rule before
-acting. **It is a snapshot of the turn's start.** The `Room` is the object
-loaded when the turn began, shared by reference with `RoomContext.room`, so a
-metadata patch made during the turn, by this handler or another, is not
-reflected in it; a handler whose decision depends on the turn's own writes
-re-reads the room. A tool loop the implementation starts under a turn MUST
+Two rules bind the values that name the turn (the room and its id, the actor,
+the toolset); the response-metadata record and the per-call record are the
+turn's write channels, described in §6.7 and above. **They name the turn; they
+do not authenticate it.** The actor is a room `Participant.id` that reads back
+the same whether the sender is identified, pending or unknown, and the room's
+organization is a fact of the room, not a grant: a handler that reaches a
+person's or a tenant's data resolves the participant (§11) and applies the
+host's own rule before acting. **The `Room` is the room as the store loaded it
+when the turn began**, shared by reference with `RoomContext.room` and so with
+every hook, provider and channel of the turn. A patch written to the store
+during the turn is not in it: a handler whose decision depends on the turn's
+own writes re-reads the room. A handler MUST NOT mutate the object: a room
+changes through the store, and a write on the shared object would be read by
+the rest of the turn (the agent-response policy, the delivery plan) as if the
+room had changed. A tool loop the implementation starts under a turn MUST
 inherit the turn's context, so a handler called on any round of the loop reads
 the same room and actor as on the first.
 
