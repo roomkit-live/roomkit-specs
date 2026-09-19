@@ -1496,7 +1496,10 @@ Implementations MUST enforce these rules:
    refused that turn, and a model that reads its own refused answer as
    history continues from a turn nobody received. The record stays in the
    timeline for host code and audit (the point on host code below applies to
-   it unchanged).
+   it unchanged), behind an explicit request: a timeline read serves the rows
+   the room received by default and the `BLOCKED` rows only when asked
+   (§14.1), a read by id is unconditional, and the history rebuilt for hooks
+   stays whole.
 
    The filter is per reader, so it MUST be applied where the reader is known —
    a single `RoomContext` shared by every channel of a broadcast cannot be
@@ -2036,7 +2039,8 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 10. IF BLOCKED BY HOOK:
     ├── Store event with status=BLOCKED, blocked_by=hook_name
     │   # An audit record: it reaches no channel, at delivery or as
-    │   # reconstructed context one turn later (§7.5 rule 8)
+    │   # reconstructed context one turn later (§7.5 rule 8), and a
+    │   # default timeline read skips it (§14.1)
     ├── Deliver injected events from hook result
     ├── Persist tasks and observations from hook result
     └── Return InboundResult(blocked=true)
@@ -7578,6 +7582,19 @@ wants the most recent event reads the last element, never the first; an
 implementation that fetches descending to find the window reverses the page
 before returning it. The conversation and timeline reads built on
 `list_events` inherit both halves of this rule.
+
+**A timeline read serves what the room received.** By default `list_events`
+MUST NOT return an event stored `BLOCKED` (§10.1 step 10, §7.5 rule 2, §8.3):
+the room refused that turn, and a reader listing what was said in the room is
+not asking for what was refused. The refused rows MUST stay readable on
+explicit request (a filter flag, `include_blocked`) and by id (`get_event`),
+because a host audits, copies or deletes them by those paths, and the filter
+MUST apply before the page is cut, so a page of `limit` received events is
+full whatever was refused around them. The conversation read that fills
+`RoomContext.recent_events` asks for the whole timeline: hooks read it whole
+(§7.5 rule 8), and the per-reader filter of that rule drops the refused rows
+for channels. A refused row still consumes an index (§8.3), so the room's
+counters keep counting it.
 
 ### 14.2 Required Implementations
 
