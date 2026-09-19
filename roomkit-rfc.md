@@ -8841,9 +8841,11 @@ whatever a handler captured when it was built describes whoever attached the
 channel, not the turn now running. An implementation MUST therefore expose the
 turn to the handler through a per-call context that follows the async call
 chain (a contextvar, in Python), readable at any depth without a signature
-change, and MUST answer with the empty value outside a tool loop so a host
-keeps its own fallback for the paths that have none (a realtime pipeline, a
-direct call). The context carries at least:
+change, and MUST answer with the empty value outside a tool call so a host
+keeps its own fallback there (a direct call). A realtime channel serving a
+tool call (§12) MUST install the same context around the handler, with the
+session's room and participant as the turn's room and actor, so one handler
+answers the same questions on both paths. The context carries at least:
 
 | Accessor | Answers |
 |---|---|
