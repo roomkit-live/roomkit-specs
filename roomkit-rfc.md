@@ -7575,13 +7575,16 @@ offset-based (`offset` + `limit`) and cursor-based (`after_index` or
 page holds and the *order* they come back in are two different answers.
 `before_index`, and in offset mode the `newest_first` flag (ignored under a
 cursor), select the **window**: the `limit` events nearest the cursor, or the
-room's tail instead of its head. The page itself MUST always be rendered in
-ascending `index` order, whichever window was selected: its first element is
-the oldest event of the window and its last element the newest. A caller that
-wants the most recent event reads the last element, never the first; an
-implementation that fetches descending to find the window reverses the page
-before returning it. The conversation and timeline reads built on
-`list_events` inherit both halves of this rule.
+room's tail instead of its head, with `offset` then counted back from the
+newest end. The page itself MUST always be rendered in ascending `index`
+order, whichever window was selected and whatever the order the rows were
+written or stamped in (ties between events stored without an index are broken
+deterministically by the store): its first element is the oldest event of the
+window and its last element the newest. A caller that wants the most recent
+event of a page reads its last element, never its first; an implementation
+that fetches descending to find the window reverses the page before returning
+it. The conversation and timeline reads built on `list_events` inherit both
+halves of this rule.
 
 **A timeline read serves what the room received.** By default `list_events`
 MUST NOT return an event stored `BLOCKED` (§10.1 step 10, §7.5 rule 2, §8.3):
