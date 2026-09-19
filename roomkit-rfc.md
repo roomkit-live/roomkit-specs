@@ -8850,11 +8850,11 @@ answers the same questions on both paths. The context carries at least:
 | Accessor | Answers |
 |---|---|
 | `current_tool_room_id()` | The id of the room the turn belongs to |
-| `current_tool_room()` | The `Room` of the turn itself: the object the store loaded when the turn began, the same one the turn's `RoomContext.room` holds for its hooks, memory provider and config provider |
+| `current_tool_room()` | The `Room` of the turn itself: the object the store loaded when the turn began, the same one the turn's `RoomContext.room` holds for its hooks, memory provider and config provider; on a realtime tool call, which runs no turn, the room as loaded for that call |
 | `current_tool_actor_id()` | The participant id of the event that woke the channel this round; empty when the turn has no author (a system injection, a webhook, a scheduled run) |
 | `current_tool_allowed_names()` | Every tool name the turn resolved, so a call is validated against the live toolset rather than an attach-time snapshot |
 | `current_tool_call()` | The per-call record: the call's id, its channel, and the structured-result reverse channel |
-| `current_response_metadata()` | The turn's one response-metadata record (§6.7) |
+| `current_response_metadata()` | The turn's one response-metadata record (§6.7); empty where no turn will merge it (a realtime tool call) |
 
 Two rules bind the values that name the turn (the room and its id, the actor,
 the toolset); the response-metadata record and the per-call record are the
@@ -8870,7 +8870,13 @@ during the turn is not in it: a handler whose decision depends on the turn's
 own writes re-reads the room. A handler MUST NOT mutate the object: a room
 changes through the store, and a write on the shared object would be read by
 the rest of the turn (the agent-response policy, the delivery plan) as if the
-room had changed. A tool loop the implementation starts under a turn MUST
+room had changed. On a path that runs no turn, a realtime tool call, the
+`Room` is the one the store loaded for that call: shared with the
+pre-execution gate's context when a hook made the channel build one, read once
+for the call otherwise, and shared with nothing else, since no turn's
+`RoomContext` exists there; `current_response_metadata()` MUST answer the
+empty value on that path, because no MESSAGE event will carry the record. A
+tool loop the implementation starts under a turn MUST
 inherit the turn's context, so a handler called on any round of the loop reads
 the same room and actor as on the first.
 
