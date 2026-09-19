@@ -8813,6 +8813,40 @@ Steering directives are typically issued by orchestration logic (e.g.,
 supervisor injecting context for a worker agent) or by hooks reacting to
 events.
 
+### 21.4 Tool Call Context
+
+A tool handler is called with the tool's name and arguments and nothing else.
+One AI channel object serves every room and every speaker it is bound to, so
+whatever a handler captured when it was built describes whoever attached the
+channel, not the turn now running. An implementation MUST therefore expose the
+turn to the handler through a per-call context that follows the async call
+chain (a contextvar, in Python), readable at any depth without a signature
+change, and MUST answer with the empty value outside a tool loop so a host
+keeps its own fallback for the paths that have none (a realtime pipeline, a
+direct call). The context carries at least:
+
+| Accessor | Answers |
+|---|---|
+| `current_tool_room_id()` | The id of the room the turn belongs to |
+| `current_tool_room()` | The `Room` of the turn itself: the object the store loaded when the turn began, the same one the turn's `RoomContext.room` holds for its hooks, memory provider and config provider |
+| `current_tool_actor_id()` | The participant id of the event that woke the channel this round; empty when the turn has no author (a system injection, a webhook, a scheduled run) |
+| `current_tool_allowed_names()` | Every tool name the turn resolved, so a call is validated against the live toolset rather than an attach-time snapshot |
+| `current_tool_call()` | The per-call record: the call's id, its channel, and the structured-result reverse channel |
+| `current_response_metadata()` | The turn's one response-metadata record (§6.7) |
+
+Two rules bind every value. **It names the turn; it does not authenticate
+it.** The actor is a room `Participant.id` that reads back the same whether
+the sender is identified, pending or unknown, and the room's organization is a
+fact of the room, not a grant: a handler that reaches a person's or a tenant's
+data resolves the participant (§11) and applies the host's own rule before
+acting. **It is a snapshot of the turn's start.** The `Room` is the object
+loaded when the turn began, shared by reference with `RoomContext.room`, so a
+metadata patch made during the turn, by this handler or another, is not
+reflected in it; a handler whose decision depends on the turn's own writes
+re-reads the room. A tool loop the implementation starts under a turn MUST
+inherit the turn's context, so a handler called on any round of the loop reads
+the same room and actor as on the first.
+
 ---
 
 ## 22. Delivery Strategies
