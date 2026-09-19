@@ -1187,7 +1187,7 @@ tools the channel handed the provider, each with the name, description and
 parameters as declared and the reason it was visible (`always` when Tool Search
 did not gate it, `pinned`, `sticky` or `revealed` when it did, the earliest
 reason winning). The union is keyed by name in first-declaration order, one
-entry per turn: the reveal window slides from one `find_tools` to the next, and
+entry per name: the reveal window slides from one `find_tools` to the next, and
 a per-round rewrite would lose a tool revealed earlier in the same turn. A turn
 that runs without Tool Search MUST report its single declaration through the
 same field, so a host has one reading whatever the turn's mode. The field
