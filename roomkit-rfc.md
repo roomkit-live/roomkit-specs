@@ -1177,6 +1177,24 @@ attempt before the replacement attempt starts, so cumulative counts MUST NOT spa
 two attempts. The complete `StreamToolCall` remains the unit of execution and
 persistence; composition events are ephemeral and MUST NOT be persisted.
 
+**What the generation hooks see:** `BEFORE_AI_GENERATION` fires once per turn,
+with the context the turn starts from, and its `tools` are the first round's
+declaration only. Under Tool Search that is the pinned floor plus the discovery
+tools: a tool `find_tools` reveals enters the declaration of the *next* round.
+`ON_AI_RESPONSE` MUST therefore carry the turn's whole declaration as
+`declared_tools`: the union, over every generation round of the turn, of the
+tools the channel handed the provider, each with the name, description and
+parameters as declared and the reason it was visible (`always` when Tool Search
+did not gate it, `pinned`, `sticky` or `revealed` when it did, the earliest
+reason winning). The union is keyed by name in first-declaration order, one
+entry per turn: the reveal window slides from one `find_tools` to the next, and
+a per-round rewrite would lose a tool revealed earlier in the same turn. A turn
+that runs without Tool Search MUST report its single declaration through the
+same field, so a host has one reading whatever the turn's mode. The field
+reports the declaration RoomKit made, not the provider's wire form of it. An
+intelligence channel whose toolset is not RoomKit's to declare (an external ACP
+agent, below) leaves it empty.
+
 **ACP Agent Channel:**
 
 An ACP agent channel connects a Room to an external
