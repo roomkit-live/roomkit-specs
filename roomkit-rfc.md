@@ -2694,7 +2694,8 @@ VoiceSession
 ├── channel_id: string                      # Associated voice channel
 ├── state: VoiceSessionState                # Current session state
 ├── created_at: datetime                    # Session start time
-└── metadata: map<string, any>              # Session-specific data
+├── metadata: map<string, any>              # Session-specific data
+└── last_usage: map<string, any>            # Read-only: what the provider recorded last (Section 12.4.2)
 ```
 
 **VoiceSessionState** enumeration:
@@ -3956,6 +3957,7 @@ RealtimeVoiceProvider (interface)
 ├── on_delegation(callback) → void          # (session, delegation_id, target): model handed reasoning to a backend (Section 12.4.1)
 ├── on_response_start(callback) → void
 ├── on_response_end(callback) → void
+├── on_usage(callback) → void              # (session, usage): what the provider just recorded (Section 12.4.2)
 └── on_error(callback) → void
 ```
 
@@ -3972,6 +3974,7 @@ RealtimeVoiceProvider (interface)
 | `on_delegation` | ON_REALTIME_DELEGATION | Model handed reasoning to a backend, hosted or integrator; the integrator target is served by the ReasoningBackend (Section 12.4.1) |
 | `on_response_start` | — | Internal lifecycle; no hook (use ON_SPEECH_START for AI speech) |
 | `on_response_end` | — | Internal lifecycle; no hook (use AFTER_BROADCAST for response tracking) |
+| `on_usage` | — | The provider's own usage report, relayed unaltered; no hook (an integrator that bills a call reads it here, Section 12.4.2) |
 | `on_error` | ON_ERROR | Mapped to the global ON_ERROR hook (Section 9.2) |
 
 **Note:** `on_response_start` and `on_response_end` are internal provider
@@ -4259,6 +4262,31 @@ or integrator); the time from it to the first spoken output is the latency the
 user hears. A provider billed by session duration MUST report duration as its
 usage and MUST NOT restate it as tokens; backend token usage, where the
 provider surfaces it, is the backend model's and is attributed to it.
+
+#### 12.4.2 Usage Reporting
+
+What a spoken turn consumed is known to the service that billed it, not to the
+framework, so a realtime provider reports its usage rather than having it
+inferred. Two surfaces carry that report, and both are public.
+
+**The snapshot.** `VoiceSession.last_usage` is what the provider recorded last
+for that session: a read-only map, empty until the first report. The framework
+fixes two of its keys — `input_tokens` and `output_tokens`, the totals a
+token-billed provider reports — and a provider MAY add its own breakdown beside
+them, per modality, cached share, reasoning or tool use, under the names its API
+uses. A reader MUST treat an absent key as unreported rather than as zero.
+
+**The callback.** `on_usage(callback)` fires on every report, with the session
+and the map just recorded. An integrator that bills a call MUST use it rather
+than the snapshot: the next report replaces the snapshot and the channel clears
+it at the end of each turn, so a reader that polls can miss a turn, while a
+callback sees every one. Callbacks MUST NOT block the provider's event loop, and
+a failing one MUST NOT break the session.
+
+A provider billed by session duration reports duration (Section 12.4.1) through
+these same two surfaces, under its own key and never restated as tokens; a
+hosted backend's token usage is likewise the backend model's and is reported
+apart, attributed to it.
 
 ### 12.5 Voice Hooks
 
