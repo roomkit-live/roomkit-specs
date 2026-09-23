@@ -2915,7 +2915,9 @@ existing provider needs no change.
      produced as the AI response event with `metadata.cancelled = true`. A tool
      call already executing when the stream stops is let finish: its
      TOOL_CALL_END is stored with its real result, and the stream is closed
-     before the model's next round. A turn cancelled from outside (e.g. an
+     before the model's next round. A call announced but not yet executing never
+     runs; its TOOL_CALL_END is stored with `status = failed`, so no start row
+     stays pending. A turn cancelled from outside (e.g. an
      operator aborting it) stores its text the same way, but aborts a running
      tool. With `flush_partial_tts = false` the sessions keep reading, so the
      stream runs to its end and nothing is cancelled.
