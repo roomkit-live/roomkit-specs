@@ -3888,6 +3888,18 @@ only when streaming STT provides partial results fast enough. Implementations
 SHOULD design backchannel detectors to work with audio features alone and treat
 transcript availability as a bonus signal.
 
+An implementation MUST NOT consult the detector at speech onset with neither a
+transcript nor any speech duration: no detector can tell an acknowledgement
+from an interruption on an empty utterance, and a transcript-based one would
+turn SEMANTIC into IMMEDIATE. It waits instead for the first partial transcript
+or for `min_speech_ms` of sustained speech, whichever comes first, and the
+speech is held (not processed as a user turn) meanwhile. When a streaming STT
+is available, the held speech SHOULD be transcribed during playback so its
+partials can be classified; a backchannel then fires ON_BACKCHANNEL once and
+the speech is discarded, a genuine interruption cancels TTS and the speech is
+processed as the user's turn. Without a streaming STT, the classification at
+`min_speech_ms` relies on `speech_duration_ms` (and `audio_bytes`) alone.
+
 **Interruption flow:**
 
 ```
