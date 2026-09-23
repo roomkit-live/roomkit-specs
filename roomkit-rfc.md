@@ -2892,7 +2892,18 @@ buffered into sentences and fed to TTS incrementally.
         (min_chunk_chars threshold prevents very short TTS fragments)
      b. tts.synthesize_stream_input(sentences) → AudioChunk stream (~200ms TTS TTFB)
         First audio reaches speaker ~500-800ms after speech end (vs ~2-3s standard)
+     c. Several sessions on the binding: the stream is read once and every session
+        receives every sentence, in parallel. The stream is pulled at the pace of
+        the fastest session; a session that stops early (barge-in, transport error)
+        does not cut the others off.
 13s. Framework accumulates full text from stream → stores AI response event
+     Interrupted: when deliver_stream() returns before the stream is exhausted
+     (every session of 12s.c stopped early), the framework MUST close the response
+     stream (no further token is generated and no tool call starts after that
+     point) and MUST store the text already produced as the AI response event with
+     `metadata.cancelled = true`. A turn cancelled from outside (e.g. an operator
+     aborting it) is stored the same way. With `flush_partial_tts = false` the
+     sessions keep reading, so the stream runs to its end and nothing is cancelled.
 14s. Framework re-broadcasts complete event to non-streaming channels (exclude_delivery
      skips channels that already received streaming content)
 15s. Fire AFTER_TTS hook (BEFORE_TTS skipped — cannot block mid-stream)
@@ -3793,7 +3804,11 @@ Check InterruptionStrategy:
 
 1. If `flush_partial_tts = true`: discard all unplayed audio in the TTS buffer.
 2. If `keep_partial_transcript = true`: store the bot's partial response in the
-   timeline with `metadata.interrupted = true` and `metadata.played_percentage`.
+   timeline with `metadata.interrupted = true` and `metadata.played_ms` (how far
+   playback got). `metadata.played_percentage` is added only when the utterance's
+   total duration is known; a streamed response (Section 12.2, step 12s) has
+   none, so it carries `played_ms` alone. For a streamed response, the stored text
+   is the sentences already handed to TTS at the moment of the interruption.
 3. Process the user's speech normally through the inbound pipeline.
 
 #### 12.3.14 Pipeline Execution Flow
