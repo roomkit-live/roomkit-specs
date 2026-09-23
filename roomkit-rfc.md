@@ -1688,10 +1688,22 @@ HookRegistration
 ├── timeout: float = 30.0                   # Maximum execution time (seconds)
 ├── channel_types: set<ChannelType> | null  # Filter: only fire for these channel types
 ├── channel_ids: set<string> | null         # Filter: only fire for these channel IDs
-└── directions: set<ChannelDirection> | null # Filter: only fire for these directions
+├── directions: set<ChannelDirection> | null # Filter: only fire for these directions
+├── fail_closed: bool = false               # SYNC only: an unusable result blocks (§9.3)
+└── needs_lock: bool = true                 # BEFORE_BROADCAST SYNC only: false runs
+                                            # the hook off the room lock (§9.5.1)
 ```
 
 Hooks MAY be registered globally (apply to all rooms) or per-room.
+
+`needs_lock = false` is only meaningful on a SYNC `BEFORE_BROADCAST` hook;
+implementations MUST reject it on any other trigger or execution mode at
+registration. A room's `BEFORE_BROADCAST` SYNC hooks MUST satisfy one ordering
+rule: no hook that needs the lock may have a lower priority than a hook that
+does not. Off-lock hooks run first (§9.5.1), so a locked hook ordered before
+an off-lock one could not run in its declared place; implementations MUST
+reject the registration that would break the rule, naming both hooks, rather
+than silently reorder.
 
 ### 9.2 Hook Triggers
 
@@ -1819,6 +1831,14 @@ Planned rows are normative design intent for the named capability.
   no rule — an implementation that blocks on exceptions but allows on timeouts
   leaks through the timeout. Implementations MUST document which triggers fail
   closed.
+- **A hook MAY declare itself fail-closed** (`fail_closed = true`), on any
+  trigger: a content check on `BEFORE_BROADCAST` (PII, moderation) is exactly
+  such a hook, while the trigger as a whole stays fail-open so that a broken
+  logging hook cannot take every room down. Every unusable outcome of a
+  fail-closed hook MUST block, and the block MUST name the hook and the
+  outcome so the sender can be told why: `blocked_by` is the hook name and
+  the reason is `hook_timeout:<name>`, `hook_error:<name>` or
+  `hook_invalid_result:<name>`.
 - A MODIFY result replaces the payload whenever one is supplied, including a
   falsy one. Redacting a string to empty is a modification; treating it as
   absent would pass the original to the next hook.
@@ -1972,6 +1992,55 @@ Inbound Event
 └──────────────────────────────────────┘
 ```
 
+#### 9.5.1 Off-lock checks (`needs_lock = false`)
+
+A check that only reads the event — a PII scan, a moderation call — does not
+need the room lock, and running its I/O under the lock makes every other event
+of the room wait behind it (§13.5). A SYNC `BEFORE_BROADCAST` hook registered
+with `needs_lock = false` runs **before** the room lock is taken, on the
+inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
+
+```
+5a. OFF-LOCK CHECK (only when an off-lock hook matches the event)
+    ├── Take the room's admission ticket (arrival order, per process)
+    ├── Run the off-lock hooks in priority order, on the pre-lock context
+    │   # Each bounded by its own timeout; checks of different events of
+    │   # the same room overlap
+    ├── Wait for every earlier ticket of the room to be released
+    ├── Acquire the room lock (step 6) and continue; step 9 reuses the
+    │   off-lock outcome and runs only the hooks that need the lock
+    └── Release the ticket once the locked section has decided and committed
+```
+
+- **Order.** Events that took a ticket commit in ticket order, so two events
+  from one sender keep their arrival order even when the second one's check
+  finishes first. The ticket is held in process memory: the guarantee holds
+  within one process. Events that match no off-lock hook take no ticket and
+  are not ordered against ticketed ones — a system notice does not wait for a
+  scan it has nothing to do with.
+- **Release.** A ticket MUST be released on every path: committed, blocked by
+  a hook or a gate, refused, timed out, failed, or cancelled. A ticket left
+  held stalls every later ticketed event of the room.
+- **Bound.** Waiting for a turn adds nothing to `process_timeout` (§13.6): it
+  counts against the same pre-commit budget. The wait is bounded by the
+  earlier holders' hook timeouts and locked sections, never by a separate
+  setting.
+- **Decision.** An off-lock BLOCK or MODIFY is applied at step 9, after the
+  status, idempotency and EDIT/DELETE gates, which keep their order and still
+  decide first. The side effects (injected events, tasks, observations) of
+  both phases are collected together.
+- **Context.** An off-lock hook receives the context built before the lock.
+  Its history can be stale by the time the event commits; a hook that reads
+  the room's state rather than the event MUST keep `needs_lock = true`.
+- **Reentrance.** An event injected (§10.5) from inside an off-lock hook's body
+  takes no ticket in that room: it would otherwise wait for the ticket its own
+  caller holds. It commits as soon as it gets the lock, before the event whose
+  check emitted it.
+- **Other commit paths** (reentry passes, streamed segments, regeneration,
+  hook-injected events) run every `BEFORE_BROADCAST` SYNC hook under the lock,
+  the off-lock ones included. `needs_lock = false` permits a hook to run off
+  the lock; it never lets an event skip it.
+
 ### 9.6 When to Use What
 
 | | Sync Hook | Async Hook | Read-Only Channel |
@@ -2030,6 +2099,11 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   └── CHALLENGE_SENT → deliver challenge, block processing
    └── Stamp participant_id on event
 
+5a. OFF-LOCK CHECK (only when a `needs_lock = false` hook matches, §9.5.1)
+    ├── Take the room's admission ticket
+    ├── Run the off-lock BEFORE_BROADCAST SYNC hooks, off the lock
+    └── Wait for the earlier tickets of the room; release ours after step 12
+
 6. ACQUIRE ROOM LOCK, THEN CHECK THE ROOM STILL ACCEPTS EVENTS
    ├── Re-read the room's status under the lock (§5.1)
    ├── If the status refuses new events (CLOSED, ARCHIVED):
@@ -2051,7 +2125,8 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    └── event.index = room.event_count
 
 9. RUN BEFORE_BROADCAST SYNC HOOKS
-   ├── Execute hooks in priority order
+   ├── Apply the step 5a outcome first, when there was one (§9.5.1)
+   ├── Execute the remaining hooks in priority order
    └── Collect result: allow / block / modify
 
 10. IF BLOCKED BY HOOK:
@@ -2404,7 +2479,11 @@ The injected event traverses the SAME pipeline as an inbound message
 write-permission gate, EDIT/DELETE handling, persistence and broadcast
 planning under the room lock, then its delivery lane, reentry passes, and
 AFTER_BROADCAST hooks. A blocking hook therefore yields a `BLOCKED` event
-and suppresses delivery, exactly as for an inbound message.
+and suppresses delivery, exactly as for an inbound message. That includes the
+off-lock check (§9.5.1, step 5a): an injected event matched by a
+`needs_lock = false` hook takes an admission ticket like an inbound one —
+unless it is injected from inside an off-lock hook's body, in which case it
+takes none and commits ahead of the event being checked.
 
 ---
 
@@ -7508,7 +7587,10 @@ NOT required to run under the room lock — it MUST preserve per-room order
 Implementations SHOULD NOT extend the room's critical section with external
 I/O (provider calls, AI generation): under a distributed lock manager, lock
 tenure is what serializes the whole deployment, and every await spent under
-the lock is paid by every other worker waiting on that room.
+the lock is paid by every other worker waiting on that room. A
+`BEFORE_BROADCAST` check that reads only the event is the hook-side case of
+that I/O: registered with `needs_lock = false`, it runs off the lock, ordered
+by the room's admission ticket instead (§9.5.1).
 
 ```
 RoomLockManager (interface)
