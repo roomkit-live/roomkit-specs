@@ -798,6 +798,14 @@ the room has reached them through, the primary included.
   presence, a status — is driving another channel's record without having
   been told. That silence is what lets one channel's departure erase
   another channel's membership.
+- `status` follows the primary channel's lifecycle. A channel that observes
+  presence on a record it does not home — a conference seeing a member
+  connect and disconnect — MUST NOT write that record's `status`: an arrival
+  there is not a join, a departure there is not a leave, and a room member
+  who hangs up on its call is still a member of the room. What such a channel
+  owes the record is the bookkeeping above (`connected_via`); what it owes
+  everyone else is its own events and hooks, which report the arrival and the
+  departure whether or not the status moved.
 - Recording a channel is bookkeeping, not presentation: it does not emit
   `PARTICIPANT_UPDATED` and does not fire `ON_PARTICIPANT_UPDATED`.
 
