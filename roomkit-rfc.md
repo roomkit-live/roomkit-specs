@@ -3846,6 +3846,7 @@ InterruptionConfig
 ├── strategy: InterruptionStrategy = CONFIRMED  # How to handle barge-in
 ├── min_speech_ms: int = 300                 # Minimum user speech duration to trigger interruption
 ├── backchannel_detector: BackchannelDetector | null  # OPTIONAL backchannel filter
+├── transcript_wait_ms: int = 1000           # SEMANTIC: how long to wait for the first words of transcribed speech
 ├── flush_partial_tts: bool = true           # Whether to discard unplayed TTS audio on interrupt
 └── keep_partial_transcript: bool = true     # Whether to store bot's partial response in timeline
 ```
@@ -3899,14 +3900,28 @@ transcript availability as a bonus signal.
 An implementation MUST NOT consult the detector at speech onset with neither a
 transcript nor any speech duration: no detector can tell an acknowledgement
 from an interruption on an empty utterance, and a transcript-based one would
-turn SEMANTIC into IMMEDIATE. It waits instead for the first partial transcript
-or for `min_speech_ms` of sustained speech, whichever comes first, and the
-speech is held (not processed as a user turn) meanwhile. When a streaming STT
-is available, the held speech SHOULD be transcribed during playback so its
+turn SEMANTIC into IMMEDIATE. It waits instead, and the speech is held (not
+processed as a user turn) meanwhile:
+
+- When a streaming STT is transcribing the speech, it waits for the first
+  partial transcript, for at most `max(min_speech_ms, transcript_wait_ms)` of
+  sustained speech. A streaming STT typically needs longer than `min_speech_ms`
+  for its first words, and judging before them classifies an empty utterance.
+- Otherwise it waits for `min_speech_ms` of sustained speech.
+
+Once the wait ends without words, the classification relies on
+`speech_duration_ms` (and `audio_bytes`) alone. When a streaming STT is
+available, the held speech SHOULD be transcribed during playback so its
 partials can be classified; a backchannel then fires ON_BACKCHANNEL once and
 the speech is discarded, a genuine interruption cancels TTS and the speech is
-processed as the user's turn. Without a streaming STT, the classification at
-`min_speech_ms` relies on `speech_duration_ms` (and `audio_bytes`) alone.
+processed as the user's turn.
+
+In continuous-STT mode, where the STT transcribes all audio and no local VAD
+segments it, every evaluation of an ongoing stretch of speech during playback,
+whichever signal triggered it (a partial transcript, or an energy or transport
+barge-in), classifies the latest words of that stretch. A stretch classified
+as a backchannel fires ON_BACKCHANNEL once and is not cut on duration alone
+afterwards; later words that are not a backchannel still interrupt.
 
 **Interruption flow:**
 
