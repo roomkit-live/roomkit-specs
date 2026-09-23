@@ -7,7 +7,7 @@
 | **Contributions** | TchatNSign, Angany AI |
 | **Version** | v17 Draft |
 | **Created** | 2026-01-27 |
-| **Last Updated** | 2026-08-24 |
+| **Last Updated** | 2026-09-23 |
 | **Supersedes** | v16 Draft |
 
 ---
@@ -2842,14 +2842,20 @@ TTSProvider (interface)
 ├── name: string
 ├── supports_streaming_input: bool (default false)
 │       # Whether this TTS accepts streaming text input
+├── context_level: TTSContextLevel (default NONE)
+│       # What conversation context this TTS consumes (Section 12.2.2)
 ├── synthesize(text, voice: string | null) → AudioContent
 │       # Returns AudioContent (Section 5) with url, mime_type, transcript, duration_seconds
-├── synthesize_stream(text, voice: string | null) → async_iterator<AudioChunk>
+├── synthesize_stream(text, voice: string | null,
+│                     context: TTSContext | null) → async_iterator<AudioChunk>
 │       # Stream audio from a complete text string
-└── synthesize_stream_input(text_stream, voice: string | null) → async_iterator<AudioChunk>
-        # Stream audio from streaming text chunks (requires supports_streaming_input = true)
-        # Accepts an async iterator of text strings (e.g., sentences from a sentence splitter)
-        # Used by VoiceChannel for streaming AI → TTS
+├── synthesize_stream_input(text_stream, voice: string | null,
+│                           context: TTSContext | null) → async_iterator<AudioChunk>
+│       # Stream audio from streaming text chunks (requires supports_streaming_input = true)
+│       # Accepts an async iterator of text strings (e.g., sentences from a sentence splitter)
+│       # Used by VoiceChannel for streaming AI → TTS
+└── release_context(context_id: string) → void
+        # Drop any state held for this context (default: no-op; Section 12.2.2)
 ```
 
 `synthesize()` returns an `AudioContent` (Section 5) rather than raw bytes.
@@ -2860,6 +2866,10 @@ supports both inline data URLs and remote storage URLs. For streaming,
 iterator of text chunks (typically sentences) and yields audio as each chunk is
 synthesized. This enables the streaming AI → TTS pipeline where LLM tokens are
 buffered into sentences and fed to TTS incrementally.
+
+`context` carries the conversation so far to a TTS that can use it (Section
+12.2.2). A provider whose `context_level` is `NONE` never receives one, so an
+existing provider needs no change.
 
 **Audio processing flow:**
 
@@ -2872,6 +2882,7 @@ buffered into sentences and fed to TTS incrementally.
 4. VAD detects speech end → ON_SPEECH_END hook fires
 5. STT transcribes captured audio → TranscriptionResult
 6. Fire ON_TRANSCRIPTION hook (can modify transcript)
+6a. If the TTS consumes context → record the user turn (Section 12.2.2)
 7. If TurnDetector configured → evaluate turn completion
    ├── Complete → Create RoomEvent
    └── Incomplete → accumulate, wait for next speech
@@ -2915,6 +2926,8 @@ buffered into sentences and fed to TTS incrementally.
 13. AEC reference: Transport feeds AEC.feed_reference() at playback time (local hw)
     or pipeline feeds it in the outbound path (network transports) — see 12.3.4
 14. If barge-in detected → InterruptionConfig determines response
+15. If the TTS consumes context → record the assistant turn once playback ends
+    or is cancelled (Section 12.2.2)
 ```
 
 The streaming path flows through the framework's normal routing infrastructure.
@@ -2974,6 +2987,101 @@ RECOMMENDED for RTP-based backends.
 Emitted concealed frames SHOULD be annotated (`metadata.concealed = true` on
 the AudioFrame) so that pipeline stages MAY treat them differently — e.g., the
 recorder journaling concealed ranges, or STT adjusting confidence.
+
+#### 12.2.2 Conversation Context for TTS
+
+A TTS that synthesizes each sentence in isolation cannot carry prosody across
+a conversation. Some can, when they are told what came before: the voice's own
+previous generations, the text of the dialogue, or the dialogue's audio —
+including how the user spoke. The Voice Channel already holds all of it: the
+captured utterance at speech end, its final transcript after
+`ON_TRANSCRIPTION`, and what it synthesized and played. This section defines
+how it hands that to the TTS.
+
+**TTSContextLevel** enumeration — what a provider consumes. Each level
+includes the ones above it:
+
+| Value | The provider consumes | Typical use |
+|---|---|---|
+| NONE | Nothing (default) | Most TTS engines |
+| SELF | Which of its own previous turns were played, and how far | Continuity handles returned by a cloud API (a request id, a generation id) |
+| TEXT | The text of every turn, both roles | Previous / next text conditioning |
+| AUDIO | The text and the audio of every turn | Dialogue-conditioned models that decode inside the conversation |
+
+```
+TTSContext
+├── context_id: string                      # The VoiceSession.id the context belongs to
+├── turns: list<ConversationTurn>           # Oldest first, bounded by TTSContextConfig
+└── next_turn_id: string                    # The turn_id the assistant turn of this call will get
+
+ConversationTurn
+├── turn_id: string                         # Assigned by the channel, unique within the context
+├── role: "user" | "assistant"
+├── participant_id: string
+├── text: string                            # As synthesized, or as transcribed after ON_TRANSCRIPTION
+├── audio: AudioFrame | null                # The whole turn; only when the provider's level is AUDIO
+├── played_ms: int | null                   # Assistant turns: audio actually played
+└── interrupted: bool                       # Assistant turns: playback was cancelled
+
+TTSContextConfig
+├── enabled: bool = true                    # Whether the channel keeps a context at all
+├── include_audio: bool = false             # Whether user and assistant audio is kept
+├── max_turns: int = 20                     # Oldest turns are dropped past this
+└── max_audio_seconds: float = 120.0        # Oldest audio is dropped past this; its text stays
+```
+
+**Passing rules.** A Voice Channel MUST NOT pass a context to a provider
+whose `context_level` is `NONE`, and MUST NOT put audio in a context unless
+the provider's level is `AUDIO` and `include_audio` is true. When
+`include_audio` is false, an `AUDIO` provider receives the context at `TEXT`
+level: every `audio` is null. The context passed to a call is a snapshot:
+the provider MUST NOT expect it to change during the call, and MUST NOT
+write to it.
+
+**One context per session.** A context belongs to one `VoiceSession` and
+holds the dialogue heard on that session only — never other channels of the
+room, and never other sessions. The room timeline is not its source: the
+timeline mixes channels and holds no audio. A response delivered to several
+sessions is therefore synthesized once per session, each call with its own
+context.
+
+**Recording the user turn.** After `ON_TRANSCRIPTION` (step 6a of the audio
+processing flow), the channel appends a `user` turn with the transcript as
+the hook left it and, when audio is kept, the utterance captured at speech
+end. If the hook changed the transcript — a redaction, typically — the
+channel MUST NOT keep the audio of that turn: the audio would still hold what
+the hook removed. A speech segment classified as a backchannel (Section
+12.3.13) is not recorded.
+
+**Recording the assistant turn.** When playback ends or is cancelled, the
+channel appends an `assistant` turn with the text actually sent to the TTS —
+after `BEFORE_TTS` and any text filter — under the `next_turn_id` the call
+was given, and `played_ms` set to the duration played. When audio is kept,
+the turn carries the synthesized audio. A call cancelled before any of its
+audio was played leaves no turn: the user heard nothing of it. On
+cancellation, the turn records `interrupted = true` and holds only what was
+played: the audio is cut at `played_ms`,
+and the text is cut to the part the provider or the channel can attribute to
+the played audio, or kept whole with `played_ms` as the only bound when no
+such attribution exists. A provider consuming the context MUST treat
+`played_ms` as the end of what the user heard.
+
+**Stateful providers.** A provider that keeps its own state per context (a
+model that holds the dialogue in a KV cache, say) MAY rely on the turns it
+already saw and read only the new ones on each call, keyed by `context_id`
+and `turn_id`. A provider that needs its own handle for a turn — the request
+id a cloud API returned, at level `SELF` — keeps it under the call's
+`next_turn_id`, and finds it again when that turn appears in a later context,
+with its `played_ms`. A call cancelled before any audio was played leaves no
+turn (see above): the provider MUST NOT assume every `next_turn_id` it saw
+is recorded. The channel MUST call `release_context(context_id)` when the session is
+unbound or ends, and the provider MUST drop everything it holds for that
+context. `release_context` on an unknown context is a no-op.
+
+**Scope.** This version defines the context for the Voice Channel's 1:1
+sessions. A Conference Channel (Section 12.10) MUST NOT pass a context to its
+TTS. A Realtime Voice Channel (Section 12.4) is out of scope: a
+speech-to-speech provider keeps its own conversation.
 
 ### 12.3 Audio Processing Pipeline
 
@@ -3809,7 +3917,10 @@ Check InterruptionStrategy:
    total duration is known; a streamed response (Section 12.2, step 12s) has
    none, so it carries `played_ms` alone. For a streamed response, the stored text
    is the sentences already handed to TTS at the moment of the interruption.
-3. Process the user's speech normally through the inbound pipeline.
+3. If the TTS consumes context: record the assistant turn with
+   `interrupted = true` and the same `played_ms` (Section 12.2.2), so the
+   provider knows where the user stopped hearing it.
+4. Process the user's speech normally through the inbound pipeline.
 
 #### 12.3.14 Pipeline Execution Flow
 
@@ -4452,7 +4563,9 @@ ranging from immediate cancellation to semantic backchannel detection.
    b. If `flush_partial_tts = true`: discard unplayed audio buffer.
    c. If `keep_partial_transcript = true`: store partial bot response in timeline
       with `metadata.interrupted = true`.
-   d. Fire ON_BARGE_IN hook.
+   d. If the TTS consumes context: record the assistant turn truncated to
+      `played_ms` (Section 12.2.2).
+   e. Fire ON_BARGE_IN hook.
 4. If classified as backchannel:
    a. Fire ON_BACKCHANNEL hook.
    b. TTS continues uninterrupted.
@@ -7871,6 +7984,8 @@ debugging. The following metrics are RECOMMENDED:
 | `pipeline.backchannel_rate` | BackchannelDetector | Ratio of backchannels to interruptions |
 | `pipeline.barge_in_count` | InterruptionConfig | Count of barge-in events per session |
 | `pipeline.debug_tap_bytes_written` | PipelineDebugTaps | Total bytes written to debug tap files |
+| `pipeline.tts_context_turns` | Voice Channel | Turns in the TTS context passed to a call, per session (Section 12.2.2) |
+| `pipeline.tts_context_audio_s` | Voice Channel | Seconds of audio held in the TTS context, per session |
 | `transport.packets_lost` | VoiceBackend | Count of packets confirmed lost per session (Section 12.2.1) |
 | `transport.concealed_frames` | VoiceBackend | Count of frames synthesized by packet loss concealment per session |
 
@@ -8321,6 +8436,24 @@ should live in the integration surface layer.
   requirements.
 - Voice session metadata (transcripts, recordings, DTMF digits) MUST follow
   the same data retention and redaction policies as other room events.
+
+**TTS conversation context (Section 12.2.2):**
+
+- Context audio is a copy of what the user said, held so the TTS can hear it.
+  It MUST be kept in memory only: never written to the conversation store, the
+  timeline, a recording, or a log.
+- It MUST stay within `max_turns` and `max_audio_seconds`, and MUST be dropped
+  when the session is unbound or ends, together with the call to
+  `release_context`.
+- Keeping audio MUST be opt-in (`include_audio = false` by default). The text
+  of the context is the transcript already stored as room events, and is under
+  the same policies.
+- A user turn whose transcript a hook modified MUST NOT keep its audio. When
+  DTMF redaction is enabled, a user turn during which DTMF was detected MUST
+  NOT keep its audio either: in-band tones carry the digits.
+- A provider at level `AUDIO` that runs as an external service receives the
+  user's voice on every call, not only the current sentence. Implementations
+  SHOULD say so where they document which providers receive audio data.
 
 **DTMF sensitivity:**
 
@@ -9737,6 +9870,7 @@ A Level 3 implementation MAY additionally support audio and/or video real-time m
 - VoiceBackend interface with at least one implementation
 - AudioCaptureSource interface (OPTIONAL, REQUIRED for capture that outlives a session — Section 12.12)
 - Packet loss concealment for lossy transports (OPTIONAL, RECOMMENDED for RTP backends — Section 12.2.1)
+- TTS conversation context — TTSContextLevel, TTSContext, `release_context` (OPTIONAL — Section 12.2.2)
 - STTProvider interface with at least one implementation
 - TTSProvider interface with at least one implementation
 - Voice hooks (ON_SPEECH_START through ON_RECORDING_STOPPED)
