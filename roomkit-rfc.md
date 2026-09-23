@@ -2908,13 +2908,17 @@ existing provider needs no change.
         the fastest session; a session that stops early (barge-in, transport error)
         does not cut the others off.
 13s. Framework accumulates full text from stream → stores AI response event
-     Interrupted: when deliver_stream() returns before the stream is exhausted
-     (every session of 12s.c stopped early), the framework MUST close the response
-     stream (no further token is generated and no tool call starts after that
-     point) and MUST store the text already produced as the AI response event with
-     `metadata.cancelled = true`. A turn cancelled from outside (e.g. an operator
-     aborting it) is stored the same way. With `flush_partial_tts = false` the
-     sessions keep reading, so the stream runs to its end and nothing is cancelled.
+     Interrupted: when deliver_stream() returns before the stream is exhausted,
+     for any reason (typically every session of 12s.c stopped early), the
+     framework MUST close the response stream (no further token is generated and
+     no tool call starts after that point) and MUST store the text already
+     produced as the AI response event with `metadata.cancelled = true`. A tool
+     call already executing when the stream stops is let finish: its
+     TOOL_CALL_END is stored with its real result, and the stream is closed
+     before the model's next round. A turn cancelled from outside (e.g. an
+     operator aborting it) stores its text the same way, but aborts a running
+     tool. With `flush_partial_tts = false` the sessions keep reading, so the
+     stream runs to its end and nothing is cancelled.
 14s. Framework re-broadcasts complete event to non-streaming channels (exclude_delivery
      skips channels that already received streaming content)
 15s. Fire AFTER_TTS hook (BEFORE_TTS skipped — cannot block mid-stream)
