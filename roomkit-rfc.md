@@ -1698,7 +1698,8 @@ Hooks MAY be registered globally (apply to all rooms) or per-room.
 
 `needs_lock = false` is only meaningful on a SYNC `BEFORE_BROADCAST` hook;
 implementations MUST reject it on any other trigger or execution mode at
-registration. A room's `BEFORE_BROADCAST` SYNC hooks MUST satisfy one ordering
+registration. Likewise `fail_closed = true` MUST be rejected on an ASYNC hook,
+which cannot block. A room's `BEFORE_BROADCAST` SYNC hooks MUST satisfy one ordering
 rule: no hook that needs the lock may have a lower priority than a hook that
 does not. Off-lock hooks run first (§9.5.1), so a locked hook ordered before
 an off-lock one could not run in its declared place; implementations MUST
@@ -2032,10 +2033,12 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
 - **Context.** An off-lock hook receives the context built before the lock.
   Its history can be stale by the time the event commits; a hook that reads
   the room's state rather than the event MUST keep `needs_lock = true`.
-- **Reentrance.** An event injected (§10.5) from inside an off-lock hook's body
-  takes no ticket in that room: it would otherwise wait for the ticket its own
-  caller holds. It commits as soon as it gets the lock, before the event whose
-  check emitted it.
+- **Reentrance.** An event injected (§10.5) by a caller that already stands in
+  the room's admission order takes no ticket in that room: from inside an
+  off-lock hook's body, or while holding the room lock (a locked hook, code
+  under the lock). It would otherwise wait for the ticket its own caller
+  holds. It runs every hook under the lock and commits ahead of the event
+  whose processing emitted it.
 - **Other commit paths** (reentry passes, streamed segments, regeneration,
   hook-injected events) run every `BEFORE_BROADCAST` SYNC hook under the lock,
   the off-lock ones included. `needs_lock = false` permits a hook to run off
@@ -2482,8 +2485,9 @@ AFTER_BROADCAST hooks. A blocking hook therefore yields a `BLOCKED` event
 and suppresses delivery, exactly as for an inbound message. That includes the
 off-lock check (§9.5.1, step 5a): an injected event matched by a
 `needs_lock = false` hook takes an admission ticket like an inbound one —
-unless it is injected from inside an off-lock hook's body, in which case it
-takes none and commits ahead of the event being checked.
+unless it is injected from inside an off-lock hook's body or under the room
+lock, in which case it takes none and commits ahead of the event being
+processed (§9.5.1, Reentrance).
 
 ---
 
