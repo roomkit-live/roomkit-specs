@@ -9265,10 +9265,17 @@ servers via an `MCPToolProvider`:
 
 ```
 MCPToolProvider
-├── server_url: string                      # MCP server endpoint
+├── server: one of
+│   ├── url: string                         # a remote server (streamable HTTP or SSE)
+│   └── command: string, args: list<string> # a local server started as a subprocess (stdio)
 ├── tools() → list<ToolDefinition>          # Discover available tools
 └── call(name, arguments) → string          # Execute a tool
 ```
+
+A server named by `command` is started when the provider connects and MUST be
+stopped when it disconnects. Its arguments MUST be passed as a list, never
+through a shell. A connection that fails part-way MUST release what it had
+opened, the server process included, before the error is reported.
 
 MCP tools are subject to the same `ToolPolicy` as local tools.
 
