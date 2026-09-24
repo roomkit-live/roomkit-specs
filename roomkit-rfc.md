@@ -3252,10 +3252,20 @@ pipeline to be useful. Typical configurations:
 
 ```
 VADConfig
-├── silence_threshold_ms: int = 500          # Silence duration to trigger speech_end
-├── speech_pad_ms: int = 300                 # Padding around speech segments
-└── min_speech_duration_ms: int = 250        # Minimum speech duration to emit event
+├── silence_threshold_ms: int | null = null   # Silence duration to trigger speech_end
+├── speech_pad_ms: int | null = null          # Audio kept from before speech detection
+├── min_speech_duration_ms: int | null = null # Minimum speech duration to emit event
+└── extra: map<string, any> = {}              # Provider-specific settings
 ```
+
+`vad_config` tunes the configured `vad` provider when the pipeline is built.
+Each field that is set MUST replace the provider's own value for that setting;
+a field left `null` MUST leave the provider's value unchanged, so the provider's
+defaults hold for everything the application did not set. `extra` carries
+settings specific to the provider (for example a model threshold); a provider
+MUST reject a key it does not know rather than ignore it. A provider that cannot
+apply a `VADConfig` SHOULD make that visible (a logged warning) instead of
+ignoring it silently.
 
 The audio pipeline is configured per Voice Channel or per Realtime Voice Channel.
 Different channels in the same room MAY have different pipeline configurations.
