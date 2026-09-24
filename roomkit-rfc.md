@@ -3907,6 +3907,13 @@ accumulated turn MUST be routed as complete, and its completion event carries
 `confidence = 0.0`. A user who pauses on a sentence the detector judged
 unfinished is answered, never ignored.
 
+**Speech that resumes before the turn is routed:** a turn the detector judges
+complete MUST NOT be routed while speech that started after the evaluated
+segment is in progress. The channel holds it as it would an incomplete turn:
+the new speech joins it and the accumulated turn is evaluated again, or routed
+once the wait ends in silence. A user who resumes a sentence after a short
+pause is answered once, on the whole sentence.
+
 When no TurnDetector is configured, the pipeline falls back to VAD-only behavior
 (current default).
 
