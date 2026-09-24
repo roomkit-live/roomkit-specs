@@ -3895,6 +3895,14 @@ VAD SPEECH_END → STT transcribes → TurnDetector.evaluate(context)
                                               next speech, re-evaluate
 ```
 
+**Waiting on an incomplete turn:** when `is_complete` is false, the channel
+MUST NOT hold the turn indefinitely. It waits `suggested_wait_ms`, or a
+configured default when the decision gives none. Speech that starts during the
+wait cancels it, and its transcript joins the accumulated turn, which is then
+evaluated again. If no speech starts before the wait ends, the accumulated turn
+MUST be routed as complete, with `reason = "long_pause"`. A user who pauses on
+a sentence the detector judged unfinished is answered, never ignored.
+
 When no TurnDetector is configured, the pipeline falls back to VAD-only behavior
 (current default).
 
