@@ -4263,14 +4263,45 @@ as a tool result, because the model issued no call and has no pending response
 to close.
 
 **Text injection** refers to programmatically inserting text into a realtime
-session's conversation context (e.g., system messages, tool results, or context
-updates) rather than sending audio. This is provider-specific: for OpenAI
-Realtime, this maps to `conversation.item.create` with text content; for Gemini
-Live, this maps to injecting text turns; for a full-duplex provider whose session
-takes only appends (OpenAI GPT-Live), a `system` role maps to an instructions
-append and a `user` role to a spoken-context append the model relays in its own
-words (Section 12.4.1). The ON_REALTIME_TEXT_INJECTED hook fires after such an
-injection, allowing integrators to log or react to context changes.
+session's conversation context (e.g., instructions, tool results, or context
+updates) rather than sending audio. The ON_REALTIME_TEXT_INJECTED hook fires
+after such an injection, allowing integrators to log or react to context
+changes.
+
+**The role is an intent, not a wire field (normative).** The providers do not
+share a vocabulary: one takes system and user messages, one takes only user and
+model turns, one takes no turns at all. `inject_text` therefore names what the
+integrator means, and each provider maps that meaning onto what its wire offers:
+
+- `system` — an **instruction** from the application: how to behave, or what to
+  do now ("greet the user by first name, then listen"). The model follows it;
+  whether it acts at once or on its next turn depends on the wire, and the
+  provider documents which.
+- `user` — **content** for the conversation. On a turn-based provider it is a
+  user turn the model answers; on a full-duplex provider that takes only appends
+  it is content the model says aloud, in its own words (Section 12.4.1).
+- `silent` — either role, added as context without asking for a response.
+
+A provider MAY accept further intents its wire carries (words put in the
+agent's mouth, say) and MUST document them.
+
+Text that directs the model MUST be injected with the `system` role, never as
+`user`: on a full-duplex provider a `user` injection is voiced as the model's
+own words, so an instruction sent that way is said, or improvised upon, instead
+of followed. An opening greeting is an instruction.
+
+| Intent | OpenAI Realtime | Gemini Live | OpenAI GPT-Live (full duplex) |
+|---|---|---|---|
+| `system` | `system` message item, then a response request | no system role in turns: a `user` turn | instructions append |
+| `user` | `user` message item, then a response request | `user` turn | commentary append (spoken, paraphrased) |
+| `silent` | the item, no response request | turn not completed; once audio flows, a text marked as context (best effort) | thinking append |
+
+A provider whose wire cannot express an intent MUST map it to the nearest
+primitive that keeps the intent's effect (an instruction still directs, content
+is still content) and MUST document the mapping in its `inject_text`. A mapping
+that changes the effect is not an implementation detail: a provider with no way
+to carry an intent MUST refuse it (`not_sent`, with a reason) rather than
+deliver it as something else.
 
 **RealtimeAudioTransport interface:**
 
@@ -4432,7 +4463,11 @@ and output rates hold at the channel boundary.
 
 **Text injection is paraphrased.** On these providers a spoken injection is
 context the model relays in its own words, not a script it reads; there is no
-verbatim primitive, and `inject_text` MUST document that. Where the provider
+verbatim primitive, and `inject_text` MUST document that. Nor is there a user
+turn: the session takes no user text once started, so a `user` injection is
+content the model voices as its own, and an instruction — an opening greeting
+included — MUST travel as an instructions append (the `system` intent, Section
+12.4). Where the provider
 bounds the size of one append, an implementation MUST split a longer text on
 sentence boundaries into as many appends as it takes, rather than truncate or
 refuse.
