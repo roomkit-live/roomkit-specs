@@ -3914,6 +3914,29 @@ the new speech joins it and the accumulated turn is evaluated again, or routed
 once the wait ends in silence. A user who resumes a sentence after a short
 pause is answered once, on the whole sentence.
 
+**Speech that resumes after the turn is routed, before its response is
+heard:** this applies with or without a TurnDetector. From the routing of a
+turn until the first audio of its response reaches the transport, the response
+is *unheard*. Speech that starts while a session's response is unheard MUST
+hold that response: no audio of it is sent while the speech lasts, and the
+speech is processed as a user turn, not evaluated as a barge-in (nothing has
+been played, so there is no echo to guard against). When the speech ends:
+
+- if it lasted at least `min_speech_ms` and yields a transcript that is routed,
+  the unheard turn MUST be cancelled with reason `superseded` before the new
+  transcript is routed. The committed user message stays stored; the new
+  transcript is routed on its own, and the model sees both messages in turn;
+- otherwise (shorter, no transcript, blocked by a hook) the held response is
+  released and plays as it would have.
+
+A response cancelled as `superseded` was never heard, so it is not part of the
+conversation. Its text may already be stored as finished (generation often ends
+before playback starts): the channel marks every MESSAGE response event of the
+turn `metadata.cancelled = true` and `metadata.cancellation_reason =
+"superseded"`, and an intelligence channel MUST NOT replay such an event as
+history. A user who
+resumes a sentence after the turn was sent is answered once, not twice.
+
 When no TurnDetector is configured, the pipeline falls back to VAD-only behavior
 (current default).
 
