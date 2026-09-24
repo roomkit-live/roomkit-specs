@@ -3687,6 +3687,8 @@ VADProvider (interface)
 ├── name: string                             # Provider name (e.g., "silero", "ten_vad", "webrtc")
 ├── process(audio_frame: AudioFrame, stream: string) → VADEvent | null
 │       # Process a frame, return event if state changed, null otherwise
+├── configure(config: VADConfig) → void
+│       # Apply the pipeline's vad_config when the pipeline is built (Section 12.3.1)
 ├── reset(stream: string) → void
 │       # Drop this stream's state when the stream ends
 └── close() → void
