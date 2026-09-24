@@ -4274,27 +4274,42 @@ model turns, one takes no turns at all. `inject_text` therefore names what the
 integrator means, and each provider maps that meaning onto what its wire offers:
 
 - `system` — an **instruction** from the application: how to behave, or what to
-  do now ("greet the user by first name, then listen"). The model follows it;
-  whether it acts at once or on its next turn depends on the wire, and the
-  provider documents which.
+  do now ("greet the user by first name, then listen"). Non-silent, the model
+  acts on it at once.
 - `user` — **content** for the conversation. On a turn-based provider it is a
   user turn the model answers; on a full-duplex provider that takes only appends
   it is content the model says aloud, in its own words (Section 12.4.1).
-- `silent` — either role, added as context without asking for a response.
+- `assistant` — a **line** the agent says to the user now (a configured
+  greeting, a scripted announcement). Where the wire has a primitive that makes
+  the agent speak a text, the provider uses it, verbatim or paraphrased as that
+  primitive does; otherwise it asks the model to say the line, as an
+  instruction. It MUST NOT reach the model as something the user said: the
+  model would answer its own line.
+- `silent` — any intent, added as context without asking for a response.
 
-A provider MAY accept further intents its wire carries (words put in the
-agent's mouth, say) and MUST document them.
+A provider MAY accept further intents its wire carries and MUST document them.
 
 Text that directs the model MUST be injected with the `system` role, never as
 `user`: on a full-duplex provider a `user` injection is voiced as the model's
 own words, so an instruction sent that way is said, or improvised upon, instead
-of followed. An opening greeting is an instruction.
+of followed. An instruction to greet ("greet the user by first name") is
+`system`; the greeting itself, when the application wrote it, is `assistant`.
 
 | Intent | OpenAI Realtime | Gemini Live | OpenAI GPT-Live (full duplex) |
 |---|---|---|---|
 | `system` | `system` message item, then a response request | no system role in turns: a `user` turn | instructions append |
 | `user` | `user` message item, then a response request | `user` turn | commentary append (spoken, paraphrased) |
+| `assistant` | `system` message asking to say the line, then a response request | `user` turn asking to say the line | instructions append asking to say the line |
 | `silent` | the item, no response request | turn not completed; once audio flows, a text marked as context (best effort) | thinking append |
+
+A provider with a speech primitive of its own carries `assistant` on it — an
+agent message (Deepgram's `InjectAgentMessage`), a direct text-to-speech call
+(Anam's `talk`). A primitive that relays information in the model's own words
+is not one: given a written greeting as a commentary append, GPT-Live
+improvised another, down to a name the application never supplied. A provider whose only instruction primitive rewrites the
+prompt keeps that for a silent `system`, and delivers a non-silent one where
+the model answers at once (Deepgram: a user message), or the instruction waits
+for the user to speak.
 
 A provider whose wire cannot express an intent MUST map it to the nearest
 primitive that keeps the intent's effect (an instruction still directs, content
