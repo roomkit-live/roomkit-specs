@@ -3917,17 +3917,20 @@ pause is answered once, on the whole sentence.
 **Speech that resumes after the turn is routed, before its response is
 heard:** this applies with or without a TurnDetector. From the routing of a
 turn until the first audio of its response reaches the transport, the response
-is *unheard*. Speech that starts while a session's response is unheard MUST
-hold that response: no audio of it is sent while the speech lasts, and the
-speech is processed as a user turn, not evaluated as a barge-in (nothing has
-been played, so there is no echo to guard against). When the speech ends:
+is *unheard*. Speech that starts while a session's response is unheard, and
+while no other audio is audible on the session, MUST hold that response: no
+audio of it is sent while the speech lasts, and the speech is processed as a
+user turn, not evaluated as a barge-in (nothing plays, so there is no echo to
+guard against). Speech over audible audio keeps its usual echo guard. Each
+speech segment is measured from its own onset. When the speech ends:
 
 - if it lasted at least `min_speech_ms` and yields a transcript that is routed,
   the unheard turn MUST be cancelled with reason `superseded` before the new
   transcript is routed. The committed user message stays stored; the new
   transcript is routed on its own, and the model sees both messages in turn;
-- otherwise (shorter, no transcript, blocked by a hook) the held response is
-  released and plays as it would have.
+- otherwise (shorter, no transcript, blocked by an `ON_TRANSCRIPTION` hook,
+  or discarded as echo) the held response is released and plays as it would
+  have, unless new speech has started meanwhile, which holds it in turn.
 
 A response cancelled as `superseded` was never heard, so it is not part of the
 conversation. Its text may already be stored as finished (generation often ends
