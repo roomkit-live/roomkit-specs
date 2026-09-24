@@ -496,6 +496,7 @@ RoomEvent
 |---|---|---|
 | MESSAGE | Core | Text, media, or rich content message |
 | SYSTEM | Core | Framework-generated notification |
+| INSTRUCTION | Directive | The application directs an agent; delivered to it, never stored (§10.1.1) |
 | TYPING | Ephemeral | User is typing |
 | READ_RECEIPT | Status | User has read up to an index |
 | DELIVERY_RECEIPT | Status | Provider confirms delivery |
@@ -2278,6 +2279,61 @@ with the record still empty, but `delivery.wait()` MUST backfill it together wit
 waiting path. A call that ran no response turn returns an empty record. When
 several channels contribute metadata they SHOULD namespace their top-level keys;
 the merge order for colliding keys is unspecified.
+
+#### 10.1.1 Instructions
+
+An application sometimes needs an agent to speak because of something nobody in
+the room said: a handoff asking the new agent to introduce itself, a scheduled
+nudge. Committed as an inbound MESSAGE, that direction is stored as a
+participant's words, shown in the transcript as theirs, and read by the model
+as a user turn. An `INSTRUCTION` event carries it through the same pipeline —
+the same hooks, lane and addressing — without either. It is the `system`
+intent of §12.4, for every kind of intelligence channel.
+
+`process_inbound()` with `event_type = INSTRUCTION` (normative):
+
+1. **It is addressed.** `addressed_to` MUST name at least one intelligence
+   channel (§19.3). An unaddressed or empty-addressed instruction is refused,
+   before anything is written, with `InboundResult(blocked=true,
+   reason=instruction_unaddressed)`: a direction meant for one agent does not
+   make every agent in the room speak.
+2. **It carries no idempotency key.** Step 7 finds a duplicate through the
+   stored event, and an instruction is never stored. One that carries a key
+   is refused, before anything is written, with
+   `reason=instruction_not_idempotent`.
+
+   Direct injection (§10.5) takes the same event, and an API whose contract
+   is the committed event cannot report either refusal by returning one: it
+   MUST raise instead, before anything is written.
+3. **Intelligence channels only see it.** The pipeline sets its visibility to
+   `"intelligence"` whatever the caller asked: no transport delivers it, and a
+   voice channel never speaks it.
+4. **Steps 1–11 apply unchanged.** Identity, the room-status gate and the
+   source write check hold, and `BEFORE_BROADCAST` hooks run on it and MAY
+   block or modify it. A hook — and an `AFTER_BROADCAST` one — MUST NOT treat
+   it as something a participant said: its author is the application. A
+   blocked instruction is not stored (§10.1 step 10 does not apply); the
+   result reports the block.
+5. **It is not committed.** At step 12 nothing is stored, no index is
+   assigned or consumed, and no room counter moves (§14.3 holds trivially).
+   Its delivery set joins the room's delivery lane without an index, behind
+   the room's latest committed event, so it keeps its place in the room's
+   order (§10.2). `InboundResult.event` is the uncommitted instruction.
+6. **An intelligence channel takes it as a directive for one turn.** The text
+   is the turn's input after the rebuilt history, marked as the application's
+   instruction and never attributed to a speaker, so the model cannot read it
+   as something a participant said; it is absent from the history rebuilt for
+   any later turn, and a memory provider does not ingest it. (A system-role
+   message after the history is not portable: several model APIs refuse one,
+   others silently turn it into a user turn, and a request that ends on the
+   assistant's last reply reads as a continuation of it.) The response is an
+   ordinary response event: committed, broadcast, subject to reentry and
+   chain depth. It MUST record the instruction that produced it in its
+   metadata (`instruction`), so the timeline still explains why the agent
+   spoke.
+7. **A realtime session is not reached this way.** A realtime voice channel
+   is a transport and never sees an intelligence-only event; its instruction
+   is `inject_text(role="system")` on the session (§12.4).
 
 ### 10.2 Broadcast Pipeline
 
@@ -4288,6 +4344,11 @@ integrator means, and each provider maps that meaning onto what its wire offers:
 - `silent` — any intent, added as context without asking for a response.
 
 A provider MAY accept further intents its wire carries and MUST document them.
+
+Outside a realtime session the same intent is an `INSTRUCTION` event
+(§10.1.1): it reaches a room's intelligence channels through the inbound
+pipeline, as the input of one turn marked as the application's, and is never
+stored.
 
 Text that directs the model MUST be injected with the `system` role, never as
 `user`: on a full-duplex provider a `user` injection is voiced as the model's
