@@ -2320,18 +2320,35 @@ intent of §12.4, for every kind of intelligence channel.
    the room's latest committed event, so it keeps its place in the room's
    order (§10.2). `InboundResult.event` is the uncommitted instruction.
 6. **An intelligence channel takes it as a directive for one turn.** The text
-   is the turn's input after the rebuilt history, marked as the application's
-   instruction and never attributed to a speaker, so the model cannot read it
-   as something a participant said; it is absent from the history rebuilt for
-   any later turn, and a memory provider does not ingest it. (A system-role
-   message after the history is not portable: several model APIs refuse one,
-   others silently turn it into a user turn, and a request that ends on the
-   assistant's last reply reads as a continuation of it.) The response is an
-   ordinary response event: committed, broadcast, subject to reentry and
-   chain depth. It MUST record the instruction that produced it in its
-   metadata (`instruction`), so the timeline still explains why the agent
-   spoke.
-7. **A realtime session is not reached this way.** A realtime voice channel
+   is the turn's input after the rebuilt history (unless it stands alone, step
+   7), marked as the application's instruction and never attributed to a
+   speaker, so the model cannot read it as something a participant said; it
+   is absent from the history rebuilt for any later turn, and a memory
+   provider does not ingest it. (A system-role message after the history is
+   not portable: several model APIs refuse one, others silently turn it into a
+   user turn, and a request that ends on the assistant's last reply reads as a
+   continuation of it.) The response is an ordinary response event:
+   committed, broadcast, subject to reentry and chain depth. It MUST record
+   the instruction that produced it in its metadata as a fingerprint,
+   `instruction = {sha256, length}` (the hex SHA-256 of the UTF-8 text and its
+   length in characters), and MUST NOT copy the text: the metadata rides on
+   every response event and every segment of it, so a copy would store an
+   instruction the room never stores — a summary's transcript, a long prompt —
+   once per reply, and deliver it to every transport. The timeline still
+   records that an instruction produced the reply and which one; an
+   application that shows its text keeps it.
+7. **It MAY stand alone.** `standalone = true` asks that the turn it opens
+   read nothing of the room: its input is the instruction alone, with no
+   rebuilt history, and the channel MUST NOT call the memory provider for it —
+   an empty view is not enough, since a provider MAY return `messages` of its
+   own (a summary, a minimum it always keeps). The channel's system prompt,
+   tools and skills are unchanged. It is for a pass that must start from a
+   blank page, such as a summary re-run that would otherwise read, and copy,
+   its previous answer. `standalone` is a property of an instruction only: set
+   on any other event type it MUST be refused before anything is written
+   (raised, since the event would otherwise land as a participant's line
+   without the requested isolation).
+8. **A realtime session is not reached this way.** A realtime voice channel
    is a transport and never sees an intelligence-only event; its instruction
    is `inject_text(role="system")` on the session (§12.4).
 
