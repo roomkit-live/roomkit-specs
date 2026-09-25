@@ -2331,7 +2331,7 @@ intent of §12.4, for every kind of intelligence channel.
    committed, broadcast, subject to reentry and chain depth. It MUST record
    the instruction that produced it in its metadata as a fingerprint,
    `instruction = {sha256, length}` (the hex SHA-256 of the UTF-8 text and its
-   length in characters), and MUST NOT copy the text: the metadata rides on
+   length in Unicode code points), and MUST NOT copy the text: the metadata rides on
    every response event and every segment of it, so a copy would store an
    instruction the room never stores — a summary's transcript, a long prompt —
    once per reply, and deliver it to every transport. The timeline still
@@ -2341,8 +2341,11 @@ intent of §12.4, for every kind of intelligence channel.
    read nothing of the room: its input is the instruction alone, with no
    rebuilt history, and the channel MUST NOT call the memory provider for it —
    an empty view is not enough, since a provider MAY return `messages` of its
-   own (a summary, a minimum it always keeps). The channel's system prompt,
-   tools and skills are unchanged. It is for a pass that must start from a
+   own (a summary, a minimum it always keeps). Nor does it read the room's
+   working memories, which are its past in another form: skills activated in
+   the room, the room's plan, and what the channel recalls of tools used
+   there (a digest that may quote their results). The channel's own system
+   prompt, tools and skill catalogue are unchanged. It is for a pass that must start from a
    blank page, such as a summary re-run that would otherwise read, and copy,
    its previous answer. `standalone` is a property of an instruction only: set
    on any other event type it MUST be refused before anything is written
