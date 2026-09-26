@@ -2347,7 +2347,20 @@ intent of §12.4, for every kind of intelligence channel.
    there (a digest that may quote their results). The channel's own system
    prompt, tools and skill catalogue are unchanged. It is for a pass that must start from a
    blank page, such as a summary re-run that would otherwise read, and copy,
-   its previous answer. `standalone` is a property of an instruction only: set
+   its previous answer.
+
+   A channel whose conversation lives in a session it does not rebuild (an
+   ACP agent, §19.3.2) cannot empty that session, so it MUST run a
+   standalone turn in a session opened for that turn and closed after it:
+   no catch-up is sent, the room's session is neither prompted nor told, and
+   its catch-up cursor does not move. The turn session takes the room
+   session's current configuration (model, mode) where the agent accepts it;
+   host-contributed context is the channel's own and still applies. Such a
+   channel also keeps an ordinary instruction in its session once prompted
+   with it — nothing is rebuilt there — which is why the step 6 marker
+   matters on it as much as the history rule does elsewhere.
+
+   `standalone` is a property of an instruction only: set
    on any other event type it MUST be refused before anything is written
    (raised, since the event would otherwise land as a participant's line
    without the requested isolation).
