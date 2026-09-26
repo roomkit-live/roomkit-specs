@@ -2353,7 +2353,11 @@ intent of §12.4, for every kind of intelligence channel.
    ACP agent, §19.3.2) cannot empty that session, so it MUST run a
    standalone turn in a session opened for that turn and closed after it:
    no catch-up is sent, the room's session is neither prompted nor told, and
-   its catch-up cursor does not move. The turn session takes the room
+   its catch-up cursor does not move. The reply is the room's like any
+   other, and the room's session did not produce it: its next catch-up MUST
+   carry it, as the channel's own words from a separate turn, or the agent
+   would answer later questions about a message it appears to have posted
+   from a history that lacks it (§19.3.2). The turn session takes the room
    session's current configuration (model, mode) where the agent accepts it;
    host-contributed context is the channel's own and still applies. Such a
    channel also keeps an ordinary instruction in its session once prompted
