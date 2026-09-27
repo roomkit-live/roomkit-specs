@@ -1422,9 +1422,11 @@ turn learned. It is how a host attributes to the reply what the turn read
 `AIContext.response_schema` to a JSON Schema. A provider whose
 `supports_response_schema` is true MUST translate it into its native
 constrained output, so that the `content` returned by `generate()` is one JSON
-document satisfying the schema. The framework does not parse that document for
-the caller: `content` stays a string, and turning it into a typed value is the
-caller's work.
+document satisfying the schema. The implementation MUST check the document
+against the schema before returning it, whatever the server claims: a proxy may
+accept the constraint and route to an upstream that ignores it. The subset below
+is small enough to check without a JSON Schema library. `content` stays a
+string all the same, and turning it into a typed value is the caller's work.
 
 The schema MUST stay within the portable subset below, the one every provider
 that supports response schemas accepts. An implementation MUST refuse a schema
@@ -1453,9 +1455,9 @@ that does not answer it. `generate()` raises a `ResponseSchemaError`, a
 | Reason | When |
 |---|---|
 | `unsupported` | `supports_response_schema` is false, the context also carries `tools`, or a streaming method (`generate_stream`, `generate_structured_stream`) received the schema. Raised before any request is sent. |
-| `refusal` | The model declined to answer: a refusal field, or a refusal or safety stop reason. |
-| `truncated` | The output cap cut the answer: a length or max-tokens stop reason. |
-| `invalid_json` | The text is not a JSON document: a server that accepted the constraint and did not apply it. |
+| `refusal` | The model declined to answer: a refusal field, a refusal or safety stop reason, or the prompt itself blocked before any answer. |
+| `truncated` | The answer was cut: a length or max-tokens stop reason, or the context window filling up mid-answer. |
+| `invalid_json` | The text is not a JSON document satisfying the schema: a server that accepted the constraint and did not apply it. |
 
 Tools and streaming are refused only because this version defines neither how a
 schema combines with the tool loop nor what a partial document means mid-stream;
