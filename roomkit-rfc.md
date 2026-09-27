@@ -2363,10 +2363,10 @@ intent of §12.4, for every kind of intelligence channel.
    would otherwise hand the turn the room's session and close that one after
    it. The turn session takes the room session's current configuration
    (model, mode) where the agent accepts it; host-contributed context is the
-   channel's own and still applies. Such a
-   channel also keeps an ordinary instruction in its session once prompted
-   with it — nothing is rebuilt there — which is why the step 6 marker
-   matters on it as much as the history rule does elsewhere.
+   channel's own and still applies. Such a channel also keeps an ordinary
+   instruction in its session once prompted with it — nothing is rebuilt
+   there — which is why the step 6 marker matters on it as much as the
+   history rule does elsewhere.
 
    `standalone` is a property of an instruction only: set
    on any other event type it MUST be refused before anything is written
