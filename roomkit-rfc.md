@@ -1352,32 +1352,58 @@ including AI.
 AIProvider (interface)
 ├── name: string                            # Provider name (e.g., "anthropic", "openai")
 ├── model_name: string                      # Model identifier (e.g., "claude-sonnet-4-5")
-├── supports_streaming: bool (default false) # Whether provider supports streaming generation
+├── supports_vision: bool (default false)   # Whether image parts reach the model
+├── supports_streaming: bool (default false) # Whether generate_stream is implemented
+├── supports_structured_streaming: bool (default false)
+│       # Whether generate_structured_stream streams natively (else it wraps generate)
+├── supports_response_schema: bool (default false)
+│       # Whether generate honours AIContext.response_schema (see below)
+├── context_window: int | null              # Input window of the active model, when known
 │
-├── generate(messages: list<AIMessage>, context: AIContext) → AIResponse
-│       # Generate a response given conversation history and context
+├── generate(context: AIContext) → AIResponse
+│       # Answer the conversation the context carries
 │
-└── generate_stream(context: AIContext) → async_iterator<string>
-        # Yield text deltas as they arrive (requires supports_streaming = true)
-        # Used by VoiceChannel for streaming AI → TTS (Section 12.2)
+├── generate_stream(context: AIContext) → async_iterator<string>
+│       # Yield text deltas as they arrive (requires supports_streaming = true)
+│       # Used by VoiceChannel for streaming AI → TTS (Section 12.2)
+│
+├── generate_structured_stream(context: AIContext) → async_iterator<StreamEvent>
+│       # Yield thinking deltas, text deltas and tool calls, then one done event
+│
+└── close() → void
+        # Release connections
 
 AIMessage
-├── role: string                            # "user", "assistant", "system"
-└── content: list<AIContentPart>            # Text parts, image parts, etc.
+├── role: string                            # "user", "assistant", "system", "tool"
+├── content: string | list<AIContentPart>   # Text, image, tool call, tool result, thinking parts
+└── metadata: map<string, any>
 
 AIContext
-├── room: RoomContext                       # Current room state
+├── messages: list<AIMessage>               # The conversation to answer
+├── system_prompt: string | null
+├── temperature: float                      # Default 0.7
+├── max_tokens: int | null                  # null defers to the provider's configured cap
+├── thinking_budget: int | null
+├── enable_thinking: bool | null
+├── reasoning_effort: string | null
+├── tools: list<AITool>                     # Functions the model may call
+├── response_schema: map<string, any> | null  # JSON Schema of the answer, see below
+├── room: RoomContext | null                # Current room state
 ├── target_capabilities: ChannelCapabilities | null
 ├── target_media_types: list<ChannelMediaType>
-├── system_instructions: string | null
 ├── metadata: map<string, any>
 └── response_metadata: ResponseMetadata     # The turn's one record, see below
 
 AIResponse
-├── text: string                            # Generated text
+├── content: string                         # Generated text
+├── thinking: string | null                 # Reasoning the provider exposed
+├── thinking_signature: string | null       # Opaque token to echo that reasoning back
+├── finish_reason: string | null            # The provider's own stop reason
+├── usage: map<string, int>                 # input_tokens, output_tokens, cache counters
+├── tool_calls: list<AIToolCall>            # Calls for the tool loop to run
 ├── tasks: list<Task>                       # Tasks to create
 ├── observations: list<Observation>         # Observations to record
-└── provider_metadata: map<string, any>     # Provider-specific data (tokens, latency)
+└── metadata: map<string, any>              # Provider-specific data (model, latency)
 ```
 
 **Response metadata is one record per turn.** `AIContext.response_metadata` is a
@@ -1391,6 +1417,55 @@ stands when that event is created — a streamed segment persisted before a tool
 round carries what was known then, the final answer carries everything the
 turn learned. It is how a host attributes to the reply what the turn read
 (cited sources, say) without a post-hoc rewrite of persisted events.
+
+**Response schema.** A caller that needs the answer in a known shape sets
+`AIContext.response_schema` to a JSON Schema. A provider whose
+`supports_response_schema` is true MUST translate it into its native
+constrained output, so that the `content` returned by `generate()` is one JSON
+document satisfying the schema. The framework does not parse that document for
+the caller: `content` stays a string, and turning it into a typed value is the
+caller's work.
+
+The schema MUST stay within the portable subset below, the one every provider
+that supports response schemas accepts. An implementation MUST refuse a schema
+outside it when the context is built or the field assigned, before any provider
+is called.
+
+| Keyword | Rule |
+|---|---|
+| `type` | One of `object`, `array`, `string`, `number`, `integer`, `boolean`, as a single string. The root MUST be `object`. |
+| `properties` | REQUIRED on an object: a map from names to subschemas, possibly empty. |
+| `required` | REQUIRED on an object: every key of `properties`, each once. |
+| `additionalProperties` | REQUIRED on an object, and `false`. |
+| `items` | REQUIRED on an array: one subschema. |
+| `enum` | On a string only: a non-empty list of distinct strings. |
+| `title`, `description` | Allowed on any subschema, as strings: guidance for the model. |
+
+No other keyword is portable. `null` and optional fields, `anyOf`, `$ref`, and
+numeric or string bounds each break on at least one provider. An answer that may
+be absent is a required field with an agreed empty value (an empty string, an
+empty list).
+
+A provider MUST NOT ignore a schema it cannot honour, and MUST NOT return text
+that does not answer it. `generate()` raises a `ResponseSchemaError`, a
+`ProviderError` that is never retryable, with one of these reasons:
+
+| Reason | When |
+|---|---|
+| `unsupported` | `supports_response_schema` is false, the context also carries `tools`, or a streaming method (`generate_stream`, `generate_structured_stream`) received the schema. Raised before any request is sent. |
+| `refusal` | The model declined to answer: a refusal field, or a refusal or safety stop reason. |
+| `truncated` | The output cap cut the answer: a length or max-tokens stop reason. |
+| `invalid_json` | The text is not a JSON document: a server that accepted the constraint and did not apply it. |
+
+Tools and streaming are refused only because this version defines neither how a
+schema combines with the tool loop nor what a partial document means mid-stream;
+lifting either restriction amends this section first.
+
+Support depends on the model and, behind an OpenAI-compatible base URL, on the
+server, so `supports_response_schema` is a provider default that an
+implementation SHOULD let the host override in the provider's configuration. A
+consumer that must run on any provider reads the property, and where it is false
+asks for JSON in the prompt and parses the answer itself.
 
 **SMS Provider interface:**
 
@@ -10196,6 +10271,8 @@ A Level 2 implementation MAY additionally support:
 - Skills framework with SkillRegistry (Section 24)
 - Image generation through an ImageProvider decoupled from the AI provider
   (Section 25)
+- Response schemas: an AI provider constraining its answer to a portable
+  JSON Schema (Section 6.7)
 - AI steering directives (Section 21.3)
 - Advanced memory providers: Summarizing, Retrieval (Section 20)
 
@@ -10522,7 +10599,7 @@ AIChannel
 │   └── AIToolResultPart                    # Tool execution result
 └── behavior:
     ├── on_event() builds conversation history + target capabilities
-    ├── Calls provider.generate(messages, context)
+    ├── Calls provider.generate(context)
     ├── Runs tool loop: generate → call tools → feed results → re-generate (up to max_tool_rounds)
     ├── Skips events from self (loop prevention)
     ├── Supports streaming via generate_stream() and deliver_stream()
