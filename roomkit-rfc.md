@@ -2351,7 +2351,10 @@ intent of §12.4, for every kind of intelligence channel.
 
    A channel whose conversation lives in a session it does not rebuild (an
    ACP agent, §19.3.2) cannot empty that session, so it MUST run a
-   standalone turn in a session opened for that turn and closed after it:
+   standalone turn in a session opened for that turn and closed after it
+   (where the agent takes a close: ACP's `session/close` is not stable, and
+   an agent that does not announce it keeps the session until its
+   connection ends; the channel MUST NOT prompt it again either way):
    no catch-up is sent, the room's session is neither prompted nor told, and
    its catch-up cursor does not move. The reply is the room's like any
    other, and the room's session did not produce it: its next catch-up MUST
