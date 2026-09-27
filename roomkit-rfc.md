@@ -2357,9 +2357,13 @@ intent of §12.4, for every kind of intelligence channel.
    other, and the room's session did not produce it: its next catch-up MUST
    carry it, as the channel's own words from a separate turn, or the agent
    would answer later questions about a message it appears to have posted
-   from a history that lacks it (§19.3.2). The turn session takes the room
-   session's current configuration (model, mode) where the agent accepts it;
-   host-contributed context is the channel's own and still applies. Such a
+   from a history that lacks it (§19.3.2). The channel MUST declare the turn
+   session as the turn's, not the room's, to whatever carries it (for ACP,
+   the `session/new` metadata): a transport that files sessions by room
+   would otherwise hand the turn the room's session and close that one after
+   it. The turn session takes the room session's current configuration
+   (model, mode) where the agent accepts it; host-contributed context is the
+   channel's own and still applies. Such a
    channel also keeps an ordinary instruction in its session once prompted
    with it — nothing is rebuilt there — which is why the step 6 marker
    matters on it as much as the history rule does elsewhere.
@@ -10444,6 +10448,7 @@ ACPChannel
 ├── sessions:
 │   ├── one ACP connection per channel instance
 │   ├── one ACP session per Room
+│   ├── a standalone turn: its own session, declared as the turn's (§10.1.1)
 │   └── prompts serialized per session
 ├── configuration:
 │   ├── command: list<string>
