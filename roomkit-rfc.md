@@ -1758,7 +1758,7 @@ Planned rows are normative design intent for the named capability.
 | ON_VAD_AUDIO_LEVEL | ASYNC | Implemented | Audio pipeline audio level update (voice) |
 | ON_INPUT_AUDIO_LEVEL | ASYNC | Implemented | Per-frame inbound audio level, throttled to ~10/sec (voice) |
 | ON_OUTPUT_AUDIO_LEVEL | ASYNC | Implemented | Per-frame outbound audio level, throttled to ~10/sec (voice) |
-| ON_SPEAKER_CHANGE | ASYNC | Implemented | Audio pipeline detected speaker change (diarization) |
+| ON_SPEAKER_CHANGE | ASYNC | Implemented | Audio pipeline detected speaker change (diarization); from a diarizing STT once Section 12.2.3's Planned parts land |
 | ON_DTMF | ASYNC | Implemented | Audio pipeline detected a DTMF tone |
 | ON_TURN_COMPLETE | ASYNC | Implemented | Turn detector determined user turn is complete |
 | ON_TURN_INCOMPLETE | ASYNC | Implemented | Turn detector determined user is still speaking (for logging) |
@@ -2918,6 +2918,8 @@ STTProvider (interface)
 ├── name: string
 ├── supports_language_override: bool (default false)
 │       # Whether transcribe/transcribe_stream honour a per-call language
+├── supports_diarization: bool (default false)
+│       # Whether final results say who spoke (Section 12.2.3)
 ├── transcribe(audio_chunk, language: string | null) → TranscriptionResult
 └── transcribe_stream(audio_stream, language: string | null) → async_iterator<TranscriptionResult>
 
@@ -2925,7 +2927,15 @@ TranscriptionResult
 ├── text: string
 ├── is_final: bool
 ├── confidence: float | null
-└── language: string | null                 # The language the provider reports for the text
+├── language: string | null                 # The language the provider reports for the text
+└── segments: list<SpeakerSegment>          # Who spoke which part of text (Section 12.2.3);
+                                            # empty when the provider attributes nothing
+
+SpeakerSegment
+├── speaker: string | null                  # Provider label, stable within one stream; null = unattributed
+├── text: string
+├── start_ms: int | null                    # Offsets from the start of the stream
+└── end_ms: int | null
 ```
 
 `language` on a call overrides the provider's configured language for that
@@ -3197,6 +3207,88 @@ context. `release_context` on an unknown context is a no-op.
 sessions. A Conference Channel (Section 12.10) MUST NOT pass a context to its
 TTS. A Realtime Voice Channel (Section 12.4) is out of scope: a
 speech-to-speech provider keeps its own conversation.
+
+#### 12.2.3 Speaker Attribution from STT
+
+Streaming recognisers now label speakers themselves, so who spoke can come from
+the STT as well as from the pipeline's diarization stage (Section 12.3.9). The
+STT's label is aligned to the words it transcribed; this section defines what
+a provider reports and how a channel carries it to the room.
+
+**Status.** The provider contract (*Labels*, *Segments*) and the refusals
+(*Channels that cannot carry labels*) are implemented. The Voice Channel parts
+(*Stream lifetime*, *Into the room*, *Speaker change*, *With the pipeline
+stage*) are **Planned**: normative design intent the reference implementation
+does not implement yet. Until a Voice Channel implements them, it MUST refuse a
+diarizing STT at construction, in every mode, with an error that says so; the
+provider is then read directly (`transcribe_stream`).
+
+**Labels.** A speaker label is assigned by the provider, is opaque, and is
+stable within one STT stream and only there: two streams may give one voice
+different labels, and one label to different voices. A provider MUST report
+labels as strings (a vendor's integer `0` becomes `"0"`) and MUST report a
+speaker it could not attribute as null, whatever the vendor spells it
+(`UU`, `PENDING`, `Unknown`, `unknown`). A provider MUST NOT invent a label the
+vendor did not send, nor carry one over from another turn.
+
+**Segments.** A provider reporting `supports_diarization = true` MUST give every
+final result the segments its text is made of, in order, each attributed to
+one speaker: a vendor that labels turns yields one segment per turn, a vendor
+that labels words yields one segment per run of consecutive words sharing a
+label, and text the vendor attributed to nobody is a segment with a null
+speaker. Partial results MAY carry segments. A provider reporting `false` MUST
+return no segments. A label MAY be revised by the vendor after the fact; a
+Voice Channel does not apply a revision to a result it has already routed.
+
+**Channels that cannot carry labels.** Labels compare only within one stream,
+so a channel that opens one stream per utterance (Voice Channel in VAD mode)
+or per flush (batch mode) MUST refuse a diarizing STT at construction. So MUST
+a Conference Channel (Section 12.10): it attributes speech by participant
+track and transcribes each utterance on its own. Several people sharing one
+track (a room microphone) is out of scope in this revision.
+
+**Stream lifetime (Planned).** In continuous mode, a Voice Channel with a
+diarizing STT MUST keep one stream open across turns, and open a new one only
+when the provider ends it, on an error, or on a language change (Section 12.2).
+Each stream a session opens starts a new *label epoch*, numbered from 0 for the
+session. The epoch travels with every label (below), and a consumer MUST NOT
+equate two labels from different epochs.
+
+**Into the room (Planned).** For a final result with segments, the Voice
+Channel:
+
+1. Routes one inbound message per segment, in order: a room message has one
+   speaker. A change of speaker ends the pending turn: a turn detector
+   (Section 12.3.12) MUST NOT join two speakers' segments into one message.
+   `ON_TRANSCRIPTION` fires per segment, and its event carries the segment's
+   `speaker`, the `speaker_epoch` and the `sender_name` below; a hook MAY
+   replace `sender_name` (a label matched to a known voice).
+2. Keeps `sender_id` as the session's participant, the owner of the audio
+   stream. A label is not a participant (Section 12.3.9): mapping one to a
+   known person is the integrator's concern.
+3. Sets on the message `metadata.speaker_label`, `metadata.speaker_epoch` and
+   `metadata.sender_name`. `sender_name` defaults to `"Speaker <label>"` in
+   epoch 0 and `"Speaker <label>#<epoch>"` after, so the same letter from two
+   epochs never reads as one person. A segment with a null speaker carries no
+   label and `sender_name = "Unknown speaker"`: without a name, the AI channel
+   would fall back to the stream owner's for words nobody was attributed. The
+   AI channel attributes a turn to `sender_name` when the room holds more than
+   one speaker, so the model reads `"Speaker A: …"` rather than one anonymous
+   stream.
+
+**Speaker change (Planned).** Evaluated per routed segment, in order. A
+segment with a null speaker neither fires nor resets the last label. The
+framework MUST fire `ON_SPEAKER_CHANGE` with `source = "stt"` when a segment's
+label differs from the last label routed in the same epoch, and on the first
+labelled segment of each epoch. The event's `speaker_id` is the label,
+`is_new_speaker` is true when the label had not been routed before in that
+epoch, and `confidence` is null unless the provider reports one. Events from
+the pipeline stage carry `source = "pipeline"`.
+
+**With the pipeline stage (Planned).** When a session has both a diarizing STT
+and a `DiarizationProvider`, the STT's label is the one attached to the
+transcript, being aligned to its words; the stage keeps firing
+`ON_SPEAKER_CHANGE` with its own source.
 
 ### 12.3 Audio Processing Pipeline
 
@@ -3800,7 +3892,8 @@ provider-assigned label (e.g., "speaker_0", "speaker_1"), not a RoomKit
 integrator concern — typically resolved via the ON_SPEAKER_CHANGE hook,
 where the integrator can match speaker labels to known participants using
 voice enrollment, channel metadata, or heuristics (e.g., the participant
-who owns the voice channel is always "speaker_0").
+who owns the voice channel is always "speaker_0"). A label from a diarizing
+STT follows the same rule, and Section 12.2.3 defines how it reaches the room.
 
 #### 12.3.10 Audio Post-Processor
 
@@ -4769,7 +4862,7 @@ Voice-specific hooks allow integrators to customize the voice pipeline:
 | ON_VAD_AUDIO_LEVEL | ASYNC | Audio level visualization | Audio Pipeline (VAD) |
 | ON_INPUT_AUDIO_LEVEL | ASYNC | VU meter for mic input | Audio Pipeline |
 | ON_OUTPUT_AUDIO_LEVEL | ASYNC | VU meter for speaker output | VoiceBackend |
-| ON_SPEAKER_CHANGE | ASYNC | Identify speaker switch | Audio Pipeline (Diarization) |
+| ON_SPEAKER_CHANGE | ASYNC | Identify speaker switch | Audio Pipeline (Diarization); STT once Section 12.2.3's Planned parts land |
 | ON_DTMF | ASYNC | IVR navigation, call transfer | Audio Pipeline (DTMF Detector) |
 | ON_TURN_COMPLETE | ASYNC | Log turn-taking metrics | Audio Pipeline (Turn Detector) |
 | ON_TURN_INCOMPLETE | ASYNC | Debug turn detection | Audio Pipeline (Turn Detector) |
