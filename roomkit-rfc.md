@@ -2351,10 +2351,7 @@ intent of §12.4, for every kind of intelligence channel.
 
    A channel whose conversation lives in a session it does not rebuild (an
    ACP agent, §19.3.2) cannot empty that session, so it MUST run a
-   standalone turn in a session opened for that turn and closed after it
-   (where the agent takes a close: ACP's `session/close` is not stable, and
-   an agent that does not announce it keeps the session until its
-   connection ends; the channel MUST NOT prompt it again either way):
+   standalone turn in a session opened for that turn and retired after it:
    no catch-up is sent, the room's session is neither prompted nor told, and
    its catch-up cursor does not move. The reply is the room's like any
    other, and the room's session did not produce it: its next catch-up MUST
@@ -2364,12 +2361,16 @@ intent of §12.4, for every kind of intelligence channel.
    session as the turn's, not the room's, to whatever carries it (for ACP,
    the `session/new` metadata): a transport that files sessions by room
    would otherwise hand the turn the room's session and close that one after
-   it. The turn session takes the room session's current configuration
-   (model, mode) where the agent accepts it; host-contributed context is the
-   channel's own and still applies. Such a channel also keeps an ordinary
-   instruction in its session once prompted with it — nothing is rebuilt
-   there — which is why the step 6 marker matters on it as much as the
-   history rule does elsewhere.
+   it. Retired means the channel MUST NOT prompt the turn session again
+   after the turn, and closes it where the agent announces it can: closing
+   is optional in ACP (`session/close` is announced in the agent's
+   capabilities), and an agent that does not announce it keeps the session
+   until its connection ends. The turn session takes the room session's
+   current configuration (model, mode) where the agent accepts it;
+   host-contributed context is the channel's own and still applies. Such a
+   channel also keeps an ordinary instruction in its session once prompted
+   with it — nothing is rebuilt there — which is why the step 6 marker
+   matters on it as much as the history rule does elsewhere.
 
    `standalone` is a property of an instruction only: set
    on any other event type it MUST be refused before anything is written
