@@ -4123,7 +4123,13 @@ DiarizationResult
 ```
 
 When diarization detects a speaker change, the framework MUST fire the
-ON_SPEAKER_CHANGE hook (Section 9.2).
+ON_SPEAKER_CHANGE hook (Section 9.2). A result that attributes the audio to
+nobody — a `speaker_id` the label rule of Section 12.2.3 reads as unattributed
+(`unknown`, `UU`, `PENDING`, empty) — is not a speaker, as for an STT label: it
+neither fires the hook nor resets the last speaker, so a stretch the stage
+could not match between two stretches of one voice is no change. The result
+still reaches the frame, where a channel naming speakers from the stage counts
+it (Section 12.2.3, *From the pipeline stage*).
 
 **Speaker-to-Participant mapping:** `DiarizationResult.speaker_id` is a
 provider-assigned label (e.g., "speaker_0", "speaker_1"), not a RoomKit
@@ -4518,7 +4524,8 @@ Check InterruptionStrategy:
                └── Create RoomEvent, route to Room (v1 behavior)
 9. IF diarization configured:
    ├── result = diarization.process(frame, stream)
-   └── IF result.is_new_speaker:
+   └── IF result names a speaker (not unattributed, Section 12.3.9)
+          AND it differs from the stream's last one:
        └── Fire ON_SPEAKER_CHANGE hook
 
 10. WHEN the stream ends:
