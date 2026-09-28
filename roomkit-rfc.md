@@ -3453,7 +3453,9 @@ construction without a diarization stage, and in batch mode. With it:
 
 1. A transcript's speaker is the stage's result heard the longest over the
    audio it transcribes: in VAD mode the utterance, its `SPEECH_END` frame
-   included; in continuous mode the audio since the previous final. The
+   included; in continuous mode the audio since the previous final. A result
+   stands for the audio since the stage's previous result on that stream, so
+   a stage that judges a buffer weighs each verdict by what it heard. The
    pipeline runs its VAD before its diarization stage, and a stage may
    identify only on the `SPEECH_END` frame, so a channel that reads the stage
    when `SPEECH_END` fires MUST wait until that frame has been through it.
