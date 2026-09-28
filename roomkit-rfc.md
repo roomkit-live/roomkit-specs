@@ -8036,18 +8036,24 @@ cannot be interrupted at all.
 
 **A tool call is a realtime tool call (normative).** A call the
 provider issues passes the pre-execution gate of Section 12.4 before it
-reaches the configured handler: the declared-tool check against the
-configuration's tools, argument validation against the declared schema,
-and BEFORE_TOOL_USE (Section 9.2). It fires ON_TOOL_CALL (Section 9.3)
-with its outcome, a refusal and a failure included, its result is
-bounded as any tool result is (Section 21.5), and a call the provider
-abandons interrupts its handler and sends no result. A handler's
+reaches the configured handler, in that section's order: the
+declared-tool check against the configuration's tools, argument
+validation against the declared schema, the configuration's ToolPolicy
+when it carries one, and BEFORE_TOOL_USE (Section 9.2), whose arguments,
+replaced or edited, are validated again. The gate has no skill-gating
+step because a conference declares no skills. The call fires ON_TOOL_CALL
+(Section 9.3) with its outcome, a refusal and a failure included, and as
+on any realtime channel the report of a refusal MUST NOT precede the
+refusal on the wire. Its result is bounded as any tool result is
+(Section 21.5), and a call the provider abandons interrupts its handler,
+sends no result, and is reported once, as cancelled; a call whose outcome
+ON_TOOL_CALL already received is not reported again. A handler's
 exception is logged; the model reads that the tool failed, not the
-exception's text. The configuration MAY carry a ToolPolicy (Section 21.1),
-applied to the tools declared to the provider and at the gate; the mix names
-no participant, so its base rules apply, never a role override. The conference is a door to the same tools as any
-other channel, and a gate that holds on one door and not another holds
-on neither.
+exception's text. The ToolPolicy (Section 21.1) also filters the tools
+declared to the provider; the mix names no participant, so its base
+rules apply, never a role override. The conference is a door to the same
+tools as any other channel, and a gate that holds on one door and not
+another holds on neither.
 
 ### 12.11 Room Media Recording
 
