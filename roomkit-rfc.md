@@ -1190,6 +1190,14 @@ persistence; composition events are ephemeral and MUST NOT be persisted.
 with the context the turn starts from, and its `tools` are the first round's
 declaration only. Under Tool Search that is the pinned floor plus the discovery
 tools: a tool `find_tools` reveals enters the declaration of the *next* round.
+The toolset the hook leaves is the turn's: a tool it removes MUST NOT be
+declared at any later round of the turn, and a call naming it MUST be refused,
+a tool the channel provides itself included; a tool it adds or edits stays as
+the hook left it, subject to the same filters as the rest (tool policy, skill
+gating, Tool Search). A hook that withdraws a tool from the first round only
+has withdrawn nothing. Likewise a skill activation (Section 24.4) counts only
+once its `activate_skill` call is served: an ON_TOOL_CALL BLOCK or a failure
+activates nothing, whatever the model read.
 `ON_AI_RESPONSE` MUST therefore carry the turn's whole declaration as
 `declared_tools`: the union, over every generation round of the turn, of the
 tools the channel handed the provider, each with the name, description and
