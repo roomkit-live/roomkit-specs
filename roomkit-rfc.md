@@ -9843,8 +9843,10 @@ round of the tool loop that carries it.
 
 The event that records a tool call's outcome (`TOOL_CALL_END`) is persisted,
 broadcast and handed to the event pipeline's hooks. It SHOULD NOT carry a
-result's images without bound: an implementation keeps them up to a size and
-states each one it leaves out. The bound is on the event only; the model's
+result's images without bound, whatever shape the result takes (content
+parts, or JSON such as an ACP agent's output) and in its structured copy as
+much as in the result: an implementation keeps them up to a size and states
+each one it leaves out. The bound is on the event only; the model's
 copy keeps every image.
 
 ---
