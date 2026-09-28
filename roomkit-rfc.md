@@ -3040,6 +3040,13 @@ TTSProvider (interface)
 │       # Whether this TTS accepts streaming text input
 ├── context_level: TTSContextLevel (default NONE)
 │       # What conversation context this TTS consumes (Section 12.2.2)
+├── max_dialogue_speakers: int (default 0)
+│       # Distinct speakers one synthesize_dialogue call can voice; 0 = no dialogue
+├── available_voices() → VoiceInfo[]
+│       # Curated offline catalog (MAY be empty); no API call
+├── list_voices(language: string | null, gender: string | null,
+│               query: string | null) → VoiceInfo[]
+│       # Live catalog; default: available_voices(), filtered
 ├── synthesize(text, voice: string | null) → AudioContent
 │       # Returns AudioContent (Section 5) with url, mime_type, transcript, duration_seconds
 ├── synthesize_stream(text, voice: string | null,
@@ -3050,8 +3057,26 @@ TTSProvider (interface)
 │       # Stream audio from streaming text chunks (requires supports_streaming_input = true)
 │       # Accepts an async iterator of text strings (e.g., sentences from a sentence splitter)
 │       # Used by VoiceChannel for streaming AI → TTS
+├── synthesize_dialogue(turns: list<DialogueTurn>,
+│                       voices: map<string, string>) → AudioContent
+│       # One clip of several speakers (requires max_dialogue_speakers > 0)
 └── release_context(context_id: string) → void
         # Drop any state held for this context (default: no-op; Section 12.2.2)
+
+VoiceInfo
+├── id: string                              # What synthesize() and connect() accept as voice
+├── name: string | null
+├── language: string | null                 # BCP-47 tag, or "multilingual"
+├── gender: string | null                   # "male" | "female" | "neutral"
+├── accent: string | null
+├── description: string | null
+├── deprecated: bool (default false)
+└── attributes: map<string, string>         # Provider-specific (persona, age, use case, category)
+
+DialogueTurn
+├── speaker: string                         # Key into the call's voices map
+├── text: string
+└── style: string | null                    # Delivery direction for this turn only
 ```
 
 `synthesize()` returns an `AudioContent` (Section 5) rather than raw bytes.
@@ -3066,6 +3091,36 @@ buffered into sentences and fed to TTS incrementally.
 `context` carries the conversation so far to a TTS that can use it (Section
 12.2.2). A provider whose `context_level` is `NONE` never receives one, so an
 existing provider needs no change.
+
+**Voices.** A voice is named by the `id` of a `VoiceInfo`: the string a
+provider returns in its catalog is the string `synthesize()` accepts, with no
+translation between the two. `available_voices()` is the curated catalog a
+provider ships, readable without credentials or network; `list_voices()`
+asks the vendor, and includes the custom voices the caller owns (Section
+12.2.4). A provider whose vendor has no voices endpoint keeps the default,
+which filters its curated catalog. The filters apply wherever the catalog
+comes from, server side or on the results, so a caller gets the same answer
+from every provider: `language` matches a voice whose tag equals it or
+starts with it and a hyphen (`"fr"` matches `fr-CA`, and `fr-CA` does not
+match `fr-FR`); `gender` matches exactly; `query` matches, without regard to
+case, a substring of the name or the description. A voice whose language or
+gender is unknown does not match a filter on it. `VoiceInfo` fields a vendor
+does not report are null or absent, and MUST NOT be inferred from another
+voice; `attributes` carries what a vendor reports beyond the common fields,
+under the vendor's own names. The `RealtimeVoiceProvider` catalog (Section
+12.4) uses the same `VoiceInfo`.
+
+**Dialogue.** `synthesize_dialogue()` voices a scripted exchange in one clip,
+each turn in the voice its speaker is mapped to, the way a podcast or a
+training role-play is produced. A provider whose `max_dialogue_speakers` is 0
+MUST raise, and every provider MUST raise before any call when the turns name
+more distinct speakers than its maximum or a speaker the `voices` map does
+not hold. `style` directs one turn's delivery, and a provider that cannot
+direct a single turn MUST raise rather than drop it. The returned
+`AudioContent` carries the turns, each as `"<speaker>: <text>"` on its own
+line, as its `transcript`. A Voice Channel speaks with one voice and never
+calls `synthesize_dialogue()`: dialogue is produced by the integrator, and
+enters a room as any other audio.
 
 **Audio processing flow:**
 
@@ -3371,6 +3426,55 @@ the pipeline stage carry `source = "pipeline"`.
 `DiarizationProvider`, the STT's label is the one attached to the transcript,
 being aligned to its words; the stage keeps firing `ON_SPEAKER_CHANGE` with its
 own source.
+
+#### 12.2.4 Custom Voices
+
+A voice can be made rather than picked: designed from a description, or
+replicated from a recording of a person. Making one manages the vendor's voice
+store; it is not synthesis, so it has an interface of its own, and the voice it
+returns is spoken through the vendor's TTS like any other (Section 12.2).
+
+```
+VoiceLibrary (interface)
+├── name: string
+├── supports_design: bool (default false)
+├── supports_replication: bool (default false)
+├── design_voice(description: string, store: bool) → CustomVoice
+│       # A voice written from a natural-language description
+├── replicate_voice(sample: AudioContent, consent: AudioContent,
+│                   store: bool) → CustomVoice
+│       # A person's voice, from a recording of it and their recorded consent
+├── get_voice(voice_id: string) → CustomVoice | null
+└── delete_voice(voice_id: string) → void
+
+CustomVoice
+├── voice: VoiceInfo                        # voice.id is what the TTS accepts
+├── stored: bool                            # Held by the vendor, listed by its TTS
+├── expires_at: datetime | null             # When the vendor stops honouring the id
+└── sample: AudioContent | null             # The vendor's preview of the voice
+```
+
+**Kinds.** A library MUST raise for a kind of creation its
+`supports_design` or `supports_replication` does not announce.
+
+**Storage.** `store = true` asks the vendor to keep the voice for the caller's
+account until it is deleted or expires; such a voice appears in the vendor
+TTS's `list_voices()` and is read back with `get_voice()`. `store = false`
+asks for a voice the vendor keeps nothing addressable for: the returned id is
+the only handle, and `get_voice()` cannot find it. A vendor that offers one
+mode only MUST make the library raise for the other, rather than return the
+mode it has. `get_voice()` returns null for an id the vendor does not hold;
+deleting such an id is not an error.
+
+**Consent.** `replicate_voice()` takes the consent recording as a required
+argument: a recording, by the person whose voice `sample` holds, agreeing to
+its replication. A library MUST send it to a vendor that verifies it, MUST NOT
+return a voice the vendor refused, and MUST raise without calling a vendor
+that has no consent check of its own when the integrator has not declared,
+through configuration, that consent is established outside the call. A TTS
+provider MAY also take reference audio in its configuration, a local model
+cloning a voice per call; the same obligation then lies with the integrator.
+Section 17.6 governs how reference and consent audio are handled.
 
 ### 12.3 Audio Processing Pipeline
 
@@ -4518,7 +4622,8 @@ RealtimeVoiceProvider (interface)
 ├── name → string                           # Provider identifier
 ├── model_name → string                     # Model behind the session; defaults to name
 ├── full_duplex: bool (default false)       # Model listens and speaks at once; no boundaries on the wire (Section 12.4.1)
-├── available_voices() → VoiceInfo[]        # Curated offline catalog
+├── available_voices() → VoiceInfo[]        # Curated offline catalog (VoiceInfo: Section 12.2)
+├── list_voices() → VoiceInfo[]             # Live catalog; default: available_voices()
 ├── available_models() → ModelInfo[]        # Curated offline catalog (MAY be empty)
 ├── connect(session, system_prompt, voice, tools, temperature) → void
 ├── disconnect(session) → void
@@ -8884,6 +8989,31 @@ should live in the integration surface layer.
   user's voice on every call, not only the current sentence. Implementations
   SHOULD say so where they document which providers receive audio data.
 
+**Custom voices (Section 12.2.4):**
+
+- A recording of a person's voice made to replicate it, and the recording of
+  their consent, are personal data identifying that person. An implementation
+  MUST hand them to the vendor for the call and keep nothing: never written to
+  the conversation store, the timeline, a recording, or a log. What it keeps is
+  the evidence the integrator needs, as metadata: which voice was created,
+  when, by whom, and whether the vendor verified the consent.
+- Replicating a voice without the consent of the person it belongs to MUST NOT
+  be possible through the framework (Section 12.2.4). The integrator remains
+  responsible for that consent, and for its withdrawal: a withdrawn consent
+  means deleting the voice.
+- A stored custom voice is held by the vendor under the integrator's account.
+  Implementations SHOULD document where it lives and for how long, as they do
+  for the providers that receive audio.
+
+**Provenance of synthesized audio:**
+
+- A vendor MAY mark the audio it synthesizes: a manifest in the file (C2PA)
+  or a watermark in the signal. An implementation MUST NOT remove a mark it
+  received: a file is passed on as the vendor produced it, not rebuilt from
+  its samples. A stage that must decode the audio (resampling, mixing,
+  encoding for a transport) loses a file-level manifest by construction;
+  implementations SHOULD document where that happens.
+
 **DTMF sensitivity:**
 
 - DTMF digits MAY contain sensitive data (credit card numbers, PINs, account
@@ -10311,6 +10441,9 @@ A Level 3 implementation MAY additionally support audio and/or video real-time m
 - TTS conversation context — TTSContextLevel, TTSContext, `release_context` (OPTIONAL — Section 12.2.2)
 - STTProvider interface with at least one implementation
 - TTSProvider interface with at least one implementation
+- Voice catalog — `VoiceInfo`, `available_voices`, `list_voices` (OPTIONAL — Section 12.2)
+- Dialogue synthesis — `synthesize_dialogue`, `DialogueTurn` (OPTIONAL — Section 12.2)
+- VoiceLibrary interface — custom voices, designed or replicated with consent (OPTIONAL — Section 12.2.4)
 - Voice hooks (ON_SPEECH_START through ON_RECORDING_STOPPED)
 - Barge-in and interruption handling (InterruptionStrategy)
 - Realtime Voice channel (speech-to-speech)
