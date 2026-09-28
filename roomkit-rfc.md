@@ -3439,10 +3439,11 @@ VoiceLibrary (interface)
 ├── name: string
 ├── supports_design: bool (default false)
 ├── supports_replication: bool (default false)
-├── design_voice(description: string, store: bool) → CustomVoice
+├── design_voice(description: string, store: bool,
+│                name: string | null) → CustomVoice
 │       # A voice written from a natural-language description
 ├── replicate_voice(sample: AudioContent, consent: AudioContent,
-│                   store: bool) → CustomVoice
+│                   store: bool, name: string | null) → CustomVoice
 │       # A person's voice, from a recording of it and their recorded consent
 ├── get_voice(voice_id: string) → CustomVoice | null
 └── delete_voice(voice_id: string) → void
@@ -3466,10 +3467,18 @@ mode only MUST make the library raise for the other, rather than return the
 mode it has. `get_voice()` returns null for an id the vendor does not hold;
 deleting such an id is not an error.
 
+`name` is the display name a stored voice is listed under; a vendor that
+names nothing ignores it.
+
 **Consent.** `replicate_voice()` takes the consent recording as a required
 argument: a recording, by the person whose voice `sample` holds, agreeing to
-its replication. A library MUST send it to a vendor that verifies it, MUST NOT
-return a voice the vendor refused, and MUST raise without calling a vendor
+its replication. A vendor MAY prescribe the words, read verbatim, and refuse
+any other; a library SHOULD then expose the statement per language, so an
+application can show the person what to read. A library MUST send the
+recording to a vendor that verifies it, MUST NOT return a voice the vendor
+refused, and MUST raise the refusal as an error of its own, distinct from any
+other failure, so the application can ask for a new recording. It MUST raise
+without calling a vendor
 that has no consent check of its own when the integrator has not declared,
 through configuration, that consent is established outside the call. A TTS
 provider MAY also take reference audio in its configuration, a local model
