@@ -10769,6 +10769,7 @@ AIChannel
 │   ├── max_tokens: int | null
 │   ├── max_context_events: int | null
 │   ├── thinking_budget: int | null         # Token budget for extended thinking/reasoning
+│   ├── response_schema: map | null         # Each turn answers in this JSON Schema (Section 6.7)
 │   ├── max_tool_rounds: int (default 200)  # Maximum tool call iterations per generation
 │   ├── tool_loop_timeout_seconds: float | null (default 300)  # Timeout for entire tool loop
 │   ├── fallback_provider: AIProvider | null # Fallback if primary provider fails
@@ -10781,6 +10782,7 @@ AIChannel
 │   ├── temperature
 │   ├── max_tokens
 │   ├── thinking_budget
+│   ├── response_schema
 │   └── tools
 ├── ai_response_model:
 │   │   # AI responses consist of ordered parts:
