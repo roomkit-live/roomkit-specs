@@ -9833,10 +9833,19 @@ round of the tool loop that carries it.
   place.
 - A model that cannot take images MUST be given the text of a content-part
   result, its images marked, the way it is given a message's.
-- The bound applies to the model's copy. Hooks observe what they observed
-  without it: a refusal observer the raw message, ON_TOOL_CALL the bounded
-  result it may override.
+- The bound applies to the model's copy, and it runs after ON_TOOL_CALL: the
+  hook receives the handler's whole result, and what it returns (the result,
+  or its override) is what is bounded and stored. Everything the model can
+  read back has then passed through the hook, so a hook that redacts covers
+  the full text; bounding first would let the model page the raw text back
+  from the store. A refusal observer receives the raw message.
 - An active skill's instructions are exempt (Section 24.4).
+
+The event that records a tool call's outcome (`TOOL_CALL_END`) is persisted,
+broadcast and handed to the event pipeline's hooks. It SHOULD NOT carry a
+result's images without bound: an implementation keeps them up to a size and
+states each one it leaves out. The bound is on the event only; the model's
+copy keeps every image.
 
 ---
 
