@@ -1973,6 +1973,17 @@ override is discarded, and the display payload an external agent attaches
   withheld would publish, to every surface that renders it, what the hook
   was there to withhold.
 - A call that failed or was refused carries no structured copy either.
+- SYNC hooks apply in turn to one outcome: each sees the result and the
+  structured copy as the previous hook left them, whichever form its
+  replacement took (a MODIFY whose event carries a new result, or the result
+  override). The model reads what the last one left. A second hook handed the
+  original would undo the first: "redact", then "cite the source", would
+  publish what the redaction removed.
+- ASYNC observers run after the SYNC hooks, on the final outcome: the result
+  the model reads, never one a hook replaced. A BLOCK does not spare them, nor
+  does the failure of a fail-closed hook that withheld the result: they fire
+  with the failure marker and the reason the model reads, since every call
+  MUST fire ON_TOOL_CALL with its outcome (below).
 
 **ON_TOOL_CALL, where the call was refused or failed:**
 
