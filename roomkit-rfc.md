@@ -3323,10 +3323,11 @@ track (a room microphone) is out of scope in this revision.
 
 **Stream lifetime.** In continuous mode, a Voice Channel with a diarizing STT
 MUST keep one stream open across turns, and open a new one only when the
-provider ends it, on an error, or on a language change (Section 12.2). While no
-audio arrives (a microphone muted during playback), the channel SHOULD keep the
-stream fed with silence at real-time pace: a provider may end a stream whose
-audio falls behind real time, which would start a new epoch. A transcript it
+provider ends it, on an error, or on a language change (Section 12.2). The
+channel SHOULD keep the stream's audio level with the clock, filling a pause
+with silence when the stream is behind (a microphone muted during playback,
+packets lost over a long call): a provider may end a stream whose audio falls
+behind real time, which would start a new epoch. A transcript it
 discards as echo of its own playback does not end the stream either. Each
 stream a session opens starts a new *label epoch*, numbered from 0 for the
 session. The epoch travels with every label (below), and a consumer MUST NOT
@@ -3336,7 +3337,9 @@ equate two labels from different epochs.
 `ON_SPEECH_END` once, then:
 
 1. Routes one inbound message per segment, in the order the finals and their
-   segments were produced: a room message has one speaker. A change of speaker ends the pending turn: a turn detector
+   segments were produced: a room message has one speaker. Ordering covers
+   the commit of each message, not the reply to it: a reply still being
+   produced MUST NOT hold back the next segment. A change of speaker ends the pending turn: a turn detector
    (Section 12.3.12) MUST NOT join two speakers' segments into one message.
    `ON_TRANSCRIPTION` fires per segment, and its event carries the segment's
    `speaker`, the `speaker_epoch` and the `sender_name` below; a hook MAY
@@ -3359,8 +3362,9 @@ segment with a null speaker neither fires nor resets the last label. The
 framework MUST fire `ON_SPEAKER_CHANGE` with `source = "stt"` when a segment's
 label differs from the last label routed in the same epoch, and on the first
 labelled segment of each epoch. The event's `speaker_id` is the label,
-`is_new_speaker` is true when the label had not been routed before in that
-epoch, and `confidence` is null unless the provider reports one. Events from
+`speaker_epoch` its epoch, `is_new_speaker` is true when the label had not been
+routed before in that epoch, and `confidence` is null unless the provider
+reports one. Events from
 the pipeline stage carry `source = "pipeline"`.
 
 **With the pipeline stage.** When a session has both a diarizing STT and a
