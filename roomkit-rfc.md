@@ -1885,7 +1885,7 @@ Planned rows are normative design intent for the named capability.
 | ON_AI_THINKING | ASYNC | Implemented | AI model began extended thinking/reasoning |
 | ON_AI_RESPONSE | ASYNC | Implemented | A turn of intelligence completed (observability). Fired by any channel of category `INTELLIGENCE`, whether the turn ran in-process or in an external agent (Section 6.4) |
 | BEFORE_TOOL_USE | SYNC | Implemented | Before a tool executes — can block or override the call |
-| ON_TOOL_CALL | ASYNC | Implemented | A tool call reached its outcome — served, refused before execution, failed during it, or abandoned by the model before its result (unified across AI and realtime channels; Section 9.3) |
+| ON_TOOL_CALL | SYNC | Implemented | A tool call reached its outcome — served, refused before execution, failed during it, or abandoned by the model before its result (unified across AI and realtime channels; Section 9.3) |
 | ON_USER_INPUT_REQUIRED | SYNC | Implemented | Human-in-the-loop: a tool paused, waiting for user input |
 | | | | |
 | **Orchestration:** | | | |
@@ -1968,7 +1968,9 @@ Planned rows are normative design intent for the named capability.
 These hold where the channel's own tool loop serves the call. An external
 handler's firing is a report on a call that ran outside the channel: its
 override is discarded, and the display payload an external agent attaches
-(ACP's tool content) is that agent's.
+(ACP's tool content) is that agent's. No hook can rewrite or withhold what the
+agent already read, so its observers see the provider's outcome and the
+provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
 
 - A SYNC hook sees the call's result and its structured copy (the payload a
   tool publishes for UI surfaces beside its result, such as MCP
@@ -1986,7 +1988,10 @@ override is discarded, and the display payload an external agent attaches
   replacement took (a MODIFY whose event carries a new result, or the result
   override). The model reads what the last one left. A second hook handed the
   original would undo the first: "redact", then "cite the source", would
-  publish what the redaction removed.
+  publish what the redaction removed. A MODIFY whose payload is not a tool-call
+  event replaces nothing, as the general rule above has it: the chain carries
+  on from the outcome the previous hook left, that hook's own override
+  included.
 - ASYNC observers run after the SYNC hooks, on the final outcome: the result
   the model reads, never one a hook replaced. A BLOCK does not spare them, nor
   does the failure of a fail-closed hook that withheld the result: they fire
