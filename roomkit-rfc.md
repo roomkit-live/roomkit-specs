@@ -1449,19 +1449,29 @@ be absent is a required field with an agreed empty value (an empty string, an
 empty list).
 
 A provider MUST NOT ignore a schema it cannot honour, and MUST NOT return text
-that does not answer it. `generate()` raises a `ResponseSchemaError`, a
-`ProviderError` that is never retryable, with one of these reasons:
+that does not answer it. `generate()` and the streaming methods raise a
+`ResponseSchemaError`, a `ProviderError` that is never retryable, with one of
+these reasons:
 
 | Reason | When |
 |---|---|
-| `unsupported` | `supports_response_schema` is false, the context also carries `tools`, or a streaming method (`generate_stream`, `generate_structured_stream`) received the schema. Raised before any request is sent. |
+| `unsupported` | `supports_response_schema` is false, or the context also carries `tools`. Raised before any request is sent. |
 | `refusal` | The model declined to answer: a refusal field, a refusal or safety stop reason, or the prompt itself blocked before any answer. |
 | `truncated` | The answer was cut: a length or max-tokens stop reason, or the context window filling up mid-answer. |
 | `invalid_json` | The text is not a JSON document satisfying the schema: a server that accepted the constraint and did not apply it. |
 
-Tools and streaming are refused only because this version defines neither how a
-schema combines with the tool loop nor what a partial document means mid-stream;
-lifting either restriction amends this section first.
+**Streaming a constrained answer.** `generate_stream()` and
+`generate_structured_stream()` carry the schema like `generate()`. The text
+deltas are the document as it is written: partial JSON, provisional until the
+stream ends. The implementation MUST check the whole document, as `generate()`
+does, before it yields the final done event, and MUST raise the error above
+instead of that event when the check fails. A consumer MUST NOT act on the
+streamed text before the done event, which is what marks it as a document
+satisfying the schema.
+
+Tools are refused only because this version does not define how a schema
+combines with the tool loop; lifting that restriction amends this section
+first.
 
 Support depends on the model and, behind an OpenAI-compatible base URL, on the
 server, so `supports_response_schema` is a provider default that an
