@@ -5735,16 +5735,26 @@ Vision providers analyze video frames and produce structured results:
 ```
 VisionProvider (interface)
 ├── name: string (property)
-├── analyze_frame(frame, prompt) → VisionResult
-│       # Analyze a single frame (async)
+├── analyze_frame(frame, prompt, response_schema) → VisionResult
+│       # Analyze a single frame (async); response_schema is optional
 │
 ├── analyze_stream(frames, interval_ms, assumed_fps) → async_iterator<VisionResult>
 │       # Streaming analysis at configurable intervals
 │
 ├── supports_streaming: bool (property)
+├── supports_response_schema: bool (property, default false)
 ├── warmup() → void                         # Pre-load models
 └── close() → void
 ```
+
+**Response schema.** `analyze_frame` MAY take a `response_schema`, under the
+rules of Section 6.7: the same portable subset, and the same
+`ResponseSchemaError` reasons. When the provider's `supports_response_schema`
+is true, the `description` it returns is one JSON document satisfying the
+schema, checked before it is returned; when it is false, a call carrying a
+schema is refused before any request. A consumer that locates or extracts
+something in a frame passes a schema where the provider supports one, instead
+of repairing free text.
 
 **VisionResult:**
 
