@@ -3365,8 +3365,9 @@ the STT as well as from the pipeline's diarization stage (Section 12.3.9). The
 STT's label is aligned to the words it transcribed; this section defines what
 a provider reports and how a channel carries it to the room.
 
-**Status.** Implemented: the provider contract, the refusals, and a Voice
-Channel carrying labels in continuous mode. A Voice Channel that does not
+**Status.** Implemented: the provider contract, the refusals, a Voice
+Channel carrying labels in continuous mode, and the opt-in naming from the
+pipeline stage. A Voice Channel that does not
 implement *Stream lifetime*, *Into the room* and *Speaker change* MUST refuse a
 diarizing STT at construction, in every mode, with an error that says so.
 
@@ -3444,6 +3445,29 @@ the pipeline stage carry `source = "pipeline"`.
 `DiarizationProvider`, the STT's label is the one attached to the transcript,
 being aligned to its words; the stage keeps firing `ON_SPEAKER_CHANGE` with its
 own source.
+
+**From the pipeline stage.** When the STT is not diarizing, a Voice Channel
+MAY name a transcript's speaker from its `DiarizationProvider` (Section
+12.3.9), on the integrator's opt-in. A channel MUST refuse the option at
+construction without a diarization stage, and in batch mode. With it:
+
+1. A transcript's speaker is the stage's result heard the longest over the
+   audio it transcribes: in VAD mode the utterance, its `SPEECH_END` frame
+   included; in continuous mode the audio since the previous final. The
+   pipeline runs its VAD before its diarization stage, and a stage may
+   identify only on the `SPEECH_END` frame, so a channel that reads the stage
+   when `SPEECH_END` fires MUST wait until that frame has been through it.
+2. The stage's `speaker_id` is normalised as an STT label (*Labels*). A
+   result that attributes the audio to nobody (`unknown`) counts as a null
+   speaker; if heard the longest, the transcript's `sender_name` is
+   `"Unknown speaker"`. A transcript over which the stage gave no result
+   carries no speaker, as without the option.
+3. The stage keeps its labels for the whole session, so the epoch is 0.
+4. The transcript reaches the room as one message, as *Into the room* sets
+   it: `ON_TRANSCRIPTION` carries the speaker and MAY rename it, and the
+   message carries `speaker_label`, `speaker_epoch` and `sender_name`. The
+   channel fires no `ON_SPEAKER_CHANGE` with `source = "stt"` for it: the
+   stage fires its own.
 
 #### 12.2.4 Custom Voices
 
