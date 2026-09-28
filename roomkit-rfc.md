@@ -10809,6 +10809,18 @@ AIChannel
     └── Returns ChannelOutput with response events + tasks + observations
 ```
 
+**Constrained turn.** A turn's `response_schema` resolves like the other
+per-turn settings: the binding metadata, then the channel's per-turn
+configuration, then the channel default. When it is set, the channel MUST NOT
+deliver or store any of the answer's text before the provider's check has
+passed (Section 6.7): a streamed answer is held until the done event, and a
+failed check fails the turn with its `ResponseSchemaError`, leaving nothing in
+the room. A turn whose tool loop stops before a final answer, on its round or
+time budget or because it was stopped, has no document to deliver and fails
+with `truncated`. The turn's tools include those the channel adds itself
+(skills, sandbox, planning, orchestration), so a schema on a channel that adds
+any needs a provider whose `supports_response_schema_with_tools` is true.
+
 ### A.9.1 ACP Agent Channel
 
 ```
