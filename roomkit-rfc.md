@@ -4771,7 +4771,10 @@ A call the gate refuses MUST still be reported through ON_TOOL_CALL's observers
 provider is holding a turn open on the result, and an observer must not stand in
 front of it. Infrastructure tools are declared by the
 channel rather than by the caller's catalogue, so the declared-tool check admits
-them; they remain exempt from skill gating, which they exist to operate.
+them. Those that only read or unlock (skill activation and reference reading,
+Tool Search: the exact names of Section 21.1) remain exempt from skill gating,
+which they exist to operate; `run_skill_script` acts, and is gated like any
+other tool.
 
 An implementation MAY additionally recover a tool call the model emitted as
 assistant *text* rather than through the provider's function calling API. Such a
@@ -9732,17 +9735,37 @@ ToolPolicy
 Glob patterns support `*` (any characters) and `?` (single character).
 Example: `allow: ["search_*", "get_*"]` permits all search and get tools.
 
+**Tools the channel provides.** A channel MUST apply its policy to every tool
+it declares to the model or executes, the tools it injects itself included,
+with one exception: the tools that only read or unlock and never act —
+`activate_skill` and `read_skill_reference` (Section 24), `read_stored_result`
+(Section 21.5), `find_tools` and `list_tools` (Tool Search). Without them a
+skill could not be activated nor a deferred tool found, so they stay declared
+and callable whatever the policy says. The exemption is by exact name and
+MUST NOT extend to a name that merely shares a prefix. Every other tool the
+channel injects — sandbox commands (`sandbox_*`), `run_skill_script`,
+`plan_tasks` — is subject to the policy like a host tool: a host that wants
+them allows them. The same names, and only them, are exempt from skill gating
+(Section 24.2). The declaration filter and the execution guard MUST apply one
+rule, so a tool the model is offered is a tool it may call. `find_tools` and
+`list_tools` MUST NOT name a tool the policy denies or a skill gates: a name
+the model can never call is a false promise and discloses what the policy
+hides.
+
 **RoleOverride:**
 
 ```
 RoleOverride
-├── allow: list<string> | null              # Additional allow patterns
+├── allow: list<string> | null              # Allow patterns (see mode)
 ├── deny: list<string> | null               # Additional deny patterns
-└── mode: "restrict" | "replace"            # Merge with base or replace entirely
+└── mode: "restrict" | "replace"            # Narrow the base or replace it entirely
 ```
 
-When `mode` is `"restrict"`, the override's allow/deny lists are merged with
-the base policy. When `"replace"`, the override completely replaces the base.
+When `mode` is `"restrict"`, the override narrows the base policy: its deny
+patterns are added to the base's, and its allow patterns constrain alongside
+the base's, so a tool must match both allow lists (each when non-empty). A
+restricting override can take access away, never grant it. When `"replace"`,
+the override completely replaces the base.
 
 ### 21.2 MCP Tool Provider
 
