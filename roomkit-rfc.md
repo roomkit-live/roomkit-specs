@@ -4784,15 +4784,20 @@ the tools declared to the session, at connection and at every reconfiguration
 reasoning backend receives (Section 12.4.1), and what Tool Search names; and it
 guards every call at the gate below, whichever entry brought it: the
 provider's own call, a call recovered from spoken text, a reasoning backend's
-call. A role override applies to the session's participant. A policy that held
-on the provider's calls and not on a backend's would be a door around it.
+call. A role override applies to the session's participant, with the role the
+store holds for it when the session's tools are first declared and again at
+each call: a role changed during the session MUST hold at the gate from the
+next call on, even while the declared tools still reflect the former one. A
+participant the store does not hold has no role, and the base rules apply to
+it. A policy that held on the provider's calls and not on a backend's would be
+a door around it.
 
 **Tool call pre-execution gate:**
 
 Before a realtime tool call is routed to whatever serves it, the channel MUST
 apply, in this order: the declared-tool check (a name absent from a non-empty
 declared catalogue is refused), argument validation against the declared schema,
-the channel's ToolPolicy when it has one (below), skill gating (Section 24.2),
+the channel's ToolPolicy when it has one (above), skill gating (Section 24.2),
 and the BEFORE_TOOL_USE hook (Section 9.2).
 
 The gate's scope is the call, not its servant. It MUST apply identically whether
@@ -9802,8 +9807,11 @@ MUST NOT extend to a name that merely shares a prefix. Every other tool the
 channel injects — sandbox commands (`sandbox_*`), `run_skill_script`,
 `plan_tasks` — is subject to the policy like a host tool: a host that wants
 them allows them. The same names, and only them, are exempt from skill gating
-(Section 24.2). The declaration filter and the execution guard MUST apply one
-rule, so a tool the model is offered is a tool it may call. `find_tools` and
+(Section 24.2). A transport that only carries a call to another tool (the
+`call_tool` of Tool Search on a provider whose declarations are fixed for the
+session) is no tool in this sense: it stays declared, and the policy applies to
+the tool it names, at the gate. The declaration filter and the execution guard
+MUST apply one rule, so a tool the model is offered is a tool it may call. `find_tools` and
 `list_tools` MUST NOT name a tool the policy denies or a skill gates: a name
 the model can never call is a false promise and discloses what the policy
 hides.
