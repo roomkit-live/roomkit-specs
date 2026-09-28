@@ -4777,12 +4777,23 @@ Integrators who need response-level tracking SHOULD use AFTER_BROADCAST on the
 transcription events emitted by the provider. A full-duplex provider has no
 such events on its wire and synthesizes them (Section 12.4.1).
 
+**Tool policy:** A realtime channel MAY carry a ToolPolicy (Section 21.1),
+with the same meaning as an AI channel's and the same exempt names. It filters
+the tools declared to the session, at connection and at every reconfiguration
+(a Tool Search reveal and a skill activation included), the catalogue a
+reasoning backend receives (Section 12.4.1), and what Tool Search names; and it
+guards every call at the gate below, whichever entry brought it: the
+provider's own call, a call recovered from spoken text, a reasoning backend's
+call. A role override applies to the session's participant. A policy that held
+on the provider's calls and not on a backend's would be a door around it.
+
 **Tool call pre-execution gate:**
 
 Before a realtime tool call is routed to whatever serves it, the channel MUST
 apply, in this order: the declared-tool check (a name absent from a non-empty
 declared catalogue is refused), argument validation against the declared schema,
-skill gating (Section 24.2), and the BEFORE_TOOL_USE hook (Section 9.2).
+the channel's ToolPolicy when it has one (below), skill gating (Section 24.2),
+and the BEFORE_TOOL_USE hook (Section 9.2).
 
 The gate's scope is the call, not its servant. It MUST apply identically whether
 the call is served by a tool handler, by an ON_TOOL_CALL hook, or by a channel
@@ -8032,7 +8043,9 @@ with its outcome, a refusal and a failure included, its result is
 bounded as any tool result is (Section 21.5), and a call the provider
 abandons interrupts its handler and sends no result. A handler's
 exception is logged; the model reads that the tool failed, not the
-exception's text. The conference is a door to the same tools as any
+exception's text. The configuration MAY carry a ToolPolicy (Section 21.1),
+applied to the tools declared to the provider and at the gate; the mix names
+no participant, so its base rules apply, never a role override. The conference is a door to the same tools as any
 other channel, and a gate that holds on one door and not another holds
 on neither.
 
