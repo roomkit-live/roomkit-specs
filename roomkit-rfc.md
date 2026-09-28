@@ -1986,8 +1986,10 @@ Planned rows are normative design intent for the named capability.
   own convention can be read — Section 15.8.1 governs that reading. A producer
   that can state the outcome structurally SHOULD do so rather than leave it to
   be recognised.
-- The body MUST travel verbatim beside that marker: it is what the model reads,
-  and its wording answers to that reader alone.
+- The body MUST travel verbatim beside that marker: it is what the model is
+  told, and its wording answers to that reader alone. An oversized body reaches
+  the model through the bound of Section 21.5 like any tool result; the event
+  carries it as the tool produced it.
 - A result override supplied on such a firing MUST be ignored. Nothing ran, so
   there is no result to correct.
 - A call that no handler and no hook served MUST report a failure, not a
@@ -9744,6 +9746,15 @@ opened, the server process included, before the error is reported.
 
 MCP tools are subject to the same `ToolPolicy` as local tools.
 
+`call` returns a string whatever the server sent. The tool handler a provider
+hands to an AI channel SHOULD instead hand an image the server returns to the
+model as an image, when it is in a format vision vendors accept (PNG, JPEG,
+GIF, WebP) and its payload decodes. Binary content the model cannot take (an
+image in another format or with a corrupt payload, audio, a blob resource)
+SHOULD reach it as a short note naming what was left out, never as its
+encoding: base64 read as text is noise the model pays for, and a bad image
+fails the whole request at the vendor.
+
 ### 21.3 AI Steering Directives
 
 Steering directives allow dynamic mid-conversation control of AI behavior.
@@ -9805,6 +9816,27 @@ empty value on that path, because no MESSAGE event will carry the record. A
 tool loop the implementation starts under a turn MUST
 inherit the turn's context, so a handler called on any round of the loop reads
 the same room and actor as on the first.
+
+### 21.5 Large Tool Results
+
+An implementation that bounds large tool results (stores the full text and
+gives the model a bounded preview with a way to read the rest back) MUST
+apply the bound to every outcome the model reads: a handler's result, a
+result override from ON_TOOL_CALL, a refusal, and an error. A bound that
+covers the success path only leaves the others unbounded, and an error page
+or a rewritten result costs the same as the result it stands for, on every
+round of the tool loop that carries it.
+
+- The preview MUST be bounded in characters, not only in lines: one long line
+  would otherwise carry the whole result.
+- A result made of content parts has its text bounded and its images kept in
+  place.
+- A model that cannot take images MUST be given the text of a content-part
+  result, its images marked, the way it is given a message's.
+- The bound applies to the model's copy. Hooks observe what they observed
+  without it: a refusal observer the raw message, ON_TOOL_CALL the bounded
+  result it may override.
+- An active skill's instructions are exempt (Section 24.4).
 
 ---
 
