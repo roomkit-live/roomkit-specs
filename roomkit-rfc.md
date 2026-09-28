@@ -1835,7 +1835,7 @@ Planned rows are normative design intent for the named capability.
 | ON_VAD_AUDIO_LEVEL | ASYNC | Implemented | Audio pipeline audio level update (voice) |
 | ON_INPUT_AUDIO_LEVEL | ASYNC | Implemented | Per-frame inbound audio level, throttled to ~10/sec (voice) |
 | ON_OUTPUT_AUDIO_LEVEL | ASYNC | Implemented | Per-frame outbound audio level, throttled to ~10/sec (voice) |
-| ON_SPEAKER_CHANGE | ASYNC | Implemented | Audio pipeline detected speaker change (diarization); from a diarizing STT once Section 12.2.3's Planned parts land |
+| ON_SPEAKER_CHANGE | ASYNC | Implemented | Audio pipeline or a diarizing STT detected a speaker change (Section 12.2.3) |
 | ON_DTMF | ASYNC | Implemented | Audio pipeline detected a DTMF tone |
 | ON_TURN_COMPLETE | ASYNC | Implemented | Turn detector determined user turn is complete |
 | ON_TURN_INCOMPLETE | ASYNC | Implemented | Turn detector determined user is still speaking (for logging) |
@@ -3292,13 +3292,10 @@ the STT as well as from the pipeline's diarization stage (Section 12.3.9). The
 STT's label is aligned to the words it transcribed; this section defines what
 a provider reports and how a channel carries it to the room.
 
-**Status.** The provider contract (*Labels*, *Segments*) and the refusals
-(*Channels that cannot carry labels*) are implemented. The Voice Channel parts
-(*Stream lifetime*, *Into the room*, *Speaker change*, *With the pipeline
-stage*) are **Planned**: normative design intent the reference implementation
-does not implement yet. Until a Voice Channel implements them, it MUST refuse a
-diarizing STT at construction, in every mode, with an error that says so; the
-provider is then read directly (`transcribe_stream`).
+**Status.** Implemented: the provider contract, the refusals, and a Voice
+Channel carrying labels in continuous mode. A Voice Channel that does not
+implement *Stream lifetime*, *Into the room* and *Speaker change* MUST refuse a
+diarizing STT at construction, in every mode, with an error that says so.
 
 **Labels.** A speaker label is assigned by the provider, is opaque, and is
 stable within one STT stream and only there: two streams may give one voice
@@ -3324,18 +3321,22 @@ a Conference Channel (Section 12.10): it attributes speech by participant
 track and transcribes each utterance on its own. Several people sharing one
 track (a room microphone) is out of scope in this revision.
 
-**Stream lifetime (Planned).** In continuous mode, a Voice Channel with a
-diarizing STT MUST keep one stream open across turns, and open a new one only
-when the provider ends it, on an error, or on a language change (Section 12.2).
-Each stream a session opens starts a new *label epoch*, numbered from 0 for the
+**Stream lifetime.** In continuous mode, a Voice Channel with a diarizing STT
+MUST keep one stream open across turns, and open a new one only when the
+provider ends it, on an error, or on a language change (Section 12.2). While no
+audio arrives (a microphone muted during playback), the channel SHOULD keep the
+stream fed with silence at real-time pace: a provider may end a stream whose
+audio falls behind real time, which would start a new epoch. A transcript it
+discards as echo of its own playback does not end the stream either. Each
+stream a session opens starts a new *label epoch*, numbered from 0 for the
 session. The epoch travels with every label (below), and a consumer MUST NOT
 equate two labels from different epochs.
 
-**Into the room (Planned).** For a final result with segments, the Voice
-Channel:
+**Into the room.** For a final result with segments, the Voice Channel fires
+`ON_SPEECH_END` once, then:
 
-1. Routes one inbound message per segment, in order: a room message has one
-   speaker. A change of speaker ends the pending turn: a turn detector
+1. Routes one inbound message per segment, in the order the finals and their
+   segments were produced: a room message has one speaker. A change of speaker ends the pending turn: a turn detector
    (Section 12.3.12) MUST NOT join two speakers' segments into one message.
    `ON_TRANSCRIPTION` fires per segment, and its event carries the segment's
    `speaker`, the `speaker_epoch` and the `sender_name` below; a hook MAY
@@ -3353,7 +3354,7 @@ Channel:
    one speaker, so the model reads `"Speaker A: …"` rather than one anonymous
    stream.
 
-**Speaker change (Planned).** Evaluated per routed segment, in order. A
+**Speaker change.** Evaluated per routed segment, in order. A
 segment with a null speaker neither fires nor resets the last label. The
 framework MUST fire `ON_SPEAKER_CHANGE` with `source = "stt"` when a segment's
 label differs from the last label routed in the same epoch, and on the first
@@ -3362,10 +3363,10 @@ labelled segment of each epoch. The event's `speaker_id` is the label,
 epoch, and `confidence` is null unless the provider reports one. Events from
 the pipeline stage carry `source = "pipeline"`.
 
-**With the pipeline stage (Planned).** When a session has both a diarizing STT
-and a `DiarizationProvider`, the STT's label is the one attached to the
-transcript, being aligned to its words; the stage keeps firing
-`ON_SPEAKER_CHANGE` with its own source.
+**With the pipeline stage.** When a session has both a diarizing STT and a
+`DiarizationProvider`, the STT's label is the one attached to the transcript,
+being aligned to its words; the stage keeps firing `ON_SPEAKER_CHANGE` with its
+own source.
 
 ### 12.3 Audio Processing Pipeline
 
@@ -4939,7 +4940,7 @@ Voice-specific hooks allow integrators to customize the voice pipeline:
 | ON_VAD_AUDIO_LEVEL | ASYNC | Audio level visualization | Audio Pipeline (VAD) |
 | ON_INPUT_AUDIO_LEVEL | ASYNC | VU meter for mic input | Audio Pipeline |
 | ON_OUTPUT_AUDIO_LEVEL | ASYNC | VU meter for speaker output | VoiceBackend |
-| ON_SPEAKER_CHANGE | ASYNC | Identify speaker switch | Audio Pipeline (Diarization); STT once Section 12.2.3's Planned parts land |
+| ON_SPEAKER_CHANGE | ASYNC | Identify speaker switch | Audio Pipeline (Diarization) or STT (Section 12.2.3) |
 | ON_DTMF | ASYNC | IVR navigation, call transfer | Audio Pipeline (DTMF Detector) |
 | ON_TURN_COMPLETE | ASYNC | Log turn-taking metrics | Audio Pipeline (Turn Detector) |
 | ON_TURN_INCOMPLETE | ASYNC | Debug turn detection | Audio Pipeline (Turn Detector) |
