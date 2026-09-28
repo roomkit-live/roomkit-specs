@@ -9643,6 +9643,13 @@ HandoffResult
 The handoff summary is injected into the target agent's context so it
 has continuity.
 
+**The room is the call's (normative).** A handoff acts on the room of the
+call that requested it, read from the tool call context (Section 21.4). One
+agent serves every room it is attached to, so a room captured when the tool
+was wired, or left behind by a hook of another event, names whichever room
+came first, not the one asking. A call made outside a tool call has no room
+to act on, and the tool MUST refuse it rather than guess.
+
 ### 19.7 Orchestration Strategies
 
 The following strategies are common patterns built on router and pipeline
@@ -10175,6 +10182,14 @@ Implementations SHOULD provide helpers for AI-driven delegation:
 
 - `setup_delegation(agent, handler, tool)` — Wires the delegation tool into
   an agent, connecting it to the TaskRunner.
+
+A delegation tool, whichever helper wired it (a supervisor's per-worker and
+strategy tools included), delegates from the room of the call, read from the
+tool call context (Section 21.4), as a handoff does (Section 19.6): the child
+room's parent is the room that issued the call, never the room the tool was
+wired in. A worker delegating in turn runs in its own child room, so its
+delegation hangs off that room. A call made outside a tool call MUST be
+refused.
 
 ### 23.5 Delegation Hooks
 
