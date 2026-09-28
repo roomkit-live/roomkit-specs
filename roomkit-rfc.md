@@ -1957,6 +1957,11 @@ Planned rows are normative design intent for the named capability.
 
 **ON_TOOL_CALL, where the call was served:**
 
+These hold where the channel's own tool loop serves the call. An external
+handler's firing is a report on a call that ran outside the channel: its
+override is discarded, and the display payload an external agent attaches
+(ACP's tool content) is that agent's.
+
 - A SYNC hook sees the call's result and its structured copy (the payload a
   tool publishes for UI surfaces beside its result, such as MCP
   `structuredContent`). It MAY replace the result, and MAY replace or clear
