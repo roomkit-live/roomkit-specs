@@ -1955,6 +1955,20 @@ Planned rows are normative design intent for the named capability.
 - Exceptions MUST be caught and logged, never propagated.
 - Used for observability, logging, side effects.
 
+**ON_TOOL_CALL, where the call was served:**
+
+- A SYNC hook sees the call's result and its structured copy (the payload a
+  tool publishes for UI surfaces beside its result, such as MCP
+  `structuredContent`). It MAY replace the result, and MAY replace or clear
+  the structured copy. A result replaced alone keeps the copy: a hook that
+  rewrites text, such as PII re-tokenisation, is not withholding the payload.
+- A BLOCK withholds the result: the model reads the block's reason as a
+  failed call, and the tool-call event carries the failure marker and no
+  structured copy. An event that kept the payload while the text was
+  withheld would publish, to every surface that renders it, what the hook
+  was there to withhold.
+- A call that failed or was refused carries no structured copy either.
+
 **ON_TOOL_CALL, where the call was refused or failed:**
 
 - Every tool call MUST fire ON_TOOL_CALL with its outcome, whether it was
