@@ -8010,6 +8010,19 @@ MUST run per-track VAD even when no STT is configured — without it the
 interruption policy of Section 12.10.5 has no sensor, and the bot
 cannot be interrupted at all.
 
+**A tool call is a realtime tool call (normative).** A call the
+provider issues passes the pre-execution gate of Section 12.4 before it
+reaches the configured handler: the declared-tool check against the
+configuration's tools, argument validation against the declared schema,
+and BEFORE_TOOL_USE (Section 9.2). It fires ON_TOOL_CALL (Section 9.3)
+with its outcome, a refusal and a failure included, its result is
+bounded as any tool result is (Section 21.5), and a call the provider
+abandons interrupts its handler and sends no result. A handler's
+exception is logged; the model reads that the tool failed, not the
+exception's text. The conference is a door to the same tools as any
+other channel, and a gate that holds on one door and not another holds
+on neither.
+
 ### 12.11 Room Media Recording
 
 Sections 12.3.7 and 12.8.10 each record a *session*: one participant, one
