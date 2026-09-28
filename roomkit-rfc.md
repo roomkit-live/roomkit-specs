@@ -1358,6 +1358,8 @@ AIProvider (interface)
 │       # Whether generate_structured_stream streams natively (else it wraps generate)
 ├── supports_response_schema: bool (default false)
 │       # Whether generate honours AIContext.response_schema (see below)
+├── supports_response_schema_with_tools: bool (default false)
+│       # Whether a schema may ride a turn that also carries tools
 ├── context_window: int | null              # Input window of the active model, when known
 │
 ├── generate(context: AIContext) → AIResponse
@@ -1455,7 +1457,7 @@ these reasons:
 
 | Reason | When |
 |---|---|
-| `unsupported` | `supports_response_schema` is false, or the context also carries `tools`. Raised before any request is sent. |
+| `unsupported` | `supports_response_schema` is false, or the context also carries `tools` and `supports_response_schema_with_tools` is false. Raised before any request is sent. |
 | `refusal` | The model declined to answer: a refusal field, a refusal or safety stop reason, or the prompt itself blocked before any answer. |
 | `truncated` | The answer was cut: a length or max-tokens stop reason, or the context window filling up mid-answer. |
 | `invalid_json` | The text is not a JSON document satisfying the schema: a server that accepted the constraint and did not apply it. |
@@ -1469,9 +1471,15 @@ instead of that event when the check fails. A consumer MUST NOT act on the
 streamed text before the done event, which is what marks it as a document
 satisfying the schema.
 
-Tools are refused only because this version does not define how a schema
-combines with the tool loop; lifting that restriction amends this section
-first.
+**Tools in the same turn.** A context may carry `tools` and a schema together
+where `supports_response_schema_with_tools` is true. The model then either calls
+tools or answers in the schema: a response that carries tool calls is a step of
+the tool loop and is not checked, and the check applies to the answer that
+carries none, the final one. A provider whose constraint is a decoding grammar
+(it forces the output into the schema token by token) MUST leave that capability
+false: the grammar stops the model from calling a tool, and it writes a
+schema-valid answer in its place, invented rather than looked up, which no check
+can tell from a true one.
 
 Support depends on the model and, behind an OpenAI-compatible base URL, on the
 server, so `supports_response_schema` is a provider default that an
