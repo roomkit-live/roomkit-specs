@@ -1199,9 +1199,9 @@ reach the loop as a mapping and never as an error: no arguments (nothing, or
 JSON `null`) are `{}`, and arguments that do not parse to an object (invalid
 JSON, an array, a fragment) are kept whole under `raw`. A call whose arguments
 the response cut before they were complete (the output cap, a content filter)
-is marked partial, and no tool loop, the AI channel's or a reasoning
-backend's, MAY run it: the model reads that the call was cut and that nothing
-ran, so it can call again with less.
+is marked partial, and a tool loop, the AI channel's or a reasoning
+backend's, MUST NOT run it: the model reads that the call was cut and that
+nothing ran, so it can call again with less.
 
 **What the generation hooks see:** `BEFORE_AI_GENERATION` fires once per turn,
 with the context the turn starts from, and its `tools` are the first round's
