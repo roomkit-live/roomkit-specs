@@ -2049,13 +2049,21 @@ Planned rows are normative design intent for the named capability.
   other than a HookResult, and a MODIFY whose payload is not of the type the
   trigger passed in.
 - **Except on triggers whose payload is content a hook may exist to withhold**,
-  where every one of those outcomes MUST block instead. BEFORE_TTS and
-  ON_TRANSCRIPTION are those triggers: a redaction hook that fails, times out,
-  or returns something unusable must not let the original through, and allowing
-  would publish exactly what the hook was there to suppress. A partial rule is
-  no rule — an implementation that blocks on exceptions but allows on timeouts
-  leaks through the timeout. Implementations MUST document which triggers fail
-  closed.
+  or an action it may exist to prevent, where every one of those outcomes MUST
+  block instead. BEFORE_TTS and ON_TRANSCRIPTION are the first kind: a
+  redaction hook that fails, times out, or returns something unusable must not
+  let the original through, and allowing would publish exactly what the hook
+  was there to suppress. BEFORE_TOOL_USE is the second: it is the gate of a
+  tool call, where an approval hook sits, and an approval hook that cannot
+  answer must not let the call run. A partial rule is no rule — an
+  implementation that blocks on exceptions but allows on timeouts leaks through
+  the timeout. Implementations MUST document which triggers fail closed.
+- **A BEFORE_TOOL_USE that failed closed refuses the call before execution**,
+  as its BLOCK does, on every channel: the model reads the same refusal
+  (`{"error": "Tool 'x' denied by pre-execution hook."}`), never the hook's
+  error, whose message can hold anything the hook held. The hook's name and
+  error go to the log and to ON_TOOL_CALL's observers, on the refused call's
+  `error_detail`.
 - **A hook MAY declare itself fail-closed** (`fail_closed = true`), on any
   trigger: a content check on `BEFORE_BROADCAST` (PII, moderation) is exactly
   such a hook, while the trigger as a whole stays fail-open so that a broken
