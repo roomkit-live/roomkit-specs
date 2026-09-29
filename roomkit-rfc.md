@@ -9600,7 +9600,8 @@ reconfigures the session to the next agent's. The tools an agent's
 configuration declares are the channel's own tools, the agent's tools and the
 handoff tool; a pipeline MUST NOT drop the channel's tools, nor declare an
 agent without its own. A call to one of the active agent's tools is served by
-that agent's tool handler.
+the handler the agent was given; a tool the agent declares without one, or
+that shares a name with a channel tool, is served by the channel's handler.
 
 **Allowed transitions:** An agent in phase P MAY hand off to:
 - `stage.next` (forward progression)
@@ -9668,13 +9669,17 @@ primitives. Implementations SHOULD provide helpers for each.
 but its agents are shared: one agent object serves every room it is attached
 to. Installing a strategy in a second room MUST NOT declare a tool twice on
 an agent or a channel, nor wrap an agent's or a channel's handling a second
-time. What a strategy adds for one room MUST reach that room only: a tool it
-declares for a room (the supervisor's `delegate_workers`, a delegation's
-result tool) is declared in that room's turns, not in every room the agent
-serves, and a flag it keeps while work runs for a room is that room's. Its
-tools act on the room of the call (Sections 19.6 and 23.4). A strategy that
-wrote into the shared agent for one room would answer, or refuse, another
-room's user.
+time. What a strategy adds for one room MUST reach that room only: on an AI
+channel, a tool it declares for a room (a supervisor's delegation tools, a
+delegation's result tool) is declared in that room's turns, not in every room
+the agent serves; on a channel whose declarations do not vary by room (a
+realtime channel), a call from a room the strategy was not installed in is
+refused. A flag it keeps while work runs for a room is that room's, and its
+tools act on the room of the call (Sections 19.6 and 23.4). A tool that
+belongs to the agent whatever the room (the handoff tool a strategy wires on
+it) MAY stay declared wherever the agent serves, and still acts on the room
+of the call. A strategy that wrote into the shared agent for one room would
+answer, or refuse, another room's user.
 
 #### 19.7.1 Pipeline
 
