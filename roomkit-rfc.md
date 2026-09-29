@@ -1243,19 +1243,36 @@ message carries only what the room has not read, the interruption marker
 (`[Response interrupted]`), never the provider's error. A cancellation adds
 nothing a round already said.
 
+The interruption marker is not an answer, and it is marked as what it is: its
+message carries `metadata["interrupted"] = true`. It MUST NOT solicit any
+intelligence channel (Section 19.3), and nothing that reads an agent's answer
+(an orchestration strategy, a delegated task's result) may take it for one.
+
 **A turn that did not complete.** `ON_AI_RESPONSE` reports a turn whose loop
 reached its end, with the reason it ended for: `cancelled` for a cancellation
-between rounds, `error` for a turn the provider interrupted after a round and
-that was delivered once its loop ended (above). A turn whose loop did not
-reach its end MUST NOT fire it, streamed or not: one that raised, a streamed
-turn the provider interrupted after a round included, or one whose response
-stream was closed before the loop's end (a barge-in, a transport that
-stopped reading, a consumer that refused the answer, a task cancelled from
-outside). Its response never reached the end the hook reports, and a closed
-stream is never reported as `completed`; what its rounds delivered stays in
-the room. Its `llm.generate` span MUST end `cancelled` or `error`, never `ok`,
-and never stay open, and it carries what the rounds used, since no hook
-reports the turn.
+between rounds, `error` for a turn the provider interrupted after a round,
+streamed or not. The two loops report such a turn alike: the hook carries what
+its rounds used, then the provider's error surfaces as when the loop raises
+(ON_ERROR fires), a streamed turn's through its stream once the hook has
+fired. A turn whose loop did not reach its end MUST NOT fire it, streamed or
+not: one that raised before any round ended, or one whose response stream was
+closed before the loop's end (a barge-in, a transport that stopped reading, a
+consumer that refused the answer, a task cancelled from outside). Its
+response never reached the end the hook reports, and a closed stream is never
+reported as `completed`; what its rounds delivered stays in the room. Its
+`llm.generate` span MUST end `cancelled` or `error`, never `ok`, and never
+stay open, and it carries what the rounds used, since no hook reports the
+turn. The span of a turn that reached its end `cancelled` (a steering
+`Cancel`) or `error` ends with that status too, never `ok`.
+
+**The turn's record.** A turn that reached its end records it on its last
+MESSAGE, streamed or not: `loop_end_reason` (the reason above) and `ai_usage`
+(what its rounds used) in the message's metadata. That message is the one of
+the turn's final text or, when the turn has none (a cancellation between
+rounds, an interruption), the last message the turn wrote. A streamed turn
+learns its end after its segments are written, so the implementation updates
+the stored message; it does not deliver it again. A host reads how any turn
+ended from its reply, whichever loop produced it.
 
 **ACP Agent Channel:**
 
@@ -9511,6 +9528,9 @@ Normative rules:
    agent is asked to respond.
 4. `addressed_to` is part of the stored event, so a transcript can show who
    was asked and a replay reproduces the same solicitation.
+5. An interruption marker (Section 6.4) solicits no intelligence channel,
+   whatever its address or a router's stamp: it says an agent's turn was cut,
+   not something to act on. It is still stored and delivered like any event.
 
 **Unaddressed events** (`addressed_to = null`) keep the behaviour of earlier
 versions: the router decides (§19.4), and with no router installed every
@@ -11142,8 +11162,9 @@ deliver or store any of the answer's text before the provider's check has
 passed (Section 6.7): a streamed answer is held until the done event, and a
 failed check fails the turn with its `ResponseSchemaError`, leaving nothing in
 the room. A turn whose tool loop stops before a final answer, on its round or
-time budget or because it was stopped, has no document to deliver and fails
-with `truncated`. The turn's tools include those the channel adds itself
+time budget, because it was stopped, or because the provider interrupted it
+after a round, has no document to deliver and fails with `truncated`, in
+either loop. Its interruption marker is not delivered as the answer. The turn's tools include those the channel adds itself
 (skills, sandbox, planning, orchestration), so a schema on a channel that adds
 any needs a provider whose `supports_response_schema_with_tools` is true.
 
