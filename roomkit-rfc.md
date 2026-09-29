@@ -9932,7 +9932,11 @@ User ↔ Supervisor
 The supervisor MAY delegate sequentially or in parallel. Results are delivered
 back via the delivery strategy system (Section 23), at the chain depth of the
 turn that delegated (Section 23.3); results presented within the turn leave
-the supervisor's answer one deeper than the event it answers (§8.3).
+the supervisor's answer one deeper than the event it answers (§8.3). Results
+of workers dispatched in the background are handed back to the supervisor
+as a background delegation's are (§23.3 step 8): an instruction addressed to
+it, each worker's output bounded, never published as a participant's
+message.
 
 An instruction a strategy needs for one turn (a supervisor's task-formulation
 pass) is passed for that turn only, over the prompt the turn would have had.
@@ -10295,6 +10299,7 @@ DeliveryContext
 ├── addressed_to: list<string> | null       # Intelligence solicitation (§19.3)
 ├── idempotency_key: string | null          # Publication/injection identity
 ├── session_id: string | null               # Exact realtime voice session
+├── instruction: bool                       # The application's direction (§10.1.1)
 └── metadata: map<string, any>              # Delivery metadata
 ```
 
@@ -10325,6 +10330,17 @@ remain an alias for selecting the room's transport, but MUST NOT silently
 replace explicit `addressed_to`. Applications select intelligence channels
 with `addressed_to`, and realtime provider sessions with `channel_id` and
 `session_id`; the latter are not intelligence channel ids (§19.3).
+
+**Instruction delivery.** `instruction = true` delivers the content as the
+application's direction to an agent rather than as something a participant
+said. Through the text pipeline it is an `INSTRUCTION` event (§10.1.1), with
+that section's rules: it needs a non-empty `addressed_to` and no
+`idempotency_key`, and is otherwise refused with `blocked` before anything is
+written. Injected into a realtime session it takes the `system` intent
+(§12.4). The strategy, the delivery hooks and the delivery backend apply to
+it unchanged. Content an application produces for an agent (a background
+task's result, a scheduled nudge) SHOULD be delivered this way, so it is
+never stored, shown or read as a participant's words.
 
 An explicit realtime destination MUST NOT expand to all sessions. Without
 `session_id`, an explicitly selected realtime channel requires one active
@@ -10404,13 +10420,15 @@ disruptive. It monitors both the AI generation state and user speech activity
 before injecting content.
 
 `Queued` MUST keep incompatible rooms, transports, intelligence addresses,
-sessions and metadata separate. Keyed requests MUST preserve their individual
-publication keys and outcome attribution rather than merging into an event
-with a different key. Every waiting caller MUST receive its own outcome,
-including requests arriving while a batch is being delivered.
+sessions, intents (message or instruction) and metadata separate. Keyed
+requests MUST preserve their individual publication keys and outcome
+attribution rather than merging into an event with a different key. Every
+waiting caller MUST receive its own outcome, including requests arriving
+while a batch is being delivered.
 
-Delivery backends MUST preserve addresses, keys and session targets in their
-serialized items and across retries. Enqueue acceptance is not transmission.
+Delivery backends MUST preserve addresses, keys, session targets and the
+instruction flag in their serialized items and across retries. Enqueue
+acceptance is not transmission.
 Workers MUST distinguish a refusal from a retryable unavailable/failed target;
 an absent recipient MUST NOT be acknowledged as successful transmission.
 
@@ -10426,6 +10444,9 @@ missing destination and duplicate publication. Its payload MUST include the
 effective content and targeting information; a rewrite in `BEFORE_DELIVER`
 must be reflected. Hook observation remains best-effort and MUST NOT change
 the delivery outcome.
+
+Both hooks see an instruction delivery as an event of type `INSTRUCTION`,
+so a hook that gates proactive content gates it too.
 
 ---
 
@@ -10482,17 +10503,28 @@ When `delegate(room_id, agent_id, task, notify, strategy)` is called:
    closes that call with `status = failed`, so no start row stays pending.
 6. Collect the agent's response as the task result.
 7. Fire `ON_TASK_COMPLETED` hook in the parent room.
-8. If `notify` is set, deliver the result to the specified channel using
-   the delivery strategy. The delivered content carries the result, bounded
-   and presented as the worker's output rather than as an instruction; the
-   result is never written into the room's stored configuration (the system
-   prompt of a binding), which would replace the notified agent's own and
-   hand a worker's output the system role for every turn after. The
+8. If `notify` is set, hand the result back through `deliver()` (§22) with
+   the delegation's strategy and `instruction = true`, so `BEFORE_DELIVER`,
+   `AFTER_DELIVER` and the delivery backend apply to it as to any proactive
+   delivery. `notify` names who is told: an intelligence channel receives it
+   addressed to it, through the room's transport (§10.1.1); a realtime voice
+   channel, injected into its session with the `system` intent (§12.4).
+   Another transport has no model to direct and receives it as a message
+   delivered through it. The delivered content carries the result, bounded and
+   delimited, presented as the worker's output rather than as an
+   instruction; a failed task says it failed, without its error (§9.3).
+   An instruction is not stored, so the result lives in the turn it opens
+   and in the agent's answer, not in the history of later turns. The
+   result is never written into the room's stored configuration (the
+   system prompt of a binding), which would replace the notified agent's
+   own and hand a worker's output the system role for every turn after. A
+   hand-back that is not delivered (refused by a hook, a room without
+   transport) is logged; `ON_TASK_COMPLETED` still carries the result. The
    delivered event carries the chain depth of the response whose turn
    delegated (the depth of that turn's trigger plus one, read from the tool
-   call context, Section 21.4), so a cycle of
-   delegation, result and delegation again ends at `max_chain_depth` (§8.3)
-   like any chain. A delegation made outside a tool call delivers at 0.
+   call context, Section 21.4), so a cycle of delegation, result and
+   delegation again ends at `max_chain_depth` (§8.3) like any chain. A
+   delegation made outside a tool call delivers at 0.
 
 ### 23.4 Delegation Tools
 
