@@ -1201,7 +1201,12 @@ JSON, an array, a fragment) are kept whole under `raw`. A call whose arguments
 the response cut before they were complete (the output cap, a content filter)
 is marked partial, and a tool loop, the AI channel's or a reasoning
 backend's, MUST NOT run it: the model reads that the call was cut and that
-nothing ran, so it can call again with less.
+nothing ran, so it can call again with less. A response the provider ended
+because it could not parse the model's call (Gemini's
+`MALFORMED_FUNCTION_CALL`) carries no call at all: the tool loop MUST tell
+the model that its call did not run, within the bound it gives an empty
+round, on any round and whatever text the round said, and a turn whose bound
+runs out ends cut short (`empty_response`), never `completed`.
 
 **What the generation hooks see:** `BEFORE_AI_GENERATION` fires once per turn,
 with the context the turn starts from, and its `tools` are the turn's toolset
