@@ -4950,6 +4950,13 @@ continuation that started anyway would speak over the caller, and the
 caller's own request would then find a response in progress and leave the
 turn unanswered.
 
+A caller's turn whose request found a response in progress is still owed
+one: the provider asks once that response ends. Any request the provider
+sends after the caller's turn was committed covers it, a continuation
+included, so the turn is never answered twice. A request the service rejects
+is no longer in progress: the error that answers it releases the state, or
+the session would never ask again.
+
 **Text injection** refers to programmatically inserting text into a realtime
 session's conversation context (e.g., instructions, tool results, or context
 updates) rather than sending audio. The ON_REALTIME_TEXT_INJECTED hook fires
