@@ -1244,9 +1244,14 @@ message carries only what the room has not read, the interruption marker
 nothing a round already said.
 
 The interruption marker is not an answer, and it is marked as what it is: its
-message carries `metadata["interrupted"] = true`. It MUST NOT solicit any
-intelligence channel (Section 19.3), and nothing that reads an agent's answer
-(an orchestration strategy, a delegated task's result) may take it for one.
+message carries `metadata["interruption_marker"] = true` (a key distinct from
+the `interrupted` of a spoken reply a barge-in cut, Section 12.3.13). It MUST
+NOT solicit any intelligence channel (Section 19.3), and nothing that reads an
+agent's answer (an orchestration strategy, a delegated task's result) may take
+it for one. A turn the provider interrupted after a round has no answer,
+whichever loop ran it: a task delegated to it fails with the provider's error,
+and a strategy that reads an agent's answer reads none from an output that
+carries an error, its rounds' text included.
 
 **A turn that did not complete.** `ON_AI_RESPONSE` reports a turn whose loop
 reached its end, with the reason it ended for: `cancelled` for a cancellation
@@ -1255,7 +1260,8 @@ streamed or not. The two loops report such a turn alike: the hook carries what
 its rounds used, then the provider's error surfaces as when the loop raises
 (ON_ERROR fires), a streamed turn's through its stream once the hook has
 fired. A turn whose loop did not reach its end MUST NOT fire it, streamed or
-not: one that raised before any round ended, or one whose response stream was
+not: one that raised (the provider's interruption after a round aside), or one
+whose response stream was
 closed before the loop's end (a barge-in, a transport that stopped reading, a
 consumer that refused the answer, a task cancelled from outside). Its
 response never reached the end the hook reports, and a closed stream is never
@@ -1269,10 +1275,13 @@ turn. The span of a turn that reached its end `cancelled` (a steering
 MESSAGE, streamed or not: `loop_end_reason` (the reason above) and `ai_usage`
 (what its rounds used) in the message's metadata. That message is the one of
 the turn's final text or, when the turn has none (a cancellation between
-rounds, an interruption), the last message the turn wrote. A streamed turn
-learns its end after its segments are written, so the implementation updates
-the stored message; it does not deliver it again. A host reads how any turn
-ended from its reply, whichever loop produced it.
+rounds, an interruption), the last message the turn wrote. A response without
+tools records it too. A streamed turn learns its end after its segments are
+written, so the implementation updates the stored message, and ON_EVENT_UPDATED
+fires as for any change to a stored event; it does not deliver the message
+again. Writing that update is best effort: a failure is logged, and the turn's
+outcome stands. A host reads how any turn ended from its reply, whichever loop
+produced it.
 
 **ACP Agent Channel:**
 
