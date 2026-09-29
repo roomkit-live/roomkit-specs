@@ -4843,6 +4843,22 @@ Its outcome, result or refusal, MUST be returned as injected context rather than
 as a tool result, because the model issued no call and has no pending response
 to close.
 
+**A response's calls are answered together (normative).** A provider that
+must be asked to continue once tool results are in MUST ask once per model
+response, after that response has ended and every call it emitted has its
+result, not once per result. Two calls issued in parallel would otherwise ask
+twice, the first time while the response is still active, which the service
+rejects, and the second call's output would then wait, unspoken, for the
+caller's next turn. A result for a call of a response the conversation has
+already left (the caller spoke again and a new response began) joins the
+response in progress: that response's single request covers it, once the
+response has ended and its own calls have their results, and with no response
+in progress the provider asks at once. A request the provider has made counts
+as a response in progress until the response it asked for begins, and a
+result submitted in between is not part of that response: the next request
+covers it. Such a result never holds the new response back, and never waits
+for the caller's next turn.
+
 **Text injection** refers to programmatically inserting text into a realtime
 session's conversation context (e.g., instructions, tool results, or context
 updates) rather than sending audio. The ON_REALTIME_TEXT_INJECTED hook fires
@@ -5073,19 +5089,6 @@ bounds the size of one append, an implementation MUST split a longer text on
 sentence boundaries into as many appends as it takes, rather than truncate or
 refuse.
 
-**A response's calls are answered together (normative).** A provider that
-must be asked to continue once tool results are in MUST ask once per model
-response, after that response has ended and every call it emitted has its
-result, not once per result. Two calls issued in parallel would otherwise ask
-twice, the first time while the response is still active, which the service
-rejects, and the second call's output would then wait, unspoken, for the
-caller's next turn. A result for a call of a response the conversation has
-already left (the caller spoke again and a new response began) joins the
-response in progress: that response's single request covers it, once the
-response has ended and its own calls have their results, and with no response
-in progress the provider asks at once. Such a result never holds the new
-response back, and never waits for the caller's next turn.
-
 **Reasoning delegation, hosted backend (normative).** In the hosted mode the
 provider's service runs the backend model, and the `tools` passed to
 `connect()` are that backend's tools. The channel sees nothing new: every
@@ -5094,8 +5097,8 @@ pre-execution gate of this section unchanged, ON_TOOL_CALL fires as always,
 and the result returns through `submit_tool_result`. The provider MUST NOT
 resume the backend while any call of the same delegation is unanswered — the
 hosted service rejects a partial continuation — and MUST resume it once the
-last result is in, the rule above applied to the delegation's response. A result submitted after the session ended is dropped, as
-for any provider.
+last result is in: the rule of Section 12.4, counted per delegation. A result
+submitted after the session ended is dropped, as for any provider.
 
 **Reasoning delegation, integrator backend (normative).** In the integrator
 mode the model signals only that it is handing work over: the provider fires
