@@ -10484,9 +10484,10 @@ When `delegate(room_id, agent_id, task, notify, strategy)` is called:
    and presented as the worker's output rather than as an instruction; the
    result is never written into the room's stored configuration (the system
    prompt of a binding), which would replace the notified agent's own and
-   hand a worker's output the system role for every turn after. The delivered event carries the chain depth of
-   the response whose turn delegated (the depth of that turn's trigger plus
-   one, read from the tool call context, Section 21.4), so a cycle of
+   hand a worker's output the system role for every turn after. The
+   delivered event carries the chain depth of the response whose turn
+   delegated (the depth of that turn's trigger plus one, read from the tool
+   call context, Section 21.4), so a cycle of
    delegation, result and delegation again ends at `max_chain_depth` (§8.3)
    like any chain. A delegation made outside a tool call delivers at 0.
 
