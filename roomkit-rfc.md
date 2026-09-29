@@ -1226,6 +1226,15 @@ message carries only what the room has not read, the interruption marker
 (`[Response interrupted]`), never the provider's error. A cancellation adds
 nothing a round already said.
 
+**A turn that did not complete.** `ON_AI_RESPONSE` reports a turn whose loop
+reached its end, whatever the reason it ended for (a cancellation between
+rounds included), and whose response was then read to its end. A turn that
+ended in an error, or whose response stream was closed before its loop's end
+(a barge-in, a transport that stopped reading, a consumer that refused the
+answer, a task cancelled from outside), MUST NOT fire it, streamed or not: no
+response was delivered for it to report. Its `llm.generate` span MUST end
+`cancelled` or `error`, never `ok`, and never stay open.
+
 **ACP Agent Channel:**
 
 An ACP agent channel connects a Room to an external
@@ -3263,7 +3272,7 @@ enters a room as any other audio.
      runs; its TOOL_CALL_END is stored with `status = failed`, so no start row
      stays pending. A turn cancelled from outside (e.g. an
      operator aborting it) stores its text the same way, but aborts a running
-     tool. With `flush_partial_tts = false` the sessions keep reading, so the
+     tool, whose TOOL_CALL_END is stored with `status = failed` as well. With `flush_partial_tts = false` the sessions keep reading, so the
      stream runs to its end and nothing is cancelled.
 14s. Framework re-broadcasts complete event to non-streaming channels (exclude_delivery
      skips channels that already received streaming content)
@@ -9961,6 +9970,12 @@ They are injected into the AI generation context:
 | Cancel | Abort the current generation immediately |
 | UpdateSystemPrompt | Append additional instructions to the system prompt |
 | InjectMessage | Add a synthetic user or assistant message to the conversation history |
+
+A Cancel ends the turn at the first point the loop reaches, and a round's
+tools are one such point: a Cancel that arrives after the model's last event
+of a round, while its calls are announced but before they run, MUST stop them.
+None of them runs, and each announced call ends with `status = failed`, so no
+start row stays pending. Both loops, streamed or not, honour the same points.
 
 Steering directives are typically issued by orchestration logic (e.g.,
 supervisor injecting context for a worker agent) or by hooks reacting to
