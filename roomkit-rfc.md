@@ -5018,6 +5018,16 @@ that changes the effect is not an implementation detail: a provider with no way
 to carry an intent MUST refuse it (`not_sent`, with a reason) rather than
 deliver it as something else.
 
+**A reconfiguration's instruction takes effect.** A provider that applies a
+reconfiguration by resuming the session, where the service resumes it under
+the instruction it started with (observed on `gemini-3.8-live`), MUST still
+make the new instruction govern the session: a session that holds no
+conversation yet reconnects without resuming, since it has nothing to keep,
+and a session that holds one keeps its context and receives the new
+instruction with its next non-silent injection, which the model acts on. An
+integrator that reconfigures such a session directly follows it with an
+injection when the model must act on the change at once.
+
 **RealtimeAudioTransport interface:**
 
 ```
