@@ -1826,24 +1826,46 @@ an event chain.
 **Chain depth tracking:**
 
 - Events from external inbound (human messages, webhooks) have `chain_depth = 0`.
-- When a channel produces a response event during broadcast, the response's
-  `chain_depth = source_event.chain_depth + 1`.
-- When `chain_depth >= max_chain_depth`, the response MUST be blocked with
-  `status = BLOCKED` and `blocked_by = "event_chain_depth_limit"`.
+- An event a channel produces in answer to another carries that event's
+  `chain_depth + 1`, whichever path produces it: a buffered response, each
+  row of a streamed one (text segments and tool-call rows), the assistant
+  transcription of a speech-to-speech provider (Section 12.4), the result an
+  orchestration strategy returns for a turn (Section 19.7), and a result
+  delivered back to the room for a turn that delegated (Section 23.3). A path
+  that restarts the count at 0 opens a chain the limit never reaches.
+
+**At the limit.** When an event's `chain_depth + 1 >= max_chain_depth`, an
+intelligence channel it solicits (Section 19.3) MUST NOT be asked to act:
+its `on_event()` is not called, so no model is called and no tool runs,
+whether the channel streams or not. The limit exists to stop what a runaway
+chain *does*, not only what it says. In place of the response, the
+implementation MUST store one record per channel not asked:
+
+- `status = BLOCKED` and `blocked_by = "event_chain_depth_limit"`;
+- the channel not asked as its source, and empty text as its content;
+- as `chain_depth`, the depth the response would have had;
+- its own observation, and a `chain_depth_exceeded` framework event.
+
+A tool-call row (`TOOL_CALL_START`, `TOOL_CALL_END`) is an activity record
+that no agent answers, and gets no record. Response events a channel other
+than an intelligence one returns at the limit are stored BLOCKED with the
+same `blocked_by`.
+
+**Below the limit, a response that was started is read.** A buffered
+response's events re-enter (§10.1 step 14), and a streamed response is
+consumed to its end, whichever pass started it: the trigger's delivery set,
+a reentry pass, or the delivery of a streamed segment. A response generated
+and then discarded costs its model call and runs its tools, with nothing of
+it in the room.
 
 **Requirements:**
 
 - Implementations MUST support a configurable `max_chain_depth` (default: 5).
-- Blocked events MUST still be stored in the timeline (for audit).
-- Side effects from the blocked channel MUST still be collected.
-- A framework event `chain_depth_exceeded` MUST be emitted.
-- The limit binds a streamed response as it binds a buffered one; its depth
-  is the trigger's plus one. It is generated and read to its end, as a
-  buffered response is generated before it is blocked, and each of its rows
-  (text segments and tool-call rows) is stored BLOCKED with the same
-  `blocked_by`, skips BEFORE_BROADCAST as a buffered blocked event does, gets
-  its own observation and `chain_depth_exceeded`, and is delivered to no
-  channel, the streaming one included.
+- Blocked records MUST still be stored in the timeline (for audit), whichever
+  path broadcast the trigger, a regeneration included.
+- A channel that was not asked has no side effects to collect. Side effects
+  of a channel whose response events were blocked MUST still be collected.
+- A framework event `chain_depth_exceeded` MUST be emitted for each record.
 
 ### 8.4 Realtime / Ephemeral Events
 
@@ -2436,6 +2458,12 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
         passes — each response takes the room lock for ITS OWN commit
         (index assignment, chain depth §8.3, the same atomic shape as
         step 12), and its delivery set joins the same lane in FIFO order.
+        Every pass re-enters its responses: a reentry pass, a streamed
+        segment, a greeting and a regenerated answer are an agent's
+        output like the trigger's response (§19.3.1). A streamed
+        response started by any pass is read by the caller that owns
+        the chain, after the trigger's own, and counts against the
+        same reentry budget as a buffered response.
         # Relaxation vs pre-lane implementations: a concurrent inbound
         # event MAY commit between a trigger and its response. Ordering
         # guarantees are per-room index monotonicity and parent linkage —
@@ -2661,7 +2689,8 @@ than being drained inside the trigger's lock tenure.
    │      └── Truncate text if target.capabilities.max_length exceeded
    │
    ├── c. CALL on_event() (all readable channels)
-   │      ├── Intelligence channels: only those solicited (§19.3)
+   │      ├── Intelligence channels: only those solicited (§19.3), and
+   │      │   none when the response would reach max_chain_depth (§8.3)
    │      └── Collect ChannelOutput (response events, tasks, observations)
    │
    ├── d. CALL deliver() (transport channels only)
@@ -5058,7 +5087,11 @@ session boundaries.
    ├── Connect provider with system_prompt, voice, tools
    └── Wire callbacks: transport audio → provider, provider audio → transport
 3. Audio flows bidirectionally: Client ↔ Transport ↔ Provider
-4. Transcriptions emitted as RoomEvents (if configured)
+4. Transcriptions emitted as RoomEvents (if configured). A user
+   transcription has `chain_depth` 0. An assistant transcription answers
+   what the model last heard, and carries that depth plus one (§8.3): 1
+   after the user spoke, the injected event's depth plus one after a text
+   injection.
 5. Tool calls pass the pre-execution gate, then are handled via:
    ├── Async tool handler function (if provided)
    └── ON_TOOL_CALL hook (fallback)
@@ -8040,7 +8073,8 @@ Implementations that compose speech-to-speech providers (Section
   attribute them.
 - Emit the provider's final assistant transcriptions as RoomEvents
   attributed to the channel, and never back into the conference's own
-  voice path.
+  voice path, with the chain depth Section 12.4 gives an assistant
+  transcription: after a text injection, that event's depth plus one.
 - Refuse a configuration holding both a synthesizer and a
   speech-to-speech provider.
 - Publish provider audio under the utterance contract of Section
@@ -9865,12 +9899,16 @@ User ↔ Supervisor
 ```
 
 The supervisor MAY delegate sequentially or in parallel. Results are delivered
-back via the delivery strategy system (Section 23).
+back via the delivery strategy system (Section 23), at the chain depth of the
+turn that delegated (Section 23.3); results presented within the turn leave
+the supervisor's answer one deeper than the event it answers (§8.3).
 
 #### 19.7.4 Loop
 
 A single agent handles the conversation indefinitely, looping back for
 refinement. Useful for iterative workflows (editing, code review, tutoring).
+The loop's result is the agent's response to the event that started it, one
+deeper than that event (§8.3).
 
 ### 19.8 StatusBus
 
@@ -10109,6 +10147,12 @@ answers the same questions on both paths. The context carries at least:
 | `current_tool_allowed_names()` | Every tool name the turn resolved, so a call is validated against the live toolset rather than an attach-time snapshot |
 | `current_tool_call()` | The per-call record: the call's id, its channel, and the structured-result reverse channel |
 | `current_response_metadata()` | The turn's one response-metadata record (§6.7); empty where no turn will merge it (a realtime tool call) |
+
+The context also carries the turn's chain depth: the depth of the response
+the turn produces (§8.3), on a realtime tool call the depth of the assistant's
+answer (§12.4). A result delivered later on the turn's behalf reads it there
+(Section 23.3); outside a turn it is 0. The implementation reads it; it need
+not expose an accessor for it.
 
 Two rules bind the values that name the turn (the room and its id, the actor,
 the toolset); the response-metadata record and the per-call record are the
@@ -10383,7 +10427,11 @@ When `delegate(room_id, agent_id, task, notify, strategy)` is called:
 6. Collect the agent's response as the task result.
 7. Fire `ON_TASK_COMPLETED` hook in the parent room.
 8. If `notify` is set, deliver the result to the specified channel using
-   the delivery strategy.
+   the delivery strategy. The delivered event carries the chain depth of
+   the response whose turn delegated (the depth of that turn's trigger plus
+   one, read from the tool call context, Section 21.4), so a cycle of
+   delegation, result and delegation again ends at `max_chain_depth` (§8.3)
+   like any chain. A delegation made outside a tool call delivers at 0.
 
 ### 23.4 Delegation Tools
 
@@ -11621,11 +11669,16 @@ meant to answer the others — selects `ADDRESSED_ONLY` instead.
    ... continues until chain_depth reaches max_chain_depth ...
    │
    ▼
-N. chain_depth = 5 (== max_chain_depth)
-   Response BLOCKED: status=BLOCKED, blocked_by="event_chain_depth_limit"
+N. The next response would have chain_depth = 5 (== max_chain_depth)
+   The other agent is NOT asked: no model call, no tool
+   Record: status=BLOCKED, blocked_by="event_chain_depth_limit",
+           source=that agent, empty text, chain_depth=5
    Framework event: chain_depth_exceeded
-   Side effects from blocked channel: STILL collected
 ```
+
+A streamed response chains the same way: each of its text segments is an
+event the other agent answers as it is committed, and the chain stops at the
+same depth.
 
 ### B.5 Dynamic Channel Management — Advisor Joins
 
