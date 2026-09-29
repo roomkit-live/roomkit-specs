@@ -2067,8 +2067,10 @@ Planned rows are normative design intent for the named capability.
 **ON_TOOL_CALL, where the call was served:**
 
 These hold where the channel's own tool loop serves the call. An external
-handler's firing is a report on a call that ran outside the channel: its
-override is discarded, and the display payload an external agent attaches
+handler's firing is a report on a call that ran outside the channel, and so is
+a firing on any call whose outcome the model already read (a call the
+provider ran itself, a realtime Tool Search call whose result was delivered
+first): its override is discarded, and the display payload an external agent attaches
 (ACP's tool content) is that agent's. No hook can rewrite or withhold what the
 agent already read, so its observers see the provider's outcome and the
 provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
@@ -2093,8 +2095,12 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   event replaces nothing, as the general rule above has it: the chain carries
   on from the outcome the previous hook left, that hook's own override
   included.
+- A replacement counts whatever its value: a hook that clears a served result
+  (replaces it with no value) has the model read that empty value, serialized
+  as any other result (JSON `null`), on every channel, never the original.
 - ASYNC observers run after the SYNC hooks, on the final outcome: the result
-  the model reads, never one a hook replaced. A BLOCK does not spare them, nor
+  the model reads, as it reads it (a replacement serialized), never one a hook
+  replaced. A BLOCK does not spare them, nor
   does the failure of a fail-closed hook that withheld the result: they fire
   with the failure marker and the reason the model reads, since every call
   MUST fire ON_TOOL_CALL with its outcome (below).
