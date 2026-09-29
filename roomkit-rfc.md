@@ -1227,12 +1227,14 @@ message carries only what the room has not read, the interruption marker
 nothing a round already said.
 
 **A turn that did not complete.** `ON_AI_RESPONSE` reports a turn whose loop
-reached its end, whatever the reason it ended for (a cancellation between
-rounds included), and whose response was then read to its end. A turn that
-ended in an error, or whose response stream was closed before its loop's end
-(a barge-in, a transport that stopped reading, a consumer that refused the
-answer, a task cancelled from outside), MUST NOT fire it, streamed or not: no
-response was delivered for it to report. Its `llm.generate` span MUST end
+reached its end, with the reason it ended for: `cancelled` for a cancellation
+between rounds, `error` for a turn the provider interrupted after a round and
+that was delivered once its loop ended (above). A turn whose loop did not
+reach its end MUST NOT fire it, streamed or not: one that raised, or whose
+response stream was closed before the loop's end (a barge-in, a transport
+that stopped reading, a consumer that refused the answer, a task cancelled
+from outside). No response was delivered for it to report, and a closed
+stream is never reported as `completed`. Its `llm.generate` span MUST end
 `cancelled` or `error`, never `ok`, and never stay open.
 
 **ACP Agent Channel:**
