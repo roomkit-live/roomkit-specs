@@ -1230,12 +1230,15 @@ nothing a round already said.
 reached its end, with the reason it ended for: `cancelled` for a cancellation
 between rounds, `error` for a turn the provider interrupted after a round and
 that was delivered once its loop ended (above). A turn whose loop did not
-reach its end MUST NOT fire it, streamed or not: one that raised, or whose
-response stream was closed before the loop's end (a barge-in, a transport
-that stopped reading, a consumer that refused the answer, a task cancelled
-from outside). No response was delivered for it to report, and a closed
-stream is never reported as `completed`. Its `llm.generate` span MUST end
-`cancelled` or `error`, never `ok`, and never stay open.
+reach its end MUST NOT fire it, streamed or not: one that raised, a streamed
+turn the provider interrupted after a round included, or one whose response
+stream was closed before the loop's end (a barge-in, a transport that
+stopped reading, a consumer that refused the answer, a task cancelled from
+outside). Its response never reached the end the hook reports, and a closed
+stream is never reported as `completed`; what its rounds delivered stays in
+the room. Its `llm.generate` span MUST end `cancelled` or `error`, never `ok`,
+and never stay open, and it carries what the rounds used, since no hook
+reports the turn.
 
 **ACP Agent Channel:**
 
@@ -3272,10 +3275,13 @@ enters a room as any other audio.
      TOOL_CALL_END is stored with its real result, and the stream is closed
      before the model's next round. A call announced but not yet executing never
      runs; its TOOL_CALL_END is stored with `status = failed`, so no start row
-     stays pending. A turn cancelled from outside (e.g. an
-     operator aborting it) stores its text the same way, but aborts a running
-     tool, whose TOOL_CALL_END is stored with `status = failed` as well. With `flush_partial_tts = false` the sessions keep reading, so the
-     stream runs to its end and nothing is cancelled.
+     stays pending. A turn cancelled from outside (e.g. an operator aborting it)
+     stores its text the same way, but aborts a running tool, whose
+     TOOL_CALL_END is stored with `status = failed` as well, and so does a turn
+     that fails while a tool runs. A TOOL_CALL_END written once the stream no
+     longer carries rows goes to every channel, the streaming one included. With
+     `flush_partial_tts = false` the sessions keep reading, so the stream runs
+     to its end and nothing is cancelled.
 14s. Framework re-broadcasts complete event to non-streaming channels (exclude_delivery
      skips channels that already received streaming content)
 15s. Fire AFTER_TTS hook (BEFORE_TTS skipped — cannot block mid-stream)
