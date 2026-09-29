@@ -1793,12 +1793,13 @@ an event chain.
 - Blocked events MUST still be stored in the timeline (for audit).
 - Side effects from the blocked channel MUST still be collected.
 - A framework event `chain_depth_exceeded` MUST be emitted.
-- The limit binds a streamed response as it binds a buffered one. Its depth
-  is known before its first token (the trigger's plus one), so a streamed
-  response at the limit is still generated and read to its end, its tools
-  run, but each of its segments is stored BLOCKED with the same `blocked_by`,
-  announced by its own `chain_depth_exceeded`, and delivered to no channel,
-  the streaming one included.
+- The limit binds a streamed response as it binds a buffered one; its depth
+  is the trigger's plus one. It is generated and read to its end, as a
+  buffered response is generated before it is blocked, and each of its rows
+  (text segments and tool-call rows) is stored BLOCKED with the same
+  `blocked_by`, skips BEFORE_BROADCAST as a buffered blocked event does, gets
+  its own observation and `chain_depth_exceeded`, and is delivered to no
+  channel, the streaming one included.
 
 ### 8.4 Realtime / Ephemeral Events
 
