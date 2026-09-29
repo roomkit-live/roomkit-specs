@@ -1276,7 +1276,8 @@ MESSAGE, streamed or not: `loop_end_reason` (the reason above) and `ai_usage`
 (what its rounds used) in the message's metadata. That message is the one of
 the turn's final text or, when the turn has none (a cancellation between
 rounds, an interruption), the last message the turn wrote. A response without
-tools records it too. A streamed turn learns its end after its segments are
+tools records it too, except from a provider that streams text alone, whose
+stream carries nothing but text to record it from. A streamed turn learns its end after its segments are
 written, so the implementation updates the stored message, and ON_EVENT_UPDATED
 fires as for any change to a stored event; it does not deliver the message
 again. Writing that update is best effort: a failure is logged, and the turn's
