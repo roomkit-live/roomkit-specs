@@ -10423,7 +10423,12 @@ When `delegate(room_id, agent_id, task, notify, strategy)` is called:
 2. Attach the specified agent as an INTELLIGENCE channel in the child room.
 3. Share relevant channels from the parent (for context access).
 4. Inject the task description as a system event in the child room.
-5. The agent processes the task and generates a response.
+5. The agent processes the task and generates a response. The child room
+   keeps the agent's trace (tool calls and text), written as any streamed
+   turn's rows are (Section 12.2 step 13s) but committed without crossing
+   `BEFORE_BROADCAST` or a delivery lane: a TOOL_CALL_END keeps the call's
+   structured copy, and a delegation cancelled or failed while a call runs
+   closes that call with `status = failed`, so no start row stays pending.
 6. Collect the agent's response as the task result.
 7. Fire `ON_TASK_COMPLETED` hook in the parent room.
 8. If `notify` is set, deliver the result to the specified channel using
