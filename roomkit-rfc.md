@@ -1220,7 +1220,11 @@ a tool the channel provides itself included; a tool it adds or edits stays as
 the hook left it, subject to the tool policy and skill gating, and a tool it
 adds is declared at every round of the turn, never deferred by Tool Search. A
 hook that withdraws a tool from the first round only has withdrawn nothing.
-A round whose declaration is empty makes no tool callable. Likewise a skill activation (Section 24.4) counts only
+A tool the hook adds is never named by `find_tools`, being declared already.
+Once the turn's toolset is resolved, a call MUST name a tool the round
+declared, an empty declaration included, or one Tool Search recovers from the
+turn's catalogue at call time: a round that declares nothing admits no other
+call. Likewise a skill activation (Section 24.4) counts only
 once its `activate_skill` call is served: an ON_TOOL_CALL BLOCK or a failure
 activates nothing, whatever the model read.
 `ON_AI_RESPONSE` MUST therefore carry the turn's whole declaration as
