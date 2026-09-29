@@ -1188,8 +1188,9 @@ persistence; composition events are ephemeral and MUST NOT be persisted.
 
 **What the generation hooks see:** `BEFORE_AI_GENERATION` fires once per turn,
 with the context the turn starts from, and its `tools` are the first round's
-declaration only. Under Tool Search that is the pinned floor plus the discovery
-tools: a tool `find_tools` reveals enters the declaration of the *next* round.
+declaration only. Under Tool Search that is the pinned floor, the tools
+orchestration injected (Section 21.1) and the discovery tools: a tool
+`find_tools` reveals enters the declaration of the *next* round.
 The toolset the hook leaves is the turn's: a tool it removes MUST NOT be
 declared at any later round of the turn, and a call naming it MUST be refused,
 a tool the channel provides itself included; a tool it adds or edits stays as
@@ -9845,17 +9846,20 @@ them allows them. The same names, and only them, are exempt from skill gating
 session) is no tool in this sense: it stays declared, and the policy applies to
 the tool it names, at the gate. The declaration filter and the execution guard
 MUST apply one rule, so a tool the model is offered is a tool it may call.
+`find_tools` and `list_tools` MUST NOT name a tool the policy denies or a skill
+gates: a name the model can never call is a false promise and discloses what
+the policy hides.
 
 **Tools orchestration injects stay declared.** When Tool Search hides a large
 catalogue behind its discovery tools, a tool that orchestration injects on an
 agent or a channel (the handoff tool, a delegation tool, a delegation's result
 tool, a strategy's tools; Sections 19 and 23) MUST stay declared as a pinned
 tool does, and MUST NOT count toward the catalogue whose size decides whether
-Tool Search hides it. The agent is told to call these tools, often that it
-must: a tool it would first have to find is a tool it does not call. `find_tools` and
-`list_tools` MUST NOT name a tool the policy denies or a skill gates: a name
-the model can never call is a false promise and discloses what the policy
-hides.
+Tool Search hides it. The tool policy and skill gating still apply to it; Tool
+Search does not: `find_tools` does not name it, being declared already, and
+the declaration reports it as `always` (Section 6.4, `declared_tools`). The
+agent is told to call these tools, often that it must: a tool it would first
+have to find is a tool it does not call.
 
 **RoleOverride:**
 
