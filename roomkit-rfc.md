@@ -419,6 +419,15 @@ inbound router happens to look is not conformant: a caller that names the room
 explicitly bypasses the router entirely, and so does the framework when it
 re-injects into a room it already knows.
 
+A streamed response writes many rows, and reading the room's status before
+each one costs a store read per row. A stream MAY instead read the status once,
+before its first row, and read it again only once the framework instance
+running it has changed a room's status since; it checks the status again
+after a row's `BEFORE_BROADCAST` hooks, which run without the room lock. A
+status changed elsewhere (another process, another framework instance sharing
+the store, a direct write to the store) is then seen by the next response, not
+mid-stream.
+
 A refused event MUST NOT be appended to the timeline, MUST NOT be broadcast,
 and MUST NOT be stored as a `BLOCKED` event: a closed room accepts nothing,
 and an audit record written into it would be the very thing the status
