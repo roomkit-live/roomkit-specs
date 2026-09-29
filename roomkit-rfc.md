@@ -1754,7 +1754,7 @@ They are NOT stored in any room timeline.
 | delivery_failed | Delivery failed after retries | room_id, event_id, channel_id, error |
 | identity_resolved | Identity was resolved | participant_id, identity_id |
 | identity_timeout | Identity resolution timed out | room_id, address |
-| chain_depth_exceeded | Event blocked by chain depth limit | room_id, channel_id, depth |
+| chain_depth_exceeded | Event blocked by chain depth limit | room_id, event_id, channel_id, data.chain_depth, data.max_chain_depth |
 | hook_error | Hook raised an exception | hook_name, trigger, error |
 | hook_timeout | Hook exceeded its timeout | hook_name, trigger, timeout_ms |
 | circuit_breaker_opened | Channel circuit breaker tripped | channel_id, failure_count |
