@@ -2070,7 +2070,10 @@ Planned rows are normative design intent for the named capability.
   (`{"error": "Tool 'x' denied by pre-execution hook."}`), never the hook's
   error, whose message can hold anything the hook held. The hook's name and
   error go to the log and to ON_TOOL_CALL's observers, on the refused call's
-  `error_detail`.
+  `error_detail`. An external tool handler decides and reports its calls
+  itself: the refusal reaches it as a denied decision that carries the
+  hook's error for it alone, and what the agent reads, and what it reports,
+  are the handler's.
 - **A hook MAY declare itself fail-closed** (`fail_closed = true`), on any
   trigger: a content check on `BEFORE_BROADCAST` (PII, moderation) is exactly
   such a hook, while the trigger as a whole stays fail-open so that a broken
