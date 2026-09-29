@@ -5080,8 +5080,11 @@ result, not once per result. Two calls issued in parallel would otherwise ask
 twice, the first time while the response is still active, which the service
 rejects, and the second call's output would then wait, unspoken, for the
 caller's next turn. A result for a call of a response the conversation has
-already left (the caller spoke again and a new response began) is submitted
-without asking the model to continue.
+already left (the caller spoke again and a new response began) joins the
+response in progress: that response's single request covers it, once the
+response has ended and its own calls have their results, and with no response
+in progress the provider asks at once. Such a result never holds the new
+response back, and never waits for the caller's next turn.
 
 **Reasoning delegation, hosted backend (normative).** In the hosted mode the
 provider's service runs the backend model, and the `tools` passed to
