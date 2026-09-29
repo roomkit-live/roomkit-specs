@@ -9931,6 +9931,12 @@ back via the delivery strategy system (Section 23), at the chain depth of the
 turn that delegated (Section 23.3); results presented within the turn leave
 the supervisor's answer one deeper than the event it answers (§8.3).
 
+An instruction a strategy needs for one turn (a supervisor's task-formulation
+pass) is passed for that turn only, over the prompt the turn would have had.
+The supervisor, like any channel, serves every room it is attached to, so its
+configuration carries no turn's instruction: one written there and restored
+afterwards leaks into the turns of other rooms running meanwhile.
+
 #### 19.7.4 Loop
 
 A single agent handles the conversation indefinitely, looping back for
@@ -10474,7 +10480,11 @@ When `delegate(room_id, agent_id, task, notify, strategy)` is called:
 6. Collect the agent's response as the task result.
 7. Fire `ON_TASK_COMPLETED` hook in the parent room.
 8. If `notify` is set, deliver the result to the specified channel using
-   the delivery strategy. The delivered event carries the chain depth of
+   the delivery strategy. The delivered content carries the result, bounded
+   and presented as the worker's output rather than as an instruction; the
+   result is never written into the room's stored configuration (the system
+   prompt of a binding), which would replace the notified agent's own and
+   hand a worker's output the system role for every turn after. The delivered event carries the chain depth of
    the response whose turn delegated (the depth of that turn's trigger plus
    one, read from the tool call context, Section 21.4), so a cycle of
    delegation, result and delegation again ends at `max_chain_depth` (§8.3)
