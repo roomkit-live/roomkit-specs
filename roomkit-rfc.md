@@ -1192,13 +1192,16 @@ a response carries an id no other call of that response carries: a provider
 whose server issues none, or the same one twice, MUST mint one, since results,
 eviction and cancellation all find a call by its id. Two calls stay two calls,
 whatever stream index or arguments they share; a call the provider receives
-twice (a re-emission carrying what the first lacked) stays one. A call's
-arguments reach the loop as a mapping and never as an error: empty arguments
-are `{}`, and arguments that do not parse to an object (invalid JSON, `null`,
-an array, a fragment) are kept whole under `raw`. A call whose arguments the
-output cap cut before they were complete is marked partial, and the loop MUST
-NOT run it: the model reads that the call was cut and that nothing ran, so it
-can call again with less.
+twice (a re-emission carrying what the first lacked) stays one, and only a
+call the wire cannot tell from such a re-emission (Gemini, an identical call
+without an id in a later chunk) is folded into the first. A call's arguments
+reach the loop as a mapping and never as an error: no arguments (nothing, or
+JSON `null`) are `{}`, and arguments that do not parse to an object (invalid
+JSON, an array, a fragment) are kept whole under `raw`. A call whose arguments
+the response cut before they were complete (the output cap, a content filter)
+is marked partial, and no tool loop, the AI channel's or a reasoning
+backend's, MAY run it: the model reads that the call was cut and that nothing
+ran, so it can call again with less.
 
 **What the generation hooks see:** `BEFORE_AI_GENERATION` fires once per turn,
 with the context the turn starts from, and its `tools` are the first round's
