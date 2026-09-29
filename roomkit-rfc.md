@@ -4928,6 +4928,19 @@ result submitted in between is not part of that response: the next request
 covers it. Such a result never holds the new response back, and never waits
 for the caller's next turn.
 
+Every request the provider makes reads that same state, whoever makes it: the
+continuation, a non-silent text injection, the request that closes the
+caller's turn in the endpointing role (Section 12.4, audio pipeline). None
+sends a request while a response is in progress, active or requested. And a
+continuation never starts while the caller holds the floor (between activity
+start and activity end in the endpointing role, between the provider's own
+speech start and speech end otherwise): it is held until the caller hands the
+floor back, and the request that answers the caller's turn covers it, since
+the results already sit in the conversation ahead of what the caller said. A
+continuation that started anyway would speak over the caller, and the
+caller's own request would then find a response in progress and leave the
+turn unanswered.
+
 **Text injection** refers to programmatically inserting text into a realtime
 session's conversation context (e.g., instructions, tool results, or context
 updates) rather than sending audio. The ON_REALTIME_TEXT_INJECTED hook fires
