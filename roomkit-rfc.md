@@ -9844,7 +9844,15 @@ them allows them. The same names, and only them, are exempt from skill gating
 `call_tool` of Tool Search on a provider whose declarations are fixed for the
 session) is no tool in this sense: it stays declared, and the policy applies to
 the tool it names, at the gate. The declaration filter and the execution guard
-MUST apply one rule, so a tool the model is offered is a tool it may call. `find_tools` and
+MUST apply one rule, so a tool the model is offered is a tool it may call.
+
+**Tools orchestration injects stay declared.** When Tool Search hides a large
+catalogue behind its discovery tools, a tool that orchestration injects on an
+agent or a channel (the handoff tool, a delegation tool, a delegation's result
+tool, a strategy's tools; Sections 19 and 23) MUST stay declared as a pinned
+tool does, and MUST NOT count toward the catalogue whose size decides whether
+Tool Search hides it. The agent is told to call these tools, often that it
+must: a tool it would first have to find is a tool it does not call. `find_tools` and
 `list_tools` MUST NOT name a tool the policy denies or a skill gates: a name
 the model can never call is a false promise and discloses what the policy
 hides.
