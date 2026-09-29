@@ -10097,12 +10097,15 @@ round of the tool loop that carries it.
   the full text; bounding first would let the model page the raw text back
   from the store. A refusal observer receives the raw message.
 - An active skill's instructions are exempt (Section 24.4).
-- What the model can read back stays readable while its room works. The
-  store's capacity is counted per room, so another room's evictions do not
-  push a room's results out; each stored result has its own id, so a call id
-  reused in a later turn overwrites nothing; and a summary rebuilt from
-  persisted history (after a restart) does not offer an id the store no
-  longer holds.
+- What the model can read back SHOULD stay readable while its room works.
+  The store's capacity is counted per room, and a bound the whole store
+  needs for memory MUST take from the room holding the most first, so a room
+  holding few results keeps them while other rooms evict; a result read back
+  counts as in use. A stored result's id MUST NOT be given to another result
+  while a context can still name it, so a call id reused in a later turn, or
+  an id whose result left the store, reads nothing it did not store. A
+  summary rebuilt from persisted history (after a restart) MUST NOT offer an
+  id the store no longer holds.
 
 The event that records a tool call's outcome (`TOOL_CALL_END`) is persisted,
 broadcast and handed to the event pipeline's hooks. It SHOULD NOT carry a
