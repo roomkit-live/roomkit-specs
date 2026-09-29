@@ -2024,8 +2024,10 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   refused call as a completed one, and a tool whose own output resembles a
   refusal as a failure.
 - That obligation covers every outcome the channel itself determines: a refusal
-  by the pre-execution gate, a handler that raised, a call nothing served, and
-  the verdict an external tool handler received from its provider. A handler
+  by the pre-execution gate, a tool not available in the turn, a guard the
+  channel applies to the call (a repeat of the same call with the same
+  arguments), a handler that raised, a call nothing served, and the verdict an
+  external tool handler received from its provider. A handler
   that instead *returns* a refusal has stated it in its body, where only its
   own convention can be read — Section 15.8.1 governs that reading. A producer
   that can state the outcome structurally SHOULD do so rather than leave it to
@@ -2039,7 +2041,10 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
 - A call that no handler and no hook served MUST report a failure, not a
   success. Reporting one — `{"status": "ok"}` and its kin — tells the model
   work was done that nobody did, and records a completed call for a tool that
-  was never reached.
+  was never reached. A declared tool that no handler serves reaches the SYNC
+  hooks with no result: a hook MAY serve it by supplying one, and that result
+  is then the call's. If none does, the call is reported once, as failed; the
+  firing that offered it to the hooks was a chance to serve it, not a report.
 
 **ON_TOOL_CALL, where the model abandoned the call:**
 
@@ -9922,6 +9927,15 @@ supervisor injecting context for a worker agent) or by hooks reacting to
 events.
 
 ### 21.4 Tool Call Context
+
+**What a handler returns (normative).** A tool handler answers with text or
+with a list of content parts (text and images, Section 21.5). Any other value
+it returns (a mapping, a list of values, a number, a null) MUST reach the model
+as its JSON serialization, the same on every channel, and a result a SYNC
+ON_TOOL_CALL hook supplies in its place (Section 9.3) is read the same way. A
+value outside the contract MUST NOT fail the turn, nor reach the model as a
+language's own printing of it. A handler that declines a call says so as a
+refusal, which carries the failure marker (Section 9.3), not as a body.
 
 A tool handler is called with the tool's name and arguments and nothing else.
 One AI channel object serves every room and every speaker it is bound to, so
