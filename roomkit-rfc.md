@@ -5073,6 +5073,16 @@ bounds the size of one append, an implementation MUST split a longer text on
 sentence boundaries into as many appends as it takes, rather than truncate or
 refuse.
 
+**A response's calls are answered together (normative).** A provider that
+must be asked to continue once tool results are in MUST ask once per model
+response, after that response has ended and every call it emitted has its
+result, not once per result. Two calls issued in parallel would otherwise ask
+twice, the first time while the response is still active, which the service
+rejects, and the second call's output would then wait, unspoken, for the
+caller's next turn. A result for a call of a response the conversation has
+already left (the caller spoke again and a new response began) is submitted
+without asking the model to continue.
+
 **Reasoning delegation, hosted backend (normative).** In the hosted mode the
 provider's service runs the backend model, and the `tools` passed to
 `connect()` are that backend's tools. The channel sees nothing new: every
@@ -5081,7 +5091,7 @@ pre-execution gate of this section unchanged, ON_TOOL_CALL fires as always,
 and the result returns through `submit_tool_result`. The provider MUST NOT
 resume the backend while any call of the same delegation is unanswered — the
 hosted service rejects a partial continuation — and MUST resume it once the
-last result is in. A result submitted after the session ended is dropped, as
+last result is in, the rule above applied to the delegation's response. A result submitted after the session ended is dropped, as
 for any provider.
 
 **Reasoning delegation, integrator backend (normative).** In the integrator
