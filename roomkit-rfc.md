@@ -2153,17 +2153,20 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   told, and its wording answers to that reader alone. An oversized body reaches
   the model through the bound of Section 21.5 like any tool result; the event
   carries it as the tool produced it.
-- A call whose handler raised, or whose hooks raised while nothing served it,
-  MUST read the same on every channel: the tool's failure, named by the
-  exception's class and nothing more (`{"error": "Tool 'x' failed
-  (<ExceptionClass>)"}`). The exception's message can hold anything the failing
-  code held (a connection string with its password, a path, a record), and
-  neither the model nor its provider's logs are a place for it. The message
-  goes to the log and to ON_TOOL_CALL's observers, on the event's
-  `error_detail`, never to the model nor to the stored TOOL_CALL_END. A handler
-  that wants the model to read its words raises `ToolRefusedError`, whose text
-  passes as it is. A tool the channel serves itself (a skill script, a sandbox
-  command) reads the same when what it runs raises.
+- A call whose handler raised MUST read the same on every channel: the tool's
+  failure, named by the exception's class and nothing more (`{"error": "Tool
+  'x' failed (<ExceptionClass>)"}`), with the failure marker. The exception's
+  message can hold anything the failing code held (a connection string with
+  its password, a path, a record), and neither the model nor its provider's
+  logs are a place for it. The message goes to the log and to ON_TOOL_CALL's
+  observers, on the event's `error_detail`, never to the model nor to the
+  stored TOOL_CALL_END. A handler that wants the model to read its words
+  raises `ToolRefusedError`, whose text passes as it is. A tool the channel
+  serves itself (a skill script, a sandbox command) reads the same when what
+  it runs raises, and so does any work a tool hands off whose failure the
+  model reads (a delegated task, a reasoning backend's tool). A call nothing
+  served whose hooks raised reads as any call nothing served: the hooks'
+  messages go to `error_detail`.
 - A result override supplied on such a firing MUST be ignored. Nothing ran, so
   there is no result to correct.
 - A call that no handler and no hook served MUST report a failure, not a
