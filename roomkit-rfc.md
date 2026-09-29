@@ -2072,14 +2072,6 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   MUST NOT send its result. The model will not read it, and a result sent for
   an id the provider no longer knows is an error the application never asked
   for.
-- A reconnect the call's own handler caused (it reconfigured its session and
-  the provider reconnected to apply it) is not the model abandoning that
-  call. The channel MUST NOT interrupt that handler, which still has work to
-  do on the new connection (a handoff greets as the new agent next), and MUST
-  NOT send its result, since the new socket never issued the id. The call's
-  outcome is reported as it would be otherwise, served when the handler
-  returns a result, and never as cancelled. Every other call the same
-  reconnect orphaned is abandoned as above.
 - The call MUST fire ON_TOOL_CALL's observers with a discrete *cancelled*
   marker beside the failure marker. An abandoned call is neither a refusal nor
   a failure, and an audit counting refusals must not count it as one; it is
@@ -2089,6 +2081,17 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
 - A call the channel no longer holds when the cancellation arrives (its result
   already left) has no outcome left to report: the provider drops the stale
   result and the channel reports nothing.
+- A reconnect the call's own handler caused (it reconfigured its session and
+  the provider reconnected to apply it) is not the model abandoning that
+  call. The channel MUST NOT interrupt that handler, which still has work to
+  do on the new connection (a handoff greets as the new agent next), and MUST
+  NOT send its result, since the new socket never issued the id. The call's
+  outcome is reported as it would be otherwise, served when the handler
+  returns a result, and never as cancelled. The reconnect is the call's own
+  when it runs within the handler's execution, the handler itself or a task
+  it started while the call was outstanding; a reconfiguration handed to work
+  that does not descend from the handler is not, and abandons the call. Every
+  other call the same reconnect orphaned is abandoned as above.
 
 **ON_USER_INPUT_REQUIRED, where the other party is a human:**
 
@@ -4790,7 +4793,7 @@ RealtimeVoiceProvider (interface)
 | `on_speech_start` | ON_SPEECH_START | Provider-detected speech start |
 | `on_speech_end` | ON_SPEECH_END | Provider-detected speech end |
 | `on_tool_call` | ON_TOOL_CALL | Tool execution request from AI, behind the pre-execution gate below (ON_REALTIME_TOOL_CALL is superseded, Section 9.2) |
-| `on_tool_call_cancelled` | ON_TOOL_CALL | Model abandoned outstanding calls; the channel interrupts their handlers, sends nothing back, and reports them to the observers with the cancelled marker (Section 9.3) |
+| `on_tool_call_cancelled` | ON_TOOL_CALL | Model abandoned outstanding calls; the channel interrupts their handlers, sends nothing back, and reports them to the observers with the cancelled marker, except a call whose own handler caused the reconnect (Section 9.3) |
 | `on_delegation` | ON_REALTIME_DELEGATION | Model handed reasoning to a backend, hosted or integrator; the integrator target is served by the ReasoningBackend (Section 12.4.1) |
 | `on_response_start` | — | Internal lifecycle; no hook (use ON_SPEECH_START for AI speech) |
 | `on_response_end` | — | Internal lifecycle; no hook (use AFTER_BROADCAST for response tracking) |
