@@ -9929,13 +9929,18 @@ events.
 ### 21.4 Tool Call Context
 
 **What a handler returns (normative).** A tool handler answers with text or
-with a list of content parts (text and images, Section 21.5). Any other value
-it returns (a mapping, a list of values, a number, a null) MUST reach the model
-as its JSON serialization, the same on every channel, and a result a SYNC
-ON_TOOL_CALL hook supplies in its place (Section 9.3) is read the same way. A
-value outside the contract MUST NOT fail the turn, nor reach the model as a
-language's own printing of it. A handler that declines a call says so as a
-refusal, which carries the failure marker (Section 9.3), not as a body.
+with a list of content parts (text and images, Section 21.5), which it MAY give
+as mappings naming their type. Any other value it returns (a mapping, a list of
+values, a number, a null) MUST reach the model as its JSON serialization, the
+same on every channel, and a result a SYNC ON_TOOL_CALL hook supplies in its
+place (Section 9.3) is read the same way. A value outside the contract MUST NOT
+fail the turn, nor reach the model as a language's own printing of it. A
+handler that declines a call SHOULD say so as a refusal, which carries the
+failure marker (Section 9.3); a body it returns instead is read by its own
+convention (Section 15.8.1). One such convention is the implementation's own:
+the answer by which a handler says a tool is not its to serve, so that a
+composition of handlers passes the call on. A call whose handlers all answer
+it was served by nothing (Section 9.3).
 
 A tool handler is called with the tool's name and arguments and nothing else.
 One AI channel object serves every room and every speaker it is bound to, so
