@@ -9593,6 +9593,15 @@ PipelineStage
 The pipeline generates one `RoutingRule` per stage with
 `conditions.phases = {stage.phase}`.
 
+**On a realtime channel.** A pipeline MAY drive a speech-to-speech session
+(Section 12.4) instead of routing events: the active agent is then the
+session's configuration (its prompt, its voice, its tools), and a handoff
+reconfigures the session to the next agent's. The tools an agent's
+configuration declares are the channel's own tools, the agent's tools and the
+handoff tool; a pipeline MUST NOT drop the channel's tools, nor declare an
+agent without its own. A call to one of the active agent's tools is served by
+that agent's tool handler.
+
 **Allowed transitions:** An agent in phase P MAY hand off to:
 - `stage.next` (forward progression)
 - Any phase in `stage.can_return_to` (backward/lateral)
@@ -9654,6 +9663,18 @@ to act on, and the tool MUST refuse it rather than guess.
 
 The following strategies are common patterns built on router and pipeline
 primitives. Implementations SHOULD provide helpers for each.
+
+**A strategy in several rooms (normative).** A strategy is installed per room,
+but its agents are shared: one agent object serves every room it is attached
+to. Installing a strategy in a second room MUST NOT declare a tool twice on
+an agent or a channel, nor wrap an agent's or a channel's handling a second
+time. What a strategy adds for one room MUST reach that room only: a tool it
+declares for a room (the supervisor's `delegate_workers`, a delegation's
+result tool) is declared in that room's turns, not in every room the agent
+serves, and a flag it keeps while work runs for a room is that room's. Its
+tools act on the room of the call (Sections 19.6 and 23.4). A strategy that
+wrote into the shared agent for one room would answer, or refuse, another
+room's user.
 
 #### 19.7.1 Pipeline
 
