@@ -1204,16 +1204,23 @@ backend's, MUST NOT run it: the model reads that the call was cut and that
 nothing ran, so it can call again with less.
 
 **What the generation hooks see:** `BEFORE_AI_GENERATION` fires once per turn,
-with the context the turn starts from, and its `tools` are the first round's
-declaration only. Under Tool Search that is the pinned floor, the tools
-orchestration injected (Section 21.1) and the discovery tools: a tool
-`find_tools` reveals enters the declaration of the *next* round.
+with the context the turn starts from, and its `tools` are the turn's toolset
+as the tool policy and skill gating leave it. Without Tool Search that is the
+first round's declaration. Under Tool Search it is the whole catalogue the
+turn may reach, before Tool Search collapses it: the first round declares the
+pinned floor, the tools orchestration injected (Section 21.1), the tools the
+hook added and the discovery tools, all taken from what the hook left, and a
+tool `find_tools` reveals enters the declaration of the *next* round. A hook
+that sees only the first round's declaration cannot withdraw a deferred tool,
+which `find_tools` would then reveal.
 The toolset the hook leaves is the turn's: a tool it removes MUST NOT be
-declared at any later round of the turn, and a call naming it MUST be refused,
+declared at any later round of the turn, MUST NOT be named by `find_tools` or
+`list_tools` nor recovered at call time, and a call naming it MUST be refused,
 a tool the channel provides itself included; a tool it adds or edits stays as
-the hook left it, subject to the same filters as the rest (tool policy, skill
-gating, Tool Search). A hook that withdraws a tool from the first round only
-has withdrawn nothing. Likewise a skill activation (Section 24.4) counts only
+the hook left it, subject to the tool policy and skill gating, and a tool it
+adds is declared at every round of the turn, never deferred by Tool Search. A
+hook that withdraws a tool from the first round only has withdrawn nothing.
+A round whose declaration is empty makes no tool callable. Likewise a skill activation (Section 24.4) counts only
 once its `activate_skill` call is served: an ON_TOOL_CALL BLOCK or a failure
 activates nothing, whatever the model read.
 `ON_AI_RESPONSE` MUST therefore carry the turn's whole declaration as
