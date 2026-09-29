@@ -10033,8 +10033,12 @@ with one exception: the tools that only read or unlock and never act —
 `activate_skill` and `read_skill_reference` (Section 24), `read_stored_result`
 (Section 21.5), `find_tools` and `list_tools` (Tool Search). Without them a
 skill could not be activated nor a deferred tool found, so they stay declared
-and callable whatever the policy says. The exemption is by exact name and
-MUST NOT extend to a name that merely shares a prefix. Every other tool the
+and callable whatever the policy says. The exemption covers the tool the
+channel serves itself under one of these exact names, and nothing else: it
+MUST NOT extend to a name that merely shares a prefix, nor to a tool of the
+host, of an MCP server, of orchestration or of a hook that carries one of
+these names, which the policy governs like any other. A channel that serves
+none of them (a conference) exempts nothing. Every other tool the
 channel injects — sandbox commands (`sandbox_*`), `run_skill_script`,
 `plan_tasks` — is subject to the policy like a host tool: a host that wants
 them allows them. The same names, and only them, are exempt from skill gating
@@ -10043,6 +10047,16 @@ them allows them. The same names, and only them, are exempt from skill gating
 session) is no tool in this sense: it stays declared, and the policy applies to
 the tool it names, at the gate. The declaration filter and the execution guard
 MUST apply one rule, so a tool the model is offered is a tool it may call.
+
+**One declaration per name.** A name the channel serves itself is declared
+with the channel's definition only: a tool declared under it with another
+schema would be served by the channel, not by what its schema describes. A
+host tool given to the channel at construction that carries such a name MUST
+be refused there, naming the tool. One that arrives later (a binding's or a
+turn's tools, an MCP server, a hook) MUST NOT be declared, and a warning names
+it. No name is declared twice in one round: a provider rejects a duplicate
+name, and the definition kept is the one of whoever serves the call
+(orchestration over the host).
 `find_tools` and `list_tools` MUST NOT name a tool the policy denies or a skill
 gates: a name the model can never call is a false promise and discloses what
 the policy hides.
