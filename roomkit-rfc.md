@@ -2072,6 +2072,14 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   MUST NOT send its result. The model will not read it, and a result sent for
   an id the provider no longer knows is an error the application never asked
   for.
+- A reconnect the call's own handler caused (it reconfigured its session and
+  the provider reconnected to apply it) is not the model abandoning that
+  call. The channel MUST NOT interrupt that handler, which still has work to
+  do on the new connection (a handoff greets as the new agent next), and MUST
+  NOT send its result, since the new socket never issued the id. The call's
+  outcome is reported as it would be otherwise, served when the handler
+  returns a result, and never as cancelled. Every other call the same
+  reconnect orphaned is abandoned as above.
 - The call MUST fire ON_TOOL_CALL's observers with a discrete *cancelled*
   marker beside the failure marker. An abandoned call is neither a refusal nor
   a failure, and an audit counting refusals must not count it as one; it is
