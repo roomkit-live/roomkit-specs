@@ -1499,6 +1499,13 @@ AIResponse
 └── metadata: map<string, any>              # Provider-specific data (model, latency)
 ```
 
+**Usage counters.** `input_tokens`, `output_tokens` and the cache counters are
+disjoint, as in Section 25.5. `output_tokens` counts every output token the
+vendor bills, a model's thinking included, whether the vendor reports that
+thinking inside its completion count or beside it. `reasoning_tokens`, when a
+provider reports it, is the thinking share of `output_tokens`: a detail, never
+added to the other counters nor priced a second time.
+
 **Response metadata is one record per turn.** `AIContext.response_metadata` is a
 dict-like mapping created with the turn and shared by identity by every
 extension point of that turn: a memory provider MAY write it while the context
