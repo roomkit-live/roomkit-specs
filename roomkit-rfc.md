@@ -1213,6 +1213,17 @@ reports the declaration RoomKit made, not the provider's wire form of it. An
 intelligence channel whose toolset is not RoomKit's to declare (an external ACP
 agent, below) leaves it empty.
 
+**A turn cut short.** A tool loop that ends before its answer (the provider
+failed after at least one round, or the turn was cancelled between rounds)
+keeps what the room already has. The text each round said before its calls was
+delivered as its own message and MUST NOT be delivered again, and nothing from
+an earlier turn of the room may be: the history the model was given is context,
+not this turn's output. The terminal message of a turn the provider interrupted
+carries only what the room has not read, which is the interruption marker
+(`[Response interrupted]`), never the provider's error; it is delivered as soon
+as one round ran, so the calls that ran are kept with it. A cancelled turn adds
+no terminal text at all.
+
 **ACP Agent Channel:**
 
 An ACP agent channel connects a Room to an external
