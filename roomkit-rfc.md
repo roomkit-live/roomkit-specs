@@ -1217,12 +1217,14 @@ agent, below) leaves it empty.
 failed after at least one round, or the turn was cancelled between rounds)
 keeps what the room already has. The text each round said before its calls was
 delivered as its own message and MUST NOT be delivered again, and nothing from
-an earlier turn of the room may be: the history the model was given is context,
-not this turn's output. The terminal message of a turn the provider interrupted
-carries only what the room has not read, which is the interruption marker
-(`[Response interrupted]`), never the provider's error; it is delivered as soon
-as one round ran, so the calls that ran are kept with it. A cancelled turn adds
-no terminal text at all.
+an earlier turn of the room MUST be delivered either: the history the model was
+given is context, not this turn's output. A turn the provider interrupted after
+a round is an error, surfaced as when the loop raises (ON_ERROR fires and the
+caller learns the provider's error), and its rounds are kept, the calls that
+ran included. Where the turn is delivered once its loop ends, its terminal
+message carries only what the room has not read, the interruption marker
+(`[Response interrupted]`), never the provider's error. A cancellation adds
+nothing a round already said.
 
 **ACP Agent Channel:**
 
