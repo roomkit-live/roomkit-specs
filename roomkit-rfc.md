@@ -10429,12 +10429,14 @@ round of the tool loop that carries it.
   the full text; bounding first would let the model page the raw text back
   from the store. A refusal observer receives the raw message.
 - An active skill's instructions are exempt (Section 24.4).
-- The read-back MAY search a stored result: given a text, it returns the lines
-  that contain it, case aside, with the lines around them and their numbers,
-  bounded as a page is. A search covers the whole result, so a search that
-  finds nothing says the text is absent from it, which a page read never can.
-  The text is matched as it is, never as a pattern the implementation would
-  run: a model-supplied pattern could stall the process.
+- The read-back MAY search a stored result: given a text on one line, it
+  returns the lines of the result as stored that contain it, case aside, with
+  the lines around them and their numbers, bounded as a page is, a line longer
+  than its share of the page cut around the match. A search reads every line
+  whole, so one that finds nothing says the text is absent from the result,
+  which a page read never can; its answer says when it holds only part of the
+  matches. The text is matched as it is, never as a pattern the implementation
+  would run: a model-supplied pattern could stall the process.
 - What the model can read back SHOULD stay readable while its room works.
   The store's capacity is counted per room, and a bound the whole store
   needs for memory MUST take from the room holding the most first, so a room
