@@ -1298,12 +1298,19 @@ Tool Search hides and what a skill's gating keeps closed (Sections 21.1,
 24.2), and the result that opens such a tool (`find_tools` naming it,
 `activate_skill` unlocking it) makes it callable by reference instead of by a
 new declaration: the declaration then does not change within the turn at all.
-The tool policy still decides what is declared, hidden or not: a tool it
-denies is never declared; a gated tool so declared is still refused until its
-skill is active. A tool held unseen is reported in `declared_tools` once a
+A result references exactly the tools the declaration described above would
+show after the call it answers, and a result that fails references none. A
+call to a held tool no result has referenced yet is recovered as a call to a
+tool Tool Search hides (Section 21.1), and its result references the tool
+itself. The tool policy still decides what is declared, hidden or not: a tool
+it denies is never declared; a gated tool so declared is still refused until
+its skill is active. A tool held unseen is reported in `declared_tools` once a
 result has made it callable, with the reason it is visible then (`revealed`
 for one `find_tools` named). A provider without that capability keeps the
-declaration described above.
+declaration described above; a `fallback_provider` without it receives the
+tools the turn made callable declared plainly and the held ones not at all. A
+compaction that summarizes a referencing result away declares the tools it
+referenced from then on, since the reference was what made them callable.
 
 **A turn cut short.** A tool loop that ends before its answer (the provider
 failed after at least one round, or the turn was cancelled between rounds)
