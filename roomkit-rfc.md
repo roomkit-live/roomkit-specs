@@ -5040,6 +5040,16 @@ Integrators who need response-level tracking SHOULD use AFTER_BROADCAST on the
 transcription events emitted by the provider. A full-duplex provider has no
 such events on its wire and synthesizes them (Section 12.4.1).
 
+**Session configuration.** A session starts with the configuration it was
+opened with (its own prompt, voice or tools), else the one set for its room
+(the active agent of a pipeline installed there, Section 19.5), else the
+channel's. Reconfiguring a session (a handoff, an application changing one
+call's instructions) changes that session only: the channel's configuration
+for future sessions, and the sessions of other rooms, MUST NOT change with it,
+since one channel serves every room it is attached to (Section 19.7). The
+channel's configuration changes through the channel's own configuration call,
+never as a side effect of a session's.
+
 **Tool policy:** A realtime channel MAY carry a ToolPolicy (Section 21.1),
 with the same meaning as an AI channel's and the same exempt names. It filters
 the tools declared to the session, at connection and at every reconfiguration
@@ -9916,7 +9926,11 @@ The pipeline generates one `RoutingRule` per stage with
 **On a realtime channel.** A pipeline MAY drive a speech-to-speech session
 (Section 12.4) instead of routing events: the active agent is then the
 session's configuration (its prompt, its voice, its tools), and a handoff
-reconfigures the session to the next agent's. The tools an agent's
+reconfigures the session to the next agent's. The active agent is the room's:
+a session that starts in a room starts with that room's active agent, a
+handoff in one room reconfigures that room's sessions, and neither changes
+another room's sessions nor the channel's configuration for future sessions
+(Section 19.7). The tools an agent's
 configuration declares are the channel's own tools, the agent's tools and the
 handoff tool; a pipeline MUST NOT drop the channel's tools, nor declare an
 agent without its own. A call to one of the active agent's tools is served by
@@ -9987,19 +10001,35 @@ primitives. Implementations SHOULD provide helpers for each.
 
 **A strategy in several rooms (normative).** A strategy is installed per room,
 but its agents are shared: one agent object serves every room it is attached
-to. Installing a strategy in a second room MUST NOT declare a tool twice on
-an agent or a channel, nor wrap an agent's or a channel's handling a second
-time. What a strategy adds for one room MUST reach that room only: on an AI
-channel, a tool it declares for a room (a supervisor's delegation tools, a
-delegation's result tool) is declared in that room's turns, not in every room
-the agent serves; on a channel whose declarations do not vary by room (a
-realtime channel), a call from a room the strategy was not installed in is
-refused. A flag it keeps while work runs for a room is that room's, and its
-tools act on the room of the call (Sections 19.6 and 23.4). A tool that
-belongs to the agent whatever the room (the handoff tool a strategy wires on
-it) MAY stay declared wherever the agent serves, and still acts on the room
-of the call. A strategy that wrote into the shared agent for one room would
-answer, or refuse, another room's user.
+to, and so does a realtime channel. What a strategy adds for a room is set up
+for that room on the shared agent or channel, and MUST reach that room only:
+
+- a tool it adds for a room (a supervisor's delegation tools, a delegation's
+  result tool, a loop's tool, a handoff tool) is declared in that room's turns
+  and in that room's realtime sessions, not in every room the agent or the
+  channel serves, and a call to it from another room is served as a call to
+  an undeclared tool;
+- the configuration that tool runs with (the workers, the reviewers, the
+  strategy, the limits, the handoff's routing) is the one installed for the
+  room of the call: a second room's install, with another configuration, runs
+  its own, and changes nothing the first room runs;
+- a turn the strategy runs in place of an agent's (a loop's produce and review,
+  a supervisor's delegation passes) runs in the rooms it was installed in only,
+  and an agent attached to a room with no such install answers there as
+  itself;
+- on a realtime channel, the active agent's configuration (Section 19.5) is the
+  room's.
+
+No install and no turn writes into the shared agent or channel on behalf of
+one room: not its tools, its handler, its handling of events, its prompt, its
+voice, nor a binding it shares. A write made for one room is read by every
+other room the object serves, which would answer, or refuse, another room's
+user with this room's configuration. Installing a strategy in a second room
+MUST NOT declare a tool twice in a room. A flag it keeps while work runs for a
+room is that room's, and its tools act on the room of the call (Sections 19.6
+and 23.4). A tool set up on an agent outside any strategy (`setup_handoff`,
+`setup_delegation` without a room) belongs to the agent whatever the room: it
+is declared wherever the agent serves, and still acts on the room of the call.
 
 #### 19.7.1 Pipeline
 
@@ -10184,15 +10214,22 @@ session) is no tool in this sense: it stays declared, and the policy applies to
 the tool it names, at the gate. The declaration filter and the execution guard
 MUST apply one rule, so a tool the model is offered is a tool it may call.
 
-**One declaration per name.** A name the channel serves itself is declared
-with the channel's definition only: a tool declared under it with another
-schema would be served by the channel, not by what its schema describes. A
-host tool given to the channel at construction that carries such a name MUST
-be refused there, naming the tool. One that arrives later (a binding's or a
-turn's tools, an MCP server, a hook) MUST NOT be declared, and a warning names
-it. No name is declared twice in one round: a provider rejects a duplicate
-name, and the definition kept is the one of whoever serves the call
-(orchestration over the host).
+**One tool per name.** A name is served by one tool in a room, and declared
+with that tool's definition: a tool declared under a name with one schema and
+served by another would have the model call the one's schema on the other's
+server. A name the channel serves itself is declared with the channel's
+definition only. The channel MUST refuse, when it is given, a tool under a
+name it already has for the same room, naming the tool: a host tool at
+construction under a name the channel serves or under a name another host tool
+already carries (two tool servers exposing the same name), and a tool
+orchestration sets up over the host's, over the channel's, or over another
+setup's for the same room (a setup for one room does not collide with another
+room's; the same strategy installed again for a room replaces its own). A tool
+that arrives with the turn (a binding's or a config provider's tools, a
+generation hook's) comes too late to be refused: under a name the channel or a
+setup already serves it MUST NOT be declared, and a warning names it; a name
+it gives twice is declared once, with the later definition. No name is
+declared twice in one round: a provider rejects a duplicate name.
 `find_tools` and `list_tools` MUST NOT name a tool the policy denies or a skill
 gates: a name the model can never call is a false promise and discloses what
 the policy hides.
