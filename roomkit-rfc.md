@@ -1351,13 +1351,17 @@ carries an error, its rounds' text included.
 
 **A turn's budget.** A channel MAY bound what a turn spends: a token budget over
 every token its provider bills for the turn (input, cache reads and writes,
-output; Section 6.7), a cost budget at the model's catalogue price, or both, set
-for the channel, a room or a turn. The loop checks them at each round boundary,
-on the usage the provider reported for the rounds so far: a turn that has
-reached a budget ends there, `budget_exceeded`, running none of the calls its
-last generation asked for and asking for no further generation. A cost budget
-for a model with no known price is a configuration error, reported when the
-budget is set.
+output; Section 6.7), a cost budget at the model's catalogue price, each
+generation priced as one response, or both, set for the channel, a room or a
+turn. The loop checks them at each round boundary, on the usage the provider
+reported for the generations so far: a turn that has reached a budget ends
+there, `budget_exceeded`, running none of the calls its last generation asked
+for and asking for no further generation, a retry of an empty answer included; a
+final round that failed to answer past its budget ends `budget_exceeded` too. A
+budget that is not a positive number, or a cost budget for a model with no known
+price, is a configuration error, reported when the channel is built for a
+channel budget and by the turn that reads it otherwise. A generation a fallback
+provider serves is priced at the primary provider's rate.
 
 **A turn that did not complete.** `ON_AI_RESPONSE` reports a turn whose loop
 reached its end, with the reason it ended for: `cancelled` for a cancellation
@@ -11514,8 +11518,8 @@ configuration, then the channel default. When it is set, the channel MUST NOT
 deliver or store any of the answer's text before the provider's check has
 passed (Section 6.7): a streamed answer is held until the done event, and a
 failed check fails the turn with its `ResponseSchemaError`, leaving nothing in
-the room. A turn whose tool loop stops before a final answer, on its round or
-time budget, because it was stopped, or because the provider interrupted it
+the room. A turn whose tool loop stops before a final answer, on its round cap,
+its deadline or its spending budget, because it was stopped, or because the provider interrupted it
 after a round, has no document to deliver and fails with `truncated`, in
 either loop. Its interruption marker is not delivered as the answer. The turn's tools include those the channel adds itself
 (skills, sandbox, planning, orchestration), so a schema on a channel that adds
