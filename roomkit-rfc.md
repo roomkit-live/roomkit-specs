@@ -1349,6 +1349,16 @@ whichever loop ran it: a task delegated to it fails with the provider's error,
 and a strategy that reads an agent's answer reads none from an output that
 carries an error, its rounds' text included.
 
+**A turn's budget.** A channel MAY bound what a turn spends: a token budget over
+every token its provider bills for the turn (input, cache reads and writes,
+output; Section 6.7), a cost budget at the model's catalogue price, or both, set
+for the channel, a room or a turn. The loop checks them at each round boundary,
+on the usage the provider reported for the rounds so far: a turn that has
+reached a budget ends there, `budget_exceeded`, running none of the calls its
+last generation asked for and asking for no further generation. A cost budget
+for a model with no known price is a configuration error, reported when the
+budget is set.
+
 **A turn that did not complete.** `ON_AI_RESPONSE` reports a turn whose loop
 reached its end, with the reason it ended for: `cancelled` for a cancellation
 between rounds, `error` for a turn the provider interrupted after a round,
@@ -11465,7 +11475,9 @@ AIChannel
 │   ├── max_context_events: int | null
 │   ├── thinking_budget: int | null         # Token budget for extended thinking/reasoning
 │   ├── response_schema: map | null         # Each turn answers in this JSON Schema (Section 6.7)
-│   ├── max_tool_rounds: int (default 200)  # Maximum tool call iterations per generation
+│   ├── max_tool_rounds: int (default 50)   # Maximum tool call iterations per generation
+│   ├── turn_budget_tokens: int | null      # Billed tokens a turn may spend (Section 6.4)
+│   ├── turn_budget_usd: float | null       # What a turn may cost at the catalogue price
 │   ├── tool_loop_timeout_seconds: float | null (default 300)  # Timeout for entire tool loop
 │   ├── fallback_provider: AIProvider | null # Fallback if primary provider fails
 │   ├── evict_threshold_tokens: int (default 5000)  # Token threshold for context eviction
@@ -11478,6 +11490,8 @@ AIChannel
 │   ├── max_tokens
 │   ├── thinking_budget
 │   ├── response_schema
+│   ├── turn_budget_tokens
+│   ├── turn_budget_usd
 │   └── tools
 ├── ai_response_model:
 │   │   # AI responses consist of ordered parts:
