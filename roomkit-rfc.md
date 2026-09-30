@@ -1327,6 +1327,19 @@ tools the turn made callable declared plainly and the held ones not at all. A
 compaction that summarizes a referencing result away declares the tools it
 referenced from then on, since the reference was what made them callable.
 
+The declaration is the room's on such a provider, kept from one turn to the
+next: the tools shown at the first round of the room's first turn stay the
+tools shown, and every other tool the turn declares is held. A tool an earlier
+turn made callable (revealed, used, unlocked by an active skill) stays held,
+and the turn reopens it with an exchange placed after the history and before
+its input: a call of the discovery tool the turn declares (`find_tools` where
+Tool Search is active, `activate_skill` for the active skills otherwise) and a
+result that references the tools it reopens. The exchange is the turn's
+context, never an event of the room: it is not stored, not delivered, and not
+counted as a tool call. A tool the policy no longer admits leaves the
+declaration, and a room whose declaration is not known (a new room, a
+restarted process) takes the one its turn would show and keeps it from then on.
+
 **A turn cut short.** A tool loop that ends before its answer (the provider
 failed after at least one round, or the turn was cancelled between rounds)
 keeps what the room already has. The text each round said before its calls was
@@ -1614,12 +1627,13 @@ Ollama's `think`, PolarGrid's `thinking`) yields to the turn on what the turn
 states and supplies what it leaves unstated. Whether the model reasons is
 stated by `thinking_budget` (`0` off, above `0` on), else by `enable_thinking`,
 and a `reasoning_effort` of `none` states off; how much it reasons is stated by
-`reasoning_effort`. A level the model does not take is sent as the nearest one
-it takes, and left out where the provider cannot know the levels the model
-takes: it knows them from what its model catalogue declares of the model, or
-from a level its configuration already sets, never from the model's name. A
-provider MUST
-apply them on a turn that declares tools as on one that does not, save for the
+`reasoning_effort`. Where such a vendor setting names levels, a level the model
+does not take is sent as the nearest one it takes, and left out where the
+provider cannot know the levels the model takes; and a model that cannot stop
+reasoning is sent its lowest level where the turn states off. The provider
+knows both from what its model catalogue declares of the model, or the levels
+from one its configuration already sets, never from the model's name. A
+provider MUST apply them on a turn that declares tools as on one that does not, save for the
 cases below. Where the vendor restricts what a turn with tools accepts (OpenAI's
 Chat Completions, for one, takes function tools only with `reasoning_effort`
 `none` on its recent models), the provider sends the value accepted, read from
