@@ -1272,24 +1272,25 @@ answer, when an anti-loop guard stops a model that keeps repeating a refused
 call, keeps the round's declaration and tells the model that no further call
 will run: none of that round's calls runs, and the turn ends `force_stopped`.
 
-**The prompt from turn to turn.** For the same reason, the system prompt
-SHOULD stay the same from one turn to the next: a system prompt that changes
-invalidates everything cached after it, the whole history included. What
-changes between turns as the conversation works travels with the turn's input
-instead, as notes: what the channel recalls of the tools used in the room (and
-what they returned), the room's plan, how speakers are named when the history
-window holds several (which speakers it holds changes as it slides), and what a
-vision provider last saw (Section 12.8.7). The notes follow the turn's input
-(the participant's words, or the application's instruction) in the same
-message, marked as the channel's, asking for nothing, with any tool result they
-quote set apart as data; when the conversation does not end on such a message,
-they are a message of their own. They come after the input, so what changes
-comes last and a provider that caches a prefix keeps the input in it; they are
-not a message of their own when the input is one, since a model whose chat
-format requires alternating roles would refuse two in a row. An active skill's
-instructions stay in the system prompt (Section 24.4): they change only when a
-skill is activated, and they are instructions, not notes. A standalone turn
-carries none of the room's memories (Section 10.1.1).
+**The prompt from turn to turn.** For the same reason, the system prompt SHOULD
+stay the same from one turn to the next: a system prompt that changes
+invalidates everything cached after it, the whole history included. What changes
+between turns as the conversation works travels with the turn's input instead,
+as notes: what the channel recalls of the tools used in the room (and what they
+returned), the room's plan, how speakers are named when the history window holds
+several (which speakers it holds changes as it slides), what a vision provider
+last saw (Section 12.8.7), and what a memory provider retrieved for this turn
+alone (Section 20.2), each passage set apart as data. The notes follow the
+turn's input (the participant's words, or the application's instruction) in the
+same message, marked as the channel's, asking for nothing, with any tool result
+they quote set apart as data; when the conversation does not end on such a
+message, they are a message of their own. They come after the input, so what
+changes comes last and a provider that caches a prefix keeps the input in it;
+they are not a message of their own when the input is one, since a model whose
+chat format requires alternating roles would refuse two in a row. An active
+skill's instructions stay in the system prompt (Section 24.4): they change only
+when a skill is activated, and they are instructions, not notes. A standalone
+turn carries none of the room's memories (Section 10.1.1).
 
 **A turn compacted.** When a provider refuses a turn's context as too long, the
 channel MAY compact the context once and replay the call. A compaction keeps the
@@ -10163,13 +10164,20 @@ never summarize something the channel was not allowed to read.
 ```
 MemoryResult
 ├── messages: list<AIMessage>               # Pre-built AI messages (summaries, instructions)
-└── events: list<RoomEvent>                 # Raw events for AIChannel to convert
+├── events: list<RoomEvent>                 # Raw events for AIChannel to convert
+└── notes: list<string>                     # What was retrieved for this turn alone
 ```
 
 When `messages` is non-empty, the AIChannel uses them directly as conversation
 history. When `events` is provided, the AIChannel converts them to AI messages
 using its standard conversion logic. Both MAY be combined — `messages` are
 prepended before converted `events`.
+
+`notes` carries what a provider retrieved for the current turn only, knowledge
+passages for one: it changes from one turn to the next, so it rides the turn's
+notes (Section 6.4), after the input, and never the history, which a provider
+that caches a prefix would otherwise bill again at every turn. A provider that
+wraps another and rebuilds its result MUST carry the inner provider's `notes`.
 
 ### 20.3 Built-in Implementations
 
