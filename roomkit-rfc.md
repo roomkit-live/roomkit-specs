@@ -1255,6 +1255,20 @@ reports the declaration RoomKit made, not the provider's wire form of it. An
 intelligence channel whose toolset is not RoomKit's to declare (an external ACP
 agent, below) leaves it empty.
 
+**The declaration from round to round.** A provider that caches requests
+reads each one as a prefix, in the order tools, system prompt, messages, and a
+declaration that gains, loses or reorders a tool invalidates everything cached
+after the tools, the history included: the next round is billed as if nothing
+were cached. Within a turn the declaration SHOULD therefore change only where
+a tool must appear, one `find_tools` reveals or one a skill activation opens
+(Section 24.4), and its order is the toolset's, the same from one turn to the
+next. The tool that reads back a large result (Section 21.5) is declared from
+the first round of any turn that declares a tool, after the others, not from
+the round a result is first stored. A round the implementation forces to
+answer, when an anti-loop guard stops a model that keeps repeating a refused
+call, keeps the round's declaration and tells the model that no further call
+will run: none of that round's calls runs, and the turn ends `force_stopped`.
+
 **A turn cut short.** A tool loop that ends before its answer (the provider
 failed after at least one round, or the turn was cancelled between rounds)
 keeps what the room already has. The text each round said before its calls was
