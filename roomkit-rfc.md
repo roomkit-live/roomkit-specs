@@ -1291,6 +1291,16 @@ instructions stay in the system prompt (Section 24.4): they change only when a
 skill is activated, and they are instructions, not notes. A standalone turn
 carries none of the room's memories (Section 10.1.1).
 
+**A turn compacted.** When a provider refuses a turn's context as too long in
+the middle of its tool loop, the channel MAY compact the context once and replay
+the call. A compaction keeps the turn's input and its notes whole: it summarizes
+the history that precedes the input, and shortens the results of the turn's
+older tool rounds by storing each as a large result is (Section 21.5), so the
+model keeps a preview and can read the rest back. It keeps every tool call with
+its result, puts no two user messages in a row (the summary joins the user
+message that follows it), and quotes no tool result's text outside a delimited
+block.
+
 **A tool that has to appear.** A provider that can hold a tool declared but
 unseen (Anthropic's deferred loading keeps such a definition out of the cached
 prefix) SHOULD receive in that form, from the first round of the turn, what
