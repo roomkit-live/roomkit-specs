@@ -1609,8 +1609,16 @@ added to the other counters nor priced a second time.
 **Reasoning settings.** `thinking_budget`, `enable_thinking` and
 `reasoning_effort` are the turn's. Where a provider's configuration carries one
 of them under the same name, the provider MUST prefer the turn's value, `false`
-included; a vendor setting of the provider's own (Gemini's `thinking_level`,
-Ollama's `think`) keeps the precedence its provider documents. A provider MUST
+included. A vendor setting of the provider's own (Gemini's `thinking_level`,
+Ollama's `think`, PolarGrid's `thinking`) yields to the turn on what the turn
+states and supplies what it leaves unstated. Whether the model reasons is
+stated by `thinking_budget` (`0` off, above `0` on), else by `enable_thinking`,
+and a `reasoning_effort` of `none` states off; how much it reasons is stated by
+`reasoning_effort`. A level the model does not take is sent as the nearest one
+it takes, and left out where the provider cannot know the levels the model
+takes: it knows them from what its model catalogue declares of the model, or
+from a level its configuration already sets, never from the model's name. A
+provider MUST
 apply them on a turn that declares tools as on one that does not, save for the
 cases below. Where the vendor restricts what a turn with tools accepts (OpenAI's
 Chat Completions, for one, takes function tools only with `reasoning_effort`
