@@ -1220,7 +1220,8 @@ runs out ends cut short (`empty_response`), never `completed`.
 **What the generation hooks see:** `BEFORE_AI_GENERATION` fires once per turn,
 with the context the turn starts from, and its `tools` are the turn's toolset
 as the tool policy and skill gating leave it. Without Tool Search that is the
-first round's declaration. Under Tool Search it is the whole catalogue the
+first round's declaration, the tool that reads back a large result aside
+(below). Under Tool Search it is the whole catalogue the
 turn may reach, before Tool Search collapses it: the first round declares the
 pinned floor, the tools orchestration injected (Section 21.1), the tools the
 hook added and the discovery tools, all taken from what the hook left, and a
@@ -1263,8 +1264,10 @@ were cached. Within a turn the declaration SHOULD therefore change only where
 a tool must appear, one `find_tools` reveals or one a skill activation opens
 (Section 24.4), and its order is the toolset's, the same from one turn to the
 next. The tool that reads back a large result (Section 21.5) is declared from
-the first round of any turn that declares a tool, after the others, not from
-the round a result is first stored. A round the implementation forces to
+the first round of any turn that declares a tool, after the others, so the
+declaration does not change when a result is stored; the generation hook sees
+it once the room holds a stored result, and may withdraw it then. A round the
+implementation forces to
 answer, when an anti-loop guard stops a model that keeps repeating a refused
 call, keeps the round's declaration and tells the model that no further call
 will run: none of that round's calls runs, and the turn ends `force_stopped`.
