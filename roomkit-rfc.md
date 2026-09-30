@@ -10177,7 +10177,9 @@ prepended before converted `events`.
 passages for one: it changes from one turn to the next, so it rides the turn's
 notes (Section 6.4), after the input, and never the history, which a provider
 that caches a prefix would otherwise bill again at every turn. A provider that
-wraps another and rebuilds its result MUST carry the inner provider's `notes`.
+wraps another and rebuilds its result MUST carry the inner provider's `notes`,
+and one that keeps the turn within a token budget MUST count them: nothing
+trims the turn's notes, so the history is what makes room for them.
 
 ### 20.3 Built-in Implementations
 
@@ -10186,7 +10188,7 @@ wraps another and rebuilds its result MUST carry the inner provider's `notes`.
 | SlidingWindowMemory | Last N events | Default, simple conversations |
 | CompactingMemory | Merges older events into compact summaries | Long conversations, reduce tokens |
 | SummarizingMemory | AI-powered summarization of history | Complex multi-topic conversations |
-| RetrievalMemory | Vector search for relevant past events | Large knowledge-heavy contexts |
+| RetrievalMemory | Knowledge sources queried with the turn's text | Knowledge-backed answers (RAG) |
 | BudgetAwareMemory | Token-based truncation with priorities | Strict token budget enforcement |
 
 **SlidingWindowMemory** is the default when no MemoryProvider is configured.
@@ -10196,9 +10198,11 @@ It returns the most recent `max_context_events` from the room timeline.
 keeping recent events intact. The summary is cached and refreshed
 periodically or when the event count exceeds a threshold.
 
-**RetrievalMemory** embeds events using a vector store and retrieves the
-most semantically relevant past events for the current message. This enables
-recall of earlier conversation topics without carrying the full history.
+**RetrievalMemory** wraps another provider and queries its knowledge sources
+(vector stores, search engines, document indexes) with the text of the current
+turn; the passages it retrieves are the turn's `notes`, each set apart as
+data, while the inner provider supplies the history. It indexes each ingested
+event in its sources.
 
 **BudgetAwareMemory** counts tokens and evicts oldest events when the total
 exceeds `evict_threshold_tokens`. It prioritizes keeping system messages,
