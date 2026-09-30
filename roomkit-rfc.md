@@ -1329,16 +1329,19 @@ referenced from then on, since the reference was what made them callable.
 
 The declaration is the room's on such a provider, kept from one turn to the
 next: the tools shown at the first round of the room's first turn stay the
-tools shown, and every other tool the turn declares is held. A tool an earlier
+tools shown, with every tool the channel never holds (Section 21.1), and every
+other tool the turn declares is held. A tool an earlier
 turn made callable (revealed, used, unlocked by an active skill) stays held,
 and the turn reopens it with an exchange placed after the history and before
 its input: a call of the discovery tool the turn declares (`find_tools` where
 Tool Search is active, `activate_skill` for the active skills otherwise) and a
 result that references the tools it reopens. The exchange is the turn's
 context, never an event of the room: it is not stored, not delivered, and not
-counted as a tool call. A tool the policy no longer admits leaves the
-declaration, and a room whose declaration is not known (a new room, a
-restarted process) takes the one its turn would show and keeps it from then on.
+counted as a tool call. Where the turn has no discovery tool to reopen with,
+it shows the tools instead. A tool the turn no longer shows (the policy denies
+it, its skill closed) leaves the declaration, and a room whose declaration is
+not known (a new room, a restarted process) takes the one its turn would show
+and keeps it from then on.
 
 **A turn cut short.** A tool loop that ends before its answer (the provider
 failed after at least one round, or the turn was cancelled between rounds)
