@@ -1272,6 +1272,21 @@ answer, when an anti-loop guard stops a model that keeps repeating a refused
 call, keeps the round's declaration and tells the model that no further call
 will run: none of that round's calls runs, and the turn ends `force_stopped`.
 
+**The prompt from turn to turn.** For the same reason, the system prompt
+SHOULD stay the same from one turn to the next: a system prompt that changes
+invalidates everything cached after it, the whole history included. What
+changes between turns as the conversation works, what the channel recalls of
+the tools used in the room (and what they returned) and the room's plan,
+travels with the turn's input instead: after the participant's words, in the
+same message, marked as the channel's and not the participant's, with any tool
+result it quotes set apart as data. It is never placed before the input (a
+provider that caches up to the last messages would lose the history's cached
+prefix when the rebuilt history drops it) nor sent as a message of its own
+(a model whose chat format requires alternating roles would refuse two in a
+row). An active skill's instructions stay in the system prompt (Section 24.4):
+they change only when a skill is activated, and they are instructions, not
+notes. A standalone turn carries none of it (Section 10.1.1).
+
 **A turn cut short.** A tool loop that ends before its answer (the provider
 failed after at least one round, or the turn was cancelled between rounds)
 keeps what the room already has. The text each round said before its calls was
