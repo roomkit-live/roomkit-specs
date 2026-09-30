@@ -10511,7 +10511,6 @@ DelegatedTask
 ├── agent_id: string                        # Agent to execute the task
 ├── task: string                            # Task description / instructions
 ├── notify: string | null                   # Channel to notify on completion
-├── strategy: DeliveryStrategy | null       # How to deliver results (default: Immediate)
 ├── status: TaskStatus                      # PENDING, IN_PROGRESS, COMPLETED, FAILED
 ├── result: string | null                   # Task result (on completion)
 ├── error: string | null                    # Error message (on failure)
@@ -10521,7 +10520,7 @@ DelegatedTask
 
 ### 23.3 Delegation Protocol
 
-When `delegate(room_id, agent_id, task, notify, strategy)` is called:
+When `delegate(room_id, agent_id, task, notify)` is called:
 
 1. Create a **child room** linked to the parent room.
 2. Attach the specified agent as an INTELLIGENCE channel in the child room.
@@ -10536,9 +10535,9 @@ When `delegate(room_id, agent_id, task, notify, strategy)` is called:
 6. Collect the agent's response as the task result.
 7. Fire `ON_TASK_COMPLETED` hook in the parent room.
 8. If `notify` is set, hand the result back through `deliver()` (§22) with
-   the delegation's strategy and `instruction = true`, so `BEFORE_DELIVER`,
-   `AFTER_DELIVER` and the delivery backend apply to it as to any proactive
-   delivery. `notify` names who is told: an intelligence channel receives it
+   the framework's delivery strategy and `instruction = true`, so
+   `BEFORE_DELIVER`, `AFTER_DELIVER` and the delivery backend apply to it as
+   to any proactive delivery. `notify` names who is told: an intelligence channel receives it
    addressed to it, through the room's transport (§10.1.1); a realtime voice
    channel, injected into its session with the `system` intent (§12.4).
    Another transport has no model to direct and receives it as a message
@@ -12069,8 +12068,8 @@ Timeline of a room with SMS customer + AI:
    │   ├── Delegates background task:
    │   │     kit.delegate(room_id, "diagnostics-bot",
    │   │       task="Check network status for customer area",
-   │   │       notify="network-specialist",
-   │   │       strategy=WaitForIdle(buffer=5.0))
+   │   │       notify="network-specialist")
+   │   │     (the kit's delivery strategy: WaitForIdle(buffer=5.0))
    │   │
    │   ├── ON_TASK_DELEGATED hook fires
    │   └── Responds: "Let me check your area's network status..."
