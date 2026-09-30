@@ -1291,6 +1291,20 @@ instructions stay in the system prompt (Section 24.4): they change only when a
 skill is activated, and they are instructions, not notes. A standalone turn
 carries none of the room's memories (Section 10.1.1).
 
+**A tool that has to appear.** A provider that can hold a tool declared but
+unseen (Anthropic's deferred loading keeps such a definition out of the cached
+prefix) SHOULD receive in that form, from the first round of the turn, what
+Tool Search hides and what a skill's gating keeps closed (Sections 21.1,
+24.2), and the result that opens such a tool (`find_tools` naming it,
+`activate_skill` unlocking it) makes it callable by reference instead of by a
+new declaration: the declaration then does not change within the turn at all.
+The tool policy still decides what is declared, hidden or not: a tool it
+denies is never declared; a gated tool so declared is still refused until its
+skill is active. A tool held unseen is reported in `declared_tools` once a
+result has made it callable, with the reason it is visible then (`revealed`
+for one `find_tools` named). A provider without that capability keeps the
+declaration described above.
+
 **A turn cut short.** A tool loop that ends before its answer (the provider
 failed after at least one round, or the turn was cancelled between rounds)
 keeps what the room already has. The text each round said before its calls was
