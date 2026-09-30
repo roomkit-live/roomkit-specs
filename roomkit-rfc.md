@@ -1275,17 +1275,21 @@ will run: none of that round's calls runs, and the turn ends `force_stopped`.
 **The prompt from turn to turn.** For the same reason, the system prompt
 SHOULD stay the same from one turn to the next: a system prompt that changes
 invalidates everything cached after it, the whole history included. What
-changes between turns as the conversation works, what the channel recalls of
-the tools used in the room (and what they returned) and the room's plan,
-travels with the turn's input instead: after the participant's words, in the
-same message, marked as the channel's and not the participant's, with any tool
-result it quotes set apart as data. It is never placed before the input (a
-provider that caches up to the last messages would lose the history's cached
-prefix when the rebuilt history drops it) nor sent as a message of its own
-(a model whose chat format requires alternating roles would refuse two in a
-row). An active skill's instructions stay in the system prompt (Section 24.4):
-they change only when a skill is activated, and they are instructions, not
-notes. A standalone turn carries none of it (Section 10.1.1).
+changes between turns as the conversation works travels with the turn's input
+instead, as notes: what the channel recalls of the tools used in the room (and
+what they returned), the room's plan, how speakers are named when the history
+window holds several (which speakers it holds changes as it slides), and what a
+vision provider last saw (Section 12.8.7). The notes follow the turn's input
+(the participant's words, or the application's instruction) in the same
+message, marked as the channel's, asking for nothing, with any tool result they
+quote set apart as data; when the conversation does not end on such a message,
+they are a message of their own. They come after the input, so what changes
+comes last and a provider that caches a prefix keeps the input in it; they are
+not a message of their own when the input is one, since a model whose chat
+format requires alternating roles would refuse two in a row. An active skill's
+instructions stay in the system prompt (Section 24.4): they change only when a
+skill is activated, and they are instructions, not notes. A standalone turn
+carries none of the room's memories (Section 10.1.1).
 
 **A turn cut short.** A tool loop that ends before its answer (the provider
 failed after at least one round, or the turn was cancelled between rounds)
@@ -6134,8 +6138,11 @@ FaceDetection
 | MockVisionProvider | — | Testing |
 
 **AI integration:** `setup_video_vision(kit, room_id, ai_channel_id)` wires
-vision results into the AIChannel's system prompt. On each VisionResult, the
-description is injected so the AI can "see" what the video shows.
+vision results into the AIChannel's context. On each VisionResult, the
+description is made available so the AI can "see" what the video shows. It
+changes from one result to the next, so it SHOULD ride the turn's notes, not
+the system prompt, and SHOULD NOT be written into the room's binding: it is
+state of the turn, not configuration of the room (Section 6.4).
 
 #### 12.8.8 AvatarProvider (Lip-Sync Video Generation)
 
@@ -11121,7 +11128,7 @@ A Level 3 implementation MAY additionally support audio and/or video real-time m
   - analyze_frame(frame) → VisionResult (description, labels, confidence, faces, OCR text)
   - analyze_stream(frames, interval_ms) for streaming analysis
   - Implementations: OpenAI-compatible (GPT-4o, Ollama, vLLM), Gemini, Mock
-- AI integration: setup_video_vision() wires vision descriptions into AIChannel system prompt
+- AI integration: setup_video_vision() wires vision descriptions into the AIChannel's turn context
 - Video and voice channels operate independently in the same room, enabling combined audio+video sessions where the AI can both hear (via STT) and see (via VisionProvider)
 
 #### Conference (SFU) — PROVISIONAL
@@ -11572,7 +11579,7 @@ VideoChannel
 │   └── video_vision_result (description, labels, confidence, text, faces)
 ├── ai_integration:
 │   └── setup_video_vision(kit, room_id, ai_channel_id) — injects vision
-│       descriptions into AIChannel system prompt
+│       descriptions into the AIChannel's turn context
 └── backends:
     ├── LocalVideoBackend — OpenCV webcam capture (dev/testing)
     ├── MockVideoBackend — Unit testing with call tracking
