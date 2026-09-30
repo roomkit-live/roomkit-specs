@@ -1578,16 +1578,20 @@ provider reports it, is the thinking share of `output_tokens`: a detail, never
 added to the other counters nor priced a second time.
 
 **Reasoning settings.** `thinking_budget`, `enable_thinking` and
-`reasoning_effort` are the turn's: a provider that translates one MUST prefer
-the turn's value to its own configuration, and MUST apply it on a turn that
-declares tools as on one that does not, save for the two cases below. Where the
-vendor restricts what a turn with tools accepts (OpenAI's Chat Completions takes
-function tools only with `reasoning_effort` `none` from GPT-5.4 on), the
-provider sends the value accepted, read from what its model catalogue declares
-of the model, never guessed from the model's name. A provider that cannot know
-the model behind its endpoint (a `base_url`, a deployment name, a proxy's alias)
-MAY omit the setting on a turn with tools, and documents that it does; it MUST
-NOT omit it where it knows the model accepts it.
+`reasoning_effort` are the turn's. Where a provider's configuration carries one
+of them under the same name, the provider MUST prefer the turn's value, `false`
+included; a vendor setting of the provider's own (Gemini's `thinking_level`,
+Ollama's `think`) keeps the precedence its provider documents. A provider MUST
+apply them on a turn that declares tools as on one that does not, save for the
+cases below. Where the vendor restricts what a turn with tools accepts (OpenAI's
+Chat Completions, for one, takes function tools only with `reasoning_effort`
+`none` on its recent models), the provider sends the value accepted, read from
+what its model catalogue declares of the model, never guessed from the model's
+name. A provider MAY leave a setting out of a turn with tools where it cannot
+know the model behind its endpoint (a `base_url`, a deployment name, a proxy's
+alias), or where turning reasoning on would require passing the model's
+reasoning back from one tool round to the next in a form it does not produce; it
+documents that it does, and MUST NOT leave it out otherwise.
 
 **Response metadata is one record per turn.** `AIContext.response_metadata` is a
 dict-like mapping created with the turn and shared by identity by every
