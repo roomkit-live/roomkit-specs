@@ -1824,7 +1824,16 @@ Implementations MUST enforce these rules:
    Likewise, an inbound or directly-injected event whose source binding cannot
    write (`access` ∉ {READ_WRITE, WRITE_ONLY} OR `muted = true`) MUST be stored
    with status `BLOCKED` (`blocked_by` = `source_read_only` or `source_muted`)
-   rather than `DELIVERED`, and MUST NOT be broadcast.
+   rather than `DELIVERED`, and MUST NOT be broadcast. A response re-enters
+   like any other event (§10.1 step 14) and meets this check after its
+   `BEFORE_BROADCAST` hooks (step 11 after step 9), whichever path commits it:
+   a buffered response, a streamed row, a regenerated answer. A muted or
+   read-only source's response is therefore stored `BLOCKED` with what its
+   hooks decided collected (rule 3), and a hook that blocks it names the
+   block. A streamed response from a source that cannot write is piped live
+   to no channel: a read-only source's stream is read to its end and each row
+   stored `BLOCKED`; a muted source's MAY be closed unread, the reply never
+   generated.
 3. **Side effects:** Tasks and observations are ALWAYS collected regardless of
    access or mute status — including for events blocked by rule 2.
 4. **Visibility filtering:** When broadcasting an event, the framework MUST
