@@ -1636,7 +1636,9 @@ Ollama's `think`, PolarGrid's `thinking`) yields to the turn on what the turn
 states and supplies what it leaves unstated. Whether the model reasons is
 stated by `thinking_budget` (`0` off, above `0` on), else by `enable_thinking`,
 and a `reasoning_effort` of `none` states off; how much it reasons is stated by
-`reasoning_effort`. Where such a vendor setting names levels, a level the model
+`reasoning_effort`. Where the turn's settings come from several levels
+(Appendix A.9, per-turn settings), an `enable_thinking: false` set at one level
+states off over a `thinking_budget` set at a less specific one. Where such a vendor setting names levels, a level the model
 does not take is sent as the nearest one it takes, and left out where the
 provider cannot know the levels the model takes; and a model that cannot stop
 reasoning is sent its lowest level where the turn states off. The provider
@@ -11579,11 +11581,18 @@ AIChannel
 `response_schema`, `turn_budget_tokens`, `turn_budget_usd`) resolves from the
 binding metadata, then the channel's per-turn configuration, then the channel
 default. A level that does not set it, its key absent or `null`, defers to the
-next: `null` never clears a setting, at either level. An integrator that
-serializes an empty form field as `null` keeps the channel's value. Lifting a
-channel default for one room takes an explicit value (`enable_thinking: false`,
-`thinking_budget: 0`); a channel's budget cannot be lifted, only replaced by
-another positive one (Section 6.4).
+next: `null` never clears a setting, at either level, so an integrator that
+serializes an empty form field as `null` keeps the next level's value. A
+setting is lifted for one room only by an explicit value that states off
+(`thinking_budget: 0`, `enable_thinking: false`, `reasoning_effort: "none"`,
+`system_prompt: ""`). The reasoning switch is read across two keys (Section
+6.7): an `enable_thinking: false` set at a level turns reasoning off whatever
+`thinking_budget` a less specific level set, while a budget set at the same or
+a more specific level still states the switch. A setting with no value that
+states off (`temperature`, `max_tokens`, `response_schema`, and the turn
+budgets of Section 6.4) cannot be lifted for a room once a less specific level
+sets it, only replaced. The binding's `tools` is a toolset of its own, and a
+`null` there declares none, like an absent key.
 
 **Constrained turn.** A turn's `response_schema` resolves like the other
 per-turn settings. When it is set, the channel MUST NOT
