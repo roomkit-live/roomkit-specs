@@ -2240,11 +2240,14 @@ Planned rows are normative design intent for the named capability.
   implementation that blocks on exceptions but allows on timeouts leaks through
   the timeout. Implementations MUST document which triggers fail closed.
 - **A BEFORE_TOOL_USE that failed closed refuses the call before execution**,
-  as its BLOCK does, on every channel: the model reads the same refusal
-  (`{"error": "Tool 'x' denied by pre-execution hook."}`), never the hook's
-  error, whose message can hold anything the hook held. The hook's name and
-  error go to the log and to ON_TOOL_CALL's observers, on the refused call's
-  `error_detail`. An external tool handler decides and reports its calls
+  as its BLOCK does, on every channel. A BLOCK's reason is the hook's own words
+  for the model, and the model reads them (`{"error": "<reason>"}`) on every
+  channel and every entry of one, as it reads the reason of an ON_TOOL_CALL
+  block. A BLOCK with no reason, and a hook that failed closed, give the fixed
+  refusal (`{"error": "Tool 'x' denied by pre-execution hook."}`), never the
+  hook's error, whose message can hold anything the hook held. The hook's name
+  and error go to the log and to ON_TOOL_CALL's observers, on the refused
+  call's `error_detail`. An external tool handler decides and reports its calls
   itself: the refusal reaches it as a denied decision that carries the
   hook's error for it alone, and what the agent reads, and what it reports,
   are the handler's.
@@ -5224,6 +5227,23 @@ Tool Search: the exact names of Section 21.1) remain exempt from skill gating,
 which they exist to operate; `run_skill_script` acts, and is gated like any
 other tool.
 
+**One call, one outcome (normative).** Every realtime tool call, whatever
+door it came through (the provider's function call, a call recovered from
+speech, a reasoning backend's call, a conference's call), is served by the
+same steps: the gate above; the serving, inside the tool call context of
+Section 21.4, which a conference installs too, with the chain depth of the
+answer that issued the call (Section 8.3); ON_TOOL_CALL (Section 9.3); the bound of
+Section 21.5, which covers the results of Tool Search and of reading a
+skill's references as it covers a handler's; the delivery; the report. A
+call's result is delivered once and its outcome reported once: a
+reconfiguration that fails once the result went out sends no second one, and
+a cancellation that arrives after the result was delivered is not reported.
+A call the session's end, or a conference's detach, interrupts is reported
+once, as cancelled. While a call is in flight its id names it: a second call
+with the same id is refused and reported once, and sends nothing, since the
+id's one result is the first call's, which runs on. A channel that mutes the input
+while a tool runs keeps it muted until the last call in flight ends.
+
 An implementation MAY additionally recover a tool call the model emitted as
 assistant *text* rather than through the provider's function calling API. Such a
 recovered call MUST pass the same gate — its arguments are reconstructed from
@@ -5545,7 +5565,12 @@ ReasoningRequest
 ├── transcript: list<TranscriptLine>        # Both roles, since the previous request
 ├── first: bool                             # First request of the session: the transcript is the whole conversation
 ├── tools: list<ToolDefinition>             # The channel's declared catalogue, for the backend's model
-└── execute_tool(name, arguments) → string  # One call through the channel's pre-execution gate and handler
+├── execute_tool(name, arguments) → string  # One call through the channel's pre-execution gate and handler
+└── execute_tool_call(name, arguments) → ToolCallResult  # The same call, with its outcome
+
+ToolCallResult
+├── text: string                            # What the backend's model reads
+└── is_error: bool                          # Refused, failed, blocked, served by nothing or cancelled
 
 TranscriptLine
 ├── role: "user" | "assistant"
@@ -5579,7 +5604,10 @@ makes are tool calls of the framework and MUST pass the pre-execution gate and
 the ToolPolicy (Section 21) as any other: `execute_tool` on the request is
 that gate, followed by the channel's handler, ON_TOOL_CALL and result
 truncation, and a backend MUST route its calls through it. A delegation is
-not a way around them.
+not a way around them. `execute_tool_call` runs the same call and also says
+whether it failed, so the backend's model reads a refused or failed call as
+one, as every tool loop does (Section 9.3); a backend SHOULD use it, and
+`execute_tool` returns the text alone.
 
 **Observability.** ON_REALTIME_DELEGATION (Section 9.2) fires when the model
 hands work over, in either mode, with the delegation id and its target (hosted
