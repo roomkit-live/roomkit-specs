@@ -11540,6 +11540,8 @@ AIChannel
 │   ├── max_tokens: int | null
 │   ├── max_context_events: int | null
 │   ├── thinking_budget: int | null         # Token budget for extended thinking/reasoning
+│   ├── enable_thinking: bool | null        # Reasoning switch, after thinking_budget (Section 6.7)
+│   ├── reasoning_effort: string | null     # How much the model reasons (Section 6.7)
 │   ├── response_schema: map | null         # Each turn answers in this JSON Schema (Section 6.7)
 │   ├── max_tool_rounds: int (default 50)   # Maximum tool call iterations per generation
 │   ├── turn_budget_tokens: int | null      # Billed tokens a turn may spend (Section 6.4)
