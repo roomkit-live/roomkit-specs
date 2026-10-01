@@ -2364,6 +2364,14 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   hooks with no result: a hook MAY serve it by supplying one, and that result
   is then the call's. If none does, the call is reported once, as failed; the
   firing that offered it to the hooks was a chance to serve it, not a report.
+- A hook that empties a served call's result (an override of null) leaves the
+  call served, with a null result: the next hook in the chain reads a served
+  call whose result is null, never a call nothing served, and does not get to
+  serve it. Every channel applies a verdict through the same reading (a
+  block, an override, a bare override, an emptied result).
+- When the context the hooks need cannot be built, the hooks do not run and
+  the call keeps the outcome its handler gave it, reported once, on every
+  channel: a context that fails is not the tool's failure.
 
 **ON_TOOL_CALL, where the model abandoned the call:**
 
@@ -9339,14 +9347,20 @@ ToolAuditEntry
 ├── tool_name: string                       # Tool function name
 ├── arguments: map<string, any>             # Input arguments
 ├── result: string                          # Tool output (truncated to 500 chars)
-├── status: string                          # "ok", "failed", or "error"
+├── status: string                          # "ok", "failed", "error" or "cancelled"
 ├── duration_ms: float                      # Execution time in milliseconds
 └── metadata: map<string, any>              # Optional extra data
 ```
 
 **Status detection:**
 - `"error"` — set when the tool handler raises an exception.
-- `"failed"` — read from the result body, which MUST be inspected for every
+- `"cancelled"` — set when the call was cancelled before its handler answered
+  (its turn or session ended, the provider abandoned it). A cancelled call
+  MUST NOT be recorded as `"ok"`, and the cancellation still reaches the
+  caller.
+- `"failed"`, structurally — set when the handler refused the call
+  (`ToolRefusedError`) or declined it as not its own (Section 21.4).
+- `"failed"`, from the body — read from the result body, which MUST be inspected for every
   failure envelope the implementation itself emits, not for one convention
   only: `{"status": "failed"}`, the `{"error": ...}` envelope a refused call
   and a wrapped MCP `isError` result return, and the `{"success": false}`
@@ -9379,10 +9393,14 @@ The `audit_tool_handler(handler, auditor, agent_id)` function wraps any tool
 handler to automatically record audit entries. It:
 
 1. Measures execution time.
-2. Catches exceptions and marks status as `"error"`.
-3. Auto-detects `"failed"` from JSON response.
-4. Truncates results to 500 characters.
-5. Returns the original handler result unchanged.
+2. Records a raised exception as `"error"`, a refusal or a declined call as
+   `"failed"` and a cancelled call as `"cancelled"`, then re-raises each, so
+   the channel reads the outcome it would have read without the wrapper.
+3. Auto-detects `"failed"` from the response body otherwise.
+4. Truncates the recorded result to 500 characters.
+5. Returns the original handler result unchanged: the same object, never a
+   printed copy of it, so content parts and structured values reach the
+   channel as the handler gave them.
 
 Integrators MAY implement custom `ToolAuditor` backends (e.g., Datadog,
 Elasticsearch) by implementing the interface.
@@ -10508,17 +10526,26 @@ events.
 
 **What a handler returns (normative).** A tool handler answers with text or
 with a list of content parts (text and images, Section 21.5), which it MAY give
-as mappings naming their type. Any other value it returns (a mapping, a list of
-values, a number, a null) MUST reach the model as its JSON serialization, the
+as mappings naming their type. A mapping counts as a part only when it has
+exactly a part's shape (a text part's type and text, an image part's type and
+image fields): one that carries a `type` key among other data is a value, and
+reading it as a part would drop the rest. Any other value it returns (a
+mapping, a list of values, a number, a null) MUST reach the model as its JSON
+serialization, the
 same on every channel, and a result a SYNC ON_TOOL_CALL hook supplies in its
 place (Section 9.3) is read the same way. A value outside the contract MUST NOT
 fail the turn, nor reach the model as a language's own printing of it. A
 handler that declines a call SHOULD say so as a refusal, which carries the
 failure marker (Section 9.3); a body it returns instead is read by its own
-convention (Section 15.8.1). One such convention is the implementation's own:
-the answer by which a handler says a tool is not its to serve, so that a
-composition of handlers passes the call on. A call whose handlers all answer
-it was served by nothing (Section 9.3).
+convention (Section 15.8.1). A handler says a tool is not its to serve by
+raising the implementation's unserved signal (`UnservedToolCallError`), so
+that a composition of handlers passes the call on and the channel reads the
+call as served by nothing; the text envelope an earlier convention returned
+(`{"error": "Unknown tool: …"}`) is still read as that signal, from a
+handler's answer only, by one adapter. A call whose handlers all decline it
+was served by nothing (Section 9.3), on every channel and every entry of one:
+a conference's calls and the calls a speech-to-speech channel recovers from
+speech read it as the function-calling path does.
 
 A tool handler is called with the tool's name and arguments and nothing else.
 One AI channel object serves every room and every speaker it is bound to, so
