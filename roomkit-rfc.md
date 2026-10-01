@@ -5803,6 +5803,30 @@ suppress TTS — both audio streams coexist. If audio mixing is needed (e.g.,
 AI speaking while another participant is speaking), the backend handles
 concurrent `send_audio()` calls.
 
+**Several transports on one channel.** A bridged room often mixes transports:
+phone callers on SIP and browser participants on WebRTC. One VoiceChannel MAY
+serve sessions from more than one VoiceBackend:
+
+```
+VoiceChannel.add_backend(backend) → void
+        # Register an additional transport. Its inbound audio enters the
+        # channel's inbound pipeline, and its session-ready and
+        # client-disconnected signals drive the channel's session
+        # lifecycle, exactly as for the backend given at construction.
+```
+
+- The channel MUST have been constructed with a backend: the pipeline is built
+  once, for that primary backend's capabilities, and every added transport's
+  audio goes through it.
+- A session belongs to exactly one backend. `bind_session(…, backend=)` names
+  it; without it, the channel asks each added backend whether it holds the
+  session (`get_session`) and falls back to the primary backend.
+- Everything addressed to one session — bridged audio, TTS audio, assistant
+  transcriptions, the playback cancel of an interruption, and the disconnect
+  when the session leaves — MUST go through that session's own backend.
+- Adding a backend already served is a no-op. Closing the channel closes the
+  added backends with the primary one.
+
 #### 12.7.4 Sample Rate Handling
 
 Voice sessions MAY have different sample rates (e.g., SIP at 8kHz, WebRTC at
