@@ -4400,8 +4400,27 @@ RecordingConfig
 ├── channels: RecordingChannelMode           # How to mix audio
 ├── storage: string                          # Storage backend identifier (integrator-defined)
 ├── retention_days: int | null               # Auto-delete after N days (null = indefinite)
+├── encryption: RecordingEncryption | null   # Encrypts finished files (Section 17.6)
+├── storage_encrypted_at_rest: bool = false  # Integrator's statement: storage encrypts
 └── metadata: map<string, any>               # Recording metadata (room_id, participant_id, etc.)
 ```
+
+```
+RecordingEncryption (interface)
+├── name: string                             # Cipher/provider name
+└── encrypt_file(path: string) → string      # Encrypt a finished file, leave no
+                                             # plaintext; returns the artifact's path
+```
+
+A recorder that stores files MUST refuse to start when its configuration
+carries neither `encryption` nor `storage_encrypted_at_rest = true`
+(Section 17.6): an omitted security decision fails closed instead of producing
+a plaintext recording. With `encryption`, the recorder hands each finished
+file to `encrypt_file()` and reports the path it returns; a file the cipher
+cannot encrypt MUST be deleted rather than kept in the clear.
+`storage_encrypted_at_rest` is a deployment assertion the implementation
+cannot verify. The same two fields, with the same rule, configure the room
+media recorder (Section 12.11) and conference recording (Section 12.10.8).
 
 The `storage` field is an integrator-defined identifier resolved by the
 implementation at runtime — similar to how provider names reference registered
@@ -8104,7 +8123,9 @@ ConferenceRecordingConfig
 ├── mode: "framework" | "egress" = "framework"
 ├── storage: string                     # Integrator-defined identifier
 ├── format: string (default "wav" for audio, "mp4" for composed video)
-└── metadata: map<string, any>
+├── metadata: map<string, any>
+├── encryption: RecordingEncryption | null   # Section 12.3.7, handed to each track's recording
+└── storage_encrypted_at_rest: bool = false
 ```
 
 - **framework** (default) — bot-subscribed tracks are recorded through the
@@ -8575,8 +8596,15 @@ MediaRecordingConfig                  MediaRecordingResult
 ├── video_fps: int                    ├── tracks: list<RecordingTrack>
 ├── audio_codec: string               ├── format: string
 ├── audio_sample_rate: int            └── size_bytes: int
-└── metadata: map<string, any> = {}
+├── metadata: map<string, any> = {}
+├── encryption: RecordingEncryption | null
+└── storage_encrypted_at_rest: bool = false
 ```
+
+`encryption` and `storage_encrypted_at_rest` follow the rule of
+Section 12.3.7: a recorder that stores files MUST refuse
+`on_recording_start()` when neither is set, and with `encryption` the result's
+`url` names the encrypted artifact.
 
 ```
 MediaRecordingHandle                  RoomRecorderBinding
@@ -9584,7 +9612,10 @@ should live in the integration surface layer.
 **Audio data handling:**
 
 - Audio recordings MUST be encrypted at rest. Implementations MUST support
-  configurable encryption for stored recordings.
+  configurable encryption for stored recordings. Every recording
+  configuration carries it (`encryption`, `storage_encrypted_at_rest`;
+  Sections 12.3.7, 12.10.8, 12.11), and a recorder that stores files fails
+  closed when neither is set.
 - Audio streams in transit SHOULD use encrypted transport (TLS, SRTP, DTLS).
 - STT and TTS provider calls transmit audio to external services.
   Implementations SHOULD document which providers receive audio data and
