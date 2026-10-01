@@ -1194,6 +1194,10 @@ cancellation, provider failure, retry and fallback: a retry closes the abandoned
 attempt before the replacement attempt starts, so cumulative counts MUST NOT span
 two attempts. The complete `StreamToolCall` remains the unit of execution and
 persistence; composition events are ephemeral and MUST NOT be persisted.
+The ephemeral `TOOL_CALL_END` MUST carry each call's `status`, `completed` or
+`failed`, as the stored `TOOL_CALL_END` does: a call refused, failed, blocked,
+served by nothing or cancelled ends `failed`, so a live surface does not read
+the outcome out of the result preview.
 
 **What a provider hands the loop for a call (normative).** Every provider,
 streamed or not, hands the loop the same thing for the same call. Each call of
