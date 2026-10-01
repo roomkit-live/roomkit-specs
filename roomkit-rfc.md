@@ -1375,7 +1375,8 @@ carries an error, its rounds' text included.
 every token its provider bills for the turn (input, cache reads and writes,
 output; Section 6.7), a cost budget at the model's catalogue price, each
 generation priced as one response, or both, set for the channel, a room or a
-turn. The loop checks them at each round boundary, on the usage the provider
+turn; a room or a turn that leaves a budget `null` keeps the next level's
+(Appendix A.9, per-turn settings). The loop checks them at each round boundary, on the usage the provider
 reported for the generations so far: a turn that has reached a budget ends
 there, `budget_exceeded`, running none of the calls its last generation asked
 for and asking for no further generation, a retry of an empty answer included; a
@@ -11543,6 +11544,8 @@ AIChannel
 │   ├── temperature
 │   ├── max_tokens
 │   ├── thinking_budget
+│   ├── enable_thinking
+│   ├── reasoning_effort
 │   ├── response_schema
 │   ├── turn_budget_tokens
 │   ├── turn_budget_usd
@@ -11562,9 +11565,19 @@ AIChannel
     └── Returns ChannelOutput with response events + tasks + observations
 ```
 
+**Per-turn settings.** Each per-turn setting (`system_prompt`, `temperature`,
+`max_tokens`, `thinking_budget`, `enable_thinking`, `reasoning_effort`,
+`response_schema`, `turn_budget_tokens`, `turn_budget_usd`) resolves from the
+binding metadata, then the channel's per-turn configuration, then the channel
+default. A level that does not set it, its key absent or `null`, defers to the
+next: `null` never clears a setting, at either level. An integrator that
+serializes an empty form field as `null` keeps the channel's value. Lifting a
+channel default for one room takes an explicit value (`enable_thinking: false`,
+`thinking_budget: 0`); a channel's budget cannot be lifted, only replaced by
+another positive one (Section 6.4).
+
 **Constrained turn.** A turn's `response_schema` resolves like the other
-per-turn settings: the binding metadata, then the channel's per-turn
-configuration, then the channel default. When it is set, the channel MUST NOT
+per-turn settings. When it is set, the channel MUST NOT
 deliver or store any of the answer's text before the provider's check has
 passed (Section 6.7): a streamed answer is held until the done event, and a
 failed check fails the turn with its `ResponseSchemaError`, leaving nothing in
