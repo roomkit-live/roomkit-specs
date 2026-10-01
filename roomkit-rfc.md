@@ -6770,7 +6770,7 @@ recording, and cross-channel integration.
 
 | Value | Description |
 |---|---|
-| AUDIO | Microphone audio |
+| AUDIO | Microphone audio, or the sound of a screen share |
 | VIDEO | Camera video |
 | SCREEN_SHARE | Screen share video |
 
@@ -6855,15 +6855,18 @@ ConferenceGrants
 ```
 
 `publish_screen_share_audio` covers the audio track a client publishes
-beside a screen share — a browser tab or a system shared with its sound —
-which SFUs carry as a source of its own. It is the one publish permission
-that defaults to false, and the reason is compatibility rather than
-caution: implementations granted no such right before the field existed,
-so a true default would widen every credential minted after an upgrade
-without anyone asking. A backend MUST grant that source only through this
+beside a screen share — a browser tab or a whole screen shared with its
+sound — which SFUs carry as a source of its own. It is the one publish
+permission that defaults to false, and the reason is compatibility rather
+than caution: a caller that never names the field mints no credential
+carrying the right, so grants written without it in mind stay exactly as
+narrow as they read. A backend MUST grant that source only through this
 field — never as part of `publish_audio` or `publish_screen_share` — and
 the two screen-share fields are independent: a share without sound needs
 only `publish_screen_share`, and granting one never implies the other.
+Once published, the sound is a track of kind AUDIO: a separate right, not
+a separate kind, so the framework transcribes and records it like any
+other audio track, attributed to the participant sharing.
 
 **ConferenceAccess** — credentials for a human client to join:
 
