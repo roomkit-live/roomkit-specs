@@ -10620,6 +10620,29 @@ much as in the result: an implementation keeps them up to a size and states
 each one it leaves out. The bound is on the event only; the model's
 copy keeps every image.
 
+### 21.6 Tool Call Timeout
+
+A handler that never answers holds its turn for good: the model waits on the
+call, and nothing else in the room's turn can proceed. An implementation MUST
+therefore bound every wait on a tool handler's answer, on every path a call
+takes (both generation loops of an AI channel, every entry of a speech-to-speech
+channel, a conference's calls), through one rule:
+
+- A channel has a default bound per call, and a bound per tool name that
+  overrides it; either MAY be absent, meaning no bound. The default SHOULD be
+  short where a person waits in silence (speech-to-speech, conference) and MAY
+  be longer for text.
+- A tool that waits on another agent or on a person by design (a delegation, an
+  orchestration strategy's tool, a human-input tool) keeps its own bound and is
+  not subject to the channel's default; a bound set for its name still applies.
+- When the bound expires, the handler MUST be cancelled, and the call fails as a
+  call whose handler raised (Section 9.3): the model reads the failure and the
+  error's class, the observers the detail. A timeout the handler raises itself is
+  that handler's failure, not an expired bound.
+
+The bound is per call, not per turn: a turn's own deadline still applies
+between rounds.
+
 ---
 
 ## 22. Delivery Strategies
