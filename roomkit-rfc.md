@@ -2374,8 +2374,11 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   serve it. Every channel applies a verdict through the same reading (a
   block, an override, a bare override, an emptied result).
 - When the context the hooks need cannot be built, the hooks do not run and
-  the call keeps the outcome its handler gave it, reported once, on every
-  channel: a context that fails is not the tool's failure.
+  the call keeps the outcome its handler gave it, on every channel: a context
+  that fails is not the tool's failure. The ASYNC observers need that context
+  and do not run either; the call is still reported once, by the `tool_call`
+  framework event for a served call, and as the failure it is for a call
+  nothing served.
 
 **ON_TOOL_CALL, where the model abandoned the call:**
 
@@ -9361,7 +9364,9 @@ ToolAuditEntry
 - `"cancelled"` — set when the call was cancelled before its handler answered
   (its turn or session ended, the provider abandoned it). A cancelled call
   MUST NOT be recorded as `"ok"`, and the cancellation still reaches the
-  caller.
+  caller. A call the channel's per-call bound cut short (Section 21.6)
+  reaches a wrapped handler as a cancellation and is recorded `"cancelled"`
+  as well, its duration the bound; the channel reports it as failed.
 - `"failed"`, structurally — set when the handler refused the call
   (`ToolRefusedError`) or declined it as not its own (Section 21.4).
 - `"failed"`, from the body — read from the result body, which MUST be inspected for every
