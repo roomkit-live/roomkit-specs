@@ -1777,7 +1777,10 @@ Controls whether a channel can read events, write events, or both within a room.
 A boolean flag on the binding. When `muted = true`:
 
 - The channel STILL receives events via `on_event()` (reading is preserved).
-- The channel's response events are SUPPRESSED (writing is blocked).
+- The channel's response events are not broadcast (writing is blocked):
+  each re-enters and its commit pass stores it `BLOCKED` with
+  `source_muted`, after its hooks (§7.5 rule 2); a streamed one MAY be closed
+  unread instead.
 - Side effects (tasks, observations) are STILL collected.
 
 Muting is temporary. The integrator calls `mute()` and `unmute()` as needed.
@@ -1828,8 +1831,12 @@ Implementations MUST enforce these rules:
    with status `BLOCKED` (`blocked_by` = `source_read_only` or `source_muted`)
    rather than `DELIVERED`, and MUST NOT be broadcast. A response re-enters
    like any other event (§10.1 step 14) and meets this check after its
-   `BEFORE_BROADCAST` hooks (step 11 after step 9), whichever path commits it:
-   a buffered response, a streamed row, a regenerated answer. A muted or
+   `BEFORE_BROADCAST` hooks (step 11 after step 9), on each path that commits
+   a response: a buffered response, a streamed row, a regenerated answer. The
+   check reads the source's binding as the hooks left it, so a hook that
+   mutes the source of the event it reads blocks that event. The greeting and
+   the trace a delegation writes into its child room (§23.3) are committed by
+   paths of their own and are not covered here. A muted or
    read-only source's response is therefore stored `BLOCKED` with what its
    hooks decided collected (rule 3), and a hook that blocks it names the
    block. A streamed response from a source that cannot write is piped live
@@ -2618,6 +2625,7 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     ├── If source_binding.access ∉ {READ_WRITE, WRITE_ONLY} OR source_binding.muted:
     │   ├── Store event with status=BLOCKED,
     │   │   blocked_by = source_read_only | source_muted
+    │   ├── Deliver injected events from hook result
     │   ├── Persist tasks and observations (side effects ALWAYS collected, §7.5)
     │   └── Return InboundResult(blocked=true)
     └── Otherwise → continue
@@ -2670,7 +2678,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
         output like the trigger's response (§19.3.1). A streamed
         response started by any pass is read by the caller that owns
         the chain, after the trigger's own, and counts against the
-        same reentry budget as a buffered response.
+        same reentry budget as a buffered response. Every response that
+        re-enters counts against that budget, a muted or read-only
+        source's included, whose pass stores it BLOCKED (§7.5 rule 2).
         # Relaxation vs pre-lane implementations: a concurrent inbound
         # event MAY commit between a trigger and its response. Ordering
         # guarantees are per-room index monotonicity and parent linkage —
@@ -2914,7 +2924,9 @@ than being drained inside the trigger's lock tenure.
 
 4. HANDLE MUTED CHANNELS
    ├── Muted channels STILL receive on_event()
-   ├── Response events from muted channels are SUPPRESSED
+   ├── Response events from muted channels re-enter like any other
+   │   (§10.1 step 14); their commit pass stores them BLOCKED source_muted
+   │   after their hooks (§7.5 rule 2), and none is broadcast
    └── Tasks and observations from muted channels are COLLECTED
 
 5. RETURN BroadcastResult
