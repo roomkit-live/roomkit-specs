@@ -5234,7 +5234,9 @@ same steps: the gate above; the serving, inside the tool call context of
 Section 21.4, which a conference installs too, with the chain depth of the
 answer that issued the call (Section 8.3); ON_TOOL_CALL (Section 9.3); the bound of
 Section 21.5, which covers the results of Tool Search and of reading a
-skill's references as it covers a handler's; the delivery; the report. A
+skill's references as it covers a handler's, a tool's complete schema read
+by name aside, since the model needs it whole to call the tool; the
+delivery; the report. A
 call's result is delivered once and its outcome reported once: a
 reconfiguration that fails once the result went out sends no second one, and
 a cancellation that arrives after the result was delivered is not reported.
