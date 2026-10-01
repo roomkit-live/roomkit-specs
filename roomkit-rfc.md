@@ -2136,7 +2136,7 @@ Planned rows are normative design intent for the named capability.
 | ON_SPEECH_START | ASYNC | Implemented | Audio pipeline detected speech start (voice; per conference lane) |
 | ON_SPEECH_END | ASYNC | Implemented | Audio pipeline detected speech end (voice; per conference lane) |
 | ON_TRANSCRIPTION | SYNC | Implemented | After STT transcription (voice) — can modify |
-| BEFORE_TTS | SYNC | Implemented | Before TTS synthesis (voice) — can modify text/voice |
+| BEFORE_TTS | SYNC | Implemented | Before TTS synthesis (voice) — can modify text/voice; once per sentence on a streamed response |
 | AFTER_TTS | ASYNC | Implemented | After TTS synthesis (voice) |
 | ON_BARGE_IN | ASYNC | Implemented | User interrupted TTS playback (voice) |
 | ON_TTS_CANCELLED | ASYNC | Implemented | TTS was cancelled (voice) |
@@ -2225,9 +2225,12 @@ Planned rows are normative design intent for the named capability.
   block instead. BEFORE_TTS and ON_TRANSCRIPTION are the first kind: a
   redaction hook that fails, times out, or returns something unusable must not
   let the original through, and allowing would publish exactly what the hook
-  was there to suppress. BEFORE_TOOL_USE is the second: it is the gate of a
-  tool call, where an approval hook sits, and an approval hook that cannot
-  answer must not let the call run. A partial rule is no rule — an
+  was there to suppress. On a streamed TTS response BEFORE_TTS runs on each
+  sentence (Section 12.2, step 12s.b), so this applies to every sentence: a
+  streamed response is never a way around the hook. BEFORE_TOOL_USE is the
+  second: it is the gate of a tool call, where an approval hook sits, and an
+  approval hook that cannot answer must not let the call run. A partial rule
+  is no rule — an
   implementation that blocks on exceptions but allows on timeouts leaks through
   the timeout. Implementations MUST document which triggers fail closed.
 - **A BEFORE_TOOL_USE that failed closed refuses the call before execution**,
@@ -3558,15 +3561,25 @@ enters a room as any other audio.
 12s. Framework pipes stream → VoiceChannel.deliver_stream():
      a. Sentence splitter buffers tokens → yields at sentence boundaries (.!?)
         (min_chunk_chars threshold prevents very short TTS fragments)
-     b. tts.synthesize_stream_input(sentences) → AudioChunk stream (~200ms TTS TTFB)
+     b. BEFORE_TTS runs on each sentence before the TTS reads it, once for all
+        sessions: the sentence is the hook's payload, a MODIFY replaces it, a
+        BLOCK drops it, and the next sentence is judged on its own. The
+        fail-closed rule of Section 9.3 applies sentence by sentence: a hook
+        that raises, times out or returns something unusable drops that
+        sentence, which is never synthesized. A sentence a hook redacts to an
+        empty string is not synthesized either. The hook sees the sentence as
+        the TTS would read it, after any text filter (a streaming filter works
+        on the tokens, before the splitter) — where the standard path runs the
+        hook before the filter.
+     c. tts.synthesize_stream_input(sentences) → AudioChunk stream (~200ms TTS TTFB)
         First audio reaches speaker ~500-800ms after speech end (vs ~2-3s standard)
-     c. Several sessions on the binding: the stream is read once and every session
+     d. Several sessions on the binding: the stream is read once and every session
         receives every sentence, in parallel. The stream is pulled at the pace of
         the fastest session; a session that stops early (barge-in, transport error)
         does not cut the others off.
 13s. Framework accumulates full text from stream → stores AI response event
      Interrupted: when deliver_stream() returns before the stream is exhausted,
-     for any reason (typically every session of 12s.c stopped early), the
+     for any reason (typically every session of 12s.d stopped early), the
      framework MUST close the response stream (no further token is generated and
      no tool call starts after that point) and MUST store the text already
      produced as the AI response event with `metadata.cancelled = true`. A tool
@@ -3583,7 +3596,10 @@ enters a room as any other audio.
      to its end and nothing is cancelled.
 14s. Framework re-broadcasts complete event to non-streaming channels (exclude_delivery
      skips channels that already received streaming content)
-15s. Fire AFTER_TTS hook (BEFORE_TTS skipped — cannot block mid-stream)
+15s. Fire AFTER_TTS hook with the text the sessions were sent: the sentences as
+     BEFORE_TTS left them (12s.b) when a hook changed or dropped one, the whole
+     streamed text otherwise. The final assistant transcript carries the same
+     text. AFTER_TTS does not fire when every sentence was dropped.
 
 --- Common outbound path ---
 12. AudioChunk stream → [PostProcessors] → [Recorder] → [Resampler] → Transport
