@@ -6850,8 +6850,20 @@ ConferenceGrants
 ├── publish_screen_share: bool = true
 ├── subscribe: bool = true
 ├── moderate: bool = false              # Can mute/remove other participants
-└── hidden: bool = false                # Invisible observer (bots, monitors)
+├── hidden: bool = false                # Invisible observer (bots, monitors)
+└── publish_screen_share_audio: bool = false  # The sound of a screen share
 ```
+
+`publish_screen_share_audio` covers the audio track a client publishes
+beside a screen share — a browser tab or a system shared with its sound —
+which SFUs carry as a source of its own. It is the one publish permission
+that defaults to false, and the reason is compatibility rather than
+caution: implementations granted no such right before the field existed,
+so a true default would widen every credential minted after an upgrade
+without anyone asking. A backend MUST grant that source only through this
+field — never as part of `publish_audio` or `publish_screen_share` — and
+the two screen-share fields are independent: a share without sound needs
+only `publish_screen_share`, and granting one never implies the other.
 
 **ConferenceAccess** — credentials for a human client to join:
 
