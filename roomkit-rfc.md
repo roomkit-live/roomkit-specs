@@ -1834,9 +1834,11 @@ Implementations MUST enforce these rules:
    `BEFORE_BROADCAST` hooks (step 11 after step 9), on each path that commits
    a response: a buffered response, a streamed row, a regenerated answer. The
    check reads the source's binding as the hooks left it, so a hook that
-   mutes the source of the event it reads blocks that event. The greeting and
-   the trace a delegation writes into its child room (§23.3) are committed by
-   paths of their own and are not covered here. A muted or
+   mutes the source of the event it reads blocks that event. The greeting,
+   and the trace a delegation writes into a child room no transport is
+   shared into (§23.3), are committed by paths of their own and are not
+   covered here; a child room with a shared transport commits its agent's
+   response as a room does, and is covered. A muted or
    read-only source's response is therefore stored `BLOCKED` with what its
    hooks decided collected (rule 3), and a hook that blocks it names the
    block. A streamed response from a source that cannot write is piped live
@@ -10794,15 +10796,30 @@ When `delegate(room_id, agent_id, task, notify)` is called:
 
 1. Create a **child room** linked to the parent room.
 2. Attach the specified agent as an INTELLIGENCE channel in the child room.
-3. Share relevant channels from the parent (for context access).
-4. Inject the task description as a system event in the child room.
-5. The agent processes the task and generates a response. The child room
-   keeps the agent's trace (tool calls and text), written as any streamed
-   turn's rows are (Section 12.2 step 13s) but committed without crossing
-   `BEFORE_BROADCAST` or a delivery lane: a TOOL_CALL_END keeps the call's
-   structured copy, and a delegation cancelled or failed while a call runs
-   closes that call with `status = failed`, so no start row stays pending.
-6. Collect the agent's response as the task result.
+3. Share the channels the caller names from the parent, each with its
+   parent binding's permissions (§7.5 rule 6).
+4. Inject the task description as a system event in the child room, visible
+   to the child room's intelligence channels only. The task description is
+   the delegating side's instruction to the worker, not a message for the
+   people behind a transport: a shared transport MUST NOT receive it, nor the
+   re-prompt a result tool sends after a turn that ended without its call.
+5. The agent processes the task and generates a response. When no transport
+   is shared into the child room, nobody is delivered the response, and the
+   child room keeps the agent's trace (tool calls and text), written as any
+   streamed turn's rows are (Section 12.2 step 13s) but committed without
+   crossing `BEFORE_BROADCAST` or a delivery lane: a TOOL_CALL_END keeps the
+   call's structured copy, and a delegation cancelled or failed while a call
+   runs closes that call with `status = failed`, so no start row stays
+   pending. When a transport is shared, the response is committed as a
+   room's response is (§10.1 steps 9 to 14, §7.5 rule 2): each row, buffered
+   or streamed, crosses `BEFORE_BROADCAST` and the agent's right to write and
+   rides the child room's delivery lane, so the shared transport receives the
+   agent's answers as its binding's access and the agent binding's visibility
+   allow, and the rows the room stored are the trace.
+6. Collect the agent's response as the task result: the answer the child
+   room kept. With a shared transport, that is what the hooks decided — a
+   rewrite holds for the result as for the delivery, and an answer the gate
+   refused is no answer.
 7. Fire `ON_TASK_COMPLETED` hook in the parent room.
 8. If `notify` is set, hand the result back through `deliver()` (§22) with
    the framework's delivery strategy and `instruction = true`, so
