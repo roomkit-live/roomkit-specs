@@ -10632,9 +10632,12 @@ channel, a conference's calls), through one rule:
   overrides it; either MAY be absent, meaning no bound. The default SHOULD be
   short where a person waits in silence (speech-to-speech, conference) and MAY
   be longer for text.
-- A tool that waits on another agent or on a person by design (a delegation, an
-  orchestration strategy's tool, a human-input tool) keeps its own bound and is
-  not subject to the channel's default; a bound set for its name still applies.
+- A tool that keeps a bound of its own is not subject to the channel's default:
+  one that waits on another agent or on a person by design (a delegation, an
+  orchestration strategy's tool, a human-input tool), or a command run under
+  its own timeout (a sandbox command). A bound set for its name still applies.
+  A tool an orchestration strategy installs for an agent to serve (a pipeline
+  agent's own tool) is the host's and is bounded like any other.
 - When the bound expires, the handler MUST be cancelled, and the call fails as a
   call whose handler raised (Section 9.3): the model reads the failure and the
   error's class, the observers the detail. A timeout the handler raises itself is
