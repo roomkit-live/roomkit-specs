@@ -8606,6 +8606,17 @@ Section 12.3.7: a recorder that stores files MUST refuse
 `on_recording_start()` when neither is set, and with `encryption` the result's
 `url` names the encrypted artifact.
 
+**Recorders bound when a room is created start before the room is written,
+all or nothing.** When one refuses `on_recording_start()`, the recordings
+already started for that room MUST be stopped and room creation MUST fail
+with the refusal, with no room written: a room that exists without the
+recording it was created with is a room the integrator believes is recorded.
+When writing the room fails, the recordings started for it MUST be stopped,
+and the recordings of a room already holding that id MUST NOT be touched.
+`ON_RECORDING_STARTED` fires for each recording once the room exists, which
+still precedes any media: a room recording captures nothing until a track is
+added.
+
 ```
 MediaRecordingHandle                  RoomRecorderBinding
 ├── id: string                        ├── recorder: MediaRecorder
