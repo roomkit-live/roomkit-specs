@@ -5243,8 +5243,10 @@ a cancellation that arrives after the result was delivered is not reported.
 A call the session's end, or a conference's detach, interrupts is reported
 once, as cancelled. While a call is in flight its id names it: a second call
 with the same id is refused and reported once, and sends nothing, since the
-id's one result is the first call's, which runs on. A channel that mutes the input
-while a tool runs keeps it muted until the last call in flight ends.
+id's one result is the first call's, which runs on. A channel that mutes the
+input while one of the provider's tool calls runs keeps it muted until the
+last such call ends; a call recovered from speech or a backend's call mutes
+nothing, the user's input being no answer to it.
 
 An implementation MAY additionally recover a tool call the model emitted as
 assistant *text* rather than through the provider's function calling API. Such a
