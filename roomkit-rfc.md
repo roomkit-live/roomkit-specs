@@ -1197,7 +1197,14 @@ persistence; composition events are ephemeral and MUST NOT be persisted.
 The ephemeral `TOOL_CALL_END` MUST carry each call's `status`, `completed` or
 `failed`, as the stored `TOOL_CALL_END` does: a call refused, failed, blocked,
 served by nothing or cancelled ends `failed`, so a live surface does not read
-the outcome out of the result preview.
+the outcome out of the result preview. The stored `TOOL_CALL_END` also carries
+the call's `outcome`, the way it ended as the channel determined it (Section
+9.3): `served`, `refused`, `failed`, `blocked`, `unserved` or `cancelled`. A
+reader that rebuilds what earlier turns did from the store, as a tool-usage
+digest reseeded after a restart does, reads that outcome rather than inferring
+it from the body: such a digest keeps the calls the live one keeps (served,
+failed, blocked; never a refusal, a call nothing served or one cancelled). A
+row stored without it is read by its `status`.
 
 **What a provider hands the loop for a call (normative).** Every provider,
 streamed or not, hands the loop the same thing for the same call. Each call of
@@ -1361,6 +1368,17 @@ policy denies it, its skill closed) leaves the declaration, and a room whose
 declaration is not known (a new room, a restarted process) takes the one its
 turn would show and keeps it from then on.
 
+**One loop, streamed or not.** An AI channel runs every turn through one tool
+loop, whatever its provider streams and whether the turn carries tools: a
+turn without tools is a loop whose first round asks for none. A provider
+that does not stream its structured events is read through
+`generate_structured_stream`'s default, which wraps `generate()` and MUST
+hand the loop everything `generate()` returned: the thinking with its
+signature, each call with its metadata (a thought signature among them), and
+the usage and metadata of the done event. A provider that streams text alone
+streams a turn without tools through `generate_stream`. Every rule this
+section gives a turn therefore holds once, for every provider.
+
 **A turn cut short.** A tool loop that ends before its answer (the provider
 failed after at least one round, or the turn was cancelled between rounds)
 keeps what the room already has. The text each round said before its calls was
@@ -1369,18 +1387,17 @@ an earlier turn of the room MUST be delivered either: the history the model was
 given is context, not this turn's output. A turn the provider interrupted after
 a round is an error, surfaced as when the loop raises (ON_ERROR fires and the
 caller learns the provider's error), and its rounds are kept, the calls that
-ran included. Where the turn is delivered once its loop ends, its terminal
-message carries only what the room has not read, the interruption marker
-(`[Response interrupted]`), never the provider's error. A cancellation adds
-nothing a round already said.
+ran included. No message is added to say so: the turn's record (below) says
+how it ended, and the provider's error never reaches the room. A cancellation
+adds nothing a round already said.
 
-The interruption marker is not an answer, and it is marked as what it is: its
-message carries `metadata["interruption_marker"] = true` (a key distinct from
-the `interrupted` of a spoken reply a barge-in cut, Section 12.3.13). It MUST
-NOT solicit any intelligence channel (Section 19.3), and nothing that reads an
-agent's answer (an orchestration strategy, a delegated task's result) may take
-it for one. A turn the provider interrupted after a round has no answer,
-whichever loop ran it: a task delegated to it fails with the provider's error,
+A stored interruption marker (`[Response interrupted]`, a message carrying
+`metadata["interruption_marker"] = true`, a key distinct from the
+`interrupted` of a spoken reply a barge-in cut, Section 12.3.13) is not an
+answer. It MUST NOT solicit any intelligence channel (Section 19.3), and
+nothing that reads an agent's answer (an orchestration strategy, a delegated
+task's result) may take it for one. A turn the provider interrupted after a
+round has no answer: a task delegated to it fails with the provider's error,
 and a strategy that reads an agent's answer reads none from an output that
 carries an error, its rounds' text included.
 
@@ -1401,12 +1418,11 @@ provider serves is priced at the primary provider's rate.
 
 **A turn that did not complete.** `ON_AI_RESPONSE` reports a turn whose loop
 reached its end, with the reason it ended for: `cancelled` for a cancellation
-between rounds, `error` for a turn the provider interrupted after a round,
-streamed or not. The two loops report such a turn alike: the hook carries what
-its rounds used, then the provider's error surfaces as when the loop raises
-(ON_ERROR fires), a streamed turn's through its stream once the hook has
-fired. A turn whose loop did not reach its end MUST NOT fire it, streamed or
-not: one that raised (the provider's interruption after a round aside), or one
+between rounds, `error` for a turn the provider interrupted after a round.
+The hook carries what its rounds used, then the provider's error surfaces as
+when the loop raises (ON_ERROR fires), through the turn's response stream once
+the hook has fired. A turn whose loop did not reach its end MUST NOT fire it:
+one that raised (the provider's interruption after a round aside), or one
 whose response stream was
 closed before the loop's end (a barge-in, a transport that stopped reading, a
 consumer that refused the answer, a task cancelled from outside). Its
@@ -1418,17 +1434,16 @@ turn. The span of a turn that reached its end `cancelled` (a steering
 `Cancel`) or `error` ends with that status too, never `ok`.
 
 **The turn's record.** A turn that reached its end records it on its last
-MESSAGE, streamed or not: `loop_end_reason` (the reason above) and `ai_usage`
+MESSAGE: `loop_end_reason` (the reason above) and `ai_usage`
 (what its rounds used) in the message's metadata. That message is the one of
 the turn's final text or, when the turn has none (a cancellation between
 rounds, an interruption), the last message the turn wrote. A response without
-tools records it too, except from a provider that streams text alone, whose
-stream carries nothing but text to record it from. A streamed turn learns its end after its segments are
+tools records it too; a provider that streams text alone reports no usage, and
+its record carries none. A turn learns its end after its segments are
 written, so the implementation updates the stored message, and ON_EVENT_UPDATED
 fires as for any change to a stored event; it does not deliver the message
 again. Writing that update is best effort: a failure is logged, and the turn's
-outcome stands. A host reads how any turn ended from its reply, whichever loop
-produced it.
+outcome stands. A host reads how any turn ended from its reply.
 
 **ACP Agent Channel:**
 
@@ -2278,6 +2293,15 @@ Planned rows are normative design intent for the named capability.
 - Cannot block or modify events.
 - Exceptions MUST be caught and logged, never propagated.
 - Used for observability, logging, side effects.
+
+**Who serves a call.** An AI channel decides it call by call, not turn by
+turn. A call the provider already ran (it carries its result) is reported; a
+call an external tool handler is configured to decide is that handler's; any
+other call is the channel's own, through the pre-execution gate, then its
+handler, and is a call nothing served when no handler takes it. A call the
+provider ran therefore never reaches the channel's handler because the channel
+has tools of its own, and a BEFORE_TOOL_USE BLOCK refuses every call the
+channel serves, a channel without a handler included.
 
 **ON_TOOL_CALL, where the call was served:**
 
@@ -6628,7 +6652,7 @@ following order:
 | 3 | tool_resolution | Resolve skills, apply ToolPolicy, apply eviction | — |
 | 4 | prompt_assembly | Compose system prompt (channel + binding + skill preambles) | — |
 | 5 | pre_generation | Fire BEFORE_AI_GENERATION hooks, respect block/modify | BEFORE_AI_GENERATION |
-| 6 | generation | Call AIProvider.generate() or generate_stream(); run tool loop | ON_AI_THINKING, ON_TOOL_CALL |
+| 6 | generation | Read the provider's structured stream (generate() wrapped when it does not stream); run the tool loop | ON_AI_THINKING, ON_TOOL_CALL |
 | 7 | post_generation (list) | Response validation, caching, output filtering (default: no-op) | — |
 | 8 | emission | Emit response events, fire AFTER_RESPONSE | ON_AI_RESPONSE |
 
@@ -10591,7 +10615,7 @@ A Cancel ends the turn at the first point the loop reaches, and a round's
 tools are one such point: a Cancel that arrives after the model's last event
 of a round, while its calls are announced but before they run, MUST stop them.
 None of them runs, and each announced call ends with `status = failed`, so no
-start row stays pending. Both loops, streamed or not, honour the same points.
+start row stays pending. The loop honours the same points for every provider.
 
 Steering directives are typically issued by orchestration logic (e.g.,
 supervisor injecting context for a worker agent) or by hooks reacting to
@@ -10727,7 +10751,7 @@ copy keeps every image.
 A handler that never answers holds its turn for good: the model waits on the
 call, and nothing else in the room's turn can proceed. An implementation MUST
 therefore bound every wait on a tool handler's answer, on every path a call
-takes (both generation loops of an AI channel, every entry of a speech-to-speech
+takes (the tool loop of an AI channel, every entry of a speech-to-speech
 channel, a conference's calls), through one rule:
 
 - A channel has a default bound per call, and a bound per tool name that
@@ -11825,8 +11849,8 @@ AIChannel
 │   └── AIToolResultPart                    # Tool execution result
 └── behavior:
     ├── on_event() builds conversation history + target capabilities
-    ├── Calls provider.generate(context)
-    ├── Runs tool loop: generate → call tools → feed results → re-generate (up to max_tool_rounds)
+    ├── Reads provider.generate_structured_stream(context) (generate() wrapped when it does not stream)
+    ├── Runs one tool loop: generate → call tools → feed results → re-generate (up to max_tool_rounds)
     ├── Skips events from self (loop prevention)
     ├── Supports streaming via generate_stream() and deliver_stream()
     └── Returns ChannelOutput with response events + tasks + observations
@@ -11857,8 +11881,7 @@ passed (Section 6.7): a streamed answer is held until the done event, and a
 failed check fails the turn with its `ResponseSchemaError`, leaving nothing in
 the room. A turn whose tool loop stops before a final answer, on its round cap,
 its deadline or its spending budget, because it was stopped, or because the provider interrupted it
-after a round, has no document to deliver and fails with `truncated`, in
-either loop. Its interruption marker is not delivered as the answer. The turn's tools include those the channel adds itself
+after a round, has no document to deliver and fails with `truncated`. The turn's tools include those the channel adds itself
 (skills, sandbox, planning, orchestration), so a schema on a channel that adds
 any needs a provider whose `supports_response_schema_with_tools` is true.
 
