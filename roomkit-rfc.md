@@ -1206,6 +1206,15 @@ it from the body: such a digest keeps the calls the live one keeps (served,
 failed, blocked; never a refusal, a call nothing served or one cancelled). A
 row stored without it is read by its `status`.
 
+**What a provider hands the loop of its reasoning (normative).** A provider
+whose reasoning comes in blocks, each with its own signature (Anthropic), hands
+the loop every block as it received it: its text and its signature, or, for a
+block the vendor redacted, its opaque data. The tool loop replays a round's
+blocks one by one, in the order and at the place they came in relative to the
+round's text and calls: the vendor refuses a round whose blocks were merged,
+split or reordered. A provider whose reasoning has no blocks hands one block
+per round.
+
 **What a provider hands the loop for a call (normative).** Every provider,
 streamed or not, hands the loop the same thing for the same call. Each call of
 a response carries an id no other call of that response carries: a provider
@@ -1377,7 +1386,7 @@ loop, whatever its provider streams and whether the turn carries tools: a
 turn without tools is a loop whose first round asks for none. A provider
 that does not stream its structured events is read through
 `generate_structured_stream`'s default, which wraps `generate()` and MUST
-hand the loop everything `generate()` returned: the thinking with its
+hand the loop everything `generate()` returned: each thinking block with its
 signature, each call with its metadata (a thought signature among them), and
 the usage and metadata of the done event. A provider that streams text alone
 streams a turn without tools through `generate_stream`. Every rule this
@@ -1645,6 +1654,7 @@ AIResponse
 ├── content: string                         # Generated text
 ├── thinking: string | null                 # Reasoning the provider exposed
 ├── thinking_signature: string | null       # Opaque token to echo that reasoning back
+├── thinking_parts: list<AIThinkingPart>    # The reasoning blocks, in order, each with its signature or redacted data
 ├── finish_reason: string | null            # The provider's own stop reason
 ├── usage: map<string, int>                 # input_tokens, output_tokens, cache counters
 ├── tool_calls: list<AIToolCall>            # Calls for the tool loop to run
