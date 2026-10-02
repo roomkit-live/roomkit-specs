@@ -4840,7 +4840,13 @@ silence, not time: speech that starts during it — including speech that starte
 while the turn was still being judged — keeps the turn open, and silence counts
 again from the end of that speech. A transcript from that speech joins the
 accumulated turn, which is then evaluated again; speech that yields no
-transcript does not hold the turn. Once the wait ends in silence, the
+transcript does not hold the turn. That transcript may still be on its way
+when the silence has lasted the wait (a streaming STT finalizes after the
+speech, sometimes for longer than the wait): the wait MUST NOT end before the
+transcript of speech that has ended has joined the turn or turned out empty,
+so the turn is routed with it. An implementation MAY bound this extra wait,
+so that a transcription that never ends does not hold the turn indefinitely.
+Once the wait ends in silence, the
 accumulated turn MUST be routed as complete, and its completion event carries
 `confidence = 0.0`. A user who pauses on a sentence the detector judged
 unfinished is answered, never ignored.
