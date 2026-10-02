@@ -4967,6 +4967,14 @@ partials can be classified; a backchannel then fires ON_BACKCHANNEL once and
 the speech is discarded, a genuine interruption cancels TTS and the speech is
 processed as the user's turn.
 
+The held speech may end before its first word and before the wait ends: a
+streaming STT often releases a short word ("okay", "stop") only when the
+speech is over. The streaming STT SHOULD then be finalized and its final
+transcript classified, rather than the speech discarded unheard. A
+backchannel, or no words at all, is discarded (a backchannel fires
+ON_BACKCHANNEL once) and TTS continues; anything else cancels TTS if it is
+still playing, and the speech is processed as the user's turn.
+
 In continuous-STT mode, where the STT transcribes all audio and no local VAD
 segments it, every evaluation of an ongoing stretch of speech during playback,
 whichever signal triggered it (a partial transcript, or an energy or transport
@@ -5878,7 +5886,9 @@ When both are active during TTS playback:
    speech segment is routed to STT as usual.
 5. If the interruption is rejected (backchannel or too short), the VAD speech
    segment is still captured but the pipeline SHOULD discard it (or queue it
-   if `InterruptionStrategy = DISABLED`).
+   if `InterruptionStrategy = DISABLED`). A SEMANTIC segment that ends before
+   its first word is not rejected as too short: its final transcript is
+   classified first (Section 12.3.13).
 
 When the backend does NOT support `BARGE_IN`, the pipeline MAY use VAD's
 `SPEECH_START` event during TTS playback as a fallback barge-in trigger. In this
