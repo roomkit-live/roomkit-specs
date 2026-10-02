@@ -1684,7 +1684,9 @@ AIResponse
 **Model listings.** A live listing backfills from the curated catalogue what
 the vendor's endpoint leaves blank (display name, context window, vision,
 price), but not its `capabilities`: a catalogue's tags MAY be internal routing
-flags, and an empty list means "unknown", never "none". A conversational
+flags, and an empty list means "unknown", never "none". A provider whose
+endpoint reports no model type at all MAY take the tags from its catalogue
+when that catalogue holds public tags only. A conversational
 provider's listing that surfaces speech models SHOULD tag them, as the image
 catalogue is tagged (Section 25.6): `transcription` for a speech-to-text model,
 `speech` for a text-to-speech one, from what the vendor reports or, failing
