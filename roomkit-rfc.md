@@ -1214,14 +1214,18 @@ eviction and cancellation all find a call by its id. Two calls stay two calls,
 whatever stream index or arguments they share; a call the provider receives
 twice (a re-emission carrying what the first lacked) stays one, and only a
 call the wire cannot tell from such a re-emission (Gemini, an identical call
-without an id in a later chunk) is folded into the first. A call's arguments
-reach the loop as a mapping and never as an error: no arguments (nothing, or
-JSON `null`) are `{}`, and arguments that do not parse to an object (invalid
-JSON, an array, a fragment) are kept whole under `raw`. A call whose arguments
-the response cut before they were complete (the output cap, a content filter)
-is marked partial, and a tool loop, the AI channel's or a reasoning
-backend's, MUST NOT run it: the model reads that the call was cut and that
-nothing ran, so it can call again with less. A response the provider ended
+in a later chunk, one copy or both without an id) is folded into the first,
+which keeps what either copy carries (its id, its thought signature). A call's
+arguments reach the loop as a mapping and never as an error: no arguments
+(nothing, or JSON `null`) are `{}`, and arguments that do not parse to an
+object (invalid JSON, an array, a fragment) are kept whole under `raw`. Such a
+call is marked partial, whatever the provider and whatever stop reason the
+response gave, and a tool loop, the AI channel's or a reasoning backend's,
+MUST NOT run it: no tool does anything useful with `raw`. The model reads that
+nothing ran, and why: its call was cut when the response was cut short (the
+output cap, a content filter, or a stream that ended without a stop reason),
+so it can call again with less; its arguments could not be read otherwise, so
+it can call again with valid ones. A response the provider ended
 because it could not parse the model's call (Gemini's
 `MALFORMED_FUNCTION_CALL`) carries no call at all: the tool loop MUST tell
 the model that its call did not run, within the bound it gives an empty
@@ -1761,6 +1765,34 @@ server, so `supports_response_schema` is a provider default that an
 implementation SHOULD let the host override in the provider's configuration. A
 consumer that must run on any provider reads the property, and where it is false
 asks for JSON in the prompt and parses the answer itself.
+
+**Declaring tools (normative).** A provider declares each tool of the context
+in its vendor's format. A tool without parameters (an absent or empty schema)
+is declared as an object schema with no properties, which every vendor
+accepts, never as an empty map. Vendors accept different tool names, so the
+names are checked in two places:
+
+- An implementation refuses, when a tool is defined, a name no vendor accepts:
+  an empty one, or one with a character other than a letter, a digit, `_`,
+  `.`, `:` or `-`. A loader of tools defined elsewhere (MCP) skips such a tool
+  with a warning and keeps the others.
+- Each provider checks its own vendor's rule when it declares a turn's tools,
+  and for a name its vendor refuses it raises, before the request, an error
+  naming the tool and the rule, rather than letting the vendor reject the
+  request mid-turn. A provider that cannot know its server's rule (an
+  OpenAI-compatible server behind a base URL) checks none: the server decides.
+
+**A tool result on the wire.** A provider renders each tool result as its
+vendor's format carries one. Where that format has an error flag on a result
+(Anthropic's `is_error`), a result whose call was refused, failed, blocked,
+served by nothing or cancelled carries it; the text the model reads is the
+same either way.
+
+**A request the model cannot serve.** Where a provider knows, from its model
+catalogue, that the model refuses function tools on the endpoint it calls, or
+that the endpoint does not serve the model at all, the request fails before it
+is sent, with a non-retryable error naming the model. Behind a base URL the
+server decides.
 
 **SMS Provider interface:**
 
