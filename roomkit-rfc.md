@@ -1639,6 +1639,11 @@ AIProvider (interface)
 ├── generate_structured_stream(context: AIContext) → async_iterator<StreamEvent>
 │       # Yield thinking deltas, text deltas and tool calls, then one done event
 │
+├── available_models() → list<ModelInfo>
+│       # Curated offline catalogue (MAY be empty)
+├── list_models() → list<ModelInfo>
+│       # Live catalogue; default: available_models() (see Model listings below)
+│
 └── close() → void
         # Release connections
 
@@ -1675,6 +1680,15 @@ AIResponse
 ├── observations: list<Observation>         # Observations to record
 └── metadata: map<string, any>              # Provider-specific data (model, latency)
 ```
+
+**Model listings.** A live listing backfills from the curated catalogue what
+the vendor's endpoint leaves blank (display name, context window, vision,
+price), but not its `capabilities`: a catalogue's tags MAY be internal routing
+flags, and an empty list means "unknown", never "none". A conversational
+provider's listing that surfaces speech models SHOULD tag them, as the image
+catalogue is tagged (Section 25.6): `transcription` for a speech-to-text model,
+`speech` for a text-to-speech one, from what the vendor reports or, failing
+that, from the model's name. A model that converses in audio is neither.
 
 **Usage counters.** `input_tokens`, `output_tokens` and the cache counters are
 disjoint, as in Section 25.5. `output_tokens` counts every output token the
