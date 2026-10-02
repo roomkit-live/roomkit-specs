@@ -1216,7 +1216,11 @@ in number, and a block without its signature), so the tool loop replays a
 round's blocks one by one, in the order and at the place they came in relative
 to the round's calls and stretches of text. A block the response cut before
 its signature is not replayed. A provider whose reasoning has no blocks hands
-one block per round, replayed first. Two readers cannot know where blocks
+one block per round, replayed first. A provider renders a replayed round's
+reasoning where its vendor reads it: DeepSeek, in thinking mode, refuses a
+round of the turn in progress that called tools without its
+`reasoning_content`, so its provider sends that field on every round that
+called tools, empty when the round did not reason. Two readers cannot know where blocks
 came, and replay them first, then the text, then the calls: a caller of
 `generate()`, since a response does not say where its blocks came, and a turn
 under a response schema, whose text is held until it is checked.
