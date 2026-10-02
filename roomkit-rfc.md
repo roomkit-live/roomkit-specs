@@ -1801,7 +1801,7 @@ names are checked in two places:
 
 **A tool result on the wire.** A provider renders each tool result as its
 vendor's format carries one. Where that format has an error flag on a result
-(Anthropic's `is_error`), a result whose call was refused, failed, blocked,
+(Anthropic's `is_error`, Gemini's `error` key), a result whose call was refused, failed, blocked,
 served by nothing or cancelled carries it; the text the model reads is the
 same either way.
 
