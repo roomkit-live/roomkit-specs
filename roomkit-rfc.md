@@ -1216,14 +1216,17 @@ in number, and a block without its signature), so the tool loop replays a
 round's blocks one by one, in the order and at the place they came in relative
 to the round's calls and stretches of text. A block the response cut before
 its signature is not replayed. A provider whose reasoning has no blocks hands
-one block per round, replayed first. A provider renders a replayed round's
-reasoning where its vendor reads it: DeepSeek, in thinking mode, refuses a
-round of the turn in progress that called tools without its
-`reasoning_content`, so its provider sends that field on every round that
-called tools, empty when the round did not reason. Two readers cannot know where blocks
+one block per round, replayed first. Two readers cannot know where blocks
 came, and replay them first, then the text, then the calls: a caller of
 `generate()`, since a response does not say where its blocks came, and a turn
 under a response schema, whose text is held until it is checked.
+
+A provider MUST render a replayed round's reasoning where its vendor reads it.
+DeepSeek, in thinking mode, refuses a round of the turn in progress that
+called tools without its `reasoning_content`, unless it issued the round's
+call ids itself a moment ago; the DeepSeek provider therefore sends that field
+on every round that called tools, empty when the round did not reason, and an
+answer's reasoning in it too.
 
 **What a provider hands the loop for a call (normative).** Every provider,
 streamed or not, hands the loop the same thing for the same call. Each call of
@@ -1805,9 +1808,9 @@ names are checked in two places:
 
 **A tool result on the wire.** A provider renders each tool result as its
 vendor's format carries one. Where that format has an error flag on a result
-(Anthropic's `is_error`, Gemini's `error` key), a result whose call was refused, failed, blocked,
-served by nothing or cancelled carries it; the text the model reads is the
-same either way.
+(Anthropic's `is_error`, Gemini's `error` key), a result whose call was
+refused, failed, blocked, served by nothing or cancelled carries it; the text
+the model reads is the same either way.
 
 **A request the model cannot serve.** Where a provider knows, from its model
 catalogue, that the model refuses function tools on the endpoint it calls, or
