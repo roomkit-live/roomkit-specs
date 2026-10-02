@@ -1291,7 +1291,15 @@ they quote set apart as data; when the conversation does not end on such a
 message, they are a message of their own. They come after the input, so what
 changes comes last and a provider that caches a prefix keeps the input in it;
 they are not a message of their own when the input is one, since a model whose
-chat format requires alternating roles would refuse two in a row. An active
+chat format requires alternating roles would refuse two in a row. A
+BEFORE_AI_GENERATION hook MAY add a block to the turn's notes: it joins the
+section the channel opened, under the same header, or opens it when the input
+carries none, and the notes then read exactly as if the channel had assembled
+them at once, so the prefix a provider caches is the same. The header is what
+marks the notes in the input, and it always opens a paragraph: a reader that
+separates the input from its notes cuts at the header's last occurrence that
+opens one, and an input that quotes the header as a paragraph of its own is
+the one it misreads. An active
 skill's instructions stay in the system prompt (Section 24.4): they change only
 when a skill is activated, and they are instructions, not notes. A standalone
 turn carries none of the room's memories (Section 10.1.1).
