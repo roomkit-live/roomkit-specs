@@ -1776,11 +1776,12 @@ names are checked in two places:
   an empty one, or one with a character other than a letter, a digit, `_`,
   `.`, `:` or `-`. A loader of tools defined elsewhere (MCP) skips such a tool
   with a warning and keeps the others.
-- Each provider checks its own vendor's rule when it declares a turn's tools,
-  and for a name its vendor refuses it raises, before the request, an error
-  naming the tool and the rule, rather than letting the vendor reject the
-  request mid-turn. A provider that cannot know its server's rule (an
-  OpenAI-compatible server behind a base URL) checks none: the server decides.
+- Each AI provider checks its own vendor's rule when it declares a turn's
+  tools, and for a name its vendor refuses it raises, before the request, an
+  error naming the tool and the rule, rather than letting the vendor reject
+  the request mid-turn. A provider that cannot know its server's rule (any
+  server behind a custom base URL, a vendor-compatible gateway included)
+  checks none: the server decides.
 
 **A tool result on the wire.** A provider renders each tool result as its
 vendor's format carries one. Where that format has an error flag on a result
