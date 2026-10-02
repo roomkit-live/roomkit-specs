@@ -2301,7 +2301,11 @@ other call is the channel's own, through the pre-execution gate, then its
 handler, and is a call nothing served when no handler takes it. A call the
 provider ran therefore never reaches the channel's handler because the channel
 has tools of its own, and a BEFORE_TOOL_USE BLOCK refuses every call the
-channel serves, a channel without a handler included.
+channel serves, a channel without a handler included. A tool a
+BEFORE_AI_GENERATION hook withdrew is gone from the turn: a call to it is the
+channel's to refuse, never an external handler's to decide. A round that mixes
+both kinds hands the next round every call it made, each with its result: the
+model reads the calls served outside the channel beside its own.
 
 **ON_TOOL_CALL, where the call was served:**
 
@@ -11852,8 +11856,8 @@ AIChannel
     ├── Reads provider.generate_structured_stream(context) (generate() wrapped when it does not stream)
     ├── Runs one tool loop: generate → call tools → feed results → re-generate (up to max_tool_rounds)
     ├── Skips events from self (loop prevention)
-    ├── Supports streaming via generate_stream() and deliver_stream()
-    └── Returns ChannelOutput with response events + tasks + observations
+    └── Returns ChannelOutput with a response stream, which the framework
+        delivers with deliver_stream() and stores segment by segment
 ```
 
 **Per-turn settings.** Each per-turn setting (`system_prompt`, `temperature`,
