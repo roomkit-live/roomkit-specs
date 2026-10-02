@@ -5137,6 +5137,7 @@ RealtimeVoiceProvider (interface)
 ├── name → string                           # Provider identifier
 ├── model_name → string                     # Model behind the session; defaults to name
 ├── full_duplex: bool (default false)       # Model listens and speaks at once; no boundaries on the wire (Section 12.4.1)
+├── supports_tools: bool (default true)     # The model can call tools; false declares none to it
 ├── available_voices() → VoiceInfo[]        # Curated offline catalog (VoiceInfo: Section 12.2)
 ├── list_voices() → VoiceInfo[]             # Live catalog; default: available_voices()
 ├── available_models() → ModelInfo[]        # Curated offline catalog (MAY be empty)
@@ -5145,6 +5146,7 @@ RealtimeVoiceProvider (interface)
 ├── send_audio(session, audio_chunk) → void
 ├── inject_text(session, text, role) → void  # Insert text into conversation context
 ├── submit_tool_result(session, call_id, result) → void  # Return tool result to provider
+├── submit_tool_error(session, call_id, result) → void   # Return a failed call's result; default: submit_tool_result
 ├── submit_delegation_output(session, delegation_id, text, spoken) → void  # Return a reasoning backend's output (Section 12.4.1)
 ├── interrupt(session) → void               # Signal user interruption to provider
 ├── truncate_audio(session, audio_end_ms) → void  # OPTIONAL: drop the unheard tail from provider context after an interruption; no-op by default
@@ -5156,13 +5158,36 @@ RealtimeVoiceProvider (interface)
 ├── on_speech_start(callback) → void
 ├── on_speech_end(callback) → void
 ├── on_tool_call(callback) → void           # AI requests a tool call
-├── on_tool_call_cancelled(callback) → void # (session, call_ids): model abandoned outstanding calls; fired only by providers whose protocol says so (Section 9.3)
+├── on_tool_call_cancelled(callback) → void # (session, call_ids): calls whose results the model will not read; fired for every call the provider abandons (below)
 ├── on_delegation(callback) → void          # (session, delegation_id, target): model handed reasoning to a backend (Section 12.4.1)
 ├── on_response_start(callback) → void
 ├── on_response_end(callback) → void
 ├── on_usage(callback) → void              # (session, usage): what the provider just recorded (Section 12.4.2)
 └── on_error(callback) → void
 ```
+
+**What a provider owes its tool calls (normative).** A call the provider
+issued is answered once, by the channel, through `submit_tool_result`, or
+through `submit_tool_error` when the call failed (refused, failed, blocked,
+served by nothing): a provider whose protocol marks a result as an error
+(ElevenLabs' client tools, for one) MUST mark it, so the model does not read a
+refusal as a success; a provider whose protocol does not ignores the
+distinction, the result's body saying it. A provider MUST report through
+`on_tool_call_cancelled` every call it abandons, whatever the cause: the
+model discarding it, a reconnect orphaning it (call ids are
+connection-scoped), its own wait on the channel timing out, the conversation
+ending. A call it abandons without that report runs on unseen, and the
+observers record a success the model never read. The tasks a session lives on
+(its receive loop, its keepalive) MUST run in a context of their own: a
+connection opened inside a tool handler (a handoff reconnecting the session)
+would otherwise carry that call's context into every event of the new
+connection. A provider whose model cannot call tools says so
+(`supports_tools` false); the channel then declares none to it and warns
+once, rather than leave every call unanswerable. A provider whose service
+ends a turn on a function call it could not parse (Gemini Live's
+`MALFORMED_FUNCTION_CALL`) MUST tell the model that the call did not run,
+since nothing else will, once until the user speaks again, so a model that
+keeps failing does not loop on the reminder.
 
 **RealtimeVoiceProvider callback → hook mapping:**
 
