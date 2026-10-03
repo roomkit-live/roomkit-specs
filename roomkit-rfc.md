@@ -1278,7 +1278,9 @@ A tool the hook adds is never named by `find_tools`, being declared already.
 Once the turn's toolset is resolved, a call MUST name a tool the round
 declared, an empty declaration included, or one Tool Search recovers from the
 turn's catalogue at call time: a round that declares nothing admits no other
-call. Likewise a skill activation (Section 24.4) counts only
+call. The channel's own tools are no exception: one the turn does not offer
+(`find_tools` while Tool Search hides nothing, `run_skill_script` with no
+executor) is refused as any undeclared tool is, on every path (Section 12.4). Likewise a skill activation (Section 24.4) counts only
 once its `activate_skill` call is served: an ON_TOOL_CALL BLOCK or a failure
 activates nothing, whatever the model read.
 `ON_AI_RESPONSE` MUST therefore carry the turn's whole declaration as
@@ -5387,7 +5389,9 @@ A call the gate refuses MUST still be reported through ON_TOOL_CALL's observers
 provider is holding a turn open on the result, and an observer must not stand in
 front of it. Infrastructure tools are declared by the
 channel rather than by the caller's catalogue, so the declared-tool check admits
-them. Those that only read or unlock (skill activation and reference reading,
+them when the session declares them: Tool Search's while it hides the session's
+catalogue, `run_skill_script` with an executor. One the session does not
+declare is refused as any undeclared tool is (Section 6.4). Those that only read or unlock (skill activation and reference reading,
 Tool Search: the exact names of Section 21.1) remain exempt from skill gating,
 which they exist to operate; `run_skill_script` acts, and is gated like any
 other tool.
@@ -10366,9 +10370,14 @@ another room's sessions nor the channel's configuration for future sessions
 (Section 19.7). The tools an agent's
 configuration declares are the channel's own tools, the agent's tools and the
 handoff tool; a pipeline MUST NOT drop the channel's tools, nor declare an
-agent without its own. A call to one of the active agent's tools is served by
-the handler the agent was given; a tool the agent declares without one, or
-that shares a name with a channel tool, is served by the channel's handler.
+agent without its own. The channel's tools are read as they are when a session
+starts or a handoff lands: a channel configured after the install keeps them
+under every agent. A call to one of the active agent's tools is served by the
+handler the agent was given; a tool the agent declares without one is served
+by the channel's handler. A name the channel's tools carry is the channel's
+(Section 21.1): declared with the channel's schema and served by its handler,
+and an agent's tool of that name is neither declared nor served, a warning
+naming it at the install.
 
 **Allowed transitions:** An agent in phase P MAY hand off to:
 - `stage.next` (forward progression)
@@ -10684,7 +10693,10 @@ it gives twice is declared once, with the later definition. No name is
 declared twice in one round: a provider rejects a duplicate name.
 `find_tools` and `list_tools` MUST NOT name a tool the policy denies or a skill
 gates: a name the model can never call is a false promise and discloses what
-the policy hides.
+the policy hides. `list_tools` is the inventory: it lists every other tool the
+turn or the session can call, declared or hidden, its discovery tools aside,
+on every path. `find_tools` names what Tool Search hides only, and its related
+names (a match's family) exclude what it never returns.
 
 **Tools orchestration injects stay declared.** When Tool Search hides a large
 catalogue behind its discovery tools, a tool that orchestration injects on an
@@ -10805,7 +10817,7 @@ answers the same questions on both paths. The context carries at least:
 | `current_tool_room_id()` | The id of the room the turn belongs to |
 | `current_tool_room()` | The `Room` of the turn itself: the object the store loaded when the turn began, the same one the turn's `RoomContext.room` holds for its hooks, memory provider and config provider; on a realtime tool call, which runs no turn, the room as loaded for that call |
 | `current_tool_actor_id()` | The participant id of the event that woke the channel this round; empty when the turn has no author (a system injection, a webhook, a scheduled run) |
-| `current_tool_allowed_names()` | Every tool name the turn resolved, so a call is validated against the live toolset rather than an attach-time snapshot |
+| `current_tool_allowed_names()` | Every tool name the turn resolved, so a call is validated against the live toolset rather than an attach-time snapshot; on a realtime door, every tool the session declares (its catalogue, what orchestration set up, the channel's own) |
 | `current_tool_call()` | The per-call record: the call's id, its channel, and the structured-result reverse channel |
 | `current_response_metadata()` | The turn's one response-metadata record (§6.7); empty where no turn will merge it (a realtime tool call) |
 
@@ -11271,7 +11283,13 @@ SkillRegistry
 ```
 
 Skills are injected into the AI agent's system prompt via `to_prompt_xml()`.
-The agent can then select and apply skills based on the user's request.
+The agent can then select and apply skills based on the user's request. A
+skill a host marks unavailable is listed there with its reason, and a registry
+whose every skill is unavailable still has something to tell: the prompt
+carries the reasons and the activation tools are declared, on every path, so
+the model says why instead of guessing. A skill's `requires` is checked, where
+an activation checks it, against every tool the conversation declares, what
+orchestration set up included.
 
 ### 24.4 Activation Lifecycle
 
