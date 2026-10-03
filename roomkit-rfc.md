@@ -5732,7 +5732,8 @@ ReasoningRequest
 ├── first: bool                             # First request of the session: the transcript is the whole conversation
 ├── tools: list<ToolDefinition>             # The channel's declared catalogue, for the backend's model
 ├── execute_tool(name, arguments) → string  # One call through the channel's pre-execution gate and handler
-└── execute_tool_call(name, arguments) → ToolCallResult  # The same call, with its outcome
+├── execute_tool_call(name, arguments) → ToolCallResult  # The same call, with its outcome
+└── report_refusal(name, arguments, body, cancelled) → void  # Reports a call the backend's own loop refused before the gate
 
 ToolCallResult
 ├── text: string                            # What the backend's model reads
@@ -5774,6 +5775,19 @@ not a way around them. `execute_tool_call` runs the same call and also says
 whether it failed, so the backend's model reads a refused or failed call as
 one, as every tool loop does (Section 9.3); a backend SHOULD use it, and
 `execute_tool` returns the text alone.
+
+A backend's turn ends by the rules of a tool loop (Section 6.4), whatever
+drives its model: a call the provider could not parse, or an empty answer, is
+asked again within the loop's bounds; a call whose arguments do not read is
+refused, and a backend whose loop refuses a call before the gate reports it
+to the channel's ON_TOOL_CALL observers through `report_refusal`, as the gate
+reports the calls it refuses itself; and a turn its round cap, deadline or
+budget cut short has no answer. Its narration is progress, never the answer:
+the run fails, and the channel answers the delegation as it answers a failed
+backend. A backend that is an agent (Section 19) runs on the AI channel's
+tool loop, with the voice session's catalogue as its tools and the channel's
+gate as their handler; tools of its own (skills, a sandbox, planning, an
+external handler) would run outside that gate, so such an agent is refused.
 
 **Observability.** ON_REALTIME_DELEGATION (Section 9.2) fires when the model
 hands work over, in either mode, with the delegation id and its target (hosted
@@ -10487,6 +10501,12 @@ The supervisor, like any channel, serves every room it is attached to, so its
 configuration carries no turn's instruction: one written there and restored
 afterwards leaks into the turns of other rooms running meanwhile.
 
+The task-formulation pass is read as any streamed turn is (Section 6.4): the
+task it hands the workers is its final answer, never the narration of its
+tool rounds joined to it, and its tool calls are stored in the room as any
+turn's TOOL_CALL rows. Its text is not stored: it is the workers' task, an
+answer to no one in the room.
+
 #### 19.7.4 Loop
 
 A single agent handles the conversation indefinitely, looping back for
@@ -11119,7 +11139,11 @@ When `delegate(room_id, agent_id, task, notify)` is called:
 6. Collect the agent's response as the task result: the answer the child
    room kept. With a shared transport, that is what the hooks decided — a
    rewrite holds for the result as for the delivery, and an answer the gate
-   refused is no answer.
+   refused is no answer. A result the agent submits through a result tool,
+   read from the child room's trace when the call ran out of the
+   framework's reach (an MCP server), is the agent's own call that ended
+   served: a refused or failed call is no result, and neither is a call of
+   another channel shared into the child room.
 7. Fire `ON_TASK_COMPLETED` hook in the parent room.
 8. If `notify` is set, hand the result back through `deliver()` (§22) with
    the framework's delivery strategy and `instruction = true`, so
