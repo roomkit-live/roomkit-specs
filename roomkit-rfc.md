@@ -1569,7 +1569,9 @@ An ACP agent channel:
 8. MUST NOT bypass the standard RoomKit persistence, visibility, chain-depth,
    or re-broadcast behavior for generated text and tool activity; and
 9. MUST fire `ON_AI_RESPONSE` when a Room turn completes, carrying the text the
-   turn produced, the number of tool calls it made, and its duration. A turn
+   turn produced, the number of tool calls it made, its duration, and how it
+   ended as its `loop_end_reason`: the stop reason the agent returned,
+   `completed` for `end_turn`. A turn
    that ended in an error, or whose response stream was closed before its
    terminal update, MUST NOT fire it: no response was delivered to the Room.
    Token counters the agent reports MUST be relayed unaltered. ACP annotates
@@ -1805,7 +1807,12 @@ is built, a `BEFORE_AI_GENERATION` hook MAY write it through
 hook MAY write it through `current_response_metadata()` (the hook runs under
 the call's turn, so a host counts the calls a turn started there, before any
 runs). The record a caller reads on `InboundResult.response_metadata` is the
-same one, whether the turn answered or failed. The framework MUST merge the record
+same one, whether the turn answered or failed; it also names how each
+replying channel's turn ended, under `turns[channel_id]` (its
+`loop_end_reason`, an ACP agent's stop reason, and its `ai_usage`), so a
+turn that produced no MESSAGE still tells its caller how it ended and two
+agents replying to one inbound never overwrite each other's end. The
+framework MUST merge the record
 into the metadata of every MESSAGE event the turn produces, as the record
 stands when that event is created — a streamed segment persisted before a tool
 round carries what was known then, the final answer carries everything the
