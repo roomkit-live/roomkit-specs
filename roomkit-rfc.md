@@ -10207,10 +10207,16 @@ Agent (extends AIChannel)
 ├── greeting: string | null                 # Auto-greeting text on session start
 ├── language: string | null                 # Preferred language
 ├── auto_greet: bool (default true)         # Play greeting on voice session start
+├── identity_in_prompt: bool (default true) # false: the host renders identity itself
 │
 ├── is_config_only: bool (read-only)        # True when no AI provider (speech-to-speech mode)
 └── build_identity_block(language) → string # Generate identity context for system prompt
 ```
+
+The identity block is appended to the agent's system prompt wherever RoomKit
+writes one: its turns, a handoff's language change, a realtime pipeline's
+sessions. An agent built with `identity_in_prompt` false writes it nowhere
+(`build_identity_block` returns nothing), its fields kept for orchestration.
 
 When `is_config_only` is true, the Agent has no AI provider and serves as a
 configuration container for speech-to-speech channels (voice, greeting, language
@@ -10860,11 +10866,11 @@ start row stays pending. The loop honours the same points for every provider.
 
 **Which loop a directive reaches.** One AI channel object serves every room it
 is bound to, so its running tool loops can belong to several rooms' turns at
-once. A host names the loop a directive is for, or its room: a `Cancel`
-addressed to a room MUST reach every loop of that room and no other, and any
-other directive addressed to a room reaches the room's most recent loop. A
-directive addressed to neither reaches the channel's most recent loop,
-whatever its room. A loop is reachable once its turn has started; a directive
+once. A host names the loop a directive is for, or its room, never both: a
+`Cancel` addressed to a room MUST reach every loop of that room, any other
+directive addressed to a room MUST reach the room's most recent loop, and
+neither MUST reach a loop of another room. A directive addressed to neither
+reaches the channel's most recent loop, whatever its room. A loop is reachable once its turn has started; a directive
 that comes before reaches nothing, and the host is told how many loops it
 reached.
 
@@ -12099,12 +12105,15 @@ AIChannel
 │   ├── reasoning_effort: string | null     # How much the model reasons (Section 6.7)
 │   ├── response_schema: map | null         # Each turn answers in this JSON Schema (Section 6.7)
 │   ├── max_tool_rounds: int (default 50)   # Maximum tool call iterations per generation
+│   ├── max_empty_retries: int (default 1)  # Tries an empty round and the continuation share
+│   ├── continuation: policy | null         # Goes on an answer that did not act (Section 6.4)
 │   ├── turn_budget_tokens: int | null      # Billed tokens a turn may spend (Section 6.4)
 │   ├── turn_budget_usd: float | null       # What a turn may cost at the catalogue price
 │   ├── tool_loop_timeout_seconds: float | null (default 300)  # Timeout for entire tool loop
 │   ├── fallback_provider: AIProvider | null # Fallback if primary provider fails
 │   ├── evict_threshold_tokens: int (default 5000)  # Token threshold for context eviction
 │   ├── memory: MemoryProvider | null       # Pluggable context construction (Section 20)
+│   ├── describe_empty_event: callable | null # What an event with no content reads as
 │   ├── tool_policy: ToolPolicy | null      # Tool access control (Section 21)
 │   └── skills: SkillRegistry | null        # Available skills (Section 24)
 ├── per_room_overrides (via binding metadata):
