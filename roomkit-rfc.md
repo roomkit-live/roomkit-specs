@@ -3319,9 +3319,11 @@ conversation starts from) without the pipeline:
 commit_event(room_id, event, organization_id) → RoomEvent
 ```
 
-The room is read scoped to `organization_id` (§17.2): a missing room, or
-another organization's, is not found. A room whose status refuses new events
-(§5.1) MUST refuse the record before anything is written. The record is
+The record names the room it is committed to: one whose `room_id` is another
+room's MUST be refused before anything is read or written, so the room checked
+is the room written. The room is read scoped to `organization_id` (§17.2): a
+missing room, or another organization's, is not found. A room whose status
+refuses new events (§5.1) MUST refuse the record before anything is written. The record is
 committed under the room lock with the next index, which the room's delivery
 lane MUST count as delivered at once: no delivery set, no hook, and no
 broadcast follow it, and the next event of the room MUST NOT wait on its
@@ -8980,7 +8982,10 @@ added.
 missing, another organization's (§17.2), or whose status refuses new events
 (§5.1) is refused before any recorder starts; the recorders start all or
 nothing, under the room lock; and `ON_RECORDING_STARTED` fires for each before
-any media, as at creation. A recording resumed after a restart is one of these:
+any media, as at creation. Media may already flow in the room: a recording
+joins it only once announced, with each of the room's tracks declared to it
+first, so what reaches it comes after its consent point and in the format its
+track declares. A recording resumed after a restart is one of these:
 its consent point is announced again. A caller feeding a room recording from a
 source the framework does not wire itself declares each track to the room's
 recordings and hands them its media through the framework, never through a
