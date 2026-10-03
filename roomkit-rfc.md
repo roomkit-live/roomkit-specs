@@ -9424,7 +9424,7 @@ roomkit
 |---|---|
 | DEBUG | Full pipeline trace, raw payloads, hook decisions |
 | INFO | Room created, event stored, channel attached, participant resolved |
-| WARNING | Delivery failed (retryable), hook timeout, chain depth approaching limit |
+| WARNING | Delivery failed (retryable), hook timeout, chain depth approaching limit, an AI turn that ended before its answer (a delegated worker's, a reasoning backend's: an expected outcome, logged without a traceback) |
 | ERROR | Provider error (non-retryable), circuit breaker opened, store failure |
 
 ### 15.3 Structured Log Context
@@ -11215,13 +11215,16 @@ When `delegate(room_id, agent_id, task, notify)` is called:
    is the agent's own call that ended served. A refused, failed or blocked
    call is no result, and neither is a call of another channel shared into
    the child room.
-   A turn its round cap, deadline or budget cut short has no answer
-   (Section 6.4): the task fails, its error naming how the turn ended, its
-   output the agent's last narration and its metadata the
-   `loop_end_reason`, whether the turn streamed or not and whether a
-   transport is shared. A result the agent submitted through a result tool
-   before the cut still counts; without one, the task fails without a
-   re-prompt.
+   A turn that did not complete (it ended for any reason but `completed`:
+   its round cap, deadline or budget cut it, a stop cancelled it, its answer
+   was cut or never came) has no answer (Section 6.4): the task fails, its
+   error naming how the turn ended, its output the agent's last narration
+   and its metadata the `loop_end_reason`, which `ON_TASK_COMPLETED` carries
+   too, whether the turn streamed or not and whether a transport is shared.
+   A result the agent submitted through a result tool before the cut still
+   counts; without one, the task fails without a re-prompt. What reads a
+   task's work (an orchestration strategy, the notified agent) reads none
+   from a failed task, its output whatever it keeps.
 7. Fire `ON_TASK_COMPLETED` hook in the parent room.
 8. If `notify` is set, hand the result back through `deliver()` (§22) with
    the framework's delivery strategy and `instruction = true`, so
