@@ -1427,7 +1427,9 @@ nothing that reads an agent's answer (an orchestration strategy, a delegated
 task's result) may take it for one. A turn the provider interrupted after a
 round has no answer: a task delegated to it fails with the provider's error,
 and a strategy that reads an agent's answer reads none from an output that
-carries an error, its rounds' text included.
+carries an error, its rounds' text included. A turn constrained to a schema
+is the exception: interrupted after a round, it fails with `truncated`, and
+`ON_AI_RESPONSE` does not fire (Appendix A.9).
 
 **A turn's budget.** A channel MAY bound what a turn spends: a token budget over
 every token its provider bills for the turn (input, cache reads and writes,
@@ -1446,7 +1448,8 @@ provider serves is priced at the primary provider's rate.
 
 **A turn that did not complete.** `ON_AI_RESPONSE` reports a turn whose loop
 reached its end, with the reason it ended for: `cancelled` for a cancellation
-between rounds, `error` for a turn the provider interrupted after a round.
+between rounds, `error` for a turn the provider interrupted after a round (a
+turn constrained to a schema aside, Appendix A.9).
 The hook carries what its rounds used, then the provider's error surfaces as
 when the loop raises (ON_ERROR fires), through the turn's response stream once
 the hook has fired. A turn whose loop did not reach its end MUST NOT fire it:
@@ -5781,13 +5784,24 @@ drives its model: a call the provider could not parse, or an empty answer, is
 asked again within the loop's bounds; a call whose arguments do not read is
 refused, and a backend whose loop refuses a call before the gate reports it
 to the channel's ON_TOOL_CALL observers through `report_refusal`, as the gate
-reports the calls it refuses itself; and a turn its round cap, deadline or
-budget cut short has no answer. Its narration is progress, never the answer:
-the run fails, and the channel answers the delegation as it answers a failed
-backend. A backend that is an agent (Section 19) runs on the AI channel's
-tool loop, with the voice session's catalogue as its tools and the channel's
-gate as their handler; tools of its own (skills, a sandbox, planning, an
-external handler) would run outside that gate, so such an agent is refused.
+reports the calls it refuses itself; and a turn that did not complete (it
+ended for any reason but `completed`: its round cap, deadline or budget cut
+it, or its answer was cut or never came) has no answer. Its narration is
+progress, never the answer: the run fails, and the channel answers the
+delegation as it answers a failed backend. A backend call the end of its
+delegation cut (the channel's bound on the run) is reported once, cancelled,
+as a call the session's end cut is. A backend that is an agent (Section 19)
+runs on the AI channel's tool loop with the agent's settings and turn
+budget, the voice session's catalogue as its tools and the channel's gate as
+their handler; the loop's own re-read of a result it stored (Section 21.5)
+stays the loop's, as on any turn. Tools of its own (skills, a sandbox,
+planning, an external handler) would run outside that gate, and a kit that
+registered it would judge each call a second time, so such an agent is
+refused. Its conversation is the session's: a call a cut delegation left
+unanswered is answered as a room turn answers one before the next
+generation, and a session's delegations run one at a time, each reading
+what the one before it worked out. The backend's turn is traced under the
+voice session's span.
 
 **Observability.** ON_REALTIME_DELEGATION (Section 9.2) fires when the model
 hands work over, in either mode, with the delegation id and its target (hosted
@@ -10503,9 +10517,11 @@ afterwards leaks into the turns of other rooms running meanwhile.
 
 The task-formulation pass is read as any streamed turn is (Section 6.4): the
 task it hands the workers is its final answer, never the narration of its
-tool rounds joined to it, and its tool calls are stored in the room as any
-turn's TOOL_CALL rows. Its text is not stored: it is the workers' task, an
-answer to no one in the room.
+tool rounds joined to it, and a pass its round cap, deadline or budget cut
+short has none, so no worker runs. Its tool calls are stored in the room as
+any turn's TOOL_CALL rows, through the room's commit gate (Section 10.1) and
+in the answered event's scope and thread. Its text is not stored: it is the
+workers' task, an answer to no one in the room.
 
 #### 19.7.4 Loop
 
@@ -11139,11 +11155,12 @@ When `delegate(room_id, agent_id, task, notify)` is called:
 6. Collect the agent's response as the task result: the answer the child
    room kept. With a shared transport, that is what the hooks decided — a
    rewrite holds for the result as for the delivery, and an answer the gate
-   refused is no answer. A result the agent submits through a result tool,
-   read from the child room's trace when the call ran out of the
-   framework's reach (an MCP server), is the agent's own call that ended
-   served: a refused or failed call is no result, and neither is a call of
-   another channel shared into the child room.
+   refused is no answer. A result the agent submits through a result tool
+   is read from the child room's trace, wherever the call was served (the
+   agent's tool loop or an MCP server), once ON_TOOL_CALL has judged it: it
+   is the agent's own call that ended served. A refused, failed or blocked
+   call is no result, and neither is a call of another channel shared into
+   the child room.
 7. Fire `ON_TASK_COMPLETED` hook in the parent room.
 8. If `notify` is set, hand the result back through `deliver()` (§22) with
    the framework's delivery strategy and `instruction = true`, so
