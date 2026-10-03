@@ -1276,16 +1276,19 @@ nothing when the answer stands (a host's recognizer of an announced action, "I
 will check that", say). The loop consults it only for a round that ended
 naturally, with text and without a call: not cut short (Section 6.4 above), not
 a call it could not parse, not a refusal, and with a tool declared, since going
-on means acting. Every provider's natural stop counts alike (`stop`, `end_turn`,
-`STOP`): the loop decides it from what the round carried, not from the provider's
-word for it. The policy shares the bound of an empty round, and the loop keeps
+on means acting. Every provider's word for a natural stop counts alike (`stop`,
+`end_turn`, `stop_sequence`, `STOP`), and only those: a truncation, a filter, a
+refusal or a stream that ended without saying why is never one. The policy shares the bound of an empty round, and the loop keeps
 its guards: no continuation after a cancellation or a force-stop, nor past the
 turn's deadline or budget. A continuation hands the next round the text as the
 assistant's message, then the instruction as the user's; the text already
 reached the room as the round's segment and is neither repeated nor withdrawn.
-A turn whose policy still asks once the bound has run out ends `unfinished`,
-never `completed`: the loop reaches its end (its end marker, `ON_AI_RESPONSE`),
-and the policy itself never raises out of the loop.
+Any round the loop tries again (an empty one, one whose call could not be
+parsed, one the policy continues) ends its segment there, as a call's start
+does, so the next round's text never runs on from it. A turn whose policy still
+asks once the bound has run out ends `unfinished`, never `completed`: the loop
+reaches its end (its end marker, `ON_AI_RESPONSE`), and running out of the
+bound never raises out of the loop.
 
 **What the generation hooks see:** `BEFORE_AI_GENERATION` fires once per turn,
 with the context the turn starts from, and its `tools` are the turn's toolset
