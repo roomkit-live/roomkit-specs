@@ -5502,7 +5502,10 @@ an id is refused and reported once the same way, with nothing sent, since no
 result can name it. A provider hands every call the model makes to the
 channel, these two, a call the output cap cut and a call to a tool the
 channel never declared included: the channel decides it, and no provider or
-vendor SDK answers it in the channel's place. A channel that mutes the
+vendor SDK answers it in the channel's place. A provider books a call as
+awaiting its result only when the channel can answer it: a call refused with
+nothing sent MUST NOT hold the response, or the provider's continuation after
+it, open on a result that never comes. A channel that mutes the
 input while one of the provider's tool calls runs keeps it muted until the
 last such call ends; a call recovered from speech or a backend's call mutes
 nothing, the user's input being no answer to it.
