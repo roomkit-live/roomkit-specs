@@ -10484,10 +10484,13 @@ nothing of the agent's serves it. The active agent's tool policy holds on its
 session beside the channel's: a tool either denies, each resolved for the
 session's participant, is neither declared, nor listed by Tool Search, nor
 among the names a handler reads, and the gate refuses it with the policy's
-words; a handoff applies the next agent's policy. A realtime session serves
-the channel's skills, never an agent's: an agent that carries skills of its
-own is refused at the install, since its gated tools would run without their
-skill.
+words. A handoff applies the next agent's policy, read for each session's
+participant, to every session of the room before any declares the next
+agent's tools. The gate MUST judge a call by the agent the room talks to when
+the call reaches it, the one that serves the call, whatever a session still
+declares. A realtime session serves the channel's skills, never an agent's:
+an agent that carries skills of its own is refused at the install, before
+anything is installed, since its gated tools would run without their skill.
 
 **Allowed transitions:** An agent in phase P MAY hand off to:
 - `stage.next` (forward progression)
