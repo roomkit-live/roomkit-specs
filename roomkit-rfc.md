@@ -1249,9 +1249,16 @@ in a later chunk, one copy or both without an id) is folded into the first,
 which keeps what either copy carries (its id, its thought signature). A call's
 arguments reach the loop as a mapping and never as an error: no arguments
 (nothing, or JSON `null`) are `{}`, and arguments that do not parse to an
-object (invalid JSON, an array, a fragment) are kept whole under `raw`. Under a
-response cut short (the output cap, a content filter, a stream that ended
-without a stop reason), only argument text that arrived and reads shows the
+object (invalid JSON, an array, a fragment) are kept whole under `raw`. A
+response is cut short when it ran out of room (the output cap, or the context
+window filling up mid-answer), when a content filter or a refusal stopped it,
+or when its stream ended without a stop reason, under any provider's word for
+each (`length`, `max_tokens`, `MAX_TOKENS`, `model_context_window_exceeded`,
+`model_length`, `content_filter`, `refusal`): every provider reads one such set,
+so none runs a call another provider refuses. Only the last call of a response
+can be cut: a call another call followed was closed by it, and runs when its
+arguments read, the response cut over its successor or not. Under a response
+cut short, only argument text that arrived and reads shows the last call's
 arguments whole: a call with no argument text yet, or known only through a parse
 of what arrived (a vendor SDK reads a fragment leniently), does not read either.
 Nothing under a cut is no evidence of no arguments (Anthropic sends no stop for
@@ -1261,15 +1268,20 @@ gave, and a tool loop, the AI channel's or a reasoning backend's,
 MUST NOT run it, nor may a realtime channel, whose provider hands such
 arguments as the model's text rather than a mapping (Section 12.4): no tool
 does anything useful with `raw`. The model reads that nothing ran, and why: its
-call was cut when the response was cut short (the output cap, a content
-filter, or a stream that ended without a stop reason), so it can call again
+call was cut when the response was cut short, so it can call again
 with less; its arguments could not be read otherwise, so it can call again
 with valid ones. A response the provider ended
 because it could not parse the model's call (Gemini's
-`MALFORMED_FUNCTION_CALL`) carries no call at all: the tool loop MUST tell
+`MALFORMED_FUNCTION_CALL`), or would not take it (Gemini's
+`UNEXPECTED_TOOL_CALL`, a call to a tool the request did not enable), carries
+no call at all: the tool loop MUST tell
 the model that its call did not run, within the bound it gives an empty
 round, on any round and whatever text the round said, and a turn whose bound
-runs out ends cut short (`empty_response`), never `completed`.
+runs out ends cut short (`empty_response`), never `completed`. A round that ran
+out of room before any answer after a tool round ends the turn `truncated`
+and is not tried again, since the same room runs out again: the output cap
+and the context window alike, read by the same rule as a response schema's
+`truncated` (Appendix A.9).
 
 **An answer that did not act.** An AI channel MAY carry a continuation policy:
 given the text a round ended on, the instruction that makes the model go on, or
