@@ -1243,11 +1243,12 @@ arguments reach the loop as a mapping and never as an error: no arguments
 object (invalid JSON, an array, a fragment) are kept whole under `raw`. Such a
 call is marked partial, whatever the provider and whatever stop reason the
 response gave, and a tool loop, the AI channel's or a reasoning backend's,
-MUST NOT run it: no tool does anything useful with `raw`. The model reads that
-nothing ran, and why: its call was cut when the response was cut short (the
-output cap, a content filter, or a stream that ended without a stop reason),
-so it can call again with less; its arguments could not be read otherwise, so
-it can call again with valid ones. A response the provider ended
+MUST NOT run it, nor may a realtime channel (Section 12.4): no tool does
+anything useful with `raw`. The model reads that nothing ran, and why: its
+call was cut when the response was cut short (the output cap, a content
+filter, or a stream that ended without a stop reason), so it can call again
+with less; its arguments could not be read otherwise, so it can call again
+with valid ones. A response the provider ended
 because it could not parse the model's call (Gemini's
 `MALFORMED_FUNCTION_CALL`) carries no call at all: the tool loop MUST tell
 the model that its call did not run, within the bound it gives an empty
@@ -1815,12 +1816,16 @@ names are checked in two places:
   an empty one, or one with a character other than a letter, a digit, `_`,
   `.`, `:` or `-`. A loader of tools defined elsewhere (MCP) skips such a tool
   with a warning and keeps the others.
-- Each AI provider checks its own vendor's rule when it declares a turn's
-  tools, and for a name its vendor refuses it raises, before the request, an
-  error naming the tool and the rule, rather than letting the vendor reject
-  the request mid-turn. A provider that cannot know its server's rule (any
-  server behind a custom base URL, a vendor-compatible gateway included)
-  checks none: the server decides.
+- Each provider checks its own vendor's rule when it declares tools, an AI
+  provider a turn's, a realtime provider a session's (at connection and at
+  every reconfiguration), and for a name its vendor refuses it raises, before
+  the request, an error naming the tool and the rule, rather than letting the
+  vendor reject the request mid-turn, or a realtime endpoint accept the
+  declaration and fail the call later, opaquely. Where a realtime endpoint
+  hands the tools to another model (a hosted reasoning backend, an agent's
+  think provider), the rule is that model's vendor's. A provider that cannot
+  know its server's rule (any server behind a custom base URL, a
+  vendor-compatible gateway included) checks none: the server decides.
 
 **A tool result on the wire.** A provider renders each tool result as its
 vendor's format carries one. Where that format has an error flag on a result
@@ -5280,9 +5285,15 @@ RealtimeVoiceProvider (interface)
 └── on_error(callback) → void
 ```
 
-**What a provider owes its tool calls (normative).** A call the provider
-issued is answered once, by the channel, through `submit_tool_result`, or
-through `submit_tool_error` when the call failed (refused, failed, blocked,
+**What a provider owes its tool calls (normative).** A call whose arguments
+read as an object reaches `on_tool_call` as that mapping; a call whose
+arguments do not (invalid JSON, an array, a fragment) reaches it as the text
+the model wrote, never as a mapping that could pass for arguments. The channel
+refuses such a call before the gate below, as a tool loop refuses a partial
+call (Section 6.4): nothing runs, the model reads that its arguments could not
+be read, and the observers receive the refusal. A call the provider issued is
+answered once, by the channel, through `submit_tool_result`, or through
+`submit_tool_error` when the call failed (refused, failed, blocked,
 served by nothing): a provider whose protocol marks a result as an error
 (ElevenLabs' client tools, for one) MUST mark it, so the model does not read a
 refusal as a success; a provider whose protocol does not ignores the
