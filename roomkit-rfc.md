@@ -10477,7 +10477,14 @@ by the channel's handler. A name the channel's tools carry is the channel's
 (Section 21.1): declared with the channel's schema and served by its handler,
 and an agent's tool of that name is neither declared nor served, a warning
 naming it at the install, nor declared once the channel drops its own:
-nothing of the agent's serves it.
+nothing of the agent's serves it. The active agent's tool policy holds on its
+session beside the channel's: a tool either denies, each resolved for the
+session's participant, is neither declared, nor listed by Tool Search, nor
+among the names a handler reads, and the gate refuses it with the policy's
+words; a handoff applies the next agent's policy. A realtime session serves
+the channel's skills, never an agent's: an agent that carries skills of its
+own is refused at the install, since its gated tools would run without their
+skill.
 
 **Allowed transitions:** An agent in phase P MAY hand off to:
 - `stage.next` (forward progression)
