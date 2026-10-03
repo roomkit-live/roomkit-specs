@@ -10850,6 +10850,16 @@ of a round, while its calls are announced but before they run, MUST stop them.
 None of them runs, and each announced call ends with `status = failed`, so no
 start row stays pending. The loop honours the same points for every provider.
 
+**Which loop a directive reaches.** One AI channel object serves every room it
+is bound to, so its running tool loops can belong to several rooms' turns at
+once. A host names the loop a directive is for, or its room: a `Cancel`
+addressed to a room MUST reach every loop of that room and no other, and any
+other directive addressed to a room reaches the room's most recent loop. A
+directive addressed to neither reaches the channel's most recent loop,
+whatever its room. A loop is reachable once its turn has started; a directive
+that comes before reaches nothing, and the host is told how many loops it
+reached.
+
 Steering directives are typically issued by orchestration logic (e.g.,
 supervisor injecting context for a worker agent) or by hooks reacting to
 events.
