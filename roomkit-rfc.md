@@ -1280,7 +1280,8 @@ declared, an empty declaration included, or one Tool Search recovers from the
 turn's catalogue at call time: a round that declares nothing admits no other
 call. The channel's own tools are no exception: one the turn does not offer
 (`find_tools` while Tool Search hides nothing, `run_skill_script` with no
-executor) is refused as any undeclared tool is, on every path (Section 12.4). Likewise a skill activation (Section 24.4) counts only
+executor) is refused as any undeclared tool is, on every path (Section 12.4).
+Likewise a skill activation (Section 24.4) counts only
 once its `activate_skill` call is served: an ON_TOOL_CALL BLOCK or a failure
 activates nothing, whatever the model read.
 `ON_AI_RESPONSE` MUST therefore carry the turn's whole declaration as
@@ -10377,7 +10378,8 @@ handler the agent was given; a tool the agent declares without one is served
 by the channel's handler. A name the channel's tools carry is the channel's
 (Section 21.1): declared with the channel's schema and served by its handler,
 and an agent's tool of that name is neither declared nor served, a warning
-naming it at the install.
+naming it at the install, nor declared once the channel drops its own:
+nothing of the agent's serves it.
 
 **Allowed transitions:** An agent in phase P MAY hand off to:
 - `stage.next` (forward progression)
@@ -10817,7 +10819,7 @@ answers the same questions on both paths. The context carries at least:
 | `current_tool_room_id()` | The id of the room the turn belongs to |
 | `current_tool_room()` | The `Room` of the turn itself: the object the store loaded when the turn began, the same one the turn's `RoomContext.room` holds for its hooks, memory provider and config provider; on a realtime tool call, which runs no turn, the room as loaded for that call |
 | `current_tool_actor_id()` | The participant id of the event that woke the channel this round; empty when the turn has no author (a system injection, a webhook, a scheduled run) |
-| `current_tool_allowed_names()` | Every tool name the turn resolved, so a call is validated against the live toolset rather than an attach-time snapshot; on a realtime door, every tool the session declares (its catalogue, what orchestration set up, the channel's own) |
+| `current_tool_allowed_names()` | Every tool name the turn resolved, so a call is validated against the live toolset rather than an attach-time snapshot; on a realtime door, every tool the session declares (its catalogue, what orchestration set up, the channel's own), and none when the session declares no catalogue, which admits any name |
 | `current_tool_call()` | The per-call record: the call's id, its channel, and the structured-result reverse channel |
 | `current_response_metadata()` | The turn's one response-metadata record (§6.7); empty where no turn will merge it (a realtime tool call) |
 
