@@ -2463,15 +2463,17 @@ never through `on_tool_result`, which reports an outcome. The handler may
 never have been asked about the call; a decision of its still pending is its
 own to withdraw. A handler that raises while it decides fails the call, as a
 tool handler that raises does. A call whose outcome the model already read
-(the provider ran it, an external handler decided it, a realtime Tool Search
-result went out) is still owed its report when a cut interrupts that report:
-it is reported once, to ON_TOOL_CALL's observers alone, with that outcome.
-Every channel claims a call's one report where the observers hear it, after
-the SYNC chain, so a report a cut interrupted is still owed and one the
-observers heard is never made twice. A call issued once its session ended
-runs no gate and is reported once, cancelled. A local call cut after its
-report keeps its stored end row `cancelled`: the row says what the model
-read, the report what ran.
+(the provider ran it, an external handler decided it, its realtime result
+went out) is still owed its report when a cut interrupts that report: it is
+reported once, to ON_TOOL_CALL's observers alone, with that outcome. A
+report is claimed where the observers hear it, past the SYNC chain and once
+their context is built, so a report a cut interrupted is still owed and one
+the observers heard is never made twice; an ACP call's end, once closed,
+reaches its report even when the task carrying it is cut. A call issued once
+its session ended runs no gate and is reported once, cancelled. A call cut
+after its report keeps its stored end row `cancelled` when the turn ended
+before the model read its result: the row says what the turn delivered, the
+report what ran.
 
 **ON_TOOL_CALL, where the call was served:**
 
