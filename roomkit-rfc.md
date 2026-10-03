@@ -2455,11 +2455,15 @@ BEFORE_AI_GENERATION hook withdrew is gone from the turn: a call to it is the
 channel's to refuse, never an external handler's to decide. A round that mixes
 both kinds hands the next round every call it made, each with its result: the
 model reads the calls served outside the channel beside its own. A call the
-turn cut before its report (a stop, the turn's cancellation, a transport that
-stopped reading), an external handler's decision still pending included, is
-reported once, cancelled, whoever serves it: an external handler hears of it
-through `on_tool_cancelled`, which reports it so by default, and never through
-`on_tool_result`, which reports an outcome.
+turn cut before its report (the turn's cancellation, a transport that stopped
+reading before the call was decided) is reported once, cancelled, to
+ON_TOOL_CALL's observers alone, whoever was to serve it: an external handler
+hears of it through `on_tool_cancelled`, which reports it so by default, and
+never through `on_tool_result`, which reports an outcome. The handler may
+never have been asked about the call; a decision of its still pending is its
+own to withdraw. A call the provider already ran is reported with its outcome
+before anything can cut it, and a handler that raises while it decides fails
+the call, as a tool handler that raises does.
 
 **ON_TOOL_CALL, where the call was served:**
 
