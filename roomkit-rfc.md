@@ -1335,18 +1335,23 @@ one whose calls were all served outside the channel. Its event carries the
 round's index, its calls, the results the channel produced and the ones the
 provider served, each in the order of the calls, and the names of the turn's
 toolset as the next round is built from it (Tool Search's whole catalogue
-included), so a hook names what it withdraws and reads the round whole: the calls of one round run concurrently, and a rule about them (one
-success among failures, say) is a rule about the round. A hook MAY withdraw
-tools for the rest of the turn, with every guarantee of a withdrawal by
-`BEFORE_AI_GENERATION` above (never declared again, never named by `find_tools`
-or `list_tools` nor recovered, a call naming it refused, a tool the channel
-provides itself included, never handed to an external handler), and MAY add
-messages the next round reads after the round's results. A withdrawal changes
-the declaration of the next round, the one exception this hook makes to the
-declaration staying the same, and costs what a changed declaration costs. A
-BLOCK changes nothing, the round having run; a hook that raises or times out is
-skipped, as any SYNC hook is. The hook belongs to an AI channel's tool loop:
-neither a realtime session nor a reasoning backend's own loop fires it.
+included), so a hook reads the round whole and names what it withdraws: the
+calls of one round run concurrently, and a rule about them (one success among
+failures, say) is a rule about the round. A hook MAY withdraw tools for the
+rest of the turn, any name whether the event lists it or not, with every
+guarantee of a withdrawal by `BEFORE_AI_GENERATION` above (never declared
+again, never named by `find_tools` or `list_tools` nor recovered, a call naming
+it refused, a tool the channel provides itself included, never handed to an
+external handler), and MAY add messages the next round reads after the round's
+results. A withdrawal changes the declaration of the next round, the one
+exception this hook makes to the declaration staying the same, and costs what a
+changed declaration costs. A hook acts on the event it receives, in place: the
+event a MODIFY returns is not read. A BLOCK stops the hooks after it, as on any
+SYNC trigger, and changes nothing of the round, which has run; a hook that
+raises or times out is skipped, or, registered fail-closed, stops the hooks
+after it. The hook belongs to a registered AI channel's tool loop: a realtime
+session does not fire it, nor does a reasoning backend's agent (not a registered
+channel), nor an external agent that runs its own loop (Section 6.4, ACP).
 
 **The prompt from turn to turn.** For the same reason, the system prompt SHOULD
 stay the same from one turn to the next: a system prompt that changes
