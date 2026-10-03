@@ -1355,8 +1355,9 @@ next round is built: not after a round cancelled before its calls ran, nor after
 one whose calls were all served outside the channel. Its event carries the
 round's index, its calls, the results the channel produced and the ones the
 provider served, each in the order of the calls, and the names of the turn's
-toolset as the next round is built from it (Tool Search's whole catalogue
-included), so a hook reads the round whole and names what it withdraws: the
+toolset as `BEFORE_AI_GENERATION` is shown it: what the tool policy and skill
+gating let the turn reach, Tool Search's whole catalogue included, nothing
+withdrawn. A hook reads the round whole and names what it withdraws: the
 calls of one round run concurrently, and a rule about them (one success among
 failures, say) is a rule about the round. A hook MAY withdraw tools for the
 rest of the turn, any name whether the event lists it or not, with every
@@ -10842,9 +10843,13 @@ channel injects — sandbox commands (`sandbox_*`), `run_skill_script`,
 them allows them. The same names, and only them, are exempt from skill gating
 (Section 24.2). A transport that only carries a call to another tool (the
 `call_tool` of Tool Search on a provider whose declarations are fixed for the
-session) is no tool in this sense: it stays declared, and the policy applies to
-the tool it names, at the gate. The declaration filter and the execution guard
-MUST apply one rule, so a tool the model is offered is a tool it may call.
+session) is exempt the same way: it stays declared and is among the names a
+handler reads (Section 21.4), and the policy applies to the tool it names, at
+the gate, once the call is unwrapped. A provider's native tool, which has no
+name (`{"google_search": {}}`), stays declared: a policy names the tools it
+governs, and Tool Search neither hides nor lists a tool it cannot name. The
+declaration filter and the execution guard MUST apply one rule, so a tool the
+model is offered is a tool it may call.
 
 **One tool per name.** A name is served by one tool in a room, and declared
 with that tool's definition: a tool declared under a name with one schema and
@@ -10866,7 +10871,8 @@ declared twice in one round: a provider rejects a duplicate name.
 gates: a name the model can never call is a false promise and discloses what
 the policy hides. `list_tools` is the inventory: it lists every other tool the
 turn or the session can call, declared or hidden, its discovery tools aside,
-on every path. `find_tools` names what Tool Search hides only, and its related
+the re-read of a stored result included once a round declares it, on every
+path. `find_tools` names what Tool Search hides only, and its related
 names (a match's family) exclude what it never returns.
 
 **Tools orchestration injects stay declared.** When Tool Search hides a large
@@ -10998,7 +11004,7 @@ answers the same questions on both paths. The context carries at least:
 | `current_tool_room_id()` | The id of the room the turn belongs to |
 | `current_tool_room()` | The `Room` of the turn itself: the object the store loaded when the turn began, the same one the turn's `RoomContext.room` holds for its hooks, memory provider and config provider; on a realtime tool call, which runs no turn, the room as loaded for that call |
 | `current_tool_actor_id()` | The participant id of the event that woke the channel this round; empty when the turn has no author (a system injection, a webhook, a scheduled run) |
-| `current_tool_allowed_names()` | Every tool name the turn resolved that its tool policy admits for its actor, so a call is validated against the live toolset rather than an attach-time snapshot: a tool the policy denies is left out on every door, since the gate refuses it before any handler, while a tool a skill keeps closed stays in; on a realtime door, every tool the session declares (its catalogue, what orchestration set up, the channel's own) that its policy admits, and none when the session declares no catalogue: it names no list, and its gate, policy included, still judges each call |
+| `current_tool_allowed_names()` | Every tool name the turn resolved, and every tool a round declared beyond it (the re-read of a stored result, the planner's tool), nothing withdrawn, that its tool policy admits for its actor, so a call is validated against the live toolset rather than an attach-time snapshot: a tool the policy denies is left out on every door, since the gate refuses it before any handler, while a tool a skill keeps closed stays in; on a realtime door, every tool the session declares (its catalogue, what orchestration set up, the channel's own) that its policy admits, and none when the session declares no catalogue: it names no list, and its gate, policy included, still judges each call |
 | `current_tool_call()` | The per-call record: the call's id, its channel, and the structured-result reverse channel |
 | `current_response_metadata()` | The turn's one response-metadata record (§6.7); empty where no turn will merge it (a realtime tool call) |
 
@@ -11544,6 +11550,13 @@ an acknowledgement without rules.
 
 Tool gating (Section 21) follows the same scope: tools revealed by activating a
 skill stay revealed while the skill is active.
+
+An activation that finds no skill under its name, when that name matches tools
+the turn may call (a model that took the `spotify_play` tool for a "spotify"
+skill), answers with the skill's absence and names those tools, and reveals
+them as `find_tools` reveals its matches, for the rest of the session: the same
+answer and the same reveal on every door, text or realtime. A skill that exists
+but is unavailable answers with its reason and no such hint.
 
 ### 24.5 Loading Failures
 
