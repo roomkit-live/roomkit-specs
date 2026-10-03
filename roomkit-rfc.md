@@ -1819,12 +1819,17 @@ is built, a `BEFORE_AI_GENERATION` hook MAY write it through
 hook MAY write it through `current_response_metadata()` (the hook runs under
 the call's turn, so a host counts the calls a turn started there, before any
 runs). The record a caller reads on `InboundResult.response_metadata` is the
-same one, whether the turn answered or failed; it also names how each
-replying channel's turn ended, under `turns[channel_id]` (its
-`loop_end_reason`, an ACP agent's stop reason, and its `ai_usage`), so a
-turn that produced no MESSAGE still tells its caller how it ended and two
-agents replying to one inbound never overwrite each other's end. The
-framework MUST merge the record
+same one, whether the turn answered or failed. The caller's copy alone also
+names how each channel that replied to the caller's own event ended, streamed
+or not, under `turns[channel_id]`: its `loop_end_reason` (an AI channel's;
+an ACP agent's stop reason, `interrupted` when its prompt never returned or
+failed after, `completed` once it returned on `end_turn`) and the `ai_usage`
+its record carries (an ACP agent's carries none), so a turn that produced no MESSAGE still tells its caller how
+it ended and two agents replying to one inbound never overwrite each other's
+end. An answer to an answer is no reply to the caller and has no entry, nor
+has an ACP turn never prompted (a transport that read nothing). `turns` is the
+framework's key: a value a turn's hooks or tools write under it is not
+carried to the caller, and never on a MESSAGE. The framework MUST merge the record
 into the metadata of every MESSAGE event the turn produces, as the record
 stands when that event is created — a streamed segment persisted before a tool
 round carries what was known then, the final answer carries everything the
