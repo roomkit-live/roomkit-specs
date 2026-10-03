@@ -414,7 +414,8 @@ Room
 A room's status governs whether it will accept another event, and
 implementations MUST enforce that at **every** point where the timeline can
 grow — an inbound message, direct injection (§10.5), a hook's injected event,
-and the framework's own re-injection alike. Enforcing it only where an
+the framework's own re-injection, and a record committed outside the pipeline
+(§10.5) alike. Enforcing it only where an
 inbound router happens to look is not conformant: a caller that names the room
 explicitly bypasses the router entirely, and so does the framework when it
 re-injects into a room it already knows.
@@ -2012,7 +2013,8 @@ Implementations MUST enforce these rules:
    check reads the source's binding as the hooks left it, so a hook that
    mutes the source of the event it reads blocks that event. The greeting,
    and the trace a delegation writes into a child room no transport is
-   shared into (§23.3), are committed by paths of their own and are not
+   shared into (§23.3), and a record an integrator commits outside the
+   pipeline (§10.5), are committed by paths of their own and are not
    covered here; a child room with a shared transport commits its agent's
    response as a room does, and is covered. A muted or
    read-only source's response is therefore stored `BLOCKED` with what its
@@ -2329,8 +2331,8 @@ Planned rows are normative design intent for the named capability.
 | ON_TURN_INCOMPLETE | ASYNC | Implemented | Turn detector determined user is still speaking (for logging) |
 | ON_BACKCHANNEL | ASYNC | Implemented | Backchannel detector classified speech as backchannel |
 | ON_SESSION_STARTED | ASYNC | Implemented | Session started on any channel type (voice: audio path live; text: room auto-created) |
-| ON_RECORDING_STARTED | ASYNC | Implemented | Audio recording started for a voice session, or for a conference track (Section 12.10.8) |
-| ON_RECORDING_STOPPED | ASYNC | Implemented | Audio recording stopped, result available |
+| ON_RECORDING_STARTED | ASYNC | Implemented | Recording started for a voice session, a conference track (Section 12.10.8) or a room (Section 12.11) |
+| ON_RECORDING_STOPPED | ASYNC | Implemented | Recording stopped for a voice session, a conference track or a room, result available |
 | ON_REALTIME_TOOL_CALL | SYNC | Superseded | Speech-to-speech tool call — superseded by `ON_TOOL_CALL` (unified across AI and realtime channels) |
 | ON_REALTIME_TEXT_INJECTED | ASYNC | Implemented | Text injected into realtime session |
 | ON_REALTIME_DELEGATION | ASYNC | Implemented | Speech-to-speech model handed reasoning or tool use to a backend, hosted or integrator-side (Section 12.4.1); carries the delegation id and its target |
@@ -3308,6 +3310,24 @@ off-lock check (§9.5.1, step 5a): an injected event matched by a
 unless it is injected from inside an off-lock hook's body or under the room
 lock, in which case it takes none and commits ahead of the event being
 processed (§9.5.1, Reentrance).
+
+**A record outside the pipeline.** An integrator MAY commit an event that no
+member is meant to receive (a trace, a display snapshot, a copy a branched
+conversation starts from) without the pipeline:
+
+```
+commit_event(room_id, event, organization_id) → RoomEvent
+```
+
+The room is read scoped to `organization_id` (§17.2): a missing room, or
+another organization's, is not found. A room whose status refuses new events
+(§5.1) MUST refuse the record before anything is written. The record is
+committed under the room lock with the next index, which the room's delivery
+lane MUST count as delivered at once: no delivery set, no hook, and no
+broadcast follow it, and the next event of the room MUST NOT wait on its
+index. It is stored as the caller gives it, whatever the persistence policy,
+and rule 2 of §7.5 does not apply to it. An event the members must receive is
+injected with `send_event` instead.
 
 ---
 
@@ -8955,6 +8975,23 @@ and the recordings of a room already holding that id MUST NOT be touched.
 `ON_RECORDING_STARTED` fires for each recording once the room exists, which
 still precedes any media: a room recording captures nothing until a track is
 added.
+
+**Recorders started on an existing room** obey the same rules: a room that is
+missing, another organization's (§17.2), or whose status refuses new events
+(§5.1) is refused before any recorder starts; the recorders start all or
+nothing, under the room lock; and `ON_RECORDING_STARTED` fires for each before
+any media, as at creation. A recording resumed after a restart is one of these:
+its consent point is announced again. A caller feeding a room recording from a
+source the framework does not wire itself declares each track to the room's
+recordings and hands them its media through the framework, never through a
+recorder it holds.
+
+**A room recording's end is announced.** When a room's recordings stop, on an
+explicit stop, when the room closes or is archived, or when the framework
+shuts down, `ON_RECORDING_STOPPED` fires for each recording that stopped, with
+its result, as for a session's or a conference track's. A room recording has
+no session: the event names the room instead. Stopping happens after the room
+is read with its scope, so a call that is refused stops nothing.
 
 ```
 MediaRecordingHandle                  RoomRecorderBinding
