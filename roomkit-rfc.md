@@ -10653,8 +10653,10 @@ The loop's result is the agent's response to the event that started it, one
 deeper than that event (§8.3). A producer's task that failed (§23.3 step 6)
 stops the loop: the last output it produced, if any, is the result, not
 approved, and says the loop stopped on that failure; with no output at all
-the turn has no answer, and its caller reads the producer's failure, never an
-empty response passed off as one.
+the turn has no answer, never an empty response passed off as one. Either
+way the loop's caller reads the producer's failure. The text an asynchronous
+loop delivers says the producer's task failed, and the cut that ended its
+turn, never with the task's error (§23.3 step 8).
 
 ### 19.8 StatusBus
 
