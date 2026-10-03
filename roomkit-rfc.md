@@ -1215,7 +1215,13 @@ wants the blocks back as it sent them (it refuses a round whose blocks changed
 in number, and a block without its signature), so the tool loop replays a
 round's blocks one by one, in the order and at the place they came in relative
 to the round's calls and stretches of text. A block the response cut before
-its signature is not replayed. A provider whose reasoning has no blocks hands
+its signature is not replayed, nor is a block without one at all: that is
+another vendor's reasoning, a round a `fallback_provider` (Appendix A.9)
+receives from the primary, which the vendor refuses and the round does
+without. A vendor that refuses a call without its own signature (Gemini 3,
+which signs each call it makes) receives such a round, none of whose calls
+carries one, as text: what it said, each call, then each result, the one form
+it takes for calls it did not make. A provider whose reasoning has no blocks hands
 one block per round, replayed first. Two readers cannot know where blocks
 came, and replay them first, then the text, then the calls: a caller of
 `generate()`, since a response does not say where its blocks came, and a turn
@@ -1240,8 +1246,10 @@ in a later chunk, one copy or both without an id) is folded into the first,
 which keeps what either copy carries (its id, its thought signature). A call's
 arguments reach the loop as a mapping and never as an error: no arguments
 (nothing, or JSON `null`) are `{}`, and arguments that do not parse to an
-object (invalid JSON, an array, a fragment) are kept whole under `raw`. Such a
-call is marked partial, whatever the provider and whatever stop reason the
+object (invalid JSON, an array, a fragment) are kept whole under `raw`; arguments
+known only through a parse that reads a fragment leniently (a vendor SDK's), not
+as the text that streamed, do not read when the response was cut over them. Such
+a call is marked partial, whatever the provider and whatever stop reason the
 response gave, and a tool loop, the AI channel's or a reasoning backend's,
 MUST NOT run it, nor may a realtime channel, whose provider hands such
 arguments as the model's text rather than a mapping (Section 12.4): no tool
@@ -1838,7 +1846,9 @@ asks for JSON in the prompt and parses the answer itself.
 **Declaring tools (normative).** A provider declares each tool of the context
 in its vendor's format. A tool without parameters (an absent or empty schema)
 is declared as an object schema with no properties, which every vendor
-accepts, never as an empty map. Vendors accept different tool names, so the
+accepts, never as an empty map, and a schema whose root has no type is
+declared an object's, for every vendor: Anthropic and OpenAI refuse it
+untyped. Vendors accept different tool names, so the
 names are checked in two places:
 
 - An implementation refuses, when a tool is defined, a name no vendor accepts:
