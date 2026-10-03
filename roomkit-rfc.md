@@ -3745,6 +3745,15 @@ iterator of text chunks (typically sentences) and yields audio as each chunk is
 synthesized. This enables the streaming AI → TTS pipeline where LLM tokens are
 buffered into sentences and fed to TTS incrementally.
 
+**Encoding.** A streamed `AudioChunk` names its encoding in `format` (Section
+12.3.11), and a vendor offering several output encodings may stream any of
+them (MP3, Opus, G.711). A Voice Channel plays decoded 16-bit PCM only: it
+MUST refuse a TTS chunk whose `format` is not `pcm_s16le` (or `pcm`) before
+the chunk reaches the outbound pipeline or the transport, with an error naming
+the format, rather than play encoded bytes as samples. Encoding for the wire
+belongs to the backend, as it does for a conference (Section 12.10.3); a TTS
+that speaks on a Voice Channel is configured for PCM output.
+
 `context` carries the conversation so far to a TTS that can use it (Section
 12.2.2). A provider whose `context_level` is `NONE` never receives one, so an
 existing provider needs no change.
