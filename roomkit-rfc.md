@@ -1314,6 +1314,25 @@ answer, when an anti-loop guard stops a model that keeps repeating a refused
 call, keeps the round's declaration and tells the model that no further call
 will run: none of that round's calls runs, and the turn ends `force_stopped`.
 
+**Between two rounds.** `AFTER_TOOL_ROUND` fires after each round in which the
+channel ran at least one call, once that round's results are in and before the
+next round is built: not after a round cancelled before its calls ran, nor after
+one whose calls were all served outside the channel. Its event carries the
+round's index, its calls, the results the channel produced and the ones the
+provider served, each in the order of the calls, so a hook reads the round
+whole: the calls of one round run concurrently, and a rule about them (one
+success among failures, say) is a rule about the round. A hook MAY withdraw
+tools for the rest of the turn, with every guarantee of a withdrawal by
+`BEFORE_AI_GENERATION` above (never declared again, never named by `find_tools`
+or `list_tools` nor recovered, a call naming it refused, a tool the channel
+provides itself included, never handed to an external handler), and MAY add
+messages the next round reads after the round's results. A withdrawal changes
+the declaration of the next round, the one exception this hook makes to the
+declaration staying the same, and costs what a changed declaration costs. A
+BLOCK changes nothing, the round having run; a hook that raises or times out is
+skipped, as any SYNC hook is. The hook belongs to an AI channel's tool loop:
+neither a realtime session nor a reasoning backend's own loop fires it.
+
 **The prompt from turn to turn.** For the same reason, the system prompt SHOULD
 stay the same from one turn to the next: a system prompt that changes
 invalidates everything cached after it, the whole history included. What changes
@@ -1738,8 +1757,11 @@ documents that it does, and MUST NOT leave it out otherwise.
 dict-like mapping created with the turn and shared by identity by every
 extension point of that turn: a memory provider MAY write it while the context
 is built, a `BEFORE_AI_GENERATION` hook MAY write it through
-`event.ai_context.response_metadata`, and a tool handler MAY write it through
-`current_response_metadata()`. The framework MUST merge the record
+`event.ai_context.response_metadata`, and a tool handler or a `BEFORE_TOOL_USE`
+hook MAY write it through `current_response_metadata()` (the hook runs under
+the call's turn, so a host counts the calls a turn started there, before any
+runs). The record a caller reads on `InboundResult.response_metadata` is the
+same one, whether the turn answered or failed. The framework MUST merge the record
 into the metadata of every MESSAGE event the turn produces, as the record
 stands when that event is created — a streamed segment persisted before a tool
 round carries what was known then, the final answer carries everything the
@@ -2283,6 +2305,7 @@ Planned rows are normative design intent for the named capability.
 | ON_AI_THINKING | ASYNC | Implemented | AI model began extended thinking/reasoning |
 | ON_AI_RESPONSE | ASYNC | Implemented | A turn of intelligence completed (observability). Fired by any channel of category `INTELLIGENCE`, whether the turn ran in-process or in an external agent (Section 6.4) |
 | BEFORE_TOOL_USE | SYNC | Implemented | Before a tool executes — can block or override the call |
+| AFTER_TOOL_ROUND | SYNC | Implemented | After a round of an AI channel's tool loop ran its calls, before the next round is built — can withdraw tools for the rest of the turn and add messages for the next round (Section 6.4) |
 | ON_TOOL_CALL | SYNC | Implemented | A tool call reached its outcome — served, refused before execution, failed during it, or abandoned by the model before its result (unified across AI and realtime channels; Section 9.3) |
 | ON_USER_INPUT_REQUIRED | SYNC | Implemented | Human-in-the-loop: a tool paused, waiting for user input |
 | | | | |
