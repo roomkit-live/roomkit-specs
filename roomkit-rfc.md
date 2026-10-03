@@ -1327,8 +1327,9 @@ channel ran at least one call, once that round's results are in and before the
 next round is built: not after a round cancelled before its calls ran, nor after
 one whose calls were all served outside the channel. Its event carries the
 round's index, its calls, the results the channel produced and the ones the
-provider served, each in the order of the calls, so a hook reads the round
-whole: the calls of one round run concurrently, and a rule about them (one
+provider served, each in the order of the calls, and the names of the turn's
+toolset as the next round is built from it (Tool Search's whole catalogue
+included), so a hook names what it withdraws and reads the round whole: the calls of one round run concurrently, and a rule about them (one
 success among failures, say) is a rule about the round. A hook MAY withdraw
 tools for the rest of the turn, with every guarantee of a withdrawal by
 `BEFORE_AI_GENERATION` above (never declared again, never named by `find_tools`
