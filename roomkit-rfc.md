@@ -10823,14 +10823,23 @@ exceeds `evict_threshold_tokens`. It prioritizes keeping system messages,
 tool results, and recent events.
 
 **The turn's footprint.** What the history may take is what the window leaves
-once the rest of the turn is in it: the system prompt, the tools declared and
-the reply budget. A host cannot always name that rest, since the prompt is
-composed per turn (skills, Tool Search, the agent's identity, a binding's
-tools). So an AI channel MUST measure it, as it will send it, before it reads
-its memory, and make the measure readable to the memory for that turn
-(`current_turn_footprint()`). A budget-aware memory reserves the larger of the
-reserve it was given and that measure: a host's reserve may add to what the
-channel knows, never take from it.
+once the rest of the turn is in it: the system prompt, the tools declared, the
+notes the channel itself adds to the turn's input (the room's plan, the digest
+of the tools already used, the speaker attribution) and the reply budget. A
+host cannot always name that rest, since the prompt is composed per turn
+(skills, Tool Search, the agent's identity, a binding's tools). So an AI channel
+MUST measure it, as it will send it, before it reads its memory, and make the
+measure readable to the memory for that turn (`current_turn_footprint()`): the
+input it measured, and the reply budget the turn requests, zero when the
+channel sets none and the provider applies its own.
+
+A budget-aware memory reserves the larger of the reserve it was given and the
+measured input: the given reserve is a floor on that same input, not an
+addition to it, so a host that measures its own system prompt is not counted
+twice. For the reply it reserves the larger of its safety margin and the reply
+budget: the margin is the reply's headroom when the reply budget is unknown or
+smaller, and the reply budget when it is larger. What a hook adds to the
+context after the memory read is not measured.
 
 ---
 
