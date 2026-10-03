@@ -2447,7 +2447,10 @@ Planned rows are normative design intent for the named capability.
 - Used for observability, logging, side effects.
 
 **Who serves a call.** An AI channel decides it call by call, not turn by
-turn. A call the provider already ran (it carries its result) is reported; a
+turn. A call the provider already ran is reported: the provider says so on the
+call, with its result and whether it failed, never in its arguments, which are
+the model's text: a key a model writes there (`_result`) is an argument like any
+other, and its call is judged as any call. A
 call an external tool handler is configured to decide is that handler's; any
 other call is the channel's own, through the pre-execution gate, then its
 handler, and is a call nothing served when no handler takes it. A call the
