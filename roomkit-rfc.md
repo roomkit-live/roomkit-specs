@@ -1243,8 +1243,9 @@ arguments reach the loop as a mapping and never as an error: no arguments
 object (invalid JSON, an array, a fragment) are kept whole under `raw`. Such a
 call is marked partial, whatever the provider and whatever stop reason the
 response gave, and a tool loop, the AI channel's or a reasoning backend's,
-MUST NOT run it, nor may a realtime channel (Section 12.4): no tool does
-anything useful with `raw`. The model reads that nothing ran, and why: its
+MUST NOT run it, nor may a realtime channel, whose provider hands such
+arguments as the model's text rather than a mapping (Section 12.4): no tool
+does anything useful with `raw`. The model reads that nothing ran, and why: its
 call was cut when the response was cut short (the output cap, a content
 filter, or a stream that ended without a stop reason), so it can call again
 with less; its arguments could not be read otherwise, so it can call again
@@ -5295,9 +5296,11 @@ be read, and the observers receive the refusal. A call the provider issued is
 answered once, by the channel, through `submit_tool_result`, or through
 `submit_tool_error` when the call failed (refused, failed, blocked,
 served by nothing): a provider whose protocol marks a result as an error
-(ElevenLabs' client tools, for one) MUST mark it, so the model does not read a
-refusal as a success; a provider whose protocol does not ignores the
-distinction, the result's body saying it. A provider MUST report through
+(ElevenLabs' client tools, Gemini Live's `error` key) MUST mark it, so the
+model does not read a refusal as a success, and MUST mark nothing else, so a
+served result whose body carries an error field of its own is not read as a
+failure; a provider whose protocol does not ignores the distinction, the
+result's body saying it. A provider MUST report through
 `on_tool_call_cancelled` every call it abandons, whatever the cause: the
 model discarding it, a reconnect orphaning it (call ids are
 connection-scoped), its own wait on the channel timing out, the conversation
