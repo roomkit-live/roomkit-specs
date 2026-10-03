@@ -11027,7 +11027,7 @@ answers the same questions on both paths. The context carries at least:
 | `current_tool_room_id()` | The id of the room the turn belongs to |
 | `current_tool_room()` | The `Room` of the turn itself: the object the store loaded when the turn began, the same one the turn's `RoomContext.room` holds for its hooks, memory provider and config provider; on a realtime tool call, which runs no turn, the room as loaded for that call |
 | `current_tool_actor_id()` | The participant id of the event that woke the channel this round; empty when the turn has no author (a system injection, a webhook, a scheduled run) |
-| `current_tool_allowed_names()` | Every tool name the turn resolved, and every tool a round declared beyond it (the re-read of a stored result, the planner's tool), nothing withdrawn, that its tool policy admits for its actor, so a call is validated against the live toolset rather than an attach-time snapshot: a tool the policy denies is left out on every door, since the gate refuses it before any handler, while a tool a skill keeps closed stays in; on a realtime door, every tool the session declares (its catalogue, what orchestration set up, the channel's own) that its policy admits, and none when the session declares no catalogue: it names no list, and its gate, policy included, still judges each call |
+| `current_tool_allowed_names()` | Every tool name the turn resolved, and every tool a round declared beyond it (the re-read of a stored result), nothing withdrawn, that its tool policy admits for its actor, so a call is validated against the live toolset rather than an attach-time snapshot: a tool the policy denies is left out on every door, since the gate refuses it before any handler, while a tool a skill keeps closed stays in; on a realtime door, every tool the session declares (its catalogue, what orchestration set up, the channel's own) that its policy admits, and none when the session declares no catalogue: it names no list, and its gate, policy included, still judges each call |
 | `current_tool_call()` | The per-call record: the call's id, its channel, and the structured-result reverse channel |
 | `current_response_metadata()` | The turn's one response-metadata record (§6.7); empty where no turn will merge it (a realtime tool call) |
 
@@ -11590,9 +11590,13 @@ skill stay revealed while the skill is active.
 An activation that finds no skill under its name, when that name matches tools
 the turn may call (a model that took the `spotify_play` tool for a "spotify"
 skill), answers with the skill's absence and names those tools, and reveals
-them as `find_tools` reveals its matches, for the rest of the session: the same
-answer and the same reveal on every door, text or realtime. A skill that exists
-but is unavailable answers with its reason and no such hint.
+them as `find_tools` reveals its matches (the window swapped, what is declared
+anyway left out), for the rest of the session, once the call is served: an
+`ON_TOOL_CALL` block reveals nothing. The same answer and the same reveal on
+every door, text or realtime; where the tools are reached through `call_tool`,
+the answer says so. Only the turn's own catalogue is matched, never the tools
+the channel serves itself. A skill that exists but is unavailable answers with
+its reason and no such hint.
 
 ### 24.5 Loading Failures
 
