@@ -11296,12 +11296,19 @@ TaskRunner (interface)
 ├── run(task: DelegatedTask) → void
 │       # Execute the task asynchronously
 │
+├── cancel(task_id: string) → bool
+│       # Cancel one task; it ends cancelled
+│
 └── close() → void
         # Cancel in-flight tasks and release resources
 ```
 
 Implementations MUST provide an `InMemoryTaskRunner` for single-process
-deployments.
+deployments. A runner ends each task exactly once, through the completion it
+was handed: completed or failed once its work ran, `cancelled` when `cancel`
+or `close` cut it (even before it ran). That completion MUST run to its end
+even if the caller of `cancel` is cancelled meanwhile, and a task whose work
+already ran when `cancel` arrives ends as it stands.
 
 ### 23.2 DelegatedTask
 
@@ -11394,12 +11401,15 @@ When `delegate(room_id, agent_id, task, notify)` is called:
    delegation made outside a tool call delivers at 0.
 
 A task cancelled from outside (its caller's timeout, the task runner's
-`cancel` or `close`, even before it ran) ends as any task does, whether it
-ran inline or in the background: `cancelled`, with no output. Steps 7 and 8
-still run, to their end though the task is being cancelled, the completion
-callback with them, and a notified agent is told the task was cancelled;
-then the cancellation goes on. A delegation's span ends with its task's
-status: `ok` completed, `error` failed, `cancelled` cancelled.
+`cancel` or `close`, even before it ran or while its delegation was still
+being set up) ends once, as any task does, whether it ran inline or in the
+background: `cancelled`, with no output. Steps 7 and 8 still run, to their
+end though the task is being cancelled, the completion callback with them,
+and a notified agent is told the task was cancelled; then the cancellation
+goes on. A framework that is closing starts no turn: step 8 is skipped and
+logged, step 7 still runs. A task whose work already ran when the
+cancellation arrives ends as it stands. A delegation's span ends with its
+task's status: `ok` completed, `error` failed, `cancelled` cancelled.
 
 ### 23.4 Delegation Tools
 
