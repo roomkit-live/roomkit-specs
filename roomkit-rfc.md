@@ -10726,13 +10726,16 @@ afterwards leaks into the turns of other rooms running meanwhile.
 The task-formulation pass is read as any streamed turn is (Section 6.4): the
 task it hands the workers is its final answer, never the narration of its
 tool rounds joined to it, and a pass its round cap, deadline or budget cut
-short has none, so no worker runs. The message it answered still gets an
-answer: the supervisor's fallback message, the text a reasoning backend
-speaks when its delegated work could not be completed (Section 12.4.1),
-stored and delivered as the supervisor's response with
-`metadata.loop_end_reason` naming the cut. A pass that failed with an error
-has no fallback: its caller reads the error, as on any turn, and the error
-is logged once. Its tool calls are stored in the room as
+short has none, so no worker runs. A pass that stopped short of its answer
+(it ended for any reason but `completed`, save a stop someone chose,
+`cancelled`) still answers the message it answered: the supervisor's
+fallback message, the text a reasoning backend speaks when its delegated work
+could not be completed (Section 12.4.1), stored and delivered as the
+supervisor's response, carrying the turn's record (its `loop_end_reason`,
+its `ai_usage`, what the turn wrote) as the turn's last message would. A
+pass that failed with an error has no fallback: the error is the turn's, as
+on any turn, logged once at its own level. Nothing of the pass's own stream
+reaches the room's transports. Its tool calls are stored in the room as
 any turn's TOOL_CALL rows, through the room's commit gate (Section 10.1) and
 in the answered event's scope and thread. Its text is not stored: it is the
 workers' task, an answer to no one in the room.
