@@ -1533,9 +1533,7 @@ its record carries none. A turn learns its end after its segments are
 written, so the implementation updates the stored message, and ON_EVENT_UPDATED
 fires as for any change to a stored event; it does not deliver the message
 again. Writing that update is best effort: a failure is logged, and the turn's
-outcome stands. The record also joins the turn's response-metadata record
-(Section 6.7), so a caller reads it on `InboundResult.response_metadata` even
-when the turn wrote no message. A host reads how any turn ended from its reply.
+outcome stands. A host reads how any turn ended from its reply.
 
 **ACP Agent Channel:**
 
@@ -11250,12 +11248,14 @@ When `delegate(room_id, agent_id, task, notify)` is called:
    A turn that did not complete (it ended for any reason but `completed`:
    its round cap, deadline or budget cut it, a stop cancelled it, its answer
    was cut or never came; an ACP agent's prompt stopped on any reason but
-   `end_turn`) has no answer (Section 6.4): the task fails, its error naming
-   how the turn ended, its output the agent's last narration and its
-   metadata the `loop_end_reason` (an ACP agent's stop reason), which
-   `ON_TASK_COMPLETED` carries too, whether the turn streamed or not, wrote
-   text or none, and whether a transport is shared. How the turn ended is
-   read from its response-metadata record, else from its last message.
+   `end_turn`, or never returned) has no answer (Section 6.4): the task
+   fails, its error naming how the turn ended, its output the agent's last
+   narration and its metadata the `loop_end_reason` (an ACP agent's stop
+   reason, or `interrupted`), which `ON_TASK_COMPLETED` carries too, whether
+   the turn streamed or not, wrote text or none, and whether a transport is
+   shared. The answer and how its turn ended are read off the same agent:
+   its turn's record, else its last message, never another agent's that
+   answered in the child room.
    A result the agent submitted through a result tool before the cut still
    counts; without one, the task fails without a re-prompt. What reads a
    task's work (an orchestration strategy, the notified agent) reads none
