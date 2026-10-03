@@ -10644,7 +10644,11 @@ workers' task, an answer to no one in the room.
 A single agent handles the conversation indefinitely, looping back for
 refinement. Useful for iterative workflows (editing, code review, tutoring).
 The loop's result is the agent's response to the event that started it, one
-deeper than that event (§8.3).
+deeper than that event (§8.3). A producer's task that failed (§23.3 step 6)
+stops the loop: the last output it produced, if any, is the result, not
+approved, and says the loop stopped on that failure; with no output at all
+the turn has no answer, and its caller reads the producer's failure, never an
+empty response passed off as one.
 
 ### 19.8 StatusBus
 
