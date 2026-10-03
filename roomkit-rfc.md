@@ -1270,6 +1270,23 @@ the model that its call did not run, within the bound it gives an empty
 round, on any round and whatever text the round said, and a turn whose bound
 runs out ends cut short (`empty_response`), never `completed`.
 
+**An answer that did not act.** An AI channel MAY carry a continuation policy:
+given the text a round ended on, the instruction that makes the model go on, or
+nothing when the answer stands (a host's recognizer of an announced action, "I
+will check that", say). The loop consults it only for a round that ended
+naturally, with text and without a call: not cut short (Section 6.4 above), not
+a call it could not parse, not a refusal, and with a tool declared, since going
+on means acting. Every provider's natural stop counts alike (`stop`, `end_turn`,
+`STOP`): the loop decides it from what the round carried, not from the provider's
+word for it. The policy shares the bound of an empty round, and the loop keeps
+its guards: no continuation after a cancellation or a force-stop, nor past the
+turn's deadline or budget. A continuation hands the next round the text as the
+assistant's message, then the instruction as the user's; the text already
+reached the room as the round's segment and is neither repeated nor withdrawn.
+A turn whose policy still asks once the bound has run out ends `unfinished`,
+never `completed`: the loop reaches its end (its end marker, `ON_AI_RESPONSE`),
+and the policy itself never raises out of the loop.
+
 **What the generation hooks see:** `BEFORE_AI_GENERATION` fires once per turn,
 with the context the turn starts from, and its `tools` are the turn's toolset
 as the tool policy and skill gating leave it. Without Tool Search that is the
