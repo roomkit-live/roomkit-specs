@@ -1491,7 +1491,8 @@ nothing that reads an agent's answer (an orchestration strategy, a delegated
 task's result) may take it for one. A turn the provider interrupted after a
 round has no answer: a task delegated to it fails with the provider's error,
 and carries the turn's end (`error`) and narration as a cut turn does
-(Section 23.3 step 6); a strategy that reads an agent's answer reads none from an output that
+(Section 23.3 step 6), while what reads the task tells the error from a cut;
+a strategy that reads an agent's answer reads none from an output that
 carries an error, its rounds' text included. A turn constrained to a schema
 is the exception: interrupted after a round, it fails with `truncated`, and
 `ON_AI_RESPONSE` does not fire (Appendix A.9).
@@ -11407,11 +11408,13 @@ When `delegate(room_id, agent_id, task, notify)` is called:
    task's error being the error's own text, and the task still carries what
    the child room's record holds of the turn: its `loop_end_reason` (`error`,
    an ACP agent's `interrupted`) in its metadata and on `ON_TASK_COMPLETED`,
-   its narration as its output; the failure is logged as its error is.
-   A result the agent submitted through a result tool before the cut still
-   counts; without one, the task fails without a re-prompt. What reads a
-   task's work (an orchestration strategy, the notified agent) reads none
-   from a failed task, its output whatever it keeps.
+   its narration as its output; the failure is logged as its error is. The
+   end is the failing agent's own: with several agents in the child room, one
+   agent's failure never carries another's end.
+   A result the agent submitted through a result tool before the cut or the
+   failure still counts; without one, the task fails without a re-prompt.
+   What reads a task's work (an orchestration strategy, the notified agent)
+   reads none from a failed task, its output whatever it keeps.
 7. Fire `ON_TASK_COMPLETED` hook in the parent room.
 8. If `notify` is set, hand the result back through `deliver()` (§22) with
    the framework's delivery strategy and `instruction = true`, so
