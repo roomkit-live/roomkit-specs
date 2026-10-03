@@ -11297,7 +11297,7 @@ DelegatedTask
 ├── agent_id: string                        # Agent to execute the task
 ├── task: string                            # Task description / instructions
 ├── notify: string | null                   # Channel to notify on completion
-├── status: TaskStatus                      # PENDING, IN_PROGRESS, COMPLETED, FAILED
+├── status: TaskStatus                      # PENDING, IN_PROGRESS, COMPLETED, FAILED, CANCELLED
 ├── result: string | null                   # Task result (on completion)
 ├── error: string | null                    # Error message (on failure)
 ├── created_at: datetime
@@ -11378,6 +11378,14 @@ When `delegate(room_id, agent_id, task, notify)` is called:
    delegation again ends at `max_chain_depth` (§8.3) like any chain. A
    delegation made outside a tool call delivers at 0.
 
+A task cancelled from outside (its caller's timeout, the task runner's
+`cancel` or `close`, even before it ran) ends as any task does, whether it
+ran inline or in the background: `cancelled`, with no output. Steps 7 and 8
+still run, to their end though the task is being cancelled, the completion
+callback with them, and a notified agent is told the task was cancelled;
+then the cancellation goes on. A delegation's span ends with its task's
+status: `ok` completed, `error` failed, `cancelled` cancelled.
+
 ### 23.4 Delegation Tools
 
 Implementations SHOULD provide helpers for AI-driven delegation:
@@ -11402,7 +11410,7 @@ refused.
 | Hook | Execution | When |
 |---|---|---|
 | ON_TASK_DELEGATED | ASYNC | Task created and child room initialized |
-| ON_TASK_COMPLETED | ASYNC | Task completed with result (or failed with error) |
+| ON_TASK_COMPLETED | ASYNC | Task ended: completed with its result, failed with its error, or cancelled |
 
 ---
 
