@@ -8985,7 +8985,12 @@ nothing, under the room lock; and `ON_RECORDING_STARTED` fires for each before
 any media, as at creation. Media may already flow in the room: a recording
 joins it only once announced, with each of the room's tracks declared to it
 first, so what reaches it comes after its consent point and in the format its
-track declares. A recording resumed after a restart is one of these:
+track declares. What such a recording captures is the room's declared tracks:
+those declared from then on, and those already declared while an earlier
+recording ran. A channel the framework wires itself declares a session's
+tracks when the session joins a room that records; a session that joined while
+the room recorded nothing declares none, and is not recorded until it joins
+again. A recording resumed after a restart is one of these:
 its consent point is announced again. A caller feeding a room recording from a
 source the framework does not wire itself declares each track to the room's
 recordings and hands them its media through the framework, never through a
@@ -8996,7 +9001,12 @@ explicit stop, when the room closes or is archived, or when the framework
 shuts down, `ON_RECORDING_STOPPED` fires for each recording that stopped, with
 its result, as for a session's or a conference track's. A room recording has
 no session: the event names the room instead. Stopping happens after the room
-is read with its scope, so a call that is refused stops nothing.
+is read with its scope, so a call that is refused stops nothing. A room whose
+record is gone while its recordings still run has them stopped by an explicit
+stop all the same, since a file nothing stops is never finalized; another
+organization's room is refused, and a gone room that records nothing is not
+found, as either would be told. With no room left to read a context from, such
+an end MAY be logged rather than announced.
 
 ```
 MediaRecordingHandle                  RoomRecorderBinding
