@@ -7870,6 +7870,17 @@ ConferenceChannel
    is admitted, and the unaccounted window of Section 17.7 stretches
    without bound.
 
+   A host MAY request the join itself (`ensure_bot(room_id)`), a first
+   need like the others for a host that must know the bot is in before
+   it lets a meeting begin. Unlike the triggers above, it waits for the
+   join and returns the bot's session: a live session is returned as it
+   is, a lost one is joined again, the request is serialised with every
+   other trigger so the room is joined once, and a new join fires
+   `ON_SESSION_STARTED` and emits `conference_started` before it returns.
+   It fails with `RoomNotAttachedError` when the channel is not attached
+   to the room or is detached while joining, and with the backend's
+   error when `join_as_bot()` fails.
+
    The join exists for the intelligence. The bot's session is the
    framework's media access (Section 12.10.1 principle 4): subscribed
    tracks feed the pipelines through it, and the AI's voice is
