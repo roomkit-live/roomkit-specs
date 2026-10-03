@@ -1218,10 +1218,12 @@ to the round's calls and stretches of text. A block the response cut before
 its signature is not replayed, nor is a block without one at all: that is
 another vendor's reasoning, a round a `fallback_provider` (Appendix A.9)
 receives from the primary, which the vendor refuses and the round does
-without. A vendor that refuses a call without its own signature (Gemini 3,
-which signs each call it makes) receives such a round, none of whose calls
-carries one, as text: what it said, each call, then each result, the one form
-it takes for calls it did not make. A provider whose reasoning has no blocks hands
+without. A vendor that refuses, in the current turn, a call without its own
+signature (Gemini 3, which signs each call it makes) receives such a round of
+that turn, none of whose calls carries one, as text: what it said, each call,
+then each result with the images it carries, the one form it takes for calls
+it did not make. An earlier turn's round, which it does not check, keeps its
+form. A provider whose reasoning has no blocks hands
 one block per round, replayed first. Two readers cannot know where blocks
 came, and replay them first, then the text, then the calls: a caller of
 `generate()`, since a response does not say where its blocks came, and a turn
@@ -1246,11 +1248,15 @@ in a later chunk, one copy or both without an id) is folded into the first,
 which keeps what either copy carries (its id, its thought signature). A call's
 arguments reach the loop as a mapping and never as an error: no arguments
 (nothing, or JSON `null`) are `{}`, and arguments that do not parse to an
-object (invalid JSON, an array, a fragment) are kept whole under `raw`; arguments
-known only through a parse that reads a fragment leniently (a vendor SDK's), not
-as the text that streamed, do not read when the response was cut over them. Such
-a call is marked partial, whatever the provider and whatever stop reason the
-response gave, and a tool loop, the AI channel's or a reasoning backend's,
+object (invalid JSON, an array, a fragment) are kept whole under `raw`. Under a
+response cut short (the output cap, a content filter, a stream that ended
+without a stop reason), only argument text that arrived and reads shows the
+arguments whole: a call with no argument text yet, or known only through a parse
+of what arrived (a vendor SDK reads a fragment leniently), does not read either.
+Nothing under a cut is no evidence of no arguments (Anthropic sends no stop for
+the block it cuts, often before its first argument chunk, measured). Such a call
+is marked partial, whatever the provider and whatever stop reason the response
+gave, and a tool loop, the AI channel's or a reasoning backend's,
 MUST NOT run it, nor may a realtime channel, whose provider hands such
 arguments as the model's text rather than a mapping (Section 12.4): no tool
 does anything useful with `raw`. The model reads that nothing ran, and why: its
