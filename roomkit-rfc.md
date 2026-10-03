@@ -11215,6 +11215,13 @@ When `delegate(room_id, agent_id, task, notify)` is called:
    is the agent's own call that ended served. A refused, failed or blocked
    call is no result, and neither is a call of another channel shared into
    the child room.
+   A turn its round cap, deadline or budget cut short has no answer
+   (Section 6.4): the task fails, its error naming how the turn ended, its
+   output the agent's last narration and its metadata the
+   `loop_end_reason`, whether the turn streamed or not and whether a
+   transport is shared. A result the agent submitted through a result tool
+   before the cut still counts; without one, the task fails without a
+   re-prompt.
 7. Fire `ON_TASK_COMPLETED` hook in the parent room.
 8. If `notify` is set, hand the result back through `deliver()` (§22) with
    the framework's delivery strategy and `instruction = true`, so
