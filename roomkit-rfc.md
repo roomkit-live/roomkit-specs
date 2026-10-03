@@ -10801,6 +10801,16 @@ event in its sources.
 exceeds `evict_threshold_tokens`. It prioritizes keeping system messages,
 tool results, and recent events.
 
+**The turn's footprint.** What the history may take is what the window leaves
+once the rest of the turn is in it: the system prompt, the tools declared and
+the reply budget. A host cannot always name that rest, since the prompt is
+composed per turn (skills, Tool Search, the agent's identity, a binding's
+tools). So an AI channel MUST measure it, as it will send it, before it reads
+its memory, and make the measure readable to the memory for that turn
+(`current_turn_footprint()`). A budget-aware memory reserves the larger of the
+reserve it was given and that measure: a host's reserve may add to what the
+channel knows, never take from it.
+
 ---
 
 ## 21. Tool Access Control
@@ -11498,9 +11508,16 @@ SkillRegistry
 ├── register(skill_dir) → SkillMetadata     # Register a single skill
 ├── get_metadata(name) → SkillMetadata | null  # Look up skill metadata
 ├── get_skill(name) → Skill | null          # Load full skill (metadata + instructions)
+├── add(skill: Skill) → void                # Register a skill built in memory
+├── copy(names?, marks = true) → SkillRegistry  # A subset, its paths and marks kept
 ├── all_metadata() → list<SkillMetadata>    # List all registered skills
 └── to_prompt_xml() → string               # Generate <available_skills> XML for AI context
 ```
+
+A host that builds its skills elsewhere (a store, a marketplace) registers them
+with `add`, and one that narrows a registry for an agent copies it with
+`copy`: a copy finds every skill the source finds, a skill discovered but not
+yet loaded included, and keeps the source's marks unless asked not to.
 
 Skills are injected into the AI agent's system prompt via `to_prompt_xml()`.
 The agent can then select and apply skills based on the user's request. A
