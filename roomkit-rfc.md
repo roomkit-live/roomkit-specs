@@ -5860,7 +5860,8 @@ delegation cut (the channel's bound on the run) is reported once, cancelled,
 as a call the session's end cut is. A backend that is an agent (Section 19)
 runs on the AI channel's tool loop with the agent's settings and turn
 budget, the voice session's catalogue as its tools and the channel's gate as
-their handler; the loop's own re-read of a result it stored (Section 21.5)
+their handler, which bounds each call as it bounds every call of the session
+(Section 21.6): the agent's own bound does not apply on top of it; the loop's own re-read of a result it stored (Section 21.5)
 stays the loop's, as on any turn. Tools of its own (skills, a sandbox,
 planning, an external handler) would run outside that gate, and a kit that
 registered it would judge each call a second time, so such an agent is
