@@ -3560,6 +3560,7 @@ VoiceBackend (interface)
 ├── connect(room_id, participant_id, channel_id) → VoiceSession
 ├── disconnect(session) → void
 ├── send_audio(session, audio_chunks) → void
+│       # Decoded 16-bit PCM only; encoding for the wire is the backend's
 ├── cancel_audio(session) → void            # Cancel current playback (if supported)
 ├── send_dtmf(session, digit, duration_ms) → void  # Send outbound DTMF (RFC 4733)
 │
