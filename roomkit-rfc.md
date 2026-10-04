@@ -1069,6 +1069,8 @@ Channel (interface)
 ├── deliver_stream(text_stream, event, binding, context) → ChannelOutput
 │       # Deliver streaming text to this channel
 │       # Default: accumulate text, deliver as complete event via deliver()
+│       # A stream that raises: deliver what was accumulated, then propagate
+│       # the failure (Section 12.2 step 13s)
 │
 ├── connect_session(session: VoiceSession, room_id: string, binding: ChannelBinding) → void
 │       # Connect a voice session to this channel (voice/realtime channels only)
@@ -3944,8 +3946,22 @@ enters a room as any other audio.
      longer carries rows goes to every channel, the streaming one included. With
      `flush_partial_tts = false` the sessions keep reading, so the stream runs
      to its end and nothing is cancelled.
+     Failed: when the response stream raises (its provider fails mid-response),
+     the framework MUST store the text already produced as the AI response event,
+     not marked cancelled, close every call still open with `status = failed`,
+     fire `ON_ERROR` and return the failure to the caller, even when the streaming
+     channel swallows it. That event reaches the streaming channel through the
+     stream, before the failure, as a completed response's last event does: the
+     channel was handed every token of it, so it MUST NOT receive that text again
+     as an ordinary delivery (no second synthesis, no second message). A channel
+     that buffers the stream instead of rendering it delivers what it buffered,
+     then the failure propagates. A failure of the streaming channel itself is not
+     the response's: what it was handed may not all have been rendered, so the
+     text goes out as an ordinary event to every channel, the streaming one
+     included.
 14s. Framework re-broadcasts complete event to non-streaming channels (exclude_delivery
-     skips channels that already received streaming content)
+     skips channels that already received streaming content, whether the
+     response completed or failed)
 15s. Fire AFTER_TTS hook with the text the sessions were sent: the sentences as
      BEFORE_TTS left them (12s.b) when a hook changed or dropped one, the whole
      streamed text otherwise. The final assistant transcript carries the same
