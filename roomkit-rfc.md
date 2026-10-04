@@ -10862,9 +10862,18 @@ deeper than that event (§8.3). A producer's task that failed (§23.3 step 6)
 stops the loop: the last output it produced, if any, is the result, not
 approved, and says the loop stopped on that failure; with no output at all
 the turn has no answer, never an empty response passed off as one. Either
-way the loop's caller reads the producer's failure. The text an asynchronous
-loop delivers says the producer's task failed, and the cut that ended its
-turn, never with the task's error (§23.3 step 8).
+way the loop's caller reads the producer's failure. An asynchronous loop
+(a voice channel's `delegate_loop`) hands its outcome back to the voice
+channel that started it as a background delegation's result is (§23.3 step
+8): an instruction to that channel, its output bounded and set apart as a
+worker's, never published as a participant's message. The text says how the
+loop ended; for a producer's task that failed, that it failed and the cut
+that ended its turn, never with the task's error. A loop that raised hands
+back that the work could not be completed, carrying the reasoning backend's
+fallback text (Section 12.4.1) and never the error's message, which goes to
+the logs and the status bus (Section 9.3), as a supervisor's background
+pipeline does (Section 19.7.3). The room is free for a new loop before the
+outcome is handed back: the model's turn on it may start one.
 
 ### 19.8 StatusBus
 
