@@ -7900,7 +7900,10 @@ ConferenceChannel
    `ON_SESSION_STARTED` and emits `conference_started` before it returns.
    It fails with `RoomNotAttachedError` when the channel is not attached
    to the room or is detached while joining, and with the backend's
-   error when `join_as_bot()` fails.
+   error when `join_as_bot()` fails. A channel configured with nothing
+   to consume or say refuses it (`ConferenceCapabilityError`) rather than
+   join: its bot would be the silent observer this section declines to
+   make a mode.
 
    The join exists for the intelligence. The bot's session is the
    framework's media access (Section 12.10.1 principle 4): subscribed
