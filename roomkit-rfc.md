@@ -2750,10 +2750,13 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   each request fires ON_USER_INPUT_REQUIRED and names the channel type of
   the door it was asked on; the requests still open are settled when the
   channel closes, or when what asked them is taken out (a conference's
-  speech-to-speech provider unplugged). A human-input handler given as a
-  plain tool handler is a host handler, bound by none of these rules. A
-  realtime pipeline's agent never carries human-input tools of its own: the
-  session serves the channel's (Section 19.5).
+  speech-to-speech provider unplugged). Tool Search never hides them, and a
+  human-input definition given twice, or under a name the channel serves
+  itself, is refused when the handler is given, as a host tool is (Section
+  21.1). A human-input handler given as a plain tool handler is a host
+  handler, bound by none of these rules. A realtime pipeline's agent never
+  carries human-input tools of its own: the session serves the channel's
+  (Section 19.5).
 
 ### 9.4 HookResult
 
@@ -11229,8 +11232,10 @@ setup's for the same room (a setup for one room does not collide with another
 room's; the same strategy installed again for a room replaces its own). A tool
 that arrives with the turn (a binding's or a config provider's tools, a
 generation hook's) comes too late to be refused: under a name the channel or a
-setup already serves it MUST NOT be declared, and a warning names it; a name
-it gives twice is declared once, with the later definition. No name is
+setup already serves it MUST NOT be declared, and a warning names it, unless it
+is that setup's own declaration (a realtime pipeline gives each agent's
+session its own handoff and tools this way, Section 19.5); a name it gives
+twice is declared once, with the later definition. No name is
 declared twice in one round: a provider rejects a duplicate name.
 `find_tools` and `list_tools` MUST NOT name a tool the policy denies or a skill
 gates: a name the model can never call is a false promise and discloses what
