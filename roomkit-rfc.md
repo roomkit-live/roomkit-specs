@@ -5646,10 +5646,13 @@ delivery; the report. A
 call's result is delivered once and its outcome reported once: a
 reconfiguration that fails once the result went out sends no second one, and
 a cancellation that arrives after the result was delivered is not reported.
-A call the session's end, or a conference's detach, interrupts is reported
-once, as cancelled, a start that fails being a session's end for the calls
-issued while it was pending, and a refusal or a report a detach would cut
-still made. An id names its call until the call's result goes out or
+A call an ending interrupts is reported once, as cancelled. The endings are
+the session's end, the channel's close, and on a conference a detach or the
+unplug of its realtime provider. A start that fails is a session's end for
+the calls the provider issued while it was pending, up to its disconnection.
+A report under way when an ending arrives (a call's refusal, or the
+cancellation of a call the provider abandoned) is still made, and reads the
+session's end first: the call is reported cancelled. An id names its call until the call's result goes out or
 the provider abandons the call: a second call under it before then is refused and reported once, and sends
 nothing, since the id's one result is the first call's, which runs on; a call
 under it after then is a new call, to the channel and to the provider alike,
