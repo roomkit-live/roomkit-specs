@@ -6080,7 +6080,11 @@ unattributed, as that section requires. A backend that yields nothing, fails,
 or exceeds the bound the channel SHOULD place on its run MUST still be
 answered with one spoken output saying the work could not be completed — a
 full-duplex model otherwise keeps the conversation open for an answer that
-never comes. An output returned for a delegation the conversation has moved
+never comes. One that fails on an error also fires ON_ERROR once, as the
+channel, with the category `reasoning`, as a room turn's failure fires it
+(Section 6.4): the fallback tells the user, the hook tells the host. A turn
+its round cap, deadline or budget cut is an expected end and fires none, as
+on a room. An output returned for a delegation the conversation has moved
 past is the model's to ignore, and the provider's instructions SHOULD tell it
 so.
 
