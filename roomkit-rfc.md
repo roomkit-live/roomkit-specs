@@ -857,6 +857,10 @@ ChannelBinding
 └── metadata: map<string, any>              # Binding-specific data (recipient_id, persona, etc.)
 ```
 
+A binding's category is the channel's own unless the attachment names one:
+an intelligence channel attached without a category takes part as an
+intelligence channel, a transport as a transport.
+
 ### 5.8 ChannelCapabilities
 
 Each channel declares what it supports:
@@ -11745,10 +11749,13 @@ When `delegate(room_id, agent_id, task, notify)` is called:
    the framework's delivery strategy and `instruction = true`, so
    `BEFORE_DELIVER`, `AFTER_DELIVER` and the delivery backend apply to it as
    to any proactive delivery. `notify` names who is told: an intelligence channel receives it
-   addressed to it, through the room's transport (§10.1.1); a realtime voice
-   channel, injected with the `system` intent (§12.4) into the session whose
-   tool call delegated, read from the tool call context (Section 21.4), or
-   its one session for a delegation made outside a call.
+   addressed to it, through the room's transport (§10.1.1); a channel that
+   hosts a realtime model (a realtime voice or audio-video channel, a
+   conference with a realtime model plugged in), injected with the `system`
+   intent (§12.4) into the session whose tool call delegated, read from the
+   tool call context (Section 21.4), or its one session for a delegation
+   made outside a call; nothing of it is published to the room's other
+   channels.
    Another transport has no model to direct and receives it as a message
    delivered through it. The delivered content carries the result, bounded and
    delimited, presented as the worker's output rather than as an
