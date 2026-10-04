@@ -10961,9 +10961,13 @@ skill gating, the arguments, then BEFORE_TOOL_USE, so a tool refused for
 access never has its arguments read. A tool the policy denies reads `Tool
 '<name>' is not permitted by the agent's tool policy.`; a tool a skill keeps
 closed reads `Tool '<name>' is gated by a skill. Activate the skill first using
-activate_skill.`; a name the turn or session does not carry reads `Tool
-'<name>' is not declared.` (under Tool Search, a name that no tool carries
-reads that none exists, with the hint to search). A tool of the turn's
+activate_skill.` (a reasoning backend, which cannot activate one, reads that
+the conversation has not activated it); a name the turn or session does not
+carry reads `Tool '<name>' is not declared.`, and under Tool Search, on a text
+turn as on a realtime session, its `call_tool` transport and its `list_tools`
+included, that no tool by that name exists, with the hint to search. A tool
+the policy denies and a skill gates reads the policy's text: activating the
+skill would not let it through. A tool of the turn's
 catalogue that a round did not declare because the policy denies it or a skill
 keeps it closed is refused with that cause's text, not as undeclared: the
 model learns to activate a skill rather than to give up. A reasoning backend's
