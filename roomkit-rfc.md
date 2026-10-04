@@ -2188,7 +2188,7 @@ They are NOT stored in any room timeline.
 | recording_started | Audio recording started | session_id, room_id, recording_id |
 | recording_stopped | Audio recording stopped | session_id, room_id, recording_id, duration_s |
 | stt_error | STT transcription failed | session_id, provider, error |
-| tts_error | TTS synthesis failed | session_id, provider, error |
+| tts_error | TTS synthesis failed | provider, error, session_id (when one session's synthesis failed) |
 | voice_session_ready | Voice session audio path is live and ready | session_id, room_id, channel_id |
 | conference_started | Bot connection to the conference is live | room_id, channel_id, bot_session_id |
 | conference_ended | Bot left the conference | room_id, channel_id, bot_session_id, duration_ms |
@@ -3603,6 +3603,8 @@ VoiceBackend (interface)
 ├── disconnect(session) → void
 ├── send_audio(session, audio_chunks) → void
 │       # Decoded 16-bit PCM only; encoding for the wire is the backend's
+│       # An exception raised by audio_chunks propagates to the caller once the
+│       # playback is released; the backend absorbs only its own transport errors
 ├── cancel_audio(session) → void            # Cancel current playback (if supported)
 ├── send_dtmf(session, digit, duration_ms) → void  # Send outbound DTMF (RFC 4733)
 │
