@@ -1353,13 +1353,13 @@ once its result went out, its call id belonging to the connection a
 reconfiguration can replace, and declares nothing of it when a
 reconfiguration gave the session another catalogue while the call was judged:
 its matches were found in the catalogue that left. So for the tools an
-activation's hint names. A tool Tool Search recovers at call time is in the
-round's reveal window while its call runs, and stays revealed only when the
-tool answered the call (served, failed, or its result withheld by an
-ON_TOOL_CALL hook), as the room's tool memory keeps any tool used: a call
-refused before it ran (a gate, BEFORE_TOOL_USE, its handler's refusal) or
-that nothing served reveals nothing, not for the next round nor for a later
-turn.
+activation's hint names. A tool Tool Search recovers at call time joins the
+reveal window only once the tool answered the call (served, failed, or its
+result withheld by an ON_TOOL_CALL hook), as the room's tool memory keeps any
+tool used: a call refused before it ran (a gate, its arguments,
+BEFORE_TOOL_USE, its handler's refusal) or that nothing served reveals
+nothing, not for the next round nor for a later turn, and leaves every other
+reveal of its round as it was.
 `ON_AI_RESPONSE` MUST therefore carry the turn's whole declaration as
 `declared_tools`: the union, over every generation round of the turn, of the
 tools the channel handed the provider, each with the name, description and
