@@ -9861,8 +9861,7 @@ ToolAuditEntry
 ```
 
 **Status detection:**
-- `"error"` — set when the tool handler raises an exception, a failure in
-  its own words (`ToolFailedError`, an MCP `isError` result) included.
+- `"error"` — set when the tool handler raises an exception.
 - `"cancelled"` — set when the call was cancelled before its handler answered
   (its turn or session ended, the provider abandoned it). A cancelled call
   MUST NOT be recorded as `"ok"`, and the cancellation still reaches the
@@ -9870,7 +9869,10 @@ ToolAuditEntry
   reaches a wrapped handler as a cancellation and is recorded `"cancelled"`
   as well, its duration the bound; the channel reports it as failed.
 - `"failed"`, structurally — set when the handler refused the call
-  (`ToolRefusedError`) or declined it as not its own (Section 21.4).
+  (`ToolRefusedError`), stated its failure in its own words
+  (`ToolFailedError`, an MCP `isError` result: the structured form of the
+  envelope below, which reads `"failed"` too) or declined it as not its own
+  (Section 21.4).
 - `"failed"`, from the body — read from the result body, which MUST be inspected for every
   failure envelope the implementation itself emits, not for one convention
   only: `{"status": "failed"}`, the `{"error": ...}` envelope a refused call
