@@ -10851,7 +10851,11 @@ work could not be completed, carrying the reasoning backend's fallback text
 (Section 12.4.1) and never the error's message, which goes to the logs and the
 status bus (Section 9.3). The supervisor told the user results would follow;
 it is told they will not, as the dispatching caller of a pipeline run within
-the turn reads its error.
+the turn reads its error. A strategy's background tool serves one run per room
+at a time, whichever voice channel's session called it, and the outcome goes
+to the session that made the call (Section 23.3 step 8). The run posts one
+terminal status entry once its outcome was handed back: `completed`, or
+`failed` when the work failed or its outcome reached no one.
 
 An instruction a strategy needs for one turn (a supervisor's task-formulation
 pass) is passed for that turn only, over the prompt the turn would have had.
@@ -10895,8 +10899,10 @@ that ended its turn, never with the task's error. A loop that raised hands
 back that the work could not be completed, carrying the reasoning backend's
 fallback text (Section 12.4.1) and never the error's message, which goes to
 the logs and the status bus (Section 9.3), as a supervisor's background
-pipeline does (Section 19.7.3). The room is free for a new loop before the
-outcome is handed back: the model's turn on it may start one.
+pipeline does (Section 19.7.3), one loop per room and in the session that
+made the call. The room is free for a new loop before the outcome is handed
+back: the model's turn on it may start one. A loop its producer's task
+stopped posts its terminal status entry as `failed`.
 
 ### 19.8 StatusBus
 
@@ -11634,11 +11640,15 @@ When `delegate(room_id, agent_id, task, notify)` is called:
    `BEFORE_DELIVER`, `AFTER_DELIVER` and the delivery backend apply to it as
    to any proactive delivery. `notify` names who is told: an intelligence channel receives it
    addressed to it, through the room's transport (§10.1.1); a realtime voice
-   channel, injected into its session with the `system` intent (§12.4).
+   channel, injected with the `system` intent (§12.4) into the session whose
+   tool call delegated, read from the tool call context (Section 21.4), or
+   its one session for a delegation made outside a call.
    Another transport has no model to direct and receives it as a message
    delivered through it. The delivered content carries the result, bounded and
    delimited, presented as the worker's output rather than as an
-   instruction; a failed task says it failed, without its error (§9.3).
+   instruction; a task that did not complete says it failed or was
+   cancelled, without its error (§9.3), whatever output or error text it
+   left. Only a completed task with nothing to say is not handed back.
    An instruction is not stored, so the result lives in the turn it opens
    and in the agent's answer, not in the history of later turns. The
    result is never written into the room's stored configuration (the
