@@ -2719,6 +2719,12 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   the caller that asked for it. An outcome already delivered SHOULD stay
   readable for long enough that a second read, or a caller that lost track of
   the request, reads the outcome rather than an error.
+- A human-input tool call follows the line between a refusal and a failure:
+  a request that was rejected (by the human, a BLOCK, or the handler closing
+  before an answer) is a refusal, the model reading the reason given; one
+  nobody answered in time is a failure, the tool having run without an answer;
+  any other error takes the generic failure path, its message withheld from
+  the model.
 
 ### 9.4 HookResult
 
@@ -5982,7 +5988,8 @@ ReasoningRequest
 
 ToolCallResult
 ├── text: string                            # What the backend's model reads
-└── is_error: bool                          # Refused, failed, blocked, served by nothing or cancelled
+├── is_error: bool                          # Refused, failed, blocked, served by nothing or cancelled
+└── refused: bool                           # Among those, refused: the backend's loop reads it refused, any other error failed
 
 TranscriptLine
 ├── role: "user" | "assistant"
