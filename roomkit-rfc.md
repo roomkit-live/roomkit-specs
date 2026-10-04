@@ -2737,6 +2737,17 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   generic failure path, the message withheld from the model. A request whose
   waiting call is cut (a turn cancelled, a session ended, a call abandoned)
   is withdrawn as a release withdraws it: no answer is taken for it after.
+- Human-input tools have these rules on every channel that serves them (an
+  AI channel, a speech-to-speech channel, a conference) and on every door of
+  that channel (a speech-to-speech session's provider calls, the calls it
+  recovers from speech, a reasoning backend's): the channel declares and
+  serves them itself, before the host's handler, which replacing that
+  handler leaves alone; their own timeout bounds the call (Section 21.6);
+  each request fires ON_USER_INPUT_REQUIRED and names the channel type of
+  the door it was asked on; the requests still open are settled when the
+  channel closes, or when what asked them is taken out (a conference's
+  speech-to-speech provider unplugged). A human-input handler given as a
+  plain tool handler is a host handler, bound by none of these rules.
 
 ### 9.4 HookResult
 
