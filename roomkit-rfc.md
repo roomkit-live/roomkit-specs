@@ -1268,7 +1268,14 @@ is marked partial, whatever the provider and whatever stop reason the response
 gave, and a tool loop, the AI channel's or a reasoning backend's,
 MUST NOT run it, nor may a realtime channel, whose provider hands such
 arguments as the model's text rather than a mapping (Section 12.4): no tool
-does anything useful with `raw`. The model reads that nothing ran, and why: its
+does anything useful with `raw`. A realtime provider applies the same rule
+where its wire tells a cut: a call whose item the response cut (OpenAI
+Realtime's and GPT-Live's `status: "incomplete"`) runs only when its argument
+text arrived and reads, and is otherwise handed on marked cut, so the model
+reads that its call was cut off; such a provider hands a call on once its item
+says whether it was cut (OpenAI Realtime's `function_call_arguments.done`
+comes before the item's status, measured). A provider whose wire carries no
+sign of a cut (Deepgram's `FunctionCallRequest`) reads none. The model reads that nothing ran, and why: its
 call was cut when the response was cut short, so it can call again
 with less; its arguments could not be read otherwise, so it can call again
 with valid ones. A response the provider ended
