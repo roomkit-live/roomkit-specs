@@ -5582,9 +5582,14 @@ call's result is delivered once and its outcome reported once: a
 reconfiguration that fails once the result went out sends no second one, and
 a cancellation that arrives after the result was delivered is not reported.
 A call the session's end, or a conference's detach, interrupts is reported
-once, as cancelled. While a call is in flight its id names it: a second call
-with the same id is refused and reported once, and sends nothing, since the
-id's one result is the first call's, which runs on. A call that came without
+once, as cancelled. An id names its call until the call's result goes out: a
+second call under it before then is refused and reported once, and sends
+nothing, since the id's one result is the first call's, which runs on; a call
+under it after then is a new call, to the channel and to the provider alike,
+and gets its own answer while the first finishes its report. A provider frees
+the id when it sends the result, at the step the channel counts the call
+delivered, before anything can yield in between: a call issued meanwhile is
+otherwise new to the one and a duplicate to the other, and is never answered. A call that came without
 an id is refused and reported once the same way, with nothing sent, since no
 result can name it. A provider hands every call the model makes to the
 channel, these two, a call the output cap cut and a call to a tool the
