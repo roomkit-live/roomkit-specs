@@ -10781,7 +10781,13 @@ the supervisor's answer one deeper than the event it answers (§8.3). Results
 of workers dispatched in the background are handed back to the supervisor
 as a background delegation's are (§23.3 step 8): an instruction addressed to
 it, each worker's output bounded, never published as a participant's
-message.
+message. A background pipeline that fails before its results (a delegation
+that raised) hands its failure back the same way: an instruction that the
+work could not be completed, carrying the reasoning backend's fallback text
+(Section 12.4.1) and never the error's message, which goes to the logs and the
+status bus (Section 9.3). The supervisor told the user results would follow;
+it is told they will not, as the dispatching caller of a pipeline run within
+the turn reads its error.
 
 An instruction a strategy needs for one turn (a supervisor's task-formulation
 pass) is passed for that turn only, over the prompt the turn would have had.
