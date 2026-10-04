@@ -10766,9 +10766,15 @@ words. A handoff applies the next agent's policy, read for each session's
 participant, to every session of the room before any declares the next
 agent's tools. The gate MUST judge a call by the agent the room talks to when
 the call reaches it, the one that serves the call, whatever a session still
-declares. A realtime session serves the channel's skills, never an agent's:
-an agent that carries skills of its own is refused at the install, before
-anything is installed, since its gated tools would run without their skill.
+declares. A realtime session serves the channel's skills and human-input
+tools, never an agent's, and serves no agent's planner, sandbox or external
+tool handler: an agent that carries one of these is refused at the install,
+before anything is installed, each cause named, with the channel's own option
+where the channel has one (its skills, its human-input handler). Its gated
+tools would run without their skill, and its other ones would be called by a
+model that was never told of them. A reasoning backend's agent is refused for
+the same causes by the same rule, and for tools of its own besides
+(Section 12.4.1).
 
 **Allowed transitions:** An agent in phase P MAY hand off to:
 - `stage.next` (forward progression)
