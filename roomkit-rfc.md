@@ -5620,7 +5620,14 @@ under it after then is a new call, to the channel and to the provider alike,
 and gets its own answer while the first finishes its report. A provider frees
 the id when it sends the result, at the step the channel counts the call
 delivered, before anything can yield in between: a call issued meanwhile is
-otherwise new to the one and a duplicate to the other, and is never answered. A call that came without
+otherwise new to the one and a duplicate to the other, and is never answered. A
+call the provider abandons (the model discarded it, a reconnect orphaned it,
+the provider's wait on it timed out, the connection ended) frees its id the
+same way, at the step the provider reports it: the channel frees it there too,
+before the handler it interrupts has finished, sends nothing for that call
+afterwards, and answers a call issued under the id meanwhile as a new call. A
+call a reconnect its own handler caused orphans, which runs on, frees its id
+at that step as well: the new connection never issued it. A call that came without
 an id is refused and reported once the same way, with nothing sent, since no
 result can name it. Such a refusal takes the path of any call: the session's
 end is read first (a call on an ended session is reported cancelled), a
