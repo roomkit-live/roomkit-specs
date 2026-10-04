@@ -6013,7 +6013,8 @@ ReasoningRequest
 ├── unavailable: map<string, string>        # Session tools the model is not offered, each with the refusal its call reads (Section 21.1)
 ├── execute_tool(name, arguments) → string  # One call through the channel's pre-execution gate and handler
 ├── execute_tool_call(name, arguments) → ToolCallResult  # The same call, with its outcome
-└── report_refusal(name, arguments, body, cancelled, refused, detail) → void  # Reports a call the backend's own loop ended before the gate, with its outcome
+├── report_refusal(name, arguments, body, cancelled, refused, detail) → void  # Reports a call the backend's own loop ended before the gate, with its outcome
+└── report_call(name, arguments, result, is_error, detail, tool_call_id) → void  # Reports a call the backend's own provider served outside the gate, with its outcome
 
 ToolCallResult
 ├── text: string                            # What the backend's model reads
@@ -6063,7 +6064,10 @@ asked again within the loop's bounds; a call whose arguments do not read is
 refused, and a backend whose loop ends a call before the gate reports it
 to the channel's ON_TOOL_CALL observers through `report_refusal`, with the
 outcome its loop gave it (refused, cancelled or failed) and what failed, as the gate
-reports the calls it refuses itself; and a turn that did not complete (it
+reports the calls it refuses itself; a call the backend's own provider served
+(a provider-side tool, outside the gate) is reported once to the channel's
+ON_TOOL_CALL hooks through `report_call`, served or failed, as an AI channel
+reports one (Section 9.3); and a turn that did not complete (it
 ended for any reason but `completed`: its round cap, deadline or budget cut
 it, or its answer was cut or never came) has no answer. Its narration is
 progress, never the answer: the run fails, and the channel answers the
