@@ -5821,7 +5821,9 @@ session boundaries.
 
 ```
 1. Client connects → RealtimeAudioTransport.accept()
-2. start_session(room_id, participant_id, connection, metadata)
+2. start_session(room_id, participant_id, connection, metadata, organization_id)
+   ├── Read the room scoped to organization_id (§17.2); another
+   │   organization's room is not found, and no session is created
    ├── Create RealtimeSession
    ├── Connect provider with system_prompt, voice, tools
    └── Wire callbacks: transport audio → provider, provider audio → transport
@@ -9155,7 +9157,8 @@ first, so what reaches it comes after its consent point and in the format its
 track declares. What such a recording captures is the room's declared tracks:
 those declared from then on, and those already declared while an earlier
 recording ran. A channel the framework wires itself declares a session's
-tracks when the session joins a room that records; a session that joined while
+tracks when the session joins a room that records, once the join has read the
+room with the caller's scope (§17.2); a session that joined while
 the room recorded nothing declares none, and is not recorded until it joins
 again. A recording resumed after a restart is one of these:
 its consent point is announced again. A caller feeding a room recording from a
@@ -10166,6 +10169,11 @@ should live in the integration surface layer.
 - Rooms are scoped by `organization_id`.
 - Implementations MUST ensure that room operations are isolated per organization.
 - Identity resolution MUST be scoped to the organization.
+- A door that brings a session into a room (a framework join, a realtime
+  channel's session start) MUST read the room with the organization the caller
+  acts for, before any session exists or is bound: another organization's room
+  is not found, no session joins it, and none of its recordings is told of the
+  session's tracks. Called without an organization, the read is unscoped.
 
 ### 17.3 Sensitive Data
 
@@ -12701,7 +12709,7 @@ RealtimeVoiceChannel
 │   ├── reasoning_timeout_s: float              # Bound on one delegation's run (Section 12.4.1)
 │   └── emit_transcription_events: bool
 ├── session_management:
-│   ├── start_session(room_id, participant_id, connection, metadata)
+│   ├── start_session(room_id, participant_id, connection, metadata, organization_id)
 │   └── end_session(session)
 ├── tool_handling:
 │   ├── async handler function (priority)
