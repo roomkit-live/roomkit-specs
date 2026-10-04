@@ -10976,7 +10976,10 @@ channel serves itself under one of these exact names, and nothing else: it
 MUST NOT extend to a name that merely shares a prefix, nor to a tool of the
 host, of an MCP server, of orchestration or of a hook that carries one of
 these names, which the policy governs like any other. A channel that serves
-none of them (a conference) exempts nothing. Every other tool the
+none of them (a conference) exempts nothing, and neither does a door through
+which the channel serves none of its own tools (a reasoning backend's calls,
+a call recovered from speech): the exemption is read door by door, the same
+for the policy and for skill gating. Every other tool the
 channel injects — sandbox commands (`sandbox_*`), `run_skill_script`,
 `plan_tasks` — is subject to the policy like a host tool: a host that wants
 them allows them. The same names, and only them, are exempt from skill gating
@@ -11010,7 +11013,10 @@ keeps it closed is refused with that cause's text, not as undeclared: the
 model learns to activate a skill rather than to give up. A reasoning backend's
 model is offered only the session tools it may call; a call it makes to one
 it was not offered reads the session's cause, which the channel hands the
-backend with the catalogue (`unavailable`).
+backend with the catalogue (`unavailable`). Both are read when the
+delegation starts, with the participant's role and the room's agent as they
+stand then, as the gate reads them at each call: a role changed during the
+session holds for the backend's catalogue from the next delegation on.
 
 **One tool per name.** A name is served by one tool in a room, and declared
 with that tool's definition: a tool declared under a name with one schema and
