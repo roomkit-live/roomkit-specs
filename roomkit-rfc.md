@@ -10897,8 +10897,11 @@ to the session that made the call (Section 23.3 step 8). The run posts one
 terminal status entry once its outcome was handed back: `completed`, or
 `failed` when the work failed, none of its workers' tasks completed, or its
 outcome reached no one. A per-worker tool dispatched in the background is
-such a run, for that worker in that room: the worker is free again before
-its outcome is handed back. A background run ends with the framework:
+followed by such a run, for that worker in that room: its delegation stays a
+task of the framework's task runner (its id in the dispatch answer, which
+cancels it), the run waits for it within the per-task timeout, past which it
+is cancelled, the worker is free again before its outcome is handed back, and
+the run alone hands it back. A background run ends with the framework:
 closing the framework cancels it, which frees its room and posts its terminal
 entry `failed`, with nothing handed back.
 
@@ -10908,7 +10911,13 @@ cancelled, and it reads as failed. The worker is posted `pending` on the
 status bus, then one terminal entry however the delegation ends: completed,
 failed, timed out, raised, or cancelled by its caller. A sequential team is
 supervised (the supervisor frames and validates each step) whether it runs
-within the turn or in the background.
+within the turn or in the background; a supervisor without a model (a
+configuration-only agent, as a voice supervisor often is) cannot frame nor
+judge a step, and its team runs unsupervised, each worker given the task and
+the work done before it. A run whose supervised chain stopped on a step the
+supervisor left unvalidated did not complete its work, as the supervisor
+reads it within the turn. A run asked for once the framework began closing
+does not start.
 
 An instruction a strategy needs for one turn (a supervisor's task-formulation
 pass) is passed for that turn only, over the prompt the turn would have had.
