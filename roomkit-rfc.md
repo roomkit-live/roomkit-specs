@@ -3200,9 +3200,11 @@ intent of §12.4, for every kind of intelligence channel.
    on any other event type it MUST be refused before anything is written
    (raised, since the event would otherwise land as a participant's line
    without the requested isolation).
-8. **A realtime session is not reached this way.** A realtime voice channel
-   is a transport and never sees an intelligence-only event; its instruction
-   is `inject_text(role="system")` on the session (§12.4).
+8. **A realtime session is not reached this way.** A channel hosting a
+   realtime model (a realtime voice or audio-video channel, a conference with
+   a realtime model plugged in) is a transport and never sees an
+   intelligence-only event; its instruction is `inject_text(role="system")`
+   on the model's session (§12.4).
 
 ### 10.2 Broadcast Pipeline
 
@@ -6183,7 +6185,7 @@ Voice-specific hooks allow integrators to customize the voice pipeline:
 | ON_RECORDING_STOPPED | ASYNC | Store recording reference in timeline | Audio Pipeline (Recorder) / Conference Channel |
 | ON_TOOL_CALL | SYNC | Execute tool and return result | Realtime Provider (ON_REALTIME_TOOL_CALL is superseded, Section 9.2) |
 | ON_TOOL_CALL | ASYNC | Audit tool use, including calls refused, failed, or abandoned by the model (Section 9.3) | Realtime Voice Channel |
-| ON_REALTIME_TEXT_INJECTED | ASYNC | Log text injections | Realtime Voice Channel |
+| ON_REALTIME_TEXT_INJECTED | ASYNC | Log text injections | Realtime Voice Channel / Conference Channel (realtime model) |
 | ON_REALTIME_DELEGATION | ASYNC | Measure delegation latency, log hand-offs to the backend | Realtime Provider (Section 12.4.1) |
 | ON_PROTOCOL_TRACE | ASYNC | Log/inspect transport protocol traces (SIP, RTP) | Channel (via emit_trace) |
 | BEFORE_BRIDGE_AUDIO | SYNC | Filter/modify audio before bridging (mute, gain) | AudioBridge (Section 12.7) |
@@ -9031,6 +9033,15 @@ attributed to the channel — no participant is their author — and MUST
 NOT be delivered back into the conference's own voice path: the words
 were already heard once, on the bot track.
 
+**Proactive delivery (normative).** The provider's room session is the
+conference's realtime destination (Section 22): a delivery naming the
+conference, with no intelligence address, MUST be injected into that
+session with the intent of Section 12.4, as on a realtime voice channel,
+and is `unavailable` while no session is connected. A strategy waiting
+for idle waits until the model's answer has ended and reached the bot
+track and the provider hears nobody speak. The injection fires
+ON_REALTIME_TEXT_INJECTED.
+
 **One voice per bot (normative).** A channel MUST refuse a
 configuration holding both a synthesizer (tts) and a speech-to-speech
 provider, at construction and at the plugs alike. There is one bot
@@ -11491,7 +11502,7 @@ DeliveryContext
 ├── channel_id: string | null               # Transport/source channel
 ├── addressed_to: list<string> | null       # Intelligence solicitation (§19.3)
 ├── idempotency_key: string | null          # Publication/injection identity
-├── session_id: string | null               # Exact realtime voice session
+├── session_id: string | null               # Exact realtime model session
 ├── instruction: bool                       # The application's direction (§10.1.1)
 └── metadata: map<string, any>              # Delivery metadata
 ```
@@ -11539,7 +11550,9 @@ An explicit realtime destination MUST NOT expand to all sessions. Without
 `session_id`, an explicitly selected realtime channel requires one active
 session; multiple sessions are ambiguous. Strategies waiting for idle MUST
 pin the selected session before waiting and verify it is still active before
-injecting. Missing or replaced sessions and injection errors MUST NOT report
+injecting. A pinned delivery stays an injection: a session or a model gone by
+the time it goes out refuses it, and it MUST NOT be published to the room
+instead. Missing or replaced sessions and injection errors MUST NOT report
 success. Unaddressed calls without explicit destinations MAY retain room-wide
 realtime injection. A non-null intelligence address uses the text pipeline,
 not a direct realtime injection; combining it with `session_id` is invalid.
