@@ -1336,9 +1336,14 @@ once its `activate_skill` call is served: an ON_TOOL_CALL BLOCK or a failure
 activates nothing, whatever the model read. So does a `find_tools` reveal, on
 every path: a BLOCK or a failure reveals nothing, not for the next round nor
 for a later turn, and a search that finds nothing reveals nothing, the reveal
-window left as it was. A realtime session declares what a served `find_tools`
-call revealed once its result went out, its call id belonging to the
-connection a reconfiguration can replace.
+window left as it was. A served call reveals its matches whatever an
+ON_TOOL_CALL hook replaced its result with, as a served activation opens its
+gates. A realtime session declares what a served `find_tools` call revealed
+once its result went out, its call id belonging to the connection a
+reconfiguration can replace, and declares nothing of it when a
+reconfiguration gave the session another catalogue while the call was judged:
+its matches were found in the catalogue that left. So for the tools an
+activation's hint names.
 `ON_AI_RESPONSE` MUST therefore carry the turn's whole declaration as
 `declared_tools`: the union, over every generation round of the turn, of the
 tools the channel handed the provider, each with the name, description and
@@ -5583,7 +5588,8 @@ Section 21.4, which a conference installs too, with the chain depth of the
 answer that issued the call (Section 8.3); ON_TOOL_CALL (Section 9.3); the bound of
 Section 21.5, which covers the results of Tool Search and of reading a
 skill's references as it covers a handler's, a tool's complete schema read
-by name aside, since the model needs it whole to call the tool; the
+by name aside, since the model needs it whole to call the tool (a refusal, a
+BLOCK or a hook's replacement in its place is bounded as any result); the
 delivery; the report. A
 call's result is delivered once and its outcome reported once: a
 reconfiguration that fails once the result went out sends no second one, and
