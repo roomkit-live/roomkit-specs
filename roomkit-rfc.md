@@ -5591,10 +5591,18 @@ the id when it sends the result, at the step the channel counts the call
 delivered, before anything can yield in between: a call issued meanwhile is
 otherwise new to the one and a duplicate to the other, and is never answered. A call that came without
 an id is refused and reported once the same way, with nothing sent, since no
-result can name it. A provider hands every call the model makes to the
-channel, these two, a call the output cap cut and a call to a tool the
-channel never declared included: the channel decides it, and no provider or
-vendor SDK answers it in the channel's place. A provider books a call as
+result can name it. Such a refusal takes the path of any call: the session's
+end is read first (a call on an ended session is reported cancelled), a
+`call_tool` transport is unwrapped so the report names the tool it carries,
+and it waits for the transcription that precedes it. A call that named no tool
+is refused before the gate, as an unreadable one, and answered under its id. A
+provider hands every call the model makes to the channel, these, a call the
+output cap cut and a call to a tool the channel never declared included: the
+channel decides it, and no provider or vendor SDK answers it in the channel's
+place. The id a provider hands on is the service's, never a key of the call's
+arguments: a vendor SDK that folds the id into the arguments, where a key the
+model wrote can replace it, is patched so the service's id stands and the
+model's key stays an argument, judged as any (Section 9.3). A provider books a call as
 awaiting its result only when the channel can answer it: a call refused with
 nothing sent MUST NOT hold the response, or the provider's continuation after
 it, open on a result that never comes. A channel that mutes the
