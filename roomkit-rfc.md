@@ -2747,7 +2747,9 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   the door it was asked on; the requests still open are settled when the
   channel closes, or when what asked them is taken out (a conference's
   speech-to-speech provider unplugged). A human-input handler given as a
-  plain tool handler is a host handler, bound by none of these rules.
+  plain tool handler is a host handler, bound by none of these rules. A
+  realtime pipeline's agent never carries human-input tools of its own: the
+  session serves the channel's (Section 19.5).
 
 ### 9.4 HookResult
 
