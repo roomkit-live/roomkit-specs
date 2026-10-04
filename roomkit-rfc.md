@@ -8212,6 +8212,9 @@ attendee SHOULD receive grants without publish permissions (Section 17.7).
 The caller MAY also pass `attributes` for the backend to carry on the
 participant (Section 12.10.3); the channel passes them through, bounds them
 as it bounds the provider attributes it persists, and adds none of its own.
+The caller MAY pass the `organization_id` it acts for: the room is read with
+it before anything is admitted, and another organization's room is not found
+(Section 17.2).
 
 `mint_access()` MUST NOT issue a credential for a room the channel is no
 longer attached to, and the check MUST hold across every await the call
@@ -10169,11 +10172,14 @@ should live in the integration surface layer.
 - Rooms are scoped by `organization_id`.
 - Implementations MUST ensure that room operations are isolated per organization.
 - Identity resolution MUST be scoped to the organization.
-- A door that brings a session into a room (a framework join, a realtime
-  channel's session start) MUST read the room with the organization the caller
-  acts for, before any session exists or is bound: another organization's room
-  is not found, no session joins it, and none of its recordings is told of the
-  session's tracks. Called without an organization, the read is unscoped.
+- A door that admits a participant into a room's media (a framework join, a
+  realtime channel's session start, a conference channel's `mint_access()`)
+  MUST read the room with the organization the caller acts for, before any
+  session exists or is bound and before any credential is minted: another
+  organization's room is not found, no session joins it, no credential admits
+  to it, and none of its recordings is told of the session's tracks. Called
+  without an organization, a framework join reads the room unscoped, and a
+  session start or a mint reads none for the scope.
 
 ### 17.3 Sensitive Data
 
