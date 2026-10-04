@@ -1254,7 +1254,8 @@ response is cut short when it ran out of room (the output cap, or the context
 window filling up mid-answer), when a content filter or a refusal stopped it,
 or when its stream ended without a stop reason, under any provider's word for
 each (`length`, `max_tokens`, `MAX_TOKENS`, `model_context_window_exceeded`,
-`model_length`, `content_filter`, `refusal`): every provider reads one such set,
+`model_length`, `content_filter`, `refusal`, and Mistral's generation `error`):
+every provider reads one such set,
 so none runs a call another provider refuses. Only the last call of a response
 can be cut: a call another call followed was closed by it, and runs when its
 arguments read, the response cut over its successor or not. Under a response
@@ -1275,13 +1276,15 @@ because it could not parse the model's call (Gemini's
 `MALFORMED_FUNCTION_CALL`), or would not take it (Gemini's
 `UNEXPECTED_TOOL_CALL`, a call to a tool the request did not enable), carries
 no call at all: the tool loop MUST tell
-the model that its call did not run, within the bound it gives an empty
+the model that its call did not run and why (its call could not be read, or
+the tool is not in the request: calling it again would end the same way),
+within the bound it gives an empty
 round, on any round and whatever text the round said, and a turn whose bound
 runs out ends cut short (`empty_response`), never `completed`. A round that ran
 out of room before any answer after a tool round ends the turn `truncated`
 and is not tried again, since the same room runs out again: the output cap
 and the context window alike, read by the same rule as a response schema's
-`truncated` (Appendix A.9).
+`truncated` (Section 6.7).
 
 **An answer that did not act.** An AI channel MAY carry a continuation policy:
 given the text a round ended on, the instruction that makes the model go on, or
@@ -1895,7 +1898,11 @@ carries none, the final one. A provider whose constraint is a decoding grammar
 (it forces the output into the schema token by token) MUST leave that capability
 false: the grammar stops the model from calling a tool, and it writes a
 schema-valid answer in its place, invented rather than looked up, which no check
-can tell from a true one.
+can tell from a true one. A response that ended on a call the provider would
+not hand over (Gemini's `MALFORMED_FUNCTION_CALL`, `UNEXPECTED_TOOL_CALL`) is a
+step of the tool loop as well, which tells the model and asks again (Section
+6.4): it is not checked, carries no document, and says so by that finish
+reason, which a caller of `generate()` outside the loop reads.
 
 Support depends on the model and, behind an OpenAI-compatible base URL, on the
 server, so `supports_response_schema` is a provider default that an
