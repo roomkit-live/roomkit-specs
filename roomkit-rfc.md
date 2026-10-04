@@ -2574,12 +2574,15 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   such a hook offers MUST be discarded. A call that never ran is no such
   report: a refusal on every door (the pre-execution gate's, an external
   handler's, a call the external door refuses itself, a rejected ACP
-  permission) and a cancellation reach the ASYNC observers only, marked
+  permission, a refusal ACP imposes on an approval it cannot apply), a
+  handler that raised while it decided, and a cancellation reach the ASYNC
+  observers only, marked
   `refused` or `cancelled` beside `is_error`, so an audit tells a refusal from
   a failure and from a cancellation. An external handler hears its own refusal
   through `on_tool_refused`, which reports it so by default, and never through
   `on_tool_result`; a handler that raises while it decides fails the call,
-  which the channel reports itself with what failed (`error_detail`). An ACP
+  which the channel reports itself, with what failed (`error_detail`), as it
+  reports a call it refused itself. An ACP
   call reports the same body with an external handler as without one: a
   cancellation's envelope, a failure's bounded error.
 - The outcome MUST be carried on the event as a discrete marker, not left to
