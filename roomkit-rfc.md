@@ -10883,7 +10883,20 @@ the turn reads its error. A strategy's background tool serves one run per room
 at a time, whichever voice channel's session called it, and the outcome goes
 to the session that made the call (Section 23.3 step 8). The run posts one
 terminal status entry once its outcome was handed back: `completed`, or
-`failed` when the work failed or its outcome reached no one.
+`failed` when the work failed, none of its workers' tasks completed, or its
+outcome reached no one. A per-worker tool dispatched in the background is
+such a run, for that worker in that room: the worker is free again before
+its outcome is handed back. A background run ends with the framework:
+closing the framework cancels it, which frees its room and posts its terminal
+entry `failed`, with nothing handed back.
+
+Each worker's delegation, within the turn or in the background, is bounded
+by the strategy's per-task timeout: a worker past it is cut, its task ended
+cancelled, and it reads as failed. The worker is posted `pending` on the
+status bus, then one terminal entry however the delegation ends: completed,
+failed, timed out, raised, or cancelled by its caller. A sequential team is
+supervised (the supervisor frames and validates each step) whether it runs
+within the turn or in the background.
 
 An instruction a strategy needs for one turn (a supervisor's task-formulation
 pass) is passed for that turn only, over the prompt the turn would have had.
@@ -10930,7 +10943,11 @@ the logs and the status bus (Section 9.3), as a supervisor's background
 pipeline does (Section 19.7.3), one loop per room and in the session that
 made the call. The room is free for a new loop before the outcome is handed
 back: the model's turn on it may start one. A loop its producer's task
-stopped posts its terminal status entry as `failed`.
+stopped posts its terminal status entry as `failed`. The producer and the
+reviewers are delegated as a supervisor's workers are (Section 19.7.3),
+without a per-task bound: each is posted `pending`, then one terminal entry
+however its delegation ends. An asynchronous loop ends with the framework as
+a supervisor's background run does.
 
 ### 19.8 StatusBus
 
