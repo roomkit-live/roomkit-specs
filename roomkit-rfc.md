@@ -2492,7 +2492,8 @@ Planned rows are normative design intent for the named capability.
   call's `error_detail`. An external tool handler decides and reports its calls
   itself: the refusal reaches it as a denied decision that carries the
   hook's error for it alone, and what the agent reads, and what it reports,
-  are the handler's.
+  are the handler's; a handler that hands that error on with its decision has
+  it reported on the refusal's `error_detail`, as on the channel's own doors.
 - **A hook MAY declare itself fail-closed** (`fail_closed = true`), on any
   trigger: a content check on `BEFORE_BROADCAST` (PII, moderation) is exactly
   such a hook, while the trigger as a whole stays fail-open so that a broken
@@ -2621,7 +2622,11 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   which the channel reports itself, with what failed (`error_detail`), as it
   reports a call it refused itself. An ACP
   call reports the same body with an external handler as without one: a
-  cancellation's envelope, a failure's bounded error.
+  cancellation's envelope, a failure's bounded error. An ACP call RoomKit
+  refused that the agent ran anyway and closed completed is reported as it
+  ended, served, its markers those of a served call, and MUST carry a marker
+  of its own (`refused_but_ran`) on its report and its end row, so an audit
+  sees the refusal the agent went past.
 - The outcome MUST be carried on the event as a discrete marker, not left to
   be inferred from the result body. A refusal's body is a body like any other:
   one implementation's refusals are JSON error envelopes, another's are the
@@ -5706,7 +5711,10 @@ afterwards, and answers a call issued under the id meanwhile as a new call. A
 call a reconnect its own handler caused orphans, which runs on, frees its id
 at that step as well: the new connection never issued it. A call that came without
 an id is refused and reported once the same way, with nothing sent, since no
-result can name it. Such a refusal takes the path of any call: the session's
+result can name it. A text turn holds its round's calls by id the same way: a
+second call of a round under an id the first holds is refused with the same
+words and reported as a call of its own, the first keeping its report and its
+end row its own arguments. Such a refusal takes the path of any call: the session's
 end is read first (a call on an ended session is reported cancelled), a
 `call_tool` transport is unwrapped so the report names the tool it carries,
 and it waits for the transcription that precedes it. A call that named no tool
@@ -6109,7 +6117,9 @@ outcome its loop gave it (refused, cancelled or failed) and what failed, as the 
 reports the calls it refuses itself; a call the backend's own provider served
 (a provider-side tool, outside the gate) is reported once to the channel's
 ON_TOOL_CALL hooks through `report_call`, served or failed, as an AI channel
-reports one (Section 9.3); and a turn that did not complete (it
+reports one (Section 9.3); each of these reports names the call by the id
+the backend's model gave it, within its delegation's, whichever of them
+reports it; and a turn that did not complete (it
 ended for any reason but `completed`: its round cap, deadline or budget cut
 it, or its answer was cut or never came) has no answer. Its narration is
 progress, never the answer: the run fails, and the channel answers the
