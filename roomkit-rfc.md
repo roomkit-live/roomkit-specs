@@ -2588,6 +2588,11 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   (a handler that raised), or reached no servant at all. A trigger that fires
   only for the calls that succeeded cannot support an audit trail: a refused
   agent and an idle one produce the same record, which is none.
+- Every report of a call, on every door, carries the arguments the call ran
+  with, or those the gate had when it stopped it (repaired, rewritten by
+  BEFORE_TOOL_USE); the model's own only for a call stopped before its
+  arguments were read. A call its turn or its session cut while it ran is
+  reported with the arguments it ran with.
 - Such a firing MUST NOT be able to serve the call. Where the trigger's SYNC
   hooks do serve tools — the AI tool loop, the realtime channel — that means
   dispatching to **the hooks registered ASYNC only**: a refused call reaching a
