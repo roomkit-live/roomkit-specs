@@ -2629,7 +2629,11 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   logs are a place for it. The message goes to the log and to ON_TOOL_CALL's
   observers, on the event's `error_detail`, never to the model nor to the
   stored TOOL_CALL_END. A handler that wants the model to read its words
-  raises `ToolRefusedError`, whose text passes as it is. A tool the channel
+  says which outcome they carry: a refusal (`ToolRefusedError`, nothing ran)
+  or a failure (`ToolFailedError`, the tool ran and could not do it), whose
+  text passes as it is, the failure's also as the event's `error_detail`. An
+  MCP tool whose result says `isError` ran and failed: it is a failure, never
+  a refusal, on every channel. A tool the channel
   serves itself (a skill script, a sandbox command) reads the same when what
   it runs raises, and so does any work a tool hands off whose failure the
   model reads (a delegated task, a reasoning backend's tool). A call nothing
@@ -2654,7 +2658,9 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   that fails is not the tool's failure. The ASYNC observers need that context
   and do not run either; the call is still reported once, by the `tool_call`
   framework event for a served call, and as the failure it is for a call
-  nothing served.
+  nothing served. So for a refused, failed or cancelled call whose observers'
+  context fails, and for a call an external handler ran: its `tool_call`
+  framework event still reports it once.
 
 **ON_TOOL_CALL, where the model abandoned the call:**
 
@@ -5958,7 +5964,7 @@ ReasoningRequest
 ├── unavailable: map<string, string>        # Session tools the model is not offered, each with the refusal its call reads (Section 21.1)
 ├── execute_tool(name, arguments) → string  # One call through the channel's pre-execution gate and handler
 ├── execute_tool_call(name, arguments) → ToolCallResult  # The same call, with its outcome
-└── report_refusal(name, arguments, body, cancelled) → void  # Reports a call the backend's own loop refused before the gate
+└── report_refusal(name, arguments, body, cancelled, refused, detail) → void  # Reports a call the backend's own loop ended before the gate, with its outcome
 
 ToolCallResult
 ├── text: string                            # What the backend's model reads
@@ -6004,8 +6010,9 @@ one, as every tool loop does (Section 9.3); a backend SHOULD use it, and
 A backend's turn ends by the rules of a tool loop (Section 6.4), whatever
 drives its model: a call the provider could not parse, or an empty answer, is
 asked again within the loop's bounds; a call whose arguments do not read is
-refused, and a backend whose loop refuses a call before the gate reports it
-to the channel's ON_TOOL_CALL observers through `report_refusal`, as the gate
+refused, and a backend whose loop ends a call before the gate reports it
+to the channel's ON_TOOL_CALL observers through `report_refusal`, with the
+outcome its loop gave it (refused, cancelled or failed) and what failed, as the gate
 reports the calls it refuses itself; and a turn that did not complete (it
 ended for any reason but `completed`: its round cap, deadline or budget cut
 it, or its answer was cut or never came) has no answer. Its narration is
@@ -9853,7 +9860,8 @@ ToolAuditEntry
 ```
 
 **Status detection:**
-- `"error"` — set when the tool handler raises an exception.
+- `"error"` — set when the tool handler raises an exception, a failure in
+  its own words (`ToolFailedError`, an MCP `isError` result) included.
 - `"cancelled"` — set when the call was cancelled before its handler answered
   (its turn or session ended, the provider abandoned it). A cancelled call
   MUST NOT be recorded as `"ok"`, and the cancellation still reaches the
