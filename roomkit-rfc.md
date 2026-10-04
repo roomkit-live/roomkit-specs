@@ -6109,8 +6109,9 @@ their handler, which bounds each call as it bounds every call of the session
 (Section 21.6): the agent's own bounds, its default and per tool, do not apply
 on top of it, and a tool that waits by design has no bound but the run's. The
 loop's own re-read of a result it stored (Section 21.5) stays the loop's, as
-on any turn, and answers from memory, with no wait to bound. Tools of its own (skills, a sandbox,
-planning, an external handler) would run outside that gate, and a kit that
+on any turn, and answers from memory, with no wait to bound. Tools of its own (host tools, a skill
+registry even empty, a human-input handler, a sandbox, planning, an external
+handler) would run outside that gate, and a kit that
 registered it would judge each call a second time, so such an agent is
 refused. Its conversation is the session's: a call a cut delegation left
 unanswered is answered as a room turn answers one before the next
@@ -10770,7 +10771,9 @@ agent's tools. The gate MUST judge a call by the agent the room talks to when
 the call reaches it, the one that serves the call, whatever a session still
 declares. A realtime session serves the channel's skills and human-input
 tools, never an agent's, and serves no agent's planner, sandbox or external
-tool handler: an agent that carries one of these is refused at the install,
+tool handler: an agent that carries one of these, a skill registry even empty
+(a skill added to it later would open its gated tools with nothing to gate
+them), is refused at the install,
 before anything is installed, each cause named, with the channel's own option
 where the channel has one (its skills, its human-input handler). Its gated
 tools would run without their skill, and its other ones would be called by a
@@ -11171,7 +11174,10 @@ same text for the same cause on every door: an AI channel's turn, a reasoning
 backend's (Section 12.4.1), a realtime session, a conference. The order is: a
 call cut short, a tool withdrawn for the turn, the declared check, the policy,
 skill gating, the arguments, then BEFORE_TOOL_USE, so a tool refused for
-access never has its arguments read. A tool the policy denies reads `Tool
+access never has its arguments read. Arguments that do not fit the declared
+schema read `Invalid arguments for '<name>': <why>`; arguments a
+BEFORE_TOOL_USE hook left that do not fit it, whether it returned them or
+edited them in place, read `Invalid rewritten arguments for '<name>': <why>`. A tool the policy denies reads `Tool
 '<name>' is not permitted by the agent's tool policy.`; a tool a skill keeps
 closed reads `Tool '<name>' is gated by a skill. Activate the skill first using
 activate_skill.` (a reasoning backend, which cannot activate one, reads that
