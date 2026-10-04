@@ -11633,7 +11633,9 @@ SkillRegistry
 ├── add(skill: Skill) → void                # Register a skill built in memory
 ├── copy(names?, marks = true) → SkillRegistry  # A subset, its paths and marks kept
 ├── all_metadata() → list<SkillMetadata>    # List all registered skills
-├── gated_tool_names(activated) → set<string>  # Patterns kept closed: unactivated skills', unavailable skills'
+├── gated_tool_names(activated) → set<string>  # Patterns kept closed: unactivated skills', closed ones
+├── closed_tool_names(activated) → set<string> # Patterns only unavailable skills gate, none activated opens
+├── requires_match: (name, offered) → bool  # How a requires name is served (default: an exact tool name)
 └── to_prompt_xml() → string               # Generate <available_skills> XML for AI context
 ```
 
@@ -11649,13 +11651,21 @@ whose every skill is unavailable still has something to tell: the prompt
 carries the reasons and the activation tools are declared, on every path, so
 the model says why instead of guessing. A skill's `requires` is checked by
 every activation, on a text turn as on a realtime session, with one rule:
-against every tool the conversation declares, what orchestration set up
-included, once its tool policy is applied and skill gating aside (the skill
-opens what it gates). A tool the policy denies is no tool the skill can use:
-the activation is refused (`Required tools not available: <names>`) and never
-hands over that tool's schema. A skill marked unavailable can never be
-activated, so the tools it gates stay closed: marking it does not open them
-(`gated_tool_names`, the one reading of skill gating every door uses).
+against every tool the conversation declares, the channel's own and what
+orchestration set up included, once its tool policy is applied and skill
+gating aside (the skill opens what it gates). A `requires` name is an exact
+tool name unless the registry's host says how its names are served
+(`requires_match`: a hub served by any tool named `<hub>_*`, say), and an
+activation hands over the schemas of the tools that serve it. A tool the
+policy denies is no tool the skill can use: the activation is refused
+(`Required tools not available: <names>`) and never hands over that tool's
+schema, to the model or to a hook. A skill marked unavailable can never be
+activated, so the tools it gates stay closed (marked while the registry holds
+it): marking it does not open them, a required tool only such a gate holds is
+missing, and a call to it reads that a skill not available here gates it.
+A pattern an activated skill gates is that skill's to open: an unavailable
+skill gating the same pattern does not hold it closed (`closed_tool_names`).
+`gated_tool_names` is the one reading of skill gating both doors use.
 
 ### 24.4 Activation Lifecycle
 
