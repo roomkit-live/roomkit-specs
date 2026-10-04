@@ -3941,7 +3941,11 @@ enters a room as any other audio.
      for any reason (typically every session of 12s.d stopped early), the
      framework MUST close the response stream (no further token is generated and
      no tool call starts after that point) and MUST store the text already
-     produced as the AI response event with `metadata.cancelled = true`. A tool
+     produced as the AI response event with `metadata.cancelled = true`. A turn
+     whose record names no end yet records it `cancelled`, as its caller and a
+     delegation read it (Section 6.4, Section 23.3): a delegated turn so
+     stopped fails, never handing on its partial text as an answer; a response
+     never read names no end. A tool
      call already executing when the stream stops is let finish: its
      TOOL_CALL_END is stored with its real result, and the stream is closed
      before the model's next round. A call announced but not yet executing never
