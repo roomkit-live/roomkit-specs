@@ -2722,11 +2722,11 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   readable for long enough that a second read, or a caller that lost track of
   the request, reads the outcome rather than an error.
 - A human-input tool call follows the line between a refusal and a failure:
-  a request that was rejected (by the human, a BLOCK, or the handler closing
-  before an answer) is a refusal, the model reading the reason given; one
-  nobody answered in time is a failure, the tool having run without an answer;
-  any other error takes the generic failure path, its message withheld from
-  the model.
+  a request a human or a BLOCK rejected is a refusal, the model reading why;
+  one nobody answered in time is a failure, the tool having run without an
+  answer; one the handler gave up on before an answer (its close, a release),
+  whether before the call or while it waits, and any other error take the
+  generic failure path, the message withheld from the model.
 
 ### 9.4 HookResult
 
