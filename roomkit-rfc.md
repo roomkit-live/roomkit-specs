@@ -2726,7 +2726,9 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   one nobody answered in time is a failure, the tool having run without an
   answer; one the handler gave up on before an answer (its close, a release),
   whether before the call or while it waits, and any other error take the
-  generic failure path, the message withheld from the model.
+  generic failure path, the message withheld from the model. A request whose
+  waiting call is cut (a turn cancelled, a session ended, a call abandoned)
+  is withdrawn as a release withdraws it: no answer is taken for it after.
 
 ### 9.4 HookResult
 
