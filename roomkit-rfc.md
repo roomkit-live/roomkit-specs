@@ -2193,7 +2193,7 @@ They are NOT stored in any room timeline.
 | recording_started | Audio recording started | session_id, room_id, recording_id |
 | recording_stopped | Audio recording stopped | session_id, room_id, recording_id, duration_s |
 | stt_error | STT transcription failed | session_id, provider, error |
-| tts_error | TTS synthesis failed | provider, error, session_id (when one session's synthesis failed) |
+| tts_error | TTS synthesis failed | session_id, provider, error |
 | voice_session_ready | Voice session audio path is live and ready | session_id, room_id, channel_id |
 | conference_started | Bot connection to the conference is live | room_id, channel_id, bot_session_id |
 | conference_ended | Bot left the conference | room_id, channel_id, bot_session_id, duration_ms |
@@ -3610,8 +3610,9 @@ VoiceBackend (interface)
 ├── disconnect(session) → void
 ├── send_audio(session, audio_chunks) → void
 │       # Decoded 16-bit PCM only; encoding for the wire is the backend's
-│       # An exception raised by audio_chunks propagates to the caller once the
-│       # playback is released; the backend absorbs only its own transport errors
+│       # An exception raised by audio_chunks MUST reach the caller once the
+│       # backend has stopped playing; the backend MAY log and absorb errors of
+│       # its own transport
 ├── cancel_audio(session) → void            # Cancel current playback (if supported)
 ├── send_dtmf(session, digit, duration_ms) → void  # Send outbound DTMF (RFC 4733)
 │
@@ -3888,8 +3889,10 @@ enters a room as any other audio.
         First audio reaches speaker ~500-800ms after speech end (vs ~2-3s standard)
      d. Several sessions on the binding: the stream is read once and every session
         receives every sentence, in parallel. The stream is pulled at the pace of
-        the fastest session; a session that stops early (barge-in, transport error)
-        does not cut the others off.
+        the fastest session; a session that stops early (barge-in, transport error,
+        its TTS failing) does not cut the others off. A session whose TTS fails is
+        reported as `tts_error`; its failure is not the response's, which takes
+        step 13s once every session has stopped (no `ON_ERROR`, no replay).
 13s. Framework accumulates full text from stream → stores AI response event
      Interrupted: when deliver_stream() returns before the stream is exhausted,
      for any reason (typically every session of 12s.d stopped early), the
