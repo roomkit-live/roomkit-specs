@@ -1333,7 +1333,12 @@ call. The channel's own tools are no exception: one the turn does not offer
 executor) is refused as any undeclared tool is, on every path (Section 12.4).
 Likewise a skill activation (Section 24.4) counts only
 once its `activate_skill` call is served: an ON_TOOL_CALL BLOCK or a failure
-activates nothing, whatever the model read.
+activates nothing, whatever the model read. So does a `find_tools` reveal, on
+every path: a BLOCK or a failure reveals nothing, not for the next round nor
+for a later turn, and a search that finds nothing reveals nothing, the reveal
+window left as it was. A realtime session declares what a served `find_tools`
+call revealed once its result went out, its call id belonging to the
+connection a reconfiguration can replace.
 `ON_AI_RESPONSE` MUST therefore carry the turn's whole declaration as
 `declared_tools`: the union, over every generation round of the turn, of the
 tools the channel handed the provider, each with the name, description and
@@ -2519,8 +2524,7 @@ report what ran.
 These hold where the channel's own tool loop serves the call. An external
 handler's firing is a report on a call that ran outside the channel, and so is
 a firing on any call whose outcome the model already read (a call the
-provider ran itself, a realtime Tool Search call whose result was delivered
-first): its override is discarded, and the display payload an external agent attaches
+provider ran itself): its override is discarded, and the display payload an external agent attaches
 (ACP's tool content) is that agent's. No hook can rewrite or withhold what the
 agent already read, so its observers see the provider's outcome and the
 provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
