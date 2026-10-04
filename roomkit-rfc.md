@@ -3966,7 +3966,11 @@ enters a room as any other audio.
      BEFORE_TTS left them (12s.b) when a hook changed or dropped one, the whole
      streamed text otherwise. The final assistant transcript carries the same
      text. AFTER_TTS does not fire when every sentence was dropped, nor when no
-     session was served (each stopped on a failed synthesis or playback).
+     session was served (each stopped on a failed synthesis or playback). A
+     response that fails (step 13s) is spoken to the end of the text it
+     produced, its last partial sentence included: the sessions that heard it
+     get that text as their final transcript and AFTER_TTS fires with it, then
+     the failure propagates.
 
 --- Common outbound path ---
 12. AudioChunk stream → [PostProcessors] → [Recorder] → [Resampler] → Transport
@@ -9167,7 +9171,10 @@ record is gone while its recordings still run has them stopped by an explicit
 stop all the same, since a file nothing stops is never finalized; another
 organization's room is refused, and a gone room that records nothing is not
 found, as either would be told. With no room left to read a context from, such
-an end MAY be logged rather than announced.
+an end MAY be logged rather than announced. Listing a room's recordings and
+declaring a track to them read the room the same way, with its scope and the
+same rule for a gone room: a caller learns of, or feeds, no other
+organization's recording.
 
 ```
 MediaRecordingHandle                  RoomRecorderBinding
