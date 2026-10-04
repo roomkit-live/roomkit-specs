@@ -5521,9 +5521,12 @@ a door around it.
 
 Before a realtime tool call is routed to whatever serves it, the channel MUST
 apply, in this order: the declared-tool check (a name absent from a non-empty
-declared catalogue is refused), argument validation against the declared schema,
-the channel's ToolPolicy when it has one (above), skill gating (Section 24.2),
-and the BEFORE_TOOL_USE hook (Section 9.2).
+declared catalogue is refused), the channel's ToolPolicy when it has one
+(above), skill gating (Section 24.2), argument validation against the declared
+schema, and the BEFORE_TOOL_USE hook (Section 9.2). A tool the policy denies or
+a skill keeps closed is refused before its arguments are read, so its refusal
+never names what its schema requires; each refusal reads its cause's text
+(Section 21.1).
 
 The gate's scope is the call, not its servant. It MUST apply identically whether
 the call is served by a tool handler, by an ON_TOOL_CALL hook, or by a channel
@@ -5893,6 +5896,7 @@ ReasoningRequest
 ├── transcript: list<TranscriptLine>        # Both roles, since the previous request
 ├── first: bool                             # First request of the session: the transcript is the whole conversation
 ├── tools: list<ToolDefinition>             # The channel's declared catalogue, for the backend's model
+├── unavailable: map<string, string>        # Session tools the model is not offered, each with the refusal its call reads (Section 21.1)
 ├── execute_tool(name, arguments) → string  # One call through the channel's pre-execution gate and handler
 ├── execute_tool_call(name, arguments) → ToolCallResult  # The same call, with its outcome
 └── report_refusal(name, arguments, body, cancelled) → void  # Reports a call the backend's own loop refused before the gate
@@ -8942,10 +8946,10 @@ cannot be interrupted at all.
 **A tool call is a realtime tool call (normative).** A call the
 provider issues passes the pre-execution gate of Section 12.4 before it
 reaches the configured handler, in that section's order: the
-declared-tool check against the configuration's tools, argument
-validation against the declared schema, the configuration's ToolPolicy
-when it carries one, and BEFORE_TOOL_USE (Section 9.2), whose arguments,
-replaced or edited, are validated again. The gate has no skill-gating
+declared-tool check against the configuration's tools, the
+configuration's ToolPolicy when it carries one, argument validation
+against the declared schema, and BEFORE_TOOL_USE (Section 9.2), whose
+arguments, replaced or edited, are validated again. The gate has no skill-gating
 step because a conference declares no skills. The call fires ON_TOOL_CALL
 (Section 9.3) with its outcome, a refusal and a failure included, and as
 on any realtime channel the report of a refusal MUST NOT precede the
@@ -10928,6 +10932,24 @@ name (`{"google_search": {}}`), stays declared: a policy names the tools it
 governs, and Tool Search neither hides nor lists a tool it cannot name. The
 declaration filter and the execution guard MUST apply one rule, so a tool the
 model is offered is a tool it may call.
+
+**One refusal per cause.** A call is refused in the same order and with the
+same text for the same cause on every door: an AI channel's turn, a reasoning
+backend's (Section 12.4.1), a realtime session, a conference. The order is: a
+call cut short, a tool withdrawn for the turn, the declared check, the policy,
+skill gating, the arguments, then BEFORE_TOOL_USE, so a tool refused for
+access never has its arguments read. A tool the policy denies reads `Tool
+'<name>' is not permitted by the agent's tool policy.`; a tool a skill keeps
+closed reads `Tool '<name>' is gated by a skill. Activate the skill first using
+activate_skill.`; a name the turn or session does not carry reads `Tool
+'<name>' is not declared.` (under Tool Search, a name that no tool carries
+reads that none exists, with the hint to search). A tool of the turn's
+catalogue that a round did not declare because the policy denies it or a skill
+keeps it closed is refused with that cause's text, not as undeclared: the
+model learns to activate a skill rather than to give up. A reasoning backend's
+model is offered only the session tools it may call; a call it makes to one
+it was not offered reads the session's cause, which the channel hands the
+backend with the catalogue (`unavailable`).
 
 **One tool per name.** A name is served by one tool in a room, and declared
 with that tool's definition: a tool declared under a name with one schema and
