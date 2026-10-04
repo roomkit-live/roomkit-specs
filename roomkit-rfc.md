@@ -11032,10 +11032,14 @@ keeps it closed is refused with that cause's text, not as undeclared: the
 model learns to activate a skill rather than to give up. A reasoning backend's
 model is offered only the session tools it may call; a call it makes to one
 it was not offered reads the session's cause, which the channel hands the
-backend with the catalogue (`unavailable`). Both are read when the
-delegation starts, with the participant's role and the room's agent as they
-stand then, as the gate reads them at each call: a role changed during the
-session holds for the backend's catalogue from the next delegation on.
+backend with the catalogue (`unavailable`). Both are read when the channel
+hands the delegation to the backend, with the participant's role and the
+room's agent as they stand then, as the gate reads them at each call, and
+inside the delegation's bound: a read that fails is answered by the spoken
+fallback. A role changed during the session holds for the catalogue of the
+delegations handed over after it; one a backend queues behind another keeps
+what was read when it was handed over, its calls judged at the gate as the
+role stands.
 
 **One tool per name.** A name is served by one tool in a room, and declared
 with that tool's definition: a tool declared under a name with one schema and
