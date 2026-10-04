@@ -11082,7 +11082,11 @@ session) is exempt the same way: it stays declared and is among the names a
 handler reads (Section 21.4), and the policy applies to the tool it names, at
 the gate, once the call is unwrapped. A provider's native tool, which has no
 name (`{"google_search": {}}`), stays declared: a policy names the tools it
-governs, and Tool Search neither hides nor lists a tool it cannot name. The
+governs, and Tool Search neither hides nor lists a tool it cannot name. A
+call under an alias a handler serves as another tool (an MCP tool called
+`mcp__<server>__<tool>`, which the MCP handler runs as `<tool>`) is judged under
+both names, by the policy and by skill gating: refused when either is, so no
+tool runs under an alias that its own name is refused. The
 declaration filter and the execution guard MUST apply one rule, so a tool the
 model is offered is a tool it may call.
 
