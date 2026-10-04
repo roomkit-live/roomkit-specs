@@ -2198,7 +2198,7 @@ They are NOT stored in any room timeline.
 | recording_started | Audio recording started | session_id, room_id, recording_id |
 | recording_stopped | Audio recording stopped | session_id, room_id, recording_id, duration_s |
 | stt_error | STT transcription failed | session_id, provider, error |
-| tts_error | TTS synthesis failed | session_id, provider, error |
+| tts_error | A session's TTS synthesis or its playback failed | session_id, provider, error |
 | voice_session_ready | Voice session audio path is live and ready | session_id, room_id, channel_id |
 | conference_started | Bot connection to the conference is live | room_id, channel_id, bot_session_id |
 | conference_ended | Bot left the conference | room_id, channel_id, bot_session_id, duration_ms |
@@ -3871,6 +3871,9 @@ enters a room as any other audio.
 9. Room broadcasts → AI or other channels respond
 10. Response event arrives at Voice channel via deliver()
 11. If TextContent → Fire BEFORE_TTS hook → TTS synthesizes → AudioChunk stream
+    (each session plays in parallel; a session whose synthesis or playback fails
+     is reported as `tts_error` once its playback is released, and AFTER_TTS fires
+     only when a session was served)
 
 --- Streaming AI → TTS path (framework-native, when AIProvider supports streaming) ---
 8s. Route through normal inbound pipeline → Room broadcasts to AIChannel
@@ -3920,7 +3923,8 @@ enters a room as any other audio.
 15s. Fire AFTER_TTS hook with the text the sessions were sent: the sentences as
      BEFORE_TTS left them (12s.b) when a hook changed or dropped one, the whole
      streamed text otherwise. The final assistant transcript carries the same
-     text. AFTER_TTS does not fire when every sentence was dropped.
+     text. AFTER_TTS does not fire when every sentence was dropped, nor when no
+     session was served (each stopped on a failed synthesis or playback).
 
 --- Common outbound path ---
 12. AudioChunk stream → [PostProcessors] → [Recorder] → [Resampler] → Transport
