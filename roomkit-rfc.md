@@ -1353,7 +1353,10 @@ once its result went out, its call id belonging to the connection a
 reconfiguration can replace, and declares nothing of it when a
 reconfiguration gave the session another catalogue while the call was judged:
 its matches were found in the catalogue that left. So for the tools an
-activation's hint names. A tool Tool Search recovers at call time joins the
+activation's hint names. An activation that names no skill and whose answer
+carries no hint (no tool matches the name, or the skill is unavailable)
+reveals nothing and is refused, as a reference or a script asked of a skill
+the registry does not offer is. A tool Tool Search recovers at call time joins the
 reveal window only once the tool answered the call (served, failed, or its
 result withheld by an ON_TOOL_CALL hook), as the room's tool memory keeps any
 tool used: a call refused before it ran (a gate, its arguments,
