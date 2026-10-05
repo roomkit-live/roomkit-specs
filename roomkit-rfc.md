@@ -5701,7 +5701,11 @@ reconfiguration that fails once the result went out sends no second one, and
 a cancellation that arrives after the result was delivered is not reported.
 A call an ending interrupts is reported once, as cancelled. The endings are
 the session's end, the channel's close, and on a conference a detach or the
-unplug of its realtime provider. A start that fails is a session's end for
+unplug of its realtime provider. A call whose own handler caused the ending
+(a hang-up tool ending its session, detaching its room, unplugging the
+provider, closing its channel) is not interrupted, on every host: it runs on
+and reports its own outcome, while the other calls the ending reaches are
+interrupted. A start that fails is a session's end for
 the calls the provider issued while it was pending, up to its disconnection.
 A report under way when an ending arrives (a call's refusal, or the
 cancellation of a call the provider abandoned) is still made, and reads the
