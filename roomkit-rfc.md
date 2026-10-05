@@ -1012,17 +1012,32 @@ The normalized representation of a message arriving from outside the framework:
 ```
 InboundMessage
 ├── channel_id: string                      # Which registered channel
-├── channel_type: ChannelType               # Channel type
 ├── sender_id: string                       # Sender identifier (phone number, email, user ID)
 ├── content: EventContent                   # Parsed content
+├── event_type: EventType = MESSAGE         # SYSTEM for a voice session start;
+│                                           # INSTRUCTION (Section 10.1.1)
+├── external_id: string | null              # Provider-side reference
+├── thread_id: string | null                # Provider-native thread reference,
+│                                           # passed through to the provider
+├── parent_event_id: string | null          # In-app thread: the event this replies to
+├── idempotency_key: string | null          # Duplicate prevention
 ├── raw_payload: map<string, any>           # Original provider payload
 ├── provider_message_id: string | null      # Provider's message ID
-├── timestamp: datetime | null              # When originally sent
-├── idempotency_key: string | null          # Duplicate prevention
-├── room_id: string | null                  # Pre-determined room (if known)
+├── metadata: map<string, any>              # Extra data
 ├── session: VoiceSession | null            # Voice session to connect after processing
-└── metadata: map<string, any>              # Extra data
+├── visibility: string = "all"              # Event visibility (Section 7.3);
+│                                           # "transport" reaches no intelligence channel
+├── addressed_to: list<string> | null       # Intelligence channels asked to act
+│                                           # (Section 19.3); null = any eligible
+├── response_visibility: string | null      # Where the answer may go; null = unrestricted
+├── chain_depth: int = 0                    # The chain the message continues (Section 8.3)
+└── standalone: bool = false                # INSTRUCTION only: the turn reads nothing
+                                            # of the room (Section 10.1.1)
 ```
+
+The room, when the caller knows it, is passed to `process_inbound()` (Section
+10.1), not carried by the message; the channel type is the registered
+channel's.
 
 **Unified voice inbound:** When the `session` field is set, `process_inbound()`
 connects the voice session to the channel after successful hook processing. This
@@ -1037,13 +1052,12 @@ provided to convert a `VoiceSession` into an `InboundMessage` with a
 parse_voice_session(session: VoiceSession, channel_id: string) → InboundMessage
     # Returns InboundMessage with:
     #   channel_id = channel_id
-    #   channel_type = VOICE or REALTIME_VOICE
     #   sender_id = session.participant_id
+    #   event_type = SYSTEM
     #   content = SystemContent(body="Voice session started",
     #             code="session_started", data={session_id, channel_id, caller})
     #   session = session
-    #   room_id = session.room_id (if set)
-    #   metadata = session.metadata
+    #   metadata = session.metadata, merged with the caller's metadata
 ```
 
 ### 5.13 Delivery Result
@@ -1775,7 +1789,7 @@ MUST transcode content to match each target channel's supported media types.
 
 | Source Content | Target Supports | Transcoded To |
 |---|---|---|
-| RichContent | TEXT only | TextContent (extract plain_text or strip formatting) |
+| RichContent | TEXT only | TextContent (plain_text, else body unchanged) |
 | MediaContent | TEXT only | TextContent ("[Media: {caption or filename or url}]") |
 | AudioContent | TEXT only | TextContent (the transcript, or "[Voice message: {url}]") |
 | VideoContent | TEXT only | TextContent ("[Video: {url}]") |
@@ -2584,7 +2598,7 @@ them as above runs after those as an observer.
 | ON_VIDEO_SESSION_ENDED | ASYNC | Implemented | Video session ended |
 | ON_VIDEO_TRACK_ADDED | ASYNC | Planned | Video track added to session |
 | ON_VIDEO_TRACK_REMOVED | ASYNC | Planned | Video track removed from session |
-| ON_VISION_RESULT | ASYNC | Implemented | VisionProvider returned analysis result |
+| ON_VISION_RESULT | SYNC | Implemented | VisionProvider returned an analysis result — can block it, or modify its description, labels, confidence, text or faces |
 | ON_SCREEN_SHARE_STARTED | ASYNC | Implemented | Screen sharing started: a conference participant published a screen-share track (Section 12.10.4) |
 | ON_SCREEN_SHARE_STOPPED | ASYNC | Implemented | Screen sharing stopped: a conference screen-share track was unpublished (Section 12.10.4) |
 | ON_VIDEO_DETECTION | ASYNC | Implemented | Video detection event (object, face, etc.) |
@@ -7348,7 +7362,7 @@ and records them through Section 12.11 instead (Section 12.10.8).
 | ON_VIDEO_SESSION_ENDED | ASYNC | Video session ended |
 | ON_VIDEO_TRACK_ADDED | ASYNC | Video track added to session (Planned, Section 9.2) |
 | ON_VIDEO_TRACK_REMOVED | ASYNC | Video track removed from session (Planned, Section 9.2) |
-| ON_VISION_RESULT | ASYNC | VisionProvider returned analysis result |
+| ON_VISION_RESULT | SYNC | VisionProvider returned an analysis result — can block or modify it |
 | ON_VIDEO_DETECTION | ASYNC | Filter emitted a detection event (YOLO, face, etc.) |
 | ON_SCREEN_SHARE_STARTED | ASYNC | Screen sharing started; fired by the conference channel only, not by a video channel (Section 12.10.4) |
 | ON_SCREEN_SHARE_STOPPED | ASYNC | Screen sharing stopped; fired by the conference channel only, not by a video channel (Section 12.10.4) |
@@ -10046,12 +10060,12 @@ ConversationStore (interface)
 │
 ├── Tasks
 │   ├── create_task(room_id, task) → Task
-│   ├── list_tasks(room_id, filters) → list<Task>
+│   ├── list_tasks(room_id, status | null) → list<Task>
 │   └── update_task(task) → Task
 │
 └── Observations
     ├── create_observation(room_id, observation) → Observation
-    └── list_observations(room_id, filters) → list<Observation>
+    └── list_observations(room_id) → list<Observation>
 ```
 
 **Reading a timeline (`list_events`).** Two pagination modes exist:
@@ -12335,7 +12349,8 @@ SkillMetadata
 ├── license: string | null                  # License identifier
 ├── compatibility: string | null            # Free text, not interpreted; shown with
 │       # the license in to_prompt_xml()
-├── allowed_tools: list<string>             # Tool access patterns (ToolPolicy globs)
+├── allowed_tools: list<string>             # Tool access patterns (ToolPolicy globs);
+│       # in frontmatter, a list or comma-separated
 ├── requires: list<string>                  # Exact names of the tools the skill needs
 │       # (Section 24.3), read from extra_metadata `requires`, a list or
 │       # comma-separated; empty by default
@@ -12843,7 +12858,7 @@ A Level 3 implementation MAY additionally support audio and/or video real-time m
 - VideoBackend interface — transport abstraction (connect, disconnect, send_video, callbacks)
 - VideoChannel — session-based channel orchestrator:
   - Session lifecycle with dual-signal ready mechanism (matching VoiceChannel pattern)
-  - Hook triggers: ON_VIDEO_SESSION_STARTED, ON_VIDEO_SESSION_ENDED (ON_VIDEO_TRACK_ADDED and ON_VIDEO_TRACK_REMOVED are Planned, Section 9.2)
+  - Hook triggers: ON_VIDEO_SESSION_STARTED, ON_VIDEO_SESSION_ENDED, ON_VISION_RESULT, ON_VIDEO_DETECTION, BEFORE_BRIDGE_VIDEO (ON_VIDEO_TRACK_ADDED and ON_VIDEO_TRACK_REMOVED are Planned, Section 9.2)
   - Optional VisionProvider integration with configurable analysis interval
   - Vision results emitted as framework events (video_vision_result)
 - VisionProvider interface — frame analysis abstraction:
@@ -13332,7 +13347,9 @@ VideoChannel
 │   └── disconnect_video(session)
 ├── hooks:
 │   ├── ON_VIDEO_SESSION_STARTED — SessionStartedEvent
-│   └── ON_VIDEO_SESSION_ENDED — SessionStartedEvent (same type as STARTED)
+│   ├── ON_VIDEO_SESSION_ENDED — SessionStartedEvent (same type as STARTED)
+│   ├── ON_VISION_RESULT, ON_VIDEO_DETECTION
+│   └── BEFORE_BRIDGE_VIDEO (Section 12.8.11)
 ├── framework_events:
 │   ├── video_session_started
 │   ├── video_session_ended
@@ -13775,15 +13792,14 @@ Timeline of a room with SMS customer + AI:
    ├── parse_voice_session(session, channel_id="realtime-voice")
    │   → InboundMessage {
    │       channel_id: "realtime-voice",
-   │       channel_type: REALTIME_VOICE,
    │       sender_id: "+15551234567",
+   │       event_type: SYSTEM,
    │       content: SystemContent{body: "Voice session started",
    │                 code: "session_started",
    │                 data: {session_id: "...", channel_id: "realtime-voice",
    │                        caller: "+1555..."}},
-   │       session: <VoiceSession>,
-   │       room_id: "room-abc"
-   │     }
+   │       session: <VoiceSession>
+   │     }   # process_inbound(message, room_id="room-abc")
    │
    ▼
 3. kit.process_inbound(message, room_id="room-abc")
