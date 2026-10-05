@@ -5721,7 +5721,9 @@ an id is refused and reported once the same way, with nothing sent, since no
 result can name it. A text turn holds its round's calls by id the same way: a
 second call of a round under an id the first holds is refused with the same
 words and reported as a call of its own, the first keeping its report and its
-end row its own arguments. Such a refusal takes the path of any call: the session's
+end row its own arguments; one the provider already ran under such an id is
+reported as a call of its own with the outcome the provider gave it, and a
+call under an id an earlier round used is a new call. Such a refusal takes the path of any call: the session's
 end is read first (a call on an ended session is reported cancelled), a
 `call_tool` transport is unwrapped so the report names the tool it carries,
 and it waits for the transcription that precedes it. A call that named no tool
