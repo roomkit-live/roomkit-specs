@@ -10838,7 +10838,12 @@ by the channel's handler. A name the channel's tools carry is the channel's
 (Section 21.1): declared with the channel's schema and served by its handler,
 and an agent's tool of that name is neither declared nor served, a warning
 naming it at the install, nor declared once the channel drops its own:
-nothing of the agent's serves it. The active agent's tool policy holds on its
+nothing of the agent's serves it. The channel's tools here are its host
+definitions, every name its human-input tools serve, declared or not, and the
+tools it serves itself (Tool Search's and the skills', whether or not a session
+declares them now); for a pipeline agent's own tool, this skip takes the place
+of the refusal Section 21.1 gives a tool orchestration sets up over the
+channel's, so the install goes through with the agent's other tools. The active agent's tool policy holds on its
 session beside the channel's: a tool that either policy denies, each resolved for the
 session's participant, is neither declared, nor listed by Tool Search, nor
 among the names a handler reads, and the gate refuses it with the policy's
