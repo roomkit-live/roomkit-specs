@@ -5708,11 +5708,13 @@ the provider's wait on it timed out, the connection ended) frees its id the
 same way, at the step the provider reports it: the channel frees it there too,
 before the handler it interrupts has finished, sends nothing for that call
 afterwards, and answers a call issued under the id meanwhile as a new call. A
-provider holds the ids it issued in one book, freed by the same three steps
-(the result, the abandonment, the connection's end), and drops, with a log,
-a result submitted for an id it does not hold, abandoned or never issued:
+provider holds the ids it issued in one book, freed by the result or the
+abandonment, and drops, with a log, a result submitted for an id it does not
+hold, abandoned, never issued, or issued by a connection that is gone:
 nothing goes out for it, whoever submits it (an application calling the
 provider directly included), and an abandoned call is reported once. A
+session connected again under the same id abandons the calls its previous
+connection issued. A
 call a reconnect its own handler caused orphans, which runs on, frees its id
 at that step as well: the new connection never issued it. A call that came without
 an id is refused and reported once the same way, with nothing sent, since no
