@@ -11423,7 +11423,10 @@ The supervisor, like any channel, serves every room it is attached to, so its
 configuration carries no turn's instruction: one written there and restored
 afterwards leaks into the turns of other rooms running meanwhile.
 
-The task-formulation pass is read as any streamed turn is (Section 6.4): the
+The task-formulation pass is read as any streamed turn is (Section 6.4), and
+fails as one does: its failure fires ON_ERROR once, as a streamed turn's
+(`streaming`, with the correlation of the tool rows it wrote), is logged once,
+and reaches the room turn's caller without a second report. The
 task it hands the workers is its final answer, never the narration of its
 tool rounds joined to it, and a pass its round cap, deadline or budget cut
 short has none, so no worker runs. A pass that stopped short of its answer
@@ -11449,7 +11452,10 @@ deeper than that event (§8.3). A producer's task that failed (§23.3 step 6)
 stops the loop: the last output it produced, if any, is the result, not
 approved, and says the loop stopped on that failure; with no output at all
 the turn has no answer, never an empty response passed off as one. Either
-way the loop's caller reads the producer's failure. An asynchronous loop
+way the loop's caller reads the producer's failure; it is reported to
+ON_ERROR once, where the producer's turn failed (its task's room), and a
+producer's turn its round cap, deadline, budget or a stop cut short fires
+none, as a room turn's does. An asynchronous loop
 (a voice channel's `delegate_loop`) hands its outcome back to the voice
 channel that started it as a background delegation's result is (§23.3 step
 8): an instruction to that channel, its output bounded and set apart as a
@@ -12276,7 +12282,9 @@ being set up) ends once, as any task does, whether it ran inline or in the
 background: `cancelled`, with no output. Steps 7 and 8 still run, to their
 end though the task is being cancelled, the completion callback with them,
 and a notified agent is told the task was cancelled; then the cancellation
-goes on. A framework that is closing starts no turn: step 8 is skipped and
+goes on. A step 8 whose notified agent's turn fails leaves the log line to
+that turn's failure, with its cause and at its level, and notes the result
+not delivered below it. A framework that is closing starts no turn: step 8 is skipped and
 logged, step 7 still runs. A step 8 already under way when the framework
 closes is cut with it, as a strategy's background run's hand-back is: the
 turn it started is cancelled, what it had produced kept as a cancelled
