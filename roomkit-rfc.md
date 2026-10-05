@@ -6006,7 +6006,9 @@ the ending: a handler that ends its session through a task of its own, and a
 close that runs in a task of its own, still spare it, and the task that holds
 it (a backend's delegation) with it. A spared call still running when its
 channel closes is waited for within the close's bound, then interrupted and
-reported once, as cancelled; nothing of it outlives the close. A start that fails is a session's end for
+reported once, as cancelled; nothing of it outlives the close. A handler that
+closes the framework itself finishes once the framework is gone: it runs on,
+but its outcome reaches no hook, and is logged. A start that fails is a session's end for
 the calls the provider issued while it was pending, up to its disconnection.
 A report under way when an ending arrives (a call's refusal, or the
 cancellation of a call the provider abandoned) is still made, with the outcome
