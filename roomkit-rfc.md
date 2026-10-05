@@ -404,6 +404,7 @@ Room
 ├── updated_at: datetime                    # Last modification time
 ├── closed_at: datetime | null              # When the room was closed
 ├── timers: RoomTimers                      # Auto-transition configuration
+├── agent_response_policy: AgentResponsePolicy = AGENT_CHAIN  # What an agent's own output solicits (Section 19.3.1)
 ├── metadata: map<string, any>              # Integrator-defined data
 ├── event_count: int                        # Total events stored
 └── latest_index: int                       # Highest event index (for read tracking)
@@ -1801,6 +1802,35 @@ AIMessage
 ├── role: string                            # "user", "assistant", "system", "tool"
 ├── content: string | list<AIContentPart>   # Text, image, tool call, tool result, thinking parts
 └── metadata: map<string, any>
+
+AIContentPart                               # One of these, told apart by type
+├── AITextPart
+│   ├── type: string = "text"
+│   └── text: string
+├── AIImagePart
+│   ├── type: string = "image"
+│   ├── url: string
+│   └── mime_type: string | null
+├── AIToolCallPart
+│   ├── type: string = "tool_call"
+│   ├── id: string
+│   ├── name: string
+│   ├── arguments: map<string, any>
+│   └── metadata: map<string, any>
+├── AIToolResultPart
+│   ├── type: string = "tool_result"
+│   ├── tool_call_id: string
+│   ├── name: string
+│   ├── result: string | list<AITextPart | AIImagePart>
+│   ├── is_error: bool (default false)      # A failure or a refusal, carried, never inferred
+│   ├── structured_content: map<string, any> | null  # MCP structuredContent; never rendered to providers
+│   ├── outcome: string | null              # served, refused, failed, blocked, unserved or cancelled; never rendered to providers
+│   └── references: list<string>            # Tools the result makes callable (Section 6.4)
+└── AIThinkingPart
+    ├── type: string = "thinking"
+    ├── thinking: string
+    ├── signature: string | null
+    └── redacted: string | null             # A redacted block's opaque data; thinking is then empty
 
 AIContext
 ├── messages: list<AIMessage>               # The conversation to answer
@@ -4610,8 +4640,8 @@ pipeline to be useful. Typical configurations:
 
 - **Voice Channel (STT/TTS):** VAD (required for speech detection) + optional
   denoiser, AEC, AGC, and diarization.
-- **Realtime Voice Channel (speech-to-speech):** Denoiser, AEC, and/or diarization
-  only — the AI provider handles turn detection, so VAD is not needed.
+- **Realtime Voice Channel (speech-to-speech):** Denoiser, AEC, and/or
+  diarization; a VAD is optional and takes one of the two roles of Section 12.4.
 - **PSTN/SIP integration:** Resampler (RECOMMENDED) + DTMF + recorder + VAD.
 
 ```
@@ -5098,12 +5128,13 @@ VADEvent
 
 **Relationship with speech-to-speech providers:**
 
-When using a speech-to-speech provider (Section 12.4), the provider manages its
-own turn detection internally. The audio pipeline acts as a **preprocessor** —
-denoising audio before it reaches the provider and running diarization to
-identify speakers. VAD MAY be configured for observational purposes (activity
-logging, audio level monitoring for UI) but does NOT control turn-taking — that
-responsibility belongs to the provider.
+When using a speech-to-speech provider (Section 12.4), the audio pipeline acts
+as a **preprocessor** — denoising audio before it reaches the provider and
+running diarization to identify speakers. Without a VAD, the provider manages
+its own turn detection. A configured VAD takes one of the two roles of Section
+12.4: on a provider that takes turns it drives turn-taking (endpointing); on a
+full-duplex provider it observes (activity logging, audio level monitoring for
+UI) and turn-taking stays with the provider.
 
 #### 12.3.9 Diarization Provider
 
@@ -5704,11 +5735,13 @@ RealtimeVoiceProvider (interface)
 ├── model_name → string                     # Model behind the session; defaults to name
 ├── full_duplex: bool (default false)       # Model listens and speaks at once; no boundaries on the wire (Section 12.4.1)
 ├── supports_tools: bool (default true)     # The model can call tools; false declares none to it
+├── supports_mid_session_reconfigure: bool (default true)  # Whether reconfigure() can safely run mid-session; false when it would replace the session or lose its state
 ├── available_voices() → VoiceInfo[]        # Curated offline catalog (VoiceInfo: Section 12.2)
 ├── list_voices() → VoiceInfo[]             # Live catalog; default: available_voices()
 ├── available_models() → ModelInfo[]        # Curated offline catalog (MAY be empty)
-├── connect(session, system_prompt, voice, tools, temperature) → void
+├── connect(session, system_prompt, voice, tools, temperature, input_sample_rate = 16000, output_sample_rate = 24000, server_vad = true, provider_config) → void  # server_vad false: the channel signals turns (endpointing role)
 ├── disconnect(session) → void
+├── reconfigure(session, system_prompt, voice, tools, temperature, provider_config) → void  # New settings mid-session; default: disconnect, then connect again with them
 ├── send_audio(session, audio_chunk) → void
 ├── inject_text(session, text, role) → void  # Insert text into conversation context
 ├── submit_tool_result(session, call_id, result) → void  # Return tool result to provider
@@ -5716,6 +5749,8 @@ RealtimeVoiceProvider (interface)
 ├── submit_delegation_output(session, delegation_id, text, spoken) → void  # Return a reasoning backend's output (Section 12.4.1)
 ├── interrupt(session) → void               # Signal user interruption to provider
 ├── truncate_audio(session, audio_end_ms) → void  # OPTIONAL: drop the unheard tail from provider context after an interruption; no-op by default
+├── send_activity_start(session) → void     # Endpointing role: the user started speaking; no-op by default
+├── send_activity_end(session) → void       # Endpointing role: the user stopped speaking; no-op by default
 ├── close() → void                          # Release all resources
 │
 │   # Callback registration:
@@ -5863,8 +5898,9 @@ and reports its own outcome, while the other calls the ending reaches are
 interrupted. A start that fails is a session's end for
 the calls the provider issued while it was pending, up to its disconnection.
 A report under way when an ending arrives (a call's refusal, or the
-cancellation of a call the provider abandoned) is still made, and reads the
-session's end first: the call is reported cancelled. An id names its call until the call's result goes out or
+cancellation of a call the provider abandoned) is still made, with the outcome
+already decided: a refusal is reported refused, whether or not its body went
+out, and an abandoned call cancelled (Section 9.3). An id names its call until the call's result goes out or
 the provider abandons the call: a second call under it before then is refused and reported once, and sends
 nothing, since the id's one result is the first call's, which runs on; a call
 under it after then is a new call, to the channel and to the provider alike,
@@ -6089,11 +6125,11 @@ Typical use cases:
 - **Audio level monitoring** (via optional VAD) — for UI indicators
 - **Activity logging and metrics** — for observability
 
-VAD is OPTIONAL in this mode, and a configured VAD may serve either of two
-roles. Which one is a deployment decision, and an implementation SHOULD make it
-explicit rather than infer it silently.
+VAD is OPTIONAL in this mode, and a configured VAD serves one of two roles,
+set by the provider: endpointing on a provider that takes turns, observation on
+a full-duplex provider.
 
-**Observation (default).** The VAD feeds diarization, level metering and
+**Observation.** The VAD feeds diarization, level metering and
 metrics; it does NOT control when the speech-to-speech provider responds.
 Turn-taking is fully managed by the provider's own endpointing.
 
@@ -6180,7 +6216,8 @@ a response would wait for a burst that never comes — and a recorder (Section
 **The session is fixed at start (normative).** Such a provider typically fixes
 model, instructions, voice, audio format, delegation mode and seeded history
 when the session starts, and takes only appends afterwards. The provider MUST
-expose that a mid-session reconfiguration replaces the session, so that the
+declare `supports_mid_session_reconfigure` false, since a mid-session
+reconfiguration replaces the session, so that the
 orchestration that changes a running agent — a handoff (Section 19.6), a skill
 activation (Section 24.4) — chooses an append where one exists and accepts the
 loss where it does not. A changed system prompt SHOULD be delivered as an
@@ -6238,7 +6275,7 @@ ReasoningRequest
 ├── unavailable: map<string, string>        # Session tools the model is not offered, each with the refusal its call reads (Section 21.1)
 ├── execute_tool(name, arguments) → string  # One call through the channel's pre-execution gate and handler
 ├── execute_tool_call(name, arguments) → ToolCallResult  # The same call, with its outcome
-├── report_refusal(name, arguments, body, cancelled, refused, detail) → void  # Reports a call the backend's own loop ended before the gate, with its outcome
+├── report_refusal(name, arguments, body, cancelled = false, refused = true, detail = null) → void  # Reports a call the backend's own loop ended before the gate, with its outcome, under the id model_call_id() names
 └── report_call(name, arguments, result, is_error, detail, tool_call_id) → void  # Reports a call the backend's own provider served outside the gate, with its outcome
 
 ToolCallResult
@@ -6299,7 +6336,11 @@ reports the calls it refuses itself; a call the backend's own provider served
 ON_TOOL_CALL hooks through `report_call`, served or failed, as an AI channel
 reports one (Section 9.3); each of these reports names the call by the id
 the backend's model gave it, within its delegation's, whichever of them
-reports it; and a turn that did not complete (it
+reports it (`report_call` takes that id as `tool_call_id`; `execute_tool`,
+`execute_tool_call` and `report_refusal` read it from `model_call_id()`,
+which the framework's tool loop sets around the call it runs or reports; a
+call that comes with no id is reported under one minted within its
+delegation's); and a turn that did not complete (it
 ended for any reason but `completed`: its round cap, deadline or budget cut
 it, or its answer was cut or never came) has no answer. Its narration is
 progress, never the answer: the run fails, and the channel answers the
@@ -10831,7 +10872,8 @@ by `max_chain_depth`. That is a feature for a pipeline (analyst → writer)
 and a hazard for a room of independent agents, where two agents answer each
 other until the depth limit stops them.
 
-Implementations MUST provide both policies, selectable per room:
+Implementations MUST provide both policies (`AgentResponsePolicy`), selectable
+per room through the room's `agent_response_policy`:
 
 | Policy | An agent's output solicits |
 |---|---|
@@ -11070,6 +11112,13 @@ HandoffResult
 The handoff summary is injected into the target agent's context so it
 has continuity.
 
+`setup_handoff(agent, handler, tool, room_id)` wires the handoff tool into an
+AI channel and serves its calls with the `HandoffHandler`. `tool` (default
+null) replaces the default `handoff_conversation` definition; `room_id`
+(default null) declares it in that one room's turns, as a strategy installed
+in the room does (Section 19.7), and null declares it in every room the agent
+serves. Setting it up again where it is already declared is refused.
+
 **The room is the call's (normative).** A handoff acts on the room of the
 call that requested it, read from the tool call context (Section 21.4). One
 agent serves every room it is attached to, so a room captured when the tool
@@ -11110,8 +11159,9 @@ other room the object serves, which would answer, or refuse, another room's
 user with this room's configuration. Installing a strategy in a second room
 MUST NOT declare a tool twice in a room. A flag it keeps while work runs for a
 room is that room's, and its tools act on the room of the call (Sections 19.6
-and 23.4). A tool set up on an agent outside any strategy (`setup_handoff`,
-`setup_delegation` without a room) belongs to the agent whatever the room: it
+and 23.4). A tool set up on an agent outside any strategy (`setup_handoff`
+without a `room_id`, `setup_delegation`, `setup_realtime_delegation`) belongs
+to the agent whatever the room: it
 is declared wherever the agent serves, and still acts on the room of the call.
 
 #### 19.7.1 Pipeline
@@ -11249,12 +11299,28 @@ The `StatusBus` enables inter-agent coordination through status messages:
 
 ```
 StatusBus (interface)
-├── post(room_id, agent_id, status, metadata) → void
-├── subscribe(room_id, callback) → unsubscribe_function
-└── get_latest(room_id, agent_id) → Status | null
+├── post(agent_id, action, status, detail = "", metadata = null) → StatusEntry  # Publishes without waiting for the subscribers
+├── post_async(agent_id, action, status, detail = "", metadata = null) → StatusEntry  # Waits for the subscribers
+├── subscribe(callback) → void              # callback(StatusEntry) on every post
+├── unsubscribe(callback) → void
+├── recent(n = 10, agent_id = null, status = null) → list<StatusEntry>  # Most recent entries, optionally filtered
+├── recent_text(n = 10) → string            # Recent entries as text, for an agent's context
+├── has_completed(agent_id = null) → bool   # Whether a COMPLETED entry is among the last 50 completed ones
+└── close() → void
+
+StatusEntry
+├── ts: string                              # ISO 8601 time of the post
+├── agent_id: string
+├── action: string                          # What the agent is doing or did
+├── status: StatusLevel                     # OK, FAILED, PENDING, INFO, COMPLETED
+├── detail: string = ""
+└── metadata: map<string, any>              # room_id here names the entry's room
 ```
 
-Status posts fire `ON_STATUS_POSTED` hooks. Agents MAY use the StatusBus to
+`StatusLevel` values are written `ok`, `failed`, `pending`, `info` and
+`completed`. One bus serves the framework; an entry names its room, if any, in
+`metadata.room_id`. Status posts fire `ON_STATUS_POSTED` hooks in that room; an
+entry that names no room reaches no room's hooks. Agents MAY use the StatusBus to
 signal completion, progress, or request attention without sending room events.
 
 ---
@@ -11915,15 +11981,23 @@ already ran when `cancel` arrives ends as it stands.
 ```
 DelegatedTask
 ├── id: string                              # Unique task identifier
-├── room_id: string                         # Parent room
+├── parent_room_id: string                  # Room that delegated
+├── child_room_id: string                   # Room the agent works in
 ├── agent_id: string                        # Agent to execute the task
 ├── task: string                            # Task description / instructions
-├── notify: string | null                   # Channel to notify on completion
-├── status: TaskStatus                      # PENDING, IN_PROGRESS, COMPLETED, FAILED, CANCELLED
-├── result: string | null                   # Task result (on completion)
-├── error: string | null                    # Error message (on failure)
-├── created_at: datetime
-└── completed_at: datetime | null
+├── status: TaskStatus = PENDING            # PENDING, IN_PROGRESS, COMPLETED, FAILED, CANCELLED
+└── result: DelegatedTaskResult | null      # Set when the task ends
+
+DelegatedTaskResult
+├── task_id: string
+├── parent_room_id: string
+├── child_room_id: string
+├── agent_id: string
+├── status: TaskStatus = COMPLETED
+├── output: string | null                   # The worker's answer; a worker cut short keeps its narration
+├── error: string | null                    # Error message (on failure); "cancelled" for a task cancelled from outside
+├── duration_ms: float = 0
+└── metadata: map<string, any>              # loop_end_reason when a cut or a failed turn ended the worker
 ```
 
 ### 23.3 Delegation Protocol
@@ -11986,9 +12060,10 @@ When `delegate(room_id, agent_id, task, notify)` is called:
    reads none from a failed task, its output whatever it keeps.
 7. Fire `ON_TASK_COMPLETED` hook in the parent room.
 8. If `notify` is set, hand the result back through `deliver()` (§22) with
-   the framework's delivery strategy and `instruction = true`, so
-   `BEFORE_DELIVER`, `AFTER_DELIVER` and the delivery backend apply to it as
-   to any proactive delivery. `notify` names who is told: an intelligence channel receives it
+   the framework's delivery strategy, so `BEFORE_DELIVER`, `AFTER_DELIVER` and
+   the delivery backend apply to it as to any proactive delivery, and with
+   `instruction = true` when `notify` names an intelligence channel or a
+   channel that hosts a realtime model. `notify` names who is told: an intelligence channel receives it
    addressed to it, through the room's transport (§10.1.1); a channel that
    hosts a realtime model (a realtime voice or audio-video channel, a
    conference with a realtime model plugged in), injected with the `system`
@@ -11996,8 +12071,8 @@ When `delegate(room_id, agent_id, task, notify)` is called:
    tool call context (Section 21.4), or its one session for a delegation
    made outside a call; nothing of it is published to the room's other
    channels.
-   Another transport has no model to direct and receives it as a message
-   delivered through it. The delivered content carries the result, bounded and
+   Another transport has no model to direct and receives it as an ordinary
+   delivery through it (`channel_id = notify`, `instruction = false`). The delivered content carries the result, bounded and
    delimited, presented as the worker's output rather than as an
    instruction; a task that did not complete says it failed or was
    cancelled, without its error (§9.3), whatever output or error text it
@@ -12039,7 +12114,12 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   available delegation targets with descriptions.
 
 - `setup_delegation(agent, handler, tool)` — Wires the delegation tool into
-  an agent, connecting it to the TaskRunner.
+  an AI channel, connecting it to the TaskRunner. It takes no room: the tool
+  is declared wherever the agent serves. `tool` (default null) replaces the
+  default definition; setting it up twice on a channel is refused.
+
+- `setup_realtime_delegation(channel, handler, tool)` — The same for a
+  realtime voice channel, whose sessions declare the tool.
 
 A delegation tool, whichever helper wired it (a supervisor's per-worker and
 strategy tools included), delegates from the room of the call, read from the
@@ -12079,6 +12159,8 @@ tools:
 allowed_tools:
   - "search_*"
   - "fetch_*"
+requires:
+  - search_web
 ---
 
 ## Instructions
@@ -12100,6 +12182,7 @@ SkillMetadata
 ├── license: string | null                  # License identifier
 ├── tools: list<string>                     # Tools this skill provides
 ├── allowed_tools: list<string>             # Tool access patterns (ToolPolicy globs)
+├── requires: list<string>                  # Exact names of the tools the skill needs (Section 24.3), from frontmatter `requires`, a list or comma-separated; empty by default
 └── path: string                            # Filesystem path to skill directory
 ```
 
@@ -12114,6 +12197,10 @@ SkillRegistry
 ├── add(skill: Skill) → void                # Register a skill built in memory
 ├── copy(names?, marks = true) → SkillRegistry  # A subset, its paths and marks kept
 ├── all_metadata() → list<SkillMetadata>    # List all registered skills
+├── mark_unavailable(name, reason) → void   # The skill leaves the available set, its reason kept; what it gated stays closed
+├── get_unavailable_reason(name) → string | null
+├── unavailable_skills → map<string, string>  # Unavailable skill name → reason
+├── mark_unlisted(name) → void              # Still activatable, left out of to_prompt_xml()
 ├── gated_tool_names(activated) → set<string>  # Patterns kept closed: unactivated skills', closed ones
 ├── closed_tool_names(activated) → set<string> # Patterns only unavailable skills gate, none activated opens
 ├── requires_match: (name, offered) → bool  # How a requires name is served (default: an exact tool name)
@@ -12879,9 +12966,11 @@ AIChannel
 │   ├── turn_budget_tokens
 │   ├── turn_budget_usd
 │   └── tools
-├── ai_response_model:
-│   │   # AI responses consist of ordered parts:
-│   ├── AITextPart                          # Generated text content
+├── ai_message_parts:
+│   │   # AIMessage content parts (AIContentPart, Section 6.7), in the
+│   │   # conversation a turn is built from and its tool loop extends:
+│   ├── AITextPart                          # Text content
+│   ├── AIImagePart                         # Image content
 │   ├── AIThinkingPart                      # Chain-of-thought reasoning (preserved in history)
 │   ├── AIToolCallPart                      # Function call with name and arguments
 │   └── AIToolResultPart                    # Tool execution result
