@@ -981,14 +981,11 @@ all three and MUST NOT conflate them:
 Task
 ├── id: string                              # Unique identifier
 ├── room_id: string                         # Originating room
-├── type: string                            # Integrator-defined type
-├── status: TaskStatus                      # Current state
-├── title: string | null                    # Human-readable title
+├── title: string                           # Human-readable title
 ├── description: string | null              # Detailed description
-├── data: map<string, any>                  # Structured payload
 ├── assigned_to: string | null              # Who is responsible
-├── created_by: string | null               # Channel or hook that created it
-├── created_at: datetime                    # When created
+├── status: TaskStatus = PENDING            # Current state
+├── created_at: datetime                    # When created (default: now)
 └── metadata: map<string, any>              # Integrator-defined data
 ```
 
@@ -1000,10 +997,11 @@ Task
 Observation
 ├── id: string                              # Unique identifier
 ├── room_id: string                         # Originating room
-├── type: string                            # Category (e.g., "sentiment", "compliance_violation")
-├── data: map<string, any>                  # Structured payload
-├── source_channel_id: string | null        # Which channel produced this
-├── created_at: datetime                    # When created
+├── channel_id: string                      # Which channel produced this
+├── content: string                         # The observation, as text
+├── category: string | null                 # Category (e.g., "sentiment", "compliance_violation")
+├── confidence: float = 1.0                 # From 0.0 to 1.0
+├── created_at: datetime                    # When created (default: now)
 └── metadata: map<string, any>              # Integrator-defined data
 ```
 
@@ -1033,7 +1031,7 @@ hooks, and same pipeline. See Section 10.1 for the additional step.
 
 A convenience helper `parse_voice_session(session, channel_id)` SHOULD be
 provided to convert a `VoiceSession` into an `InboundMessage` with a
-`SystemContent(code="session_started")` body and the session pre-attached:
+`SystemContent(code="session_started")` content and the session pre-attached:
 
 ```
 parse_voice_session(session: VoiceSession, channel_id: string) → InboundMessage
@@ -1041,7 +1039,8 @@ parse_voice_session(session: VoiceSession, channel_id: string) → InboundMessag
     #   channel_id = channel_id
     #   channel_type = VOICE or REALTIME_VOICE
     #   sender_id = session.participant_id
-    #   content = SystemContent(code="session_started", data={caller, callee, ...})
+    #   content = SystemContent(body="Voice session started",
+    #             code="session_started", data={session_id, channel_id, caller})
     #   session = session
     #   room_id = session.room_id (if set)
     #   metadata = session.metadata
@@ -1156,13 +1155,22 @@ Channel (interface)
 
 ```
 ChannelOutput
+├── responded: bool = false                 # The channel answered the event; only then
+│                                           # do its response_events re-enter
 ├── response_events: list<RoomEvent>        # Response events (subject to permissions)
 ├── response_stream: async_iterator<str>    # Streaming response (mutually exclusive with response_events)
 │       # When set, framework pipes stream to streaming-capable channels,
-│       # accumulates full text, stores event, and re-broadcasts to others.
+│       # and stores each segment as it is produced, delivering it to the others.
+├── response_metadata: ResponseMetadata     # The turn's response-metadata record (Section 6.7),
+│       # merged into each event stored from response_stream as that segment
+│       # is stored; a buffered reply carries its final state in response_events
+├── provider_result: ProviderResult | null  # A transport delivery's provider answer (Section 5.13)
 ├── tasks: list<Task>                       # Side effects (always allowed)
 ├── observations: list<Observation>         # Side effects (always allowed)
-└── metadata_updates: map<string, any>      # Room metadata to update
+├── metadata_updates: map<string, any>      # Room metadata to update
+└── error: Exception | null                 # An error met while producing the output; the
+        # output is still used, and the error surfaces as for a channel that
+        # raised: ON_ERROR fires and InboundResult.error carries it
 ```
 
 ### 6.2 ChannelType Enumeration
@@ -1768,10 +1776,10 @@ MUST transcode content to match each target channel's supported media types.
 | Source Content | Target Supports | Transcoded To |
 |---|---|---|
 | RichContent | TEXT only | TextContent (extract plain_text or strip formatting) |
-| MediaContent | TEXT only | TextContent (use caption or filename) |
-| AudioContent | TEXT only | TextContent (use transcript or "[Voice message]") |
+| MediaContent | TEXT only | TextContent ("[Media: {caption or filename or url}]") |
+| AudioContent | TEXT only | TextContent (the transcript, or "[Voice message: {url}]") |
 | VideoContent | TEXT only | TextContent ("[Video: {url}]") |
-| LocationContent | TEXT only | TextContent ("[Location] lat, lon - label") |
+| LocationContent | TEXT only | TextContent ("[Location: {label or address} ({latitude}, {longitude})]") |
 | CompositeContent | varies | Filter parts to target's supported types |
 | TemplateContent | no templates | TextContent (use body or "[Template: {template_id}]") |
 | EditContent | no edit support | TextContent ("Correction: {new text}") |
@@ -2290,32 +2298,32 @@ They are NOT stored in any room timeline.
 
 | Event | When | Data |
 |---|---|---|
-| room_created | New room created | room_id, organization_id |
-| room_paused | Room transitioned to PAUSED | room_id |
-| room_closed | Room transitioned to CLOSED | room_id |
+| room_created | New room created | room_id |
+| room_paused | Room transitioned to PAUSED by its inactivity timer | room_id, reason (`timer`) |
+| room_closed | Room transitioned to CLOSED | room_id; reason (`timer`) when its inactivity timer closed it |
 | room_archived | Room transitioned to ARCHIVED | room_id |
 | room_refused_event | A room whose status refuses new events turned one away (§5.1) | room_id, event_id, status, operation, event_type |
 | channel_registered | Channel registered with framework | channel_id, channel_type |
-| channel_unregistered | Channel unregistered | channel_id |
+| channel_unregistered | Channel unregistered | channel_id, channel_type |
 | room_channel_attached | Channel attached to a room | room_id, channel_id, access, visibility |
 | room_channel_detached | Channel detached from a room | room_id, channel_id |
 | channel_connected | WebSocket connection registered for a room | channel_id, room_id, connection_id |
 | channel_disconnected | WebSocket connection unregistered | channel_id, connection_id |
-| source_connected | Source provider connected | source_id |
-| source_disconnected | Source provider disconnected | source_id |
+| source_connected | Source provider connected | channel_id, source_name |
+| source_disconnected | Source provider disconnected | channel_id, source_name |
 | source_attached | Source provider attached to its channel | channel_id, source_name |
 | source_detached | Source provider detached from its channel | channel_id, source_name |
 | source_error | A source provider's run failed | channel_id, source_name, error, attempt |
 | source_exhausted | Source provider given up after its last restart attempt | channel_id, source_name, attempts, last_error |
-| event_processed | Inbound event fully processed | room_id, event_id |
+| event_processed | An event that entered through the inbound pipeline or direct injection (§10.5) finished its delivery set and its `AFTER_BROADCAST` hooks; not emitted for the events its processing produced (responses, streamed rows, hook-injected events) | room_id, event_id |
 | event_blocked | Event blocked by a hook or by a source that cannot write (§7.5 rule 2); a chain-depth record emits `chain_depth_exceeded` instead | room_id, event_id, channel_id (the event's source), reason, blocked_by |
 | process_timeout | The pre-commit phase exceeded `process_timeout` (§13.6) | room_id, channel_id (expired before the room lock) or event_id (under it), timeout |
-| delivery_succeeded | Event delivered to channel | room_id, event_id, channel_id |
-| delivery_failed | Delivery failed after retries | room_id, event_id, channel_id, error |
-| broadcast_partial_failure | At least one of an event's deliveries failed; the event stays DELIVERED (§13.6) | room_id, event_id, failed, total, errors (channel_id → error) |
+| delivery_succeeded | A transport channel's `deliver()` succeeded, for an event that entered through the inbound pipeline or direct injection (§10.5); a response's deliveries are not reported | room_id, event_id, channel_id |
+| delivery_failed | A target's `on_event()` or `deliver()` failed (`deliver()` after its retries), for the same events as `delivery_succeeded` | room_id, event_id, channel_id, error |
+| broadcast_partial_failure | `delivery_failed` was emitted for at least one of an event's targets; the event stays DELIVERED (§13.6) | room_id, event_id, failed, total, errors (channel_id → error) |
 | delivery_skipped | A room's delivery lane passed over committed indexes whose delivery never came (left, for example, by a process that crashed before delivering them) after waiting `gap_timeout` (default 30 s) | room_id, from_index, to_index |
-| identity_resolved | Identity was resolved | participant_id, identity_id |
-| identity_timeout | Identity resolution timed out | room_id, address |
+| identity_resolved | The inbound pipeline ended with an identity for the sender, found by the resolver or supplied by a hook | room_id, channel_id, event_id, identity_id, display_name, status (the resolution's status) |
+| identity_timeout | Identity resolution timed out, for an inbound sender or a conference participant | room_id, channel_id, timeout (seconds) |
 | chain_depth_exceeded | Event blocked by chain depth limit | room_id, event_id, channel_id, data.chain_depth, data.max_chain_depth |
 | session_started | `ON_SESSION_STARTED` fired (§9.2): a voice session started, or the inbound pipeline auto-created a room for a text channel | room_id; session_id, channel_id (voice) or channel_id, channel_type (text) |
 | before_ai_generation | `BEFORE_AI_GENERATION` decided on an AI turn (allowed when no hook ran) | room_id, channel_id, allowed, blocked_by |
@@ -2325,24 +2333,24 @@ They are NOT stored in any room timeline.
 | user_input_required | A tool call asked for the user's input; `ON_USER_INPUT_REQUIRED` decided (allowed when no hook ran) | room_id, channel_id, pending_id, tool_name, tool_call_id, allowed, reason |
 | feedback | Feedback submitted for a room or a response (`ON_FEEDBACK`) | room_id, channel_id, event_id, dimension, rating |
 | status_posted | An entry was posted to the StatusBus | ts, agent_id, action, status, detail, metadata |
-| hook_error | Hook raised an exception | hook_name, trigger, error |
-| hook_timeout | Hook exceeded its timeout | hook_name, trigger, timeout_ms |
-| circuit_breaker_opened | Channel circuit breaker tripped | channel_id, failure_count |
-| circuit_breaker_closed | Channel circuit breaker recovered | channel_id |
+| hook_error | A `BEFORE_BROADCAST` SYNC hook failed at an event's commit gate (§10.1 step 9): it raised, timed out or returned an unusable result | room_id, event_id, hook, error |
+| hook_timeout | A hook, SYNC or ASYNC, exceeded its timeout | room_id, hook_name, trigger, timeout (seconds) |
+| circuit_breaker_opened | Channel circuit breaker tripped | channel_id, state (`open`) |
+| circuit_breaker_closed | Channel circuit breaker recovered: a call succeeded after it tripped | channel_id, state (`closed`) |
 | voice_session_started | Voice session transitioned to ACTIVE | session_id, room_id, channel_id |
-| voice_session_ended | Voice session transitioned to ENDED | session_id, room_id, duration_ms |
-| recording_started | Audio recording started | session_id, room_id, recording_id |
-| recording_stopped | Audio recording stopped | session_id, room_id, recording_id, duration_s |
+| voice_session_ended | Voice session transitioned to ENDED | session_id, room_id, channel_id |
+| recording_started | A recording started: a voice session's audio, a room's media (Section 12.11) or a conference track (Section 12.10) | room_id, id; session_id (voice); scope = `room` (room); channel_id, track_id, participant_id (conference track) |
+| recording_stopped | A recording stopped, its result available | room_id, id, duration_seconds; session_id (voice); scope = `room`, url (room); channel_id, track_id, participant_id, url, size_bytes (conference track) |
 | stt_error | STT transcription failed | session_id, provider, error |
 | tts_error | A session's TTS synthesis or its playback failed | session_id, provider, error |
-| voice_session_ready | Voice session audio path is live and ready | session_id, room_id, channel_id |
+| voice_session_ready | Voice session audio path is live and ready | session_id, room_id, channel_id, participant_id |
 | video_session_started | Video session started | room_id, session_id, channel_id |
 | video_session_ended | Video session ended | room_id, session_id, channel_id |
 | video_vision_result | A vision provider analysed a video session's frame | room_id, session_id, channel_id, description, labels, confidence, text, faces (count), elapsed_ms |
 | conference_started | Bot connection to the conference is live | room_id, channel_id, bot_session_id |
 | conference_ended | Bot left the conference | room_id, channel_id, bot_session_id, duration_ms |
-| conference_participant_joined | Participant joined the media session | room_id, participant_id |
-| conference_participant_left | Participant left the media session | room_id, participant_id |
+| conference_participant_joined | Participant joined the media session | room_id, channel_id, participant_id |
+| conference_participant_left | Participant left the media session | room_id, channel_id, participant_id |
 | conference_bot_grants_changed | A connected bot session's effective grants changed (Section 12.10.4) | room_id, channel_id, bot_session_id, hidden |
 
 An implementation MUST emit each event of this table for the features it
@@ -2577,8 +2585,8 @@ them as above runs after those as an observer.
 | ON_VIDEO_TRACK_ADDED | ASYNC | Planned | Video track added to session |
 | ON_VIDEO_TRACK_REMOVED | ASYNC | Planned | Video track removed from session |
 | ON_VISION_RESULT | ASYNC | Implemented | VisionProvider returned analysis result |
-| ON_SCREEN_SHARE_STARTED | ASYNC | Implemented | Screen sharing started |
-| ON_SCREEN_SHARE_STOPPED | ASYNC | Implemented | Screen sharing stopped |
+| ON_SCREEN_SHARE_STARTED | ASYNC | Implemented | Screen sharing started: a conference participant published a screen-share track (Section 12.10.4) |
+| ON_SCREEN_SHARE_STOPPED | ASYNC | Implemented | Screen sharing stopped: a conference screen-share track was unpublished (Section 12.10.4) |
 | ON_VIDEO_DETECTION | ASYNC | Implemented | Video detection event (object, face, etc.) |
 | | | | |
 | **Conference:** (SFU) | | | |
@@ -3094,9 +3102,16 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    ├── Otherwise → call InboundRoomRouter.route(channel_id, channel_type, sender_id, metadata)
    │   ├── Router returns existing room → use it
    │   └── Router returns null → create new room
-   └── If new room created → attach channel, fire ON_ROOM_CREATED hook;
-       then, for a channel other than VOICE and REALTIME_VOICE, fire
-       ON_SESSION_STARTED (§9.2) and emit `session_started` (§8.2)
+   ├── For a room id in hand (provided or routed):
+   │   ├── A room of another organization than the one the caller acts for
+   │   │   → fail, nothing written (§17.2)
+   │   ├── No room with that id → create a new room with that id
+   │   └── Room exists, channel not bound to it → attach the channel, unless
+   │       it was detached from that room (§7.5 rule 7)
+   └── If new room created → fire ON_ROOM_CREATED hook and emit
+       `room_created`, then attach channel; then, for a channel other than
+       VOICE and REALTIME_VOICE, fire ON_SESSION_STARTED (§9.2) and emit
+       `session_started` (§8.2)
 
 3. BUILD CONTEXT
    ├── Fetch room state
@@ -3908,6 +3923,12 @@ VoiceBackend (interface)
 │       # An exception raised by audio_chunks MUST reach the caller once the
 │       # backend has stopped playing; the backend MAY log and absorb errors of
 │       # its own transport
+├── send_audio_sync(session, audio_chunk) → void
+│       # Send one chunk without awaiting, from an audio callback thread; the
+│       # audio bridge sends through it (Section 12.7). Backends that support
+│       # bridging SHOULD override the default, which schedules send_audio()
+│       # on the calling thread's running event loop (adding latency) and
+│       # drops the chunk with a warning when that thread runs no loop
 ├── cancel_audio(session) → void            # Cancel current playback (if supported)
 ├── send_dtmf(session, digit, duration_ms) → void  # Send outbound DTMF (RFC 4733)
 │
@@ -4726,8 +4747,9 @@ One `AudioPipeline` serves many audio streams. A Voice Channel bridging
 participants carries one stream per session; a conference carries one per lane.
 These are different speakers sharing one set of stage instances.
 
-Every stage therefore receives a **stream key** and MUST keep its state under
-it:
+Every frame stage — resampler, AEC, AGC, denoiser, VAD, DTMF, diarization and
+postprocessors — therefore receives a **stream key** and MUST keep its state
+under it:
 
 ```
 process(audio_frame: AudioFrame, stream: string) → ...
@@ -5780,6 +5802,10 @@ RealtimeVoiceProvider (interface)
 ├── supports_mid_session_reconfigure: bool (default true)
 │       # Whether reconfigure() can run mid-session; false when it would
 │       # replace the session or lose its state
+├── supports_context_preservation: bool (default false)
+│       # Whether provider_config {"preserve_context": true} is supported:
+│       # the provider keeps tool-delivered instructions verbatim for the
+│       # session, or ends it with an error before going on without them
 ├── available_voices() → VoiceInfo[]        # Curated offline catalog (VoiceInfo: Section 12.2)
 ├── list_voices() → VoiceInfo[]             # Live catalog; default: available_voices()
 ├── available_models() → ModelInfo[]        # Curated offline catalog (MAY be empty)
@@ -5793,7 +5819,18 @@ RealtimeVoiceProvider (interface)
 │       # New settings mid-session; default: disconnect, then connect
 │       # again with them
 ├── send_audio(session, audio_chunk) → void
-├── inject_text(session, text, role) → void  # Insert text into conversation context
+├── start_audio_stream(session) → void
+│       # Open the provider's audio input path before audio flows (a
+│       # greeting before the caller speaks); no-op by default
+├── inject_text(session, text, role = "user", silent = false)
+│           → VoiceInjectionResult | null
+│       # Insert text into the conversation; role is an intent ("system" or
+│       # "user", below); silent adds it without requesting a response. The
+│       # result's status is sent, not_sent or unknown, with a reason and
+│       # whether a retry is allowed (Section 22.1); null reads as unknown
+├── inject_image(session, image_data, mime_type = "image/png", prompt = "",
+│                silent = false) → void
+│       # Add an image for multimodal analysis; default: fails as unsupported
 ├── submit_tool_result(session, call_id, result) → void  # Return tool result to provider
 ├── submit_tool_error(session, call_id, result) → void   # Return a failed call's result; default: submit_tool_result
 ├── submit_delegation_output(session, delegation_id, text, spoken) → void  # Return a reasoning backend's output (Section 12.4.1)
@@ -5801,6 +5838,9 @@ RealtimeVoiceProvider (interface)
 ├── truncate_audio(session, audio_end_ms) → void  # OPTIONAL: drop the unheard tail from provider context after an interruption; no-op by default
 ├── send_activity_start(session) → void     # Endpointing role: the user started speaking; no-op by default
 ├── send_activity_end(session) → void       # Endpointing role: the user stopped speaking; no-op by default
+├── send_event(session, event) → void
+│       # Send a raw provider-specific event; default: fails as unsupported
+├── is_responding(session_id) → bool        # Whether a response is being generated; default false
 ├── close() → void                          # Release all resources
 │
 │   # Callback registration:
@@ -6624,7 +6664,7 @@ begins immediately.
 
 **Audio forwarding:** When `forward()` is called with an audio frame from
 session A, the bridge sends that frame to all other sessions in the same room
-via `VoiceBackend.send_audio()`. For the `"forward"` strategy, this is a
+via `VoiceBackend.send_audio_sync()`. For the `"forward"` strategy, this is a
 direct send of the frame to each other session. For the `"mix"` strategy
 (N-party), the bridge MUST mix audio from all other active sessions and send
 each participant a mix of everyone else's audio (excluding their own, to
@@ -6664,7 +6704,7 @@ operate in parallel — neither blocks the other.
 **Outbound bridged audio flow:**
 
 ```
-AudioBridge.forward() → Pipeline outbound chain → Backend.send_audio()
+AudioBridge.forward() → Pipeline outbound chain → Backend.send_audio_sync()
     [Recorder tap] → [AEC reference] → [Resampler] → Transport
 ```
 
@@ -6694,7 +6734,7 @@ When both bridge and TTS are active, TTS audio from AI responses and bridged
 audio from other participants are both sent to the session. The bridge does NOT
 suppress TTS — both audio streams coexist. If audio mixing is needed (e.g.,
 AI speaking while another participant is speaking), the backend handles
-concurrent `send_audio()` calls.
+concurrent `send_audio()` (TTS) and `send_audio_sync()` (bridge) calls.
 
 **Several transports on one channel.** A bridged room often mixes transports:
 phone callers on SIP and browser participants on WebRTC. One VoiceChannel MAY
@@ -7310,8 +7350,8 @@ and records them through Section 12.11 instead (Section 12.10.8).
 | ON_VIDEO_TRACK_REMOVED | ASYNC | Video track removed from session (Planned, Section 9.2) |
 | ON_VISION_RESULT | ASYNC | VisionProvider returned analysis result |
 | ON_VIDEO_DETECTION | ASYNC | Filter emitted a detection event (YOLO, face, etc.) |
-| ON_SCREEN_SHARE_STARTED | ASYNC | Screen sharing started |
-| ON_SCREEN_SHARE_STOPPED | ASYNC | Screen sharing stopped |
+| ON_SCREEN_SHARE_STARTED | ASYNC | Screen sharing started; fired by the conference channel only, not by a video channel (Section 12.10.4) |
+| ON_SCREEN_SHARE_STOPPED | ASYNC | Screen sharing stopped; fired by the conference channel only, not by a video channel (Section 12.10.4) |
 | BEFORE_BRIDGE_VIDEO | SYNC | Before frame forwarded via bridge — can block |
 
 ### 12.9 AI Generation Pipeline
@@ -12028,7 +12068,7 @@ A durable delivery-lane outbox and crash recovery of turns are separate capabili
 |---|---|
 | Immediate | Deliver synchronously. May interrupt active voice playback. |
 | WaitForIdle(buffer = 1.0, playback_timeout = 15.0) | Wait until both AI generation and user input are idle for `buffer` seconds, then deliver. Prevents interrupting active exchanges. A wait longer than `playback_timeout` seconds delivers anyway. |
-| Queued(buffer_seconds) | Batch multiple delivery items, then deliver together after `buffer_seconds` of inactivity. |
+| Queued(buffer = 1.0, playback_timeout = 15.0, separator) | Batch multiple delivery items, then deliver together after `buffer` seconds of inactivity, their contents joined with `separator` (default a blank line). `playback_timeout` seconds bound the wait. |
 
 **WaitForIdle** is RECOMMENDED for voice channels where interruptions are
 disruptive. It monitors both the AI generation state and user speech activity
@@ -12268,11 +12308,8 @@ A Skill is defined by a `SKILL.md` file with YAML frontmatter:
 ---
 name: "web-search"
 description: "Search the web for current information"
-version: "1.0.0"
 license: "MIT"
-tools:
-  - search_web
-  - fetch_url
+compatibility: "Needs network access"
 allowed_tools:
   - "search_*"
   - "fetch_*"
@@ -12295,14 +12332,16 @@ You are a web search specialist. When asked to find information...
 SkillMetadata
 ├── name: string                            # Unique skill identifier
 ├── description: string                     # What the skill does
-├── version: string | null                  # Semantic version
 ├── license: string | null                  # License identifier
-├── tools: list<string>                     # Tools this skill provides
+├── compatibility: string | null            # Free text, not interpreted; shown with
+│       # the license in to_prompt_xml()
 ├── allowed_tools: list<string>             # Tool access patterns (ToolPolicy globs)
 ├── requires: list<string>                  # Exact names of the tools the skill needs
-│       # (Section 24.3), from frontmatter `requires`, a list or
+│       # (Section 24.3), read from extra_metadata `requires`, a list or
 │       # comma-separated; empty by default
-└── path: string                            # Filesystem path to skill directory
+└── extra_metadata: map<string, string>     # Every other frontmatter key (`version`,
+        # `requires`, ...), its value as a string, a list's items joined
+        # by commas
 ```
 
 ### 24.3 SkillRegistry
@@ -12312,7 +12351,8 @@ SkillRegistry
 ├── discover(*directories) → int            # Scan directories for SKILL.md files, return count
 ├── register(skill_dir) → SkillMetadata     # Register a single skill
 ├── get_metadata(name) → SkillMetadata | null  # Look up skill metadata
-├── get_skill(name) → Skill | null          # Load full skill (metadata + instructions)
+├── get_skill(name) → Skill | null          # Load full skill (metadata, instructions and
+│       # the path of its directory)
 ├── add(skill: Skill) → void                # Register a skill built in memory
 ├── copy(names?, marks = true) → SkillRegistry  # A subset, its paths and marks kept
 ├── all_metadata() → list<SkillMetadata>    # List all registered skills
@@ -12803,7 +12843,7 @@ A Level 3 implementation MAY additionally support audio and/or video real-time m
 - VideoBackend interface — transport abstraction (connect, disconnect, send_video, callbacks)
 - VideoChannel — session-based channel orchestrator:
   - Session lifecycle with dual-signal ready mechanism (matching VoiceChannel pattern)
-  - Hook triggers: ON_VIDEO_SESSION_STARTED, ON_VIDEO_SESSION_ENDED, ON_SCREEN_SHARE_STARTED, ON_SCREEN_SHARE_STOPPED (ON_VIDEO_TRACK_ADDED and ON_VIDEO_TRACK_REMOVED are Planned, Section 9.2)
+  - Hook triggers: ON_VIDEO_SESSION_STARTED, ON_VIDEO_SESSION_ENDED (ON_VIDEO_TRACK_ADDED and ON_VIDEO_TRACK_REMOVED are Planned, Section 9.2)
   - Optional VisionProvider integration with configurable analysis interval
   - Vision results emitted as framework events (video_vision_result)
 - VisionProvider interface — frame analysis abstraction:
@@ -12822,7 +12862,8 @@ A Level 3 implementation MAY additionally support audio and/or video real-time m
   (Section 12.10.4)
 - Conference hooks (ON_CONFERENCE_PARTICIPANT_JOINED/LEFT,
   ON_CONFERENCE_TRACK_PUBLISHED/UNPUBLISHED, ON_CONFERENCE_TRACK_MUTED/UNMUTED,
-  ON_ACTIVE_SPEAKER_CHANGED, ON_CONNECTION_QUALITY_CHANGED)
+  ON_ACTIVE_SPEAKER_CHANGED, ON_CONNECTION_QUALITY_CHANGED, and
+  ON_SCREEN_SHARE_STARTED/STOPPED for screen-share tracks)
 - Explicit track subscription, participant identity correlation, and bot
   self-exclusion (Sections 12.10.2–12.10.4)
 - Multi-party interruption policy (ConferenceInterruptionConfig)
@@ -13470,7 +13511,7 @@ ConferenceChannel
    │           }
    │         ],
    │         observations: [
-   │           Observation{type: "compliance_violation", data: {pattern: "SIN"}}
+   │           Observation{category: "compliance_violation", content: "SIN sent by SMS", metadata: {pattern: "SIN"}}
    │         ]
    │       )
    │
@@ -13736,8 +13777,10 @@ Timeline of a room with SMS customer + AI:
    │       channel_id: "realtime-voice",
    │       channel_type: REALTIME_VOICE,
    │       sender_id: "+15551234567",
-   │       content: SystemContent{code: "session_started",
-   │                 data: {caller: "+1555...", callee: "+1666..."}},
+   │       content: SystemContent{body: "Voice session started",
+   │                 code: "session_started",
+   │                 data: {session_id: "...", channel_id: "realtime-voice",
+   │                        caller: "+1555..."}},
    │       session: <VoiceSession>,
    │       room_id: "room-abc"
    │     }
