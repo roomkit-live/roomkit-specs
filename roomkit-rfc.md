@@ -78,7 +78,7 @@ interpreted as described in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
 |---|---|
 | **Room** | A conversation space where channels connect and events flow. The unit of state. |
 | **Channel** | Any entity that interacts with a Room — transports messages, generates AI responses, or observes events. |
-| **Event** | An immutable record of something that happened in a Room (message, system event, status change). |
+| **Event** | A record of something that happened in a Room (message, system event, status change). Once committed, its index and status never change (§4.3). |
 | **Participant** | A human (or system identity) taking part in a Room conversation. |
 | **Identity** | A cross-channel representation of a person, linking addresses across channel types. |
 | **Provider** | An interchangeable implementation behind a channel (e.g., Twilio behind SMS). |
@@ -304,7 +304,8 @@ A Room is a conversation space where channels connect and events flow through.
 - **Channel-agnostic** — A Room does not know whether it carries SMS or AI traffic.
 - **Multi-channel** — SMS + WebSocket + AI + Observer simultaneously.
 - **Dynamic** — Channels can be attached, detached, muted, or reconfigured at any time.
-- **Observable** — Hooks and read-access channels see everything in the Room.
+- **Observable** — Hooks see everything in the Room; a channel sees what its
+  access and each event's visibility allow (§7.5).
 - **Persistent** — Rooms survive session boundaries, channel switches, and escalations.
 
 A Room holds no message content directly. Content lives in Events stored in the
@@ -345,8 +346,14 @@ Direction declares capability. Permissions restrict per room.
 ### 4.3 The Event
 
 Everything in a Room is a RoomEvent — messages, system notifications, typing
-indicators, channel state changes, participant joins/leaves. Events are immutable
-once stored. Events are sequentially indexed within their room.
+indicators, channel state changes, participant joins/leaves. Once stored, an
+event keeps its index and status. Its content and source change only through
+§10.3 (an EDIT event or a direct `update_event()`); its metadata and
+`delivery_results` can also be written afterwards, by §10.3 and by the
+framework's own records of what became of it (a delivery that failed, the end
+of a streamed turn, a response cancelled as `superseded`); a direct
+`delete_event()` removes it (§10.3). Events are sequentially indexed within
+their room.
 
 ### 4.4 The Participant
 
@@ -627,7 +634,6 @@ VideoContent
 ├── url: string                             # Video URL (or data: URI)
 ├── duration_seconds: float | null          # Duration
 ├── mime_type: string                       # Video MIME type
-├── size_bytes: int | null                  # File size
 └── thumbnail_url: string | null            # Preview image URL
 ```
 
@@ -846,7 +852,9 @@ ChannelBinding
 ├── direction: ChannelDirection             # INBOUND, OUTBOUND, BIDIRECTIONAL
 ├── access: Access                          # Permission level
 ├── muted: bool                             # Temporarily silenced (suppress response events)
-├── output_muted: bool                      # Output-only muting (suppress deliver(), keep on_event())
+├── output_muted: bool                      # Speech output muted: events still arrive,
+│                                           # a speech-to-speech provider's audio is not
+│                                           # forwarded, injected text is not spoken
 ├── visibility: string                      # Write visibility rule
 ├── participant_id: string | null           # Bound to a specific participant
 ├── last_read_index: int | null             # Read horizon for unread tracking
@@ -1004,12 +1012,19 @@ DeliveryResult
 ├── status: string                          # "sent", "queued", "failed"
 ├── provider_message_id: string | null      # Provider's message ID
 ├── error: DeliveryError | null             # Error details if failed
-└── retry_after: datetime | null            # When to retry (if rate limited)
+├── retry_after: datetime | null            # When to retry (if rate limited)
+└── provider_result: ProviderResult | null  # The provider's own answer, if any
 
 DeliveryError
 ├── code: string                            # Machine-readable error code
 ├── message: string                         # Human-readable description
 └── retryable: bool                         # Whether a retry may succeed
+
+ProviderResult                              # What a provider's send() returns
+├── success: bool                           # Whether the provider accepted it
+├── provider_message_id: string | null      # Provider's message ID
+├── error: string | null                    # Provider's error if not accepted
+└── metadata: map<string, any>              # Provider-specific data
 ```
 
 ### 5.14 Protocol Trace
@@ -1712,7 +1727,7 @@ MUST transcode content to match each target channel's supported media types.
 | RichContent | TEXT only | TextContent (extract plain_text or strip formatting) |
 | MediaContent | TEXT only | TextContent (use caption or filename) |
 | AudioContent | TEXT only | TextContent (use transcript or "[Voice message]") |
-| VideoContent | TEXT only | TextContent (use caption or "[Video]") |
+| VideoContent | TEXT only | TextContent ("[Video: {url}]") |
 | LocationContent | TEXT only | TextContent ("[Location] lat, lon - label") |
 | CompositeContent | varies | Filter parts to target's supported types |
 | TemplateContent | no templates | Use fallback content, or transcode to RichContent/TextContent |
@@ -2210,15 +2225,34 @@ They are NOT stored in any room timeline.
 | room_refused_event | A room whose status refuses new events turned one away (§5.1) | room_id, event_id, status, operation, event_type |
 | channel_registered | Channel registered with framework | channel_id, channel_type |
 | channel_unregistered | Channel unregistered | channel_id |
+| room_channel_attached | Channel attached to a room | room_id, channel_id, access, visibility |
+| room_channel_detached | Channel detached from a room | room_id, channel_id |
+| channel_connected | WebSocket connection registered for a room | channel_id, room_id, connection_id |
+| channel_disconnected | WebSocket connection unregistered | channel_id, connection_id |
 | source_connected | Source provider connected | source_id |
 | source_disconnected | Source provider disconnected | source_id |
+| source_attached | Source provider attached to its channel | channel_id, source_name |
+| source_detached | Source provider detached from its channel | channel_id, source_name |
+| source_error | A source provider's run failed | channel_id, source_name, error, attempt |
+| source_exhausted | Source provider given up after its last restart attempt | channel_id, source_name, attempts, last_error |
 | event_processed | Inbound event fully processed | room_id, event_id |
-| event_blocked | Event blocked by hook | room_id, event_id, hook_name |
+| event_blocked | Event blocked by a hook or by a source that cannot write (§7.5 rule 2); a chain-depth record emits `chain_depth_exceeded` instead | room_id, event_id, channel_id (the event's source), reason, blocked_by |
+| process_timeout | The pre-commit phase exceeded `process_timeout` (§13.6) | room_id, channel_id (expired before the room lock) or event_id (under it), timeout |
 | delivery_succeeded | Event delivered to channel | room_id, event_id, channel_id |
 | delivery_failed | Delivery failed after retries | room_id, event_id, channel_id, error |
+| broadcast_partial_failure | At least one of an event's deliveries failed; the event stays DELIVERED (§13.6) | room_id, event_id, failed, total, errors (channel_id → error) |
+| delivery_skipped | A room's delivery lane passed over committed indexes whose delivery never came (left, for example, by a process that crashed before delivering them) after waiting `gap_timeout` (default 30 s) | room_id, from_index, to_index |
 | identity_resolved | Identity was resolved | participant_id, identity_id |
 | identity_timeout | Identity resolution timed out | room_id, address |
 | chain_depth_exceeded | Event blocked by chain depth limit | room_id, event_id, channel_id, data.chain_depth, data.max_chain_depth |
+| session_started | `ON_SESSION_STARTED` fired (§9.2): a voice session started, or the inbound pipeline auto-created a room for a text channel | room_id; session_id, channel_id (voice) or channel_id, channel_type (text) |
+| before_ai_generation | `BEFORE_AI_GENERATION` decided on an AI turn (allowed when no hook ran) | room_id, channel_id, allowed, blocked_by |
+| ai_response | An AI channel's turn completed (`ON_AI_RESPONSE`) | room_id, channel_id, tool_calls_count, latency_ms, streaming |
+| before_tool_use | `BEFORE_TOOL_USE` decided on a tool call | room_id, channel_id, tool_name, tool_call_id, allowed, reason |
+| tool_call | A tool call was reported (§9.3), whatever its outcome | room_id, channel_id, tool_name, tool_call_id, channel_type; is_error, cancelled, refused, refused_but_ran when true |
+| user_input_required | A tool call asked for the user's input; `ON_USER_INPUT_REQUIRED` decided (allowed when no hook ran) | room_id, channel_id, pending_id, tool_name, tool_call_id, allowed, reason |
+| feedback | Feedback submitted for a room or a response (`ON_FEEDBACK`) | room_id, channel_id, event_id, dimension, rating |
+| status_posted | An entry was posted to the StatusBus | ts, agent_id, action, status, detail, metadata |
 | hook_error | Hook raised an exception | hook_name, trigger, error |
 | hook_timeout | Hook exceeded its timeout | hook_name, trigger, timeout_ms |
 | circuit_breaker_opened | Channel circuit breaker tripped | channel_id, failure_count |
@@ -2230,13 +2264,20 @@ They are NOT stored in any room timeline.
 | stt_error | STT transcription failed | session_id, provider, error |
 | tts_error | A session's TTS synthesis or its playback failed | session_id, provider, error |
 | voice_session_ready | Voice session audio path is live and ready | session_id, room_id, channel_id |
+| video_session_started | Video session started | room_id, session_id, channel_id |
+| video_session_ended | Video session ended | room_id, session_id, channel_id |
+| video_vision_result | A vision provider analysed a video session's frame | room_id, session_id, channel_id, description, labels, confidence, text, faces (count), elapsed_ms |
 | conference_started | Bot connection to the conference is live | room_id, channel_id, bot_session_id |
 | conference_ended | Bot left the conference | room_id, channel_id, bot_session_id, duration_ms |
 | conference_participant_joined | Participant joined the media session | room_id, participant_id |
 | conference_participant_left | Participant left the media session | room_id, participant_id |
+| conference_bot_grants_changed | A connected bot session's effective grants changed (Section 12.10.4) | room_id, channel_id, bot_session_id, hidden |
 
-Implementations MUST emit these events. Integrators subscribe to framework
-events for monitoring and integration purposes.
+An implementation MUST emit each event of this table for the features it
+provides: the rows of a feature (voice, recording, video, conference, AI
+channel, tool calls, event sources, WebSocket connections, StatusBus) are
+owed only by an implementation that provides it. Integrators subscribe to
+framework events for monitoring and integration purposes.
 
 `room_refused_event` carries one `data` shape whichever path refused, so a
 subscriber reads it without knowing which one did:
@@ -2294,6 +2335,15 @@ consumed to its end, whichever pass started it: the trigger's delivery set,
 a reentry pass, or the delivery of a streamed segment. A response generated
 and then discarded costs its model call and runs its tools, with nothing of
 it in the room.
+
+**Reentry cap.** The responses one cascade re-enters (the answers to one
+inbound or injected event, one regeneration or one delegated run) share a
+reentry budget of `10 × max_chain_depth` passes, buffered responses and
+chained streams alike (§10.1 step 14). A buffered response past the budget
+does not re-enter, and a chained stream past it is closed unread, so nothing
+is generated. Either is stored `BLOCKED` with
+`blocked_by = "reentry_loop_cap"`; neither emits `chain_depth_exceeded` nor
+`event_blocked`.
 
 **Requirements:**
 
@@ -2894,10 +2944,13 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   under the lock). It would otherwise wait for the ticket its own caller
   holds. It runs every hook under the lock and commits ahead of the event
   whose processing emitted it.
-- **Other commit paths** (reentry passes, streamed segments, regeneration,
-  hook-injected events) run every `BEFORE_BROADCAST` SYNC hook under the lock,
-  the off-lock ones included. `needs_lock = false` permits a hook to run off
-  the lock; it never lets an event skip it.
+- **Other commit paths** (reentry passes, regeneration, hook-injected events)
+  run every `BEFORE_BROADCAST` SYNC hook under the lock, the off-lock ones
+  included. `needs_lock = false` permits a hook to run off the lock; it never
+  lets an event skip it. A streamed row is the exception (§4): it runs every
+  hook, the `needs_lock = true` ones included, and commits without the room
+  lock; the store assigns its index atomically (§8.1), and the room's status
+  is checked again after its hooks.
 
 ### 9.6 When to Use What
 
@@ -2935,7 +2988,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    ├── Otherwise → call InboundRoomRouter.route(channel_id, channel_type, sender_id, metadata)
    │   ├── Router returns existing room → use it
    │   └── Router returns null → create new room
-   └── If new room created → attach channel, fire ON_ROOM_CREATED hook
+   └── If new room created → attach channel, fire ON_ROOM_CREATED hook;
+       then, for a channel other than VOICE and REALTIME_VOICE, fire
+       ON_SESSION_STARTED (§9.2) and emit `session_started` (§8.2)
 
 3. BUILD CONTEXT
    ├── Fetch room state
@@ -2982,13 +3037,24 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 8. ASSIGN EVENT INDEX
    └── event.index = room.event_count
 
+8a. VALIDATE EDIT/DELETE (EDIT and DELETE events only — §10.3 Validation)
+    ├── If validation fails → Return InboundResult(blocked=true, reason=
+    │   target_event_not_found | identity_required_for_edit |
+    │   not_authorized | not_original_author)
+    │   # The sender and the target's author must both be identified.
+    │   # Nothing is stored; the target's state update waits for step 12,
+    │   # once the hooks have allowed the event.
+    └── Otherwise → continue
+
 9. RUN BEFORE_BROADCAST SYNC HOOKS
    ├── Apply the step 5a outcome first, when there was one (§9.5.1)
    ├── Execute the remaining hooks in priority order
    └── Collect result: allow / block / modify
 
 10. IF BLOCKED BY HOOK:
-    ├── Store event with status=BLOCKED, blocked_by=hook_name
+    ├── Commit event with status=BLOCKED, blocked_by=hook_name, in the
+    │   same atomic transaction as step 12: the event takes its index,
+    │   event_count += 1, latest_index = event.index (§14.1, §14.3)
     │   # An audit record: it reaches no channel, at delivery or as
     │   # reconstructed context one turn later (§7.5 rule 8), and a
     │   # default timeline read skips it (§14.1)
@@ -2998,8 +3064,8 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 
 11. CHECK SOURCE CAN WRITE
     ├── If source_binding.access ∉ {READ_WRITE, WRITE_ONLY} OR source_binding.muted:
-    │   ├── Store event with status=BLOCKED,
-    │   │   blocked_by = source_read_only | source_muted
+    │   ├── Commit event with status=BLOCKED,
+    │   │   blocked_by = source_read_only | source_muted, as at step 10
     │   ├── Deliver injected events from hook result
     │   ├── Persist tasks and observations (side effects ALWAYS collected, §7.5)
     │   └── Return InboundResult(blocked=true)
@@ -3042,7 +3108,8 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   room lock (the pre-lane behavior) trivially satisfies this
     │   ordering and remains conformant.
     ├── Each target: transcode → rate limit → on_event() / deliver()
-    │   with per-operation timeouts (§10.2)
+    │   # The framework sets no timeout of its own: each external call is
+    │   # bounded by its channel's or its provider's own timeout.
     └── REENTRY: response events emitted here (intelligence channels)
         re-enter the pipeline's locked section (steps 6–12) as new
         passes — each response takes the room lock for ITS OWN commit
@@ -3167,10 +3234,13 @@ intent of §12.4, for every kind of intelligence channel.
    source write check hold, and `BEFORE_BROADCAST` hooks run on it and MAY
    block or modify it. A hook — and an `AFTER_BROADCAST` one — MUST NOT treat
    it as something a participant said: its author is the application. A
-   blocked instruction is not stored (§10.1 step 10 does not apply); the
-   result reports the block.
+   blocked instruction is not stored (the BLOCKED commit of §10.1 steps 10–11
+   does not apply) and the result reports the block; `event_blocked` is still
+   emitted, and the injected events, tasks and observations of its hooks are
+   still processed.
 5. **It is not committed.** At step 12 nothing is stored, no index is
-   assigned or consumed, and no room counter moves (§14.3 holds trivially).
+   consumed (the one step 8 assigned is provisional, for the hooks), and no
+   room counter moves (§14.3 holds trivially).
    Its delivery set joins the room's delivery lane without an index, behind
    the room's latest committed event, so it keeps its place in the room's
    order (§10.2). `InboundResult.event` is the uncommitted instruction.
@@ -3416,7 +3486,11 @@ participant has spoken yet. It is deliberately narrower than "the channel is
 bound to some room".
 
 **A router MUST NOT guess.** When the inputs it was given match more than one
-ACTIVE room, it MUST return null rather than choose among them. Returning any
+ACTIVE room and nothing in them tells which conversation the message belongs
+to — for the default strategy, a channel bound to several ACTIVE rooms (step
+3) — it MUST return null rather than choose among them. Step 1 is not a guess:
+it returns the most recently created of the ACTIVE rooms where the sender is
+connected, a conversation the sender is in. Returning any
 one of several candidates delivers a message into a conversation it does not
 belong to, and — because the room it lands in is where the message is stored,
 broadcast to that room's channels, and read back as context by that room's
@@ -9596,8 +9670,10 @@ the same room.
 **Serialization scope.** The room lock MUST cover the locked pre-commit
 section, the commit point, and broadcast planning (§10.1 steps 6–12):
 everything that reads room state to decide, assigns the index, writes the
-timeline, or resolves the delivery set. External delivery execution (§10.2 step 3) is
-NOT required to run under the room lock — it MUST preserve per-room order
+timeline, or resolves the delivery set. A streamed response's rows are the
+exception (§4, §9.5.1): their hooks and their commit run without the lock.
+External delivery execution (§10.2 step 3) is NOT required to run under the
+room lock — it MUST preserve per-room order
 (the delivery lane, §10.2), which holding the lock trivially satisfies.
 Implementations SHOULD NOT extend the room's critical section with external
 I/O (provider calls, AI generation): under a distributed lock manager, lock
@@ -9632,7 +9708,9 @@ transaction that stores the event as DELIVERED and updates the room counters:
 
 - **Pre-commit phase** (§10.1 steps 3–11: context build, identity resolution,
   BEFORE_BROADCAST hooks, write-permission check, index assignment). This phase
-  performs no durable write of the inbound event. `process_timeout` MUST bound
+  decides only and performs no durable write of the inbound event: the BLOCKED
+  record that steps 10–11 owe is committed once the phase has ended, outside
+  `process_timeout`, as the step 12 commit is. `process_timeout` MUST bound
   this phase. On expiry the implementation MUST abort **before** the commit
   point, leaving no partial durable state, and return
   `InboundResult(blocked=true, reason=process_timeout)`. The event MUST NOT
@@ -9647,9 +9725,11 @@ transaction that stores the event as DELIVERED and updates the room counters:
 - **Post-commit phase** (§10.1 steps 14–17: delivery-lane execution,
   reentry passes, side effects, async hooks). Slowness here MUST NOT
   invalidate the committed event.
-  Bound external delivery with **per-operation** timeouts (§10.2) and report
-  failures per channel via `delivery_failed` framework events — never by
-  changing the source event's status or the returned result to blocked/failed.
+  Each external delivery call is bounded by its transport channel's or
+  provider's own timeout (the framework adds none around `deliver()` or
+  `on_event()`), and failures are reported per channel via `delivery_failed`
+  framework events — never by changing the source event's status or the
+  returned result to blocked/failed.
   A degraded broadcast SHOULD surface as `broadcast_partial_failure`, with the
   source event remaining DELIVERED.
 
@@ -9683,11 +9763,14 @@ ConversationStore (interface)
 │   ├── add_event(room_id, event) → RoomEvent
 │   ├── get_event(event_id) → RoomEvent | null
 │   ├── list_events(room_id, filters) → list<RoomEvent>
-│   └── update_event(event_id, updates) → RoomEvent
+│   ├── get_event_count(room_id, filter | null) → int
+│   ├── update_event(event_id, updates) → RoomEvent
+│   └── delete_event(room_id, event_id, cascade_replies = true) → list<string>
 │
 ├── Bindings
 │   ├── create_binding(room_id, binding) → ChannelBinding
 │   ├── get_binding(room_id, channel_id) → ChannelBinding | null
+│   ├── update_binding(binding) → ChannelBinding
 │   ├── delete_binding(room_id, channel_id) → void
 │   └── list_bindings(room_id) → list<ChannelBinding>
 │
@@ -9705,7 +9788,8 @@ ConversationStore (interface)
 │
 ├── Tasks
 │   ├── create_task(room_id, task) → Task
-│   └── list_tasks(room_id, filters) → list<Task>
+│   ├── list_tasks(room_id, filters) → list<Task>
+│   └── update_task(task) → Task
 │
 └── Observations
     ├── create_observation(room_id, observation) → Observation
@@ -9766,10 +9850,11 @@ and never inherits the page's cap.
   at the storage layer — a single transaction plus a `UNIQUE(room_id, index)`
   constraint (§8.1) — not by an in-process lock alone.
 - Room state updates MUST be consistent with event storage. Specifically,
-  storing an event as DELIVERED and bumping the room's `event_count` /
-  `latest_index` form a **single atomic commit** (§10.1 step 12): an observer
-  MUST never see a DELIVERED event that is not reflected in the room counters,
-  nor counters that count an event absent from the timeline.
+  storing an event — DELIVERED at §10.1 step 12, BLOCKED at steps 10–11 — and
+  bumping the room's `event_count` / `latest_index` form a **single atomic
+  commit**: an observer MUST never see a stored event that is not reflected in
+  the room counters, nor counters that count an event absent from the
+  timeline.
 - Once committed (DELIVERED), an event MUST NOT be retroactively re-marked
   BLOCKED or FAILED. A processing timeout or a delivery failure after the
   commit point (§13.6) MUST NOT alter the event's committed status.
@@ -9777,7 +9862,8 @@ and never inherits the page's cap.
 
 ### 14.4 Returned-Object Ownership
 
-- Committed events are immutable (§4). An event object returned by a read
+- A committed event changes only through the write interface (§4.3). An
+  event object returned by a read
   (`get_event`, `list_events`, conversation reads) is a snapshot of the
   committed record: the caller MUST treat it as frozen and MUST NOT mutate
   it. A store MAY return the same object to multiple readers (an in-memory
@@ -9878,9 +9964,10 @@ with the following structured context fields: `session_id`, `room_id`,
 
 ### 15.5 Framework Events for Monitoring
 
-See Section 8.2 for the complete list of framework events. These MUST be
-emittable and subscribable by integrators for monitoring dashboards, alerting,
-and integration purposes.
+See Section 8.2 for the complete list of framework events; an implementation
+owes the events of the features it provides. These MUST be emittable and
+subscribable by integrators for monitoring dashboards, alerting, and
+integration purposes.
 
 ### 15.6 Protocol Trace Infrastructure
 
