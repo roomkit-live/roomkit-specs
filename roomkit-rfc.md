@@ -5,10 +5,10 @@
 | **Status** | Draft |
 | **Author** | Sylvain Boily |
 | **Contributions** | TchatNSign, Angany AI |
-| **Version** | v17 Draft |
+| **Version** | v18 Draft |
 | **Created** | 2026-01-27 |
-| **Last Updated** | 2026-09-23 |
-| **Supersedes** | v16 Draft |
+| **Last Updated** | 2026-10-05 |
+| **Supersedes** | v17 Draft |
 
 ---
 
