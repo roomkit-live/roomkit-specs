@@ -2623,9 +2623,10 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   reports a call it refused itself. A handler that raises while it reports a
   call (its outcome, its refusal, its cancellation) is logged and does not
   fail the turn: the channel reports the call itself, once, as it ended,
-  unless the handler's report had already reached ON_TOOL_CALL, on every
-  door that hands a call's report to a handler (an AI channel's external
-  door, ACP). An ACP
+  unless the handler's report had already reached ON_TOOL_CALL's observers,
+  on every door that hands a call's report to a handler (an AI channel's
+  external door, ACP); an override that cannot take the arguments the door
+  hands it raises the same way. An ACP
   call reports the same body with an external handler as without one: a
   cancellation's envelope, a failure's bounded error. An ACP call RoomKit
   refused that the agent ran anyway and closed completed is reported as it
