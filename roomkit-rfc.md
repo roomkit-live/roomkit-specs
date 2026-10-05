@@ -3888,7 +3888,9 @@ VoiceBackend (interface)
 │
 │   # Session lifecycle:
 ├── on_session_ready(callback) → void       # Audio path is live, ready for send/receive
-├── on_transport_disconnect(callback) → void  # Detect transport-level disconnect
+├── on_client_disconnected(callback) → void  # Client or transport disconnected
+├── get_session(session_id) → VoiceSession | null  # null if sessions are not tracked
+├── list_sessions(room_id) → list<VoiceSession>    # Empty if sessions are not tracked
 │
 │   # Server-side session acceptance:
 ├── accept(request) → VoiceSession          # Accept an inbound session (SIP/PSTN/WebRTC offer)
@@ -4629,9 +4631,11 @@ AudioPipelineConfig
 ├── dtmf: DTMFDetector | null               # OPTIONAL DTMF tone detection
 ├── turn_detector: TurnDetector | null       # OPTIONAL semantic turn detection (post-STT)
 ├── recorder: AudioRecorder | null           # OPTIONAL bidirectional recording
+├── recording_config: RecordingConfig | null # OPTIONAL recording parameters
 ├── postprocessors: list<AudioPostProcessor> # OPTIONAL outbound processing chain
 ├── vad_config: VADConfig | null             # OPTIONAL VAD tuning parameters
-├── interruption: InterruptionConfig | null  # OPTIONAL barge-in behavior (default: CONFIRMED)
+├── interruption: InterruptionConfig | null  # OPTIONAL barge-in behavior; when null,
+│                                            # VoiceChannel uses its legacy parameters (A.10)
 └── debug_taps: PipelineDebugTaps | null     # OPTIONAL diagnostic stage capture (Section 12.3.15)
 ```
 
@@ -4737,6 +4741,12 @@ coefficients, VAD speech buffers, AGC gain history, diarization accumulators)
 from a previous stream with the same id.
 
 `close()` remains global and MUST release every stream's state.
+
+The stages this contract covers are the frame stages: resampler, AEC, AGC,
+denoiser, VAD, DTMF, diarization and postprocessors. The recorder is addressed
+by its handle (Section 12.3.7). The turn detector (Section 12.3.12) and the
+backchannel detector (Section 12.3.13) take no audio frame and no stream key;
+their `reset()` takes none either, and the session lifecycle does not call it.
 
 #### 12.3.2 Denoiser Provider
 
@@ -4937,18 +4947,15 @@ DTMFEvent
 **Critical: DTMF runs in parallel, not in series.**
 
 DTMF tones are sinusoidal signals that would be destroyed or distorted by the
-denoiser, AGC, or AEC. The DTMF detector MUST process audio from the resampled
-stream *before* AEC/AGC/denoiser stages, in parallel with the main pipeline:
+denoiser, AGC, or AEC. The DTMF detector MUST process the frame the inbound
+resampler produced (the transport frame when no resampler runs) *before*
+AEC/AGC/denoiser stages, in parallel with the main pipeline:
 
 ```
 Transport → [Resampler] → ┬─→ [AEC] → [AGC] → [Denoiser] → [VAD] → ...
                            │
                            └─→ [DTMF Detector] (parallel)
 ```
-
-Implementations MAY alternatively run DTMF detection on the raw (pre-resampler)
-stream if the detector supports the transport's native format, since the Goertzel
-algorithm does not require a specific sample rate.
 
 When a DTMF tone is detected, the framework MUST fire the ON_DTMF hook
 (Section 9.2). Implementations MAY optionally suppress the DTMF audio from the
@@ -5385,6 +5392,7 @@ acknowledgments, not requests to stop.
 InterruptionConfig
 ├── strategy: InterruptionStrategy = CONFIRMED  # How to handle barge-in
 ├── min_speech_ms: int = 300                 # Minimum user speech duration to trigger interruption
+├── allow_during_first_ms: int = 0           # Response audio (ms) played before barge-in is allowed (0 = no gate)
 ├── backchannel_detector: BackchannelDetector | null  # OPTIONAL backchannel filter
 ├── transcript_wait_ms: int = 1000           # SEMANTIC: how long to wait for the first words of transcribed speech
 ├── flush_partial_tts: bool = true           # Whether to discard unplayed TTS audio on interrupt
@@ -5408,7 +5416,7 @@ BackchannelDetector (interface)
 ├── classify(context: BackchannelContext) → BackchannelDecision
 │       # Classify whether speech is a backchannel or genuine interruption
 ├── reset() → void
-│       # Reset internal state (e.g., on session start)
+│       # Reset internal state (the session lifecycle does not call it)
 └── close() → void
         # Release resources
 ```
@@ -5517,11 +5525,12 @@ Check InterruptionStrategy:
 
 ```
 1. VoiceSession transitions to ACTIVE
-2. Call reset() on all configured pipeline stages (in pipeline order)
+2. Call reset(stream) on every configured frame stage (Section 12.3.1), the
+   session id being the stream key
 3. Backend fires on_session_ready callback when audio path is live
    └── VoiceChannel fires ON_SESSION_STARTED hook (dual-signal: requires
        both bind_session() and backend ready, in either order)
-4. IF recorder configured:
+4. IF recorder AND recording_config configured:
    ├── handle = recorder.start(session, recording_config)
    └── Fire ON_RECORDING_STARTED hook
 ```
@@ -5530,10 +5539,12 @@ Check InterruptionStrategy:
 
 ```
 1. VoiceSession transitions to ENDED
-2. IF recorder configured AND recording active:
+2. Call reset(stream) on every configured frame stage (Section 12.3.1), the
+   session id being the stream key
+3. IF recorder configured AND recording active:
    ├── result = recorder.stop(handle)
    └── Fire ON_RECORDING_STOPPED hook with RecordingResult
-3. Call close() on pipeline stages only if the channel is being destroyed
+4. Call close() on pipeline stages only if the channel is being destroyed
    (not on session end — stages are reused across sessions)
 ```
 
@@ -5581,7 +5592,7 @@ Check InterruptionStrategy:
        └── Fire ON_SPEAKER_CHANGE hook
 
 10. WHEN the stream ends:
-   └── FOR EACH configured stage: stage.reset(stream)
+   └── FOR EACH configured frame stage: stage.reset(stream)
        (Releases that speaker's state. Skipping it leaks one stream's buffers —
         and native memory for SDK-backed stages — per speaker the room ever had.)
 ```
@@ -6469,9 +6480,9 @@ ranging from immediate cancellation to semantic backchannel detection.
    a. Fire ON_BACKCHANNEL hook.
    b. TTS continues uninterrupted, and the speech is discarded (Section 12.3.13).
 
-Implementations SHOULD support a configurable `barge_in_threshold_ms` — minimum
-TTS playback duration before barge-in detection activates. This prevents
-interruption at the very start of a response.
+Implementations SHOULD support a configurable minimum playback duration before
+barge-in is allowed (`InterruptionConfig.allow_during_first_ms`, Section
+12.3.13). This prevents interruption at the very start of a response.
 
 **Relationship between VoiceBackend barge-in and VAD:**
 
@@ -6531,7 +6542,7 @@ multi-party conferencing.
 
 4. **The bridge is a concrete component, not an ABC.** Unlike STT/TTS/VAD
    providers, there are no genuinely different "bridge implementations" to
-   swap. Variations (2-party forwarding vs N-party mixing) are configuration
+   swap. Variations (direct forwarding vs N-party mixing) are configuration
    options on a single `AudioBridge` class.
 
 #### 12.7.2 AudioBridge
@@ -6545,8 +6556,9 @@ AudioBridge
 │       # Unregister a session
 ├── forward(session, audio_frame) → void
 │       # Forward audio from this session to all other sessions in the room
-│       # For 2 sessions: direct forwarding
-│       # For N>2 sessions: mix audio from all other sessions
+│       # "forward": the frame goes unmixed to each other session
+│       # "mix": each other session receives a mix of every session's
+│       #   latest frame but its own
 └── close() → void
         # Clean up all sessions
 ```
@@ -6556,7 +6568,8 @@ AudioBridgeConfig
 ├── enabled: bool = true
 ├── max_participants: int = 10         # Maximum sessions per room
 └── mixing_strategy: "forward" | "mix" = "forward"
-        # "forward": optimized 2-party direct forwarding (errors if >2)
+        # "forward": direct forwarding; each frame is sent unmixed to every
+        #   other session (N>2: one send per source per target)
         # "mix": N-party additive mixing with clipping protection
 ```
 
@@ -6567,8 +6580,8 @@ begins immediately.
 
 **Audio forwarding:** When `forward()` is called with an audio frame from
 session A, the bridge sends that frame to all other sessions in the same room
-via `VoiceBackend.send_audio()`. For the `"forward"` strategy (2-party), this
-is a direct send to the single other session. For the `"mix"` strategy
+via `VoiceBackend.send_audio()`. For the `"forward"` strategy, this is a
+direct send of the frame to each other session. For the `"mix"` strategy
 (N-party), the bridge MUST mix audio from all other active sessions and send
 each participant a mix of everyone else's audio (excluding their own, to
 prevent echo).
@@ -6673,8 +6686,8 @@ registration time and apply resampling per-target in the outbound path.
 
 #### 12.7.5 N-Party Mixing
 
-For rooms with more than 2 voice sessions, the bridge MUST mix audio so each
-participant hears all others but not themselves.
+With the `"mix"` strategy, the bridge MUST mix audio so each participant hears
+all others but not themselves.
 
 **Mixing algorithm (additive with clipping protection):**
 
@@ -6982,7 +6995,7 @@ VideoEncoderProvider (interface)
 └── close() → void
 ```
 
-Implementations: PyAV (H.264/H.265, optional NVIDIA GPU acceleration).
+Implementations: PyAV (H.264 Constrained Baseline, default encoder libx264).
 
 **VideoTransformProvider:**
 
@@ -7218,7 +7231,9 @@ VideoRecorder (interface)
 ├── name: string (property)
 ├── start(session, config) → VideoRecordingHandle
 ├── stop(handle) → VideoRecordingResult
-└── tap_frame(handle, frame) → void         # Feed frame to recorder
+├── tap_frame(handle, frame) → void         # Feed frame to recorder
+├── reset() → void                          # Reset internal state
+└── close() → void                          # Release resources
 ```
 
 **VideoRecordingResult:**
@@ -9382,7 +9397,8 @@ another holds on neither.
 ### 12.11 Room Media Recording
 
 Sections 12.3.7 and 12.8.10 each record a *session*: one participant, one
-medium, in the two directions a session has. A room is not a session. It holds
+medium — audio in the two directions a session has (12.3.7), the video the
+session receives (12.8.10). A room is not a session. It holds
 several participants, each of which may publish more than one kind of media,
 and they arrive and leave across the room's lifetime rather than all at its
 start. Room media recording is the interface for that shape, and it is what
@@ -13094,6 +13110,8 @@ VoiceChannel
 │   ├── interruption: InterruptionConfig | null   # Section 12.6 — the current surface
 │   ├── enable_barge_in: bool (default true)      # legacy; superseded by interruption
 │   └── barge_in_threshold_ms: int (default 200)  # legacy; maps to allow_during_first_ms
+│                                                 # (IMMEDIATE strategy; used only when
+│                                                 # no InterruptionConfig is given)
 ├── streaming_delivery:
 │   ├── supports_streaming_delivery: bool
 │   │   # True when TTS supports streaming input AND backend is configured
@@ -13165,7 +13183,7 @@ VideoChannel
 │   └── disconnect_video(session)
 ├── hooks:
 │   ├── ON_VIDEO_SESSION_STARTED — SessionStartedEvent
-│   └── ON_VIDEO_SESSION_ENDED — SessionStartedEvent
+│   └── ON_VIDEO_SESSION_ENDED — SessionStartedEvent (same type as STARTED)
 ├── framework_events:
 │   ├── video_session_started
 │   ├── video_session_ended
