@@ -2637,8 +2637,9 @@ transport's delivery failure does not fire ON_ERROR.
   was there to suppress. On a streamed TTS response BEFORE_TTS runs on each
   sentence (Section 12.2, step 12s.b), so this applies to every sentence: a
   streamed response is never a way around the hook. BEFORE_TOOL_USE carries
-  an action a hook may exist to prevent: it is the gate of a tool call, where an approval hook sits, and an
-  approval hook that cannot answer must not let the call run. A partial rule
+  an action a hook may exist to prevent: it is the gate of a tool call, where
+  an approval hook sits, and an approval hook that cannot answer must not let
+  the call run. A partial rule
   is no rule — an
   implementation that blocks on exceptions but allows on timeouts leaks through
   the timeout.
@@ -5776,13 +5777,21 @@ RealtimeVoiceProvider (interface)
 ├── model_name → string                     # Model behind the session; defaults to name
 ├── full_duplex: bool (default false)       # Model listens and speaks at once; no boundaries on the wire (Section 12.4.1)
 ├── supports_tools: bool (default true)     # The model can call tools; false declares none to it
-├── supports_mid_session_reconfigure: bool (default true)  # Whether reconfigure() can safely run mid-session; false when it would replace the session or lose its state
+├── supports_mid_session_reconfigure: bool (default true)
+│       # Whether reconfigure() can run mid-session; false when it would
+│       # replace the session or lose its state
 ├── available_voices() → VoiceInfo[]        # Curated offline catalog (VoiceInfo: Section 12.2)
 ├── list_voices() → VoiceInfo[]             # Live catalog; default: available_voices()
 ├── available_models() → ModelInfo[]        # Curated offline catalog (MAY be empty)
-├── connect(session, system_prompt, voice, tools, temperature, input_sample_rate = 16000, output_sample_rate = 24000, server_vad = true, provider_config) → void  # server_vad false: the channel signals turns (endpointing role)
+├── connect(session, system_prompt, voice, tools, temperature,
+│           input_sample_rate = 16000, output_sample_rate = 24000,
+│           server_vad = true, provider_config) → void
+│       # server_vad false: the channel signals turns (endpointing role)
 ├── disconnect(session) → void
-├── reconfigure(session, system_prompt, voice, tools, temperature, provider_config) → void  # New settings mid-session; default: disconnect, then connect again with them
+├── reconfigure(session, system_prompt, voice, tools, temperature,
+│               provider_config) → void
+│       # New settings mid-session; default: disconnect, then connect
+│       # again with them
 ├── send_audio(session, audio_chunk) → void
 ├── inject_text(session, text, role) → void  # Insert text into conversation context
 ├── submit_tool_result(session, call_id, result) → void  # Return tool result to provider
@@ -6262,8 +6271,8 @@ a response would wait for a burst that never comes — and a recorder (Section
 **The session is fixed at start (normative).** Such a provider typically fixes
 model, instructions, voice, audio format, delegation mode and seeded history
 when the session starts, and takes only appends afterwards. The provider MUST
-declare `supports_mid_session_reconfigure` false, since a mid-session
-reconfiguration replaces the session, so that the
+declare `supports_mid_session_reconfigure` false — a mid-session
+reconfiguration replaces the session — so that the
 orchestration that changes a running agent — a handoff (Section 19.6), a skill
 activation (Section 24.4) — chooses an append where one exists and accepts the
 loss where it does not. A changed system prompt SHOULD be delivered as an
@@ -9056,9 +9065,10 @@ modes is therefore not a transparent configuration change, and
 implementations SHOULD document it as such.
 
 **Recorder mapping.** AudioRecorder (Section 12.3.7) and VideoRecorder
-(Section 12.8.10) are specified around a session: `record_inbound` /
-`record_outbound`, an INBOUND_ONLY | OUTBOUND_ONLY | BOTH mode, a handle
-carrying a `session_id`. A conference has no session and no single inbound
+(Section 12.8.10) are specified around a session, with a handle carrying a
+`session_id`: AudioRecorder records its two directions (`record_inbound` /
+`record_outbound`, an INBOUND_ONLY | OUTBOUND_ONLY | BOTH mode),
+VideoRecorder the video the session receives (`tap_frame`). A conference has no session and no single inbound
 direction — it has N attributed tracks plus one bot track — so neither
 interface applies to it, and neither changes on its account. Framework-mode
 conference recording binds to MediaRecorder (Section 12.11) instead, which
@@ -9320,7 +9330,7 @@ ConferenceRealtimeConfig
 ├── tool_policy: ToolPolicy | null            # Section 21.1
 ├── tool_timeout_seconds: float | null = 10   # Per-call bound (Section 21.6); null = unbounded
 ├── tool_timeouts: map<string, float | null> = {}  # Per-tool-name bounds
-└── human_input_handler: HumanInputToolHandler | null  # Human-input tools, served before tool_handler
+└── human_input_handler: callable | null     # Human-input tools (Section 9.3), served before tool_handler
 ```
 
 The composition changes no boundary it crosses. The provider keeps the
@@ -11401,13 +11411,17 @@ The `StatusBus` enables inter-agent coordination through status messages:
 
 ```
 StatusBus (interface)
-├── post(agent_id, action, status, detail = "", metadata = null) → StatusEntry  # Publishes without waiting for the subscribers
-├── post_async(agent_id, action, status, detail = "", metadata = null) → StatusEntry  # Waits for the subscribers
+├── post(agent_id, action, status, detail = "", metadata = null) → StatusEntry
+│       # Publishes without waiting for the subscribers
+├── post_async(agent_id, action, status, detail = "", metadata = null) → StatusEntry
+│       # Waits for the subscribers
 ├── subscribe(callback) → void              # callback(StatusEntry) on every post
 ├── unsubscribe(callback) → void
-├── recent(n = 10, agent_id = null, status = null) → list<StatusEntry>  # Most recent entries, optionally filtered
+├── recent(n = 10, agent_id = null, status = null) → list<StatusEntry>
+│       # Most recent entries, optionally filtered
 ├── recent_text(n = 10) → string            # Recent entries as text, for an agent's context
-├── has_completed(agent_id = null) → bool   # Whether a COMPLETED entry is among the last 50 completed ones
+├── has_completed(agent_id = null) → bool
+│       # Whether a COMPLETED entry is among the last 50 completed ones
 └── close() → void
 
 StatusEntry
@@ -12165,8 +12179,9 @@ When `delegate(room_id, agent_id, task, notify)` is called:
    the framework's delivery strategy, so `BEFORE_DELIVER`, `AFTER_DELIVER` and
    the delivery backend apply to it as to any proactive delivery, and with
    `instruction = true` when `notify` names an intelligence channel or a
-   channel that hosts a realtime model. `notify` names who is told: an intelligence channel receives it
-   addressed to it, through the room's transport (§10.1.1); a channel that
+   channel that hosts a realtime model. `notify` names who is told: an
+   intelligence channel receives it addressed to it, through the room's
+   transport (§10.1.1); a channel that
    hosts a realtime model (a realtime voice or audio-video channel, a
    conference with a realtime model plugged in), injected with the `system`
    intent (§12.4) into the session whose tool call delegated, read from the
@@ -12174,8 +12189,8 @@ When `delegate(room_id, agent_id, task, notify)` is called:
    made outside a call; nothing of it is published to the room's other
    channels.
    Another transport has no model to direct and receives it as an ordinary
-   delivery through it (`channel_id = notify`, `instruction = false`). The delivered content carries the result, bounded and
-   delimited, presented as the worker's output rather than as an
+   delivery through it (`channel_id = notify`, `instruction = false`). The
+   delivered content carries the result, bounded and delimited, presented as the worker's output rather than as an
    instruction; a task that did not complete says it failed or was
    cancelled, without its error (§9.3), whatever output or error text it
    left. Only a completed task with nothing to say is not handed back.
@@ -12284,7 +12299,9 @@ SkillMetadata
 ├── license: string | null                  # License identifier
 ├── tools: list<string>                     # Tools this skill provides
 ├── allowed_tools: list<string>             # Tool access patterns (ToolPolicy globs)
-├── requires: list<string>                  # Exact names of the tools the skill needs (Section 24.3), from frontmatter `requires`, a list or comma-separated; empty by default
+├── requires: list<string>                  # Exact names of the tools the skill needs
+│       # (Section 24.3), from frontmatter `requires`, a list or
+│       # comma-separated; empty by default
 └── path: string                            # Filesystem path to skill directory
 ```
 
