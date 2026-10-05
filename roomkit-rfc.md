@@ -6002,9 +6002,15 @@ host and every door, a reasoning backend's included: it runs on and reports
 its own outcome, while the other calls the ending reaches are interrupted.
 The call that caused an ending is known by the call context the ending runs
 in, which every task its handler starts inherits, not by the task that runs
-the ending: a handler that ends its session through a task of its own, and a
-close that runs in a task of its own, still spare it, and the task that holds
-it (a backend's delegation) with it. A spared call still running when its
+the ending; the context lasts until the call's outcome is delivered and
+reported. A handler that ends its session through a task of its own, awaited
+or not, and a close that runs in a task of its own, still spare it, and the
+task that holds it (a backend's delegation) with it while the call runs: the
+backend's other calls the ending reaches are interrupted, each answered to the
+backend as cancelled, and once the sparing call returns on the session its
+ending closed, the delegation ends with it, no further round run. An AI
+channel's close that cuts the turns holding such a call (a backend's agent)
+spares it the same way. A spared call still running when its
 channel closes is waited for within the close's bound, then interrupted and
 reported once, as cancelled; nothing of it outlives the close. A handler that
 closes the framework itself finishes once the framework is gone: it runs on,
