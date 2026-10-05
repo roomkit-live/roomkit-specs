@@ -1815,6 +1815,11 @@ catalogue is tagged (Section 25.6): `transcription` for a speech-to-text model,
 `speech` for a text-to-speech one, from what the vendor reports or, failing
 that, from the model's name. A model that converses in audio is neither.
 
+**The model that answered.** `metadata.model` names the model that answered,
+as the response names it (a dated snapshot, a router's pick), and the model
+asked for only when the response names none; a stream's done event names the
+same, so both modes report it alike.
+
 **Usage counters.** `input_tokens`, `output_tokens` and the cache counters are
 disjoint, as in Section 25.5. `output_tokens` counts every output token the
 vendor bills, a model's thinking included, whether the vendor reports that
