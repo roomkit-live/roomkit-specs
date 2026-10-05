@@ -3367,7 +3367,11 @@ intent of §12.4, for every kind of intelligence channel.
    voice channel never speaks it.
 4. **Steps 1–11 apply unchanged.** Identity, the room-status gate and the
    source write check hold, and `BEFORE_BROADCAST` hooks run on it and MAY
-   block or modify it. A hook — and an `AFTER_BROADCAST` one — MUST NOT treat
+   block or modify it. The caller's `metadata` rides the instruction, whatever
+   the transport's parser keeps: the pipeline applies it to the event (a key
+   the parser set keeps its value, and `standalone` is the typed field's word,
+   step 7), so a hook reads what the caller attached to it, a delegation's
+   hand-back its task (§23.3 step 8). A hook — and an `AFTER_BROADCAST` one — MUST NOT treat
    it as something a participant said: its author is the application. A
    blocked instruction is not stored (the BLOCKED commit of §10.1 steps 10–11
    does not apply) and the result reports the block; `event_blocked` is still
