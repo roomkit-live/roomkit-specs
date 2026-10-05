@@ -22,9 +22,9 @@ abstractions, processing pipelines, permission model, hook engine, and identity
 resolution. It specifies the realtime media architecture — the voice pipeline,
 video, speech-to-speech, SFU-based conferencing, and recording — and the surfaces
 an AI agent is built on: multi-agent orchestration, memory, tool access control,
-task delegation, skills, and image generation. Storage, observability, resilience
-patterns, and conformance levels complete what constitutes a conforming
-implementation.
+delivery strategies, task delegation, skills, and image generation. Storage,
+observability, integration surfaces (REST, MCP), resilience patterns, and
+conformance levels complete what constitutes a conforming implementation.
 
 The specification is language-agnostic. Implementations MAY be written in any
 programming language. All examples use pseudocode or structured notation.
@@ -82,16 +82,16 @@ interpreted as described in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
 | **Participant** | A human (or system identity) taking part in a Room conversation. |
 | **Identity** | A cross-channel representation of a person, linking addresses across channel types. |
 | **Provider** | An interchangeable implementation behind a channel (e.g., Twilio behind SMS). |
-| **Source** | A persistent connection that pushes inbound events (as opposed to webhook pull). |
+| **Source** | A persistent connection that pushes inbound events (as opposed to per-message webhook callbacks). |
 | **Hook** | A pluggable function that intercepts, blocks, modifies, or reacts to events. |
 | **Binding** | The attachment of a channel to a room, including permissions and metadata. |
-| **Side Effect** | A task or observation produced by a channel or hook, not subject to permission restrictions. |
-| **Chain Depth** | The number of re-entries an event has caused (AI responds to AI responds to...). |
+| **Side Effect** | A task, observation, or room-metadata update produced by a channel or hook, not subject to permission restrictions. |
+| **Chain Depth** | The number of response hops between an event and the external inbound event that started its chain (AI responds to AI responds to...). |
 | **Integrator** | The developer building an application on top of a RoomKit implementation. |
 | **Broadcast** | The act of routing an event to all eligible channels in a Room. |
 | **Transcoding** | Converting event content from one format to another for cross-channel delivery. |
 | **Audio Pipeline** | A configurable chain of audio processing stages (resampler, AEC, AGC, denoiser, VAD, diarization, DTMF, recording) between the transport and the conversation engine. |
-| **AI Pipeline** | A configurable chain of AI generation stages (pre-context gates, memory retrieval, tool resolution, prompt assembly, pre-generation gate, generation, post-generation, emission) between an AIChannel receiving an event and emitting a response. Peer abstraction to Audio Pipeline and Video Pipeline. |
+| **AI Pipeline** | A configurable chain of AI generation stages (pre-context gates, memory retrieval, tool resolution, prompt assembly, pre-generation gate, generation, post-generation, emission) between an AIChannel receiving an event and emitting a response. Peer abstraction to Audio Pipeline and Video Pipeline. DRAFT, not conformance-bearing (Section 12.9). |
 | **ACP** | Agent Client Protocol — a protocol for communication between code editors or conversation hosts (clients) and coding agents (servers). |
 | **AEC** | Acoustic Echo Cancellation — removes the bot's own audio from the inbound stream to prevent self-triggering. |
 | **AGC** | Automatic Gain Control — normalizes audio volume to a consistent level regardless of input device or distance. |
@@ -369,7 +369,7 @@ paths:
 Channel/Hook Output
 ├── Room Events (messages, responses)
 │   ├── Subject to permissions (access, mute, visibility)
-│   ├── Broadcast according to write_visibility
+│   ├── Broadcast according to the binding's visibility
 │   └── Stored in timeline
 │
 └── Side Effects (ALWAYS allowed, even when muted)
@@ -537,7 +537,7 @@ RoomEvent
 | DELIVERED | Event successfully stored and broadcast |
 | READ | Event read by recipient (from read receipt) |
 | FAILED | Delivery failed after all retries |
-| BLOCKED | Event blocked by a sync hook |
+| BLOCKED | Event refused: by a sync hook, a source that cannot write (§7.5 rule 2), or the chain-depth limit (§8.3) |
 
 **EventSource:**
 
@@ -922,7 +922,7 @@ all three and MUST NOT conflate them:
 |---|---|---|---|
 | **Channel Instance** | Channel.info | Global, static | `{provider: "twilio", from_number: "+15551234"}` |
 | **Channel Binding** | ChannelBinding.metadata | Per-room | `{persona: "formal", language: "fr"}` |
-| **Event Source** | EventSource.channel_data | Per-event | `SMSChannelData{from: "+15559876", segments: 1}` |
+| **Event Source** | RoomEvent.channel_data | Per-event | `SMSChannelData{from_number: "+15559876", segments: 1}` |
 
 ### 5.10 Task
 
@@ -1181,7 +1181,8 @@ An AI channel wraps an AI Provider (see Section 6.7). When `on_event()` is calle
 1. Build conversation history from room timeline.
 2. Determine target transport channel's capabilities and media types.
 3. Construct AI context with capabilities, system instructions, and room metadata.
-4. Call the AI provider's `generate()` method.
+4. Run the turn's tool loop over the provider's structured stream (**One loop,
+   streamed or not**, below).
 5. Return ChannelOutput with response event(s), tasks, and observations.
 
 The AI channel MUST skip events originating from itself to prevent infinite loops.
@@ -1357,9 +1358,9 @@ once its result went out, its call id belonging to the connection a
 reconfiguration can replace, and declares nothing of it when a
 reconfiguration gave the session another catalogue while the call was judged:
 its matches were found in the catalogue that left. So for the tools an
-activation's hint names. An activation that names no skill and whose answer
-carries no hint (no tool matches the name, or the skill is unavailable)
-reveals nothing and is refused, as a reference or a script asked of a skill
+activation's hint names. An activation whose answer carries no hint (it
+finds no skill and no tool matches the name, or the skill exists but is
+unavailable) reveals nothing and is refused, as a reference or a script asked of a skill
 the registry does not offer is. A tool Tool Search recovers at call time joins the
 reveal window only once the tool answered the call (served, failed, or its
 result withheld by an ON_TOOL_CALL hook), as the room's tool memory keeps any
@@ -1755,7 +1756,8 @@ AIProvider (interface)
 │
 ├── generate_stream(context: AIContext) → async_iterator<string>
 │       # Yield text deltas as they arrive (requires supports_streaming = true)
-│       # Used by VoiceChannel for streaming AI → TTS (Section 12.2)
+│       # Streams a turn without tools when the provider streams text alone
+│       # (Section 6.4, One loop)
 │
 ├── generate_structured_stream(context: AIContext) → async_iterator<StreamEvent>
 │       # Yield thinking deltas, text deltas and tool calls, then one done event
@@ -2098,7 +2100,7 @@ Implementations MUST enforce these rules:
 5. **Self-skip:** A channel MUST NOT receive its own events via `on_event()`.
 6. **A binding is never widened implicitly.** Wherever the framework creates a
    binding from an existing one — sharing a channel into a delegated room
-   (§19), copying a template, re-attaching a channel it detached earlier — the
+   (§23.3), copying a template, re-attaching a channel it detached earlier — the
    new binding MUST NOT grant more than the one it derives from. Carrying over
    a binding's category and metadata while letting `access`, `visibility` and
    `muted` fall back to defaults silently promotes a read-only observer into a
@@ -2352,7 +2354,7 @@ than silently reorder.
 ### 9.2 Hook Triggers
 
 **HookTrigger** enumeration. The **Status** column distinguishes triggers the
-reference implementation emits today (**Implemented** — 73 as of this revision)
+reference implementation emits today (**Implemented** — 78 as of this revision)
 from those specified for a forthcoming capability but not yet emitted
 (**Planned**), and from a trigger kept for historical reference whose behaviour
 has moved elsewhere (**Superseded**). Conformance targets the Implemented set;
@@ -2428,7 +2430,7 @@ Planned rows are normative design intent for the named capability.
 | | | | |
 | **Delegation:** | | | |
 | ON_TASK_DELEGATED | ASYNC | Implemented | Background task delegated to a child room |
-| ON_TASK_COMPLETED | ASYNC | Implemented | Delegated task completed with result |
+| ON_TASK_COMPLETED | ASYNC | Implemented | Delegated task ended: completed with its result, failed with its error, or cancelled |
 | | | | |
 | **Video:** | | | |
 | BEFORE_BRIDGE_VIDEO | SYNC | Implemented | Before video frame is forwarded via bridge — can block/modify |
@@ -2609,7 +2611,7 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   hooks do serve tools — the AI tool loop, the realtime channel — that means
   dispatching to **the hooks registered ASYNC only**: a refused call reaching a
   servant would let the refusal hide the side effect instead of preventing it,
-  and the pre-execution gate of Section 12.2 would hold under some
+  and the pre-execution gate of Section 12.4 would hold under some
   configurations and not others. Where the tool already ran outside the channel
   and the firing is a report by construction — an external tool handler
   relaying its provider's outcome — it MAY reach every hook, and any result
@@ -2792,7 +2794,8 @@ HookResult
 ```
 
 `event` carries the replacement payload for a "modify" result, and its type is
-whatever the trigger passed in. Only BEFORE_BROADCAST passes a RoomEvent: the
+whatever the trigger passed in. Only BEFORE_BROADCAST and BEFORE_DELIVER
+(Section 22.3) pass a RoomEvent: the
 TTS trigger receives a string, the bridge triggers receive media frames, and the
 tool and generation triggers receive their own event types. Typing this field as
 a RoomEvent would make "modify" unusable for every trigger but one, so consumers
@@ -2922,7 +2925,7 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 
 2. ROUTE TO ROOM
    ├── If room_id provided → use it
-   ├── Otherwise → call InboundRoomRouter.route(channel_id, channel_type, sender_id)
+   ├── Otherwise → call InboundRoomRouter.route(channel_id, channel_type, sender_id, metadata)
    │   ├── Router returns existing room → use it
    │   └── Router returns null → create new room
    └── If new room created → attach channel, fire ON_ROOM_CREATED hook
@@ -3344,10 +3347,12 @@ additional validation and state updates before broadcasting.
 **State updates** (applied only after BEFORE_BROADCAST hooks allow the event —
 a hook that blocks the EDIT/DELETE MUST leave the target event unmutated):
 
-1. On successful EDIT: the framework SHOULD call `update_event()` to replace the
+1. On successful EDIT: the framework SHOULD call the store's `update_event()`
+   (§14.1) to replace the
    original event's content with `EditContent.new_content` and set
    `metadata.edited = true`. The EDIT event itself MUST be stored in the timeline.
-2. On successful DELETE: the framework SHOULD call `update_event()` to set
+2. On successful DELETE: the framework SHOULD call the store's `update_event()`
+   (§14.1) to set
    `metadata.deleted = true` on the original event. The DELETE event itself MUST
    be stored in the timeline.
 
@@ -3955,7 +3960,8 @@ enters a room as any other audio.
 
 --- Streaming AI → TTS path (framework-native, when AIProvider supports streaming) ---
 8s. Route through normal inbound pipeline → Room broadcasts to AIChannel
-9s. AIChannel.on_event() returns ChannelOutput(response_stream=generate_stream())
+9s. AIChannel.on_event() returns ChannelOutput(response_stream=…), the text of the
+    turn's tool loop (Section 6.4, One loop)
 10s. Framework detects response_stream in broadcast result
 11s. Framework finds streaming delivery targets (channels with supports_streaming_delivery)
 12s. Framework pipes stream → VoiceChannel.deliver_stream():
@@ -4212,7 +4218,7 @@ stable within one STT stream and only there: two streams may give one voice
 different labels, and one label to different voices. A provider MUST report
 labels as strings (a vendor's integer `0` becomes `"0"`) and MUST report a
 speaker it could not attribute as null, whatever the vendor spells it
-(`UU`, `PENDING`, `Unknown`, `unknown`). A provider MUST NOT invent a label the
+(`UU`, `PENDING`, `unknown` in any case, or empty). A provider MUST NOT invent a label the
 vendor did not send, nor carry one over from another turn.
 
 **Segments.** A provider reporting `supports_diarization = true` MUST give every
@@ -4428,9 +4434,9 @@ TTS / Speech-to-Speech Provider → [PostProcessors] → [Recorder ◉] → [AEC
 | — | Turn detection (post-STT, pre-room event) |
 | — | Interruption handling (barge-in → backchannel detection) |
 
-**Note on subsection ordering:** The subsections below (12.3.1–12.3.14) are
+**Note on subsection ordering:** The subsections below (12.3.1–12.3.15) are
 organized by concern (configuration, then inbound stages, then outbound stages,
-then frame format, then post-STT stages, then execution flow) — NOT by pipeline
+then frame format, then post-STT stages, then execution flow, then debug taps) — NOT by pipeline
 execution order. For execution order, see the inbound/outbound diagrams above
 and the Pipeline Execution Flow (Section 12.3.14).
 
@@ -4980,7 +4986,7 @@ DiarizationResult
 When diarization detects a speaker change, the framework MUST fire the
 ON_SPEAKER_CHANGE hook (Section 9.2). A result that attributes the audio to
 nobody — a `speaker_id` the label rule of Section 12.2.3 reads as unattributed
-(`unknown`, `UU`, `PENDING`, empty) — is not a speaker, as for an STT label: it
+(`UU`, `PENDING`, `unknown` in any case, or empty) — is not a speaker, as for an STT label: it
 neither fires the hook nor resets the last speaker, so a stretch the stage
 could not match between two stretches of one voice is no change. The result
 still reaches the frame, where a channel naming speakers from the stage counts
@@ -5622,7 +5628,7 @@ keeps failing does not loop on the reminder.
 | `on_tool_call` | ON_TOOL_CALL | Tool execution request from AI, behind the pre-execution gate below (ON_REALTIME_TOOL_CALL is superseded, Section 9.2) |
 | `on_tool_call_cancelled` | ON_TOOL_CALL | Model abandoned outstanding calls; the channel interrupts their handlers, sends nothing back, and reports them to the observers with the cancelled marker, except a call whose own handler caused the reconnect (Section 9.3) |
 | `on_delegation` | ON_REALTIME_DELEGATION | Model handed reasoning to a backend, hosted or integrator; the integrator target is served by the ReasoningBackend (Section 12.4.1) |
-| `on_response_start` | — | Internal lifecycle; no hook (use ON_SPEECH_START for AI speech) |
+| `on_response_start` | — | Internal lifecycle; no hook (use AFTER_BROADCAST for response tracking) |
 | `on_response_end` | — | Internal lifecycle; no hook (use AFTER_BROADCAST for response tracking) |
 | `on_usage` | — | The provider's own usage report, relayed unaltered; no hook (an integrator that bills a call reads it here, Section 12.4.2) |
 | `on_error` | ON_ERROR | Mapped to the global ON_ERROR hook (Section 9.2) |
@@ -5632,7 +5638,7 @@ lifecycle callbacks used for audio routing and session bookkeeping. They do not
 map to hooks because they don't represent events the integrator needs to act on.
 Integrators who need response-level tracking SHOULD use AFTER_BROADCAST on the
 transcription events emitted by the provider. A full-duplex provider has no
-such events on its wire and synthesizes them (Section 12.4.1).
+response boundaries on its wire and synthesizes them (Section 12.4.1).
 
 **Session configuration.** A session starts with the configuration it was
 opened with (its own prompt, voice or tools), else the one set for its room
@@ -5735,15 +5741,16 @@ connection issued. A
 call a reconnect its own handler caused orphans, which runs on, frees its id
 at that step as well: the new connection never issued it. A call that came without
 an id is refused and reported once the same way, with nothing sent, since no
-result can name it. A text turn holds its round's calls by id the same way: a
-second call of a round under an id the first holds is refused with the same
-words and reported as a call of its own, the first keeping its report and its
-end row its own arguments; one the provider already ran under such an id is
-reported as a call of its own with the outcome the provider gave it, and a
-call under an id an earlier round used is a new call. Such a refusal takes the path of any call: the session's
+result can name it. Such a refusal takes the path of any call: the session's
 end is read first (a call on an ended session is reported cancelled), a
 `call_tool` transport is unwrapped so the report names the tool it carries,
-and it waits for the transcription that precedes it. A call that named no tool
+and it waits for the transcription that precedes it. A text turn holds its
+round's calls by id the same way: a second call of a round under an id the
+first holds is refused with the same words and reported as a call of its own,
+the first keeping its report and its end row its own arguments; one the
+provider already ran under such an id is reported as a call of its own with
+the outcome the provider gave it, and a call under an id an earlier round used
+is a new call. A call that named no tool
 is refused before the gate, as an unreadable one, and answered under its id. A
 provider hands every call the model makes to the channel, these, a call the
 output cap cut and a call to a tool the channel never declared included: the
@@ -6225,8 +6232,8 @@ Voice-specific hooks allow integrators to customize the voice pipeline:
 | ON_TURN_INCOMPLETE | ASYNC | Debug turn detection | Audio Pipeline (Turn Detector) |
 | ON_BACKCHANNEL | ASYNC | Track user engagement | Audio Pipeline (Backchannel Detector) |
 | ON_SESSION_STARTED | ASYNC | Send greeting, start telemetry | VoiceBackend / Inbound pipeline |
-| ON_RECORDING_STARTED | ASYNC | Notify participants of recording | Audio Pipeline (Recorder) / Conference Channel |
-| ON_RECORDING_STOPPED | ASYNC | Store recording reference in timeline | Audio Pipeline (Recorder) / Conference Channel |
+| ON_RECORDING_STARTED | ASYNC | Notify participants of recording | Audio Pipeline (Recorder) / Conference Channel / Room media recorder (Section 12.11) |
+| ON_RECORDING_STOPPED | ASYNC | Store recording reference in timeline | Audio Pipeline (Recorder) / Conference Channel / Room media recorder (Section 12.11) |
 | ON_TOOL_CALL | SYNC | Execute tool and return result | Realtime Provider (ON_REALTIME_TOOL_CALL is superseded, Section 9.2) |
 | ON_TOOL_CALL | ASYNC | Audit tool use, including calls refused, failed, or abandoned by the model (Section 9.3) | Realtime Voice Channel |
 | ON_REALTIME_TEXT_INJECTED | ASYNC | Log text injections | Realtime Voice Channel / Conference Channel (realtime model) |
@@ -6270,10 +6277,10 @@ ranging from immediate cancellation to semantic backchannel detection.
    d. If the TTS consumes context: record the assistant turn truncated to
       `played_ms` (Section 12.2.2).
    e. Fire ON_BARGE_IN hook.
+   f. Process the user's speech through the audio pipeline as the user's turn.
 4. If classified as backchannel:
    a. Fire ON_BACKCHANNEL hook.
-   b. TTS continues uninterrupted.
-5. The user's speech is processed normally through the audio pipeline.
+   b. TTS continues uninterrupted, and the speech is discarded (Section 12.3.13).
 
 Implementations SHOULD support a configurable `barge_in_threshold_ms` — minimum
 TTS playback duration before barge-in detection activates. This prevents
@@ -7154,7 +7161,7 @@ following order:
 | 5 | pre_generation | Fire BEFORE_AI_GENERATION hooks, respect block/modify | BEFORE_AI_GENERATION |
 | 6 | generation | Read the provider's structured stream (generate() wrapped when it does not stream); run the tool loop | ON_AI_THINKING, ON_TOOL_CALL |
 | 7 | post_generation (list) | Response validation, caching, output filtering (default: no-op) | — |
-| 8 | emission | Emit response events, fire AFTER_RESPONSE | ON_AI_RESPONSE |
+| 8 | emission | Emit response events, fire ON_AI_RESPONSE | ON_AI_RESPONSE |
 
 **Ordering rationale:**
 
@@ -7167,7 +7174,7 @@ following order:
 | 5 | pre_generation | Final modification opportunity before provider call. Hooks can mutate AIContext in place (system prompt injection, dynamic tool addition). |
 | 6 | generation | Provider invocation + tool loop. The expensive step. |
 | 7 | post_generation | Inspect/modify the response before emission (caching lookup/store, output content filter, safety guardrails with optional regeneration). |
-| 8 | emission | Final step. Emit response events, fire AFTER_RESPONSE hook, trigger broadcast pipeline. |
+| 8 | emission | Final step. Emit response events, fire ON_AI_RESPONSE hook, trigger broadcast pipeline. |
 
 Stages MUST NOT be reordered by integrators. Insertion is allowed only at the
 multi-stage slots (`gates`, `post_generation`).
@@ -7322,7 +7329,10 @@ when a pipeline is in use. All such work MUST flow through the pipeline.
 | BEFORE_AI_CONTEXT_BUILD | PreContextGateStage (default impl) | SYNC — can block |
 | BEFORE_AI_GENERATION | PreGenerationStage (default impl) | SYNC — can block/modify |
 | ON_AI_THINKING | GenerationStage | ASYNC — observability |
+| BEFORE_TOOL_USE | GenerationStage (during tool loop) | SYNC — can block or override the call |
 | ON_TOOL_CALL | GenerationStage (during tool loop) | SYNC — can intercept; ASYNC — observes every call, refusals included (Section 9.3) |
+| AFTER_TOOL_ROUND | GenerationStage (during tool loop) | SYNC — can withdraw tools and add messages for the next round |
+| ON_USER_INPUT_REQUIRED | GenerationStage (during tool loop) | SYNC — human-in-the-loop pause |
 | ON_AI_RESPONSE | EmissionStage | ASYNC — observability |
 
 Hook triggers are preserved as callback points fired by their stages. Existing
@@ -7339,8 +7349,7 @@ Pipeline implementations SHOULD emit a framework event per stage completion:
 | `ai_pipeline.aborted` | stage_name, abort_reason, total_latency_ms |
 | `ai_pipeline.completed` | stage_count, total_latency_ms |
 
-This provides per-stage timing and abort visibility consistent with the voice
-pipeline's `voice.pipeline.*` events.
+This provides per-stage timing and abort visibility.
 
 #### 12.9.11 Conformance
 
@@ -7667,7 +7676,7 @@ BotSession
 ├── id: string
 ├── room_id: string
 ├── identity: string                    # Display identity in the conference
-├── joined_at: timestamp                # When the bot connected; MUST be timezone-aware
+├── joined_at: datetime                 # When the bot connected; MUST be timezone-aware
 └── metadata: map<string, any>
 ```
 
@@ -7984,7 +7993,8 @@ They are surfaced, not vouched for. A backend MUST NOT place an attribute
 in `asserted_metadata` merely because it rode a credential that backend
 minted: the deployment may issue other credentials, and an SFU that lets
 a client rewrite its own attributes after joining leaves nothing to tell
-the two apart at read time. Rule 1 of Section 12.10.2 governs unchanged,
+the two apart at read time. Point 1 of the `asserted_metadata` rules of
+Section 12.10.2 governs unchanged,
 and an implementation that cannot establish the value independently MUST
 leave it unasserted — where it can be read and rendered, but cannot found
 an identity.
@@ -8507,8 +8517,9 @@ SHOULD narrow the grants in place where the backend can, and MAY leave
 them standing where it cannot: an unused privilege against a cut in the
 event bridge is a trade this specification settles for continuity.
 Explicit `bot_grants` are never rewritten by a plug or an unplug — the
-caller who set them took coverage on themselves (Section 12.10.3), and
-that holds at runtime exactly as at construction.
+caller who set them took coverage on themselves (the coverage rule
+binds derived grants only, below), and that holds at runtime exactly as
+at construction.
 
 **Runtime ownership of explicit grants (normative):** that the plugs
 never rewrite an explicit `bot_grants` does not make the grant set
@@ -8699,7 +8710,9 @@ integrator can meet the disclosure rules that apply to it.
 
 **Hooks** (Section 9.2): `ON_CONFERENCE_PARTICIPANT_JOINED`,
 `ON_CONFERENCE_PARTICIPANT_LEFT`, `ON_CONFERENCE_TRACK_PUBLISHED`,
-`ON_CONFERENCE_TRACK_UNPUBLISHED`, `ON_ACTIVE_SPEAKER_CHANGED`.
+`ON_CONFERENCE_TRACK_UNPUBLISHED`, `ON_CONFERENCE_TRACK_MUTED`,
+`ON_CONFERENCE_TRACK_UNMUTED`, `ON_ACTIVE_SPEAKER_CHANGED`,
+`ON_CONNECTION_QUALITY_CHANGED`.
 Screen-share track publication additionally fires the existing
 `ON_SCREEN_SHARE_STARTED` / `ON_SCREEN_SHARE_STOPPED`.
 
@@ -8721,7 +8734,7 @@ RealtimeBackend instead:
 | Event | Emitted when |
 |---|---|
 | `conference_started` | `join_as_bot()` completes and the bot connection is live — the same point as `ON_SESSION_STARTED` |
-| `conference_ended` | `leave()` completes on channel detach |
+| `conference_ended` | The bot session ends: `leave()` completes (channel detach, the unplug of the last need, or the leave of a re-join), or the backend reports the session's end (`on_bot_session_ended`) |
 | `conference_participant_joined` | A Participant record is created or reactivated from `on_participant_joined` |
 | `conference_participant_left` | `on_participant_left` is processed |
 | `conference_bot_grants_changed` | A connected session's effective grants changed (Section 12.10.4): replaced in place through `update_bot_grants()`, or carried in by the replacement session of the announced re-join. Carries `bot_session_id` and the session's `hidden` status |
@@ -9379,7 +9392,7 @@ is not.
 
 ### 12.12 Capture Sources
 
-Every transport in Section 12.1 acquires its capture device when a session
+Every voice transport (VoiceBackend, Section 12.2) acquires its capture device when a session
 starts and releases it when that session ends. That is the right lifetime for a
 call, and the wrong one for anything that must be listening *before* there is a
 session to listen for — a wake word, a hotkey that arms on speech, an
@@ -9719,7 +9732,7 @@ MUST apply before the page is cut, so a page of `limit` received events is
 full whatever was refused around them. The conversation read that fills
 `RoomContext.recent_events` asks for the whole timeline: hooks read it whole
 (§7.5 rule 8), and the per-reader filter of that rule drops the refused rows
-for channels. A refused row still consumes an index (§8.3), so the room's
+for channels. A refused row still consumes an index (§10.1 step 8), so the room's
 counters keep counting it.
 
 **A count follows the rule of the page it stands for.** `get_event_count`
@@ -9942,6 +9955,17 @@ when the room is created and the channel is attached:
 This ensures that no protocol traces are lost, even for the initial signaling
 messages that precede room creation.
 
+**SIP trace examples:**
+
+A SIP voice backend SHOULD emit the following traces:
+
+| Event | Direction | Protocol | Summary | Raw |
+|---|---|---|---|---|
+| Call received | inbound | sip | `INVITE from +1555... to +1666...` | Serialized SIP INVITE request |
+| Call accepted | outbound | sip | `200 OK (codec=16000Hz, ...)` | SDP answer body |
+| Remote hangup | inbound | sip | `BYE from +1555...` | Serialized SIP BYE request |
+| Local hangup | outbound | sip | `BYE (local hangup)` | null (library may not expose serialized form) |
+
 ### 15.7 Telemetry Provider
 
 Implementations SHOULD provide a pluggable telemetry provider abstraction for
@@ -9976,17 +10000,6 @@ Implementations SHOULD instrument the following operations with spans:
 
 Each span SHOULD include structured attributes: `room_id`, `channel_id`,
 `event_id`, `provider`, and `latency_ms`.
-
-**SIP trace examples:**
-
-A SIP voice backend SHOULD emit the following traces:
-
-| Event | Direction | Protocol | Summary | Raw |
-|---|---|---|---|---|
-| Call received | inbound | sip | `INVITE from +1555... to +1666...` | Serialized SIP INVITE request |
-| Call accepted | outbound | sip | `200 OK (codec=16000Hz, ...)` | SDP answer body |
-| Remote hangup | inbound | sip | `BYE from +1555...` | Serialized SIP BYE request |
-| Local hangup | outbound | sip | `BYE (local hangup)` | null (library may not expose serialized form) |
 
 ### 15.8 Audit System
 
@@ -10058,8 +10071,9 @@ The `audit_tool_handler(handler, auditor, agent_id)` function wraps any tool
 handler to automatically record audit entries. It:
 
 1. Measures execution time.
-2. Records a raised exception as `"error"`, a refusal or a declined call as
-   `"failed"` and a cancelled call as `"cancelled"`, then re-raises each, so
+2. Records a raised exception as `"error"`, a refusal, a stated failure
+   (`ToolFailedError`) or a declined call as `"failed"` and a cancelled call
+   as `"cancelled"`, then re-raises each, so
    the channel reads the outcome it would have read without the wrapper.
 3. Auto-detects `"failed"` from the response body otherwise.
 4. Truncates the recorded result to 500 characters.
@@ -10328,7 +10342,8 @@ should live in the integration surface layer.
 
 **TTS conversation context (Section 12.2.2):**
 
-- Context audio is a copy of what the user said, held so the TTS can hear it.
+- Context audio is a copy of the session's dialogue audio (what the user said and
+  what was synthesized), held so the TTS can hear it.
   It MUST be kept in memory only: never written to the conversation store, the
   timeline, a recording, or a log.
 - It MUST stay within `max_turns` and `max_audio_seconds`, and MUST be dropped
@@ -10474,7 +10489,7 @@ These principles define the conceptual architecture of RoomKit:
    types before generating — not after.
 
 9. **Three layers of metadata.** Channel.info (instance), ChannelBinding.metadata
-   (per-room), EventSource.channel_data (per-event). Never lose data.
+   (per-room), RoomEvent.channel_data (per-event). Never lose data.
 
 10. **Direction declares capability.** Channels declare inbound/outbound/bidirectional.
     Permissions restrict per room.
@@ -10492,7 +10507,8 @@ These principles define the conceptual architecture of RoomKit:
     model. STT/TTS are providers. No special "voice API."
 
 15. **Sources complement webhooks.** Persistent connections (WhatsApp Personal,
-    SSE) push events. Webhooks pull events. Both feed the same inbound pipeline.
+    SSE) push events. Webhooks deliver per-message callbacks. Both feed the same
+    inbound pipeline.
 
 16. **Framework-agnostic core.** No web framework dependency. Integration surfaces
     are thin wrappers. Any language, any framework.
@@ -10509,27 +10525,27 @@ These principles define the conceptual architecture of RoomKit:
     pluggable providers, optional stages, session-scoped state. Vision results
     feed back into AI channels and filter contexts.
 
-20. **Agents are channels.** Multi-agent orchestration uses the same
+19. **Agents are channels.** Multi-agent orchestration uses the same
     Room/Channel/Event model. Agents are intelligence channels with identity
     metadata. Routing, handoff, and coordination happen through existing
     primitives — no special agent API.
 
-21. **Orchestration through primitives.** Multi-agent routing, handoff, and
+20. **Orchestration through primitives.** Multi-agent routing, handoff, and
     state management are built on existing Room/Channel/Event/Hook primitives.
     The router is a BEFORE_BROADCAST hook. State lives in room metadata.
     Handoffs are tool calls. No new core abstractions required.
 
-22. **Memory is pluggable.** AI context construction is a swappable strategy,
+21. **Memory is pluggable.** AI context construction is a swappable strategy,
     not a hardcoded sliding window. Implementations choose how to build
     conversation history: recent events, summarized history, vector retrieval,
     or token-budget-aware truncation.
 
-23. **Audit is two-tiered.** Tool auditing captures every tool call (input,
+22. **Audit is two-tiered.** Tool auditing captures every tool call (input,
     output, timing, status). Session auditing captures the full conversation
     timeline (speech, tools, vision, interruptions). Both use pluggable
     backends — same extensibility pattern as providers and stores.
 
-24. **The conference media plane is external.** RoomKit orchestrates
+23. **The conference media plane is external.** RoomKit orchestrates
     conferences — rooms, access, participant lifecycle, AI participation —
     but never forwards media between human participants. An external SFU
     owns packet routing; RoomKit joins it as one participant among many.
@@ -10680,8 +10696,8 @@ turn that has already closed.
 #### 19.3.2 Delivered versus solicited
 
 A channel that is not solicited MUST NOT be asked to produce a response, and
-MUST NOT be delivered the event either — the implementation skips it. At step
-3c the two are one decision, not two.
+MUST NOT be delivered the event either — the implementation skips it. At
+§10.2 step 3c the two are one decision, not two.
 
 Skipping alone would not settle the question, because the cost is not the
 same for every channel. An agent whose context is rebuilt from the room's
@@ -10821,7 +10837,7 @@ by the channel's handler. A name the channel's tools carry is the channel's
 and an agent's tool of that name is neither declared nor served, a warning
 naming it at the install, nor declared once the channel drops its own:
 nothing of the agent's serves it. The active agent's tool policy holds on its
-session beside the channel's: a tool either denies, each resolved for the
+session beside the channel's: a tool that either policy denies, each resolved for the
 session's participant, is neither declared, nor listed by Tool Search, nor
 among the names a handler reads, and the gate refuses it with the policy's
 words. A handoff applies the next agent's policy, read for each session's
@@ -10971,7 +10987,7 @@ User ↔ Supervisor
 ```
 
 The supervisor MAY delegate sequentially or in parallel. Results are delivered
-back via the delivery strategy system (Section 23), at the chain depth of the
+back via the delivery strategy system (Section 22), at the chain depth of the
 turn that delegated (Section 23.3); results presented within the turn leave
 the supervisor's answer one deeper than the event it answers (§8.3). Results
 of workers dispatched in the background are handed back to the supervisor
@@ -10980,8 +10996,9 @@ it, each worker's output bounded, never published as a participant's
 message. A background pipeline that fails before its results (a delegation
 that raised) hands its failure back the same way: an instruction that the
 work could not be completed, carrying the reasoning backend's fallback text
-(Section 12.4.1) and never the error's message, which goes to the logs and the
-status bus (Section 9.3). The supervisor told the user results would follow;
+(Section 12.4.1) and never the error's message, which goes to the logs
+(Section 9.3) and the status bus (Section 19.8). The supervisor told the user
+results would follow;
 it is told they will not, as the dispatching caller of a pipeline run within
 the turn reads its error. A strategy's background tool serves one run per room
 at a time, whichever voice channel's session called it, and the outcome goes
@@ -11052,8 +11069,8 @@ loop ended; for a producer's task that failed, that it failed and the cut
 that ended its turn, never with the task's error. A loop that raised hands
 back that the work could not be completed, carrying the reasoning backend's
 fallback text (Section 12.4.1) and never the error's message, which goes to
-the logs and the status bus (Section 9.3), as a supervisor's background
-pipeline does (Section 19.7.3), one loop per room and in the session that
+the logs (Section 9.3) and the status bus (Section 19.8), as a supervisor's
+background pipeline does (Section 19.7.3), one loop per room and in the session that
 made the call. The room is free for a new loop before the outcome is handed
 back: the model's turn on it may start one. A loop its producer's task
 stopped posts its terminal status entry as `failed`. The producer and the
@@ -11098,7 +11115,7 @@ MemoryProvider (interface)
 
 A provider is handed history, it does not fetch it: the `context` it receives
 MUST already be the requesting channel's view of the room (§7.5 rule 8). Making
-each provider apply the visibility filter itself would put the rule in seven
+each provider apply the visibility filter itself would put the rule in five
 places and leave every third-party provider outside it; making the caller apply
 it once puts it in one, and a provider that summarizes what it is given can then
 never summarize something the channel was not allowed to read.
@@ -11363,8 +11380,8 @@ start row stays pending. The loop honours the same points for every provider.
 is bound to, so its running tool loops can belong to several rooms' turns at
 once. A host names the loop a directive is for, or its room, never both: a
 `Cancel` addressed to a room MUST reach every loop of that room, any other
-directive addressed to a room MUST reach the room's most recent loop, and
-neither MUST reach a loop of another room. A directive addressed to neither
+directive addressed to a room MUST reach the room's most recent loop, and a
+directive addressed to a room MUST NOT reach a loop of another room. A directive addressed to neither
 reaches the channel's most recent loop, whatever its room. A loop is reachable once its turn has started; a directive
 that comes before reaches nothing, and the host is told how many loops it
 reached.
@@ -12394,6 +12411,7 @@ A Level 3 implementation MAY additionally support audio and/or video real-time m
 - VoiceLibrary interface — custom voices, designed or replicated with consent (OPTIONAL — Section 12.2.4)
 - Voice hooks (ON_SPEECH_START through ON_RECORDING_STOPPED)
 - Barge-in and interruption handling (InterruptionStrategy)
+- Audio bridging — AudioBridge (OPTIONAL — Section 12.7)
 - Realtime Voice channel (speech-to-speech)
 - RealtimeVoiceProvider interface
 - Full-duplex providers and reasoning delegation (OPTIONAL — Section 12.4.1)
@@ -12415,13 +12433,13 @@ A Level 3 implementation MAY additionally support audio and/or video real-time m
   - Optional VisionProvider integration with configurable analysis interval
   - Vision results emitted as framework events (video_vision_result)
 - VisionProvider interface — frame analysis abstraction:
-  - analyze_frame(frame) → VisionResult (description, labels, confidence, faces, OCR text)
-  - analyze_stream(frames, interval_ms) for streaming analysis
+  - analyze_frame(frame, prompt, response_schema) → VisionResult (description, labels, confidence, faces, OCR text)
+  - analyze_stream(frames, interval_ms, assumed_fps) for streaming analysis (Section 12.8.7)
   - Implementations: OpenAI-compatible (GPT-4o, Ollama, vLLM), Gemini, Mock
 - AI integration: setup_video_vision() wires vision descriptions into the AIChannel's turn context
 - Video and voice channels operate independently in the same room, enabling combined audio+video sessions where the AI can both hear (via STT) and see (via VisionProvider)
 
-#### Conference (SFU) — PROVISIONAL
+#### Conference (SFU)
 
 - Conference data models (ConferenceTrack, TrackKind, ConferenceParticipant,
   ConferenceGrants, ConferenceAccess, BotSession, ConferenceCapability)
@@ -12429,7 +12447,8 @@ A Level 3 implementation MAY additionally support audio and/or video real-time m
 - ConferenceChannel with per-track STT lanes and bot TTS publication
   (Section 12.10.4)
 - Conference hooks (ON_CONFERENCE_PARTICIPANT_JOINED/LEFT,
-  ON_CONFERENCE_TRACK_PUBLISHED/UNPUBLISHED, ON_ACTIVE_SPEAKER_CHANGED)
+  ON_CONFERENCE_TRACK_PUBLISHED/UNPUBLISHED, ON_CONFERENCE_TRACK_MUTED/UNMUTED,
+  ON_ACTIVE_SPEAKER_CHANGED, ON_CONNECTION_QUALITY_CHANGED)
 - Explicit track subscription, participant identity correlation, and bot
   self-exclusion (Sections 12.10.2–12.10.4)
 - Multi-party interruption policy (ConferenceInterruptionConfig)
@@ -12899,8 +12918,9 @@ VideoChannel
 │       descriptions into the AIChannel's turn context
 └── backends:
     ├── LocalVideoBackend — OpenCV webcam capture (dev/testing)
+    ├── ScreenCaptureBackend — mss screen capture (screen sharing, monitoring)
     ├── MockVideoBackend — Unit testing with call tracking
-    └── (future) WebRTC, SIP video backends
+    └── optional (MAY): WebRTC (FastRTC), RTP, SIP video, WebSocket backends
 ```
 
 ### A.13 Telegram Channel
@@ -12972,15 +12992,18 @@ ConferenceChannel
 ├── hooks:
 │   ├── ON_CONFERENCE_PARTICIPANT_JOINED / LEFT
 │   ├── ON_CONFERENCE_TRACK_PUBLISHED / UNPUBLISHED
+│   ├── ON_CONFERENCE_TRACK_MUTED / UNMUTED
 │   ├── ON_ACTIVE_SPEAKER_CHANGED
+│   ├── ON_CONNECTION_QUALITY_CHANGED
 │   ├── ON_SCREEN_SHARE_STARTED / STOPPED
 │   └── ON_TRANSCRIPTION — per track, participant-attributed
 ├── framework_events:
 │   ├── conference_started / conference_ended
-│   └── conference_participant_joined / conference_participant_left
+│   ├── conference_participant_joined / conference_participant_left
+│   └── conference_bot_grants_changed
 └── backends:
     ├── MockConferenceBackend — unit testing with scripted event sequences
-    └── (future) SFU providers (e.g., LiveKit)
+    └── SFU providers (e.g., LiveKit)
 ```
 
 ## Appendix B: Complete Event Flow Examples
@@ -13001,7 +13024,7 @@ ConferenceChannel
    ├── Route: no active room for +15551234567 → create new room
    │   └── Fire ON_ROOM_CREATED hook → attach AI channel
    │
-   ├── Identity: resolve("+15551234567", SMS) → IDENTIFIED (Jean Tremblay)
+   ├── Identity: resolve(message from "+15551234567" on SMS, context) → IDENTIFIED (Jean Tremblay)
    │
    ├── Create RoomEvent {
    │     type: MESSAGE, content: TextContent{text: "Bonjour"},
@@ -13017,7 +13040,7 @@ ConferenceChannel
    │   └── AI channel.on_event()
    │       ├── Build history: [{role: "user", text: "Bonjour"}]
    │       ├── Target: SMS capabilities (max 1600 chars, text only)
-   │       ├── Call provider.generate(history, context)
+   │       ├── Run the tool loop over the provider's structured stream (§6.4)
    │       └── Return ChannelOutput{events: [
    │             RoomEvent{content: TextContent{text: "Bonjour Jean! ..."}}
    │           ]}
@@ -13050,14 +13073,14 @@ ConferenceChannel
    │   ├── Detects SIN pattern: 123-456-789
    │   └── Returns HookResult.block(
    │         reason: "SIN detected",
-   │         inject: [
+   │         injected_events: [
    │           InjectedEvent{
-   │             target: "sms_customer",
-   │             content: TextContent{text: "Message blocked. Do not send SIN by SMS."}
+   │             target_channel_ids: ["sms_customer"],
+   │             event: RoomEvent{content: TextContent{text: "Message blocked. Do not send SIN by SMS."}}
    │           },
    │           InjectedEvent{
-   │             target: "ws_advisor",
-   │             content: TextContent{text: "Client attempted to send SIN. Blocked."}
+   │             target_channel_ids: ["ws_advisor"],
+   │             event: RoomEvent{content: TextContent{text: "Client attempted to send SIN. Blocked."}}
    │           }
    │         ],
    │         observations: [
@@ -13084,7 +13107,7 @@ ConferenceChannel
    │
    ▼
 2. Identity resolution:
-   resolver.resolve("+15551234567", SMS) → AMBIGUOUS
+   resolver.resolve(message from "+15551234567" on SMS, context) → AMBIGUOUS
    candidates: [
      Identity{name: "Jean Tremblay", id: "id_jean"},
      Identity{name: "Marie Tremblay", id: "id_marie"},
@@ -13380,18 +13403,18 @@ Timeline of a room with SMS customer + AI:
    ├── Route: create new room
    ├── Attach channels:
    │   ├── "sms_main" (TRANSPORT, customer)
-   │   ├── "triage" (INTELLIGENCE, Agent: role="Triage", phase="triage")
-   │   ├── "network-specialist" (INTELLIGENCE, Agent: role="Network Engineer", phase="specialist")
-   │   └── "closer" (INTELLIGENCE, Agent: role="Resolution", phase="closing")
+   │   ├── "triage" (INTELLIGENCE, Agent: role="Triage")
+   │   ├── "network-specialist" (INTELLIGENCE, Agent: role="Network Engineer")
+   │   └── "closer" (INTELLIGENCE, Agent: role="Resolution")
    │
    ├── ConversationState initialized:
    │     {phase: "triage", active_agent_id: "triage"}
    │
    ├── ConversationRouter installed as BEFORE_BROADCAST hook:
    │     rules: [
-   │       {agent: "triage", conditions: {phases: {"triage"}}},
-   │       {agent: "network-specialist", conditions: {phases: {"specialist"}}},
-   │       {agent: "closer", conditions: {phases: {"closing"}}},
+   │       {agent_id: "triage", conditions: {phases: {"triage"}}},
+   │       {agent_id: "network-specialist", conditions: {phases: {"specialist"}}},
+   │       {agent_id: "closer", conditions: {phases: {"closing"}}},
    │     ]
    │
    ├── BEFORE_BROADCAST: router stamps event metadata → target: "triage"
@@ -13399,7 +13422,7 @@ Timeline of a room with SMS customer + AI:
    │
    └── Triage agent responds:
        ├── Generates: "I'll connect you with our network specialist."
-       ├── Calls tool: handoff_conversation(target="network-specialist",
+       ├── Calls tool: handoff_conversation(target_agent_id="network-specialist",
        │     reason="network outage", summary="Customer reports internet down since yesterday")
        │
        ├── HandoffHandler processes:
@@ -13425,7 +13448,7 @@ Timeline of a room with SMS customer + AI:
    │   │     kit.delegate(room_id, "diagnostics-bot",
    │   │       task="Check network status for customer area",
    │   │       notify="network-specialist")
-   │   │     (the kit's delivery strategy: WaitForIdle(buffer=5.0))
+   │   │     (the kit's delivery strategy: WaitForIdle(buffer_seconds=5.0))
    │   │
    │   ├── ON_TASK_DELEGATED hook fires
    │   └── Responds: "Let me check your area's network status..."
@@ -13441,7 +13464,7 @@ Timeline of a room with SMS customer + AI:
    ▼
 5. Specialist resolves and hands off to closer
    │
-   ├── Calls: handoff_conversation(target="closer",
+   ├── Calls: handoff_conversation(target_agent_id="closer",
    │     reason="resolved", summary="Area outage confirmed, ETA communicated")
    │
    ├── ConversationState:
