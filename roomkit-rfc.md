@@ -2632,11 +2632,14 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   external door, ACP); an override that cannot take the arguments the door
   hands it raises the same way. An ACP
   call reports the same body with an external handler as without one: a
-  cancellation's envelope, a failure's bounded error. An ACP call RoomKit
-  refused that the agent ran anyway and closed completed is reported as it
-  ended, served, its markers those of a served call, and MUST carry a marker
-  of its own (`refused_but_ran`) on its report and its end row, so an audit
-  sees the refusal the agent went past.
+  cancellation's envelope, a failure's bounded error. An ACP call whose
+  permission RoomKit rejected (it refused the call, or its handler raised
+  deciding it) that the agent ran anyway and closed completed is reported as
+  it ended, served, its markers those of a served call, and MUST carry a
+  marker of its own (`refused_but_ran`) on its report and its end row, so an
+  audit sees the rejection the agent went past; that report carries what
+  failed in the rejection (`error_detail`) when something did, whether the
+  handler or the channel makes it.
 - The outcome MUST be carried on the event as a discrete marker, not left to
   be inferred from the result body. A refusal's body is a body like any other:
   one implementation's refusals are JSON error envelopes, another's are the
