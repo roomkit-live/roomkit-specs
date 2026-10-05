@@ -6092,7 +6092,8 @@ never comes. One that fails on an error also fires ON_ERROR once, as the
 channel, with the category `reasoning`, as a room turn's failure fires it
 (Section 6.4): the fallback tells the user, the hook tells the host. A turn
 its round cap, deadline or budget cut is an expected end and fires none, as
-on a room. An output returned for a delegation the conversation has moved
+on a room, and so is a run past the channel's bound, the delegation's own
+deadline. An output returned for a delegation the conversation has moved
 past is the model's to ignore, and the provider's instructions SHOULD tell it
 so.
 
