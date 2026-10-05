@@ -780,6 +780,18 @@ Participant
 | CHALLENGE_SENT | Verification challenge sent to participant |
 | REJECTED | Identity challenge failed or was rejected |
 
+**Joining and leaving:** a deliberate join is the operation `add_member`. It
+creates the participant ACTIVE, or reactivates an existing record that is not
+ACTIVE (a re-join keeps `joined_at`), then emits `PARTICIPANT_JOINED` and fires
+`ON_PARTICIPANT_JOINED`; on a member already ACTIVE it only records a newly
+reached channel, with no event. With an `identity_id` the participant is
+IDENTIFIED, otherwise PENDING. Leaving is `remove_member`: it sets the
+participant's status to LEFT, or to BANNED when asked, keeping the record, then
+emits `PARTICIPANT_LEFT` and fires `ON_PARTICIPANT_LEFT`; an unknown participant
+is an error. Both hooks are ASYNC; their payload is a system event whose data
+carries `participant_id` and, on a join, `identity_id`, on a leave, the new
+`status`.
+
 **Renaming (normative):** a member's presentation can change while they are
 present — their display name above all. Implementations SHOULD provide an
 update operation (`rename_member`) that changes `display_name` in place,
@@ -2381,7 +2393,7 @@ intercept, block, modify, and react to events in the pipeline.
 ```
 HookRegistration
 ├── trigger: HookTrigger                    # When this hook fires
-├── execution: HookExecution                # SYNC or ASYNC
+├── execution: HookExecution                # SYNC or ASYNC, on any trigger
 ├── handler: function                       # The hook function
 ├── priority: int = 0                       # Execution order (lower = first)
 ├── name: string                            # Human-readable identifier
@@ -2409,11 +2421,22 @@ than silently reorder.
 ### 9.2 Hook Triggers
 
 **HookTrigger** enumeration. The **Status** column distinguishes triggers the
-reference implementation emits today (**Implemented** — 78 as of this revision)
+reference implementation emits today (**Implemented** — 76 as of this revision)
 from those specified for a forthcoming capability but not yet emitted
 (**Planned**), and from a trigger kept for historical reference whose behaviour
 has moved elsewhere (**Superseded**). Conformance targets the Implemented set;
 Planned rows are normative design intent for the named capability.
+
+The **Execution** column says how the framework runs the trigger; it does not
+restrict registration, and a hook may be registered SYNC or ASYNC on any
+trigger. On a SYNC trigger the hooks registered SYNC run as the chain of
+Section 9.3, which may block or modify; then, unless the chain blocked, the
+hooks registered ASYNC run as observers on the payload it left (ON_TOOL_CALL
+tells its observers of a block too, Section 9.3). On an ASYNC trigger every
+registered hook runs, concurrently, whatever its declared mode, and what it
+returns is discarded. ON_IDENTITY_AMBIGUOUS and ON_IDENTITY_UNKNOWN are decided
+by the identity hooks of Section 11.2, registered apart; a hook registered on
+them as above runs after those as an observer.
 
 | Trigger | Execution | Status | When It Fires |
 |---|---|---|---|
@@ -2436,11 +2459,11 @@ Planned rows are normative design intent for the named capability.
 | ON_PARTICIPANT_UPDATED | ASYNC | Implemented | Member presentation changed via `rename_member` |
 | ON_TASK_CREATED | ASYNC | Implemented | A task was created |
 | ON_DELIVERY_STATUS | ASYNC | Implemented | Delivery status webhook from provider |
-| ON_ERROR | ASYNC | Implemented | An error occurred in the pipeline |
+| ON_ERROR | ASYNC | Implemented | A turn failed, or a speech-to-speech provider reported an error; payload and categories below the table |
 | ON_SPEECH_START | ASYNC | Implemented | Audio pipeline detected speech start (voice; per conference lane) |
 | ON_SPEECH_END | ASYNC | Implemented | Audio pipeline detected speech end (voice; per conference lane) |
 | ON_TRANSCRIPTION | SYNC | Implemented | After STT transcription (voice) — can modify |
-| BEFORE_TTS | SYNC | Implemented | Before TTS synthesis (voice) — can modify text/voice; once per sentence on a streamed response |
+| BEFORE_TTS | SYNC | Implemented | Before TTS synthesis (voice) — can block or modify the text; once per sentence on a streamed response |
 | AFTER_TTS | ASYNC | Implemented | After TTS synthesis (voice) |
 | ON_BARGE_IN | ASYNC | Implemented | User interrupted TTS playback (voice) |
 | ON_TTS_CANCELLED | ASYNC | Implemented | TTS was cancelled (voice) |
@@ -2491,8 +2514,8 @@ Planned rows are normative design intent for the named capability.
 | BEFORE_BRIDGE_VIDEO | SYNC | Implemented | Before video frame is forwarded via bridge — can block/modify |
 | ON_VIDEO_SESSION_STARTED | ASYNC | Implemented | Video session became active |
 | ON_VIDEO_SESSION_ENDED | ASYNC | Implemented | Video session ended |
-| ON_VIDEO_TRACK_ADDED | ASYNC | Implemented | Video track added to session |
-| ON_VIDEO_TRACK_REMOVED | ASYNC | Implemented | Video track removed from session |
+| ON_VIDEO_TRACK_ADDED | ASYNC | Planned | Video track added to session |
+| ON_VIDEO_TRACK_REMOVED | ASYNC | Planned | Video track removed from session |
 | ON_VISION_RESULT | ASYNC | Implemented | VisionProvider returned analysis result |
 | ON_SCREEN_SHARE_STARTED | ASYNC | Implemented | Screen sharing started |
 | ON_SCREEN_SHARE_STOPPED | ASYNC | Implemented | Screen sharing stopped |
@@ -2509,8 +2532,25 @@ Planned rows are normative design intent for the named capability.
 | ON_CONNECTION_QUALITY_CHANGED | ASYNC | Implemented | SFU reported a participant's connection quality |
 | | | | |
 | **Other:** | | | |
-| ON_PLAN_UPDATED | ASYNC | Implemented | Orchestration plan was updated |
-| ON_FEEDBACK | ASYNC | Implemented | Feedback/scoring event emitted |
+| ON_PLAN_UPDATED | ASYNC | Implemented | An AI channel's `plan_tasks` tool stored a new task plan for the room; the payload carries the room, the channel, the plan's tasks (`title`, `status`) and a timestamp |
+| ON_FEEDBACK | ASYNC | Implemented | `submit_feedback` recorded a rating (0.0–1.0, clamped) as an Observation of the room; the payload is that Observation, carrying the rating, its dimension (default `overall`), the comment and the rated event |
+
+**ON_ERROR payload.** ON_ERROR receives a RoomEvent that is never stored. Its
+source is the channel that failed (on a realtime channel, with the session's
+participant), its content is a text whose body is the error message, and its
+metadata carries `error` (the same message), `error_type` (the error's type
+name, or the provider's error code) and `error_category`:
+
+| `error_category` | Fired when |
+|---|---|
+| `generation` | An intelligence channel failed to respond to a broadcast event |
+| `streaming` | A streamed response raised, a delegated task's turn included |
+| `realtime_provider` | A speech-to-speech provider reported an error, fatal or not |
+| `reasoning` | A reasoning backend's turn raised (Section 12.4.1) |
+
+On a room turn the event's `chain_depth` is the triggering event's plus one,
+and its `visibility` is the triggering event's response visibility. A
+transport's delivery failure does not fire ON_ERROR.
 
 ### 9.3 Hook Execution Modes
 
@@ -2518,26 +2558,30 @@ Planned rows are normative design intent for the named capability.
 
 - Run sequentially, ordered by priority (lower number = first).
 - Each hook receives the event and room context.
-- Each hook MUST return a HookResult.
+- Each hook MUST return a HookResult, except the identity hooks that decide
+  ON_IDENTITY_AMBIGUOUS and ON_IDENTITY_UNKNOWN, which are registered apart and
+  return an IdentityHookResult or null (Section 11.2).
 - A BLOCK result stops the pipeline — no further hooks run.
 - A hook that does not produce a usable result MUST be treated as ALLOW with an
   error logged, so that a broken hook cannot take a room down. This covers a
   hook that raises, one that exceeds its timeout, one that returns something
   other than a HookResult, and a MODIFY whose payload is not of the type the
   trigger passed in.
-- **Except on triggers whose payload is content a hook may exist to withhold**,
-  or an action it may exist to prevent, where every one of those outcomes MUST
-  block instead. BEFORE_TTS and ON_TRANSCRIPTION are the first kind: a
+- **Except on three triggers, which fail closed: BEFORE_TTS, ON_TRANSCRIPTION
+  and BEFORE_TOOL_USE**, where every one of those outcomes MUST block instead.
+  Every other trigger, BEFORE_BROADCAST and ON_TOOL_CALL included, is fail-open
+  unless a hook declares itself fail-closed (below). BEFORE_TTS and
+  ON_TRANSCRIPTION carry content a hook may exist to withhold: a
   redaction hook that fails, times out, or returns something unusable must not
   let the original through, and allowing would publish exactly what the hook
   was there to suppress. On a streamed TTS response BEFORE_TTS runs on each
   sentence (Section 12.2, step 12s.b), so this applies to every sentence: a
-  streamed response is never a way around the hook. BEFORE_TOOL_USE is the
-  second: it is the gate of a tool call, where an approval hook sits, and an
+  streamed response is never a way around the hook. BEFORE_TOOL_USE carries
+  an action a hook may exist to prevent: it is the gate of a tool call, where an approval hook sits, and an
   approval hook that cannot answer must not let the call run. A partial rule
   is no rule — an
   implementation that blocks on exceptions but allows on timeouts leaks through
-  the timeout. Implementations MUST document which triggers fail closed.
+  the timeout.
 - **A BEFORE_TOOL_USE that failed closed refuses the call before execution**,
   as its BLOCK does, on every channel. A BLOCK's reason is the hook's own words
   for the model, and the model reads them (`{"error": "<reason>"}`) on every
@@ -2552,8 +2596,9 @@ Planned rows are normative design intent for the named capability.
   are the handler's; a handler that hands that error on with its decision has
   it reported on the refusal's `error_detail`, as on the channel's own doors.
 - **A hook MAY declare itself fail-closed** (`fail_closed = true`), on any
-  trigger: a content check on `BEFORE_BROADCAST` (PII, moderation) is exactly
-  such a hook, while the trigger as a whole stays fail-open so that a broken
+  trigger whose SYNC hooks run as a chain (Section 9.2): a content check on
+  `BEFORE_BROADCAST` (PII, moderation) is exactly such a hook, while the
+  trigger as a whole stays fail-open so that a broken
   logging hook cannot take every room down. Every unusable outcome of a
   fail-closed hook MUST block, and the block MUST name the hook and the
   outcome so the sender can be told why: `blocked_by` is the hook name and
@@ -2837,7 +2882,7 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
 
 ### 9.4 HookResult
 
-Sync hooks MUST return a HookResult:
+Sync hooks MUST return a HookResult, the identity hooks of Section 11.2 aside:
 
 ```
 HookResult
@@ -2959,7 +3004,7 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
 | Can **block** events | Yes | No | No |
 | Can **modify** events | Yes | No | No |
 | Can **inject** targeted events | Yes (on block) | No | No |
-| Can produce **tasks/observations** | Yes | Yes | Yes |
+| Can produce **tasks/observations** | Yes | No | Yes |
 | Can produce **response messages** | No | No | No (read-only) |
 | Runs | Before broadcast | After broadcast | During broadcast |
 | Typical use | Rule-based filtering | Logging, analytics | AI-powered analysis |
@@ -3593,30 +3638,50 @@ Returns IdentityResult
       │   ├── Fire ON_IDENTITY_AMBIGUOUS hook
       │   └── Hook returns:
       │       ├── resolved(identity) → use that identity
-      │       ├── pending(candidates) → create pending participant
+      │       ├── pending() or null → create pending participant
       │       ├── challenge(inject) → send challenge, block processing
       │       └── reject() → reject the message
       │
       └── UNKNOWN (0 matches)
           ├── Fire ON_IDENTITY_UNKNOWN hook
           └── Hook returns:
-              ├── create(new_identity) → create identity and participant
-              ├── pending() → create pending participant
+              ├── resolved(identity) → use that identity
+              ├── pending(candidates) → create pending participant
               ├── challenge(inject) → send challenge, block processing
-              └── reject() → reject the message
+              ├── reject() → reject the message
+              └── null → process the message, its sender unresolved
 ```
+
+Identity hooks receive the event, the room context and the IdentityResult, and
+run in registration order. The first one that returns a result decides; one
+that raises is logged and the next one runs. A result whose status the trigger
+does not act on is read as null. A hook registered on these two triggers
+through HookRegistration (Section 9.1) runs after them as an observer and
+cannot decide. The pending participant carries the resolver's candidates on
+ON_IDENTITY_AMBIGUOUS, and on ON_IDENTITY_UNKNOWN the hook's, else the
+resolver's.
 
 ### 11.3 Identity Hook Result
 
 ```
 IdentityHookResult
-├── action: "resolved" | "pending" | "challenge" | "reject" | "create"
-├── identity: Identity | null               # For "resolved" action
-├── candidates: list<Identity>              # For "pending" action
-├── injected_events: list<InjectedEvent>    # For "challenge" action
-├── new_identity: Identity | null           # For "create" action
-└── reason: string | null                   # For "reject" action
+├── status: IdentificationStatus            # The outcome (below)
+├── identity: Identity | null               # For IDENTIFIED: the sender
+├── display_name: string | null             # Set by pending(); not read
+├── candidates: list<Identity> | null       # For PENDING, on UNKNOWN only
+├── inject: InjectedEvent | null            # For CHALLENGE_SENT: the challenge
+├── reason: string | null                   # For REJECTED: the block's reason
+├── challenge_type: string | null           # Not read by the framework
+└── message: string | null                  # Set by challenge(); not read
 ```
+
+`resolved(identity)`, `pending(display_name, candidates)`,
+`challenge(inject, message)` and `reject(reason)` set `status` to IDENTIFIED,
+PENDING, CHALLENGE_SENT and REJECTED; `reject` defaults its reason to
+"Unknown sender". A challenge blocks the message with the reason
+`identity_challenge_sent`; a REJECTED result with no reason blocks it with
+`identity_rejected` on ON_IDENTITY_AMBIGUOUS and `unknown_sender` on
+ON_IDENTITY_UNKNOWN.
 
 ### 11.4 Channel Type Filtering
 
@@ -6298,7 +6363,7 @@ Voice-specific hooks allow integrators to customize the voice pipeline:
 | ON_SPEECH_START | ASYNC | Show "listening" indicator | Audio Pipeline (VAD) |
 | ON_SPEECH_END | ASYNC | Log speech duration | Audio Pipeline (VAD) |
 | ON_TRANSCRIPTION | SYNC | Fix STT errors, redact content | STT Provider |
-| BEFORE_TTS | SYNC | Select voice, modify text | Voice Channel |
+| BEFORE_TTS | SYNC | Redact or rewrite text, hold speech back | Voice Channel |
 | AFTER_TTS | ASYNC | Log synthesis metrics, cache | Voice Channel |
 | ON_BARGE_IN | ASYNC | Track interruptions | VoiceBackend (transport) |
 | ON_TTS_CANCELLED | ASYNC | Log cancellation reason | Voice Channel |
@@ -7141,8 +7206,8 @@ and records them through Section 12.11 instead (Section 12.10.8).
 |---|---|---|
 | ON_VIDEO_SESSION_STARTED | ASYNC | Video session became active |
 | ON_VIDEO_SESSION_ENDED | ASYNC | Video session ended |
-| ON_VIDEO_TRACK_ADDED | ASYNC | Video track added to session |
-| ON_VIDEO_TRACK_REMOVED | ASYNC | Video track removed from session |
+| ON_VIDEO_TRACK_ADDED | ASYNC | Video track added to session (Planned, Section 9.2) |
+| ON_VIDEO_TRACK_REMOVED | ASYNC | Video track removed from session (Planned, Section 9.2) |
 | ON_VISION_RESULT | ASYNC | VisionProvider returned analysis result |
 | ON_VIDEO_DETECTION | ASYNC | Filter emitted a detection event (YOLO, face, etc.) |
 | ON_SCREEN_SHARE_STARTED | ASYNC | Screen sharing started |
@@ -12532,7 +12597,7 @@ A Level 3 implementation MAY additionally support audio and/or video real-time m
 - VideoBackend interface — transport abstraction (connect, disconnect, send_video, callbacks)
 - VideoChannel — session-based channel orchestrator:
   - Session lifecycle with dual-signal ready mechanism (matching VoiceChannel pattern)
-  - Hook triggers: ON_VIDEO_SESSION_STARTED, ON_VIDEO_SESSION_ENDED, ON_VIDEO_TRACK_ADDED, ON_VIDEO_TRACK_REMOVED, ON_SCREEN_SHARE_STARTED, ON_SCREEN_SHARE_STOPPED
+  - Hook triggers: ON_VIDEO_SESSION_STARTED, ON_VIDEO_SESSION_ENDED, ON_SCREEN_SHARE_STARTED, ON_SCREEN_SHARE_STOPPED (ON_VIDEO_TRACK_ADDED and ON_VIDEO_TRACK_REMOVED are Planned, Section 9.2)
   - Optional VisionProvider integration with configurable analysis interval
   - Vision results emitted as framework events (video_vision_result)
 - VisionProvider interface — frame analysis abstraction:
