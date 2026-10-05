@@ -11867,8 +11867,9 @@ and a notified agent is told the task was cancelled; then the cancellation
 goes on. A framework that is closing starts no turn: step 8 is skipped and
 logged, step 7 still runs. A step 8 already under way when the framework
 closes is cut with it, as a strategy's background run's hand-back is: the
-turn it started is cancelled, nothing of it is stored after the close, and
-the cut is logged; the task's end (step 7, its waiters) still completes. A task whose work already ran when the
+turn it started is cancelled, what it had produced kept as a cancelled
+response (Section 12.2 step 13s) and nothing more stored, and the task's
+completion callback and its waiters still run. A task whose work already ran when the
 cancellation arrives ends as it stands. A delegation's span ends with its
 task's status: `ok` completed, `error` failed, `cancelled` cancelled.
 
