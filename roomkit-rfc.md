@@ -2641,7 +2641,9 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   marker of its own (`refused_but_ran`) on its report and its end row, so an
   audit sees the rejection the agent went past; that report carries what
   failed in the rejection (`error_detail`) when something did, whether the
-  handler or the channel makes it.
+  handler or the channel makes it, but for a handler whose override cannot
+  take it, which reports the call without it and is logged, as a refusal's
+  detail is.
 - The outcome MUST be carried on the event as a discrete marker, not left to
   be inferred from the result body. A refusal's body is a body like any other:
   one implementation's refusals are JSON error envelopes, another's are the
