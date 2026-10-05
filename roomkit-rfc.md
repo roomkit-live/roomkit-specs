@@ -6102,8 +6102,13 @@ session boundaries.
    ├── Read the room scoped to organization_id (§17.2); another
    │   organization's room is not found, and no session is created
    ├── Create RealtimeSession
+   ├── Retain transport audio received from here until the provider has
+   │   connected (at most 1 MiB; past it, new input is dropped and logged)
    ├── Connect provider with system_prompt, voice, tools
-   └── Wire callbacks: transport audio → provider, provider audio → transport
+   ├── Wire callbacks: transport audio → provider, provider audio → transport
+   └── Flush the retained audio to the provider in arrival order, frames
+       arriving during the flush included, before ON_SESSION_STARTED; a
+       failed start discards it
 3. Audio flows bidirectionally: Client ↔ Transport ↔ Provider
 4. Transcriptions emitted as RoomEvents (if configured). A user
    transcription has `chain_depth` 0. An assistant transcription answers
@@ -7949,8 +7954,9 @@ ConferenceBackend (interface)
 ├── capabilities: ConferenceCapability
 │
 │   # Control plane:
-├── ensure_room(room_id, metadata) → void
-│       # Idempotent: create the conference room if absent
+├── ensure_room(room_id, metadata?, e2ee?) → void
+│       # Idempotent: create the conference room if absent; e2ee
+│       # (default false) requests E2EE (Section 12.10.2)
 ├── close_room(room_id) → void
 ├── mint_access(room_id, participant_id, grants, display_name?, attributes?) → ConferenceAccess
 ├── list_participants(room_id) → list<ConferenceParticipant>
@@ -8248,11 +8254,14 @@ ConferenceChannel
 ├── backend: ConferenceBackend
 ├── stt: STTProvider | null             # Per-track transcription
 ├── tts: TTSProvider | null             # AI voice via bot track
+├── realtime: ConferenceRealtimeConfig | null   # Speech-to-speech (Section 12.10.12); excludes tts
+├── pipeline: AudioPipelineConfig | null   # Lane stages with stt or realtime; null = default VAD and contract
 ├── vision: VisionProvider | null       # Video/screen-share analysis
 ├── interruption: ConferenceInterruptionConfig
 ├── recording: ConferenceRecordingConfig | null   # Section 12.10.8
+├── recorder: MediaRecorder | null      # Section 12.11; required with recording, refused without it
 ├── bot_identity: string                # Bot's display identity
-├── bot_grants: ConferenceGrants        # Grants for join_as_bot()
+├── bot_grants: ConferenceGrants | null # Explicit grants for join_as_bot(); null = derived (Section 12.10.3)
 ├── default_grants: ConferenceGrants    # Grants minted for participants
 ├── e2ee: bool = false                  # Request E2EE (requires E2EE capability)
 ├── close_room_on_detach: bool = false  # Whether detach calls close_room()
@@ -8365,6 +8374,16 @@ ConferenceChannel
    `conference_ended` **if a bot session is active** — the lazy join of
    step 1 may never have run — and MUST call `close_room()` when
    `close_room_on_detach` is set, whether or not a bot ever joined.
+   The detach first closes the room to new work, then waits for the work
+   already in flight for it — announcements and the hooks they run,
+   publications on the bot track, mints — on one bounded budget for the
+   whole wait. Past the budget the teardown goes ahead without what
+   remains, and a mint still outstanding is taken back as **Admitting
+   participants** requires. A detach issued from inside such work does not
+   wait for it: admission closes at once, and the rest of the teardown runs
+   once that work has ended or the same bound has passed. The
+   speech-to-speech session, the lanes and the recordings are closed before
+   `leave()`, and `conference_ended` is announced last.
 
 The SFU's own signals about the conference are relayed on their hooks
 while the bot's session is connected: `on_active_speaker_changed` fires
@@ -8524,8 +8543,8 @@ ConferenceBackend contract offers no revocation, and a check that was true
 before a roster lookup and false after it has already handed out admission
 to a conference the framework has left. Implementations MUST therefore
 treat the mint as work a detach cannot land in the middle of — the
-in-flight-work discipline of Section 12.10.4 — rather than as a precondition
-tested once.
+in-flight work a detach waits for (step 5 of the lifecycle above) — rather
+than as a precondition tested once.
 
 A bounded drain does not satisfy this on its own. Every other kind of
 in-flight work degrades gracefully past the deadline — a chunk arrives late,
@@ -8639,6 +8658,16 @@ Subscription is re-evaluated when configuration changes at runtime: adding
 a VisionProvider to a live conference MUST subscribe the already-published
 video tracks, and removing the last consumer of a track MUST
 `unsubscribe_track()` it.
+
+**Collection gate (normative):** the room binding permits collection while
+the channel is attached to the room and the binding can write under Section
+7.5 — `access` ∈ {READ_WRITE, WRITE_ONLY} and `muted = false`. While it does
+not, the channel MUST NOT subscribe a track, hand a frame to a lane or a
+recording, deliver a transcription, or start a re-join after a session loss.
+When the gate closes, frames stop being routed at once; the channel then
+unsubscribes every track, closes its lanes and finalizes its recordings. When
+it reopens with a bot in the conference, the published tracks the channel
+consumes are subscribed again.
 
 **Hot-plugging intelligence (normative):** the configuration first need is
 read from — stt, tts, recording, and vision where an implementation
@@ -8873,14 +8902,18 @@ ConferenceInterruptionConfig
 configuration time rather than degrade silently. The strategy classifies an
 utterance from its transcript, and a conference lane only has a transcript once
 the utterance has ended — by which point the interruption it would have
-authorised is moot. The remaining strategies apply unchanged; `scope` is the
+authorised is moot. The remaining strategies apply with the InterruptionConfig
+defaults of Section 12.3.13, evaluated per track: CONFIRMED waits for
+`min_speech_ms` (300 ms) of one track's sustained speech, and
+ConferenceInterruptionConfig has no field to change it. `scope` is the
 conference's own axis and composes with all of them.
 
-Backchannel detection (Section 12.6) otherwise applies per track before
-interruption evaluation. An interruption that lands is more than the chunk
+No backchannel detection runs on a conference lane: it belongs to the SEMANTIC
+strategy. An interruption that lands is more than the chunk
 stream stopping: the channel calls `stop_playback()` so the audio the
 transport already holds is discarded instead of playing on over the
-participant (Sections 12.10.3 and 12.10.4). `ON_BARGE_IN` fires with the
+participant (Sections 12.10.3 and 12.10.4). The utterances still waiting for
+the floor in that room are dropped unpublished. `ON_BARGE_IN` fires with the
 interrupting participant identified.
 
 #### 12.10.6 AI Participation Patterns
@@ -9239,6 +9272,27 @@ turn-taking agent in a multi-party meeting — the speech-to-speech
 pattern of Section 12.10.6 — and it is OPTIONAL within Conformance
 Level 3. This section binds only implementations that offer it.
 
+The composition is configured through the channel's `realtime` field
+(Section 12.10.4):
+
+```
+ConferenceRealtimeConfig
+├── provider: RealtimeVoiceProvider           # One provider session per conference
+├── system_prompt: string | null
+├── voice: string | null
+├── tools: list<ToolDefinition> | null        # Each needs tool_handler or human_input_handler
+├── tool_handler: callable | null             # (room_id, name, arguments) → serialized result
+├── temperature: float | null
+├── input_sample_rate: int = 24000            # Rate the mix is resampled to
+├── output_sample_rate: int = 24000           # Rate of the provider's audio, published as-is
+├── server_vad: bool = true                   # Provider turn-taking only, never interruption
+├── provider_config: map<string, any> | null  # Provider-specific session options
+├── tool_policy: ToolPolicy | null            # Section 21.1
+├── tool_timeout_seconds: float | null = 10   # Per-call bound (Section 21.6); null = unbounded
+├── tool_timeouts: map<string, float | null> = {}  # Per-tool-name bounds
+└── human_input_handler: HumanInputToolHandler | null  # Human-input tools, served before tool_handler
+```
+
 The composition changes no boundary it crosses. The provider keeps the
 interface of Section 12.4 — one session, one audio input, no notion of
 a conference. The backend keeps the interface of Section 12.10.3 —
@@ -9327,8 +9381,10 @@ first assistant transcript delta has arrived.
 sensor: ON_BARGE_IN MUST identify the interrupting participant, and
 only track identity can — the provider's own speech detection hears
 the mix and can name no one, so it MUST NOT trigger the interruption
-path. An interruption that lands does what Section 12.10.5 says —
-`stop_playback()`, the latch, ON_BARGE_IN — and additionally SHOULD
+path. An interruption that lands does what Section 12.10.5 says — the
+response publishes nothing past its next chunk and closes with `is_final`,
+`stop_playback()` is called, ON_BARGE_IN fires, and what the provider
+still sends for that response is discarded — and additionally SHOULD
 signal the provider to cancel the response in flight, where the
 provider can: cancellation is best-effort, since Section 12.4
 providers exist whose sessions cannot cancel a response, and it is
@@ -13249,11 +13305,14 @@ ConferenceChannel
 │   ├── backend: ConferenceBackend
 │   ├── stt: STTProvider | null           # Per-track transcription
 │   ├── tts: TTSProvider | null           # AI voice via bot track
+│   ├── realtime: ConferenceRealtimeConfig | null  # OPTIONAL — speech-to-speech; excludes tts
+│   ├── pipeline: AudioPipelineConfig | null       # Lane stages; null = default VAD and format contract
 │   ├── vision: VisionProvider | null     # OPTIONAL — video/screen tracks
 │   ├── interruption: ConferenceInterruptionConfig
 │   ├── recording: ConferenceRecordingConfig | null
+│   ├── recorder: MediaRecorder | null    # Required with recording, refused without it
 │   ├── bot_identity: string              # Bot's display identity
-│   ├── bot_grants: ConferenceGrants      # Grants for join_as_bot()
+│   ├── bot_grants: ConferenceGrants | null  # Explicit grants for join_as_bot(); null = derived
 │   ├── default_grants: ConferenceGrants  # Grants minted for participants
 │   ├── e2ee: bool                        # default false — requires E2EE cap
 │   ├── close_room_on_detach: bool        # default false
