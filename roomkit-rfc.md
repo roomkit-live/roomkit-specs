@@ -225,14 +225,14 @@ A conforming RoomKit implementation consists of the following layers:
 ┌─────────────────────────────────────────────────────────────────────┐
 │                     Integration Surfaces                            │
 │                                                                     │
-│   ┌───────────────┐    ┌───────────────┐    ┌───────────────┐      │
-│   │   REST API    │    │  MCP Server   │    │   WebSocket   │      │
-│   │  (humans,     │    │  (AI agents,  │    │   (real-time  │      │
-│   │   systems)    │    │   tools)      │    │    clients)   │      │
-│   └───────┬───────┘    └───────┬───────┘    └───────┬───────┘      │
-└───────────┼────────────────────┼────────────────────┼──────────────┘
-            │                    │                    │
-            ▼                    ▼                    ▼
+│   ┌───────────────┐    ┌───────────────┐                           │
+│   │   REST API    │    │  MCP Server   │                           │
+│   │  (humans,     │    │  (AI agents,  │                           │
+│   │   systems)    │    │   tools)      │                           │
+│   └───────┬───────┘    └───────┬───────┘                           │
+└───────────┼────────────────────┼───────────────────────────────────┘
+            │                    │
+            ▼                    ▼
 ┌─────────────────────────────────────────────────────────────────────┐
 │                          RoomKit Core                               │
 │                                                                     │
@@ -279,7 +279,7 @@ A conforming RoomKit implementation consists of the following layers:
 
 | Layer | Responsibility |
 |---|---|
-| **Integration Surfaces** | REST API for humans/systems, MCP for AI agents, WebSocket for real-time |
+| **Integration Surfaces** | REST API for humans/systems, MCP for AI agents; real-time clients connect through the WebSocket channel (Section 6.3, Appendix A.8) on a socket the host serves |
 | **RoomKit Core** | Room lifecycle, event routing, hooks, permissions, identity, store |
 | **Channel Interface** | Unified abstraction — every channel implements the same interface |
 | **Provider Layer** | Interchangeable implementations behind channels |
@@ -287,7 +287,7 @@ A conforming RoomKit implementation consists of the following layers:
 ### 3.2 Key Separations
 
 1. **Channel type and Provider are separate.** SMS is a channel type. Twilio is a provider. Swap providers without changing room logic.
-2. **Core and Integration Surfaces are separate.** Core has no web framework dependency. REST/MCP/WebSocket are thin wrappers.
+2. **Core and Integration Surfaces are separate.** Core has no web framework dependency. REST/MCP are thin wrappers; real-time clients reach the core through the WebSocket channel.
 3. **Framework and Business Logic are separate.** Framework provides primitives. Integrator registers hooks and configures channels.
 4. **Transport and Audio Processing are separate.** The transport delivers raw audio frames. The audio pipeline (resampler, AEC, AGC, denoiser, VAD, diarization, DTMF, recording) is a distinct layer with pluggable providers, independent of the transport choice.
 
@@ -535,7 +535,11 @@ RoomEvent
 | RECORDING_STARTED | Voice | Audio recording started for a session |
 | RECORDING_STOPPED | Voice | Audio recording stopped, result available |
 | TASK_CREATED | Side effect | A task was created |
+| TASK_DELEGATED | Side effect | A task was delegated to a child room; payload of ON_TASK_DELEGATED, never stored (Section 23.5) |
+| TASK_COMPLETED | Side effect | A delegated task ended; payload of ON_TASK_COMPLETED, never stored (Section 23.5) |
 | OBSERVATION | Side effect | An observation was recorded |
+| TOOL_CALL_START | Activity | A tool call started (ToolCallContent, status `pending`) |
+| TOOL_CALL_END | Activity | A tool call ended (ToolCallContent, with its status and outcome) |
 
 **EventStatus** enumeration:
 
@@ -575,13 +579,16 @@ appropriate name. System-generated events (`channel_id="system"`) MAY leave
 ### 5.3 Event Content
 
 Event content is a **discriminated union** — each event carries exactly one content
-type. Implementations MUST support all content types defined here.
+type. Implementations MUST support all content types defined here. Each content
+type carries a `type` field that names it and discriminates the union: `text`,
+`rich`, `media`, `location`, `audio`, `video`, `composite`, `system`,
+`template`, `edit`, `delete` or `tool_call`.
 
 **TextContent** — Plain text message:
 
 ```
 TextContent
-├── text: string                            # Message text
+├── body: string                            # Message text
 └── language: string | null                 # ISO 639-1 language code
 ```
 
@@ -589,11 +596,12 @@ TextContent
 
 ```
 RichContent
-├── text: string                            # Primary text (may contain markdown/HTML)
+├── body: string                            # Primary text, in `format`
+├── format: "html" | "markdown" = "markdown" # Markup of body
 ├── plain_text: string | null               # Plain text fallback
-├── buttons: list<Button>                   # Interactive buttons
-├── cards: list<Card>                       # Structured card elements
-└── quick_replies: list<QuickReply>         # Suggested quick responses
+├── buttons: list<map<string, any>>         # Interactive buttons
+├── cards: list<map<string, any>>           # Structured card elements
+└── quick_replies: list<string>             # Suggested quick responses
 ```
 
 **MediaContent** — File, image, or document:
@@ -611,8 +619,8 @@ MediaContent
 
 ```
 LocationContent
-├── latitude: float                         # Latitude
-├── longitude: float                        # Longitude
+├── latitude: float                         # Latitude, -90 to 90
+├── longitude: float                        # Longitude, -180 to 180
 ├── label: string | null                    # Location name
 └── address: string | null                  # Street address
 ```
@@ -623,8 +631,7 @@ LocationContent
 AudioContent
 ├── url: string                             # Audio URL (or data: URI)
 ├── duration_seconds: float | null          # Duration
-├── mime_type: string                       # Audio MIME type
-├── size_bytes: int | null                  # File size
+├── mime_type: string = "audio/ogg"         # Audio MIME type
 └── transcript: string | null               # STT transcript (if available)
 ```
 
@@ -642,7 +649,7 @@ VideoContent
 
 ```
 CompositeContent
-└── parts: list<EventContent>               # Ordered list of content parts
+└── parts: list<EventContent>               # Ordered list of content parts, at least one
 ```
 
 Implementations MUST enforce a maximum nesting depth of 5 levels for
@@ -652,8 +659,8 @@ CompositeContent.
 
 ```
 SystemContent
-├── code: string                            # Machine-readable code
-├── message: string                         # Human-readable description
+├── body: string                            # Human-readable description
+├── code: string | null                     # Machine-readable code
 └── data: map<string, any>                  # Structured payload
 ```
 
@@ -662,9 +669,9 @@ SystemContent
 ```
 TemplateContent
 ├── template_id: string                     # Template identifier
-├── language: string                        # Template language
-├── parameters: map<string, any>            # Variable substitutions
-└── fallback: EventContent | null           # Content for channels without template support
+├── language: string = "en"                 # Template language
+├── parameters: map<string, string>         # Variable substitutions
+└── body: string | null                     # Text for channels without template support
 ```
 
 **EditContent** — Edit of a previously sent message:
@@ -681,7 +688,7 @@ EditContent
 ```
 DeleteContent
 ├── target_event_id: string                # The event being deleted
-├── delete_type: DeleteType                # SENDER, SYSTEM, or ADMIN
+├── delete_type: DeleteType = SENDER       # SENDER, SYSTEM, or ADMIN
 └── reason: string | null                  # Optional reason
 ```
 
@@ -692,6 +699,29 @@ DeleteContent
 | SENDER | The original message author deleted their own message |
 | SYSTEM | Automated deletion (e.g., auto-moderation, policy enforcement) |
 | ADMIN | Administrative deletion by a room administrator or operator |
+
+**ToolCallContent** — A tool call, carried by TOOL_CALL_START and TOOL_CALL_END
+events:
+
+```
+ToolCallContent
+├── tool_name: string                       # Tool called
+├── tool_id: string                         # The call's identifier
+├── arguments: map<string, any>             # Call arguments
+├── result: any | null                      # Call result (end row)
+├── status: "pending" | "completed" | "failed" = "pending"
+│       # pending on the start row, completed or failed on the end row
+├── duration_ms: int | null                 # Execution time (end row)
+├── error: string | null                    # Error of a failed call
+├── structured_content: map<string, any> | null
+│       # Structured copy of the result for UI surfaces (Section 9.3)
+├── outcome: "served" | "refused" | "failed" | "blocked" | "unserved"
+│       | "cancelled" | null
+│       # How the call ended, on an end row (Section 6.4); null on a row
+│       # written without it, which a reader takes by its status
+└── refused_but_ran: bool = false
+        # The call ran although RoomKit refused it (Section 9.3)
+```
 
 ### 5.4 Channel Data (Typed, Per-Channel)
 
@@ -1126,8 +1156,8 @@ Channel (interface)
 
 ```
 ChannelOutput
-├── events: list<RoomEvent>                 # Response events (subject to permissions)
-├── response_stream: async_iterator<str>    # Streaming response (mutually exclusive with events)
+├── response_events: list<RoomEvent>        # Response events (subject to permissions)
+├── response_stream: async_iterator<str>    # Streaming response (mutually exclusive with response_events)
 │       # When set, framework pipes stream to streaming-capable channels,
 │       # accumulates full text, stores event, and re-broadcasts to others.
 ├── tasks: list<Task>                       # Side effects (always allowed)
@@ -1211,7 +1241,7 @@ An AI channel wraps an AI Provider (see Section 6.7). When `on_event()` is calle
 3. Construct AI context with capabilities, system instructions, and room metadata.
 4. Run the turn's tool loop over the provider's structured stream (**One loop,
    streamed or not**, below).
-5. Return ChannelOutput with response event(s), tasks, and observations.
+5. Return ChannelOutput with a response stream (Appendix A.9).
 
 The AI channel MUST skip events originating from itself to prevent infinite loops.
 
@@ -1743,7 +1773,7 @@ MUST transcode content to match each target channel's supported media types.
 | VideoContent | TEXT only | TextContent ("[Video: {url}]") |
 | LocationContent | TEXT only | TextContent ("[Location] lat, lon - label") |
 | CompositeContent | varies | Filter parts to target's supported types |
-| TemplateContent | no templates | Use fallback content, or transcode to RichContent/TextContent |
+| TemplateContent | no templates | TextContent (use body or "[Template: {template_id}]") |
 | EditContent | no edit support | TextContent ("Correction: {new text}") |
 | DeleteContent | no delete support | TextContent ("[Message deleted]") or SystemContent |
 
@@ -10502,7 +10532,7 @@ POST   /webhooks/{channel_type}/{provider}/status   # Delivery status webhook
 **WebSocket:**
 
 ```
-WS     /ws/{room_id}                            # Real-time room connection
+WS     /ws/{room_id}                            # Real-time room connection (WebSocket channel, Appendix A.8)
 ```
 
 ### 16.2 MCP Server (RECOMMENDED)
@@ -11983,7 +12013,7 @@ A durable delivery-lane outbox and crash recovery of turns are separate capabili
 | Strategy | Behavior |
 |---|---|
 | Immediate | Deliver synchronously. May interrupt active voice playback. |
-| WaitForIdle(buffer_seconds) | Wait until both AI generation and user input are idle for `buffer_seconds`, then deliver. Prevents interrupting active exchanges. |
+| WaitForIdle(buffer = 1.0, playback_timeout = 15.0) | Wait until both AI generation and user input are idle for `buffer` seconds, then deliver. Prevents interrupting active exchanges. A wait longer than `playback_timeout` seconds delivers anyway. |
 | Queued(buffer_seconds) | Batch multiple delivery items, then deliver together after `buffer_seconds` of inactivity. |
 
 **WaitForIdle** is RECOMMENDED for voice channels where interruptions are
@@ -12988,9 +13018,14 @@ WebSocketChannel
 │   ├── supports_edit: true
 │   └── supports_delete: true
 ├── connection_registry: map<connection_id, send_function>
-│   ├── register_connection(id, send_fn) → void
-│   └── unregister_connection(id) → void
-└── delivery: broadcasts to all registered connections
+│   ├── register_connection(id, send_fn, room_id,
+│   │       stream_send_fn: function | null) → void
+│   │       # Subscribes the connection to room_id; with stream_send_fn
+│   │       # it also receives streamed responses as they are produced
+│   ├── subscribe(id, room_id) → void          # Also deliver room_id's events
+│   ├── unsubscribe(id, room_id) → void        # Stop delivering room_id's events
+│   └── unregister_connection(id) → void       # Also drops its subscriptions
+└── delivery: sends to the connections subscribed to the event's room
 ```
 
 ### A.9 AI Channel
@@ -13350,7 +13385,7 @@ ConferenceChannel
    ▼
 2. Twilio webhook → parse_webhook() → InboundMessage
    {channel_id: "sms_main", sender_id: "+15551234567",
-    content: TextContent{text: "Bonjour"}}
+    content: TextContent{body: "Bonjour"}}
    │
    ▼
 3. process_inbound(message)
@@ -13361,7 +13396,7 @@ ConferenceChannel
    ├── Identity: resolve(message from "+15551234567" on SMS, context) → IDENTIFIED (Jean Tremblay)
    │
    ├── Create RoomEvent {
-   │     type: MESSAGE, content: TextContent{text: "Bonjour"},
+   │     type: MESSAGE, content: TextContent{body: "Bonjour"},
    │     source: {channel_id: "sms_main", participant_id: "p_jean"},
    │     index: 0, chain_depth: 0
    │   }
@@ -13375,9 +13410,9 @@ ConferenceChannel
    │       ├── Build history: [{role: "user", text: "Bonjour"}]
    │       ├── Target: SMS capabilities (max 1600 chars, text only)
    │       ├── Run the tool loop over the provider's structured stream (§6.4)
-   │       └── Return ChannelOutput{events: [
-   │             RoomEvent{content: TextContent{text: "Bonjour Jean! ..."}}
-   │           ]}
+   │       └── Return ChannelOutput{response_stream}
+   │             SMS does not stream: the framework reads the stream, and
+   │             its text becomes RoomEvent{content: TextContent{body: "Bonjour Jean! ..."}}
    │
    ├── Reentry: AI response event
    │   ├── chain_depth = 1 (< max 5)
@@ -13396,7 +13431,7 @@ ConferenceChannel
    │
    ▼
 2. process_inbound → RoomEvent {
-     content: TextContent{text: "Mon NAS est 123-456-789"},
+     content: TextContent{body: "Mon NAS est 123-456-789"},
      source: {channel_id: "sms_customer"}, index: 5
    }
    │
@@ -13410,11 +13445,11 @@ ConferenceChannel
    │         injected_events: [
    │           InjectedEvent{
    │             target_channel_ids: ["sms_customer"],
-   │             event: RoomEvent{content: TextContent{text: "Message blocked. Do not send SIN by SMS."}}
+   │             event: RoomEvent{content: TextContent{body: "Message blocked. Do not send SIN by SMS."}}
    │           },
    │           InjectedEvent{
    │             target_channel_ids: ["ws_advisor"],
-   │             event: RoomEvent{content: TextContent{text: "Client attempted to send SIN. Blocked."}}
+   │             event: RoomEvent{content: TextContent{body: "Client attempted to send SIN. Blocked."}}
    │           }
    │         ],
    │         observations: [
@@ -13560,7 +13595,7 @@ Timeline of a room with SMS customer + AI:
    {channel_id: "wa_customer", sender_id: "+15551234567",
     content: EditContent{
       target_event_id: "evt_003",
-      new_content: TextContent{text: "I need 50000$"},
+      new_content: TextContent{body: "I need 50000$"},
       edit_source: "sender"
     },
     event_type: EDIT}
@@ -13571,8 +13606,11 @@ Timeline of a room with SMS customer + AI:
    ├── Validate: evt_003 exists in room → ✓
    ├── Validate: sender is original author → ✓
    │
+   ├── BEFORE_BROADCAST hooks → allow
+   │   (a block leaves evt_003 unmutated and fires no ON_EVENT_UPDATED)
+   │
    ├── Update original event via update_event():
-   │   evt_003.content = TextContent{text: "I need 50000$"}
+   │   evt_003.content = TextContent{body: "I need 50000$"}
    │   evt_003.metadata.edited = true
    │
    ├── Store EDIT event {
@@ -13587,11 +13625,14 @@ Timeline of a room with SMS customer + AI:
    │   │   └── deliver() native edit → client updates message in-place
    │   │
    │   ├── SMS (supports_edit: false)
-   │   │   └── Transcode → TextContent{text: "Correction: I need 50000$"}
+   │   │   └── Transcode → TextContent{body: "Correction: I need 50000$"}
    │   │       └── deliver() → SMS sent as new message
    │   │
    │   └── AI channel.on_event()
    │       └── Updates conversation history with corrected text
+   │
+   ├── ON_EVENT_UPDATED hooks → evt_003 as edited
+   │   (async, once the room lock is released)
    │
    └── AFTER_BROADCAST hooks → audit log
 ```
@@ -13617,6 +13658,9 @@ Timeline of a room with SMS customer + AI:
    ├── Validate: evt_005 exists in room → ✓
    ├── Validate: sender is original author (SENDER type) → ✓
    │
+   ├── BEFORE_BROADCAST hooks → allow
+   │   (a block leaves evt_005 unmutated and fires no ON_EVENT_DELETED)
+   │
    ├── Mark original event as deleted via update_event():
    │   evt_005.metadata.deleted = true
    │
@@ -13632,11 +13676,14 @@ Timeline of a room with SMS customer + AI:
    │   │   └── deliver() native delete → client removes message
    │   │
    │   ├── SMS (supports_delete: false)
-   │   │   └── Transcode → TextContent{text: "[Message deleted]"}
+   │   │   └── Transcode → TextContent{body: "[Message deleted]"}
    │   │       └── deliver() → SMS sent as new message
    │   │
    │   └── AI channel.on_event()
    │       └── Updates conversation history (removes or marks deleted)
+   │
+   ├── ON_EVENT_DELETED hooks → evt_005 as deleted
+   │   (async, once the room lock is released)
    │
    └── AFTER_BROADCAST hooks → audit log
 ```
@@ -13782,7 +13829,7 @@ Timeline of a room with SMS customer + AI:
    │   │     kit.delegate(room_id, "diagnostics-bot",
    │   │       task="Check network status for customer area",
    │   │       notify="network-specialist")
-   │   │     (the kit's delivery strategy: WaitForIdle(buffer_seconds=5.0))
+   │   │     (the kit's delivery strategy: WaitForIdle(buffer=5.0))
    │   │
    │   ├── ON_TASK_DELEGATED hook fires
    │   └── Responds: "Let me check your area's network status..."
@@ -13791,8 +13838,8 @@ Timeline of a room with SMS customer + AI:
 4. Delegated task completes
    │
    ├── ON_TASK_COMPLETED hook fires
+   ├── BEFORE_DELIVER hook fires (can block or modify)
    ├── WaitForIdle strategy waits for conversation pause
-   ├── BEFORE_DELIVER hook fires
    ├── Result injected: "Network status: area outage confirmed, ETA 2 hours"
    │
    ▼
