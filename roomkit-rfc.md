@@ -2534,7 +2534,11 @@ ON_TOOL_CALL's observers alone, whoever was to serve it: an external handler
 hears of it through `on_tool_cancelled`, which reports it so by default, and
 never through `on_tool_result`, which reports an outcome. The handler may
 never have been asked about the call; a decision of its still pending is its
-own to withdraw. A handler that raises while it decides fails the call, as a
+own to withdraw. The channel's close is such a cut: an AI channel that
+closes cancels the calls its running turns execute, each reported once,
+cancelled, its end row too, asks no further round, and each such turn ends
+`cancelled`, as a speech-to-speech channel's close interrupts its calls
+(Section 12.4). A handler that raises while it decides fails the call, as a
 tool handler that raises does. A call whose outcome the model already read
 (the provider ran it, an external handler decided it, its realtime result
 went out) is still owed its report when a cut interrupts that report: it is
