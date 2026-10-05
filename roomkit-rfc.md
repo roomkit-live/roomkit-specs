@@ -11513,6 +11513,9 @@ StatusEntry
 `metadata.room_id`. Status posts fire `ON_STATUS_POSTED` hooks in that room; an
 entry that names no room reaches no room's hooks. Agents MAY use the StatusBus to
 signal completion, progress, or request attention without sending room events.
+The framework posts each delegated task on the bus (Section 23.3), and an agent
+reads its room's tasks through the `task_status` tool (Section 23.4); an agent is
+never pointed at a tool it was not given.
 
 ---
 
@@ -12193,7 +12196,7 @@ DelegatedTaskResult
 
 ### 23.3 Delegation Protocol
 
-When `delegate(room_id, agent_id, task, notify)` is called:
+When `delegate(room_id, agent_id, task, notify, post_status = true)` is called:
 
 1. Create a **child room** linked to the parent room.
 2. Attach the specified agent as an INTELLIGENCE channel in the child room.
@@ -12269,6 +12272,10 @@ When `delegate(room_id, agent_id, task, notify)` is called:
    instruction; a task that did not complete says it failed or was
    cancelled, without its error (§9.3), whatever output or error text it
    left. Only a completed task with nothing to say is not handed back.
+   The delivery carries the task in its metadata, `task_id`, `agent_id` (the
+   worker) and `task_status`, whichever channel it reaches, so a hook that sees
+   it (`BEFORE_BROADCAST`, `BEFORE_DELIVER`) tells a task's result from any
+   other instruction and names the task without reading its text.
    An instruction is not stored, so the result lives in the turn it opens
    and in the agent's answer, not in the history of later turns. The
    result is never written into the room's stored configuration (the
@@ -12299,6 +12306,19 @@ completion callback and its waiters still run. A task whose work already ran whe
 cancellation arrives ends as it stands. A delegation's span ends with its
 task's status: `ok` completed, `error` failed, `cancelled` cancelled.
 
+A delegation is followed on the framework's StatusBus (Section 19.8), so an
+agent or a host sees a task while it runs. Once its child room is ready, when
+`ON_TASK_DELEGATED` fires, it posts `pending` under the worker's `agent_id`,
+action `task`, its detail the task, bounded. Once it ends, when
+`ON_TASK_COMPLETED` fires, it posts `completed`, its detail the result,
+bounded, or `failed` for a task that failed or was cancelled, its detail
+saying which and never the error's text (Section 9.3). Both entries carry in
+their metadata `room_id`, the parent room, `task_id` and `child_room_id`; the
+terminal one adds `task_status` and `duration_ms`. A caller that follows its
+tasks on the bus itself (an orchestration strategy's worker run, Section
+19.7.3) delegates with `post_status = false`, and the delegation posts
+nothing, so a task never shows twice.
+
 ### 23.4 Delegation Tools
 
 Implementations SHOULD provide helpers for AI-driven delegation:
@@ -12314,6 +12334,16 @@ Implementations SHOULD provide helpers for AI-driven delegation:
 
 - `setup_realtime_delegation(channel, handler, tool)` — The same for a
   realtime voice channel, whose sessions declare the tool.
+
+- `task_status` — A tool an agent can be given on its own, independently of
+  the delegation helpers. It answers with the tasks posted on the StatusBus for
+  the room of the call, read from the tool call context (Section 21.4): those
+  running and those ended, the latest entry of each, with its worker, the task,
+  its status, its result or that it failed, and when it was posted; a
+  `task_id` argument narrows the answer to one task. It reads the bus for that
+  room only: one room's tasks never show in another. A tool reply that tells
+  its agent to follow the work (a strategy's background dispatch, Section
+  19.7.3) names `task_status` only when the agent was given it.
 
 A delegation tool, whichever helper wired it (a supervisor's per-worker and
 strategy tools included), delegates from the room of the call, read from the
