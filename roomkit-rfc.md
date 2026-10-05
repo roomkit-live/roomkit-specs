@@ -5997,9 +5997,16 @@ A call an ending interrupts is reported once, as cancelled. The endings are
 the session's end, the channel's close, and on a conference a detach or the
 unplug of its realtime provider. A call whose own handler caused the ending
 (a hang-up tool ending its session, detaching its room, unplugging the
-provider, closing its channel) is not interrupted, on every host: it runs on
-and reports its own outcome, while the other calls the ending reaches are
-interrupted. A start that fails is a session's end for
+provider, closing its channel or the framework) is not interrupted, on every
+host and every door, a reasoning backend's included: it runs on and reports
+its own outcome, while the other calls the ending reaches are interrupted.
+The call that caused an ending is known by the call context the ending runs
+in, which every task its handler starts inherits, not by the task that runs
+the ending: a handler that ends its session through a task of its own, and a
+close that runs in a task of its own, still spare it, and the task that holds
+it (a backend's delegation) with it. A spared call still running when its
+channel closes is waited for within the close's bound, then interrupted and
+reported once, as cancelled; nothing of it outlives the close. A start that fails is a session's end for
 the calls the provider issued while it was pending, up to its disconnection.
 A report under way when an ending arrives (a call's refusal, or the
 cancellation of a call the provider abandoned) is still made, with the outcome
