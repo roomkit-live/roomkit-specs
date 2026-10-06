@@ -5030,6 +5030,17 @@ same AEC instance — this would double-feed and corrupt the adaptive filter.
   signal and the echo in the inbound stream. Transport-level feeding provides
   the best alignment for local hardware; pipeline-level feeding is sufficient
   for network transports where latency is inherently variable.
+- A transport feeding the reference from its speaker callback SHOULD keep one
+  output stream open for the session, playing silence between responses. An
+  output stream opened per response starts at a new render-to-capture delay
+  each time, which the audio server may then take seconds to settle; an
+  adaptive filter cannot follow a delay that moves under it (measured on a
+  desktop audio server: a quarter of the echo left above -50 dBFS, against
+  one twentieth with the delay held still).
+- After playback ends, or is cut by a barge-in, the speaker and the room still
+  sound: the audio already handed to the device, then the room's echo tail. A
+  transport running its own AEC SHOULD keep cancelling for that tail (about
+  0.5 s), on the silent reference that follows, before it bypasses the AEC.
 - The reference and capture (inbound) audio MUST have the same sample rate and
   frame size. When the transport uses different sample rates for input and
   output, the implementation MUST either resample the reference to match the
