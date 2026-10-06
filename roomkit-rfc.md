@@ -12386,13 +12386,16 @@ When `delegate(room_id, agent_id, task, notify, post_status = true)` is called:
    delegation again ends at `max_chain_depth` (§8.3) like any chain. A
    delegation made outside a tool call delivers at 0.
 
-A task cancelled from outside (its caller's timeout, the task runner's
-`cancel` or `close`, even before it ran or while its delegation was still
-being set up) ends once, as any task does, whether it ran inline or in the
-background: `cancelled`, with no output. Steps 7 and 8 still run, to their
-end though the task is being cancelled, the completion callback with them,
-and a notified agent is told the task was cancelled; then the cancellation
-goes on. A step 8 whose notified agent's turn fails leaves the log line to
+A task cancelled from outside (its caller's timeout, the framework's
+`cancel_task(task_id)`, the task runner's `cancel` or `close`, even before it
+ran or while its delegation was still being set up) ends once, as any task
+does, whether it ran inline or in the background: `cancelled`, with no
+output. Steps 7 and 8 still run, to their end though the task is being
+cancelled, the completion callback with them, and a notified agent is told
+the task was cancelled; then the cancellation goes on. The one exception is
+an agent that cancelled the task itself (its `cancel_task` call, Section
+23.4): the tool's answer has told it, and step 8 hands it nothing, or it
+would say the cancellation twice. A step 8 whose notified agent's turn fails leaves the log line to
 that turn's failure, with its cause and at its level, and notes the result
 not delivered below it. A framework that is closing starts no turn: step 8 is skipped and
 logged, step 7 still runs. A step 8 already under way when the framework
@@ -12441,6 +12444,17 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   room only: one room's tasks never show in another. A tool reply that tells
   its agent to follow the work (a strategy's background dispatch, Section
   19.7.3) names `task_status` only when the agent was given it.
+
+- `cancel_task` — A tool an agent can be given on its own, as `task_status`,
+  so that a request the person changed or dropped stops its work. It cancels
+  one task of the room of the call, named by its `task_id` (from the
+  delegation's answer or `task_status`): a task still running ends
+  `cancelled`, as any task cancelled from outside does (Section 23.3). It
+  reaches only the tasks the bus lists for that room: a call never cancels
+  another room's task, nor one a strategy runs without posting it
+  (`post_status = false`), which that strategy follows itself. It answers
+  that the task was cancelled, that it had already ended (with its status),
+  or that the room has no such task.
 
 A delegation tool, whichever helper wired it (a supervisor's per-worker and
 strategy tools included), delegates from the room of the call, read from the
