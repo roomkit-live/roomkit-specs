@@ -2483,14 +2483,20 @@ turn (each message, streamed segment and tool row of it) MUST carry
 never stored, but it has an id, which its hooks see; an answer to it carries
 that id. An event that answers no event (an inbound message, a system event, a
 greeting) has `responds_to = null`. A turn the channel runs again for the same
-event carries the same `responds_to`. The pair (`source.channel_id`,
-`responds_to`) names one channel's answer to one event. `parent_event_id` is
-unrelated: it places an event in an in-app thread, and always names the
-thread's root.
+event carries the same `responds_to`. A buffered answer a channel already
+named keeps its name. The pair (`source.channel_id`, `responds_to`) names one
+channel's answer to one event. `parent_event_id` is unrelated: it places an
+event in an in-app thread, and always names the thread's root. A
+speech-to-speech channel (Section 12.4) is not bound by this yet: its answer to
+the user's speech starts before that speech's transcript is committed, so there
+is no event to name, and its answers carry `responds_to = null` (Planned).
 
 **What the turn is told.** `BEFORE_AI_GENERATION` receives, with the turn's
 context, the event the turn answers (`trigger`), so a hook can tell the model
-what this turn answers, and that another answer in the room is under way.
+what this turn answers, and that another answer in the room is under way. A
+stand-in an orchestration strategy hands a turn in place of the event it
+answers (a supervisor's workers' results, Section 19.7) names that event in its
+own `responds_to`, which is what the turn's answer names.
 
 **Consumption.** A response is delivered to channels (Section 10.2). Whether
 the people it was delivered to took it in is its consumption, recorded per
