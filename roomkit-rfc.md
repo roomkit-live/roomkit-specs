@@ -6192,10 +6192,10 @@ Every request the provider makes reads that same state, whoever makes it: the
 continuation, a non-silent text injection, the request that closes the
 caller's turn in the endpointing role (Section 12.4, audio pipeline). None
 sends a request while a response is in progress, active or requested. And a
-continuation never starts while the caller holds the floor (between activity
+continuation never starts while the caller is speaking (between activity
 start and activity end in the endpointing role, between the provider's own
-speech start and speech end otherwise): it is held until the caller hands the
-floor back, and the request that answers the caller's turn covers it, since
+speech start and speech end otherwise): it is held until the caller's turn
+ends, and the request that answers the caller's turn covers it, since
 the results already sit in the conversation ahead of what the caller said. A
 continuation that started anyway would speak over the caller, and the
 caller's own request would then find a response in progress and leave the
@@ -6373,7 +6373,7 @@ through the pipeline before being forwarded to the provider.
 Some speech-to-speech providers do not take turns. A **full-duplex provider**
 (e.g., OpenAI GPT-Live) listens and speaks at the same time: it decides on its
 own when to answer, when to fall silent because the user spoke over it, and
-when to hold the floor with a backchannel. Its wire carries audio and
+when to answer only with a backchannel and let the user keep talking. Its wire carries audio and
 transcript deltas in both directions and little else — no response start or
 end, no speech start or end, no request to respond, no interruption. The same
 providers hold no tools: the conversational model hands reasoning and tool use
@@ -6390,8 +6390,8 @@ and call tools. The two compose: the backend of a reasoning delegation MAY
 itself delegate a task.
 
 **Boundaries are synthesized (normative).** The channel contracts of this
-section — idle tracking, end-of-response flushing, AEC activation, the floor
-of Section 12.10.12 — hold on `on_response_start` and `on_response_end`, and a
+section — idle tracking, end-of-response flushing, AEC activation, one
+utterance at a time on the bot track (Section 12.10.12) — hold on `on_response_start` and `on_response_end`, and a
 full-duplex provider has neither on its wire. The provider MUST synthesize
 them: `on_response_start` when assistant output (audio or transcript) resumes
 after quiet, `on_response_end` when assistant output has been quiet for a
@@ -9118,7 +9118,7 @@ strategy. An interruption that lands is more than the chunk
 stream stopping: the channel calls `stop_playback()` so the audio the
 transport already holds is discarded instead of playing on over the
 participant (Sections 12.10.3 and 12.10.4). The utterances still waiting for
-the floor in that room are dropped unpublished. `ON_BARGE_IN` fires with the
+their turn in that room are dropped unpublished. `ON_BARGE_IN` fires with the
 interrupting participant identified.
 
 #### 12.10.6 AI Participation Patterns
@@ -9564,19 +9564,19 @@ ON_REALTIME_TEXT_INJECTED.
 **One voice per bot (normative).** A channel MUST refuse a
 configuration holding both a synthesizer (tts) and a speech-to-speech
 provider, at construction and at the plugs alike. There is one bot
-track and one floor; two components that each answer the room would
-answer over each other, and no floor discipline turns two
-intelligences into one voice. A deployment that wants to trade the
+track and one voice on it at a time; two components that each answer
+the room would answer over each other, and no turn-taking rule turns
+two intelligences into one voice. A deployment that wants to trade the
 STT/TTS pattern for the realtime one does it through the plugs —
 unplug one, plug the other — and never holds both.
 
 **The provider's voice is an utterance (normative).** Provider audio
 reaches the conference through the outbound contract of Section
-12.10.4 unchanged: a response takes the floor and opens an utterance,
+12.10.4 unchanged: a response takes its turn and opens an utterance,
 its audio deltas are the utterance's chunks, and its end closes the
 utterance with `is_final` — as does a barge-in, and a leave abandons
 it with no terminal chunk, exactly as written there. One utterance at
-a time holds: a second response waits for the floor. BEFORE_TTS and
+a time holds: a second response waits for its turn. BEFORE_TTS and
 AFTER_TTS do not fire — they are text-synthesis hooks and no text
 precedes this synthesis. ON_BARGE_IN fires as always, though its
 `interrupted_text` MAY be empty when the interruption lands before the
