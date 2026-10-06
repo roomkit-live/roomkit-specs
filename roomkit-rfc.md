@@ -348,10 +348,11 @@ Direction declares capability. Permissions restrict per room.
 Everything in a Room is a RoomEvent — messages, system notifications, typing
 indicators, channel state changes, participant joins/leaves. Once stored, an
 event keeps its index and status. Its content and source change only through
-§10.3 (an EDIT event or a direct `update_event()`); its metadata and
-`delivery_results` can also be written afterwards, by §10.3 and by the
-framework's own records of what became of it (a delivery that failed, the end
-of a streamed turn, a response cancelled as `superseded`); a direct
+§10.3 (an EDIT event or a direct `update_event()`); its metadata,
+`delivery_results` and `consumption` can also be written afterwards, by §10.3
+and by the framework's own records of what became of it (a delivery that
+failed, the end of a streamed turn, a response cancelled as `superseded`, a
+response read or heard, §8.5); a direct
 `delete_event()` removes it (§10.3). Events are sequentially indexed within
 their room.
 
@@ -499,7 +500,9 @@ RoomEvent
 ├── addressed_to: list<string> | null       # Intelligence channels asked to act (§19.3)
 ├── index: int >= 0                         # Sequential position in room timeline
 ├── chain_depth: int >= 0                   # Response chain depth (loop prevention)
-├── parent_event_id: string | null          # Event this is responding to
+├── parent_event_id: string | null          # In-app thread: the root of its thread
+├── responds_to: string | null              # The event this response answers (§8.5)
+├── consumption: map<string, Consumption>   # Per delivering channel: taken in? (§8.5)
 ├── correlation_id: string | null           # Integrator's external reference
 ├── idempotency_key: string | null          # Duplicate prevention key
 ├── created_at: datetime                    # When the event was created
@@ -1402,7 +1405,8 @@ reaches its end (its end marker, `ON_AI_RESPONSE`), and running out of the
 bound never raises out of the loop.
 
 **What the generation hooks see:** `BEFORE_AI_GENERATION` fires once per turn,
-with the context the turn starts from, and its `tools` are the turn's toolset
+with the context the turn starts from and the event the turn answers (`trigger`,
+Section 8.5), and its `tools` are the turn's toolset
 as the tool policy and skill gating leave it. Without Tool Search that is the
 first round's declaration, the tool that reads back a large result aside
 (below). Under Tool Search it is the whole catalogue the
@@ -2463,6 +2467,61 @@ RealtimeBackend (interface)
 Implementations SHOULD provide at least an in-memory realtime backend for
 single-process deployments.
 
+### 8.5 Responses: What They Answer, and Whether They Were Consumed
+
+An intelligence channel answers events: a participant's message, an
+instruction (Section 10.1.1), a delegated task's hand-back (Section 23.3).
+Several answers can be under way in one room at once: the room lock does not
+cover generation (Section 13.5). An answer therefore says which event it
+answers, and the room records whether each answer reached the person it was
+delivered to. With both, a host can tell each turn what it answers and where
+the room's other requests stand: answered, being answered, taken in or not.
+
+**What a response answers.** Every event an intelligence channel produces for a
+turn (each message, streamed segment and tool row of it) MUST carry
+`responds_to`: the id of the event that triggered the turn. An instruction is
+never stored, but it has an id, which its hooks see; an answer to it carries
+that id. An event that answers no event (an inbound message, a system event, a
+greeting) has `responds_to = null`. A turn the channel runs again for the same
+event carries the same `responds_to`. The pair (`source.channel_id`,
+`responds_to`) names one channel's answer to one event. `parent_event_id` is
+unrelated: it places an event in an in-app thread, and always names the
+thread's root.
+
+**What the turn is told.** `BEFORE_AI_GENERATION` receives, with the turn's
+context, the event the turn answers (`trigger`), so a hook can tell the model
+what this turn answers, and that another answer in the room is under way.
+
+**Consumption.** A response is delivered to channels (Section 10.2). Whether
+the person took it in is its consumption, recorded per delivering channel:
+
+```
+Consumption
+├── state: "consumed" | "partial" | "unconsumed"
+├── at: datetime                            # When the state was recorded
+└── detail: map<string, any>                # How far, by channel: played_ms, played_percentage
+```
+
+- `consumed`: taken in whole. A voice response played to its end, or a response
+  a `READ_RECEIPT` of the delivering channel covers (its index at or below the
+  receipt's).
+- `partial`: taken in part. A voice response cut by a barge-in (Section
+  12.3.13), with `detail.played_ms`, and `detail.played_percentage` when the
+  total duration is known.
+- `unconsumed`: delivered, but nothing of it reached the person. A voice
+  response cancelled as `superseded` before any of its audio played (Section
+  12.2).
+
+The state is the same on every event of the answer, which is every event that
+has the same `source.channel_id` and `responds_to`. A channel that cannot tell
+records nothing: a missing entry means unknown, not `unconsumed`. A later state
+replaces an earlier one; `consumed` is final, so a response read after it was
+cut becomes `consumed`, and a `consumed` response stays `consumed`. Each change
+fires `ON_CONSUMPTION` (ASYNC) in the room, with the answer's events, its
+`responds_to`, the delivering channel and the new state. Consumption says
+nothing of delivery: an event that failed to deliver has its `delivery_results`,
+and no consumption.
+
 ---
 
 ## 9. Hook System
@@ -2571,6 +2630,7 @@ them as above runs after those as an observer.
 | **Delivery:** | | | |
 | BEFORE_DELIVER | SYNC | Implemented | Before proactive delivery strategy executes — can block/modify |
 | AFTER_DELIVER | ASYNC | Implemented | After proactive delivery completes |
+| ON_CONSUMPTION | ASYNC | Planned | A response's consumption changed on a delivering channel: consumed, partial or unconsumed (Section 8.5) |
 | | | | |
 | **AI Generation:** | | | |
 | BEFORE_AI_CONTEXT_BUILD | SYNC | Planned | Before AI context is built (pre-memory, pre-tool-resolution) — can block cheaply. Arrives with the Section 12.9 pipeline, which is DRAFT; required by nothing today |
@@ -4283,6 +4343,10 @@ enters a room as any other audio.
      produced, its last partial sentence included: the sessions that heard it
      get that text as their final transcript and AFTER_TTS fires with it, then
      the failure propagates.
+16s. When a served session's playback of the response reaches its end, the
+     response is recorded `consumed` on the voice channel (Section 8.5); a cut
+     records `partial` (Section 12.3.13), and a response superseded before any
+     audio records `unconsumed` (Section 12.2).
 
 --- Common outbound path ---
 12. AudioChunk stream → [PostProcessors] → [Recorder] → [Resampler] → Transport
@@ -5438,7 +5502,8 @@ speech segment is measured from its own onset. When the speech ends:
   have, unless new speech has started meanwhile, which holds it in turn.
 
 A response cancelled as `superseded` was never heard, so it is not part of the
-conversation. Its text may already be stored as finished (generation often ends
+conversation, and its consumption on the voice channel is `unconsumed`
+(Section 8.5). Its text may already be stored as finished (generation often ends
 before playback starts): the channel marks every MESSAGE response event of the
 turn `metadata.cancelled = true` and `metadata.cancellation_reason =
 "superseded"`, and an intelligence channel MUST NOT replay such an event as
@@ -5585,6 +5650,8 @@ Check InterruptionStrategy:
    total duration is known; a streamed response (Section 12.2, step 12s) has
    none, so it carries `played_ms` alone. For a streamed response, the stored text
    is the sentences already handed to TTS at the moment of the interruption.
+   The response is recorded `partial` on the voice channel, with the same
+   `played_ms` (Section 8.5), whether or not the partial response is kept.
 3. If the TTS consumes context: record the assistant turn with
    `interrupted = true` and the same `played_ms` (Section 12.2.2), so the
    provider knows where the user stopped hearing it.
