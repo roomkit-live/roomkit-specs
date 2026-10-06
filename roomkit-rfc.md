@@ -12368,11 +12368,15 @@ When `delegate(room_id, agent_id, task, notify, post_status = true)` is called:
    delivered content carries the result, bounded and delimited, presented as the worker's output rather than as an
    instruction; a task that did not complete says it failed or was
    cancelled, without its error (§9.3), whatever output or error text it
-   left. Only a completed task with nothing to say is not handed back.
+   left. It names the task as the delegating agent wrote it (`task`, on one
+   line, bounded), so the notified agent says the result for what was asked,
+   not for what the conversation moved on to meanwhile. Only a completed task
+   with nothing to say is not handed back.
    The delivery carries the task in its metadata, `task_id`, `agent_id` (the
-   worker) and `task_status`, whichever channel it reaches, so a hook that sees
-   it (`BEFORE_BROADCAST`, `BEFORE_DELIVER`) tells a task's result from any
-   other instruction and names the task without reading its text.
+   worker), `task_status` and `task` (what was asked, bounded), whichever
+   channel it reaches, so a hook that sees it (`BEFORE_BROADCAST`,
+   `BEFORE_DELIVER`) tells a task's result from any other instruction and
+   names the task without reading its text.
    An instruction is not stored, so the result lives in the turn it opens
    and in the agent's answer, not in the history of later turns. The
    result is never written into the room's stored configuration (the
