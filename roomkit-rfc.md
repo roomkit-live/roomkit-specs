@@ -2493,14 +2493,32 @@ context, the event the turn answers (`trigger`), so a hook can tell the model
 what this turn answers, and that another answer in the room is under way.
 
 **Consumption.** A response is delivered to channels (Section 10.2). Whether
-the person took it in is its consumption, recorded per delivering channel:
+the people it was delivered to took it in is its consumption, recorded per
+delivering channel and, where the channel can tell them apart, per participant:
 
 ```
-Consumption
+Consumption                                 # One delivering channel's record
 ├── state: "consumed" | "partial" | "unconsumed"
-├── at: datetime                            # When the state was recorded
-└── detail: map<string, any>                # How far, by channel: played_ms, played_percentage
+├── at: datetime                            # When the state was last recorded
+├── detail: map<string, any>                # How far, by channel: played_ms, played_percentage
+└── participants: map<string, ParticipantConsumption>  # By participant id; empty when
+                                                       # the channel cannot tell them apart
+
+ParticipantConsumption
+├── state: "consumed" | "partial" | "unconsumed"
+├── at: datetime
+└── detail: map<string, any>
 ```
+
+A channel that serves its participants separately (a voice session per caller, a
+read receipt per reader), or knows who was present while it played a shared
+stream (a conference room's subscribers), records each participant. Every
+participant served by the channel has an entry. The channel's own `state` is then the least
+consumed of its participants (`unconsumed` before `partial` before `consumed`),
+so `consumed` says everyone took it in, and the entry of the participant who
+sent the triggering event says whether the asker did. A channel that cannot tell
+its participants apart (one microphone shared by several people) records its
+own state alone.
 
 - `consumed`: taken in whole. A voice response played to its end, or a response
   a `READ_RECEIPT` of the delivering channel covers (its index at or below the
@@ -2512,13 +2530,15 @@ Consumption
   response cancelled as `superseded` before any of its audio played (Section
   12.2).
 
-The state is the same on every event of the answer, which is every event that
+The record is the same on every event of the answer, which is every event that
 has the same `source.channel_id` and `responds_to`. A channel that cannot tell
-records nothing: a missing entry means unknown, not `unconsumed`. A later state
-replaces an earlier one; `consumed` is final, so a response read after it was
-cut becomes `consumed`, and a `consumed` response stays `consumed`. Each change
-fires `ON_CONSUMPTION` (ASYNC) in the room, with the answer's events, its
-`responds_to`, the delivering channel and the new state. Consumption says
+records nothing: a missing entry, the channel's or a participant's, means
+unknown, not `unconsumed`. For the channel and for each participant, a later
+state replaces an earlier one; `consumed` is final, so a response read after it
+was cut becomes `consumed`, and a `consumed` response stays `consumed`. Each
+change fires `ON_CONSUMPTION` (ASYNC) in the room, with the answer's events, its
+`responds_to`, the delivering channel, the participant when one changed, and
+the new state. Consumption says
 nothing of delivery: an event that failed to deliver has its `delivery_results`,
 and no consumption.
 
