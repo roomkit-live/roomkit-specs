@@ -5810,13 +5810,15 @@ list is provided, only the named stages are captured. Valid stage names:
 
 | Stage name | Capture point | What it reveals |
 |---|---|---|
-| `raw` | After resampler, before AEC | What the pipeline receives from transport |
+| `transport_raw` | In a transport that cancels echo itself, before its AEC | What the microphone captured |
+| `raw` | After resampler, before AEC | What the pipeline receives from transport (after the transport's own AEC, when it has one) |
 | `post_aec` | After AEC | Echo cancellation effectiveness |
 | `post_agc` | After AGC | Volume normalization result |
 | `post_denoiser` | After denoiser | Noise reduction quality — what VAD sees |
 | `post_vad_speech` | On SPEECH_END event | Accumulated speech audio bytes sent to STT |
 | `outbound_raw` | Before postprocessors | TTS output before processing |
 | `outbound_final` | After postprocessors, before resampler | Final audio sent to transport |
+| `aec_reference` | In a transport that cancels echo itself, beside `transport_raw` | The reference its AEC received while that frame was captured |
 
 **Output files:**
 
@@ -5825,6 +5827,7 @@ easy to compare stages side by side in any audio editor:
 
 ```
 {output_dir}/
+  {session_id}_00_transport_raw.wav
   {session_id}_01_raw.wav
   {session_id}_02_post_aec.wav
   {session_id}_03_post_agc.wav
@@ -5832,10 +5835,22 @@ easy to compare stages side by side in any audio editor:
   {session_id}_05_post_vad_speech.wav
   {session_id}_06_outbound_raw.wav
   {session_id}_07_outbound_final.wav
+  {session_id}_08_aec_reference.wav
 ```
 
 When `session_scoped` is false, files omit the session prefix (useful for
 quick single-session debugging).
+
+A transport that cancels echo itself (`NATIVE_AEC`, transport-level reference
+feeding, Section 12.3.4) runs its AEC before the pipeline: `raw` is then already
+echo-cancelled and `post_aec` equals it. Such a transport emits `transport_raw`
+and `aec_reference` for every captured frame, from the capture path: the frame
+as captured, and the reference its AEC received meanwhile (as played, at the
+captured frame's rate), silence where it received none, so the frame's duration
+is kept. Both are then aligned sample for sample with `raw`, which makes the
+transport's echo cancellation measurable, and replayable offline. Writing them
+MUST NOT happen on the audio I/O threads: a file write there delays playback
+and capture.
 
 Files are opened lazily on first write and closed on session end. Each file
 uses the pipeline's internal AudioFormat (from the AudioPipelineContract),
