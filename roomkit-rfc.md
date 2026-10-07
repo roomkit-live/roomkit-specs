@@ -6466,9 +6466,9 @@ of a realtime model (a realtime voice channel, a conference with a realtime
 model plugged in): its source the host channel, its content the text, and its
 metadata `injected_role` (the intent) and `session_id`; an injection that
 carries a broadcast event names it in `injected_from` (its `channel_id` and
-`event_id`). A session the host no longer serves is not injected into: the
-injection is `not_sent` with reason `realtime_session_gone`, and the hook does
-not fire.
+`event_id`). A session the host no longer holds, or one its provider ended
+before the host let it go, is not injected into: the injection is `not_sent`
+with reason `realtime_session_gone`, and the hook does not fire.
 
 **The role is an intent, not a wire field (normative).** The providers do not
 share a vocabulary: one takes system and user messages, one takes only user and
