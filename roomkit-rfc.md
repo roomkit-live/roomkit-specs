@@ -12681,8 +12681,10 @@ A task cancelled from outside (its caller's timeout, the framework's
 own `close()`, even before it ran or while its delegation was still being set
 up) ends once, as any task does, whether it ran inline or in the background:
 `cancelled`, with no output. The framework holds an inline task as it holds
-the background ones, so its `close()` cuts it and waits for its end, steps 7
-and 8 included, before it releases the store. Steps 7 and 8 still run, to their end though the task is being
+the background ones, so its `close()` cuts it and waits for its end, its
+completion included (step 7, and step 8 for a background task), before it
+releases the store; a task its delegation announced as the close began ends
+the same way, before it runs. Steps 7 and 8 still run, to their end though the task is being
 cancelled, the completion callback with them, and a notified agent is told
 the task was cancelled; then the cancellation goes on. The one exception is
 an agent that cancelled the task itself (its `cancel_task` call, Section
