@@ -4426,6 +4426,20 @@ the reported language, and pins the following streams to it. An implementation
 MAY ship that flow as a policy; it MUST leave the primitive reachable from
 hooks.
 
+**Audio between streams.** In continuous mode, audio that arrives while no
+stream is open (between two turns, during a reconnect after an error) is
+carried into the next stream, so a reconnect loses no speech. What is carried
+MUST be bounded: a reconnect that takes long (a service that does not answer
+its handshake) would otherwise hand the next stream a backlog the service
+refuses, or a lag behind the conversation that only grows. A Voice Channel
+keeps the most recent audio and drops the oldest, and MUST expose how much it
+dropped (RoomKit keeps 5 s and logs a warning naming the seconds dropped).
+A provider whose service limits how far ahead of real time audio may be sent
+MUST pace what it sends rather than send a backlog at once. Meta's realtime
+service refuses a stream sent 7 s or more ahead at once ("Audio processing
+backlog too large", measured 2026-10-07); RoomKit's Meta provider sends at
+most 3 s at once, then at most twice real time until it has caught up.
+
 **TTSProvider interface:**
 
 ```
