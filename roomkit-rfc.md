@@ -1411,7 +1411,10 @@ listening to one who thinks aloud, does not answer every turn. An instruction
 (Section 10.1.1), a delegated task's hand-back (Section 23.3) among them, is not
 submitted to it: the application asked for that turn. The channel consults the
 policy once per event, after building the turn's context and before
-`BEFORE_AI_GENERATION`:
+`BEFORE_AI_GENERATION`. The recent events a policy reads are those the channel
+may know, as its context has them (Section 7.5 rule 8): a policy may hand them
+to a classifier outside, and an event withheld from the channel at delivery
+MUST NOT reach it that way.
 
 ```
 SpeakPolicy (interface)
