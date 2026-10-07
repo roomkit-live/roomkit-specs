@@ -6791,6 +6791,7 @@ ReasoningBackend (interface)
 │       # Work out the request from the transcript and answer it, with the
 │       # backend's own model, context and tools
 ├── session_ended(session_id) → void        # OPTIONAL: release state kept for a session; no-op by default
+├── served_names() → set<string>            # OPTIONAL: tool names the backend answers itself, before the gate; none by default
 └── close() → void
 
 ReasoningRequest
@@ -6803,7 +6804,8 @@ ReasoningRequest
 ├── execute_tool(name, arguments) → string  # One call through the channel's pre-execution gate and handler
 ├── execute_tool_call(name, arguments) → ToolCallResult  # The same call, with its outcome
 ├── report_refusal(name, arguments, body, cancelled = false, refused = true, detail = null) → void  # Reports a call the backend's own loop ended before the gate, with its outcome, under the id model_call_id() names
-└── report_call(name, arguments, result, is_error, detail, tool_call_id) → void  # Reports a call the backend's own provider served outside the gate, with its outcome
+├── report_call(name, arguments, result, is_error, detail, tool_call_id) → void  # Reports a call the backend's own provider served outside the gate, with its outcome
+└── participant_role: string?               # The session participant's role when the delegation was handed over
 
 ToolCallResult
 ├── text: string                            # What the backend's model reads
@@ -6885,13 +6887,18 @@ registry even empty, a human-input handler, a sandbox, planning, an external
 handler) would run outside that gate, and a kit that
 registered it would judge each call a second time, so such an agent is
 refused. The names the agent serves itself (its re-read of a stored result,
-its tool search when on) stay its own: a channel MUST refuse, at
-construction, a session tool declared under one of them, which the agent
-would otherwise answer outside the gate. The agent's own `tool_policy`
-composes with the channel's, as an agent's policy does on a realtime
-pipeline (Section 19.5): a call it denies is refused in the agent's loop,
-before the channel's gate, and the channel's ON_TOOL_CALL observers see it
-as any refusal. Its conversation is the session's: a call a cut delegation left
+its tool search unless turned off) stay its own: a channel MUST refuse a
+session tool given under one of them, at construction and at `configure`, a
+human-input tool's included, which the agent would otherwise answer outside
+the gate; one that arrives later (a session's or a room's tools, a
+reconfiguration) is not declared, with a warning, as Section 21.1 drops a
+name the channel serves. The agent's own `tool_policy` composes with the
+channel's, as an agent's policy does on a realtime pipeline (Section 19.5):
+it is resolved for the session participant's role, which the channel reads
+when it hands the delegation over and passes in the request
+(`participant_role`), so its role overrides apply; a call it denies is
+refused in the agent's loop, before the channel's gate, and the channel's
+ON_TOOL_CALL observers see it as any refusal. Its conversation is the session's: a call a cut delegation left
 unanswered is answered as a room turn answers one before the next
 generation, and a session's delegations run one at a time, each reading
 what the one before it worked out. The backend's turn is traced under the
