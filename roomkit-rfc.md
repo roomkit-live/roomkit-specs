@@ -2164,6 +2164,62 @@ EmailProvider (interface)
 Implementations SHOULD define similar provider interfaces for WhatsApp, Messenger,
 Teams, RCS, HTTP, Voice (STT, TTS), and any custom channel types.
 
+### 6.8 Classifiers
+
+A classifier answers narrow, typed questions about a state (a text, or
+structured data such as a turn with the conversation around it) with
+probabilities, not generated text. It is how a component asks for judgment where
+code needs understanding (was the agent addressed, did the person finish)
+without a generation: the component asks its questions together, in one call,
+and composes the answers in code, where each one stays visible and measurable.
+Support is OPTIONAL.
+
+```
+Classifier (interface)
+├── classify(state: string | JSON, questions: map<string, Question>) → Answers
+└── close() → void
+
+YesNoQuestion
+├── instructions: string                # The question, and what it means
+├── yes: string | null = null           # What a yes covers, when that needs saying
+└── no: string | null = null            # What a no covers
+
+ChoiceQuestion
+├── instructions: string
+└── options: map<string, string>        # Each option and what it covers; two at least
+
+ScoreQuestion
+├── instructions: string
+└── levels: list<string>                # Ordered levels, lowest first, each described; two at least
+
+YesNoAnswer
+└── probability: float                  # Of yes, in [0, 1]
+
+ChoiceAnswer
+├── choice: string                      # The most probable option
+└── probabilities: map<string, float>   # Every option's
+
+ScoreAnswer
+├── score: float                        # The expected level: 0 for the first, a fraction between two
+└── probabilities: list<float>          # Each level's, in the levels' order
+
+Answers: map<string, Answer>            # By question name, every question answered
+```
+
+A classifier answers every question it was asked, or raises `ClassifierError`
+for whatever kept it from answering (a refused request, an answer it cannot read,
+the end of its wait, which it bounds). It sends the questions' wording as the
+caller wrote it. An implementation says how far its probabilities can be
+trusted: a trained classifier's are calibrated; a generative model asked for one
+answer gives the answer it chose probability 1, and is documented as such.
+`close()` releases what the classifier opened itself; a provider or a client it
+was handed stays its owner's.
+
+RoomKit provides a mock (scripted answers), a classifier on any AI provider that
+answers under a JSON schema (Section 6.7), uncalibrated, and Jev (TypeSafe's
+System One model), calibrated, behind an optional extra. A speak policy built on
+judgments (Section 6.4) is a classifier's first consumer.
+
 ---
 
 ## 7. Permission Model
