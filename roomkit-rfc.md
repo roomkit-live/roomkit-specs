@@ -6834,7 +6834,14 @@ on any turn, and answers from memory, with no wait to bound. Tools of its own (h
 registry even empty, a human-input handler, a sandbox, planning, an external
 handler) would run outside that gate, and a kit that
 registered it would judge each call a second time, so such an agent is
-refused. Its conversation is the session's: a call a cut delegation left
+refused. The names the agent serves itself (its re-read of a stored result,
+its tool search when on) stay its own: a channel MUST refuse, at
+construction, a session tool declared under one of them, which the agent
+would otherwise answer outside the gate. The agent's own `tool_policy`
+composes with the channel's, as an agent's policy does on a realtime
+pipeline (Section 19.5): a call it denies is refused in the agent's loop,
+before the channel's gate, and the channel's ON_TOOL_CALL observers see it
+as any refusal. Its conversation is the session's: a call a cut delegation left
 unanswered is answered as a room turn answers one before the next
 generation, and a session's delegations run one at a time, each reading
 what the one before it worked out. The backend's turn is traced under the
