@@ -5636,7 +5636,11 @@ processed as a user turn) meanwhile:
 - Otherwise it waits for `min_speech_ms` of sustained speech.
 
 Once the wait ends without words, the classification relies on
-`speech_duration_ms` (and `audio_bytes`) alone. When a streaming STT is
+`speech_duration_ms` (and `audio_bytes`) alone. A detector MAY instead judge an
+utterance without words a backchannel, so that only words interrupt: sound the
+STT made nothing of (echo an AEC left, a cough, room noise) then never cuts the
+bot, and a wordless interruption does not either. It is a configuration of the
+detector, not its default. When a streaming STT is
 available, the held speech SHOULD be transcribed during playback so its
 partials can be classified; a backchannel then fires ON_BACKCHANNEL once and
 the speech is discarded, a genuine interruption cancels TTS and the speech is
