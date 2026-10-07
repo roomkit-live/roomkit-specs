@@ -1426,7 +1426,8 @@ SpeakTurn
 ├── people: list<string>                # Who takes part besides the agent, named as its context names them
 ├── channel_id: string                  # The agent's channel: its own answers in `recent` come from it
 ├── speakers: map<string, string>       # Who said `event` and each of `recent`, by event id, where the room names them
-└── thought: Thought | null = null      # What the agent has in mind, when the channel has a thinker (below)
+├── thought: Thought | null = null      # What the agent has in mind, when the channel has a thinker (below)
+└── cut: CutReply | null = null         # The agent's answer cut off just before the event, when it has not spoken since (below)
 
 SpeakDecision
 ├── mode: "speak" | "offer" | "silent"
@@ -1536,6 +1537,40 @@ judgment reaches the policy's proactivity (0.5 by default, lower is more
 eager), half of it when the thought is urgent, never on urgency alone.
 RoomKit provides a thinker on any AI provider that answers under a JSON schema
 (Section 6.7), whose instructions the application can replace, and a mock.
+
+**A cut answer.** When the agent's answer is cut off by a barge-in (Section
+12.3.13), the room holds a record of it that names the answer. The AI channel
+uses it twice:
+
+```
+CutReply
+├── text: string                        # What the agent was saying: the text handed to speech when it was cut
+├── played_ms: int                      # How much of it played before the cut
+└── at: datetime                        # When it was cut
+```
+
+- In the context the agent's next turn reads, that answer is marked as
+  interrupted: the model reads that the person may not have heard its end,
+  rather than an answer heard whole.
+- A speak policy reads it in `SpeakTurn.cut` when the event came after the cut
+  and the agent has not answered since. The classifier policy then also judges
+  whether the turn leaves the agent free to go on (an acknowledgement, a
+  thanks, a short reaction, talking over it by accident) or wants the turn (a
+  question, a request, a correction, asking it to stop). Free to go on, and
+  not asked for quiet nor talking over an unfinished speaker, the agent speaks
+  with the reason `resume after cut`, its notes asking it to go on from where it
+  was cut without repeating what was heard.
+
+Which part of the answer was heard is not guessed: the record keeps the text
+handed to speech and how long it played.
+
+Only a record a voice channel of the room wrote counts: `internal`, with no
+participant, its source a channel bound to the room as voice, and
+`interrupted` exactly `true`. Event metadata is anyone's to write, and a
+record taken at its word would put a sender's text in the agent's mouth as
+its own. A record whose `answer_responds_to` is neither a string nor absent is
+skipped, and a `played_ms` that is not a non-negative number reads as 0: a
+malformed record never fails the turns of the room it stays in.
 
 **What the generation hooks see:** `BEFORE_AI_GENERATION` fires once per turn
 (purpose `answer`), and once per thinker call (purpose `thought`, above, with
@@ -5912,6 +5947,11 @@ Check InterruptionStrategy:
    is the sentences already handed to TTS at the moment of the interruption.
    The response is recorded `partial` on the voice channel, with the same
    `played_ms` (Section 8.5), whether or not the partial response is kept.
+   The record is the agent's words, not the listener's: it carries no
+   participant id, and names the answer it cut with
+   `metadata.answer_channel_id` (the intelligence channel that produced it) and
+   `metadata.answer_responds_to` (the event that answer responds to, Section
+   8.5), so the AI channel can mark that answer as cut (Section 6.4).
 3. If the TTS consumes context: record the assistant turn with
    `interrupted = true` and the same `played_ms` (Section 12.2.2), so the
    provider knows where the user stopped hearing it.
