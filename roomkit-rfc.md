@@ -12871,9 +12871,11 @@ of the turn, the channel's notes (Section 6.4) carry the latest of them
 (RoomKit: 6), each with its worker and what was asked, then either how long it
 has run, its latest progress with how long ago it was posted, and that no
 result has come back yet, so none of its data may be given, or how it ended.
-The notes say to speak of a running task only when asked, and to give none of
-its data before its result comes back; a result itself comes back by its
-hand-back, never through the notes. What was asked and the progress are a
+The notes say that each task's progress is the latest its worker gave, to
+answer from without a tool call when asked how far a task got, to speak of a
+running task only when asked, and to give nothing of its result before it
+comes back; a result itself comes back by its hand-back, never through the
+notes. What was asked and the progress are a
 worker's text: each is quoted between marks it cannot close (a quote mark
 inside it is made plain), on one line, and bounded, set apart as data. What
 the notes give unquoted carries no text of its own: a worker's name keeps to an
