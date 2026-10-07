@@ -11903,10 +11903,13 @@ deeper than that event (§8.3). A producer's task that failed (§23.3 step 6)
 stops the loop: the last output it produced, if any, is the result, not
 approved, and says the loop stopped on that failure; with no output at all
 the turn has no answer, never an empty response passed off as one. Either
-way the loop's caller reads the producer's failure; it is reported to
-ON_ERROR once, where the producer's turn failed (its task's room), and a
-producer's turn its round cap, deadline, budget or a stop cut short fires
-none, as a room turn's does. An asynchronous loop
+way the loop's caller reads how the producer's last turn ended under `turns`,
+keyed by the producer, with its usage, as a room turn's caller does (§6.4): a
+turn its round cap, deadline, budget or a stop cut short is read there, is
+no error and fires no ON_ERROR, as a room turn's does; a turn that failed
+reaches the caller as the error it raised, its type unchanged (a provider's
+failure as that provider's error), reported to ON_ERROR once, where the
+producer's turn failed (its task's room), and logged once. An asynchronous loop
 (a voice channel's `delegate_loop`) hands its outcome back to the voice
 channel that started it as a background delegation's result is (§23.3 step
 8): an instruction to that channel, its output bounded and set apart as a
@@ -12640,8 +12643,9 @@ DelegatedTaskResult
 ├── status: TaskStatus = COMPLETED
 ├── output: string | null                   # The worker's answer; a worker cut short keeps its narration
 ├── error: string | null                    # Error message (on failure); "cancelled" for a task cancelled from outside
+├── exception: error | null                 # The failure itself, its type kept; held in memory, never serialized
 ├── duration_ms: float = 0
-└── metadata: map<string, any>              # loop_end_reason when a cut or a failed turn ended the worker
+└── metadata: map<string, any>              # loop_end_reason when a cut or a failed turn ended the worker; turns: the worker's turn record (§6.4)
 ```
 
 ### 23.3 Delegation Protocol
@@ -12698,6 +12702,12 @@ When `delegate(room_id, agent_id, task, notify, post_status = true)` is called:
    its narration as its output; the failure is logged as its error is. The
    end is the failing agent's own: with several agents in the child room, one
    agent's failure never carries another's end.
+   Whatever ended the turn, the task's metadata carries the turn's record
+   under `turns`, keyed by the agent, as a room turn's caller reads it
+   (Section 6.4): how it ended and its `ai_usage`, the last turn's when a
+   result tool re-prompted the agent. A failed task keeps the failure itself
+   (`exception`), its type unchanged, so a caller that hands it on raises
+   what the turn raised.
    A result the agent submitted through a result tool before the cut or the
    failure still counts; without one, the task fails without a re-prompt.
    What reads a task's work (an orchestration strategy, the notified agent)
