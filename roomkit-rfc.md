@@ -9821,8 +9821,16 @@ conference, with no intelligence address, MUST be injected into that
 session with the intent of Section 12.4, as on a realtime voice channel,
 and is `unavailable` while no session is connected. A strategy waiting
 for idle waits until the model's answer has ended and reached the bot
-track and the provider hears nobody speak. The injection fires
+track, the provider hears nobody speak, no tool call of the session is in
+flight, and no result (or delegation fallback) sent to the model is still
+waiting for its answer, as on a realtime voice channel. The injection fires
 ON_REALTIME_TEXT_INJECTED.
+
+**A delegation is always answered (normative).** A full-duplex provider's
+delegation fires ON_REALTIME_DELEGATION; a conference serves no reasoning
+backend, so an integrator-side delegation is answered with the spoken
+fallback a realtime voice channel without a backend gives (Section 12.4.1),
+never left waiting.
 
 **One voice per bot (normative).** A channel MUST refuse a
 configuration holding both a synthesizer (tts) and a speech-to-speech
