@@ -1425,7 +1425,8 @@ SpeakTurn
 ├── recent: list<RoomEvent>             # The conversation before it, oldest first, the agent's answers included
 ├── people: list<string>                # Who takes part besides the agent, named as its context names them
 ├── channel_id: string                  # The agent's channel: its own answers in `recent` come from it
-└── speakers: map<string, string>       # Who said `event` and each of `recent`, by event id, where the room names them
+├── speakers: map<string, string>       # Who said `event` and each of `recent`, by event id, where the room names them
+└── thought: Thought | null = null      # What the agent has in mind, when the channel has a thinker (below)
 
 SpeakDecision
 ├── mode: "speak" | "offer" | "silent"
@@ -1483,7 +1484,63 @@ their recent turns, so that one misheard word does not switch it, and its
 decision's notes say which language to answer in. A classifier that fails
 falls back as any policy does: the agent speaks.
 
-**What the generation hooks see:** `BEFORE_AI_GENERATION` fires once per turn,
+**What the agent thinks.** An AI channel that has a speak policy MAY also
+carry a thinker: what the agent thinks while it listens, its answer, when it is
+silent, to "what are you thinking about?". The thought is neither memory (the
+room's history is, Section 20) nor a summary: what the agent makes of what is
+said, what it would say if given the turn, and whether that cannot wait.
+
+```
+Thought
+├── text: string = ""                   # What the agent thinks, in the first person
+├── want_to_say: list<string> = []      # What it would say if given the turn, most important first, three at most
+└── urgent: bool = false                # What it wants to say cannot wait
+
+Thinker (interface)
+└── think(previous: Thought, context: AIContext) → Thought
+```
+
+1. The thinker runs only on events the policy left silent: a turn the agent
+   answers waits for no thought. The channel builds the event's context as for
+   an answer (the agent's own prompt, the conversation it may know), passes it
+   through `BEFORE_AI_GENERATION` with the purpose `thought`, and hands what the
+   hooks left to the thinker with the previous thought. A hook that blocks it
+   keeps the previous thought. A thinker MUST NOT reach a model with a context
+   that hook did not see: whatever an application keeps from a model there
+   (consent, redaction, a budget) holds for the thought too.
+2. One thinker call runs at a time per room. Events that arrive during a call
+   are thought about in the next one, from the latest context; none is queued.
+3. The channel waits for that thought up to a bound (1.5 s by default). When
+   it comes back in time with something to say, the policy is asked again on
+   the same event, with the thought: the agent may raise its hand on a turn it
+   first listened to. Each decision fires `ON_SPEAK_DECISION`.
+4. When the agent speaks or offers on an event submitted to the policy, the
+   turn's notes carry its thought, and what it wanted to say is then empty: it
+   is said, or offered. A thinker call running meanwhile does not bring it
+   back. An instruction carries no thought and empties nothing. The thought is
+   a model's reading of what people said, so whatever they said can reach it:
+   the notes MUST carry it quoted, bounded, and named as information to weigh,
+   not as the runtime's instructions.
+5. A thinker that fails, or the end of its wait, keeps the previous thought.
+6. The thought is the channel's, per room, in memory: it is not stored, and a
+   restart starts from an empty thought, as does a room the channel is
+   attached to or detached from, so that a room reusing an id never inherits
+   another conversation's thought.
+
+Every new thought fires `ON_THOUGHT` with the room, the channel and the thought.
+A policy reads it in `SpeakTurn.thought`. The classifier policy then also
+judges whether what the agent wants to say answers what the turn asks, or
+corrects or warns about what it says. Only wondered about and knowing the
+answer, the agent speaks rather than offers; not addressed, it offers when that
+judgment reaches the policy's proactivity (0.5 by default, lower is more
+eager), half of it when the thought is urgent, never on urgency alone.
+RoomKit provides a thinker on any AI provider that answers under a JSON schema
+(Section 6.7), whose instructions the application can replace, and a mock.
+
+**What the generation hooks see:** `BEFORE_AI_GENERATION` fires once per turn
+(purpose `answer`), and once per thinker call (purpose `thought`, above, with
+the context the thinker would read, its tools never called), so a hook tells
+the agent's turn from its thinking. For a turn it fires
 with the context the turn starts from and the event the turn answers (`trigger`,
 Section 8.5), and its `tools` are the turn's toolset
 as the tool policy and skill gating leave it. Without Tool Search that is the
@@ -2796,7 +2853,8 @@ them as above runs after those as an observer.
 | **AI Generation:** | | | |
 | BEFORE_AI_CONTEXT_BUILD | SYNC | Planned | Before AI context is built (pre-memory, pre-tool-resolution) — can block cheaply. Arrives with the Section 12.9 pipeline, which is DRAFT; required by nothing today |
 | ON_SPEAK_DECISION | ASYNC | Implemented | An AI channel's speak policy decided whether the agent speaks, offers or stays silent on an event (Section 6.4) |
-| BEFORE_AI_GENERATION | SYNC | Implemented | Before AI provider generate() — can modify context |
+| ON_THOUGHT | ASYNC | Implemented | An AI channel's thinker came back with what the agent has in mind in a room (Section 6.4) |
+| BEFORE_AI_GENERATION | SYNC | Implemented | Before AI provider generate() — can modify context; a turn's (`answer`) or a thinker's (`thought`, Section 6.4) |
 | ON_AI_THINKING | ASYNC | Implemented | AI model began extended thinking/reasoning |
 | ON_AI_RESPONSE | ASYNC | Implemented | A turn of intelligence completed (observability). Fired by any channel of category `INTELLIGENCE`, whether the turn ran in-process or in an external agent (Section 6.4) |
 | BEFORE_TOOL_USE | SYNC | Implemented | Before a tool executes — can block or override the call |
