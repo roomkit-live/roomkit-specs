@@ -1404,6 +1404,52 @@ asks once the bound has run out ends `unfinished`, never `completed`: the loop
 reaches its end (its end marker, `ON_AI_RESPONSE`), and running out of the
 bound never raises out of the loop.
 
+**Whether the agent speaks.** An AI channel MAY carry a speak policy, which
+decides on every event the channel would answer whether the agent speaks now,
+offers to, or stays silent: an agent in a conversation with several people, or
+listening to one who thinks aloud, does not answer every turn. An instruction
+(Section 10.1.1), a delegated task's hand-back (Section 23.3) among them, is not
+submitted to it: the application asked for that turn. The channel consults the
+policy once per event, after building the turn's context and before
+`BEFORE_AI_GENERATION`:
+
+```
+SpeakPolicy (interface)
+└── decide(turn: SpeakTurn) → SpeakDecision
+
+SpeakTurn
+├── event: RoomEvent                    # The event the turn would answer (its trigger)
+├── recent: list<RoomEvent>             # The conversation before it, oldest first, the agent's answers included
+└── people: list<string>                # Who takes part besides the agent, named as its context names them
+
+SpeakDecision
+├── mode: "speak" | "offer" | "silent"
+├── reason: string = ""                 # Why, in a few words, for logs and hooks
+├── judgments: map<string, float> = {}  # What the policy weighed, by name, each in [0, 1] or its own scale
+└── notes: list<string> = []            # Blocks the turn's notes carry when the agent speaks or offers
+```
+
+- `speak` runs the turn as without a policy; the decision's notes join the
+  turn's notes (below) before `BEFORE_AI_GENERATION`, which sees them.
+- `offer` runs the turn with one more block: offer, in one short sentence, what
+  the agent could add, without giving it.
+- `silent` runs no turn: no generation, `BEFORE_AI_GENERATION` does not fire,
+  nothing is delivered and no answer names the event (Section 8.5). The event
+  is stored as any event is: the conversation is the agent's memory whether it
+  spoke or not.
+
+The channel bounds the wait for a decision (2 s by default). A policy that
+fails or does not decide in time does not silence the agent: the channel logs
+it and runs the turn as without a policy, and the decision it reports is
+`speak` with the reason `fallback`. Every decision fires `ON_SPEAK_DECISION`
+with the event, the channel and the decision, so that what an agent left
+unanswered, and why, can be followed and measured. A channel without a policy
+answers every event, as before, and decides nothing; a policy that always
+speaks reports each decision, a baseline to measure another against. A turn the
+channel's strategy takes in a room (Section 19.7) is not submitted to it
+either. The agent's identity is the policy's own: a policy that judges whether
+the agent was addressed is told its name when it is made.
+
 **What the generation hooks see:** `BEFORE_AI_GENERATION` fires once per turn,
 with the context the turn starts from and the event the turn answers (`trigger`,
 Section 8.5), and its `tools` are the turn's toolset
@@ -2660,6 +2706,7 @@ them as above runs after those as an observer.
 | | | | |
 | **AI Generation:** | | | |
 | BEFORE_AI_CONTEXT_BUILD | SYNC | Planned | Before AI context is built (pre-memory, pre-tool-resolution) — can block cheaply. Arrives with the Section 12.9 pipeline, which is DRAFT; required by nothing today |
+| ON_SPEAK_DECISION | ASYNC | Implemented | An AI channel's speak policy decided whether the agent speaks, offers or stays silent on an event (Section 6.4) |
 | BEFORE_AI_GENERATION | SYNC | Implemented | Before AI provider generate() — can modify context |
 | ON_AI_THINKING | ASYNC | Implemented | AI model began extended thinking/reasoning |
 | ON_AI_RESPONSE | ASYNC | Implemented | A turn of intelligence completed (observability). Fired by any channel of category `INTELLIGENCE`, whether the turn ran in-process or in an external agent (Section 6.4) |
