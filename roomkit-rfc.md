@@ -13151,7 +13151,11 @@ and the outcomes of individual vendor calls. An implementation MUST NOT mark
 an ambiguous network failure as unbilled or automatically retry a paid
 generation. A failed status is marked retryable only where the vendor did not
 run the generation (408, 409, 429, 503); a 500, 502 or 504 may follow one it
-ran and billed, and is final: the host decides. Independent concurrent calls SHOULD settle so their outcomes can
+ran and billed, and is final: the host decides. A transport failure is
+retryable only when the request never left (the connection could not be
+made); a timeout or a connection lost once the request went out is ambiguous,
+and final. An image the vendor delivered in a form the provider cannot return
+was generated and billed: that failure is final too. Independent concurrent calls SHOULD settle so their outcomes can
 be collected. Cancellation MUST remain cancellation, with already received
 outcomes accessible through an optional asynchronous progress callback.
 
