@@ -2962,7 +2962,7 @@ name, or the provider's error code) and `error_category`:
 |---|---|
 | `generation` | An intelligence channel failed to respond to a broadcast event |
 | `streaming` | A streamed response raised, a delegated task's turn included |
-| `realtime_provider` | A speech-to-speech provider reported an error, fatal or not |
+| `realtime_provider` | A speech-to-speech provider reported an error, fatal or not, or a conference's lazy connect to it failed (Section 12.10.12) |
 | `reasoning` | A reasoning backend's turn raised (Section 12.4.1) |
 
 On a room turn the event's `chain_depth` is the triggering event's plus one,
@@ -9960,7 +9960,10 @@ when there is something for it to hear or say, and a connect failure
 MUST NOT fail the join or the plug, exactly as a lazy join's own
 failure does not (Section 12.10.4) — the configuration stands, and
 implementations SHOULD retry with a cooldown rather than on every
-mixing window. When the bot session ends — detach, unplug,
+mixing window. With no caller to raise to, each failed connect fires
+ON_ERROR (`error_category = realtime_provider`, `error_type` the
+error's type name), so the integrator learns the model is unreachable.
+When the bot session ends — detach, unplug,
 backend-side loss, close — the provider session is disconnected with
 it.
 
