@@ -2105,7 +2105,10 @@ asked for only when the response names none; a stream's done event names the
 same, so both modes report it alike.
 
 **Usage counters.** `input_tokens`, `output_tokens` and the cache counters are
-disjoint, as in Section 25.5. `output_tokens` counts every output token the
+disjoint, as in Section 25.5. A cache counter the vendor reports at zero is
+omitted, as one it does not report: on a text turn the two bill the same, and
+every provider reports them alike (an image's usage keeps a reported zero,
+Section 25.5). `output_tokens` counts every output token the
 vendor bills, a model's thinking included, whether the vendor reports that
 thinking inside its completion count or beside it. `reasoning_tokens`, when a
 provider reports it, is the thinking share of `output_tokens`: a detail, never
@@ -13132,7 +13135,9 @@ An error after a request has started MUST preserve every available result and
 usage report. A partial generation still raises, carrying successful results
 and the outcomes of individual vendor calls. An implementation MUST NOT mark
 an ambiguous network failure as unbilled or automatically retry a paid
-generation. Independent concurrent calls SHOULD settle so their outcomes can
+generation. A failed status is marked retryable only where the vendor did not
+run the generation (408, 409, 429, 503); a 500, 502 or 504 may follow one it
+ran and billed, and is final: the host decides. Independent concurrent calls SHOULD settle so their outcomes can
 be collected. Cancellation MUST remain cancellation, with already received
 outcomes accessible through an optional asynchronous progress callback.
 
