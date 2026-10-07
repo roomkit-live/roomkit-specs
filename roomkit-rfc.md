@@ -4008,6 +4008,13 @@ unless it is injected from inside an off-lock hook's body or under the room
 lock, in which case it takes none and commits ahead of the event being
 processed (§9.5.1, Reentrance).
 
+Its result is the committed event, so a refusal before the commit point is
+raised, never returned as an event that was not written: a room whose status
+refuses new events (§5.1) raises a room-closed error, and `process_timeout`
+(§13.6), which bounds its wait for the off-lock check and the room lock as it
+bounds its pre-commit phase, raises a process-timeout error once it has
+emitted the `process_timeout` framework event. Nothing of the event is written.
+
 **A record outside the pipeline.** An integrator MAY commit an event that no
 member is meant to receive (a trace, a display snapshot, a copy a branched
 conversation starts from) without the pipeline:
@@ -10427,8 +10434,9 @@ transaction that stores the event as DELIVERED and updates the room counters:
   `process_timeout`, as the step 12 commit is. `process_timeout` MUST bound
   this phase. On expiry the implementation MUST abort **before** the commit
   point, leaving no partial durable state, and return
-  `InboundResult(blocked=true, reason=process_timeout)`. The event MUST NOT
-  appear in the timeline.
+  `InboundResult(blocked=true, reason=process_timeout)` (direct injection,
+  whose result is the committed event, raises instead, §10.5). The event MUST
+  NOT appear in the timeline.
 
 - **Commit point** (§10.1 step 12). Once the DELIVERED transaction has
   committed, the event is authoritative. `process_timeout` MUST NOT cancel,
