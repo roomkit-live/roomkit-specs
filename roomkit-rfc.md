@@ -12779,7 +12779,10 @@ A task cancelled from outside (its caller's timeout, the framework's
 `cancel_task(task_id)`, the task runner's `cancel` or `close`, the framework's
 own `close()`, even before it ran or while its delegation was still being set
 up) ends once, as any task does, whether it ran inline or in the background:
-`cancelled`, with no output. The framework holds an inline task as it holds
+`cancelled`, with no output. A task whose worker's turn had begun carries it
+under `turns` (step 6), its end `cancelled`, as a room turn's caller reads a
+read cancelled from outside (Section 6.4); one cut before its turn began
+carries none. The framework holds an inline task as it holds
 the background ones, so its `close()` cuts it and waits for its end, its
 completion included (step 7, and step 8 for a background task), before it
 releases the store; a task its delegation announced as the close began ends
