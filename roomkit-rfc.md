@@ -11638,7 +11638,12 @@ StatusEntry
 
 `StatusLevel` values are written `ok`, `failed`, `pending`, `info` and
 `completed`. One bus serves the framework; an entry names its room, if any, in
-`metadata.room_id`. Status posts fire `ON_STATUS_POSTED` hooks in that room; an
+`metadata.room_id`. The framework's own posts bound `detail`, a summary for
+whoever follows the bus: cut at a word, the cut ending in `…`, never in the
+middle of a word or a number. A `completed` entry whose detail was cut keeps the
+whole outcome in `metadata.result`, bounded at 4,000 characters and its cut
+marked the same way: an agent reads an outcome back from it (Section 23.4),
+never from the summary, which once turned a 14.9 °C forecast into "1". Status posts fire `ON_STATUS_POSTED` hooks in that room; an
 entry that names no room reaches no room's hooks. Agents MAY use the StatusBus to
 signal completion, progress, or request attention without sending room events.
 The framework posts each delegated task on the bus (Section 23.3), and an agent
@@ -12446,7 +12451,8 @@ agent or a host sees a task while it runs. Once its child room is ready, when
 `ON_TASK_DELEGATED` fires, it posts `pending` under the worker's `agent_id`,
 action `task`, its detail the task, bounded. Once it ends, when
 `ON_TASK_COMPLETED` fires, it posts `completed`, its detail the result,
-bounded, or `failed` for a task that failed or was cancelled, its detail
+bounded, with the whole result in `metadata.result` when the detail was cut
+(Section 19.8), or `failed` for a task that failed or was cancelled, its detail
 saying which and never the error's text (Section 9.3). Both entries carry in
 their metadata `room_id`, the parent room, `task_id` and `child_room_id`; the
 terminal one adds `task_status` and `duration_ms`. A caller that follows its
@@ -12474,7 +12480,8 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   the delegation helpers. It answers with the tasks posted on the StatusBus for
   the room of the call, read from the tool call context (Section 21.4): those
   running and those ended, the latest entry of each, with its worker, the task,
-  its status, its result or that it failed, and when it was posted; a
+  its status, its whole result (Section 19.8) or that it failed, and when it
+  was posted; a
   `task_id` argument narrows the answer to one task. It reads the bus for that
   room only: one room's tasks never show in another. A tool reply that tells
   its agent to follow the work (a strategy's background dispatch, Section
