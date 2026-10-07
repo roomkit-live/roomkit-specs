@@ -1420,7 +1420,9 @@ SpeakPolicy (interface)
 SpeakTurn
 ├── event: RoomEvent                    # The event the turn would answer (its trigger)
 ├── recent: list<RoomEvent>             # The conversation before it, oldest first, the agent's answers included
-└── people: list<string>                # Who takes part besides the agent, named as its context names them
+├── people: list<string>                # Who takes part besides the agent, named as its context names them
+├── channel_id: string                  # The agent's channel: its own answers in `recent` come from it
+└── speakers: map<string, string>       # Who said `event` and each of `recent`, by event id, where the room names them
 
 SpeakDecision
 ├── mode: "speak" | "offer" | "silent"
@@ -1449,6 +1451,34 @@ speaks reports each decision, a baseline to measure another against. A turn the
 channel's strategy takes in a room (Section 19.7) is not submitted to it
 either. The agent's identity is the policy's own: a policy that judges whether
 the agent was addressed is told its name when it is made.
+
+The people are the room's active participants that are neither agents nor bots
+nor on the agent's channel, or, when more, the distinct speakers named in the
+recent events: one microphone is one participant but may carry several
+diarized voices. A speaker is named as the turn's context names speakers: the
+name the sender's transport stamped on the event, else the participant's
+display name.
+
+RoomKit provides a policy built on a classifier (Section 6.8). It asks narrow
+questions about the turn, in one call, over the turn's text, the recent turns
+named by speaker (the agent's own under its name) and the people, and composes
+the answers in code, in this order:
+
+1. silent when the speaker has not finished, postpones or declines asking, or
+   asks the agent to keep quiet; silent too when a request to keep quiet made
+   earlier still stands and the turn asks the agent nothing;
+2. speak when the turn answers a question the agent just asked;
+3. speak when the agent is asked directly or indirectly, or asked for
+   something tentatively, or asked anything when one person talks with it;
+4. offer when the speaker only wonders whether the agent could help;
+5. silent otherwise.
+
+Each judgment is reported with the decision. Its questions can be replaced by
+name, and its composition by an implementation of its own. Told the languages
+the agent answers in, it also judges the language the speaker speaks, over
+their recent turns, so that one misheard word does not switch it, and its
+decision's notes say which language to answer in. A classifier that fails
+falls back as any policy does: the agent speaks.
 
 **What the generation hooks see:** `BEFORE_AI_GENERATION` fires once per turn,
 with the context the turn starts from and the event the turn answers (`trigger`,
