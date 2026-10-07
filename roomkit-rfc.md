@@ -5037,10 +5037,15 @@ same AEC instance — this would double-feed and corrupt the adaptive filter.
   adaptive filter cannot follow a delay that moves under it (measured on a
   desktop audio server: a quarter of the echo left above -50 dBFS, against
   one twentieth with the delay held still).
-- After playback ends, or is cut by a barge-in, the speaker and the room still
-  sound: the audio already handed to the device, then the room's echo tail. A
-  transport running its own AEC SHOULD keep cancelling for that tail (about
-  0.5 s), on the silent reference that follows, before it bypasses the AEC.
+- A transport running its own AEC SHOULD run it without pause for as long as
+  it captures: through a response, through a cut, and on the silent reference
+  between responses, feeding every played block and processing every captured
+  frame, including frames it then drops (mute, gating, half-duplex). Paused and
+  resumed, the canceller's render and capture timelines come back out of step
+  and its converged filter misses the next response's echo (measured: up to
+  89 % of a response's first-second echo left above -50 dBFS, against none
+  when it never pauses). With a silent reference it leaves the user's voice
+  untouched.
 - The reference and capture (inbound) audio MUST have the same sample rate and
   frame size. When the transport uses different sample rates for input and
   output, the implementation MUST either resample the reference to match the
