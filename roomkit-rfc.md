@@ -12655,10 +12655,12 @@ When `delegate(room_id, agent_id, task, notify, post_status = true)` is called:
    delegation made outside a tool call delivers at 0.
 
 A task cancelled from outside (its caller's timeout, the framework's
-`cancel_task(task_id)`, the task runner's `cancel` or `close`, even before it
-ran or while its delegation was still being set up) ends once, as any task
-does, whether it ran inline or in the background: `cancelled`, with no
-output. Steps 7 and 8 still run, to their end though the task is being
+`cancel_task(task_id)`, the task runner's `cancel` or `close`, the framework's
+own `close()`, even before it ran or while its delegation was still being set
+up) ends once, as any task does, whether it ran inline or in the background:
+`cancelled`, with no output. The framework holds an inline task as it holds
+the background ones, so its `close()` cuts it and waits for its end, steps 7
+and 8 included, before it releases the store. Steps 7 and 8 still run, to their end though the task is being
 cancelled, the completion callback with them, and a notified agent is told
 the task was cancelled; then the cancellation goes on. The one exception is
 an agent that cancelled the task itself (its `cancel_task` call, Section
