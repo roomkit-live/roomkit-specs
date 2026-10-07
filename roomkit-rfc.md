@@ -1742,10 +1742,13 @@ so that nothing it holds reads as written by the runtime:
   one, so that none is left to close the quote.
 
 What the runtime gives outside both carries no text of its own: an identifier
-kept to an identifier's characters (letters, digits, `_ . @ + -`), a value from
-a known set (a task's ending, a plan step's status), a number, or a person's
-name kept to a name's characters (letters, digits, spaces, `.`, `-`, `'`), on
-one line and bounded, as the `Name: ` prefix of a transcript gives it. The
+kept to an identifier's characters (letters with their marks, digits,
+`_ . @ + -`), a value from a known set (a task's ending, a plan step's status),
+a number, or a person's name kept to a name's characters (letters with their
+marks, digits, spaces, `.`, `-`, `_`, `#`, apostrophes), on one line and
+bounded, as the `Name: ` prefix of a transcript gives it. A tool call the
+channel recalls in the turn's notes names its tool and its arguments' keys as
+identifiers and quotes each text value. The
 conversation itself (a participant's message, the agent's own answers, the
 application's instruction) keeps its author's role and is not quoted; the
 runtime's own renderings of it (the transcript a thinker, a summarizer, a
