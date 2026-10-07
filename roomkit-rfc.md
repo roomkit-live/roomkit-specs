@@ -2245,8 +2245,14 @@ status is final. Without a status, a lost connection (refused, reset or timed
 out) is retryable, and an answer that could not be read is final: a body that
 is not the provider's format, such as a gateway's HTML page in place of JSON,
 including a stream that ends without one event, never reads as an empty
-success. A provider whose SDK drops a status it does not classify cannot read
-it, and its failure is final.
+success. A 200 whose body is an error object reads as the status it names. A
+provider whose SDK drops a status it does not classify cannot read it, and
+its failure is final; any other failure without a status is retryable only
+when its message names a retryable status, a rate limit or an overload, as
+whole words. One exception is kept: Ollama reports a stream its server
+aborted (its template failed to parse the model's own output) with no
+status, a generation defect that a new sample may not repeat, and it reads
+as a lost connection.
 
 **SMS Provider interface:**
 
