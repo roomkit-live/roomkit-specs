@@ -6701,6 +6701,16 @@ observation, never as the entry to the interruption path below. Synthesized
 boundaries lag the audio they describe by the gap, and a latency metric read
 from them MUST account for it.
 
+**An answer awaited starts with the model's output (normative).** A host that
+sent the model a tool result or a delegation's spoken output is not idle until
+the model's answer to it starts. The answer starts with a response start, and,
+on a full-duplex provider, which may say it inside a response already open and
+synthesize no new start, with audible assistant audio or a non-empty partial
+transcript of the assistant's words. The host waits from before the output is
+sent, so an answer that starts before the send returns is not missed. An output
+that could not be sent is not waited for. Every host of a realtime model (a
+realtime voice channel, a conference) reads the answer's start the same way.
+
 **Interruption belongs to the model (normative).** When the user speaks over a
 full-duplex provider, the model hears it and decides — it stops, or finishes
 its clause, or says "mhm" and carries on. The framework MUST NOT decide for
@@ -9863,14 +9873,16 @@ and is `unavailable` while no session is connected. A strategy waiting
 for idle waits until the model's answer has ended and reached the bot
 track, the provider hears nobody speak, no tool call of the session is in
 flight, and no result (or delegation fallback) sent to the model is still
-waiting for its answer, as on a realtime voice channel. The injection fires
-ON_REALTIME_TEXT_INJECTED.
+waiting for its answer (Section 12.4.1), as on a realtime voice channel. The
+injection fires ON_REALTIME_TEXT_INJECTED.
 
 **A delegation is always answered (normative).** A full-duplex provider's
 delegation fires ON_REALTIME_DELEGATION; a conference serves no reasoning
 backend, so an integrator-side delegation is answered with the spoken
 fallback a realtime voice channel without a backend gives (Section 12.4.1),
-never left waiting.
+never left waiting. A delegation the provider issues while the room's session
+is still connecting is answered once the session is the room's, as a tool call
+issued then is served.
 
 **One voice per bot (normative).** A channel MUST refuse a
 configuration holding both a synthesizer (tts) and a speech-to-speech
