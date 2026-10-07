@@ -1684,7 +1684,8 @@ stay the same from one turn to the next: a system prompt that changes
 invalidates everything cached after it, the whole history included. What changes
 between turns as the conversation works travels with the turn's input instead,
 as notes: what the channel recalls of the tools used in the room (and what they
-returned), the room's plan, how speakers are named when the history window holds
+returned), the room's plan, the room's background tasks and how far each got
+(Section 23.4), how speakers are named when the history window holds
 several (which speakers it holds changes as it slides), what a vision provider
 last saw (Section 12.8.7), and what a memory provider retrieved for this turn
 alone (Section 20.2), each passage set apart as data. The notes follow the
@@ -3745,8 +3746,9 @@ intent of §12.4, for every kind of intelligence channel.
    an empty view is not enough, since a provider MAY return `messages` of its
    own (a summary, a minimum it always keeps). Nor does it read the room's
    working memories, which are its past in another form: skills activated in
-   the room, the room's plan, and what the channel recalls of tools used
-   there (a digest that may quote their results). The channel's own system
+   the room, the room's plan, the room's background tasks, and what the
+   channel recalls of tools used there (a digest that may quote their
+   results). The channel's own system
    prompt, tools and skill catalogue are unchanged. It is for a pass that must start from a
    blank page, such as a summary re-run that would otherwise read, and copy,
    its previous answer.
@@ -12811,6 +12813,17 @@ tasks on the bus itself (an orchestration strategy's worker run, Section
 19.7.3) delegates with `post_status = false`, and the delegation posts
 nothing, so a task never shows twice.
 
+**Progress.** A task MAY say how far it got while it runs ("12/30 s", "3
+sources of 5"). The child room's metadata names its task (`task_id`, beside
+`parent_room_id` and `task_agent_id`), so a tool the worker calls in that room
+posts its task's progress with `post_task_progress(kit, detail)`, read from the
+tool call context (Section 21.4): an `info` entry under the worker's
+`agent_id`, action `task`, its detail the progress, bounded, with the same
+metadata as the task's other entries. It returns whether it posted: a call
+outside a task's child room posts nothing. A progress entry does not end the
+task: a reader of the bus keeps the latest progress of a task apart from its
+status, and a task that ended stays ended whatever progress follows.
+
 ### 23.4 Delegation Tools
 
 Implementations SHOULD provide helpers for AI-driven delegation:
@@ -12831,8 +12844,8 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   the delegation helpers. It answers with the tasks posted on the StatusBus for
   the room of the call, read from the tool call context (Section 21.4): those
   running and those ended, the latest entry of each, with its worker, the task,
-  its status, its whole result (Section 19.8) or that it failed, and when it
-  was posted; a
+  its status, its latest progress and when it was posted (Section 23.3), its
+  whole result (Section 19.8) or that it failed, and when it was posted; a
   `task_id` argument narrows the answer to one task. It reads the bus for that
   room only: one room's tasks never show in another. A tool reply that tells
   its agent to follow the work (a strategy's background dispatch, Section
@@ -12848,6 +12861,22 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   (`post_status = false`), which that strategy follows itself. It answers
   that the task was cancelled, that it had already ended (with its status),
   or that the room has no such task.
+
+**The room's tasks in the turn's notes.** An AI channel's turn reads the
+room's tasks without a tool call: when the StatusBus lists tasks for the room
+of the turn, the channel's notes (Section 6.4) carry the latest of them
+(RoomKit: 6), each with its worker and what was asked, then either how long it
+has run, its latest progress with how long ago it was posted, and that no
+result has come back yet, so none of its data may be given, or how it ended.
+The notes say to speak of a running task only when asked, and to give none of
+its data before its result comes back; a result itself comes back by its
+hand-back, never through the notes. What was asked and the progress are a
+worker's text: each is quoted between marks it cannot close (a quote mark
+inside it is made plain), on one line, and bounded, set apart as data; a
+worker's name and a task's status are on one line and bounded too. The notes are read
+from the bus as the turn is built, and nothing is stored: a task the bus no
+longer lists is no longer in them. A standalone turn carries none (Section
+10.1.1), and a realtime session, which builds no turn, carries none either.
 
 A delegation tool, whichever helper wired it (a supervisor's per-worker and
 strategy tools included), delegates from the room of the call, read from the
