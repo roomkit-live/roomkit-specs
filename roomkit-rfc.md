@@ -6521,7 +6521,9 @@ recovered call MUST pass the same gate — its arguments are reconstructed from
 free text and are therefore less trustworthy than a function call's, not more.
 Its outcome, result or refusal, MUST be returned as injected context rather than
 as a tool result, because the model issued no call and has no pending response
-to close.
+to close. The result it returns is set apart as a tool's result
+(`<tool_result>`, Section 6.4): it is data the tool returned, never the
+runtime's own words.
 
 **A response's calls are answered together (normative).** A provider that
 must be asked to continue once tool results are in MUST ask once per model
@@ -6587,8 +6589,9 @@ integrator means, and each provider maps that meaning onto what its wire offers:
   greeting, a scripted announcement). Where the wire has a primitive that makes
   the agent speak a text, the provider uses it, verbatim or paraphrased as that
   primitive does; otherwise it asks the model to say the line, as an
-  instruction. It MUST NOT reach the model as something the user said: the
-  model would answer its own line.
+  instruction that quotes the line as Section 6.4 quotes a text, so the line
+  cannot end the instruction and add to it. It MUST NOT reach the model as
+  something the user said: the model would answer its own line.
 - `silent` — any intent, added as context without asking for a response.
 
 A provider MAY accept further intents its wire carries and MUST document them.
@@ -6597,6 +6600,18 @@ Outside a realtime session the same intent is an `INSTRUCTION` event
 (§10.1.1): it reaches a room's intelligence channels through the inbound
 pipeline, as the input of one turn marked as the application's, and is never
 stored.
+
+**Text from another channel (normative).** A text event another channel
+broadcast into the room reaches a realtime session (a realtime voice channel's,
+a conference's with a realtime model plugged in) as what it is: content
+someone else wrote. It is injected with the `user` intent, never `system` nor
+`assistant`, its author named as a transcript names them (a person by their
+name and the channel they wrote through, anything else by its channel id) and
+its text quoted as Section 6.4 quotes a text from outside: `Marie · sms: “…”`.
+Nothing the event carries chooses the intent, its metadata included, which a
+remote client can write. The application directs the model through its own
+doors: `inject_text` with the `system` intent, or a delivery marked as an
+instruction (Section 22.1).
 
 Text that directs the model MUST be injected with the `system` role, never as
 `user`: on a full-duplex provider a `user` injection is voiced as the model's
@@ -6626,6 +6641,13 @@ is still content) and MUST document the mapping in its `inject_text`. A mapping
 that changes the effect is not an implementation detail: a provider with no way
 to carry an intent MUST refuse it (`not_sent`, with a reason) rather than
 deliver it as something else.
+
+A provider that joins an injected text to instructions of its own MUST keep
+the two apart, so that the text never reads as more of the instructions: an
+instruction a resumption left unapplied (below) is set apart in a block of its
+own before the injected text, and content a provider adds to the prompt it
+rewrites for a silent injection (Deepgram) is set apart in a block of its own
+after the instructions.
 
 **A reconfiguration's instruction takes effect.** A provider that applies a
 reconfiguration by resuming the session, where the service resumes it under
