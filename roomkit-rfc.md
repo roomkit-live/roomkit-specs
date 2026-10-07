@@ -2527,7 +2527,7 @@ They are NOT stored in any room timeline.
 | source_exhausted | Source provider given up after its last restart attempt | channel_id, source_name, attempts, last_error |
 | event_processed | An event that entered through the inbound pipeline or direct injection (§10.5) finished its delivery set and its `AFTER_BROADCAST` hooks; not emitted for the events its processing produced (responses, streamed rows, hook-injected events) | room_id, event_id |
 | event_blocked | Event blocked by a hook or by a source that cannot write (§7.5 rule 2); a chain-depth record emits `chain_depth_exceeded` instead | room_id, event_id, channel_id (the event's source), reason, blocked_by |
-| process_timeout | The pre-commit phase exceeded `process_timeout` (§13.6) | room_id, channel_id (expired before the room lock) or event_id (under it), timeout |
+| process_timeout | The pre-commit phase exceeded `process_timeout` (§13.6) | room_id, channel_id (expired before the room lock) or event_id (under it), timeout; `operation = regenerate` for a regeneration |
 | delivery_succeeded | A transport channel's `deliver()` succeeded, for an event that entered through the inbound pipeline or direct injection (§10.5); a response's deliveries are not reported | room_id, event_id, channel_id |
 | delivery_failed | A target's `on_event()` or `deliver()` failed (`deliver()` after its retries), for the same events as `delivery_succeeded` | room_id, event_id, channel_id, error |
 | broadcast_partial_failure | `delivery_failed` was emitted for at least one of an event's targets; the event stays DELIVERED (§13.6) | room_id, event_id, failed, total, errors (channel_id → error) |
@@ -10345,6 +10345,13 @@ transaction that stores the event as DELIVERED and updates the room counters:
   returned result to blocked/failed.
   A degraded broadcast SHOULD surface as `broadcast_partial_failure`, with the
   source event remaining DELIVERED.
+
+A regeneration re-broadcasts an event already committed, so it has no commit
+point of its own: `process_timeout` bounds its wait for the room lock and its
+choice of the event to replay, and MUST NOT bound the broadcast, which runs in
+the room's delivery lane off the lock like any post-commit phase (§13.5). On
+expiry it returns `InboundResult(blocked=true, reason=process_timeout)` and
+emits `process_timeout` with `operation = regenerate`.
 
 Implementations MAY additionally model outbound delivery with an explicit
 `PENDING → COMMITTED | FAILED` state and an outbox, plus recovery of events
