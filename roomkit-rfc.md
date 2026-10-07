@@ -2234,6 +2234,20 @@ that the endpoint does not serve the model at all, the request fails before it
 is sent, with a non-retryable error naming the model. Behind a base URL the
 server decides.
 
+**What a failed generation reads as (normative).** A provider MUST raise a
+failure as a `ProviderError` whose `retryable` flag does not depend on the
+provider or on the form the server gave the failure. Its status is the one the
+server described: the HTTP status of an error response, else the status or
+error type written in the error's body, as when a stream already answered 200
+carries an error event (Anthropic's `overloaded_error` reads as the 529 it
+stands for). A status of 408, 409, 429 or any 5xx is retryable; any other
+status is final. Without a status, a lost connection (refused, reset or timed
+out) is retryable, and an answer that could not be read is final: a body that
+is not the provider's format, such as a gateway's HTML page in place of JSON,
+including a stream that ends without one event, never reads as an empty
+success. A provider whose SDK drops a status it does not classify cannot read
+it, and its failure is final.
+
 **SMS Provider interface:**
 
 ```
