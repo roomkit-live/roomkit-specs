@@ -1520,8 +1520,8 @@ Thinker (interface)
    is said, or offered. A thinker call running meanwhile does not bring it
    back. An instruction carries no thought and empties nothing. The thought is
    a model's reading of what people said, so whatever they said can reach it:
-   the notes MUST carry it quoted, bounded, and named as information to weigh,
-   not as the runtime's instructions.
+   the notes MUST carry it quoted (as any text from outside, below), bounded,
+   and named as information to weigh, not as the runtime's instructions.
 5. A thinker that fails, or the end of its wait, keeps the previous thought.
 6. The thought is the channel's, per room, in memory: it is not stored, and a
    restart starts from an empty thought, as does a room the channel is
@@ -1722,6 +1722,38 @@ cut the input when nothing before the input can be shortened. Text the runtime
 places next to a user message (the turn's notes, a compaction's summary, a
 summary a memory provider returns) joins that message rather than forming a
 second user message in a row.
+
+**Text from outside in a model's context (normative).** Text the runtime places
+in a model's context without having written it (a person's words or name, a
+worker's output or progress, a tool's result, a passage a memory retrieved, a
+model's output such as a thought, a summary, or the task a tool call asked for)
+can hold anything, a frame of the runtime's own included. Every rendering that
+places such text, present and future, MUST keep it in a frame it cannot leave,
+so that nothing it holds reads as written by the runtime:
+
+- **a block**, set apart in a tag of its own (`<tool_result>`,
+  `<worker_output>`, `<knowledge>`, `<conversation_summary>`), where any
+  closing tag of that name the text holds, in any case or spacing, is
+  neutralised; a text cut short never leaves part of such a block open (it
+  names the block instead, as a compaction does);
+- or **a quote**, inline: on one line (each run of whitespace, line breaks
+  included, one space), bounded, between `“` and `”`, every double quote mark
+  the text holds (`"`, `“`, `”`, `„`, `«`, `»` and the like) made a single
+  one, so that none is left to close the quote.
+
+What the runtime gives outside both carries no text of its own: an identifier
+kept to an identifier's characters (letters, digits, `_ . @ + -`), a value from
+a known set (a task's ending, a plan step's status), a number, or a person's
+name kept to a name's characters (letters, digits, spaces, `.`, `-`, `'`), on
+one line and bounded, as the `Name: ` prefix of a transcript gives it. The
+conversation itself (a participant's message, the agent's own answers, the
+application's instruction) keeps its author's role and is not quoted; the
+runtime's own renderings of it (the transcript a thinker, a summarizer, a
+compaction or an external agent reads) quote each message. The rule holds for
+the turn's notes, a hand-back, a speaker's name, the room context handed to an
+ACP agent and the summary a memory provider builds, and for any text a
+realtime session, an orchestration strategy or a vision provider places in a
+model's context.
 
 **A tool that has to appear.** A provider that can hold a tool declared but
 unseen (Anthropic's deferred loading keeps such a definition out of the cached
@@ -12753,10 +12785,11 @@ When `delegate(room_id, agent_id, task, notify, post_status = true)` is called:
    delivered content carries the result, bounded and delimited, presented as the worker's output rather than as an
    instruction; a task that did not complete says it failed or was
    cancelled, without its error (§9.3), whatever output or error text it
-   left. It names the task as the delegating agent wrote it (`task`, on one
-   line, bounded), so the notified agent says the result for what was asked,
-   not for what the conversation moved on to meanwhile. Only a completed task
-   with nothing to say is not handed back.
+   left. It names the task as the delegating agent wrote it (`task`, quoted
+   as Section 6.4 quotes a text from outside), and the worker by its id kept
+   to an identifier's characters, so the notified agent says the result for
+   what was asked, not for what the conversation moved on to meanwhile. Only
+   a completed task with nothing to say is not handed back.
    The delivery carries the task in its metadata, `task_id`, `agent_id` (the
    worker), `task_status` and `task` (what was asked, bounded), whichever
    channel it reaches, so a hook that sees it (`BEFORE_BROADCAST`,
@@ -12876,8 +12909,8 @@ answer from without a tool call when asked how far a task got, to speak of a
 running task only when asked, and to give nothing of its result before it
 comes back; a result itself comes back by its hand-back, never through the
 notes. What was asked and the progress are a
-worker's text: each is quoted between marks it cannot close (a quote mark
-inside it is made plain), on one line, and bounded, set apart as data. What
+worker's text: each is quoted as Section 6.4 quotes a text from outside (on
+one line, bounded, between marks it cannot close), set apart as data. What
 the notes give unquoted carries no text of its own: a worker's name keeps to an
 identifier's characters, and a task's ending is `completed`, `failed`,
 `cancelled`, or else `ended`. The notes are read
