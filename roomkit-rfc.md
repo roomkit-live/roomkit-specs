@@ -1700,11 +1700,17 @@ BEFORE_AI_GENERATION hook MAY add a block to the turn's notes: it joins the
 section the channel opened, under the same header, or opens it when the input
 carries none, and the notes then read as if the channel had assembled them
 at once, so the prefix a provider caches is the same. The header is the
-notes' only mark, recognized as the channel places it, a paragraph of its own
-with a block after it: the block a hook adds joins the notes it marks, a
-reader that separates the input from its notes cuts at its last such
-occurrence, and an input, or a note, that quotes the header that way is what
-both misread. An active
+notes' only mark, and the channel's alone: a copy of it in the conversation's
+text (a participant's message, the agent's own answer, the application's
+instruction, a message a memory provider built) or in a block of the notes,
+in any case or spacing, MUST be replaced before the model reads it by a fixed
+mark saying the runtime did not write it, as a fenced block's closing tag is
+neutralised. The replacement is the same on every turn, so the prefix a
+provider caches is the same, and the header the model reads is the one the
+channel placed, a paragraph of its own with a block after it: the block a
+hook adds joins the notes it marks, and a reader that separates the input
+from its notes cuts there. Only a copy a hook writes into the messages itself
+is what both misread. An active
 skill's instructions stay in the system prompt (Section 24.4): they change only
 when a skill is activated, and they are instructions, not notes. A standalone
 turn carries none of the room's memories (Section 10.1.1).
@@ -1750,10 +1756,11 @@ bounded, as the `Name: ` prefix of a transcript gives it. A tool call the
 channel recalls in the turn's notes names its tool and its arguments' keys as
 identifiers and quotes each text value. The
 conversation itself (a participant's message, the agent's own answers, the
-application's instruction) keeps its author's role and is not quoted; the
-runtime's own renderings of it (the transcript a thinker, a summarizer, a
-compaction or an external agent reads) quote each message, after the name the
-runtime gave its speaker, never a name read from the message's text. The rule holds for
+application's instruction) keeps its author's role and is not quoted, a copy
+of the turn's notes' header it holds replaced as above; the runtime's own
+renderings of it (the transcript a thinker, a summarizer, a compaction or
+an external agent reads) quote each message, after the name the runtime gave
+its speaker, never a name read from the message's text. The rule holds for
 the turn's notes, a hand-back, a speaker's name, the room context handed to an
 ACP agent and the summary a memory provider builds, and for any text a
 realtime session, an orchestration strategy or a vision provider places in a
