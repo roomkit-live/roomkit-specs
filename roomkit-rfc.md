@@ -12875,8 +12875,10 @@ The notes say to speak of a running task only when asked, and to give none of
 its data before its result comes back; a result itself comes back by its
 hand-back, never through the notes. What was asked and the progress are a
 worker's text: each is quoted between marks it cannot close (a quote mark
-inside it is made plain), on one line, and bounded, set apart as data; a
-worker's name and a task's status are on one line and bounded too. The notes are read
+inside it is made plain), on one line, and bounded, set apart as data. What
+the notes give unquoted carries no text of its own: a worker's name keeps to an
+identifier's characters, and a task's ending is `completed`, `failed`,
+`cancelled`, or else `ended`. The notes are read
 from the bus as the turn is built, and nothing is stored: a task the bus no
 longer lists is no longer in them. A standalone turn carries none (Section
 10.1.1), and a realtime session, which builds no turn, carries none either.
