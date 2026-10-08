@@ -1704,10 +1704,21 @@ notes' only mark, and the channel's alone: a copy of it in the conversation's
 text (a participant's message, the agent's own answer, the application's
 instruction, a message a memory provider built, a message steering injects
 (Section 21.3)) or in a block of the notes, in any case, spacing or
-punctuation, with invisible characters between or inside its words, or
+punctuation, its letters in any of the forms a fenced block's tag is
+compared in, with invisible characters between or inside its words, or
 running over adjacent text parts, MUST be replaced before the model reads it
 by a fixed mark saying the runtime did not write it, as a fenced block's
-closing tag is neutralised. The replacement is the same on every turn, so
+closing tag is neutralised. The same holds for every other mark the runtime
+writes in a model's input: the mark of the application's instruction, the
+mark of an answer that was cut off, a summary's header (a compaction's or a
+memory provider's), and the lines that open and close the room context
+handed to an ACP agent. A copy of one of them in the text an event brings
+(as it enters a transcript or an ACP prompt, before the runtime places its
+own marks) or in a message steering injects MUST be replaced by a fixed mark
+saying the runtime did not write it; a mark whose fixed part is a short
+phrase (the room context's opening) counts only with its opening bracket, so
+that prose naming the same words is left as written. The marks the runtime
+places itself are kept. The replacement is the same on every turn, so
 the prefix a provider caches is the same, and the header the model reads is
 the one the channel placed, a paragraph of its own with a block after it:
 the block a hook adds joins the notes it marks, and a reader that separates
@@ -12384,7 +12395,7 @@ They are injected into the AI generation context:
 |---|---|
 | Cancel | Abort the current generation immediately |
 | UpdateSystemPrompt | Append additional instructions to the system prompt |
-| InjectMessage | Add a synthetic user or assistant message to the conversation history, a copy of the turn's notes' header it holds replaced (Section 6.4) |
+| InjectMessage | Add a synthetic user or assistant message to the conversation history, a copy of the turn's notes' header or of another runtime mark it holds replaced (Section 6.4) |
 
 A Cancel ends the turn at the first point the loop reaches, and a round's
 tools are one such point: a Cancel that arrives after the model's last event
