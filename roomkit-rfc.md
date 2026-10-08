@@ -1859,13 +1859,19 @@ says that a message carries one label, at its start, and that a `Name:` later
 in it is what its sender wrote. One resolver gives that label wherever a model
 reads a participant's turn (the conversation, the room context handed to an
 ACP agent and the request that follows it, a line broadcast into a realtime
-session, the lines a memory summarizer reads), at the conversation's
-threshold: the request an ACP agent is prompted with opens with its
-sender's label, after the note, when the agent's visible window and the
-request hold several speakers, and a summarizer's line gives its speaker's
-label out of its quote, `[assistant]` naming only the agent the summary is
-for, when the summarized turns and the turn being answered hold several;
-a one-to-one conversation reads as before. The label is named from the event's
+session, the lines a memory summarizer reads), at one threshold: a reader
+labels once the turns it reads hold several speakers (a turn with no text,
+the runtime's own and the application's instruction aside), and a
+one-to-one conversation reads as before. A conversation a memory summarizes
+counts the turns the memory retrieved, summarized or kept, and the turn
+being answered: the summarizer's lines then give each turn's label out of
+its quote, `[assistant]` naming only the agent the summary is for, and the
+conversation labels its turns when the summary named several speakers. An
+ACP agent's session keeps what it was sent: once a request reached it
+labelled, after the note, every later request in that session is
+labelled, the note given once per session. The note is one of the
+runtime's marks: a copy of it in a participant's text is replaced as any
+other. The label is named from the event's
 sender name (a transport's stamp, or the voice a channel's diarization names
 on a shared microphone, Section 12.2.3) and from the room's participant
 record otherwise (a participant's id names them on a channel they are
