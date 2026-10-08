@@ -1756,10 +1756,11 @@ so that nothing it holds reads as written by the runtime:
   character or a combining mark between its letters, one slash or more (an
   escaped one included) and the common look-alikes of the bracket and the
   slash, and with a mark after the name (`</tag.>`): a closing tag errs
-  toward what a model could read as one. An opening tag of that name, its
-  bracket right before the name, is neutralised as well, the rest of it kept
-  as written, so no reader tracking nesting reads the runtime's text after
-  the block as data. A provider that rewrites a framed text before sending
+  toward what a model could read as one. An opening tag of that name, in the
+  same forms and spacing, its name ended by anything that does not continue
+  it (the text's end included; `<tag-list>` and `<tag.v2>` are other tags),
+  is neutralised as well, the rest of it kept as written, so no reader
+  tracking nesting reads the runtime's text after the block as data. A provider that rewrites a framed text before sending
   it (a character its API refuses) MUST replace what it removes, never
   delete it, so that it joins nothing the frame kept apart. A text cut short
   never leaves part of such a block open (it names the block instead, as a
