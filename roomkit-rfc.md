@@ -3702,11 +3702,14 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   │   the event carries it (metadata.author_rank, any value the event
     │   │   came with dropped). The room's named participants hold the first
     │   │   ranks, in the order they joined; a source new to the room joins
-    │   │   the register only when its event is visible to every reader
-    │   │   (§7.5): a restricted turn is ranked against the register without
-    │   │   joining it, so no reader learns of a source it cannot see. Under
-    │   │   the lock, before the commit, so the rank of a turn never changes
-    │   │   once stored; a BLOCKED record (steps 10, 11) takes none
+    │   │   the register whatever its event's visibility: a restricted turn
+    │   │   ranked without joining it would leave its rank to the next
+    │   │   source, and a reader who sees both would read two sources under
+    │   │   one label. The rank is the room's, so a reader may learn from it
+    │   │   that a source it does not see has a name that reads alike, never
+    │   │   the source nor its turn (§7.5 rule 8). Under the lock, before
+    │   │   the commit, so the rank of a turn never changes once stored; a
+    │   │   BLOCKED record (steps 10, 11) takes none
     ├── Commit atomically, as ONE logical transaction:
     │   ├── Store event with status=DELIVERED
     │   └── Update room state: latest_index = event.index; event_count += 1;
