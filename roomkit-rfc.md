@@ -1745,8 +1745,10 @@ so that nothing it holds reads as written by the runtime:
 - **a block**, set apart in a tag of its own (`<tool_result>`,
   `<worker_output>`, `<knowledge>`, `<conversation_summary>`, `<context>` for
   content a realtime provider adds to its prompt), where any
-  closing tag of that name the text holds, in any case or spacing, is
-  neutralised; a text cut short never leaves part of such a block open (it
+  closing tag of that name the text holds, in any case or spacing, or with a
+  character Unicode marks as ignorable by default anywhere in it (a
+  zero-width space, a direction mark, a Hangul filler: a model reads past
+  them), is neutralised; a text cut short never leaves part of such a block open (it
   names the block instead, as a compaction does);
 - or **a quote**, inline: on one line (each run of whitespace, line breaks
   included, one space), bounded, between `“` and `”`, every double quote mark
