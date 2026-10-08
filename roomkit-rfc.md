@@ -1749,7 +1749,9 @@ so that nothing it holds reads as written by the runtime:
   closing tag of that name the text holds, in any case or spacing, or with a
   character Unicode marks as ignorable by default anywhere in it (a
   zero-width space, a direction mark, a Hangul filler: a model reads past
-  them), is neutralised; a text cut short never leaves part of such a block open (it
+  them), with attributes of any length, or with its brackets in their
+  fullwidth form (`＜／tag＞`), is neutralised: a closing tag errs toward what
+  a model could read as one; a text cut short never leaves part of such a block open (it
   names the block instead, as a compaction does);
 - or **a quote**, inline: on one line (each run of whitespace, line breaks
   included, one space), bounded, between `“` and `”`, every double quote mark
