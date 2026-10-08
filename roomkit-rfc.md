@@ -4582,14 +4582,17 @@ DialogueTurn
 └── style: string | null                    # Delivery direction for this turn only
 ```
 
-A provider that builds a speech model's prompt around the text to speak (a
-model with no field of its own for the text and its delivery) MUST set the
-text apart as a `<transcript>` block (Section 6.4), so that the text can
-neither end the transcript nor open another. A speech model performs a
-delivery cue written in the text it speaks (an audio tag, a sentence such as
-"whisper this"), whatever frame holds the text: an application that speaks
-text it does not trust removes such cues before synthesis, in a BEFORE_TTS
-hook.
+A TTS provider that builds a speech model's prompt around the text to speak
+(a model with no field of its own for the text and its delivery) MUST set
+the text apart as a `<transcript>` block (Section 6.4), so that the text can
+neither end the transcript nor open another; a line a realtime session is
+asked to say keeps the quote of Section 12.4. A generative speech model may
+perform a delivery cue written in the text it speaks (an audio tag, a
+sentence such as "whisper this"), whatever frame holds the text: text the
+application does not trust has such cues removed before it reaches the
+model, in a BEFORE_TTS hook where a channel speaks it, and by the
+application itself before it calls `synthesize()` directly or injects an
+`assistant` line into a realtime session.
 
 `synthesize()` returns an `AudioContent` (Section 5) rather than raw bytes.
 This allows the result to carry metadata (transcript, duration, MIME type) and
