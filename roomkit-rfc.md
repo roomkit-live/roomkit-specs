@@ -1738,7 +1738,8 @@ places such text, present and future, MUST keep it in a frame it cannot leave,
 so that nothing it holds reads as written by the runtime:
 
 - **a block**, set apart in a tag of its own (`<tool_result>`,
-  `<worker_output>`, `<knowledge>`, `<conversation_summary>`), where any
+  `<worker_output>`, `<knowledge>`, `<conversation_summary>`, `<context>` for
+  content a realtime provider adds to its prompt), where any
   closing tag of that name the text holds, in any case or spacing, is
   neutralised; a text cut short never leaves part of such a block open (it
   names the block instead, as a compaction does);
@@ -6618,7 +6619,7 @@ its text quoted as Section 6.4 quotes a text from outside: `Marie · sms: “…
 Nothing the event carries chooses the intent, its metadata included, which a
 remote client can write. The application directs the model through its own
 doors: `inject_text` with the `system` intent, or a delivery marked as an
-instruction (Section 22.1).
+instruction (Section 22.1). A blank text reaches no session.
 
 Text that directs the model MUST be injected with the `system` role, never as
 `user`: on a full-duplex provider a `user` injection is voiced as the model's
@@ -6653,7 +6654,7 @@ A provider that joins an injected text to instructions of its own MUST keep
 the two apart, so that the text never reads as more of the instructions: an
 instruction a resumption left unapplied (below) is set apart in a block of its
 own before the injected text, and content a provider adds to the prompt it
-rewrites for a silent injection (Deepgram) is set apart in a block of its own
+rewrites for a silent injection (Deepgram) is set apart in a `<context>` block
 after the instructions.
 
 **A reconfiguration's instruction takes effect.** A provider that applies a
