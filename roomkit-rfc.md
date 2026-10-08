@@ -3584,7 +3584,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   │   it was detached from that room (§7.5 rule 7)
    │   └── Routed (not provided), and the channel's binding names no
    │       participant and is not `group` → record the sender on it
-   │       (`participant_id`, §10.4), under the room lock
+   │       (`participant_id`, §10.4), under the room lock and before step 3;
+   │       when the binding names another sender by then (a concurrent
+   │       message was recorded first), route the message once more
    └── If new room created → fire ON_ROOM_CREATED hook and emit
        `room_created`, then attach channel, its binding naming the sender
        (`participant_id = sender_id`, §5.7); then, for a channel other than
@@ -4109,6 +4111,16 @@ following hold:
   stored event of the channel, a `BLOCKED` one excepted, whose source names a
   participant other than the sender.
 
+The sender is known to the room by their address, and by the identity the
+store resolves that address to (`resolve_identity`, §14.1): a participant or
+an event named by either is the sender's own. A message the framework writes
+itself, under the sender `system` (a `deliver()` to the room, an
+orchestration cue), names no correspondent. A member added under an id that
+is neither the address nor a resolvable identity cannot be told from a
+stranger, so the room is closed to step 3: its correspondent's messages are
+routed by `room_id`, or the address is linked to the identity
+(`link_address`, §14.1).
+
 A message with no sender address is held to the same conditions, so it is
 admitted only where no one is named, joined or heard on the channel.
 
@@ -4116,7 +4128,18 @@ When step 3 admits a sender through a binding that names no participant and
 is not `group`, the framework records the sender on it (§10.1 step 2): step 1
 then finds them on their next message, and step 3 admits no one else. A room
 the framework creates for an inbound message is bound to its sender from the
-start.
+start. The sender is recorded when the message is routed, under the room
+lock, before anything of the message is processed: two first messages
+arriving together cannot both be admitted, since the second finds the binding
+naming the first and is routed again. A message a hook later refuses has
+been routed all the same: routing decides which conversation a message
+belongs to, a hook what becomes of it.
+
+**A delivery status follows its message.** A provider's delivery status that
+names no room is routed by the same rule: the room whose binding of the
+status's channel names its recipient, else the one ACTIVE room bound to the
+channel, else none. It is never dispatched with the context of one room among
+several.
 
 **A binding speaks for its own channel.** The sender a binding names is found
 through it on that channel only. A correspondent of one number writing to
@@ -10733,7 +10756,13 @@ ConversationStore (interface)
 │   ├── delete_room(room_id) → void
 │   ├── list_rooms(filters) → list<Room>
 │   ├── find_room(filters) → Room | null
-│   └── find_latest_room(filters) → Room | null
+│   ├── find_latest_room(filters) → Room | null
+│   ├── find_room_id_by_binding(channel_id, participant_id, status) → string | null
+│   │                                         # newest room whose binding of
+│   │                                         # channel_id names participant_id
+│   └── find_room_id_by_participant(participant_id, status) → string | null
+│                                             # newest room where participant_id
+│                                             # is a participant (§10.4 step 1)
 │
 ├── Events
 │   ├── add_event(room_id, event) → RoomEvent
