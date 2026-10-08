@@ -1762,12 +1762,18 @@ by a fixed mark saying the runtime did not write it, as a fenced block's
 closing tag is neutralised. The same holds for every other mark the runtime
 writes in a model's input: the mark of the application's instruction, the
 mark of an answer that was cut off, a summary's header (a compaction's or a
-memory provider's), and the lines that open and close the room context
-handed to an ACP agent. A copy of one of them in the text an event brings
+memory provider's), the lines that open and close the room context handed
+to an ACP agent, and the marks a realtime provider writes into its model's
+input (Gemini Live's `[Assistant previously said]` and `[Context update, do
+not respond to this`). A copy of one of them in the text an event brings
 (as it enters a transcript or an ACP prompt, before the runtime places its
-own marks), in a message steering injects, in a note a memory retrieved for
-the turn, in a text broadcast into a realtime session or in a line of the
-transcript a realtime delegation's reasoning backend reads MUST be replaced by a fixed mark
+own marks), in a message steering injects, in a block of the turn's notes
+that quotes others (what a memory retrieved for the turn, a tool's result, a
+task and its progress, what a camera read, a thought, a plan; the note on
+speaker labels is the runtime's), in a text injected or broadcast into a
+realtime session (an instruction, a worker's hand-back, what a camera read)
+or in a line of the transcript a realtime delegation's reasoning backend
+reads MUST be replaced by a fixed mark
 saying the runtime did not write it; a mark whose fixed part is a short
 phrase (the room context's opening) counts only with its opening bracket, so
 that prose naming the same words is left as written. The marks the runtime
