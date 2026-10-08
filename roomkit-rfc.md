@@ -1480,8 +1480,11 @@ The channel bounds the wait for a decision (2 s by default). A policy that
 fails or does not decide in time does not silence the agent: the channel logs
 it and runs the turn as without a policy, and the decision it reports is
 `speak` with the reason `fallback`. Every decision fires `ON_SPEAK_DECISION`
-with the event, the channel and the decision, so that what an agent left
-unanswered, and why, can be followed and measured. A channel without a policy
+with the event, the channel and the decision, how long the policy took to
+decide (the bound, when it did not decide in time) and whether it was asked
+again once the agent thought (below), so that what an agent left unanswered,
+why, and what deciding cost can be followed and measured without wrapping the
+policy. A channel without a policy
 answers every event, as before, and decides nothing; a policy that always
 speaks reports each decision, a baseline to measure another against. A turn the
 channel's strategy takes in a room (Section 19.7) is not submitted to it
@@ -1559,7 +1562,10 @@ Thinker (interface)
    attached to or detached from, so that a room reusing an id never inherits
    another conversation's thought.
 
-Every new thought fires `ON_THOUGHT` with the room, the channel and the thought.
+Every new thought fires `ON_THOUGHT` with the room, the channel and the thought,
+the one it replaces, and how long the thinker call that brought it took; a
+thought emptied because the agent spoke (rule 4) came from no call and carries
+no duration. A call that fails or brings back the same thought fires nothing.
 A policy reads it in `SpeakTurn.thought`. The classifier policy then also
 judges whether what the agent wants to say answers what the turn asks, or
 corrects or warns about what it says. Only wondered about and knowing the
