@@ -1789,7 +1789,13 @@ kept to an identifier's characters (letters with their marks, digits,
 a number, or a person's name kept to a name's characters (letters with their
 marks, digits, spaces, `.`, `-`, `_`, `#`, apostrophes, a letter that reads
 as a colon or a double quote left out), on one line and bounded, as the
-`Name: ` prefix of a transcript gives it. A tool call the
+`Name: ` prefix of a transcript gives it. When the history window holds
+several named speakers, every participant's turn in the conversation opens
+with such a label, which the runtime alone places: the speaker's name, or, for
+a turn whose speaker has no name, the label of the channel it came through,
+as the room context of an ACP agent names it; the note that says how speakers
+are named says that a message carries one label, at its start, and that a
+`Name:` later in it is what its sender wrote. A tool call the
 channel recalls in the turn's notes names its tool and its arguments' keys as
 identifiers and quotes each text value. The
 conversation itself (a participant's message, the agent's own answers, the
