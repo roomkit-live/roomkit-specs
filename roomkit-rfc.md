@@ -1744,7 +1744,8 @@ so that nothing it holds reads as written by the runtime:
 
 - **a block**, set apart in a tag of its own (`<tool_result>`,
   `<worker_output>`, `<knowledge>`, `<conversation_summary>`, `<context>` for
-  content a realtime provider adds to its prompt), where any
+  content a realtime provider adds to its prompt, `<task>` for the goal or
+  task an orchestration strategy copies into another model's prompt), where any
   closing tag of that name the text holds, in any case or spacing, or with a
   character Unicode marks as ignorable by default anywhere in it (a
   zero-width space, a direction mark, a Hangul filler: a model reads past
@@ -11836,7 +11837,10 @@ HandoffResult
    - Return `HandoffResult(accepted=false, reason=...)`.
 
 The handoff summary is injected into the target agent's context so it
-has continuity.
+has continuity, set apart as a summary of the conversation
+(`<conversation_summary>`, Section 6.4) under the previous agent's id kept to
+an identifier's characters. The reason the room's timeline records for the
+handoff is quoted.
 
 `setup_handoff(agent, handler, tool, room_id)` wires the handoff tool into an
 AI channel and serves its calls with the `HandoffHandler`. `tool` (default
@@ -11877,6 +11881,16 @@ for that room on the shared agent or channel, and MUST reach that room only:
   itself;
 - on a realtime channel, the active agent's configuration (Section 19.5) is the
   room's.
+
+**What a strategy hands a model (normative).** A strategy that composes a
+model's input from other models' outputs (the workers' results a supervisor
+reviews or presents, the team's work a next worker builds on, the content a
+reviewer judges, a reviewer's feedback a producer revises with) sets each
+output apart in a `<worker_output>` block of its own under its author's label:
+one output cannot close its block, nor pass itself off as another worker's or
+as a verdict. The user's goal or task it copies into such an input is a
+`<task>` block. The input a model acts on as its own (the task framed for a
+worker, a worker's own task) stays that model's input and is not set apart.
 
 No install and no turn writes into the shared agent or channel on behalf of
 one room: not its tools, its handler, its handling of events, its prompt, its
