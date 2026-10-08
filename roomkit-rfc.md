@@ -1871,7 +1871,10 @@ ACP agent's session keeps what it was sent: once a request reached it
 labelled, after the note, every later request in that session is
 labelled, the note given once per session. The note is one of the
 runtime's marks: a copy of it in a participant's text is replaced as any
-other. The label is named from the event's
+other. A turn a memory's summary is joined to keeps its label out of the
+quote in every rendering of it (a thinker's transcript, a compaction's),
+the summary rendered before it, and a speak policy reads each turn under
+the label the conversation gives it. The label is named from the event's
 sender name (a transport's stamp, or the voice a channel's diarization names
 on a shared microphone, Section 12.2.3) and from the room's participant
 record otherwise (a participant's id names them on a channel they are
@@ -11859,6 +11862,12 @@ one output cannot close its block, nor pass itself off as another worker's or
 as a verdict. The user's goal or task it copies into such an input is a
 `<task>` block. The input a model acts on as its own (the task framed for a
 worker, a worker's own task) stays that model's input and is not set apart.
+When several people speak in the room (the conversation's threshold, Section
+6.4; a one-to-one conversation left as it is), a delegated task names out of
+its block who asked for it, by the label the conversation gives the turn
+that led to it: a participant's own words open with `Alice asked:`, a task
+the delegating agent wrote with `Requested by Alice (2), in the delegating
+agent's words:`.
 
 No install and no turn writes into the shared agent or channel on behalf of
 one room: not its tools, its handler, its handling of events, its prompt, its
