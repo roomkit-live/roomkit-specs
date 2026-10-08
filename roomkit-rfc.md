@@ -4869,9 +4869,10 @@ enters a room as any other audio.
 9. Room broadcasts → AI or other channels respond
 10. Response event arrives at Voice channel via deliver()
 11. If TextContent → Fire BEFORE_TTS hook → TTS synthesizes → AudioChunk stream
-    (with a sentence budget, 12s.e, the first sentences of the text up to it are
-     spoken, cut by the same sentence rule as the streamed path; the response
-     was stored whole before it reached the channel)
+    (with a sentence budget, 12s.e, the first sentences of a text delivered
+     whole, a response or any text the channel speaks of a room event, are
+     spoken up to it, cut by the same sentence rule as the streamed path; the
+     response was stored whole before it reached the channel)
     (each session plays in parallel; a session whose synthesis or playback fails
      is reported as `tts_error` once its playback is released, and AFTER_TTS fires
      only when a session was served)
@@ -4904,14 +4905,17 @@ enters a room as any other audio.
         reported as `tts_error`; its failure is not the response's, which takes
         step 13s once every session has stopped (no `ON_ERROR`, no replay).
      e. With a sentence budget (the channel's `max_sentences`), the sentences
-        BEFORE_TTS left are counted: a reply that goes on past the budget ends
-        at the first sentence over it, as when every session stops early
-        (step 13s). That sentence is not synthesized, the stream is closed (no
-        further token, no tool call that has not started), and the text
-        produced so far is stored marked cancelled, so the room keeps about
-        what was heard rather than what was never said. A reply of exactly
-        the budget is not cut. The application's own text (`say()`) has no
-        budget.
+        BEFORE_TTS left are counted. Once the budget is said, a reply that
+        goes on (a word, a tool call, another round) stops there, as when
+        every session stops early (step 13s): the channel reads no further,
+        before the turn asks for a call its next text would announce; what it
+        held of the sentence over the budget is not synthesized; the stream is
+        closed (no further token, no tool call that has not started), and the
+        text produced so far is stored marked cancelled, so the room keeps
+        about what was heard rather than what was never said, and the turn
+        reports no response (`ON_AI_RESPONSE`), as any turn its reader
+        stopped. A reply of exactly the budget is not cut. The application's
+        own text (`say()`) has no budget.
 13s. Framework accumulates full text from stream → stores AI response event
      Interrupted: when deliver_stream() returns before the stream is exhausted,
      for any reason (typically every session of 12s.d stopped early), the
