@@ -1844,7 +1844,14 @@ or a channel does not read as one; the note that says how speakers are named
 says that a message carries one label, at its start, and that a `Name:` later
 in it is what its sender wrote. One resolver gives that label wherever a model
 reads a participant's turn (the conversation, the room context handed to an
-ACP agent, a line broadcast into a realtime session), named from the event's
+ACP agent and the request that follows it, a line broadcast into a realtime
+session, the lines a memory summarizer reads), at the conversation's
+threshold: the request an ACP agent is prompted with opens with its
+sender's label, after the note, when the agent's visible window and the
+request hold several speakers, and a summarizer's line gives its speaker's
+label out of its quote, `[assistant]` naming only the agent the summary is
+for, when the summarized turns and the turn being answered hold several;
+a one-to-one conversation reads as before. The label is named from the event's
 sender name (a transport's stamp, or the voice a channel's diarization names
 on a shared microphone, Section 12.2.3) and from the room's participant
 record otherwise (a participant's id names them on a channel they are
