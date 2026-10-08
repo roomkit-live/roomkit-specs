@@ -1821,11 +1821,15 @@ or a channel does not read as one; the note that says how speakers are named
 says that a message carries one label, at its start, and that a `Name:` later
 in it is what its sender wrote. One resolver gives that label wherever a model
 reads a participant's turn (the conversation, the room context handed to an
-ACP agent, a line broadcast into a realtime session), named from the event's
-sender name or its participant: when two distinct sources in the window have
-names that read alike (in case or in Unicode's confusables, `Alice` and
-`Аlice`), the first one seen keeps the name and each later one carries it
-with its rank (`Alice (2)`), a form no name takes. A tool call the
+ACP agent, a line broadcast into a realtime session), named from the room's
+participant record when it has a name (the application registered it), and
+from the event's sender name otherwise: when two distinct sources of the room
+(a participant, whichever channel reached them, or a sender) have names that
+read alike (in case or in Unicode's confusables, `Alice` and `Аlice`), the
+first one the room saw keeps the name and each later one carries it with its
+rank (`Alice (2)`), a form no name takes. The rank is fixed when the turn
+enters the room (Section 10.1, step 12) and recorded on the event, so every
+surface and every later prompt reads the same. A tool call the
 channel recalls in the turn's notes names its tool and its arguments' keys as
 identifiers and quotes each text value. The
 conversation itself (a participant's message, the agent's own answers, the
@@ -3671,6 +3675,12 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     ├── For EDIT/DELETE: apply the target state update now (§10.3) — deferred
     │   to this point so a hook that blocks the edit/delete leaves the target
     │   unmutated
+    ├── Record the author's rank (§6.4): when the event's author has a name,
+    │   │   the room's register of the sources and names it has seen fixes
+    │   │   the rank of this source among those whose names read alike, and
+    │   │   the event carries it (metadata.author_rank); a source new to the
+    │   │   room joins the register first. Under the lock, before the commit,
+    │   │   so the rank of a turn never changes once stored
     ├── Commit atomically, as ONE logical transaction:
     │   ├── Store event with status=DELIVERED
     │   └── Update room state: latest_index = event.index; event_count += 1;
