@@ -1770,8 +1770,9 @@ identifiers and quotes each text value. The
 conversation itself (a participant's message, the agent's own answers, the
 application's instruction) keeps its author's role and is not quoted, a copy
 of the turn's notes' header it holds replaced as above; the runtime's own
-renderings of it (the transcript a thinker, a summarizer, a compaction or
-an external agent reads) quote each message, after the name the runtime gave
+renderings of it (the transcript a thinker, a summarizer, a compaction, an
+external agent or a realtime delegation's reasoning backend reads) quote each
+message, after the name the runtime gave
 its speaker, never a name read from the message's text. The rule holds for
 the turn's notes, a hand-back, a speaker's name, the room context handed to an
 ACP agent and the summary a memory provider builds, and for any text a
