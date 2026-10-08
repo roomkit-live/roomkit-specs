@@ -1857,6 +1857,11 @@ a participant's id, a form no name takes, so that a person named like an
 agent or a channel does not read as one. Each line, not only the first: an
 API merges consecutive user turns into one message, and a model then reads a
 `Bob:` line inside Alice's message as Bob's (measured on two models, RMK-616).
+A line ends at any break a model may render as one (a carriage return, a
+Unicode line or paragraph separator, a form feed), not only a line feed. The
+label guards the start of each line, not its middle: a `Name:` written inside
+a line is still read as another author's (measured, RMK-635, which decides
+how the conversation sets each turn apart).
 The note that says how speakers are named says that each line opens with its
 author's label, and that a `Name:` after the label is what its author
 wrote. The request an ACP agent is prompted with is labelled the same way. One resolver gives that label wherever a model
