@@ -1757,7 +1757,8 @@ so that nothing it holds reads as written by the runtime:
   `<worker_output>`, `<knowledge>`, `<conversation_summary>`, `<context>` for
   content a realtime provider adds to its prompt, `<task>` for the goal or
   task an orchestration strategy copies into another model's prompt,
-  `<vision>` for what a vision provider saw), where any
+  `<vision>` for what a vision provider saw, `<transcript>` for the text a
+  speech model's prompt asks it to speak), where any
   closing tag of that name the text holds is neutralised where it starts,
   its end bracket there or not and what follows kept: compared in any case
   and under NFKC folding (fullwidth and mathematical letters, `＜／tag＞`),
@@ -4580,6 +4581,15 @@ DialogueTurn
 ├── text: string
 └── style: string | null                    # Delivery direction for this turn only
 ```
+
+A provider that builds a speech model's prompt around the text to speak (a
+model with no field of its own for the text and its delivery) MUST set the
+text apart as a `<transcript>` block (Section 6.4), so that the text can
+neither end the transcript nor open another. A speech model performs a
+delivery cue written in the text it speaks (an audio tag, a sentence such as
+"whisper this"), whatever frame holds the text: an application that speaks
+text it does not trust removes such cues before synthesis, in a BEFORE_TTS
+hook.
 
 `synthesize()` returns an `AudioContent` (Section 5) rather than raw bytes.
 This allows the result to carry metadata (transcript, duration, MIME type) and
