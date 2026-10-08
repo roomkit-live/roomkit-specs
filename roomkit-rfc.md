@@ -1845,11 +1845,11 @@ record otherwise (a participant's id names them on a channel they are
 reached through, an identity the identity pipeline resolved names them on
 any, Section 5.5): when two distinct sources of the room
 (a participant, whichever channel reached them, or a sender) have names that
-read alike (in case or in Unicode's confusables, `Alice` and `Аlice`, or
-through a third name, `Lan`, `Ian`, `ian`), a
+read alike (in case or in Unicode's confusables, `Alice` and `Аlice`), a
 participant the room registered keeps the name, then the first source the
 room saw, and each later one carries it with its rank (`Alice (2)`), a form
-no name takes. The name and the rank are fixed when the turn
+no name takes; a name that reads like two others (`Ian`, like `Lan` and
+`ian`) ranks after both and renumbers neither. The name and the rank are fixed when the turn
 enters the room (Section 10.1, step 12) and recorded on the event, so every
 surface and every later prompt reads the same, and a participant renamed
 later keeps on their earlier turns the name they spoke under. A tool call the
@@ -3706,25 +3706,27 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   unmutated
     ├── Record the author (§6.4): when the event's author has a name, the
     │   │   room's register of the sources and names it has seen fixes the
-    │   │   rank of this source among those whose names read alike, directly
-    │   │   or through another name, and the event carries its name, its rank
-    │   │   and its source (metadata.author, any value the event came with
-    │   │   dropped); a reader reads that record while the event's source is
-    │   │   the one recorded. The room's named participants hold the first
-    │   │   ranks, in the order they joined; a source new to a group of names
-    │   │   takes the group's highest rank plus one, and when a name joins
-    │   │   two groups, a source whose rank another source of the group holds
-    │   │   takes a new one for its next turns. A source new to the room joins
+    │   │   rank of this source among those whose names read like its own,
+    │   │   and the event carries its name, its rank and its source
+    │   │   (metadata.author, any value the event came with dropped); a
+    │   │   reader reads that record while the event's source is the one
+    │   │   recorded. The room's named participants take their seats first,
+    │   │   in the order they joined, each the lowest rank no source whose
+    │   │   name reads like theirs holds; a source new to the names it uses
+    │   │   takes one more than the highest rank those sources hold; a source
+    │   │   keeps its rank while no source whose name reads like the one it
+    │   │   uses holds it, and takes a new one otherwise. A source new to the room joins
     │   │   the register whatever its event's visibility: a restricted turn
     │   │   ranked without joining it would leave its rank to the next
     │   │   source, and a reader who sees both would read two sources under
     │   │   one label. The rank is the room's, so a reader may learn from it
     │   │   that a source it does not see has a name that reads alike, never
     │   │   the source nor its turn (§7.5 rule 8). A room with no register (a
-    │   │   room from before it) has it rebuilt once from its timeline, its
-    │   │   named participants first, then its received turns in index order;
-    │   │   a turn with no record of its author reads its rank from the
-    │   │   register. The register is read and written under the room lock,
+    │   │   room from before it) has it rebuilt once from its timeline: the
+    │   │   ranks its turns' records hold, then its named participants'
+    │   │   seats, then the authors of its other received turns in index
+    │   │   order; a turn with no record of its author reads its rank from
+    │   │   the register. The register is read and written under the room lock,
     │   │   so a store shared across processes needs the distributed lock of
     │   │   §13.5. Before the commit, so the rank of a turn never changes once
     │   │   stored: a commit that fails after it leaves a rank unused, never
