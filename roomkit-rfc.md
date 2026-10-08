@@ -1519,6 +1519,18 @@ their recent turns, so that one misheard word does not switch it, and its
 decision's notes say which language to answer in. A classifier that fails
 falls back as any policy does: the agent speaks.
 
+RoomKit also provides a policy that answers only some people, around any
+other: an agent that listens to everyone in the room (a television, a
+meeting it assists one person in) but answers only them. An event whose
+speaker, as `speakers` names them, is not one of them is decided `silent`
+with the reason `only listened to`, without asking the policy it wraps, and
+so is an event whose speaker the room does not name. The people it passes on
+are only those it answers, so that a voice only listened to never makes a
+conversation with one person a group one. An event so left silent is stored,
+and thought about, as any other: the agent hears it. A speaker is matched by
+the name the room gives them, ignoring case: this chooses whom the agent
+answers, it is not an access control.
+
 **What the agent thinks.** An AI channel that has a speak policy MAY also
 carry a thinker: what the agent thinks while it listens, its answer, when it is
 silent, to "what are you thinking about?". The thought is neither memory (the
