@@ -4133,10 +4133,11 @@ The sender is known to the room by their address, and by the identity the
 store resolves that address to (`resolve_identity`, §14.1): a participant or
 an event named by either is the sender's own. A message the framework writes
 itself, under the sender `system` (a `deliver()` to the room, an
-orchestration cue), names no correspondent, and a message routed under that
-sender is never admitted by step 3: the framework names the room it writes
-to, and a sender borrowing the name, on a channel whose senders choose their
-id, gets a room of its own. A member added under an id that
+orchestration cue), names no correspondent: it is never recorded on a
+binding, and a message routed under that sender is never admitted by step 3
+into a room whose binding is not `group`. The framework names the room it
+writes to, and a sender borrowing the name, on a channel whose senders choose
+their id, gets a room of its own. A member added under an id that
 is neither the address nor a resolvable identity cannot be told from a
 stranger, so the room is closed to step 3: its correspondent's messages are
 routed by `room_id`, or the address is linked to the identity
@@ -4161,16 +4162,18 @@ belongs to, a hook what becomes of it.
 **A delivery status follows its message.** A provider's delivery status that
 names no room is routed by the same rule: the room whose binding of the
 status's channel names its recipient, else the one ACTIVE room bound to the
-channel, else none. It is never dispatched with the context of one room among
+channel unless its binding names another correspondent, else none. It is never dispatched with the context of one room among
 several.
 
 **A binding speaks for its own channel.** The sender a binding names is found
-through it on that channel only. A correspondent of one number writing to
-another number of the same type is not taken to the first number's room: on a
-kit serving a bank and a clinic, each on its own SMS number, the bank's
-customer writing to the clinic lands in the clinic's conversation. Merging a
-person's conversations across channels is a participant's matter, not a
-binding's.
+through it on that channel only. A correspondent recorded on one number's
+binding, writing to another number of the same type, is not taken to the
+first number's room: on a kit serving a bank and a clinic, each on its own SMS
+number, a customer the bank's number recorded writing to the clinic lands in
+the clinic's conversation. A participant record is another matter: a member
+the integrator added to the bank's room is found by step 1 whatever number
+they write to. Merging or separating a person's conversations across channels
+is decided for participants, not by bindings.
 
 Example, on one SMS number with no room yet: alice writes first, and the room
 created for her has a binding naming her. Bob's first message finds no room of
@@ -4213,6 +4216,9 @@ query planner in another does not satisfy this, and its behaviour cannot be
 reasoned about from the specification.
 
 Implementations MUST allow integrators to provide a custom routing strategy.
+The framework records the sender on the binding of the room any strategy
+returns (§10.1 step 2): a custom strategy that sends several senders to one
+room declares that room's binding `group`.
 
 ### 10.5 Direct Event Injection
 
