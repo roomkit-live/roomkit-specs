@@ -902,7 +902,11 @@ ChannelBinding
 │                                           # a speech-to-speech provider's audio is not
 │                                           # forwarded, injected text is not spoken
 ├── visibility: string                      # Write visibility rule
-├── participant_id: string | null           # Bound to a specific participant
+├── participant_id: string | null           # The binding's correspondent (§10.4): the
+│                                           # sender a room was created for, or the
+│                                           # first one routed to it
+├── group: bool                             # Several senders share this binding's
+│                                           # conversation (§10.4); default false
 ├── last_read_index: int | null             # Read horizon for unread tracking
 ├── attached_at: datetime                   # When attached
 ├── capabilities: ChannelCapabilities       # What this channel supports
@@ -914,6 +918,16 @@ ChannelBinding
 A binding's category is the channel's own unless the attachment names one:
 an intelligence channel attached without a category takes part as an
 intelligence channel, a transport as a transport.
+
+A binding carries one correspondent's conversation unless it is declared
+`group`. The framework records on it the sender a room was created for, or the
+first sender routed to it (`participant_id`, §10.1 step 2), and the default
+router admits no one else through it (§10.4). A binding declared `group` holds
+a conversation of several senders, such as a group chat on a channel dedicated
+to its room: every sender writing on it belongs to the room, and none is
+recorded on it. The declaration is the integrator's to make, because nothing
+the store holds tells a group channel from a number shared by many
+correspondents.
 
 ### 5.8 ChannelCapabilities
 
@@ -3554,10 +3568,14 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   ├── A room of another organization than the one the caller acts for
    │   │   → fail, nothing written (§17.2)
    │   ├── No room with that id → create a new room with that id
-   │   └── Room exists, channel not bound to it → attach the channel, unless
-   │       it was detached from that room (§7.5 rule 7)
+   │   ├── Room exists, channel not bound to it → attach the channel, unless
+   │   │   it was detached from that room (§7.5 rule 7)
+   │   └── Routed (not provided), and the channel's binding names no
+   │       participant and is not `group` → record the sender on it
+   │       (`participant_id`, §10.4), under the room lock
    └── If new room created → fire ON_ROOM_CREATED hook and emit
-       `room_created`, then attach channel; then, for a channel other than
+       `room_created`, then attach channel, its binding naming the sender
+       (`participant_id = sender_id`, §5.7); then, for a channel other than
        VOICE and REALTIME_VOICE, fire ON_SESSION_STARTED (§9.2) and emit
        `session_started` (§8.2)
 
@@ -4048,16 +4066,61 @@ InboundRoomRouter (interface)
 
 **Default routing strategy:**
 
-1. Find the latest ACTIVE room where a participant with the same sender address
-   is connected via the same channel type.
+1. Find the latest ACTIVE room whose binding of this channel names the sender
+   (§5.7); otherwise, the latest ACTIVE room where a participant with the same
+   sender address is connected via the same channel type.
 2. If found → return that room.
-3. Otherwise, if the channel is bound to exactly **one** ACTIVE room → return
-   that room.
+3. Otherwise, if the channel is bound to exactly **one** ACTIVE room and that
+   room admits the sender (below) → return that room.
 4. If not found → return null (framework creates a new room).
 
-Step 3 is what routes a channel dedicated to a single conversation, where no
-participant has spoken yet. It is deliberately narrower than "the channel is
-bound to some room".
+**Step 3 admits one conversation.** Step 3 is what routes a channel dedicated
+to a single conversation. It is deliberately narrower than "the channel is
+bound to some room": on a number shared by many correspondents, the one ACTIVE
+room bound to it is someone's conversation, and a second correspondent routed
+into it would be stored there, answered with that conversation as context, and
+answered at that conversation's address. The room admits the sender only when
+its binding of the channel is declared `group` (§5.7), or when all of the
+following hold:
+
+- the binding names no participant, or names the sender;
+- no participant of the room other than the sender joined it through this
+  channel: a member the integrator added on the channel says whose
+  conversation the room is before they have written;
+- the room has received nothing on this channel from another sender: no
+  stored event of the channel, a `BLOCKED` one excepted, whose source names a
+  participant other than the sender.
+
+A message with no sender address is held to the same conditions, so it is
+admitted only where no one is named, joined or heard on the channel.
+
+When step 3 admits a sender through a binding that names no participant and
+is not `group`, the framework records the sender on it (§10.1 step 2): step 1
+then finds them on their next message, and step 3 admits no one else. A room
+the framework creates for an inbound message is bound to its sender from the
+start.
+
+**A binding speaks for its own channel.** The sender a binding names is found
+through it on that channel only. A correspondent of one number writing to
+another number of the same type is not taken to the first number's room: on a
+kit serving a bank and a clinic, each on its own SMS number, the bank's
+customer writing to the clinic lands in the clinic's conversation. Merging a
+person's conversations across channels is a participant's matter, not a
+binding's.
+
+Example, on one SMS number with no room yet: alice writes first, and the room
+created for her has a binding naming her. Bob's first message finds no room of
+his at step 1; at step 3 the binding names alice, so null, and bob gets a room
+of his own. Alice's next message is found at step 1 through her binding, and
+lands in hers. Had the integrator opened alice's room itself and added her as a
+member on the SMS channel, bob would be refused the same way before alice ever
+wrote; had it opened the room and added no one, the first sender would be
+admitted and recorded, and the second refused.
+
+A conversation of several senders on one channel, such as a group chat bound
+to its room, is declared `group` on its binding. Without the declaration, the
+default router routes its second speaker to a room of their own, which is the
+safe answer: nothing in the store tells a group channel from a shared number.
 
 **A router MUST NOT guess.** When the inputs it was given match more than one
 ACTIVE room and nothing in them tells which conversation the message belongs
