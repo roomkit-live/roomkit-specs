@@ -1849,14 +1849,17 @@ visarga included), on one line and bounded, as the
 `Name: ` prefix of a transcript gives it. When the history window holds
 several speakers (a person by name, or, for turns whose sender has no name,
 the channel they came through; the runtime's own system events aside, and a
-one-to-one conversation left as it is), every participant's turn in the
-conversation opens with such a label, which the runtime alone places: the
-speaker's name, or, for a turn whose speaker has no name, its channel as the
-room addresses it (`@sms1`), kept to an identifier's characters and never a
-participant's id, a form no name takes, so that a person named like an agent
-or a channel does not read as one; the note that says how speakers are named
-says that a message carries one label, at its start, and that a `Name:` later
-in it is what its sender wrote. One resolver gives that label wherever a model
+one-to-one conversation left as it is), every line of a participant's turn
+in the conversation opens with such a label, which the runtime alone places:
+the speaker's name, or, for a turn whose speaker has no name, its channel as
+the room addresses it (`@sms1`), kept to an identifier's characters and never
+a participant's id, a form no name takes, so that a person named like an
+agent or a channel does not read as one. Each line, not only the first: an
+API merges consecutive user turns into one message, and a model then reads a
+`Bob:` line inside Alice's message as Bob's (measured on two models, RMK-616).
+The note that says how speakers are named says that each line opens with its
+author's label, and that a `Name:` after the label is what its author
+wrote. The request an ACP agent is prompted with is labelled the same way. One resolver gives that label wherever a model
 reads a participant's turn (the conversation, the room context handed to an
 ACP agent and the request that follows it, a line broadcast into a realtime
 session, the lines a memory summarizer reads), at one threshold: a reader
