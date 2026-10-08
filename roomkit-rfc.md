@@ -7779,18 +7779,19 @@ FaceDetection
 | GeminiVisionProvider | Google Gemini | Google Gemini vision |
 | MockVisionProvider | — | Testing |
 
-**AI integration:** `setup_video_vision(kit, room_id, ai_channel_id)` wires
-vision results into the AIChannel's context. On each VisionResult, the
-description is made available so the AI can "see" what the video shows. It
-changes from one result to the next, so it rides the turn's notes, not the
-system prompt, and is not written into the room's binding: it is state of the
-turn, not configuration of the room (Section 6.4). An AI channel's turn
-carries the latest result a video channel attached to its room produced,
-whichever video channel, as a `<vision>` block (Section 6.4): the
+**AI integration:** what a vision provider saw reaches a room's AI channels
+with no wiring. It changes from one result to the next, so it rides the turn's
+notes, not the system prompt, and is not written into the room's binding: it
+is state of the turn, not configuration of the room (Section 6.4). An AI
+channel's turn carries the latest result a video channel attached to its room
+produced, whichever video channel, as a `<vision>` block (Section 6.4): the
 description, the objects detected and the text read in the frame are what a
-model or the camera saw, data that cannot close its block. A realtime session
-that is given what the camera sees takes the same block as a silent
-injection.
+model or the camera saw, data that cannot close its block. A standalone turn
+(Section 10.1.1) carries none. The result belongs to the video session that
+produced it: once that session ends, no turn reads it. A realtime session that
+is given what the camera sees takes the same block as a silent injection.
+`setup_video_vision`, which wrote the result into one AI channel's system
+prompt, is deprecated and writes nothing.
 
 #### 12.8.8 AvatarProvider (Lip-Sync Video Generation)
 
