@@ -1819,7 +1819,13 @@ room addresses it (`@sms1`), kept to an identifier's characters and never a
 participant's id, a form no name takes, so that a person named like an agent
 or a channel does not read as one; the note that says how speakers are named
 says that a message carries one label, at its start, and that a `Name:` later
-in it is what its sender wrote. A tool call the
+in it is what its sender wrote. One resolver gives that label wherever a model
+reads a participant's turn (the conversation, the room context handed to an
+ACP agent, a line broadcast into a realtime session), named from the event's
+sender name or its participant: when two distinct sources in the window have
+names that read alike (in case or in Unicode's confusables, `Alice` and
+`Аlice`), the first one seen keeps the name and each later one carries it
+with its rank (`Alice (2)`), a form no name takes. A tool call the
 channel recalls in the turn's notes names its tool and its arguments' keys as
 identifiers and quotes each text value. The
 conversation itself (a participant's message, the agent's own answers, the
