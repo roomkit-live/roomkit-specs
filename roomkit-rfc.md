@@ -1702,15 +1702,20 @@ carries none, and the notes then read as if the channel had assembled them
 at once, so the prefix a provider caches is the same. The header is the
 notes' only mark, and the channel's alone: a copy of it in the conversation's
 text (a participant's message, the agent's own answer, the application's
-instruction, a message a memory provider built) or in a block of the notes,
-in any case or spacing, MUST be replaced before the model reads it by a fixed
-mark saying the runtime did not write it, as a fenced block's closing tag is
-neutralised. The replacement is the same on every turn, so the prefix a
-provider caches is the same, and the header the model reads is the one the
-channel placed, a paragraph of its own with a block after it: the block a
-hook adds joins the notes it marks, and a reader that separates the input
-from its notes cuts there. Only a copy a hook writes into the messages itself
-is what both misread. An active
+instruction, a message a memory provider built, a message steering injects
+(Section 21.3)) or in a block of the notes, in any case, spacing or
+punctuation, with invisible characters between or inside its words, or
+running over adjacent text parts, MUST be replaced before the model reads it
+by a fixed mark saying the runtime did not write it, as a fenced block's
+closing tag is neutralised. The replacement is the same on every turn, so
+the prefix a provider caches is the same, and the header the model reads is
+the one the channel placed, a paragraph of its own with a block after it:
+the block a hook adds joins the notes it marks, and a reader that separates
+the input from its notes cuts there (an input with images carries its notes
+in a text part of their own, which such a reader leaves out). The turn's own
+rounds are not rewritten: what the agent writes between its tool calls, and
+a tool's result, which the tool role frames. Only a copy a hook writes into
+the messages itself is what both misread. An active
 skill's instructions stay in the system prompt (Section 24.4): they change only
 when a skill is activated, and they are instructions, not notes. A standalone
 turn carries none of the room's memories (Section 10.1.1).
@@ -12333,7 +12338,7 @@ They are injected into the AI generation context:
 |---|---|
 | Cancel | Abort the current generation immediately |
 | UpdateSystemPrompt | Append additional instructions to the system prompt |
-| InjectMessage | Add a synthetic user or assistant message to the conversation history |
+| InjectMessage | Add a synthetic user or assistant message to the conversation history, a copy of the turn's notes' header it holds replaced (Section 6.4) |
 
 A Cancel ends the turn at the first point the loop reaches, and a round's
 tools are one such point: a Cancel that arrives after the model's last event
