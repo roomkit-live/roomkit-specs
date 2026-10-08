@@ -11880,11 +11880,13 @@ as a verdict. The user's goal or task it copies into such an input is a
 `<task>` block. The input a model acts on as its own (the task framed for a
 worker, a worker's own task) stays that model's input and is not set apart.
 When several people speak in the room (the conversation's threshold, Section
-6.4; a one-to-one conversation left as it is), a delegated task names out of
-its block who asked for it, by the label the conversation gives the turn
-that led to it: a participant's own words open with `Alice asked:`, a task
-the delegating agent wrote with `Requested by Alice (2), in the delegating
-agent's words:`.
+6.4; a one-to-one conversation left as it is), the user's task such an input
+holds as a `<task>` block is headed by who asked for it, by the label the
+conversation gives the turn that led to it: `Alice asked:` before a
+participant's own words, `Requested by Alice (2), in the delegating agent's
+words:` before a task the delegating agent wrote. The heading names the
+asker of the task the block holds and nothing else: the runtime's own
+prompts and the input a worker acts on as its own carry no asker.
 
 No install and no turn writes into the shared agent or channel on behalf of
 one room: not its tools, its handler, its handling of events, its prompt, its
