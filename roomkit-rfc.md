@@ -2280,14 +2280,15 @@ cases below. Where the vendor restricts what a turn with tools accepts (OpenAI's
 Chat Completions, for one, takes function tools only with `reasoning_effort`
 `none` on its recent models), the provider sends the value accepted, read from
 what its model catalogue declares of the model, never guessed from the model's
-name. Where the provider's configuration states whether the server takes the
-setting beside tools, that statement decides, over what the catalogue declares.
-A provider MAY leave a setting out of a turn with tools where it cannot
+name. A provider MAY leave a setting out of a turn with tools where it cannot
 know the model behind its endpoint (a `base_url`, a deployment name, a proxy's
-alias) and its configuration states nothing of it, or where turning reasoning on
-would require passing the model's reasoning back from one tool round to the next
-in a form it does not produce; it documents that it does, and MUST NOT leave it
-out otherwise.
+alias) and its configuration does not state that the server takes the setting
+there, or where turning reasoning on would require passing the model's reasoning
+back from one tool round to the next in a form it does not produce; it documents
+that it does, and MUST NOT leave it out otherwise. Such a statement covers only
+what the catalogue does not declare: a model the catalogue declares is sent the
+value the catalogue says it accepts, and a provider that knows its vendor's rule
+refuses the statement in its configuration rather than ignore it.
 
 **Response metadata is one record per turn.** `AIContext.response_metadata` is a
 dict-like mapping created with the turn and shared by identity by every
