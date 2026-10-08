@@ -1464,7 +1464,8 @@ SpeakDecision
 ├── mode: "speak" | "offer" | "silent"
 ├── reason: string = ""                 # Why, in a few words, for logs and hooks
 ├── judgments: map<string, float> = {}  # What the policy weighed, by name, each in [0, 1] or its own scale
-└── notes: list<string> = []            # Blocks the turn's notes carry when the agent speaks or offers
+├── notes: list<string> = []            # Blocks the turn's notes carry when the agent speaks or offers
+└── final: bool = false                 # A silence the agent's thought will not change (below)
 ```
 
 - `speak` runs the turn as without a policy; the decision's notes join the
@@ -1504,8 +1505,7 @@ named by speaker (the agent's own under its name) and the people, and composes
 the answers in code, in this order:
 
 1. silent when the speaker has not finished, postpones or declines asking, or
-   asks the agent to keep quiet; silent too when a request to keep quiet made
-   earlier still stands and the turn asks the agent nothing;
+   asks the agent to keep quiet on this turn;
 2. speak when the turn answers a question the agent just asked;
 3. speak when the agent is asked directly or indirectly, or asked for
    something tentatively, or asked anything when one person talks with it;
@@ -1519,11 +1519,33 @@ their recent turns, so that one misheard word does not switch it, and its
 decision's notes say which language to answer in. A classifier that fails
 falls back as any policy does: the agent speaks.
 
+**Staying quiet when asked.** A request to stay quiet or only listen from now
+on is a state of the room, not a judgment remade on every turn: re-judged from
+the recent turns, it faded as they passed, and was lost once it left them. The
+classifier policy keeps it per room, in memory as the thought is (rule 6
+below), set when a turn asks the agent to stay quiet or only listen until told
+otherwise: that turn is silent, and final. The classifier reads it with every turn, so that each judgment is
+made knowing it, and is asked, instead of that request, whether the turn puts a
+question or a request to the agent itself and whether it lets the agent talk
+again. While the room listens:
+
+- the agent is silent, and the decision is final (below);
+- a question or a request put to the agent and addressing it directly (its
+  name, or "you") is answered, and the room goes on listening: answering one
+  question does not lift a request to stay quiet;
+- a turn that lets the agent talk again ends the state, and is decided as
+  without it.
+
+A conversation with one person does not make every request the agent's while
+the room listens: a question said aside and one put to the agent read alike
+without the address. A cut answer is not resumed. Each decision made while the
+room listens reports it among its judgments (`listening`).
+
 RoomKit also provides a policy that answers only some people, around any
 other: an agent that listens to everyone in the room (a television, a
 meeting it assists one person in) but answers only them. An event whose
 speaker, as `speakers` names them, is not one of them is decided `silent`
-with the reason `only listened to`, without asking the policy it wraps, and
+with the reason `only listened to`, final, without asking the policy it wraps, and
 so is an event whose speaker the room does not name. The people it passes on
 are only those it answers, the speaker among them even when no participant
 record names them so (a microphone's record and the voice its transport
@@ -1537,7 +1559,16 @@ chooses whom the agent answers, it is not an access control.
 carry a thinker: what the agent thinks while it listens, its answer, when it is
 silent, to "what are you thinking about?". The thought is neither memory (the
 room's history is, Section 20) nor a summary: what the agent makes of what is
-said, what it would say if given the turn, and whether that cannot wait.
+said, what it would say if given the turn, and whether that cannot wait. It is
+about what the agent hears: what is being talked about, what the speaker is
+doing (asking, telling, thinking aloud, talking to someone else, reading
+something), and what the agent makes of it, the people named; never about the
+agent itself (what it said or did, whether it should speak, how it is seen).
+What it would say holds only what it would say to the people about what is
+being discussed: never a rule for itself, nor what it does not know. When the
+topic changes, the thought starts again from the new one, keeping of the
+previous only what still concerns it: a thought rewritten from itself on every
+call drifts into its own concerns.
 
 ```
 Thought
@@ -1551,7 +1582,9 @@ Thinker (interface)
 
 1. The thinker runs only on events the policy left silent: a turn the agent
    answers waits for no thought. The channel builds the event's context as for
-   an answer (the agent's own prompt, the conversation it may know), passes it
+   an answer (the agent's own prompt, the conversation it may know), every
+   speaker named, the one person of a one-to-one conversation included (an
+   answer's context leaves that conversation unlabelled), passes it
    through `BEFORE_AI_GENERATION` with the purpose `thought`, and hands what the
    hooks left to the thinker with the previous thought. A hook that blocks it
    keeps the previous thought. A thinker MUST NOT reach a model with a context
@@ -1562,7 +1595,10 @@ Thinker (interface)
 3. The channel waits for that thought up to a bound (1.5 s by default). When
    it comes back in time with something to say, the policy is asked again on
    the same event, with the thought: the agent may raise its hand on a turn it
-   first listened to. Each decision fires `ON_SPEAK_DECISION`.
+   first listened to. Each decision fires `ON_SPEAK_DECISION`. A decision the
+   policy marks final is a silence no thought changes (a room that listens, a
+   voice only listened to): the thinker thinks, and the channel neither waits
+   for it nor asks again, so the next turn is not held back.
 4. When the agent speaks or offers on an event submitted to the policy, the
    turn's notes carry its thought, and what it wanted to say is then empty: it
    is said, or offered. A thinker call running meanwhile does not bring it
@@ -1570,6 +1606,7 @@ Thinker (interface)
    a model's reading of what people said, so whatever they said can reach it:
    the notes MUST carry it quoted (as any text from outside, below), bounded,
    and named as information to weigh, not as the runtime's instructions.
+   Asked what it is thinking, the agent answers with it.
 5. A thinker that fails, or the end of its wait, keeps the previous thought.
 6. The thought is the channel's, per room, in memory: it is not stored, and a
    restart starts from an empty thought, as does a room the channel is
