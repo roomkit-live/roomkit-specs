@@ -1838,9 +1838,10 @@ or a channel does not read as one; the note that says how speakers are named
 says that a message carries one label, at its start, and that a `Name:` later
 in it is what its sender wrote. One resolver gives that label wherever a model
 reads a participant's turn (the conversation, the room context handed to an
-ACP agent, a line broadcast into a realtime session), named from the room's
-participant record when it has a name (the application registered it), and
-from the event's sender name otherwise: when two distinct sources of the room
+ACP agent, a line broadcast into a realtime session), named from the event's
+sender name (a transport's stamp, or the voice a channel's diarization names
+on a shared microphone, Section 12.2.3) and from the room's participant
+record otherwise: when two distinct sources of the room
 (a participant, whichever channel reached them, or a sender) have names that
 read alike (in case or in Unicode's confusables, `Alice` and `Аlice`), the
 first one the room saw keeps the name and each later one carries it with its
