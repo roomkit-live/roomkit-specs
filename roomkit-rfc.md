@@ -1749,16 +1749,21 @@ so that nothing it holds reads as written by the runtime:
   `<vision>` for what a vision provider saw), where any
   closing tag of that name the text holds is neutralised where it starts,
   its end bracket there or not and what follows kept: compared in any case
-  and under NFKC folding (fullwidth and mathematical letters, `＜／tag＞`)
-  with the Cyrillic, Greek and Armenian homoglyphs of its letters,
-  with any spacing, a character Unicode marks as ignorable by default or a
-  control character a provider may strip anywhere in it, one slash or more
-  (an escaped one included) and any of the bracket's or the slash's
-  look-alikes, and with a mark after the name (`</tag.>`): a closing tag errs
-  toward what a model could read as one. An opening tag of that name is
-  neutralised as well, so no reader tracking nesting reads the runtime's text
-  after the block as data. A text cut short never leaves part of such a block
-  open (it names the block instead, as a compaction does);
+  and under NFKC folding (fullwidth and mathematical letters, `＜／tag＞`),
+  with the common homoglyphs of its letters (Cyrillic, Greek and Armenian
+  letters, small capitals), with spacing around its brackets and slash, a
+  character Unicode marks as ignorable by default, a control or line-break
+  character or a combining mark between its letters, one slash or more (an
+  escaped one included) and the common look-alikes of the bracket and the
+  slash, and with a mark after the name (`</tag.>`): a closing tag errs
+  toward what a model could read as one. An opening tag of that name, its
+  bracket right before the name, is neutralised as well, the rest of it kept
+  as written, so no reader tracking nesting reads the runtime's text after
+  the block as data. A provider that rewrites a framed text before sending
+  it (a character its API refuses) MUST replace what it removes, never
+  delete it, so that it joins nothing the frame kept apart. A text cut short
+  never leaves part of such a block open (it names the block instead, as a
+  compaction does);
 - or **a quote**, inline: on one line (each run of whitespace, line breaks
   included, one space), bounded, between `“` and `”`, every double quote mark
   the text holds (`"`, `“`, `”`, `„`, `«`, `»` and the like) made a single
