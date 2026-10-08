@@ -4115,7 +4115,10 @@ The sender is known to the room by their address, and by the identity the
 store resolves that address to (`resolve_identity`, §14.1): a participant or
 an event named by either is the sender's own. A message the framework writes
 itself, under the sender `system` (a `deliver()` to the room, an
-orchestration cue), names no correspondent. A member added under an id that
+orchestration cue), names no correspondent, and a message routed under that
+sender is never admitted by step 3: the framework names the room it writes
+to, and a sender borrowing the name, on a channel whose senders choose their
+id, gets a room of its own. A member added under an id that
 is neither the address nor a resolvable identity cannot be told from a
 stranger, so the room is closed to step 3: its correspondent's messages are
 routed by `room_id`, or the address is linked to the identity
@@ -4131,7 +4134,9 @@ the framework creates for an inbound message is bound to its sender from the
 start. The sender is recorded when the message is routed, under the room
 lock, before anything of the message is processed: two first messages
 arriving together cannot both be admitted, since the second finds the binding
-naming the first and is routed again. A message a hook later refuses has
+naming the first and is routed again. The wait for that lock is bounded by
+`process_timeout` (§13.6); past it the message is refused as a process
+timeout, never let in unrecorded. A message a hook later refuses has
 been routed all the same: routing decides which conversation a message
 belongs to, a hook what becomes of it.
 
