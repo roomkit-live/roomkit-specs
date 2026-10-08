@@ -1857,8 +1857,9 @@ a participant's id, a form no name takes, so that a person named like an
 agent or a channel does not read as one. Each line, not only the first: an
 API merges consecutive user turns into one message, and a model then reads a
 `Bob:` line inside Alice's message as Bob's (measured on two models, RMK-616).
-A line ends at any break a model may render as one (a carriage return, a
-Unicode line or paragraph separator, a form feed), not only a line feed. The
+Every line break (a carriage return, a Unicode line or paragraph separator,
+a form feed) is made a line feed before the labels are placed: a model reads
+some as no break at all, and a label after one would sit mid-line. The
 label guards the start of each line, not its middle: a `Name:` written inside
 a line is still read as another author's (measured, RMK-635, which decides
 how the conversation sets each turn apart).
