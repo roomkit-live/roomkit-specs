@@ -4869,6 +4869,9 @@ enters a room as any other audio.
 9. Room broadcasts → AI or other channels respond
 10. Response event arrives at Voice channel via deliver()
 11. If TextContent → Fire BEFORE_TTS hook → TTS synthesizes → AudioChunk stream
+    (with a sentence budget, 12s.e, the first sentences of the text up to it are
+     spoken, cut by the same sentence rule as the streamed path; the response
+     was stored whole before it reached the channel)
     (each session plays in parallel; a session whose synthesis or playback fails
      is reported as `tts_error` once its playback is released, and AFTER_TTS fires
      only when a session was served)
@@ -4900,6 +4903,15 @@ enters a room as any other audio.
         its TTS failing) does not cut the others off. A session whose TTS fails is
         reported as `tts_error`; its failure is not the response's, which takes
         step 13s once every session has stopped (no `ON_ERROR`, no replay).
+     e. With a sentence budget (the channel's `max_sentences`), the sentences
+        BEFORE_TTS left are counted: a reply that goes on past the budget ends
+        at the first sentence over it, as when every session stops early
+        (step 13s). That sentence is not synthesized, the stream is closed (no
+        further token, no tool call that has not started), and the text
+        produced so far is stored marked cancelled, so the room keeps about
+        what was heard rather than what was never said. A reply of exactly
+        the budget is not cut. The application's own text (`say()`) has no
+        budget.
 13s. Framework accumulates full text from stream → stores AI response event
      Interrupted: when deliver_stream() returns before the stream is exhausted,
      for any reason (typically every session of 12s.d stopped early), the
@@ -4942,7 +4954,8 @@ enters a room as any other audio.
      skips channels that already received streaming content, whether the
      response completed or failed)
 15s. Fire AFTER_TTS hook with the text the sessions were sent: the sentences as
-     BEFORE_TTS left them (12s.b) when a hook changed or dropped one, the whole
+     BEFORE_TTS left them (12s.b) when a hook changed or dropped one, or as many
+     as the budget let through when it ended the reply (12s.e), the whole
      streamed text otherwise. The final assistant transcript carries the same
      text. AFTER_TTS does not fire when every sentence was dropped, nor when no
      session was served (each stopped on a failed synthesis or playback). A
