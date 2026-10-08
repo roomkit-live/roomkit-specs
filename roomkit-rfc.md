@@ -1762,8 +1762,11 @@ so that nothing it holds reads as written by the runtime:
   closing tag of that name the text holds is neutralised where it starts,
   its end bracket there or not and what follows kept: compared in any case
   and under NFKC folding (fullwidth and mathematical letters, `＜／tag＞`),
-  with the common homoglyphs of its letters (Cyrillic, Greek and Armenian
-  letters, small capitals), with spacing around its brackets and slash, a
+  with the forms Unicode lists as confusable with its letters (UTS #39
+  confusables: Cyrillic, Greek, Armenian, Coptic, Cherokee letters, digits
+  such as `0` for `o`) and small capitals, a character that reads as several
+  of its letters (`ⅵ` for `vi`) included, with spacing around its brackets
+  and slash, a
   character Unicode marks as ignorable by default, a control or line-break
   character or a combining mark between its letters, one slash or more (an
   escaped one included) and the common look-alikes of the bracket and the
