@@ -1843,9 +1843,10 @@ sender name (a transport's stamp, or the voice a channel's diarization names
 on a shared microphone, Section 12.2.3) and from the room's participant
 record otherwise: when two distinct sources of the room
 (a participant, whichever channel reached them, or a sender) have names that
-read alike (in case or in Unicode's confusables, `Alice` and `Аlice`), the
-first one the room saw keeps the name and each later one carries it with its
-rank (`Alice (2)`), a form no name takes. The rank is fixed when the turn
+read alike (in case or in Unicode's confusables, `Alice` and `Аlice`), a
+participant the room registered keeps the name, then the first source the
+room saw, and each later one carries it with its rank (`Alice (2)`), a form
+no name takes. The rank is fixed when the turn
 enters the room (Section 10.1, step 12) and recorded on the event, so every
 surface and every later prompt reads the same. A tool call the
 channel recalls in the turn's notes names its tool and its arguments' keys as
@@ -3698,9 +3699,14 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     ├── Record the author's rank (§6.4): when the event's author has a name,
     │   │   the room's register of the sources and names it has seen fixes
     │   │   the rank of this source among those whose names read alike, and
-    │   │   the event carries it (metadata.author_rank); a source new to the
-    │   │   room joins the register first. Under the lock, before the commit,
-    │   │   so the rank of a turn never changes once stored
+    │   │   the event carries it (metadata.author_rank, any value the event
+    │   │   came with dropped). The room's named participants hold the first
+    │   │   ranks, in the order they joined; a source new to the room joins
+    │   │   the register only when its event is visible to every reader
+    │   │   (§7.5): a restricted turn is ranked against the register without
+    │   │   joining it, so no reader learns of a source it cannot see. Under
+    │   │   the lock, before the commit, so the rank of a turn never changes
+    │   │   once stored; a BLOCKED record (steps 10, 11) takes none
     ├── Commit atomically, as ONE logical transaction:
     │   ├── Store event with status=DELIVERED
     │   └── Update room state: latest_index = event.index; event_count += 1;
