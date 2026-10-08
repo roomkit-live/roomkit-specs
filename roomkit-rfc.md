@@ -1775,13 +1775,14 @@ so that nothing it holds reads as written by the runtime:
   speech model's prompt asks it to speak), where any
   closing tag of that name the text holds is neutralised where it starts,
   its end bracket there or not and what follows kept: compared in any case
-  and under NFKC folding (fullwidth and mathematical letters, `＜／tag＞`),
-  with the forms Unicode lists as confusable with its letters (UTS #39
-  confusables: Cyrillic, Greek, Armenian, Coptic, Cherokee letters, digits
-  such as `0` for `o`) and small capitals, a character that reads as several
-  of its letters (`ⅵ` for `vi`) included, with spacing around its brackets
-  and slash, a
-  character Unicode marks as ignorable by default, a control or line-break
+  and under NFKC folding (fullwidth and mathematical letters, `＜／tag＞`)
+  and canonical decomposition (an accented letter), with the forms Unicode
+  lists as confusable with its letters (UTS #39 confusables: Cyrillic, Greek,
+  Armenian, Coptic, Cherokee letters, digits such as `0` for `o`) and small
+  capitals, a character that reads as several of its letters (`ⅵ` for `vi`)
+  included, a form of another case that reads as another letter (`i` for the
+  `I` that reads as `l`) left out, with spacing around its brackets and
+  slash, a character Unicode marks as ignorable by default, a control or line-break
   character or a combining mark between its letters, one slash or more (an
   escaped one included) and the common look-alikes of the bracket and the
   slash, and with a mark after the name (`</tag.>`): a closing tag errs
@@ -1806,7 +1807,8 @@ kept to an identifier's characters (letters with their marks, digits,
 `_ . @ + -`), a value from a known set (a task's ending, a plan step's status),
 a number, or a person's name kept to a name's characters (letters with their
 marks, digits, spaces, `.`, `-`, `_`, `#`, apostrophes, a letter that reads
-as a colon or a double quote left out), on one line and bounded, as the
+as a colon or a double quote left out, a mark such as the Devanagari
+visarga included), on one line and bounded, as the
 `Name: ` prefix of a transcript gives it. When the history window holds
 several speakers (a person by name, or, for turns whose sender has no name,
 the channel they came through; the runtime's own system events aside, and a
