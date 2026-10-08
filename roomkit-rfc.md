@@ -1765,7 +1765,9 @@ mark of an answer that was cut off, a summary's header (a compaction's or a
 memory provider's), and the lines that open and close the room context
 handed to an ACP agent. A copy of one of them in the text an event brings
 (as it enters a transcript or an ACP prompt, before the runtime places its
-own marks) or in a message steering injects MUST be replaced by a fixed mark
+own marks), in a message steering injects, in a note a memory retrieved for
+the turn, in a text broadcast into a realtime session or in a line of the
+transcript a realtime delegation's reasoning backend reads MUST be replaced by a fixed mark
 saying the runtime did not write it; a mark whose fixed part is a short
 phrase (the room context's opening) counts only with its opening bracket, so
 that prose naming the same words is left as written. The marks the runtime
@@ -1781,7 +1783,8 @@ pipeline removes from what a sender supplies, and nothing else does: a
 record without it (a relay stored before the key existed among them) was
 never kept from a sender and reads as a copy; a message a memory of the
 runtime builds (a summary, the handed-on context) carries the same key in
-its metadata, and the text a model wrote into either (a handoff's reason, a
+its metadata, and a memory tells a summary it chains from by that key alone,
+never by its header; the text a model wrote into either (a handoff's reason, a
 summary) is cleaned as it is written. A copy of a mark is replaced in every
 record and every memory message without it, the messages a host's memory
 provider builds included, and so is a copy that runs over consecutive user
