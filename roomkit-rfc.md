@@ -5369,6 +5369,11 @@ interface, and mix streams silently — which is the failure this contract exist
 to prevent. A conformance check SHOULD verify that a stream's output sequence is
 unchanged when a second stream is interleaved with it.
 
+The resampler is the one exception: its `reset(stream | null)` reads null as
+every stream, which is how a pipeline-wide reset calls it. A forgotten key
+there resets every stream rather than mixing two of them, so the rule above
+does not need to bind it.
+
 For providers backed by a native SDK, the model and the adaptive state
 typically live in the same object (SpeexDSP's `SpeexEchoState`, RNNoise's
 `DenoiseState`, WebRTC's `AudioProcessing`). Per-stream state then means one
@@ -9057,7 +9062,7 @@ ConferenceChannel
 ├── tts: TTSProvider | null             # AI voice via bot track
 ├── realtime: ConferenceRealtimeConfig | null   # Speech-to-speech (Section 12.10.12); excludes tts
 ├── pipeline: AudioPipelineConfig | null   # Lane stages with stt or realtime; null = default VAD and contract
-├── vision: VisionProvider | null       # Video/screen-share analysis
+├── vision: VisionProvider | null       # Video/screen-share analysis (Planned)
 ├── interruption: ConferenceInterruptionConfig
 ├── recording: ConferenceRecordingConfig | null   # Section 12.10.8
 ├── recorder: MediaRecorder | null      # Section 12.11; required with recording, refused without it
@@ -9440,10 +9445,12 @@ damaged transcript as a bad recognizer.
 
 **Per-track video lanes:**
 
-VIDEO and SCREEN_SHARE tracks route through the VideoPipeline (Section
-12.8.4) — decoder (if needed), transforms, filters, vision analysis.
-VisionResults are attributed to the publishing participant and feed
-`setup_video_vision()` AI integration unchanged.
+**Planned.** No implementation analyses conference video yet: the
+reference channel consumes AUDIO tracks only. When it does, VIDEO and
+SCREEN_SHARE tracks route through the VideoPipeline (Section 12.8.4) —
+decoder (if needed), transforms, filters, vision analysis — and
+VisionResults are attributed to the publishing participant and reach the AI
+turns as the `<vision>` block of Section 12.8.7.
 
 **Selective subscription:** the channel MUST call `subscribe_track()` only
 for tracks it consumes, and MUST NOT rely on backend auto-subscription
@@ -10792,9 +10799,11 @@ ConversationStore (interface)
 │   └── list_participants(room_id) → list<Participant>
 │
 ├── Identity
-│   ├── store_identity(identity) → Identity
+│   ├── create_identity(identity) → Identity
 │   ├── get_identity(identity_id) → Identity | null
-│   └── resolve_by_address(channel_type, address, organization_id) → Identity | null
+│   ├── resolve_identity(channel_type, address, organization_id | null) → Identity | null
+│   └── link_address(identity_id, channel_type, address, organization_id | null) → void
+│       # The same address may belong to a different identity in each organization
 │
 ├── Tasks
 │   ├── create_task(room_id, task) → Task
@@ -11266,9 +11275,10 @@ to the caller.
 The RoomKit core MUST NOT depend on any specific web framework. Integration
 surfaces are thin wrappers that expose core functionality.
 
-### 16.1 REST API (RECOMMENDED)
+### 16.1 REST API (OPTIONAL)
 
-A conforming REST API implementation SHOULD provide the following endpoints:
+The framework is a library, and the host owns its HTTP surface. An
+implementation that offers a REST API SHOULD provide the following endpoints:
 
 **Rooms:**
 
@@ -11321,7 +11331,7 @@ GET    /rooms/{id}/observations                 # List observations for room
 ```
 POST   /identities                              # Create identity
 GET    /identities/resolve?channel=sms&address=+1... # Resolve identity
-PATCH  /identities/{id}                         # Update identity
+POST   /identities/{id}/addresses               # Link a channel address to an identity
 ```
 
 **Webhooks:**
@@ -11337,7 +11347,7 @@ POST   /webhooks/{channel_type}/{provider}/status   # Delivery status webhook
 WS     /ws/{room_id}                            # Real-time room connection (WebSocket channel, Appendix A.8)
 ```
 
-### 16.2 MCP Server (RECOMMENDED)
+### 16.2 MCP Server (OPTIONAL)
 
 For AI agents to interact with rooms natively via the Model Context Protocol:
 
@@ -12849,12 +12859,12 @@ A durable delivery-lane outbox and crash recovery of turns are separate capabili
 | Strategy | Behavior |
 |---|---|
 | Immediate | Deliver synchronously. May interrupt active voice playback. |
-| WaitForIdle(buffer = 1.0, playback_timeout = 15.0) | Wait until both AI generation and user input are idle for `buffer` seconds, then deliver. Prevents interrupting active exchanges. A wait longer than `playback_timeout` seconds delivers anyway. |
-| Queued(buffer = 1.0, playback_timeout = 15.0, separator) | Batch multiple delivery items, then deliver together after `buffer` seconds of inactivity, their contents joined with `separator` (default a blank line). `playback_timeout` seconds bound the wait. |
+| WaitForIdle(buffer = 1.0, playback_timeout = 15.0) | On a voice channel, wait until the room's TTS playback has finished; on a channel hosting a realtime model, wait until the model's sessions are idle (no answer in flight, nobody heard speaking, no tool call in flight, its audio forwarded); then wait `buffer` seconds and deliver. On any other channel, deliver at once, with no buffer. A wait longer than `playback_timeout` seconds delivers anyway. |
+| Queued(buffer = 1.0, playback_timeout = 15.0, separator) | Batch multiple delivery items, then deliver together after `buffer` seconds of inactivity, their contents joined with `separator` (default a blank line). It waits for idle as WaitForIdle does, and a wait longer than `playback_timeout` seconds delivers the batch anyway. |
 
 **WaitForIdle** is RECOMMENDED for voice channels where interruptions are
-disruptive. It monitors both the AI generation state and user speech activity
-before injecting content.
+disruptive. On a channel hosting a realtime model it watches both the model's
+answer and the user's speech; on a voice channel, the TTS playback.
 
 `Queued` MUST keep incompatible rooms, transports, intelligence addresses,
 sessions, intents (message or instruction) and metadata separate. Keyed
@@ -13640,7 +13650,6 @@ A Level 1 implementation SHOULD additionally support:
 - Circuit breaker
 - Retry policy
 - Rate limiting
-- REST API (Section 16.1)
 - Telemetry provider abstraction (Section 15.7)
 
 ### 26.3 Level 2: Rich (OPTIONAL)
@@ -13654,6 +13663,7 @@ A Level 2 implementation MAY additionally support:
 - RCS channel with SMS fallback
 - Template content support
 - Source providers (persistent connections)
+- REST API (Section 16.1)
 - MCP Server (Section 16.2)
 - ACP agent channel (Section 6.4)
 - Realtime/ephemeral events backend
@@ -13734,8 +13744,14 @@ A Level 3 implementation MAY additionally support audio and/or video real-time m
   - analyze_frame(frame, prompt, response_schema) → VisionResult (description, labels, confidence, faces, OCR text)
   - analyze_stream(frames, interval_ms, assumed_fps) for streaming analysis (Section 12.8.7)
   - Implementations: OpenAI-compatible (GPT-4o, Ollama, vLLM), Gemini, Mock
-- AI integration: setup_video_vision() wires vision descriptions into the AIChannel's turn context
+- VideoRecorder interface (OPTIONAL — Section 12.8.10)
+- AI integration: vision results reach the AI channels' turns as a `<vision>` block (Section 12.8.7); `setup_video_vision()` is deprecated and wires nothing
 - Video and voice channels operate independently in the same room, enabling combined audio+video sessions where the AI can both hear (via STT) and see (via VisionProvider)
+
+#### Room media recording
+
+- MediaRecorder interface (OPTIONAL — Section 12.11); REQUIRED for an
+  implementation that records conferences in framework mode (Section 12.10.8)
 
 #### Conference (SFU)
 
@@ -13753,7 +13769,7 @@ A Level 3 implementation MAY additionally support audio and/or video real-time m
 - Multi-party interruption policy (ConferenceInterruptionConfig)
 - Participant lifecycle integration (conference events create/update
   Participant records)
-- Optional: vision on tracks, egress recording delegation, SIP gateway
+- Optional: vision on tracks (Planned), egress recording delegation, SIP gateway
   interop, bot video publication (avatar), speech-to-speech composition
 
 ---
@@ -14224,8 +14240,8 @@ VideoChannel
 │   ├── video_session_ended
 │   └── video_vision_result (description, labels, confidence, text, faces)
 ├── ai_integration:
-│   └── setup_video_vision(kit, room_id, ai_channel_id) — injects vision
-│       descriptions into the AIChannel's turn context
+│   └── vision results reach the AI turns as a `<vision>` block
+│       (Section 12.8.7); setup_video_vision() is deprecated, wires nothing
 └── backends:
     ├── LocalVideoBackend — OpenCV webcam capture (dev/testing)
     ├── ScreenCaptureBackend — mss screen capture (screen sharing, monitoring)
@@ -14286,7 +14302,7 @@ ConferenceChannel
 │   ├── tts: TTSProvider | null           # AI voice via bot track
 │   ├── realtime: ConferenceRealtimeConfig | null  # OPTIONAL — speech-to-speech; excludes tts
 │   ├── pipeline: AudioPipelineConfig | null       # Lane stages; null = default VAD and format contract
-│   ├── vision: VisionProvider | null     # OPTIONAL — video/screen tracks
+│   ├── vision: VisionProvider | null     # Planned — video/screen tracks
 │   ├── interruption: ConferenceInterruptionConfig
 │   ├── recording: ConferenceRecordingConfig | null
 │   ├── recorder: MediaRecorder | null    # Required with recording, refused without it
