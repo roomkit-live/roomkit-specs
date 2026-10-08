@@ -12839,14 +12839,17 @@ When `delegate(room_id, agent_id, task, notify, post_status = true)` is called:
    as Section 6.4 quotes a text from outside), and the worker by its id kept
    to an identifier's characters, so the notified agent says the result for
    what was asked, not for what the conversation moved on to meanwhile.
-   Delivered to a model (an intelligence channel, a channel that hosts a
-   realtime model), it also says, after the result, that the turn it opens
-   gives that result only, another of the agent's replies taking care of
-   whatever else was said, in the language the conversation is in rather
-   than the result's: the turn reads the room's last messages, and one that
-   answered them too repeated what another turn was saying, and a worker's
-   result written in English was said in English to a conversation in
-   French. A transport's delivery carries no such line. Only a completed task with
+   Delivered to an intelligence channel, whose hand-back opens a turn of its
+   own, it also says, after the result, that the turn gives that result
+   only, another of the agent's replies taking care of whatever else was
+   said, in the language the conversation is in rather than the result's:
+   the turn reads the room's last messages, and one that answered them too
+   repeated what another turn was saying, and a worker's result written in
+   English was said in English to a conversation in French. A channel that
+   hosts a realtime model gets no such line: its injection may open no turn
+   of its own (a silent one, an intent its provider keeps as a standing
+   instruction), where the line would tell the reply to the person's next
+   question not to answer it. A transport's delivery carries none either. Only a completed task with
    nothing to say is not handed back.
    The delivery carries the task in its metadata, `task_id`, `agent_id` (the
    worker), `task_status` and `task` (what was asked, bounded), whichever
