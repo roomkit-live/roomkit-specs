@@ -6861,7 +6861,12 @@ included — MUST travel as an instructions append (the `system` intent, Section
 12.4). Where the provider
 bounds the size of one append, an implementation MUST split a longer text on
 sentence boundaries into as many appends as it takes, rather than truncate or
-refuse.
+refuse. A text the runtime set apart in a frame (Section 6.4) keeps it in each
+append: a block left open at the end of an append is closed there and opened
+again at the start of the next, and a quote left open is closed there and
+opened again after what precedes it on its line (its author's name, the
+instruction that quotes it), so that no piece of the text reaches the model
+outside its frame, an instructions append least of all.
 
 **Reasoning delegation, hosted backend (normative).** In the hosted mode the
 provider's service runs the backend model, and the `tools` passed to
