@@ -1747,24 +1747,31 @@ so that nothing it holds reads as written by the runtime:
   content a realtime provider adds to its prompt, `<task>` for the goal or
   task an orchestration strategy copies into another model's prompt,
   `<vision>` for what a vision provider saw), where any
-  closing tag of that name the text holds, in any case or spacing, or with a
-  character Unicode marks as ignorable by default anywhere in it (a
-  zero-width space, a direction mark, a Hangul filler: a model reads past
-  them), with attributes of any length, or with its brackets in their
-  fullwidth form (`＜／tag＞`), is neutralised: a closing tag errs toward what
-  a model could read as one; a text cut short never leaves part of such a block open (it
-  names the block instead, as a compaction does);
+  closing tag of that name the text holds is neutralised where it starts,
+  its end bracket there or not and what follows kept: compared in any case
+  and under NFKC folding (fullwidth and mathematical letters, `＜／tag＞`),
+  with any spacing, a character Unicode marks as ignorable by default or a
+  control character a provider may strip anywhere in it, one slash or more
+  (an escaped one included) and any of the bracket's or the slash's
+  look-alikes, and with a mark after the name (`</tag.>`): a closing tag errs
+  toward what a model could read as one. An opening tag of that name is
+  neutralised as well, so no reader tracking nesting reads the runtime's text
+  after the block as data. A text cut short never leaves part of such a block
+  open (it names the block instead, as a compaction does);
 - or **a quote**, inline: on one line (each run of whitespace, line breaks
   included, one space), bounded, between `“` and `”`, every double quote mark
   the text holds (`"`, `“`, `”`, `„`, `«`, `»` and the like) made a single
-  one, so that none is left to close the quote.
+  one, so that none is left to close the quote, and the bidirectional
+  embeddings, overrides and isolates dropped, so that none shows the quote's
+  end reversed.
 
 What the runtime gives outside both carries no text of its own: an identifier
 kept to an identifier's characters (letters with their marks, digits,
 `_ . @ + -`), a value from a known set (a task's ending, a plan step's status),
 a number, or a person's name kept to a name's characters (letters with their
-marks, digits, spaces, `.`, `-`, `_`, `#`, apostrophes), on one line and
-bounded, as the `Name: ` prefix of a transcript gives it. A tool call the
+marks, digits, spaces, `.`, `-`, `_`, `#`, apostrophes, a letter that reads
+as a colon or a double quote left out), on one line and bounded, as the
+`Name: ` prefix of a transcript gives it. A tool call the
 channel recalls in the turn's notes names its tool and its arguments' keys as
 identifiers and quotes each text value. The
 conversation itself (a participant's message, the agent's own answers, the
