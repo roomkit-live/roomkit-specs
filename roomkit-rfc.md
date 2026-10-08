@@ -1770,16 +1770,22 @@ saying the runtime did not write it; a mark whose fixed part is a short
 phrase (the room context's opening) counts only with its opening bracket, so
 that prose naming the same words is left as written. The marks the runtime
 places itself are kept. The runtime also writes marks into the timeline and
-into memory: the handoff relay (`[Handoff: …]`) and the header of the
-context a previous agent hands on (`[Context from previous agent …]`) join
-the marks above. Which text is the runtime's is a provenance, never a
-reading of the text: a record the runtime writes into the timeline carries
-`metadata.runtime_record`, which the inbound pipeline removes from what a
-sender supplies, and a message a memory of the runtime builds (a summary,
-the handed-on context) carries the same key in its metadata. A copy of a
-mark is replaced in every record and every memory message without it, the
-messages a host's memory provider builds included, and in a copy that runs
-over two consecutive user messages, which an API may merge into one. The replacement is the same on every turn, so
+into memory: the handoff relay (`[Handoff: …]`, which counts with its
+colon, so that `[HANDOFF] notes` is prose) and the header of the context a
+previous agent hands on (`[Context from previous agent …]`) join the marks
+above. Which text is the runtime's is a provenance, never a reading of the
+text: a record the runtime writes into the timeline that holds its marks
+(the handoff relay) carries `metadata.runtime_record`, which the inbound
+pipeline removes from what a sender supplies; a relay stored before the key
+existed is told by its `system` type and its `handoff` flag, which the
+inbound pipeline removes from a `system` event a sender supplies; a
+message a memory of the runtime builds (a summary, the handed-on context)
+carries the same key in its metadata, and the text a model wrote into
+either (a handoff's reason, a summary) is cleaned as it is written. A copy of a mark is replaced in every record and
+every memory message without it, the messages a host's memory provider
+builds included, and so is a copy that runs over consecutive user messages
+(a memory's last message and the turn after it included), which an API may
+merge into one. The replacement is the same on every turn, so
 the prefix a provider caches is the same, and the header the model reads is
 the one the channel placed, a paragraph of its own with a block after it:
 the block a hook adds joins the notes it marks, and a reader that separates
