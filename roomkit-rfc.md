@@ -1749,7 +1749,8 @@ so that nothing it holds reads as written by the runtime:
   `<vision>` for what a vision provider saw), where any
   closing tag of that name the text holds is neutralised where it starts,
   its end bracket there or not and what follows kept: compared in any case
-  and under NFKC folding (fullwidth and mathematical letters, `＜／tag＞`),
+  and under NFKC folding (fullwidth and mathematical letters, `＜／tag＞`)
+  with the Cyrillic, Greek and Armenian homoglyphs of its letters,
   with any spacing, a character Unicode marks as ignorable by default or a
   control character a provider may strip anywhere in it, one slash or more
   (an escaped one included) and any of the bracket's or the slash's
