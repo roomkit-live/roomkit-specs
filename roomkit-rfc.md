@@ -1525,11 +1525,13 @@ meeting it assists one person in) but answers only them. An event whose
 speaker, as `speakers` names them, is not one of them is decided `silent`
 with the reason `only listened to`, without asking the policy it wraps, and
 so is an event whose speaker the room does not name. The people it passes on
-are only those it answers, so that a voice only listened to never makes a
-conversation with one person a group one. An event so left silent is stored,
-and thought about, as any other: the agent hears it. A speaker is matched by
-the name the room gives them, ignoring case: this chooses whom the agent
-answers, it is not an access control.
+are only those it answers, the speaker among them even when no participant
+record names them so (a microphone's record and the voice its transport
+stamps), so that a voice only listened to never makes a conversation with one
+person a group one. An event so left silent is stored, and thought about, as
+any other: the agent hears it. A speaker is matched by the name the room gives
+them, kept to a name's characters as the room keeps it and ignoring case: this
+chooses whom the agent answers, it is not an access control.
 
 **What the agent thinks.** An AI channel that has a speak policy MAY also
 carry a thinker: what the agent thinks while it listens, its answer, when it is
