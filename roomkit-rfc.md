@@ -12501,12 +12501,17 @@ opened, the server process included, before the error is reported.
 
 A provider lists the server's tools once, when it connects, following the
 listing's cursor across every page, and keeps the output schema each tool was
-listed with. With `discover` false it connects without listing: `tools()` is
-empty and no call is validated, for a host that only reads the server's
-resources. A `call` MUST NOT list the server's tools again. A tool listed with
-an output schema has its structured result validated against that schema, and
-a result that breaks it is refused; a tool the listing did not name is called
-as it is, without validation. Listing again on each call of an unnamed tool
+listed with. A listing that pages on without bringing anything new (an empty
+page that still carries a cursor, a cursor handed out twice) or past a bound
+of pages ends there, with a warning naming the server: a server that pages
+forever MUST NOT hold the connection open. With `discover` false it connects
+without listing: `tools()` is empty and no call is validated, for a host that
+only reads the server's resources. A `call` MUST NOT list the server's tools
+again. A tool listed with an output schema has a successful result's
+structured content validated against that schema, and a result that breaks it
+(or carries none) fails the call: the tool ran, so the call is failed, not
+refused (Section 9.3). A tool the listing did not name is called as it is,
+without validation. Listing again on each call of an unnamed tool
 costs the whole catalogue every time, and a gateway that serves tools per
 caller never names them to the connection that calls them.
 
