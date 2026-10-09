@@ -903,7 +903,8 @@ ChannelBinding
 ├── visibility: string                      # Write visibility rule
 ├── participant_id: string | null           # The binding's correspondent (§10.4): the
 │                                           # sender a room was created for, or the
-│                                           # first one routed to it
+│                                           # first one routed to it; on a chat
+│                                           # channel, the chat
 ├── group: bool                             # Several senders share this binding's
 │                                           # conversation (§10.4); default false
 ├── last_read_index: int | null             # Read horizon for unread tracking
@@ -932,11 +933,15 @@ recipient the binding already has is kept. Conversely, a binding the
 integrator gives a recipient and no correspondent names that recipient as
 its correspondent: the room is that person's conversation, and the router
 admits no one else through it (§10.4). On a transport that delivers to a chat
-or a conversation (Telegram, Teams, Discord), the recipient names no one: a
-room opened for a message there replies to the chat the message came from,
-never to its sender, since in a group chat the sender is one member, not the
-chat. On one that delivers to a URL (an HTTP webhook), nothing of the message
-is written as the recipient.
+or a conversation (Telegram, Teams, Discord), the chat a message was posted in
+is its conversation: a private chat is its user's, a group chat the group's,
+shared by all its members. The framework routes the message, records the
+binding's correspondent and admits a sender by the chat, and a room opened for
+the message replies there; the message's author stays its sender. A user who
+writes to the bot privately and in a group holds two conversations, and a
+room found by the sender would answer one in the other. On a transport that
+delivers to a URL (an HTTP webhook), nothing of the message is written as the
+recipient.
 
 A channel addressed by phone number compares and stores numbers in one form,
 E.164 (`+15550000001`). The inbound sender, a binding's correspondent and
@@ -4304,7 +4309,9 @@ InboundRoomRouter (interface)
 
 1. Find the latest ACTIVE room whose binding of this channel names the sender
    (§5.7); otherwise, the latest ACTIVE room where a participant with the same
-   sender address is connected via the same channel type.
+   sender address is connected via the same channel type. On a chat channel
+   the address routed by is the chat the message was posted in, not its
+   sender (§5.7), here and in step 3.
 2. If found → return that room.
 3. Otherwise, if the channel is bound to exactly **one** ACTIVE room and that
    room admits the sender (below) → return that room.
