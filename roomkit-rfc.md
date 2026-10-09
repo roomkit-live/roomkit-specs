@@ -561,6 +561,9 @@ EventSource
 ├── channel_type: ChannelType               # Channel type enum
 ├── direction: ChannelDirection             # INBOUND or OUTBOUND
 ├── participant_id: string | null           # Which human, if applicable
+├── verification: VerificationStatus | null # The sender's verification when the
+│                                           # event was received (§11.7); null where
+│                                           # none applies
 ├── external_id: string | null              # External system reference
 ├── provider: string | null                 # Provider/backend name for event attribution
 ├── raw_payload: map<string, any>           # Original provider payload — never lost
@@ -810,8 +813,19 @@ Participant
 | PENDING | Awaiting resolution — may have `candidates` |
 | AMBIGUOUS | Multiple candidates found — requires disambiguation |
 | UNKNOWN | No matching identity — may create new |
-| CHALLENGE_SENT | Verification challenge sent to participant |
+| CHALLENGE_SENT | Identification challenge sent to the sender (§11.2); not a verification (§11.7) |
 | REJECTED | Identity challenge failed or was rejected |
+
+**VerificationStatus** enumeration (Section 11.7): whether an identified
+sender has proven who they are.
+
+| Value | Description |
+|---|---|
+| UNVERIFIED | Identified, not proven: no verification in force |
+| PENDING | A verification request is open for the identity |
+| VERIFIED | Proven by the integrator's method; in force until it expires |
+| EXPIRED | Was verified; its time ran out |
+| REVOKED | Ended by the integrator before its time |
 
 **Joining and leaving:** a deliberate join is the operation `add_member`. It
 creates the participant ACTIVE, or reactivates an existing record that is not
@@ -2921,6 +2935,9 @@ They are NOT stored in any room timeline.
 | delivery_skipped | A room's delivery lane passed over committed indexes whose delivery never came (left, for example, by a process that crashed before delivering them) after waiting `gap_timeout` (default 30 s) | room_id, from_index, to_index |
 | identity_resolved | The inbound pipeline ended with an identity for the sender, found by the resolver or supplied by a hook | room_id, channel_id, event_id, identity_id, display_name, status (the resolution's status) |
 | identity_timeout | Identity resolution timed out, for an inbound sender or a conference participant | room_id, channel_id, timeout (seconds) |
+| verification_requested | A verification request was opened (§11.7.2) | identity_id, request_id, room_id, channel_id, method, expires_at |
+| verification_completed | A verification request completed (§11.7.2) | identity_id, request_id, room_id, channel_id, method, expires_at |
+| verification_ended | A verification or a request ended: expired, revoked, failed, cancelled (§11.7.5) | identity_id, request_id (for a request), reason |
 | chain_depth_exceeded | Event blocked by chain depth limit | room_id, event_id, channel_id, data.chain_depth, data.max_chain_depth |
 | session_started | `ON_SESSION_STARTED` fired (§9.2): a voice session started, or the inbound pipeline auto-created a room for a text channel | room_id; session_id, channel_id (voice) or channel_id, channel_type (text) |
 | before_ai_generation | `BEFORE_AI_GENERATION` decided on an AI turn (allowed when no hook ran) | room_id, channel_id, allowed, blocked_by |
@@ -3204,6 +3221,9 @@ them as above runs after those as an observer.
 | ON_IDENTITY_AMBIGUOUS | SYNC | Implemented | Multiple identity candidates found |
 | ON_IDENTITY_UNKNOWN | SYNC | Implemented | No identity match found |
 | ON_PARTICIPANT_IDENTIFIED | ASYNC | Implemented | Participant identity resolved |
+| ON_VERIFICATION_REQUIRED | SYNC | Planned | An identified sender's message arrives while the identity is not verified — the hook holds, passes or blocks it (§11.7.3) |
+| ON_VERIFICATION_COMPLETED | ASYNC | Planned | A verification request completed (§11.7.2) |
+| ON_VERIFICATION_ENDED | ASYNC | Planned | A verification or a request ended: expired, revoked, failed (§11.7.5) |
 | ON_PARTICIPANT_JOINED | ASYNC | Implemented | Explicit member join via `add_member` |
 | ON_PARTICIPANT_LEFT | ASYNC | Implemented | Explicit member leave via `remove_member` |
 | ON_PARTICIPANT_UPDATED | ASYNC | Implemented | Member presentation changed via `rename_member` |
@@ -3833,6 +3853,15 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   ├── UNKNOWN → fire ON_IDENTITY_UNKNOWN hook
    │   └── CHALLENGE_SENT → deliver challenge, block processing
    └── Stamp participant_id on event
+
+5b. VERIFICATION (§11.7; when verification is configured and the sender is
+    IDENTIFIED)
+   ├── A reply that is the code of the identity's open code request in this
+   │   room (§11.7.4) → attempt it; the message is consumed: its text is
+   │   never stored nor broadcast, and no agent reads it
+   ├── Stamp source.verification
+   └── Not VERIFIED → fire ON_VERIFICATION_REQUIRED (SYNC), which holds the
+       event (the default), passes it or blocks it (§11.7.3)
 
 5a. OFF-LOCK CHECK (only when a `needs_lock = false` hook matches, §9.5.1)
     ├── Take the room's admission ticket
@@ -4653,6 +4682,152 @@ composable with channels that name their own participants.
 When resolution is skipped, the event's `participant_id` MUST be left as the
 channel set it, and no participant record is created or modified: the sender is
 either already a participant or deliberately unattributed.
+
+### 11.7 Identity Verification
+
+Identification says whose an address is; **verification** says the person
+writing has proven it. A number that resolves to Alice says the phone is
+Alice's, not that Alice is typing. A service that answers account questions
+over a channel needs both. An implementation that supports verification
+carries the state, its lifecycle, a label on every message and the hooks;
+the integrator keeps the **method** (how a person proves who they are: a
+page behind a link, a code, a login) and the **policy** (what a message from
+an unverified sender may reach). Verification applies to an IDENTIFIED
+sender only; an identification challenge (§11.2) is another matter.
+
+#### 11.7.1 State
+
+```
+Verification
+├── identity_id: string
+├── status: VerificationStatus             # §5
+├── method: string | null                  # The integrator's name for it ("link", "code", "sso")
+├── verified_via: string | null            # Channel the completing request was opened on
+├── verified_at: datetime | null
+├── expires_at: datetime | null
+└── ended_reason: string | null            # "expired", "revoked" once ended
+```
+
+A verification belongs to the **identity**: once verified, the person is
+verified on every channel and in every room their addresses reach, and
+`verified_via` tells where they proved it, for an integrator that requires a
+channel of its own. An identity with no record is UNVERIFIED.
+
+#### 11.7.2 Requests
+
+```
+VerificationRequest
+├── id: string                             # Public reference
+├── identity_id, room_id, channel_id: string
+├── method: string                         # "link", "code", or the integrator's
+├── secret_hash: string                     # The secret is never stored in clear
+├── window_start: datetime                 # Reception of the message that opened it
+├── expires_at: datetime
+├── attempts: int
+└── status: OPEN | COMPLETED | FAILED | EXPIRED | CANCELLED
+```
+
+`request_verification(identity_id, room_id, channel_id, method, ttl)` opens a
+request and returns it with its secret, once: the integrator puts the secret
+in its link or sends it as a code, and the implementation keeps only its
+hash. An identity that is not verified becomes PENDING; one already verified
+stays VERIFIED meanwhile (asking again does not end a verification in force).
+Opening a request cancels the identity's earlier open one. `complete_verification(request_id, secret,
+method)` is called by the integrator once its own check passed (the page's
+PIN, the login); it compares the secret in constant time and refuses a
+request that is not OPEN or has expired. A mismatch counts as an attempt; at
+the policy's bound the request FAILS, and a request that fails while the
+identity is VERIFIED ends that verification too: whoever could not prove it
+is not let on as the person (fail closed). A request that expires unanswered
+changes nothing. A completion makes the identity
+VERIFIED until `now + ttl`, emits `verification_completed` and fires
+ON_VERIFICATION_COMPLETED (ASYNC).
+
+#### 11.7.3 Labels and holding
+
+The inbound pipeline stamps `source.verification` on every event of an
+identified sender (§10.1 step 5b), so a hook, a router, a user interface and
+a context builder read one fact. While the identity is not VERIFIED, every
+such event fires ON_VERIFICATION_REQUIRED (SYNC), whose hooks decide per
+message:
+
+- **hold** (the default when no hook passes it): the event is stored and
+  delivered marked held, its scope narrowed to the transport channels it
+  reached — its own visibility, or its source binding's — so the room's
+  people and transports (an advisor's console) see it and no intelligence
+  channel reads it, in delivery or in context. Holding never widens what a
+  message reached;
+- **pass**: the event goes on unchanged, labelled — where an integrator lets
+  a general question through. A hook passes a message explicitly; a hook
+  that merely allows it (as one that only watches does) does not;
+- **block**: as any blocked event (§9.4).
+
+An edit or a deletion (§10.3) from an unverified sender is refused unless a
+hook passes it: held, it would still change a message the agents read.
+
+Labelling and holding apply where the integrator configured verification;
+a configuration MAY label without holding. Opening a request and telling
+the sender (sending the link, the code) is the hook's: the method is the
+integrator's. An implementation SHOULD offer a
+policy that opens one request per identity when none is open, and reminds a
+sender who writes again while it is open once per request, re-sending the
+link. A sender writing while a request is pending otherwise meets silence.
+
+#### 11.7.4 Codes in the conversation
+
+With the method `code`, the secret is a short code the person replies with in
+the conversation. A message from the request's identity, in its room, whose
+whole text has the code's form is an attempt and is consumed (§10.1 step 5b):
+its text is never stored nor broadcast, no agent reads it, and the attempt is
+recorded by the framework events alone. Any other message is an ordinary
+one. A code is short, so its request's time and attempts MUST be bounded
+tightly.
+
+#### 11.7.5 The end of a verification
+
+A verification ends when its time runs out (EXPIRED) or when the integrator
+revokes it (`revoke_verification(identity_id, reason)`, REVOKED); a request
+ends when it fails, expires or is cancelled. Each end emits
+`verification_ended` and fires ON_VERIFICATION_ENDED (ASYNC) with the reason,
+**when it happens**, not on the sender's next message: the implementation
+arms a timer at `expires_at`, and when it starts it ends the verifications
+whose time passed while nothing ran and re-arms the timers of the others,
+from the store (`check_verifications()`). A policy MAY open a new request at
+once; otherwise the sender's next message meets ON_VERIFICATION_REQUIRED.
+
+#### 11.7.6 Releasing held messages
+
+When a request completes, the messages its sender wrote while it was open
+are released to the room's intelligence channels, unless the policy says
+otherwise: the held events of that room whose sender is the identity,
+received from `window_start` to the completion, never released before,
+within the policy's bounds of number and age. Releasing an event restores the
+visibility it had before it was held (`update_event`, ON_EVENT_UPDATED), and
+the room's intelligence channels act on it as on any inbound message of its
+author: nothing is copied, and the last released event alone solicits an
+answer, the earlier ones being its context.
+
+A released message MUST reach an agent as its **author's own turn**, never as
+an instruction or anything else carrying the application's authority: a
+message an unverified sender wrote, quoted or not, gains none by its author
+proving who they are. Nothing outside the window is released: what was
+written before the request — before a verification was revoked, during a
+request that failed — may not be the verified person's.
+
+#### 11.7.7 Security floor
+
+- A secret carried in a link has at least 128 bits of entropy; a code is
+  short, so its request is short-lived and allows few attempts.
+- A secret is stored only as its hash, compared in constant time, used once,
+  and never logged.
+- A completion is refused after the request expired, failed, was cancelled
+  or completed, and after the verification was revoked.
+- Every transition emits its framework event (§8), the audit trail.
+- A link is a bearer secret: forwarded, it verifies whoever opens it and
+  passes the method's own check. That check (a PIN, a login) is the
+  method's; a method with none SHOULD NOT guard anything that matters.
+
+Verification state is scoped to the organization as identities are (§17.2).
 
 ---
 
@@ -10790,6 +10965,15 @@ ConversationStore (interface)
 │   └── link_address(identity_id, channel_type, address, organization_id | null) → void
 │       # The same address may belong to a different identity in each organization
 │
+├── Verification (§11.7; Level 2)
+│   ├── get_verification(identity_id, organization_id | null) → Verification | null
+│   ├── put_verification(verification) → Verification
+│   ├── list_verifications_in_force() → list<Verification>
+│   │   # Re-arms the expiry timers when the implementation starts
+│   ├── create_verification_request(request) → VerificationRequest
+│   ├── get_verification_request(request_id) → VerificationRequest | null
+│   └── update_verification_request(request) → VerificationRequest
+│
 ├── Tasks
 │   ├── create_task(room_id, task) → Task
 │   ├── list_tasks(room_id, status | null) → list<Task>
@@ -14182,6 +14366,8 @@ A Level 2 implementation MAY additionally support:
   (Section 25)
 - Response schemas: an AI provider constraining its answer to a portable
   JSON Schema (Section 6.7)
+- Identity verification: requests, labels, holding and release, the three
+  verification triggers (Section 11.7)
 - AI steering directives (Section 21.3)
 - Advanced memory providers: Summarizing, Retrieval (Section 20)
 
