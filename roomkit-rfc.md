@@ -952,7 +952,9 @@ they are compared or recorded, so `whatsapp:+15550000001`, `15550000001` and
 `+1 (555) 000-0001` are one person. A number written without its country code
 takes a country code the integrator configures on the channel, or is kept as
 written when none is; a short code, an email address or any other id is kept
-as written. The message's raw payload keeps the provider's own spelling.
+as written. The message's raw payload keeps the provider's own spelling. An
+email channel compares and stores an address lower-case and without a display
+name (`Alice <Alice@Example.com>` is `alice@example.com`).
 
 A binding declared `group` holds
 a conversation of several senders, such as a group chat on a channel dedicated
@@ -4311,9 +4313,16 @@ InboundRoomRouter (interface)
 
 1. Find the latest ACTIVE room whose binding of this channel names the sender
    (§5.7); otherwise, the latest ACTIVE room where a participant with the same
-   sender address is connected via the same channel type. On a chat channel
-   the address routed by is the chat the message was posted in, not its
-   sender (§5.7), here and in step 3.
+   sender address is connected via the same channel type. The sender is named
+   by their address, then by the identity the store resolves it to
+   (`resolve_identity`, §14.1), so a member the integrator added under their
+   identity is found by an address linked to it. An identity reaches every
+   channel its person uses: a room found through it as a participant is the
+   sender's only when the identity joined that room through the same
+   channel, so a message is not carried into a room of another channel,
+   whose messages would then go out on this one. On a chat channel the
+   address routed by is the chat the message was posted in, not its sender
+   (§5.7), here and in step 3.
 2. If found → return that room.
 3. Otherwise, if the channel is bound to exactly **one** ACTIVE room and that
    room admits the sender (below) → return that room.
