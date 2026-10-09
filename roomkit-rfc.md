@@ -937,9 +937,11 @@ or a conversation (Telegram, Teams, Discord), the chat a message was posted in
 is its conversation: a private chat is its user's, a group chat the group's,
 shared by all its members. The framework routes the message, records the
 binding's correspondent and admits a sender by the chat, and a room opened for
-the message replies there; the message's author stays its sender. A user who
-writes to the bot privately and in a group holds two conversations, and a
-room found by the sender would answer one in the other. On a transport that
+the message replies there; the message's author stays its sender. The chat a
+binding delivers to names its conversation as a phone number names its
+correspondent: a room the integrator opens for a chat admits no one else. A
+user who writes to the bot privately and in a group holds two conversations,
+and a room found by the sender would answer one in the other. On a transport that
 delivers to a URL (an HTTP webhook), nothing of the message is written as the
 recipient.
 
