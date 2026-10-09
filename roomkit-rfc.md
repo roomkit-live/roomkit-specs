@@ -7,7 +7,7 @@
 | **Contributions** | TchatNSign, Angany AI |
 | **Version** | v18 Draft |
 | **Created** | 2026-01-27 |
-| **Last Updated** | 2026-10-08 |
+| **Last Updated** | 2026-10-09 |
 | **Supersedes** | v17 Draft |
 
 ---
@@ -12489,6 +12489,7 @@ MCPToolProvider
 ├── server: one of
 │   ├── url: string                         # a remote server (streamable HTTP or SSE)
 │   └── command: string, args: list<string> # a local server started as a subprocess (stdio)
+├── discover: bool = true                   # List the server's tools when connecting
 ├── tools() → list<ToolDefinition>          # Discover available tools
 └── call(name, arguments) → string          # Execute a tool
 ```
@@ -12497,6 +12498,17 @@ A server named by `command` is started when the provider connects and MUST be
 stopped when it disconnects. Its arguments MUST be passed as a list, never
 through a shell. A connection that fails part-way MUST release what it had
 opened, the server process included, before the error is reported.
+
+A provider lists the server's tools once, when it connects, following the
+listing's cursor across every page, and keeps the output schema each tool was
+listed with. With `discover` false it connects without listing: `tools()` is
+empty and no call is validated, for a host that only reads the server's
+resources. A `call` MUST NOT list the server's tools again. A tool listed with
+an output schema has its structured result validated against that schema, and
+a result that breaks it is refused; a tool the listing did not name is called
+as it is, without validation. Listing again on each call of an unnamed tool
+costs the whole catalogue every time, and a gateway that serves tools per
+caller never names them to the connection that calls them.
 
 MCP tools are subject to the same `ToolPolicy` as local tools.
 
