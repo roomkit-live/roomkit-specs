@@ -941,7 +941,10 @@ the message replies there; the message's author stays its sender. The chat a
 binding delivers to names its conversation as a phone number names its
 correspondent: a room the integrator opens for a chat admits no one else. A
 user who writes to the bot privately and in a group holds two conversations,
-and a room found by the sender would answer one in the other. On a transport that
+and a room found by the sender would answer one in the other. A channel that
+carries both private chats and groups (WhatsApp Personal) takes a group
+message's group as its conversation and a private message's sender. On a
+transport that
 delivers to a URL (an HTTP webhook), nothing of the message is written as the
 recipient.
 
