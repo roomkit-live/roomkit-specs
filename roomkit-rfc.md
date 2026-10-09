@@ -921,10 +921,15 @@ intelligence channel, a transport as a transport.
 A binding carries one correspondent's conversation unless it is declared
 `group`. The framework records on it the sender a room was created for, or the
 first sender routed to it (`participant_id`, §10.1 step 2), and the default
-router admits no one else through it (§10.4). A binding declared `group` holds
+router admits no one else through it (§10.4). On a transport channel, the same
+address is where the room's replies go: when the framework records the sender,
+or finds a binding naming the sender by address without one, it also writes
+the address as the binding's recipient, under the metadata key the channel
+delivers to (`phone_number`, `email_address`, ...; Appendix A). A recipient
+the binding already has, the host's above all, is kept. A binding declared `group` holds
 a conversation of several senders, such as a group chat on a channel dedicated
 to its room: every sender writing on it belongs to the room, and none is
-recorded on it. The declaration is the integrator's to make, because nothing
+recorded on it, as correspondent or as recipient. The declaration is the integrator's to make, because nothing
 the store holds tells a group channel from a number shared by many
 correspondents.
 
@@ -3742,12 +3747,15 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   │   it was detached from that room (§7.5 rule 7)
    │   └── Routed (not provided), and the channel's binding names no
    │       participant and is not `group` → record the sender on it
-   │       (`participant_id`, §10.4), under the room lock and before step 3;
+   │       (`participant_id`, §10.4) and, on a transport, as its recipient
+   │       where it has none (§5.7), under the room lock and before step 3;
    │       when the binding names another sender by then (a concurrent
    │       message was recorded first), route the message once more
    └── If new room created → fire ON_ROOM_CREATED hook and emit
        `room_created`, then attach channel, its binding naming the sender
-       (`participant_id = sender_id`, §5.7); then, for a channel other than
+       (`participant_id = sender_id`, §5.7) and, on a transport, addressing
+       replies to them (the channel's recipient key = sender_id); then, for a
+       channel other than
        VOICE and REALTIME_VOICE, fire ON_SESSION_STARTED (§9.2) and emit
        `session_started` (§8.2)
 
@@ -4151,6 +4159,9 @@ than being drained inside the trigger's lock tenure.
    ├── d. CALL deliver() (transport channels only)
    │      ├── Apply rate limiter
    │      ├── Check circuit breaker
+   │      ├── No recipient in the binding → refuse before any send:
+   │      │   delivery_failed (error `no_recipient`), not retried, not
+   │      │   counted by the circuit breaker (§13.1)
    │      ├── Call provider
    │      ├── On failure → apply retry policy
    │      └── Record delivery result
@@ -10501,7 +10512,10 @@ failures.
 
 **Transitions:**
 
-- CLOSED → OPEN: After N consecutive delivery failures (configurable).
+- CLOSED → OPEN: After N consecutive delivery failures (configurable). A
+  delivery refused before any send because its binding names no recipient
+  (§10.2 step 3d) is not one: it says nothing about the provider, and the
+  breaker is shared by every room on the channel.
 - OPEN → HALF_OPEN: After a configurable cooldown period.
 - HALF_OPEN → CLOSED: Probe delivery succeeds.
 - HALF_OPEN → OPEN: Probe delivery fails.
