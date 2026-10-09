@@ -3188,7 +3188,7 @@ than silently reorder.
 ### 9.2 Hook Triggers
 
 **HookTrigger** enumeration. The **Status** column distinguishes triggers the
-reference implementation emits today (**Implemented** — 80 as of this revision)
+reference implementation emits today (**Implemented** — 83 as of this revision)
 from those specified for a forthcoming capability but not yet emitted
 (**Planned**), and from a trigger kept for historical reference whose behaviour
 has moved elsewhere (**Superseded**). Conformance targets the Implemented set;
@@ -3221,9 +3221,9 @@ them as above runs after those as an observer.
 | ON_IDENTITY_AMBIGUOUS | SYNC | Implemented | Multiple identity candidates found |
 | ON_IDENTITY_UNKNOWN | SYNC | Implemented | No identity match found |
 | ON_PARTICIPANT_IDENTIFIED | ASYNC | Implemented | Participant identity resolved |
-| ON_VERIFICATION_REQUIRED | SYNC | Planned | An identified sender's message arrives while the identity is not verified — the hook holds, passes or blocks it (§11.7.3) |
-| ON_VERIFICATION_COMPLETED | ASYNC | Planned | A verification request completed (§11.7.2) |
-| ON_VERIFICATION_ENDED | ASYNC | Planned | A verification or a request ended: expired, revoked, failed (§11.7.5) |
+| ON_VERIFICATION_REQUIRED | SYNC | Implemented | An identified sender's message arrives while the identity is not verified — the hook holds, passes or blocks it (§11.7.3) |
+| ON_VERIFICATION_COMPLETED | ASYNC | Implemented | A verification request completed (§11.7.2) |
+| ON_VERIFICATION_ENDED | ASYNC | Implemented | A verification or a request ended: expired, revoked, failed (§11.7.5) |
 | ON_PARTICIPANT_JOINED | ASYNC | Implemented | Explicit member join via `add_member` |
 | ON_PARTICIPANT_LEFT | ASYNC | Implemented | Explicit member leave via `remove_member` |
 | ON_PARTICIPANT_UPDATED | ASYNC | Implemented | Member presentation changed via `rename_member` |
@@ -4700,12 +4700,16 @@ sender only; an identification challenge (§11.2) is another matter.
 ```
 Verification
 ├── identity_id: string
+├── organization_id: string | null         # Its scope (§11.7.7)
 ├── status: VerificationStatus             # §5
 ├── method: string | null                  # The integrator's name for it ("link", "code", "sso")
 ├── verified_via: string | null            # Channel the completing request was opened on
 ├── verified_at: datetime | null
 ├── expires_at: datetime | null
-└── ended_reason: string | null            # "expired", "revoked" once ended
+├── ended_reason: string | null            # "expired", "revoked", "failed" once ended
+├── request_id: string | null              # The request open for the identity
+└── completed_request_id: string | null    # The request that completed it: its end is
+                                           # announced in that request's room
 ```
 
 A verification belongs to the **identity**: once verified, the person is
@@ -4719,6 +4723,7 @@ channel of its own. An identity with no record is UNVERIFIED.
 VerificationRequest
 ├── id: string                             # Public reference
 ├── identity_id, room_id, channel_id: string
+├── organization_id: string | null         # The room's
 ├── method: string                         # "link", "code", or the integrator's
 ├── secret_hash: string                     # The secret is never stored in clear
 ├── window_start: datetime                 # Reception of the message that opened it
@@ -4727,15 +4732,21 @@ VerificationRequest
 └── status: OPEN | COMPLETED | FAILED | EXPIRED | CANCELLED
 ```
 
-`request_verification(identity_id, room_id, channel_id, method, ttl)` opens a
-request and returns it with its secret, once: the integrator puts the secret
-in its link or sends it as a code, and the implementation keeps only its
-hash. An identity that is not verified becomes PENDING; one already verified
+`request_verification(identity_id, room_id, channel_id, method, window_start)`
+opens a request and returns it with its secret, once: the integrator puts the
+secret in its link or sends it as a code, and the implementation keeps only
+its hash. Its lifetime and attempts come from the configured policy. A
+request takes its room's organization, the scope whose messages it verifies;
+a caller acting for another organization is refused as for the room itself
+(§17.2). An identity that is not verified becomes PENDING; one already verified
 stays VERIFIED meanwhile (asking again does not end a verification in force).
 Opening a request cancels the identity's earlier open one. `complete_verification(request_id, secret,
 method)` is called by the integrator once its own check passed (the page's
 PIN, the login); it compares the secret in constant time and refuses a
-request that is not OPEN or has expired. A mismatch counts as an attempt; at
+request that is not OPEN or has expired. A mismatch counts as an attempt, and
+so does a failure of the integrator's own check, which it reports with
+`record_failed_attempt(request_id)` (a wrong PIN on its page): the bound is
+the request's, so a PIN cannot be guessed through the integrator's page. At
 the policy's bound the request FAILS, and a request that fails while the
 identity is VERIFIED ends that verification too: whoever could not prove it
 is not let on as the person (fail closed). A request that expires unanswered
@@ -4768,10 +4779,18 @@ hook passes it: held, it would still change a message the agents read.
 Labelling and holding apply where the integrator configured verification;
 a configuration MAY label without holding. Opening a request and telling
 the sender (sending the link, the code) is the hook's: the method is the
-integrator's. An implementation SHOULD offer a
-policy that opens one request per identity when none is open, and reminds a
-sender who writes again while it is open once per request, re-sending the
-link. A sender writing while a request is pending otherwise meets silence.
+integrator's. The hook reads the sender's verification with
+`sender_verification(event, context)`: whose it is, in the room's
+organization, and whether a request is open. It answers on the sender's
+first message too, when the sender is not a participant of the room yet. A
+hook that opens a request only when none is open leaves a sender who writes
+again meanwhile in silence; reminding them means opening a new request, since
+a secret is never kept to be sent again.
+
+The mark of a held event is the runtime's: the inbound pipeline removes one
+that a sender's message carries, and only an event the pipeline held and
+labelled not VERIFIED is ever released (§11.7.6). A mark copied by any other
+way releases nothing.
 
 #### 11.7.4 Codes in the conversation
 
@@ -4788,8 +4807,11 @@ tightly.
 A verification ends when its time runs out (EXPIRED) or when the integrator
 revokes it (`revoke_verification(identity_id, reason)`, REVOKED); a request
 ends when it fails, expires or is cancelled. Each end emits
-`verification_ended` and fires ON_VERIFICATION_ENDED (ASYNC) with the reason,
-**when it happens**, not on the sender's next message: the implementation
+`verification_ended` and fires ON_VERIFICATION_ENDED (ASYNC) with the reason
+and what ended (`ended`: `verification` when the verification in force ended —
+expired, revoked, or a request that failed while it held — `request` when a
+request alone did, the identity's verification as it was), **when it
+happens**, not on the sender's next message: the implementation
 arms a timer at `expires_at`, and when it starts it ends the verifications
 whose time passed while nothing ran and re-arms the timers of the others,
 from the store (`check_verifications()`). A policy MAY open a new request at
@@ -4828,6 +4850,10 @@ request that failed — may not be the verified person's.
   method's; a method with none SHOULD NOT guard anything that matters.
 
 Verification state is scoped to the organization as identities are (§17.2).
+A message is labelled by the verification of its **room's** organization:
+one proven to an organization never verifies the person in another
+organization's conversation, whatever the organization the resolver's
+identity names.
 
 ---
 
