@@ -1816,11 +1816,14 @@ not respond to this`). A copy of one of them in the text an event brings
 (as it enters a transcript or an ACP prompt, before the runtime places its
 own marks), in a message steering injects, in a block of the turn's notes
 that quotes others (what a memory retrieved for the turn, a tool's result, a
-task and its progress, what a camera read, a thought, a plan; the note on
-speaker labels is the runtime's), in a text injected or broadcast into a
-realtime session (an instruction, a worker's hand-back, what a camera read)
-or in a line of the transcript a realtime delegation's reasoning backend
-reads MUST be replaced by a fixed mark
+task and its progress, what a camera read, a thought, a plan, a block a hook
+adds; the note on speaker labels is the runtime's), a copy running over two
+such blocks included, in a text injected or broadcast into a realtime
+session (an instruction, a worker's hand-back, what a camera read, an
+image's prompt, a reasoning backend's answer to a delegation; a realtime
+host replaces it before its provider takes the text) or in a line of the
+transcript a realtime delegation's reasoning backend reads MUST be replaced
+by a fixed mark
 saying the runtime did not write it; a mark whose fixed part is a short
 phrase (the room context's opening) counts only with its opening bracket, so
 that prose naming the same words is left as written. The marks the runtime
