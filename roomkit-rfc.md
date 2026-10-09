@@ -1449,7 +1449,8 @@ MUST NOT reach it that way.
 
 ```
 SpeakPolicy (interface)
-└── decide(turn: SpeakTurn) → SpeakDecision
+├── decide(turn: SpeakTurn) → SpeakDecision
+└── forget_room(room_id: string)        # Optional: drop what it keeps of a room the channel joins or leaves
 
 SpeakTurn
 ├── event: RoomEvent                    # The event the turn would answer (its trigger)
@@ -1465,7 +1466,7 @@ SpeakDecision
 ├── reason: string = ""                 # Why, in a few words, for logs and hooks
 ├── judgments: map<string, float> = {}  # What the policy weighed, by name, each in [0, 1] or its own scale
 ├── notes: list<string> = []            # Blocks the turn's notes carry when the agent speaks or offers
-└── final: bool = false                 # A silence the agent's thought will not change (below)
+└── final: bool = false                 # A silence the agent's thought will not change (below); only on `silent`
 ```
 
 - `speak` runs the turn as without a policy; the decision's notes join the
@@ -1517,29 +1518,38 @@ name, and its composition by an implementation of its own. Told the languages
 the agent answers in, it also judges the language the speaker speaks, over
 their recent turns, so that one misheard word does not switch it, and its
 decision's notes say which language to answer in. A classifier that fails
-falls back as any policy does: the agent speaks.
+falls back as any policy does: the agent speaks, unless the room listens
+(below).
 
 **Staying quiet when asked.** A request to stay quiet or only listen from now
 on is a state of the room, not a judgment remade on every turn: re-judged from
 the recent turns, it faded as they passed, and was lost once it left them. The
 classifier policy keeps it per room, in memory as the thought is (rule 6
-below), set when a turn asks the agent to stay quiet or only listen until told
-otherwise: that turn is silent, and final. The classifier reads it with every turn, so that each judgment is
-made knowing it, and is asked, instead of that request, whether the turn puts a
-question or a request to the agent itself and whether it lets the agent talk
-again. While the room listens:
+below): the channel has the policy forget a room it joins or leaves
+(`forget_room`), so a room that reuses an id inherits no request. It is set
+when a turn asks the agent to stay quiet or only listen until told otherwise:
+that turn is silent, and final. The classifier reads the request with every
+turn, with who made it and bounded as any text from outside, so that each
+judgment is made knowing it, and is asked, instead of that request, whether
+the turn puts a question or a request to the agent itself and whether it lets
+the agent talk again. While the room listens:
 
 - the agent is silent, and the decision is final (below);
 - a question or a request put to the agent and addressing it directly (its
   name, or "you") is answered, and the room goes on listening: answering one
-  question does not lift a request to stay quiet;
+  question does not lift a request to stay quiet; a speaker who has not
+  finished, postpones it or asks for quiet is not answered;
 - a turn that lets the agent talk again ends the state, and is decided as
-  without it.
+  without it;
+- a turn the policy cannot judge (no text, a classifier that fails) is silent:
+  falling back to speaking would break the request.
 
-A conversation with one person does not make every request the agent's while
-the room listens: a question said aside and one put to the agent read alike
-without the address. A cut answer is not resumed. Each decision made while the
-room listens reports it among its judgments (`listening`).
+A turn is decided as it was judged: when another turn of the room starts or
+ends the state during the classifier call, the answers to the questions asked
+decide it. A conversation with one person does not make every request the
+agent's while the room listens: a question said aside and one put to the agent
+read alike without the address. A cut answer is not resumed. Each decision
+made while the room listens reports it among its judgments (`listening`).
 
 RoomKit also provides a policy that answers only some people, around any
 other: an agent that listens to everyone in the room (a television, a
