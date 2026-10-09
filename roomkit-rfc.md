@@ -4196,7 +4196,9 @@ than being drained inside the trigger's lock tenure.
    │      ├── Check circuit breaker
    │      ├── No recipient in the binding → refuse before any send:
    │      │   delivery_failed (error `no_recipient`), not retried, not
-   │      │   counted by the circuit breaker (§13.1)
+   │      │   counted by the circuit breaker (§13.1). A channel whose
+   │      │   provider delivers to a destination of its own (a webhook's
+   │      │   configured URL) needs no recipient and is not refused
    │      ├── Call provider
    │      ├── On failure → apply retry policy
    │      └── Record delivery result
