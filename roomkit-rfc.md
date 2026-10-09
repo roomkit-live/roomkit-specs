@@ -7,7 +7,7 @@
 | **Contributions** | TchatNSign, Angany AI |
 | **Version** | v18 Draft |
 | **Created** | 2026-01-27 |
-| **Last Updated** | 2026-10-05 |
+| **Last Updated** | 2026-10-08 |
 | **Supersedes** | v17 Draft |
 
 ---
@@ -921,12 +921,33 @@ intelligence channel, a transport as a transport.
 A binding carries one correspondent's conversation unless it is declared
 `group`. The framework records on it the sender a room was created for, or the
 first sender routed to it (`participant_id`, §10.1 step 2), and the default
-router admits no one else through it (§10.4). On a transport channel, the same
-address is where the room's replies go: when the framework records the sender,
-or finds a binding naming the sender by address without one, it also writes
-the address as the binding's recipient, under the metadata key the channel
-delivers to (`phone_number`, `email_address`, ...; Appendix A). A recipient
-the binding already has, the host's above all, is kept. A binding declared `group` holds
+router admits no one else through it (§10.4). On a transport channel whose
+replies go to the address the correspondent writes from (a phone number, an
+email address: SMS, RCS, WhatsApp, email, Messenger), the binding's recipient
+and its correspondent are one address. When the framework records the
+sender, or finds a binding naming the sender by address without a recipient,
+it writes the address as the binding's recipient, under the metadata key the
+channel delivers to (`phone_number`, `email_address`, ...; Appendix A); a
+recipient the binding already has is kept. Conversely, a binding the
+integrator gives a recipient and no correspondent names that recipient as
+its correspondent: the room is that person's conversation, and the router
+admits no one else through it (§10.4). On a transport that delivers to a chat
+or a conversation (Telegram, Teams, Discord), the recipient names no one: a
+room opened for a message there replies to the chat the message came from,
+never to its sender, since in a group chat the sender is one member, not the
+chat. On one that delivers to a URL (an HTTP webhook), nothing of the message
+is written as the recipient.
+
+A channel addressed by phone number compares and stores numbers in one form,
+E.164 (`+15550000001`). The inbound sender, a binding's correspondent and
+recipient, and a participant's id given on that channel are normalized before
+they are compared or recorded, so `whatsapp:+15550000001`, `15550000001` and
+`+1 (555) 000-0001` are one person. A number written without its country code
+takes a country code the integrator configures on the channel, or is kept as
+written when none is; a short code, an email address or any other id is kept
+as written. The message's raw payload keeps the provider's own spelling.
+
+A binding declared `group` holds
 a conversation of several senders, such as a group chat on a channel dedicated
 to its room: every sender writing on it belongs to the room, and none is
 recorded on it, as correspondent or as recipient. The declaration is the integrator's to make, because nothing
@@ -3732,7 +3753,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 ```
 1. RESOLVE CHANNEL
    ├── Look up registered channel by message.channel_id
-   └── Fail if channel not registered
+   ├── Fail if channel not registered
+   └── Write sender_id in the channel's form (E.164 on a channel
+       addressed by phone number, §5.7) before anything reads it
 
 2. ROUTE TO ROOM
    ├── If room_id provided → use it
@@ -3747,14 +3770,17 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   │   it was detached from that room (§7.5 rule 7)
    │   └── Routed (not provided), and the channel's binding names no
    │       participant and is not `group` → record the sender on it
-   │       (`participant_id`, §10.4) and, on a transport, as its recipient
-   │       where it has none (§5.7), under the room lock and before step 3;
+   │       (`participant_id`, §10.4) and, on a transport, address the
+   │       binding's replies where the message came from (the sender's
+   │       address, or its chat) where it has no recipient (§5.7), under
+   │       the room lock and before step 3;
    │       when the binding names another sender by then (a concurrent
    │       message was recorded first), route the message once more
    └── If new room created → fire ON_ROOM_CREATED hook and emit
        `room_created`, then attach channel, its binding naming the sender
        (`participant_id = sender_id`, §5.7) and, on a transport, addressing
-       replies to them (the channel's recipient key = sender_id); then, for a
+       replies where the message came from (the sender's address, or the
+       chat it was posted in, §5.7); then, for a
        channel other than
        VOICE and REALTIME_VOICE, fire ON_SESSION_STARTED (§9.2) and emit
        `session_started` (§8.2)
@@ -4294,6 +4320,9 @@ its binding of the channel is declared `group` (§5.7), or when all of the
 following hold:
 
 - the binding names no participant, or names the sender;
+- on a channel whose replies go to the sender's address (§5.7), the binding
+  has no recipient, or its recipient is the sender's address: a room that
+  delivers to someone else is their conversation;
 - no participant of the room other than the sender joined it through this
   channel: a member the integrator added on the channel says whose
   conversation the room is before they have written;
@@ -4313,7 +4342,8 @@ their id, gets a room of its own. A member added under an id that
 is neither the address nor a resolvable identity cannot be told from a
 stranger, so the room is closed to step 3: its correspondent's messages are
 routed by `room_id`, or the address is linked to the identity
-(`link_address`, §14.1).
+(`link_address`, §14.1), unless the binding's recipient names them (§5.7),
+in which case step 1 finds them through it.
 
 A message with no sender address is held to the same conditions, so it is
 admitted only where no one is named, joined or heard on the channel.
@@ -4351,10 +4381,11 @@ Example, on one SMS number with no room yet: alice writes first, and the room
 created for her has a binding naming her. Bob's first message finds no room of
 his at step 1; at step 3 the binding names alice, so null, and bob gets a room
 of his own. Alice's next message is found at step 1 through her binding, and
-lands in hers. Had the integrator opened alice's room itself and added her as a
-member on the SMS channel, bob would be refused the same way before alice ever
-wrote; had it opened the room and added no one, the first sender would be
-admitted and recorded, and the second refused.
+lands in hers. Had the integrator opened alice's room itself, addressed to her
+number or with her added as a member on the SMS channel, bob would be refused
+the same way before alice ever wrote, and alice found at her first message;
+had it opened the room naming no one and no recipient, the first sender would
+be admitted and recorded, and the second refused.
 
 A conversation of several senders on one channel, such as a group chat bound
 to its room, is declared `group` on its binding. Without the declaration, the
