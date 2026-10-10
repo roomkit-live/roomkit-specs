@@ -2685,9 +2685,17 @@ answer gives the answer it chose probability 1, and is documented as such.
 was handed stays its owner's.
 
 RoomKit provides a mock (scripted answers), a classifier on any AI provider that
-answers under a JSON schema (Section 6.7), uncalibrated, and Jev (TypeSafe's
-System One model), calibrated, behind an optional extra. A speak policy built on
-judgments (Section 6.4) is a classifier's first consumer.
+answers under a JSON schema (Section 6.7), uncalibrated, Jev (TypeSafe's System
+One model), calibrated, behind an optional extra, and OpenAI's Decisions API
+(`gpt-6-luna`), behind the OpenAI extra. The Decisions API answers the same
+three kinds of question with probabilities (`predicate` for a yes/no question,
+`choice`, `score` over labelled levels), over a text: a structured state is sent
+as its JSON. OpenAI advises calibrating thresholds on labelled data, and the
+classifier is documented as such. A question the API declines to answer (a
+`refusal`) fails the call with `ClassifierError`, since a classifier answers
+every question or none. A speak policy built on judgments (Section 6.4) is a
+classifier's first consumer; a discussion's dispatch policy (Section 19.7.5) is
+another.
 
 ---
 
