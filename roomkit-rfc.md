@@ -12256,7 +12256,8 @@ anything (see "Left out").
 Discussion
 ├── agents: list<AIChannel>                   # The agents of the discussion: AI channels, Agents among them
 ├── people: set<string> | null                # Names agents address people by (null: the room's people, §6.4)
-├── everyone: list<channel_id> | null         # Asked by a person's message that answers no one (null: all agents)
+├── addressed_only: bool (default false)      # A person's message asks only the agents it names (rule 8)
+├── everyone: list<channel_id> | null         # Asked, in this order, by a person's message that answers no one (null: all agents)
 ├── max_turns: int | null                     # Turns given in the room's lifetime (null: no bound but max_depth)
 ├── max_depth: int | null                     # The depth limit of its turns (null: the kit's max_chain_depth)
 ├── done: function(room_id) → bool | null     # The discussion is over once it holds
@@ -12355,7 +12356,17 @@ SpeakQueue (one per room, readable by the host)
    other sender (a bot, a webhook, an event a hook injects, a delivery,
    Section 22) queues the agents its address names, at the back; with no
    address it asks no agent. A merged turn answers the latest person's message
-   among the events that asked for it, else the latest of them.
+   among the events that asked for it, else the latest of them. The order of
+   `everyone` is the host's, so the agent that should open (the one that looks
+   at the facts before the others act) comes first; the discussion does not
+   rotate it. With `addressed_only`, a person's message asks only the agents
+   it addresses, as `ADDRESSED_ONLY` asks only the channels an event names
+   (Section 19.3.1): one that names nobody asks no agent, the agents that
+   asked a person included, which wait for a message that names them. People
+   who talk among themselves in the room are then never cut into by an agent;
+   a host that wants agents to judge for themselves whether an unaddressed
+   message is for them leaves `addressed_only` off and gives them a speak
+   policy (Section 6.4).
 9. **A turn reads the room as it is.** A turn a message asked for is a rerun
    of the event it answers, planned for that one agent under the room lock and
    run in the room's delivery lane, as a regeneration re-broadcasts an event
@@ -12372,13 +12383,14 @@ SpeakQueue (one per room, readable by the host)
     discussion owes that person an answer (`asked` records the agent and the
     person), and a person's message, once routed (rule 8), clears what was
     asked of them (of every person, when the discussion cannot tell them
-    apart). When no agent of the queue can take a turn, the discussion waits
-    for a person's message, its `waiting` reading true, if it owes a person an
-    answer, if an agent of the queue only listens, or if the depth limit
-    stopped the next turn; until a person writes, it gives no turn but those
-    of rule 7 (an instruction, a regenerated answer). With no person in the
-    room, or nothing to wait for, a discussion that can give no turn is idle,
-    not over: the next event that asks for a turn opens it again.
+    apart); with `addressed_only`, only a message that names the agent clears
+    what it asked. When no agent of the queue can take a turn, the discussion
+    waits for a person's message, its `waiting` reading true, if it owes a
+    person an answer, if an agent of the queue only listens, or if the depth
+    limit stopped the next turn; until a person writes, it gives no turn but
+    those of rule 7 (an instruction, a regenerated answer). With no person in
+    the room, or nothing to wait for, a discussion that can give no turn is
+    idle, not over: the next event that asks for a turn opens it again.
 11. **Depth.** A turn the strategy gives answers an event (rules 8 and 9) and
     carries its `chain_depth + 1` (Section 8.3). A person's message is at
     depth 0, so each one opens a chain. `max_depth` takes the place of
