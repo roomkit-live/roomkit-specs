@@ -12614,17 +12614,25 @@ SpeakQueue (one per room, readable by the host)
     reaches, and the holder decides it before it gives another turn, so the
     agents a person's message asks for still come before the agents queued
     after it. Messages waiting are decided in the order they were committed;
-    once the discussion is over, they are dropped with its queue (rule 15).
-    The discussion bounds the wait for a decision (`dispatch_timeout`, 5 s by
-    default). A policy that fails or does not decide in time does not silence
-    the room: the message asks every candidate, as with no policy, and the
-    decision reported names them with the reason `fallback`; so does a
-    process holding the lease whose host gave it no policy.
+    once the discussion is over, they are dropped with its queue (rule 15),
+    and a process that stops while it decides leaves the message waiting for
+    the next holder. At most 16 messages wait: past them, the oldest asks
+    every candidate it reaches that does not only listen, undecided, so a
+    room with no holder alive keeps a bounded queue. The discussion bounds
+    the wait for a decision (`dispatch_timeout`, 5 s by default). A policy
+    that fails, does not decide in time or returns no readable decision does
+    not silence the room: the message asks every candidate, as with no
+    policy, and the decision reported names them with the reason `fallback`;
+    so does a process holding the lease whose host gave it no policy, and
+    any failure in deciding.
 
-    Every decision fires `ON_DISPATCH_DECISION` with the room, the message,
-    the candidates, the decision and how long the policy took (the bound,
-    when it did not decide in time), so who took what, why and at what cost
-    can be followed and measured without wrapping the policy. The decision is
+    Every decision applied fires `ON_DISPATCH_DECISION` with the room, the
+    message, the candidates, the decision and how long the policy took (the
+    bound, when it did not decide in time), so who took what, why and at
+    what cost can be followed and measured without wrapping the policy. A
+    decision on a message another process decided first (it took the lease
+    over meanwhile) is neither applied nor reported: each message is
+    reported once. The decision is
     not stored with the message: its `addressed_to` stays null, and a
     regenerated answer to it with no answer left asks `everyone` (rule 7),
     not a new decision. An agent picked still answers through its speak
