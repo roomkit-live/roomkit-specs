@@ -7,7 +7,7 @@
 | **Contributions** | TchatNSign, Angany AI |
 | **Version** | v18 Draft |
 | **Created** | 2026-01-27 |
-| **Last Updated** | 2026-10-09 |
+| **Last Updated** | 2026-10-10 |
 | **Supersedes** | v17 Draft |
 
 ---
@@ -4816,6 +4816,16 @@ that a sender's message carries, and only an event the pipeline held and
 labelled not VERIFIED is ever released (§11.7.6). A mark copied by any other
 way releases nothing.
 
+Labelling and holding act on messages. In a speech-to-speech session
+(§12.4) the model hears the person before any message exists, and their
+transcript is recorded afterwards: nothing there is labelled or held, and
+holding a transcript would not keep the words from the model. An integrator
+that requires verification gates the session itself: it starts the session,
+or gives it the instructions and tools that reach an account, only once
+`verification_of` reads VERIFIED for the identity in the room's
+organization, and on ON_VERIFICATION_ENDED it ends or reconfigures the
+session. The implementation does not claim to hold anything there.
+
 #### 11.7.4 Codes in the conversation
 
 With the method `code`, the secret is a short code the person replies with in
@@ -7393,7 +7403,9 @@ session boundaries.
        arriving during the flush included, before ON_SESSION_STARTED; a
        failed start discards it
 3. Audio flows bidirectionally: Client ↔ Transport ↔ Provider
-4. Transcriptions emitted as RoomEvents (if configured). A user
+4. Transcriptions emitted as RoomEvents (if configured), after the model
+   heard them: identity verification neither labels nor holds them, and
+   the integrator gates the session instead (§11.7.3). A user
    transcription has `chain_depth` 0. An assistant transcription answers
    what the model last heard, and carries that depth plus one (§8.3): 1
    after the user spoke, the injected event's depth plus one after a text
