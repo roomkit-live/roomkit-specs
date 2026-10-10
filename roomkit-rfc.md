@@ -12087,6 +12087,27 @@ without a `room_id`, `setup_delegation`, `setup_realtime_delegation`) belongs
 to the agent whatever the room: it
 is declared wherever the agent serves, and still acts on the room of the call.
 
+**One strategy per room, installed while the room lives (normative).** A room
+holds at most one strategy. An implementation MUST provide
+`install_strategy(room_id, strategy)` and `uninstall_strategy(room_id)` on
+the framework, and `create_room(orchestration=...)` installs through the same
+path:
+
+- Installing on a room that already lives does what creating the room with
+  the strategy does: the strategy's agents are registered and attached as
+  intelligence channels, and its hooks, tools, turn runners and state are set
+  up. The room's timeline stays, and the agents' turns read it (Section 20.1).
+- While a strategy is installed, installing another one is refused, whatever
+  the strategy, the host's own included: one rule decides who speaks.
+  `uninstall_strategy` comes first.
+- Uninstalling removes what the install added for that room, and only that:
+  its room hooks, the tools and turn runners it set up on the room's agents,
+  the agents it attached (an agent bound before the install stays bound), and
+  the room state it wrote (`ConversationState`, a discussion's speak queue). A
+  strategy MAY have an uninstall step of its own, run first (a discussion
+  stops giving turns). The timeline stays. The room then answers by its
+  `agent_response_policy`, and another strategy may be installed.
+
 #### 19.7.1 Pipeline
 
 Agents are chained linearly. Each agent handles one phase and hands off to
@@ -12283,10 +12304,11 @@ SpeakQueue (one per room, readable by the host)
    another strategy in it are refused. One rule decides who speaks, never two:
    the supervisor a router always solicits (Section 19.4 step 4) has no place
    in a discussion. The room's `agent_response_policy` plays no part while the
-   discussion is installed; uninstalling it gives the room back to its policy
-   at once and forgets the discussion (its queue, who only listens, what
-   agents asked people, the turns given, whether it was over), so a
-   discussion installed later starts fresh.
+   discussion is installed; uninstalling it (Section 19.7, one strategy per
+   room) gives the room back to its policy at once and forgets the
+   discussion (its queue, who only listens, what agents asked people, the
+   turns given, whether it was over), so a discussion installed later starts
+   fresh.
 2. **People.** A person is a participant of the room that is neither an
    agent nor a bot, as Section 6.4 names the people of a turn; a person's
    message is an event such a participant sent through a transport channel,
@@ -12303,7 +12325,13 @@ SpeakQueue (one per room, readable by the host)
    every event as before (Section 19.3 rule 1). An agent is not delivered an
    event at broadcast, as no channel left unsolicited is (Section 19.3.2); a
    turn reads the room when it starts (rule 9), filtered by what visibility
-   lets the agent see (Section 7.5 rule 8).
+   lets the agent see (Section 7.5 rule 8). Its memory provider (Section 20)
+   is still handed every message the agent may see (visibility and access,
+   rule 4), the agent's own excepted, as the message is committed, as a room
+   with no discussion hands it: a provider that learns as messages arrive (an
+   index, a summary) learns the whole conversation, not only the messages
+   that asked for the agent. The turn that answers a message does not hand it
+   again.
 4. **Names.** An agent's answer and a person's message address agents by
    naming them: `@` followed by an agent's channel id; `@all` names every
    agent. A name starts the text or follows a character that is neither a
@@ -12479,18 +12507,40 @@ SpeakQueue (one per room, readable by the host)
     events are stored and delivered with no agent asked. `done` is the host's:
     a mission's state, a person's word, a budget. A host that wants the agents
     to answer again uninstalls the discussion (rule 1).
-16. **Its state.** The speak queue is room state, stored with the room as
-    `ConversationState` is (Section 19.2) and read and changed under the room
-    lock (Section 13.5): processes that serve one room keep one queue, and the
-    queue and the count of turns given outlive a restart. Two things do not.
-    `speaking` belongs to the process that runs the turn: a turn whose process
-    stopped has ended (rule 6), and the next turn goes to the queue. One
-    process at a time gives a room's turns, whether one process serves the
-    room or the processes hold a lease on it: two would give two turns at
-    once. A queued turn's instruction is kept with it in memory only, as an
-    instruction is stored nowhere (Section 10.1.1): an instruction the
-    discussion drops (it is over, uninstalled, or its process stopped) is
-    reported through `ON_SPEAK_QUEUE` as dropped.
+16. **Its state, across processes.** Installing a discussion stores it with the
+    room, as `ConversationState` is (Section 19.2): its configuration (the
+    agents' channel ids, `people`, `addressed_only`, `everyone`, `max_turns`,
+    `max_depth`, `silent_token`) and its speak queue. Every process that
+    serves the room follows the stored discussion, whether or not its host
+    installed it there: it asks no agent at broadcast (rule 3), and reads
+    names and queues (rules 4, 5, 8, 10) by the stored configuration. Every
+    change of the queue is read and written under the room lock (Section
+    13.5), so the processes that serve one room keep one queue, and the queue
+    and the count of turns given outlive a restart. Uninstalling, in any
+    process, ends the discussion in all of them.
+
+    A process where the host installed the discussion may give its turns, one
+    process at a time: the one that holds the room's **lease**, stored with
+    the queue with the time it expires (15 s by default). It gives the turns,
+    renews the lease while it holds it, and another process that installed
+    the discussion takes it once it has expired: a process that stopped gives
+    up its turns that way, and its running turn has ended (rule 6). A process
+    that queues a turn without holding the lease makes it known through the
+    stored queue, which the holder reads again at least once a second; a
+    change that concerns the running turn (its agent set to listen only, rule
+    12) reaches the holder the same way. `speaking` is stored with the lease
+    and names the holder's running turn. `done` is the host's and is checked
+    by the process holding the lease. A process that only follows the
+    discussion never gives a turn: with no process that installed it alive,
+    messages are queued and wait.
+
+    A queued turn's instruction is kept in memory only, by the process that
+    received it, as an instruction is stored nowhere (Section 10.1.1). Its
+    entry names that process. When the turn comes and the holder is another
+    process, the holder hands the lease over; an instruction whose process
+    does not take the lease within one lease period is dropped. An
+    instruction the discussion drops (it is over, uninstalled, or its process
+    stopped) is reported through `ON_SPEAK_QUEUE` as dropped.
 17. **Following the queue.** The host reads a room's `SpeakQueue` at any time,
     and each change of it fires `ON_SPEAK_QUEUE` (Section 9) with the room,
     the queue as it now is and what changed: an agent queued, a turn given or
