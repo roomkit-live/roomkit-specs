@@ -12283,13 +12283,18 @@ SpeakQueue (one per room, readable by the host)
    another strategy in it are refused. One rule decides who speaks, never two:
    the supervisor a router always solicits (Section 19.4 step 4) has no place
    in a discussion. The room's `agent_response_policy` plays no part while the
-   discussion is installed; uninstalling it drops the queue and gives the room
-   back to its policy.
+   discussion is installed; uninstalling it gives the room back to its policy
+   at once and forgets the discussion (its queue, who only listens, what
+   agents asked people, the turns given, whether it was over), so a
+   discussion installed later starts fresh.
 2. **People.** A person is a participant of the room that is neither an
    agent nor a bot, as Section 6.4 names the people of a turn; a person's
    message is an event such a participant sent through a transport channel,
    or one a transport channel brought in with no participant record behind
-   it (a room whose people the host never recorded still has people).
+   it (a room whose people the host never recorded still has people). A
+   delivery (Section 22), which a transport brings in from the framework's
+   own sender, is no person's message: it is an event from another sender
+   (rule 8).
 3. **The strategy takes the turns.** No event solicits an agent at broadcast
    (Section 10.2, solicitation): the strategy queues the agents an event asks
    for and gives each its turn later (rule 7). The address keeps its meaning
@@ -12303,8 +12308,8 @@ SpeakQueue (one per room, readable by the host)
    naming them: `@` followed by an agent's channel id; `@all` names every
    agent. A name starts the text or follows a character that is neither a
    letter, a digit, `_` nor `@`; it is the longest run of the characters an
-   identifier holds (letters, digits, `_`, `-`, `.`) that follows, a final
-   `.` excepted, and it matches a channel id ignoring case. Names are read in
+   identifier holds (letters of any script, digits, `_`, `-`, `.`) that
+   follows, a final `.` excepted, and it matches a channel id ignoring case. Names are read in
    the text the event commits with, once its `BEFORE_BROADCAST` hooks have
    run (Section 10.1): never in a tool's arguments or result, an agent's
    reasoning, a fenced code block or a quoted line. They set the event's
@@ -12312,11 +12317,20 @@ SpeakQueue (one per room, readable by the host)
    address a transport set; a name that is no agent of the room addresses
    nobody. A name queues an agent only when the event's visibility includes
    it and its access lets it read the event (Section 7.5): a name is no way
-   around visibility. A person's name (`people`, else the names Section 6.4
-   gives the room's people, kept to an identifier's characters) addresses no
-   intelligence channel: it records that the agent asked that person (rule
-   10). Where a person's name and an agent's channel id read alike, the name
-   is the agent's. This is the mechanism Section 19.3.1 leaves open: an agent
+   around visibility; the visibility is the event's own, else its source
+   binding's (Section 7.5). A person's name addresses no intelligence
+   channel: it records that the agent asked that person (rule 10). The names
+   people are addressed by are those of the room's people as the transcript
+   labels them (Section 6.4: a participant's name, a transport's stamp, else
+   the channel of a sender with no name), only those `people` lists when it
+   is set, kept to an identifier's characters and at most 32 of them: a
+   longer name addresses nobody, never cut short, since a cut name could be
+   another person's whole one. What is recorded is the person as the
+   transcript labels them, and only when one person answers to the name: a
+   name two people answer to (`Alice Martin`, `AliceMartin`) records no one,
+   and a look-alike's ranked label (`Alice (2)`, Section 6.4) is addressed by
+   no name. Where a person's name and an agent's channel id read alike, the
+   name is the agent's. This is the mechanism Section 19.3.1 leaves open: an agent
    MAY address another agent.
 5. **A turn queues each agent once.** Each event a turn commits carries its
    own names when it is committed (Section 19.3 rule 4). The queue takes them
@@ -12338,12 +12352,14 @@ SpeakQueue (one per room, readable by the host)
    queue can, a person's message that put it first included: an agent that
    asks a person at every turn would otherwise keep the turns from the agents
    it waits on. Every turn an agent of the room takes goes through the queue.
-   An instruction addressed to an agent (Section 10.1.1) queues it at the
-   front, and its turn takes the instruction as its input (rule 16); a
-   regenerated answer queues its agent at the front too. Such a turn is given
-   even while the discussion waits for a person (rule 10), and to an agent
-   that only listens. Requests that put agents at the front are served in the
-   order they came.
+   An instruction addressed to agents (Section 10.1.1) queues each of them at
+   the front for a turn of its own, which takes the instruction as its input
+   (rule 16). A regenerated answer queues at the front, for a turn of its own,
+   each agent that answered the event (each agent the event asked for, when
+   no answer to it is left), once per agent and event. Such a turn is given
+   even while the discussion waits for a person (rule 10), to an agent that
+   only listens, and to the agent whose turn just ended. Requests that put
+   agents at the front are served in the order they came.
 8. **The queue.** An agent an agent names is queued at the back, or keeps its
    place when already queued: the request merges into its pending turn, one
    turn for every event that asked for it. A person's message puts the agents
@@ -12377,22 +12393,26 @@ SpeakQueue (one per room, readable by the host)
    answers is passed as the turn's `current_event` and keeps its place in the
    history, before what came after it (Section 20.1), and a speak policy reads
    the conversation up to the turn's start in `SpeakTurn.recent` (Section
-   6.4). The turn's notes say which event the turn answers and every speaker
-   that asked for it. A turn is never given by publishing a message or an
+   6.4). The turn's notes say which event the turn answers (its author's label
+   and a quote of it, Section 6.4) and every speaker that asked for it. A turn is never given by publishing a message or an
    instruction in the room for the agent to answer, which a model reads as a
    third party's words and may rightly refuse to obey.
 10. **Asking a person, waiting for one.** When an agent names a person, the
     discussion owes that person an answer (`asked` records the agent and the
-    person), and a person's message, once routed (rule 8), clears what was
-    asked of them (of every person, when the discussion cannot tell them
-    apart); with `addressed_only`, only a message that names the agent clears
-    what it asked. When no agent of the queue can take a turn, the discussion
-    waits for a person's message, its `waiting` reading true, if it owes a
-    person an answer, if an agent of the queue only listens, or if the depth
-    limit stopped the next turn; until a person writes, it gives no turn but
-    those of rule 7 (an instruction, a regenerated answer). With no person in
-    the room, or nothing to wait for, a discussion that can give no turn is
-    idle, not over: the next event that asks for a turn opens it again.
+    person as the transcript labels them, rule 4), and a person's message,
+    once routed (rule 8), clears what was asked of them: of that label alone,
+    so a sender who takes another's name (ranked apart, Section 6.4) answers
+    for nobody else. With `addressed_only`, only a message that names the
+    agent clears what it asked. When no agent of the queue can take a turn,
+    the discussion waits for a person's message, its `waiting` reading true,
+    if the room has a person to wait for (one of its participants is, or a
+    person's message reached it) and it owes a person an answer, an agent of
+    the queue only listens, or the depth limit stopped the next turn. Until a
+    person writes, whatever the message asks, or the cause of the wait is gone
+    (the agent it waited on talks again), it gives no turn but those of rule 7
+    (an instruction, a regenerated answer). With no person in the room, or
+    nothing to wait for, a discussion that can give no turn is idle, not over:
+    the next event that asks for a turn opens it again.
 11. **Depth.** A turn the strategy gives answers an event (rules 8 and 9) and
     carries its `chain_depth + 1` (Section 8.3). A person's message is at
     depth 0, so each one opens a chain. `max_depth` takes the place of
@@ -12405,9 +12425,12 @@ SpeakQueue (one per room, readable by the host)
     and its turn answers the next event that asks for it within the limit: a
     person's message, which opens a new chain, or a request from a shallower
     one (rule 8). Each turn has a reentry budget of its own, `10 × max_depth`
-    passes (Section 8.3), as a regeneration does. An autonomous discussion,
-    with no person to open a new chain, needs a `max_depth` that lets its work
-    through.
+    passes (Section 8.3), as a regeneration does. A turn of its own (rule 7)
+    past the limit does not wait: an instruction's is dropped and reported as
+    dropped (rule 16), there being no stored event to record it against; a
+    regenerated answer's is recorded once and dropped. An autonomous
+    discussion, with no person to open a new chain, needs a `max_depth` that
+    lets its work through.
 12. **Listening only.** An implementation that provides Discussion MUST
     provide `listen_only(room_id, channel_ids)` and `talk_again(room_id,
     channel_ids)` for the host, which binds them to what a person does (a
@@ -12415,12 +12438,15 @@ SpeakQueue (one per room, readable by the host)
     the state, and it means what the listening state of Section 6.4 means: an
     agent that only listens keeps its place in the queue and takes no turn an
     agent's message asks for; a person's message that names it gives it one
-    turn, and it goes on listening; `talk_again` ends the state. An agent
+    turn, and it goes on listening (one that names nobody, routed to
+    `everyone` or to the agents that asked that person, gives it none);
+    `talk_again` ends the state. An agent
     whose speak policy also listens (Section 6.4) is silenced by either.
     Setting the state on the agent whose turn runs cuts that turn, as a
     `Cancel` steering directive does (Section 21.3): what the turn committed
-    stays in the room. Talking again, its next turn reads the whole room
-    (rule 9).
+    stays in the room; a turn given but not running yet, which no `Cancel`
+    reaches, is abandoned before it runs. Talking again, its next turn reads
+    the whole room (rule 9).
 13. **Staying silent.** A turn a message asked for is submitted to the agent's
     speak policy, when it has one, as any event the agent would answer
     (Section 6.4); an instruction's turn is not, as Section 6.4 says. A
@@ -12438,15 +12464,18 @@ SpeakQueue (one per room, readable by the host)
 14. **What a turn knows.** Each turn's notes (Section 6.4) carry, as the
     runtime's own block and not a participant's words: the other agents of
     the room by their channel ids, with the `role` and `description` of those
-    that are Agents (Section 19.1); the people the agent may address; which
-    event the turn answers and who asked for it; and how the room works (name
+    that are Agents (Section 19.1); the people the agent may address, by the
+    names rule 4 gives them; which event the turn answers and who asked for
+    it, a person's label and their words quoted (Section 6.4); and how the
+    room works (name
     an agent with `@` to address it, a message that names nobody wakes nobody,
     the silence token when it has nothing to add, one agent speaks at a time).
 15. **The end.** The discussion is over once `done` holds, checked before each
-    turn is given, or once `max_turns` turns were given in the room. It gives
-    no further turn and drops its queue; an instruction addressed to an agent
-    afterwards is refused, its result blocked with the reason
-    `discussion_over`; a turn running then ends as it would; the room's later
+    turn is given, or once `max_turns` turns were given in the room, from the
+    moment the last of them is given. It gives no further turn and drops its
+    queue; an instruction addressed to an agent afterwards, and a regenerated
+    answer asked for afterwards, are refused, their result blocked with the
+    reason `discussion_over`; a turn running then ends as it would; the room's later
     events are stored and delivered with no agent asked. `done` is the host's:
     a mission's state, a person's word, a budget. A host that wants the agents
     to answer again uninstalls the discussion (rule 1).
@@ -12466,7 +12495,9 @@ SpeakQueue (one per room, readable by the host)
     and each change of it fires `ON_SPEAK_QUEUE` (Section 9) with the room,
     the queue as it now is and what changed: an agent queued, a turn given or
     ended, a queued instruction dropped, an agent listening only or talking
-    again, the discussion waiting for a person, the discussion over. A console
+    again, the discussion waiting for a person or no longer waiting, the
+    discussion over. The host's calls take the organization a room belongs to
+    (Section 17.2): a room of another organization holds no discussion for it. A console
     that shows who speaks, who is next, who only listens and whether the
     discussion waits for a person follows it, and draws the room's agents from
     the room's intelligence bindings and the agents' identity (Section 19.1).
