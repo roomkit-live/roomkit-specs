@@ -1865,7 +1865,8 @@ closing tag is neutralised. The same holds for every other mark the runtime
 writes in a model's input: the mark of the application's instruction, the
 mark of an answer that was cut off, a summary's header (a compaction's or a
 memory provider's), the lines that open and close the room context handed
-to an ACP agent, and the marks a realtime provider writes into its model's
+to an ACP agent, the mark that opens an ACP agent's standing instructions,
+and the marks a realtime provider writes into its model's
 input (Gemini Live's `[Assistant previously said]` and `[Context update, do
 not respond to this`). A copy of one of them in the text an event brings
 (as it enters a transcript or an ACP prompt, before the runtime places its
@@ -12928,8 +12929,8 @@ SpeakQueue (one per room, readable by the host)
     outlives an uninstalled or ended discussion: a relayed hand-back is then
     an instruction like any other, refused once the discussion is over (rule
     15), its result kept on `ON_TASK_COMPLETED` and the StatusBus; a posted
-    result, which asks no turn, is posted at once, and one queued when the
-    discussion ends or is uninstalled is posted then.
+    result, which asks no turn, is posted once no turn runs, one queued when
+    the discussion ends or is uninstalled included.
 
 The rules of Section 19.7 for a strategy in several rooms hold: the speak
 queue and who only listens are the room's, and the same agents may hold a
