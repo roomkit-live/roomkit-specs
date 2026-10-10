@@ -12284,7 +12284,7 @@ Discussion
 ├── max_depth: int | null                     # The depth limit of its turns (null: the kit's max_chain_depth)
 ├── done: function(room_id) → bool | null     # The discussion is over once it holds
 ├── silent_token: string (default "(silent)") # The answer of an agent that stays silent
-├── dispatch: DispatchPolicy | null           # Picks who takes a person's message rule 8 gives `everyone` (rule 18)
+├── dispatch: DispatchPolicy | null           # Picks who takes a person's message that names no agent (rule 18)
 └── dispatch_timeout: float (default 5 s)     # How long a decision may take (rule 18)
 
 SpeakQueue (one per room, readable by the host)
@@ -12398,10 +12398,11 @@ SpeakQueue (one per room, readable by the host)
    message with no address (`addressed_to` null, and no name read in it)
    answers the agents that asked that person (`asked`), and puts them at the
    front in the order they asked; when none asked, it puts `everyone` there,
-   in their order, or those of them a dispatch policy picks (rule 18); each
-   only when the message's visibility includes it and its
+   in their order; each only when the message's visibility includes it and its
    access lets it read the message (rule 4). The message is routed so before
-   rule 10 clears what was asked. A message whose address is empty, or that
+   rule 10 clears what was asked. With a dispatch policy, such a message is
+   left to the policy instead, whether agents asked that person or not
+   (rule 18). A message whose address is empty, or that
    names only people, asks no agent (Section 19.3 rule 3). An event from any
    other sender (a bot, a webhook, an event a hook injects, a delivery,
    Section 22) queues the agents its address names, at the back; with no
@@ -12435,7 +12436,8 @@ SpeakQueue (one per room, readable by the host)
     person as the transcript labels them, rule 4), and a person's message,
     once routed (rule 8), clears what was asked of them: of that label alone,
     so a sender who takes another's name (ranked apart, Section 6.4) answers
-    for nobody else. With `addressed_only`, only a message that names the
+    for nobody else. With a dispatch policy, the policy judges whether the
+    message answers them (rule 18); what was asked is cleared all the same. With `addressed_only`, only a message that names the
     agent clears what it asked. When no agent of the queue can take a turn,
     the discussion waits for a person's message, its `waiting` reading true,
     if the room has a person to wait for (one of its participants is, or a
@@ -12562,16 +12564,19 @@ SpeakQueue (one per room, readable by the host)
     answer in its result (Section 10.1 step 18): the answers come in the turns
     that follow, as a regenerated answer the discussion queued does.
 18. **Who takes an unaddressed message.** A discussion MAY carry a dispatch
-    policy, which decides, for a person's message that rule 8 gives to
-    `everyone`, which of them take it and in which order, or that none does: a
-    room where every agent is asked every remark spends turns on agents with
-    nothing to add (each says nothing, rule 13, but its turn runs), and the
-    agent that should answer may come third. The policy is asked for that
-    message only: a message with an address, one that names an agent or only
-    people, and one that answers the agents that asked that person are routed
-    as rule 8 says, and a discussion with `addressed_only`, where a message
-    that names nobody asks no agent, takes no dispatch policy. A name stays
-    the person's word: no policy overrides it.
+    policy, which decides, for a person's message with no address and no
+    name (rule 8), which agents take it and in which order, or that none
+    does. Without one, rule 8 gives that message to the agents that asked
+    that person, else to `everyone`: a room where every agent is asked every
+    remark spends turns on agents with nothing to add (each says nothing,
+    rule 13, but its turn runs), the agent that should answer may come
+    third, and an agent that asked the person a question takes the person's
+    next message even when it answers nothing of it (a request for another
+    agent, a thanks). The policy is asked for that message only: a message
+    with an address, or that names an agent or only people, is routed as
+    rule 8 says, and a discussion with `addressed_only`, where a message that
+    names nobody asks no agent, takes no dispatch policy. A name stays the
+    person's word: no policy overrides it.
 
     ```
     DispatchPolicy (interface)
@@ -12582,7 +12587,8 @@ SpeakQueue (one per room, readable by the host)
     ├── event: RoomEvent                    # The person's message
     ├── recent: list<RoomEvent>             # The conversation before it, oldest first: the room's messages a candidate may read
     ├── speakers: map<string, string>       # Who said `event` and each of `recent`, by event id: a person by their transcript label, an agent as `@channel_id`
-    └── candidates: list<DispatchCandidate> # The agents it may pick, in `everyone`'s order
+    ├── candidates: list<DispatchCandidate> # The agents it may pick: those that asked the author first, then `everyone`'s order
+    └── asked: list<channel_id>             # The candidates that asked the message's author and wait for the answer (rule 10)
 
     DispatchCandidate
     ├── channel_id: string
@@ -12596,9 +12602,10 @@ SpeakQueue (one per room, readable by the host)
     └── judgments: map<string, float> = {}  # What the policy weighed, by name
     ```
 
-    The candidates are `everyone`, in its order, less the agents the message
-    does not reach (its visibility and their access, rule 4) and those that
-    only listen, which an unaddressed message gives no turn (rule 12). With no
+    The candidates are the agents that asked that person, in the order they
+    asked, then `everyone`, in its order, less the agents the message does
+    not reach (its visibility and their access, rule 4) and those that only
+    listen, which an unaddressed message gives no turn (rule 12). With no
     candidate, the policy is not asked and no agent is. The agents a decision
     names are put at the front of the queue in its order, as rule 8 puts
     `everyone`; one that is not a candidate, or named twice, is left out, so a
@@ -12617,14 +12624,15 @@ SpeakQueue (one per room, readable by the host)
     once the discussion is over, they are dropped with its queue (rule 15),
     and a process that stops while it decides leaves the message waiting for
     the next holder. At most 16 messages wait: past them, the oldest asks
-    every candidate it reaches that does not only listen, undecided, so a
-    room with no holder alive keeps a bounded queue. The discussion bounds
+    what it asks with no policy (below), undecided, so a room with no holder
+    alive keeps a bounded queue. The discussion bounds
     the wait for a decision (`dispatch_timeout`, 5 s by default). A policy
     that fails, does not decide in time or returns no readable decision does
-    not silence the room: the message asks every candidate, as with no
-    policy, and the decision reported names them with the reason `fallback`;
-    so does a process holding the lease whose host gave it no policy, and
-    any failure in deciding.
+    not silence the room: the message asks what it asks with no policy, the
+    candidates that asked its author, else every candidate, and the decision
+    reported names them with the reason `fallback`; so does a process
+    holding the lease whose host gave it no policy, and any failure in
+    deciding.
 
     Every decision applied fires `ON_DISPATCH_DECISION` with the room, the
     message, the candidates, the decision and how long the policy took (the
@@ -12641,7 +12649,9 @@ SpeakQueue (one per room, readable by the host)
     RoomKit provides a policy built on a classifier (Section 6.8). It asks one
     yes/no question per candidate, all in one call: whether that agent should
     take the message, given what each agent's identity says it does, over the
-    message, its speaker and the recent conversation named by speaker. The
+    message, its speaker and the recent conversation named by speaker; an
+    agent that waits for the speaker's answer is marked as such, so that it
+    is picked when the message answers it and not otherwise. The
     candidates whose probability reaches a threshold (0.5 by default) take it,
     likeliest first, at most a number of them (2 by default); with none
     reaching it, no agent takes it (thanks, small talk). Each candidate's
