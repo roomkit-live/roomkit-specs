@@ -12887,7 +12887,11 @@ SpeakQueue (one per room, readable by the host)
     hand-back, an instruction addressed to the agent the task is for, which
     the discussion queues at the front for a turn of its own (rule 7),
     results served in the order they come; a task cancelled or failed says
-    so the same way (Section 23.3). Each turn's notes list the room's tasks
+    so the same way (Section 23.3). A posted result (`hand_back = "post"`)
+    takes the same place, and its turn posts it as the agent's message
+    without running the agent's model: it never cuts a turn under way, and
+    the names it carries ask no one, its worker having written it outside
+    the room. Each turn's notes list the room's tasks
     (Section 23.4), so an agent asked how a task goes answers from them, and
     `cancel_task` or the host's `cancel_task(task_id)` stops one. A worker
     runs in its own child room, outside the discussion, so an agent of the
@@ -13672,7 +13676,7 @@ DelegatedTaskResult
 ### 23.3 Delegation Protocol
 
 When `delegate(room_id, agent_id, task, notify, post_status = true, brief = null,
-conversation = 0)` is called:
+conversation = 0, hand_back = "relay")` is called:
 
 1. Create a **child room** linked to the parent room.
 2. Attach the specified agent as an INTELLIGENCE channel in the child room.
@@ -13797,6 +13801,30 @@ conversation = 0)` is called:
    call context, Section 21.4), so a cycle of delegation, result and
    delegation again ends at `max_chain_depth` (§8.3) like any chain. A
    delegation made outside a tool call delivers at 0.
+   `hand_back` says how the result reaches the room. `relay`, the default,
+   is the hand-back above: the notified agent is told, and says the result
+   in a turn of its own, in the conversation's words and with what the room
+   said meanwhile. `post` publishes the result to the parent room as it
+   is, as a message of the notified agent, without a turn of its model: the
+   result reaches the room at once and as the worker wrote it, where a
+   relayed one waits the length of a turn and comes back rewritten. Which
+   one fits is the host's call, by context: a result to put in the
+   conversation's words is relayed; a long or exact one (an analysis, a
+   list, a diff), or one a slow model would hold, is posted. `post`
+   requires `notify` to name an intelligence channel attached to the
+   parent room; a delegation that names another channel with `post` is
+   refused when called. The message names the task (`task`, quoted as
+   Section 6.4 quotes a text from outside) before the result, so the room
+   tells what it answers; a task that did not complete posts that it failed
+   or was cancelled, without its error (§9.3); a completed task with
+   nothing to say posts nothing, and a task the agent cancelled itself
+   posts nothing either. The message is committed as the notified agent's
+   response is (§10.1 steps 9 to 14): it crosses `BEFORE_BROADCAST` and the
+   agent's right to write, is stored, and reaches the room's channels as
+   the agent binding's visibility allows, so later turns, of every agent,
+   read it in the history, where a relayed result lives only in the answer
+   its turn gave. It carries the task in its metadata as the relayed
+   delivery does, and the chain depth that delivery would carry.
 
 A task cancelled from outside (its caller's timeout, the framework's
 `cancel_task(task_id)`, the task runner's `cancel` or `close`, the framework's
@@ -13878,23 +13906,25 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   19.7.3) names `task_status` only when the agent was given it.
 
 - `work_in_background` — A tool an agent of a room is given
-  (`setup_background(agent, worker = null)`), to start long work as a task
-  and free its turn: going through many records, files or traces, an
-  analysis of several tool calls. Its arguments are `task`, what to do and
-  report, and `agent`, the agent of the room it is for, the caller by
-  default. The task runs on that agent's worker: the agent itself, unless
-  its background was set up with another (any intelligence channel the kit
-  holds, another agent or an external agent among them, Section 6.4). It is
-  handed the room's last messages (`conversation`, RoomKit: 12), and its
-  result goes back to the agent it is for (`notify`), as any delegation's
-  (Section 23.3). The tool answers at once, with the task's id, and tells
-  the agent to say in a sentence that the work is under way and to end its
-  turn. A call from a task's child room is refused: a worker does its work
-  and starts no task of its own. The host starts the same task with
-  `start_task(room_id, agent_id, task)`, a delegation made outside a tool
-  call, and a person through whatever the host gives them (a console's
-  `/task`). Whether work is long is the agent's judgment through its tool
-  or the host's: a model may keep long work in its own turn whatever its
+  (`setup_background(agent, worker = null, hand_back = "relay")`), to start
+  long work as a task and free its turn: going through many records, files or
+  traces, an analysis of several tool calls. Its arguments are `task`, what to
+  do and report, and `agent`, the agent of the room it is for, the caller by
+  default. The task runs on that agent's worker: the agent itself, unless its
+  background was set up with another (any intelligence channel the kit holds,
+  another agent or an external agent among them, Section 6.4). It is handed
+  the room's last messages (`conversation`, RoomKit: 12), and its result goes
+  back to the agent it is for (`notify`), as any delegation's (Section 23.3),
+  relayed or posted as the setup's `hand_back` says: the host's choice for
+  that agent's tasks, never the model's. The tool answers at once, with the
+  task's id, and tells the agent to say in a sentence that the work is under
+  way and to end its turn. A call from a task's child room is refused: a
+  worker does its work and starts no task of its own. The host starts the same
+  task with `start_task(room_id, agent_id, task, hand_back = null)`, a
+  delegation made outside a tool call whose `hand_back` is the agent's setup's
+  when null; a person starts one through whatever the host gives them (a
+  console's `/task`). Whether work is long is the agent's judgment through its
+  tool or the host's: a model may keep long work in its own turn whatever its
   tool says, and a host whose agents do so starts their tasks itself.
 
 - `cancel_task` — A tool an agent can be given on its own, as `task_status`,
