@@ -12287,7 +12287,9 @@ SpeakQueue (one per room, readable by the host)
    back to its policy.
 2. **People.** A person is a participant of the room that is neither an
    agent nor a bot, as Section 6.4 names the people of a turn; a person's
-   message is an event such a participant sent through a transport channel.
+   message is an event such a participant sent through a transport channel,
+   or one a transport channel brought in with no participant record behind
+   it (a room whose people the host never recorded still has people).
 3. **The strategy takes the turns.** No event solicits an agent at broadcast
    (Section 10.2, solicitation): the strategy queues the agents an event asks
    for and gives each its turn later (rule 7). The address keeps its meaning
@@ -12419,19 +12421,20 @@ SpeakQueue (one per room, readable by the host)
     `Cancel` steering directive does (Section 21.3): what the turn committed
     stays in the room. Talking again, its next turn reads the whole room
     (rule 9).
-13. **Staying silent.** A turn a message asked for is submitted to the
-    agent's speak policy, when it has one, as any event the agent would answer
+13. **Staying silent.** A turn a message asked for is submitted to the agent's
+    speak policy, when it has one, as any event the agent would answer
     (Section 6.4); an instruction's turn is not, as Section 6.4 says. A
     `silent` decision runs no generation and ends the turn. Without a policy,
-    or when the policy lets it speak, the model may stay silent itself: a turn
-    whose only text is `silent_token`, ignoring case, surrounding whitespace,
-    a final period and the brackets around the token if it has some, says
-    nothing. Its row is stored with `status = BLOCKED` and
-    `blocked_by = "discussion_silent"`, read for no name and delivered nowhere:
-    the start of a streamed answer is held back until its text can no longer
-    be the token, since a streamed segment once delivered is not taken back
-    (Section 6.4). A turn that ends with no text produces no row and says
-    nothing too. A silent turn counts as a turn (rules 7 and 15).
+    or when the policy lets it speak, the model may stay silent itself: a text
+    row of the turn whose only text is `silent_token`, ignoring case,
+    surrounding whitespace, a final period and the brackets around the token
+    if it has some, says nothing; a turn whose text rows all say nothing
+    stayed silent. Its row is stored with `status = BLOCKED` and `blocked_by =
+    "discussion_silent"`, read for no name and delivered nowhere: the start of
+    a streamed answer is held back until its text can no longer be the token,
+    since a streamed segment once delivered is not taken back (Section 6.4). A
+    turn that ends with no text produces no row and says nothing too. A silent
+    turn counts as a turn (rules 7 and 15).
 14. **What a turn knows.** Each turn's notes (Section 6.4) carry, as the
     runtime's own block and not a participant's words: the other agents of
     the room by their channel ids, with the `role` and `description` of those
@@ -12452,11 +12455,13 @@ SpeakQueue (one per room, readable by the host)
     lock (Section 13.5): processes that serve one room keep one queue, and the
     queue and the count of turns given outlive a restart. Two things do not.
     `speaking` belongs to the process that runs the turn: a turn whose process
-    stopped has ended (rule 6), and the next turn goes to the queue. A queued
-    turn's instruction is kept with it in memory only, as an instruction is
-    stored nowhere (Section 10.1.1): an instruction the discussion drops (it
-    is over, uninstalled, or its process stopped) is reported through
-    `ON_SPEAK_QUEUE` as dropped.
+    stopped has ended (rule 6), and the next turn goes to the queue. One
+    process at a time gives a room's turns, whether one process serves the
+    room or the processes hold a lease on it: two would give two turns at
+    once. A queued turn's instruction is kept with it in memory only, as an
+    instruction is stored nowhere (Section 10.1.1): an instruction the
+    discussion drops (it is over, uninstalled, or its process stopped) is
+    reported through `ON_SPEAK_QUEUE` as dropped.
 17. **Following the queue.** The host reads a room's `SpeakQueue` at any time,
     and each change of it fires `ON_SPEAK_QUEUE` (Section 9) with the room,
     the queue as it now is and what changed: an agent queued, a turn given or
@@ -12562,11 +12567,13 @@ places and leave every third-party provider outside it; making the caller apply
 it once puts it in one, and a provider that summarizes what it is given can then
 never summarize something the channel was not allowed to read.
 
-The `current_event` is the event the turn answers, and a provider MUST keep it
-whatever its window or budget: when events follow it in the `context` (a
-discussion's deferred turn, Section 19.7.5), the provider returns it at its
-place in the history, before them, and never folds it into a summary. A window
-that drops it would leave the model answering an event it cannot read.
+The `current_event` is the event the turn answers, and what the turn reads
+MUST keep it whatever the provider's window or budget: when events follow it
+in the `context` (a discussion's deferred turn, Section 19.7.5), it reads at
+its place in the history, before them, and is never folded into a summary. A
+provider returns it there, or leaves it out as it does a turn's input and the
+channel places it there; either way a window cannot drop it, which would
+leave the model answering an event it cannot read.
 
 ### 20.2 MemoryResult
 
