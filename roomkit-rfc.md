@@ -12876,6 +12876,27 @@ SpeakQueue (one per room, readable by the host)
     probability is reported with the decision, under its channel id. An agent
     with no identity is judged by its channel id alone.
 
+19. **Talking and working.** A turn talks; long work runs as a task
+    (Section 23), off the floor. An agent given the background tool (Section
+    23.4) starts one and says in a sentence that the work is under way, and
+    its turn ends there; the host starts one for an agent with `start_task`,
+    and a person through what the host gives them. Tasks run in parallel
+    with the discussion's turns and with one another, and the floor stays
+    one turn at a time: a question asked while a task runs is answered in
+    its turn, not after the task. A task's result comes back as its
+    hand-back, an instruction addressed to the agent the task is for, which
+    the discussion queues at the front for a turn of its own (rule 7),
+    results served in the order they come; a task cancelled or failed says
+    so the same way (Section 23.3). Each turn's notes list the room's tasks
+    (Section 23.4), so an agent asked how a task goes answers from them, and
+    `cancel_task` or the host's `cancel_task(task_id)` stops one. A worker
+    runs in its own child room, outside the discussion, so an agent of the
+    discussion may work through any intelligence channel, an external agent
+    among them, which the discussion itself does not hold (rule 1). A task
+    outlives an uninstalled or ended discussion: its hand-back is then an
+    instruction like any other, refused once the discussion is over (rule
+    15), its result kept on `ON_TASK_COMPLETED` and the StatusBus.
+
 The rules of Section 19.7 for a strategy in several rooms hold: the speak
 queue and who only listens are the room's, and the same agents may hold a
 discussion in another room with a speak queue of its own.
@@ -12884,9 +12905,11 @@ discussion in another room with a speak queue of its own.
 ends, which no event reports yet; a person speaking names no one with `@`;
 an agent's written names would be spoken. Realtime channels, whose turns run
 outside the room's queue, and agents that think while they listen, which
-need every event without a turn. External agents (Section 6.4, ACP), which
-run their own loop. One turn at a time, even for agents whose work does not
-depend on each other. The text an agent writes between tool rounds still
+need every event without a turn. External agents (Section 6.4, ACP) as
+participants, which run their own loop; one may still do an agent's work as
+a task's worker (rule 19). One turn at a time: work that does not need the
+floor runs as tasks (rule 19), but turns themselves never run in parallel,
+each reading a room the others' answers would have changed. The text an agent writes between tool rounds still
 reaches the room as messages; only the names they carry wait for the turn's
 end. An approval a person gives for one production change is a tool's
 concern (Section 21), and a mission's shared state is the host's (`done`).
@@ -13648,7 +13671,8 @@ DelegatedTaskResult
 
 ### 23.3 Delegation Protocol
 
-When `delegate(room_id, agent_id, task, notify, post_status = true)` is called:
+When `delegate(room_id, agent_id, task, notify, post_status = true, brief = null,
+conversation = 0)` is called:
 
 1. Create a **child room** linked to the parent room.
 2. Attach the specified agent as an INTELLIGENCE channel in the child room.
@@ -13659,6 +13683,17 @@ When `delegate(room_id, agent_id, task, notify, post_status = true)` is called:
    the delegating side's instruction to the worker, not a message for the
    people behind a transport: a shared transport MUST NOT receive it, nor the
    re-prompt a result tool sends after a turn that ended without its call.
+   The description is the `brief` when one is given, else the `task`: the
+   `task` is what was asked, as the delegating side wrote it, the label the
+   hand-back (step 8), the StatusBus and the turn's notes name the task by;
+   the `brief` is what the worker is told, which may say more (how to work,
+   what to report) and never reaches the parent room. With `conversation`
+   above 0, the description also carries the parent room's last
+   `conversation` messages that the notified channel may read (Section 7.5),
+   oldest first, each under the label the transcript gives its author and
+   quoted as Section 6.4 quotes a text from outside, set apart as data: a
+   worker asked to look into what the room is talking about reads what was
+   said, which its child room, new and empty, does not hold.
 5. The agent processes the task and generates a response. When no transport
    is shared into the child room, nobody is delivered the response, and the
    child room keeps the agent's trace (tool calls and text), written as any
@@ -13841,6 +13876,26 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   room only: one room's tasks never show in another. A tool reply that tells
   its agent to follow the work (a strategy's background dispatch, Section
   19.7.3) names `task_status` only when the agent was given it.
+
+- `work_in_background` — A tool an agent of a room is given
+  (`setup_background(agent, worker = null)`), to start long work as a task
+  and free its turn: going through many records, files or traces, an
+  analysis of several tool calls. Its arguments are `task`, what to do and
+  report, and `agent`, the agent of the room it is for, the caller by
+  default. The task runs on that agent's worker: the agent itself, unless
+  its background was set up with another (any intelligence channel the kit
+  holds, another agent or an external agent among them, Section 6.4). It is
+  handed the room's last messages (`conversation`, RoomKit: 12), and its
+  result goes back to the agent it is for (`notify`), as any delegation's
+  (Section 23.3). The tool answers at once, with the task's id, and tells
+  the agent to say in a sentence that the work is under way and to end its
+  turn. A call from a task's child room is refused: a worker does its work
+  and starts no task of its own. The host starts the same task with
+  `start_task(room_id, agent_id, task)`, a delegation made outside a tool
+  call, and a person through whatever the host gives them (a console's
+  `/task`). Whether work is long is the agent's judgment through its tool
+  or the host's: a model may keep long work in its own turn whatever its
+  tool says, and a host whose agents do so starts their tasks itself.
 
 - `cancel_task` — A tool an agent can be given on its own, as `task_status`,
   so that a request the person changed or dropped stops its work. It cancels
