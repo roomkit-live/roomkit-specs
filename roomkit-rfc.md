@@ -13951,13 +13951,16 @@ Implementations SHOULD provide helpers for AI-driven delegation:
 - `work_in_background` — A tool an agent of a room is given
   (`setup_background(agent, worker = null, hand_back = "relay")`), to start
   long work as a task and free its turn: going through many records, files or
-  traces, an analysis of several tool calls. Its arguments are `task`, what to
-  do and report, and `agent`, the agent of the room it is for, the caller by
-  default. The task runs on that agent's worker: the agent itself, unless its
-  background was set up with another (any intelligence channel the kit holds,
-  another agent or an external agent among them, Section 6.4). It is handed
+  traces, an analysis of several tool calls. Its argument is `task`, what to
+  do and report. The task is the calling agent's own, and runs on that
+  agent's worker: the agent itself, unless its background was set up with
+  another (any intelligence channel the kit holds, another agent or an
+  external agent among them, Section 6.4). A model never starts a task for
+  another agent, whose worker may hold more than it does (a workspace, its
+  tools) and in whose name the result would come back: it asks that agent by
+  name, and only the host's `start_task` reaches any agent. It is handed
   the room's last messages (`conversation`, RoomKit: 12), and its result goes
-  back to the agent it is for (`notify`), as any delegation's (Section 23.3),
+  back to the calling agent (`notify`), as any delegation's (Section 23.3),
   relayed or posted as the setup's `hand_back` says: the host's choice for
   that agent's tasks, never the model's. The tool answers at once, with the
   task's id, and tells the agent to say in a sentence that the work is under
