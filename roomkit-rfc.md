@@ -3163,7 +3163,7 @@ than silently reorder.
 ### 9.2 Hook Triggers
 
 **HookTrigger** enumeration. The **Status** column distinguishes triggers the
-reference implementation emits today (**Implemented** — 76 as of this revision)
+reference implementation emits today (**Implemented** — 80 as of this revision)
 from those specified for a forthcoming capability but not yet emitted
 (**Planned**), and from a trigger kept for historical reference whose behaviour
 has moved elsewhere (**Superseded**). Conformance targets the Implemented set;
@@ -3237,7 +3237,8 @@ them as above runs after those as an observer.
 | BEFORE_AI_CONTEXT_BUILD | SYNC | Planned | Before an AI channel builds a turn's context (before memory retrieval and tool resolution) — can block the turn cheaply (Section 6.4, Anatomy of an AI turn); required by nothing today |
 | ON_SPEAK_DECISION | ASYNC | Implemented | An AI channel's speak policy decided whether the agent speaks, offers or stays silent on an event (Section 6.4) |
 | ON_THOUGHT | ASYNC | Implemented | An AI channel's thinker came back with what the agent has in mind in a room (Section 6.4) |
-| ON_SPEAK_QUEUE | ASYNC | Planned | A discussion's speak queue changed: an agent queued, a turn given or ended, an agent listening only or talking again, the discussion waiting for a person or over (Section 19.7.5) |
+| ON_SPEAK_QUEUE | ASYNC | Implemented | A discussion's speak queue changed: an agent queued, a turn given or ended, an agent listening only or talking again, the discussion waiting for a person or over (Section 19.7.5) |
+| ON_DISPATCH_DECISION | ASYNC | Implemented | A discussion's dispatch policy decided which agents take a person's message that names none (Section 19.7.5 rule 18) |
 | BEFORE_AI_GENERATION | SYNC | Implemented | Before AI provider generate() — can modify context; a turn's (`answer`) or a thinker's (`thought`, Section 6.4) |
 | ON_AI_THINKING | ASYNC | Implemented | AI model began extended thinking/reasoning |
 | ON_AI_RESPONSE | ASYNC | Implemented | A turn of intelligence completed (observability). Fired by any channel of category `INTELLIGENCE`, whether the turn ran in-process or in an external agent (Section 6.4) |
@@ -12282,7 +12283,9 @@ Discussion
 ├── max_turns: int | null                     # Turns given in the room's lifetime (null: no bound but max_depth)
 ├── max_depth: int | null                     # The depth limit of its turns (null: the kit's max_chain_depth)
 ├── done: function(room_id) → bool | null     # The discussion is over once it holds
-└── silent_token: string (default "(silent)") # The answer of an agent that stays silent
+├── silent_token: string (default "(silent)") # The answer of an agent that stays silent
+├── dispatch: DispatchPolicy | null           # Picks who takes a person's message rule 8 gives `everyone` (rule 18)
+└── dispatch_timeout: float (default 5 s)     # How long a decision may take (rule 18)
 
 SpeakQueue (one per room, readable by the host)
 ├── speaking: channel_id | null               # The agent whose turn runs now
@@ -12395,7 +12398,8 @@ SpeakQueue (one per room, readable by the host)
    message with no address (`addressed_to` null, and no name read in it)
    answers the agents that asked that person (`asked`), and puts them at the
    front in the order they asked; when none asked, it puts `everyone` there,
-   in their order; each only when the message's visibility includes it and its
+   in their order, or those of them a dispatch policy picks (rule 18); each
+   only when the message's visibility includes it and its
    access lets it read the message (rule 4). The message is routed so before
    rule 10 clears what was asked. A message whose address is empty, or that
    names only people, asks no agent (Section 19.3 rule 3). An event from any
@@ -12412,7 +12416,8 @@ SpeakQueue (one per room, readable by the host)
    who talk among themselves in the room are then never cut into by an agent;
    a host that wants agents to judge for themselves whether an unaddressed
    message is for them leaves `addressed_only` off and gives them a speak
-   policy (Section 6.4).
+   policy (Section 6.4), or gives the discussion a dispatch policy, which
+   judges once for the room (rule 18).
 9. **A turn reads the room as it is.** A turn a message asked for is a rerun
    of the event it answers, planned for that one agent under the room lock and
    run in the room's delivery lane, as a regeneration re-broadcasts an event
@@ -12510,7 +12515,8 @@ SpeakQueue (one per room, readable by the host)
 16. **Its state, across processes.** Installing a discussion stores it with the
     room, as `ConversationState` is (Section 19.2): its configuration (the
     agents' channel ids, `people`, `addressed_only`, `everyone`, `max_turns`,
-    `max_depth`, `silent_token`) and its speak queue. Every process that
+    `max_depth`, `silent_token`, whether it has a dispatch policy) and its
+    speak queue. Every process that
     serves the room follows the stored discussion, whether or not its host
     installed it there: it asks no agent at broadcast (rule 3), and reads
     names and queues (rules 4, 5, 8, 10) by the stored configuration. Every
@@ -12530,7 +12536,8 @@ SpeakQueue (one per room, readable by the host)
     change that concerns the running turn (its agent set to listen only, rule
     12) reaches the holder the same way. `speaking` is stored with the lease
     and names the holder's running turn. `done` is the host's and is checked
-    by the process holding the lease. A process that only follows the
+    by the process holding the lease, which asks its dispatch policy too
+    (rule 18). A process that only follows the
     discussion never gives a turn: with no process that installed it alive,
     messages are queued and wait.
 
@@ -12554,6 +12561,84 @@ SpeakQueue (one per room, readable by the host)
     A person's message returns once committed and broadcast, with no agent's
     answer in its result (Section 10.1 step 18): the answers come in the turns
     that follow, as a regenerated answer the discussion queued does.
+18. **Who takes an unaddressed message.** A discussion MAY carry a dispatch
+    policy, which decides, for a person's message that rule 8 gives to
+    `everyone`, which of them take it and in which order, or that none does: a
+    room where every agent is asked every remark spends turns on agents with
+    nothing to add (each says nothing, rule 13, but its turn runs), and the
+    agent that should answer may come third. The policy is asked for that
+    message only: a message with an address, one that names an agent or only
+    people, and one that answers the agents that asked that person are routed
+    as rule 8 says, and a discussion with `addressed_only`, where a message
+    that names nobody asks no agent, takes no dispatch policy. A name stays
+    the person's word: no policy overrides it.
+
+    ```
+    DispatchPolicy (interface)
+    └── decide(turn: DispatchTurn) → DispatchDecision
+
+    DispatchTurn
+    ├── room_id: string
+    ├── event: RoomEvent                    # The person's message
+    ├── recent: list<RoomEvent>             # The conversation before it, oldest first: the room's messages a candidate may read
+    ├── speakers: map<string, string>       # Who said `event` and each of `recent`, by event id: a person by their transcript label, an agent as `@channel_id`
+    └── candidates: list<DispatchCandidate> # The agents it may pick, in `everyone`'s order
+
+    DispatchCandidate
+    ├── channel_id: string
+    ├── name: string | null                 # An Agent's identity (Section 19.1), as a turn's notes give it (rule 14)
+    ├── role: string | null
+    └── description: string | null
+
+    DispatchDecision
+    ├── agents: list<channel_id>            # Who takes the message, in the order they answer; empty: no agent
+    ├── reason: string = ""                 # Why, in a few words, for logs and hooks
+    └── judgments: map<string, float> = {}  # What the policy weighed, by name
+    ```
+
+    The candidates are `everyone`, in its order, less the agents the message
+    does not reach (its visibility and their access, rule 4) and those that
+    only listen, which an unaddressed message gives no turn (rule 12). With no
+    candidate, the policy is not asked and no agent is. The agents a decision
+    names are put at the front of the queue in its order, as rule 8 puts
+    `everyone`; one that is not a candidate, or named twice, is left out, so a
+    policy is no way around visibility or the listening state. An empty
+    decision asks no agent: the message is stored and delivered, and the
+    discussion goes idle (rule 10). The recent events a policy reads are
+    those a candidate may read: a policy may hand them to a classifier
+    outside, and an event no candidate may read MUST NOT reach it that way.
+
+    The decision is the room's, taken once per message, off the room lock, by
+    the process holding the lease (rule 16): routing the message leaves it
+    waiting for a decision in the stored queue, with the candidates it
+    reaches, and the holder decides it before it gives another turn, so the
+    agents a person's message asks for still come before the agents queued
+    after it. Messages waiting are decided in the order they were committed;
+    once the discussion is over, they are dropped with its queue (rule 15).
+    The discussion bounds the wait for a decision (`dispatch_timeout`, 5 s by
+    default). A policy that fails or does not decide in time does not silence
+    the room: the message asks every candidate, as with no policy, and the
+    decision reported names them with the reason `fallback`; so does a
+    process holding the lease whose host gave it no policy.
+
+    Every decision fires `ON_DISPATCH_DECISION` with the room, the message,
+    the candidates, the decision and how long the policy took (the bound,
+    when it did not decide in time), so who took what, why and at what cost
+    can be followed and measured without wrapping the policy. The decision is
+    not stored with the message: its `addressed_to` stays null, and a
+    regenerated answer to it with no answer left asks `everyone` (rule 7),
+    not a new decision. An agent picked still answers through its speak
+    policy, when it has one (rule 13).
+
+    RoomKit provides a policy built on a classifier (Section 6.8). It asks one
+    yes/no question per candidate, all in one call: whether that agent should
+    take the message, given what each agent's identity says it does, over the
+    message, its speaker and the recent conversation named by speaker. The
+    candidates whose probability reaches a threshold (0.5 by default) take it,
+    likeliest first, at most a number of them (2 by default); with none
+    reaching it, no agent takes it (thanks, small talk). Each candidate's
+    probability is reported with the decision, under its channel id. An agent
+    with no identity is judged by its channel id alone.
 
 The rules of Section 19.7 for a strategy in several rooms hold: the speak
 queue and who only listens are the room's, and the same agents may hold a
@@ -12570,7 +12655,8 @@ reaches the room as messages; only the names they carry wait for the turn's
 end. An approval a person gives for one production change is a tool's
 concern (Section 21), and a mission's shared state is the host's (`done`).
 An agent that asked a person may still be named by another agent before the
-person answers. Threads (`parent_event_id`): an agent's answer already stays
+person answers. A dispatch policy decides for a person's message only: an
+agent's message that names nobody still asks no agent. Threads (`parent_event_id`): an agent's answer already stays
 in the thread of the event it answers, but this version keeps one queue for
 the room and gives every turn the whole room; a later version makes each
 thread a conversation of its own (its own queue and chains, a turn reading
