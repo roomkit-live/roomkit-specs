@@ -2251,6 +2251,29 @@ filesystem or terminal operations. An ACP agent channel:
 - SHOULD expose tool and plan progress through the realtime backend without
   persisting transient progress updates.
 
+**Identity and instructions.** An ACP agent channel MAY carry an identity as
+an Agent does (Section 19.1): a `name`, a `role` and a `description`, which a
+discussion's notes, a dispatch policy and a host's view present it by
+(Section 19.7.5). Its `instructions` (default null) are the integrator's
+standing direction for the agent (a persona, how the room works), since the
+agent's own system prompt is not RoomKit's to set. The channel sends them in
+the first prompt of each session it opens for a Room, a session opened again
+after its transport died included, as the runtime's block ahead of the
+catch-up and the request, never as a participant's words, and not again
+while the session keeps them.
+
+**In a discussion.** An ACP agent channel takes a discussion's turns as an AI
+channel does (Section 19.7.5). The turn's notes (rule 14) ride its prompt as
+the runtime's own block, under the notes' header, and every copy of that
+header in the prompt's other text (the catch-up, the request, a host's
+block) is replaced as Section 6.4 replaces it in a turn's input, so a
+participant cannot pass their words off as the runtime's notes. Its session
+keeps its own history, so the turn sends what the agent has not read yet,
+up to the turn's start, and the event the turn answers as its request; the
+notes say which event that is and who asked for it. A hold that cuts its
+turn (rule 12) cancels its prompt (item 7). Its answer streams like any
+agent's, so a silent one is held back and blocked as rule 13 says.
+
 ### 6.5 Source Providers
 
 Source providers maintain **persistent connections** that push inbound events to
@@ -12487,14 +12510,15 @@ others answered, and every answer solicits the others again (Section 19.3.1).
 `ADDRESSED_ONLY` stops the dogpile by stopping the agents from answering each
 other at all. A discussion keeps them talking and takes the turns itself.
 
-This version covers text: AI channels (Section 6.4), Agents among them, in
-rooms whose people write. Its terms are those of Section 6.4, which speaks
+This version covers text: AI channels (Section 6.4), Agents among them, and
+external agents (ACP agent channels, Section 6.4), in rooms whose people
+write. Its terms are those of Section 6.4, which speaks
 for text and voice alike, so that voice can join it without renaming
 anything (see "Left out").
 
 ```
 Discussion
-├── agents: list<AIChannel>                   # The agents of the discussion: AI channels, Agents among them
+├── agents: list<AIChannel | ACPChannel>      # The agents of the discussion: AI channels (Agents among them) and external agents
 ├── people: set<string> | null                # Names agents address people by (null: the room's people, §6.4)
 ├── addressed_only: bool (default false)      # A person's message asks only the agents it names (rule 8)
 ├── everyone: list<channel_id> | null         # Asked, in this order, by a person's message that answers no one (null: all agents)
@@ -12646,7 +12670,9 @@ SpeakQueue (one per room, readable by the host)
    history, before what came after it (Section 20.1), and a speak policy reads
    the conversation up to the turn's start in `SpeakTurn.recent` (Section
    6.4). The turn's notes say which event the turn answers (its author's label
-   and a quote of it, Section 6.4) and every speaker that asked for it. A turn is never given by publishing a message or an
+   and a quote of it, Section 6.4) and every speaker that asked for it. An
+   external agent, whose session keeps its own history, is sent what it has
+   not read yet and the event it answers as its request (Section 6.4). A turn is never given by publishing a message or an
    instruction in the room for the agent to answer, which a model reads as a
    third party's words and may rightly refuse to obey.
 10. **Asking a person, waiting for one.** When an agent names a person, the
@@ -12696,7 +12722,8 @@ SpeakQueue (one per room, readable by the host)
     `talk_again` ends the state. An agent
     whose speak policy also listens (Section 6.4) is silenced by either.
     Setting the state on the agent whose turn runs cuts that turn, as a
-    `Cancel` steering directive does (Section 21.3): what the turn committed
+    `Cancel` steering directive does (Section 21.3), or, for an external
+    agent, as its channel's cancellation does (Section 6.4): what the turn committed
     stays in the room; a turn given but not running yet, which no `Cancel`
     reaches, is abandoned before it runs. Talking again, its next turn reads
     the whole room (rule 9).
@@ -12717,7 +12744,8 @@ SpeakQueue (one per room, readable by the host)
 14. **What a turn knows.** Each turn's notes (Section 6.4) carry, as the
     runtime's own block and not a participant's words: the other agents of
     the room by their channel ids, with the `role` and `description` of those
-    that are Agents (Section 19.1); the people the agent may address, by the
+    that carry an identity (Agents, Section 19.1, and external agents given
+    one, Section 6.4); the people the agent may address, by the
     names rule 4 gives them; which event the turn answers and who asked for
     it, a person's label and their words quoted (Section 6.4); and how the
     room works (name
@@ -12896,7 +12924,7 @@ SpeakQueue (one per room, readable by the host)
     `cancel_task` or the host's `cancel_task(task_id)` stops one. A worker
     runs in its own child room, outside the discussion, so an agent of the
     discussion may work through any intelligence channel, an external agent
-    among them, which the discussion itself does not hold (rule 1). A task
+    among them. A task
     outlives an uninstalled or ended discussion: its hand-back is then an
     instruction like any other, refused once the discussion is over (rule
     15), its result kept on `ON_TASK_COMPLETED` and the StatusBus.
@@ -12909,9 +12937,9 @@ discussion in another room with a speak queue of its own.
 ends, which no event reports yet; a person speaking names no one with `@`;
 an agent's written names would be spoken. Realtime channels, whose turns run
 outside the room's queue, and agents that think while they listen, which
-need every event without a turn. External agents (Section 6.4, ACP) as
-participants, which run their own loop; one may still do an agent's work as
-a task's worker (rule 19). One turn at a time: work that does not need the
+need every event without a turn. The room's tools for an external agent:
+its tools are its own (its workspace, what its agent accepts), and this
+version wires none of the room's into it. One turn at a time: work that does not need the
 floor runs as tasks (rule 19), but turns themselves never run in parallel,
 each reading a room the others' answers would have changed. The text an agent writes between tool rounds still
 reaches the room as messages; only the names they carry wait for the turn's
@@ -14881,7 +14909,7 @@ ACPChannel
 ├── category: INTELLIGENCE
 ├── direction: BIDIRECTIONAL
 ├── media_types: [TEXT, RICH]
-├── role: ACP client (external coding agent is the ACP server)
+├── protocol side: ACP client (external coding agent is the ACP server)
 ├── transport:
 │   ├── stable default: stdio
 │   ├── command: argument vector (never shell-expanded)
@@ -14898,7 +14926,9 @@ ACPChannel
 │   ├── environment: map<string, string> | null
 │   ├── authentication_method: string | null
 │   ├── mcp_servers: list<ACP MCPServer>
-│   └── external_tool_handler: ExternalToolHandler | null
+│   ├── external_tool_handler: ExternalToolHandler | null
+│   ├── name, role, description: string | null  # its identity, as an Agent's (§6.4)
+│   └── instructions: string | null             # sent once per session (§6.4)
 ├── update_mapping:
 │   ├── agent_message_chunk → text stream delta
 │   ├── agent_thought_chunk → thinking stream marker + ephemeral event
