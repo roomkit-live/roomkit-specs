@@ -12925,9 +12925,11 @@ SpeakQueue (one per room, readable by the host)
     runs in its own child room, outside the discussion, so an agent of the
     discussion may work through any intelligence channel, an external agent
     among them. A task
-    outlives an uninstalled or ended discussion: its hand-back is then an
-    instruction like any other, refused once the discussion is over (rule
-    15), its result kept on `ON_TASK_COMPLETED` and the StatusBus.
+    outlives an uninstalled or ended discussion: a relayed hand-back is then
+    an instruction like any other, refused once the discussion is over (rule
+    15), its result kept on `ON_TASK_COMPLETED` and the StatusBus; a posted
+    result, which asks no turn, is posted at once, and one queued when the
+    discussion ends or is uninstalled is posted then.
 
 The rules of Section 19.7 for a strategy in several rooms hold: the speak
 queue and who only listens are the room's, and the same agents may hold a
