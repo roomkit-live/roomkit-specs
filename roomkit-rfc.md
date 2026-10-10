@@ -12484,7 +12484,12 @@ reaches the room as messages; only the names they carry wait for the turn's
 end. An approval a person gives for one production change is a tool's
 concern (Section 21), and a mission's shared state is the host's (`done`).
 An agent that asked a person may still be named by another agent before the
-person answers.
+person answers. Threads (`parent_event_id`): an agent's answer already stays
+in the thread of the event it answers, but this version keeps one queue for
+the room and gives every turn the whole room; a later version makes each
+thread a conversation of its own (its own queue and chains, a turn reading
+its thread with the room before it as background, an agent taking one turn
+at a time across the room).
 
 **Conformance.** Level 2, with the rest of Section 19.
 
