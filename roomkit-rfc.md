@@ -2239,6 +2239,28 @@ ACP sessions are process-local by default. An implementation MAY add persistent
 session resumption, but MUST scope resumed session identifiers to the associated
 Room and agent endpoint.
 
+**Session setup.** What a session is opened with is the integrator's, per
+Room. The channel's `mcp_servers` (default none) are the MCP servers given to
+each session in `session/new`: a list, the same for every Room, or a function
+of the Room identifier, called each time the channel opens a session for that
+Room, so that a server can be told which Room it acts for (a stdio server's
+environment, a URL). The channel's `session_config` (default none) maps ACP
+session configuration option identifiers to values (`mode`, `model`, an
+agent's own options). The channel MUST set each of them on every session it
+opens for a Room before the session is prompted: the Room's first session, one
+opened again after the previous one was invalidated or after a new connection
+to the agent, and a standalone turn's session (Section 10.1.1 step 7). A value
+the session already announces is not set again. A value the host sets on a
+Room's session while it lives (`set_config_option`) belongs to the Room as
+well: the channel MUST set it again on the Room's next session, over
+`session_config`, until the host closes the Room's session, which forgets it.
+An agent's mode decides what it asks the client before acting, and an agent
+that acts unasked never reaches the external tool handler: a session left on
+another value than the one set up is not degraded but ungated. So when the
+agent refuses a value, the channel MUST NOT prompt that session, MUST release
+it, and MUST fail the turn, or the call that was opening the session, with an
+error naming the option.
+
 ACP agents can request permission to execute tools and can request client-side
 filesystem or terminal operations. An ACP agent channel:
 
@@ -4197,7 +4219,9 @@ intent of §12.4, for every kind of intelligence channel.
    after the turn, and closes it where the agent announces it can: closing
    is optional in ACP (`session/close` is announced in the agent's
    capabilities), and an agent that does not announce it keeps the session
-   until its connection ends. The turn session takes the room session's
+   until its connection ends. The turn session MUST take the Room's session
+   setup as the Room's next session would (the ACP agent channel's *Session
+   setup*, a refused value failing the turn), then the room session's
    current configuration (model, mode) where the agent accepts it;
    host-contributed context is the channel's own and still applies. Such a
    channel also keeps an ordinary instruction in its session once prompted
@@ -14936,6 +14960,8 @@ ACPChannel
 │   ├── one ACP connection per channel instance
 │   ├── one ACP session per Room
 │   ├── a standalone turn: its own session, declared as the turn's (§10.1.1)
+│   ├── setup on every open: mcp_servers for the Room, session_config, then the
+│   │   values the host set on the Room; a refused value fails the open
 │   └── prompts serialized per session
 ├── configuration:
 │   ├── command: list<string>
@@ -14943,7 +14969,8 @@ ACPChannel
 │   ├── additional_directories: list<absolute path>
 │   ├── environment: map<string, string> | null
 │   ├── authentication_method: string | null
-│   ├── mcp_servers: list<ACP MCPServer>
+│   ├── mcp_servers: list<ACP MCPServer> | (room_id) → list<ACP MCPServer>
+│   ├── session_config: map<string, string | bool> | null  # set on every session opened
 │   ├── external_tool_handler: ExternalToolHandler | null
 │   ├── name, role, description: string | null  # its identity, as an Agent's (§6.4)
 │   └── instructions: string | null             # sent once per session (§6.4)
