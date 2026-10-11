@@ -2254,6 +2254,10 @@ the session already announces is not set again. A value the host sets on a
 Room's session while it lives (`set_config_option`) belongs to the Room as
 well: the channel MUST set it again on the Room's next session, over
 `session_config`, until the host closes the Room's session, which forgets it.
+A value the host sets while the Room has no open session is set on the
+session that call opens in place of the Room's earlier value for that
+option, so a value the agent has come to refuse is replaced by setting
+another one.
 An agent's mode decides what it asks the client before acting, and an agent
 that acts unasked never reaches the external tool handler: a session left on
 another value than the one set up is not degraded but ungated. So when the
