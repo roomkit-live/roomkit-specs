@@ -2191,7 +2191,10 @@ An ACP agent channel:
 1. MUST use `ChannelType.AI`, category `INTELLIGENCE`, and direction
    `BIDIRECTIONAL`;
 2. MUST initialize one ACP connection per channel instance and create a distinct
-   ACP session for each Room;
+   ACP session for each Room, opened once: callers that ask for it at the same
+   time (a first prompt, a rebuild, a host setting a session value) find the
+   session the first of them opened, and a host call made from inside a turn
+   MUST NOT wait for that turn to end to get it;
 3. MUST serialize prompts within an ACP session while allowing different Room
    sessions to operate concurrently;
 4. MUST convert Room message content into ACP prompt content and map ACP agent
@@ -2201,7 +2204,11 @@ An ACP agent channel:
 6. MUST skip events originating from itself and persisted tool-call activity
    events, preventing duplicate prompts and agent loops;
 7. MUST support cancellation of an active Room turn and MUST release ACP
-   sessions and transport resources when the channel closes;
+   sessions and transport resources when the channel closes. A turn is active
+   from the moment it holds its Room, while the agent is started and its
+   session is opened, set up or rebuilt: cancelled then, it MUST end without
+   prompting, its response metadata marked `interrupted`, and a session
+   opened for it alone (a standalone turn's) MUST be closed;
 8. MUST NOT bypass the standard RoomKit persistence, visibility, chain-depth,
    or re-broadcast behavior for generated text and tool activity; and
 9. MUST fire `ON_AI_RESPONSE` when a Room turn completes, carrying the text the
@@ -2298,8 +2305,9 @@ participant cannot pass their words off as the runtime's notes. Its session
 keeps its own history, so the turn sends what the agent has not read yet,
 up to the turn's start, and the event the turn answers as its request; the
 notes say which event that is and who asked for it. A hold that cuts its
-turn (rule 12) cancels its prompt (item 7). Its answer streams like any
-agent's, so a silent one is held back and blocked as rule 13 says.
+turn (rule 12) cancels it (item 7), its session's opening included. Its
+answer streams like any agent's, so a silent one is held back and blocked as
+rule 13 says.
 
 ### 6.5 Source Providers
 
