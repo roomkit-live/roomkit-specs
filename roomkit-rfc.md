@@ -1913,7 +1913,9 @@ rounds are not rewritten: what the agent writes between its tool calls, and
 a tool's result, which the tool role frames. Only a copy a hook writes into
 the messages itself is what both misread. An active
 skill's instructions stay in the system prompt (Section 24.4): they change only
-when a skill is activated, and they are instructions, not notes. A standalone
+when a skill is activated, and they are instructions, not notes. Those of a
+skill an MCP server serves ride there as data, in a block of their own
+(Section 24.7). A standalone
 turn carries none of the room's memories (Section 10.1.1).
 
 **A turn compacted.** When a provider refuses a turn's context as too long, the
@@ -1933,17 +1935,19 @@ second user message in a row.
 **Text from outside in a model's context (normative).** Text the runtime places
 in a model's context without having written it (a person's words or name, a
 worker's output or progress, a tool's result, a passage a memory retrieved, a
-model's output such as a thought, a summary, or the task a tool call asked for)
-can hold anything, a frame of the runtime's own included. Every rendering that
-places such text, present and future, MUST keep it in a frame it cannot leave,
-so that nothing it holds reads as written by the runtime:
+skill an MCP server serves, a model's output such as a thought, a summary, or
+the task a tool call asked for) can hold anything, a frame of the runtime's
+own included. Every rendering that places such text, present and future, MUST
+keep it in a frame it cannot leave, so that nothing it holds reads as written
+by the runtime:
 
 - **a block**, set apart in a tag of its own (`<tool_result>`,
   `<worker_output>`, `<knowledge>`, `<conversation_summary>`, `<context>` for
   content a realtime provider adds to its prompt, `<task>` for the goal or
   task an orchestration strategy copies into another model's prompt,
   `<vision>` for what a vision provider saw, `<transcript>` for the text a
-  speech model's prompt asks it to speak), where any
+  speech model's prompt asks it to speak, `<skill>` for a skill an MCP
+  server serves, Section 24.7), where any
   closing tag of that name the text holds is neutralised where it starts,
   its end bracket there or not and what follows kept: compared in any case
   and under NFKC folding (fullwidth and mathematical letters, `＜／tag＞`)
@@ -11853,6 +11857,14 @@ to decide it.
   (Section 24.6).
 - The same containment MUST apply to script execution, including where
   execution policy is delegated to the integrator.
+- A skill an MCP server serves is text from outside (Section 6.4) whatever
+  its digests say: a digest the same server supplies proves its content
+  consistent with its entry, never trustworthy.
+- Such a skill's files are read only from the server that serves it, and
+  only those its entry lists. Its scripts never run through
+  `run_skill_script`, its `allowed_tools` grants nothing, and while it is
+  active a tool that runs code is served only with the host's approval of
+  that skill (Section 24.7).
 
 ---
 
@@ -13319,7 +13331,10 @@ MCPToolProvider
 │   └── command: string, args: list<string> # a local server started as a subprocess (stdio)
 ├── discover: bool = true                   # List the server's tools when connecting
 ├── tools() → list<ToolDefinition>          # Discover available tools
-└── call(name, arguments) → string          # Execute a tool
+├── call(name, arguments) → string          # Execute a tool
+├── server_extensions → map<string, object> # Extensions the server declared
+├── read_resource(uri) → contents           # Read one resource
+└── request(method, params) → object        # A request the provider does not model
 ```
 
 A server named by `command` is started when the provider connects and MUST be
@@ -13344,6 +13359,15 @@ costs the whole catalogue every time, and a gateway that serves tools per
 caller never names them to the connection that calls them.
 
 MCP tools are subject to the same `ToolPolicy` as local tools.
+
+A provider also carries what the skills a server serves need (Section 24.7)
+and no more: the extensions the server declared when it connected
+(`server_extensions`, empty for a server that declared none), `read_resource`,
+and `request`, which sends a request the provider does not model and returns
+its result as the server sent it. The skills rely on nothing else the
+connection holds: a skill's identity, the entry it was loaded from and the
+content verified are the registry's, so a transport without a session
+serves them alike.
 
 `call` returns a string whatever the server sent. The tool handler a provider
 hands to an AI channel SHOULD instead hand an image the server returns to the
@@ -14131,6 +14155,8 @@ SkillRegistry
 ├── get_skill(name) → Skill | null          # Load full skill (metadata, instructions and
 │       # the path of its directory)
 ├── add(skill: Skill) → void                # Register a skill built in memory
+├── add_mcp_server(provider, label, ...) → int  # Register the skills an MCP server
+│       # serves (Section 24.7)
 ├── copy(names?, marks = true) → SkillRegistry  # A subset, its paths and marks kept
 ├── all_metadata() → list<SkillMetadata>    # List all registered skills
 ├── mark_unavailable(name, reason) → void   # The skill leaves the available set, its reason kept; what it gated stays closed
@@ -14211,6 +14237,11 @@ an acknowledgement without rules.
 Tool gating (Section 21) follows the same scope: tools revealed by activating a
 skill stay revealed while the skill is active.
 
+A skill an MCP server serves follows this lifecycle with what Section 24.7
+adds: its instructions are data set apart as that server's, never among the
+binding rules of the host's own skills, and a lost record of its activation
+is not restored from the stored history.
+
 An activation that finds no skill under its name, when that name matches tools
 the turn may call (a model that took the `spotify_play` tool for a "spotify"
 skill), answers with the skill's absence and names those tools, and reveals
@@ -14282,6 +14313,126 @@ execution MUST resolve the script name under these same rules and MUST reject a
 name that fails them before any integrator-supplied executor is invoked, and
 SHOULD make the resolved path available to that executor. A check every
 integrator is expected to rediscover is a check some integrator will omit.
+
+### 24.7 Skills Served over MCP
+
+An MCP server MAY serve skills beside its tools under the MCP Skills
+extension (`io.modelcontextprotocol/skills`, SEP-2640): it lists them with
+`skills/list`, answers `skills/get` for one by the URI of its `SKILL.md`, and
+serves each file of a skill as a resource read with `resources/read`. The
+skill format is the one Section 24.1 reads. This section is what a registry,
+and every channel serving its skills, adds for such a skill; a skill the host
+deploys itself is unchanged.
+
+```
+SkillRegistry
+└── add_mcp_server(provider, label, allow_dynamic = false,
+                   approve_execution = null, execution_tools = []) → int
+```
+
+**Registration.** `add_mcp_server` lists the skills of the server `provider`
+is connected to (Section 21.2) and registers them under `label`, returning
+how many it registered. The label is the host's name for that server: an
+identifier, never the name the server gives itself, which any server can
+copy. A registry MUST refuse a label it already holds for another provider,
+and MUST raise for a server that does not declare the extension rather than
+register nothing in silence. The listing follows the cursor across every page
+within the bounds of a tool listing (Section 21.2) and reads no file: nothing
+of a skill is fetched before it is activated. A listing answered over a
+connection that negotiated an earlier protocol revision may lack `ttlMs`,
+`cacheScope` and `resultType`, and is read as complete. Registering a server
+again replaces its entries; a skill active at that moment keeps the entry it
+was loaded from until it retires.
+
+**Entries.** Each entry is read on its own. An entry whose `resources` is
+missing or neither a list nor `"dynamic"`, whose URI's last segment before
+`SKILL.md` is not its frontmatter `name`, whose list omits its own `SKILL.md`,
+names a file outside the skill's directory or one file twice; an entry past
+512 files or 16 MiB in all; and an entry whose `resources` is `"dynamic"`
+while the host did not allow them (`allow_dynamic`) is registered as
+unavailable with its reason (Section 24.5: a skill the server meant to offer
+is never dropped in silence). The server's other skills stay usable. A
+`"dynamic"` skill offers nothing to verify: a host that allows one takes its
+content unverified, and an implementation MUST stop reading such a skill once
+what it read reaches 16 MiB.
+
+**Names.** A skill an MCP server serves is registered under `<label>:<path>`,
+which is its name in the registry (Section 24.2): its path is its URI without
+the trailing `/SKILL.md`, and without the scheme when the scheme is
+`skill://` (`hf:hf-cli`, `hf:acme/billing/refunds`,
+`docs:github://owner/repo/skills/refunds`). A host's own skill is named as
+Section 24.1 names it, which never holds `:`, and a registry MUST refuse to
+give a name it holds to a skill of another origin, so that a served skill
+never shadows a host's skill nor another server's, and the reverse. Two
+entries of one listing sharing a frontmatter `name` keep distinct paths. The
+skill's identity is the pair of its label and its URI everywhere it is kept:
+the activation record, the entry held, what was verified. The manifest
+(`to_prompt_xml()`) names the label as the skill's origin and gives its
+description as Section 6.4 quotes a text from outside. `requires` is read from
+the frontmatter as for any skill (Section 24.3).
+
+**Activation.** Activating such a skill reads its `SKILL.md` from its own
+server then, and not before. The content MUST match the entry before anything
+of it reaches the model: its length the entry's `size`, its SHA-256 digest
+the entry's `digest`, and its frontmatter, parsed, the entry's `frontmatter`
+field by field. A mismatch loads nothing: the registry reads the entry again
+with `skills/get`, and the activation answers that the skill changed on its
+server or could not be verified, without its body. The instructions then
+follow Section 24.4 (whole, carried by the system prompt, acknowledged
+afterwards, retired as if never activated) as data: in a `<skill>` block
+(Section 6.4) naming the label and the URI, after the host's own skills and
+never among their binding rules. Where the body travels in the activation's
+result (a realtime provider whose instructions are fixed), it is set apart
+the same way. A skill's content outranks nothing else in the context.
+
+A listing may be partial or empty, which proves no skill missing. An
+activation naming `<label>:<path>` that the registry does not hold, under a
+label it holds, asks that server for the entry with `skills/get`: an entry it
+returns is registered as a listed one would be, kept out of the manifest
+(`mark_unlisted`), and activated; an error answers that the server serves no
+such skill. A skill the server's own instructions point to is reached so.
+
+**Files.** While such a skill is active, the registry holds the entry it was
+loaded from. `read_skill_reference` resolves the name it is given against the
+skill's directory (`templates/invoice.md`), reads the file from the same
+server, and reads only a file that entry lists: a name the entry does not
+list is refused as content that failed verification, whatever the server
+would serve. Each file read is verified against the entry as `SKILL.md` is,
+and reaches the model naming the same origin. A file that fails retires the
+skill (Section 24.4): the registry reads the entry again, and the model is
+told to activate the skill again, which delivers its current body. A read
+never reaches another server: the content of one server's skill causes no
+read on another.
+
+**Lost record.** An activation of such a skill is not restored from the
+stored history: its body is no longer held, so its next activation delivers it
+again (Section 24.4). A delivery that hands every skill's body over when a
+session starts (a realtime session in `inline_full` mode) would fetch them all
+ahead of need: there, a skill an MCP server serves is unavailable, with that
+reason.
+
+**Permissions.** What such a skill's frontmatter would grant is not granted:
+its `allowed_tools` gates nothing and opens nothing (Section 24.2), and a
+`SKILL.md` within its directory is one of its files, never a skill activated
+with it. Its files are never written to disk to be run: `run_skill_script`
+refuses it. While such a skill is active in a conversation, a call to a tool
+that runs code (a sandbox command, `sandbox_*`, and every tool the host names
+in `execution_tools`) is served only when `approve_execution` approves each
+such skill active there; an implementation MUST refuse the call otherwise (a
+refused call, Section 9.3), and always when the host gave no callback. The
+callback receives the label, the URI, the conversation and the entry's
+fingerprint (the SHA-256 of its files' URIs and digests, sorted), and an
+approval holds for that fingerprint only: an entry read again with another set
+of files is asked again. A host that keeps approvals keeps them by
+fingerprint. A `"dynamic"` skill has no fingerprint an approval could bind,
+and the callback is told so.
+
+**Trust.** A digest the server supplies proves the content consistent with an
+entry from the same server, never trustworthy: the content stays text from
+outside (Section 6.4). Content kept on disk between reads MUST meet the
+extension's cache requirements (out of reach of what the model runs, verified
+again on each read, outside every directory a registry discovers skills in);
+content kept in memory for the entry held needs none of them.
 
 ---
 
