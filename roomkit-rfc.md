@@ -14195,7 +14195,8 @@ SkillMetadata
 │       # the license in to_prompt_xml()
 ├── allowed_tools: list<string>             # Tool access patterns (ToolPolicy globs);
 │       # in frontmatter, a list or comma-separated (a text `[a, b]` and
-│       # quoted entries read as that list)
+│       # quoted entries read as that list; a text in brackets also gates
+│       # itself, the glob it is: `[ab]` covers `a` and `b`)
 ├── requires: list<string>                  # Exact names of the tools the skill needs
 │       # (Section 24.3), read from extra_metadata `requires` as
 │       # allowed_tools is; empty by default
