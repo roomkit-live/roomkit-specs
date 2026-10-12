@@ -14173,9 +14173,11 @@ anything is built. Past a bound, the skill cannot be parsed (Section 24.5),
 and a served skill's content fails its check (Section 24.7).
 
 A host's own skill whose frontmatter is not YAML, or is read without a YAML
-reader, MAY be read line by line, each `key: value` line a field. That reading
-MUST keep both YAML list forms: a key alone on its line followed by `- item`
-lines, as in the example, and `[a, b]` whole on the key's line. Whichever
+reader, MAY be read line by line, each `key: value` line at the top level a
+field; a line indented under a key is not one. That reading MUST keep both
+YAML list forms: a key alone on its line followed by `- item` lines, as in the
+example, and `[a, b]` whole on the key's line. Of a frontmatter that is also
+YAML, it MUST NOT gate or require less than the YAML reading does. Whichever
 reader, an `allowed_tools` or `requires` that is neither a text nor a list of
 texts, or that a line-by-line reading cannot read whole (a list spread over
 several lines, a block scalar, a line under the key that is not a `- item`),
@@ -14192,10 +14194,11 @@ SkillMetadata
 ├── compatibility: string | null            # Free text, not interpreted; shown with
 │       # the license in to_prompt_xml()
 ├── allowed_tools: list<string>             # Tool access patterns (ToolPolicy globs);
-│       # in frontmatter, a list or comma-separated
+│       # in frontmatter, a list or comma-separated (a text `[a, b]` and
+│       # quoted entries read as that list)
 ├── requires: list<string>                  # Exact names of the tools the skill needs
-│       # (Section 24.3), read from extra_metadata `requires`, a list or
-│       # comma-separated; empty by default
+│       # (Section 24.3), read from extra_metadata `requires` as
+│       # allowed_tools is; empty by default
 └── extra_metadata: map<string, string>     # Every other frontmatter key (`version`,
         # `requires`, ...), its value as a string, a list's items joined
         # by commas
