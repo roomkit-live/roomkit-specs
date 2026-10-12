@@ -14355,9 +14355,10 @@ offers keeps, while active, the entry it was loaded from. A copy of a registry
 narrowed to some names (Section 24.3) reaches those names and no other: only
 a registry that took the server whole asks it for a skill its listing did not
 hold. A registry and its copies share the entries the servers gave: a skill
-one of them retires when it registers the server again is retired in each of
-them, an active one included, and a copy made without the names its source
-marks unavailable never asks a server for them either.
+one of them retires, when it registers the server again or when a file fails
+its check, is retired in each of them, an active one included, and a copy made
+without the names its source marks unavailable never asks a server for them
+either.
 
 **Entries.** Each entry is read on its own. An entry whose `resources` is
 missing or neither a list nor `"dynamic"`, whose URI's last segment before
