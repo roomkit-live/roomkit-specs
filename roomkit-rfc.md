@@ -11683,6 +11683,8 @@ should live in the integration surface layer.
 - Rooms are scoped by `organization_id`.
 - Implementations MUST ensure that room operations are isolated per organization.
 - Identity resolution MUST be scoped to the organization.
+- A room the framework creates for another room's work (a delegation's
+  child room, Section 23.3) MUST belong to that room's organization.
 - A door that admits a participant into a room's media (a framework join, a
   realtime channel's session start, a conference channel's `mint_access()`)
   MUST read the room with the organization the caller acts for, before any
@@ -13795,7 +13797,13 @@ DelegatedTaskResult
 When `delegate(room_id, agent_id, task, notify, post_status = true, brief = null,
 conversation = 0, hand_back = "relay")` is called:
 
-1. Create a **child room** linked to the parent room.
+1. Create a **child room** linked to the parent room, in the parent room's
+   organization (Section 17.2). A tool, a hook or a provider acting in the
+   child room reads the organization it acts for from the room, as it does
+   in the parent; a child room without one would have the task's work, and
+   the parent's messages the description carries (step 4), run outside any
+   tenant. A read scoped to the parent's organization finds the child room,
+   and one scoped to another does not.
 2. Attach the specified agent as an INTELLIGENCE channel in the child room.
 3. Share the channels the caller names from the parent, each with its
    parent binding's permissions (§7.5 rule 6).
