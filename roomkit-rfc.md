@@ -14160,6 +14160,21 @@ You are a web search specialist. When asked to find information...
 - [Search API docs](https://...)
 ```
 
+The frontmatter is read as YAML, within bounds that keep a few hundred bytes
+from exhausting the host: a YAML alias is refused, and so are collections
+nested past 64 levels, more than 64 brackets or braces open at once (quoted
+ones counted too) and a frontmatter past 65536 characters, each before
+anything is built. Past a bound, the skill cannot be parsed (Section 24.5),
+and a served skill's content fails its check (Section 24.7).
+
+A host's own skill whose frontmatter is not YAML, or is read without a YAML
+reader, MAY be read line by line, each `key: value` line a field. That reading
+MUST keep both list forms the example uses: a key alone on its line followed
+by `- item` lines, and `[a, b]` on the key's line. A line it cannot place
+under `allowed_tools` or `requires` means the skill cannot be parsed: a skill
+read without what it gates hands the model, before any activation, the tools
+it was meant to keep closed.
+
 ### 24.2 SkillMetadata
 
 ```
