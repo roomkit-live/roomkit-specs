@@ -1341,7 +1341,7 @@ abstraction sits on top of them:
 | Whether the channel answers at all | Addressing and the agent-response policy (Section 19.3); `BEFORE_AI_CONTEXT_BUILD` would block here (Planned, Section 9.2) |
 | The conversation history | The memory provider (Section 20), over the channel's view of the room (Section 7.5 rule 8) |
 | The tools the turn may call | The tool registry, tool policy and skill gating (Sections 21 and 24) |
-| The system prompt | The channel's and the binding's instructions, the skills' preambles (Section 24) |
+| The system prompt | The channel's and the binding's instructions, the instructions of the MCP servers the host names (Section 21.2), the skills' preambles (Section 24) |
 | The gate before generation | `BEFORE_AI_GENERATION` (Section 9.2) |
 | Generation and tool calls | The provider's structured stream and the one tool loop (below, Section 6.7); `BEFORE_TOOL_USE`, `ON_TOOL_CALL`, `AFTER_TOOL_ROUND` (Section 9.3) |
 | What goes out | `BEFORE_BROADCAST` on each stored segment of a streamed response (Section 9.5) |
@@ -1935,7 +1935,7 @@ second user message in a row.
 **Text from outside in a model's context (normative).** Text the runtime places
 in a model's context without having written it (a person's words or name, a
 worker's output or progress, a tool's result, a passage a memory retrieved, a
-skill an MCP server serves, a model's output such as a thought, a summary, or
+skill an MCP server serves, the instructions an MCP server publishes, a model's output such as a thought, a summary, or
 the task a tool call asked for) can hold anything, a frame of the runtime's
 own included. Every rendering that places such text, present and future, MUST
 keep it in a frame it cannot leave, so that nothing it holds reads as written
@@ -1947,7 +1947,8 @@ by the runtime:
   task an orchestration strategy copies into another model's prompt,
   `<vision>` for what a vision provider saw, `<transcript>` for the text a
   speech model's prompt asks it to speak, `<skill>` for a skill an MCP
-  server serves, Section 24.7), where any
+  server serves, Section 24.7, `<server_instructions>` for what an MCP server
+  publishes on using its tools, Section 21.2), where any
   closing tag of that name the text holds is neutralised where it starts,
   its end bracket there or not and what follows kept: compared in any case
   and under NFKC folding (fullwidth and mathematical letters, `＜／tag＞`)
@@ -13335,6 +13336,8 @@ MCPToolProvider
 ├── tools() → list<ToolDefinition>          # Discover available tools
 ├── call(name, arguments) → string          # Execute a tool
 ├── server_extensions → map<string, object> # Extensions the server declared
+├── instructions → string | null           # What the server published for the model
+├── server_info → object                   # What the server said of itself
 ├── read_resource(uri) → contents           # Read one resource
 └── request(method, params) → object        # A request the provider does not model
 ```
@@ -13361,6 +13364,29 @@ costs the whole catalogue every time, and a gateway that serves tools per
 caller never names them to the connection that calls them.
 
 MCP tools are subject to the same `ToolPolicy` as local tools.
+
+**Server instructions.** A server MAY publish, when it connects, how a model
+should use its tools (the `instructions` of its handshake result). A provider
+keeps them (`instructions`, null when the server published none) with what the
+server said of itself (`server_info`: its name, its version), from the handshake
+the connection made: a client that negotiates the newer protocol's discovery
+reads them from that result instead. A channel that composes a model's system
+prompt (an AI channel, a realtime voice channel whose provider takes tools)
+SHOULD take, from its host, the instructions of the servers whose tools it
+serves, each under the host's label for the server: an identifier, never the
+name the server gives itself, and a label that is not one fails the channel's
+construction. The channel MUST add them to every system prompt it composes,
+after its own prompt (or the one a binding or a turn's configuration sets for
+the room) and before the skills' preambles (Section 24). The same on every
+turn, they stay in the prefix a provider caches (Section 6.4); they are not
+tools, so Tool Search does not hide them; and no eviction or compaction reaches
+them. They are text from outside (Section 6.4): each server's sits in a
+`<server_instructions>` block under a line naming its label, the whole under a
+heading saying that they are their servers' content, which does not outrank the
+system's or the user's instructions and grants no permission. A server's text
+past 8192 characters is cut, with a warning naming the server. A server the
+host does not name, or names with no text, adds nothing: that is how a host
+keeps a server's instructions out of the prompt.
 
 A provider also carries what the skills a server serves need (Section 24.7)
 and no more: the extensions the server declared when it connected
