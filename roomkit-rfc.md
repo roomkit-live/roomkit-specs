@@ -12272,17 +12272,18 @@ words. A handoff applies the next agent's policy, read for each session's
 participant, to every session of the room before any declares the next
 agent's tools. The gate MUST judge a call by the agent the room talks to when
 the call reaches it, the one that serves the call, whatever a session still
-declares. A realtime session serves the channel's skills and human-input
-tools, never an agent's, and serves no agent's planner, sandbox or external
-tool handler: an agent that carries one of these, a skill registry even empty
-(a skill added to it later would open its gated tools with nothing to gate
-them), is refused at the install,
-before anything is installed, each cause named, with the channel's own option
-where the channel has one (its skills, its human-input handler). Its gated
-tools would run without their skill, and its other ones would be called by a
-model that was never told of them. A reasoning backend's agent is refused for
-the same causes by the same rule, and for tools of its own besides
-(Section 12.4.1).
+declares. A realtime session serves the channel's skills, human-input
+tools and MCP servers' instructions (Section 21.2), never an agent's, and
+serves no agent's planner, sandbox or external tool handler: an agent that
+carries one of these, a skill registry even empty (a skill added to it later
+would open its gated tools with nothing to gate them), is refused at the
+install, before anything is installed, each cause named, with the channel's
+own option where the channel has one (its skills, its human-input handler,
+its servers' instructions). Its gated tools would run without their skill,
+and its other ones would be called by a model that was never told of them
+or of how to use them. A reasoning backend's agent is refused for the same
+causes by the same rule, its servers' instructions aside, which reach its own
+model (Section 21.2), and for tools of its own besides (Section 12.4.1).
 
 **Allowed transitions:** An agent in phase P MAY hand off to:
 - `stage.next` (forward progression)
@@ -13371,8 +13372,9 @@ keeps them (`instructions`, null when the server published none) with what the
 server said of itself (`server_info`: its name, its version), from the handshake
 the connection made: a client that negotiates the newer protocol's discovery
 reads them from that result instead. A channel that composes a model's system
-prompt (an AI channel, a realtime voice channel whose provider takes tools)
-SHOULD take, from its host, the instructions of the servers whose tools it
+prompt (an AI channel, the agent a reasoning backend drives (Section
+12.4.1), a realtime voice channel whose provider takes tools) SHOULD take,
+from its host, the instructions of the servers whose tools it
 serves, each under the host's label for the server: an identifier, never the
 name the server gives itself, and a label that is not one fails the channel's
 construction. The channel MUST add them to every system prompt it composes,
@@ -13386,7 +13388,10 @@ heading saying that they are their servers' content, which does not outrank the
 system's or the user's instructions and grants no permission. A server's text
 past 8192 characters is cut, with a warning naming the server. A server the
 host does not name, or names with no text, adds nothing: that is how a host
-keeps a server's instructions out of the prompt.
+keeps a server's instructions out of the prompt. A realtime pipeline serves
+the channel's, never an agent's (Section 19.5). A conference's realtime bot
+sends the prompt its host wrote as it is (Section 12.10): the channel adds
+nothing to it, the servers' instructions included.
 
 A provider also carries what the skills a server serves need (Section 24.7)
 and no more: the extensions the server declared when it connected
