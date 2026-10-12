@@ -14174,11 +14174,13 @@ and a served skill's content fails its check (Section 24.7).
 
 A host's own skill whose frontmatter is not YAML, or is read without a YAML
 reader, MAY be read line by line, each `key: value` line a field. That reading
-MUST keep both list forms the example uses: a key alone on its line followed
-by `- item` lines, and `[a, b]` on the key's line. A line it cannot place
-under `allowed_tools` or `requires` means the skill cannot be parsed: a skill
-read without what it gates hands the model, before any activation, the tools
-it was meant to keep closed.
+MUST keep both YAML list forms: a key alone on its line followed by `- item`
+lines, as in the example, and `[a, b]` whole on the key's line. Whichever
+reader, an `allowed_tools` or `requires` that is neither a text nor a list of
+texts, or that a line-by-line reading cannot read whole (a list spread over
+several lines, a block scalar, a line under the key that is not a `- item`),
+means the skill cannot be parsed: a skill read without what it gates hands
+the model, before any activation, the tools it was meant to keep closed.
 
 ### 24.2 SkillMetadata
 
