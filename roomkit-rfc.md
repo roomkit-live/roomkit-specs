@@ -6654,6 +6654,7 @@ InterruptionConfig
 ├── allow_during_first_ms: int = 0           # Response audio (ms) played before barge-in is allowed (0 = no gate)
 ├── backchannel_detector: BackchannelDetector | null  # OPTIONAL backchannel filter
 ├── transcript_wait_ms: int = 1000           # SEMANTIC: how long to wait for the first words of transcribed speech
+├── echo_guard_ms: int = 6000                # Session response audio (ms) during which speech echoing the response is no interruption (0 = off)
 ├── flush_partial_tts: bool = true           # Whether to discard unplayed TTS audio on interrupt
 └── keep_partial_transcript: bool = true     # Whether to store bot's partial response in timeline
 ```
@@ -6734,6 +6735,23 @@ transcript classified, rather than the speech discarded unheard. A
 backchannel, or no words at all, is discarded (a backchannel fires
 ON_BACKCHANNEL once) and TTS continues; anything else cancels TTS if it is
 still playing, and the speech is processed as the user's turn.
+
+**Echo guard.** An echo canceller learns the room from the responses it hears:
+at a session's start it has heard none, and a response's opening words come
+back through the microphone, where an STT transcribes them as if someone had
+spoken. While the session has played less than `echo_guard_ms` of response
+audio in all, whatever the strategy, speech whose words are only words of the
+response being played (the text handed to the TTS so far), consecutive and in
+their order, is that response's echo. Words are compared without case,
+punctuation or accents, and the last one heard may be the start of the
+response's word, as a partial transcript catches a word being said. An echo
+does not interrupt, is not queued (DISABLED), and is no turn: its final
+transcript is discarded, including when it arrives once the response is over,
+as long as it adds no word the response did not say there. A word that is not
+the response's makes the speech an ordinary utterance, judged as any other.
+Past `echo_guard_ms`, the response's own words interrupt as any words do:
+someone answering "the sword" to "the sword or the shield?" is not an echo.
+`echo_guard_ms = 0` turns the guard off.
 
 In continuous-STT mode, where the STT transcribes all audio and no local VAD
 segments it, every evaluation of an ongoing stretch of speech during playback,
