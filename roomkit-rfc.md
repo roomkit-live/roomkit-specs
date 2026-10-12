@@ -14349,8 +14349,12 @@ within the bounds of a tool listing (Section 21.2) and reads no file: nothing
 of a skill is fetched before it is activated. A listing answered over a
 connection that negotiated an earlier protocol revision may lack `ttlMs`,
 `cacheScope` and `resultType`, and is read as complete. Registering a server
-again replaces its entries; a skill active at that moment keeps the entry it
-was loaded from until it retires.
+again replaces its entries: a skill it no longer offers, or offers in a form
+the host does not take, retires and is served nowhere any more; one it still
+offers keeps, while active, the entry it was loaded from. A copy of a registry
+narrowed to some names (Section 24.3) reaches those names and no other: only
+a registry that took the server whole asks it for a skill its listing did not
+hold.
 
 **Entries.** Each entry is read on its own. An entry whose `resources` is
 missing or neither a list nor `"dynamic"`, whose URI's last segment before
@@ -14391,7 +14395,11 @@ afterwards, retired as if never activated) as data: in a `<skill>` block
 (Section 6.4) naming the label and the URI, after the host's own skills and
 never among their binding rules. Where the body travels in the activation's
 result (a realtime provider whose instructions are fixed), it is set apart
-the same way. A skill's content outranks nothing else in the context.
+the same way. A skill's content outranks nothing else in the context. An
+activation records what it loaded, never what a second lookup finds: a skill
+marked unavailable is never activated, one loaded before included. A session
+keeps an activated skill's body as it rendered it, set apart, so nothing read
+later delivers it otherwise.
 
 A listing may be partial or empty, which proves no skill missing. An
 activation naming `<label>:<path>` that the registry does not hold, under a
