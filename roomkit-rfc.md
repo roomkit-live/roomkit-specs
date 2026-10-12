@@ -14199,7 +14199,7 @@ SkillMetadata
 │       # itself, the glob it is: `[ab]` covers `a` and `b`)
 ├── requires: list<string>                  # Exact names of the tools the skill needs
 │       # (Section 24.3), read from extra_metadata `requires` as
-│       # allowed_tools is; empty by default
+│       # allowed_tools is, its glob reading aside; empty by default
 └── extra_metadata: map<string, string>     # Every other frontmatter key (`version`,
         # `requires`, ...), its value as a string, a list's items joined
         # by commas
