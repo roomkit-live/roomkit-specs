@@ -6101,6 +6101,20 @@ same AEC instance — this would double-feed and corrupt the adaptive filter.
   89 % of a response's first-second echo left above -50 dBFS, against none
   when it never pauses). With a silent reference it leaves the user's voice
   untouched.
+- The same holds for a pipeline canceller whose reference the transport hands
+  over block by block as it plays it, at the timing of strategy 1 but without a
+  canceller of its own. A transport that reports every played block, the
+  silence between responses included, SHOULD say so on each played block
+  (`metadata.reference_continues = true`), and the pipeline SHOULD then keep its
+  canceller active from the first response until the stream ends: the end of a
+  response's playback (`metadata.playback_ended`) SHOULD NOT bypass it. Bypassed
+  there, it drops the silent reference while capture runs on, and resumes at the
+  next response with the timelines out of step (measured on a recorded session
+  replayed through WebRTC AEC3: the next response's echo 0 to 5 dB below the
+  microphone signal, against 34 to 44 dB kept active). A transport whose played
+  blocks stop between responses leaves the canceller no reference to run on; the
+  pipeline bypasses it once that playback has ended, keeping its converged filter
+  for the next response.
 - The reference and capture (inbound) audio MUST have the same sample rate and
   frame size. When the transport uses different sample rates for input and
   output, the implementation MUST either resample the reference to match the
