@@ -6744,16 +6744,28 @@ spoken. While the session has played less than `echo_guard_ms` of response
 audio in all, whatever the strategy, speech whose words are only words of the
 response being played (the text handed to the TTS so far), consecutive and in
 their order, is that response's echo. Words are compared without case,
-punctuation or accents, and the last one heard may be the start of the
-response's word, as a partial transcript catches a word being said. An echo
-does not interrupt, is not queued (DISABLED), and is no turn: its partial
-transcripts are not published (`ON_PARTIAL_TRANSCRIPTION`), and its final
-transcript is discarded, including when it arrives once the response is over,
-as long as it adds no word the response did not say there. A word that is not
-the response's makes the speech an ordinary utterance, judged as any other.
-Past `echo_guard_ms`, the response's own words interrupt as any words do:
-someone answering "the sword" to "the sword or the shield?" is not an echo.
-`echo_guard_ms = 0` turns the guard off.
+punctuation or accents. In a partial transcript the last word heard may be
+the start of the response's, as a partial catches a word being said, but only
+after a whole word: a lone "No" is no echo of "not", nor "Stop" of "stopped".
+A final transcript is compared in whole words. An echo does not interrupt, is
+not queued (DISABLED), and is no turn: its partial transcripts are not
+published (`ON_PARTIAL_TRANSCRIPTION`), and its final transcript is discarded,
+including when it arrives once the response is over, as long as it adds no
+word the response did not say there. The verdict on an utterance holds while
+its response plays and up to 10 seconds after the session's playback ends; it
+ends with its utterance (a final, the end of the STT stream) and with any
+speech that starts once nothing plays, which is nobody's echo. A word that is
+not the response's makes the speech an ordinary utterance, judged as any
+other: when only the final says it, during the playback, the final is judged
+then, as a whole utterance past any minimum duration, and when the strategy
+interrupts, the playback is cut and the final is the turn. While the guard is
+open, a stretch of loud audio with no words yet waits for the STT's first
+words, up to `transcript_wait_ms`, before it may interrupt on its duration:
+only words tell the echo from the person. Audio played from a file
+(`VoiceChannel.play()`) counts toward the session's played audio as a
+response's does. Past `echo_guard_ms`, the response's own words interrupt as
+any words do: someone answering "the sword" to "the sword or the shield?" is
+not an echo. `echo_guard_ms = 0` turns the guard off.
 
 In continuous-STT mode, where the STT transcribes all audio and no local VAD
 segments it, every evaluation of an ongoing stretch of speech during playback,
