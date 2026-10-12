@@ -6745,7 +6745,8 @@ response being played (the text handed to the TTS so far), consecutive and in
 their order, is that response's echo. Words are compared without case,
 punctuation or accents, and the last one heard may be the start of the
 response's word, as a partial transcript catches a word being said. An echo
-does not interrupt, is not queued (DISABLED), and is no turn: its final
+does not interrupt, is not queued (DISABLED), and is no turn: its partial
+transcripts are not published (`ON_PARTIAL_TRANSCRIPTION`), and its final
 transcript is discarded, including when it arrives once the response is over,
 as long as it adds no word the response did not say there. A word that is not
 the response's makes the speech an ordinary utterance, judged as any other.
