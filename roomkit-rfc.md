@@ -5348,8 +5348,9 @@ enters a room as any other audio.
         out then as its last sentence, however short, before the call runs: a
         reply's "Let me check." is said while the tool works, not once it is
         done, and never runs on into the next round's first word. A streaming
-        text filter ends with the segment too, so nothing it holds waits for
-        the call.
+        text filter lets out there the text it has decided to speak; a span it
+        removes (an `[internal]` block), opened before the call, stays open
+        across it, so its text is never spoken, whichever segment closes it.
      b. BEFORE_TTS runs on each sentence before the TTS reads it, once for all
         sessions: the sentence is the hook's payload, a MODIFY replaces it, a
         BLOCK drops it, and the next sentence is judged on its own. The
