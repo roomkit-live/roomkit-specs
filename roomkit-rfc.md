@@ -14354,7 +14354,10 @@ the host does not take, retires and is served nowhere any more; one it still
 offers keeps, while active, the entry it was loaded from. A copy of a registry
 narrowed to some names (Section 24.3) reaches those names and no other: only
 a registry that took the server whole asks it for a skill its listing did not
-hold.
+hold. A registry and its copies share the entries the servers gave: a skill
+one of them retires when it registers the server again is retired in each of
+them, an active one included, and a copy made without the names its source
+marks unavailable never asks a server for them either.
 
 **Entries.** Each entry is read on its own. An entry whose `resources` is
 missing or neither a list nor `"dynamic"`, whose URI's last segment before
@@ -14389,7 +14392,9 @@ of it reaches the model: its length the entry's `size`, its SHA-256 digest
 the entry's `digest`, and its frontmatter, parsed, the entry's `frontmatter`
 field by field. A mismatch loads nothing: the registry reads the entry again
 with `skills/get`, and the activation answers that the skill changed on its
-server or could not be verified, without its body. The instructions then
+server or could not be verified, without its body. An entry read again is held
+to the rules a listed one is (Entries): one the host does not take leaves the
+skill unavailable with its reason. The instructions then
 follow Section 24.4 (whole, carried by the system prompt, acknowledged
 afterwards, retired as if never activated) as data: in a `<skill>` block
 (Section 6.4) naming the label and the URI, after the host's own skills and
