@@ -5342,7 +5342,14 @@ enters a room as any other audio.
 11s. Framework finds streaming delivery targets (channels with supports_streaming_delivery)
 12s. Framework pipes stream → VoiceChannel.deliver_stream():
      a. Sentence splitter buffers tokens → yields at sentence boundaries (.!?)
-        (min_chunk_chars threshold prevents very short TTS fragments)
+        (min_chunk_chars threshold prevents very short TTS fragments), and at
+        the end of each text segment (Section 6.4: a call's start ends one, as
+        does a round the loop tries again). What the segment still holds goes
+        out then as its last sentence, however short, before the call runs: a
+        reply's "Let me check." is said while the tool works, not once it is
+        done, and never runs on into the next round's first word. A streaming
+        text filter ends with the segment too, so nothing it holds waits for
+        the call.
      b. BEFORE_TTS runs on each sentence before the TTS reads it, once for all
         sessions: the sentence is the hook's payload, a MODIFY replaces it, a
         BLOCK drops it, and the next sentence is judged on its own. The
@@ -5417,8 +5424,8 @@ enters a room as any other audio.
 15s. Fire AFTER_TTS hook with the text the sessions were sent: the sentences as
      BEFORE_TTS left them (12s.b) when a hook changed or dropped one, or as many
      as the budget let through when it ended the reply (12s.e), the whole
-     streamed text otherwise. The final assistant transcript carries the same
-     text. AFTER_TTS does not fire when every sentence was dropped, nor when no
+     streamed text otherwise, its segments (12s.a) apart as `ON_AI_RESPONSE`
+     sets them. The final assistant transcript carries the same text. AFTER_TTS does not fire when every sentence was dropped, nor when no
      session was served (each stopped on a failed synthesis or playback). A
      response that fails (step 13s) is spoken to the end of the text it
      produced, its last partial sentence included: the sessions that heard it
