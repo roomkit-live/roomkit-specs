@@ -1848,7 +1848,16 @@ they quote set apart as data; when the conversation does not end on such a
 message, they are a message of their own. They come after the input, so what
 changes comes last and a provider that caches a prefix keeps the input in it;
 they are not a message of their own when the input is one, since a model whose
-chat format requires alternating roles would refuse two in a row. A
+chat format requires alternating roles would refuse two in a row. For a model
+that sees, the latest images the room's tool results returned (two, newest
+last) follow the notes in the same message, each after the call that returned
+it, under a header that sets them apart as data a tool returned, never
+instructions: the notes say what a result showed in its tool's words, never
+what it looks like, and a follow-up about a picture needs the picture. They
+ride the turn's input, never an assistant's message, where several providers
+refuse an image; only a live result's are kept (history rebuilt from the store
+brings back the text alone), and the tool decides how large an image it
+returns. A model that does not see reads the notes alone. A
 BEFORE_AI_GENERATION hook MAY add a block to the turn's notes: it joins the
 section the channel opened, under the same header, or opens it when the input
 carries none, and the notes then read as if the channel had assembled them
