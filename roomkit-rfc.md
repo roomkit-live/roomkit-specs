@@ -6778,7 +6778,13 @@ duration: only words tell the echo from the person. Audio played from a file
 (`VoiceChannel.play()`) counts toward the session's played audio as a
 response's does. Past `echo_guard_ms`, the response's own words interrupt as
 any words do: someone answering "the sword" to "the sword or the shield?" is
-not an echo. `echo_guard_ms = 0` turns the guard off.
+not an echo. `echo_guard_ms = 0` turns the guard off. With an STT that tells
+voices apart (Section 12.2.3), whatever `echo_guard_ms`, a voice heard speaking
+while nothing played is a person's; a final from a voice never heard so, said
+over a response, whose words are that response's in their order, one misheard
+at most and three at least heard right, is that response come back past the
+canceller and taken for another speaker: it is discarded, no turn. The barge-in
+its first words decided stands: the voice is only known with the final.
 
 In continuous-STT mode, where the STT transcribes all audio and no local VAD
 segments it, every evaluation of an ongoing stretch of speech during playback,
