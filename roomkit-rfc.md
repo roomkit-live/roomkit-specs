@@ -5437,6 +5437,16 @@ enters a room as any other audio.
      records `partial` (Section 12.3.13), and a response superseded before any
      audio records `unconsumed` (Section 12.2).
 
+One playback at a time: a response that reaches a session while another plays
+there (a background task's result relayed as the agent finishes a sentence,
+Section 23.4) waits until that playback has been sent whole, then plays. The
+agent's words are cut by the person speaking (Section 12.3.13), never by its
+own next response; several responses waiting play in turn, each whole. A
+playback sent whole whose echo is still draining (no AEC) is taken over, not
+cancelled, and its drain ends no later playback. The application's own text
+(`say()`) does not wait: it cuts the playback under way (`ON_TTS_CANCELLED`,
+reason `new_tts`).
+
 --- Common outbound path ---
 12. AudioChunk stream → [PostProcessors] → [Recorder] → [Resampler] → Transport
     (TTS emits variable-size AudioChunks; pipeline stages that require fixed-size
@@ -6744,24 +6754,27 @@ spoken. While the session has played less than `echo_guard_ms` of response
 audio in all, whatever the strategy, speech whose words are only words of the
 response being played (the text handed to the TTS so far), consecutive and in
 their order, is that response's echo. Words are compared without case,
-punctuation or accents. In a partial transcript the last word heard may be
-the start of the response's, as a partial catches a word being said, but only
-after a whole word: a lone "No" is no echo of "not", nor "Stop" of "stopped".
-A final transcript is compared in whole words. An echo does not interrupt, is
-not queued (DISABLED), and is no turn: its partial transcripts are not
-published (`ON_PARTIAL_TRANSCRIPTION`), and its final transcript is discarded,
-including when it arrives once the response is over, as long as it adds no
-word the response did not say there. The verdict on an utterance holds while
-its response plays and up to 10 seconds after the session's playback ends; it
-ends with its utterance (a final, the end of the STT stream) and with any
-speech that starts once nothing plays, which is nobody's echo. A word that is
-not the response's makes the speech an ordinary utterance, judged as any
-other: when only the final says it, during the playback, the final is judged
-then, as a whole utterance past any minimum duration, and when the strategy
-interrupts, the playback is cut and the final is the turn. While the guard is
-open, a stretch of loud audio with no words yet waits for the STT's first
-words, up to `transcript_wait_ms`, before it may interrupt on its duration:
-only words tell the echo from the person. Audio played from a file
+punctuation or accents. In a partial transcript the last word heard may be the
+start of the response's, as a partial catches a word being said, but only after
+a whole word: a lone "No" is no echo of "not", nor "Stop" of "stopped". A final
+transcript is compared in whole words. An echo does not interrupt, is not
+queued (DISABLED), and is no turn: its partial transcripts are not published
+(`ON_PARTIAL_TRANSCRIPTION`), and its final transcript is discarded, including
+when it arrives once the response is over, as long as it adds no word the
+response did not say there. The verdict on an utterance holds while its
+response plays and up to 10 seconds after the session's playback ends; it ends
+with its utterance (a final, the end of the STT stream) and with any speech
+that starts once nothing plays, which is nobody's echo. While it holds, the
+utterance's words decide nothing else: no barge-in on the response that cut the
+echoed one short, or on the next, is decided on them. When it lapses with its
+utterance still open (an STT that never closed it), the words go with it. A
+word that is not the response's makes the speech an ordinary utterance, judged
+as any other: when only the final says it, during the playback, the final is
+judged then, as a whole utterance past any minimum duration, and when the
+strategy interrupts, the playback is cut and the final is the turn. While the
+guard is open, a stretch of loud audio with no words yet waits for the STT's
+first words, up to `transcript_wait_ms`, before it may interrupt on its
+duration: only words tell the echo from the person. Audio played from a file
 (`VoiceChannel.play()`) counts toward the session's played audio as a
 response's does. Past `echo_guard_ms`, the response's own words interrupt as
 any words do: someone answering "the sword" to "the sword or the shield?" is
@@ -13022,32 +13035,31 @@ SpeakQueue (one per room, readable by the host)
     probability is reported with the decision, under its channel id. An agent
     with no identity is judged by its channel id alone.
 
-19. **Talking and working.** A turn talks; long work runs as a task
-    (Section 23), off the floor. An agent given the background tool (Section
-    23.4) starts one and says in a sentence that the work is under way, and
+19. **Talking and working.** A turn talks; long work runs as a task (Section
+    23), off the floor. An agent given the background tool (Section 23.4)
+    starts one and says once, in a sentence, that the work is under way, and
     its turn ends there; the host starts one for an agent with `start_task`,
-    and a person through what the host gives them. Tasks run in parallel
-    with the discussion's turns and with one another, and the floor stays
-    one turn at a time: a question asked while a task runs is answered in
-    its turn, not after the task. A task's result comes back as its
-    hand-back, an instruction addressed to the agent the task is for, which
-    the discussion queues at the front for a turn of its own (rule 7),
-    results served in the order they come; a task cancelled or failed says
-    so the same way (Section 23.3). A posted result (`hand_back = "post"`)
-    takes the same place, and its turn posts it as the agent's message
-    without running the agent's model: it never cuts a turn under way, and
-    the names it carries ask no one, its worker having written it outside
-    the room. Each turn's notes list the room's tasks
-    (Section 23.4), so an agent asked how a task goes answers from them, and
-    `cancel_task` or the host's `cancel_task(task_id)` stops one. A worker
-    runs in its own child room, outside the discussion, so an agent of the
-    discussion may work through any intelligence channel, an external agent
-    among them. A task
-    outlives an uninstalled or ended discussion: a relayed hand-back is then
-    an instruction like any other, refused once the discussion is over (rule
-    15), its result kept on `ON_TASK_COMPLETED` and the StatusBus; a posted
-    result, which asks no turn, is posted once no turn runs, one queued when
-    the discussion ends or is uninstalled included.
+    and a person through what the host gives them. Tasks run in parallel with
+    the discussion's turns and with one another, and the floor stays one turn
+    at a time: a question asked while a task runs is answered in its turn, not
+    after the task. A task's result comes back as its hand-back, an
+    instruction addressed to the agent the task is for, which the discussion
+    queues at the front for a turn of its own (rule 7), results served in the
+    order they come; a task cancelled or failed says so the same way (Section
+    23.3). A posted result (`hand_back = "post"`) takes the same place, and
+    its turn posts it as the agent's message without running the agent's
+    model: it never cuts a turn under way, and the names it carries ask no
+    one, its worker having written it outside the room. Each turn's notes list
+    the room's tasks (Section 23.4), so an agent asked how a task goes answers
+    from them, and `cancel_task` or the host's `cancel_task(task_id)` stops
+    one. A worker runs in its own child room, outside the discussion, so an
+    agent of the discussion may work through any intelligence channel, an
+    external agent among them. A task outlives an uninstalled or ended
+    discussion: a relayed hand-back is then an instruction like any other,
+    refused once the discussion is over (rule 15), its result kept on
+    `ON_TASK_COMPLETED` and the StatusBus; a posted result, which asks no
+    turn, is posted once no turn runs, one queued when the discussion ends or
+    is uninstalled included.
 
 The rules of Section 19.7 for a strategy in several rooms hold: the speak
 queue and who only listens are the room's, and the same agents may hold a
@@ -14115,9 +14127,10 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   back to the calling agent (`notify`), as any delegation's (Section 23.3),
   relayed or posted as the setup's `hand_back` says: the host's choice for
   that agent's tasks, never the model's. The tool answers at once, with the
-  task's id, and tells the agent to say in a sentence that the work is under
-  way and to end its turn. A call from a task's child room is refused: a
-  worker does its work and starts no task of its own. The host starts the same
+  task's id, and tells the agent to say once, in a sentence, that the work is
+  under way (before the call or after it, never both) and to end its turn. A
+  call from a task's child room is refused: a worker does its work and starts
+  no task of its own. The host starts the same
   task with `start_task(room_id, agent_id, task, hand_back = null)`, a
   delegation made outside a tool call whose `hand_back` is the agent's setup's
   when null; a person starts one through whatever the host gives them (a
