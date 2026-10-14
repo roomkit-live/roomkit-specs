@@ -613,7 +613,7 @@ RichContent
 
 ```
 MediaContent
-├── url: string                             # Media URL (or data: URI)
+├── url: string                             # A link, a data: URI, or a reference the application resolves (Section 6.4)
 ├── mime_type: string                       # MIME type (image/jpeg, application/pdf, etc.)
 ├── filename: string | null                 # Original filename
 ├── caption: string | null                  # Text caption
@@ -1936,6 +1936,44 @@ skill an MCP server serves ride there as data, in a block of their own
 (Section 24.7). A standalone
 turn carries none of the room's memories (Section 10.1.1).
 
+**Images an author sent.** A `MediaContent` an event brings (alone, or a part
+of a `CompositeContent`) reaches a model that sees as an image after its
+caption, with the words of the event, in the history and in the input alike.
+Its URL is a data URI, which carries the image; a link (`http` or `https`),
+handed to the provider as it is; or a reference, `<scheme>://…` in a scheme
+the application chooses and RoomKit never interprets, naming a media the
+application holds. A scheme a reader could fetch or open itself (`file`,
+`ftp`) or run (`javascript`, `vbscript`) is refused when the content is
+built, as is a URL without a scheme: some transports read a URL they are
+handed. A channel resolves a reference as it builds the turn, by asking the
+application's media resolver for its bytes: an asynchronous callable
+`(media, room_id) → bytes | null` handed to the framework (`media_resolver`),
+which serves every AI channel registered on it. Any participant can write a
+reference, so the resolver MUST answer only for a media the room it is asked
+for may show, and none otherwise. The store and every broadcast carry the
+reference alone, never the bytes, and no resolution is kept from one turn to
+the next; a transport channel is handed the reference as it is, which the
+application resolves itself where that channel needs the media. Per turn the channel sends the
+newest images its authors sent, history and input counted together: four by
+default, a bound the channel's configuration MAY change or remove
+(`max_author_images`). Only an image every vision provider takes is sent: PNG,
+JPEG, GIF or WebP, up to 5 MB of data, the type being the media's. Anything
+else takes the image's place as a text mention, never a failed turn: a media
+that is not such an image, or any media for a model that does not see, reads
+as its transcoded form (Section 6.6), save that a media alone in its event
+without a caption reads, for a model that does not see, as what the channel's
+`describe_empty_event` says of the event first; an image past the bound reads as an
+earlier image not shown; a reference no resolver serves, that the resolver
+fails on or answers none for, or whose bytes break the constraints, reads as
+an image unavailable. The name a mention gives (the caption, else the
+filename, else the type) is quoted (Section 6.4), and a mention never carries
+a data URI or a reference. A turn whose request carried an author's images
+and fails on a provider error not retried marks those images refused in the
+room, and the turns after it carry a mention in their place: one the provider
+refused would fail every later turn while it stays in the window. The images
+an author sent count in what the turn measures (Section 20); a media that is
+not an image counts as its mention.
+
 **A turn compacted.** When a provider refuses a turn's context as too long, the
 channel MAY compact the context once and replay the call. A compaction keeps the
 turn's input and its notes whole. When the input falls in the older half of the
@@ -2377,7 +2415,7 @@ MUST transcode content to match each target channel's supported media types.
 | Source Content | Target Supports | Transcoded To |
 |---|---|---|
 | RichContent | TEXT only | TextContent (plain_text, else body unchanged) |
-| MediaContent | TEXT only | TextContent ("[Media: {caption or filename or url}]") |
+| MediaContent | TEXT only | TextContent ("[Media: {caption or filename or url}]"): the URL only when it is a link (`http`, `https`), else the media type; never a data URI or a reference |
 | AudioContent | TEXT only | TextContent (the transcript, or "[Voice message: {url}]") |
 | VideoContent | TEXT only | TextContent ("[Video: {url}]") |
 | LocationContent | TEXT only | TextContent ("[Location: {label or address} ({latitude}, {longitude})]") |
@@ -15266,6 +15304,7 @@ AIChannel
 │   ├── evict_threshold_tokens: int (default 5000)  # Token threshold for context eviction
 │   ├── memory: MemoryProvider | null       # Pluggable context construction (Section 20)
 │   ├── describe_empty_event: callable | null # What an event with no content reads as
+│   ├── max_author_images: int | null (default 4)  # Newest author images a turn sends (Section 6.4)
 │   ├── tool_policy: ToolPolicy | null      # Tool access control (Section 21)
 │   └── skills: SkillRegistry | null        # Available skills (Section 24)
 ├── per_room_overrides (via binding metadata):
