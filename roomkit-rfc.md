@@ -5462,7 +5462,9 @@ agent's words are cut by the person speaking (Section 12.3.13), never by its
 own next response; several responses waiting play in turn, each whole: the
 session is one response's from the moment it is found free, so of several
 waiting one takes it and the others wait on that one. A playback sent whole
-whose echo is still draining (no AEC) is taken over, not cancelled, and its
+whose echo is still draining (no AEC) is taken over, not cancelled, by
+whatever takes the session (a response, `say()` or `play()`): it was heard
+whole, so no `ON_TTS_CANCELLED` fires and no buffered audio is flushed; its
 drain, or the drain of a playback cut short, ends no later playback. The
 application's own text (`say()`) does not wait: it cuts the playback under way
 (`ON_TTS_CANCELLED`, reason `new_tts`), and the responses waiting play after
