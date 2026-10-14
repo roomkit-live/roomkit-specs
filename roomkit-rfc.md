@@ -1861,9 +1861,13 @@ They ride the turn's input, never an assistant's message, where several
 providers refuse an image. Only an image every vision provider takes is kept:
 inline (a data URI, never a link, which may expire or be out of the vendor's
 reach), PNG, JPEG, GIF or WebP, up to 2 MB of data, from a live result (never
-history rebuilt from the store). A turn that replayed them and fails on a
-provider error not retried replays none of the room's images after it: one the
-provider refused would fail every later turn. The labels quote the calls as the digest does,
+history rebuilt from the store). A turn that replayed them and whose content
+the provider refused replays none of the room's images after it: one the
+provider refused would fail every later turn. The content is refused when the
+turn's first request fails, before anything of it streamed, on a provider
+error not retried that is no authentication, permission, missing model or rate
+limit: a later round, or a stream already under way, shows the images were
+taken. The labels quote the calls as the digest does,
 each copy of a runtime mark replaced, and the images count in what the turn
 measures before its history (Section 20). A model that does not see reads the
 notes alone. A
@@ -1944,8 +1948,10 @@ handed to the provider as it is; or a reference, `<scheme>://…` in a scheme
 the application chooses and RoomKit never interprets, naming a media the
 application holds. A scheme a reader could fetch or open itself (`file`,
 `ftp`) or run (`javascript`, `vbscript`) is refused when the content is
-built, as is a URL without a scheme: some transports read a URL they are
-handed. A channel resolves a reference as it builds the turn, by asking the
+built, as is a URL without a scheme and a reference a path reader could
+follow (a one-letter scheme, read as a drive, a `..` segment, a backslash):
+some transports read a URL they are handed as a local path, and a transport
+MUST NOT read a reference as one. A channel resolves a reference as it builds the turn, by asking the
 application's media resolver for its bytes: an asynchronous callable
 `(media, room_id) → bytes | null` handed to the framework (`media_resolver`),
 which serves every AI channel registered on it. Any participant can write a
@@ -1957,20 +1963,23 @@ application resolves itself where that channel needs the media. Per turn the cha
 newest images its authors sent, history and input counted together: four by
 default, a bound the channel's configuration MAY change or remove
 (`max_author_images`). Only an image every vision provider takes is sent: PNG,
-JPEG, GIF or WebP, up to 5 MB of data, the type being the media's. Anything
-else takes the image's place as a text mention, never a failed turn: a media
-that is not such an image, or any media for a model that does not see, reads
-as its transcoded form (Section 6.6), save that a media alone in its event
-without a caption reads, for a model that does not see, as what the channel's
-`describe_empty_event` says of the event first; an image past the bound reads as an
-earlier image not shown; a reference no resolver serves, that the resolver
-fails on or answers none for, or whose bytes break the constraints, reads as
-an image unavailable. The name a mention gives (the caption, else the
+JPEG, GIF or WebP (`image/jpg` read as JPEG, parameters aside), with data, up to
+5 MB of it. Anything else takes the image's place as a text mention, never a
+failed turn: a media of another type, or any media for a model that does not
+see, reads as its transcoded form (Section 6.6), save that a media alone in its
+event without a caption reads, for a model that does not see, as what the
+channel's `describe_empty_event` says of the event first; an image past the
+bound reads as an earlier image not shown; an image with no data or past the
+size, and a reference no resolver serves, that the resolver fails on or answers
+none for, reads as an image unavailable. An AI channel takes every media
+whatever its model sees (its capabilities name MEDIA), so that the event it
+answers reads as the same event does in its history. The name a mention gives (the caption, else the
 filename, else the type) is quoted (Section 6.4), and a mention never carries
-a data URI or a reference. A turn whose request carried an author's images
-and fails on a provider error not retried marks those images refused in the
-room, and the turns after it carry a mention in their place: one the provider
-refused would fail every later turn while it stays in the window. The images
+a data URI or a reference. A turn whose content the provider refused, as for
+the images tools returned above, marks the author images its request carried
+refused in the room, and the turns after it carry a mention in their place:
+one the provider refused would fail every later turn while it stays in the
+window. The images
 an author sent count in what the turn measures (Section 20); a media that is
 not an image counts as its mention.
 
@@ -2416,8 +2425,8 @@ MUST transcode content to match each target channel's supported media types.
 |---|---|---|
 | RichContent | TEXT only | TextContent (plain_text, else body unchanged) |
 | MediaContent | TEXT only | TextContent ("[Media: {caption or filename or url}]"): the URL only when it is a link (`http`, `https`), else the media type; never a data URI or a reference |
-| AudioContent | TEXT only | TextContent (the transcript, or "[Voice message: {url}]") |
-| VideoContent | TEXT only | TextContent ("[Video: {url}]") |
+| AudioContent | TEXT only | TextContent (the transcript, or "[Voice message: {url}]"): the URL only when it is a link, else the media type |
+| VideoContent | TEXT only | TextContent ("[Video: {url}]"): the URL only when it is a link, else the media type |
 | LocationContent | TEXT only | TextContent ("[Location: {label or address} ({latitude}, {longitude})]") |
 | CompositeContent | varies | Filter parts to target's supported types |
 | TemplateContent | no templates | TextContent (use body or "[Template: {template_id}]") |
