@@ -8340,6 +8340,37 @@ VideoBackend (interface)
 Implementations MAY provide additional backends for WebRTC (FastRTC),
 RTP, SIP video, or WebSocket transport.
 
+**Combined audio/video backends.** A transport that carries a call's audio
+and video together (a SIP INVITE with an `m=video` line, RTP with a parallel
+video stream, a WebRTC connection with both tracks) is a voice backend
+(Section 12.2) whose calls may carry video. One object MUST NOT implement
+both VoiceBackend and VideoBackend: their lifecycle methods share names and
+differ in meaning (`on_session_ready` is the audio path live for one, the
+video path for the other), so a channel registering its voice callbacks
+would be served the video ones, or none.
+
+```
+AudioVideoBackend (interface, a VoiceBackend)
+└── video: VideoBackend (property)          # The video of its calls
+```
+
+The call is the voice session, and the backend's own lifecycle is the voice
+backend's: `on_session_ready` when a call's audio path is live and
+`on_client_disconnected` when the call ends, for every call, with or without
+video. The video of a call is served by the `video` facet, whose sessions
+carry the call's session id: its `on_session_ready` fires when the call's
+video path is live, for a call that negotiated video only, and its
+`on_client_disconnected` when that video ends, which is when its call ends.
+Video never starts or stops on its own: a call without video stays an
+audio-only call. The facet creates no session (`connect` is not supported;
+calls come from the transport), and its `disconnect` ends the call.
+
+An audio/video channel (AudioVideoChannel) reports `ON_SESSION_STARTED`
+for the call, and `ON_VIDEO_SESSION_STARTED` and `ON_VIDEO_SESSION_ENDED`
+for its video, each once: the video ones only for a call with video,
+`ON_VIDEO_SESSION_STARTED` once the session is both bound and its video
+path live, whichever comes last, and `ON_VIDEO_SESSION_ENDED` only after it.
+
 #### 12.8.4 Video Processing Pipeline
 
 The video pipeline processes inbound frames through ordered stages:
