@@ -5467,7 +5467,10 @@ drain, or the drain of a playback cut short, ends no later playback. The
 application's own text (`say()`) does not wait: it cuts the playback under way
 (`ON_TTS_CANCELLED`, reason `new_tts`), and the responses waiting play after
 it. Audio the application plays from a file (`play()`) is not the agent's
-words: a response cuts it (reason `new_tts`).
+words: a response cuts it (reason `new_tts`). Like `say()`, `play()` does not
+wait: it cuts the playback under way (`ON_TTS_CANCELLED`, reason `new_tts`),
+and its playback is measured as a response's is, so a cut reports, and the
+session's played audio counts, what was heard of it.
 
 --- Common outbound path ---
 12. AudioChunk stream → [PostProcessors] → [Recorder] → [Resampler] → Transport
@@ -8142,8 +8145,13 @@ VoiceChannel.add_backend(backend) → void
   it; without it, the channel asks each added backend whether it holds the
   session (`get_session`) and falls back to the primary backend.
 - Everything addressed to one session — bridged audio, TTS audio, assistant
-  transcriptions, the playback cancel of an interruption, and the disconnect
-  when the session leaves — MUST go through that session's own backend.
+  transcriptions, the playback cancel of an interruption, DTMF, and the
+  disconnect when the session leaves — MUST go through that session's own
+  backend.
+- A response delivered to the room reaches the sessions of every backend. What
+  a backend's capabilities decide for one session — whether its playback can
+  be cancelled (`INTERRUPTION`), whether its echo is cancelled at the
+  transport (`NATIVE_AEC`) — is read on that session's own backend.
 - Adding a backend already served is a no-op. Closing the channel closes the
   added backends with the primary one.
 
