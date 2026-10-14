@@ -6799,7 +6799,14 @@ while nothing played is a person's; a final from a voice never heard so, said
 over a response, whose words are that response's in their order, one misheard
 at most and three at least heard right, is that response come back past the
 canceller and taken for another speaker: it is discarded, no turn. The barge-in
-its first words decided stands: the voice is only known with the final.
+its first words decided stands: the voice is only known with the final. The
+rule has a cost, accepted: a person not yet heard while nothing played who
+answers over a response with three or more of its words in their order ("the
+kitchen lamp" to "the kitchen lamp or the living room lamp?") cuts the
+response and is not heard, so the agent stops and says nothing; what they say
+next while nothing plays is heard. A voice is known within one STT stream:
+when the provider closes a kept stream, the voices heard alone are forgotten,
+as the next stream numbers its voices afresh.
 
 In continuous-STT mode, where the STT transcribes all audio and no local VAD
 segments it, every evaluation of an ongoing stretch of speech during playback,
