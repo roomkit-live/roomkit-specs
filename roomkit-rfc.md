@@ -2056,9 +2056,10 @@ the channel they came through; the runtime's own system events aside, and a
 one-to-one conversation left as it is), every line of a participant's turn
 in the conversation opens with such a label, which the runtime alone places:
 the speaker's name, or, for a turn whose speaker has no name, its channel as
-the room addresses it (`@sms1`), kept to an identifier's characters and never
-a participant's id, a form no name takes, so that a person named like an
-agent or a channel does not read as one. What the participant typed on the
+the room addresses it (`@sms1`; an agent of a discussion by its handle,
+`@Jev`, which its turn's notes give too, Section 19.7.5), kept to an
+identifier's characters and never a participant's id, a form no name takes,
+so that a person named like an agent or a channel does not read as one. What the participant typed on the
 line follows as a JSON string, its `"` and backslashes escaped, every other
 double quote mark made a single one and the marks that reorder text dropped
 as inside a quote (a `”` left as typed read as the string's end), and its
@@ -12776,6 +12777,7 @@ anything (see "Left out").
 ```
 Discussion
 ├── agents: list<AIChannel | ACPChannel>      # The agents of the discussion: AI channels (Agents among them) and external agents
+├── handles: map<channel_id, string> | null   # The name each agent is addressed by (rule 4; null or absent: derived)
 ├── people: set<string> | null                # Names agents address people by (null: the room's people, §6.4)
 ├── addressed_only: bool (default false)      # A person's message asks only the agents it names (rule 8)
 ├── everyone: list<channel_id> | null         # Asked, in this order, by a person's message that answers no one (null: all agents)
@@ -12835,11 +12837,27 @@ SpeakQueue (one per room, readable by the host)
    that asked for the agent. The turn that answers a message does not hand it
    again.
 4. **Names.** An agent's answer and a person's message address agents by
-   naming them: `@` followed by an agent's channel id; `@all` names every
+   naming them: `@` followed by an agent's handle; `@all` names every
    agent. A name starts the text or follows a character that is neither a
    letter, a digit, `_` nor `@`; it is the longest run of the characters an
    identifier holds (letters of any script, digits, `_`, `-`, `.`) that
-   follows, a final `.` excepted, and it matches a channel id ignoring case. Names are read in
+   follows, a final `.` excepted, and it matches a handle ignoring case.
+   Each agent has one **handle**, the name the room addresses it by: the
+   one `handles` gives it; else its channel id, when the channel id is a
+   handle; else its `name` (an Agent's identity, Section 19.1, or an
+   external agent's, Section 6.4) kept to a name's characters (`Research
+   Desk` gives `ResearchDesk`), when that is a handle. A handle is a run of
+   those characters, at most 32 of them, with no final `.`, and is not
+   `all`. A channel id such as `agent:3f2a…` cannot be one (`@agent:3f2a`
+   reads as `@agent`), and a 36-character identifier is no name for a model
+   to copy or a person to read: an agent named `Jev` is addressed as `@Jev`.
+   The discussion is refused at construction when an agent has no handle,
+   when `handles` gives one that is not a handle or names a channel that is
+   not one of its agents, and when two agents' handles read alike ignoring
+   case. A channel id that is not its agent's handle is no name: the
+   address a name sets, the queue and every hook keep channel ids. A host
+   names no handle after another channel of the room: a sender with no name
+   on that channel would carry the same label (Section 6.4). Names are read in
    the text the event commits with, once its `BEFORE_BROADCAST` hooks have
    run (Section 10.1): never in a tool's arguments or result, an agent's
    reasoning, a fenced code block or a quoted line. They set the event's
@@ -12859,7 +12877,7 @@ SpeakQueue (one per room, readable by the host)
    transcript labels them, and only when one person answers to the name: a
    name two people answer to (`Alice Martin`, `AliceMartin`) records no one,
    and a look-alike's ranked label (`Alice (2)`, Section 6.4) is addressed by
-   no name. Where a person's name and an agent's channel id read alike, the
+   no name. Where a person's name and an agent's handle read alike, the
    name is the agent's. This is the mechanism Section 19.3.1 leaves open: an agent
    MAY address another agent.
 5. **A turn queues each agent once.** Each event a turn commits carries its
@@ -12999,8 +13017,9 @@ SpeakQueue (one per room, readable by the host)
     turn that ends with no text produces no row and says nothing too. A silent
     turn counts as a turn (rules 7 and 15).
 14. **What a turn knows.** Each turn's notes (Section 6.4) carry, as the
-    runtime's own block and not a participant's words: the other agents of
-    the room by their channel ids, with the `role` and `description` of those
+    runtime's own block and not a participant's words: the agent's own
+    handle, the other agents of the room by their handles, with the `name`,
+    `role` and `description` of those
     that carry an identity (Agents, Section 19.1, and external agents given
     one, Section 6.4); the people the agent may address, by the
     names rule 4 gives them; which event the turn answers and who asked for
@@ -13019,9 +13038,10 @@ SpeakQueue (one per room, readable by the host)
     to answer again uninstalls the discussion (rule 1).
 16. **Its state, across processes.** Installing a discussion stores it with the
     room, as `ConversationState` is (Section 19.2): its configuration (the
-    agents' channel ids, `people`, `addressed_only`, `everyone`, `max_turns`,
+    agents' channel ids and their handles, `people`, `addressed_only`, `everyone`, `max_turns`,
     `max_depth`, `silent_token`, whether it has a dispatch policy) and its
-    speak queue. Every process that
+    speak queue; a configuration stored without handles, by an earlier
+    version, addresses each agent by its channel id. Every process that
     serves the room follows the stored discussion, whether or not its host
     installed it there: it asks no agent at broadcast (rule 3), and reads
     names and queues (rules 4, 5, 8, 10) by the stored configuration. Every
@@ -13089,7 +13109,7 @@ SpeakQueue (one per room, readable by the host)
     ├── room_id: string
     ├── event: RoomEvent                    # The person's message
     ├── recent: list<RoomEvent>             # The conversation before it, oldest first: the room's messages a candidate may read
-    ├── speakers: map<string, string>       # Who said `event` and each of `recent`, by event id: a person by their transcript label, an agent as `@channel_id`
+    ├── speakers: map<string, string>       # Who said `event` and each of `recent`, by event id: a person by their transcript label, an agent as `@handle`
     ├── candidates: list<DispatchCandidate> # The agents it may pick: those that asked the author first, then `everyone`'s order
     └── asked: list<channel_id>             # The candidates that asked the message's author and wait for the answer (rule 10)
 
@@ -13097,7 +13117,8 @@ SpeakQueue (one per room, readable by the host)
     ├── channel_id: string
     ├── name: string | null                 # An Agent's identity (Section 19.1), as a turn's notes give it (rule 14)
     ├── role: string | null
-    └── description: string | null
+    ├── description: string | null
+    └── handle: string | null               # The name the room addresses it by (rule 4); null: its channel id
 
     DispatchDecision
     ├── agents: list<channel_id>            # Who takes the message, in the order they answer; empty: no agent
@@ -13158,8 +13179,10 @@ SpeakQueue (one per room, readable by the host)
     candidates whose probability reaches a threshold (0.5 by default) take it,
     likeliest first, at most a number of them (2 by default); with none
     reaching it, no agent takes it (thanks, small talk). Each candidate's
-    probability is reported with the decision, under its channel id. An agent
-    with no identity is judged by its channel id alone.
+    probability is reported with the decision, under its channel id. Each
+    candidate is presented to the classifier by its handle, the name the
+    conversation it reads uses for it; an agent with no identity is judged
+    by its handle alone.
 
 19. **Talking and working.** A turn talks; long work runs as a task (Section
     23), off the floor. An agent given the background tool (Section 23.4)
