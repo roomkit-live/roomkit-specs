@@ -12847,8 +12847,9 @@ SpeakQueue (one per room, readable by the host)
    handle; else its `name` (an Agent's identity, Section 19.1, or an
    external agent's, Section 6.4) kept to a name's characters (`Research
    Desk` gives `ResearchDesk`), when that is a handle. A handle is a run of
-   those characters, at most 32 of them, with no final `.`, and is not
-   `all`. A channel id such as `agent:3f2a…` cannot be one (`@agent:3f2a`
+   those characters, at most 32 of them, with no final `.`, that an
+   identifier keeps as it is (the transcript labels the agent's turns with
+   it, Section 6.4: `dev-` and `a--b` are none), and is not `all`. A channel id such as `agent:3f2a…` cannot be one (`@agent:3f2a`
    reads as `@agent`), and a 36-character identifier is no name for a model
    to copy or a person to read: an agent named `Jev` is addressed as `@Jev`.
    The discussion is refused at construction when an agent has no handle,
@@ -13040,8 +13041,8 @@ SpeakQueue (one per room, readable by the host)
     room, as `ConversationState` is (Section 19.2): its configuration (the
     agents' channel ids and their handles, `people`, `addressed_only`, `everyone`, `max_turns`,
     `max_depth`, `silent_token`, whether it has a dispatch policy) and its
-    speak queue; a configuration stored without handles, by an earlier
-    version, addresses each agent by its channel id. Every process that
+    speak queue; a configuration stored without handles addresses each
+    agent by its channel id. Every process that
     serves the room follows the stored discussion, whether or not its host
     installed it there: it asks no agent at broadcast (rule 3), and reads
     names and queues (rules 4, 5, 8, 10) by the stored configuration. Every
