@@ -1226,8 +1226,10 @@ Channel (interface)
 ├── capabilities() → ChannelCapabilities
 │       # Declare supported features
 │
-├── info() → map<string, any>
-│       # Channel instance information
+├── info: map<string, any>
+│       # Channel instance information (Section 5.9), read as an attribute
+│       # like the other properties: code reading it on any channel gets
+│       # the map
 │
 └── close() → void
         # Release resources
