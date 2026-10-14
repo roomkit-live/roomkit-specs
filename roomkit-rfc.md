@@ -8135,9 +8135,11 @@ serve sessions from more than one VoiceBackend:
 ```
 VoiceChannel.add_backend(backend) → void
         # Register an additional transport. Its inbound audio enters the
-        # channel's inbound pipeline, and its session-ready and
+        # channel's inbound pipeline, its session-ready and
         # client-disconnected signals drive the channel's session
-        # lifecycle, exactly as for the backend given at construction.
+        # lifecycle, and its own barge-in detection and out-of-band DTMF
+        # reach the channel, exactly as for the backend given at
+        # construction.
 ```
 
 - The channel MUST have been constructed with a backend: the pipeline is built
@@ -8145,7 +8147,8 @@ VoiceChannel.add_backend(backend) → void
   audio goes through it.
 - A session belongs to exactly one backend. `bind_session(…, backend=)` names
   it; without it, the channel asks each added backend whether it holds the
-  session (`get_session`) and falls back to the primary backend.
+  session (`get_session`) and falls back to the primary backend. A session
+  joined on a pull-model backend is started listening on that backend.
 - Everything addressed to one session — bridged audio, TTS audio, assistant
   transcriptions, the playback cancel of an interruption, DTMF, and the
   disconnect when the session leaves — MUST go through that session's own
