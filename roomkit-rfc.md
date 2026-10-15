@@ -1774,10 +1774,21 @@ unavailable) reveals nothing and is refused, as a reference or a script asked of
 the registry does not offer is. A tool Tool Search recovers at call time joins the
 reveal window only once the tool answered the call (served, failed, or its
 result withheld by an ON_TOOL_CALL hook), as the room's tool memory keeps any
-tool used: a call refused before it ran (a gate, its arguments,
-BEFORE_TOOL_USE, its handler's refusal) or that nothing served reveals
-nothing, not for the next round nor for a later turn, and leaves every other
-reveal of its round as it was.
+tool used. A tool the model called and that answered MUST remain declared for
+the rest of the turn, even after a later `find_tools` replaces the search
+window. A tool admitted by the catalogue, tool policy and skill gates whose
+call was refused solely because the model's arguments were invalid MUST also
+be declared for the turn's next rounds, so the provider can parse a corrected
+call against its schema. This declaration is not an executed call and MUST NOT
+enter the room's memory of tools used. Other refusals (an access gate,
+BEFORE_TOOL_USE, the handler's refusal), or a call nothing served, reveal
+nothing and leave every other reveal of the round as it was.
+The same rule applies to a reconfigurable realtime session: retain a called
+tool for its current catalogue, publish a needed schema only after delivering
+the call's result, and discard retained names when the session ends or its
+catalogue is replaced. A call from an earlier catalogue MUST NOT reveal tools
+into its replacement. Search matches that have not been called still follow
+the search window; retention does not widen access or activate a skill.
 `ON_AI_RESPONSE` MUST therefore carry the turn's whole declaration as
 `declared_tools`: the union, over every generation round of the turn, of the
 tools the channel handed the provider, each with the name, description and
