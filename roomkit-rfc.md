@@ -13102,7 +13102,11 @@ SpeakQueue (one per room, readable by the host)
     13.5), so the processes that serve one room keep one queue, and the queue
     and the count of turns given outlive a restart. Uninstalling, in any
     process, one that only follows the discussion included, ends it in all of
-    them and unbinds the agents its installs attached.
+    them and unbinds the agents its installs attached (a configuration stored
+    without them names none). A process that gives no turn, because it only
+    follows the discussion or its host installed another configuration, keeps
+    no instruction and no task result for a turn: it reports the instruction
+    dropped and posts the result at once.
 
     A process where the host installed the discussion may give its turns
     while the configuration its host installed is the stored one: a process
