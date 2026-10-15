@@ -1876,8 +1876,8 @@ history rebuilt from the store). A turn that replayed them and whose content
 the provider refused replays none of the room's images after it: one the
 provider refused would fail every later turn. The content is refused when the
 turn's first request fails, before anything of it streamed, on a provider
-error not retried that is no authentication, permission, missing model or rate
-limit: a later round, or a stream already under way, shows the images were
+error not retried that is no authentication, payment, permission, missing model
+or rate limit: a later round, or a stream already under way, shows the images were
 taken. The labels quote the calls as the digest does,
 each copy of a runtime mark replaced, and the images count in what the turn
 measures before its history (Section 20). A model that does not see reads the
@@ -1962,7 +1962,11 @@ application holds. A scheme a reader could fetch or open itself (`file`,
 built, as is a URL without a scheme and a reference a path reader could
 follow (a one-letter scheme, read as a drive, a `..` segment, a backslash):
 some transports read a URL they are handed as a local path, and a transport
-MUST NOT read a reference as one. A channel resolves a reference as it builds the turn, by asking the
+MUST NOT read a reference as one. A link's scheme and a data URI's are kept in
+lower case, whatever case they were written in, since that is the spelling
+every reader tests: a transport that fetches only `http://` and `https://` read
+`HTTP://../secret` as a path. A reference keeps its scheme as the application
+wrote it. A channel resolves a reference as it builds the turn, by asking the
 application's media resolver for its bytes: an asynchronous callable
 `(media, room_id) → bytes | null` handed to the framework (`media_resolver`),
 which serves every AI channel registered on it. Any participant can write a
@@ -1974,8 +1978,9 @@ application resolves itself where that channel needs the media. Per turn the cha
 newest images its authors sent, history and input counted together: four by
 default, a bound the channel's configuration MAY change or remove
 (`max_author_images`). Only an image every vision provider takes is sent: PNG,
-JPEG, GIF or WebP (`image/jpg` read as JPEG, parameters aside), with data, up to
-5 MB of it. Anything else takes the image's place as a text mention, never a
+JPEG, GIF or WebP (`image/jpg` read as JPEG, case and parameters aside), with
+data, up to 5 MB of it, and it is sent under the type it was read as, its data
+URI's header included: a provider refuses `image/jpg`. Anything else takes the image's place as a text mention, never a
 failed turn: a media of another type, or any media for a model that does not
 see, reads as its transcoded form (Section 6.6), save that a media alone in its
 event without a caption reads, for a model that does not see, as what the
