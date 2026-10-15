@@ -11170,6 +11170,11 @@ RoomLockManager (interface)
 └── release(lock) → void
 ```
 
+The room lock MUST be reentrant within one execution context (a task and the
+tasks it awaits as its own): code that holds it may call an operation that
+takes it again, as a host serialising its own changes of a room does (Section
+19.7) and as a tool handler run under the inbound pipeline's lock does.
+
 For single-process deployments, an in-memory lock manager (per-room async mutex)
 is sufficient. When a persistent store is shared across multiple processes an
 in-memory lock manager is **NOT** sufficient — per-process locks do not
@@ -12858,8 +12863,9 @@ SpeakQueue (one per room, readable by the host)
    discussion (its queue, who only listens, what agents asked people, the
    turns given, whether it was over), so a discussion installed later starts
    fresh. The turn running when it is uninstalled is cut, as listening only
-   cuts it (rule 12), and nothing of its end is recorded in the forgotten
-   queue; a process that stops (rule 16) records it, its queue being kept.
+   cuts it (rule 12), in whichever process gives it (rule 16), and nothing of
+   its end is recorded in the forgotten queue; a process that stops (rule 16)
+   records it, its queue being kept.
 
    Installing a discussion in a room that holds one, in any process (Section
    19.7), replaces its configuration and keeps the rest: the queue, who only
