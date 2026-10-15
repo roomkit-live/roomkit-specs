@@ -12639,6 +12639,11 @@ path:
   discussion stores the agents its installs attached with it (Section 19.7.5
   rule 16), so any process serving the room uninstalls it, one where no host
   installed it included.
+- A host MAY install and uninstall a strategy while it holds the room's lock
+  (Section 13.5), as it does to serialise its own changes of the room: both
+  take the lock again within the same task, and neither waits on work that
+  needs it. Uninstalling a discussion cuts its running turn without waiting
+  for that turn's end to be recorded (Section 19.7.5 rule 1).
 
 #### 19.7.1 Pipeline
 
@@ -12852,7 +12857,9 @@ SpeakQueue (one per room, readable by the host)
    room) gives the room back to its policy at once and forgets the
    discussion (its queue, who only listens, what agents asked people, the
    turns given, whether it was over), so a discussion installed later starts
-   fresh.
+   fresh. The turn running when it is uninstalled is cut, as listening only
+   cuts it (rule 12), and nothing of its end is recorded in the forgotten
+   queue; a process that stops (rule 16) records it, its queue being kept.
 
    Installing a discussion in a room that holds one, in any process (Section
    19.7), replaces its configuration and keeps the rest: the queue, who only
