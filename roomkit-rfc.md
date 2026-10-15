@@ -13083,7 +13083,10 @@ SpeakQueue (one per room, readable by the host)
     (Section 17.2): a room of another organization holds no discussion for it. A console
     that shows who speaks, who is next, who only listens and whether the
     discussion waits for a person follows it, and draws the room's agents from
-    the room's intelligence bindings and the agents' identity (Section 19.1).
+    the room's intelligence bindings and the agents' identity (Section 19.1),
+    each shown and named by its handle (rule 4): a command that names an
+    agent reads the name as rule 4 does, and the queue's channel ids are
+    shown as handles.
     A person's message returns once committed and broadcast, with no agent's
     answer in its result (Section 10.1 step 18): the answers come in the turns
     that follow, as a regenerated answer the discussion queued does.
@@ -14254,7 +14257,10 @@ Implementations SHOULD provide helpers for AI-driven delegation:
 - `task_status` — A tool an agent can be given on its own, independently of
   the delegation helpers. It answers with the tasks posted on the StatusBus for
   the room of the call, read from the tool call context (Section 21.4): those
-  running and those ended, the latest entry of each, with its worker, the task,
+  running and those ended, the latest entry of each, with its worker (named
+  by its handle when it is an agent of the room's discussion, Section 19.7.5
+  rule 4, as the worker's brief, the tool's answer that starts a task, the
+  relayed result and the tasks' block of a turn's notes name it), the task,
   its status, its latest progress and when it was posted (Section 23.3), its
   whole result (Section 19.8) or that it failed, and when it was posted; a
   `task_id` argument narrows the answer to one task. It reads the bus for that
