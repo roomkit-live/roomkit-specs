@@ -12624,14 +12624,21 @@ path:
   up. The room's timeline stays, and the agents' turns read it (Section 20.1).
 - While a strategy is installed, installing another one is refused, whatever
   the strategy, the host's own included: one rule decides who speaks.
-  `uninstall_strategy` comes first.
+  `uninstall_strategy` comes first. One exception: a Discussion installed in
+  a room that holds a discussion, installed in this process or followed from
+  another (Section 19.7.5 rule 16), takes the place of the one the room holds
+  and keeps its state (rule 1). That is how a process that restarted takes
+  the discussion back, and how a host changes its agents.
 - Uninstalling removes what the install added for that room, and only that:
   its room hooks, the tools and turn runners it set up on the room's agents,
   the agents it attached (an agent bound before the install stays bound), and
   the room state it wrote (`ConversationState`, a discussion's speak queue). A
   strategy MAY have an uninstall step of its own, run first (a discussion
   stops giving turns). The timeline stays. The room then answers by its
-  `agent_response_policy`, and another strategy may be installed.
+  `agent_response_policy`, and another strategy may be installed. A
+  discussion stores the agents its installs attached with it (Section 19.7.5
+  rule 16), so any process serving the room uninstalls it, one where no host
+  installed it included.
 
 #### 19.7.1 Pipeline
 
@@ -12846,6 +12853,16 @@ SpeakQueue (one per room, readable by the host)
    discussion (its queue, who only listens, what agents asked people, the
    turns given, whether it was over), so a discussion installed later starts
    fresh.
+
+   Installing a discussion in a room that holds one, in any process (Section
+   19.7), replaces its configuration and keeps the rest: the queue, who only
+   listens, what agents asked people, the turns given, whether it is over,
+   and the running turn of an agent it keeps. An agent it no longer holds
+   leaves the queue (an instruction it was owed is reported dropped, rule 16),
+   its running turn is cut as listening only cuts it (rule 12), and it is
+   unbound when an install of the discussion bound it; an agent bound
+   otherwise is an intelligence channel the room cannot keep, and the install
+   is refused, as above.
 2. **People.** A person is a participant of the room that is neither an
    agent nor a bot, as Section 6.4 names the people of a turn; a person's
    message is an event such a participant sent through a transport channel,
@@ -13073,19 +13090,26 @@ SpeakQueue (one per room, readable by the host)
 16. **Its state, across processes.** Installing a discussion stores it with the
     room, as `ConversationState` is (Section 19.2): its configuration (the
     agents' channel ids and their handles, `people`, `addressed_only`, `everyone`, `max_turns`,
-    `max_depth`, `silent_token`, whether it has a dispatch policy) and its
+    `max_depth`, `silent_token`, whether it has a dispatch policy, and the
+    agents its installs attached to the room) and its
     speak queue; a configuration stored without handles addresses each
     agent by its channel id. Every process that
     serves the room follows the stored discussion, whether or not its host
     installed it there: it asks no agent at broadcast (rule 3), and reads
-    names and queues (rules 4, 5, 8, 10) by the stored configuration. Every
+    names and queues (rules 4, 5, 8, 10) by the stored configuration, read
+    again once another process replaced it (rule 1). Every
     change of the queue is read and written under the room lock (Section
     13.5), so the processes that serve one room keep one queue, and the queue
     and the count of turns given outlive a restart. Uninstalling, in any
-    process, ends the discussion in all of them.
+    process, one that only follows the discussion included, ends it in all of
+    them and unbinds the agents its installs attached.
 
-    A process where the host installed the discussion may give its turns, one
-    process at a time: the one that holds the room's **lease**, stored with
+    A process where the host installed the discussion may give its turns
+    while the configuration its host installed is the stored one: a process
+    whose host installed another (the stored one was replaced elsewhere) gives
+    up the lease and only follows, until its host installs the stored one. One
+    process at a time gives the turns: the one that holds the room's
+    **lease**, stored with
     the queue with the time it expires (15 s by default). It gives the turns,
     renews the lease while it holds it, and another process that installed
     the discussion takes it once it has expired: a process that stopped gives
