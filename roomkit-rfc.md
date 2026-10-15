@@ -12646,9 +12646,9 @@ explicit handoff occurs.
 A supervisor agent talks to the user and delegates work to specialist agents.
 Specialists run in isolated **child rooms** — their output is collected and
 returned to the supervisor. When the workers run on the user's message
-itself (one pass), a message that is not plain text (a media, a composite)
-is answered by the supervisor alone: the workers' tasks carry text, and the
-supervisor's own channel sees the media.
+itself (one pass), a message its tasks cannot carry (a media, a composite,
+an empty text) is answered by the supervisor alone: the workers' tasks carry
+text, and the supervisor's own channel sees the media.
 
 ```
 User ↔ Supervisor
@@ -12728,8 +12728,9 @@ workers' task, an answer to no one in the room.
 
 A single agent handles the conversation indefinitely, looping back for
 refinement. Useful for iterative workflows (editing, code review, tutoring).
-A message that is not plain text (a media, a composite) is answered by the
-producer alone, as a one-pass supervisor answers it (§19.7.3): the loop's
+A message its tasks cannot carry (a media, a composite, an empty text) is
+answered by the producer alone, as a one-pass supervisor answers it
+(§19.7.3), through the same reading of the message: the loop's
 tasks carry text, and the producer's own channel sees the media; it is never
 left without an answer.
 The loop's result is the agent's response to the event that started it, one
