@@ -2440,6 +2440,15 @@ framework MUST deliver the EDIT or DELETE event without transcoding. When the
 target channel does NOT support the operation, the framework MUST transcode to
 the fallback representation shown above.
 
+A reader that takes a room's message as text outside a channel (a delegated
+task's brief, a speak classifier, a discussion's dispatch and the notes of
+its turns, a scoring query, a memory's summary, an ACP agent's catch-up)
+reads it the same way: its text, each media as its label above, a
+composite's parts in order. One that reads names in it (a discussion's
+addressing) or a search query in it (a memory's retrieval) reads the
+author's words alone, a media's caption included, never a file name or a
+type: an agent named in a file name is not addressed.
+
 **Max length enforcement:** After transcoding, if the target channel declares a
 `max_length`, the framework MUST truncate TextContent to that limit.
 
@@ -12636,7 +12645,10 @@ explicit handoff occurs.
 
 A supervisor agent talks to the user and delegates work to specialist agents.
 Specialists run in isolated **child rooms** — their output is collected and
-returned to the supervisor.
+returned to the supervisor. When the workers run on the user's message
+itself (one pass), a message that is not plain text (a media, a composite)
+is answered by the supervisor alone: the workers' tasks carry text, and the
+supervisor's own channel sees the media.
 
 ```
 User ↔ Supervisor
@@ -12716,6 +12728,10 @@ workers' task, an answer to no one in the room.
 
 A single agent handles the conversation indefinitely, looping back for
 refinement. Useful for iterative workflows (editing, code review, tutoring).
+A message that is not plain text (a media, a composite) is answered by the
+producer alone, as a one-pass supervisor answers it (§19.7.3): the loop's
+tasks carry text, and the producer's own channel sees the media; it is never
+left without an answer.
 The loop's result is the agent's response to the event that started it, one
 deeper than that event (§8.3). A producer's task that failed (§23.3 step 6)
 stops the loop: the last output it produced, if any, is the result, not
