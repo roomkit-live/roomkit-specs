@@ -89,6 +89,9 @@ interpreted as described in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
 | **Chain Depth** | The number of response hops between an event and the external inbound event that started its chain (AI responds to AI responds to...). |
 | **Integrator** | The developer building an application on top of a RoomKit implementation. |
 | **Broadcast** | The act of routing an event to all eligible channels in a Room. |
+| **Intelligence Turn** | One call of an intelligence channel's `on_event()`, to the end of the response stream it returns (Section 10.6). Distinct from a speaker's conversational turn (Turn Detection). |
+| **Turn Backend** | What carries a turn between the room's owner, which commits and broadcasts, and a turn executor, as serialized messages; in memory by default (Section 10.6). |
+| **Turn Executor** | What builds an intelligence channel and runs its turns, in the owner's process or another, without ever committing (Section 10.6). |
 | **Transcoding** | Converting event content from one format to another for cross-channel delivery. |
 | **Audio Pipeline** | A configurable chain of audio processing stages (resampler, AEC, AGC, denoiser, VAD, diarization, DTMF, recording) between the transport and the conversation engine. |
 | **ACP** | Agent Client Protocol — a protocol for communication between code editors or conversation hosts (clients) and coding agents (servers). |
@@ -1322,7 +1325,10 @@ reference capabilities:
 
 Intelligence channels process events and produce responses or insights. They
 MUST implement `on_event()`. They do NOT deliver to external systems — the
-framework routes their output through the normal event pipeline.
+framework routes their output through the normal event pipeline. Each call of
+an intelligence channel's `on_event()` is a turn, run through the turn backend
+by a turn executor (Section 10.6), which may live in another process than the
+room's owner.
 
 **AI Channel:**
 
@@ -2345,7 +2351,9 @@ the configured command as an argument vector without a shell. Alternate ACP
 transports MAY be implemented when standardized, but MUST preserve the lifecycle
 and permission requirements above.
 
-ACP sessions are process-local by default. An implementation MAY add persistent
+ACP sessions are process-local by default: local to the turn executor that
+hosts the channel, to which the room's turns are placed while it holds the
+session (§10.6.7). An implementation MAY add persistent
 session resumption, but MUST scope resumed session identifiers to the associated
 Room and agent endpoint.
 
@@ -3343,7 +3351,11 @@ HookRegistration
                                             # the hook off the room lock (§9.5.1)
 ```
 
-Hooks MAY be registered globally (apply to all rooms) or per-room.
+Hooks MAY be registered globally (apply to all rooms) or per-room. A hook on a
+trigger that fires on the turn executor (§10.6.6) is registered on a turn
+executor; implementations MUST refuse it on the kit at registration. A room
+hook on such a trigger is registered on the executors under a name, which the
+room's owner keeps for the room (§10.6.6).
 
 `needs_lock = false` is only meaningful on a SYNC `BEFORE_BROADCAST` hook;
 implementations MUST reject it on any other trigger or execution mode at
@@ -3373,7 +3385,9 @@ tells its observers of a block too, Section 9.3). On an ASYNC trigger every
 registered hook runs, concurrently, whatever its declared mode, and what it
 returns is discarded. ON_IDENTITY_AMBIGUOUS and ON_IDENTITY_UNKNOWN are decided
 by the identity hooks of Section 11.2, registered apart; a hook registered on
-them as above runs after those as an observer.
+them as above runs after those as an observer. The triggers of the table of
+§10.6.6 fire on the turn executor that hosts the channel, every other trigger
+on the room's owner.
 
 | Trigger | Execution | Status | When It Fires |
 |---|---|---|---|
@@ -4225,7 +4239,8 @@ bounded cleanup that expires MUST report incomplete drainage, not success;
 resources still in use MUST be retained. An implementation MUST refuse a drain
 from a context that its own delivery needs to progress, such as its room lock
 or delivery lane. These guarantees cover execution owned by the local process;
-cross-worker cancellation requires an explicit distributed contract.
+a turn another process runs is cancelled, and its drainage reported, as
+§10.6.8 says.
 
 **InboundResult:**
 
@@ -4410,6 +4425,8 @@ than being drained inside the trigger's lock tenure.
    ├── c. CALL on_event() (all readable channels)
    │      ├── Intelligence channels: only those solicited (§19.3), and
    │      │   none when the response would reach max_chain_depth (§8.3)
+   │      ├── An intelligence channel's call is a turn, run through the
+   │      │   turn backend (§10.6)
    │      └── Collect ChannelOutput (response events, tasks, observations)
    │
    ├── d. CALL deliver() (transport channels only)
@@ -4715,6 +4732,526 @@ broadcast follow it, and the next event of the room MUST NOT wait on its
 index. It is stored as the caller gives it, whatever the persistence policy,
 and rule 2 of §7.5 does not apply to it. An event the members must receive is
 injected with `send_event` instead.
+
+### 10.6 Turn Execution
+
+An **intelligence turn** (a *turn* in this section) is one call of
+`on_event()` on a binding of category `INTELLIGENCE`, from that call to the
+end of the response stream it returns, when it returns one. Every turn MUST
+run through a **turn backend**, which carries it between two roles:
+
+- The **room owner** is the process that runs the delivery set the turn is a
+  target of: the room's delivery lane (§10.2), or a delegation's worker run
+  (§23.3). It plans, commits and broadcasts, and it reads the turn's output as
+  the channel's `ChannelOutput`. The lane is the only runner of a room's
+  delivery sets, in index order (§10.1, §13.5); a delegation's worker run is
+  its child room's. A turn is one target of a delivery set.
+- A **turn executor** builds the channel the turn needs, runs its `on_event()`,
+  advances its response stream as the owner reads it, and sends what it reads
+  as frames. An executor MUST NOT commit to the store, deliver to a transport
+  or broadcast: what a turn produces reaches the room through the owner, as
+  its output or as an owner call (§10.6.5).
+
+An implementation's default kit MUST own an in-memory executor, so a
+deployment that configures nothing runs every turn in the owner's process,
+through the in-memory backend. Any process MAY run executors, the owner's
+included.
+
+```
+TurnBackend (interface)
+├── submit(request: TurnRequest) → TurnLink
+│       # Owner side: start a turn. The link yields its frames in order,
+│       # and sends its control messages and its call answers
+├── control(channel_id, room_id, message: ChannelControl) → ChannelResult
+│       # Owner side: a message about a channel's per-room state (§10.6.3)
+├── serve(executor: TurnExecutor) → void
+│       # Executor side: receive the requests and the channel control of the
+│       # channels the executor declares, until close
+└── close() → void
+        # Fail the turns in flight (executor_lost) and release the transport
+```
+
+#### 10.6.1 Scope and the one path
+
+**Scope.** Every turn runs through the backend, whichever call starts it: the
+solicited target of §10.2 step 3c, and the intelligence channels an injected
+event names (§9.4), whose stream the owner closes unread and whose output it
+discards: an injected event answers nothing. Every intelligence channel is in
+scope: an AI channel, an ACP agent channel and a channel of the integrator's
+own.
+
+A strategy that takes an agent's turns in a room (a turn runner, Section 19.7:
+a loop's produce and review, a supervisor's delegation passes) runs on the
+owner, as the target the delivery set would otherwise have given the agent.
+Each generation it asks of an agent (the producer's answer, a supervisor's
+first pass, its presentation of the results) is a turn of its own, submitted
+through the backend as a strategy turn (`strategy_turn`, §10.6.3) with the
+event and the binding the runner gives it (an instruction for one call rides
+that binding, §19.7.3). What Section 19.7 sets
+up for a room on a shared agent (its turn runner, its tools, their
+configuration) is kept by the owner per channel and room and travels in each
+request: nothing is installed on a live channel object. A delegation's worker
+answers in its child room (§23.3) and a discussion's turn is a rerun planned
+for one agent (§19.7.5): both are delivery sets whose intelligence targets are
+turns.
+
+Out of scope: a speech-to-speech channel (§12.4), whose model holds the
+conversation in the owner's process, and the fan-out of an event to live
+connections held by another process.
+
+**One path (normative).** Every backend MUST carry the same serialized
+messages (§10.6.3). The in-memory backend MUST serialize each message and
+parse it on the other side, so that no object of the turn is shared between
+the owner and the executor: neither the channel's stream, its
+response-metadata record, its tool-call markers nor an exception crosses as a
+live object. An implementation MUST NOT keep a local shortcut that hands the
+owner the channel's objects; a distributed backend carries the in-memory
+backend's messages on another transport, never a second path. The behaviour
+this document gives intelligence channels MUST hold through the in-memory
+backend: an implementation's conformance suite for intelligence channels MUST
+be runnable against it, and SHOULD run against it by default.
+
+#### 10.6.2 Channels on each side
+
+**On the owner, a declaration.** The owner knows each intelligence channel by
+its declaration, registered as a channel is. It needs no live object of the
+channel to plan, broadcast, run a strategy or read a turn.
+
+```
+ChannelDeclaration
+├── channel_id: string
+├── channel_type: ChannelType
+├── category: ChannelCategory               # INTELLIGENCE
+├── capabilities: ChannelCapabilities
+├── identity: AgentIdentity | null          # what Section 19 reads of an agent
+├── thinks_while_listening: bool            # it carries a thinker (§6.4), which
+│                                           # a discussion refuses (§19.7.5)
+└── recent_events_window: int               # the history the owner's context
+                                            # build reads for its turns
+
+AgentIdentity                               # an Agent's identity fields (§19.1)
+├── name: string | null
+├── role: string | null
+├── description: string | null
+├── scope: string | null
+├── greeting: string | null
+└── language: string | null
+```
+
+A channel the host registers on the kit as a live object is declared by it.
+What Section 19.7 and Section 23.4 set up for a channel (its turn runner,
+its tools, a delegation's result tool) is kept by the owner, per channel and
+room, beside the declaration.
+
+**On the executor, a factory.** The executor builds the channel through a
+factory the host gives it: an agent holds live objects (its provider, its MCP
+clients, its memory). The kit's own executor reads the live channels the host
+registered on the kit, and declares them. The executor gives the channel what
+the kit gives a channel it registers, each on the executor's side:
+
+- the hooks the channel fires, against the executor's own registry
+  (§10.6.6), the after-response hook every intelligence channel gets included;
+- its realtime publications, turned into `ephemeral` frames;
+- the framework events it emits (§8.2), turned into `framework_event` frames;
+- its readers of state that lives in the owner's process (the room's
+  background tasks, §23.4; what a vision provider last saw, §12.8.7), turned
+  into owner calls;
+- the host's media resolver and attached-media reader (§6.4), which the host
+  gives the executor as it gives the kit;
+- its readers of the store, which read the store: a distributed backend
+  requires it shared (§10.6.9).
+
+**Per-room state.** A channel MAY keep state per room between two turns on its
+executor. An AI channel keeps a room's thought and its speak policy's
+listening state (§6.4), its plan, the results it evicted and reads back, the
+skills it activated, the tools Tool Search revealed and its tool-usage digest;
+an ACP agent channel keeps the room's session. That state is the executor's,
+not the room's, and is one of two kinds, which an implementation documents per
+state:
+
+- a **cache**, rebuilt from the timeline and the store when absent (a digest
+  reseeded from its rows, §6.4);
+- **session state**, which starts empty when absent, as after a restart (a
+  plan, a thought). Some of it the room needs: an ACP session, whose agent
+  holds the conversation, and a speak policy's listening state, a request to
+  stay quiet that is a state of the room (§6.4).
+
+Each request names the room's previous turn of the channel (`previous_turn`,
+§10.6.3): the one the owner submitted last, ended or not. An executor that
+holds state for the channel and room not left by that turn MUST discard it
+before running the turn: the turns of a room may
+have run elsewhere since, and a state they made obsolete (a speak policy told
+to talk again, a plan revised) MUST NOT come back. Placement (§10.6.7) keeps a
+room's turns where its state is.
+
+#### 10.6.3 Messages
+
+Five families, each message a serializable record.
+
+**The request**, owner → executor:
+
+```
+TurnRequest
+├── turn_id: string
+├── room_id: string
+├── channel_id: string
+├── event: RoomEvent                    # transcoded, max length applied (§10.2
+│                                       # step 3a-b); an injected event's as sent
+├── binding: ChannelBinding             # as the runner gives it (§10.6.1)
+├── context: RoomContext
+├── answers: bool                       # false: an injected event's delivery
+├── strategy_turn: bool                 # a generation a turn runner asks
+│                                       # (§10.6.1): the channel answers, past
+│                                       # its speak policy and its thinker (§6.4)
+├── notes: list<string>                 # the runtime's own blocks for the turn
+│                                       # (a discussion's turn notes, §19.7.5
+│                                       # rule 14); never read from event metadata
+├── in_place: bool                      # a discussion's turn: the event keeps
+│                                       # its place in the history (rule 9)
+├── owner_tools: list<OwnerTool>        # the tools the owner serves (§10.6.5)
+├── room_hooks: list<string>            # the names of the room's hooks on
+│                                       # executor triggers (§10.6.6)
+├── previous_turn: {turn_id, executor_id} | null
+│                                       # the room's previous turn of the channel
+└── trace: map<string, string> | null   # trace context of the broadcast span
+
+OwnerTool
+├── tool: AITool                        # its declaration (§6.7)
+└── waits_by_design: bool               # bounded by its own bound, not the
+                                        # channel's default (§21.6)
+```
+
+**Frames**, executor → owner, each carrying the turn id:
+
+| Frame | Carries |
+|---|---|
+| `accepted` | The executor's id: it took the turn |
+| `heartbeat` | Nothing: the turn is still running |
+| `output` | `on_event()` returned: the `ChannelOutput` without its stream (`responded`, `response_events`, `response_metadata`, `tasks`, `observations`, `metadata_updates`, its error as an error record), and whether a stream follows |
+| `item` | One item of the stream, answering one `pull`: a text delta, a reasoning delta, a call's start (its id, name, arguments), a call's end (its id, the sequence number of its start's frame, name, arguments, result, status, outcome, duration, error, structured content, `refused_but_ran`), a segment break, the loop's end (reason, rounds, usage, the limits it ran under), or the stream's end |
+| `tool_args` | The arguments a call runs with once its gate fixed them (a `BEFORE_TOOL_USE` rewrite, §9.3), naming the call's start frame |
+| `record` | The turn's response-metadata record as it stands (§6.7), sent before the `item` it was read with whenever it changed |
+| `ephemeral` | An ephemeral event of the turn (thinking, tool-call composition, custom), which the owner publishes on its realtime backend |
+| `framework_event` | A framework event the turn emitted (§8.2), with its payload, which the owner emits on its own bus |
+| `input_request` | A tool asked a human for input: the request's id, tool and prompt (§10.6.5) |
+| `input_closed` | A request closed on the executor without an answer: its id and why (a hook's block, its bound, a release, §9.3) |
+| `steer_result` | The number of loops a `steer` reached |
+| `error` | `on_event()` or the stream raised: an error record (§10.6.8) |
+| `end` | The turn ended; nothing follows |
+
+**Control**, owner → executor, on a turn's link:
+
+| Message | Carries |
+|---|---|
+| `pull` | Read the stream's next item (§10.6.4) |
+| `close` | The reader closed the stream (§10.6.4) |
+| `cancel` | The reason the owner cancels the turn (§10.6.8) |
+| `steer` | A steering directive (§21.3), answered by `steer_result` with the number of loops it reached |
+| `input_answer` | The outcome recorded for an `input_request`: answered with its value, or rejected with its reason |
+| `heartbeat` | Nothing: the owner still reads the turn (§10.6.8) |
+
+**Delivery.** Every message of a turn's link, in both directions (frames,
+control, calls and their results), carries a sequence number and MUST reach
+the other side exactly once and in order. A side MUST drop a duplicate and
+fail the turn with `frame_lost` on a gap in the sequence; the owner MUST drop
+a message of a turn that ended or failed.
+
+**Calls**, executor → owner, each answered once by its result:
+
+| Call | Result | Serves |
+|---|---|---|
+| `tool_call` | `tool_result` | A call to a tool the owner serves (§10.6.5) |
+| `call_cancel` | none | The executor withdraws a `tool_call` whose turn it cut or whose bound expired (§21.6): the owner cancels its handler |
+| `host_call` | `host_result` | A verb of `TurnHost`, or a reader of owner-process state (§10.6.5) |
+
+**Channel control**, owner → executor, outside any turn, about a channel's
+per-room state:
+
+| Message | Carries |
+|---|---|
+| `room_attached` | The channel was attached to the room |
+| `room_detached` | The channel was detached from the room: its state for the room is dropped (§6.4) |
+| `channel_call` | A per-room verb of the channel, answered by `channel_result` (an ACP session's `set_config_option` or `close_session`, §6.4); an implementation documents each channel's set. Cutting a running turn is never a channel call: it is the turn's `cancel` or `steer` |
+
+`room_attached` and `room_detached` reach every executor that declares the
+channel, and need no result. After `room_detached`, the owner names no
+previous turn for the channel in the room (`previous_turn` is null), so an
+executor that missed the message still discards the room's state at its next
+turn (§10.6.2). A `channel_call` reaches one executor, the one that holds the
+room's state for the channel, else one that declares the channel, and its
+`channel_result` is that executor's. An executor closes the channels it built
+when it closes; the kit's close closes its own executor's.
+
+#### 10.6.4 The stream: pulled, never pushed
+
+The owner hands its reader a `ChannelOutput` built from the `output` frame.
+When a stream follows, its response stream yields the items the `item` frames
+carry, so the consumer that stores segments and the streaming targets that
+render them (§10.2, Appendix A.9) read it as they read a local stream.
+
+The reader sets the pace, as it does locally: a model round and a tool call run
+only as the stream is read, a reader that stops leaves no call started after
+that point (§12.2), and a stream closed unread makes no provider call (a muted
+binding, §7.5; an injected event). The owner's reads of its stream send
+`pull` messages, each granting a number of items: the executor advances the
+channel's stream by at most the items granted, and MUST NOT advance past an
+item other than a text or reasoning delta (a call's start, a segment break, a
+loop's end) until a later `pull` grants it, so a call or a round starts only
+once the reader asked for what follows it. Closing the owner's stream sends
+`close`, and the executor closes the channel's stream as a local reader's
+close would: it is the reader's close, not a cancellation (§10.6.8).
+
+The consumer reads in frames what the channel changes after yielding it:
+
+- each segment is stored with the record of the last `record` frame received
+  before the `item` that ended it: a tool handler's write mid-loop reaches the
+  segments that follow (§6.7);
+- a call's arguments are its `tool_args` frame's when it has one, its start's
+  otherwise;
+- a call's end names its start's frame, so two calls under one id stay two
+  calls (§6.4);
+- a call that ended before the stream was closed or the turn cut is closed
+  with its own outcome: the executor sends its end before the turn's `end`,
+  and the owner closes as cancelled only a call no end was sent for.
+
+#### 10.6.5 What a turn asks of the owner
+
+**Owner-served tools.** A tool runs where the live objects it needs live. The
+tools that read or change the owner's state are served by the owner: the tools
+orchestration sets up for a room (handoff, Section 19.6; the strategies' tools,
+Section 19.7; a delegation's result tool, Section 23.3) and the tools the
+implementation binds to the kit (a delegation's status and cancel tools,
+Section 23.4), which a host attaches on the owner, to the channel's
+declaration (§10.6.2), never through the executor's factory. The owner lists
+them in the request's
+`owner_tools`, and the executor's channel declares them to its model with its
+other tools. Their gate (`BEFORE_TOOL_USE`) and their report (`ON_TOOL_CALL`)
+run on the executor, as for every call of the turn; only the handler runs on
+the owner:
+
+- `tool_call` carries the per-call context the implementation keeps for the
+  call (§21.4), at least: its id, its name, the arguments its gate left, the
+  turn's room, chain depth, actor and allowed names, who asked for the turn
+  (the author label a strategy heads a task with, §19.7), and the id of the
+  voice session it serves when it has one. The owner installs that context
+  around the handler, so the handler reads what it reads locally.
+- `tool_result` carries the handler's answer as §21.4 reads it, its outcome
+  (served, refused, failed, served by nothing, §9.3), the failure's class and
+  the structured copy.
+- A call the executor withdraws (its turn cut, its bound expired, §21.6) sends
+  `call_cancel`; the owner cancels the handler, and cancels every owner-served
+  call of a turn it cuts or loses itself.
+
+The tools the implementation installs that hold the channel's state (a plan,
+§6.4; the human-input tools, §9.3) run on the executor. The host's tools need
+the host's live objects (its MCP clients, its sandbox, its database): they run
+on the executor.
+
+**TurnHost.** A host tool or hook on the executor reaches a room only through
+`TurnHost`, which it reads with `current_turn_host()` (§21.4): inside a tool
+call of a turn, and inside a hook the executor fires, during a turn or between
+turns, bound to the room the hook fires for; empty anywhere else. Its surface
+is minimal and enumerated: each verb is one `host_call`, every argument is
+data (no callable crosses), and an implementation documents the set. It MUST
+carry:
+
+```
+TurnHost
+├── send_event(room_id, channel_id, content, ...) → RoomEvent    # §10.5
+├── delegate(room_id, agent_id, task, ...) → string              # the task id (§23.3)
+└── wait_task(task_id, timeout) → DelegatedTaskResult | null     # §23.2
+```
+
+An implementation adds the verbs its own tools and hooks need to write (a
+status post, §19.8; a room-metadata update; an observation, §5.11), each
+documented as one `host_call`.
+
+Reads go to the store, which the executor shares; every write goes through
+`TurnHost`. Each call carries the room and the turn it is made from, and the
+owner applies to it the reentrancy of its own task waiting on that turn when
+the call arrives (the delivery-set target awaiting `output`, or the reader
+awaiting an `item`): a call that would wait on the room's own delivery from a
+task that delivery needs returns with its completion detached (§10.1 step 18),
+as it does locally, rather than wait on the delivery set that runs the turn.
+An implementation cannot keep a host's code from committing through another
+kit it holds: a host that runs a kit beside its executors MUST NOT let a
+turn's tools reach a room through it.
+
+**Human input.** A tool waiting for a human's answer runs on the executor, and
+the answer arrives on the owner, which keeps the open requests of its rooms'
+turns and offers their answer (`answer_input(request_id, value)`) and their
+rejection (`reject_input(request_id, reason)`). The human-input handler the
+host gave the channel forwards an answer or a rejection it receives to that
+record, so both doors answer the same request, once. The
+executor MUST send `input_request` before it fires `ON_USER_INPUT_REQUIRED`,
+and the owner MUST hold an answer for an id it does not know yet until the
+request arrives or `input_hold_timeout` (default 60 seconds) passes, so a
+request is answerable from its creation (§9.3). The outcome reaches the
+waiting tool as `input_answer`: an answer it reads, or a rejection it reads as
+a refusal (§9.3). An outcome recorded is never reported to the tool as a
+failure. A request closed on the executor without an answer (a hook's block,
+its bound, a release) sends `input_closed`, and the owner closes its record; a
+request whose turn was cut is withdrawn on both sides.
+
+#### 10.6.6 Hooks
+
+A trigger fires where the work it observes runs. These triggers fire on the
+executor that hosts the channel, during a turn or between turns (a thinker's
+thought, a human-input request's notification):
+
+| Trigger | Fires on |
+|---|---|
+| `BEFORE_AI_CONTEXT_BUILD` (Planned) | Executor |
+| `BEFORE_AI_GENERATION` | Executor |
+| `ON_AI_THINKING` | Executor |
+| `ON_AI_RESPONSE` | Executor |
+| `BEFORE_TOOL_USE` | Executor |
+| `AFTER_TOOL_ROUND` | Executor |
+| `ON_TOOL_CALL` | Executor |
+| `ON_USER_INPUT_REQUIRED` | Executor |
+| `ON_SPEAK_DECISION` | Executor |
+| `ON_THOUGHT` | Executor |
+| `ON_PLAN_UPDATED` | Executor |
+| Every other trigger of §9.2 | Owner |
+
+On the owner fire, among others, `ON_ERROR` (from the turn's `error` frame,
+§9.2), `ON_TASK_CREATED` (from the output's tasks), `BEFORE_BROADCAST` on each
+stored segment (§9.5), `AFTER_BROADCAST`, and the triggers that owner-served
+tools and discussions fire (`ON_HANDOFF`, `ON_TASK_DELEGATED`,
+`ON_STATUS_POSTED`, `ON_SPEAK_QUEUE`, `ON_DISPATCH_DECISION`).
+
+**Registration.** A hook on an executor trigger MUST be registered on an
+executor, and an implementation MUST refuse it on the kit at registration,
+naming where it fires: registered on the kit, it would never fire for a turn
+another process runs. A host registers its turn hooks with one function it
+runs on every executor, the kit's own included, so its setup takes one path
+too. The implementation's own hooks on these triggers (a scorer of turns, a
+console's view of tool calls) register on executors the same way, and one that
+writes (a scorer recording an observation) writes through `TurnHost`.
+
+A trigger of the table that fires in the owner's process outside any turn (a
+speech-to-speech session's tool calls and its reasoning delegations, §12.4 and
+§12.4.1; a conference's tool calls, §12.10) fires the hooks registered on the
+kit's own executor: one registration covers both.
+
+**Room hooks.** A room hook on an executor trigger (§9.1) is registered on the
+executors under a name. The owner keeps which names a room has, as it keeps
+the room's other hooks, and the request carries them in `room_hooks`: the
+executor runs the hooks registered under those names for that turn. An
+executor that has not registered every name a request carries does not take
+it (§10.6.7), so a turn never runs without one of its room's hooks.
+
+**Context.** A hook on the executor receives a `RoomContext` built from the
+shared store when it fires, as a hook on the owner does, and changes a room
+only through `TurnHost` (§10.6.5).
+
+#### 10.6.7 Placement
+
+An executor declares the channels it can host and the names of the room hooks
+it registered. The backend MUST deliver a request only to an executor that
+declares the request's channel and registered every name of its `room_hooks`;
+a request no executor accepts within `accept_timeout` fails (§10.6.8). A
+backend SHOULD place a room's turns of a channel on the executor that ran its
+previous one while that executor lives, so its caches stay warm and its
+session state stays; it MUST do so for a channel that holds session state the
+room needs (an ACP session, a speak policy's listening state, §10.6.2), by a
+declaration scoped to the room: "the same
+executor for the session's life" is the case where one executor holds the
+room. A channel control message is placed as §10.6.3 says.
+
+#### 10.6.8 Liveness, cancellation and errors
+
+**Liveness, both ways.** While a turn runs, each side MUST send a message on
+its link at least every `heartbeat_interval` (default 2 seconds), a
+`heartbeat` when it has nothing else to send, the in-memory backend included.
+
+- The owner MUST fail the turn when `accepted` does not come within
+  `accept_timeout` (default 10 seconds), with `no_executor` when no executor
+  that could take the request (§10.6.7) ran meanwhile and `executor_lost`
+  otherwise, and when the executor stays silent for `heartbeat_timeout`
+  (default 10 seconds), with `executor_lost`.
+- The executor MUST cut the turn as `owner_lost` when the owner stays silent
+  for `heartbeat_timeout`, and stop sending its frames: its tools stop acting
+  for an owner that no longer reads them, and an ACP session's next prompt is
+  not held behind a turn nobody reads (§6.4).
+
+Silence is counted only while the side that counts it runs: a stall of its own
+event loop is not the other side's silence. In memory, where the executor's
+CPU is the owner's stall, a busy turn is therefore never lost.
+
+An executor in a process of its own MUST beat from a context the turn's work
+cannot stall (a thread of its own), so a turn busy with its CPU, the case the
+backend exists for, still beats. A slow turn that keeps beating is never
+failed by the owner: the framework sets no timeout of its own around
+`on_event()` (§13.6), and the heartbeat tells a slow turn from a lost executor
+without one. A turn that failed ends as an
+`on_event()` that raised: its target is recorded failed in the delivery set,
+`ON_ERROR` fires, and the caller reads the error (§10.1 step 18); a stream
+already read ends as a stream that raised (§12.2 step 13s), its stored
+segments kept. The owner cancels the turn's owner-served calls and sends
+`cancel` to the executor it lost, best effort. The turn commits nothing by
+itself, so its failure leaves no index unaccounted for, and the lane moves on.
+
+**Cancellation.** The owner's ways of ending a turn early keep their local
+meaning, each its own message:
+
+- the reader stops reading: `close` (§10.6.4), a reader's close;
+- the turn's cascade is cancelled (§10.1, *Explicit delivery cancellation*;
+  the kit closing): `cancel`, with the cascade's reason; the executor cancels
+  the turn's work as its own process would cancel it locally, its running
+  tool handlers included (§21.6);
+- a steering `Cancel` (§21.3): `steer`.
+
+The turn then ends with what such an end produces locally (its loop's end with
+reason `cancelled`, its open calls closed, §6.4 *A turn cut short*), then
+`end`. An `end` that does not come within `cancel_timeout` (default 5 seconds)
+after `cancel` is reported as incomplete drainage (§10.1): the turn ends
+failed, the owner drops its later frames, and nothing reports its cleanup
+done. After `close`, the owner waits for `end` while the executor keeps
+beating: a call already running is let finish (§12.2 step 13s), within its
+own bound (§21.6).
+
+**Steering.** The owner offers the host an asynchronous `steer(directive,
+channel_id, room_id | turn_id | null)` that answers the number of loops it
+reached; across the backend a turn's id names its loop. It resolves the target
+turns from the turns it submitted, in the order it started them, under the
+rules of §21.3 (a room's most recent loop is the loop of its most recently
+started turn still running, the channel's most recent loop that of its most
+recently started turn in any room), sends `steer` on each target's link, and
+sums their `steer_result`. A channel without steering (an ACP agent channel)
+receives a `Cancel` as the turn's `cancel`, as its own cancellation does: the
+owner then waits for `end` as after `close`, without `cancel_timeout`, and the
+turn counts as one loop reached. A discussion that holds the room cuts its
+turns this way (§19.7.5). The turns a host can steer are those the process it
+steers from submitted: with several owner processes, it steers from the one
+running the room's delivery (§10.2), and another reaches none of them.
+
+**Errors.** An error record carries the error's kind (the implementation's
+name of its class, from a set it documents), its message, the attributes that
+classify it (a provider's status code and whether it is retryable, a cut
+turn's reason), and its causes, each a kind and a message, in order. The owner
+rebuilds one error of that kind per turn, with its causes, so what reads it
+(`ON_ERROR`'s `error_type`, a task's failure, §23.3, a reader that compares
+the error it holds with the turn's) reads it as it reads a local one; a kind
+the owner does not know is rebuilt as a generic turn error that keeps the
+kind. The message is for logs and hooks, never for a model (§9.3).
+
+#### 10.6.9 Telemetry and prerequisites
+
+**Telemetry.** The request carries the trace context of the broadcast span;
+the spans the executor records for the turn (its generations, its tool calls,
+its hooks) are its children, so a tracing backend shows one trace across the
+processes.
+
+**Prerequisites.** A backend whose executors run in other processes requires
+a store they share (Section 14): the executor reads it. It SHOULD refuse to
+start without one. The distributed lock manager of §13.5 is what several
+owner processes need among themselves; an executor takes no room lock.
+
+**On the owner.** Ordering (per room, in index order), the reentry of response
+events as commit passes, chain depth (§8.3), the persistence of streamed
+segments and their hooks, the delivery to streaming targets, the turn record
+(§6.4) and the caller's `turns` are the owner's, read off the frames.
 
 ---
 
@@ -11230,7 +11767,8 @@ transaction that stores the event as DELIVERED and updates the room counters:
   invalidate the committed event.
   Each external delivery call is bounded by its transport channel's or
   provider's own timeout (the framework adds none around `deliver()` or
-  `on_event()`), and failures are reported per channel via `delivery_failed`
+  `on_event()`; a turn's heartbeat tells a lost executor from a slow turn,
+  §10.6.8), and failures are reported per channel via `delivery_failed`
   framework events — never by changing the source event's status or the
   returned result to blocked/failed.
   A degraded broadcast SHOULD surface as `broadcast_partial_failure`, with the
@@ -11623,7 +12161,9 @@ Implementations SHOULD instrument the following operations with spans:
 `stt_transcribe`, `tts_synthesize`, `identity_resolve`, and `store_event`.
 
 Each span SHOULD include structured attributes: `room_id`, `channel_id`,
-`event_id`, `provider`, and `latency_ms`.
+`event_id`, `provider`, and `latency_ms`. The spans a turn executor records
+for a turn are children of the broadcast span, through the trace context the
+turn's request carries (Section 10.6), whichever process runs it.
 
 ### 15.8 Audit System
 
@@ -12585,7 +13125,8 @@ primitives. Implementations SHOULD provide helpers for each.
 **A strategy in several rooms (normative).** A strategy is installed per room,
 but its agents are shared: one agent object serves every room it is attached
 to, and so does a realtime channel. What a strategy adds for a room is set up
-for that room on the shared agent or channel, and MUST reach that room only:
+for that room, kept by the room's owner for an agent (§10.6.1) and on the
+realtime channel itself, and MUST reach that room only:
 
 - a tool it adds for a room (a supervisor's delegation tools, a delegation's
   result tool, a loop's tool, a handoff tool) is declared in that room's turns
@@ -12632,6 +13173,9 @@ and 23.4). A tool set up on an agent outside any strategy (`setup_handoff`
 without a `room_id`, `setup_delegation`, `setup_realtime_delegation`) belongs
 to the agent whatever the room: it
 is declared wherever the agent serves, and still acts on the room of the call.
+What a strategy sets up for a room is kept by the room's owner, per channel and
+room, and its turn runner runs there, each generation it asks of an agent a
+turn of its own through the turn backend (§10.6.1).
 
 **One strategy per room, installed while the room lives (normative).** A room
 holds at most one strategy. An implementation MUST provide
@@ -12642,7 +13186,8 @@ path:
 - Installing on a room that already lives does what creating the room with
   the strategy does: the strategy's agents are registered and attached as
   intelligence channels, and its hooks, tools, turn runners and state are set
-  up. The room's timeline stays, and the agents' turns read it (Section 20.1).
+  up, the owner keeping an agent's for the room (§10.6.1). The room's
+  timeline stays, and the agents' turns read it (Section 20.1).
 - While a strategy is installed, installing another one is refused, whatever
   the strategy, the host's own included: one rule decides who speaks.
   `uninstall_strategy` comes first. One exception: a Discussion installed in
@@ -12651,7 +13196,7 @@ path:
   and keeps its state (rule 1). That is how a process that restarted takes
   the discussion back, and how a host changes its agents.
 - Uninstalling removes what the install added for that room, and only that:
-  its room hooks, the tools and turn runners it set up on the room's agents,
+  its room hooks, the tools and turn runners it set up for the room's agents,
   the agents it attached (an agent bound before the install stays bound), and
   the room state it wrote (`ConversationState`, a discussion's speak queue). A
   strategy MAY have an uninstall step of its own, run first (a discussion
@@ -13758,6 +14303,11 @@ reaches the channel's most recent loop, whatever its room. A loop is reachable o
 that comes before reaches nothing, and the host is told how many loops it
 reached.
 
+The loops of a room's turns run on turn executors (Section 10.6): the room's
+owner resolves the turns a directive reaches under the rules above, from the
+turns it started, sends it to each as the backend's `steer` message, and tells
+the host the sum of what they reached (§10.6.8).
+
 Steering directives are typically issued by orchestration logic (e.g.,
 supervisor injecting context for a worker agent) or by hooks reacting to
 events.
@@ -13794,10 +14344,12 @@ channel, not the turn now running. An implementation MUST therefore expose the
 turn to the handler through a per-call context that follows the async call
 chain (a contextvar, in Python), readable at any depth without a signature
 change, and MUST answer with the empty value outside a tool call so a host
-keeps its own fallback there (a direct call). A realtime channel serving a
-tool call (§12) MUST install the same context around the handler, with the
-session's room and participant as the turn's room and actor, so one handler
-answers the same questions on both paths. The context carries at least:
+keeps its own fallback there (a direct call); `current_turn_host()` alone also
+answers inside a hook a turn executor fires (§10.6.5). A realtime channel
+serving a tool call (§12) MUST install the same context around the handler,
+with the session's room and participant as the turn's room and actor, so one
+handler answers the same questions on both paths. The context carries at
+least:
 
 | Accessor | Answers |
 |---|---|
@@ -13807,6 +14359,7 @@ answers the same questions on both paths. The context carries at least:
 | `current_tool_allowed_names()` | Every tool name the turn resolved, and every tool a round declared beyond it (the re-read of a stored result), nothing withdrawn, that its tool policy admits for its actor, so a call is validated against the live toolset rather than an attach-time snapshot: a tool the policy denies is left out on every door, since the gate refuses it before any handler, while a tool a skill keeps closed stays in; on a realtime door, every tool the session declares (its catalogue, what orchestration set up, the channel's own) that its policy admits, and none when the session declares no catalogue: it names no list, and its gate, policy included, still judges each call |
 | `current_tool_call()` | The per-call record: the call's id, its channel, and the structured-result reverse channel |
 | `current_response_metadata()` | The turn's one response-metadata record (§6.7); empty where no turn will merge it (a realtime tool call) |
+| `current_turn_host()` | The turn's `TurnHost` (§10.6.5), the only way a host tool or a hook an executor fires writes to a room; inside a hook it is bound to the hook's room, during a turn or between turns; empty anywhere else |
 
 The context also carries the turn's chain depth: the depth of the response
 the turn produces (§8.3), on a realtime tool call the depth of the assistant's
@@ -13823,7 +14376,8 @@ organization is a fact of the room, not a grant: a handler that reaches a
 person's or a tenant's data resolves the participant (§11) and applies the
 host's own rule before acting. **The `Room` is the room as the store loaded it
 when the turn began**, shared by reference with `RoomContext.room` and so with
-every hook, provider and channel of the turn. A patch written to the store
+every hook, provider and channel of the turn on its side of the turn backend
+(Section 10.6): the owner and the executor each hold their own copy. A patch written to the store
 during the turn is not in it: a handler whose decision depends on the turn's
 own writes re-reads the room. A handler MUST NOT mutate the object: a room
 changes through the store, and a write on the shared object would be read by
@@ -15069,6 +15623,8 @@ A conforming implementation MUST support:
 - Structured logging
 - Idempotency checking
 - Event addressing: `RoomEvent.addressed_to`, honoured when set (Section 19.3)
+- Turn backend with its in-memory implementation and the kit's own executor:
+  every turn through its serialized messages (Section 10.6)
 
 ### 26.2 Level 1: Transport (RECOMMENDED)
 
@@ -15126,6 +15682,7 @@ A Level 2 implementation MAY additionally support:
   verification triggers (Section 11.7)
 - AI steering directives (Section 21.3)
 - Advanced memory providers: Summarizing, Retrieval (Section 20)
+- A turn backend whose executors run in other processes (Section 10.6)
 
 ### 26.4 Level 3: Real-Time Media (OPTIONAL)
 
