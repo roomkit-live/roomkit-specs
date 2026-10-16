@@ -12650,13 +12650,16 @@ path:
   needs it. Uninstalling a discussion cuts its running turn without waiting
   for that turn's end to be recorded (Section 19.7.5 rule 1).
 - A strategy stored with the room (a discussion, Section 19.7.5 rule 16) can
-  be replaced by another process's install. An implementation MUST then
-  provide `room_strategy_is_current(room_id, kind)`, which tells the host
-  whether the strategy of that kind it installed in this process is the one
-  the room stores now: false once another process installed another one,
-  when this process installed none, or once the strategy was uninstalled.
-  It reads the room's stored state when called. Asked about a kind that is
-  not stored with the room, it is refused rather than answered false, so the
+  be replaced by another process's install. For such a kind, an
+  implementation MUST provide `room_strategy_is_current(room_id, kind)`,
+  which tells the host whether the strategy of that kind it installed in
+  this process is the one the room stores now: false once another process
+  installed another configuration, when this process installed none, or
+  once the strategy was uninstalled. It reads the room's stored state when
+  called; an uninstall another process made is taken at once, so
+  `room_strategy(room_id)` answers none from then on, where a replaced
+  install still names this process's own. Asked about a kind that is not
+  stored with the room, it is refused rather than answered false, so the
   question keeps its meaning when another kind comes to be stored.
 
 #### 19.7.1 Pipeline
@@ -13135,9 +13138,11 @@ SpeakQueue (one per room, readable by the host)
     whose host installed another (the stored one was replaced elsewhere) gives
     up the lease and only follows, until its host installs the stored one.
     `room_strategy_is_current(room_id, Discussion)` (Section 19.7) is how
-    the host learns it: a host that finds it false installs the
-    configuration it wants, so that a room no longer waits on a process that
-    replaced it and stopped. One
+    the host learns it. A host that finds it false installs the
+    configuration it wants again while its own state still wants the
+    discussion, so that a room no longer waits on a process that replaced it
+    and stopped; it does not reinstall a discussion its own state no longer
+    wants, which would bring back one another process uninstalled. One
     process at a time gives the turns: the one that holds the room's
     **lease**, stored with
     the queue with the time it expires (15 s by default). It gives the turns,
