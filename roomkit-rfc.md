@@ -12863,6 +12863,7 @@ Discussion
 ├── max_depth: int | null                     # The depth limit of its turns (null: the kit's max_chain_depth)
 ├── done: function(room_id) → bool | null     # The discussion is over once it holds
 ├── silent_token: string (default "(silent)") # The answer of an agent that stays silent
+├── rules: string | null                      # How the room works, as each turn's notes give it (rule 14; null: the default)
 ├── dispatch: DispatchPolicy | null           # Picks who takes a person's message that names no agent (rule 18)
 └── dispatch_timeout: float (default 5 s)     # How long a decision may take (rule 18)
 
@@ -13116,9 +13117,16 @@ SpeakQueue (one per room, readable by the host)
     one, Section 6.4); the people the agent may address, by the
     names rule 4 gives them; which event the turn answers and who asked for
     it, a person's label and their words quoted (Section 6.4); and how the
-    room works (name
-    an agent with `@` to address it, a message that names nobody wakes nobody,
-    the silence token when it has nothing to add, one agent speaks at a time).
+    room works. That last part is the host's `rules` when the discussion has
+    them, `{handle}` in them standing for another agent's handle with its `@`
+    (an example the agent can follow) and `{silent}` for the silence token;
+    without them, it is the default, which tells the agent to end its
+    message with the handle of the agent that must act next, says that a
+    name without `@` reaches nobody and a message that names nobody wakes
+    nobody, and gives the silence token for when it has nothing to add.
+    The rest of the notes, what the turn knows of the room, is the
+    discussion's alone. That one agent speaks at a time is stated with the
+    agent's own handle.
 15. **The end.** The discussion is over once `done` holds, checked before each
     turn is given, or once `max_turns` turns were given in the room, from the
     moment the last of them is given. It gives no further turn and drops its
@@ -13131,7 +13139,7 @@ SpeakQueue (one per room, readable by the host)
 16. **Its state, across processes.** Installing a discussion stores it with the
     room, as `ConversationState` is (Section 19.2): its configuration (the
     agents' channel ids and their handles, `people`, `addressed_only`, `everyone`, `max_turns`,
-    `max_depth`, `silent_token`, whether it has a dispatch policy, and the
+    `max_depth`, `silent_token`, `rules`, whether it has a dispatch policy, and the
     agents its installs attached to the room) and its
     speak queue; a configuration stored without handles addresses each
     agent by its channel id. Every process that
