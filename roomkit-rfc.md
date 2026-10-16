@@ -1974,17 +1974,33 @@ reference, so the resolver MUST answer only for a media the room it is asked
 for may show, and none otherwise. The store and every broadcast carry the
 reference alone, never the bytes, and no resolution is kept from one turn to
 the next; a transport channel is handed the reference as it is, which the
-application resolves itself where that channel needs the media. Per turn the channel sends the
+application resolves itself where that channel needs the media. An application
+may keep the media a message carries outside its content, in a record of its
+own beside the words; it names them to the channel through its attached-media
+reader: a callable `(event) → list of MediaContent` handed to the framework
+(`attached_media`), which serves every AI channel registered on it. A channel
+reads each event of the room through it, the history it gives its memory
+provider and the event it answers alike, an instruction (Section 10.1.1)
+excepted: the media the reader names follow the event's own content, in the
+order given, as the parts of a `CompositeContent` (a text without words gives
+them its place), and every rule of this paragraph and of Section 20 applies to
+them as to the event's own. The reader is asked again on every turn, so it
+MUST name the same media for the same event, in the same order: an image is
+known by its event and its place among the parts, which is what a refusal
+records. A reader that fails names none for that event, never a failed turn.
+The store and every broadcast keep the event as it was stored. Per turn the channel sends the
 newest images its authors sent, history and input counted together: four by
 default, a bound the channel's configuration MAY change or remove
 (`max_author_images`). Only an image every vision provider takes is sent: PNG,
 JPEG, GIF or WebP (`image/jpg` read as JPEG, case and parameters aside), with
 data, up to 5 MB of it, and it is sent under the type it was read as, its data
 URI's header included: a provider refuses `image/jpg`. Anything else takes the image's place as a text mention, never a
-failed turn: a media of another type, or any media for a model that does not
-see, reads as its transcoded form (Section 6.6), save that a media alone in its
-event without a caption reads, for a model that does not see, as what the
-channel's `describe_empty_event` says of the event first; an image past the
+failed turn: a media of another type reads as its transcoded form (Section
+6.6), save that one alone in its event without a caption reads, for a model
+that does not see, as what the channel's `describe_empty_event` says of the
+event first; an image, for a model that does not see, reads as an image not
+shown because the model does not see images, so that the model says it cannot
+see it rather than answer as if it had; an image past the
 bound reads as an earlier image not shown; an image with no data or past the
 size, and a reference no resolver serves, that the resolver fails on or answers
 none for, reads as an image unavailable. An AI channel takes every media
