@@ -5074,9 +5074,13 @@ backend gives each executor it serves:
 | `room_publication` | — | A realtime publication or a framework event made after its turn ended, as `ephemeral` and `framework_event` carry them, with the channel, room, executor and turn |
 
 The owner accepts one only from the executor of the last turn it sent for
-the channel and room (`previous_turn`, §10.6.2): the `executor_id` and the
-turn id MUST match its record, and anything else is refused, an owner that
-restarted included, until its next turn. It publishes what it accepts as it
+the channel and room (`previous_turn`, §10.6.2), and anything else is
+refused, an owner that restarted included, until its next turn. A
+`room_call` MUST also name that very turn: work an earlier turn began writes
+nothing once a later turn was sent. A `room_publication` may name an earlier
+turn of that executor, which still holds the room's state: an external
+agent's updates (§6.4) arrive in the context of the turn that opened its
+connection. It publishes what it accepts as it
 publishes a turn's `ephemeral` and `framework_event` frames, for the room
 and kinds a turn may publish.
 
