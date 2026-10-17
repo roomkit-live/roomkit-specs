@@ -5074,8 +5074,22 @@ awaiting an `item`): a call that would wait on the room's own delivery from a
 task that delivery needs returns with its completion detached (§10.1 step 18),
 as it does locally, rather than wait on the delivery set that runs the turn.
 An implementation cannot keep a host's code from committing through another
-kit it holds: a host that runs a kit beside its executors MUST NOT let a
-turn's tools reach a room through it.
+kit it holds: a host that runs a kit beside an executor of another process
+MUST NOT let that executor's turns reach a room through it.
+
+**The in-memory backend's execution context.** The in-memory backend runs in
+the owner's process, where a host's tool holds the kit itself and may call it
+from a turn. It therefore runs a turn's work in a copy of the execution
+context of the owner task that submitted the turn, and advances the turn's
+stream in a copy of the context of the task that first reads it, kept for the
+stream's life: the reentrancy guards that task holds (its room's delivery
+lane, a room lock, a kit-held run) hold for the turn as they hold in the
+owner's own code, and a tool that waits on the delivery of the event it sent
+gets its completion detached rather than wait on itself. That context is the
+only thing the in-memory backend carries beside the messages, and it is no
+object of the turn. A turn's code also knows the turns it runs under, so a
+close called from one of them does not cut it. An executor of another process
+has no such context: its turns reach a room through `TurnHost`.
 
 **Human input.** A tool waiting for a human's answer runs on the executor, and
 the answer arrives on the owner, which keeps the open requests of its rooms'
