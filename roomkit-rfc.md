@@ -5030,6 +5030,7 @@ per-room state:
 |---|---|
 | `room_attached` | The channel was attached to the room: the room's binding of it (§5.7) |
 | `room_detached` | The channel was detached from the room: its state for the room is dropped (§6.4) |
+| `committed_event` | An event committed in the room that the channel's memory is handed (a discussion's, §19.7.5 rule 3), answered by nothing |
 | `channel_call` | A per-room verb of the channel, answered by `channel_result` (an ACP session's `set_config_option` or `close_session`, §6.4); an implementation documents each channel's set. It carries its `call_id`, its channel and room, the verb and its arguments, what the room keeps for the channel as the owner stores it (§10.6.2), and `previous_turn`; a later request's `previous_turn` names the call by its `call_id`. Cutting a running turn is never a channel call: it is the turn's `cancel` or `steer` |
 
 `room_attached` and `room_detached` reach every executor that declares the
@@ -5044,6 +5045,14 @@ executor that missed the message still discards the room's state at its next
 turn (§10.6.2), and the owner forgets what the room kept for the channel,
 even when the message could not be sent.
 
+A `committed_event` reaches one executor, the one that holds the room's
+state for the channel, else one that declares the channel, and never makes
+that executor the holder: it leaves the room's state as it is and names no
+previous turn. The executor hands the event to the channel (an AI channel's
+memory, §20), logs what the channel raises, and applies it before any later
+request of the owner for that channel and room. One no executor takes is
+dropped and logged by the owner.
+
 A `channel_call` is made for a channel attached to the room, in the room's
 organization (§17.2). It reaches one executor, the one that holds the room's
 state for the channel, else one that declares the channel, and its
@@ -5055,6 +5064,21 @@ the result names no call. A `channel_call` no executor takes fails with
 else within `accept_timeout`; the owner then names the previous turn it
 named before the call. An executor closes the channels it built when it
 closes; the kit's close closes its own executor's.
+
+**Outside a turn**, executor → owner, through the port to the owner the
+backend gives each executor it serves:
+
+| Message | Answer | Carries |
+|---|---|---|
+| `room_call` | `host_result` | A `TurnHost` verb made after its turn ended (§10.6.5): its `call_id`, the channel and room, the executor's id, the id of the turn the work began in, that turn's chain depth, the verb and its arguments |
+| `room_publication` | — | A realtime publication or a framework event made after its turn ended, as `ephemeral` and `framework_event` carry them, with the channel, room, executor and turn |
+
+The owner accepts one only from the executor of the last turn it sent for
+the channel and room (`previous_turn`, §10.6.2): the `executor_id` and the
+turn id MUST match its record, and anything else is refused, an owner that
+restarted included, until its next turn. It publishes what it accepts as it
+publishes a turn's `ephemeral` and `framework_event` frames, for the room
+and kinds a turn may publish.
 
 #### 10.6.4 The stream: pulled, never pushed
 
@@ -5137,10 +5161,16 @@ on the executor.
 the turn's room inside a tool call of a turn and inside a hook the executor
 fires while the turn runs. It is empty anywhere else, a task or an `ASYNC`
 hook that outlives its turn included, and a verb called on it after its turn
-ended is refused. Between turns (a background thinker's thought, §6.4) it is
-empty, so a hook that fires there cannot write to the room. An
-implementation MAY carry host calls outside a turn's link; one that does
-binds `TurnHost` there to the room the hook fires for. Its surface
+ended is refused, except the verbs below. Between turns (a background
+thinker's thought, §6.4) it is bound to the room of the turn the work began
+in: `send_event`, `post_status`, `update_room_metadata` and
+`add_observation` cross as `room_call` (§10.6.3), at the chain depth of
+that turn, so that the bound on agent loops (§10.4) holds; `delegate`,
+`wait_task` and the readers of owner-process state are refused there, with
+an error naming the verb. Outside any turn, a channel's realtime
+publications and framework events cross as `room_publication`: an executor
+never publishes on the owner's realtime backend or bus itself, and never
+writes the owner's store. Its surface
 is minimal and enumerated: each verb is one `host_call`, every argument is
 data (no callable crosses), and an implementation documents the set. It MUST
 carry:
@@ -13599,7 +13629,8 @@ SpeakQueue (one per room, readable by the host)
    lets the agent see (Section 7.5 rule 8). Its memory provider (Section 20)
    is still handed every message the agent may see (visibility and access,
    rule 4), the agent's own excepted, as the message is committed, as a room
-   with no discussion hands it: a provider that learns as messages arrive (an
+   with no discussion hands it, through the turn backend to the executor that
+   holds the agent's state for the room (`committed_event`, §10.6.3): a provider that learns as messages arrive (an
    index, a summary) learns the whole conversation, not only the messages
    that asked for the agent. The turn that answers a message does not hand it
    again.
