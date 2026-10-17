@@ -2373,10 +2373,12 @@ the session already announces is not set again. A value the host sets on a
 Room's session while it lives (`set_config_option`, a channel call through the
 kit, §10.6.3) belongs to the Room as well: the channel MUST set it again on
 the Room's next session, over `session_config`, until the host closes the
-Room's session, which forgets it. The owner stores it with the Room
-(§10.6.2), so the session another executor opens for the Room after the
-first is lost is set to it too; only a channel call writes it, so nothing but
-the host sets the agent's mode.
+Room's session through a channel call or detaches the channel, either of
+which forgets it. The owner stores it with the Room (§10.6.2), so the session
+another executor opens once the executor that held the Room is lost is set
+to it too. Only a channel call writes it, so the Room's next session is set
+only to values the host set through the kit; a mode the agent switches to
+itself is its live session's, not the Room's.
 A value the host sets while the Room has no open session is set on the
 session that call opens in place of the Room's earlier value for that
 option, so a value the agent has come to refuse is replaced by setting
@@ -2389,13 +2391,13 @@ it, and MUST fail the turn, or the call that was opening the session, with an
 error naming the option.
 
 **Detaching.** Detaching the channel from a Room drops the Room's state
-(§10.6.3): the channel closes the Room's session and forgets the values the
-host set on it, so a later attachment opens a new session, caught up on the
-Room (§19.3.2). A detach MUST NOT wait for the agent: the session is closed
-off it, by the Room's turn still running when that turn ends, else in the
-background. A turn that started before the detach and has not prompted yet
-MUST end without prompting, marked `interrupted`, and a session it opened
-for the detached Room MUST be closed.
+(§10.6.3): the channel MUST close the Room's session and forget the values
+the host set on it, so a later attachment opens a new session, caught up on
+the Room (§19.3.2). A detach MUST NOT wait for the agent: the session is
+closed off it, once the Room's turn still running has ended, a standalone
+turn's included. A turn that started before the detach and has not prompted
+yet MUST end without prompting, marked `interrupted`, and a session it
+opened for the detached Room MUST be closed.
 
 ACP agents can request permission to execute tools and can request client-side
 filesystem or terminal operations. An ACP agent channel:
@@ -3836,8 +3838,9 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   answer; one the handler gave up on before an answer (its close, a release),
   whether before the call or while it waits, and any other error take the
   generic failure path, the message withheld from the model. A request whose
-  waiting call is cut (a turn cancelled, a session ended, a call abandoned)
-  is withdrawn as a release withdraws it: no answer is taken for it after.
+  waiting call is cut (a turn cancelled, a session ended, a call abandoned),
+  or still open when the turn that opened it ends (§10.6.5), is withdrawn as
+  a release withdraws it: no answer is taken for it after.
 - Human-input tools have these rules on every channel that serves them (an
   AI channel, a speech-to-speech channel, a conference) and on every door of
   that channel (a speech-to-speech session's provider calls, the calls it
@@ -4893,9 +4896,9 @@ state:
   stay quiet that is a state of the room (§6.4).
 
 Each request names the room's previous turn of the channel (`previous_turn`,
-§10.6.3): the one the owner sent last, ended or not, recorded as it is sent so
-a turn sent alongside it names it (one that could not be sent is none). A
-channel call (§10.6.3) leaves the room's
+§10.6.3): the one the owner sent last, ended or not. The owner records it as
+it sends it, so a turn sent while the previous one runs names it; a turn the
+backend refused is never named. A channel call (§10.6.3) leaves the room's
 state as a turn does: it names the previous turn or call too, and the next
 turn names it. An executor that holds state for the channel and room not left
 by that turn or call MUST discard it before running the turn or the call's
@@ -4909,16 +4912,16 @@ of which turn left a room's state (a bounded record), it discards that state,
 and a discard that failed is attempted again at the room's next turn.
 Placement (§10.6.7) keeps a room's turns where its state is.
 
-**State the host sets for the room.** What the host sets on a channel's
-per-room state through a channel call and the room needs back on another
-executor (an ACP session's configuration values, §6.4) is the room's, not the
-executor's: the channel's result reports it when the call changed it, the
-owner stores it with the room (Section 5, under a metadata key of the
-implementation's own namespace that only the channel call writes, never a
-room-metadata update nor a turn's `TurnHost`), and hands it to the executor
-with each request (in its `RoomContext`) and each channel call, before the
-turn or the verb; the channel takes it back when it holds none for the room.
-A detach forgets it.
+**State the host sets for the room.** Some per-room state is set by the host
+through a channel call and is needed again on another executor (an ACP
+session's configuration values, §6.4). That state is the room's, not the
+executor's. A channel's result reports it when the verb changed it. The owner
+MUST store it in the room's metadata (§5.1), under a key of the
+implementation's own namespace, and MUST refuse that key in any other write
+(a room's creation or metadata update, a `TurnHost` verb). It hands it to the
+executor with each request, in the room its `RoomContext` carries, and with
+each channel call, before the turn or the verb runs. The channel takes it
+back when it holds none for the room. A detach forgets it.
 
 #### 10.6.3 Messages
 
@@ -4967,13 +4970,14 @@ OwnerTool
 | `output` | `on_event()` returned: the `ChannelOutput` without its stream (`responded`, `response_events`, `response_metadata`, `tasks`, `observations`, `metadata_updates`, its error as an error record), and whether a stream follows |
 | `item` | One item of the stream, answering one `pull`: a text delta, a reasoning delta, a call's start (its id, name, arguments), a call's end (its id, the sequence number of its start's frame, name, arguments, result, status, outcome, duration, error, structured content, `refused_but_ran`), a segment break, the loop's end (reason, rounds, usage, the limits it ran under), or the stream's end |
 | `tool_args` | The arguments a call runs with once its gate fixed them (a `BEFORE_TOOL_USE` rewrite, §9.3), naming the call's start frame |
+| `tool_ended` | A call's end known before the `item` carrying it was read (§10.6.4): the start's frame and the end |
 | `record` | The turn's response-metadata record as it stands (§6.7), sent before the `item` it was read with whenever it changed |
 | `ephemeral` | An ephemeral event of the turn (thinking, tool-call composition, custom), which the owner publishes on its realtime backend |
 | `framework_event` | A framework event the turn emitted (§8.2), with its payload, which the owner emits on its own bus |
 | `input_request` | A tool asked a human for input: the request's id, tool and prompt (§10.6.5) |
-| `input_closed` | A request settled on the executor: its id and how (an answer the host's handler took, a hook's block, its bound, a release, §9.3) |
+| `input_closed` | A request settled on the executor other than by an `input_answer`: its id and its outcome (answered, rejected, timed out), from the host's handler, a hook's block, its bound or a release (§9.3) |
 | `input_taken` | Whether an `input_answer` settled its request: false when the request was settled first (§10.6.5) |
-| `steer_result` | The number of loops a `steer` reached |
+| `steer_result` | The number of loops a `steer` reached, or none when the channel cannot steer the turn (§10.6.8) |
 | `error` | `on_event()` or the stream raised: an error record (§10.6.8) |
 | `end` | The turn ended; nothing follows |
 
@@ -5007,27 +5011,33 @@ per-room state:
 
 | Message | Carries |
 |---|---|
-| `room_attached` | The channel was attached to the room |
+| `room_attached` | The channel was attached to the room: the room's binding of it (§5.7) |
 | `room_detached` | The channel was detached from the room: its state for the room is dropped (§6.4) |
-| `channel_call` | A per-room verb of the channel, answered by `channel_result` (an ACP session's `set_config_option` or `close_session`, §6.4); an implementation documents each channel's set. It carries its `call_id`, the verb's arguments, what the room keeps for the channel as the owner stores it (§10.6.2) and `previous_turn`. Cutting a running turn is never a channel call: it is the turn's `cancel` or `steer` |
+| `channel_call` | A per-room verb of the channel, answered by `channel_result` (an ACP session's `set_config_option` or `close_session`, §6.4); an implementation documents each channel's set. It carries its `call_id`, its channel and room, the verb and its arguments, what the room keeps for the channel as the owner stores it (§10.6.2), and `previous_turn`; a later request's `previous_turn` names the call by its `call_id`. Cutting a running turn is never a channel call: it is the turn's `cancel` or `steer` |
 
 `room_attached` and `room_detached` reach every executor that declares the
 channel, and need no result: the executor applies them as the channel's own
 attach and detach would for a channel the kit holds, and logs what the
-channel raises. An intelligence channel therefore cannot refuse an attachment
-by raising, as a channel of another category can. After `room_detached`, the
-owner names no previous turn for the channel in the room (`previous_turn` is
-null), so an
+channel raises. A binding of category `INTELLIGENCE` (§5.7) is therefore kept
+when its channel raises on `room_attached`, and a detach does not report what
+the channel raised; only a backend that cannot carry `room_attached` fails
+the attachment, which is then undone. After `room_detached`, the owner names
+no previous turn for the channel in the room (`previous_turn` is null), so an
 executor that missed the message still discards the room's state at its next
 turn (§10.6.2), and the owner forgets what the room kept for the channel,
-even when the message could not be sent. A `channel_call` is made for a
-channel attached to the room, in the room's organization (§17.2); it reaches
-one executor, the one that holds the room's state for the channel, else one
-that declares the channel, and its `channel_result` is that executor's: the
-verb's result as data or its error record, what the room keeps for the
-channel when the verb changed it, and the executor's id. An
-executor closes the channels it built when it closes; the kit's close closes
-its own executor's.
+even when the message could not be sent.
+
+A `channel_call` is made for a channel attached to the room, in the room's
+organization (§17.2). It reaches one executor, the one that holds the room's
+state for the channel, else one that declares the channel, and its
+`channel_result` is that executor's: the verb's result as data or its error
+record, what the room keeps for the channel when the verb changed it, and
+the executor's id. A backend answers a call on the call's own exchange, so
+the result names no call. A `channel_call` no executor takes fails with
+`no_executor`, at once from a backend that knows every executor (§10.6.7),
+else within `accept_timeout`; the owner then names the previous turn it
+named before the call. An executor closes the channels it built when it
+closes; the kit's close closes its own executor's.
 
 #### 10.6.4 The stream: pulled, never pushed
 
@@ -5085,10 +5095,11 @@ the owner:
 - `tool_result` carries the handler's answer as §21.4 reads it, its outcome
   (served, refused, failed, served by nothing, §9.3), the failure's class and
   the structured copy.
-- A call the executor withdraws (its turn cut, its bound expired, §21.6) sends
-  `call_cancel`, a `host_call` as a `tool_call`; the owner cancels the
-  handler, and cancels every owner-served call of a turn it cuts or loses
-  itself.
+- A `tool_call` or a `host_call` the executor withdraws (its turn cut, or the
+  tool or hook that made it cut by its bound, §21.6) sends `call_cancel`, and
+  the owner cancels the handler or the verb. The owner also cancels every
+  call of a turn it cuts or loses itself. Unless the turn is cut, the
+  executor sends `end` only once each call it sent was answered.
 
 The tools the implementation installs that hold the channel's state (a plan,
 §6.4; the human-input tools, §9.3) run on the executor. The host's tools need
@@ -5096,12 +5107,14 @@ the host's live objects (its MCP clients, its sandbox, its database): they run
 on the executor.
 
 **TurnHost.** A host tool or hook on the executor reaches a room only through
-`TurnHost`, which it reads with `current_turn_host()` (§21.4): inside a tool
-call of a turn, and inside a hook the executor fires during a turn, bound to
-the turn's room; empty anywhere else. Between turns (a background thinker's
-thought, §6.4) it stays empty while an implementation carries no host call
-outside a turn's link; one that does binds it there to the room the hook
-fires for. Its surface
+`TurnHost`, which it reads with `current_turn_host()` (§21.4). It is bound to
+the turn's room inside a tool call of a turn and inside a hook the executor
+fires while the turn runs. It is empty anywhere else, a task or an `ASYNC`
+hook that outlives its turn included, and a verb called on it after its turn
+ended is refused. Between turns (a background thinker's thought, §6.4) it is
+empty, so a hook that fires there cannot write to the room. An
+implementation MAY carry host calls outside a turn's link; one that does
+binds `TurnHost` there to the room the hook fires for. Its surface
 is minimal and enumerated: each verb is one `host_call`, every argument is
 data (no callable crosses), and an implementation documents the set. It MUST
 carry:
@@ -5117,14 +5130,17 @@ An implementation adds the verbs its own tools and hooks need to write (a
 status post, §19.8; a room-metadata update; an observation, §5.11), each
 documented as one `host_call`.
 
-A `TurnHost` acts for its turn's room and that room's organization: a verb
-naming another room, or a room of another organization, MUST be refused, as
-an argument a verb does not take is. An event it sends is at least as deep as
-the turn's response (§8.3), so a chain of turns writing through it stops at
-the chain-depth limit as a local one does; `wait_task` answers for the tasks
-delegated from the turn's room. A room-metadata update through it MUST NOT
-write a key of the implementation's own namespace (a detach's revocation,
-§7.5; what the room keeps for a channel, §10.6.2).
+A `TurnHost` acts for its turn's room, in that room's organization: the
+owner MUST refuse a verb that names another room or another organization
+than the room's, and an argument the verb does not take. A status post it
+makes names the turn's room (§19.8). An event it sends is at least as deep as
+the turn's response (§8.3), and a task it delegates inherits the turn's depth
+(§23.3), so a chain of turns writing through it stops at the chain-depth
+limit as a local one does. `wait_task` answers for a task a `TurnHost` of the
+turn's room delegated, and answers null for any other, as it does past its
+timeout. A room-metadata update through it MUST NOT write a key of the
+implementation's own namespace (a detach's revocation, §7.5; what the room
+keeps for a channel, §10.6.2).
 
 Reads go to the store, which the executor shares; every write goes through
 `TurnHost`. Each call carries the room and the turn it is made from, and the
@@ -5222,7 +5238,8 @@ it (§10.6.7), so a turn never runs without one of its room's hooks.
 
 **Context.** A hook on the executor receives a `RoomContext` built from the
 shared store when it fires, as a hook on the owner does, and changes a room
-only through `TurnHost` (§10.6.5).
+only through `TurnHost` (§10.6.5); between turns, where `TurnHost` is empty,
+it changes none.
 
 #### 10.6.7 Placement
 
@@ -5306,9 +5323,9 @@ cannot reach the turn yet (it answers none), receives a `Cancel` as the
 turn's `cancel`: the owner then waits for `end` as after `close`, without
 `cancel_timeout`, and the turn counts as one loop reached. An ACP agent
 channel steers a `Cancel` alone, for the turn it names, as its own
-cancellation (§6.4 item 7): it answers one once the turn holds the agent (its
-session being opened, or its prompt out), and none before, when the owner
-cuts the turn. A discussion that holds the room cuts its turns this way
+cancellation (§6.4 item 7): it answers one once the turn holds its Room
+(§6.4 item 7), its session being opened or its prompt out; before that it
+answers none, and the owner cuts the turn. A discussion that holds the room cuts its turns this way
 (§19.7.5). The turns a host can steer are those the process it
 steers from submitted: with several owner processes, it steers from the one
 running the room's delivery (§10.2), and another reaches none of them.
@@ -14432,7 +14449,7 @@ turn to the handler through a per-call context that follows the async call
 chain (a contextvar, in Python), readable at any depth without a signature
 change, and MUST answer with the empty value outside a tool call so a host
 keeps its own fallback there (a direct call); `current_turn_host()` alone also
-answers inside a hook a turn executor fires (§10.6.5). A realtime channel
+answers inside a hook a turn executor fires while a turn runs (§10.6.5). A realtime channel
 serving a tool call (§12) MUST install the same context around the handler,
 with the session's room and participant as the turn's room and actor, so one
 handler answers the same questions on both paths. The context carries at
