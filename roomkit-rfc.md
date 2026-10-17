@@ -4854,10 +4854,21 @@ AgentIdentity                               # an Agent's identity fields (§19.1
 ├── description: string | null
 ├── scope: string | null
 ├── greeting: string | null
-└── language: string | null
+├── language: string | null
+└── auto_greet: bool                        # greets on a session start (§19.1),
+                                            # default true
 ```
 
 A channel the host registers on the kit as a live object is declared by it.
+A declaration registers as a channel does, through the same door, and the
+owner finds it wherever it looks a channel up: routing, delivery, a binding's
+creation, a delegation. Its binding is an intelligence binding: a declared
+channel has no object in the owner's process to deliver to or take a message
+from, and the owner MUST refuse binding it otherwise. The owner's own
+executor MUST NOT build a channel the owner holds by declaration alone: its
+turns run on an executor whose host builds it, and fail with `no_executor`
+when none takes them (§10.6.7). A channel declared and the same channel
+registered live MUST read alike on the owner, its greeting included.
 What Section 19.7 and Section 23.4 set up for a channel (its turn runner,
 its tools, a delegation's result tool) is kept by the owner, per channel and
 room, beside the declaration.
