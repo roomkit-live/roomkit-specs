@@ -4855,6 +4855,9 @@ AgentIdentity                               # an Agent's identity fields (§19.1
 ├── scope: string | null
 ├── greeting: string | null
 ├── language: string | null
+├── purpose: string | null                  # what a supervisor's roster says
+│                                           # of a worker (§19.7.3)
+├── voice: string | null                    # its TTS voice (§19.1)
 └── auto_greet: bool                        # greets on a session start (§19.1),
                                             # default true
 ```
@@ -5111,6 +5114,12 @@ the owner:
   the owner cancels the handler or the verb. The owner also cancels every
   call of a turn it cuts or loses itself. Unless the turn is cut, the
   executor sends `end` only once each call it sent was answered.
+
+An executor whose channel already declares a tool under the name of one of
+the request's `owner_tools` MUST refuse the turn, with an error naming the
+tool: which of the two handlers a call reaches would otherwise depend on the
+executor. The owner refuses the same clash when it sets up the tool on a
+channel it holds live, and cannot for one it holds by declaration alone.
 
 The tools the implementation installs that hold the channel's state (a plan,
 §6.4; the human-input tools, §9.3) run on the executor. The host's tools need
