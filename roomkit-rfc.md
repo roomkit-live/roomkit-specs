@@ -4845,6 +4845,9 @@ ChannelDeclaration
 ├── identity: AgentIdentity | null          # what Section 19 reads of an agent
 ├── thinks_while_listening: bool            # it carries a thinker (§6.4), which
 │                                           # a discussion refuses (§19.7.5)
+├── takes_owner_tools: bool                 # its turns declare the tools the
+│                                           # owner serves (§10.6.5); an external
+│                                           # agent's (§6.4) do not
 └── recent_events_window: int               # the history the owner's context
                                             # build reads for its turns
 
@@ -5119,7 +5122,10 @@ An executor whose channel already declares a tool under the name of one of
 the request's `owner_tools` MUST refuse the turn, with an error naming the
 tool: which of the two handlers a call reaches would otherwise depend on the
 executor. The owner refuses the same clash when it sets up the tool on a
-channel it holds live, and cannot for one it holds by declaration alone.
+channel it holds live, and cannot for one it holds by declaration alone. The
+owner MUST refuse to set up a tool for a channel whose declaration says its
+turns do not take the owner's tools; a delegation's result tool is not set up
+for it, and its result is its text.
 
 The tools the implementation installs that hold the channel's state (a plan,
 §6.4; the human-input tools, §9.3) run on the executor. The host's tools need
