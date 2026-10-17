@@ -5046,8 +5046,9 @@ turn (§10.6.2), and the owner forgets what the room kept for the channel,
 even when the message could not be sent.
 
 A `committed_event` reaches one executor, the one that holds the room's
-state for the channel, else one that declares the channel, and never makes
-that executor the holder: it leaves the room's state as it is and names no
+state for the channel, else one that would take the room's turns (the
+room's hooks it carries included, §10.6.6), and never makes that executor
+the holder: it leaves the room's state as it is and names no
 previous turn. The executor hands the event to the channel (an AI channel's
 memory, §20), logs what the channel raises, and applies it before any later
 request of the owner for that channel and room. One no executor takes is
@@ -5163,18 +5164,19 @@ on the executor.
 **TurnHost.** A host tool or hook on the executor reaches a room only through
 `TurnHost`, which it reads with `current_turn_host()` (§21.4). It is bound to
 the turn's room inside a tool call of a turn and inside a hook the executor
-fires while the turn runs. It is empty anywhere else, a task or an `ASYNC`
-hook that outlives its turn included, and a verb called on it after its turn
-ended is refused, except the verbs below. Between turns (a background
+fires while the turn runs, and, after the turn, in work the turn began (a
+task or an `ASYNC` hook that outlives it) for the verbs below; it is empty
+anywhere else, and any other verb called on it after its turn ended is
+refused. Between turns (a background
 thinker's thought, §6.4) it is bound to the room of the turn the work began
 in: `send_event`, `post_status`, `update_room_metadata` and
 `add_observation` cross as `room_call` (§10.6.3), at the chain depth of
 that turn, so that the bound on agent loops (§10.4) holds; `delegate`,
 `wait_task` and the readers of owner-process state are refused there, with
-an error naming the verb. Outside any turn, a channel's realtime
-publications and framework events cross as `room_publication`: an executor
-never publishes on the owner's realtime backend or bus itself, and never
-writes the owner's store. Its surface
+an error naming the verb. What work a turn began publishes after
+the turn (realtime publications, framework events) crosses as
+`room_publication`: an executor never publishes it on the owner's realtime
+backend or bus itself, and never writes the owner's store. Its surface
 is minimal and enumerated: each verb is one `host_call`, every argument is
 data (no callable crosses), and an implementation documents the set. It MUST
 carry:
