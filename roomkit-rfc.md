@@ -3369,10 +3369,12 @@ HookRegistration
 ```
 
 Hooks MAY be registered globally (apply to all rooms) or per-room. A hook on a
-trigger that fires on the turn executor (§10.6.6) is registered on a turn
-executor; implementations MUST refuse it on the kit at registration. A room
-hook on such a trigger is registered on the executors under a name, which the
-room's owner keeps for the room (§10.6.6).
+trigger that fires on the turn executor (§10.6.6) registered on the kit is a
+registration on the kit's own executor; implementations MUST refuse one that a
+channel the kit holds by its declaration alone could fire, whose turns run on
+another executor (§10.6.6). A room hook on such a trigger for those channels
+is registered on the executors under a name, which the room's owner keeps for
+the room (§10.6.6).
 
 `needs_lock = false` is only meaningful on a SYNC `BEFORE_BROADCAST` hook;
 implementations MUST reject it on any other trigger or execution mode at
@@ -5296,12 +5298,20 @@ stored segment (§9.5), `AFTER_BROADCAST`, and the triggers that owner-served
 tools and discussions fire (`ON_HANDOFF`, `ON_TASK_DELEGATED`,
 `ON_STATUS_POSTED`, `ON_SPEAK_QUEUE`, `ON_DISPATCH_DECISION`).
 
-**Registration.** A hook on an executor trigger MUST be registered on an
-executor, and an implementation MUST refuse it on the kit at registration,
-naming where it fires: registered on the kit, it would never fire for a turn
-another process runs. A host registers its turn hooks with one function it
-runs on every executor, the kit's own included, so its setup takes one path
-too. The implementation's own hooks on these triggers (a scorer of turns, a
+**Registration.** A hook on an executor trigger registers on the executor
+that runs the turns it observes. Registered on the kit, it is a registration
+on the kit's own executor: it fires for the turns of the channels the kit
+holds live, and for the calls outside any turn below. A channel the kit holds
+by its declaration alone (§10.6.2) runs its turns on another executor, where
+such a hook would never fire. An implementation MUST therefore refuse a hook
+on an executor trigger registered on the kit that such a channel could fire
+(its channel filter does not leave the channel out), and the declaration of
+such a channel while such a hook is registered, naming the executor where the
+hook registers instead. A room hook on an executor trigger registered on the
+kit is refused while the kit holds any channel by its declaration alone: the
+room's channels are not known when it registers. A host registers its turn
+hooks with one function it runs on every executor, the kit's own included, so
+its setup takes one path too. The implementation's own hooks on these triggers (a scorer of turns, a
 console's view of tool calls) register on executors the same way, and one that
 writes (a scorer recording an observation) writes through `TurnHost`.
 
@@ -5310,7 +5320,9 @@ speech-to-speech session's tool calls and its reasoning delegations, §12.4 and
 §12.4.1; a conference's tool calls, §12.10) fires the hooks registered on the
 kit's own executor: one registration covers both.
 
-**Room hooks.** A room hook on an executor trigger (§9.1) is registered on the
+**Room hooks.** A room hook on an executor trigger the kit registers for a
+room (above) is its own executor's hook for that room, and no request names
+it. One for a channel other executors run (§9.1) is registered on the
 executors under a name. The owner keeps which names a room has, as it keeps
 the room's other hooks, and the request carries them in `room_hooks`: the
 executor runs the hooks registered under those names for that turn. An
