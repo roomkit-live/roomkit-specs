@@ -5066,6 +5066,11 @@ else within `accept_timeout`; the owner then names the previous turn it
 named before the call. An executor closes the channels it built when it
 closes; the kit's close closes its own executor's.
 
+A `committed_event` or a `channel_call` that reaches an executor that closed,
+or a process that is closing, is refused unapplied, as a request is
+(§10.6.7): the owner places it again, never on the executor that refused it,
+and one no other executor takes is dropped and logged, or fails, as above.
+
 **Outside a turn**, executor → owner, through the port to the owner the
 backend gives each executor it serves:
 
