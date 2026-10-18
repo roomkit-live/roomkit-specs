@@ -5322,9 +5322,15 @@ it changes none.
 An executor declares the channels it can host and the names of the room hooks
 it registered. The backend MUST deliver a request only to an executor that
 declares the request's channel and registered every name of its `room_hooks`;
-a request no executor accepts within `accept_timeout` fails (§10.6.8). A
-backend that knows every executor (the in-memory one) fails at once, with
-`no_executor`, a request none of them declares. A
+a request no executor accepts within `accept_timeout` fails (§10.6.8). To
+other processes an executor declares its channels as a set: one that declares
+them by a rule (every channel, a predicate) takes the turns of its own process
+only. A turn placed on an executor of the owner's own process is carried in
+that process, as the in-memory backend carries it; one placed elsewhere crosses
+the backend's transport. A backend that knows every executor alive (the
+in-memory one; a distributed one keeping a registry of the executors alive and
+what they declare) fails at once, with `no_executor`, a request none of them
+declares. A
 backend SHOULD place a room's turns of a channel on the executor that ran its
 previous one while that executor lives, so its caches stay warm and its
 session state stays; it MUST do so for a channel that holds session state the
@@ -5357,7 +5363,11 @@ CPU is the owner's stall, a busy turn is therefore never lost.
 
 An executor in a process of its own MUST beat from a context the turn's work
 cannot stall (a thread of its own), so a turn busy with its CPU, the case the
-backend exists for, still beats. A slow turn that keeps beating is never
+backend exists for, still beats. That beat MAY travel outside the turn's
+numbered messages (a record of the executor alive that its thread refreshes,
+on the transport's clock): once an executor took the turn, the owner counts
+it as a message from that executor; before, only `accepted` counts, so a turn
+no executor takes still fails within `accept_timeout`. A slow turn that keeps beating is never
 failed by the owner: the framework sets no timeout of its own around
 `on_event()` (§13.6), and the heartbeat tells a slow turn from a lost executor
 without one. A turn that failed ends as an
@@ -5424,9 +5434,20 @@ its hooks) are its children, so a tracing backend shows one trace across the
 processes.
 
 **Prerequisites.** A backend whose executors run in other processes requires
-a store they share (Section 14): the executor reads it. It SHOULD refuse to
-start without one. The distributed lock manager of §13.5 is what several
-owner processes need among themselves; an executor takes no room lock.
+a store they share (Section 14): the executor reads it. It SHOULD warn when an
+executor that takes turns from other processes has none. The distributed lock
+manager of §13.5 is what several owner processes need among themselves; an
+executor takes no room lock. Every process of a backend keeps the same
+timeouts (§10.6.8).
+
+**Addressing and trust.** Work a turn began that reaches the owner after the
+turn (§10.6.3) goes to the owner process that submitted the turn, which the
+backend records as it carries the request; with several owner processes, the
+others do not see it. A distributed backend's transport is its trust
+boundary: the executor ids and owner addresses its messages carry are not
+authenticated beyond it, so whoever can write to the transport can act as an
+executor or an owner, as whoever can read it reads the rooms' turns. It is
+restricted as the rooms are (credentials, encryption in transit).
 
 **On the owner.** Ordering (per room, in index order), the reentry of response
 events as commit passes, chain depth (§8.3), the persistence of streamed
