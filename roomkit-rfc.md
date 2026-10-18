@@ -5002,7 +5002,7 @@ OwnerTool
 
 | Message | Carries |
 |---|---|
-| `pull` | Grant the reading of the stream's next items, their number given (§10.6.4) |
+| `pull` | Grant the reading of the stream's next items: their number, and how many items the owner's reader read, a joined `item` counting its deltas (§10.6.4) |
 | `close` | The reader closed the stream (§10.6.4) |
 | `cancel` | The reason the owner cancels the turn (§10.6.8) |
 | `steer` | A steering directive (§21.3), answered by `steer_result` with the number of loops it reached |
@@ -5100,7 +5100,10 @@ binding, §7.5; an injected event). The owner's reads of its stream send
 channel's stream by at most the items granted, and MUST NOT advance past an
 item other than a text or reasoning delta (a call's start, a segment break, a
 loop's end) until a later `pull` grants it, so a call or a round starts only
-once the reader asked for what follows it. Within a grant the executor reads
+once the reader asked for what follows it. A later `pull` is one the owner
+sent once its reader read that item: each `pull` says how many items the
+reader read, and the executor takes one that says fewer than it had read
+through that item as granting nothing. Within a grant the executor reads
 deltas ahead of the reader. Text deltas the channel yields without waiting
 between them MAY cross as one `item` holding their joined text and their
 number, which counts as that many items against the grant: the text is kept,
@@ -6197,7 +6200,7 @@ enters a room as any other audio.
         before the turn asks for a call its next text would announce; what it
         held of the sentence over the budget is not synthesized; the stream is
         closed (no further token, no tool call that has not started), and the
-        text produced so far is stored marked cancelled, so the room keeps
+        text read so far is stored marked cancelled, so the room keeps
         about what was heard rather than what was never said, and the turn
         reports no response (`ON_AI_RESPONSE`), as any turn its reader
         stopped. A reply of exactly the budget is not cut. The application's
@@ -6206,8 +6209,9 @@ enters a room as any other audio.
      Interrupted: when deliver_stream() returns before the stream is exhausted,
      for any reason (typically every session of 12s.d stopped early), the
      framework MUST close the response stream (no further token is generated and
-     no tool call starts after that point) and MUST store the text already
-     produced as the AI response event with `metadata.cancelled = true`. A turn
+     no tool call starts after that point) and MUST store the text its reader
+     was handed (what the turn backend read ahead of it is dropped, Section
+     10.6.4) as the AI response event with `metadata.cancelled = true`. A turn
      its reader stopped once it began records it `cancelled`, as its caller and
      a delegation read it (Section 6.4, Section 23.3), unless its record already
      names how it was cut (an ACP agent's `interrupted`, a stop reason): an
