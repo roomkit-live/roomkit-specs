@@ -5456,8 +5456,8 @@ as it reads a local one:
 
 - an error of a class the side rebuilds comes back of that class, with its
   arguments and attributes. A side rebuilds the implementation's own classes,
-  the language's, and the classes its host declares, each with its
-  subclasses. Each side reads what the other raised, so a host declares its
+  the language's built-in ones, and the classes its host declares, each with
+  its subclasses. Each side reads what the other raised, so a host declares its
   classes to the owner and to each of its executors, an executor in another
   process included;
 - any other comes back as a generic turn error that keeps the kind, the
@@ -5467,8 +5467,8 @@ as it reads a local one:
 - a generic turn error that crosses again crosses as the error it stands
   for, its kind and classes unchanged.
 
-A side MUST NOT import a module, nor run a module's code (an attribute hook),
-to resolve a kind or a class a record names: it looks the name up among the
+A side MUST NOT import a module, nor run a module's code (an attribute hook,
+a lazy loader), to resolve a kind or a class a record names: it looks the name up among the
 classes already loaded, and one it does not find there is a class it does not
 rebuild. The message is for logs and hooks, never for a model (§9.3).
 
