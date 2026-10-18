@@ -3368,8 +3368,10 @@ HookRegistration
                                             # the hook off the room lock (§9.5.1)
 ```
 
-Hooks MAY be registered globally (apply to all rooms) or per-room. A hook on a
-trigger that fires on the turn executor (§10.6.6) registered on the kit is a
+Hooks MAY be registered globally (apply to all rooms) or per-room. On a
+trigger that fires on the turn executor (§10.6.6), the channel filters read the
+turn's agent: `channel_ids` its id, `channel_types` its type when the trigger's
+payload carries it. A hook on such a trigger registered on the kit is a
 registration on the kit's own executor; implementations MUST refuse one that a
 channel the kit holds by its declaration alone could fire, whose turns run on
 another executor (§10.6.6). A room hook on such a trigger for those channels
