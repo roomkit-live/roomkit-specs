@@ -4985,7 +4985,7 @@ OwnerTool
 | `accepted` | The executor's id: it took the turn |
 | `heartbeat` | Nothing: the turn is still running |
 | `output` | `on_event()` returned: the `ChannelOutput` without its stream (`responded`, `response_events`, `response_metadata`, `tasks`, `observations`, `metadata_updates`, its error as an error record), and whether a stream follows |
-| `item` | One item of the stream, answering one `pull`: a text delta, a reasoning delta, a call's start (its id, name, arguments), a call's end (its id, the sequence number of its start's frame, name, arguments, result, status, outcome, duration, error, structured content, `refused_but_ran`), a segment break, the loop's end (reason, rounds, usage, the limits it ran under), or the stream's end |
+| `item` | One item of the stream, within what the `pull` messages granted: a text delta (or the text deltas the channel yielded together, joined, with their number), a reasoning delta, a call's start (its id, name, arguments), a call's end (its id, the sequence number of its start's frame, name, arguments, result, status, outcome, duration, error, structured content, `refused_but_ran`), a segment break, the loop's end (reason, rounds, usage, the limits it ran under), or the stream's end |
 | `tool_args` | The arguments a call runs with once its gate fixed them (a `BEFORE_TOOL_USE` rewrite, §9.3), naming the call's start frame |
 | `tool_ended` | A call's end known before the `item` carrying it was read (§10.6.4): the start's frame and the end |
 | `record` | The turn's response-metadata record as it stands (§6.7), sent before the `item` it was read with whenever it changed |
@@ -5002,7 +5002,7 @@ OwnerTool
 
 | Message | Carries |
 |---|---|
-| `pull` | Read the stream's next item (§10.6.4) |
+| `pull` | Grant the reading of the stream's next items, their number given (§10.6.4) |
 | `close` | The reader closed the stream (§10.6.4) |
 | `cancel` | The reason the owner cancels the turn (§10.6.8) |
 | `steer` | A steering directive (§21.3), answered by `steer_result` with the number of loops it reached |
@@ -5100,9 +5100,20 @@ binding, §7.5; an injected event). The owner's reads of its stream send
 channel's stream by at most the items granted, and MUST NOT advance past an
 item other than a text or reasoning delta (a call's start, a segment break, a
 loop's end) until a later `pull` grants it, so a call or a round starts only
-once the reader asked for what follows it. Closing the owner's stream sends
-`close`, and the executor closes the channel's stream as a local reader's
-close would: it is the reader's close, not a cancellation (§10.6.8).
+once the reader asked for what follows it. Within a grant the executor reads
+deltas ahead of the reader. Text deltas the channel yields without waiting
+between them MAY cross as one `item` holding their joined text and their
+number, which counts as that many items against the grant: the text is kept,
+not where it was cut, so a reader that decides between deltas decides on the
+text (a sentence budget reads it a sentence at a time, §12.2 step 12s.e).
+Closing the owner's stream sends `close`, and the executor closes the
+channel's stream as a local reader's close would: it is the reader's close,
+not a cancellation (§10.6.8). A close that finds the executor reading ahead,
+past a delta, cuts that read at once, since a local reader's close would have
+found the stream waiting at the item it yielded; a read only a later `pull`
+let start (a call running past its start) finishes first. Items read ahead
+that the owner had not read when its stream was closed or the turn cut are
+dropped: what the consumer stores is what its readers read (§10.2).
 
 The consumer reads in frames what the channel changes after yielding it:
 
