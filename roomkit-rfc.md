@@ -4992,7 +4992,7 @@ OwnerTool
 | `item` | One item of the stream, within what the `pull` messages granted: a text delta (or the text deltas the channel yielded together, joined, with their number), a reasoning delta, a call's start (its id, name, arguments), a call's end (its id, the sequence number of its start's frame, name, arguments, result, status, outcome, duration, error, structured content, `refused_but_ran`), a segment break, the loop's end (reason, rounds, usage, the limits it ran under), or the stream's end |
 | `tool_args` | The arguments a call runs with once its gate fixed them (a `BEFORE_TOOL_USE` rewrite, §9.3), naming the call's start frame |
 | `tool_ended` | A call's end known before the `item` carrying it was read (§10.6.4): the start's frame and the end |
-| `record` | The turn's response-metadata record as it stands (§6.7), sent before the `item` it was read with whenever it changed |
+| `record` | The turn's response-metadata record as it stands (§6.7), sent before the `item` it was read with whenever it changed (§10.6.4) |
 | `ephemeral` | An ephemeral event of the turn (thinking, tool-call composition, custom), which the owner publishes on its realtime backend |
 | `framework_event` | A framework event the turn emitted (§8.2), with its payload, which the owner emits on its own bus |
 | `input_request` | A tool asked a human for input: the request's id, tool and prompt (§10.6.5) |
@@ -5139,6 +5139,14 @@ The consumer reads in frames what the channel changes after yielding it:
 - a call that ended before the stream was closed or the turn cut is closed
   with its own outcome: the executor sends its end before the turn's `end`,
   and the owner closes as cancelled only a call no end was sent for.
+
+The executor compares the record with the last one it sent before each `item`
+that is no delta (the stream's end included) and once the stream is closed,
+so each of those reaches the owner after every change written before it.
+Before a text or reasoning delta it MAY look only for a write to one of the
+record's keys, so that a delta costs nothing for the record's size: a change
+made inside a value the record already holds then reaches the owner before
+the next `item` that is no delta, the one ending the segment stored with it.
 
 #### 10.6.5 What a turn asks of the owner
 
