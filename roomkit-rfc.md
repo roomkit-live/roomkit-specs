@@ -5141,8 +5141,9 @@ The consumer reads in frames what the channel changes after yielding it:
   and the owner closes as cancelled only a call no end was sent for.
 
 The executor compares the record with the last one it sent before each `item`
-that is no delta (the stream's end included) and once the stream is closed,
-so each of those reaches the owner after every change written before it.
+that is no delta (the stream's end included), before the `error` a failed
+stream ends with, and once the stream is closed, so each of those reaches
+the owner after every change written before it.
 Before a text or reasoning delta it MAY look only for a write to one of the
 record's keys, so that a delta costs nothing for the record's size: a change
 made inside a value the record already holds then reaches the owner before
