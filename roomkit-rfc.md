@@ -5443,14 +5443,34 @@ steers from submitted: with several owner processes, it steers from the one
 running the room's delivery (§10.2), and another reaches none of them.
 
 **Errors.** An error record carries the error's kind (the implementation's
-name of its class, from a set it documents), its message, the attributes that
-classify it (a provider's status code and whether it is retryable, a cut
-turn's reason), and its causes, each a kind and a message, in order. The owner
-rebuilds one error of that kind per turn, with its causes, so what reads it
+name of its class), its message, its arguments and the attributes JSON
+carries (what classifies it: a provider's status code and whether it is
+retryable, a cut turn's reason, an application's own code), the kinds of the
+classes its class derives from, nearest first, and its causes, each a record
+of its own, in order. The side that reads a record (the owner for a turn's
+error, the executor for what an owner-served call or a host verb raised)
+rebuilds one error per record, its causes chained, so what reads it
 (`ON_ERROR`'s `error_type`, a task's failure, §23.3, a reader that compares
-the error it holds with the turn's) reads it as it reads a local one; a kind
-the owner does not know is rebuilt as a generic turn error that keeps the
-kind. The message is for logs and hooks, never for a model (§9.3).
+the error it holds with the turn's, the host's own classification) reads it
+as it reads a local one:
+
+- an error of a class the side rebuilds comes back of that class, with its
+  arguments and attributes. A side rebuilds the implementation's own classes,
+  the language's, and the classes its host declares, each with its
+  subclasses. Each side reads what the other raised, so a host declares its
+  classes to the owner and to each of its executors, an executor in another
+  process included;
+- any other comes back as a generic turn error that keeps the kind, the
+  classes it derives from and the attributes, and that is also of the nearest
+  of those classes the side rebuilds: a host's subclass of a provider error
+  still reads as a provider error (its log line, §15.3; `ON_ERROR`);
+- a generic turn error that crosses again crosses as the error it stands
+  for, its kind and classes unchanged.
+
+A side MUST NOT import a module, nor run a module's code (an attribute hook),
+to resolve a kind or a class a record names: it looks the name up among the
+classes already loaded, and one it does not find there is a class it does not
+rebuild. The message is for logs and hooks, never for a model (§9.3).
 
 #### 10.6.9 Telemetry and prerequisites
 
