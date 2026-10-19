@@ -2309,7 +2309,10 @@ An ACP agent channel:
 4. MUST convert Room message content into ACP prompt content and map ACP agent
    message chunks back to the normal RoomKit streaming output path;
 5. MUST map ACP tool-call lifecycle updates to RoomKit tool-call stream markers
-   and MUST map ACP plan updates to RoomKit realtime events;
+   and MUST map ACP plan updates to RoomKit realtime events. Each session
+   update and permission request MUST be handled under the Room turn prompting
+   that session (its publications, hooks and host, §10.6.5), whichever Room's
+   turn opened the connection, and outside any turn when none prompts it;
 6. MUST skip events originating from itself and persisted tool-call activity
    events, preventing duplicate prompts and agent loops;
 7. MUST support cancellation of an active Room turn and MUST release ACP
@@ -2397,7 +2400,10 @@ the Room (§19.3.2). A detach MUST NOT wait for the agent: the session is
 closed off it, once the Room's turn still running has ended, a standalone
 turn's included. A turn that started before the detach and has not prompted
 yet MUST end without prompting, marked `interrupted`, and a session it
-opened for the detached Room MUST be closed.
+opened for the detached Room MUST be closed. A host call running across the
+detach (a value being set while the session opens, or while a turn holds the
+Room) MUST close a session it opened and keep no value for the Room, and the
+owner stores no call result for a Room the channel is no longer attached to.
 
 ACP agents can request permission to execute tools and can request client-side
 filesystem or terminal operations. An ACP agent channel:
@@ -4919,7 +4925,10 @@ state:
 Each request names the room's previous turn of the channel (`previous_turn`,
 §10.6.3): the one the owner sent last, ended or not. The owner records it as
 it sends it, so a turn sent while the previous one runs names it; a turn the
-backend refused is never named. A channel call (§10.6.3) leaves the room's
+backend refused before any executor took it (`no_executor`,
+`backend_closed`, a channel call whose arguments cannot be serialized) is
+never named, while one the owner stopped waiting for once sent (a cancel, a
+timeout) stays named, since its executor may have begun it. A channel call (§10.6.3) leaves the room's
 state as a turn does: it names the previous turn or call too, and the next
 turn names it. An executor that holds state for the channel and room not left
 by that turn or call MUST discard it before running the turn or the call's
@@ -5089,8 +5098,8 @@ refused, an owner that restarted included, until its next turn. A
 `room_call` MUST also name that very turn: work an earlier turn began writes
 nothing once a later turn was sent. A `room_publication` may name an earlier
 turn of that executor, which still holds the room's state: an external
-agent's updates (§6.4) arrive in the context of the turn that opened its
-connection. It publishes what it accepts as it
+agent's update (§6.4) is handled under the turn prompting its session, or
+outside any turn when none is. It publishes what it accepts as it
 publishes a turn's `ephemeral` and `framework_event` frames, for the room
 and kinds a turn may publish.
 
@@ -5279,8 +5288,11 @@ refusal (§9.3); the executor answers `input_taken`, and the owner's door
 answers whether the waiting tool read its outcome. A request settled on the
 executor otherwise sends `input_closed`, and the owner closes its record. A
 request belongs to the turn that opened it; one still open when its turn ends
-is withdrawn on both sides, its waiter reading it released, and one a task
-opens after its turn ended is the host's handler's alone.
+is withdrawn on both sides, its waiter reading it released, but a detached
+one (a request no tool waits on, which its creator alone releases): the
+owner's record goes with the turn while the request stays open on the
+executor, answerable there. One a task opens after its
+turn ended is the host's handler's alone.
 
 #### 10.6.6 Hooks
 
