@@ -4931,7 +4931,8 @@ marks a request handed as it gives it to an executor, before any wait on
 the executor's answer: a turn that failed before (no executor declares it,
 the backend closed, it cannot be serialized, its placement failed) is never
 named, while one handed stays named whatever followed (a cancel, a timeout),
-since its executor may have begun it. A channel call (§10.6.3) leaves the
+since its executor may have begun it; a refusal that applied nothing (a
+closing process's) takes the mark back. A channel call (§10.6.3) leaves the
 room's state as a turn does: it names the previous turn or call too, and the next
 turn names it. An executor that holds state for the channel and room not left
 by that turn or call MUST discard it before running the turn or the call's
