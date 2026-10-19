@@ -4797,7 +4797,9 @@ TurnBackend (interface)
 │       # Executor side: receive the requests and the channel control of the
 │       # channels the executor declares, until close
 └── close() → void
-        # Fail the turns in flight (executor_lost) and release the transport
+        # Fail the turns in flight (executor_lost) and release the transport;
+        # on the executor side, cut the turns it runs and write their end
+        # within cancel_timeout first
 ```
 
 #### 10.6.1 Scope and the one path
@@ -5410,8 +5412,8 @@ backend exists for, still beats. That beat MAY travel outside the turn's
 numbered messages (a record of the executor alive that its thread refreshes,
 on the transport's clock): once an executor took the turn, the owner counts
 it as a message from that executor while that executor's process still runs
-the turn (a turn whose work ended without its `end` is then lost, not waited
-for); before, only `accepted` counts, so a turn no executor takes still fails
+the turn, which it does until the turn's `end` is written (a turn whose work
+ended without its `end` is then lost, not waited for); before, only `accepted` counts, so a turn no executor takes still fails
 within `accept_timeout`. An executor beats as one process's: the same id
 restarted in another process beats for none of the first one's turns. A slow
 turn that keeps beating is never
@@ -5478,9 +5480,12 @@ as it reads a local one:
 - an error of a class the side rebuilds comes back of that class, with its
   arguments and attributes. A side rebuilds the implementation's own classes,
   the language's built-in ones, and the classes its host declares, each with
-  its subclasses. Each side reads what the other raised, so a host declares its
+  its subclasses, a class nested in another or defined in a function
+  included. Each side reads what the other raised, so a host declares its
   classes to the owner and to each of its executors, an executor in another
-  process included;
+  process included. One that cannot be rebuilt so that it gives back its
+  message (a field its message reads did not cross) comes back as the generic
+  turn error below, also of that class, its message kept;
 - any other comes back as a generic turn error that keeps the kind, the
   classes it derives from and the attributes, and that is also of the nearest
   of those classes the side rebuilds: a host's subclass of a provider error
