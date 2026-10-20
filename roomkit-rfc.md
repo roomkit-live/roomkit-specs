@@ -1102,8 +1102,11 @@ InboundMessage
 │                                           # (Section 19.3); null = any eligible
 ├── response_visibility: string | null      # Where the answer may go; null = unrestricted
 ├── chain_depth: int = 0                    # The chain the message continues (Section 8.3)
-└── standalone: bool = false                # INSTRUCTION only: the turn reads nothing
-                                            # of the room (Section 10.1.1)
+├── standalone: bool = false                # INSTRUCTION only: the turn reads nothing
+│                                           # of the room (Section 10.1.1)
+└── delivery_key: string | null             # The caller's name for the message's delivery
+                                            # while in flight, for its cancellation
+                                            # (Section 10.1); never stored
 ```
 
 The room, when the caller knows it, is passed to `process_inbound()` (Section
@@ -4250,18 +4253,34 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 ```
 
 **Explicit delivery cancellation:** An implementation MAY expose cancellation
-of a call's delivery cascade. Cancellation MUST NOT change the committed
-timeline event's status (§13.6). It MUST stop subsequent generation/tool rounds
-and reentry belonging to the cancelled cascade, join its running generation,
-tool handlers and stream consumers (including their finalizers), and report a
-terminal cancellation outcome before claiming cleanup has completed. Other
-cascades and shared providers MUST remain usable. The next call MAY resume
-after that cleanup. Cancellation cannot revoke external effects already
+of a call's delivery cascade. Cancelling it stops the cascade's turns, not its
+delivery: a turn the cascade has not started MUST NOT start, a turn being
+handed to its executor (§10.6.2) MUST be cut, never left running, a running
+turn MUST be cut (§10.6.8), and no reentry belonging to the cascade follows. The committed event is still delivered: its delivery set executes for
+every target but the intelligence channels it would have asked, and its
+AFTER_BROADCAST hooks fire, whether its plan had executed, was executing or
+still waited in the room's lane, where it keeps its place. Cancellation MUST
+NOT change the committed timeline event's status (§13.6). It MUST join the
+cascade's running generation, tool handlers and stream consumers (including
+their finalizers), and report a terminal cancellation outcome before claiming
+cleanup has completed; a plan still waiting in the lane is not running work,
+and its delivery follows in lane order. Other cascades, the other turns of the
+room among them, and shared providers MUST remain usable. The next call MAY
+resume after that cleanup. Cancellation cannot revoke external effects already
 committed by a handler, nor implicitly own tasks detached by application code.
 
 The awaited path SHOULD propagate caller cancellation after draining its own
 cascade. A detached-completion handle SHOULD provide explicit cancellation;
-cancelling a mere completion waiter SHOULD leave detached work running.
+cancelling a mere completion waiter SHOULD leave detached work running. An
+implementation MAY let the caller name a message's delivery by a key of its own
+(`InboundMessage.delivery_key`), so code that holds no handle, another task or
+a tool an agent calls with the key as text, cancels it. The key names every
+delivery in flight that carries it, from the call's start until its delivery
+is over. A cancellation by key answers how many deliveries it cancelled
+(none for a key naming nothing in flight) and returns without waiting for
+their cleanup, which each delivery's caller reads on its result; it returns at
+once from the room's lane or under its lock. A key names a delivery and grants
+nothing: the host checks who may cancel before it cancels.
 Repeated cancellation MUST NOT interrupt cleanup already in progress. A
 bounded cleanup that expires MUST report incomplete drainage, not success;
 resources still in use MUST be retained. An implementation MUST refuse a drain
@@ -5436,8 +5455,15 @@ meaning, each its own message:
 - the turn's cascade is cancelled (§10.1, *Explicit delivery cancellation*;
   the kit closing): `cancel`, with the cascade's reason; the executor cancels
   the turn's work as its own process would cancel it locally, its running
-  tool handlers included (§21.6);
+  tool handlers included (§21.6). A turn its cascade would start once
+  cancelled is never submitted, and a submission the cancellation interrupts
+  after its hand-over gives the turn up: the backend releases it, and its
+  executor cuts it as it would cut one whose owner was lost;
 - a steering `Cancel` (§21.3): `steer`.
+
+An executor cancels a turn's work once: a `close` and a `cancel` that reach it
+in either order let the cleanup the first one started, the channel's
+finalizers included, run to its end before `end`.
 
 The turn then ends with what such an end produces locally (its loop's end with
 reason `cancelled`, its open calls closed, §6.4 *A turn cut short*), then
@@ -14580,7 +14606,10 @@ directive addressed to a room MUST reach the room's most recent loop, and a
 directive addressed to a room MUST NOT reach a loop of another room. A directive addressed to neither
 reaches the channel's most recent loop, whatever its room. A loop is reachable once its turn has started; a directive
 that comes before reaches nothing, and the host is told how many loops it
-reached.
+reached. To stop the turns one message starts, whether they have started or
+not, a host cancels that message's delivery (§10.1, *Explicit delivery
+cancellation*), by its handle or its `delivery_key`, rather than steering its
+room: the room's other turns go on.
 
 The loops of a room's turns run on turn executors (Section 10.6): the room's
 owner resolves the turns a directive reaches under the rules above, from the
