@@ -4210,7 +4210,10 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
         step 12), and its delivery set joins the same lane in FIFO order.
         Every pass re-enters its responses: a reentry pass, a streamed
         segment, a greeting and a regenerated answer are an agent's
-        output like the trigger's response (§19.3.1). A streamed
+        output like the trigger's response (§19.3.1). The trigger's
+        own responses are read one after another, in the order their
+        turns returned them: the first ready is read first, wherever
+        its turn runs (§10.6). A streamed
         response started by any pass is read by the caller that owns
         the chain, after the trigger's own, and counts against the
         same reentry budget as a buffered response. Every response that
