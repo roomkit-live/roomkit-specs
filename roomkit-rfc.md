@@ -5085,9 +5085,10 @@ executor that missed the message still discards the room's state at its next
 turn (§10.6.2), and the owner forgets what the room kept for the channel,
 even when the message could not be sent.
 
-A `committed_event` reaches one executor, the one that holds the room's
-state for the channel, else one that would take the room's turns (the
-room's hooks it carries included, §10.6.6), and never makes that executor
+A `committed_event` reaches one executor: the owner's own for a channel the
+owner holds live (§10.6.7), else the one that holds the room's state for the
+channel, else one that would take the room's turns (the room's hooks it
+carries included, §10.6.6). It never makes that executor
 the holder: it leaves the room's state as it is and names no
 previous turn. The executor hands the event to the channel (an AI channel's
 memory, §20), logs what the channel raises, and applies it before any later
@@ -5095,8 +5096,9 @@ request of the owner for that channel and room. One no executor takes is
 dropped and logged by the owner.
 
 A `channel_call` is made for a channel attached to the room, in the room's
-organization (§17.2). It reaches one executor, the one that holds the room's
-state for the channel, else one that declares the channel, and its
+organization (§17.2). It reaches one executor: the owner's own for a channel
+the owner holds live (§10.6.7), else the one that holds the room's state for
+the channel, else one that declares the channel. Its
 `channel_result` is that executor's: the verb's result as data or its error
 record, what the room keeps for the channel when the verb changed it, and
 the executor's id. A backend answers a call on the call's own exchange, so
