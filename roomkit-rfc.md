@@ -4873,7 +4873,9 @@ be runnable against it, and SHOULD run against it by default.
 
 **On the owner, a declaration.** The owner knows each intelligence channel by
 its declaration, registered as a channel is. It needs no live object of the
-channel to plan, broadcast, run a strategy or read a turn.
+channel to plan, broadcast, run a strategy or read a turn, except a strategy
+that drives a realtime session, which runs each agent's own prompt (Section
+19.5, Section 19.6).
 
 ```
 ChannelDeclaration
@@ -13378,7 +13380,7 @@ causes by the same rule, its servers' instructions aside, which reach its own
 model (Section 21.2), and for tools of its own besides (Section 12.4.1). An
 agent the kit holds by its declaration alone, or an intelligence channel that
 is not an agent, is refused at the install as well: a session runs the
-agent's prompt and identity block, which only the agent itself carries
+agent's own prompt, which only the agent itself carries
 (Section 10.6.2).
 
 **Allowed transitions:** An agent in phase P MAY hand off to:
@@ -13441,15 +13443,16 @@ null) replaces the default `handoff_conversation` definition; `room_id`
 in the room does (Section 19.7), and null declares it in every room the agent
 serves. Setting it up again where it is already declared is refused.
 
-**A realtime handoff needs its agents (normative).** A handler serving a
-realtime channel reconfigures the room's sessions with the next agent's prompt
-and identity block, and its language change with the active agent's: both are
-the agent's own (Section 19.5), which a declaration does not carry (Section
-10.6.2). Such a handler MUST refuse an agent held by its declaration alone, or
-an intelligence channel that is not an agent, when it is given it, and a
-language change on a realtime channel whose active agent is one MUST be
-refused before the room's language is written. A handler with no realtime
-channel takes declared agents.
+**A realtime handoff needs its agents (normative).** A realtime pipeline
+reconfigures the room's sessions with the next agent's prompt on a handoff
+(Section 19.5), and a handler's language change reconfigures them with the
+active agent's: the agent's own prompt, which a declaration does not carry
+(Section 10.6.2). A handler whose event channel is a realtime channel the kit
+holds MUST refuse an agent held by its declaration alone, or an intelligence
+channel that is not an agent, when it is given its agents; and a language
+change on a realtime channel whose active agent is one MUST be refused before
+the room's language is written, whoever put the agent among the handler's
+agents. A handler with no realtime channel takes declared agents.
 
 **The room is the call's (normative).** A handoff acts on the room of the
 call that requested it, read from the tool call context (Section 21.4). One
