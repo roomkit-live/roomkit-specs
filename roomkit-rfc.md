@@ -13375,7 +13375,11 @@ its servers' instructions). Its gated tools would run without their skill,
 and its other ones would be called by a model that was never told of them
 or of how to use them. A reasoning backend's agent is refused for the same
 causes by the same rule, its servers' instructions aside, which reach its own
-model (Section 21.2), and for tools of its own besides (Section 12.4.1).
+model (Section 21.2), and for tools of its own besides (Section 12.4.1). An
+agent the kit holds by its declaration alone, or an intelligence channel that
+is not an agent, is refused at the install as well: a session runs the
+agent's prompt and identity block, which only the agent itself carries
+(Section 10.6.2).
 
 **Allowed transitions:** An agent in phase P MAY hand off to:
 - `stage.next` (forward progression)
@@ -13436,6 +13440,16 @@ null) replaces the default `handoff_conversation` definition; `room_id`
 (default null) declares it in that one room's turns, as a strategy installed
 in the room does (Section 19.7), and null declares it in every room the agent
 serves. Setting it up again where it is already declared is refused.
+
+**A realtime handoff needs its agents (normative).** A handler serving a
+realtime channel reconfigures the room's sessions with the next agent's prompt
+and identity block, and its language change with the active agent's: both are
+the agent's own (Section 19.5), which a declaration does not carry (Section
+10.6.2). Such a handler MUST refuse an agent held by its declaration alone, or
+an intelligence channel that is not an agent, when it is given it, and a
+language change on a realtime channel whose active agent is one MUST be
+refused before the room's language is written. A handler with no realtime
+channel takes declared agents.
 
 **The room is the call's (normative).** A handoff acts on the room of the
 call that requested it, read from the tool call context (Section 21.4). One
