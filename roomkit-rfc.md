@@ -4294,7 +4294,8 @@ resources still in use MUST be retained. An implementation MUST refuse a drain
 from a context that its own delivery needs to progress, such as its room lock
 or delivery lane. These guarantees cover execution owned by the local process;
 a turn another process runs is cancelled, and its drainage reported, as
-§10.6.8 says.
+§10.6.8 says, and so is a turn its owner gave up as it closed, which is not
+joined even when its executor runs in the owner's process.
 
 **InboundResult:**
 
@@ -5485,12 +5486,16 @@ reason `cancelled`, its open calls closed, §6.4 *A turn cut short*), then
 `end`. An `end` that does not come within `cancel_timeout` (default 5 seconds)
 after `cancel` is reported as incomplete drainage (§10.1): the turn ends
 failed, the owner drops its later frames, and nothing reports its cleanup
-done. A turn the owner gives up as it closes owes no `end`: the owner waits
-for nothing of it and drops its later frames, the executor, no longer hearing
-its owner, cuts it, and a cascade that read it counts its cleanup done. After
-`close`, the owner waits for `end` while the executor keeps
+done. After `close`, the owner waits for `end` while the executor keeps
 beating: a call already running is let finish (§12.2 step 13s), within its
-own bound (§21.6).
+own bound (§21.6). A turn still open when its owner itself closes (the kit's
+close, after it cancelled the turn's cascade) is given up and owes no `end`:
+the owner waits for nothing more from its executor and drops its later
+frames; the backend releases the turn, and its executor cuts it as it would
+cut one whose owner was lost, at once when the release reaches it, else after
+`heartbeat_timeout` of silence, except the turn the close runs under
+(§10.6.5); a cascade that read it counts its cleanup done. A turn already over
+keeps what its end reported: one whose `end` is owed stays incomplete.
 
 **Steering.** The owner offers the host an asynchronous `steer(directive,
 channel_id, room_id | turn_id | null)` that answers the number of loops it
