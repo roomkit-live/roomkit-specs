@@ -4263,8 +4263,9 @@ still waited in the room's lane, where it keeps its place. Cancellation MUST
 NOT change the committed timeline event's status (§13.6). It MUST join the
 cascade's running generation, tool handlers and stream consumers (including
 their finalizers), and report a terminal cancellation outcome before claiming
-cleanup has completed; a plan still waiting in the lane is not running work,
-and its delivery follows in lane order. Other cascades, the other turns of the
+cleanup has completed; neither the event's delivery to its other targets,
+which goes on, nor a plan still waiting in the lane, whose delivery follows in
+lane order, is the turns' work to join. Other cascades, the other turns of the
 room among them, and shared providers MUST remain usable. The next call MAY
 resume after that cleanup. Cancellation cannot revoke external effects already
 committed by a handler, nor implicitly own tasks detached by application code.
@@ -4280,7 +4281,10 @@ is over. A cancellation by key answers how many deliveries it cancelled
 (none for a key naming nothing in flight) and returns without waiting for
 their cleanup, which each delivery's caller reads on its result; it returns at
 once from the room's lane or under its lock. A key names a delivery and grants
-nothing: the host checks who may cancel before it cancels.
+nothing: the host checks who may cancel before it cancels, and an
+implementation that scopes operations to an organization (§17.2) scopes a
+cancellation by key alike, reaching only the deliveries of that organization's
+rooms, so two tenants that chose the same key never cancel each other's.
 Repeated cancellation MUST NOT interrupt cleanup already in progress. A
 bounded cleanup that expires MUST report incomplete drainage, not success;
 resources still in use MUST be retained. An implementation MUST refuse a drain
