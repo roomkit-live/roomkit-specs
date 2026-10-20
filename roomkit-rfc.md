@@ -5485,7 +5485,10 @@ reason `cancelled`, its open calls closed, §6.4 *A turn cut short*), then
 `end`. An `end` that does not come within `cancel_timeout` (default 5 seconds)
 after `cancel` is reported as incomplete drainage (§10.1): the turn ends
 failed, the owner drops its later frames, and nothing reports its cleanup
-done. After `close`, the owner waits for `end` while the executor keeps
+done. A turn the owner gives up as it closes owes no `end`: the owner waits
+for nothing of it and drops its later frames, the executor, no longer hearing
+its owner, cuts it, and a cascade that read it counts its cleanup done. After
+`close`, the owner waits for `end` while the executor keeps
 beating: a call already running is let finish (§12.2 step 13s), within its
 own bound (§21.6).
 
