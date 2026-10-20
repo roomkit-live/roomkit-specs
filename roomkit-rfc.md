@@ -15304,7 +15304,13 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   another room's task, nor one a strategy runs without posting it
   (`post_status = false`), which that strategy follows itself. It answers
   that the task was cancelled, that it had already ended (with its status),
-  or that the room has no such task.
+  that the room has no such task, or, for a task of the room it may not
+  cancel, that it is still running and why: an inline delegation runs inside
+  the turn that asked for it and ends with it; a task a strategy follows is
+  the strategy's, which the host may cancel. Whether a task is the room's is
+  what the framework knows of the tasks it runs for each room, never what the
+  bus lists: a task of another room, or one the framework never ran, is no
+  task of the room.
 
 **The room's tasks in the turn's notes.** An AI channel's turn reads the
 room's tasks without a tool call: when the StatusBus lists tasks for the room
