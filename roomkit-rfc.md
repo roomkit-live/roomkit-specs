@@ -5397,7 +5397,13 @@ that process, as the in-memory backend carries it; one placed elsewhere crosses
 the backend's transport. A backend that knows every executor alive (the
 in-memory one; a distributed one keeping a registry of the executors alive and
 what they declare) fails at once, with `no_executor`, a request none of them
-declares. A request MUST reach one executor at most: a process that refuses it
+declares. The owner's own executor, the one that runs the channels the owner
+holds live, takes their turns, channel calls and committed events: a backend
+MUST place them on it and on no other executor, whatever else declares the
+channel, and one it does not take (a room hook it does not define) fails with
+`no_executor`. An agent a host runs on an executor of its own is one the owner
+holds by its declaration (§10.6.2). A request MUST reach one executor at
+most: a process that refuses it
 (its executor closed) has it placed again; one that does not answer it within
 `accept_timeout` loses the turn (`executor_lost`), which is never handed to
 another. A
