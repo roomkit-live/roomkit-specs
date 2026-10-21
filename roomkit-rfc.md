@@ -6165,9 +6165,10 @@ at once, so on a stream per turn a turn started soon after the last one is
 sent half to the stream being closed and reaches the room in pieces ("What
 is the capital of Italy?", "Answer", "in one word.", reproduced 2026-10-21).
 Such a provider gives a turn's final once its last words can have arrived,
-and closes it sooner when the next turn starts: that turn's own words trail
-its start by the delay (RoomKit's Voxtral provider waits the delay plus
-100 ms after the end, three quarters of the delay after the next start).
+and before the next turn's own words can: RoomKit's Voxtral provider waits the
+delay plus 100 ms after the end, and 0.95 of the delay once the next turn has
+started (a turn's last words came up to 0.9 of the delay after its end, the
+next turn's first word no sooner than a delay after it, measured 2026-10-21).
 The typical flow starts a session in a detecting mode (Deepgram `multi`), reads
 the reported language, and pins the following streams to it. An implementation
 MAY ship that flow as a policy; it MUST leave the primitive reachable from
