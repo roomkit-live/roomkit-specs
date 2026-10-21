@@ -7703,6 +7703,7 @@ BackchannelContext
 ├── transcript: string | null                # Partial transcript of the speech (if STT fast enough)
 ├── speech_duration_ms: float                # How long the user has been speaking
 ├── bot_speech_progress: float               # How far into the bot's response (0.0 to 1.0)
+├── is_final: bool (default true)            # False: a partial transcript of speech under way
 └── metadata: map<string, any>               # Additional context
 ```
 
@@ -7710,7 +7711,8 @@ BackchannelContext
 BackchannelDecision
 ├── is_backchannel: bool                     # True = acknowledgment, False = real interruption
 ├── confidence: float                        # Decision confidence [0.0, 1.0]
-└── label: string | null                     # Classification label (e.g., "agreement", "filler", "question")
+├── label: string | null                     # Classification label (e.g., "agreement", "filler", "question")
+└── pending: bool (default false)            # No verdict yet: the words may still become a backchannel
 ```
 
 **Timing constraint:** In the SEMANTIC strategy, the `BackchannelContext.transcript`
@@ -7805,6 +7807,26 @@ barge-in), classifies the latest words of that stretch. A stretch classified
 as a backchannel fires ON_BACKCHANNEL once and is not cut on duration alone
 afterwards; later words that are not a backchannel still interrupt.
 
+**Words still being said.** A streaming STT writes its partial transcripts
+word by word, or in pieces of words: Voxtral Realtime 3 wrote "Ou" before
+"Ouais", "Je" before "Je vois", "D" before "D'accord". Judged alone, the first
+partial of most acknowledgements is none, and the bot was cut by an
+acknowledgement it should have talked through. The implementation therefore
+tells the detector whether the transcript is a partial
+(`BackchannelContext.is_final`), and a detector MAY answer a partial `pending`
+when its words may still become a backchannel: acknowledgements, then the
+first words of one, the last of them perhaps only begun. A pending verdict
+neither interrupts nor fires ON_BACKCHANNEL: the speech is judged again on its
+next words, and is not cut on duration alone meanwhile. A final transcript is
+never pending. When the last partial of speech said during playback was left
+pending and its final arrives, the final is classified as a whole utterance,
+past any minimum duration: a backchannel is discarded, anything else cancels
+TTS and is processed as the user's turn ("No" might have been "noted"; its
+final "No." cuts). The cost is accepted: a genuine interruption whose first
+words may open an acknowledgement ("Je voudrais…", "I want…") cuts one partial
+later, 0.06 to 0.35 s measured on Voxtral; one whose first word opens none
+("non", "stop", "attends", "wait") cuts at once.
+
 **Interruption flow:**
 
 ```
@@ -7823,6 +7845,7 @@ Check InterruptionStrategy:
       │   └── Speech stops before threshold → Ignore, resume TTS
       │
       ├── SEMANTIC → Run BackchannelDetector
+      │   ├── pending = true → Wait for the next words (no verdict yet)
       │   ├── is_backchannel = true → Ignore, resume TTS
       │   │   └── Fire ON_BACKCHANNEL hook (async)
       │   └── is_backchannel = false → Cancel TTS
