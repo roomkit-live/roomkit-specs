@@ -15331,9 +15331,11 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   tasks it runs for each room, never what the bus lists: a task of another
   room, one the framework never ran, or one another framework runs for the
   room on a bus they share, is no task of the room there. One it ran for the
-  room and that ended is answered ended, with its status, as soon as it ends,
-  before its hooks run and before the bus shows that end (RoomKit keeps the
-  latest 1024 ended, all rooms together).
+  room and that ended is answered ended, with its status, even before the bus
+  shows that end: an inline task from its completion's start, before its
+  hooks run, and a background task from its runner's handing over of its
+  end, a call meanwhile waiting for that (RoomKit keeps the latest 1024
+  ended, all rooms together).
 
 **The room's tasks in the turn's notes.** An AI channel's turn reads the
 room's tasks without a tool call: when the StatusBus lists tasks for the room
