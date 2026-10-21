@@ -6117,6 +6117,8 @@ STTProvider (interface)
 │       # Whether transcribe/transcribe_stream honour a per-call language
 ├── supports_diarization: bool (default false)
 │       # Whether final results say who spoke (Section 12.2.3)
+├── keeps_stream_across_turns: bool (default false)
+│       # Whether one stream carries turn after turn, a final for each
 ├── transcribe(audio_chunk, language: string | null) → TranscriptionResult
 └── transcribe_stream(audio_stream, language: string | null) → async_iterator<TranscriptionResult>
 
@@ -6144,8 +6146,28 @@ be back-filled from the request: null means the provider said nothing.
 
 A Voice Channel SHOULD let the STT language be chosen per session at runtime.
 The choice applies from the next stream opened for that session: a stream is
-opened per utterance (VAD mode) or per turn (continuous mode), and every
-streaming STT API RoomKit targets fixes the language for the life of a stream.
+opened per utterance (VAD mode) or per turn (continuous mode, but for a kept
+stream, below), and every streaming STT API RoomKit targets fixes the language
+for the life of a stream.
+
+**Kept streams.** In continuous mode a Voice Channel opens a stream per turn,
+except for a provider that diarizes (its labels hold within one stream,
+Section 12.2.3) or that reports `keeps_stream_across_turns`: its model cuts
+the turns within one stream, a final for each, and keeps listening. The
+channel MUST keep such a stream open across turns, as Section 12.2.3 *Stream
+lifetime* says for a diarizing one: a new stream only when the provider ends
+it, on an error, or on a language change; silence filling a pause; a final
+discarded as echo leaving the stream open. Its finals MUST reach the room in
+the order they were produced, the reply to one never holding back the next.
+A provider whose text trails its turn events needs it: Voxtral Realtime 3
+writes a word a streaming delay after hearing it, while its turn events come
+at once, so on a stream per turn a turn started soon after the last one is
+sent half to the stream being closed and reaches the room in pieces ("What
+is the capital of Italy?", "Answer", "in one word.", reproduced 2026-10-21).
+Such a provider gives a turn's final once its last words can have arrived,
+and closes it sooner when the next turn starts: that turn's own words trail
+its start by the delay (RoomKit's Voxtral provider waits the delay plus
+100 ms after the end, three quarters of the delay after the next start).
 The typical flow starts a session in a detecting mode (Deepgram `multi`), reads
 the reported language, and pins the following streams to it. An implementation
 MAY ship that flow as a policy; it MUST leave the primitive reachable from
