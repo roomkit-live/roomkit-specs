@@ -15788,7 +15788,11 @@ child room is marked, its completion callback and its waiters run, and its
 span ends `error`, so no reader shows it running. The caller of an inline
 delegation, or of one its runner refused, receives the error and step 8
 hands nothing back; a background task whose run raised has no caller left,
-and its notified channel is told it failed, as for any failed task.
+and its notified channel is told it failed, as for any failed task. A
+delegation that fails before its task is announced (the parent room's
+context unreadable as the announcement is built) raises to its caller, and
+nothing reports the end of a task never announced: no `ON_TASK_COMPLETED`,
+no end on the StatusBus, no completion callback.
 
 A delegation is followed on the framework's StatusBus (Section 19.8), so an
 agent or a host sees a task while it runs. Once its child room is ready, when
@@ -15887,7 +15891,11 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   runs in the background. Calls that cancel one task at once cancel it once,
   the host's `cancel_task(task_id)` among them: each is answered that it was
   cancelled, and none of the agents that made them is handed the
-  cancellation back. A task the bus lists ended is
+  cancellation back. A call made while such a cancel's end is still being
+  completed, the task ended `cancelled` but whom its end is handed back to
+  not yet decided, is one of them when it could have cancelled the task
+  running; made once that is decided, or on a task that ended otherwise, it
+  is answered that the task ended. A task the bus lists ended is
   answered as the bus lists it, as `task_status` reads it: nothing is left to
   act on. Whether a
   task the bus lists running is the room's is what the framework knows of the
