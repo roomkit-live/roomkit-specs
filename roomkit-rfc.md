@@ -13807,7 +13807,10 @@ reconfigures the session to the next agent's. The active agent is the room's:
 a session that starts in a room starts with that room's active agent, a
 handoff in one room reconfigures that room's sessions, and neither changes
 another room's sessions nor the channel's configuration for future sessions
-(Section 19.7). The tools an agent's
+(Section 19.7). An agent with neither a prompt nor an identity block to set
+gives its session the channel's own prompt when a handoff makes it active, as
+a session that starts with it gets; a language change of the room keeps the
+session's prompt as it is. The tools an agent's
 configuration declares are the channel's own tools, the agent's tools and the
 handoff tool; a pipeline MUST NOT drop the channel's tools, nor declare an
 agent without its own. The channel's tools are read as they are when a session
@@ -14043,6 +14046,14 @@ Triage → Specialist → Resolution → Closing
 
 The first agent is the entry point. Only forward transitions (and explicitly
 allowed backward transitions) are permitted.
+
+On a voice channel the strategy names, the agents' voices are the channel's
+voice map, and a handoff in a room the strategy runs MAY greet with the
+agent it made active (a farewell spoken first), through hooks of that room
+only. A realtime voice channel is refused: its sessions' configuration and
+the handoff it serves are the channel's, for every room, as
+`ConversationPipeline.install` wires them (Section 19.5), which a strategy
+installed room by room cannot hold.
 
 #### 19.7.2 Swarm
 
