@@ -5785,7 +5785,10 @@ declares. The owner's own executor, the one that runs the channels the owner
 holds live, takes their turns, channel calls and committed events: a backend
 MUST place them on it and on no other executor, whatever else declares the
 channel, and one it does not take (a room hook it does not define) fails with
-`no_executor`. An agent a host runs on an executor of its own is one the owner
+`no_executor`. Once the owner's own executor closed (a host closing it while
+the owner runs), they fail with `no_executor` too: they are never placed on
+another executor, whose copy of the channel would run without the live
+channel's state. An agent a host runs on an executor of its own is one the owner
 holds by its declaration (§10.6.2). A request MUST reach one executor at
 most: a process that refuses it
 (its executor closed) has it placed again; one that does not answer it within
