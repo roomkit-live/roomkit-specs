@@ -844,6 +844,11 @@ Participant
 | OBSERVER | Read-only participant (supervisor, auditor) |
 | BOT | Automated system participant |
 
+An AGENT is a person: the people who take part (Section 6.4) include them.
+An AI agent takes part through an intelligence channel (Section 6.4), not as
+a participant; an automated participant the host records in the room, an AI
+one included, is a BOT.
+
 **ParticipantStatus** enumeration:
 
 | Value | Description |
@@ -1641,12 +1646,11 @@ either, save a turn a discussion gives in answer to a message (Section
 it. The agent's identity is the policy's own: a policy that judges whether
 the agent was addressed is told its name when it is made.
 
-The people are the room's active participants that are neither agents nor bots
-nor on the agent's channel, or, when more, the distinct speakers named in the
-recent events: one microphone is one participant but may carry several
-diarized voices. A speaker is named as the turn's context names speakers: the
-name the sender's transport stamped on the event, else the participant's
-display name.
+The people are those who take part besides the agent (*Who takes part*,
+below), or, when more, the distinct speakers named in the recent events: one
+microphone is one participant but may carry several diarized voices. A
+speaker is named as the turn's context names speakers: the name the sender's
+transport stamped on the event, else the participant's display name.
 
 RoomKit provides a policy built on a classifier (Section 6.8). It asks narrow
 questions about the turn, in one call, over the turn's text, the recent turns
@@ -2230,12 +2234,13 @@ labels once the turns it reads hold several speakers (a turn with no text,
 the runtime's own and the application's instruction aside), or two people
 or more take part, and a one-to-one conversation reads as before.
 **Who takes part** besides the agent is read from the room's roster, not
-from who has spoken: its active participants who are neither agents, bots
-nor observers (an observer reads without taking part), nor on the agent's
-own channel, and whose messages reach the agent (a channel they are reached
-through is bound in the room with a visibility that lets its messages reach
-the agent, Section 7.5: a person the agent would never hear is not named to
-it), silent ones included, one per person in the order they joined, each
+from who has spoken: its active participants who are neither bots nor
+observers (an observer reads without taking part; an AGENT, a human advisor,
+takes part, Section 5), nor on the agent's own channel, and whose messages
+reach the agent (a channel they are reached through is bound in the room
+with a visibility that lets its messages reach the agent, Section 7.5: a
+person the agent would never hear is not named to it), silent ones
+included, one per person in the order they joined, each
 named by the room's record of them (their name and its rank, or their
 channel when they have no name). A conference
 keeps the roster (Section 12.10.4); an integration that carries several
@@ -14368,11 +14373,11 @@ SpeakQueue (one per room, readable by the host)
    unbound when an install of the discussion bound it; an agent bound
    otherwise is an intelligence channel the room cannot keep, and the install
    is refused, as above.
-2. **People.** A person is a participant of the room that is neither an
-   agent nor a bot, as Section 6.4 names the people of a turn; a person's
-   message is an event such a participant sent through a transport channel,
-   or one a transport channel brought in with no participant record behind
-   it (a room whose people the host never recorded still has people). A
+2. **People.** A person is a participant of the room that is neither a bot
+   nor an observer, the roles Section 6.4 leaves out of who takes part; a
+   person's message is an event such a participant sent through a transport
+   channel, or one a transport channel brought in with no participant record
+   behind it (a room whose people the host never recorded still has people). A
    delivery (Section 22), which a transport brings in from the framework's
    own sender, is no person's message: it is an event from another sender
    (rule 8).
