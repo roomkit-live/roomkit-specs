@@ -15574,7 +15574,11 @@ conversation = 0, hand_back = "relay")` is called:
    an ACP agent's `interrupted`) in its metadata and on `ON_TASK_COMPLETED`,
    its narration as its output; the failure is logged as its error is. The
    end is the failing agent's own: with several agents in the child room, one
-   agent's failure never carries another's end.
+   agent's failure never carries another's end. The task is its delegated
+   agent's: the failed turn of another agent of the child room (a helper or a
+   responder shared into it) does not fail the task, which ends as its agent's
+   turn did, and stays that agent's turn in the child room, `ON_ERROR`
+   firing there as for any room's turn.
    Whatever ended the turn, the task's metadata carries the turn's record
    under `turns`, keyed by the agent, as a room turn's caller reads it
    (Section 6.4): how it ended and its `ai_usage`, the last turn's when a
