@@ -4660,7 +4660,7 @@ held for verification (§11.7.3) is over only once its release is answered
 policy's bound of age for releasing it, then names the turns its release
 starts; cancelled at any of these points, it is released with no answer. A
 cancellation by key answers how many deliveries it cancelled (none for a key
-naming nothing in flight) and returns without waiting for their cleanup, which
+naming nothing) and returns without waiting for their cleanup, which
 each delivery's caller reads on its result (a call refused before its commit
 reports its refusal instead); it returns at once from the room's lane or under
 its lock.
@@ -6302,7 +6302,9 @@ the last released, no agent answers the release, and the earlier ones are
 not answered in its place, since their answer would read the cancelled
 message as context. The cancellation is recorded with the held event, so a
 release in any process honours it; a cancellation by key reaches the held
-messages of the process that received them.
+messages of the process that received them. A completion handle (§10.1,
+step 18) follows the delivery set alone: it cancels a held message while
+that set runs, and past it the key is what names the message.
 
 A released message MUST reach an agent as its **author's own turn**, never as
 an instruction or anything else carrying the application's authority: a
