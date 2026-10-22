@@ -3156,7 +3156,8 @@ Implementations MUST enforce these rules:
    block. A streamed response from a source that cannot write is piped live
    to no channel: a read-only source's stream is read to its end and each row
    stored `BLOCKED`; a muted source's MAY be closed unread, the reply never
-   generated.
+   generated. An event a hook injects takes no source check: it is the
+   hook's, not a channel's (§9.4).
 3. **Side effects:** Tasks and observations are ALWAYS collected regardless of
    access or mute status — including for events blocked by rule 2.
 4. **Visibility filtering:** When broadcasting an event, the framework MUST
@@ -3376,6 +3377,8 @@ an event chain.
   discussion gives in answer to the event it answers (Section 19.7.5), and a
   result delivered back to the room for a turn that delegated (Section 23.3). A path
   that restarts the count at 0 opens a chain the limit never reaches.
+- An event a hook injects keeps the `chain_depth` of the event whose hooks
+  injected it (§9.4).
 
 **At the limit.** When an event's `chain_depth + 1 >= max_chain_depth`, an
 intelligence channel it solicits (Section 19.3) MUST NOT be asked to act:
@@ -3384,10 +3387,16 @@ whether the channel streams or not. The limit exists to stop what a runaway
 chain *does*, not only what it says. In place of the response, the
 implementation MUST store one record per channel not asked:
 
-- `status = BLOCKED` and `blocked_by = "event_chain_depth_limit"`;
-- the channel not asked as its source, and empty text as its content;
-- as `chain_depth`, the depth the response would have had;
-- its own observation, and a `chain_depth_exceeded` framework event.
+- a `message` event, with `status = BLOCKED` and
+  `blocked_by = "event_chain_depth_limit"`;
+- the channel not asked as its source, with direction OUTBOUND like a
+  response, and empty text as its content;
+- as `chain_depth`, the depth the response would have had, and as
+  `responds_to` the trigger, which the response would have answered (§8.5);
+- its own observation, of category `event_chain_depth_exceeded`, whose
+  metadata holds `chain_depth` (the depth the response would have had),
+  `max_chain_depth` and `source_channel` (the channel not asked);
+- a `chain_depth_exceeded` framework event.
 
 A tool-call row (`TOOL_CALL_START`, `TOOL_CALL_END`) is an activity record
 that no agent answers, and gets no record. Response events a channel other
@@ -3402,12 +3411,14 @@ and then discarded costs its model call and runs its tools, with nothing of
 it in the room.
 
 **Reentry cap.** The responses one cascade re-enters (the answers to one
-inbound or injected event, one regeneration or one delegated run) share a
-reentry budget of `10 × max_chain_depth` passes, buffered responses and
-chained streams alike (§10.1 step 14). A buffered response past the budget
-does not re-enter, and a chained stream past it is closed unread, so nothing
-is generated. Either is stored `BLOCKED` with
-`blocked_by = "reentry_loop_cap"`; neither emits `chain_depth_exceeded` nor
+inbound or directly injected event, one regeneration or one delegated run)
+and the events its hooks inject (§9.4) share a reentry budget of
+`10 × max_chain_depth` passes, buffered responses, chained streams and
+injected events alike (§10.1 step 14). A buffered response past the budget
+does not re-enter, a chained stream past it is closed unread, so nothing is
+generated, and an injected event past it is not committed as a pass, so its
+hooks never run. Each is stored `BLOCKED` with
+`blocked_by = "reentry_loop_cap"`; none emits `chain_depth_exceeded` nor
 `event_blocked`.
 
 **Requirements:**
@@ -3460,6 +3471,17 @@ event in an in-app thread, and always names the thread's root. A
 speech-to-speech channel (Section 12.4) is not bound by this yet: its answer to
 the user's speech starts before that speech's transcript is committed, so there
 is no event to name, and its answers carry `responds_to = null` (Planned).
+
+**Who a response comes from.** The responder is the source of every response
+event it returns, buffered or as the rows of its stream. On each one the
+pipeline writes its `source` (the responder's channel id and channel type,
+with direction OUTBOUND), its room, its `chain_depth` (the trigger's plus
+one, §8.3) and, unless the channel named the event it answers, its
+`responds_to`; it clears its idempotency key (§13.4). A response that claims
+another source gets the responder's, and the implementation logs a warning:
+the write check reads the source's binding (§7.5 rule 2), and a response
+committed under another channel's name would be checked against that
+channel's.
 
 **What the turn is told.** `BEFORE_AI_GENERATION` receives, with the turn's
 context, the event the turn answers (`trigger`), so a hook can tell the model
@@ -4071,7 +4093,7 @@ HookResult
 ├── action: "allow" | "block" | "modify"
 ├── event: any | null                       # The replacement payload; required on "modify"
 ├── reason: string | null                   # Why blocked or modified
-├── injected_events: list<InjectedEvent>    # Events to inject when blocking
+├── injected_events: list<InjectedEvent>    # Events to inject, whatever the action
 ├── tasks: list<Task>                       # Tasks to create (side effects)
 ├── observations: list<Observation>         # Observations to record (side effects)
 └── metadata: map<string, any>              # Additional hook metadata
@@ -4110,6 +4132,35 @@ InjectedEvent
 └── target_channel_ids: list<string> | null # Deliver to specific channels (null = store only)
 ```
 
+**Injected events.** The events every result of an event's `BEFORE_BROADCAST`
+chain carries are collected, whatever its action (allow, modify or block),
+off the lock and under it (§9.5.1), and committed whichever way the event
+ends: blocked by a hook, blocked by its source's permissions, or delivered
+(§10.1 steps 10 to 12). A hook that lets an event through can still notify
+someone.
+
+An injected event is committed as a pass of the cascade (§8.3), after the
+event whose hooks injected it:
+
+- It takes the room lock for its own commit and runs the `BEFORE_BROADCAST`
+  chain, every hook under the lock (§9.5.1). A hook may block it, which
+  stores it `BLOCKED`, and the events its own hooks inject are committed the
+  same way.
+- It counts against the cascade's reentry budget, which bounds injections of
+  injections (§8.3).
+- It keeps the `chain_depth` of the event whose hooks injected it. Its
+  visibility names its targets only, whatever visibility it came with, and
+  is `none` when it is stored only. The pipeline clears its idempotency key
+  (§13.4).
+- It takes no source check (§7.5 rule 2): it is the hook's, not a channel's.
+- It is delivered to its transport targets only, under the rules of any
+  delivery (§10.2 step 3), and never to its own source (§7.5 rule 5).
+
+An injected event asks no agent. An intelligence channel among its targets
+is not called: the event's visibility names it, and the agent reads the
+event in its history at its next turn. An integrator who wants an agent to
+answer injects the event directly (§10.5).
+
 ### 9.5 Hook Pipeline (BEFORE_BROADCAST)
 
 ```
@@ -4125,12 +4176,13 @@ Inbound Event
 └──────────────┬───────────────────────┘
                │
           blocked? ──yes──→ Store event (status=BLOCKED, blocked_by=hook_name)
-               │              Deliver InjectedEvents to target channels
                │              Persist tasks and observations
+               │              Then commit every result's InjectedEvents (§9.4)
                │
                ▼ (allowed, possibly modified)
          Event Router
          Broadcasts to channels
+         Then commits every result's InjectedEvents (§9.4)
                │
                ▼
 ┌──────────────────────────────────────┐
@@ -4194,7 +4246,9 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   lets an event skip it. A streamed row is the exception (§4): it runs every
   hook, the `needs_lock = true` ones included, and commits without the room
   lock; the store assigns its index atomically (§8.1), and the room's status
-  is checked again after its hooks.
+  is checked again after its hooks. The events a streamed row's hooks inject
+  take the room lock for their own commit, as every injected event does
+  (§9.4).
 
 ### 9.6 When to Use What
 
@@ -4202,7 +4256,7 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
 |---|---|---|---|
 | Can **block** events | Yes | No | No |
 | Can **modify** events | Yes | No | No |
-| Can **inject** targeted events | Yes (on block) | No | No |
+| Can **inject** targeted events | Yes (any action) | No | No |
 | Can produce **tasks/observations** | Yes | No | Yes |
 | Can produce **response messages** | No | No | No (read-only) |
 | Runs | Before broadcast | After broadcast | During broadcast |
@@ -4307,10 +4361,12 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
        # earlier, the answer can be stale by the time the event commits.
 
 7. IDEMPOTENCY CHECK
-   ├── If idempotency_key exists and was seen → return the result the first
-   │   delivery produced, without reprocessing (§13.4). A store that cannot
-   │   resolve the key back to its committed event MAY return a blocked
-   │   result instead; neither answer reprocesses.
+   ├── If idempotency_key exists and the room holds an event from the same
+   │   source channel with that key (§13.4) → return the result the first
+   │   delivery produced, without reprocessing: the committed event, or a
+   │   blocked result carrying the record stored BLOCKED. A store that
+   │   cannot resolve the key back to its committed event MAY return a
+   │   blocked result instead; neither answer reprocesses.
    └── Otherwise → continue
 
 8. ASSIGN EVENT INDEX
@@ -4340,9 +4396,11 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   # An audit record: it reaches no channel, at delivery or as
     │   # reconstructed context one turn later (§7.5 rule 8), and a
     │   # default timeline read skips it (§14.1)
-    ├── Deliver injected events from hook result
+    ├── Queue the injected events of every hook result (allow and modify
+    │   included), each committed after this event as a pass of the
+    │   cascade (§9.4)
     ├── Persist tasks and observations from hook result
-    └── Return InboundResult(blocked=true)
+    └── Return InboundResult(blocked=true, event=the BLOCKED record)
 
 11. CHECK SOURCE CAN WRITE
     ├── If the source has no binding in the room (step 2) OR
@@ -4351,11 +4409,13 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   │   source_unbound with no binding; else source_read_only when the
     │   │   access does not write, NONE included, muted or not; else
     │   │   source_muted (§7.5 rule 2)
-    │   ├── Deliver injected events from hook result
+    │   ├── Queue the injected events of every hook result, as at step 10
     │   ├── Persist tasks and observations (side effects ALWAYS collected, §7.5)
-    │   └── Return InboundResult(blocked=true)
+    │   └── Return InboundResult(blocked=true, event=the BLOCKED record)
     └── Otherwise → continue
         # A source that cannot write MUST NOT inject a DELIVERED event.
+        # An event a hook injected takes no source check: it is the
+        # hook's, not a channel's (§9.4).
 
 12. COMMIT EVENT — the commit point (§13.6, §14.3):
     ├── For EDIT/DELETE: apply the target state update now (§10.3) — deferred
@@ -4398,7 +4458,7 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   # (e.g. by process_timeout, §13.6) — the timeline is authoritative.
     │   # No separate, non-atomic room-state write ever follows this commit:
     │   # the timeline and the counters can never diverge (§14.3).
-    ├── Deliver any injected events
+    ├── Queue the injected events of every hook result, as at step 10
     ├── IF message.session is set:
     │   └── Call channel.connect_session(session, room_id, binding)
     │       # Connects the voice session (starts realtime AI, etc.)
@@ -4414,6 +4474,8 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     # assignment, hooks, permission, commit, broadcast planning. External
     # delivery executes outside it (§10.2 delivery lanes) — a slow
     # provider MUST NOT extend the room's critical section (§13.5).
+    # A release that fails changes nothing steps 6–12 decided or wrote
+    # (§13.5).
 
 14. EXECUTE DELIVERY LANE (§10.2) — per-room FIFO, after lock release:
     ├── An event's delivery set MUST complete before the next event's
@@ -4530,14 +4592,26 @@ joined even when its executor runs in the owner's process.
 
 ```
 InboundResult
-├── event: RoomEvent | null                 # The processed event (null if blocked)
+├── event: RoomEvent | null                 # The committed event, the record stored
+│                                           # BLOCKED included; null when nothing
+│                                           # was committed
 ├── blocked: bool                           # Whether the event was blocked
 ├── reason: string | null                   # Block reason
-├── error: Exception | null                 # Generation/stream failure, when observed
+├── error: Exception | null                 # Generation/stream failure, or a failed
+│                                           # lock release (§13.5), when observed
 ├── response_metadata: ResponseMetadata     # Final records of root response turns
 ├── delivery: CompletionHandle | null       # Detached completion only (step 18)
 └── delivery_results: map<string, DeliveryResult>
 ```
+
+`event` is what the message committed: the event stored DELIVERED, or the
+record stored `BLOCKED` when a hook or its source's permissions blocked it
+(steps 10, 11), so that the caller can trace a refused message by its id and
+index. A replay of the message returns the same, with the record's
+`blocked_by` as its `reason` (§13.4). `event` is null only when nothing was
+committed, as when the room refused the message (§5.1); an instruction,
+which is never committed, is the exception (§10.1.1). `error` carries a
+failed release of the room lock only when no earlier error was met (§13.5).
 
 `response_metadata` MUST merge the response-metadata records produced by the
 intelligence channels in the caller's root delivery set. It is the final state
@@ -5068,12 +5142,10 @@ TurnBackend (interface)
 
 #### 10.6.1 Scope and the one path
 
-**Scope.** Every turn runs through the backend, whichever call starts it: the
-solicited target of §10.2 step 3c, and the intelligence channels an injected
-event names (§9.4), whose stream the owner closes unread and whose output it
-discards: an injected event answers nothing. Every intelligence channel is in
-scope: an AI channel, an ACP agent channel and a channel of the integrator's
-own.
+**Scope.** Every turn runs through the backend, whichever call starts it, the
+solicited target of §10.2 step 3c among them. An event a hook injects starts
+no turn: it asks no agent (§9.4). Every intelligence channel is in scope: an
+AI channel, an ACP agent channel and a channel of the integrator's own.
 
 A strategy that takes an agent's turns in a room (a turn runner, Section 19.7:
 a loop's produce and review, a supervisor's delegation passes) runs on the
@@ -5235,10 +5307,9 @@ TurnRequest
 ├── room_id: string
 ├── channel_id: string
 ├── event: RoomEvent                    # transcoded, max length applied (§10.2
-│                                       # step 3a-b); an injected event's as sent
+│                                       # step 3a-b)
 ├── binding: ChannelBinding             # as the runner gives it (§10.6.1)
 ├── context: RoomContext
-├── answers: bool                       # false: an injected event's delivery
 ├── strategy_turn: bool                 # a generation a turn runner asks
 │                                       # (§10.6.1): the channel answers, past
 │                                       # its speak policy and its thinker (§6.4)
@@ -5385,7 +5456,7 @@ render them (§10.2, Appendix A.9) read it as they read a local stream.
 The reader sets the pace, as it does locally: a model round and a tool call run
 only as the stream is read, a reader that stops leaves no call started after
 that point (§12.2), and a stream closed unread makes no provider call (a muted
-binding, §7.5; an injected event). The owner's reads of its stream send
+binding, §7.5). The owner's reads of its stream send
 `pull` messages, each granting a number of items: the executor advances the
 channel's stream by at most the items granted, and MUST NOT advance past an
 item other than a text or reasoning delta (a call's start, a segment break, a
@@ -12290,23 +12361,35 @@ deliveries MUST be queued (not dropped).
 
 ### 13.4 Idempotency
 
-If an InboundMessage carries an `idempotency_key`, the framework MUST:
+An idempotency key is unique per room and per source channel. Keys usually
+come from providers (an SMS message id, an email Message-ID), and two
+channels of one room may carry the same key for two different messages. An
+inbound message and an event injected directly (§10.5) are the events that
+carry a key: the pipeline clears it on the responses it commits (§8.5) and
+on the events a hook injects (§9.4).
 
-1. Check under a room-level lock whether the key has been seen.
-2. If seen → return the original result without reprocessing.
-3. If not seen → process normally and record the key.
+If an InboundMessage or a directly injected event carries an
+`idempotency_key`, the framework MUST:
+
+1. Check under a room-level lock whether the room holds an event from the
+   same source channel with that key.
+2. If it does → return the original result without reprocessing.
+3. If not → process normally and record the key.
 
 The point of step 2 is that a sender retries because it never observed the
 first answer, not because it wants the message delivered twice. Reporting the
 redelivery as refused conflates "you already said this" with "this was not
 accepted", and leaves the sender unable to learn the event it committed.
 
-The original result is the committed event. A ConversationStore resolves it
-from the key it recorded at commit; the key SHOULD therefore be stored so it
-can be read back, not merely tested for presence. A store that can only answer
-"seen" MAY return a blocked result carrying the reason instead — a degraded but
-conforming answer, since the MUST that matters, *without reprocessing*, holds
-either way.
+The original result is the result the first delivery produced. A message the
+room delivered returns its committed event. A message the room blocked returns
+a blocked result carrying the record stored `BLOCKED` (§10.1 steps 10, 11),
+with the record's `blocked_by` as its reason: the hook's own reason is not
+stored. A ConversationStore resolves the event from the key it recorded at
+commit; the key SHOULD therefore be stored so it can be read back, not merely
+tested for presence. A store that can only answer "seen" MAY return a blocked
+result carrying the reason instead — a degraded but conforming answer, since
+the MUST that matters, *without reprocessing*, holds either way.
 
 ### 13.5 Room-Level Locking
 
@@ -12335,6 +12418,17 @@ RoomLockManager (interface)
 ├── acquire(room_id) → lock
 └── release(lock) → void
 ```
+
+**A release that fails.** `release` can fail: a distributed lock manager can
+lose its connection, or find its lease already expired. A failed release
+changes nothing the locked section decided or wrote: an event it committed
+stays committed, a refusal it decided stays a refusal, and the delivery it
+planned executes. The operation reports what it did. An inbound result
+carries the failure as its `error` when no earlier error was met (§10.1); a
+failure met before the release stays the one reported. A lifecycle change
+logs it, as does a direct injection, whose result is the committed event
+(§10.5). The cascade goes on. The lock manager owns what a failed release
+leaves behind, and the next locked section asks it for the lock again.
 
 The room lock MUST be reentrant within one execution context (a task and the
 tasks it awaits as its own): code that holds it may call an operation that
@@ -12539,7 +12633,12 @@ and never inherits the page's cap.
 - Once committed (DELIVERED), an event MUST NOT be retroactively re-marked
   BLOCKED or FAILED. A processing timeout or a delivery failure after the
   commit point (§13.6) MUST NOT alter the event's committed status.
-- Idempotency key checks MUST be performed under the room lock.
+- Idempotency key checks MUST be performed under the room lock. A key is
+  looked up within its room and its source channel (§13.4): a store that
+  indexes keys, or enforces their uniqueness with a constraint, does so on
+  `(room_id, source.channel_id, idempotency_key)`, since a constraint over
+  the room and the key alone would refuse one channel's message for
+  another's.
 
 ### 14.4 Returned-Object Ownership
 
@@ -13439,6 +13538,9 @@ Normative rules:
 5. An interruption marker (Section 6.4) solicits no intelligence channel,
    whatever its address or a router's stamp: it says an agent's turn was cut,
    not something to act on. It is still stored and delivered like any event.
+6. An event a hook injects (Section 9.4) solicits no intelligence channel,
+   whatever its address: it is delivered to its transport targets only, and
+   an agent its visibility names reads it in its history at its next turn.
 
 **Unaddressed events** (`addressed_to = null`) keep the behaviour of earlier
 versions: the router decides (§19.4), and with no router installed every
@@ -14189,9 +14291,10 @@ SpeakQueue (one per room, readable by the host)
    left to the policy instead, whether agents asked that person or not
    (rule 18). A message whose address is empty, or that
    names only people, asks no agent (Section 19.3 rule 3). An event from any
-   other sender (a bot, a webhook, an event a hook injects, a delivery,
-   Section 22) queues the agents its address names, at the back; with no
-   address it asks no agent. A merged turn answers the latest person's message
+   other sender (a bot, a webhook, a delivery, Section 22) queues the agents
+   its address names, at the back; with no address it asks no agent. An
+   event a hook injects asks no agent, whatever its address (Section 9.4).
+   A merged turn answers the latest person's message
    among the events that asked for it, else the latest of them. The order of
    `everyone` is the host's, so the agent that should open (the one that looks
    at the facts before the others act) comes first; the discussion does not
@@ -15179,10 +15282,11 @@ success. Unaddressed calls without explicit destinations MAY retain room-wide
 realtime injection. A non-null intelligence address uses the text pipeline,
 not a direct realtime injection; combining it with `session_id` is invalid.
 
-**Idempotency boundary.** Text keys are scoped to the room and use the
-ConversationStore's existing locked publication and unique-key contract
-(§13.4). Replays, including concurrent ones, MUST NOT create a second trigger
-event while the key is retained. The same key identifies the same publication
+**Idempotency boundary.** Text keys are scoped to the room and to the source
+channel, and use the ConversationStore's existing locked publication and
+unique-key contract (§13.4). Replays, including concurrent ones, MUST NOT
+create a second trigger event while the key is retained. The same key
+identifies the same publication
 regardless of subsequent body or address changes. Retention follows the store:
 memory does not survive restart; durable stores retain committed keys until
 the corresponding event/key is removed. Distributed use requires a shared
@@ -16257,7 +16361,7 @@ A conforming implementation MUST support:
 - Permission enforcement (Section 7.5)
 - Hook engine with SYNC and ASYNC execution
 - BEFORE_BROADCAST and AFTER_BROADCAST hooks with HookResult
-- InjectedEvent delivery on block
+- InjectedEvent delivery, whatever the hook's action
 - Event chain depth tracking and limiting
 - Inbound processing pipeline (Section 10.1)
 - Broadcast pipeline (Section 10.2)
@@ -17154,8 +17258,13 @@ meant to answer the others — selects `ADDRESSED_ONLY` instead.
    ▼
 N. The next response would have chain_depth = 5 (== max_chain_depth)
    The other agent is NOT asked: no model call, no tool
-   Record: status=BLOCKED, blocked_by="event_chain_depth_limit",
-           source=that agent, empty text, chain_depth=5
+   Record: type=message, status=BLOCKED,
+           blocked_by="event_chain_depth_limit",
+           source=that agent (OUTBOUND), empty text, chain_depth=5,
+           responds_to=the response it was not asked to answer
+   Observation: category="event_chain_depth_exceeded",
+                metadata={chain_depth: 5, max_chain_depth: 5,
+                          source_channel: that agent}
    Framework event: chain_depth_exceeded
 ```
 
