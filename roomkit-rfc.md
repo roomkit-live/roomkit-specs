@@ -4654,11 +4654,16 @@ delivery in flight that carries it, from the call's start until its delivery
 is over. A delivery cancelled before its event is committed (while the call
 routes the message, builds its event or resolves its sender, steps 1 to 5b)
 is cancelled all the same: the event is committed and delivered as the
-paragraph above says, and none of its turns starts. A cancellation by key
-answers how many deliveries it cancelled (none for a key naming nothing in
-flight) and returns without waiting for their cleanup, which each delivery's
-caller reads on its result (a call refused before its commit reports its
-refusal instead); it returns at once from the room's lane or under its lock.
+paragraph above says, and none of its turns starts. The delivery of a message
+held for verification (§11.7.3) is over only once its release is answered
+(§11.7.6): the key names it past its delivery set, until its release or the
+policy's bound of age for releasing it, then names the turns its release
+starts; cancelled at any of these points, it is released with no answer. A
+cancellation by key answers how many deliveries it cancelled (none for a key
+naming nothing in flight) and returns without waiting for their cleanup, which
+each delivery's caller reads on its result (a call refused before its commit
+reports its refusal instead); it returns at once from the room's lane or under
+its lock.
 A key names a delivery and grants nothing: the host checks who may cancel
 before it cancels, and an implementation that scopes operations to an
 organization (§17.2) scopes a cancellation by key alike, reaching only the
@@ -6289,6 +6294,15 @@ visibility it had before it was held (`update_event`, ON_EVENT_UPDATED), and
 the room's intelligence channels act on it as on any inbound message of its
 author: nothing is copied, and the last released event alone solicits an
 answer, the earlier ones being its context.
+
+A held message whose delivery was cancelled (§10.1, *Explicit delivery
+cancellation*), before its commit, while it was delivered or while it waited
+for its release, is released all the same and solicits no answer: when it is
+the last released, no agent answers the release, and the earlier ones are
+not answered in its place, since their answer would read the cancelled
+message as context. The cancellation is recorded with the held event, so a
+release in any process honours it; a cancellation by key reaches the held
+messages of the process that received them.
 
 A released message MUST reach an agent as its **author's own turn**, never as
 an instruction or anything else carrying the application's authority: a
