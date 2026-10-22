@@ -15794,8 +15794,11 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   cancel, that it is still running and why: an inline delegation runs inside
   the turn that asked for it and ends with it; a task a strategy runs without
   posting it is the strategy's to follow, which the host may cancel when it
-  runs in the background. A task the bus lists ended is answered as the bus
-  lists it, as `task_status` reads it: nothing is left to act on. Whether a
+  runs in the background. Calls that cancel one task at once cancel it once:
+  each is answered that it was cancelled, and none of the agents that made
+  them is handed the cancellation back. A task the bus lists ended is
+  answered as the bus lists it, as `task_status` reads it: nothing is left to
+  act on. Whether a
   task the bus lists running is the room's is what the framework knows of the
   tasks it runs for each room, never what the bus lists: a task of another
   room, one the framework never ran, or one another framework runs for the
