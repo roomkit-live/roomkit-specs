@@ -1713,9 +1713,24 @@ CutReply
 └── at: datetime                        # When it was cut
 ```
 
-- In the context the agent's next turn reads, that answer is marked as
-  interrupted: the model reads that the person may not have heard its end,
-  rather than an answer heard whole.
+- In the context the agent's next turn reads, that answer is followed by a
+  mark that says when it was cut and quotes how far the person heard it
+  (`[The person cut you off during this answer, 5.7 s in: they heard it up to
+  “…” and not the rest.]`), rather than reading as an answer heard whole. The
+  quote is the AI channel's estimate, and it SHOULD end early rather than
+  late: a model told the person heard words they did not goes on past them.
+  With no word timed by the TTS, RoomKit takes the words by their letters at
+  the share of the answer's audio that played, less two words, or at 11
+  letters a second when that share is unknown; with too little played to
+  quote, the mark says the person heard little or none of it. The words are
+  the agent's, which a participant may have led it to say: they MUST be
+  given as a quote (below, "Text from outside in a model's context"), a copy
+  of a runtime mark in them replaced; a long quote keeps its end, where the
+  person stopped hearing. While the history window holds a cut answer, the
+  turn's notes say how one reads, and
+  that an answer of the agent's without the mark was heard to its end:
+  without it, a model asked whether it was cut off answers for the last cut
+  it reads, however many whole answers followed it.
 - A speak policy reads it in `SpeakTurn.cut` when the event came after the cut
   and the agent has not answered since. The classifier policy then also judges
   whether the turn leaves the agent free to go on (an acknowledgement, a
@@ -1725,8 +1740,9 @@ CutReply
   with the reason `resume after cut`, its notes asking it to go on from where it
   was cut without repeating what was heard.
 
-Which part of the answer was heard is not guessed: the record keeps the text
-handed to speech and how long it played.
+The record does not guess which part of the answer was heard: it keeps the
+text handed to speech, how long it played, and the share of its audio when
+that is known. The quote above is estimated where the model reads it.
 
 Only a record a voice channel of the room wrote counts: `internal`, with no
 participant, its source a channel bound to the room as voice, and
@@ -1861,8 +1877,9 @@ between turns as the conversation works travels with the turn's input instead,
 as notes: what the channel recalls of the tools used in the room (and what they
 returned), the room's plan, the room's background tasks and how far each got
 (Section 23.4), how speakers are named when the history window holds
-several (which speakers it holds changes as it slides), what a vision provider
-last saw (Section 12.8.7), and what a memory provider retrieved for this turn
+several (which speakers it holds changes as it slides), how a cut answer
+reads while the window holds one (above, "A cut answer"), what a vision
+provider last saw (Section 12.8.7), and what a memory provider retrieved for this turn
 alone (Section 20.2), each passage set apart as data. The notes follow the
 turn's input (the participant's words, or the application's instruction) in the
 same message, marked as the channel's, asking for nothing, with any tool result
@@ -1915,8 +1932,8 @@ not respond to this`). A copy of one of them in the text an event brings
 own marks), in a message steering injects, in a block of the turn's notes
 that quotes others (what a memory retrieved for the turn, a tool's result, a
 task and its progress, what a camera read, a thought, a plan, a block a hook
-adds; the note on speaker labels is the runtime's), a copy running over two
-such blocks included, in a text injected or broadcast into a realtime
+adds; the notes on speaker labels and on cut answers are the runtime's), a
+copy running over two such blocks included, in a text injected or broadcast into a realtime
 session (an instruction, a worker's hand-back, what a camera read, an
 image's prompt, a reasoning backend's answer to a delegation; a realtime
 host replaces it before its provider takes the text) or in a line of the
@@ -7860,9 +7877,10 @@ Check InterruptionStrategy:
 2. If `keep_partial_transcript = true`: store the bot's partial response in the
    timeline with `metadata.interrupted = true` and `metadata.played_ms` (how far
    playback got). `metadata.played_percentage` is added only when the utterance's
-   total duration is known; a streamed response (Section 12.2, step 12s) has
-   none, so it carries `played_ms` alone. For a streamed response, the stored text
-   is the sentences already handed to TTS at the moment of the interruption.
+   total duration is known: its synthesis ended before the cut. One still being
+   synthesized, a streamed response (Section 12.2, step 12s) whose sentences are
+   still arriving included, carries `played_ms` alone. For a streamed response,
+   the stored text is the sentences already handed to TTS at the moment of the interruption.
    The response is recorded `partial` on the voice channel, with the same
    `played_ms` (Section 8.5), whether or not the partial response is kept.
    The record is the agent's words, not the listener's: it carries no
