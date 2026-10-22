@@ -1936,7 +1936,9 @@ between turns as the conversation works travels with the turn's input instead,
 as notes: what the channel recalls of the tools used in the room (and what they
 returned), the room's plan, the room's background tasks and how far each got
 (Section 23.4), how speakers are named when the history window holds
-several (which speakers it holds changes as it slides), how a cut answer
+several (which speakers it holds changes as it slides), who takes part
+when two people or more do (below; who is present changes as people come
+and go), how a cut answer
 reads while the window holds one (above, "A cut answer"), what a vision
 provider last saw (Section 12.8.7), and what a memory provider retrieved for this turn
 alone (Section 20.2), each passage set apart as data. The notes follow the
@@ -2170,7 +2172,8 @@ visarga included), on one line and bounded, as the
 `Name: ` prefix of a transcript gives it. When the history window holds
 several speakers (a person by name, or, for turns whose sender has no name,
 the channel they came through; the runtime's own system events aside, and a
-one-to-one conversation left as it is), every line of a participant's turn
+one-to-one conversation left as it is), or two people or more take part
+(below), every line of a participant's turn
 in the conversation opens with such a label, which the runtime alone places:
 the speaker's name, or, for a turn whose speaker has no name, its channel as
 the room addresses it (`@sms1`; an agent of a discussion by its handle,
@@ -2199,8 +2202,25 @@ reads a participant's turn (the conversation, the room context handed to an
 ACP agent and the request that follows it, a line broadcast into a realtime
 session, the lines a memory summarizer reads), at one threshold: a reader
 labels once the turns it reads hold several speakers (a turn with no text,
-the runtime's own and the application's instruction aside), and a
-one-to-one conversation reads as before. A conversation a memory summarizes
+the runtime's own and the application's instruction aside), or two people
+or more take part, and a one-to-one conversation reads as before.
+**Who takes part** besides the agent is read from the room's roster, not
+from who has spoken: its active participants who are neither agents nor
+bots nor on the agent's own channel, silent ones included, one per person
+in the order they joined, each named as their turns are labelled (their
+name and its rank, or their channel when they have no name). A conference
+keeps the roster (Section 12.10.4); an integration that carries several
+people through one stream (a meeting bridged into one audio stream) writes
+it, a member per person present, and matches each voice to its person
+(Section 12.2.3). An agent that joins a meeting where one
+person speaks while others listen thus reads that person's first turn
+labelled, not as an anonymous user's. When two people or more take part,
+the turn's notes name them, so the agent knows who is there before each
+has spoken and may address someone who has not said a word; the note is
+one of the runtime's marks, and a standalone turn, which reads nothing of
+the room, carries none. A speak policy's `SpeakTurn.people` is the same
+list, or the distinct voices of the turns when they are more (one
+microphone may carry several). A conversation a memory summarizes
 counts the turns the memory retrieved, summarized or kept, and the turn
 being answered: the summarizer's lines then give each turn's label out of
 its quote, `[assistant]` naming only the agent the summary is for, and the
@@ -7064,10 +7084,20 @@ equate two labels from different epochs.
    (Section 12.3.12) MUST NOT join two speakers' segments into one message.
    `ON_TRANSCRIPTION` fires per segment, and its event carries the segment's
    `speaker`, the `speaker_epoch` and the `sender_name` below; a hook MAY
-   replace `sender_name` (a label matched to a known voice).
+   replace `sender_name` (a label matched to a known voice), and MAY name the
+   room participant the voice is (`participant_id`).
 2. Keeps `sender_id` as the session's participant, the owner of the audio
-   stream. A label is not a participant (Section 12.3.9): mapping one to a
-   known person is the integrator's concern.
+   stream, unless a hook named the participant who spoke: the message is
+   then theirs. A label is not a participant (Section 12.3.9): mapping one
+   to a known person is the integrator's concern, and the hook is where it
+   does so. A name proves nothing, so a voice is never matched to a
+   participant by its name; a voice named like a participant without being
+   matched to them is another source and carries a rank (Section 6.4). An
+   id names its participant only on a channel they are reached through
+   (Section 5.5): one added to the room on the voice channel. A meeting
+   bridged into one stream thus writes its people on the room's roster and
+   matches each voice to its person, and its first turn reads under that
+   person's name (Section 6.4, *Who takes part*).
 3. Sets on the message `metadata.speaker_label`, `metadata.speaker_epoch` and
    `metadata.sender_name`. `sender_name` defaults to `"Speaker <label>"` in
    epoch 0 and `"Speaker <label>#<epoch>"` after, so the same letter from two
@@ -7076,7 +7106,8 @@ equate two labels from different epochs.
    would fall back to the stream owner's for words nobody was attributed. The
    AI channel attributes a turn to `sender_name` when the room holds more than
    one speaker, so the model reads `"Speaker A: …"` rather than one anonymous
-   stream.
+   stream, and from the first turn when the integrator wrote the people the
+   stream carries on the room's roster (step 2).
 
 **Speaker change.** Evaluated per routed segment, in order. A
 segment with a null speaker neither fires nor resets the last label. The
@@ -7113,8 +7144,9 @@ construction without a diarization stage, and in batch mode. With it:
    carries no speaker, as without the option.
 3. The stage keeps its labels for the whole session, so the epoch is 0.
 4. The transcript reaches the room as one message, as *Into the room* sets
-   it: `ON_TRANSCRIPTION` carries the speaker and MAY rename it, and the
-   message carries `speaker_label`, `speaker_epoch` and `sender_name`. The
+   it: `ON_TRANSCRIPTION` carries the speaker and MAY rename it or name the
+   participant it is, and the message carries `speaker_label`,
+   `speaker_epoch` and `sender_name`. The
    channel fires no `ON_SPEAKER_CHANGE` with `source = "stt"` for it: the
    stage fires its own.
 
