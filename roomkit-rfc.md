@@ -4297,14 +4297,22 @@ implementation MAY let the caller name a message's delivery by a key of its own
 (`InboundMessage.delivery_key`), so code that holds no handle, another task or
 a tool an agent calls with the key as text, cancels it. The key names every
 delivery in flight that carries it, from the call's start until its delivery
-is over. A cancellation by key answers how many deliveries it cancelled
-(none for a key naming nothing in flight) and returns without waiting for
-their cleanup, which each delivery's caller reads on its result; it returns at
-once from the room's lane or under its lock. A key names a delivery and grants
-nothing: the host checks who may cancel before it cancels, and an
-implementation that scopes operations to an organization (§17.2) scopes a
-cancellation by key alike, reaching only the deliveries of that organization's
-rooms, so two tenants that chose the same key never cancel each other's.
+is over. A delivery cancelled before its event is committed (while the call
+routes the message, builds its event or resolves its sender, steps 1 to 5b)
+is cancelled all the same: the event is committed and delivered as the
+paragraph above says, and none of its turns starts. A cancellation by key
+answers how many deliveries it cancelled (none for a key naming nothing in
+flight) and returns without waiting for their cleanup, which each delivery's
+caller reads on its result; it returns at once from the room's lane or under
+its lock. A key names a delivery and grants nothing: the host checks who may
+cancel before it cancels, and an implementation that scopes operations to an
+organization (§17.2) scopes a cancellation by key alike, reaching only the
+deliveries of that organization's rooms, so two tenants that chose the same
+key never cancel each other's. A delivery whose call named no organization
+belongs to none until its room is known: a scoped cancellation reaching it
+before then takes effect once the room proves the organization's, and is not
+counted, since counting it would tell one tenant of a delivery another may
+own.
 Repeated cancellation MUST NOT interrupt cleanup already in progress. A
 bounded cleanup that expires MUST report incomplete drainage, not success;
 resources still in use MUST be retained. An implementation MUST refuse a drain
