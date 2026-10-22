@@ -1035,7 +1035,8 @@ Each channel declares what it supports:
 ```
 ChannelCapabilities
 ├── media_types: list<ChannelMediaType>     # What content categories are supported
-├── max_length: int | null                  # Maximum text length (null = unlimited)
+├── max_length: int | null                  # Maximum text length, in Unicode code
+│                                           # points (null = unlimited, §6.6)
 │
 │   # Text features:
 ├── supports_rich_text: bool
@@ -1078,6 +1079,17 @@ ChannelCapabilities
 | VIDEO | Video messages |
 | LOCATION | Geographic coordinates |
 | TEMPLATE | Pre-approved message templates |
+
+`media_types` decides what the channel receives: a content of a category it
+names is delivered unchanged, one of a category it does not name is
+transcoded, and text is the fallback every channel takes, whatever it
+declares (Section 6.6). Of the `supports_*` flags, only `supports_edit` and
+`supports_delete` take part in transcoding: they decide whether an edit or a
+delete is delivered natively (Section 10.3). The others describe the channel
+and do not decide transcoding: a channel whose `media_types` names RICH
+receives a rich content unchanged whatever `supports_rich_text` says, and one
+whose `media_types` does not name RICH receives its text form even when
+`supports_rich_text` is true.
 
 ### 5.9 Three Levels of Channel Metadata
 
@@ -2547,20 +2559,36 @@ inbound pipeline (Section 10.1).
 
 When an event is broadcast to channels with different capabilities, the framework
 MUST transcode content to match each target channel's supported media types.
+The target's `media_types` (Section 5.8) decides: a content of a category it
+names is delivered unchanged, and one of a category it does not name is
+replaced by its text form, as the table below gives it. Text is the fallback
+every channel takes, whatever its `media_types` declares: a voice channel
+that declares AUDIO alone receives a text unchanged and a rich text as its
+text form.
 
 **Default transcoding rules:**
 
-| Source Content | Target Supports | Transcoded To |
+| Source Content | Target | Transcoded To |
 |---|---|---|
-| RichContent | TEXT only | TextContent (plain_text, else body unchanged) |
-| MediaContent | TEXT only | TextContent ("[Media: {caption or filename or url}]"): the URL only when it is a link (`http`, `https`), else the media type; never a data URI or a reference |
-| AudioContent | TEXT only | TextContent (the transcript, or "[Voice message: {url}]"): the URL only when it is a link, else the media type |
-| VideoContent | TEXT only | TextContent ("[Video: {url}]"): the URL only when it is a link, else the media type |
-| LocationContent | TEXT only | TextContent ("[Location: {label or address} ({latitude}, {longitude})]") |
-| CompositeContent | varies | Filter parts to target's supported types |
-| TemplateContent | no templates | TextContent (use body or "[Template: {template_id}]") |
+| TextContent | any | Unchanged |
+| RichContent | no RICH | TextContent (plain_text, else body unchanged) |
+| MediaContent | no MEDIA | TextContent ("[Media: {caption or filename or url}]"): the URL only when it is a link (`http`, `https`), else the media type; never a data URI or a reference |
+| AudioContent | no AUDIO | TextContent (the transcript, or "[Voice message: {url}]"): the URL only when it is a link, else the media type |
+| VideoContent | no VIDEO | TextContent ("[Video: {url}]"): the URL only when it is a link, else the media type |
+| LocationContent | no LOCATION | TextContent ("[Location: {label or address} ({latitude}, {longitude})]", or "[Location: ({latitude}, {longitude})]" with neither, e.g. "[Location: (45.5, -73.6)]") |
+| CompositeContent | any | Each part by its own row (below) |
+| TemplateContent | no TEMPLATE | TextContent (use body or "[Template: {template_id}]") |
 | EditContent | no edit support | TextContent ("Correction: {new text}") |
 | DeleteContent | no delete support | TextContent ("[Message deleted]") or SystemContent |
+| SystemContent | any | Unchanged |
+| ToolCallContent | any | Unchanged |
+
+A composite is transcoded part by part, each part by its own row, and no
+part is dropped: a part the target cannot carry becomes its text form. When
+every part ends up as a `TextContent`, the composite becomes one
+`TextContent`, the parts' texts joined in order by a newline, so that a
+channel that declares TEXT alone receives one message. Otherwise the
+composite keeps its transcoded parts, in order.
 
 When the target channel supports edits or deletes natively (i.e.,
 `capabilities.supports_edit` or `capabilities.supports_delete` is true), the
@@ -2578,9 +2606,23 @@ author's words alone, a media's caption included, never a file name or a
 type: an agent named in a file name is not addressed.
 
 **Max length enforcement:** After transcoding, if the target channel declares a
-`max_length`, the framework MUST truncate TextContent to that limit.
+`max_length`, the framework MUST truncate TextContent to that limit: a text,
+a composite that became one text, or each text part of a composite that
+keeps its parts. The limit counts Unicode code points, as an instruction's
+length does (Section 10.1.1), and a cut MUST NOT split a code point (a UTF-8
+sequence, a UTF-16 surrogate pair). A cut text ends with `...`, three ASCII
+full stops counted within the limit, so that the reader sees the cut: with a
+limit of 8, "Thank you for calling" becomes "Thank...". A limit below 4 code
+points cuts without the marker: with a limit of 3, the same text becomes
+"Tha". The marker is not U+2026 (HORIZONTAL ELLIPSIS): outside the GSM 7-bit
+alphabet, that character would turn an SMS into UCS-2.
 
 Implementations SHOULD allow integrators to provide a custom transcoding strategy.
+A custom strategy that cannot transcode a content for a target MAY skip that
+target: neither `on_event()` nor `deliver()` is called for it, and the
+failure is recorded among the broadcast's per-channel errors (Section 10.2).
+The default rules never skip a target, since every content has a form each
+channel takes.
 
 ### 6.7 Provider Abstraction
 
@@ -4613,11 +4655,14 @@ than being drained inside the trigger's lock tenure.
 
 3. FOR EACH TARGET CHANNEL (concurrently):
    │
-   ├── a. TRANSCODE CONTENT
-   │      └── Convert event content to target's supported media types
+   ├── a. TRANSCODE CONTENT (§6.6)
+   │      ├── Convert event content to target's supported media types
+   │      └── A custom strategy that cannot transcode MAY skip the
+   │          target: no on_event() or deliver(), an error recorded
    │
    ├── b. ENFORCE MAX LENGTH
-   │      └── Truncate text if target.capabilities.max_length exceeded
+   │      └── Truncate text if target.capabilities.max_length exceeded,
+   │          counted in Unicode code points (§6.6)
    │
    ├── c. CALL on_event() (all readable channels, whatever their direction)
    │      ├── Intelligence channels: only those solicited (§19.3), and
@@ -16546,7 +16591,7 @@ AIChannel
 ├── type: AI
 ├── category: INTELLIGENCE
 ├── direction: BIDIRECTIONAL
-├── media_types: [TEXT]
+├── media_types: [TEXT, MEDIA]
 ├── capabilities:
 │   ├── supports_rich_text: true (provider-dependent)
 │   ├── supports_edit: false
