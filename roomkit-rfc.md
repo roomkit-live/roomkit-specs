@@ -5300,7 +5300,9 @@ room, beside the declaration.
 **On the executor, a factory.** The executor builds the channel through a
 factory the host gives it: an agent holds live objects (its provider, its MCP
 clients, its memory). The kit's own executor reads the live channels the host
-registered on the kit, and declares them. The executor gives the channel what
+registered on the kit, and declares them; it alone runs them, closed or not:
+once it closed, their turns fail with `no_executor` rather than run on another
+executor's copy (§10.6.7). The executor gives the channel what
 the kit gives a channel it registers, each on the executor's side:
 
 - the hooks the channel fires, against the executor's own registry
