@@ -5199,8 +5199,9 @@ TurnBackend (interface)
 │       # Executor side: receive the requests and the channel control of the
 │       # channels the executor declares, until close
 └── close() → void
-        # Fail the turns in flight (executor_lost) and release the transport;
-        # on the executor side, cut the turns it runs and write their end
+        # Fail the turns in flight (backend_closed: the owner's backend
+        # closed, its executor is not lost) and release the transport; on
+        # the executor side, cut the turns it runs and write their end
         # within cancel_timeout first
 ```
 
@@ -5868,7 +5869,10 @@ beating: a call already running is let finish (§12.2 step 13s), within its
 own bound (§21.6). A turn still open when its owner itself closes (the kit's
 close, after it cancelled the turn's cascade) is given up and owes no `end`:
 the owner waits for nothing more from its executor and drops its later
-frames; the backend releases the turn, and its executor cuts it as it would
+frames, and its reader fails it with `backend_closed`, a reason of its own (the
+owner's backend closed; its executor is not lost, so never `executor_lost`),
+which a host reads on the error a turn link raises; the backend releases the
+turn, and its executor cuts it as it would
 cut one whose owner was lost, at once when the release reaches it, else after
 `heartbeat_timeout` of silence, except the turn the close runs under
 (§10.6.5); a cascade that read it counts its cleanup done. A turn already over
