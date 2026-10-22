@@ -15807,7 +15807,11 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   shows that end: an inline task from its completion's start, before its
   hooks run, and a background task from its runner's handing over of its
   end, a call meanwhile waiting for that (RoomKit keeps the latest 1024
-  ended, all rooms together).
+  ended, all rooms together). Past that bound, a task that ended while the
+  bus still lists its line running (a bus that lags behind its end) reads as
+  no task of the room: the bound is the same for every room, and what a room
+  is answered depends on how many tasks ended elsewhere, never on what they
+  were.
 
 **The room's tasks in the turn's notes.** An AI channel's turn reads the
 room's tasks without a tool call: when the StatusBus lists tasks for the room
