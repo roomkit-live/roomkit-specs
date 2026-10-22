@@ -7,7 +7,7 @@
 | **Contributions** | TchatNSign, Angany AI |
 | **Version** | v18 Draft |
 | **Created** | 2026-01-27 |
-| **Last Updated** | 2026-10-17 |
+| **Last Updated** | 2026-10-22 |
 | **Supersedes** | v17 Draft |
 
 ---
@@ -139,7 +139,30 @@ ModelName
 └── field_name: map<string, any>        # Dictionary/map type
 ```
 
-Enumeration values are written in UPPER_SNAKE_CASE. Field names use snake_case.
+Enumeration values are written in UPPER_SNAKE_CASE in this document; their
+serialized form is lowercase (Section 1.4). Field names use snake_case.
+
+### 1.4 Serialized Form
+
+The records this document defines have one serialized form, JSON
+([RFC 8259](https://www.rfc-editor.org/rfc/rfc8259)). Stores, logs and the
+turn messages of Section 10.6.3 exchange records in this form, so that two
+implementations can read each other's data and share conformance scenarios.
+Implementations MUST serialize a record as follows:
+
+- A record is a JSON object whose members are its fields, named as this
+  document writes them. A `map` is a JSON object and a `list` a JSON array.
+- An enumeration value is written in lowercase snake_case: `ACTIVE` is
+  `"active"`, `READ_WRITE` is `"read_write"`.
+- Event content (Section 5.3) is an object whose `type` member names its
+  content type, with the names Section 5.3 gives, beside the fields of that
+  type: `{"type": "text", "body": "Hello", "language": "en"}`. Content held in
+  other content, a composite's part or an edit's new content, is tagged the
+  same way.
+- A `datetime` is a string in the form of
+  [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339), written in UTC:
+  `"2026-10-22T14:03:07.250Z"`. A value without an offset MUST NOT be
+  written; a reader MAY read one as UTC.
 
 ---
 
@@ -410,7 +433,8 @@ Room
 ├── agent_response_policy: AgentResponsePolicy = AGENT_CHAIN  # What an agent's own output solicits (Section 19.3.1)
 ├── metadata: map<string, any>              # Integrator-defined data
 ├── event_count: int                        # Total events stored
-└── latest_index: int                       # Highest event index (for read tracking)
+└── latest_index: int | null                # Highest event index (for read tracking);
+                                            # null while the room has no event
 ```
 
 **RoomStatus** enumeration:
@@ -491,7 +515,7 @@ MUST transition to CLOSED.
 
 ```
 RoomEvent
-├── id: string                              # Unique event identifier
+├── id: string                              # Unique event identifier (§8.1)
 ├── room_id: string                         # Owning room
 ├── type: EventType                         # What kind of event
 ├── source: EventSource                     # Where it came from
@@ -562,7 +586,7 @@ RoomEvent
 EventSource
 ├── channel_id: string                      # Which channel produced this
 ├── channel_type: ChannelType               # Channel type enum
-├── direction: ChannelDirection             # INBOUND or OUTBOUND
+├── direction: EventDirection               # INBOUND or OUTBOUND
 ├── participant_id: string | null           # Which human, if applicable
 ├── verification: VerificationStatus | null # The sender's verification when the
 │                                           # event was received (§11.7); null where
@@ -572,6 +596,17 @@ EventSource
 ├── raw_payload: map<string, any>           # Original provider payload — never lost
 └── provider_message_id: string | null      # Provider's message identifier
 ```
+
+**EventDirection** enumeration, the way an event travelled:
+
+| Value | Meaning |
+|---|---|
+| INBOUND | From outside into the room |
+| OUTBOUND | From the room towards outside |
+
+An event travels one way: unlike a channel's direction (§4.2), the type has no
+BIDIRECTIONAL value, and a source with any other direction is not a valid
+`EventSource`.
 
 Implementations MUST preserve `raw_payload` unmodified. This is the audit trail
 and the source of truth for provider-specific data.
@@ -661,7 +696,12 @@ CompositeContent
 ```
 
 Implementations MUST enforce a maximum nesting depth of 5 levels for
-CompositeContent.
+CompositeContent. The outermost composite is level 1, and a composite among
+the parts of a level-n composite is level n + 1; content that holds a sixth
+level MUST be refused. A part that is not a composite adds no level, so a
+composite of text parts has one level. An edit's new content (EditContent,
+below) stands in the edit's place: a composite that is an edit's new content
+has the level a composite in the edit's place would have.
 
 **SystemContent** — Framework-generated message:
 
@@ -1016,7 +1056,6 @@ ChannelCapabilities
 ├── supports_reactions: bool
 ├── supports_edit: bool
 ├── supports_delete: bool
-├── delivery_mode: DeliveryMode
 ├── rate_limit: RateLimit | null
 │
 │   # Extensible:
@@ -3111,6 +3150,8 @@ that is monotonically increasing within each room.
 
 - The `index` MUST start at 0 for the first event in a room.
 - Each subsequent event MUST have `index = previous_index + 1`.
+- The room's `latest_index` (§5.1) is the highest index committed in it, and
+  MUST be `null` while the room has no event.
 - The `index` MUST be assigned atomically per room. A room-level lock (§13.5)
   serializes assignment within a single process; it is **NOT** sufficient when a
   persistent store is shared across processes (e.g. a load-balanced deployment),
@@ -3122,6 +3163,17 @@ that is monotonically increasing within each room.
 - A duplicate `(room_id, index)` MUST be rejected by the store (the constraint
   violation surfaced to the caller), never silently persisted.
 - The `index` enables pagination, read horizon tracking, and gap detection.
+
+**Event ids.** The pipeline gives every event it commits its `id`, whatever id
+a channel or a hook built the event with. An inbound event takes its id at
+§10.1 step 4, when the receiving channel builds it, so identity resolution and
+hooks read the id it is committed with; a response event, an event a hook
+injects and an event injected directly (§10.5) each take a fresh id as their
+pass begins. A channel or a hook that reuses an id (the trigger's, a constant,
+one from its provider) therefore never makes two events share one, and
+`responds_to` and every read or write by id name one event. A provider's own
+identifier belongs in `source.provider_message_id`. A record committed outside
+the pipeline (§10.5) keeps the id its caller gives it.
 
 ### 8.2 Framework Events
 
@@ -3388,7 +3440,7 @@ HookRegistration
 ├── timeout: float = 30.0                   # Maximum execution time (seconds)
 ├── channel_types: set<ChannelType> | null  # Filter: only fire for these channel types
 ├── channel_ids: set<string> | null         # Filter: only fire for these channel IDs
-├── directions: set<ChannelDirection> | null # Filter: only fire for these directions
+├── directions: set<EventDirection> | null  # Filter: only fire for these directions
 ├── fail_closed: bool = false               # SYNC only: an unusable result blocks (§9.3)
 └── needs_lock: bool = true                 # BEFORE_BROADCAST SYNC only: false runs
                                             # the hook off the room lock (§9.5.1)
@@ -4073,7 +4125,8 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    └── Fetch recent events (for AI context)
 
 4. CHANNEL PROCESSES INBOUND
-   └── channel.handle_inbound(message, context) → RoomEvent
+   ├── channel.handle_inbound(message, context) → RoomEvent
+   └── Give the event its id (§8.1), whatever id the channel built it with
 
 5. IDENTITY RESOLUTION (if resolver configured and the sender has an address
    left to resolve — §11.6 skips a channel that names its own senders, and a
@@ -5014,7 +5067,7 @@ back when it holds none for the room. A detach forgets it.
 
 #### 10.6.3 Messages
 
-Five families, each message a serializable record.
+Five families, each message a record in the serialized form of Section 1.4.
 
 **The request**, owner → executor:
 
@@ -12581,7 +12634,7 @@ Tool auditing records every tool call with input, output, timing, and status.
 
 ```
 ToolAuditEntry
-├── ts: string                              # ISO 8601 timestamp
+├── ts: string                              # RFC 3339 time, in UTC (§1.4)
 ├── agent_id: string                        # Which agent made the call
 ├── tool_name: string                       # Tool function name
 ├── arguments: map<string, any>             # Input arguments
@@ -12659,7 +12712,7 @@ calls, vision events, interruptions, and session lifecycle.
 
 ```
 SessionAuditEntry
-├── ts: string                              # ISO 8601 timestamp
+├── ts: string                              # RFC 3339 time, in UTC (§1.4)
 ├── type: string                            # Event type (see below)
 ├── role: string | null                     # "user", "assistant", or "system"
 ├── content: string                         # Text, transcription, or description
@@ -14340,7 +14393,7 @@ StatusBus (interface)
 └── close() → void
 
 StatusEntry
-├── ts: string                              # ISO 8601 time of the post
+├── ts: string                              # RFC 3339 time of the post, in UTC (§1.4)
 ├── agent_id: string
 ├── action: string                          # What the agent is doing or did
 ├── status: StatusLevel                     # OK, FAILED, PENDING, INFO, COMPLETED
