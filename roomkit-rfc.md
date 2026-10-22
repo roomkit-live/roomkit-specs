@@ -1920,12 +1920,14 @@ external handler), and MAY add messages the next round reads after the round's
 results. A withdrawal changes the declaration of the next round, the one
 exception this hook makes to the declaration staying the same, and costs what a
 changed declaration costs. A hook acts on the event it receives, in place: the
-event a MODIFY returns is not read. A BLOCK stops the hooks after it, as on any
+event a MODIFY returns is not read, but a MODIFY that returns none is an
+unusable result (Section 9.3). A BLOCK stops the hooks after it, as on any
 SYNC trigger, and changes nothing of the round, which has run; a hook that
-raises or times out is skipped, or, registered fail-closed, stops the hooks
-after it. The hook belongs to a registered AI channel's tool loop: a realtime
-session does not fire it, nor does a reasoning backend's agent (not a registered
-channel), nor an external agent that runs its own loop (Section 6.4, ACP).
+raises, times out or returns an unusable result is skipped, or, registered
+fail-closed, stops the hooks after it. The hook belongs to a registered AI
+channel's tool loop: a realtime session does not fire it, nor does a
+reasoning backend's agent (not a registered channel), nor an external agent
+that runs its own loop (Section 6.4, ACP).
 
 **The prompt from turn to turn.** For the same reason, the system prompt SHOULD
 stay the same from one turn to the next: a system prompt that changes
@@ -3531,7 +3533,7 @@ HookRegistration
 ├── execution: HookExecution                # SYNC or ASYNC, on any trigger
 ├── handler: function                       # The hook function
 ├── priority: int = 0                       # Execution order (lower = first)
-├── name: string                            # Human-readable identifier
+├── name: string                            # Unique within its scope (below)
 ├── timeout: float = 30.0                   # Maximum execution time (seconds)
 ├── channel_types: set<ChannelType> | null  # Filter: only fire for these channel types
 ├── channel_ids: set<string> | null         # Filter: only fire for these channel IDs
@@ -3550,6 +3552,13 @@ channel the kit holds by its declaration alone could fire, whose turns run on
 another executor (§10.6.6). A room hook on such a trigger for those channels
 is registered on the executors under a name, which the room's owner keeps for
 the room (§10.6.6).
+
+A hook's `name` is unique within its scope: the kit's hooks, registered
+globally, or the hooks of one room. Implementations MUST refuse at
+registration a hook whose name a hook of the same scope already holds, since
+a block names its hook by that name alone (`blocked_by`, §9.3). An
+implementation that gives a hook a default name, when the integrator gives
+none, MUST make that name unique within its scope.
 
 `needs_lock = false` is only meaningful on a SYNC `BEFORE_BROADCAST` hook;
 implementations MUST reject it on any other trigger or execution mode at
@@ -3705,11 +3714,26 @@ On a room turn the event's `chain_depth` is the triggering event's plus one,
 and its `visibility` is the triggering event's response visibility. A
 transport's delivery failure does not fire ON_ERROR.
 
+**The context of a lifecycle hook.** A hook on ON_ROOM_CREATED,
+ON_CHANNEL_ATTACHED or ON_ROOM_CLOSED receives the room context any hook
+receives (§10.1 step 3), as the change left the room: the room itself (on
+ON_ROOM_CLOSED, closed), its bindings and participants as the change read
+them under the room lock (on ON_CHANNEL_ATTACHED, the attached binding among
+them, in place of any it replaces), and its recent events, so that a hook on
+a room's closing can read its conversation. A room just created has the
+bindings its creation made, such as the agents an orchestration attached
+(Section 19.7); the channel whose message created it is attached after the
+hook (§10.1 step 2).
+
 ### 9.3 Hook Execution Modes
 
 **SYNC hooks:**
 
-- Run sequentially, ordered by priority (lower number = first).
+- Run sequentially, ordered by priority (lower number = first). At equal
+  priority the kit's hooks run before the room's, and hooks of one scope run
+  in the order they were registered (§9.1); on BEFORE_BROADCAST an off-lock
+  hook still runs before a hook of equal priority that needs the lock
+  (§9.5.1).
 - Each hook receives the event and room context.
 - Each hook MUST return a HookResult, except the identity hooks that decide
   ON_IDENTITY_AMBIGUOUS and ON_IDENTITY_UNKNOWN, which are registered apart and
@@ -3718,8 +3742,8 @@ transport's delivery failure does not fire ON_ERROR.
 - A hook that does not produce a usable result MUST be treated as ALLOW with an
   error logged, so that a broken hook cannot take a room down. This covers a
   hook that raises, one that exceeds its timeout, one that returns something
-  other than a HookResult, and a MODIFY whose payload is not of the type the
-  trigger passed in.
+  other than a HookResult, a MODIFY that carries no payload, and a MODIFY
+  whose payload is not of the type the trigger passed in.
 - **Except on three triggers, which fail closed: BEFORE_TTS, ON_TRANSCRIPTION
   and BEFORE_TOOL_USE**, where every one of those outcomes MUST block instead.
   Every other trigger, BEFORE_BROADCAST and ON_TOOL_CALL included, is fail-open
@@ -3758,9 +3782,12 @@ transport's delivery failure does not fire ON_ERROR.
   outcome so the sender can be told why: `blocked_by` is the hook name and
   the reason is `hook_timeout:<name>`, `hook_error:<name>` or
   `hook_invalid_result:<name>`.
-- A MODIFY result replaces the payload whenever one is supplied, including a
+- A MODIFY result replaces the payload with the one it carries, including a
   falsy one. Redacting a string to empty is a modification; treating it as
-  absent would pass the original to the next hook.
+  absent would pass the original to the next hook. A MODIFY that carries no
+  payload replaces nothing: it is an unusable result, which the trigger's or
+  the hook's fail-open or fail-closed rule decides, as it decides a payload
+  of the wrong type.
 
 **ASYNC hooks:**
 
@@ -4042,7 +4069,7 @@ Sync hooks MUST return a HookResult, the identity hooks of Section 11.2 aside:
 ```
 HookResult
 ├── action: "allow" | "block" | "modify"
-├── event: any | null                       # The replacement payload (for "modify" action)
+├── event: any | null                       # The replacement payload; required on "modify"
 ├── reason: string | null                   # Why blocked or modified
 ├── injected_events: list<InjectedEvent>    # Events to inject when blocking
 ├── tasks: list<Task>                       # Tasks to create (side effects)
@@ -4056,7 +4083,24 @@ whatever the trigger passed in. Only BEFORE_BROADCAST and BEFORE_DELIVER
 TTS trigger receives a string, the bridge triggers receive media frames, and the
 tool and generation triggers receive their own event types. Typing this field as
 a RoomEvent would make "modify" unusable for every trigger but one, so consumers
-MUST check the type they expect before substituting it.
+MUST check the type they expect before substituting it. A "modify" result MUST
+carry its payload: one whose `event` is null is an unusable result (§9.3).
+
+**A `BEFORE_BROADCAST` replacement.** A MODIFY on BEFORE_BROADCAST replaces
+what the event says and whom it asks, never which event it is. The
+replacement MAY change the event's `content`, its address (`addressed_to`),
+its `visibility`, its thread (`parent_event_id`), its `correlation_id` and its
+`metadata`. Implementations MUST keep the original's `id`, `room_id`, `type`,
+`source`, `index`, `chain_depth`, `responds_to`, `idempotency_key`,
+`created_at`, `status` and `blocked_by` on it: a field of these that the hook
+changed is put back from the original before the next hook reads the event,
+and the hook's other changes stand. The source's write check (§10.1 step 11)
+and the chain-depth limit (§8.3) read these fields after the hooks: no hook
+can commit an event under another source, at another index or chain depth,
+or as the answer to another event. A visibility the hook changed is still
+narrowed at commit by the source binding's visibility (§7.5). A router hook
+that addresses an event (Section 19.4), by its address or its routing
+metadata, is unaffected.
 
 **InjectedEvent:**
 
@@ -4285,6 +4329,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    ├── Apply the step 5a outcome first, when there was one (§9.5.1)
    ├── Execute the remaining hooks in priority order
    └── Collect result: allow / block / modify
+       # A modify rewrites what the event says, never which event it is:
+       # its id, source, index, chain depth and the other fields §9.4
+       # protects are kept from the original
 
 10. IF BLOCKED BY HOOK:
     ├── Commit event with status=BLOCKED, blocked_by=hook_name, in the
