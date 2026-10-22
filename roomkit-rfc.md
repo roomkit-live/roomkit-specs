@@ -14106,7 +14106,10 @@ status bus, then one terminal entry however the delegation ends: completed,
 failed, timed out, raised, or cancelled by its caller. That entry names the
 task (`task_id`) once the task exists, whatever ended it, so the task's line
 on the bus (Section 23.4) ends with it, the progress its worker posted
-meanwhile included. A sequential team is
+meanwhile included, whatever action the run posts under (a Loop's
+`iteration` and `review`, Section 19.7.4). The run marks its entries as its
+own, a mark a turn's host refuses (Section 10.6.5), so no entry a turn posts
+ends a task's line. A sequential team is
 supervised (the supervisor frames and validates each step) whether it runs
 within the turn or in the background; a supervisor without a model (a
 configuration-only agent, as a voice supervisor often is) cannot frame nor
@@ -15485,8 +15488,10 @@ TaskRunner (interface)
 
 Implementations MUST provide an `InMemoryTaskRunner` for single-process
 deployments. A runner ends each task exactly once, through the completion it
-was handed: completed or failed once its work ran, `cancelled` when `cancel`
-or `close` cut it (even before it ran). That completion MUST run to its end
+was handed: completed or failed once its work ran (failed when its run raised
+outside its turn's outcome), `cancelled` when `cancel` or `close` cut it (even
+before it ran). A `run` that raises has not taken the task: the delegation
+ends it failed (Section 23.3), and the runner MUST NOT end it too. That completion MUST run to its end
 even if the caller of `cancel` is cancelled meanwhile, and a task whose work
 already ran when `cancel` arrives ends as it stands.
 
@@ -15810,9 +15815,10 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   cancel, that it is still running and why: an inline delegation runs inside
   the turn that asked for it and ends with it; a task a strategy runs without
   posting it is the strategy's to follow, which the host may cancel when it
-  runs in the background. Calls that cancel one task at once cancel it once:
-  each is answered that it was cancelled, and none of the agents that made
-  them is handed the cancellation back. A task the bus lists ended is
+  runs in the background. Calls that cancel one task at once cancel it once,
+  the host's `cancel_task(task_id)` among them: each is answered that it was
+  cancelled, and none of the agents that made them is handed the
+  cancellation back. A task the bus lists ended is
   answered as the bus lists it, as `task_status` reads it: nothing is left to
   act on. Whether a
   task the bus lists running is the room's is what the framework knows of the
