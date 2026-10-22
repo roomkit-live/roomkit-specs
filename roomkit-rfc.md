@@ -3151,8 +3151,11 @@ Implementations MUST enforce these rules:
    block. A streamed response from a source that cannot write is piped live
    to no channel: a read-only source's stream is read to its end and each row
    stored `BLOCKED`; a muted source's MAY be closed unread, the reply never
-   generated. An event a hook injects takes no source check: it is the
-   hook's, not a channel's (§9.4).
+   generated. A source both read-only and muted is refused as read-only, so
+   its stream is read to its end. An event a hook injects takes no source
+   check: it is the hook's, not a channel's (§9.4). Nor does an event the
+   framework itself writes through the pipeline, such as a delegation's task
+   description (§23.3): it is the framework's, not a channel's.
 3. **Side effects:** Tasks and observations are ALWAYS collected regardless of
    access or mute status — including for events blocked by rule 2.
 4. **Visibility filtering:** When broadcasting an event, the framework MUST
@@ -3619,7 +3622,10 @@ globally, or the hooks of one room. Implementations MUST refuse at
 registration a hook whose name a hook of the same scope already holds, so
 that a block names one hook of its scope (`blocked_by`, §9.3). An
 implementation that gives a hook a default name, when the integrator gives
-none, MUST make that name unique within its scope.
+none, MUST make that name unique within its scope. A hook MUST NOT be named
+after a value the framework writes in `blocked_by` (`source_read_only`,
+`source_muted`, `source_unbound`, `event_chain_depth_limit`,
+`reentry_loop_cap`): its block would read as the framework's refusal.
 
 `needs_lock = false` is only meaningful on a SYNC `BEFORE_BROADCAST` hook;
 implementations MUST reject it on any other trigger or execution mode at
@@ -3778,12 +3784,14 @@ On a room turn the event's `chain_depth` is the triggering event's plus one,
 and its `visibility` is the triggering event's response visibility. A
 transport's delivery failure does not fire ON_ERROR.
 
-**The context of a lifecycle hook.** A hook on ON_ROOM_CREATED,
-ON_CHANNEL_ATTACHED or ON_ROOM_CLOSED receives the room context any hook
-receives (§10.1 step 3), as the change left the room: the room itself (on
-ON_ROOM_CLOSED, closed), its bindings and participants as the change read
-them under the room lock (on ON_CHANNEL_ATTACHED, the attached binding among
-them, in place of any it replaces), and its recent events, so that a hook on
+**The context of a lifecycle hook.** A hook on a lifecycle trigger
+(ON_ROOM_CREATED, ON_ROOM_PAUSED, ON_ROOM_CLOSED, ON_CHANNEL_ATTACHED,
+ON_CHANNEL_DETACHED, ON_CHANNEL_MUTED, ON_CHANNEL_UNMUTED) receives the room
+context any hook receives (§10.1 step 3), as the change left the room: the
+room itself (on ON_ROOM_CLOSED, closed), its bindings and participants as
+the change read them under the room lock (on ON_CHANNEL_ATTACHED, the
+attached binding among them, in place of any it replaces; on
+ON_CHANNEL_DETACHED, without the detached one), and its recent events, so that a hook on
 a room's closing can read its conversation. A room just created has the
 bindings its creation made, such as the agents an orchestration attached
 (Section 19.7); the channel whose message created it is attached after the
@@ -3852,6 +3860,8 @@ hook (§10.1 step 2).
   payload replaces nothing: it is an unusable result, which the trigger's or
   the hook's fail-open or fail-closed rule decides, as it decides a payload
   of the wrong type.
+- An unusable result's tasks and observations are collected, as side
+  effects always are (§7.5 rule 3); the events it would inject are not.
 
 **ASYNC hooks:**
 
@@ -4154,11 +4164,14 @@ carry its payload: one whose `event` is null is an unusable result (§9.3).
 what the event says and whom it asks, never which event it is. The
 replacement MAY change the event's `content`, its address (`addressed_to`),
 its `visibility`, its thread (`parent_event_id`), its `correlation_id` and its
-`metadata`. Implementations MUST keep the original's `id`, `room_id`, `type`,
-`source`, `index`, `chain_depth`, `responds_to`, `idempotency_key`,
-`created_at`, `status` and `blocked_by` on it: a field of these that the hook
-changed is put back from the original before the next hook reads the event,
-and the hook's other changes stand. The source's write check (§10.1 step 11)
+`metadata`, and its `channel_data`. Implementations MUST keep the original's
+`id`, `room_id`, `type`, `source`, `index`, `chain_depth`, `responds_to`,
+`idempotency_key`, `created_at`, `status`, `blocked_by`, `consumption` and
+`delivery_results` on it, and with them the checks already passed: the event
+an EDIT or a DELETE targets (`target_event_id`, checked at §10.1 step 8a),
+and an INSTRUCTION's visibility and address (§10.1.1). A field of these that
+the hook changed is put back from the original before the next hook reads
+the event, and the hook's other changes stand. The source's write check (§10.1 step 11)
 and the chain-depth limit (§8.3) read these fields after the hooks: no hook
 can commit an event under another source, at another index or chain depth,
 or as the answer to another event. A visibility the hook changed is still
@@ -4460,8 +4473,8 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │       event=the BLOCKED record)
     └── Otherwise → continue
         # A source that cannot write MUST NOT inject a DELIVERED event.
-        # An event a hook injected takes no source check: it is the
-        # hook's, not a channel's (§9.4).
+        # An event a hook injected, or one the framework itself writes,
+        # takes no source check: it is not a channel's (§7.5 rule 2, §9.4).
 
 12. COMMIT EVENT — the commit point (§13.6, §14.3):
     ├── For EDIT/DELETE: apply the target state update now (§10.3) — deferred
@@ -4812,7 +4825,8 @@ than being drained inside the trigger's lock tenure.
 **Step-by-step:**
 
 ```
-1. CHECK SOURCE CAN WRITE (not for an event a hook injects, §9.4)
+1. CHECK SOURCE CAN WRITE (not for an event a hook injects or the
+   framework itself writes, §7.5 rule 2)
    ├── The source must have a binding in the room
    ├── source_binding.access must be READ_WRITE or WRITE_ONLY
    └── source_binding.muted must be false
@@ -17021,7 +17035,8 @@ VoiceChannel
     ├── Standard path:
     │   ├── AudioContent → [postprocessors] → [recorder] → [resampler] → transport → [AEC ref †]
     │   ├── TextContent → TTS → AudioChunk stream → outbound pipeline → transport → [AEC ref †]
-    │   └── Other → error
+    │   └── Other (system, tool-call, a composite keeping a part that is
+    │       neither text nor audio) → not spoken, no delivery error
     ├── Streaming AI → TTS path (framework-native):
     │   └── Framework pipes AIChannel.response_stream → deliver_stream()
     │       → sentence_splitter → synthesize_stream_input() → outbound pipeline → transport
