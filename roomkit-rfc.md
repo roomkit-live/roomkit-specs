@@ -366,7 +366,10 @@ Channels are classified along two dimensions:
 | `deliver()` | Framework needs to push an event to the channel's external recipient | OUTBOUND |
 | `on_event()` | A room event occurs and this channel has read access | READ |
 
-Direction declares capability. Permissions restrict per room.
+Direction declares capability. Permissions restrict per room. A transport
+whose direction sends (OUTBOUND or BIDIRECTIONAL) is called with `deliver()`;
+an INBOUND-only one never is, and still receives `on_event()` when it may
+read the event (§10.2). Direction does not filter intelligence channels.
 
 ### 4.3 The Event
 
@@ -402,7 +405,7 @@ paths:
 Channel/Hook Output
 ├── Room Events (messages, responses)
 │   ├── Subject to permissions (access, mute, visibility)
-│   ├── Broadcast according to the binding's visibility
+│   ├── Broadcast according to the event's visibility and its binding's
 │   └── Stored in timeline
 │
 └── Side Effects (ALWAYS allowed, even when muted)
@@ -521,8 +524,10 @@ RoomEvent
 ├── source: EventSource                     # Where it came from
 ├── content: EventContent                   # Normalized payload (discriminated union)
 ├── status: EventStatus                     # Delivery outcome
-├── blocked_by: string | null               # Hook name if blocked
-├── visibility: string                      # Who can see this event
+├── blocked_by: string | null               # If BLOCKED, why: a hook's name, or the
+│                                           # framework's reason (§7.5 rule 2, §8.3)
+├── visibility: string                      # Who can see this event: its own and its
+│                                           # source binding's, intersected at commit (§7.3)
 ├── addressed_to: list<string> | null       # Intelligence channels asked to act (§19.3)
 ├── index: int >= 0                         # Sequential position in room timeline
 ├── chain_depth: int >= 0                   # Response chain depth (loop prevention)
@@ -578,7 +583,7 @@ RoomEvent
 | DELIVERED | Event successfully stored and broadcast |
 | READ | Event read by recipient (from read receipt) |
 | FAILED | Delivery failed after all retries |
-| BLOCKED | Event refused: by a sync hook, a source that cannot write (§7.5 rule 2), or the chain-depth limit (§8.3) |
+| BLOCKED | Event refused: by a sync hook, a source that cannot write or has no binding in the room (§7.5 rule 2), or the chain-depth limit (§8.3) |
 
 **EventSource:**
 
@@ -1135,7 +1140,8 @@ InboundMessage
 ├── provider_message_id: string | null      # Provider's message ID
 ├── metadata: map<string, any>              # Extra data
 ├── session: VoiceSession | null            # Voice session to connect after processing
-├── visibility: string = "all"              # Event visibility (Section 7.3);
+├── visibility: string = "all"              # Event visibility (Section 7.3), intersected
+│                                           # with the source binding's at commit;
 │                                           # "transport" reaches no intelligence channel
 ├── addressed_to: list<string> | null       # Intelligence channels asked to act
 │                                           # (Section 19.3); null = any eligible
@@ -2996,8 +3002,8 @@ A boolean flag on the binding. When `muted = true`:
 - The channel STILL receives events via `on_event()` (reading is preserved).
 - The channel's response events are not broadcast (writing is blocked):
   each re-enters and its commit pass stores it `BLOCKED` with
-  `source_muted`, after its hooks (§7.5 rule 2); a streamed one MAY be closed
-  unread instead.
+  `source_muted` (`source_read_only` when its access does not write either),
+  after its hooks (§7.5 rule 2); a streamed one MAY be closed unread instead.
 - Side effects (tasks, observations) are STILL collected.
 
 Muting is temporary. The integrator calls `mute()` and `unmute()` as needed.
@@ -3005,16 +3011,53 @@ Muting is temporary. The integrator calls `mute()` and `unmute()` as needed.
 ### 7.3 Visibility
 
 Controls which channels see events produced by the source channel. Set on the
-binding as a string value:
+binding as a string value, and carried by each event (§5.2):
 
 | Value | Meaning |
 |---|---|
 | `"all"` | All channels in the room see the event |
 | `"none"` | No channels see the event (stored in timeline only) |
+| `"internal"` | No channels see the event, as with `"none"`; marks a record the framework wrote (§6.4) |
 | `"transport"` | Only transport channels see the event |
 | `"intelligence"` | Only intelligence channels see the event |
 | `"channel_a,channel_b"` | Comma-separated list of specific channel IDs |
 | `"channel_a"` | Single channel ID |
+
+**Grammar.** A visibility is one of the five keywords `all`, `none`,
+`internal`, `transport` and `intelligence`, or a list of one or more channel
+ids separated by commas. A keyword is written exactly as above, in lowercase
+(`"All"` is a channel id, not the keyword). The keywords are reserved: a
+channel whose id is one of them MUST be refused when it is registered, and
+so MUST a channel whose id contains a comma or starts or ends with
+whitespace, so that every channel id can be written in a list. Whitespace
+around the whole value and around each id is ignored (`" sms , ws "` is
+`"sms,ws"`). An empty value and an empty item (`""`, `"sms,,ws"`, `"sms,"`)
+MUST be refused. An id listed twice counts once, and a list is written back
+with each id once, sorted by code point. An id that names no channel bound
+to the room is allowed and matches nothing.
+
+**An event's visibility.** An event carries a visibility of its own (an
+inbound message's `visibility`, §5.12, `"all"` unless the caller sets one),
+and its source binding has one. A channel sees an event whose source is
+bound to the room only when both include it. The framework computes the
+visibility that includes exactly those channels when it commits the event
+(§10.1 step 12) and stores it as the event's `visibility`: delivery (§10.2)
+and every history rebuilt for a channel (§7.5 rule 8) read that field
+alone, so a binding changed or removed later changes no past event. The
+intersection of two visibilities is:
+
+- `all` with any value: that value;
+- `internal` with any value: `internal`, which keeps the mark of a record
+  the framework wrote;
+- `none` with any value other than `internal`: `none`;
+- a category with itself: that category; `transport` with `intelligence`:
+  `none`;
+- two lists: the ids both name;
+- a category with a list: the listed channels of that category, read from
+  the room's bindings at commit; a listed id that no binding of the room
+  holds is dropped.
+
+An intersection that leaves no id is `none`.
 
 "See" is not "be delivered to". `"none"` reads *stored in timeline only*, and it
 means it: an event a channel was not allowed to see at delivery MUST NOT reach
@@ -3045,8 +3088,15 @@ Implementations MUST enforce these rules:
    binding has `access` ∈ {READ_WRITE, WRITE_ONLY} AND `muted = false`.
    Likewise, an inbound or directly-injected event whose source binding cannot
    write (`access` ∉ {READ_WRITE, WRITE_ONLY} OR `muted = true`) MUST be stored
-   with status `BLOCKED` (`blocked_by` = `source_read_only` or `source_muted`)
-   rather than `DELIVERED`, and MUST NOT be broadcast. A response re-enters
+   with status `BLOCKED` rather than `DELIVERED`, and MUST NOT be broadcast.
+   Its `blocked_by` is `source_read_only` when the access does not write,
+   `NONE` included and whether the binding is muted or not, since the access
+   is the lasting cause; it is `source_muted` when the source could write but
+   is muted. An event whose source has no binding in the room, such as a
+   channel the integrator detached (rule 7), MUST be stored `BLOCKED` with
+   `blocked_by` = `source_unbound` and MUST NOT be broadcast either; the
+   channel of an inbound message still parses it (§10.1 step 4), with a
+   context that holds no event of the room. A response re-enters
    like any other event (§10.1 step 14) and meets this check after its
    `BEFORE_BROADCAST` hooks (step 11 after step 9), on each path that commits
    a response: a buffered response, a streamed row, a regenerated answer. The
@@ -3066,8 +3116,9 @@ Implementations MUST enforce these rules:
 3. **Side effects:** Tasks and observations are ALWAYS collected regardless of
    access or mute status — including for events blocked by rule 2.
 4. **Visibility filtering:** When broadcasting an event, the framework MUST
-   check the source binding's visibility and deliver only to channels included
-   in the visibility rule.
+   deliver only to channels that both the event's own visibility and its
+   source binding's include: the intersection the event carries from its
+   commit (§7.3).
 5. **Self-skip:** A channel MUST NOT receive its own events via `on_event()`.
 6. **A binding is never widened implicitly.** Wherever the framework creates a
    binding from an existing one — sharing a channel into a delegated room
@@ -3095,9 +3146,10 @@ Implementations MUST enforce these rules:
 
    The same holds for an event delivered to nobody. An event stored `BLOCKED`
    — refused by a hook (§10.1 step 10), written by a source that could not
-   write, read-only or muted (step 11, rule 2), stopped by the chain-depth cap
-   or the reentry cap (§8.3) — MUST NOT reach any channel's reconstructed
-   context, its own source's included: the room
+   write, read-only or muted, or that has no binding in the room (step 11,
+   rule 2), stopped by the chain-depth cap or the reentry cap (§8.3) —
+   MUST NOT reach any channel's reconstructed context, its own source's
+   included: the room
    refused that turn, and a model that reads its own refused answer as
    history continues from a turn nobody received. The record stays in the
    timeline for host code and audit (the point on host code below applies to
@@ -3121,21 +3173,22 @@ Implementations MUST enforce these rules:
      prompt would erase the assistant pattern of §7.4
      (`visibility="ws_advisor"`) from the inside. Its own *refused* turns are
      the exception stated above: an answer nobody received, a muted channel's
-     included, is not history the channel may continue from.
+     included, is not history the channel may continue from. A channel with
+     no binding in the room is handed none of its events, its own included
+     (rule 2).
    - **Host code reads the timeline whole.** Hooks, scorers and framework
      machinery run in the integrator's process and hold the store already;
      filtering their `recent_events` would forbid nothing and would break
      legitimate readers. Visibility is a rule between the room and its
      channels.
-   - **Visibility is a live property of the binding.** An implementation that
-     resolves a source's visibility from its binding at read time MUST accept
-     that widening a binding widens its past too, and MUST document it. One
-     that stamps the effective visibility onto the event at commit gets a
-     replay-stable answer instead. Either is conformant; the choice MUST be
-     stated. When the source binding no longer exists, the event's own
-     `visibility` field is the whole answer — an implementation MUST NOT treat
-     an unresolvable source as a reason to hide ordinary history, which would
-     empty a room's context the moment a transport detaches.
+   - **Visibility is fixed at commit.** The event's own `visibility` field is
+     the whole answer: the intersection stored at its commit (§7.3), never
+     the source's binding as it stands when the history is read. Widening or
+     narrowing a binding changes what the source's later events reach, not
+     what its past ones reached. The same holds when the source binding no
+     longer exists: an implementation MUST NOT treat an unresolvable source
+     as a reason to hide ordinary history, which would empty a room's context
+     the moment a transport detaches.
 
 ---
 
@@ -3200,7 +3253,7 @@ They are NOT stored in any room timeline.
 | source_error | A source provider's run failed | channel_id, source_name, error, attempt |
 | source_exhausted | Source provider given up after its last restart attempt | channel_id, source_name, attempts, last_error |
 | event_processed | An event that entered through the inbound pipeline or direct injection (§10.5) finished its delivery set and its `AFTER_BROADCAST` hooks; not emitted for the events its processing produced (responses, streamed rows, hook-injected events) | room_id, event_id |
-| event_blocked | Event blocked by a hook or by a source that cannot write (§7.5 rule 2); a chain-depth record emits `chain_depth_exceeded` instead | room_id, event_id, channel_id (the event's source), reason, blocked_by |
+| event_blocked | Event blocked by a hook, or by a source that cannot write or has no binding in the room (§7.5 rule 2); a chain-depth record emits `chain_depth_exceeded` instead | room_id, event_id, channel_id (the event's source), reason, blocked_by |
 | process_timeout | The pre-commit phase exceeded `process_timeout` (§13.6) | room_id, channel_id (expired before the room lock) or event_id (under it), timeout; `operation = regenerate` for a regeneration, which carries neither `channel_id` nor `event_id` |
 | delivery_succeeded | A transport channel's `deliver()` succeeded, for an event that entered through the inbound pipeline or direct injection (§10.5); a response's deliveries are not reported | room_id, event_id, channel_id |
 | delivery_failed | A target's `on_event()` or `deliver()` failed (`deliver()` after its retries), for the same events as `delivery_succeeded` | room_id, event_id, channel_id, error |
@@ -4100,7 +4153,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   │   → fail, nothing written (§17.2)
    │   ├── No room with that id → create a new room with that id
    │   ├── Room exists, channel not bound to it → attach the channel, unless
-   │   │   it was detached from that room (§7.5 rule 7)
+   │   │   it was detached from that room (§7.5 rule 7); a channel left
+   │   │   unbound goes on without a binding, and step 11 refuses its
+   │   │   event (source_unbound)
    │   └── Routed (not provided), and the channel's binding names no
    │       participant and is not `group` → record the sender on it
    │       (`participant_id`, §10.4) and, on a transport, address the
@@ -4123,6 +4178,8 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    ├── Fetch all bindings
    ├── Fetch all participants
    └── Fetch recent events (for AI context)
+       # A channel with no binding in the room (step 2) is handed none: it
+       # parses the message at step 4 with a context that holds no event
 
 4. CHANNEL PROCESSES INBOUND
    ├── channel.handle_inbound(message, context) → RoomEvent
@@ -4199,9 +4256,12 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     └── Return InboundResult(blocked=true)
 
 11. CHECK SOURCE CAN WRITE
-    ├── If source_binding.access ∉ {READ_WRITE, WRITE_ONLY} OR source_binding.muted:
-    │   ├── Commit event with status=BLOCKED,
-    │   │   blocked_by = source_read_only | source_muted, as at step 10
+    ├── If the source has no binding in the room (step 2) OR
+    │   source_binding.access ∉ {READ_WRITE, WRITE_ONLY} OR source_binding.muted:
+    │   ├── Commit event with status=BLOCKED, as at step 10, blocked_by =
+    │   │   source_unbound with no binding; else source_read_only when the
+    │   │   access does not write, NONE included, muted or not; else
+    │   │   source_muted (§7.5 rule 2)
     │   ├── Deliver injected events from hook result
     │   ├── Persist tasks and observations (side effects ALWAYS collected, §7.5)
     │   └── Return InboundResult(blocked=true)
@@ -4240,7 +4300,8 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   │   stored: a commit that fails after it leaves a rank unused, never
     │   │   one held twice. A BLOCKED record (steps 10, 11) takes none
     ├── Commit atomically, as ONE logical transaction:
-    │   ├── Store event with status=DELIVERED
+    │   ├── Store event with status=DELIVERED and, as its visibility, the
+    │   │   intersection of its own and its source binding's (§7.3)
     │   └── Update room state: latest_index = event.index; event_count += 1;
     │       timers.last_activity_at = now
     │   # After this transaction returns, the event is durably part of the
@@ -4537,6 +4598,7 @@ than being drained inside the trigger's lock tenure.
 
 ```
 1. CHECK SOURCE CAN WRITE
+   ├── The source must have a binding in the room
    ├── source_binding.access must be READ_WRITE or WRITE_ONLY
    └── source_binding.muted must be false
        (if muted: suppress events but collect side effects)
@@ -4545,8 +4607,9 @@ than being drained inside the trigger's lock tenure.
    ├── Get all bindings in room
    ├── Exclude source channel
    ├── Exclude channels with access = WRITE_ONLY or NONE
-   ├── Exclude OUTBOUND-only channels
-   └── Apply visibility filter from source_binding.visibility
+   └── Keep the channels the event's visibility includes: the
+       intersection of its own and its source binding's, stored at its
+       commit (§7.3)
 
 3. FOR EACH TARGET CHANNEL (concurrently):
    │
@@ -4556,14 +4619,16 @@ than being drained inside the trigger's lock tenure.
    ├── b. ENFORCE MAX LENGTH
    │      └── Truncate text if target.capabilities.max_length exceeded
    │
-   ├── c. CALL on_event() (all readable channels)
+   ├── c. CALL on_event() (all readable channels, whatever their direction)
    │      ├── Intelligence channels: only those solicited (§19.3), and
    │      │   none when the response would reach max_chain_depth (§8.3)
    │      ├── An intelligence channel's call is a turn, run through the
    │      │   turn backend (§10.6)
    │      └── Collect ChannelOutput (response events, tasks, observations)
    │
-   ├── d. CALL deliver() (transport channels only)
+   ├── d. CALL deliver() (transport channels whose direction sends,
+   │      OUTBOUND or BIDIRECTIONAL; an INBOUND-only transport gets
+   │      on_event() alone)
    │      ├── Apply rate limiter
    │      ├── Check circuit breaker
    │      ├── No recipient in the binding → refuse before any send:
@@ -4584,7 +4649,8 @@ than being drained inside the trigger's lock tenure.
    ├── Muted channels STILL receive on_event()
    ├── Response events from muted channels re-enter like any other
    │   (§10.1 step 14); their commit pass stores them BLOCKED source_muted
-   │   after their hooks (§7.5 rule 2), and none is broadcast
+   │   (source_read_only for a channel whose access does not write) after
+   │   their hooks (§7.5 rule 2), and none is broadcast
    └── Tasks and observations from muted channels are COLLECTED
 
 5. RETURN BroadcastResult
@@ -5880,10 +5946,10 @@ message:
 
 - **hold** (the default when no hook passes it): the event is stored and
   delivered marked held, its scope narrowed to the transport channels it
-  reached — its own visibility, or its source binding's — so the room's
-  people and transports (an advisor's console) see it and no intelligence
-  channel reads it, in delivery or in context. Holding never widens what a
-  message reached;
+  reached — those both its own visibility and its source binding's include
+  (§7.3) — so the room's people and transports (an advisor's console) see
+  it and no intelligence channel reads it, in delivery or in context.
+  Holding never widens what a message reached;
 - **pass**: the event goes on unchanged, labelled — where an integrator lets
   a general question through. A hook passes a message explicitly; a hook
   that merely allows it (as one that only watches does) does not;
@@ -13259,10 +13325,10 @@ RoomEvent
 ```
 
 **Addressing is not visibility.** Visibility (§7.3) is configured on a
-binding and answers who may *see* what a source produces. Addressing is set
-on an event by its sender and answers who is *asked to act*. The two are
-orthogonal: addressing one agent MUST NOT hide the event from any channel
-visibility would have shown it to.
+binding, narrowed by an event's own, and answers who may *see* what a source
+produces. Addressing is set on an event by its sender and answers who is
+*asked to act*. The two are orthogonal: addressing one agent MUST NOT hide
+the event from any channel visibility would have shown it to.
 
 Normative rules:
 
@@ -13974,9 +14040,10 @@ SpeakQueue (one per room, readable by the host)
    address a transport set; a name that is no agent of the room addresses
    nobody. A name queues an agent only when the event's visibility includes
    it and its access lets it read the event (Section 7.5): a name is no way
-   around visibility; the visibility is the event's own, else its source
-   binding's (Section 7.5). A person's name addresses no intelligence
-   channel: it records that the agent asked that person (rule 10). The names
+   around visibility; the visibility is the one the event carries, its own
+   intersected with its source binding's at commit (Section 7.3). A person's
+   name addresses no intelligence channel: it records that the agent asked
+   that person (rule 10). The names
    people are addressed by are those of the room's people as the transcript
    labels them (Section 6.4: a participant's name, a transport's stamp, else
    the channel of a sender with no name), only those `people` lists when it
