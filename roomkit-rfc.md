@@ -3339,10 +3339,52 @@ They are NOT stored in any room timeline.
 | conference_bot_grants_changed | A connected bot session's effective grants changed (Section 12.10.4) | room_id, channel_id, bot_session_id, hidden |
 
 An implementation MUST emit each event of this table for the features it
-provides: the rows of a feature (voice, recording, video, conference, AI
-channel, tool calls, event sources, WebSocket connections, StatusBus) are
-owed only by an implementation that provides it. Integrators subscribe to
-framework events for monitoring and integration purposes.
+provides: the rows of a feature are owed only by an implementation that
+provides it. Each row is owed by Level 0 or by one feature:
+
+- **Level 0** (Section 26.1 lists them per step): `room_created`,
+  `room_paused`, `room_closed`, `room_archived`, `room_refused_event`,
+  `channel_registered`, `channel_unregistered`, `room_channel_attached`,
+  `room_channel_detached`, `event_processed`, `event_blocked`,
+  `delivery_succeeded`, `delivery_failed`, `broadcast_partial_failure`,
+  `chain_depth_exceeded`, `hook_error`, `hook_timeout`, and
+  `session_started` for a room the inbound pipeline creates for a text
+  channel.
+- **Processing timeout** (Section 13.6): `process_timeout`.
+- **Delivery lanes across processes** (a store shared by several processes,
+  Section 13.5): `delivery_skipped`.
+- **Identity resolution** (Level 1; Section 10.1 step 5, Section 11):
+  `identity_resolved`, `identity_timeout`.
+- **Identity verification** (Level 2; Section 10.1 step 5b, Section 11.7):
+  `verification_requested`, `verification_completed`, `verification_ended`.
+- **Circuit breaker** (Level 1, Section 13.1): `circuit_breaker_opened`,
+  `circuit_breaker_closed`.
+- **WebSocket connections** (Level 1, Appendix A.8): `channel_connected`,
+  `channel_disconnected`.
+- **AI channel** (Level 1, Section 6.4): `before_ai_generation`,
+  `ai_response`.
+- **Tool calls** (Section 9.3; an AI channel's, Level 1, and a
+  speech-to-speech channel's or a conference's, Level 3): `before_tool_use`,
+  `tool_call`, `user_input_required`.
+- **Event sources** (Level 2, Section 6.5): `source_connected`,
+  `source_disconnected`, `source_attached`, `source_detached`,
+  `source_error`, `source_exhausted`.
+- **StatusBus** (Level 2, Section 19.8): `status_posted`.
+- **Feedback** (`submit_feedback`, Section 9.2): `feedback`.
+- **Voice** (Level 3, Section 12): `voice_session_started`,
+  `voice_session_ended`, `voice_session_ready`, `stt_error`, `tts_error`,
+  and `session_started` for a voice session.
+- **Recording** (Level 3: a voice session's, Section 12.3.7; a room's media,
+  Section 12.11; a conference track's, Section 12.10.8): `recording_started`,
+  `recording_stopped`.
+- **Video** (Level 3, Section 12.8): `video_session_started`,
+  `video_session_ended`, `video_vision_result`.
+- **Conference** (Level 3, Section 12.10): `conference_started`,
+  `conference_ended`, `conference_participant_joined`,
+  `conference_participant_left`, `conference_bot_grants_changed`.
+
+Integrators subscribe to framework events for monitoring and integration
+purposes.
 
 `room_refused_event` carries one `data` shape whichever path refused, so a
 subscriber reads it without knowing which one did:
@@ -3598,8 +3640,11 @@ than silently reorder.
 reference implementation emits today (**Implemented** — 83 as of this revision)
 from those specified for a forthcoming capability but not yet emitted
 (**Planned**), and from a trigger kept for historical reference whose behaviour
-has moved elsewhere (**Superseded**). Conformance targets the Implemented set;
-Planned rows are normative design intent for the named capability.
+has moved elsewhere (**Superseded**). The column tells what one
+implementation emits and is not the conformance list: the triggers an
+implementation MUST fire are those Section 26.1 lists for Level 0, per step,
+and, for a feature it provides, those the feature's section names. Planned
+rows are normative design intent for the named capability.
 
 The **Execution** column says how the framework runs the trigger; it does not
 restrict registration, and a hook may be registered SYNC or ASYNC on any
@@ -5167,13 +5212,15 @@ conversation in the owner's process, and the fan-out of an event to live
 connections held by another process.
 
 **One path (normative).** Every backend MUST carry the same serialized
-messages (§10.6.3). The in-memory backend MUST serialize each message and
-parse it on the other side, so that no object of the turn is shared between
-the owner and the executor: neither the channel's stream, its
-response-metadata record, its tool-call markers nor an exception crosses as a
-live object. An implementation MUST NOT keep a local shortcut that hands the
-owner the channel's objects; a distributed backend carries the in-memory
-backend's messages on another transport, never a second path. The behaviour
+messages (§10.6.3), written in the serialized form. The in-memory backend
+MUST serialize each message and parse it on the other side, for two reasons.
+Every test run against it then checks the exact messages a distributed
+backend carries. And no object of the turn is shared between the owner and
+the executor: neither the channel's stream, its response-metadata record, its
+tool-call markers nor an exception crosses as a live object. An
+implementation MUST NOT keep a local shortcut that hands the owner the
+channel's objects; a distributed backend carries the in-memory backend's
+messages on another transport, never a second path. The behaviour
 this document gives intelligence channels MUST hold through the in-memory
 backend: an implementation's conformance suite for intelligence channels MUST
 be runnable against it, and SHOULD run against it by default.
@@ -16363,19 +16410,59 @@ A conforming implementation MUST support:
 - BEFORE_BROADCAST and AFTER_BROADCAST hooks with HookResult
 - InjectedEvent delivery, whatever the hook's action
 - Event chain depth tracking and limiting
-- Inbound processing pipeline (Section 10.1)
+- Inbound processing pipeline (Section 10.1); its identity steps belong to
+  higher levels, identity resolution (step 5) to Level 1 and identity
+  verification (step 5b) to Level 2, and an implementation skips the step of
+  a feature it does not provide
 - Broadcast pipeline (Section 10.2)
 - Reentry passes (response events re-enter the pipeline as commit passes)
 - Inbound room routing (pluggable)
 - Room-level locking
 - ConversationStore interface with in-memory implementation
 - Content transcoding (at least text fallback)
-- Framework events (Section 8.2)
+- The hook triggers and the framework events (Section 8.2) of the steps and
+  operations below
 - Structured logging
 - Idempotency checking
 - Event addressing: `RoomEvent.addressed_to`, honoured when set (Section 19.3)
 - Turn backend with its in-memory implementation and the kit's own executor:
   every turn through its serialized messages (Section 10.6)
+
+**Triggers and framework events.** A Level 0 implementation MUST fire each
+hook trigger, and emit each framework event, that the table below names for a
+step or an operation, whenever that step or operation runs. The table is
+Level 0's conformance list; the Status column of Section 9.2 tells what one
+implementation emits and is not. A feature of a higher level, or one no level
+lists, owes the triggers and the framework events its own section names, and
+only an implementation that provides it owes them: identity resolution
+(Level 1) owes ON_IDENTITY_AMBIGUOUS and ON_IDENTITY_UNKNOWN at §10.1 step 5,
+identity verification (Level 2) ON_VERIFICATION_REQUIRED at step 5b and the
+other triggers of Section 11.7, and an AI channel (Level 1) the triggers of
+its turn (Section 6.4). Section 8.2 says which level or feature owes each
+framework event.
+
+| Step or operation | Hook triggers | Framework events |
+|---|---|---|
+| A room created, by the integrator or at §10.1 step 2 | ON_ROOM_CREATED | room_created |
+| §10.1 step 2: a room created for a channel other than VOICE and REALTIME_VOICE | ON_SESSION_STARTED | session_started |
+| A channel attached to a room, by the integrator or at §10.1 step 2 | ON_CHANNEL_ATTACHED | room_channel_attached |
+| A channel detached from a room | ON_CHANNEL_DETACHED | room_channel_detached |
+| A channel muted or unmuted in a room (§7.2) | ON_CHANNEL_MUTED, ON_CHANNEL_UNMUTED | — |
+| A channel registered with the framework, or unregistered | — | channel_registered, channel_unregistered |
+| A room transitioned to PAUSED (§5.1) | ON_ROOM_PAUSED | room_paused, when its inactivity timer paused it |
+| A room transitioned to CLOSED | ON_ROOM_CLOSED | room_closed |
+| A room transitioned to ARCHIVED | — | room_archived |
+| An event the room's status refuses (§5.1, §10.1 step 6) | — | room_refused_event |
+| §10.1 steps 5a and 9 | BEFORE_BROADCAST | hook_error |
+| §10.1 steps 10 and 11 | — | event_blocked |
+| §10.1 steps 10, 11 and 15: a task stored | ON_TASK_CREATED | — |
+| §10.2 step 3c: a record the chain depth limit stores (§8.3) | — | chain_depth_exceeded |
+| §10.2 step 3c: a turn that failed or returned an error (§6.1, §10.6.8) | ON_ERROR | — |
+| §10.2 steps 3c and 3d: a target's `on_event()` or `deliver()` | — | delivery_succeeded, delivery_failed, broadcast_partial_failure |
+| §10.1 step 16 | AFTER_BROADCAST | — |
+| §10.1 step 17 | — | event_processed |
+| §10.3: an EDIT or a DELETE committed; a direct `update_event()` or `delete_event()` | ON_EVENT_UPDATED, ON_EVENT_DELETED | — |
+| A hook that exceeds its timeout (§9.1) | — | hook_timeout |
 
 ### 26.2 Level 1: Transport (RECOMMENDED)
 
@@ -16388,7 +16475,7 @@ A Level 1 implementation SHOULD additionally support:
 - AI channel with at least one AI provider
 - Agent class (AIChannel subclass with identity metadata)
 - Provider abstraction (swappable per channel type)
-- Identity resolution pipeline
+- Identity resolution pipeline (Section 10.1 step 5, Sections 11.1–11.6)
 - Identity hooks (ON_IDENTITY_AMBIGUOUS, ON_IDENTITY_UNKNOWN)
 - Participant model with identification status
 - Memory system with at least SlidingWindowMemory (Section 20)
@@ -16430,7 +16517,7 @@ A Level 2 implementation MAY additionally support:
 - Response schemas: an AI provider constraining its answer to a portable
   JSON Schema (Section 6.7)
 - Identity verification: requests, labels, holding and release, the three
-  verification triggers (Section 11.7)
+  verification triggers (Section 10.1 step 5b, Section 11.7)
 - AI steering directives (Section 21.3)
 - Advanced memory providers: Summarizing, Retrieval (Section 20)
 - A turn backend whose executors run in other processes (Section 10.6)
