@@ -904,10 +904,30 @@ person reached by SMS and then by email is one participant, not two.
 `channel_id` is their *primary* channel; `connected_via` is every channel
 the room has reached them through, the primary included.
 
+**Who a sender is (normative):** an event's `participant_id` names a
+Participant only on a channel that participant was reached through
+(`connected_via`): an id one transport gives says nothing of another's. A
+channel is reached by a deliberate join (a member added, a session joined),
+and by the identity pipeline, which records the channel it resolved a sender
+on (Section 11); an identity's id names its person on a channel one of their
+records was reached through. A sender whose id names nobody on its channel is
+no participant of the room: it carries no participant's name, role,
+authority, identification nor verification. Every reading of who a sender is
+follows this one rule: the label a transcript gives them (Section 6.4), the
+role a tool policy's override is chosen by (Section 21.1), the authority and
+the authorship an edit or a delete is checked against (Section 10.3), the
+identification that spares resolution (Section 11.6) and the verification a
+message is labelled with (Section 11.7.3). Linking one person's channels is
+the host's deliberate join or the identity pipeline's resolution, never two
+transports' ids that happen to be equal.
+
 - A **lazy materialisation** — the get-or-create that materialises a sender
   the first time they speak — MUST NOT re-home an existing record: the
   `channel_id` it is given applies to a record being created, and to no
-  other. A **deliberate join** MAY set `channel_id` to the channel joined
+  other. Nor does it adopt one for a sender the identity pipeline has not
+  identified (a pending participant, Section 11.3) whose id names a record
+  reached through other channels only: that id names nobody on the sender's
+  channel (above), so the sender gets a record of its own. A **deliberate join** MAY set `channel_id` to the channel joined
   through, which is what "primary channel used to join" means; the channel
   it replaces MUST remain in `connected_via`.
 - Either way, the channel named by the caller MUST be added to
@@ -2240,9 +2260,8 @@ the summary rendered before it, and a speak policy reads each turn under
 the label the conversation gives it. The label is named from the event's
 sender name (a transport's stamp, or the voice a channel's diarization names
 on a shared microphone, Section 12.2.3) and from the room's participant
-record otherwise (a participant's id names them on a channel they are
-reached through, an identity the identity pipeline resolved names them on
-any, Section 5.5): when two distinct sources of the room
+record otherwise (a participant's id, or their identity's, names them on a
+channel they are reached through, Section 5.5): when two distinct sources of the room
 (a participant, whichever channel reached them, or a sender) have names that
 read alike (in case or in Unicode's confusables, `Alice` and `Аlice`), a
 participant the room registered keeps the name, then the first source the
@@ -4954,9 +4973,13 @@ additional validation and state updates before broadcasting.
    `DeleteContent`) references an existing event in the same room.
 2. For `DeleteContent` with `delete_type = SENDER` or `EditContent` with
    `edit_source = "sender"`, the framework MUST verify that the inbound sender
-   is the original author of the target event.
+   is the original author of the target event: the same participant (Section
+   5.5), or, for a sender who names no participant, the same sender id on the
+   same channel.
 3. For `DeleteContent` with `delete_type = ADMIN`, the framework MUST verify
-   that the sender has administrative authority (e.g., via permissions or role).
+   that the sender has administrative authority (e.g., via permissions or role),
+   as the participant it is on its channel (Section 5.5): an id that names an
+   owner on another channel grants none.
 4. For `DeleteContent` with `delete_type = SYSTEM`, the event SHOULD originate
    from a SYSTEM channel or a hook.
 5. If validation fails, the framework MUST reject the event and SHOULD return
@@ -6110,8 +6133,10 @@ resolution for them:
    carry the identity a track was published under, and resolving that is the
    "resolve on the opaque identity" Section 12.10.2 rule 3 rules out.
 2. **The room has already identified the sender.** Where the event's
-   `participant_id` names a Participant of the room whose `identification` is
-   IDENTIFIED, the question has been answered and the answer is on the roster.
+   `participant_id` names, on the event's channel (Section 5.5), a Participant
+   of the room whose `identification` is IDENTIFIED, the question has been
+   answered and the answer is on the roster. The same id on a channel the
+   participant was never reached through answers nothing, and is resolved.
 
 Case 1 is not the conference alone. The test is where the `sender_id` comes
 from. A channel that reads it off the wire carries whatever the remote network
@@ -6214,7 +6239,10 @@ ON_VERIFICATION_COMPLETED (ASYNC).
 
 The inbound pipeline stamps `source.verification` on every event of an
 identified sender (§10.1 step 5b), so a hook, a router, a user interface and
-a context builder read one fact. While the identity is not VERIFIED, every
+a context builder read one fact. An identified sender is the identity the
+pipeline resolved for the event, or the IDENTIFIED participant the event's id
+names on its channel (Section 5.5): an identity's id arriving through a
+channel it was never resolved on carries no verification. While the identity is not VERIFIED, every
 such event fires ON_VERIFICATION_REQUIRED (SYNC), whose hooks decide per
 message:
 
@@ -15067,6 +15095,10 @@ RoleOverride
 ├── deny: list<string> | null               # Additional deny patterns
 └── mode: "restrict" | "replace"            # Narrow the base or replace it entirely
 ```
+
+The role an override is chosen by is the role of the participant the waking
+event's sender is on its channel (Section 5.5); a sender who names no
+participant there has no role, and the base rules apply.
 
 When `mode` is `"restrict"`, the override narrows the base policy: its deny
 patterns are added to the base's, and its allow patterns constrain alongside
