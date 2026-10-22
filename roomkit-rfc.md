@@ -2205,20 +2205,25 @@ labels once the turns it reads hold several speakers (a turn with no text,
 the runtime's own and the application's instruction aside), or two people
 or more take part, and a one-to-one conversation reads as before.
 **Who takes part** besides the agent is read from the room's roster, not
-from who has spoken: its active participants who are neither agents nor
-bots nor on the agent's own channel, silent ones included, one per person
-in the order they joined, each named as their turns are labelled (their
-name and its rank, or their channel when they have no name). A conference
+from who has spoken: its active participants who are neither agents, bots
+nor observers (an observer reads without taking part), nor on the agent's
+own channel, and whose messages reach the agent (a channel they are reached
+through is bound in the room with a visibility that lets its messages reach
+the agent, Section 7.5: a person the agent would never hear is not named to
+it), silent ones included, one per person in the order they joined, each
+named by the room's record of them (their name and its rank, or their
+channel when they have no name). A conference
 keeps the roster (Section 12.10.4); an integration that carries several
 people through one stream (a meeting bridged into one audio stream) writes
 it, a member per person present, and matches each voice to its person
 (Section 12.2.3). An agent that joins a meeting where one
 person speaks while others listen thus reads that person's first turn
 labelled, not as an anonymous user's. When two people or more take part,
-the turn's notes name them, so the agent knows who is there before each
-has spoken and may address someone who has not said a word; the note is
-one of the runtime's marks, and a standalone turn, which reads nothing of
-the room, carries none. A speak policy's `SpeakTurn.people` is the same
+the turn's notes name them, each name in a quote (a participant may
+choose their name, and it must not read as the runtime's words), so the
+agent knows who is there before each has spoken and may address someone
+who has not said a word; the note is one of the runtime's marks, and a
+standalone turn, which reads nothing of the room, carries none. A speak policy's `SpeakTurn.people` is the same
 list, or the distinct voices of the turns when they are more (one
 microphone may carry several). A conversation a memory summarizes
 counts the turns the memory retrieved, summarized or kept, and the turn
@@ -7081,14 +7086,17 @@ equate two labels from different epochs.
    segments were produced: a room message has one speaker. Ordering covers
    the commit of each message, not the reply to it: a reply still being
    produced MUST NOT hold back the next segment. A change of speaker ends the pending turn: a turn detector
-   (Section 12.3.12) MUST NOT join two speakers' segments into one message.
+   (Section 12.3.12) MUST NOT join two speakers' segments into one message,
+   two segments under one label that a hook matched to two participants
+   (below) included.
    `ON_TRANSCRIPTION` fires per segment, and its event carries the segment's
    `speaker`, the `speaker_epoch` and the `sender_name` below; a hook MAY
    replace `sender_name` (a label matched to a known voice), and MAY name the
    room participant the voice is (`participant_id`).
 2. Keeps `sender_id` as the session's participant, the owner of the audio
    stream, unless a hook named the participant who spoke: the message is
-   then theirs. A label is not a participant (Section 12.3.9): mapping one
+   then theirs, and their record names it, `sender_name` left out, unless
+   the hook also gave the voice a name of its own. A label is not a participant (Section 12.3.9): mapping one
    to a known person is the integrator's concern, and the hook is where it
    does so. A name proves nothing, so a voice is never matched to a
    participant by its name; a voice named like a participant without being
