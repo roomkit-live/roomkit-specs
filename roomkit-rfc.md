@@ -15689,6 +15689,17 @@ completion callback and its waiters still run. A task whose work already ran whe
 cancellation arrives ends as it stands. A delegation's span ends with its
 task's status: `ok` completed, `error` failed, `cancelled` cancelled.
 
+A task announced (its `ON_TASK_DELEGATED` fired) that would otherwise never
+reach its end ends `failed`, once, as a task that ran does: one its task
+runner refused to take (its `submit` raised), and one whose run raised
+outside its turn's outcome (an error computing its result, an exception that
+is not the turn's own). Step 7 runs, its end is posted on the StatusBus, its
+child room is marked, its completion callback and its waiters run, and its
+span ends `error`, so no reader shows it running. The caller of an inline
+delegation, or of one its runner refused, receives the error and step 8
+hands nothing back; a background task whose run raised has no caller left,
+and its notified channel is told it failed, as for any failed task.
+
 A delegation is followed on the framework's StatusBus (Section 19.8), so an
 agent or a host sees a task while it runs. Once its child room is ready, when
 `ON_TASK_DELEGATED` fires, it posts `pending` under the worker's `agent_id`,
