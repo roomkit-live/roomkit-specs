@@ -927,9 +927,14 @@ transports' ids that happen to be equal.
   other. Nor does it adopt one for a sender the identity pipeline has not
   identified (a pending participant, Section 11.3) whose id names a record
   reached through other channels only: that id names nobody on the sender's
-  channel (above), so the sender gets a record of its own. A **deliberate join** MAY set `channel_id` to the channel joined
-  through, which is what "primary channel used to join" means; the channel
-  it replaces MUST remain in `connected_via`.
+  channel (above), so the sender gets a record of its own, one per sender and
+  channel, and the event is sent under its id, so their next message finds it
+  and a later resolution of it (Section 11.3) is theirs. A host's own
+  get-or-create (`ensure_participant`) is a deliberate reach, as a join is: the
+  host vouches for the sender, and the channel it names is recorded. A
+  **deliberate join** MAY set `channel_id` to the channel joined through,
+  which is what "primary channel used to join" means; the channel it
+  replaces MUST remain in `connected_via`.
 - Either way, the channel named by the caller MUST be added to
   `connected_via` when absent from it, and implementations MUST persist
   `connected_via`. A channel reached once and never recorded is a channel
@@ -2261,30 +2266,29 @@ the label the conversation gives it. The label is named from the event's
 sender name (a transport's stamp, or the voice a channel's diarization names
 on a shared microphone, Section 12.2.3) and from the room's participant
 record otherwise (a participant's id, or their identity's, names them on a
-channel they are reached through, Section 5.5): when two distinct sources of the room
-(a participant, whichever channel reached them, or a sender) have names that
-read alike (in case or in Unicode's confusables, `Alice` and `Аlice`), a
-participant the room registered keeps the name, then the first source the
-room saw, and each later one carries it with its rank (`Alice (2)`), a form
-no name takes; a name that reads like two others (`Ian`, like `Lan` and
-`ian`) ranks after both and renumbers neither. The name and the rank are fixed when the turn
-enters the room (Section 10.1, step 12) and recorded on the event, so every
-surface and every later prompt reads the same, and a participant renamed
-later keeps on their earlier turns the name they spoke under. A tool call the
-channel recalls in the turn's notes names its tool and its arguments' keys as
-identifiers and quotes each text value. The
+channel they are reached through, Section 5.5): when two distinct sources of
+the room (a participant, whichever channel reached them, or a sender) have
+names that read alike (in case or in Unicode's confusables, `Alice` and
+`Аlice`), a participant the room registered keeps the name, then the first
+source the room saw, and each later one carries it with its rank (`Alice
+(2)`), a form no name takes; a name that reads like two others (`Ian`, like
+`Lan` and `ian`) ranks after both and renumbers neither. The name and the rank
+are fixed when the turn enters the room (Section 10.1, step 12) and recorded
+on the event, so every surface and every later prompt reads the same, and a
+participant renamed later keeps on their earlier turns the name they spoke
+under. A tool call the channel recalls in the turn's notes names its tool and
+its arguments' keys as identifiers and quotes each text value. The
 conversation itself (a participant's message, the agent's own answers, the
 application's instruction) keeps its author's role and is not quoted beyond
-the line labels above, a copy
-of the turn's notes' header it holds replaced as above; the runtime's own
-renderings of it (the transcript a thinker, a summarizer, a compaction, an
-external agent or a realtime delegation's reasoning backend reads) quote each
-message, after the name the runtime gave
-its speaker, never a name read from the message's text. The rule holds for
-the turn's notes, a hand-back, a speaker's name, the room context handed to an
-ACP agent and the summary a memory provider builds, and for any text a
-realtime session, an orchestration strategy or a vision provider places in a
-model's context.
+the line labels above, a copy of the turn's notes' header it holds replaced as
+above; the runtime's own renderings of it (the transcript a thinker, a
+summarizer, a compaction, an external agent or a realtime delegation's
+reasoning backend reads) quote each message, after the name the runtime gave
+its speaker, never a name read from the message's text. The rule holds for the
+turn's notes, a hand-back, a speaker's name, the room context handed to an ACP
+agent and the summary a memory provider builds, and for any text a realtime
+session, an orchestration strategy or a vision provider places in a model's
+context.
 
 **A tool that has to appear.** A provider that can hold a tool declared but
 unseen (Anthropic's deferred loading keeps such a definition out of the cached
@@ -4977,9 +4981,9 @@ additional validation and state updates before broadcasting.
    5.5), or, for a sender who names no participant, the same sender id on the
    same channel.
 3. For `DeleteContent` with `delete_type = ADMIN`, the framework MUST verify
-   that the sender has administrative authority (e.g., via permissions or role),
-   as the participant it is on its channel (Section 5.5): an id that names an
-   owner on another channel grants none.
+   that the sender has administrative authority (e.g., via permissions or
+   role), as the participant it is on its channel (Section 5.5): an id that
+   names an owner on another channel grants none.
 4. For `DeleteContent` with `delete_type = SYSTEM`, the event SHOULD originate
    from a SYSTEM channel or a hook.
 5. If validation fails, the framework MUST reject the event and SHOULD return
@@ -5040,14 +5044,16 @@ InboundRoomRouter (interface)
 
 1. Find the latest ACTIVE room whose binding of this channel names the sender
    (§5.7); otherwise, the latest ACTIVE room where a participant with the same
-   sender address is connected via the same channel type. The sender is named
-   by their address, then by the identity the store resolves it to
+   sender address joined through this channel. The sender is named by their
+   address, then by the identity the store resolves it to
    (`resolve_identity`, §14.1), so a member the integrator added under their
-   identity is found by an address linked to it. An identity reaches every
-   channel its person uses: a room found through it as a participant is the
-   sender's only when the identity joined that room through the same
-   channel, so a message is not carried into a room of another channel,
-   whose messages would then go out on this one. On a chat channel the
+   identity is found by an address linked to it. An id names its participant
+   only on a channel they are reached through (Section 5.5), and an identity
+   reaches every channel its person uses: a room found through a participant
+   record, by the address or the identity, is the sender's only when that
+   participant joined it through this channel, so a message is not carried
+   into a room of another channel, whose messages would then go out on this
+   one. On a chat channel the
    address routed by is the chat the message was posted in, not its sender
    (§5.7), here and in step 3.
 2. If found → return that room.
@@ -6242,9 +6248,9 @@ identified sender (§10.1 step 5b), so a hook, a router, a user interface and
 a context builder read one fact. An identified sender is the identity the
 pipeline resolved for the event, or the IDENTIFIED participant the event's id
 names on its channel (Section 5.5): an identity's id arriving through a
-channel it was never resolved on carries no verification. While the identity is not VERIFIED, every
-such event fires ON_VERIFICATION_REQUIRED (SYNC), whose hooks decide per
-message:
+channel it was never resolved on carries no verification. While the
+identity is not VERIFIED, every such event fires ON_VERIFICATION_REQUIRED
+(SYNC), whose hooks decide per message:
 
 - **hold** (the default when no hook passes it): the event is stored and
   delivered marked held, its scope narrowed to the transport channels it
@@ -15276,7 +15282,7 @@ least:
 |---|---|
 | `current_tool_room_id()` | The id of the room the turn belongs to |
 | `current_tool_room()` | The `Room` of the turn itself: the object the store loaded when the turn began, the same one the turn's `RoomContext.room` holds for its hooks, memory provider and config provider; on a realtime tool call, which runs no turn, the room as loaded for that call |
-| `current_tool_actor_id()` | The participant id of the event that woke the channel this round; empty when the turn has no author (a system injection, a webhook, a scheduled run) |
+| `current_tool_actor_id()` | The participant id of the event that woke the channel this round; empty when the turn has no author (a system injection, a webhook, a scheduled run), and when the sender's id is a participant's the room reached through other channels only (Section 5.5), whom it would otherwise name |
 | `current_tool_allowed_names()` | Every tool name the turn resolved, and every tool a round declared beyond it (the re-read of a stored result), nothing withdrawn, that its tool policy admits for its actor, so a call is validated against the live toolset rather than an attach-time snapshot: a tool the policy denies is left out on every door, since the gate refuses it before any handler, while a tool a skill keeps closed stays in; on a realtime door, every tool the session declares (its catalogue, what orchestration set up, the channel's own) that its policy admits, and none when the session declares no catalogue: it names no list, and its gate, policy included, still judges each call |
 | `current_tool_call()` | The per-call record: the call's id, its channel, and the structured-result reverse channel |
 | `current_response_metadata()` | The turn's one response-metadata record (§6.7); empty where no turn will merge it (a realtime tool call) |
