@@ -5455,8 +5455,11 @@ per-room state:
 | `committed_event` | An event committed in the room that the channel's memory is handed (a discussion's, §19.7.5 rule 3), answered by nothing |
 | `channel_call` | A per-room verb of the channel, answered by `channel_result` (an ACP session's `set_config_option` or `close_session`, §6.4); an implementation documents each channel's set. It carries its `call_id`, its channel and room, the verb and its arguments, what the room keeps for the channel as the owner stores it (§10.6.2), and `previous_turn`; a later request's `previous_turn` names the call by its `call_id`. Cutting a running turn is never a channel call: it is the turn's `cancel` or `steer` |
 
-`room_attached` and `room_detached` reach every executor that declares the
-channel, and need no result: the executor applies them as the channel's own
+`room_attached` and `room_detached` reach every executor that may run the
+channel's turns: the owner's own executor alone for a channel the owner holds
+live (§10.6.7), so an executor that declares it and never takes its turns
+builds no copy of it; every executor that declares the channel otherwise. They
+need no result: the executor applies them as the channel's own
 attach and detach would for a channel the kit holds, and logs what the
 channel raises. A binding of category `INTELLIGENCE` (§5.7) is therefore kept
 when its channel raises on `room_attached`, and a detach does not report what
@@ -5788,8 +5791,10 @@ channel, and one it does not take (a room hook it does not define) fails with
 `no_executor`. Once the owner's own executor closed (a host closing it while
 the owner runs), they fail with `no_executor` too: they are never placed on
 another executor, whose copy of the channel would run without the live
-channel's state. An agent a host runs on an executor of its own is one the owner
-holds by its declaration (§10.6.2). A request MUST reach one executor at
+channel's state. The channel's `room_attached` and `room_detached`
+(§10.6.3) reach that executor alone, for the same reason. An agent a host
+runs on an executor of its own is one the owner holds by its declaration
+(§10.6.2). A request MUST reach one executor at
 most: a process that refuses it
 (its executor closed) has it placed again; one that does not answer it within
 `accept_timeout` loses the turn (`executor_lost`), which is never handed to
