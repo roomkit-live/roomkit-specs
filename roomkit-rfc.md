@@ -14091,7 +14091,10 @@ Each worker's delegation, within the turn or in the background, is bounded
 by the strategy's per-task timeout: a worker past it is cut, its task ended
 cancelled, and it reads as failed. The worker is posted `pending` on the
 status bus, then one terminal entry however the delegation ends: completed,
-failed, timed out, raised, or cancelled by its caller. A sequential team is
+failed, timed out, raised, or cancelled by its caller. That entry names the
+task (`task_id`) once the task exists, whatever ended it, so the task's line
+on the bus (Section 23.4) ends with it, the progress its worker posted
+meanwhile included. A sequential team is
 supervised (the supervisor frames and validates each step) whether it runs
 within the turn or in the background; a supervisor without a model (a
 configuration-only agent, as a voice supervisor often is) cannot frame nor
