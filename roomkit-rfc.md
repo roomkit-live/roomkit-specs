@@ -561,11 +561,12 @@ Implementations MUST enforce timer transitions when configured:
 - **Resume.** A DELIVERED commit resumes a PAUSED room in the commit's
   transaction: the room is ACTIVE again, `paused_at` null. What is no
   activity resumes nothing. A sender who writes again is routed to their
-  PAUSED conversation as to an ACTIVE one (§10.4 step 1), and their
-  delivered message resumes it. The integrator MAY resume a PAUSED room, as
-  it MAY reopen a CLOSED one (above); either moves `last_activity_at` to its
-  instant, which restarts the inactivity timer, and neither fires a hook nor
-  emits a framework event.
+  PAUSED conversation as to an ACTIVE one, and a group's next message to its
+  PAUSED room (§10.4 steps 1 and 3), which the delivered message resumes.
+  The integrator MAY resume a PAUSED room, as it MAY reopen a CLOSED one
+  (above), and either moves `last_activity_at` to its instant, which
+  restarts the inactivity timer. A resume, by a commit or by the integrator,
+  and a reopen fire no hook and emit no framework event.
 - **Close.** When `closed_after_seconds` elapses from `paused_at` without a
   resume, the room MUST transition to CLOSED.
 - **When.** Every locked section that reads the room's status (the gate of
@@ -966,25 +967,27 @@ sender has proven who they are.
 
 **Joining and leaving:** a deliberate join is the operation `add_member`. It
 creates the participant ACTIVE, or reactivates an existing record that is not
-ACTIVE (a re-join keeps `joined_at`), then emits `PARTICIPANT_JOINED` and fires
-`ON_PARTICIPANT_JOINED`; on a member already ACTIVE it only records a newly
-reached channel, with no event. With an `identity_id` the participant is
-IDENTIFIED, otherwise PENDING. Leaving is `remove_member`: it sets the
-participant's status to LEFT, or to BANNED when asked, keeping the record, then
-emits `PARTICIPANT_LEFT` and fires `ON_PARTICIPANT_LEFT`; an unknown participant
-is an error. Both hooks are ASYNC; their payload is a system event whose data
-carries `participant_id` and, on a join, `identity_id`, on a leave, the new
-`status`.
+ACTIVE (a re-join keeps `joined_at`), then fires `ON_PARTICIPANT_JOINED` with
+a `PARTICIPANT_JOINED` event as its payload; on a member already ACTIVE it
+only records a newly reached channel, with no event. With an `identity_id` the
+participant is IDENTIFIED, otherwise PENDING. Leaving is `remove_member`: it
+sets the participant's status to LEFT, or to BANNED when asked, keeping the
+record, then fires `ON_PARTICIPANT_LEFT` with a `PARTICIPANT_LEFT` event as
+its payload; an unknown participant is an error. Both hooks are ASYNC; their
+payload is a system event whose data carries `participant_id` and, on a join,
+`identity_id`, on a leave, the new `status`. An implementation that writes
+lifecycle records (§5.1) stores that event; one that does not stores nothing.
 
 **Renaming (normative):** a member's presentation can change while they are
 present — their display name above all. Implementations SHOULD provide an
-update operation (`rename_member`) that changes `display_name` in place,
-emits `PARTICIPANT_UPDATED` and fires `ON_PARTICIPANT_UPDATED`, so an
-interface reflecting the room learns of the change the same way it learned
-of the join. `id` and `identity_id` are not presentation and MUST NOT be
-changed through it: they are what attribution, correlation
-(Section 12.10.2) and moderation stand on. A rename that changes nothing
-is a no-op — no write, no event.
+update operation (`rename_member`) that changes `display_name` in place and
+fires `ON_PARTICIPANT_UPDATED` with a `PARTICIPANT_UPDATED` event as its
+payload (stored as a lifecycle record only by an implementation that writes
+them, §5.1), so an interface reflecting the room learns of the change the same
+way it learned of the join. `id` and `identity_id` are not presentation and
+MUST NOT be changed through it: they are what attribution, correlation
+(Section 12.10.2) and moderation stand on. A rename that changes nothing is a
+no-op — no write, no event.
 
 **One record, several channels (normative):** a Participant is one record
 per (`room_id`, `id`). Section 4.4 says a participant is connected via one
@@ -3298,13 +3301,14 @@ to the room is allowed and matches nothing.
 
 **Who writes `internal`.** Only the framework writes `internal`, on the
 records it writes itself (an interruption record, §6.4): a value that marks
-the framework's record is not the integrator's to give. An implementation
-MUST refuse it, before anything is read or written, on an attach and a
-binding update, on an inbound message (§5.12) and on a direct injection
-(§10.5); a hook's modify that writes it has the event's visibility put back
-from the original (§9.4). A record committed outside the pipeline (§10.5)
-is stored as its caller gives it, and reaches no channel. An event the
-integrator wants stored and shown to no channel takes `none`.
+the framework's record is not the integrator's to give. An implementation MUST
+refuse it, before anything is read or written, on an attach and a binding
+update, on an inbound message (§5.12) and on a direct injection (§10.5); a
+hook's modify that writes it has the event's visibility put back from the
+original (§9.4), and a channel's response that carries it is committed with
+`none` (§8.5). A record committed outside the pipeline (§10.5) is stored as
+its caller gives it, and reaches no channel. An event the integrator wants
+stored and shown to no channel takes `none`.
 
 **An event's visibility.** An event carries a visibility of its own (an
 inbound message's `visibility`, §5.12, `"all"` unless the caller sets one),
@@ -3493,7 +3497,9 @@ that is monotonically increasing within each room.
 **Sequential indexing requirements:**
 
 - The `index` MUST start at 0 for the first event in a room.
-- Each subsequent event MUST have `index = previous_index + 1`.
+- Each event MUST take the room's `event_count` as its index, so indexes
+  are given out consecutively and never again; a hard delete leaves the
+  gaps it makes (§14.3).
 - The room's `latest_index` (§5.1) is the highest index committed in it, and
   MUST be `null` while the room has no event.
 - The `index` MUST be assigned atomically per room. A room-level lock (§13.5)
@@ -3637,12 +3643,12 @@ subscriber reads it without knowing which one did:
 
 - `status` — the room status that refused (`closed` or `archived`); null only
   when the room no longer exists.
-- `operation` — the path that met the gate: `inbound` for a message or a
-  direct injection refused at §10.1 step 6; `reentry` for the framework's own
+- `operation` — the path that met the gate: `inbound` for a message or a direct
+  injection refused at §10.1 step 6 or 9a; `reentry` for the framework's own
   re-injection, which is a response, a hook's injected event, or a record
-  stored in place of a turn or a response the room refuses (an agent not
-  asked at the chain-depth limit, a response or an injected event past the
-  reentry budget, §8.3); `regenerate` for a regeneration of the last answer.
+  stored in place of a turn or a response the room refuses (an agent not asked
+  at the chain-depth limit, a response or an injected event past the reentry
+  budget, §8.3); `regenerate` for a regeneration of the last answer.
 - `event_type` — the type of the refused event; null when a regenerate had
   nothing to replay.
 
@@ -3785,7 +3791,11 @@ channel's provider message id could be acted on by a native edit or delete
 (§10.3). A response under its own source keeps the fields its channel wrote
 (its participant, its provider, its raw payload, its provider message id). The
 pipeline clears `verification` on every response: it is a received sender's
-(§5.2, §11.7), and a response is no message received.
+(§5.2, §11.7), and a response is no message received. A response, or a row of
+a stream, that carries the visibility `internal`, which only the framework
+writes (§7.3), is committed with `none`, and the implementation logs a
+warning: it is stored and reaches no channel, as its channel asked, without
+the mark of the framework's own records.
 
 **What the turn is told.** `BEFORE_AI_GENERATION` receives, with the turn's
 context, the event the turn answers (`trigger`), so a hook can tell the model
@@ -4614,18 +4624,18 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
 - **Reentrance.** An event injected (§10.5) by a caller that already stands in
   the room's admission order takes no ticket in that room: from inside an
   off-lock hook's body, or while holding the room lock (a locked hook, code
-  under the lock). It would otherwise wait for the ticket its own caller
-  holds. It runs every hook under the lock and commits ahead of the event
-  whose processing emitted it. Made under the lock, it MUST draw on the
-  reentry budget of the cascade whose section holds the lock (§8.3), so
-  that a locked hook that injects on every event stops at the cap: an entry
+  under the lock). It would otherwise wait for the ticket its own caller holds.
+  It runs every hook under the lock and commits ahead of the event whose
+  processing emitted it. Made under the lock, it MUST draw on the reentry
+  budget of the cascade whose section holds the lock (§8.3), and made from an
+  off-lock hook's body, on the budget of the cascade of the event the hook runs
+  for, so that a hook that injects on every event stops at the cap: an entry
   past it is stored `BLOCKED` with `reentry_loop_cap`. A call into the room
   from its work outside the lock and outside its admission order (a turn, a
-  delivery) is a new arrival: it takes a ticket when an off-lock hook fires
-  for its event, `process_timeout` bounds it (§13.6), and its cascade is its
-  own; one that would wait on its own delivery from a context the delivery
-  lane cannot progress past returns with its completion detached (§10.1
-  step 18).
+  delivery) is a new arrival: it takes a ticket when an off-lock hook fires for
+  its event, `process_timeout` bounds it (§13.6), and its cascade is its own;
+  one that would wait on its own delivery from a context the delivery lane
+  cannot progress past returns with its completion detached (§10.1 step 18).
 - **Other commit paths** (reentry passes, regeneration, hook-injected events)
   run every `BEFORE_BROADCAST` SYNC hook under the lock, the off-lock ones
   included. `needs_lock = false` permits a hook to run off the lock; it never
@@ -4697,9 +4707,10 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │       timers applied first, check that the room is still the
    │       message's (§10.4), then record the sender, before step 3:
    │       ├── No longer the message's: the room is CLOSED or ARCHIVED
-   │       │   by then, or PAUSED and not the sender's conversation by
-   │       │   step 1 of §10.4 (the channel's binding names them, or a
-   │       │   participant they are was reached through the channel);
+   │       │   by then, or PAUSED unless it is the sender's conversation
+   │       │   by step 1 of §10.4 (the channel's binding names the sender,
+   │       │   or a participant who is the sender was reached through the
+   │       │   channel) or its binding of the channel is `group`;
    │       │   or the channel's binding, not `group`, names a correspondent
    │       │   other than the sender (its participant, else its recipient,
    │       │   §5.7), as when a concurrent message was recorded first; or
@@ -4712,7 +4723,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │       │   written, the lock is released, and the message is routed once
    │       │   more, its identity not read again; a second answer that is
    │       │   not the message's, like no answer, gives the message a new
-   │       │   room. A routed message is never refused room_closed
+   │       │   room. A routed message is never refused room_closed at
+   │       │   this step; a room closed after its section is refused at
+   │       │   step 6, as for any event
    │       └── Otherwise, where the binding names no participant and is
    │           not `group`, record the sender on it: a binding update
    │           (§7.5 rule 6) that writes the sender's address as its
@@ -4732,14 +4745,14 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    └── If new room created → fire ON_ROOM_CREATED and wait for its hooks,
        each within its timeout (§9.3), their context the room as created,
        with no binding of the channel; emit `room_created`; then, under
-       the room lock, attach the channel
-       unless a binding of it exists by then (a hook's included, §7.5
-       rule 7), its binding naming the sender (`participant_id =
-       sender_id`, §5.7) and, on a transport, addressing replies where the
-       message came from (the sender's address, or the chat it was posted
-       in, §5.7); then, for a channel other than VOICE and REALTIME_VOICE,
-       whether or not the attach was made, fire ON_SESSION_STARTED (§9.2)
-       and emit `session_started` (§8.2)
+       the room lock, attach the channel unless a binding of it exists by
+       then (a hook's included, §7.5 rule 7), its binding naming the
+       sender (`participant_id = sender_id`, §5.7) and, on a transport,
+       addressing replies where the message came from (the sender's
+       address, or the chat it was posted in, §5.7); then, for a channel
+       other than VOICE and REALTIME_VOICE, whether or not the attach was
+       made, fire ON_SESSION_STARTED (§9.2) and emit `session_started`
+       (§8.2)
 
 3. BUILD CONTEXT
    ├── Fetch room state
@@ -5400,13 +5413,16 @@ message's, a response's (§10.1 step 14), that of an event a hook injects
    grants none, and a channel's own output holds no participant's
    authority, whatever participant it names. A sender who names no one is
    refused with `identity_required_for_edit`.
-6. For `DeleteContent` with `delete_type = SYSTEM`, the event SHOULD
-   originate from a SYSTEM channel or a hook. An EDIT or a DELETE a hook
-   injects (§9.4) is the hook's, whatever source it names, and makes a
-   SYSTEM change only (a SYSTEM delete, an edit whose `edit_source` is
-   `system`): any other, one that claims the sender's or an administrator's
-   authority included, is refused `not_authorized`, so a hook never edits or
-   deletes in a participant's name.
+6. For `DeleteContent` with `delete_type = SYSTEM`, or `EditContent` with
+   `edit_source = "system"`, which claim the system's authority, the framework
+   MUST verify that the event comes from a SYSTEM channel or a hook; otherwise
+   `not_authorized`. `edit_source` is `"sender"`, `"system"` or null: an
+   implementation that accepts another value checks it as the sender's (rule
+   4), never as the system's. An EDIT or a DELETE a hook injects (§9.4) is the
+   hook's, whatever source it names, and makes a SYSTEM change only (a SYSTEM
+   delete, an edit whose `edit_source` is `system`): any other, one that claims
+   the sender's or an administrator's authority included, is refused
+   `not_authorized`, so a hook never edits or deletes in a participant's name.
 7. If validation fails, the framework MUST reject the event: nothing of it
    is stored, and no hook runs on it. A refused inbound message returns a
    blocked result with the reason (§10.1 step 8a), a direct injection
@@ -5545,10 +5561,12 @@ missing from the store is created with the id.
    whatever its status. On a chat channel the address routed by is the chat the
    message was posted in, not its sender (§5.7), here and in step 3.
 2. If found → return that room.
-3. Otherwise, if the channel is bound to exactly **one** ACTIVE room and that
-   room admits the sender (below) → return that room. Step 3 reads ACTIVE
-   rooms only: it admits no one into a PAUSED room, and a PAUSED room does
-   not count among the rooms the channel is bound to.
+3. Otherwise, if the channel is bound to exactly **one** room step 3 reads,
+   and that room admits the sender (below) → return that room. Step 3 reads
+   the ACTIVE rooms, and the PAUSED rooms whose binding of the channel is
+   declared `group` (§5.7): a group's conversation is the channel's, and its
+   next message resumes it. Any other PAUSED room is no one's to be admitted
+   into, and does not count among the rooms the channel is bound to.
 4. If not found → return null (framework creates a new room).
 
 **Step 3 admits one conversation.** Step 3 is what routes a channel dedicated
@@ -5602,18 +5620,21 @@ admission that chose the room, not only the binding (§10.1 step 2): someone
 else may have been heard on the channel, or reached through it, since the
 router read the room, and recording the sender there would send that person's
 answers to them. A room CLOSED or ARCHIVED by then, one PAUSED by then that is
-not the sender's conversation by step 1, or one no longer admitting the
-sender, is no longer the message's: nothing is written, and the message is
-routed once more, a second failure giving it a new room. The wait for that
-lock is bounded by `process_timeout` (§13.6); past it the message is refused
-as a process timeout, never let in unrecorded. A message a hook later refuses
-has been routed all the same: routing decides which conversation a message
-belongs to, a hook what becomes of it.
+neither the sender's conversation by step 1 nor bound to the channel as
+`group`, or one no longer admitting the sender, is no longer the message's:
+nothing is written, and the message is routed once more, a second failure
+giving it a new room. The wait for that lock is bounded by `process_timeout`
+(§13.6); past it the message is refused as a process timeout, never let in
+unrecorded. A message a hook later refuses has been routed all the same:
+routing decides which conversation a message belongs to, a hook what becomes
+of it.
 
 **A delivery status follows its message.** A provider's delivery status that
-names no room is routed by the same rule: the room whose binding of the
-status's channel names its recipient, else the one ACTIVE room bound to the
-channel unless its binding names another correspondent, else none. It is never dispatched with the context of one room among
+names no room is routed by the same rule: the newest ACTIVE or PAUSED room
+whose binding of the status's channel names its recipient, as step 1 finds a
+sender's, else the one ACTIVE room bound to the channel unless its binding
+names another correspondent, else none. A status is no activity, and resumes
+no room (§5.1). It is never dispatched with the context of one room among
 several.
 
 **A binding speaks for its own channel.** The sender a binding names is found
@@ -5643,17 +5664,16 @@ default router routes its second speaker to a room of their own, which is the
 safe answer: nothing in the store tells a group channel from a shared number.
 
 **A router MUST NOT guess.** When the inputs it was given match more than one
-ACTIVE room and nothing in them tells which conversation the message belongs
-to — for the default strategy, a channel bound to several ACTIVE rooms (step
-3) — it MUST return null rather than choose among them. Step 1 is not a guess:
-it returns the most recently created of the ACTIVE or PAUSED rooms where the
-sender is connected, a conversation the sender is in. Returning any
-one of several candidates delivers a message into a conversation it does not
-belong to, and — because the room it lands in is where the message is stored,
-broadcast to that room's channels, and read back as context by that room's
-agent — the disclosure is durable, not transient. Null is the safe answer: the
-framework creates a new room, which is recoverable, whereas a wrong room is
-not.
+room and nothing in them tells which conversation the message belongs to — for
+the default strategy, a channel bound to several rooms step 3 reads — it MUST
+return null rather than choose among them. Step 1 is not a guess: it returns
+the most recently created of the ACTIVE or PAUSED rooms where the sender is
+connected, a conversation the sender is in. Returning any one of several
+candidates delivers a message into a conversation it does not belong to, and —
+because the room it lands in is where the message is stored, broadcast to that
+room's channels, and read back as context by that room's agent — the
+disclosure is durable, not transient. Null is the safe answer: the framework
+creates a new room, which is recoverable, whereas a wrong room is not.
 
 This is not a hypothetical configuration. An implementation that lets a
 channel be shared across rooms (§19, delegation) creates it as a matter of
@@ -5737,17 +5757,17 @@ room's MUST be refused before anything is read or written, so the room checked
 is the room written. The room is read scoped to `organization_id` (§17.2): a
 missing room, or another organization's, is not found. A room whose status
 refuses new events (§5.1) MUST refuse the record before anything is written,
-and emits no framework event: a record reaches no one, and no subscriber
-waits for it. The record is committed under the room lock with the next
-index, which the room's delivery lane MUST count as delivered at once: no
-delivery set, no hook, and no broadcast follow it, and the next event of the
-room MUST NOT wait on its index. It counts in `event_count` and
-`latest_index`, and is no activity: `last_activity_at` does not move, and a
-PAUSED room stays paused (§5.1), since a trace nobody receives does not keep
-a room alive. It is stored as the caller gives it (its status, its
-visibility and the rest), whatever the persistence policy, and rule 2 of
-§7.5 does not apply to it. An event the members must receive is injected
-with `send_event` instead.
+and emits no framework event: a record reaches no one, and no subscriber waits
+for it. The record is committed under the room lock with the next index, which
+the room's delivery lane MUST pass at its turn with nothing to run, as a
+record stored `BLOCKED` (§13.5): no delivery set, no hook, and no broadcast
+follow it, and the next event of the room waits on its index no longer than on
+the events before it. It counts in `event_count` and `latest_index`, and is no
+activity: `last_activity_at` does not move, and a PAUSED room stays paused
+(§5.1), since a trace nobody receives does not keep a room alive. It is stored
+as the caller gives it (its status, its visibility and the rest), whatever the
+persistence policy, and rule 2 of §7.5 does not apply to it. An event the
+members must receive is injected with `send_event` instead.
 
 ### 10.6 Turn Execution
 
@@ -6601,7 +6621,7 @@ Returns IdentityResult
       │   └── Hook returns:
       │       ├── resolved(identity) → use that identity
       │       ├── pending() or null → create pending participant
-      │       ├── challenge(inject) → send challenge, block processing
+      │       ├── challenge(inject) → commit the challenge (§9.4), block processing
       │       └── reject() → reject the message
       │
       └── UNKNOWN (0 matches)
@@ -6609,7 +6629,7 @@ Returns IdentityResult
           └── Hook returns:
               ├── resolved(identity) → use that identity
               ├── pending(candidates) → create pending participant
-              ├── challenge(inject) → send challenge, block processing
+              ├── challenge(inject) → commit the challenge (§9.4), block processing
               ├── reject() → reject the message
               └── null → process the message, its sender unresolved
 ```
@@ -13159,28 +13179,27 @@ one distributed lock manager, and SHOULD detect the unsafe combination of a
 shared persistent store with an in-memory lock manager and warn (or refuse) at
 initialization.
 
-**Delivery lanes across processes.** A process holds a delivery lane per
-room it delivers in, and a lane runs only the delivery sets its own process
+**Delivery lanes across processes.** A process holds a delivery lane per room
+it delivers in, and a lane runs only the delivery sets its own process
 planned, since a plan holds live channels. When several processes share a
 store, the room's delivery cursor orders them: `delivered_index` (§5.1), the
-highest index whose delivery set has run, `-1` before any. A lane runs the
-set of the index after the cursor, then advances the cursor by one, a
-compare-and-set in the store (`advance_delivered_index`, §14.1) that
-succeeds only from the index before. The sets of one room run under its
-delivery claim, a lock of the room's lock manager held apart from the room
-lock, so that one event's set completes before the next one's begins across
-the deployment; a lane never holds the claim and the room lock together.
-Every committed index reaches the lane of the process that committed it
-once: an index with no delivery set (a record stored `BLOCKED`, a lifecycle
-record, §5.1) advances the cursor at its turn and runs nothing, and a record
-committed outside the pipeline counts as delivered at once (§10.5). An
-instruction's set, which has no index, runs once the cursor has reached the
-latest index committed before it (§10.1.1). A committed index whose set no
-lane runs (its process stopped between the commit and the delivery) holds
-the cursor: a lane that has waited on it for `gap_timeout` (default 30 s)
-while no lane held the claim forces the cursor past it and emits
-`delivery_skipped` with the indexes skipped (§8.2). The loss is bounded to
-what was in flight and observable, and the room never wedges; a lane that
+highest index whose delivery set has run, `-1` before any. A lane runs the set
+of the index after the cursor, then advances the cursor by one, a
+compare-and-set in the store (`advance_delivered_index`, §14.1) that succeeds
+only from the index before. The sets of one room run under its delivery claim,
+a lock of the room's lock manager held apart from the room lock, so that one
+event's set completes before the next one's begins across the deployment; a
+lane never holds the claim and the room lock together. Every committed index
+reaches the lane of the process that committed it once: an index with no
+delivery set (a record stored `BLOCKED`, a lifecycle record, §5.1, a record
+committed outside the pipeline, §10.5) advances the cursor at its turn and
+runs nothing. An instruction's set, which has no index, runs once the cursor
+has reached the latest index committed before it (§10.1.1). A committed index
+whose set no lane runs (its process stopped between the commit and the
+delivery) holds the cursor: a lane that has waited on it for `gap_timeout`
+(default 30 s) while no lane held the claim forces the cursor past it and
+emits `delivery_skipped` with the indexes skipped (§8.2). The loss is bounded
+to what was in flight and observable, and the room never wedges; a lane that
 finds its own set skipped drops it, since running it then would break the
 room's order. A durable outbox that turns that loss into recovery is a
 separate capability (§13.6).
@@ -13277,19 +13296,27 @@ ConversationStore (interface)
 │   ├── advance_delivered_index(room_id, index, force = false) → bool
 │   │                                         # compare-and-set from index - 1, or
 │   │                                         # from any lower value when forced
-│   ├── find_room_id_by_binding(channel_id, participant_id, filter) → string | null
+│   ├── find_room_id_by_binding(channel_id, participant_id, identity_id, filter)
+│   │                             → string | null
 │   │                                         # newest room whose binding of
 │   │                                         # channel_id names participant_id
-│   └── find_room_id_by_participant(channel_id, participant_id, filter) → string | null
-│                                             # newest room where participant_id, or
-│                                             # its identity, is a participant reached
-│                                             # through channel_id (§10.4 step 1)
-│       # Both: filter names the statuses (ACTIVE and PAUSED for §10.4
-│       # step 1) and the organization; the newest room is ordered as
-│       # §10.4 step 1 orders rooms
+│   │                                         # or identity_id
+│   └── find_room_id_by_participant(channel_id, participant_id, identity_id, filter)
+│                                 → string | null
+│                                             # newest room where a participant named
+│                                             # participant_id or identity_id was
+│                                             # reached through channel_id
+│       # Both serve §10.4 step 1: identity_id is the identity the caller
+│       # resolved for the sender (resolve_identity, in the call's
+│       # organization), null when none; filter names the statuses (ACTIVE
+│       # and PAUSED for step 1) and the organization; the newest room is
+│       # ordered as step 1 orders rooms, whichever name found it
 │
 ├── Events
 │   ├── add_event(room_id, event) → RoomEvent
+│   │                                         # a DELIVERED edit or delete also
+│   │                                         # writes its target's change, in the
+│   │                                         # same transaction (§14.3)
 │   ├── get_event(event_id) → RoomEvent | null
 │   ├── list_events(room_id, filters) → list<RoomEvent>
 │   ├── get_event_count(room_id, filter | null) → int
@@ -16121,25 +16148,26 @@ success. Unaddressed calls without explicit destinations MAY retain room-wide
 realtime injection. A non-null intelligence address uses the text pipeline,
 not a direct realtime injection; combining it with `session_id` is invalid.
 
-**Idempotency boundary.** A keyed text delivery's key names one publication
-in its room, whatever transport carries it: it is checked within the room,
-before a transport is resolved, and a match returns the original outcome
-without publishing again. A retry that would resolve another transport (one
-plugged in or detached since the first attempt) is still that publication.
-The key is the application's, so the collision of two providers' keys that
-scopes an inbound key by its channel (§13.4) does not arise; an application
-SHOULD keep its keys apart from the message ids its providers give (a prefix
-of its own), since the lookup within the room does not tell them apart.
-Publication uses the ConversationStore's locked publication (§13.4), the key
-looked up under the room lock within the room, whatever channel committed it
-(`get_event_by_idempotency_key` with no channel, §14.1; §14.3). Replays,
-including concurrent ones, MUST NOT create a second trigger event while the
-key is retained. The same key
-identifies the same publication regardless of subsequent body or address
-changes. Retention follows the store: memory does not survive restart; durable
-stores retain committed keys until the corresponding event/key is removed.
-Distributed use requires a shared store and a lock manager appropriate to that
-store.
+**Idempotency boundary.** A keyed text delivery's key names one publication in
+its room, whatever transport carries it: it is checked within the room, before
+a transport is resolved, and a match returns the original outcome without
+publishing again. A retry that would resolve another transport (one plugged in
+or detached since the first attempt) is still that publication. The key is the
+application's, so the collision of two providers' keys that scopes an inbound
+key by its channel (§13.4) does not arise; an application SHOULD keep its keys
+apart from the message ids its providers give (a prefix of its own), since the
+lookup within the room does not tell them apart. Publication uses the
+ConversationStore's locked publication (§13.4), the key looked up under the
+room lock within the room, whatever channel committed it
+(`get_event_by_idempotency_key` with no channel, §14.1; §14.3). The lookup,
+the transport's resolution and the publication's commit run in one section
+under the room lock, so a concurrent replay waits for the first and finds its
+key. Replays, including concurrent ones, MUST NOT create a second trigger
+event while the key is retained. The same key identifies the same publication
+regardless of subsequent body or address changes. Retention follows the store:
+memory does not survive restart; durable stores retain committed keys until
+the corresponding event/key is removed. Distributed use requires a shared
+store and a lock manager appropriate to that store.
 
 **Realtime injection identity.** A keyed proactive voice injection MUST reserve
 its attempt atomically in the ConversationStore before calling the provider.
@@ -17287,7 +17315,7 @@ framework event.
 | A room transitioned to PAUSED (§5.1) | ON_ROOM_PAUSED | room_paused, when its inactivity timer paused it |
 | A room transitioned to CLOSED | ON_ROOM_CLOSED | room_closed |
 | A room transitioned to ARCHIVED | — | room_archived |
-| An event the room's status refuses (§5.1, §10.1 step 6) | — | room_refused_event |
+| An event the room's status refuses (§5.1, §10.1 steps 6 and 9a) | — | room_refused_event |
 | §10.1 steps 5a and 9 | BEFORE_BROADCAST | hook_error |
 | §10.1 steps 10 and 11 | — | event_blocked |
 | §10.1 steps 10, 11 and 15: a task stored | ON_TASK_CREATED | — |
@@ -18042,7 +18070,7 @@ and the events after it the indexes that follow.
    ▼
 3. process_inbound(message)
    │
-   ├── Route: no active room for +15551234567 → create new room
+   ├── Route: no room of +15551234567 → create new room
    │   ├── Fire ON_ROOM_CREATED hook → attach AI channel
    │   │   (step 2 waits for the hook, §9.3, so the AI channel is bound
    │   │   before the message's delivery set is planned)
