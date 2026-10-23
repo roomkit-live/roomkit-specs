@@ -3421,7 +3421,7 @@ They are NOT stored in any room timeline.
 | user_input_required | A tool call asked for the user's input; `ON_USER_INPUT_REQUIRED` decided (allowed when no hook ran) | room_id, channel_id, pending_id, tool_name, tool_call_id, allowed, reason |
 | feedback | Feedback submitted for a room or a response (`ON_FEEDBACK`) | room_id, channel_id, event_id, dimension, rating |
 | status_posted | An entry was posted to the StatusBus | ts, agent_id, action, status, detail, metadata |
-| hook_error | A `BEFORE_BROADCAST` SYNC hook failed at an event's commit gate (§10.1 step 9): it raised, timed out or returned an unusable result | room_id, event_id, hook, error |
+| hook_error | A `BEFORE_BROADCAST` SYNC hook failed: it raised, timed out or returned an unusable result, off the lock as it ran (§10.1 step 5a, §9.5.1) or at an event's commit gate (step 9) | room_id, event_id, hook, error |
 | hook_timeout | A hook, SYNC or ASYNC, exceeded its timeout | room_id, hook_name, trigger, timeout (seconds) |
 | circuit_breaker_opened | Channel circuit breaker tripped | channel_id, state (`open`) |
 | circuit_breaker_closed | Channel circuit breaker recovered: a call succeeded after it tripped | channel_id, state (`closed`) |
@@ -3726,7 +3726,11 @@ the room (§10.6.6).
 A hook's `name` is unique within its scope: the kit's hooks, registered
 globally, or the hooks of one room. Implementations MUST refuse at
 registration a hook whose name a hook of the same scope already holds, so
-that a block names one hook of its scope (`blocked_by`, §9.3). An
+that a block names one hook of its scope (`blocked_by`, §9.3). A room hook
+registered on the turn executors under a name is the exception: on an
+executor a name carries one hook per trigger, and registering it again
+replaces it, since every executor runs the host's one setup function
+(§10.6.6); the name a room enables joins the room's scope. An
 implementation that gives a hook a default name, when the integrator gives
 none, MUST make that name unique within its scope. A hook MUST NOT be named
 after a value the framework writes in `blocked_by` (`source_read_only`,
@@ -4251,7 +4255,8 @@ HookResult
 ├── action: "allow" | "block" | "modify"
 ├── event: any | null                       # The replacement payload; required on "modify"
 ├── reason: string | null                   # Why blocked or modified
-├── injected_events: list<InjectedEvent>    # Events to inject, whatever the action
+├── injected_events: list<InjectedEvent>    # Events to inject, whatever the action;
+│                                           # committed on BEFORE_BROADCAST (below)
 ├── tasks: list<Task>                       # Tasks to create (side effects)
 ├── observations: list<Observation>         # Observations to record (side effects)
 └── metadata: map<string, any>              # Additional hook metadata
@@ -4311,18 +4316,35 @@ event whose hooks injected it:
   same way.
 - It counts against the cascade's reentry budget, which bounds injections of
   injections (§8.3).
-- It keeps the `chain_depth` of the event whose hooks injected it. Its
-  visibility names its targets only, whatever visibility it came with, and
-  is `none` when it is stored only. The pipeline clears its idempotency key
-  (§13.4).
+- It keeps the `chain_depth` of the event whose hooks injected it, and the
+  source the hook gave it. Its visibility names those of its targets the
+  room binds, whatever visibility it came with, and is `none` when it names
+  none or is stored only: a target the room does not bind would otherwise
+  read the event once attached. No source binding narrows it, and the hooks
+  of its own chain may narrow it, never widen it: the visibility a modify
+  gives it is intersected with the one it had (§7.3). The pipeline clears
+  its idempotency key (§13.4).
 - It takes no source check (§7.5 rule 2): it is the hook's, not a channel's.
+  An EDIT or a DELETE it carries is the hook's change whatever source it
+  names, and takes step 8a with the system's authority only (§10.3).
 - It is delivered to its transport targets only, under the rules of any
-  delivery (§10.2 step 3), and never to its own source (§7.5 rule 5).
+  delivery (§10.2 step 3), and never to its own source (§7.5 rule 5). Its
+  delivery set fires `AFTER_BROADCAST` like any other (§10.1 step 16).
 
 An injected event asks no agent. An intelligence channel among its targets
 is not called: the event's visibility names it, and the agent reads the
-event in its history at its next turn. An integrator who wants an agent to
-answer injects the event directly (§10.5).
+event in its history at its next turn. A transport hosting a model (a
+realtime voice channel, a conference with a realtime model plugged in,
+§12.4) is an agent too: it takes the event into the model's context
+silently, and asks no answer. An integrator who wants an agent to answer
+injects the event directly (§10.5).
+
+**Which triggers commit injected events.** The injected events of
+`BEFORE_BROADCAST` results are committed as above, and so is the event an
+identity challenge injects (`inject`, §11.3), which takes the same pass in a
+cascade of its own. On every other SYNC trigger (`BEFORE_DELIVER`,
+`ON_VERIFICATION_REQUIRED` and the rest) a result's injected events are not
+committed: they are dropped with a warning logged, never silently.
 
 ### 9.5 Hook Pipeline (BEFORE_BROADCAST)
 
@@ -4366,37 +4388,52 @@ with `needs_lock = false` runs **before** the room lock is taken, on the
 inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
 
 ```
-5a. OFF-LOCK CHECK (only when an off-lock hook matches the event)
+5a. OFF-LOCK CHECK (only when an off-lock hook fires for the event)
     ├── Take the room's admission ticket (arrival order, per process)
     ├── Run the off-lock hooks in priority order, on the pre-lock context
     │   # Each bounded by its own timeout; checks of different events of
-    │   # the same room overlap
+    │   # the same room overlap. A block stops them; a hook that produced
+    │   # no usable result is reported now (hook_timeout, hook_error)
     ├── Wait for every earlier ticket of the room to be released
     ├── Acquire the room lock (step 6) and continue; step 9 reuses the
     │   off-lock outcome and runs only the hooks that need the lock
-    └── Release the ticket once the locked section has decided and committed
+    └── Release the ticket once the locked section has decided and
+        committed, after the room lock's release (step 13)
 ```
 
 - **Order.** Events that took a ticket commit in ticket order, so two events
   from one sender keep their arrival order even when the second one's check
   finishes first. The ticket is held in process memory: the guarantee holds
-  within one process. Events that match no off-lock hook take no ticket and
-  are not ordered against ticketed ones — a system notice does not wait for a
-  scan it has nothing to do with.
+  within one process. An event takes a ticket only when an off-lock hook
+  fires for it, the hook's filters applied: events that match no off-lock
+  hook take no ticket and are not ordered against ticketed ones — a system
+  notice does not wait for a scan it has nothing to do with. An event the
+  off-lock hooks blocked still waits for its turn, so a blocked record keeps
+  the ticket order too.
 - **Release.** A ticket MUST be released on every path: committed, blocked by
-  a hook or a gate, refused, timed out, failed, or cancelled. A ticket left
-  held stalls every later ticketed event of the room.
+  a hook or a gate, refused, timed out, failed, or cancelled. It is released
+  after the room lock, once the locked section is over. A ticket left held
+  stalls every later ticketed event of the room.
 - **Bound.** Waiting for a turn adds nothing to `process_timeout` (§13.6): it
   counts against the same pre-commit budget. The wait is bounded by the
   earlier holders' hook timeouts and locked sections, never by a separate
   setting.
-- **Decision.** An off-lock BLOCK or MODIFY is applied at step 9, after the
-  status, idempotency and EDIT/DELETE gates, which keep their order and still
-  decide first. The side effects (injected events, tasks, observations) of
-  both phases are collected together.
-- **Context.** An off-lock hook receives the context built before the lock.
-  Its history can be stale by the time the event commits; a hook that reads
-  the room's state rather than the event MUST keep `needs_lock = true`.
+- **Decision.** The off-lock hooks are the first hooks of the event's one
+  chain (§9.1): a block among them stops the chain, and a modify hands its
+  payload on. Their BLOCK or MODIFY is applied at step 9, after the status,
+  idempotency and EDIT/DELETE gates, which keep their order and still decide
+  first; a block there runs none of the hooks that need the lock. The side
+  effects (injected events, tasks, observations) of both phases are collected
+  together, in hook order. An event a gate refuses before step 9 drops the
+  off-lock outcome, its side effects included, as it runs no locked hook.
+- **Errors.** An off-lock hook that produces no usable result (§9.3) is
+  reported when it is met, before the lock: `hook_timeout` when it timed
+  out, and `hook_error`, whatever the gates decide next.
+- **Context.** An off-lock hook receives the context built before the lock
+  (§10.1 step 3), the room as step 2 left it: what an attach or the record
+  of a routed sender wrote there included. Its history can be stale by the
+  time the event commits; a hook that reads the room's state rather than the
+  event MUST keep `needs_lock = true`.
 - **Reentrance.** An event injected (§10.5) by a caller that already stands in
   the room's admission order takes no ticket in that room: from inside an
   off-lock hook's body, or while holding the room lock (a locked hook, code
@@ -4419,7 +4456,7 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
 |---|---|---|---|
 | Can **block** events | Yes | No | No |
 | Can **modify** events | Yes | No | No |
-| Can **inject** targeted events | Yes (any action) | No | No |
+| Can **inject** targeted events | Yes (any action, on BEFORE_BROADCAST, §9.4) | No | No |
 | Can produce **tasks/observations** | Yes | No | Yes |
 | Can produce **response messages** | No | No | No (read-only) |
 | Runs | Before broadcast | After broadcast | During broadcast |
@@ -4496,7 +4533,8 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   ├── IDENTIFIED → create/update identified participant
    │   ├── AMBIGUOUS → fire ON_IDENTITY_AMBIGUOUS hook
    │   ├── UNKNOWN → fire ON_IDENTITY_UNKNOWN hook
-   │   └── CHALLENGE_SENT → deliver challenge, block processing
+   │   └── CHALLENGE_SENT → commit the challenge as an injected event
+   │       (§9.4), block processing
    └── Stamp participant_id on event
 
 5b. VERIFICATION (§11.7; when verification is configured and the sender is
@@ -4508,10 +4546,12 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    └── Not VERIFIED → fire ON_VERIFICATION_REQUIRED (SYNC), which holds the
        event (the default), passes it or blocks it (§11.7.3)
 
-5a. OFF-LOCK CHECK (only when a `needs_lock = false` hook matches, §9.5.1)
+5a. OFF-LOCK CHECK (only when a `needs_lock = false` hook fires, §9.5.1)
     ├── Take the room's admission ticket
-    ├── Run the off-lock BEFORE_BROADCAST SYNC hooks, off the lock
-    └── Wait for the earlier tickets of the room; release ours after step 12
+    ├── Run the off-lock BEFORE_BROADCAST SYNC hooks, off the lock; report
+    │   one that produced no usable result now (hook_error, §9.5.1)
+    └── Wait for the earlier tickets of the room; release ours after the
+        room lock's release (step 13)
 
 6. ACQUIRE ROOM LOCK, THEN CHECK THE ROOM STILL ACCEPTS EVENTS
    ├── Re-read the room's status under the lock (§5.1)
@@ -5046,7 +5086,11 @@ additional validation and state updates before broadcasting.
    role), as the participant it is on its channel (Section 5.5): an id that
    names an owner on another channel grants none.
 4. For `DeleteContent` with `delete_type = SYSTEM`, the event SHOULD originate
-   from a SYSTEM channel or a hook.
+   from a SYSTEM channel or a hook. An EDIT or a DELETE a hook injects (§9.4)
+   is the hook's, whatever source it names, and makes a SYSTEM change only:
+   one that claims the sender's or an administrator's authority is refused
+   `not_authorized`, so a hook never edits or deletes in a participant's
+   name.
 5. If validation fails, the framework MUST reject the event and SHOULD return
    an error to the source channel.
 
@@ -5886,7 +5930,12 @@ executors under a name. The owner keeps which names a room has, as it keeps
 the room's other hooks, and the request carries them in `room_hooks`: the
 executor runs the hooks registered under those names for that turn. An
 executor that has not registered every name a request carries does not take
-it (§10.6.7), so a turn never runs without one of its room's hooks.
+it (§10.6.7), so a turn never runs without one of its room's hooks. On an
+executor a name carries at most one hook per trigger, and a hook registered
+again under a name and a trigger it already carries replaces the first. A
+name the room enables joins the room's scope (§9.1): enabling a name a hook
+of the room already holds, the room's own or another enabled one, MUST be
+refused, so that a room never holds two hooks of one name.
 
 **Context.** A hook on the executor receives a `RoomContext` built from the
 shared store when it fires, as a hook on the owner does, and changes a room
@@ -6170,8 +6219,9 @@ IdentityHookResult
 `challenge(inject, message)` and `reject(reason)` set `status` to IDENTIFIED,
 PENDING, CHALLENGE_SENT and REJECTED; `reject` defaults its reason to
 "Unknown sender". A challenge blocks the message with the reason
-`identity_challenge_sent`; a REJECTED result with no reason blocks it with
-`identity_rejected` on ON_IDENTITY_AMBIGUOUS and `unknown_sender` on
+`identity_challenge_sent`, and its `inject` is committed as an injected event
+(§9.4), in a cascade of its own; a REJECTED result with no reason blocks it
+with `identity_rejected` on ON_IDENTITY_AMBIGUOUS and `unknown_sender` on
 ON_IDENTITY_UNKNOWN.
 
 ### 11.4 Channel Type Filtering
@@ -9006,9 +9056,12 @@ someone else wrote. It is injected with the `user` intent, never `system` nor
 name and the channel they wrote through, anything else by its channel id) and
 its text quoted as Section 6.4 quotes a text from outside: `Marie · sms: “…”`.
 Nothing the event carries chooses the intent, its metadata included, which a
-remote client can write. The application directs the model through its own
-doors: `inject_text` with the `system` intent, or a delivery marked as an
-instruction (Section 22.1). A blank text reaches no session.
+remote client can write. An event a hook injects (Section 9.4) asks no
+agent, a hosted model included: it is injected the same way, `silent`, so
+the model takes it as context and is asked no answer. The application
+directs the model through its own doors: `inject_text` with the `system`
+intent, or a delivery marked as an instruction (Section 22.1). A blank text
+reaches no session.
 
 Text that directs the model MUST be injected with the `system` role, never as
 `user`: on a full-duplex provider a `user` injection is voiced as the model's
