@@ -4508,7 +4508,8 @@ its `visibility`, its thread (`parent_event_id`), its `correlation_id` and its
 `delivery_results` on it, and with them the checks already passed: the event
 an EDIT or a DELETE targets (`target_event_id`), its `edit_source` or
 `delete_type` and its kind of content, which keeps a change from hiding in
-its new content (checked at §10.1 step 8a, §10.3), an INSTRUCTION's
+its new content (checked at §10.1 step 8a, §10.3; an edit's replacement by
+another kind of content is its new content), an INSTRUCTION's
 visibility, address and `standalone` word (§10.1.1), and the fingerprint the
 pipeline wrote on a response to an instruction (`metadata.instruction`,
 §10.1.1 step 6), or its absence. A field of these that the hook changed is
@@ -5491,8 +5492,11 @@ message's, a response's (§10.1 step 14), that of an event a hook injects
 A hook's modify keeps what the validation checked (§9.4): the target, the
 `edit_source` and the `delete_type`, and the kind of content. The hook's new
 content of an edit and its reason of a delete stand, unless that new content
-holds a change, which leaves the original's; a replacement of another kind
-of content, or one that hides a change in a composite, leaves the original's.
+holds a change, which leaves the original's. A replacement of an edit by
+content of another kind is taken as the edit's new content, so a hook that
+redacts an event as text redacts an edit too; one that is or holds a change,
+in a composite included, leaves the original's. A replacement of a delete by
+content of another kind leaves the original's.
 
 **State updates** (applied only after BEFORE_BROADCAST hooks allow the event —
 a hook that blocks the EDIT/DELETE MUST leave the target event unmutated):
