@@ -560,8 +560,10 @@ Implementations MUST enforce timer transitions when configured:
   instant.
 - **Resume.** A DELIVERED commit resumes a PAUSED room in the commit's
   transaction: the room is ACTIVE again, `paused_at` null. What is no
-  activity resumes nothing. The integrator MAY resume a PAUSED room, as it
-  MAY reopen a CLOSED one (above); either moves `last_activity_at` to its
+  activity resumes nothing. A sender who writes again is routed to their
+  PAUSED conversation as to an ACTIVE one (§10.4 step 1), and their
+  delivered message resumes it. The integrator MAY resume a PAUSED room, as
+  it MAY reopen a CLOSED one (above); either moves `last_activity_at` to its
   instant, which restarts the inactivity timer, and neither fires a hook nor
   emits a framework event.
 - **Close.** When `closed_after_seconds` elapses from `paused_at` without a
@@ -4694,7 +4696,10 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   └── Routed (not provided) → under the room lock, the room's due
    │       timers applied first, check that the room is still the
    │       message's (§10.4), then record the sender, before step 3:
-   │       ├── No longer the message's: the room is not ACTIVE by then;
+   │       ├── No longer the message's: the room is CLOSED or ARCHIVED
+   │       │   by then, or PAUSED and not the sender's conversation by
+   │       │   step 1 of §10.4 (the channel's binding names them, or a
+   │       │   participant they are was reached through the channel);
    │       │   or the channel's binding, not `group`, names a correspondent
    │       │   other than the sender (its participant, else its recipient,
    │       │   §5.7), as when a concurrent message was recorded first; or
@@ -5518,28 +5523,32 @@ missing from the store is created with the id.
 
 **Default routing strategy:**
 
-1. Find the newest ACTIVE room whose binding of this channel names the sender
-   (§5.7); otherwise, the newest ACTIVE room where a participant who is the
-   sender was reached through this channel (its `connected_via` names the
-   channel, whatever the participant's status: a LEFT or BANNED record still
-   says whose conversation the room is). Within each lookup the sender is
-   named by their address or by their identity, and the newest room either
-   name finds wins, so an older room found by the address does not hide a
-   newer one found by the identity; a member the integrator added under
-   their identity is found by an address linked to it. The newest is the
-   most recently created, and of rooms created at the same instant the one
-   with the greatest id, so the answer never depends on the order rooms are
+1. Find the newest ACTIVE or PAUSED room whose binding of this channel names
+   the sender (§5.7); otherwise, the newest ACTIVE or PAUSED room where a
+   participant who is the sender was reached through this channel (its
+   `connected_via` names the channel, whatever the participant's status: a LEFT
+   or BANNED record still says whose conversation the room is). Within each
+   lookup the sender is named by their address or by their identity, and the
+   newest room either name finds wins, so an older room found by the address
+   does not hide a newer one found by the identity; a member the integrator
+   added under their identity is found by an address linked to it. The newest
+   is the most recently created, and of rooms created at the same instant the
+   one with the greatest id, so the answer never depends on the order rooms are
    read in. An id names its participant only on a channel they are reached
    through (Section 5.5), and an identity reaches every channel its person
    uses: a room found through a participant record, by the address or the
    identity, is the sender's only when that participant was reached through
    this channel, so a message is not carried into a room of another channel,
-   whose messages would then go out on this one. On a chat channel the
-   address routed by is the chat the message was posted in, not its sender
-   (§5.7), here and in step 3.
+   whose messages would then go out on this one. A PAUSED room is the sender's
+   conversation as an ACTIVE one is: its timer paused it for inactivity, and
+   the message's delivered commit resumes it (§5.1); the newest room wins
+   whatever its status. On a chat channel the address routed by is the chat the
+   message was posted in, not its sender (§5.7), here and in step 3.
 2. If found → return that room.
 3. Otherwise, if the channel is bound to exactly **one** ACTIVE room and that
-   room admits the sender (below) → return that room.
+   room admits the sender (below) → return that room. Step 3 reads ACTIVE
+   rooms only: it admits no one into a PAUSED room, and a PAUSED room does
+   not count among the rooms the channel is bound to.
 4. If not found → return null (framework creates a new room).
 
 **Step 3 admits one conversation.** Step 3 is what routes a channel dedicated
@@ -5581,24 +5590,25 @@ in which case step 1 finds them through it.
 A message with no sender address is held to the same conditions, so it is
 admitted only where no one is named, joined or heard on the channel.
 
-When step 3 admits a sender through a binding that names no participant and
-is not `group`, the framework records the sender on it (§10.1 step 2): step 1
+When step 3 admits a sender through a binding that names no participant and is
+not `group`, the framework records the sender on it (§10.1 step 2): step 1
 then finds them on their next message, and step 3 admits no one else. A room
 the framework creates for an inbound message is bound to its sender from the
-start. The sender is recorded when the message is routed, under the room
-lock, before anything of the message is processed: two first messages
-arriving together cannot both be admitted, since the second finds the binding
-naming the first and is routed again. Under that lock the framework checks
-again the admission that chose the room, not only the binding (§10.1 step
-2): someone else may have been heard on the channel, or reached through it,
-since the router read the room, and recording the sender there would send
-that person's answers to them. A room no longer ACTIVE, or no longer
-admitting the sender, is no longer the message's: nothing is written, and
-the message is routed once more, a second failure giving it a new room. The
-wait for that lock is bounded by `process_timeout` (§13.6); past it the
-message is refused as a process timeout, never let in unrecorded. A message
-a hook later refuses has been routed all the same: routing decides which
-conversation a message belongs to, a hook what becomes of it.
+start. The sender is recorded when the message is routed, under the room lock,
+before anything of the message is processed: two first messages arriving
+together cannot both be admitted, since the second finds the binding naming
+the first and is routed again. Under that lock the framework checks again the
+admission that chose the room, not only the binding (§10.1 step 2): someone
+else may have been heard on the channel, or reached through it, since the
+router read the room, and recording the sender there would send that person's
+answers to them. A room CLOSED or ARCHIVED by then, one PAUSED by then that is
+not the sender's conversation by step 1, or one no longer admitting the
+sender, is no longer the message's: nothing is written, and the message is
+routed once more, a second failure giving it a new room. The wait for that
+lock is bounded by `process_timeout` (§13.6); past it the message is refused
+as a process timeout, never let in unrecorded. A message a hook later refuses
+has been routed all the same: routing decides which conversation a message
+belongs to, a hook what becomes of it.
 
 **A delivery status follows its message.** A provider's delivery status that
 names no room is routed by the same rule: the room whose binding of the
@@ -5636,8 +5646,8 @@ safe answer: nothing in the store tells a group channel from a shared number.
 ACTIVE room and nothing in them tells which conversation the message belongs
 to — for the default strategy, a channel bound to several ACTIVE rooms (step
 3) — it MUST return null rather than choose among them. Step 1 is not a guess:
-it returns the most recently created of the ACTIVE rooms where the sender is
-connected, a conversation the sender is in. Returning any
+it returns the most recently created of the ACTIVE or PAUSED rooms where the
+sender is connected, a conversation the sender is in. Returning any
 one of several candidates delivers a message into a conversation it does not
 belong to, and — because the room it lands in is where the message is stored,
 broadcast to that room's channels, and read back as context by that room's
@@ -13274,8 +13284,9 @@ ConversationStore (interface)
 │                                             # newest room where participant_id, or
 │                                             # its identity, is a participant reached
 │                                             # through channel_id (§10.4 step 1)
-│       # Both: filter names the status and the organization; the newest
-│       # room is ordered as §10.4 step 1 orders rooms
+│       # Both: filter names the statuses (ACTIVE and PAUSED for §10.4
+│       # step 1) and the organization; the newest room is ordered as
+│       # §10.4 step 1 orders rooms
 │
 ├── Events
 │   ├── add_event(room_id, event) → RoomEvent
