@@ -448,8 +448,10 @@ Room
 ├── agent_response_policy: AgentResponsePolicy = AGENT_CHAIN  # What an agent's own output solicits (Section 19.3.1)
 ├── metadata: map<string, any>              # Integrator-defined data
 ├── event_count: int                        # Total events stored
-└── latest_index: int | null                # Highest event index (for read tracking);
-                                            # null while the room has no event
+├── latest_index: int | null                # Highest event index (for read tracking);
+│                                           # null while the room has no event
+└── delivered_index: int = -1               # Highest index whose delivery set has run
+                                            # (delivery lanes across processes, §13.5)
 ```
 
 **RoomStatus** enumeration:
@@ -511,6 +513,15 @@ Closing a room does not, by itself, sever what is attached to it. Whether
 `close_room()` detaches channels, ends voice sessions or leaves them in place
 is an implementation's choice; what it MUST NOT do is leave a path by which a
 still-attached channel can append to the closed room.
+
+**The implementation's metadata keys.** The keys of a room's `metadata` that
+start with `roomkit:` are the implementation's own namespace: what the
+framework keeps for the room, such as a detach's revocation (§7.5 rule 7) or
+the state the host sets for a channel (§10.6.2). Only the framework writes
+them. A room's creation and an integrator's metadata update that name such a
+key MUST be refused, and so MUST a `TurnHost` verb that does (§10.6.5); a
+channel's `metadata_updates` that name one have it dropped with a warning,
+the rest applied (§10.1 step 15).
 
 **RoomTimers:**
 
@@ -1375,7 +1386,7 @@ ChannelOutput
 ├── provider_result: ProviderResult | null  # A transport delivery's provider answer (Section 5.13)
 ├── tasks: list<Task>                       # Side effects (always allowed)
 ├── observations: list<Observation>         # Side effects (always allowed)
-├── metadata_updates: map<string, any>      # Room metadata to update
+├── metadata_updates: map<string, any>      # Room metadata to update (§10.1 step 15)
 └── error: Exception | null                 # An error met while producing the output; the
         # output is still used, and the error surfaces as for a channel that
         # raised: ON_ERROR fires and InboundResult.error carries it
@@ -3473,7 +3484,7 @@ provides it. Each row is owed by Level 0 or by one feature:
   `source_disconnected`, `source_attached`, `source_detached`,
   `source_error`, `source_exhausted`.
 - **StatusBus** (Level 2, Section 19.8): `status_posted`.
-- **Feedback** (`submit_feedback`, Section 9.2): `feedback`.
+- **Feedback** (`submit_feedback`, Section 15.9): `feedback`.
 - **Voice** (Level 3, Section 12): `voice_session_started`,
   `voice_session_ended`, `voice_session_ready`, `stt_error`, `tts_error`,
   and `session_started` for a voice session.
@@ -3626,10 +3637,16 @@ pipeline MUST write its `source` (the responder's channel id and channel type,
 with direction OUTBOUND), its room, its `chain_depth` (the trigger's plus
 one, §8.3) and, unless the channel named the event it answers, its
 `responds_to`; it clears its idempotency key (§13.4). A response that claims
-another source gets the responder's, and the implementation logs a warning:
-the write check reads the source's binding (§7.5 rule 2), and a response
-committed under another channel's name would be checked against that
-channel's.
+another source gets a fresh one, the responder's (its channel id and channel
+type, OUTBOUND), keeping nothing of the source it claimed, and the
+implementation logs a warning: the write check reads the source's binding
+(§7.5 rule 2), and a response committed under another channel's name would
+be checked against that channel's, while another channel's provider message
+id could be acted on by a native edit or delete (§10.3). A response under
+its own source keeps the fields its channel wrote (its participant, its
+provider, its raw payload, its provider message id). The pipeline clears
+`verification` on every response: it is a received sender's (§5.2, §11.7),
+and a response is no message received.
 
 **What the turn is told.** `BEFORE_AI_GENERATION` receives, with the turn's
 context, the event the turn answers (`trigger`), so a hook can tell the model
@@ -3875,7 +3892,7 @@ on the room's owner.
 | | | | |
 | **Other:** | | | |
 | ON_PLAN_UPDATED | ASYNC | Implemented | An AI channel's `plan_tasks` tool stored a new task plan for the room; the payload carries the room, the channel, the plan's tasks (`title`, `status`) and a timestamp |
-| ON_FEEDBACK | ASYNC | Implemented | `submit_feedback` recorded a rating (0.0–1.0, clamped) as an Observation of the room; the payload is that Observation, carrying the rating, its dimension (default `overall`), the comment and the rated event |
+| ON_FEEDBACK | ASYNC | Implemented | `submit_feedback` recorded a rating (0.0–1.0, clamped) as an Observation of the room (Section 15.9); the payload is that Observation, carrying the rating, its dimension (default `overall`), the comment and the rated event |
 
 **ON_ERROR payload.** ON_ERROR receives a RoomEvent that is never stored. Its
 source is the channel that failed (on a realtime channel, with the session's
@@ -4720,7 +4737,13 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
         # never timeline adjacency.
 
 15. PERSIST SIDE EFFECTS
-    └── Store all tasks and observations from hooks + channels
+    ├── Store all tasks and observations from hooks + channels
+    └── Apply the room metadata updates of the cascade's channel outputs
+        (§6.1), from on_event() and deliver() alike: merged key by key in
+        the order the targets answered, and written once, as a partial
+        update of the room (update_room, §14.1); a key of the
+        implementation's namespace (§5.1) is dropped with a warning, the
+        rest applied
 
 16. RUN AFTER_BROADCAST ASYNC HOOKS
     └── After the event's delivery set completes — "all channels have
@@ -5049,7 +5072,8 @@ BroadcastResult
 ├── reentry_events: list<RoomEvent>             # Response events for reentry loop
 ├── tasks: list<Task>                           # Accumulated tasks
 ├── observations: list<Observation>             # Accumulated observations
-├── metadata_updates: map<string, any>          # Room metadata to update
+├── metadata_updates: map<string, any>          # The targets' room metadata updates,
+│                                               # merged (§10.1 step 15)
 ├── blocked_events: list<RoomEvent>             # Chain-depth-blocked events
 └── errors: map<string, string>                 # Per-channel error messages
 ```
@@ -5319,13 +5343,18 @@ The record names the room it is committed to: one whose `room_id` is another
 room's MUST be refused before anything is read or written, so the room checked
 is the room written. The room is read scoped to `organization_id` (§17.2): a
 missing room, or another organization's, is not found. A room whose status
-refuses new events (§5.1) MUST refuse the record before anything is written. The record is
-committed under the room lock with the next index, which the room's delivery
-lane MUST count as delivered at once: no delivery set, no hook, and no
-broadcast follow it, and the next event of the room MUST NOT wait on its
-index. It is stored as the caller gives it, whatever the persistence policy,
-and rule 2 of §7.5 does not apply to it. An event the members must receive is
-injected with `send_event` instead.
+refuses new events (§5.1) MUST refuse the record before anything is written,
+and emits no framework event: a record reaches no one, and no subscriber
+waits for it. The record is committed under the room lock with the next
+index, which the room's delivery lane MUST count as delivered at once: no
+delivery set, no hook, and no broadcast follow it, and the next event of the
+room MUST NOT wait on its index. It counts in `event_count` and
+`latest_index`, and is no activity: `last_activity_at` does not move, and a
+PAUSED room stays paused (§5.1), since a trace nobody receives does not keep
+a room alive. It is stored as the caller gives it (its status, its
+visibility and the rest), whatever the persistence policy, and rule 2 of
+§7.5 does not apply to it. An event the members must receive is injected
+with `send_event` instead.
 
 ### 10.6 Turn Execution
 
@@ -5523,11 +5552,11 @@ through a channel call and is needed again on another executor (an ACP
 session's configuration values, §6.4). That state is the room's, not the
 executor's. A channel's result reports it when the verb changed it. The owner
 MUST store it in the room's metadata (§5.1), under a key of the
-implementation's own namespace, and MUST refuse that key in any other write
-(a room's creation or metadata update, a `TurnHost` verb). It hands it to the
-executor with each request, in the room its `RoomContext` carries, and with
-each channel call, before the turn or the verb runs. The channel takes it
-back when it holds none for the room. A detach forgets it.
+implementation's own namespace (`roomkit:`), and MUST refuse that key in any
+other write (a room's creation or metadata update, a `TurnHost` verb). It
+hands it to the executor with each request, in the room its `RoomContext`
+carries, and with each channel call, before the turn or the verb runs. The
+channel takes it back when it holds none for the room. A detach forgets it.
 
 #### 10.6.3 Messages
 
@@ -5822,8 +5851,8 @@ the turn's response (§8.3), and a task it delegates inherits the turn's depth
 limit as a local one does. `wait_task` answers for a task a `TurnHost` of the
 turn's room delegated, and answers null for any other, as it does past its
 timeout. A room-metadata update through it MUST NOT write a key of the
-implementation's own namespace (a detach's revocation, §7.5; what the room
-keeps for a channel, §10.6.2).
+implementation's own namespace (§5.1: a detach's revocation, §7.5; what the
+room keeps for a channel, §10.6.2).
 
 Reads go to the store, which the executor shares; every write goes through
 `TurnHost`. Each call carries the room and the turn it is made from, and the
@@ -12651,7 +12680,9 @@ come from providers (an SMS message id, an email Message-ID), and two
 channels of one room may carry the same key for two different messages. An
 inbound message and an event injected directly (§10.5) are the events that
 carry a key: the pipeline clears it on the responses it commits (§8.5) and
-on the events a hook injects (§9.4).
+on the events a hook injects (§9.4). A proactive delivery's key is the
+application's and names one publication in the room, whatever transport
+carries it (§22.1).
 
 If an InboundMessage or a directly injected event carries an
 `idempotency_key`, the framework MUST:
@@ -12732,6 +12763,29 @@ one distributed lock manager, and SHOULD detect the unsafe combination of a
 shared persistent store with an in-memory lock manager and warn (or refuse) at
 initialization.
 
+**Delivery lanes across processes.** A process holds a delivery lane per
+room it delivers in, and a lane runs only the delivery sets its own process
+planned, since a plan holds live channels. When several processes share a
+store, the room's delivery cursor orders them: `delivered_index` (§5.1), the
+highest index whose delivery set has run, `-1` before any. A lane runs the
+set of the index after the cursor, then advances the cursor by one, a
+compare-and-set in the store (`advance_delivered_index`, §14.1) that
+succeeds only from the index before. The sets of one room run under its
+delivery claim, a lock of the room's lock manager held apart from the room
+lock, so that one event's set completes before the next one's begins across
+the deployment; a lane never holds the claim and the room lock together. An
+instruction's set, which has no index, runs once the cursor has reached the
+latest index committed before it (§10.1.1), and a record committed outside
+the pipeline counts as delivered at once (§10.5). A committed index whose
+set no lane runs (its process stopped between the commit and the delivery)
+holds the cursor: a lane that has waited on it for `gap_timeout` (default
+30 s) while no lane held the claim forces the cursor past it and emits
+`delivery_skipped` with the indexes skipped (§8.2). The loss is bounded to
+what was in flight and observable, and the room never wedges; a lane that
+finds its own set skipped drops it, since running it then would break the
+room's order. A durable outbox that turns that loss into recovery is a
+separate capability (§13.6).
+
 ### 13.6 Processing Timeout
 
 Implementations SHOULD support a configurable `process_timeout`. Its semantics
@@ -12802,6 +12856,10 @@ ConversationStore (interface)
 │   ├── list_rooms(filters) → list<Room>
 │   ├── find_room(filters) → Room | null
 │   ├── find_latest_room(filters) → Room | null
+│   ├── get_delivered_index(room_id) → int    # -1 before any set ran (§13.5)
+│   ├── advance_delivered_index(room_id, index, force = false) → bool
+│   │                                         # compare-and-set from index - 1, or
+│   │                                         # from any lower value when forced
 │   ├── find_room_id_by_binding(channel_id, participant_id, status) → string | null
 │   │                                         # newest room whose binding of
 │   │                                         # channel_id names participant_id
@@ -13321,6 +13379,26 @@ line, independently parseable:
 JSONL files are append-only. Implementations MUST create parent directories
 automatically. Write errors MUST be logged but MUST NOT propagate exceptions
 to the caller.
+
+### 15.9 Feedback
+
+An implementation MAY let a host record how a room, or one of its
+responses, was rated:
+
+```
+submit_feedback(room_id, rating, event_id | null, channel_id | null,
+                comment = "", dimension = "overall", metadata) → void
+```
+
+The rating is a number from 0.0 to 1.0; a value outside is clamped. It is
+recorded as an Observation of the room (§5.11): its `channel_id` the rated
+channel (empty when none is named), its `category` `feedback:<dimension>`,
+its `confidence` the rating, its `content` a line naming the dimension, the
+rating and the comment, and its metadata `type = "feedback"`, `dimension`,
+`rating`, `comment` and `event_id`, beside the caller's `metadata`. Once the
+observation is stored, `ON_FEEDBACK` (ASYNC, §9.2) fires with it as its
+payload, and `feedback` is emitted (§8.2) with the room, the channel, the
+event, the dimension and the rating.
 
 ---
 
@@ -15593,10 +15671,16 @@ success. Unaddressed calls without explicit destinations MAY retain room-wide
 realtime injection. A non-null intelligence address uses the text pipeline,
 not a direct realtime injection; combining it with `session_id` is invalid.
 
-**Idempotency boundary.** Text keys are scoped to the room and to the source
-channel, and use the ConversationStore's existing locked publication and
-unique-key contract (§13.4). Replays, including concurrent ones, MUST NOT
-create a second trigger event while the key is retained. The same key
+**Idempotency boundary.** A keyed text delivery's key names one publication
+in its room, whatever transport carries it: it is checked within the room,
+before a transport is resolved, and a match returns the original outcome
+without publishing again. A retry that would resolve another transport (one
+plugged in or detached since the first attempt) is still that publication.
+The key is the application's, so the collision of two providers' keys that
+scopes an inbound key by its channel (§13.4) does not arise. Publication
+uses the ConversationStore's existing locked publication and unique-key
+contract (§13.4). Replays, including concurrent ones, MUST NOT create a
+second trigger event while the key is retained. The same key
 identifies the same publication regardless of subsequent body or address
 changes. Retention follows the store: memory does not survive restart; durable
 stores retain committed keys until the corresponding event/key is removed.
