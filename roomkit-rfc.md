@@ -7,7 +7,7 @@
 | **Contributions** | TchatNSign, Angany AI |
 | **Version** | v18 Draft |
 | **Created** | 2026-01-27 |
-| **Last Updated** | 2026-10-22 |
+| **Last Updated** | 2026-10-23 |
 | **Supersedes** | v17 Draft |
 
 ---
@@ -145,20 +145,32 @@ serialized form is lowercase (Section 1.4). Field names use snake_case.
 ### 1.4 Serialized Form
 
 The records this document defines have one serialized form, JSON
-([RFC 8259](https://www.rfc-editor.org/rfc/rfc8259)). Stores, logs and the
-turn messages of Section 10.6.3 exchange records in this form, so that two
-implementations can read each other's data and share conformance scenarios.
-Implementations MUST serialize a record as follows:
+([RFC 8259](https://www.rfc-editor.org/rfc/rfc8259)). What implementations
+exchange is written in this form (the turn messages of Section 10.6.3, logs,
+conformance fixtures, a room's export), so that two implementations can read
+each other's data and share conformance scenarios. The form binds what is
+exchanged, not how a store persists it: a store MAY keep a representation of
+its own (columns, an encoding of its choice), and two implementations sharing
+one database would need a common schema, which this document does not
+define. Implementations MUST serialize a record as follows:
 
 - A record is a JSON object whose members are its fields, named as this
   document writes them. A `map` is a JSON object and a `list` a JSON array.
+- A writer writes every field of a record, a null one as `null`. A reader
+  takes a field that is absent as its default.
 - An enumeration value is written in lowercase snake_case: `ACTIVE` is
-  `"active"`, `READ_WRITE` is `"read_write"`.
+  `"active"`, `READ_WRITE` is `"read_write"`. A map keyed by an enumeration
+  (an Identity's `channel_addresses`, Section 5.6) writes each key as the
+  value's serialized form: `{"sms": ["+15551234"]}`.
 - Event content (Section 5.3) is an object whose `type` member names its
   content type, with the names Section 5.3 gives, beside the fields of that
   type: `{"type": "text", "body": "Hello", "language": "en"}`. Content held in
   other content, a composite's part or an edit's new content, is tagged the
-  same way.
+  same way, and so is every other union this document defines: its `type`
+  member names the member it holds, as the union's definition names it (a
+  frame of Section 10.6.3: `{"type": "heartbeat", "turn_id": "t1"}`).
+- A `bytes` value is a string in base64
+  ([RFC 4648](https://www.rfc-editor.org/rfc/rfc4648), Section 4).
 - A `datetime` is a string in the form of
   [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339), written in UTC:
   `"2026-10-22T14:03:07.250Z"`. A value without an offset MUST NOT be
@@ -708,6 +720,15 @@ composite of text parts has one level. An edit's new content (EditContent,
 below) stands in the edit's place: a composite that is an edit's new content
 has the level a composite in the edit's place would have.
 
+Content that holds a sixth level is refused where it is built, before
+anything of its event is written, and no event that holds one is ever
+committed: an inbound message, or the event a channel builds from it
+(§10.1 step 4), fails the message with nothing stored; a hook's replacement
+(§9.4) is an unusable result (§9.3); a direct injection (§10.5) raises before
+anything is read; an edit's new content counts its levels in the edit's
+place (above), which is its target's place once the commit writes it there
+(§10.3).
+
 **SystemContent** — Framework-generated message:
 
 ```
@@ -1111,15 +1132,24 @@ ChannelCapabilities
 | TEMPLATE | Pre-approved message templates |
 
 `media_types` decides what the channel receives: a content of a category it
-names is delivered unchanged, one of a category it does not name is
-transcoded, and text is the fallback every channel takes, whatever it
-declares (Section 6.6). Of the `supports_*` flags, only `supports_edit` and
-`supports_delete` take part in transcoding: they decide whether an edit or a
-delete is delivered natively (Section 10.3). The others describe the channel
-and do not decide transcoding: a channel whose `media_types` names RICH
-receives a rich content unchanged whatever `supports_rich_text` says, and one
-whose `media_types` does not name RICH receives its text form even when
-`supports_rich_text` is true.
+names is delivered unchanged (a file, within the limits below), one of a
+category it does not name is transcoded, and text is the fallback every
+channel takes, whatever it declares (Section 6.6). Of the `supports_*`
+flags, only `supports_edit` and `supports_delete` take part in transcoding:
+they decide whether an edit or a delete is delivered natively (Section
+10.3). The others describe the channel and do not decide transcoding: a
+channel whose `media_types` names RICH receives a rich content unchanged
+whatever `supports_rich_text` says, and one whose `media_types` does not
+name RICH receives its text form even when `supports_rich_text` is true.
+
+A channel whose `media_types` names MEDIA receives a file only when it takes
+that file: a MediaContent whose `mime_type` is absent from a non-empty
+`supported_media_types`, or whose known size (`size_bytes`) is over
+`max_media_size_bytes`, is delivered as its text form (Section 6.6), as for
+a channel that does not name MEDIA. An empty `supported_media_types` takes
+every type, and a null `max_media_size_bytes`, or a file of unknown size,
+any size. A provider's refusal of a file it cannot carry would lose the
+whole message; its text form keeps it.
 
 ### 5.9 Three Levels of Channel Metadata
 
@@ -1404,11 +1434,11 @@ reference capabilities:
 | WebSocket | TEXT, RICH, MEDIA, AUDIO, VIDEO, LOCATION | unlimited | All features, real-time, edit, delete |
 | Voice | AUDIO | — | Streaming audio, STT/TTS |
 | Realtime Voice | AUDIO | — | Speech-to-speech, tool calling |
-| Telegram | TEXT, RICH, MEDIA, LOCATION | 4,096 | Buttons, inline keyboards, edit, delete |
+| Telegram | TEXT, RICH, MEDIA, AUDIO, VIDEO, LOCATION | 4,096 | Buttons, inline keyboards, edit, delete |
 | Audio/Video | AUDIO, VIDEO | — | Combined voice + video, STT/TTS + vision |
 | Realtime Audio/Video | AUDIO, VIDEO | — | Speech-to-speech + video, tool calling |
 | Video | VIDEO | — | Video-only, vision provider integration |
-| Conference | AUDIO, VIDEO | — | Multi-party SFU, per-track STT, AI bot participant |
+| Conference | AUDIO | — | Multi-party SFU, per-track STT, AI bot participant |
 | Webhook | TEXT, RICH | unlimited | Generic HTTP POST |
 
 ### 6.4 Intelligence Channels
@@ -2616,7 +2646,8 @@ When an event is broadcast to channels with different capabilities, the framewor
 MUST transcode content to match each target channel's supported media types.
 The target's `media_types` (Section 5.8) decides: a content of a category it
 names is delivered unchanged, and one of a category it does not name is
-replaced by its text form, as the table below gives it. Text is the fallback
+replaced by its text form, as the table below gives it; so is a file whose
+type or size the target does not take (Section 5.8). Text is the fallback
 every channel takes, whatever its `media_types` declares: a voice channel
 that declares AUDIO alone receives a text unchanged and a rich text as its
 text form.
@@ -2627,7 +2658,7 @@ text form.
 |---|---|---|
 | TextContent | any | Unchanged |
 | RichContent | no RICH | TextContent (plain_text, else body unchanged) |
-| MediaContent | no MEDIA | TextContent ("[Media: {caption or filename or url}]"): the URL only when it is a link (`http`, `https`), else the media type; never a data URI or a reference |
+| MediaContent | no MEDIA, or a type or a size the target does not take (Section 5.8) | TextContent ("[Media: {caption or filename or url}]"): the URL only when it is a link (`http`, `https`), else the media type; never a data URI or a reference |
 | AudioContent | no AUDIO | TextContent (the transcript, or "[Voice message: {url}]"): the URL only when it is a link, else the media type |
 | VideoContent | no VIDEO | TextContent ("[Video: {url}]"): the URL only when it is a link, else the media type |
 | LocationContent | no LOCATION | TextContent ("[Location: {label or address} ({latitude}, {longitude})]", or "[Location: ({latitude}, {longitude})]" with neither, e.g. "[Location: (45.5, -73.6)]") |
@@ -12562,10 +12593,11 @@ room delivered returns its committed event. A message the room blocked returns
 a blocked result carrying the record stored `BLOCKED` (§10.1 steps 10, 11),
 with the record's `blocked_by` as its reason: the hook's own reason is not
 stored. A ConversationStore resolves the event from the key it recorded at
-commit; the key SHOULD therefore be stored so it can be read back, not merely
-tested for presence. A store that can only answer "seen" MAY return a blocked
-result carrying the reason instead — a degraded but conforming answer, since
-the MUST that matters, *without reprocessing*, holds either way.
+commit (`get_event_by_idempotency_key`, §14.1); the key SHOULD therefore be
+stored so it can be read back, not merely tested for presence. A store that
+can only answer "seen" MAY return a blocked result carrying the reason
+instead — a degraded but conforming answer, since the MUST that matters,
+*without reprocessing*, holds either way.
 
 ### 13.5 Room-Level Locking
 
@@ -12705,7 +12737,10 @@ ConversationStore (interface)
 │   ├── list_events(room_id, filters) → list<RoomEvent>
 │   ├── get_event_count(room_id, filter | null) → int
 │   ├── update_event(event_id, updates) → RoomEvent
-│   └── delete_event(room_id, event_id, cascade_replies = true) → list<string>
+│   ├── delete_event(room_id, event_id, cascade_replies = true) → list<string>
+│   └── get_event_by_idempotency_key(room_id, channel_id, key) → RoomEvent | null
+│                                             # the event of channel_id that key
+│                                             # committed, BLOCKED included (§13.4)
 │
 ├── Bindings
 │   ├── create_binding(room_id, binding) → ChannelBinding
@@ -12716,9 +12751,11 @@ ConversationStore (interface)
 │
 ├── Participants
 │   ├── create_participant(room_id, participant) → Participant
-│   ├── get_participant(participant_id) → Participant | null
-│   ├── update_participant(participant_id, updates) → Participant
-│   ├── delete_participant(participant_id) → void
+│   ├── get_participant(room_id, participant_id) → Participant | null
+│   ├── update_participant(participant) → Participant
+│   │                                         # writes the whole record, keyed
+│   │                                         # by (room_id, id) (§5.5)
+│   ├── delete_participant(room_id, participant_id) → void
 │   └── list_participants(room_id) → list<Participant>
 │
 ├── Identity
@@ -17011,7 +17048,7 @@ AIChannel
 ├── type: AI
 ├── category: INTELLIGENCE
 ├── direction: BIDIRECTIONAL
-├── media_types: [TEXT, MEDIA]
+├── media_types: [TEXT, RICH, MEDIA]
 ├── capabilities:
 │   ├── supports_rich_text: true (provider-dependent)
 │   ├── supports_edit: false
@@ -17246,6 +17283,7 @@ VideoChannel
 ├── channel_type: VIDEO
 ├── category: TRANSPORT
 ├── direction: BIDIRECTIONAL
+├── media_types: [VIDEO]
 ├── requires:
 │   ├── backend: VideoBackend
 │   ├── vision: VisionProvider | null     # OPTIONAL
@@ -17281,7 +17319,7 @@ TelegramChannel
 ├── type: TELEGRAM
 ├── category: TRANSPORT
 ├── direction: BIDIRECTIONAL
-├── media_types: [TEXT, RICH, MEDIA, LOCATION]
+├── media_types: [TEXT, RICH, MEDIA, AUDIO, VIDEO, LOCATION]
 ├── capabilities:
 │   ├── max_length: 4096
 │   ├── supports_rich_text: true (HTML subset)
@@ -17321,6 +17359,7 @@ ConferenceChannel
 ├── channel_type: CONFERENCE
 ├── category: TRANSPORT
 ├── direction: BIDIRECTIONAL
+├── media_types: [AUDIO]
 ├── requires:
 │   ├── backend: ConferenceBackend
 │   ├── stt: STTProvider | null           # Per-track transcription
