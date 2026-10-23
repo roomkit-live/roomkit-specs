@@ -1008,6 +1008,20 @@ Identity
 └── metadata: map<string, any>              # Integrator-defined data
 ```
 
+An address belongs to one identity per organization and channel type, so a
+resolution never chooses: creating an identity, or linking an address
+(`link_address`, §14.1), with an address another identity of the
+organization holds MUST be refused, and moving an address is an explicit
+unlink, never a silent re-home of someone's conversations. Identity
+resolution is scoped to the organization it names (§17.2); for none, it
+resolves the identities of no organization only, never an organization's.
+`link_address` links to an identity of the organization it names, and
+refuses an unknown identity or another organization's; linking an address
+the identity already holds changes nothing. Addresses compare as stored: the
+framework resolves a sender's address in its channel's form (§5.7), so a
+host links addresses in that form (E.164 on a channel addressed by phone
+number).
+
 ### 5.7 ChannelBinding
 
 When a channel is attached to a Room, a ChannelBinding is created:
@@ -1048,15 +1062,15 @@ A binding carries one correspondent's conversation unless it is declared
 first sender routed to it (`participant_id`, §10.1 step 2), and the default
 router admits no one else through it (§10.4). On a transport channel whose
 replies go to the address the correspondent writes from (a phone number, an
-email address: SMS, RCS, WhatsApp, email, Messenger), the binding's recipient
-and its correspondent are one address. When the framework records the
-sender, or finds a binding naming the sender by address without a recipient,
-it writes the address as the binding's recipient, under the metadata key the
-channel delivers to (`phone_number`, `email_address`, ...; Appendix A); a
-recipient the binding already has is kept. Conversely, a binding the
-integrator gives a recipient and no correspondent names that recipient as
-its correspondent: the room is that person's conversation, and the router
-admits no one else through it (§10.4). On a transport that delivers to a chat
+email address: SMS, MMS, RCS, WhatsApp, email, Messenger), the binding's
+recipient and its correspondent are one address. When the framework records
+the sender, or finds a binding naming the sender by address without a
+recipient, it writes the address as the binding's recipient, under the
+channel's recipient key (below); a recipient the binding already has is
+kept. Conversely, a binding the integrator gives a recipient and no
+correspondent names that recipient as its correspondent: the room is that
+person's conversation, and the router admits no one else through it
+(§10.4). On a transport that delivers to a chat
 or a conversation (Telegram, Teams, Discord), the chat a message was posted in
 is its conversation: a private chat is its user's, a group chat the group's,
 shared by all its members. The framework routes the message, records the
@@ -1072,16 +1086,66 @@ transport that
 delivers to a URL (an HTTP webhook), nothing of the message is written as the
 recipient.
 
+**Addresses by channel type.** A channel's type decides how its addresses
+are written and compared. Its declaration names the binding metadata key its
+recipient is written under and, on a channel that answers chats, the
+metadata key its inbound messages carry their chat under; a declaration MAY
+name other keys, or none. The defaults:
+
+| Type | Address | Recipient key | Chat key |
+|---|---|---|---|
+| SMS, MMS, RCS, WHATSAPP | Phone number, E.164 (below) | `phone_number` | — |
+| WHATSAPP_PERSONAL | Phone number, E.164 | `phone_number` | `group_jid`, a group message's group |
+| VOICE | Phone number, E.164 | — | — |
+| EMAIL | Email address (below) | `email_address` | — |
+| MESSENGER | As written | `facebook_user_id` | — |
+| TELEGRAM | Its chat, as written | `telegram_chat_id` | `chat_id` |
+| TEAMS | Its chat, as written | `teams_conversation_id` | `conversation_id` |
+| Any other type | As written | — | — |
+
+A channel with no recipient key delivers to a destination of its own (a
+WebSocket's connections, a webhook's URL, a voice or video session) and
+needs no recipient (§10.2 step 3d). A recipient is a value under the key
+that is neither null nor an empty string. A chat message is its chat's: it
+is routed by the chat its chat key carries, and a room opened for it binds
+the channel naming the chat as correspondent and recipient (§10.1 step 2).
+On a channel that carries private chats and groups, a message that carries
+the key is its group's, any other its sender's. On a channel whose replies
+go to a chat only, a message that does not carry its chat has no address:
+it records no one, and a room opened for it names neither correspondent nor
+recipient, so its deliveries are refused `no_recipient` until the integrator
+names one. Its author is the message's sender either way.
+
 A channel addressed by phone number compares and stores numbers in one form,
 E.164 (`+15550000001`). The inbound sender, a binding's correspondent and
-recipient, and a participant's id given on that channel are normalized before
-they are compared or recorded, so `whatsapp:+15550000001`, `15550000001` and
-`+1 (555) 000-0001` are one person. A number written without its country code
-takes a country code the integrator configures on the channel, or is kept as
-written when none is; a short code, an email address or any other id is kept
-as written. The message's raw payload keeps the provider's own spelling. An
-email channel compares and stores an address lower-case and without a display
-name (`Alice <Alice@Example.com>` is `alice@example.com`).
+recipient, and a participant's id given on that channel are written in that
+form before they are compared or recorded; the message's raw payload keeps
+the provider's own spelling. A number is written as follows:
+
+- A URI scheme (`whatsapp:`, `tel:`) and the separators people type (spaces,
+  `-`, `.`, `(`, `)`) are dropped, and so is the trunk prefix written `(0)`
+  after a country code: `+33 (0)6 12 34 56 78` is `+33612345678`. What is
+  left is a number when it is digits, after a `+` or not; anything else (an
+  email address, a group's id) is kept as written.
+- A number written with `+`, or with the international prefix `00`, is
+  international: `+` and its digits.
+- Digits without either, on a channel with a country code declared: a
+  number that starts with the code and has more than 10 digits already
+  carries it (`15550000001` is `+15550000001` for the code 1); any other
+  takes the code in place of its trunk prefix `0`, or before its digits
+  (`0612345678` is `+33612345678` for the code 33). Six digits or fewer are
+  a short code, kept as written.
+- Digits without either, on a channel that declares no country code, are
+  kept as written. The digits alone cannot tell `13800138000`, a national
+  number in China, from `+1 380 013 8000`, and a router MUST NOT guess
+  (§10.4): a missed match opens a new room, while a wrong merge discloses
+  one person's conversation to another.
+- A result of more than 15 digits is kept as written.
+
+So, on a channel declaring the country code 1, `whatsapp:+15550000001`,
+`15550000001` and `+1 (555) 000-0001` are one person. An email channel
+compares and stores an address lower-case and without a display name
+(`Alice <Alice@Example.com>` is `alice@example.com`).
 
 A binding declared `group` holds
 a conversation of several senders, such as a group chat on a channel dedicated
@@ -4502,33 +4566,68 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 
 2. ROUTE TO ROOM
    ├── If room_id provided → use it
-   ├── Otherwise → call InboundRoomRouter.route(channel_id, channel_type, sender_id, metadata)
-   │   ├── Router returns existing room → use it
+   ├── Otherwise → read the sender's identity once, scoped to the
+   │   caller's organization (resolve_identity, §14.1, §17.2), then call
+   │   InboundRoomRouter.route(channel_id, channel_type, sender_id,
+   │   metadata, organization_id, identity) (§10.4)
+   │   ├── Router returns a room id → use it
    │   └── Router returns null → create new room
-   ├── For a room id in hand (provided or routed):
+   ├── For a room id in hand (provided or routed), whoever gave it:
    │   ├── A room of another organization than the one the caller acts for
    │   │   → fail, nothing written (§17.2)
-   │   ├── No room with that id → create a new room with that id
-   │   ├── Room exists, channel not bound to it → attach the channel, unless
-   │   │   it was detached from that room (§7.5 rule 7); a channel left
-   │   │   unbound goes on without a binding, and step 11 refuses its
-   │   │   event (source_unbound)
-   │   └── Routed (not provided), and the channel's binding names no
-   │       participant and is not `group` → record the sender on it
-   │       (`participant_id`, §10.4) and, on a transport, address the
-   │       binding's replies where the message came from (the sender's
-   │       address, or its chat) where it has no recipient (§5.7), under
-   │       the room lock and before step 3;
-   │       when the binding names another sender by then (a concurrent
-   │       message was recorded first), route the message once more
+   │   ├── No room with that id → create a new room with that id; a
+   │   │   creation the store refuses because another call created the
+   │   │   room meanwhile reads the room again, as one that exists
+   │   ├── Room exists, channel not bound to it → under the room lock,
+   │   │   the room's due timers applied first (§5.1), attach the channel
+   │   │   at its declaration's defaults (read-write, unmuted, visible to
+   │   │   all, its capabilities), naming the sender only on a routed room
+   │   │   (below). No attach is made to a room whose status refuses
+   │   │   events, nor of a channel detached from that room or bound to it
+   │   │   by then (§7.5 rule 7): a channel left unbound goes on without a
+   │   │   binding, and step 11 refuses its event (source_unbound), unless
+   │   │   step 6 refuses the room first (room_closed)
+   │   └── Routed (not provided) → under the room lock, the room's due
+   │       timers applied first, check that the room is still the
+   │       message's (§10.4), then record the sender, before step 3:
+   │       ├── No longer the message's: the room is not ACTIVE by then;
+   │       │   or the channel's binding, not `group`, names a correspondent
+   │       │   other than the sender (its participant, else its recipient,
+   │       │   §5.7), as when a concurrent message was recorded first; or
+   │       │   the record would name the sender on a binding that names no
+   │       │   one, and the room as the lock finds it no longer admits them
+   │       │   by step 3's conditions (§10.4), whichever strategy chose it,
+   │       │   unless the sender is a participant reached through the
+   │       │   channel. The framework's own sender (`system`) and a message
+   │       │   with no address are no one's correspondent. Nothing is
+   │       │   written, the lock is released, and the message is routed once
+   │       │   more, its identity not read again; a second answer that is
+   │       │   not the message's, like no answer, gives the message a new
+   │       │   room. A routed message is never refused room_closed
+   │       └── Otherwise, where the binding names no participant and is
+   │           not `group`, record the sender on it: a binding update
+   │           (§7.5 rule 6) that writes the sender's address as its
+   │           correspondent (`participant_id`, §10.4) and, on a transport,
+   │           as its recipient where it has none (the sender's address, or
+   │           its chat, §5.7), every other field carried over; a binding
+   │           naming the sender without a recipient gets the address as its
+   │           recipient. A routed room that does not bind the channel has it
+   │           attached under the same lock, its binding naming the sender,
+   │           unless rule 7 refuses. The record fires no trigger and emits
+   │           no framework event, and is made whatever the binding's access
+   │           or mute: routing decides the conversation, the permissions
+   │           what becomes of the message (step 11). A `group` binding is
+   │           never written, and the framework's own sender and a message
+   │           with no address record no one
    └── If new room created → fire ON_ROOM_CREATED hook and emit
-       `room_created`, then attach channel, its binding naming the sender
-       (`participant_id = sender_id`, §5.7) and, on a transport, addressing
-       replies where the message came from (the sender's address, or the
-       chat it was posted in, §5.7); then, for a
-       channel other than
-       VOICE and REALTIME_VOICE, fire ON_SESSION_STARTED (§9.2) and emit
-       `session_started` (§8.2)
+       `room_created`, then, under the room lock, attach the channel
+       unless a binding of it exists by then (a hook's included, §7.5
+       rule 7), its binding naming the sender (`participant_id =
+       sender_id`, §5.7) and, on a transport, addressing replies where the
+       message came from (the sender's address, or the chat it was posted
+       in, §5.7); then, for a channel other than VOICE and REALTIME_VOICE,
+       whether or not the attach was made, fire ON_SESSION_STARTED (§9.2)
+       and emit `session_started` (§8.2)
 
 3. BUILD CONTEXT
    ├── Fetch room state
@@ -5038,9 +5137,12 @@ than being drained inside the trigger's lock tenure.
    │      on_event() alone)
    │      ├── Apply rate limiter
    │      ├── Check circuit breaker
-   │      ├── No recipient in the binding → refuse before any send:
-   │      │   delivery_failed (error `no_recipient`), not retried, not
-   │      │   counted by the circuit breaker (§13.1). A channel whose
+   │      ├── No recipient in the binding (no value under the channel's
+   │      │   recipient key that is neither null nor empty, §5.7) →
+   │      │   refuse before any send: delivery_failed (error
+   │      │   `no_recipient`), a failed delivery result of code
+   │      │   `no_recipient`, not retried, not counted by the circuit
+   │      │   breaker (§13.1). A channel whose
    │      │   provider delivers to a destination of its own (a webhook's
    │      │   configured URL) needs no recipient and is not refused
    │      ├── Call provider
@@ -5166,23 +5268,41 @@ MUST route it to an appropriate room.
 
 ```
 InboundRoomRouter (interface)
-└── route(channel_id, channel_type, sender_id, metadata) → Room | null
+└── route(channel_id, channel_type, sender_id, metadata,
+          organization_id, identity) → string | null
+        # organization_id: the organization the caller acts for, null when
+        # it names none; identity: the sender's, or null. Returns a room id
 ```
+
+The router is given the organization the caller acts for and the sender's
+identity, which the framework reads once per message before the first route,
+scoped to that organization (`resolve_identity`, §14.1, §17.2), so that the
+router and the check made when the sender is recorded (§10.1 step 2) name
+the sender alike; a message with no address reads none. The default strategy
+searches that organization's rooms only, every room when the call names
+none. A router answers a room id, or null; the id is held to step 2's rules
+whoever gave it: another organization's room fails the message, and a room
+missing from the store is created with the id.
 
 **Default routing strategy:**
 
-1. Find the latest ACTIVE room whose binding of this channel names the sender
-   (§5.7); otherwise, the latest ACTIVE room where a participant with the same
-   sender address joined through this channel. The sender is named by their
-   address, then by the identity the store resolves it to
-   (`resolve_identity`, §14.1), so a member the integrator added under their
-   identity is found by an address linked to it. An id names its participant
-   only on a channel they are reached through (Section 5.5), and an identity
-   reaches every channel its person uses: a room found through a participant
-   record, by the address or the identity, is the sender's only when that
-   participant joined it through this channel, so a message is not carried
-   into a room of another channel, whose messages would then go out on this
-   one. On a chat channel the
+1. Find the newest ACTIVE room whose binding of this channel names the sender
+   (§5.7); otherwise, the newest ACTIVE room where a participant who is the
+   sender was reached through this channel (its `connected_via` names the
+   channel, whatever the participant's status: a LEFT or BANNED record still
+   says whose conversation the room is). Within each lookup the sender is
+   named by their address or by their identity, and the newest room either
+   name finds wins, so an older room found by the address does not hide a
+   newer one found by the identity; a member the integrator added under
+   their identity is found by an address linked to it. The newest is the
+   most recently created, and of rooms created at the same instant the one
+   with the greatest id, so the answer never depends on the order rooms are
+   read in. An id names its participant only on a channel they are reached
+   through (Section 5.5), and an identity reaches every channel its person
+   uses: a room found through a participant record, by the address or the
+   identity, is the sender's only when that participant was reached through
+   this channel, so a message is not carried into a room of another channel,
+   whose messages would then go out on this one. On a chat channel the
    address routed by is the chat the message was posted in, not its sender
    (§5.7), here and in step 3.
 2. If found → return that room.
@@ -5235,11 +5355,17 @@ the framework creates for an inbound message is bound to its sender from the
 start. The sender is recorded when the message is routed, under the room
 lock, before anything of the message is processed: two first messages
 arriving together cannot both be admitted, since the second finds the binding
-naming the first and is routed again. The wait for that lock is bounded by
-`process_timeout` (§13.6); past it the message is refused as a process
-timeout, never let in unrecorded. A message a hook later refuses has
-been routed all the same: routing decides which conversation a message
-belongs to, a hook what becomes of it.
+naming the first and is routed again. Under that lock the framework checks
+again the admission that chose the room, not only the binding (§10.1 step
+2): someone else may have been heard on the channel, or reached through it,
+since the router read the room, and recording the sender there would send
+that person's answers to them. A room no longer ACTIVE, or no longer
+admitting the sender, is no longer the message's: nothing is written, and
+the message is routed once more, a second failure giving it a new room. The
+wait for that lock is bounded by `process_timeout` (§13.6); past it the
+message is refused as a process timeout, never let in unrecorded. A message
+a hook later refuses has been routed all the same: routing decides which
+conversation a message belongs to, a hook what becomes of it.
 
 **A delivery status follows its message.** A provider's delivery status that
 names no room is routed by the same rule: the room whose binding of the
@@ -5253,9 +5379,10 @@ binding, writing to another number of the same type, is not taken to the
 first number's room: on a kit serving a bank and a clinic, each on its own SMS
 number, a customer the bank's number recorded writing to the clinic lands in
 the clinic's conversation. A participant record is another matter: a member
-the integrator added to the bank's room is found by step 1 whatever number
-they write to. Merging or separating a person's conversations across channels
-is decided for participants, not by bindings.
+the integrator added to the bank's room is found by step 1 on whatever
+number of the room's they were reached through and write to. Merging or
+separating a person's conversations across channels is decided for
+participants, not by bindings.
 
 Example, on one SMS number with no room yet: alice writes first, and the room
 created for her has a binding naming her. Bob's first message finds no room of
@@ -12850,6 +12977,8 @@ ConversationStore (interface)
 │
 ├── Rooms
 │   ├── create_room(organization_id, metadata) → Room
+│   │                                         # refuses an id the store holds,
+│   │                                         # never replaces a room (§10.1 step 2)
 │   ├── get_room(room_id) → Room | null
 │   ├── update_room(room_id, updates) → Room
 │   ├── delete_room(room_id) → void
@@ -12860,12 +12989,15 @@ ConversationStore (interface)
 │   ├── advance_delivered_index(room_id, index, force = false) → bool
 │   │                                         # compare-and-set from index - 1, or
 │   │                                         # from any lower value when forced
-│   ├── find_room_id_by_binding(channel_id, participant_id, status) → string | null
+│   ├── find_room_id_by_binding(channel_id, participant_id, filter) → string | null
 │   │                                         # newest room whose binding of
 │   │                                         # channel_id names participant_id
-│   └── find_room_id_by_participant(participant_id, status) → string | null
-│                                             # newest room where participant_id
-│                                             # is a participant (§10.4 step 1)
+│   └── find_room_id_by_participant(channel_id, participant_id, filter) → string | null
+│                                             # newest room where participant_id, or
+│                                             # its identity, is a participant reached
+│                                             # through channel_id (§10.4 step 1)
+│       # Both: filter names the status and the organization; the newest
+│       # room is ordered as §10.4 step 1 orders rooms
 │
 ├── Events
 │   ├── add_event(room_id, event) → RoomEvent
@@ -12894,12 +13026,13 @@ ConversationStore (interface)
 │   ├── delete_participant(room_id, participant_id) → void
 │   └── list_participants(room_id) → list<Participant>
 │
-├── Identity
+├── Identity (§5.6)
 │   ├── create_identity(identity) → Identity
 │   ├── get_identity(identity_id) → Identity | null
 │   ├── resolve_identity(channel_type, address, organization_id | null) → Identity | null
 │   └── link_address(identity_id, channel_type, address, organization_id | null) → void
-│       # The same address may belong to a different identity in each organization
+│       # The same address may belong to a different identity in each
+│       # organization, and to one identity within it
 │
 ├── Verification (§11.7; Level 2)
 │   ├── get_verification(identity_id, organization_id | null) → Verification | null
@@ -13540,6 +13673,12 @@ should live in the integration surface layer.
   to it, and none of its recordings is told of the session's tracks. Called
   without an organization, a framework join reads the room unscoped, and a
   session start or a mint reads none for the scope.
+- A call that names no organization (an inbound message, a direct
+  injection) reads rooms unscoped, and a room it creates belongs to no
+  organization. A call acting for an organization reaches that
+  organization's rooms only: a room of another organization, or of none, is
+  not its own (§10.1 step 2), and a room it creates belongs to the
+  organization.
 
 ### 17.3 Sensitive Data
 
@@ -17093,8 +17232,10 @@ WhatsAppPersonalChannel
 │   ├── send_document(jid, data, filename) → ProviderResult
 │   ├── send_location(jid, lat, lon, name, address) → ProviderResult
 │   └── send_reaction(chat, sender, message_id, emoji) → ProviderResult
-└── binding_metadata:
-    └── phone_number: string (recipient)
+├── binding_metadata:
+│   └── phone_number: string (recipient)
+└── chat_key: group_jid (a group message's group; a private message is its
+    sender's, §5.7)
 ```
 
 ### A.5 Messenger Channel
@@ -17141,8 +17282,9 @@ TeamsChannel
 │   ├── parse_webhook(activity) → InboundMessage
 │   └── save_conversation_reference(activity) → void
 ├── requires: ConversationReferenceStore
-└── binding_metadata:
-    └── teams_conversation_id: string
+├── binding_metadata:
+│   └── teams_conversation_id: string (recipient: the chat, §5.7)
+└── chat_key: conversation_id
 ```
 
 ### A.7 RCS Channel
@@ -17167,6 +17309,8 @@ RCSChannel
 │   ├── send(event, to) → RCSDeliveryResult
 │   ├── check_capability(phone) → bool
 │   └── RCSDeliveryResult includes: channel_used, fallback flag
+├── binding_metadata:
+│   └── phone_number: string (recipient)
 └── configuration:
     └── fallback: bool (auto-fallback to SMS when RCS unavailable)
 ```
@@ -17495,6 +17639,9 @@ TelegramChannel
 │   ├── parse_webhook(request) → InboundMessage
 │   ├── verify_signature(request) → bool
 │   └── send(chat_id, content, options) → DeliveryResult
+├── binding_metadata:
+│   └── telegram_chat_id: string (recipient: the chat, §5.7)
+├── chat_key: chat_id
 └── delivery: sends via Telegram Bot API (sendMessage, sendPhoto, etc.)
 ```
 
