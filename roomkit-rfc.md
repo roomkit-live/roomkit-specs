@@ -3431,6 +3431,11 @@ Implementations MUST enforce these rules:
    (§14.1), a read by id is unconditional, and the history rebuilt for hooks
    stays whole.
 
+   An event deleted by an accepted DELETE stays in the history rebuilt for a
+   channel, with its content withheld: an empty text in place of what was
+   said, and nothing of the provider's original payload; its stored record,
+   and the history rebuilt for hooks, keep the content (§10.3).
+
    The filter is per reader, so it MUST be applied where the reader is known —
    a single `RoomContext` shared by every channel of a broadcast cannot be
    filtered once for all of them. An implementation MUST apply it before the
@@ -3912,7 +3917,7 @@ on the room's owner.
 | BEFORE_BROADCAST | SYNC | Implemented | Before event reaches channels — can block/modify |
 | AFTER_BROADCAST | ASYNC | Implemented | After all channels have processed the event |
 | ON_EVENT_UPDATED | ASYNC | Implemented | A persisted event's stored state was mutated (inbound EDIT, §10.3, or direct `update_event()`) |
-| ON_EVENT_DELETED | ASYNC | Implemented | A persisted event was deleted (inbound soft DELETE, §10.3, or direct hard `delete_event()`) |
+| ON_EVENT_DELETED | ASYNC | Implemented | A persisted event was deleted (inbound soft DELETE, §10.3, or direct hard `delete_event()`, once per event removed) |
 | ON_CHANNEL_ATTACHED | ASYNC | Implemented | Channel attached to a room |
 | ON_CHANNEL_DETACHED | ASYNC | Implemented | Channel detached from a room |
 | ON_CHANNEL_MUTED | ASYNC | Implemented | Channel muted in a room: its binding's `muted` changed to true (§7.2) |
@@ -4419,8 +4424,10 @@ its `visibility`, its thread (`parent_event_id`), its `correlation_id` and its
 `id`, `room_id`, `type`, `source`, `index`, `chain_depth`, `responds_to`,
 `idempotency_key`, `created_at`, `status`, `blocked_by`, `consumption` and
 `delivery_results` on it, and with them the checks already passed: the event
-an EDIT or a DELETE targets (`target_event_id`, checked at §10.1 step 8a),
-and an INSTRUCTION's visibility and address (§10.1.1). A field of these that
+an EDIT or a DELETE targets (`target_event_id`), its `edit_source` or
+`delete_type` and its kind of content, which keeps a change from hiding in
+its new content (checked at §10.1 step 8a, §10.3), and an INSTRUCTION's
+visibility and address (§10.1.1). A field of these that
 the hook changed is put back from the original before the next hook reads
 the event, and the hook's other changes stand. The source's write check (§10.1 step 11)
 and the chain-depth limit (§8.3) read these fields after the hooks: no hook
@@ -4753,13 +4760,14 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 8. ASSIGN EVENT INDEX
    └── event.index = room.event_count
 
-8a. VALIDATE EDIT/DELETE (EDIT and DELETE events only — §10.3 Validation)
+8a. VALIDATE EDIT/DELETE (an EDIT or a DELETE, and an event holding a change
+    elsewhere — §10.3 Validation; on every pass that commits an event)
     ├── If validation fails → Return InboundResult(blocked=true, reason=
     │   target_event_not_found | identity_required_for_edit |
     │   not_authorized | not_original_author)
-    │   # The sender and the target's author must both be identified.
-    │   # Nothing is stored; the target's state update waits for step 12,
-    │   # once the hooks have allowed the event.
+    │   # A sender's change needs an author for the change and for its
+    │   # target (§10.3). Nothing is stored; the target's state update
+    │   # waits for step 12, once the hooks have allowed the event.
     └── Otherwise → continue
 
 9. RUN BEFORE_BROADCAST SYNC HOOKS
@@ -4806,9 +4814,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
         # takes no source check: it is not a channel's (§7.5 rule 2, §9.4).
 
 12. COMMIT EVENT — the commit point (§13.6, §14.3):
-    ├── For EDIT/DELETE: apply the target state update now (§10.3) — deferred
-    │   to this point so a hook that blocks the edit/delete leaves the target
-    │   unmutated
+    ├── For EDIT/DELETE: apply the target state update now (§10.3), in the
+    │   commit's transaction below — deferred to this point so a hook that
+    │   blocks the edit/delete leaves the target unmutated
     ├── Record the author (§6.4): when the event's author has a name, the
     │   │   room's register of the sources and names it has seen fixes the
     │   │   rank of this source among those whose names read like its own,
@@ -5272,50 +5280,114 @@ turn later, a rerun planned for that agent alone.
 
 ### 10.3 Edit and Delete Processing
 
-When an inbound event has type EDIT or DELETE, the framework MUST perform
-additional validation and state updates before broadcasting.
+When an event has type EDIT or DELETE, the framework MUST perform additional
+validation and state updates before broadcasting. The validation is §10.1
+step 8a, and it runs on every pass that commits an event: an inbound
+message's, a response's (§10.1 step 14), an event's a hook injects (§9.4)
+and a direct injection's (§10.5).
 
 **Validation:**
 
-1. The framework MUST verify that `target_event_id` (from `EditContent` or
-   `DeleteContent`) references an existing event in the same room.
-2. For `DeleteContent` with `delete_type = SENDER` or `EditContent` with
-   `edit_source = "sender"`, the framework MUST verify that the inbound sender
-   is the original author of the target event: the same participant (Section
-   5.5), or, for a sender who names no participant, the same sender id on the
-   same channel.
-3. For `DeleteContent` with `delete_type = ADMIN`, the framework MUST verify
-   that the sender has administrative authority (e.g., via permissions or
-   role), as the participant it is on its channel (Section 5.5): an id that
-   names an owner on another channel grants none.
-4. For `DeleteContent` with `delete_type = SYSTEM`, the event SHOULD originate
-   from a SYSTEM channel or a hook. An EDIT or a DELETE a hook injects (§9.4)
-   is the hook's, whatever source it names, and makes a SYSTEM change only:
-   one that claims the sender's or an administrator's authority is refused
-   `not_authorized`, so a hook never edits or deletes in a participant's
-   name.
-5. If validation fails, the framework MUST reject the event and SHOULD return
-   an error to the source channel.
+1. An event is an edit when its type is EDIT and its content an
+   `EditContent`, a delete when its type is DELETE and its content a
+   `DeleteContent`. A type and a content that disagree name no target that
+   can be checked, and are refused with `target_event_not_found`; so is a
+   change held anywhere else, at any depth (an edit's new content, a
+   composite's part), which the commit would write on its target, or a
+   channel apply natively, without this check.
+2. The framework MUST verify that `target_event_id` references, read under
+   the room lock, an event of the same room that is not `BLOCKED`, not
+   deleted (`metadata.deleted`) and not itself an edit or a delete;
+   otherwise `target_event_not_found`. An edited event may be edited again.
+   A delete of an event already deleted is refused: a client that retries a
+   delete gives it an idempotency key, and the retry is answered as the
+   first (§13.4).
+3. An event's author is, for an event that travelled OUTBOUND (a channel's
+   own output, an agent's response), the channel itself, whatever
+   participant it names: a channel never speaks as a participant. Otherwise
+   it is the participant its sender id names on its channel (Section 5.5);
+   else the sender id on its channel; else nobody. Authorship does not
+   depend on the participant's status: a participant who left, or was
+   banned, is still the author of their messages.
+4. For `DeleteContent` with `delete_type = SENDER`, or `EditContent` with
+   `edit_source = "sender"` or null (the sender's), the framework MUST
+   verify that the sender is the original author of the target event: a
+   change whose event or target has no author is refused with
+   `identity_required_for_edit`, and two authors that differ with
+   `not_original_author`. An agent edits its own responses, and no one
+   else's.
+5. For `DeleteContent` with `delete_type = ADMIN`, the framework MUST verify
+   that the sender has administrative authority as the participant it is on
+   its channel (Section 5.5): an OWNER or an AGENT, neither LEFT nor BANNED.
+   Otherwise `not_authorized`: an id that names an owner on another channel
+   grants none, and a channel's own output holds no participant's
+   authority, whatever participant it names. A sender who names no one is
+   refused with `identity_required_for_edit`.
+6. `DeleteContent` with `delete_type = SYSTEM`, and `EditContent` with
+   `edit_source = "system"`, claim the system's authority. A channel makes
+   such a change only as a SYSTEM channel, and an EDIT or a DELETE a hook
+   injects (§9.4) is the hook's, whatever source it names, and makes a
+   SYSTEM change only: one that claims the sender's or an administrator's
+   authority is refused `not_authorized`, so a hook never edits or deletes
+   in a participant's name.
+7. If validation fails, the framework MUST reject the event: nothing of it
+   is stored, and no hook runs on it. A refused inbound message returns a
+   blocked result with the reason (§10.1 step 8a), a direct injection
+   raises (§10.5), and a refused response or injected event is logged at
+   warning level.
+
+A hook's modify keeps what the validation checked (§9.4): the target, the
+`edit_source` and the `delete_type`, and the kind of content. The hook's new
+content of an edit and its reason of a delete stand, unless that new content
+holds a change, which leaves the original's; a replacement of another kind
+of content, or one that hides a change in a composite, leaves the original's.
 
 **State updates** (applied only after BEFORE_BROADCAST hooks allow the event —
 a hook that blocks the EDIT/DELETE MUST leave the target event unmutated):
 
-1. On successful EDIT: the framework SHOULD call the store's `update_event()`
-   (§14.1) to replace the
-   original event's content with `EditContent.new_content` and set
-   `metadata.edited = true`. The EDIT event itself MUST be stored in the timeline.
-2. On successful DELETE: the framework SHOULD call the store's `update_event()`
-   (§14.1) to set
-   `metadata.deleted = true` on the original event. The DELETE event itself MUST
-   be stored in the timeline.
+1. On successful EDIT: the commit writes the target with
+   `EditContent.new_content` as the hooks left it and `metadata.edited =
+   true`, the target's other metadata kept. The EDIT event itself MUST be
+   stored in the timeline.
+2. On successful DELETE: the commit writes `metadata.deleted = true` on the
+   target, its other metadata kept. The DELETE event itself MUST be stored
+   in the timeline.
+3. The change, its target's update and the room's counters MUST be one
+   transaction (§14.3): a commit that fails leaves neither the change nor
+   the target's update, and one whose target is gone by then fails whole.
+4. An accepted change is committed with its own visibility, narrowed by its
+   source binding's (§7.3), narrowed again to its target's: a correction of
+   a message an advisor alone saw never reaches the customer. An injected
+   change reaches those of its targets that could see the target.
+5. The change's delivery set reads the target as the commit left it.
+
+**What a channel is handed of a deleted event.** A soft-deleted event's
+content is withheld from every history a channel is handed (§7.5 rule 8):
+the context a channel parses a message with, and the one each target of a
+broadcast is told and delivered with. The event is there with an empty text
+in place of what was said, and without the provider's original payload
+(`source.raw_payload`), which holds the text. An edit of a deleted event has
+its new content and its raw payload withheld alike, since it holds a version
+of the deleted text. The event keeps its id, index, type, its source with
+the provider's message id, its thread, its metadata with `metadata.deleted`,
+and its `channel_data`: the delete that follows names an event the reader
+holds, a transcript keeps the event's place, the reader tells a deleted
+event from one that said nothing, and a channel that deletes natively still
+finds the provider's references. An empty text rather than a placeholder: a
+placeholder's words would be the framework's, in one language, read by a
+model as the sender's line (§6.4), while the mark already says what
+happened. The stored record keeps its content, and so do the contexts hooks
+receive: the store and the hooks are the host's, which owns the record, and
+a hard delete (below) is how a host removes it.
 
 **Mutation triggers:** After a successful EDIT the framework MUST fire
 `ON_EVENT_UPDATED` with the mutated target event; after a successful DELETE it
-MUST fire `ON_EVENT_DELETED`. Firings follow the async-hook locking rule of
-§10.1 (deferred until the room lock is released). A blocked EDIT/DELETE MUST
-NOT fire either trigger. These triggers let observers (e.g. maintainers of
-denormalized projections over the timeline) see every stored-state change
-regardless of origin.
+MUST fire `ON_EVENT_DELETED`, each with the target as the commit left it.
+Firings follow the async-hook locking rule of §10.1: they come once the room
+lock is released, before the change's `AFTER_BROADCAST` hooks. A blocked or
+refused EDIT/DELETE MUST NOT fire either trigger. These triggers let
+observers (e.g. maintainers of denormalized projections over the timeline)
+see every stored-state change regardless of origin.
 
 **Direct mutation (host-owned):** The framework SHOULD also expose direct
 APIs — `update_event(room_id, event_id, content|source|metadata)` and
@@ -5324,9 +5396,20 @@ that own authorization on their own surfaces. Direct `update_event()` replaces
 the provided fields wholesale and adds no `edited` marker; direct
 `delete_event()` is a HARD delete that MUST cascade to thread replies by
 default (no self-referential FK protects them) and MUST return the deleted
-event IDs. Both MUST serialise against inbound processing via the room lock
-and MUST fire the corresponding mutation trigger after the lock is released;
-a target that does not exist in the room MUST be a no-op that fires nothing.
+event IDs. Whatever `cascade_replies` says, a hard delete also removes the
+edits and deletes of every event it removes: an edit holds its target's
+corrected content, which a host deleting the message means to remove, and a
+change of an event that no longer exists changes nothing. Both MUST
+serialise against inbound processing via the room lock, whatever the room's
+status, its due timers applied first (§5.1): a change to what the room
+stored is no new event. Both MUST fire the corresponding mutation trigger
+after the lock is released: `ON_EVENT_UPDATED` once, with the event as it
+now stands, and `ON_EVENT_DELETED` once per event removed, each with the
+event as it was stored, so that a projection over the timeline sees every
+row that went. A room or a target the store does not hold, another room's
+event included, MUST be a no-op that fires nothing: `update_event()`
+returns null and `delete_event()` no id. An update that changes nothing
+writes nothing and fires nothing, and returns the event as stored.
 
 **Broadcast behavior:**
 
@@ -5334,7 +5417,7 @@ During broadcast, for each target channel:
 
 1. If the target channel's `capabilities.supports_edit` is true (for EDIT events)
    or `capabilities.supports_delete` is true (for DELETE events), the framework
-   SHOULD deliver the event natively.
+   MUST deliver the event natively.
 2. If the target channel does NOT support the operation, the framework MUST
    apply transcoding fallback (see Section 6.6).
 
@@ -12896,6 +12979,9 @@ If an InboundMessage or a directly injected event carries an
 2. If it does → return the original result without reprocessing.
 3. If not → process normally and record the key.
 
+A key is retained with its event: a hard delete (§10.3) removes it with the
+event it named, and a retry of that message is then processed anew.
+
 The point of step 2 is that a sender retries because it never observed the
 first answer, not because it wants the message delivered twice. Reporting the
 redelivery as refused conflates "you already said this" with "this was not
@@ -13083,6 +13169,8 @@ ConversationStore (interface)
 │   ├── get_event_count(room_id, filter | null) → int
 │   ├── update_event(event_id, updates) → RoomEvent
 │   ├── delete_event(room_id, event_id, cascade_replies = true) → list<string>
+│   │                                         # the ids removed (§10.3); a store
+│   │                                         # MAY return the removed events
 │   └── get_event_by_idempotency_key(room_id, channel_id, key) → RoomEvent | null
 │                                             # the event of channel_id that key
 │                                             # committed, BLOCKED included (§13.4)
@@ -13163,7 +13251,8 @@ counters keep counting it.
 **A count follows the rule of the page it stands for.** `get_event_count`
 without a filter counts every committed row, the refused ones included: a
 refused row consumed an index (§8.3), and that count is the timeline's size,
-the exact twin of the room's maintained `event_count`. `get_event_count` with
+the twin of the room's maintained `event_count` until a hard delete removes
+rows, which leaves `event_count` as it was (§14.3). `get_event_count` with
 an `EventFilter` MUST count exactly the rows `list_events` would serve under
 that filter, with no page: the same criteria, and the same received-rows
 default lifted by `include_blocked`, so a host that needs the exact number of
@@ -13188,7 +13277,15 @@ and never inherits the page's cap.
   bumping the room's `event_count` / `latest_index` form a **single atomic
   commit**: an observer MUST never see a stored event that is not reflected in
   the room counters, nor counters that count an event absent from the
-  timeline.
+  timeline, but one a hard delete removed (below). An EDIT or a DELETE and
+  its target's update (§10.3) are part of that commit: the store writes the
+  change, the counters and the target in one transaction, and fails the
+  whole commit when the target is gone.
+- A hard delete (§10.3) leaves the room's counters as they are:
+  `event_count` counts every index given out, and an index is never given
+  again, so a store refuses a commit at an index below the room's
+  `event_count`, a removed one included. A removed event's idempotency key
+  goes with it (§13.4).
 - Once committed (DELIVERED), an event MUST NOT be retroactively re-marked
   BLOCKED or FAILED. A processing timeout or a delivery failure after the
   commit point (§13.6) MUST NOT alter the event's committed status.
@@ -18030,21 +18127,21 @@ change (`CHANNEL_ATTACHED`, `CHANNEL_MUTED`, `CHANNEL_UPDATED`,
    ▼
 3. process_inbound(message)
    │
-   ├── Validate: evt_003 exists in room → ✓
+   ├── Validate: evt_003 exists in room, not deleted, not a change → ✓
    ├── Validate: sender is original author → ✓
    │
    ├── BEFORE_BROADCAST hooks → allow
    │   (a block leaves evt_003 unmutated and fires no ON_EVENT_UPDATED)
    │
-   ├── Update original event via update_event():
-   │   evt_003.content = TextContent{body: "I need 50000$"}
-   │   evt_003.metadata.edited = true
-   │
-   ├── Store EDIT event {
-   │     type: EDIT, content: EditContent{...},
-   │     source: {channel_id: "wa_customer"},
-   │     index: 7
-   │   }
+   ├── Commit, in one transaction (§14.3):
+   │   ├── Store EDIT event {
+   │   │     type: EDIT, content: EditContent{...},
+   │   │     source: {channel_id: "wa_customer"},
+   │   │     index: 7, visibility: its own, narrowed to evt_003's
+   │   │   }
+   │   └── Write the target:
+   │       evt_003.content = TextContent{body: "I need 50000$"}
+   │       evt_003.metadata.edited = true
    │
    ├── Broadcast to channels:
    │   │
@@ -18082,20 +18179,20 @@ change (`CHANNEL_ATTACHED`, `CHANNEL_MUTED`, `CHANNEL_UPDATED`,
    ▼
 3. process_inbound(message)
    │
-   ├── Validate: evt_005 exists in room → ✓
+   ├── Validate: evt_005 exists in room, not already deleted → ✓
    ├── Validate: sender is original author (SENDER type) → ✓
    │
    ├── BEFORE_BROADCAST hooks → allow
    │   (a block leaves evt_005 unmutated and fires no ON_EVENT_DELETED)
    │
-   ├── Mark original event as deleted via update_event():
-   │   evt_005.metadata.deleted = true
-   │
-   ├── Store DELETE event {
-   │     type: DELETE, content: DeleteContent{...},
-   │     source: {channel_id: "wa_customer"},
-   │     index: 8
-   │   }
+   ├── Commit, in one transaction (§14.3):
+   │   ├── Store DELETE event {
+   │   │     type: DELETE, content: DeleteContent{...},
+   │   │     source: {channel_id: "wa_customer"},
+   │   │     index: 8, visibility: its own, narrowed to evt_005's
+   │   │   }
+   │   └── Mark the target as deleted:
+   │       evt_005.metadata.deleted = true
    │
    ├── Broadcast to channels:
    │   │
@@ -18107,7 +18204,8 @@ change (`CHANNEL_ATTACHED`, `CHANNEL_MUTED`, `CHANNEL_UPDATED`,
    │   │       └── deliver() → SMS sent as new message
    │   │
    │   └── AI channel.on_event()
-   │       └── Updates conversation history (removes or marks deleted)
+   │       └── Its history holds evt_005 marked deleted, its content
+   │           withheld (§10.3)
    │
    ├── ON_EVENT_DELETED hooks → evt_005 as deleted
    │   (async, once the room lock is released)
