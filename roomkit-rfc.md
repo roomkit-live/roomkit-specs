@@ -448,7 +448,8 @@ Room
 ├── timers: RoomTimers                      # Auto-transition configuration
 ├── agent_response_policy: AgentResponsePolicy = AGENT_CHAIN  # What an agent's own output solicits (Section 19.3.1)
 ├── metadata: map<string, any>              # Integrator-defined data
-├── event_count: int                        # Total events stored
+├── event_count: int                        # Indexes given out; a hard delete
+│                                           # leaves it (§8.1, §14.3)
 ├── latest_index: int | null                # Highest event index (for read tracking);
 │                                           # null while the room has no event
 └── delivered_index: int = -1               # Highest index whose delivery set has run
@@ -511,7 +512,8 @@ change (§5.2: `CHANNEL_ATTACHED`, `CHANNEL_MUTED`, ...), or `SYSTEM` for a
 change no type names; its content a `SystemContent` (§5.3); its source the
 framework's (`channel_id = "system"`); its visibility `internal` (§7.3). It
 takes the room's next index and counts in `event_count`, is never delivered,
-runs no hook, and is no activity (below): a mute does not restart a room's
+runs no hook of its own (a member operation's trigger carries it as its
+payload, §5.5), and is no activity (below): a mute does not restart a room's
 inactivity timer. The indexes of Appendix B assume an implementation that
 writes none.
 
@@ -1047,8 +1049,8 @@ transports' ids that happen to be equal.
   owes the record is the bookkeeping above (`connected_via`); what it owes
   everyone else is its own events and hooks, which report the arrival and the
   departure whether or not the status moved.
-- Recording a channel is bookkeeping, not presentation: it does not emit
-  `PARTICIPANT_UPDATED` and does not fire `ON_PARTICIPANT_UPDATED`.
+- Recording a channel is bookkeeping, not presentation: it writes no
+  `PARTICIPANT_UPDATED` record and does not fire `ON_PARTICIPANT_UPDATED`.
 
 ### 5.6 Identity
 
@@ -3512,7 +3514,8 @@ that is monotonically increasing within each room.
   than on an in-process lock.
 - A duplicate `(room_id, index)` MUST be rejected by the store (the constraint
   violation surfaced to the caller), never silently persisted.
-- The `index` enables pagination, read horizon tracking, and gap detection.
+- The `index` enables pagination, read horizon tracking, and gap detection;
+  a hard delete's gaps are expected (§14.3).
 
 **Event ids.** The pipeline MUST give every event it commits its `id`, whatever id
 a channel or a hook built the event with. An inbound event takes its id at
@@ -3709,17 +3712,17 @@ and then discarded costs its model call and runs its tools, with nothing of
 it in the room.
 
 **Reentry cap.** The responses one cascade re-enters (the answers to one
-inbound or directly injected event, one regeneration or one delegated run)
-and the events its hooks inject (§9.4) share a reentry budget of
-`10 × max_chain_depth` passes, buffered responses, chained streams and
-injected events alike (§10.1 steps 10 to 14), and so do the events code
-under its lock injects directly (§9.5.1, Reentrance). A buffered response
-past the budget does not re-enter, a chained stream past it is closed
-unread, so nothing is generated, and an injected event past it is not
-committed as a pass, so its hooks never run. Each is stored `BLOCKED` with
-`blocked_by = "reentry_loop_cap"`, and with the visibility its pass would
-have committed it with (§7.3); none emits `chain_depth_exceeded` nor
-`event_blocked`.
+inbound or directly injected event, one regeneration or one delegated run) and
+the events its hooks inject (§9.4) share a reentry budget of `10 ×
+max_chain_depth` passes, buffered responses, chained streams and injected
+events alike (§10.1 steps 10 to 14), and so do the events code under its lock,
+or an off-lock hook's body for the event it runs for, injects directly
+(§9.5.1, Reentrance). A buffered response past the budget does not re-enter, a
+chained stream past it is closed unread, so nothing is generated, and an
+injected event past it is not committed as a pass, so its hooks never run.
+Each is stored `BLOCKED` with `blocked_by = "reentry_loop_cap"`, and with the
+visibility its pass would have committed it with (§7.3); none emits
+`chain_depth_exceeded` nor `event_blocked`.
 
 **Requirements:**
 
@@ -5561,12 +5564,12 @@ missing from the store is created with the id.
    whatever its status. On a chat channel the address routed by is the chat the
    message was posted in, not its sender (§5.7), here and in step 3.
 2. If found → return that room.
-3. Otherwise, if the channel is bound to exactly **one** room step 3 reads,
-   and that room admits the sender (below) → return that room. Step 3 reads
-   the ACTIVE rooms, and the PAUSED rooms whose binding of the channel is
-   declared `group` (§5.7): a group's conversation is the channel's, and its
-   next message resumes it. Any other PAUSED room is no one's to be admitted
-   into, and does not count among the rooms the channel is bound to.
+3. Otherwise, if the channel is bound to exactly **one** room step 3 reads, and
+   that room admits the sender (below) → return that room. Step 3 reads the
+   ACTIVE rooms, and the PAUSED rooms whose binding of the channel is declared
+   `group` (§5.7): a group's conversation is the channel's, and its next
+   delivered message resumes it (§5.1). Any other PAUSED room is no one's to be
+   admitted into, and does not count among the rooms the channel is bound to.
 4. If not found → return null (framework creates a new room).
 
 **Step 3 admits one conversation.** Step 3 is what routes a channel dedicated
@@ -5703,19 +5706,20 @@ send_event(room_id, channel_id, content, event_type, ...,
            organization_id | null) → RoomEvent
 ```
 
-The injected event traverses the SAME pipeline as an inbound message
-(Section 10.1): index assignment, BEFORE_BROADCAST hooks, the source
-write-permission gate, EDIT/DELETE handling, persistence and broadcast
-planning under the room lock, then its delivery lane, reentry passes, and
-AFTER_BROADCAST hooks. A blocking hook therefore yields a `BLOCKED` event
-and suppresses delivery, exactly as for an inbound message. That includes the
-off-lock check (§9.5.1, step 5a): an injected event matched by a
-`needs_lock = false` hook takes an admission ticket like an inbound one —
-unless it is injected from inside an off-lock hook's body or under the room
-lock, in which case it takes none and commits ahead of the event being
-processed (§9.5.1, Reentrance). Made under the room lock, it draws on the
-reentry budget of the cascade that holds it (§8.3); made from the room's
-work outside the lock (a turn, a delivery), it is a new arrival (§9.5.1).
+The injected event traverses the SAME pipeline as an inbound message (Section
+10.1): index assignment, BEFORE_BROADCAST hooks, the source write-permission
+gate, EDIT/DELETE handling, persistence and broadcast planning under the room
+lock, then its delivery lane, reentry passes, and AFTER_BROADCAST hooks. A
+blocking hook therefore yields a `BLOCKED` event and suppresses delivery,
+exactly as for an inbound message. That includes the off-lock check (§9.5.1,
+step 5a): an injected event matched by a `needs_lock = false` hook takes an
+admission ticket like an inbound one — unless it is injected from inside an
+off-lock hook's body or under the room lock, in which case it takes none and
+commits ahead of the event being processed (§9.5.1, Reentrance). Made under
+the room lock, it draws on the reentry budget of the cascade that holds it
+(§8.3); made from an off-lock hook's body, on that of the event the hook runs
+for; made from the room's work outside the lock (a turn, a delivery), it is a
+new arrival (§9.5.1).
 
 An injection takes §10.1's steps 1 to 4 its own way. The channel it names
 MUST be registered, and the event is admitted as a message is before
