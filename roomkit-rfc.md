@@ -689,6 +689,12 @@ provider. The channel SHOULD expose a `provider_name` property that returns the
 appropriate name. System-generated events (`channel_id="system"`) MAY leave
 `provider` as null.
 
+**A key the pipeline reserves.** `metadata.instruction` is the pipeline's
+alone: it writes it on a response to an instruction (§10.1.1 step 6) and
+removes it from every other event it commits, whoever wrote it (a parser,
+the caller's metadata, a channel, a hook), so that no event claims an
+instruction that did not produce it.
+
 ### 5.3 Event Content
 
 Event content is a **discriminated union** — each event carries exactly one content
@@ -3759,7 +3765,12 @@ event it returns, buffered or as the rows of its stream. On each one the
 pipeline MUST write its `source` (the responder's channel id and channel type,
 with direction OUTBOUND), its room, its `chain_depth` (the trigger's plus
 one, §8.3) and, unless the channel named the event it answers, its
-`responds_to`; it clears its idempotency key (§13.4). A response that claims
+`responds_to`; it clears its idempotency key (§13.4). A response typed
+`INSTRUCTION` does not re-enter: it is dropped with a warning, and its
+channel's other responses re-enter as usual, since only the application
+issues instructions (§10.1.1) and one agent's answer would otherwise direct
+another in the application's name; an agent that wants another to act
+addresses its answer (§19.3.1). A response that claims
 another source gets a fresh one, the responder's (its channel id and channel
 type, OUTBOUND), keeping nothing of the source it claimed, and the
 implementation logs a warning: the write check reads the source's binding
@@ -4426,18 +4437,19 @@ its `visibility`, its thread (`parent_event_id`), its `correlation_id` and its
 `delivery_results` on it, and with them the checks already passed: the event
 an EDIT or a DELETE targets (`target_event_id`), its `edit_source` or
 `delete_type` and its kind of content, which keeps a change from hiding in
-its new content (checked at §10.1 step 8a, §10.3), and an INSTRUCTION's
-visibility and address (§10.1.1). A field of these that
-the hook changed is put back from the original before the next hook reads
-the event, and the hook's other changes stand. The source's write check (§10.1 step 11)
-and the chain-depth limit (§8.3) read these fields after the hooks: no hook
-can commit an event under another source, at another index or chain depth,
-or as the answer to another event. A visibility the hook changed is still
+its new content (checked at §10.1 step 8a, §10.3), an INSTRUCTION's
+visibility, address and `standalone` word (§10.1.1), and the fingerprint the
+pipeline wrote on a response to an instruction (`metadata.instruction`,
+§10.1.1 step 6), or its absence. A field of these that the hook changed is
+put back from the original before the next hook reads the event, and the
+hook's other changes stand. The source's write check (§10.1 step 11) and the
+chain-depth limit (§8.3) read these fields after the hooks: no hook can
+commit an event under another source, at another index or chain depth, or
+as the answer to another event. A visibility the hook changed is still
 narrowed at commit by the source binding's visibility (§7.3), and one of
 `internal`, which only the framework writes, is put back from the original
-(§7.3). A router hook
-that addresses an event (Section 19.4), by its address or its routing
-metadata, is unaffected.
+(§7.3). A router hook that addresses an event (Section 19.4), by its address
+or its routing metadata, is unaffected.
 
 **InjectedEvent:**
 
@@ -4485,6 +4497,13 @@ realtime voice channel, a conference with a realtime model plugged in,
 §12.4) is an agent too: it takes the event into the model's context
 silently, and asks no answer. An integrator who wants an agent to answer
 injects the event directly (§10.5).
+
+**No injected instruction.** A hook MUST NOT inject an INSTRUCTION
+(§10.1.1). One among a result's injected events is dropped with a warning
+before any pass: no hook runs on it, and nothing of it is stored or
+delivered. The rest of the result stands, its other injected events, tasks
+and observations included. A hook that wants an agent directed injects the
+instruction directly (§10.5), which takes it through §10.1.1.
 
 **Which triggers commit injected events.** The injected events of
 `BEFORE_BROADCAST` results are committed as above, and so is the event an
@@ -5045,15 +5064,23 @@ nudge. Committed as an inbound MESSAGE, that direction is stored as a
 participant's words, shown in the transcript as theirs, and read by the model
 as a user turn. An `INSTRUCTION` event carries it through the same pipeline —
 the same hooks, lane and addressing — without either. It is the `system`
-intent of §12.4, for every kind of intelligence channel.
+intent of §12.4, for every kind of intelligence channel. Only the
+application issues one, through `process_inbound()` or direct injection
+(§10.5): an instruction a hook injects is dropped (§9.4), and a channel's
+response typed `INSTRUCTION` does not re-enter (§8.5).
 
 `process_inbound()` with `event_type = INSTRUCTION` (normative):
 
-1. **It is addressed.** `addressed_to` MUST name at least one intelligence
-   channel (§19.3). An unaddressed or empty-addressed instruction is refused,
-   before anything is written, with `InboundResult(blocked=true,
-   reason=instruction_unaddressed)`: a direction meant for one agent does not
-   make every agent in the room speak.
+1. **It is addressed.** `addressed_to` MUST name at least one channel the
+   framework registers as an intelligence channel (§19.3), which is checked
+   against the registry before anything is read. An unaddressed or
+   empty-addressed instruction, or one that names no registered intelligence
+   channel, is refused, before anything is written, with
+   `InboundResult(blocked=true, reason=instruction_unaddressed)`: a direction
+   meant for one agent does not make every agent in the room speak. The
+   address's other names ask nobody, as a name the room does not bind (§19.3
+   rule 2): a registered agent the room does not bind is asked nowhere, and
+   the instruction goes on.
 2. **It carries no idempotency key.** Step 7 finds a duplicate through the
    stored event, and an instruction is never stored. One that carries a key
    is refused, before anything is written, with
@@ -5079,7 +5106,9 @@ intent of §12.4, for every kind of intelligence channel.
    still processed.
 5. **It is not committed.** At step 12 nothing is stored, no index is
    consumed (the one step 8 assigned is provisional, for the hooks), and no
-   room counter moves (§14.3 holds trivially).
+   room counter moves (§14.3 holds trivially). It is no activity: neither
+   `last_activity_at` nor a PAUSED room's status moves, and a committed
+   response resumes the room (§5.1).
    Its delivery set joins the room's delivery lane without an index, behind
    the room's latest committed event, so it keeps its place in the room's
    order (§10.2). `InboundResult.event` is the uncommitted instruction.
@@ -5092,15 +5121,23 @@ intent of §12.4, for every kind of intelligence channel.
    not portable: several model APIs refuse one, others silently turn it into a
    user turn, and a request that ends on the assistant's last reply reads as a
    continuation of it.) The response is an ordinary response event:
-   committed, broadcast, subject to reentry and chain depth. It MUST record
-   the instruction that produced it in its metadata as a fingerprint,
-   `instruction = {sha256, length}` (the hex SHA-256 of the UTF-8 text and its
-   length in Unicode code points), and MUST NOT copy the text: the metadata rides on
-   every response event and every segment of it, so a copy would store an
-   instruction the room never stores — a summary's transcript, a long prompt —
-   once per reply, and deliver it to every transport. The timeline still
-   records that an instruction produced the reply and which one; an
-   application that shows its text keeps it.
+   committed, broadcast, subject to reentry and chain depth. The pipeline
+   MUST record the instruction that produced it in its metadata as a
+   fingerprint, `instruction = {sha256, length}`, as it writes a response's
+   source and depth (§8.5): on every response event the instruction's
+   delivery set returns, one stored past the reentry budget included,
+   replacing whatever the channel wrote under that key, since the pipeline
+   cannot check an integrator's channel's write. `sha256` is the lowercase
+   hex SHA-256 of the UTF-8 text the instruction's content reads as (§6.6),
+   as its hooks left it, and `length` that text's length in Unicode code
+   points. A hook's modify of the response keeps the fingerprint (§9.4). An
+   answer to that response, and the record of an agent not asked at the
+   chain-depth limit (§8.3), carry none. A response MUST NOT carry a copy of
+   the text: the metadata rides on every response event and every segment
+   of it, so a copy would store an instruction the room never stores — a
+   summary's transcript, a long prompt — once per reply, and deliver it to
+   every transport. The timeline still records that an instruction produced
+   the reply and which one; an application that shows its text keeps it.
 7. **It MAY stand alone.** `standalone = true` asks that the turn it opens
    read nothing of the room: its input is the instruction alone, with no
    rebuilt history, and the channel MUST NOT call the memory provider for it —
