@@ -3371,8 +3371,9 @@ Implementations MUST enforce these rules:
    channel the integrator detached (rule 7), MUST be stored `BLOCKED` with
    `blocked_by` = `source_unbound` and MUST NOT be broadcast either; the
    channel of an inbound message still parses it (§10.1 step 4), with a
-   context that holds no event of the room. A response re-enters
-   like any other event (§10.1 step 14) and meets this check after its
+   context that holds no event of the room. A direct injection that names
+   such a channel raises instead, with nothing written (§10.5). A response
+   re-enters like any other event (§10.1 step 14) and meets this check after its
    `BEFORE_BROADCAST` hooks (step 11 after step 9), on each path that commits
    a response: a buffered response, a streamed row, a regenerated answer. The
    check reads the source's binding as the hooks left it, so a hook that
@@ -3540,7 +3541,7 @@ They are NOT stored in any room timeline.
 | source_exhausted | Source provider given up after its last restart attempt | channel_id, source_name, attempts, last_error |
 | event_processed | An event that entered through the inbound pipeline or direct injection (§10.5) finished its delivery set and its `AFTER_BROADCAST` hooks; not emitted for the events its processing produced (responses, streamed rows, hook-injected events) | room_id, event_id |
 | event_blocked | Event blocked by a hook, or by a source that cannot write or has no binding in the room (§7.5 rule 2); a chain-depth record emits `chain_depth_exceeded` instead | room_id, event_id, channel_id (the event's source), reason, blocked_by |
-| process_timeout | The pre-commit phase exceeded `process_timeout` (§13.6) | room_id, channel_id (expired before the room lock) or event_id (under it), timeout; `operation = regenerate` for a regeneration, which carries neither `channel_id` nor `event_id` |
+| process_timeout | The pre-commit phase exceeded `process_timeout` (§13.6) | room_id (null when the deadline passed while the message was routed), channel_id (expired before the room lock) or event_id (under it), timeout; `operation = regenerate` for a regeneration, which carries neither `channel_id` nor `event_id` |
 | delivery_succeeded | A transport channel's `deliver()` succeeded, for an event that entered through the inbound pipeline or direct injection (§10.5); a response's deliveries are not reported | room_id, event_id, channel_id |
 | delivery_failed | A target's `on_event()` or `deliver()` failed (`deliver()` after its retries), for the same events as `delivery_succeeded` | room_id, event_id, channel_id, error |
 | broadcast_partial_failure | `delivery_failed` was emitted for at least one of an event's targets; the event stays DELIVERED (§13.6) | room_id, event_id, failed, total, errors (channel_id → error) |
@@ -3701,10 +3702,11 @@ it in the room.
 inbound or directly injected event, one regeneration or one delegated run)
 and the events its hooks inject (§9.4) share a reentry budget of
 `10 × max_chain_depth` passes, buffered responses, chained streams and
-injected events alike (§10.1 steps 10 to 14). A buffered response past the budget
-does not re-enter, a chained stream past it is closed unread, so nothing is
-generated, and an injected event past it is not committed as a pass, so its
-hooks never run. Each is stored `BLOCKED` with
+injected events alike (§10.1 steps 10 to 14), and so do the events code
+under its lock injects directly (§9.5.1, Reentrance). A buffered response
+past the budget does not re-enter, a chained stream past it is closed
+unread, so nothing is generated, and an injected event past it is not
+committed as a pass, so its hooks never run. Each is stored `BLOCKED` with
 `blocked_by = "reentry_loop_cap"`, and with the visibility its pass would
 have committed it with (§7.3); none emits `chain_depth_exceeded` nor
 `event_blocked`.
@@ -4469,10 +4471,14 @@ someone.
 An injected event is committed as a pass of the cascade (§8.3), after the
 event whose hooks injected it:
 
-- It takes the room lock for its own commit and runs the `BEFORE_BROADCAST`
-  chain, every hook under the lock (§9.5.1). A hook may block it, which
-  stores it `BLOCKED`, and the events its own hooks inject are committed the
-  same way.
+- It commits after its cause, in a pass and a locked section of its own,
+  once the cause's section has released the room lock: another event may
+  commit between the cause and it. It takes the room lock for its own
+  commit and runs the `BEFORE_BROADCAST` chain, every hook under the lock
+  (§9.5.1). A hook may block it, which stores it `BLOCKED`, and the events
+  its own hooks inject are committed the same way. An event that code under
+  the lock injects directly (§10.5) is another path: it commits ahead of the
+  cause, within the cause's section (§9.5.1, Reentrance).
 - It counts against the cascade's reentry budget, which bounds injections of
   injections (§8.3).
 - It keeps the `chain_depth` of the event whose hooks injected it, and the
@@ -4605,7 +4611,16 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   off-lock hook's body, or while holding the room lock (a locked hook, code
   under the lock). It would otherwise wait for the ticket its own caller
   holds. It runs every hook under the lock and commits ahead of the event
-  whose processing emitted it.
+  whose processing emitted it. Made under the lock, it MUST draw on the
+  reentry budget of the cascade whose section holds the lock (§8.3), so
+  that a locked hook that injects on every event stops at the cap: an entry
+  past it is stored `BLOCKED` with `reentry_loop_cap`. A call into the room
+  from its work outside the lock and outside its admission order (a turn, a
+  delivery) is a new arrival: it takes a ticket when an off-lock hook fires
+  for its event, `process_timeout` bounds it (§13.6), and its cascade is its
+  own; one that would wait on its own delivery from a context the delivery
+  lane cannot progress past returns with its completion detached (§10.1
+  step 18).
 - **Other commit paths** (reentry passes, regeneration, hook-injected events)
   run every `BEFORE_BROADCAST` SYNC hook under the lock, the off-lock ones
   included. `needs_lock = false` permits a hook to run off the lock; it never
@@ -4797,6 +4812,17 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
        # its id, source, index, chain depth and the other fields §9.4
        # protects are kept from the original
 
+9a. RE-READ THE ROOM (only when a hook ran under the lock, §9.5.1 Reentrance)
+    ├── The event takes the room's next index: an entry committed ahead of
+    │   it during its hooks took the one step 8 showed them
+    ├── A room no longer accepting events (a hook closed it) refuses the
+    │   event as step 6 does: nothing stored, its injected events dropped
+    │   (§5.1)
+    ├── Step 11 reads the source's binding as the hooks left it
+    └── An EDIT or a DELETE has its target read and validated again (step
+        8a): a delete an entry committed ahead of an edit refuses the edit
+        (target_event_not_found) rather than be undone by it
+
 10. IF BLOCKED BY HOOK:
     ├── Commit event with status=BLOCKED, blocked_by=hook_name, in the
     │   same atomic transaction as step 12: the event takes its index,
@@ -4904,8 +4930,10 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     ├── INJECTED EVENTS: the events steps 10–12 queued re-enter the
     │   locked section (steps 6–12) as passes of the same cascade, after
     │   the event whose hooks injected them (§9.4): each takes the room
-    │   lock for its own commit, counts against the reentry budget
-    │   (§8.3), and its delivery set joins the same lane in FIFO order
+    │   lock for its own commit once the cause's lock is released, so
+    │   another event may commit between them, counts against the
+    │   reentry budget (§8.3), and its delivery set joins the same lane
+    │   in FIFO order
     └── REENTRY: response events emitted here (intelligence channels)
         re-enter the pipeline's locked section (steps 6–12) as new
         passes — each response takes the room lock for ITS OWN commit
@@ -5633,7 +5661,8 @@ Integrators MAY inject events into a room directly, without an inbound channel
 message (e.g., from a REST API or MCP tool call):
 
 ```
-send_event(room_id, channel_id, content, event_type, ...) → RoomEvent
+send_event(room_id, channel_id, content, event_type, ...,
+           organization_id | null) → RoomEvent
 ```
 
 The injected event traverses the SAME pipeline as an inbound message
@@ -5646,14 +5675,36 @@ off-lock check (§9.5.1, step 5a): an injected event matched by a
 `needs_lock = false` hook takes an admission ticket like an inbound one —
 unless it is injected from inside an off-lock hook's body or under the room
 lock, in which case it takes none and commits ahead of the event being
-processed (§9.5.1, Reentrance).
+processed (§9.5.1, Reentrance). Made under the room lock, it draws on the
+reentry budget of the cascade that holds it (§8.3); made from the room's
+work outside the lock (a turn, a delivery), it is a new arrival (§9.5.1).
 
-Its result is the committed event, so a refusal before the commit point is
-raised, never returned as an event that was not written: a room whose status
-refuses new events (§5.1) raises a room-closed error, and `process_timeout`
+An injection takes §10.1's steps 1 to 4 its own way. The channel it names
+MUST be registered, and the event is admitted as a message is before
+anything is read: an instruction's refusals (§10.1.1), `standalone` on
+another type, the visibility `internal` (§7.3). None of step 2 runs. The
+room is read scoped to `organization_id` (§17.2), unscoped when the call
+names none: a room that does not exist, or another organization's, raises.
+A channel the room does not bind is not attached, and the call raises with
+nothing written: the host named the channel itself, so it is a caller's
+error with nothing to audit, unlike a stranger's message (§7.5 rule 2).
+There is no parse. The event's source is the channel it names, `INBOUND`
+for a transport, whose event stands for a message coming in, and `OUTBOUND`
+for an intelligence channel, whose event is its own words going out, as its
+responses are.
+
+Its result is the committed event, so every refusal before the commit point
+that leaves no committed record is raised, never returned as an event that
+was not written: a room whose status refuses new events (§5.1) raises a
+room-closed error, a refused edit or delete (§10.1 step 8a) and a refused
+instruction (§10.1.1) raise with their reason, and `process_timeout`
 (§13.6), which bounds its wait for the off-lock check and the room lock as it
 bounds its pre-commit phase, raises a process-timeout error once it has
-emitted the `process_timeout` framework event. Nothing of the event is written.
+emitted the `process_timeout` framework event. Nothing of the event is
+written. A record stored `BLOCKED`, by a hook or by a source that cannot
+write, is the committed event and is returned; a replay returns the event
+its key committed (§13.4); an instruction, never committed, returns
+uncommitted (§10.1.1).
 
 **A record outside the pipeline.** An integrator MAY commit an event that no
 member is meant to receive (a trace, a display snapshot, a copy a branched
@@ -13119,16 +13170,27 @@ Implementations SHOULD support a configurable `process_timeout`. Its semantics
 are defined **relative to the commit point** (§10.1 step 12) — the atomic
 transaction that stores the event as DELIVERED and updates the room counters:
 
-- **Pre-commit phase** (§10.1 steps 3–11: context build, identity resolution,
-  BEFORE_BROADCAST hooks, write-permission check, index assignment). This phase
-  decides only and performs no durable write of the inbound event: the BLOCKED
-  record that steps 10–11 owe is committed once the phase has ended, outside
-  `process_timeout`, as the step 12 commit is. `process_timeout` MUST bound
-  this phase. On expiry the implementation MUST abort **before** the commit
-  point, leaving no partial durable state, and return
+- **Pre-commit phase** (§10.1 steps 1–11: routing, with the identity it
+  reads, the router and step 2's waits for the room lock; context build,
+  identity resolution, BEFORE_BROADCAST hooks, write-permission check, index
+  assignment). This phase decides only and performs no durable write of the
+  inbound event: the BLOCKED record that steps 10–11 owe is committed once
+  the phase has ended, outside `process_timeout`, as the step 12 commit is.
+  `process_timeout` MUST bound this phase, as one deadline from the call's
+  start to its decision: a router or a lock that hangs holds the caller no
+  longer than the bound. On expiry the implementation MUST abort **before**
+  the commit point, leaving no partial durable state: the injected events,
+  tasks and observations of the hooks that ran are dropped with the event,
+  and the room's next event takes the index it never consumed. It returns
   `InboundResult(blocked=true, reason=process_timeout)` (direct injection,
   whose result is the committed event, raises instead, §10.5). The event MUST
-  NOT appear in the timeline.
+  NOT appear in the timeline. A room step 2 creates is completed whatever
+  the deadline (its creation, its ON_ROOM_CREATED hooks, each within its own
+  timeout, and its attach), and stays when the event times out next: it is
+  the room's state, not the event's. A hook's own timeout reached before the
+  deadline is the hook's (`hook_timeout`, then the fail-open or fail-closed
+  rule of §9.3); a deadline reached first is the call's: the hook is
+  dropped, and nothing reports it as the hook's failure.
 
 - **Commit point** (§10.1 step 12). Once the DELIVERED transaction has
   committed, the event is authoritative. `process_timeout` MUST NOT cancel,
@@ -13146,7 +13208,9 @@ transaction that stores the event as DELIVERED and updates the room counters:
   framework events — never by changing the source event's status or the
   returned result to blocked/failed.
   A degraded broadcast SHOULD surface as `broadcast_partial_failure`, with the
-  source event remaining DELIVERED.
+  source event remaining DELIVERED. A cascade that a failure stops runs no
+  further pass, but still delivers every event it committed, an entry nested
+  under its lock included: an event stored is delivered.
 
 A regeneration re-broadcasts an event already committed, so it has no commit
 point of its own: `process_timeout` bounds its wait for the room lock and its
