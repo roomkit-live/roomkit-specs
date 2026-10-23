@@ -1067,17 +1067,21 @@ Identity
 
 An address belongs to one identity per organization and channel type, so a
 resolution never chooses: creating an identity, or linking an address
-(`link_address`, §14.1), with an address another identity of the
-organization holds MUST be refused, and moving an address is an explicit
-unlink, never a silent re-home of someone's conversations. Identity
-resolution is scoped to the organization it names (§17.2); for none, it
-resolves the identities of no organization only, never an organization's.
-`link_address` links to an identity of the organization it names, and
-refuses an unknown identity or another organization's; linking an address
-the identity already holds changes nothing. Addresses compare as stored: the
-framework resolves a sender's address in its channel's form (§5.7), so a
-host links addresses in that form (E.164 on a channel addressed by phone
-number).
+(`link_address`, §14.1), with an address another identity of the organization
+holds MUST be refused, and moving an address is an explicit unlink
+(`unlink_address`, §14.1) followed by a link, never a silent re-home of
+someone's conversations. Identity resolution is scoped to the organization it
+names (§17.2); for none, it resolves the identities of no organization only,
+never an organization's. `link_address` links to an identity of the
+organization it names, and refuses an unknown identity or another
+organization's; linking an address the identity already holds changes nothing.
+`unlink_address` removes an address from the identity it names, in the
+organization it names, under the same refusals; an address the identity does
+not hold changes nothing. An unlink changes which identity a later message
+resolves to, never a stored conversation: the rooms, bindings and participants
+that named the address stay as they are. Addresses compare as stored: the
+framework resolves a sender's address in its channel's form (§5.7), so a host
+links addresses in that form (E.164 on a channel addressed by phone number).
 
 ### 5.7 ChannelBinding
 
@@ -4716,12 +4720,15 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │       │   channel) or its binding of the channel is `group`;
    │       │   or the channel's binding, not `group`, names a correspondent
    │       │   other than the sender (its participant, else its recipient,
-   │       │   §5.7), as when a concurrent message was recorded first; or
-   │       │   the record would name the sender on a binding that names no
-   │       │   one, and the room as the lock finds it no longer admits them
-   │       │   by step 3's conditions (§10.4), whichever strategy chose it,
-   │       │   unless the sender is a participant reached through the
-   │       │   channel. The framework's own sender (`system`) and a message
+   │       │   §5.7), as when a concurrent message was recorded first, a
+   │       │   member reached through the channel included: the binding is
+   │       │   that correspondent's conversation; or the record would name
+   │       │   the sender on a binding that names no one, and the room as
+   │       │   the lock finds it no longer admits them by step 3's
+   │       │   conditions (§10.4), whichever strategy chose it, unless the
+   │       │   sender is a participant reached through the channel, which
+   │       │   spares this last condition only. The framework's own sender
+   │       │   (`system`) and a message
    │       │   with no address are no one's correspondent. Nothing is
    │       │   written, the lock is released, and the message is routed once
    │       │   more, its identity not read again; a second answer that is
@@ -5642,14 +5649,17 @@ several.
 
 **A binding speaks for its own channel.** The sender a binding names is found
 through it on that channel only. A correspondent recorded on one number's
-binding, writing to another number of the same type, is not taken to the
-first number's room: on a kit serving a bank and a clinic, each on its own SMS
+binding, writing to another number of the same type, is not taken to the first
+number's room: on a kit serving a bank and a clinic, each on its own SMS
 number, a customer the bank's number recorded writing to the clinic lands in
 the clinic's conversation. A participant record is another matter: a member
-the integrator added to the bank's room is found by step 1 on whatever
-number of the room's they were reached through and write to. Merging or
-separating a person's conversations across channels is decided for
-participants, not by bindings.
+the integrator added to the bank's room is found by step 1 on whatever number
+of the room's they were reached through and write to, unless that number's
+binding names another correspondent: a binding not declared `group` is one
+correspondent's conversation, whose answers go to their address, and the
+member then gets a room of their own (§10.1 step 2). Merging or separating a
+person's conversations across channels is decided for participants, not by
+bindings.
 
 Example, on one SMS number with no room yet: alice writes first, and the room
 created for her has a binding naming her. Bob's first message finds no room of
@@ -13356,9 +13366,11 @@ ConversationStore (interface)
 │   ├── create_identity(identity) → Identity
 │   ├── get_identity(identity_id) → Identity | null
 │   ├── resolve_identity(channel_type, address, organization_id | null) → Identity | null
-│   └── link_address(identity_id, channel_type, address, organization_id | null) → void
+│   ├── link_address(identity_id, channel_type, address, organization_id | null) → void
+│   └── unlink_address(identity_id, channel_type, address, organization_id | null) → void
 │       # The same address may belong to a different identity in each
-│       # organization, and to one identity within it
+│       # organization, and to one identity within it; moving it is an
+│       # unlink then a link (§5.6)
 │
 ├── Verification (§11.7; Level 2)
 │   ├── get_verification(identity_id, organization_id | null) → Verification | null
