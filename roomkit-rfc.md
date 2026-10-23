@@ -168,7 +168,7 @@ define. Implementations MUST serialize a record as follows:
   other content, a composite's part or an edit's new content, is tagged the
   same way, and so is every other union this document defines: its `type`
   member names the member it holds, as the union's definition names it (a
-  frame of Section 10.6.3: `{"type": "heartbeat", "turn_id": "t1"}`).
+  frame of Section 10.6.3 carries `"type": "heartbeat"` beside its fields).
 - A `bytes` value is a string in base64
   ([RFC 4648](https://www.rfc-editor.org/rfc/rfc4648), Section 4).
 - A `datetime` is a string in the form of
@@ -574,10 +574,12 @@ Implementations MUST enforce timer transitions when configured:
   or on the period of a sweeper the implementation runs. A transition takes
   the instant it fell due, however late it is applied: a check long after
   both fell due pauses the room at the first instant and closes it at the
-  second, in one write. Each is reported once stored (`ON_ROOM_PAUSED` and
-  `room_paused`, `ON_ROOM_CLOSED` and `room_closed`, with `reason = timer`),
-  before anything the section decides next: a message a close that fell due
-  refuses reports `room_closed` before its `room_refused_event`.
+  second, in one write. Each emits its framework event once stored
+  (`room_paused`, `room_closed`, with `reason = timer`), before anything the
+  section decides next, so a message a close that fell due refuses reports
+  `room_closed` before its `room_refused_event`; its trigger
+  (`ON_ROOM_PAUSED`, `ON_ROOM_CLOSED`) fires as an ASYNC trigger does, once
+  the room lock is released (§10.1).
 
 ### 5.2 RoomEvent
 
@@ -1114,25 +1116,23 @@ email address: SMS, MMS, RCS, WhatsApp, email, Messenger), the binding's
 recipient and its correspondent are one address. When the framework records
 the sender, or finds a binding naming the sender by address without a
 recipient, it writes the address as the binding's recipient, under the
-channel's recipient key (below); a recipient the binding already has is
-kept. Conversely, a binding the integrator gives a recipient and no
-correspondent names that recipient as its correspondent: the room is that
-person's conversation, and the router admits no one else through it
-(§10.4). On a transport that delivers to a chat
-or a conversation (Telegram, Teams, Discord), the chat a message was posted in
-is its conversation: a private chat is its user's, a group chat the group's,
-shared by all its members. The framework routes the message, records the
-binding's correspondent and admits a sender by the chat, and a room opened for
-the message replies there; the message's author stays its sender. The chat a
-binding delivers to names its conversation as a phone number names its
-correspondent: a room the integrator opens for a chat admits no one else. A
-user who writes to the bot privately and in a group holds two conversations,
-and a room found by the sender would answer one in the other. A channel that
-carries both private chats and groups (WhatsApp Personal) takes a group
-message's group as its conversation and a private message's sender. On a
-transport that
-delivers to a URL (an HTTP webhook), nothing of the message is written as the
-recipient.
+channel's recipient key (below); a recipient the binding already has is kept.
+Conversely, a binding the integrator gives a recipient and no correspondent
+names that recipient as its correspondent: the room is that person's
+conversation, and the router admits no one else through it (§10.4). On a
+transport that delivers to a chat or a conversation (Telegram, Teams,
+Discord), the chat a message was posted in is its conversation: a private chat
+is its user's, a group chat the group's, shared by all its members. The
+framework routes the message, records the binding's correspondent and admits a
+sender by the chat, and a room opened for the message replies there; the
+message's author stays its sender. The chat a binding delivers to names its
+conversation as a phone number names its correspondent: a room the integrator
+opens for a chat admits no one else. A user who writes to the bot privately
+and in a group holds two conversations, and a room found by the sender would
+answer one in the other. A channel that carries both private chats and groups
+(WhatsApp Personal) takes a group message's group as its conversation and a
+private message's sender. On a transport that delivers to a URL (an HTTP
+webhook), nothing of the message is written as the recipient.
 
 **Addresses by channel type.** A channel's type decides how its addresses
 are written and compared. Its declaration names the binding metadata key its
@@ -1188,7 +1188,8 @@ the provider's own spelling. A number is written as follows:
   number in China, from `+1 380 013 8000`, and a router MUST NOT guess
   (§10.4): a missed match opens a new room, while a wrong merge discloses
   one person's conversation to another.
-- A result of more than 15 digits is kept as written.
+- A result of more than 15 digits, or one whose first digit is `0`, which no
+  country code is, is kept as written.
 
 So, on a channel declaring the country code 1, `whatsapp:+15550000001`,
 `15550000001` and `+1 (555) 000-0001` are one person. An email channel
@@ -3311,15 +3312,16 @@ visibility that includes exactly those channels when it commits the event,
 DELIVERED (§10.1 step 12) or `BLOCKED` in its place (steps 10 and 11, §8.3),
 and store it as the event's `visibility`: delivery (§10.2) and every history
 rebuilt for a channel (§7.5 rule 8) read that field alone, so a binding
-changed or removed later changes no past event. A record stored `BLOCKED`
-takes the visibility its event would have been delivered with, so that a
-reader shown it later (a host's view of the room) sees no more of it than it
-would have seen of the event: a hook's block and a source refusal, of an
-inbound message, a direct injection or a response; the record of an agent
-not asked at the chain-depth limit, and a response stored past the reentry
-budget (§8.3). An event whose source has no binding keeps its own. An event
-a hook injects is no channel's and keeps its own (§9.4), blocked or stored
-past the budget. The intersection of two visibilities is:
+changed or removed later changes no past event. An accepted EDIT or DELETE
+is narrowed once more, to its target's visibility (§10.3). A record stored
+`BLOCKED` takes the visibility its event would have been delivered with, so
+that a reader shown it later (a host's view of the room) sees no more of it
+than it would have seen of the event: a hook's block and a source refusal,
+of an inbound message, a direct injection or a response; the record of an
+agent not asked at the chain-depth limit, and a response stored past the
+reentry budget (§8.3). An event whose source has no binding keeps its own.
+An event a hook injects is no channel's and keeps its own (§9.4), blocked or
+stored past the budget. The intersection of two visibilities is:
 
 - `all` with any value: that value;
 - `internal` with any value: `internal`, which keeps the mark of a record
@@ -3543,7 +3545,7 @@ They are NOT stored in any room timeline.
 | event_blocked | Event blocked by a hook, or by a source that cannot write or has no binding in the room (§7.5 rule 2); a chain-depth record emits `chain_depth_exceeded` instead | room_id, event_id, channel_id (the event's source), reason, blocked_by |
 | process_timeout | The pre-commit phase exceeded `process_timeout` (§13.6) | room_id (null when the deadline passed while the message was routed), channel_id (expired before the room lock) or event_id (under it), timeout; `operation = regenerate` for a regeneration, which carries neither `channel_id` nor `event_id` |
 | delivery_succeeded | A transport channel's `deliver()` succeeded, for an event that entered through the inbound pipeline or direct injection (§10.5); a response's deliveries are not reported | room_id, event_id, channel_id |
-| delivery_failed | A target's `on_event()` or `deliver()` failed (`deliver()` after its retries), for the same events as `delivery_succeeded` | room_id, event_id, channel_id, error |
+| delivery_failed | A target's `on_event()` or `deliver()` failed (`deliver()` after its retries), or an intelligence channel the event solicits was not called because it is no longer registered (§10.2 step 3, error `channel_not_registered`), for the same events as `delivery_succeeded` | room_id, event_id, channel_id, error |
 | broadcast_partial_failure | `delivery_failed` was emitted for at least one of an event's targets; the event stays DELIVERED (§13.6) | room_id, event_id, failed, total, errors (channel_id → error) |
 | delivery_skipped | A room's delivery lane passed over committed indexes whose delivery never came (left, for example, by a process that crashed before delivering them) after waiting `gap_timeout` (default 30 s) | room_id, from_index, to_index |
 | identity_resolved | The inbound pipeline ended with an identity for the sender, found by the resolver or supplied by a hook | room_id, channel_id, event_id, identity_id, display_name, status (the resolution's status) |
@@ -3765,24 +3767,23 @@ is no event to name, and its answers carry `responds_to = null` (Planned).
 **Who a response comes from.** The responder is the source of every response
 event it returns, buffered or as the rows of its stream. On each one the
 pipeline MUST write its `source` (the responder's channel id and channel type,
-with direction OUTBOUND), its room, its `chain_depth` (the trigger's plus
-one, §8.3) and, unless the channel named the event it answers, its
-`responds_to`; it clears its idempotency key (§13.4). A response typed
-`INSTRUCTION` does not re-enter: it is dropped with a warning, and its
-channel's other responses re-enter as usual, since only the application
-issues instructions (§10.1.1) and one agent's answer would otherwise direct
-another in the application's name; an agent that wants another to act
-addresses its answer (§19.3.1). A response that claims
-another source gets a fresh one, the responder's (its channel id and channel
-type, OUTBOUND), keeping nothing of the source it claimed, and the
-implementation logs a warning: the write check reads the source's binding
-(§7.5 rule 2), and a response committed under another channel's name would
-be checked against that channel's, while another channel's provider message
-id could be acted on by a native edit or delete (§10.3). A response under
-its own source keeps the fields its channel wrote (its participant, its
-provider, its raw payload, its provider message id). The pipeline clears
-`verification` on every response: it is a received sender's (§5.2, §11.7),
-and a response is no message received.
+with direction OUTBOUND), its room, its `chain_depth` (the trigger's plus one,
+§8.3) and, unless the channel named the event it answers, its `responds_to`;
+it clears its idempotency key (§13.4). A response typed `INSTRUCTION` does not
+re-enter: it is dropped with a warning, and its channel's other responses
+re-enter as usual, since only the application issues instructions (§10.1.1)
+and one agent's answer would otherwise direct another in the application's
+name; an agent that wants another to act addresses its answer (§19.3.1). A
+response that claims another source gets a fresh one, the responder's (its
+channel id and channel type, OUTBOUND), keeping nothing of the source it
+claimed, and the implementation logs a warning: the write check reads the
+source's binding (§7.5 rule 2), and a response committed under another
+channel's name would be checked against that channel's, while another
+channel's provider message id could be acted on by a native edit or delete
+(§10.3). A response under its own source keeps the fields its channel wrote
+(its participant, its provider, its raw payload, its provider message id). The
+pipeline clears `verification` on every response: it is a received sender's
+(§5.2, §11.7), and a response is no message received.
 
 **What the turn is told.** `BEFORE_AI_GENERATION` receives, with the turn's
 context, the event the turn answers (`trigger`), so a hook can tell the model
@@ -3929,8 +3930,8 @@ on the room's owner.
 |---|---|---|---|
 | BEFORE_BROADCAST | SYNC | Implemented | Before event reaches channels — can block/modify |
 | AFTER_BROADCAST | ASYNC | Implemented | After all channels have processed the event |
-| ON_EVENT_UPDATED | ASYNC | Implemented | A persisted event's stored state was mutated (inbound EDIT, §10.3, or direct `update_event()`) |
-| ON_EVENT_DELETED | ASYNC | Implemented | A persisted event was deleted (inbound soft DELETE, §10.3, or direct hard `delete_event()`, once per event removed) |
+| ON_EVENT_UPDATED | ASYNC | Implemented | A persisted event's stored state was mutated (an EDIT committed, §10.3, or direct `update_event()`) |
+| ON_EVENT_DELETED | ASYNC | Implemented | A persisted event was deleted (a soft DELETE committed, §10.3, or direct hard `delete_event()`, once per event removed) |
 | ON_CHANNEL_ATTACHED | ASYNC | Implemented | Channel attached to a room |
 | ON_CHANNEL_DETACHED | ASYNC | Implemented | Channel detached from a room |
 | ON_CHANNEL_MUTED | ASYNC | Implemented | Channel muted in a room: its binding's `muted` changed to true (§7.2) |
@@ -4466,7 +4467,9 @@ chain carries are collected, whatever its action (allow, modify or block),
 off the lock and under it (§9.5.1), and MUST be committed whichever way the
 event ends: blocked by a hook, blocked by its source's permissions, or delivered
 (§10.1 steps 10 to 12). A hook that lets an event through can still notify
-someone.
+someone. An event refused with nothing stored once its hooks have run (its
+room closed under them, §10.1 step 9a; a gate before step 9, §9.5.1; an
+expired `process_timeout`, §13.6) drops them with it.
 
 An injected event is committed as a pass of the cascade (§8.3), after the
 event whose hooks injected it:
@@ -4677,7 +4680,8 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   │   → fail, nothing written (§17.2)
    │   ├── No room with that id → create a new room with that id; a
    │   │   creation the store refuses because another call created the
-   │   │   room meanwhile reads the room again, as one that exists
+   │   │   room meanwhile reads the room again, as one that exists, checked
+   │   │   for the caller's organization as above
    │   ├── Room exists, channel not bound to it → under the room lock,
    │   │   the room's due timers applied first (§5.1), attach the channel
    │   │   at its declaration's defaults (read-write, unmuted, visible to
@@ -4713,12 +4717,13 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │           naming the sender without a recipient gets the address as its
    │           recipient. A routed room that does not bind the channel has it
    │           attached under the same lock, its binding naming the sender,
-   │           unless rule 7 refuses. The record fires no trigger and emits
-   │           no framework event, and is made whatever the binding's access
-   │           or mute: routing decides the conversation, the permissions
-   │           what becomes of the message (step 11). A `group` binding is
-   │           never written, and the framework's own sender and a message
-   │           with no address record no one
+   │           unless rule 7 refuses; that attach reports ON_CHANNEL_ATTACHED
+   │           and room_channel_attached. The record itself fires no trigger
+   │           and emits no framework event, and is made whatever the
+   │           binding's access or mute: routing decides the conversation,
+   │           the permissions what becomes of the message (step 11). A
+   │           `group` binding is never written, and the framework's own
+   │           sender and a message with no address record no one
    └── If new room created → fire ON_ROOM_CREATED and wait for its hooks,
        each within its timeout (§9.3), their context the room as created,
        with no binding of the channel; emit `room_created`; then, under
@@ -4798,7 +4803,8 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     elsewhere — §10.3 Validation; on every pass that commits an event)
     ├── If validation fails → Return InboundResult(blocked=true, reason=
     │   target_event_not_found | identity_required_for_edit |
-    │   not_authorized | not_original_author)
+    │   not_authorized | not_original_author); on another pass, as §10.3
+    │   rule 7 says
     │   # A sender's change needs an author for the change and for its
     │   # target (§10.3). Nothing is stored; the target's state update
     │   # waits for step 12, once the hooks have allowed the event.
@@ -4891,7 +4897,8 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   │   one held twice. A BLOCKED record (steps 10, 11) takes none
     ├── Commit atomically, as ONE logical transaction:
     │   ├── Store event with status=DELIVERED and, as its visibility, the
-    │   │   intersection of its own and its source binding's (§7.3)
+    │   │   intersection of its own and its source binding's (§7.3), an
+    │   │   EDIT's or a DELETE's narrowed again to its target's (§10.3)
     │   └── Update room state: latest_index = event.index; event_count += 1;
     │       timers.last_activity_at = the commit's instant; a PAUSED room
     │       resumes, ACTIVE with paused_at null (§5.1)
@@ -5257,8 +5264,8 @@ than being drained inside the trigger's lock tenure.
 3. FOR EACH TARGET CHANNEL (concurrently):
    │   # A target whose channel is no longer registered is not called: a
    │   # transport is skipped, its connections possibly held by another
-   │   # process; an intelligence channel is reported delivery_failed
-   │   # (error `channel_not_registered`, not retryable)
+   │   # process; an intelligence channel the event solicits is reported
+   │   # delivery_failed (error `channel_not_registered`, not retryable)
    │
    ├── a. TRANSCODE CONTENT (§6.6)
    │      └── Convert event content to target's supported media types
@@ -5311,9 +5318,9 @@ than being drained inside the trigger's lock tenure.
 their rooms. A message on it is refused as one on an unknown channel (§10.1
 step 1), and a delivery set does not call it (step 3): a transport is
 skipped, since in a deployment of several processes its connections may be
-held by another, and an intelligence channel is reported `delivery_failed`
-with the error `channel_not_registered`, not retryable. A channel registered
-again under the id serves the bindings.
+held by another, and an intelligence channel the event solicits is reported
+`delivery_failed` with the error `channel_not_registered`, not retryable. A
+channel registered again under the id serves the bindings.
 
 **BroadcastResult:**
 
@@ -5348,8 +5355,8 @@ turn later, a rerun planned for that agent alone.
 When an event has type EDIT or DELETE, the framework MUST perform additional
 validation and state updates before broadcasting. The validation is §10.1
 step 8a, and it runs on every pass that commits an event: an inbound
-message's, a response's (§10.1 step 14), an event's a hook injects (§9.4)
-and a direct injection's (§10.5).
+message's, a response's (§10.1 step 14), that of an event a hook injects
+(§9.4) and a direct injection's (§10.5).
 
 **Validation:**
 
@@ -5375,9 +5382,9 @@ and a direct injection's (§10.5).
    depend on the participant's status: a participant who left, or was
    banned, is still the author of their messages.
 4. For `DeleteContent` with `delete_type = SENDER`, or `EditContent` with
-   `edit_source = "sender"` or null (the sender's), the framework MUST
-   verify that the sender is the original author of the target event: a
-   change whose event or target has no author is refused with
+   `edit_source = "sender"` or null, which is the sender's, the framework
+   MUST verify that the sender is the original author of the target event:
+   a change whose event or target has no author is refused with
    `identity_required_for_edit`, and two authors that differ with
    `not_original_author`. An agent edits its own responses, and no one
    else's.
@@ -5388,13 +5395,13 @@ and a direct injection's (§10.5).
    grants none, and a channel's own output holds no participant's
    authority, whatever participant it names. A sender who names no one is
    refused with `identity_required_for_edit`.
-6. `DeleteContent` with `delete_type = SYSTEM`, and `EditContent` with
-   `edit_source = "system"`, claim the system's authority. A channel makes
-   such a change only as a SYSTEM channel, and an EDIT or a DELETE a hook
+6. For `DeleteContent` with `delete_type = SYSTEM`, the event SHOULD
+   originate from a SYSTEM channel or a hook. An EDIT or a DELETE a hook
    injects (§9.4) is the hook's, whatever source it names, and makes a
-   SYSTEM change only: one that claims the sender's or an administrator's
-   authority is refused `not_authorized`, so a hook never edits or deletes
-   in a participant's name.
+   SYSTEM change only (a SYSTEM delete, an edit whose `edit_source` is
+   `system`): any other, one that claims the sender's or an administrator's
+   authority included, is refused `not_authorized`, so a hook never edits or
+   deletes in a participant's name.
 7. If validation fails, the framework MUST reject the event: nothing of it
    is stored, and no hook runs on it. A refused inbound message returns a
    blocked result with the reason (§10.1 step 8a), a direct injection
@@ -5548,9 +5555,10 @@ following hold:
 - on a channel whose replies go to the sender's address (§5.7), the binding
   has no recipient, or its recipient is the sender's address: a room that
   delivers to someone else is their conversation;
-- no participant of the room other than the sender joined it through this
-  channel: a member the integrator added on the channel says whose
-  conversation the room is before they have written;
+- no participant of the room other than the sender was reached through this
+  channel (its `connected_via`, whatever its status): a member the
+  integrator added on the channel says whose conversation the room is before
+  they have written;
 - the room has received nothing on this channel from another sender: no
   stored event of the channel, a `BLOCKED` one excepted, whose source names a
   participant other than the sender.
@@ -13151,13 +13159,16 @@ compare-and-set in the store (`advance_delivered_index`, §14.1) that
 succeeds only from the index before. The sets of one room run under its
 delivery claim, a lock of the room's lock manager held apart from the room
 lock, so that one event's set completes before the next one's begins across
-the deployment; a lane never holds the claim and the room lock together. An
+the deployment; a lane never holds the claim and the room lock together.
+Every committed index reaches the lane of the process that committed it
+once: an index with no delivery set (a record stored `BLOCKED`, a lifecycle
+record, §5.1) advances the cursor at its turn and runs nothing, and a record
+committed outside the pipeline counts as delivered at once (§10.5). An
 instruction's set, which has no index, runs once the cursor has reached the
-latest index committed before it (§10.1.1), and a record committed outside
-the pipeline counts as delivered at once (§10.5). A committed index whose
-set no lane runs (its process stopped between the commit and the delivery)
-holds the cursor: a lane that has waited on it for `gap_timeout` (default
-30 s) while no lane held the claim forces the cursor past it and emits
+latest index committed before it (§10.1.1). A committed index whose set no
+lane runs (its process stopped between the commit and the delivery) holds
+the cursor: a lane that has waited on it for `gap_timeout` (default 30 s)
+while no lane held the claim forces the cursor past it and emits
 `delivery_skipped` with the indexes skipped (§8.2). The loss is bounded to
 what was in flight and observable, and the room never wedges; a lane that
 finds its own set skipped drops it, since running it then would break the
@@ -13187,10 +13198,12 @@ transaction that stores the event as DELIVERED and updates the room counters:
   NOT appear in the timeline. A room step 2 creates is completed whatever
   the deadline (its creation, its ON_ROOM_CREATED hooks, each within its own
   timeout, and its attach), and stays when the event times out next: it is
-  the room's state, not the event's. A hook's own timeout reached before the
-  deadline is the hook's (`hook_timeout`, then the fail-open or fail-closed
-  rule of §9.3); a deadline reached first is the call's: the hook is
-  dropped, and nothing reports it as the hook's failure.
+  the room's state, not the event's; so is step 2's attach or record of a
+  routed sender in a room that exists, whose deadline bounds its wait for
+  the room lock only. A hook's own timeout reached before the deadline is
+  the hook's (`hook_timeout`, then the fail-open or fail-closed rule of
+  §9.3); a deadline reached first is the call's: the hook is dropped, and
+  nothing reports it as the hook's failure.
 
 - **Commit point** (§10.1 step 12). Once the DELIVERED transaction has
   committed, the event is authoritative. `process_timeout` MUST NOT cancel,
@@ -13240,9 +13253,10 @@ interface:
 ConversationStore (interface)
 │
 ├── Rooms
-│   ├── create_room(organization_id, metadata) → Room
-│   │                                         # refuses an id the store holds,
-│   │                                         # never replaces a room (§10.1 step 2)
+│   ├── create_room(organization_id, metadata, room_id | null) → Room
+│   │                                         # the id §10.1 step 2 gives, or a
+│   │                                         # fresh one; refuses an id the store
+│   │                                         # holds (§14.3)
 │   ├── get_room(room_id) → Room | null
 │   ├── update_room(room_id, updates) → Room
 │   ├── delete_room(room_id) → void
@@ -13271,10 +13285,14 @@ ConversationStore (interface)
 │   ├── update_event(event_id, updates) → RoomEvent
 │   ├── delete_event(room_id, event_id, cascade_replies = true) → list<string>
 │   │                                         # the ids removed (§10.3); a store
-│   │                                         # MAY return the removed events
-│   └── get_event_by_idempotency_key(room_id, channel_id, key) → RoomEvent | null
+│   │                                         # MAY return the removed events in
+│   │                                         # their place, the framework's call
+│   │                                         # returning their ids
+│   └── get_event_by_idempotency_key(room_id, channel_id | null, key) → RoomEvent | null
 │                                             # the event of channel_id that key
-│                                             # committed, BLOCKED included (§13.4)
+│                                             # committed, BLOCKED included (§13.4);
+│                                             # null: any channel of the room, for a
+│                                             # proactive delivery's key (§22.1)
 │
 ├── Bindings
 │   ├── create_binding(room_id, binding) → ChannelBinding
@@ -13382,6 +13400,10 @@ and never inherits the page's cap.
   its target's update (§10.3) are part of that commit: the store writes the
   change, the counters and the target in one transaction, and fails the
   whole commit when the target is gone.
+- A room is created once: a store MUST refuse to create a room under an id it
+  already holds, and never replaces the room it holds. §10.1 step 2 creates
+  a room under an id in hand, and a store that replaced the room would
+  re-home another conversation, another organization's included.
 - A hard delete (§10.3) leaves the room's counters as they are:
   `event_count` counts every index given out, and an index is never given
   again, so a store refuses a commit at an index below the room's
@@ -13395,7 +13417,10 @@ and never inherits the page's cap.
   indexes keys, or enforces their uniqueness with a constraint, does so on
   `(room_id, source.channel_id, idempotency_key)`, since a constraint over
   the room and the key alone would refuse one channel's message for
-  another's.
+  another's. A proactive delivery's key is the exception: it names one
+  publication in its room, whatever transport carries it (§22.1), and is
+  looked up within the room, under the same lock, whatever channel
+  committed it.
 
 ### 14.4 Returned-Object Ownership
 
@@ -16091,10 +16116,14 @@ before a transport is resolved, and a match returns the original outcome
 without publishing again. A retry that would resolve another transport (one
 plugged in or detached since the first attempt) is still that publication.
 The key is the application's, so the collision of two providers' keys that
-scopes an inbound key by its channel (§13.4) does not arise. Publication
-uses the ConversationStore's existing locked publication and unique-key
-contract (§13.4). Replays, including concurrent ones, MUST NOT create a
-second trigger event while the key is retained. The same key
+scopes an inbound key by its channel (§13.4) does not arise; an application
+SHOULD keep its keys apart from the message ids its providers give (a prefix
+of its own), since the lookup within the room does not tell them apart.
+Publication uses the ConversationStore's locked publication (§13.4), the key
+looked up under the room lock within the room, whatever channel committed it
+(`get_event_by_idempotency_key` with no channel, §14.1; §14.3). Replays,
+including concurrent ones, MUST NOT create a second trigger event while the
+key is retained. The same key
 identifies the same publication regardless of subsequent body or address
 changes. Retention follows the store: memory does not survive restart; durable
 stores retain committed keys until the corresponding event/key is removed.
@@ -17253,7 +17282,7 @@ framework event.
 | §10.1 steps 10, 11 and 15: a task stored | ON_TASK_CREATED | — |
 | §10.2 step 3c: a record the chain depth limit stores (§8.3) | — | chain_depth_exceeded |
 | §10.2 step 3c: a turn that failed or returned an error (§6.1, §10.6.8) | ON_ERROR | — |
-| §10.2 steps 3c and 3d: a target's `on_event()` or `deliver()` | — | delivery_succeeded, delivery_failed, broadcast_partial_failure |
+| §10.2 steps 3c and 3d: a target's `on_event()` or `deliver()`; a solicited intelligence channel no longer registered (§10.2 step 3) | — | delivery_succeeded, delivery_failed, broadcast_partial_failure |
 | §10.1 step 16 | AFTER_BROADCAST | — |
 | §10.1 step 17 | — | event_processed |
 | §10.3: an EDIT or a DELETE committed; a direct `update_event()` or `delete_event()` | ON_EVENT_UPDATED, ON_EVENT_DELETED | — |
@@ -18122,7 +18151,8 @@ and the events after it the indexes that follow.
 7. Participant updated: identification=IDENTIFIED, identity_id="id_marie"
    │
    ▼
-8. PARTICIPANT_IDENTIFIED event added to timeline
+8. ON_PARTICIPANT_IDENTIFIED fires; an implementation that writes lifecycle
+   records (§5.1) adds a PARTICIPANT_IDENTIFIED record to the timeline
 ```
 
 ### B.4 AI ↔ AI Multi-Agent with Chain Depth
@@ -18205,9 +18235,10 @@ Timeline of a room with SMS customer + AI:
                   ↑ customer sees this directly
 ```
 
-The lifecycle changes are reported by their hooks and framework events
-(§26.1); an implementation that writes lifecycle records (§5.1) adds one per
-change (`CHANNEL_ATTACHED`, `CHANNEL_MUTED`, `CHANNEL_UPDATED`,
+The attach, the mute and the unmute are reported by their hooks and
+framework events (§26.1); a binding update that changes no mute reports
+nothing (§7.2). An implementation that writes lifecycle records (§5.1) adds
+one per change (`CHANNEL_ATTACHED`, `CHANNEL_MUTED`, `CHANNEL_UPDATED`,
 `CHANNEL_UNMUTED`), each at the next index, `internal` and never delivered.
 
 ### B.6 Message Edit — Cross-Channel with Fallback
