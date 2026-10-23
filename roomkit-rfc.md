@@ -1800,10 +1800,11 @@ fails or does not decide in time does not silence the agent: the channel logs
 it and runs the turn as without a policy, and the decision it reports is
 `speak` with the reason `fallback`. Every decision fires `ON_SPEAK_DECISION`
 with the event, the channel and the decision, how long the policy took to
-decide (the bound, when it did not decide in time) and whether it was asked
-again once the agent thought (below), so that what an agent left unanswered,
-why, and what deciding cost can be followed and measured without wrapping the
-policy. A channel without a policy
+decide (the bound, when it did not decide in time), whether it was asked
+again once the agent thought, the thought it was decided with and whether the
+decision is late (below), so that what an agent left unanswered, why, and what
+deciding cost can be followed and measured without wrapping the policy. A
+channel without a policy
 answers every event, as before, and decides nothing; a policy that always
 speaks reports each decision, a baseline to measure another against. A turn the
 channel's strategy takes in a room (Section 19.7) is not submitted to it
@@ -1811,6 +1812,22 @@ either, save a turn a discussion gives in answer to a message (Section
 19.7.5): that one is the agent's own answer to the room, and is submitted to
 it. The agent's identity is the policy's own: a policy that judges whether
 the agent was addressed is told its name when it is made.
+
+The channel acts on the decision its `ON_SPEAK_DECISION` hooks leave, as on
+any SYNC trigger's payload (Section 9.3). Its SYNC hooks run in order before
+the channel acts: a MODIFY replaces the decision with the one its payload
+carries, and a BLOCK leaves the agent silent, with the reason `blocked by
+<hook>` (`hook_error:<hook>` for the failure of a fail-closed hook). Only the
+decision is read off a MODIFY's payload: the event decided on, the room and
+the channel stay the channel's. Its ASYNC hooks then observe the decision that
+stands. An application so takes in code an action the decision calls for,
+rather than leaving it to the model: an offer becomes a raised hand and a
+silence, and once the agent is given the floor its turn's notes say what it
+raised its hand for. The trigger is fail-open: a hook that fails changes
+nothing, and a room whose hook context cannot be built keeps the policy's
+decision, unless a hook registered there fails closed, which leaves the agent
+silent as that hook's own failure would. A silence a hook leaves is thought
+about as any other (rule 1 below).
 
 The people are those who take part besides the agent (*Who takes part*,
 below), or, when more, the distinct speakers named in the recent events: one
@@ -1830,6 +1847,13 @@ the answers in code, in this order:
    something tentatively, or asked anything when one person talks with it;
 4. offer when the speaker only wonders whether the agent could help;
 5. silent otherwise.
+
+A speaker has not finished when the turn ends cut off or says they are not
+done: a hesitation inside a turn whose last sentence is complete, or saying
+one does not know, is no unfinished turn. A turn about the agent said to
+someone else, or asking someone else to tell or explain something to it, does
+not address it: that person speaks next. Asking the agent whether it is ready
+to listen expects an answer, and is no request for quiet.
 
 Each judgment is reported with the decision. Its questions can be replaced by
 name, and its composition by an implementation of its own. Told the languages
@@ -1852,7 +1876,13 @@ judgment is made knowing it, and is asked, instead of that request, whether
 the turn puts a question or a request to the agent itself and whether it lets
 the agent talk again. While the room listens:
 
-- the agent is silent, and the decision is final (below);
+- the agent is silent, and the decision is final (below), unless what it
+  has in mind answers or corrects the turn as surely as the policy's
+  proactivity asks of an open room (below), the speaker has finished, neither
+  postpones it nor asks for quiet, and no question put to someone else waits
+  for them: the agent then offers, asking for the floor without taking it
+  (an application may show it as a raised hand), and the room goes on
+  listening;
 - a question or a request put to the agent and addressing it directly (its
   name, or "you") is answered, and the room goes on listening: answering one
   question does not lift a request to stay quiet; a speaker who has not
@@ -1924,13 +1954,25 @@ Thinker (interface)
    it comes back in time with something to say, the policy is asked again on
    the same event, with the thought: the agent may raise its hand on a turn it
    first listened to. Each decision fires `ON_SPEAK_DECISION`. A decision the
-   policy marks final is a silence no thought changes (a room that listens, a
-   voice only listened to): the thinker thinks, and the channel neither waits
-   for it nor asks again, so the next turn is not held back.
+   policy marks final is a silence no thought changes now (a room that
+   listens, a voice only listened to): the thinker thinks, and the channel
+   does not wait for it, so the next turn is not held back.
+
+   A thought that comes back after its event was decided (past the bound, or
+   on a final decision) with something to say, while no later event was given
+   to the thinker, is decided late: the policy is asked again on that event
+   with it, and the decision fires `ON_SPEAK_DECISION` marked late. No turn
+   runs on a late decision, whatever it says: the event's turn is over, and
+   the conversation may have moved on. Its hooks act on it (raise a hand, or
+   deliver an instruction for the agent to speak, Section 10.1.1). A later
+   event reads the thought itself, and no late decision is owed to the
+   earlier one.
 4. When the agent speaks or offers on an event submitted to the policy, the
    turn's notes carry its thought, and what it wanted to say is then empty: it
    is said, or offered. A thinker call running meanwhile does not bring it
-   back. An instruction carries no thought and empties nothing. The thought is
+   back, nor does one on a context taken while one of the agent's turns ran
+   in the room: what it would say is that answer, not in its context yet. An
+   instruction carries no thought and empties nothing. The thought is
    a model's reading of what people said, so whatever they said can reach it:
    the notes MUST carry it quoted (as any text from outside, below), bounded,
    and named as information to weigh, not as the runtime's instructions.
@@ -1946,11 +1988,18 @@ the one it replaces, and how long the thinker call that brought it took; a
 thought emptied because the agent spoke (rule 4) came from no call and carries
 no duration. A call that fails or brings back the same thought fires nothing.
 A policy reads it in `SpeakTurn.thought`. The classifier policy then also
-judges whether what the agent wants to say answers what the turn asks, or
-corrects or warns about what it says. Only wondered about and knowing the
-answer, the agent speaks rather than offers; not addressed, it offers when that
-judgment reaches the policy's proactivity (0.5 by default, lower is more
-eager), half of it when the thought is urgent, never on urgency alone.
+judges whether what the agent wants to say answers a question or a need still
+open at the turn (asked in it, or before it and answered by no one since, the
+agent included), or corrects or warns about what the turn says, and whether a
+question put to someone other than the agent still waits for that person's
+first try (they have not answered it, said they do not know, nor given up).
+Only wondered about and knowing the answer, the agent speaks rather than
+offers; not addressed, it offers when that judgment reaches the policy's
+proactivity (0.5 by default, lower is more eager), half of it when the thought
+is urgent, never on urgency alone. Unless the thought is urgent, a question
+that waits for someone else is theirs to answer first: wondered about, the
+agent offers rather than speaks, and not addressed, it stays silent. A
+question put to everyone waits for no one.
 RoomKit provides a thinker on any AI provider that answers under a JSON schema
 (Section 6.7), whose instructions the application can replace, and a mock.
 
@@ -4003,7 +4052,7 @@ on the room's owner.
 | | | | |
 | **AI Generation:** | | | |
 | BEFORE_AI_CONTEXT_BUILD | SYNC | Planned | Before an AI channel builds a turn's context (before memory retrieval and tool resolution) — can block the turn cheaply (Section 6.4, Anatomy of an AI turn); required by nothing today |
-| ON_SPEAK_DECISION | ASYNC | Implemented | An AI channel's speak policy decided whether the agent speaks, offers or stays silent on an event (Section 6.4) |
+| ON_SPEAK_DECISION | SYNC | Implemented | An AI channel's speak policy decided whether the agent speaks, offers or stays silent on an event — can change the decision (MODIFY) or leave the agent silent (BLOCK) (Section 6.4) |
 | ON_THOUGHT | ASYNC | Implemented | An AI channel's thinker came back with what the agent has in mind in a room (Section 6.4) |
 | ON_SPEAK_QUEUE | ASYNC | Implemented | A discussion's speak queue changed: an agent queued, a turn given or ended, an agent listening only or talking again, the discussion waiting for a person or over (Section 19.7.5) |
 | ON_DISPATCH_DECISION | ASYNC | Implemented | A discussion's dispatch policy decided which agents take a person's message that names none (Section 19.7.5 rule 18) |
