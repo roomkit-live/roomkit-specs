@@ -443,6 +443,7 @@ Room
 ├── status: RoomStatus                      # Current lifecycle state
 ├── created_at: datetime                    # When the room was created
 ├── updated_at: datetime                    # Last modification time
+├── paused_at: datetime | null              # When the room was paused; null unless PAUSED
 ├── closed_at: datetime | null              # When the room was closed
 ├── timers: RoomTimers                      # Auto-transition configuration
 ├── agent_response_policy: AgentResponsePolicy = AGENT_CHAIN  # What an agent's own output solicits (Section 19.3.1)
@@ -486,13 +487,14 @@ and MUST NOT be stored as a `BLOCKED` event: a closed room accepts nothing,
 and an audit record written into it would be the very thing the status
 forbids. The framework MUST return a blocked result naming the refusal
 (`reason = room_closed`) and, when what it turned away is an inbound event, a
-response re-entering the room or a regeneration, MUST emit the
-`room_refused_event` framework event (§8.2) so the condition is observable — a
-room that has gone quiet because it closed is otherwise indistinguishable from
-one whose integration has broken. The framework's own lifecycle records
-(`SystemContent`, §5.3) and the events an identity challenge injects (§11) MAY
-be refused without an event: neither is a message a subscriber could be
-waiting for.
+response re-entering the room, a hook's injected event, a record the room
+would store in place of a turn or a response it refuses (§8.3), or a
+regeneration, MUST emit the `room_refused_event` framework event (§8.2) so
+the condition is observable — a room that has gone quiet because it closed
+is otherwise indistinguishable from one whose integration has broken. The
+framework's own lifecycle records (`SystemContent`, §5.3) and the events an
+identity challenge injects (§11) MAY be refused without an event: neither is
+a message a subscriber could be waiting for.
 
 One exception, and only one: the framework's own record of the transition —
 the lifecycle hook, the framework event, and any timeline entry an
@@ -500,6 +502,18 @@ implementation chooses to write to mark it — is produced by the transition
 itself rather than through the pipeline, and is not subject to this refusal.
 Closing a room MUST remain observable: a room that simply goes quiet, with no
 signal of why, is indistinguishable from one whose integration has broken.
+
+**Lifecycle records.** An implementation MAY write a record in the timeline
+when a lifecycle change happens: a channel's attach, detach, mute, unmute or
+binding update, a participant's change, a timer's transition. When it does,
+the record is the framework's. Its type is the lifecycle type that names the
+change (§5.2: `CHANNEL_ATTACHED`, `CHANNEL_MUTED`, ...), or `SYSTEM` for a
+change no type names; its content a `SystemContent` (§5.3); its source the
+framework's (`channel_id = "system"`); its visibility `internal` (§7.3). It
+takes the room's next index and counts in `event_count`, is never delivered,
+runs no hook, and is no activity (below): a mute does not restart a room's
+inactivity timer. The indexes of Appendix B assume an implementation that
+writes none.
 
 CLOSED and ARCHIVED refuse identically; they differ in intent. CLOSED is a
 conversation that has ended and that the integrator MAY reopen by returning
@@ -529,13 +543,41 @@ the rest applied (§10.1 step 15).
 RoomTimers
 ├── inactive_after_seconds: int | null      # Seconds of inactivity before ACTIVE → PAUSED
 ├── closed_after_seconds: int | null        # Seconds in PAUSED before PAUSED → CLOSED
-└── last_activity_at: datetime | null       # Timestamp of last event
+└── last_activity_at: datetime | null       # Instant of the room's last activity (below)
 ```
 
-Implementations MUST enforce timer transitions when configured. When
-`inactive_after_seconds` elapses without a new event, the room MUST transition to
-PAUSED. When `closed_after_seconds` elapses in PAUSED without resumption, the room
-MUST transition to CLOSED.
+Implementations MUST enforce timer transitions when configured:
+
+- **Activity.** A room's activity is the events it stores DELIVERED through
+  the pipeline: each such commit moves `last_activity_at` to its instant, in
+  the commit's transaction (§10.1 step 12). A record stored `BLOCKED`, a
+  lifecycle record (above), an instruction, which is never stored
+  (§10.1.1), and a record committed outside the pipeline (§10.5) are no
+  activity. Inactivity counts from `last_activity_at`, or from `created_at`
+  while the room has had none.
+- **Pause.** When `inactive_after_seconds` elapses without activity, an
+  ACTIVE room MUST transition to PAUSED, and `paused_at` records the
+  instant.
+- **Resume.** A DELIVERED commit resumes a PAUSED room in the commit's
+  transaction: the room is ACTIVE again, `paused_at` null. What is no
+  activity resumes nothing. The integrator MAY resume a PAUSED room, as it
+  MAY reopen a CLOSED one (above); either moves `last_activity_at` to its
+  instant, which restarts the inactivity timer, and neither fires a hook nor
+  emits a framework event.
+- **Close.** When `closed_after_seconds` elapses from `paused_at` without a
+  resume, the room MUST transition to CLOSED.
+- **When.** Every locked section that reads the room's status (the gate of
+  §10.1 step 6, an attach or a binding change, a direct mutation, a record's
+  commit) first applies the transitions due at its instant, so an event that
+  arrives after its room fell due is refused as if the timer had run on
+  time. A room nobody writes to transitions when the host checks its timers,
+  or on the period of a sweeper the implementation runs. A transition takes
+  the instant it fell due, however late it is applied: a check long after
+  both fell due pauses the room at the first instant and closes it at the
+  second, in one write. Each is reported once stored (`ON_ROOM_PAUSED` and
+  `room_paused`, `ON_ROOM_CLOSED` and `room_closed`, with `reason = timer`),
+  before anything the section decides next: a message a close that fell due
+  refuses reports `room_closed` before its `room_refused_event`.
 
 ### 5.2 RoomEvent
 
@@ -3207,6 +3249,16 @@ A boolean flag on the binding. When `muted = true`:
 
 Muting is temporary. The integrator calls `mute()` and `unmute()` as needed.
 
+**A binding change that changes nothing.** Detaching or updating a channel
+the room does not bind fails, with nothing written. An update applies to the
+binding as stored, carrying over every field it does not name (§7.5 rule 6),
+and one that changes nothing writes nothing and fires nothing, so a retried
+call duplicates no hook and no record. `ON_CHANNEL_MUTED` and
+`ON_CHANNEL_UNMUTED` fire when `muted` changes, and only then: muting a
+muted channel fires nothing. A change of access, visibility or metadata
+fires no trigger and emits no framework event. A binding changes whatever
+the room's status, which governs what the timeline accepts (§5.1).
+
 ### 7.3 Visibility
 
 Controls which channels see events produced by the source channel. Set on the
@@ -3460,7 +3512,7 @@ They are NOT stored in any room timeline.
 |---|---|---|
 | room_created | New room created | room_id |
 | room_paused | Room transitioned to PAUSED by its inactivity timer | room_id, reason (`timer`) |
-| room_closed | Room transitioned to CLOSED | room_id; reason (`timer`) when its inactivity timer closed it |
+| room_closed | Room transitioned to CLOSED | room_id; reason (`timer`) when its close timer closed it (§5.1) |
 | room_archived | Room transitioned to ARCHIVED | room_id |
 | room_refused_event | A room whose status refuses new events turned one away (§5.1) | room_id, event_id, status, operation, event_type |
 | channel_registered | Channel registered with framework | channel_id, channel_type |
@@ -3571,8 +3623,10 @@ subscriber reads it without knowing which one did:
   when the room no longer exists.
 - `operation` — the path that met the gate: `inbound` for a message or a
   direct injection refused at §10.1 step 6; `reentry` for the framework's own
-  re-injection of a response; `regenerate` for a regeneration of the last
-  answer.
+  re-injection, which is a response, a hook's injected event, or a record
+  stored in place of a turn or a response the room refuses (an agent not
+  asked at the chain-depth limit, a response or an injected event past the
+  reentry budget, §8.3); `regenerate` for a regeneration of the last answer.
 - `event_type` — the type of the refused event; null when a regenerate had
   nothing to replay.
 
@@ -3861,9 +3915,9 @@ on the room's owner.
 | ON_EVENT_DELETED | ASYNC | Implemented | A persisted event was deleted (inbound soft DELETE, §10.3, or direct hard `delete_event()`) |
 | ON_CHANNEL_ATTACHED | ASYNC | Implemented | Channel attached to a room |
 | ON_CHANNEL_DETACHED | ASYNC | Implemented | Channel detached from a room |
-| ON_CHANNEL_MUTED | ASYNC | Implemented | Channel muted in a room |
-| ON_CHANNEL_UNMUTED | ASYNC | Implemented | Channel unmuted in a room |
-| ON_ROOM_CREATED | ASYNC | Implemented | New room created |
+| ON_CHANNEL_MUTED | ASYNC | Implemented | Channel muted in a room: its binding's `muted` changed to true (§7.2) |
+| ON_CHANNEL_UNMUTED | ASYNC | Implemented | Channel unmuted in a room: its binding's `muted` changed to false (§7.2) |
+| ON_ROOM_CREATED | ASYNC | Implemented | New room created; the creation awaits its hooks (§9.3) |
 | ON_ROOM_PAUSED | ASYNC | Implemented | Room transitioned to PAUSED |
 | ON_ROOM_CLOSED | ASYNC | Implemented | Room transitioned to CLOSED |
 | ON_IDENTITY_AMBIGUOUS | SYNC | Implemented | Multiple identity candidates found |
@@ -4056,7 +4110,12 @@ hook (§10.1 step 2).
 
 **ASYNC hooks:**
 
-- Run concurrently after the triggering operation completes.
+- Run concurrently after the triggering operation completes, but for
+  ON_ROOM_CREATED, whose hooks a room's creation awaits: every creation, the
+  integrator's and §10.1 step 2's alike, returns once they have finished or
+  timed out, each within its own timeout, so that a hook that attaches the
+  room's agent (Appendix B.1) has done so before anything is sent into the
+  room.
 - Cannot block or modify events.
 - Exceptions MUST be caught and logged, never propagated.
 - Used for observability, logging, side effects.
@@ -4619,8 +4678,10 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │           what becomes of the message (step 11). A `group` binding is
    │           never written, and the framework's own sender and a message
    │           with no address record no one
-   └── If new room created → fire ON_ROOM_CREATED hook and emit
-       `room_created`, then, under the room lock, attach the channel
+   └── If new room created → fire ON_ROOM_CREATED and wait for its hooks,
+       each within its timeout (§9.3), their context the room as created,
+       with no binding of the channel; emit `room_created`; then, under
+       the room lock, attach the channel
        unless a binding of it exists by then (a hook's included, §7.5
        rule 7), its binding naming the sender (`participant_id =
        sender_id`, §5.7) and, on a transport, addressing replies where the
@@ -4670,7 +4731,8 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
         room lock's release (step 13)
 
 6. ACQUIRE ROOM LOCK, THEN CHECK THE ROOM STILL ACCEPTS EVENTS
-   ├── Re-read the room's status under the lock (§5.1)
+   ├── Apply the room's due timer transitions, then re-read its status
+   │   under the lock (§5.1)
    ├── If the status refuses new events (CLOSED, ARCHIVED):
    │   └── Return InboundResult(blocked=true, reason=room_closed)
    │       # Nothing is stored: a refused event is not appended to the
@@ -4712,7 +4774,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     ├── Commit event with status=BLOCKED, blocked_by=hook_name, in the
     │   same atomic transaction as step 12: the event takes its index,
     │   event_count += 1, latest_index = event.index (§14.1, §14.3); its
-    │   visibility is the one step 12 would store (§7.3)
+    │   visibility is the one step 12 would store (§7.3). It is no
+    │   activity: last_activity_at does not move, and a PAUSED room stays
+    │   paused (§5.1)
     │   # An audit record: it reaches no channel, at delivery or as
     │   # reconstructed context one turn later (§7.5 rule 8), and a
     │   # default timeline read skips it (§14.1)
@@ -4776,7 +4840,8 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   ├── Store event with status=DELIVERED and, as its visibility, the
     │   │   intersection of its own and its source binding's (§7.3)
     │   └── Update room state: latest_index = event.index; event_count += 1;
-    │       timers.last_activity_at = now
+    │       timers.last_activity_at = the commit's instant; a PAUSED room
+    │       resumes, ACTIVE with paused_at null (§5.1)
     │   # After this transaction returns, the event is durably part of the
     │   # timeline. It MUST NOT be retroactively re-marked BLOCKED or FAILED
     │   # (e.g. by process_timeout, §13.6) — the timeline is authoritative.
@@ -5117,6 +5182,10 @@ than being drained inside the trigger's lock tenure.
        commit (§7.3)
 
 3. FOR EACH TARGET CHANNEL (concurrently):
+   │   # A target whose channel is no longer registered is not called: a
+   │   # transport is skipped, its connections possibly held by another
+   │   # process; an intelligence channel is reported delivery_failed
+   │   # (error `channel_not_registered`, not retryable)
    │
    ├── a. TRANSCODE CONTENT (§6.6)
    │      └── Convert event content to target's supported media types
@@ -5164,6 +5233,14 @@ than being drained inside the trigger's lock tenure.
 
 5. RETURN BroadcastResult
 ```
+
+**An unregistered channel.** Unregistering a channel leaves its bindings in
+their rooms. A message on it is refused as one on an unknown channel (§10.1
+step 1), and a delivery set does not call it (step 3): a transport is
+skipped, since in a deployment of several processes its connections may be
+held by another, and an intelligence channel is reported `delivery_failed`
+with the error `channel_not_registered`, not retryable. A channel registered
+again under the id serves the bindings.
 
 **BroadcastResult:**
 
@@ -16920,7 +16997,7 @@ A conforming implementation MUST support:
 
 - Room model with lifecycle (ACTIVE, PAUSED, CLOSED, ARCHIVED), including
   refusing new events at every entry point once the status says so (Section 5.1)
-- Room timers (auto-pause, auto-close)
+- Room timers (auto-pause, auto-close, resume on activity; Section 5.1)
 - RoomEvent with all EventType values and all EventContent types
 - Sequential event indexing
 - Channel interface (handle_inbound, deliver, on_event, capabilities)
@@ -17710,6 +17787,10 @@ ConferenceChannel
 
 ## Appendix B: Complete Event Flow Examples
 
+The indexes of these examples assume an implementation that writes no
+lifecycle record (§5.1); one that writes them gives each the next index,
+and the events after it the indexes that follow.
+
 ### B.1 Customer (SMS) + AI — Basic Conversation
 
 ```
@@ -17724,7 +17805,10 @@ ConferenceChannel
 3. process_inbound(message)
    │
    ├── Route: no active room for +15551234567 → create new room
-   │   └── Fire ON_ROOM_CREATED hook → attach AI channel
+   │   ├── Fire ON_ROOM_CREATED hook → attach AI channel
+   │   │   (step 2 waits for the hook, §9.3, so the AI channel is bound
+   │   │   before the message's delivery set is planned)
+   │   └── Attach sms_main, its binding naming +15551234567
    │
    ├── Identity: resolve(message from "+15551234567" on SMS, context) → IDENTIFIED (Jean Tremblay)
    │
@@ -17901,27 +17985,32 @@ Timeline of a room with SMS customer + AI:
 [3] ai→          "I can help with mortgage info..."   (chain_depth=1)
 
 ── Advisor joins ──
-[4] CHANNEL_ATTACHED  ws_advisor (access=READ_WRITE, visibility=all)
+    ON_CHANNEL_ATTACHED  ws_advisor (access=READ_WRITE, visibility=all)
 
 ── Integrator mutes AI, changes to assistant mode ──
-[5] CHANNEL_MUTED     ai_support
-[6] CHANNEL_UPDATED   ai_support (visibility → "ws_advisor" only)
-[7] CHANNEL_UNMUTED   ai_support
+    ON_CHANNEL_MUTED     ai_support
+    binding update       ai_support (visibility → "ws_advisor" only)
+    ON_CHANNEL_UNMUTED   ai_support
 
 ── Now AI whispers only to advisor ──
-[8] customer→    "What rate can I get?"               (chain_depth=0)
-[9] ai→          "Suggest offering 4.5% based on..."  (visibility: ws_advisor only)
+[4] customer→    "What rate can I get?"               (chain_depth=0)
+[5] ai→          "Suggest offering 4.5% based on..."  (visibility: ws_advisor only)
                   ↑ customer does NOT see this
-[10] advisor→    "We can offer you 4.5% fixed."       (visibility: all)
+[6] advisor→     "We can offer you 4.5% fixed."       (visibility: all)
                   ↑ customer sees this
 
 ── Advisor lets AI respond directly again ──
-[11] CHANNEL_UPDATED  ai_support (visibility → "all")
+    binding update       ai_support (visibility → "all")
 
-[12] customer→   "What documents do I need?"          (chain_depth=0)
-[13] ai→         "You'll need: 1. ID 2. Income..."    (visibility: all)
+[7] customer→    "What documents do I need?"          (chain_depth=0)
+[8] ai→          "You'll need: 1. ID 2. Income..."    (visibility: all)
                   ↑ customer sees this directly
 ```
+
+The lifecycle changes are reported by their hooks and framework events
+(§26.1); an implementation that writes lifecycle records (§5.1) adds one per
+change (`CHANNEL_ATTACHED`, `CHANNEL_MUTED`, `CHANNEL_UPDATED`,
+`CHANNEL_UNMUTED`), each at the next index, `internal` and never delivered.
 
 ### B.6 Message Edit — Cross-Channel with Fallback
 
