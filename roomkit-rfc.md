@@ -1214,7 +1214,8 @@ InboundMessage
 ├── session: VoiceSession | null            # Voice session to connect after processing
 ├── visibility: string = "all"              # Event visibility (Section 7.3), intersected
 │                                           # with the source binding's at commit;
-│                                           # "transport" reaches no intelligence channel
+│                                           # "transport" reaches no intelligence channel;
+│                                           # never "internal", the framework's
 ├── addressed_to: list<string> | null       # Intelligence channels asked to act
 │                                           # (Section 19.3); null = any eligible
 ├── response_visibility: string | null      # Where the answer may go; null = unrestricted
@@ -3159,15 +3160,33 @@ MUST be refused. An id listed twice counts once, and a list is written back
 with each id once, sorted by code point. An id that names no channel bound
 to the room is allowed and matches nothing.
 
+**Who writes `internal`.** Only the framework writes `internal`, on the
+records it writes itself (an interruption record, §6.4): a value that marks
+the framework's record is not the integrator's to give. An implementation
+MUST refuse it, before anything is read or written, on an attach and a
+binding update, on an inbound message (§5.12) and on a direct injection
+(§10.5); a hook's modify that writes it has the event's visibility put back
+from the original (§9.4). A record committed outside the pipeline (§10.5)
+is stored as its caller gives it, and reaches no channel. An event the
+integrator wants stored and shown to no channel takes `none`.
+
 **An event's visibility.** An event carries a visibility of its own (an
 inbound message's `visibility`, §5.12, `"all"` unless the caller sets one),
 and its source binding has one. A channel sees an event whose source is
 bound to the room only when both include it. The framework MUST compute the
-visibility that includes exactly those channels when it commits the event
-(§10.1 step 12) and store it as the event's `visibility`: delivery (§10.2)
-and every history rebuilt for a channel (§7.5 rule 8) read that field
-alone, so a binding changed or removed later changes no past event. The
-intersection of two visibilities is:
+visibility that includes exactly those channels when it commits the event,
+DELIVERED (§10.1 step 12) or `BLOCKED` in its place (steps 10 and 11, §8.3),
+and store it as the event's `visibility`: delivery (§10.2) and every history
+rebuilt for a channel (§7.5 rule 8) read that field alone, so a binding
+changed or removed later changes no past event. A record stored `BLOCKED`
+takes the visibility its event would have been delivered with, so that a
+reader shown it later (a host's view of the room) sees no more of it than it
+would have seen of the event: a hook's block and a source refusal, of an
+inbound message, a direct injection or a response; the record of an agent
+not asked at the chain-depth limit, and a response stored past the reentry
+budget (§8.3). An event whose source has no binding keeps its own. An event
+a hook injects is no channel's and keeps its own (§9.4), blocked or stored
+past the budget. The intersection of two visibilities is:
 
 - `all` with any value: that value;
 - `internal` with any value: `internal`, which keeps the mark of a record
@@ -3517,6 +3536,8 @@ implementation MUST store one record per channel not asked:
   `blocked_by = "event_chain_depth_limit"`;
 - the channel not asked as its source, with direction OUTBOUND like a
   response, and empty text as its content;
+- as its visibility, the one the response would have been committed with
+  (§7.3);
 - as `chain_depth`, the depth the response would have had, and as
   `responds_to` the trigger, which the response would have answered (§8.5);
 - its own observation, of category `event_chain_depth_exceeded`, whose
@@ -3544,7 +3565,8 @@ injected events alike (§10.1 steps 10 to 14). A buffered response past the budg
 does not re-enter, a chained stream past it is closed unread, so nothing is
 generated, and an injected event past it is not committed as a pass, so its
 hooks never run. Each is stored `BLOCKED` with
-`blocked_by = "reentry_loop_cap"`; none emits `chain_depth_exceeded` nor
+`blocked_by = "reentry_loop_cap"`, and with the visibility its pass would
+have committed it with (§7.3); none emits `chain_depth_exceeded` nor
 `event_blocked`.
 
 **Requirements:**
@@ -4259,7 +4281,9 @@ the event, and the hook's other changes stand. The source's write check (§10.1 
 and the chain-depth limit (§8.3) read these fields after the hooks: no hook
 can commit an event under another source, at another index or chain depth,
 or as the answer to another event. A visibility the hook changed is still
-narrowed at commit by the source binding's visibility (§7.3). A router hook
+narrowed at commit by the source binding's visibility (§7.3), and one of
+`internal`, which only the framework writes, is put back from the original
+(§7.3). A router hook
 that addresses an event (Section 19.4), by its address or its routing
 metadata, is unaffected.
 
@@ -4531,7 +4555,8 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 10. IF BLOCKED BY HOOK:
     ├── Commit event with status=BLOCKED, blocked_by=hook_name, in the
     │   same atomic transaction as step 12: the event takes its index,
-    │   event_count += 1, latest_index = event.index (§14.1, §14.3)
+    │   event_count += 1, latest_index = event.index (§14.1, §14.3); its
+    │   visibility is the one step 12 would store (§7.3)
     │   # An audit record: it reaches no channel, at delivery or as
     │   # reconstructed context one turn later (§7.5 rule 8), and a
     │   # default timeline read skips it (§14.1)
