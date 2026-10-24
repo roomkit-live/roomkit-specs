@@ -2896,24 +2896,25 @@ text form.
 | SystemContent | any | Unchanged |
 | ToolCallContent | any | Unchanged |
 
-A composite is transcoded part by part, each part by its own row, and no
-part is dropped: a part the target cannot carry becomes its text form. When
-every part ends up as a `TextContent`, the composite becomes one
-`TextContent`, the parts' texts joined in order by a newline, so that a
-channel that declares TEXT alone receives one message. Otherwise the
-composite keeps its transcoded parts, in order.
+A composite is transcoded part by part, each part by its own row, and no part
+is dropped: a part the target cannot carry becomes its text form. When every
+part ends up as a `TextContent`, the composite becomes one `TextContent`, its
+text form (below): the parts' texts joined in order by a newline, an empty
+one skipped, so that a channel that declares TEXT alone receives one message.
+Otherwise the composite keeps its transcoded parts, in order.
 
-**Text form.** Every content has a text form, the one text it reads as: for
-a row above that transcodes to a TextContent, the text of that TextContent;
-for the rows delivered unchanged, a TextContent's body, a SystemContent's
-body, and `[Tool call: {tool_name}]` for a ToolCallContent. A composite reads
-as its parts' text forms in order, joined by a newline, a part whose text
-form is empty skipped. An EditContent reads as "Correction: {the text form of
-its new content}" and a DeleteContent as "[Message deleted]", whatever a
-reader supports. Every reader of a content as text takes its text form: an
-instruction's fingerprint (§10.1.1 step 6), a turn's history and input read
-as text (§6.4), a reader outside a channel (below), and a part a target
-cannot carry (above).
+**Text form.** Every content has a text form, the one text it reads as: for a
+row above that transcodes to a TextContent, the text of that TextContent; for
+the rows delivered unchanged, a TextContent's body, a SystemContent's body,
+and `[Tool call: {tool_name}]` for a ToolCallContent. A composite reads as
+its parts' text forms in order, joined by a newline, a part whose text form
+is empty skipped. An EditContent reads as "Correction: {the text form of its
+new content}" and a DeleteContent as "[Message deleted]", whatever a reader
+supports. Every reader of a content as text takes its text form, save the
+mentions §6.4 gives an author image and an empty event: an instruction's
+fingerprint (§10.1.1 step 6), a turn's history and input read as text (§6.4),
+a reader outside a channel (below), a part a target cannot carry and a
+composite flattened to one text (above).
 
 When the target channel supports edits or deletes natively (i.e.,
 `capabilities.supports_edit` or `capabilities.supports_delete` is true), the
