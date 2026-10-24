@@ -3929,6 +3929,23 @@ RealtimeBackend (interface)
 Implementations SHOULD provide at least an in-memory realtime backend for
 single-process deployments.
 
+**A turn's ephemerals reach no one its answer would not reach.** What a turn
+publishes live (its reasoning, its tool calls' arguments and results, any
+other ephemeral its channel or hooks publish while it runs, and what work it
+began publishes after it ends, §10.6.3) shows what the turn produces. A
+subscriber of a room's ephemerals is not a bound channel, so no answer scope
+can be tested against it. The owner MUST therefore publish a turn's
+ephemerals only when the turn's answer reaches every channel of the room:
+the triggering event's answer scope (§5.12) restricts nothing, and the
+channel's binding, as the room holds it when each ephemeral is published,
+lets it write in the room (§7.5 rule 2) with the visibility `all`. A binding
+narrowed during the turn, or after it while work it began still publishes,
+stops its ephemerals from that publish on. Otherwise the owner publishes none
+of them: an agent whose answers are scoped to a
+supervisor, an internal agent, or one the room keeps from writing shows no
+live activity to the room's subscribers. Framework events (§8.2) are not
+ephemerals and are unaffected.
+
 ### 8.5 Responses: What They Answer, and Whether They Were Consumed
 
 An intelligence channel answers events: a participant's message, an
@@ -6645,7 +6662,11 @@ turn of that executor, which still holds the room's state: an external
 agent's update (§6.4) is handled under the turn prompting its session, or
 outside any turn when none is. It publishes what it accepts as it
 publishes a turn's `ephemeral` and `framework_event` frames, for the room
-and kinds a turn may publish.
+and kinds a turn may publish, and publishes its ephemerals only as §8.4
+allows for the turn it names: that turn's trigger, as it was sent, and the
+binding as the room holds it then. A turn the owner no longer knows, or a
+channel call, which has no answer, publishes none; a publication never
+takes a later turn's scope.
 
 #### 10.6.4 The stream: pulled, never pushed
 
