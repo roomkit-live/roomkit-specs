@@ -1614,7 +1614,8 @@ ChannelOutput
 
 `SYSTEM` marks what the framework writes itself. What the application that
 embeds it writes to a room's people is the host's own words, from a `HOST`
-channel (§10.5), never a `SYSTEM` source.
+channel (§10.5), never a `SYSTEM` source. A `HOST` channel is a transport
+only: binding one as an intelligence channel MUST be refused (§10.5).
 
 Implementations MAY define additional channel types. A type added by the
 implementation itself — a new transport it ships — is an ordinary member of this
@@ -3085,7 +3086,7 @@ AIContext
 ├── tools: list<AITool>                     # Functions the model may call
 ├── response_schema: map<string, any> | null  # JSON Schema of the answer, see below
 ├── room: RoomContext | null                # Current room state
-├── target_capabilities: ChannelCapabilities | null
+├── target_capabilities: ChannelCapabilities | null  # What every transport that sends shares (§4.2)
 ├── target_media_types: list<ChannelMediaType>
 ├── metadata: map<string, any>
 └── response_metadata: ResponseMetadata     # The turn's one record, see below
@@ -5032,6 +5033,8 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   known
    ├── Look up registered channel by message.channel_id
    ├── Fail if channel not registered
+   ├── Fail if the channel is a host channel, which receives no external
+   │   payload (§10.5): nothing read, nothing routed, opened or attached
    └── Write sender_id in the channel's form (E.164 on a channel
        addressed by phone number, §5.7) before anything reads it
 
@@ -6275,24 +6278,55 @@ intelligence channel that is not one of its agents. Nor do they come from a
 author record (§10.1 step 12) and may make the changes reserved to the system
 (§10.3).
 
+A host channel MUST be bound as a transport: an attach that binds one as an
+intelligence channel, by the category it names or the one the channel
+declares, MUST be refused before anything is written. A message handed to the
+inbound pipeline on a host channel MUST be refused before anything is read
+(§10.1 step 1): the host speaks through this section's calls only. Never
+delivered to, a host channel is no transport an answer reaches: what a turn
+may answer with (`target_capabilities`, `target_media_types`, §6.7) is what
+the room's transports that send carry, and the host channel narrows none of
+it. Its declaration lists every media type, since `content` may be any; each
+transport the event reaches gets it transcoded for what it carries (§6.6).
+
 An implementation SHOULD offer the host's voice as one call:
 
 ```
 post(room_id, content, participant_id | null, addressed_to = [],
-     metadata | null, channel_id | null, organization_id | null) → RoomEvent
+     metadata | null, channel_id | null, organization_id | null,
+     idempotency_key | null) → RoomEvent
 ```
 
 `post()` injects `content` as `send_event` does (this section), from
 `channel_id` when the call names one, which MUST be a registered channel of
-type `HOST`, else from the kit's own host channel, registered on first use. A
-room that does not bind that channel gets it attached first, an ordinary
-attachment with its `CHANNEL_ATTACHED` record (§5.2). A `channel_id` that names
-a channel of another type, or none registered, MUST be refused before
-anything is written. `addressed_to` defaults to `[]`: the host's message
-solicits no intelligence channel unless it names one (§19.3). `participant_id`
-names who speaks, a participant of the room, so a reader is shown their name
-(§10.1 step 12). `metadata` carries where the message comes from: a workflow,
-its step, a job.
+type `HOST`, else from the kit's own host channel, registered on first use
+under the id `host`. A `channel_id` that names a channel of another type, or
+none registered, and, when the call names none, the id `host` held by a
+channel of another type, MUST be refused before anything is written, as must
+an argument `send_event` refuses before anything is read.
+
+A room that never bound the host channel gets it attached first, an ordinary
+attachment with its `CHANNEL_ATTACHED` record (§5.2), decided in one section
+under the room lock, where binding and status changes run: the room is read
+scoped to `organization_id`, its due timers applied (§5.1), then its binding
+of the channel. A binding made by then, set up by the integrator before the
+post or concurrently with it, is kept as it is, never replaced, so concurrent
+first posts attach the channel once. A room whose status refuses new events
+MUST raise a room-closed error. A room the host channel was detached from
+MUST raise as a channel the room does not bind does: the post does not undo
+the revocation (§7.5 rule 7), which only an explicit attach grants again.
+Nothing is written either way.
+
+`addressed_to` defaults to `[]`: the host's message solicits no intelligence
+channel unless it names one (§19.3). `participant_id` names who speaks, a
+participant of the room: a reader is shown their name (§10.1 step 12) only
+when that participant was reached through the host channel the post comes
+from (its `connected_via` names it), since an id names its participant on no
+other channel (§5.5). `metadata` carries where the message comes from: a
+workflow, its step, a job. `idempotency_key` is `send_event`'s (§13.4): a key
+the host channel holds in the room makes the post a replay, which sends
+nothing again and returns the event the key committed, read before the
+reentry budget when the room's own work posts; a blank key is no key.
 
 **A record outside the pipeline.** An integrator MAY commit an event that no
 member is meant to receive (a trace, a display snapshot, a copy a branched
@@ -18680,7 +18714,8 @@ HostChannel
 ├── type: HOST
 ├── category: TRANSPORT
 ├── direction: INBOUND             # brings the host's words in; never delivered to
-├── media_types: any the room's other transports carry
+├── media_types: every type        # post() injects any content, transcoded per transport (§6.6)
+├── narrows: nothing               # an answer carries what the transports that send carry (§10.5)
 ├── receives: nothing              # no external payload: post() and send_event inject
 └── purpose: The host application writing to a room's people in its own
              name, through post() (§10.5)
