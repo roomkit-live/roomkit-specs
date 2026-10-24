@@ -675,7 +675,7 @@ RoomEvent
 | DELIVERED | Event stored and broadcast; an allowed instruction, never stored, reads DELIVERED (§10.1.1) |
 | READ | Event read by recipient (from read receipt) |
 | FAILED | Delivery failed after all retries |
-| BLOCKED | Event refused: by a sync hook, a source that cannot write or has no binding in the room (§7.5 rule 2), or the chain-depth limit (§8.3) |
+| BLOCKED | Event refused: by a sync hook, a source that cannot write or has no binding in the room (§7.5 rule 2), the chain-depth limit or the reentry budget (§8.3) |
 
 **EventSource:**
 
@@ -3869,19 +3869,21 @@ makes into the room, each drawing one pass as it starts (§9.5.1, Reentrance):
 what code under the cascade's lock injects or sends, what an off-lock hook's
 body, a handler its check's report awaits (`hook_error`, `hook_timeout`) or
 the parse does for the cascade's event, and the calls its deliveries and turns
-make into the room, a routed message once routing has placed it there, or
-that create a room, routed or named, each charged once before the room is
-created, with the cascades those calls start. A buffered
-response past the budget does not re-enter, a chained stream past it is closed
-unread, so nothing is generated, and an injected event past it is not
-committed as a pass, so its hooks never run. Each is stored `BLOCKED` with
-`blocked_by = "reentry_loop_cap"`, and with the visibility its pass would have
-committed it with (§7.3); none emits `chain_depth_exceeded` nor
-`event_blocked`. A message past it is refused with no event, nothing of it
-stored (`reason = reentry_loop_cap`): one that names its room as it starts,
-before §10.1 step 1, and one routed or naming a room the store does not
-hold once step 2 knows its room, before any room is created (§9.5.1, Past
-the cap).
+make into the room (a routed message once routing has placed it there), and
+those that create a room, routed or named, charged once before the room is
+created, with the cascades those calls start. A message is charged once,
+wherever routing places it. A buffered response past the budget does not
+re-enter, a chained stream past it is closed unread, so nothing is
+generated, and an injected event past it is not committed as a pass, so its
+hooks never run. Each is stored `BLOCKED` with `blocked_by =
+"reentry_loop_cap"`, and with the visibility its pass would have committed
+it with (§7.3); none emits `chain_depth_exceeded` nor `event_blocked`. A
+message past it is refused with no event, nothing of it stored (`reason =
+reentry_loop_cap`): one that names its room first thing at §10.1 step 1;
+one naming a room the store does not hold at step 2, before creating it;
+a routed one at step 2, before creating a new room, or, landing in the room
+the work delivers in, after the locked check, what routing wrote kept
+(§9.5.1, Past the cap).
 
 **Requirements:**
 
@@ -4869,13 +4871,14 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   was no longer the message's (§10.4): one that lands in the room the work
   delivers in draws on that work's budget, wherever the router first placed
   it, and one that lands in another room that exists has a budget of its own.
-  A call whose room step 2 read absent, and that another call created first,
-  stays charged and goes on into that room as one that exists, its cascade
-  on a budget of its own, as for a call into another room that exists. A
-  call into any room made while a turn runs is at least as deep as the
-  response of the deepest turn it runs within, and one made while a tool call
-  outside a turn runs (a realtime or a conference tool call, §12.4) at least
-  as deep as the answer that issued it (§8.3). Once the turn, the tool call
+  When step 2 reads a call's room absent and another call creates it first,
+  the call stays charged and goes on into that room as into one that
+  exists; its cascade has a budget of its own. A message already charged is
+  not charged again, wherever routing places it once more. A call into any
+  room made while a turn runs is at least as deep as the response of the
+  deepest turn it runs within, and one made while a tool call outside a turn
+  runs (a realtime or a conference tool call, §12.4) at least as deep as the
+  answer that issued it (§8.3). Once the turn, the tool call
   or the delivery is over, work it began (a task it spawned) calls into a room
   as a new arrival with a budget of its own and the depth of its own event, 0
   for a message it creates. Such a call that would
@@ -4894,14 +4897,15 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   with `reentry_loop_cap`, no hook run, with the visibility its pass would
   have committed it with (§7.3), and `send_event()` returns that record
   (§10.5); a message is refused with no event, nothing of it stored
-  (`InboundResult(blocked=true, reason=reentry_loop_cap)`). One that names
-  its room is refused as it starts, before anything else (§10.1 step 1),
-  nothing created; one that names a room the store does not hold, when step
-  2 reads the room absent, before creating it; a routed one once step 2
-  knows its room (§10.1 step 2): before creating it when the room is new,
-  and otherwise once step 2 has kept the room for the message, what it wrote
-  to route the message (the channel's attach, the sender's record) kept, as
-  for a message a hook refuses (§10.4).
+  (`InboundResult(blocked=true, reason=reentry_loop_cap)`):
+  - one that names its room, first thing at §10.1 step 1, nothing created;
+  - one that names a room the store does not hold, at step 2, before
+    creating it;
+  - a routed one, at step 2: before creating a new room, or, when it lands
+    in the room the work delivers in, after the locked check, what step 2
+    wrote to route it (the channel's attach, the sender's record) kept, as
+    for a message a hook refuses (§10.4). One that lands in another room
+    that exists has a budget of its own and is not refused.
 - **A message routed back.** A message that names no room and that routing
   lands in the room whose lock its caller holds, or in whose admission order
   it stands, fails at once with nothing written rather than wait for its own
@@ -4950,10 +4954,11 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    ├── A message that names its room and draws on the reentry budget of
    │   that room's work (§9.5.1: made under its lock, in its admission
    │   order, or from its deliveries and turns), past that budget →
-   │   refused as it starts, before anything else, nothing created or
-   │   stored: InboundResult(blocked=true, reason=reentry_loop_cap).
-   │   A routed message, and one naming a room the store does not hold,
-   │   are charged at step 2, once their room is known
+   │   refused first thing, nothing created or stored:
+   │   InboundResult(blocked=true, reason=reentry_loop_cap). A routed
+   │   message of its deliveries and turns, and one of theirs naming a room
+   │   the store does not hold, are charged at step 2, once their room is
+   │   known
    ├── Look up registered channel by message.channel_id
    ├── Fail if channel not registered
    └── Write sender_id in the channel's form (E.164 on a channel
@@ -4973,8 +4978,7 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   ├── No room with that id → create a new room with that id; a
    │   │   creation the store refuses because another call created the
    │   │   room meanwhile reads the room again, as one that exists, checked
-   │   │   for the caller's organization as above, a charge on the reentry
-   │   │   budget made for the creation kept (below)
+   │   │   for the caller's organization as above
    │   ├── Routed (not provided) to a room that exists, whose lock the caller
    │   │   holds or in whose admission order it stands (§9.5.1, Reentrance)
    │   │   → fail at once, nothing written, the room lock not asked for
@@ -5039,8 +5043,10 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   │   charge stays when another call created the room first, the room
    │   │   having been read absent: the message goes on into that room as
    │   │   one that exists, its cascade on a budget of its own
+   │   ├── A message already charged is not charged again, wherever
+   │   │   routing places it once more
    │   └── A routed message in a room that exists, once the locked check
-   │       above kept the room for it, after any routing once more:
+   │       above kept the room for it, after any re-route:
    │       ├── The room the work delivers in → one pass drawn on the
    │       │   delivering cascade's budget; past it, refused, nothing of
    │       │   the message stored, what this step wrote to route it kept
