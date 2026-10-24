@@ -3904,8 +3904,13 @@ what code under the cascade's lock injects or sends, what an off-lock hook's
 body, a handler its check's report awaits (`hook_error`, `hook_timeout`) or
 the parse does for the cascade's event, and the calls its deliveries and turns
 make into the room (a routed message once routing has placed it there), and
-those that create a room, routed or named, charged once before the room is
-created, with the cascades those calls start. A message is charged once,
+so do those of the ASYNC hooks it fires once an event's delivery set has run
+(§10.1 step 16's `AFTER_BROADCAST` hooks, a change's `ON_EVENT_UPDATED` and
+`ON_EVENT_DELETED` hooks, §10.3), while each hook's body runs, and those that
+create a room, routed or named, charged once before the room is created, with
+the cascades those calls start. Work such a hook's body starts (a task it
+spawns) that calls once the body has returned is work of its own, with a
+budget and a depth of its own (§9.5.1). A message is charged once,
 wherever routing places it. A buffered response past the budget does not
 re-enter, a chained stream past it is closed unread, so nothing is
 generated, and an injected event past it is not committed as a pass, so its
@@ -4922,12 +4927,18 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
 - **The room's work outside the lock.** A call into the room from its work
   outside the lock and outside its admission order (a delivery set's
   deliveries and turns: a transport's `deliver()`, an agent's turn, a tool
-  handler, a `TurnHost` verb) is a new arrival: it takes a ticket when an
-  off-lock hook fires for its event, and `process_timeout` bounds it (§13.6).
-  While that delivery or turn runs, a call into its own room MUST draw on the
-  reentry budget of the cascade that delivers, the one whose delivery set runs
-  it, and so does the cascade the call starts, so that a transport whose
-  delivery sends into its room stops at the cap. So MUST a call it makes that
+  handler, a `TurnHost` verb; and the body of an ASYNC hook a cascade fires
+  once an event's delivery set has run: §10.1 step 16's `AFTER_BROADCAST`
+  hooks, a change's `ON_EVENT_UPDATED` and `ON_EVENT_DELETED` hooks, §10.3)
+  is a new arrival: it takes a ticket when an off-lock hook fires for its
+  event, and `process_timeout` bounds it (§13.6). While that delivery, turn
+  or hook body runs, a call into its own room MUST draw on the reentry budget
+  of the cascade that delivers, the one whose delivery set runs it or that
+  fired the hook, and so does the cascade the call starts, so that a
+  transport whose delivery sends into its room, or a hook that posts after
+  every event, stops at the cap. A hook body draws on it only while it runs,
+  each body on its own: a hook that posts once per event draws one pass of
+  that event's budget. So MUST a call it makes that
   creates a room, whether a routed message opens it or the call names a room
   the store does not hold, which step 2 creates with the id (§10.1 step 2,
   §10.4): the room is that cascade's own work, and the call is charged once,
@@ -4944,10 +4955,11 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   room made while a turn runs is at least as deep as the response of the
   deepest turn it runs within, and one made while a tool call outside a turn
   runs (a realtime or a conference tool call, §12.4) at least as deep as the
-  answer that issued it (§8.3). Once the turn, the tool call
-  or the delivery is over, work it began (a task it spawned) calls into a room
-  as a new arrival with a budget of its own and the depth of its own event, 0
-  for a message it creates. Such a call that would
+  answer that issued it (§8.3). Once the turn, the tool call, the delivery
+  or the hook's body is over, work it began (a task it spawned) calls into a
+  room as a new arrival with a budget of its own and the depth of its own
+  event, 0 for a message it creates, or the depth the call names (a
+  `chain_depth` it passes to continue a chain, §10.5). Such a call that would
   wait on its own delivery from a context the delivery lane cannot progress
   past returns with its completion detached (§10.1 step 18). Only a call into
   its caller's own room is detached so: a call into another room waits for
@@ -5402,11 +5414,16 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
         rest applied
 
 16. RUN AFTER_BROADCAST ASYNC HOOKS
-    └── After the event's delivery set completes — "all channels have
-        processed the event" (§9.2) is unchanged; only the timing may be
-        later than under pre-lane implementations. Non-blocking,
-        exceptions swallowed (§9.3) — a slow observer hook MUST NOT hold
-        the room lock.
+    ├── After the event's delivery set completes — "all channels have
+    │   processed the event" (§9.2) is unchanged; only the timing may be
+    │   later than under pre-lane implementations. Non-blocking,
+    │   exceptions swallowed (§9.3) — a slow observer hook MUST NOT hold
+    │   the room lock.
+    └── Each hook's body, and that of a change's mutation trigger (§10.3),
+        is the cascade's work while it runs: a call it makes into the room
+        is a new arrival drawing on the cascade's reentry budget (§8.3,
+        §9.5.1). Work it starts that calls once the body has returned
+        begins fresh.
 
 17. EMIT FRAMEWORK EVENTS
     └── event_processed, delivery_succeeded/failed, etc.
@@ -6222,8 +6239,9 @@ Reentrance). Made under the room lock, it draws on the reentry budget of the
 cascade that holds it (§8.3), or on a budget of its own under a lock the host
 holds outside any pass (§9.5.1); made in the admission order, on that of the
 event the work is for. Made from the room's work outside the lock (a turn, a
-delivery), it is a new arrival: while that work runs, one into its own room
-draws on the budget of the cascade that delivers, as does any call of that
+delivery, an ASYNC hook's body, §10.1 step 16), it is a new arrival: while
+that work runs, one into its own room draws on the budget of the cascade that
+delivers, or that fired the hook, as does any call of that
 work that creates a room (§9.5.1), and one into another room that exists
 already on a budget of its own, and one into any room is at least as deep as
 the response of the deepest turn it runs within, or as the answer that issued
@@ -6294,7 +6312,7 @@ An implementation SHOULD offer the host's voice as one call:
 ```
 post(room_id, content, participant_id | null, addressed_to = [],
      metadata | null, channel_id | null, organization_id | null,
-     idempotency_key | null) → RoomEvent
+     idempotency_key | null, chain_depth = 0) → RoomEvent
 ```
 
 `post()` injects `content` as `send_event` does (this section), from
@@ -6303,7 +6321,8 @@ type `HOST`, else from the kit's own host channel, registered on first use
 under the id `host`. A `channel_id` that names a channel of another type, or
 none registered, and, when the call names none, the id `host` held by a
 channel of another type, MUST be refused before anything is written, as must
-an argument `send_event` refuses before anything is read.
+an argument `send_event` refuses before anything is read and a negative
+`chain_depth`.
 
 A room that never bound the host channel gets it attached first, an ordinary
 attachment with its `CHANNEL_ATTACHED` record (§5.2), decided in one section
@@ -6321,15 +6340,24 @@ deadline from the call's start to its commit, and the section it opens runs
 to its end whatever becomes of the caller.
 
 `addressed_to` defaults to `[]`: the host's message solicits no intelligence
-channel unless it names one (§19.3). `participant_id` names who speaks, a
-participant of the room: a reader is shown their name (§10.1 step 12) only
-when that participant was reached through the host channel the post comes
-from (its `connected_via` names it), since an id names its participant on no
-other channel (§5.5). `metadata` carries where the message comes from: a
-workflow, its step, a job. `idempotency_key` is `send_event`'s (§13.4): a key
-the host channel holds in the room makes the post a replay, which sends
-nothing again and returns the event the key committed, read before the
-reentry budget when the room's own work posts; a blank key is no key.
+channel unless it names one (§19.3). `participant_id` names who speaks: it
+MUST name a participant reached through the host channel the post comes from
+(its `connected_via` names it), by their id or by their identity's, as a
+turn's sender is read (§5.5), since an id names its participant on no other
+channel; else the post is refused before anything is written, the first
+post's attach included, the room read scoped to `organization_id` first so
+that another organization's room is not found whoever the id names (§17.2).
+A reader is shown the speaker's name (§10.1 step 12). An integrator makes a
+member one by adding them on the host channel. `send_event` takes any id
+(§5.5). `metadata` carries where the message comes from: a workflow, its
+step, a job. `chain_depth` is `send_event`'s, the chain the post continues
+(§8.3), 0 opening one: work that follows an agent's answer once the answer's
+work is over, which begins fresh (§9.5.1), names the answer's depth plus one,
+so that its round trips with the agent end at `max_chain_depth`.
+`idempotency_key` is `send_event`'s (§13.4): a key the host channel holds in
+the room makes the post a replay, which sends nothing again and returns the
+event the key committed, read before the reentry budget when the room's own
+work posts; a blank key is no key.
 
 **A record outside the pipeline.** An integrator MAY commit an event that no
 member is meant to receive (a trace, a display snapshot, a copy a branched
