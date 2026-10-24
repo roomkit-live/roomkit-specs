@@ -2923,10 +2923,11 @@ its parts' text forms in order, joined by a newline, a part whose text form
 is empty skipped. An EditContent reads as "Correction: {the text form of its
 new content}" and a DeleteContent as "[Message deleted]", whatever a reader
 supports. A number in a text form (a location's latitude and longitude) is
-written in decimal, as the shortest decimal that reads back as the same
-`float`, with at least one digit after the point and never an exponent: 45
-is `45.0`, 5e-05 is `0.00005`, and -73.6 is `-73.6`, so a location at 45
-north reads "[Location: (45.0, -73.6)]". Every implementation then writes
+written in decimal, as the shortest decimal that reads back as the same IEEE
+754 binary64 value, with at least one digit after the point and never an
+exponent: 45 is `45.0`, 5e-05 is `0.00005`, and -73.6 is `-73.6`, so a
+location at latitude 45, longitude -73.6 reads "[Location: (45.0, -73.6)]".
+Every implementation then writes
 the same text, and an instruction's fingerprint over it agrees (§10.1.1
 step 6). Every reader of a content as text takes its text form, save the
 mentions §6.4 gives an author image and an empty event: an instruction's
