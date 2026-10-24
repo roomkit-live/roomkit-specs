@@ -388,13 +388,13 @@ read the event (§10.2). Direction does not filter intelligence channels.
 Everything in a Room is a RoomEvent — messages, system notifications, typing
 indicators, channel state changes, participant joins/leaves. Once stored, an
 event keeps its index and status. Its content and source change only through
-§10.3 (an EDIT event or a direct `update_event()`); its metadata,
-`delivery_results` and `consumption` can also be written afterwards, by §10.3
-and by the framework's own records of what became of it (a delivery that
-failed, the end of a streamed turn, a response cancelled as `superseded`, a
-response read or heard, §8.5); a direct
-`delete_event()` removes it (§10.3). Events are sequentially indexed within
-their room.
+§10.3 (an EDIT event or a direct `update_event()`); its metadata and
+`consumption` can also be written afterwards, by §10.3 and by the framework's
+own records of what became of it (the end of a streamed turn, a response
+cancelled as `superseded`, a response read or heard, §8.5); its
+`delivery_results` is written only by the record of its deliveries (§14.3),
+which every other write keeps; a direct `delete_event()` removes it (§10.3).
+Events are sequentially indexed within their room.
 
 ### 4.4 The Participant
 
@@ -623,7 +623,8 @@ RoomEvent
 │                                           # (§10.1.1 step 5)
 ├── chain_depth: int >= 0                   # Response chain depth (loop prevention)
 ├── parent_event_id: string | null          # In-app thread: the root of its thread,
-│                                           # as §10.1 step 8 stores it
+│                                           # as every path that commits the event
+│                                           # stores it (§10.1 step 8)
 ├── responds_to: string | null              # The event this response answers (§8.5)
 ├── consumption: map<string, Consumption>   # Per delivering channel: taken in? (§8.5)
 ├── correlation_id: string | null           # Integrator's external reference
@@ -631,7 +632,9 @@ RoomEvent
 ├── created_at: datetime                    # When the event was created
 ├── metadata: map<string, any>              # Integrator-defined data
 ├── channel_data: ChannelData               # Provider-specific structured metadata
-└── delivery_results: map<string, any>      # Per-channel delivery outcomes
+└── delivery_results: map<string, any>      # Per-channel delivery outcomes; once
+                                            # stored, written by the record of its
+                                            # deliveries alone (§14.3)
 ```
 
 **EventType** enumeration:
@@ -1206,11 +1209,18 @@ name other keys, or none. The defaults:
 A channel with no recipient key delivers to a destination of its own (a
 WebSocket's connections, a webhook's URL, a voice or video session) and needs
 no recipient (§10.2 step 3d). A recipient is a value under the key that is a
-string, neither empty nor blank, or a number (a chat id); null, a blank
-string, a boolean, an array and an object are none. Every read of a recipient
-takes this rule: a delivery's (§10.2 step 3d) and routing's (a binding's
-recipient read as its correspondent, the record of a routed sender, §10.1
-step 2, §10.4). A chat message is its chat's: it is routed by the chat its
+string, neither empty nor blank, or an integer, for a chat id written as one
+(Telegram's); null, a blank string, a boolean, a float, a whole one included
+(`42.0`), an array and an object are none: a float has no single written
+form, so it cannot be compared as an address. A store whose JSON form cannot
+tell a whole float from an integer (Postgres `jsonb` reads `1e16` back as
+`10000000000000000`) reads such a value as an integer. Every read of a
+recipient takes this rule: a delivery's (§10.2 step 3d) and routing's (a
+binding's recipient read as its correspondent, the record of a routed sender,
+§10.1 step 2, §10.4). Routing and the record of a sender compare a recipient, and
+a chat, in its written form: the integer `12345` and the string `"12345"`
+are one address. The framework writes the addresses it records as strings,
+a chat id included. A chat message is its chat's: it is routed by the chat its
 chat key carries, and a room opened for it binds the channel naming the chat
 as correspondent and recipient (§10.1 step 2). The chat under a chat key
 takes the recipient's rule: a value that is no recipient is no chat, and a
@@ -3444,8 +3454,10 @@ binding update, on an inbound message, as its `visibility` and as its
 `response_visibility` alike (§5.12), and on a direct injection, its
 visibility and its response visibility alike (§10.5); a hook's modify that
 writes it, or that changes the visibility of an event that holds it (a
-framework record), has the event's visibility put back from the original
-(§9.4), and a channel's response that carries it is committed with `none`
+framework record), has the event's visibility put back from the original,
+and one that writes it as a response visibility has it read as `none`
+(§9.4); a channel's response that carries it is committed with `none`, and
+one a channel gives its response as a response visibility reads as `none`
 (§8.5). A record committed outside the pipeline (§10.5) is stored as its
 caller gives it, and reaches no channel. An event the integrator wants stored
 and shown to no channel takes `none`.
@@ -3975,9 +3987,11 @@ from the room's bindings as the delivery plan that asked the channel read
 them (§10.1 step 12): the scope narrows what the channel gave, never widens
 it. The response carries the scope as its own `response_visibility` (§5.2),
 intersected with any its channel gave it, so that what answers the response
-stays within both. A response MUST NOT be visible beyond its cascade's scope:
-its hooks may change its visibility (§9.4), and once they are over the
-pipeline MUST intersect the visibility they left with the scope again. The
+stays within both; a channel's `internal` reads as `none`, as a hook's does
+(§9.4), since only the framework writes `internal` (§7.3). A response MUST
+NOT be visible beyond its cascade's scope: its hooks may change its
+visibility (§9.4), and once they are over the pipeline MUST intersect the
+visibility they left with the scope again. The
 commit then narrows the response to its source binding's (§7.3). Only a null
 `response_visibility` restricts nothing: an empty one is refused at the
 doors, and one that reaches an event any other way reads as `none` (§7.3).
@@ -4255,7 +4269,8 @@ commit left them, the target rewritten and the change in its history (§10.3,
 Mutation triggers). Fired by
 a direct `update_event()` or `delete_event()`, the payload is the event
 updated, or each event removed, and their context the room's, read once the
-call has released the room lock (§10.3, Direct mutation).
+call has released the room lock, or the context the call held under the lock
+when that read fails (§10.3, Direct mutation).
 
 **The context of a lifecycle hook.** A hook on a lifecycle trigger
 (ON_ROOM_CREATED, ON_ROOM_PAUSED, ON_ROOM_CLOSED, ON_CHANNEL_ATTACHED,
@@ -4668,10 +4683,11 @@ neither give an event that mark nor change the visibility of a framework
 record that has it. The replacement MAY narrow the event's
 `response_visibility` (§5.12), never widen or clear it: the event keeps the
 intersection of the original's and the hook's (§7.3), a null on either side
-giving the other's, and `internal` from a hook reads as `none`. A response's
-visibility a hook changed is narrowed to its cascade's scope again once its
-hooks are over (§8.5). A router hook that addresses an event (Section 19.4),
-by its address or its routing metadata, is unaffected.
+giving the other's, and `internal` from a hook reads as `none`, as it does
+from a channel on its response (§8.5). A response's visibility a hook changed
+is narrowed to its cascade's scope again once its hooks are over (§8.5). A
+router hook that addresses an event (Section 19.4), by its address or its
+routing metadata, is unaffected.
 
 **InjectedEvent:**
 
@@ -4852,8 +4868,18 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   belongs to no cascade: its call draws on a budget of its own, and the
   events its hooks inject commit once the host has released the lock, after
   the call returns. An adopted call answers at its commit, with its
-  completion detached (§10.1 step 18) and no delivery results: its delivery
-  waits in the lane behind the work that made it.
+  completion detached (§10.1 step 18) and no delivery results. Made under
+  the lock, its delivery waits in the lane behind the work that made it, and
+  a wait on it there returns unwaited (§10.1 step 18). Made in an event's
+  admission work, its delivery does not wait for that work: it runs at its
+  turn in the lane, ahead of the event's, so a wait on it from that work
+  returns with its delivery results, and the event commits and is delivered
+  after it. A wait whose delivery calls into the room and needs the ticket
+  that event holds ends at the event's `process_timeout` (§13.6): the event
+  is refused with nothing of it stored, and the wait ends with the work. The
+  delivery's call, bound by its own `process_timeout`, which started later,
+  commits only if it takes the released ticket before that expires;
+  otherwise it is refused too.
 - **The room's work outside the lock.** A call into the room from its work
   outside the lock and outside its admission order (a delivery set's
   deliveries and turns: a transport's `deliver()`, an agent's turn, a tool
@@ -4892,12 +4918,18 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   implementation need not detect it, and it lasts until a caller stops waiting
   (§13.6). An integrator SHOULD make a call into another room from a delivery
   with detached completion, or from outside that delivery.
-- **Past the cap.** Each call into the room, adopted or a new arrival from
-  its work, draws one pass on its budget as it starts, a routed message once
-  its room is known. Past the budget, an injected event is stored `BLOCKED`
-  with `reentry_loop_cap`, no hook run, with the visibility its pass would
-  have committed it with (§7.3), and `send_event()` returns that record
-  (§10.5); a message is refused with no event, nothing of it stored
+- **Past the cap.** A direct injection whose key its channel already holds
+  in the room is a replay (§13.4): its key is read as the call starts,
+  before its budget, and it returns the original result and draws nothing.
+  Only an injection reads its key first: a message past the cap stores
+  nothing, while an injection past it would store a record whose key
+  collides with the event it replays. Each other call into the room,
+  adopted or a new arrival from its work, draws one pass on its budget as it
+  starts, a routed message once its room is known. Past the budget, an
+  injected event is stored `BLOCKED` with `reentry_loop_cap`, no hook run,
+  with the visibility its pass would have committed it with (§7.3), and
+  `send_event()` returns that record (§10.5); a message is refused with no
+  event, nothing of it stored
   (`InboundResult(blocked=true, reason=reentry_loop_cap)`):
   - one that names its room, first thing at §10.1 step 1, nothing created;
   - one that names a room the store does not hold, at step 2, before
@@ -5136,14 +5168,24 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 
 8. ASSIGN EVENT INDEX
    ├── event.index = room.event_count
-   └── An inbound message's or a direct injection's (§10.5) thread is
-       rooted: a parent_event_id naming a reply is replaced by that reply's
-       own parent, its thread's root (§5.2); one naming no event of the room
-       is dropped, the event posted at the top level
-       # A response (step 14) and an event a hook injects (§9.4) keep the
-       # parent they came with, and a streamed row takes its trigger's: on
-       # those passes only a parent a hook sets is rooted (step 9). A record
-       # committed outside the pipeline is stored as given (§10.5)
+   └── The event's thread is rooted: the event its parent_event_id names
+       is read, and a parent naming a reply is replaced by that reply's own
+       parent, its thread's root (§5.2). A parent that, once rooted, names
+       no event of the room (none, another room's, one a hard delete
+       removed) is dropped, the event posted at the top level
+       # Every path that commits an event roots its parent so, at this step
+       # or at its own commit: an inbound message, a direct injection
+       # (§10.5), a response (step 14), an event a hook injects (§9.4), a
+       # streamed row, which takes its trigger's parent and is rooted at its
+       # own commit, each row, not once as its turn starts (a root deleted
+       # meanwhile drops the row's parent), and a record committed outside
+       # the pipeline (commit_event, §10.5). A parent a hook sets is rooted
+       # too (step 9). A reply committed so names a root the room held at
+       # its commit, and a hard delete's one level of replies is the whole
+       # thread (§10.3). A reply stored before this
+       # rule, or kept by a hard delete of its root that kept the replies
+       # (cascade_replies false), may name a reply or a removed event; an
+       # answer to it is rooted as above
 
 8a. VALIDATE EDIT/DELETE (an EDIT or a DELETE, and an event holding a change
     elsewhere — §10.3 Validation; on every pass that commits an event)
@@ -5399,8 +5441,9 @@ another may own.
 Repeated cancellation MUST NOT interrupt cleanup already in progress. A
 bounded cleanup that expires MUST report incomplete drainage, not success;
 resources still in use MUST be retained. An implementation MUST refuse a drain
-from a context that its own delivery needs to progress, such as its room lock
-or delivery lane. These guarantees cover execution owned by the local process;
+from a context the delivery lane cannot progress past (its room lock, its
+delivery lane, §10.2). These guarantees cover execution owned by the local
+process;
 a turn another process runs is cancelled, and its drainage reported, as
 §10.6.8 says, and so is a turn its owner gave up as it closed, which is not
 joined even when its executor runs in the owner's process.
@@ -5441,9 +5484,11 @@ of each record: the non-streaming path collects it after generation, and the
 streaming path after consuming the response stream. A deferred call MAY return
 with the record still empty, but `delivery.wait()` MUST backfill it together with
 `delivery_results` and `error`, so the waited result reads like the ordinary
-waiting path. A call that ran no response turn returns an empty record. When
-several channels contribute metadata they SHOULD namespace their top-level keys;
-the merge order for colliding keys is unspecified.
+waiting path, save a wait from a context the lane cannot progress past (the
+room lock, the lane's own work), which returns with what it has (step 18). A
+call that ran no response turn returns an empty record. When several channels
+contribute metadata they SHOULD namespace their top-level keys; the merge
+order for colliding keys is unspecified.
 
 #### 10.1.1 Instructions
 
@@ -5812,6 +5857,8 @@ a hook that blocks the EDIT/DELETE MUST leave the target event unmutated):
 3. The change, its target's update and the room's counters MUST be one
    transaction (§14.3): a commit that fails leaves neither the change nor
    the target's update, and one whose target is gone by then fails whole.
+   The target's update keeps the `delivery_results` the store holds, which
+   only the record of its deliveries writes (§14.3).
 4. An accepted change is committed with its own visibility, narrowed by its
    source binding's (§7.3), narrowed again to its target's: a correction of
    a message an advisor alone saw never reaches the customer. An injected
@@ -5876,21 +5923,23 @@ delete_event(room_id, event_id, cascade_replies = true) → list<string>
 ├── The target
 ├── Its replies, unless cascade_replies is false: the events whose
 │   parent_event_id names the target (no self-referential FK protects
-│   them), one level deep: the pipeline roots an inbound message's and a
-│   direct injection's parent (§10.1 step 8), so those name the target
-│   whichever of its replies they answered. An event whose parent names
-│   one of the replies (a response or an injected event that came with
-│   it, a record committed as given) is not removed with them
-└── Whatever cascade_replies says, the changes of every event it removes:
-    the EDIT and DELETE events whose target_event_id names one. An edit
-    holds its target's corrected content, which a host deleting the
-    message means to remove, and a change of an event that no longer
-    exists changes nothing
+│   them), one level deep: every path that commits an event roots its
+│   parent at that commit, each streamed row at its own (§10.1 step 8), so
+│   an answer to any reply of the target names the target itself, and one
+│   level is the whole thread. An event whose
+│   parent names one of the replies, which no path writes any longer, is
+│   not removed with them
+└── Whatever cascade_replies says, the changes of the target and of its
+    replies, the replies it removes: the EDIT and DELETE events whose
+    target_event_id names one of them. An edit holds its target's
+    corrected content, which a host deleting the message means to remove,
+    and a change of an event that no longer exists changes nothing. A
+    change of a change is not removed with them
 ```
 
-An event that is both a reply of the target and a change of an event
-removed is removed once, among the replies, or among the changes when
-`cascade_replies` is false.
+An event that is both a reply of the target and one of those changes is
+removed once, among the replies, or among the changes when `cascade_replies`
+is false.
 
 It MUST return the ids it removed, in this order: the target's, then its
 replies' in index order, then the changes' in index order. Both calls MUST
@@ -5901,13 +5950,16 @@ once the room lock is released, with the room's context read then:
 `ON_EVENT_UPDATED` once, with the event as it now stands, and
 `ON_EVENT_DELETED` once per event removed, in the order of the ids returned,
 each with the event as it was stored, so that a projection over the timeline
-sees every row that went. A room or a target the store does not hold,
-another room's event included, MUST be a no-op that fires nothing:
-`update_event()` returns null and `delete_event()` no id. So is a room of
-another organization than the one the call names, or of none when it names
-one, with nothing written in it, its due timers included (§17.2); a call that
-names no organization reads the room unscoped. An update that changes nothing
-writes nothing and fires nothing, and returns the event as stored.
+sees every row that went. A failure of that read does not fail the call: the
+change is stored and stands (§13.6), the implementation logs the failure,
+and the triggers fire with the context the call held under the lock. A room
+or a target the store does not hold, another room's event included, MUST be
+a no-op that fires nothing: `update_event()` returns null and
+`delete_event()` no id. So is a room of another organization than the one
+the call names, or of none when it names one, with nothing written in it,
+its due timers included (§17.2); a call that names no organization reads the
+room unscoped. An update that changes nothing writes nothing and fires
+nothing, and returns the event as stored.
 
 **Broadcast behavior:**
 
@@ -6136,7 +6188,8 @@ already on a budget of its own, and one into any room is at least as deep as
 the response of the deepest turn it runs within, or as the answer that issued
 a tool call outside a turn (§8.3); once the work is over, it is a new arrival
 with a budget and a depth of its own (§9.5.1). Past its budget it is stored
-`BLOCKED` with `reentry_loop_cap`.
+`BLOCKED` with `reentry_loop_cap`, unless its key makes it a replay, which
+draws nothing and returns the event its key committed (§13.4).
 
 An injection takes §10.1's steps 1 to 4 its own way. The channel it names
 MUST be registered, and the event is admitted as a message is before anything
@@ -6183,17 +6236,20 @@ is the room written, and so MUST one whose key is in the publication namespace
 `organization_id` (§17.2): a missing room, or another organization's, is not
 found. A room whose status refuses new events (§5.1) MUST refuse the record
 before anything is written, and emits no framework event: a record reaches no
-one, and no subscriber waits for it. The record is committed under the room
+one, and no subscriber waits for it. A record committed outside the pipeline
+is never a replay (§14.3). The record is committed under the room
 lock with the next index, which the room's delivery lane MUST pass at its turn
 with nothing to run, as a record stored `BLOCKED` (§13.5): no delivery set, no
 hook, and no broadcast follow it, and the next event of the room waits on its
 index no longer than on the events before it. It counts in `event_count` and
 `latest_index`, and is no activity: `last_activity_at` does not move, and a
 PAUSED room stays paused (§5.1), since a trace nobody receives does not keep a
-room alive. It is stored as the caller gives it (its status, its visibility
-and the rest), whatever the persistence policy, and rule 2 of §7.5 does not
-apply to it. An event the members must receive is injected with `send_event`
-instead.
+room alive. It is stored as the caller gives it (its status, its visibility,
+its `delivery_results` and the rest), whatever the persistence policy, but
+for its thread parent, rooted as every committed event's is (§10.1 step 8),
+and its author record, which the room fixes, any `metadata.author` given
+dropped (§10.1 step 12); rule 2 of §7.5 does not apply to it. An event the
+members must receive is injected with `send_event` instead.
 
 ### 10.6 Turn Execution
 
@@ -13518,12 +13574,16 @@ deliveries MUST be queued (not dropped).
 An idempotency key is unique per room and per source channel. Keys usually
 come from providers (an SMS message id, an email Message-ID), and two
 channels of one room may carry the same key for two different messages. An
-inbound message and an event injected directly (§10.5) are the events that
-carry a key: the pipeline clears it on the responses it commits (§8.5) and
-on the events a hook injects (§9.4). A proactive delivery's key is the
+inbound message, an event injected directly and a record committed outside
+the pipeline (§10.5) are the events that carry a key: the pipeline clears it
+on the responses it commits (§8.5) and on the events a hook injects (§9.4).
+A record committed outside the pipeline is never a replay (§14.3). A
+proactive delivery's key is the
 application's and names one publication in the room, whatever transport
 carries it (§22.1); it is stored in a namespace the pipeline reserves, which
-no message's key enters (§5.2).
+no message's key enters (§5.2). A blank key, empty or whitespace only, is no
+key: a message or an event that carries one is processed and stored as one
+that carries none, save at `deliver()`, which refuses it (§22.1).
 
 If an InboundMessage or a directly injected event carries an
 `idempotency_key`, the framework MUST:
@@ -13532,6 +13592,12 @@ If an InboundMessage or a directly injected event carries an
    same source channel with that key.
 2. If it does → return the original result without reprocessing.
 3. If not → process normally and record the key.
+
+A directly injected event's key is read before anything is drawn on the
+reentry budget (§8.3): its replay is no new pass, draws nothing on the budget
+of the cascade that made it, and returns the original result even past that
+budget. A message past the budget is refused first thing, its key unread,
+nothing stored (§10.1 step 1, §9.5.1 Past the cap).
 
 A key is retained with its event: a hard delete (§10.3) removes it with the
 event it named, and a retry of that message is then processed anew.
@@ -13781,11 +13847,23 @@ ConversationStore (interface)
 │   ├── add_event(room_id, event) → RoomEvent
 │   │                                         # a DELIVERED edit or delete also
 │   │                                         # writes its target's change, in the
-│   │                                         # same transaction (§14.3)
+│   │                                         # same transaction (§14.3); refuses
+│   │                                         # an event whose source channel
+│   │                                         # and idempotency key an event of
+│   │                                         # the room carries, as a
+│   │                                         # duplicate key (§14.3)
 │   ├── get_event(event_id) → RoomEvent | null
 │   ├── list_events(room_id, filters) → list<RoomEvent>
 │   ├── get_event_count(room_id, filter | null) → int
 │   ├── update_event(event_id, updates) → RoomEvent
+│   │                                         # keeps the stored
+│   │                                         # delivery_results (§14.3)
+│   ├── record_delivery_results(room_id, event_id, results) → void
+│   │                                         # replaces the event's
+│   │                                         # delivery_results with results,
+│   │                                         # and writes nothing else of it;
+│   │                                         # an event_id that is not an
+│   │                                         # event of room_id is left alone
 │   ├── delete_event(room_id, event_id, cascade_replies = true) → list<string>
 │   │                                         # the ids removed, in §10.3's order
 │   │                                         # (the target, its replies by
@@ -13920,9 +13998,19 @@ and never inherits the page's cap.
 - Once committed (DELIVERED), an event MUST NOT be retroactively re-marked
   BLOCKED or FAILED. A processing timeout or a delivery failure after the
   commit point (§13.6) MUST NOT alter the event's committed status.
+- Once stored, an event's `delivery_results` is written by the store's
+  record of its deliveries alone (`record_delivery_results`, §14.1), which
+  replaces that map and writes nothing else of the event. Every other write
+  of a stored event MUST keep the `delivery_results` the store holds,
+  whatever the copy it is given carries: an update of the event
+  (`update_event`, §10.3), and the update of a change's target, which the
+  change's commit writes (§10.3). So an edit or a delete committed while the
+  event's deliveries ran never undoes their record, and the record never
+  undoes the change. A record committed outside the pipeline is stored with
+  the `delivery_results` it brings (§10.5).
 - Idempotency key checks MUST be performed under the room lock. A key is
-  looked up within its room and its source channel (§13.4): a store that
-  indexes keys, or enforces their uniqueness with a constraint, does so on
+  looked up within its room and its source channel (§13.4): a store's index
+  or uniqueness constraint on keys covers
   `(room_id, source.channel_id, idempotency_key)`, since a constraint over
   the room and the key alone would refuse one channel's message for
   another's. A proactive delivery's key is the exception: it names one
@@ -13931,6 +14019,18 @@ and never inherits the page's cap.
   committed it. It is stored in the namespace the pipeline reserves for it
   (`roomkit:publication:<key>`, §5.2), so the per-channel uniqueness never
   sets a publication against a message keyed alike.
+- A store MUST refuse to commit an event when its room already holds an
+  event of the same source channel with the same idempotency key, with
+  nothing written: the commit fails as a duplicate key, with an error of its
+  own that every store raises alike (`IdempotencyKeyTakenError`), never its
+  storage driver's error, and never by replacing the event the key names.
+  The pipeline looks the key up first, under the room lock, before it
+  commits anything of the event, a record past the reentry budget included
+  (§10.1 step 7, §13.4), so only a direct commit meets the refusal: a record
+  committed outside the pipeline (§10.5), which is never a replay and fails
+  with this error, or a caller of the store itself. A key a hard delete
+  released (§13.4) is free again. An event under an id the
+  store already holds is outside this rule.
 
 ### 14.4 Returned-Object Ownership
 
@@ -16632,11 +16732,14 @@ success. Unaddressed calls without explicit destinations MAY retain room-wide
 realtime injection. A non-null intelligence address uses the text pipeline,
 not a direct realtime injection; combining it with `session_id` is invalid.
 
-**Idempotency boundary.** A keyed text delivery's key names one publication in
-its room, whatever transport carries it: it is checked within the room, before
-a transport is resolved, and a match returns the original outcome without
-publishing again. A retry that would resolve another transport (one plugged in
-or detached since the first attempt) is still that publication. The key is the
+**Idempotency boundary.** A blank key, empty or whitespace only, names no
+publication: `deliver()` refuses it with `blocked`, reason
+`empty_idempotency_key`, before anything is written. A keyed text delivery's
+key names one publication in its room, whatever transport carries it: it is
+checked within the room, before a transport is resolved, and a match returns
+the original outcome without publishing again. A retry that would resolve
+another transport (one plugged in or detached since the first attempt) is
+still that publication. The key is the
 application's, so the collision of two providers' keys that scopes an inbound
 key by its channel (§13.4) does not arise, and only an event a proactive
 delivery published counts as an earlier copy of it: the publication is stored
@@ -18471,7 +18574,8 @@ TelegramChannel
 │   ├── verify_signature(request) → bool
 │   └── send(chat_id, content, options) → DeliveryResult
 ├── binding_metadata:
-│   └── telegram_chat_id: string (recipient: the chat, §5.7)
+│   └── telegram_chat_id: string | int (recipient: the chat, §5.7; the
+│       framework writes a string)
 ├── chat_key: chat_id
 └── delivery: sends via Telegram Bot API (sendMessage, sendPhoto, etc.)
 ```
