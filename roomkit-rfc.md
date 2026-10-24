@@ -521,18 +521,18 @@ CLOSED and ARCHIVED refuse identically; they differ in intent. CLOSED is a
 conversation that has ended and that the integrator MAY reopen by returning
 the room to ACTIVE. ARCHIVED is a terminal storage state.
 
-**A transition from a status it does not leave from.** An integrator's
-pause, resume, close or archive of a room already in the status it leads to
-does nothing: no write, no hook, no framework event. A pause of a PAUSED
-room, a resume of an ACTIVE one, a close of a CLOSED one and an archive of
-an ARCHIVED one are such; a reopen has none, since an ACTIVE room was never
+**A transition from a status it does not leave from.** An integrator's pause,
+resume, close or archive of a room already in the status it leads to MUST do
+nothing: no write, no hook, no framework event. A pause of a PAUSED room, a
+resume of an ACTIVE one, a close of a CLOSED one and an archive of an
+ARCHIVED one are such; a reopen has none, since an ACTIVE room was never
 closed. A transition on a room in any other status it does not leave from
 MUST fail with nothing written: a pause or a resume of a CLOSED or ARCHIVED
-room, a reopen of a room that is not CLOSED, and a close of an ARCHIVED
-room. No call takes a room out of ARCHIVED. A transition names the
-organization its caller acts for: a room of another organization, or of
-none when the call names one, is not found, and nothing is written in it,
-its due timers included (§17.2).
+room, a reopen of a room that is not CLOSED, and a close of an ARCHIVED room.
+No call takes a room out of ARCHIVED. A transition names the organization its
+caller acts for: a room of another organization, or of none when the call
+names one, is not found, and nothing is written in it, its due timers
+included (§17.2).
 
 Reading is unaffected by status: history, participants and bindings remain
 readable at every status, and an implementation MUST NOT make a closed room
