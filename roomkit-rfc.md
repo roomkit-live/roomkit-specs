@@ -620,7 +620,8 @@ RoomEvent
 │                                           # depth (§8.5); null = unrestricted
 ├── index: int >= 0                         # Sequential position in room timeline
 ├── chain_depth: int >= 0                   # Response chain depth (loop prevention)
-├── parent_event_id: string | null          # In-app thread: the root of its thread
+├── parent_event_id: string | null          # In-app thread: the root of its thread,
+│                                           # as §10.1 step 8 stores it
 ├── responds_to: string | null              # The event this response answers (§8.5)
 ├── consumption: map<string, Consumption>   # Per delivering channel: taken in? (§8.5)
 ├── correlation_id: string | null           # Integrator's external reference
@@ -1385,7 +1386,9 @@ InboundMessage
 ├── external_id: string | null              # Provider-side reference
 ├── thread_id: string | null                # Provider-native thread reference,
 │                                           # passed through to the provider
-├── parent_event_id: string | null          # In-app thread: the event this replies to
+├── parent_event_id: string | null          # In-app thread: the event this replies to;
+│                                           # the pipeline stores its thread's root
+│                                           # (§10.1 step 8)
 ├── idempotency_key: string | null          # Duplicate prevention
 ├── raw_payload: map<string, any>           # Original provider payload
 ├── provider_message_id: string | null      # Provider's message ID
@@ -3924,7 +3927,8 @@ greeting) has `responds_to = null`. A turn the channel runs again for the same
 event carries the same `responds_to`. A buffered answer a channel already
 named keeps its name. The pair (`source.channel_id`, `responds_to`) names one
 channel's answer to one event. `parent_event_id` is unrelated: it places an
-event in an in-app thread, and always names the thread's root. A
+event in an in-app thread, whose root it names once §10.1 step 8 has rooted
+it. A
 speech-to-speech channel (Section 12.4) is not bound by this yet: its answer to
 the user's speech starts before that speech's transcript is committed, so there
 is no event to name, and its answers carry `responds_to = null` (Planned).
@@ -5122,7 +5126,15 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    └── Otherwise → continue
 
 8. ASSIGN EVENT INDEX
-   └── event.index = room.event_count
+   ├── event.index = room.event_count
+   └── An inbound message's or a direct injection's (§10.5) thread is
+       rooted: a parent_event_id naming a reply is replaced by that reply's
+       own parent, its thread's root (§5.2); one naming no event of the room
+       is dropped, the event posted at the top level
+       # A response (step 14) and an event a hook injects (§9.4) keep the
+       # parent they came with, and a streamed row takes its trigger's: on
+       # those passes only a parent a hook sets is rooted (step 9). A record
+       # committed outside the pipeline is stored as given (§10.5)
 
 8a. VALIDATE EDIT/DELETE (an EDIT or a DELETE, and an event holding a change
     elsewhere — §10.3 Validation; on every pass that commits an event)
@@ -5141,7 +5153,8 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    └── Collect result: allow / block / modify
        # A modify rewrites what the event says, never which event it is:
        # its id, source, index, chain depth and the other fields §9.4
-       # protects are kept from the original
+       # protects are kept from the original. A thread parent it sets is
+       # rooted as at step 8, on every pass
 
 9a. RE-READ THE ROOM (only when a hook ran under the lock, §9.5.1 Reentrance)
     ├── The event takes the room's next index: an entry committed ahead of
@@ -5851,9 +5864,11 @@ delete_event(room_id, event_id, cascade_replies = true) → list<string>
 ├── The target
 ├── Its replies, unless cascade_replies is false: the events whose
 │   parent_event_id names the target (no self-referential FK protects
-│   them). A reply names its thread's root (§5.2), so one level is the
-│   whole thread; an event whose parent is one of those replies, which the
-│   pipeline never writes, is not removed with them
+│   them), one level deep: the pipeline roots an inbound message's and a
+│   direct injection's parent (§10.1 step 8), so those name the target
+│   whichever of its replies they answered. An event whose parent names
+│   one of the replies (a response or an injected event that came with
+│   it, a record committed as given) is not removed with them
 └── Whatever cascade_replies says, the changes of every event it removes:
     the EDIT and DELETE events whose target_event_id names one. An edit
     holds its target's corrected content, which a host deleting the
@@ -5861,13 +5876,17 @@ delete_event(room_id, event_id, cascade_replies = true) → list<string>
     exists changes nothing
 ```
 
+An event that is both a reply of the target and a change of an event
+removed is removed once, among the replies, or among the changes when
+`cascade_replies` is false.
+
 It MUST return the ids it removed, in this order: the target's, then its
 replies' in index order, then the changes' in index order. Both calls MUST
 serialise against inbound processing via the room lock, whatever the room's
 status, its due timers applied first (§5.1): a change to what the room
 stored is no new event. Both MUST fire the corresponding mutation trigger
-after the lock is released, with the room's context read once the lock is
-released: `ON_EVENT_UPDATED` once, with the event as it now stands, and
+once the room lock is released, with the room's context read then:
+`ON_EVENT_UPDATED` once, with the event as it now stands, and
 `ON_EVENT_DELETED` once per event removed, in the order of the ids returned,
 each with the event as it was stored, so that a projection over the timeline
 sees every row that went. A room or a target the store does not hold,
