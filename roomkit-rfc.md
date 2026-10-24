@@ -3804,14 +3804,17 @@ an event chain.
   that restarts the count at 0 opens a chain the limit never reaches.
 - An event a hook injects keeps the `chain_depth` of the event whose hooks
   injected it (§9.4).
-- A call into a room made within a turn while it runs (its tool handlers,
-  its `TurnHost` verbs, its own code calling the framework) is at least as
-  deep as the response depth of the deepest turn it runs within: the event it
+- A call into a room made within a turn while it runs (its tool handlers, its
+  `TurnHost` verbs, its own code calling the framework) is at least as deep
+  as the response depth of the deepest turn it runs within: the event it
   injects or the message it hands in takes that depth when its own is lower
   (§9.5.1, §10.6.5), so that an agent that injects into its room at each
-  turn, through any channel, stops at the limit as its answers do. Once the
-  turn is over, work it began (a task it spawned) calls as a new arrival with
-  the depth of its own event, 0 for a message it creates (§9.5.1).
+  turn, through any channel, stops at the limit as its answers do. So is a
+  call made while a tool call outside a turn runs (a realtime or a conference
+  tool call, §12.4, §21.4), at least as deep as the answer that issued it.
+  Once the turn or the tool call is over, the floor is gone: work it began (a
+  task it spawned) calls as a new arrival with the depth of its own event, 0
+  for a message it creates (§9.5.1).
 
 **At the limit.** When an event's `chain_depth + 1 >= max_chain_depth`, an
 intelligence channel it solicits (Section 19.3) MUST NOT be asked to act:
@@ -4828,20 +4831,23 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   reentry budget of the cascade that delivers, the one whose delivery set
   runs it, and so does the cascade the call starts, so that a transport whose
   delivery sends into its room stops at the cap; a call into another room has
-  a budget of its own. Made within a turn, it is at least as deep as the
-  response of the deepest turn it runs within (§8.3). Once the turn or the
-  delivery is over, work it began (a task it spawned) calls into a room as a
-  new arrival with a budget of its own and the depth of its own event, 0 for
-  a message it creates. Such a call that would wait on its own delivery from
-  a context the delivery lane cannot progress past returns with its
-  completion detached (§10.1 step 18). Only a call into its caller's own room
-  is detached so: a call into another room waits for that room's delivery, so
-  a delivery of room A that calls into room B while a delivery of B calls
-  into A waits for B's lane, and B's for A's, and the two wait for each
-  other. Such a cycle is outside step 18's guarantee (§10.1): an
-  implementation need not detect it, and it lasts until a caller stops
-  waiting (§13.6). An integrator SHOULD make a call into another room from a
-  delivery with detached completion, or from outside that delivery.
+  a budget of its own. A call into any room made while a turn runs is at
+  least as deep as the response of the deepest turn it runs within, and one
+  made while a tool call outside a turn runs (a realtime or a conference tool
+  call, §12.4) at least as deep as the answer that issued it (§8.3). Once the
+  turn, the tool call or the delivery is over, work it began (a task it
+  spawned) calls into a room as a new arrival with a budget of its own and
+  the depth of its own event, 0 for a message it creates. Such a call that
+  would wait on its own delivery from a context the delivery lane cannot
+  progress past returns with its completion detached (§10.1 step 18). Only a
+  call into its caller's own room is detached so: a call into another room
+  waits for that room's delivery, so a delivery of room A that calls into
+  room B while a delivery of B calls into A waits for B's lane, and B's for
+  A's, and the two wait for each other. Such a cycle is outside step 18's
+  guarantee (§10.1): an implementation need not detect it, and it lasts until
+  a caller stops waiting (§13.6). An integrator SHOULD make a call into
+  another room from a delivery with detached completion, or from outside that
+  delivery.
 - **Past the cap.** Each call into the room, adopted or a new arrival from
   its work, draws one pass on its budget as it starts. Past the budget, an
   injected event is stored `BLOCKED` with `reentry_loop_cap`, no hook run,
