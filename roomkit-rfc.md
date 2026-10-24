@@ -3934,14 +3934,17 @@ or of a direct injection (§10.5), scopes its whole cascade: each response to
 its event, or to the instruction it is (§10.1.1), and each answer to such a
 response at any depth, every channel's, a transport's included, each row of a
 stream, and the records stored in place of one past the chain-depth limit or
-the reentry budget (§8.3). As it writes a response's source, the pipeline MUST
-intersect the visibility the channel gave the response with that scope (§7.3),
-a listed channel's category read from the room's bindings as the delivery plan
-that asked the channel read them (§10.1 step 12): the scope narrows what the
-channel gave, never widens it. The response carries the scope as its own
-`response_visibility` (§5.2), intersected with any its channel gave it, so
-that what answers the response stays within both. The commit narrows the
-response again to its source binding's (§7.3). A null `response_visibility`
+the reentry budget (§8.3). As it writes a response's source, the pipeline
+MUST intersect the visibility the channel gave the response with that scope
+(§7.3), a listed channel's category read from the room's bindings as the
+delivery plan that asked the channel read them (§10.1 step 12): the scope
+narrows what the channel gave, never widens it. The response carries the
+scope as its own `response_visibility` (§5.2), intersected with any its
+channel gave it, so that what answers the response stays within both. A
+response MUST NOT be visible beyond its cascade's scope: its hooks may change
+its visibility (§9.4), and once they are over the pipeline MUST intersect the
+visibility they left with the scope again. The commit then narrows the
+response to its source binding's (§7.3). A null `response_visibility`
 restricts nothing.
 
 **What the turn is told.** `BEFORE_AI_GENERATION` receives, with the turn's
@@ -4593,31 +4596,35 @@ MUST check the type they expect before substituting it. A "modify" result MUST
 carry its payload: one whose `event` is null is an unusable result (§9.3).
 
 **A `BEFORE_BROADCAST` replacement.** A MODIFY on BEFORE_BROADCAST replaces
-what the event says and whom it asks, never which event it is. The
-replacement MAY change the event's `content`, its address (`addressed_to`),
-its `visibility`, its thread (`parent_event_id`), its `correlation_id` and its
+what the event says and whom it asks, never which event it is. The replacement
+MAY change the event's `content`, its address (`addressed_to`), its
+`visibility`, its thread (`parent_event_id`), its `correlation_id` and its
 `metadata`, and its `channel_data`. Implementations MUST keep the original's
 `id`, `room_id`, `type`, `source`, `index`, `chain_depth`, `responds_to`,
 `idempotency_key`, `created_at`, `status`, `blocked_by`, `consumption` and
 `delivery_results` on it, and with them the checks already passed: the event
 an EDIT or a DELETE targets (`target_event_id`), its `edit_source` or
-`delete_type` and its kind of content, which keeps a change from hiding in
-its new content (checked at §10.1 step 8a, §10.3; an edit's replacement by
-another kind of content is its new content), an INSTRUCTION's
-visibility, address and `standalone` word (§10.1.1), and the fingerprint the
-pipeline wrote on a response to an instruction (`metadata.instruction`,
-§10.1.1 step 6), or its absence. A field of these that the hook changed is
-put back from the original before the next hook reads the event, and the
-hook's other changes stand. The source's write check (§10.1 step 11) and the
-chain-depth limit (§8.3) read these fields after the hooks: no hook can
-commit an event under another source, at another index or chain depth, or
-as the answer to another event. A visibility the hook changed is still
-narrowed at commit by the source binding's visibility (§7.3), and the
-original's is put back whenever either visibility is `internal`, which only
-the framework writes (§7.3): a hook can neither give an event that mark nor
-change the visibility of a framework record that has it. A router hook that
-addresses an event (Section 19.4), by its address or its routing metadata, is
-unaffected.
+`delete_type` and its kind of content, which keeps a change from hiding in its
+new content (checked at §10.1 step 8a, §10.3; an edit's replacement by another
+kind of content is its new content), an INSTRUCTION's visibility, address and
+`standalone` word (§10.1.1), and the fingerprint the pipeline wrote on a
+response to an instruction (`metadata.instruction`, §10.1.1 step 6), or its
+absence. A field of these that the hook changed is put back from the original
+before the next hook reads the event, and the hook's other changes stand. The
+source's write check (§10.1 step 11) and the chain-depth limit (§8.3) read
+these fields after the hooks: no hook can commit an event under another
+source, at another index or chain depth, or as the answer to another event. A
+visibility the hook changed is still narrowed at commit by the source
+binding's visibility (§7.3), and the original's is put back whenever either
+visibility is `internal`, which only the framework writes (§7.3): a hook can
+neither give an event that mark nor change the visibility of a framework
+record that has it. The replacement MAY narrow the event's
+`response_visibility` (§5.12), never widen or clear it: the event keeps the
+intersection of the original's and the hook's (§7.3), a null on either side
+giving the other's, and `internal` from a hook reads as `none`. A response's
+visibility a hook changed is narrowed to its cascade's scope again once its
+hooks are over (§8.5). A router hook that addresses an event (Section 19.4),
+by its address or its routing metadata, is unaffected.
 
 **InjectedEvent:**
 
