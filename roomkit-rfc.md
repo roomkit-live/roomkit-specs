@@ -1212,12 +1212,12 @@ chat key carries, and a room opened for it binds the channel naming the chat
 as correspondent and recipient (§10.1 step 2). The chat under a chat key
 takes the recipient's rule: a value that is no recipient is no chat, and a
 message that carries only such a value does not carry its chat. On a channel
-that carries private chats and groups, a message that carries the key is its
-group's, any other its sender's. On a channel whose replies go to a chat
-only, a message that does not carry its chat has no address: it records no
-one, and a room opened for it names neither correspondent nor recipient, so
-its deliveries are refused `no_recipient` until the integrator names one. Its
-author is the message's sender either way.
+that carries private chats and groups, a message that carries its group under
+the key is its group's, any other its sender's. On a channel whose replies go
+to a chat only, a message that does not carry its chat has no address: it
+records no one, and a room opened for it names neither correspondent nor
+recipient, so its deliveries are refused `no_recipient` until the integrator
+names one. Its author is the message's sender either way.
 
 A channel addressed by phone number compares and stores numbers in one form,
 E.164 (`+15550000001`). The inbound sender, a binding's correspondent and
