@@ -521,6 +521,16 @@ CLOSED and ARCHIVED refuse identically; they differ in intent. CLOSED is a
 conversation that has ended and that the integrator MAY reopen by returning
 the room to ACTIVE. ARCHIVED is a terminal storage state.
 
+**A transition from a status it does not leave from.** An integrator's
+pause, resume, close or archive of a room already in the status it leads to
+does nothing: no write, no hook, no framework event. A pause of a PAUSED
+room, a resume of an ACTIVE one, a close of a CLOSED one and an archive of
+an ARCHIVED one are such; a reopen has none, since an ACTIVE room was never
+closed. A transition on a room in any other status it does not leave from
+MUST fail with nothing written: a pause or a resume of a CLOSED or ARCHIVED
+room, a reopen of a room that is not CLOSED, and a close of an ARCHIVED
+room. No call takes a room out of ARCHIVED.
+
 Reading is unaffected by status: history, participants and bindings remain
 readable at every status, and an implementation MUST NOT make a closed room
 unreadable.
@@ -572,17 +582,18 @@ Implementations MUST enforce timer transitions when configured:
 - **Close.** When `closed_after_seconds` elapses from `paused_at` without a
   resume, the room MUST transition to CLOSED.
 - **When.** Every locked section that reads the room's status (the gate of
-  §10.1 step 6, an attach or a binding change, a direct mutation, a record's
-  commit) first applies the transitions due at its instant, so an event that
-  arrives after its room fell due is refused as if the timer had run on
-  time. A room nobody writes to transitions when the host checks its timers,
-  or on the period of a sweeper the implementation runs. A transition takes
-  the instant it fell due, however late it is applied: a check long after
-  both fell due pauses the room at the first instant and closes it at the
-  second, in one write. Each emits its framework event once stored
-  (`room_paused`, `room_closed`, with `reason = timer`), before anything the
-  section decides next, so a message a close that fell due refuses reports
-  `room_closed` before its `room_refused_event`; its trigger
+  §10.1 step 6, an integrator's transition, an attach or a binding change, a
+  direct mutation, a record's commit) first applies the transitions due at its
+  instant, so an event that arrives after its room fell due is refused as if
+  the timer had run on time. A room nobody writes to transitions when the host
+  checks its timers, or on the period of a sweeper the implementation runs. A
+  transition takes the instant it fell due, however late it is applied: a
+  check long after both fell due pauses the room at the first instant and
+  closes it at the second, in one write, and both its hooks then receive the
+  room as that write left it, CLOSED (§9.2). Each emits its framework event
+  once stored (`room_paused`, `room_closed`, with `reason = timer`), before
+  anything the section decides next, so a message a close that fell due
+  refuses reports `room_closed` before its `room_refused_event`; its trigger
   (`ON_ROOM_PAUSED`, `ON_ROOM_CLOSED`) fires as an ASYNC trigger does, once
   the room lock is released (§10.1).
 
@@ -4131,7 +4142,8 @@ transport's delivery failure does not fire ON_ERROR.
 (ON_ROOM_CREATED, ON_ROOM_PAUSED, ON_ROOM_CLOSED, ON_CHANNEL_ATTACHED,
 ON_CHANNEL_DETACHED, ON_CHANNEL_MUTED, ON_CHANNEL_UNMUTED) receives the room
 context any hook receives (§10.1 step 3), as the change left the room: the
-room itself (on ON_ROOM_CLOSED, closed), its bindings and participants as
+room itself (on ON_ROOM_CLOSED, closed; on ON_ROOM_PAUSED, paused, or closed
+when one write paused and closed it, §5.1), its bindings and participants as
 the change read them under the room lock (on ON_CHANNEL_ATTACHED, the
 attached binding among them, in place of any it replaces; on
 ON_CHANNEL_DETACHED, without the detached one), and its recent events, so that a hook on
