@@ -4759,25 +4759,25 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   of a routed sender wrote there included. Its history can be stale by the
   time the event commits; a hook that reads the room's state rather than the
   event MUST keep `needs_lock = true`.
-- **Reentrance.** A call into the room (an event injected, §10.5, or a
-  message that names the room, §10.1) made by a caller that already stands in
-  the room's admission order takes no ticket in that room. The caller stands
-  in it while it holds the room lock (a locked hook, code under the lock), and
-  in the work an event's admission runs before the lock: an off-lock hook's
-  body, a handler of the `hook_error` its check reports (§8.2), and the
-  message's parse (a channel's `handle_inbound()`, §10.1 step 4). It stands
-  there only while that work runs: a task the work spawned that outlives it
-  stands in no order. The call would otherwise wait for the ticket its own
-  caller holds or, made from a parse, open a cascade of its own for every
-  message. It runs every hook under the lock and commits ahead of the event
-  whose processing made it. Made under the lock, it MUST draw on the reentry
-  budget of the cascade whose section holds the lock (§8.3), and the events
-  its own hooks inject join that section's queue, committed once the section
-  has released the lock (§9.4); made in the admission order, it MUST draw on
-  the budget of the cascade of the event that work is for, so that a hook or
-  a parse that sends into the room on every event stops at the cap. Code
-  under a room lock the host holds outside any pass (a host serialising its
-  own changes, §13.5) belongs to no cascade: its call draws on a budget of
+- **Reentrance.** A call into the room (an event injected, §10.5, or a message
+  that names the room, §10.1) made by a caller that already stands in the
+  room's admission order takes no ticket in that room. The caller stands in it
+  while it holds the room lock (a locked hook, code under the lock), and in
+  the work an event's admission runs before the lock: an off-lock hook's body,
+  a handler of the `hook_error` its check reports (§8.2), and the message's
+  parse (a channel's `handle_inbound()`, §10.1 step 4). It stands there only
+  while that work runs: a task the work spawned that outlives it stands in no
+  order. The call is adopted by that work: it would otherwise wait for the
+  ticket its own caller holds or, made from a parse, open a cascade of its own
+  for every message. It runs every hook under the lock and commits ahead of
+  the event whose processing made it. Made under the lock, it MUST draw on the
+  reentry budget of the cascade whose section holds the lock (§8.3), and the
+  events its own hooks inject join that section's queue, committed once the
+  section has released the lock (§9.4); made in the admission order, it MUST
+  draw on the budget of the cascade of the event that work is for, so that a
+  hook or a parse that sends into the room on every event stops at the cap.
+  Code under a room lock the host holds outside any pass (a host serialising
+  its own changes, §13.5) belongs to no cascade: its call draws on a budget of
   its own, and the events its hooks inject commit once the host has released
   the lock, after the call returns.
 - **The room's work outside the lock.** A call into the room from its work
