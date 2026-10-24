@@ -1413,6 +1413,13 @@ The room, when the caller knows it, is passed to `process_inbound()` (Section
 10.1), not carried by the message; the channel type is the registered
 channel's.
 
+**The response scope.** A message's `response_visibility` scopes its cascade
+(Section 8.5), and that cascade only. Work that leaves the cascade is a new
+cascade, which the scope does not follow: a background delegation's hand-back
+(Section 23.3), a tool's own direct injection (Section 10.5), a child room's
+answer to the channels it shares with the room (Section 23.3). An integrator
+that wants such work scoped passes a `response_visibility` itself.
+
 **Unified voice inbound:** When the `session` field is set, `process_inbound()`
 connects the voice session to the channel after successful hook processing. This
 allows voice calls and text messages to flow through the same entry point, same
@@ -3935,18 +3942,20 @@ or of a direct injection (§10.5), scopes its whole cascade: each response to
 its event, or to the instruction it is (§10.1.1), and each answer to such a
 response at any depth, every channel's, a transport's included, each row of a
 stream, and the records stored in place of one past the chain-depth limit or
-the reentry budget (§8.3). As it writes a response's source, the pipeline
-MUST intersect the visibility the channel gave the response with that scope
-(§7.3), a listed channel's category read from the room's bindings as the
-delivery plan that asked the channel read them (§10.1 step 12): the scope
-narrows what the channel gave, never widens it. The response carries the
-scope as its own `response_visibility` (§5.2), intersected with any its
-channel gave it, so that what answers the response stays within both. A
-response MUST NOT be visible beyond its cascade's scope: its hooks may change
-its visibility (§9.4), and once they are over the pipeline MUST intersect the
-visibility they left with the scope again. The commit then narrows the
-response to its source binding's (§7.3). Only a null `response_visibility`
-restricts nothing; an empty one reads as `none` (§5.12).
+the reentry budget (§8.3). It binds that cascade only: work that leaves it is
+a new cascade, which the scope does not follow (§5.12). As it writes a
+response's source, the pipeline MUST intersect the visibility the channel
+gave the response with that scope (§7.3), a listed channel's category read
+from the room's bindings as the delivery plan that asked the channel read
+them (§10.1 step 12): the scope narrows what the channel gave, never widens
+it. The response carries the scope as its own `response_visibility` (§5.2),
+intersected with any its channel gave it, so that what answers the response
+stays within both. A response MUST NOT be visible beyond its cascade's scope:
+its hooks may change its visibility (§9.4), and once they are over the
+pipeline MUST intersect the visibility they left with the scope again. The
+commit then narrows the response to its source binding's (§7.3). Only a null
+`response_visibility` restricts nothing; an empty one reads as `none`
+(§5.12).
 
 **What the turn is told.** `BEFORE_AI_GENERATION` receives, with the turn's
 context, the event the turn answers (`trigger`), so a hook can tell the model
