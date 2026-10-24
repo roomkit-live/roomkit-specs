@@ -14288,8 +14288,8 @@ should live in the integration surface layer.
   organization's rooms only: a room of another organization, or of none, is
   not its own (§10.1 step 2), and a room it creates belongs to the
   organization.
-- The integrator's direct calls name the organization they act for as a
-  message does: a room's transitions (§5.1), a channel's attach, detach and
+- Every room operation names the organization it acts for, as a message does,
+  among them a room's transitions (§5.1), a channel's attach, detach and
   binding changes (§7.5), an update or a delete of a stored event (§10.3), a
   direct injection and a record's commit (§10.5). Against a room that is not
   the caller's, each acts as it does on a room that does not exist: a
