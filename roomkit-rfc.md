@@ -817,17 +817,20 @@ has the level a composite in the edit's place would have.
 
 Content that holds a sixth level is refused where it is built, before
 anything of its event is written, and no event that holds one is ever
-committed. Each boundary content crosses refuses it: an inbound message
-fails before anything is read, no room routed or created, and the event a
-channel builds from it (§10.1 step 4) fails the message with nothing stored;
-a hook's replacement or injected event (§9.4) is an unusable result (§9.3),
-nothing of it applied; a channel's response is the channel's failure,
-reported as that target's failed delivery (§10.2); `send_event()` and
-`commit_event()` (§10.5) and `update_event()` (§10.3) raise before anything
-is read; and a stored event that holds one fails its read, as content that
-cannot be built. An edit's new content counts its levels in the edit's place
-(above), which is its target's place once the commit writes it there
-(§10.3).
+committed. Each boundary content crosses refuses it: an inbound message fails
+before anything is read, no room routed or created, and the event a channel
+builds from it (§10.1 step 4) fails the message with nothing stored; a hook's
+replacement or injected event (§9.4) is an unusable result (§9.3), nothing of
+the result applied or collected, its tasks and observations included; a
+channel's response fails the channel's reaction, nothing of its output kept
+(its responses, tasks and observations), and the target is reported as a
+failed delivery (§10.2), an intelligence channel's also as a failed turn,
+which fires `ON_ERROR` (§9.2); `send_event()` and `commit_event()` (§10.5)
+and `update_event()` (§10.3) raise before anything is read; and a stored
+event that holds one, written outside the implementation, fails the read that
+meets it, a timeline read whole, no row skipped. An edit's new content counts
+its levels in the edit's place (above), which is its target's place once the
+commit writes it there (§10.3).
 
 **SystemContent** — Framework-generated message:
 
@@ -4278,7 +4281,9 @@ hook (§10.1 step 2).
   the hook's fail-open or fail-closed rule decides, as it decides a payload
   of the wrong type.
 - An unusable result's tasks and observations are collected, as side
-  effects always are (§7.5 rule 3); the events it would inject are not.
+  effects always are (§7.5 rule 3), save a result holding a sixth composite
+  level (§5.3), of which nothing is collected; the events it would inject are
+  not.
 
 **ASYNC hooks:**
 
