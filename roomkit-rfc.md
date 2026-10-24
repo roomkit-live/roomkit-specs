@@ -5938,10 +5938,10 @@ does not exist, or another organization's, raises. A channel the room does
 not bind is not attached, and the call raises with nothing written: the host
 named the channel itself, so it is a caller's error with nothing to audit,
 unlike a stranger's message (§7.5 rule 2). There is no parse. Its
-`response_visibility`, when it carries one, applies to its responses as a
-message's does (§8.5). The event's source is the channel it names, `INBOUND`
-for a transport, whose event stands for a message coming in, and `OUTBOUND`
-for an intelligence channel, whose event is its own words going out, as its
+`response_visibility`, when it carries one, scopes its cascade as a message's
+does (§8.5). The event's source is the channel it names, `INBOUND` for a
+transport, whose event stands for a message coming in, and `OUTBOUND` for an
+intelligence channel, whose event is its own words going out, as its
 responses are.
 
 Its result is the committed event, so every refusal before the commit point
