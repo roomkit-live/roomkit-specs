@@ -3863,15 +3863,19 @@ makes into the room, each drawing one pass as it starts (§9.5.1, Reentrance):
 what code under the cascade's lock injects or sends, what an off-lock hook's
 body, a handler its check's report awaits (`hook_error`, `hook_timeout`) or
 the parse does for the cascade's event, and the calls its deliveries and turns
-make into the room or that create a room, routed or named, each charged once
-before the room is created, with the cascades those calls start. A buffered
+make into the room, a routed message once routing has placed it there, or
+that create a room, routed or named, each charged once before the room is
+created, with the cascades those calls start. A buffered
 response past the budget does not re-enter, a chained stream past it is closed
 unread, so nothing is generated, and an injected event past it is not
 committed as a pass, so its hooks never run. Each is stored `BLOCKED` with
 `blocked_by = "reentry_loop_cap"`, and with the visibility its pass would have
 committed it with (§7.3); none emits `chain_depth_exceeded` nor
-`event_blocked`. A message past it is refused as it starts, nothing routed,
-created or stored, before §10.1 step 1 (`reason = reentry_loop_cap`).
+`event_blocked`. A message past it is refused with no event, nothing of it
+stored (`reason = reentry_loop_cap`): one that names its room as it starts,
+before §10.1 step 1, and one routed or naming a room the store does not
+hold once step 2 knows its room, before any room is created (§9.5.1, Past
+the cap).
 
 **Requirements:**
 
@@ -4852,13 +4856,21 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   the store does not hold, which step 2 creates with the id (§10.1 step 2,
   §10.4): the room is that cascade's own work, and the call is charged once,
   before the room is created. Only a call into another room that exists
-  already has a budget of its own. A call into any room made while a turn runs
-  is at least as deep as the response of the deepest turn it runs within, and
-  one made while a tool call outside a turn runs (a realtime or a conference
-  tool call, §12.4) at least as deep as the answer that issued it (§8.3). Once
-  the turn, the tool call or the delivery is over, work it began (a task it
-  spawned) calls into a room as a new arrival with a budget of its own and the
-  depth of its own event, 0 for a message it creates. Such a call that would
+  already has a budget of its own. A routed message is charged once its final
+  room is known, after step 2 has routed it once more where the first room
+  was no longer the message's (§10.4): one that lands in the room the work
+  delivers in draws on that work's budget, wherever the router first placed
+  it, and one that lands in another room that exists has a budget of its own.
+  A call whose room step 2 read absent, and that another call created first,
+  stays charged and goes on into that room as one that exists, its cascade
+  on a budget of its own, as for a call into another room that exists. A
+  call into any room made while a turn runs is at least as deep as the
+  response of the deepest turn it runs within, and one made while a tool call
+  outside a turn runs (a realtime or a conference tool call, §12.4) at least
+  as deep as the answer that issued it (§8.3). Once the turn, the tool call
+  or the delivery is over, work it began (a task it spawned) calls into a room
+  as a new arrival with a budget of its own and the depth of its own event, 0
+  for a message it creates. Such a call that would
   wait on its own delivery from a context the delivery lane cannot progress
   past returns with its completion detached (§10.1 step 18). Only a call into
   its caller's own room is detached so: a call into another room waits for
@@ -4869,12 +4881,19 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   (§13.6). An integrator SHOULD make a call into another room from a delivery
   with detached completion, or from outside that delivery.
 - **Past the cap.** Each call into the room, adopted or a new arrival from
-  its work, draws one pass on its budget as it starts. Past the budget, an
-  injected event is stored `BLOCKED` with `reentry_loop_cap`, no hook run,
-  with the visibility its pass would have committed it with (§7.3), and
-  `send_event()` returns that record (§10.5); a message is refused as it
-  starts, before §10.1 step 1, nothing routed, created or stored
-  (`InboundResult(blocked=true, reason=reentry_loop_cap)`).
+  its work, draws one pass on its budget as it starts, a routed message once
+  its room is known. Past the budget, an injected event is stored `BLOCKED`
+  with `reentry_loop_cap`, no hook run, with the visibility its pass would
+  have committed it with (§7.3), and `send_event()` returns that record
+  (§10.5); a message is refused with no event, nothing of it stored
+  (`InboundResult(blocked=true, reason=reentry_loop_cap)`). One that names
+  its room is refused as it starts, before anything else (§10.1 step 1),
+  nothing created; one that names a room the store does not hold, when step
+  2 reads the room absent, before creating it; a routed one once step 2
+  knows its room (§10.1 step 2): before creating it when the room is new,
+  and otherwise once step 2 has kept the room for the message, what it wrote
+  to route the message (the channel's attach, the sender's record) kept, as
+  for a message a hook refuses (§10.4).
 - **A message routed back.** A message that names no room and that routing
   lands in the room whose lock its caller holds, or in whose admission order
   it stands, fails at once with nothing written rather than wait for its own
@@ -4920,10 +4939,13 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 
 ```
 1. RESOLVE CHANNEL
-   ├── A message the room's own work sends past its reentry budget
-   │   (§9.5.1) → refused as it starts, before anything else, nothing
-   │   routed, created or stored: InboundResult(blocked=true,
-   │   reason=reentry_loop_cap)
+   ├── A message that names its room and draws on the reentry budget of
+   │   that room's work (§9.5.1: made under its lock, in its admission
+   │   order, or from its deliveries and turns), past that budget →
+   │   refused as it starts, before anything else, nothing created or
+   │   stored: InboundResult(blocked=true, reason=reentry_loop_cap).
+   │   A routed message, and one naming a room the store does not hold,
+   │   are charged at step 2, once their room is known
    ├── Look up registered channel by message.channel_id
    ├── Fail if channel not registered
    └── Write sender_id in the channel's form (E.164 on a channel
@@ -4943,7 +4965,8 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   ├── No room with that id → create a new room with that id; a
    │   │   creation the store refuses because another call created the
    │   │   room meanwhile reads the room again, as one that exists, checked
-   │   │   for the caller's organization as above
+   │   │   for the caller's organization as above, a charge on the reentry
+   │   │   budget made for the creation kept (below)
    │   ├── Routed (not provided) to a room that exists, whose lock the caller
    │   │   holds or in whose admission order it stands (§9.5.1, Reentrance)
    │   │   → fail at once, nothing written, the room lock not asked for
@@ -4997,6 +5020,25 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │           the permissions what becomes of the message (step 11). A
    │           `group` binding is never written, and the framework's own
    │           sender and a message with no address record no one
+   ├── The reentry budget, for a message a room's deliveries or turns
+   │   send that step 1 did not charge (§9.5.1, The room's work outside
+   │   the lock), once its room is known:
+   │   ├── A room this step creates (the router answering null, an id the
+   │   │   store does not hold, a routed message given a new room) → one
+   │   │   pass drawn on the delivering cascade's budget before the room is
+   │   │   created; past it, refused with nothing created:
+   │   │   InboundResult(blocked=true, reason=reentry_loop_cap). The
+   │   │   charge stays when another call created the room first, the room
+   │   │   having been read absent: the message goes on into that room as
+   │   │   one that exists, its cascade on a budget of its own
+   │   └── A routed message in a room that exists, once the locked check
+   │       above kept the room for it, after any routing once more:
+   │       ├── The room the work delivers in → one pass drawn on the
+   │       │   delivering cascade's budget; past it, refused, nothing of
+   │       │   the message stored, what this step wrote to route it kept
+   │       │   (the attach, the sender's record): InboundResult(blocked=true,
+   │       │   reason=reentry_loop_cap)
+   │       └── Another room → a budget of its own, nothing drawn
    └── If new room created → fire ON_ROOM_CREATED and wait for its hooks,
        each within its timeout (§9.3), their context the room as created,
        with no binding of the channel; emit `room_created`; then, under the
