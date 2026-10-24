@@ -1695,6 +1695,22 @@ The AI channel MUST skip events originating from itself to prevent infinite loop
 channel's capabilities to the AI at generation time, NOT post-process the output.
 This allows the AI to tailor its response (e.g., short text for SMS, rich for Email).
 
+**Answer text events:** `AIChannel` SHOULD project the text of its answer
+onto the realtime bus as `TEXT_DELTA` while it is written, for an observer
+that is not a transport of the room (a debugger, a dashboard, the code that
+delegated a task): the live pipe to transports (§10.2) reaches only bound
+transports, and a delegated turn's text, collected for its result (§23.3),
+reaches none. It publishes in the room it speaks in, a delegated task's child
+room included, the text coalesced on a window (a time and a size), each event
+carrying `text`, `round` (the model round the text belongs to) and
+`channel_id`. A round's buffered text MUST be published before that round's
+tool-call events and at its end, so an observer reads text and calls in the
+order they came; joined in order, a turn's `TEXT_DELTA` texts are its
+answer's text, every round's, where a delegated task's result holds the last
+segment only. Like every ephemeral of a turn, it reaches no one the answer
+would not reach (§8.4), and it is never persisted: the stored message remains
+the answer.
+
 **Tool-call composition events:** A provider whose structured stream exposes
 tool-call argument fragments MAY yield `StreamToolCallDelta` before the complete
 `StreamToolCall`. `AIChannel` SHOULD project those fragments onto the realtime bus
