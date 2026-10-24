@@ -3731,6 +3731,13 @@ an event chain.
   that restarts the count at 0 opens a chain the limit never reaches.
 - An event a hook injects keeps the `chain_depth` of the event whose hooks
   injected it (§9.4).
+- A call into a room made within a turn (its tool handlers, its `TurnHost`
+  verbs, its own code calling the framework) is at least as deep as the
+  turn's response: the event it injects or the message it hands in takes
+  that depth when its own is lower (§9.5.1, §10.6.5). So is a call that work
+  the turn began makes after the turn (a task it spawned, §10.6.5), so that
+  an agent that injects into its room at each turn, through any channel and
+  however late, stops at the limit as its answers do.
 
 **At the limit.** When an event's `chain_depth + 1 >= max_chain_depth`, an
 intelligence channel it solicits (Section 19.3) MUST NOT be asked to act:
@@ -3768,14 +3775,18 @@ it in the room.
 inbound or directly injected event, one regeneration or one delegated run) and
 the events its hooks inject (§9.4) share a reentry budget of `10 ×
 max_chain_depth` passes, buffered responses, chained streams and injected
-events alike (§10.1 steps 10 to 14), and so do the events code under its lock,
-or an off-lock hook's body for the event it runs for, injects directly
-(§9.5.1, Reentrance). A buffered response past the budget does not re-enter, a
-chained stream past it is closed unread, so nothing is generated, and an
-injected event past it is not committed as a pass, so its hooks never run.
-Each is stored `BLOCKED` with `blocked_by = "reentry_loop_cap"`, and with the
-visibility its pass would have committed it with (§7.3); none emits
-`chain_depth_exceeded` nor `event_blocked`.
+events alike (§10.1 steps 10 to 14), and so do the calls the room's own work
+makes into the room, each drawing one pass as it starts (§9.5.1,
+Reentrance): what code under the cascade's lock injects or sends, what an
+off-lock hook's body, a handler of its `hook_error` or the parse does for the
+cascade's event, and the calls its deliveries and turns make, with the
+cascades those calls start. A buffered response past the budget does not
+re-enter, a chained stream past it is closed unread, so nothing is generated,
+and an injected event past it is not committed as a pass, so its hooks never
+run. Each is stored `BLOCKED` with `blocked_by = "reentry_loop_cap"`, and with
+the visibility its pass would have committed it with (§7.3); none emits
+`chain_depth_exceeded` nor `event_blocked`. A message past it is refused
+before its parse, with nothing stored (`reason = reentry_loop_cap`).
 
 **Requirements:**
 
@@ -4678,21 +4689,52 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   of a routed sender wrote there included. Its history can be stale by the
   time the event commits; a hook that reads the room's state rather than the
   event MUST keep `needs_lock = true`.
-- **Reentrance.** An event injected (§10.5) by a caller that already stands in
-  the room's admission order takes no ticket in that room: from inside an
-  off-lock hook's body, or while holding the room lock (a locked hook, code
-  under the lock). It would otherwise wait for the ticket its own caller holds.
-  It runs every hook under the lock and commits ahead of the event whose
-  processing emitted it. Made under the lock, it MUST draw on the reentry
-  budget of the cascade whose section holds the lock (§8.3), and made from an
-  off-lock hook's body, on the budget of the cascade of the event the hook runs
-  for, so that a hook that injects on every event stops at the cap: an entry
-  past it is stored `BLOCKED` with `reentry_loop_cap`. A call into the room
-  from its work outside the lock and outside its admission order (a turn, a
-  delivery) is a new arrival: it takes a ticket when an off-lock hook fires for
-  its event, `process_timeout` bounds it (§13.6), and its cascade is its own;
-  one that would wait on its own delivery from a context the delivery lane
-  cannot progress past returns with its completion detached (§10.1 step 18).
+- **Reentrance.** A call into the room (an event injected, §10.5, or a
+  message that names the room, §10.1) made by a caller that already stands in
+  the room's admission order takes no ticket in that room. The caller stands
+  in it while it holds the room lock (a locked hook, code under the lock), and
+  in the work an event's admission runs before the lock: an off-lock hook's
+  body, a handler of the `hook_error` its check reports (§8.2), and the
+  message's parse (a channel's `handle_inbound()`, §10.1 step 4). It stands
+  there only while that work runs: a task the work spawned that outlives it
+  stands in no order. The call would otherwise wait for the ticket its own
+  caller holds or, made from a parse, open a cascade of its own for every
+  message. It runs every hook under the lock and commits ahead of the event
+  whose processing made it. Made under the lock, it MUST draw on the reentry
+  budget of the cascade whose section holds the lock (§8.3), and the events
+  its own hooks inject join that section's queue, committed once the section
+  has released the lock (§9.4); made in the admission order, it MUST draw on
+  the budget of the cascade of the event that work is for, so that a hook or
+  a parse that sends into the room on every event stops at the cap. Code
+  under a room lock the host holds outside any pass (a host serialising its
+  own changes, §13.5) belongs to no cascade: its call draws on a budget of
+  its own, and the events its hooks inject commit once the host has released
+  the lock, after the call returns.
+- **The room's work outside the lock.** A call into the room from its work
+  outside the lock and outside its admission order (a delivery set's
+  deliveries and turns: a transport's `deliver()`, an agent's turn, a tool
+  handler, a `TurnHost` verb) is a new arrival: it takes a ticket when an
+  off-lock hook fires for its event, and `process_timeout` bounds it (§13.6).
+  It MUST draw on the reentry budget of the cascade that delivers, the one
+  whose delivery set runs that delivery or that turn, and so does the cascade
+  it starts, so that a transport whose delivery sends into its room stops at
+  the cap. Made within a turn, it is at least as deep as the turn's response
+  (§8.3). Such a call that would wait on its own delivery from a context the
+  delivery lane cannot progress past returns with its completion detached
+  (§10.1 step 18).
+- **Past the cap.** Each call the room's work makes draws one pass on its
+  budget as it starts. Past the budget, an injected event is stored `BLOCKED`
+  with `reentry_loop_cap`, no hook run, with the visibility its pass would
+  have committed it with (§7.3), and `send_event()` returns that record
+  (§10.5); a message is refused before its parse, with nothing stored
+  (`InboundResult(blocked=true, reason=reentry_loop_cap)`).
+- **A message routed back.** A message that names no room and that routing
+  lands in the room whose lock its caller holds, or in whose admission order
+  it stands, fails at once with nothing written rather than wait for its own
+  caller: its room known only once routed, it cannot be adopted, and
+  committed it would come ahead of the event its caller works for, outside
+  every order (§10.1 step 2). One routed back into the room from its work
+  outside the lock is a new arrival, as above.
 - **Other commit paths** (reentry passes, regeneration, hook-injected events)
   run every `BEFORE_BROADCAST` SYNC hook under the lock, the off-lock ones
   included. `needs_lock = false` permits a hook to run off the lock; it never
@@ -4751,6 +4793,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   │   creation the store refuses because another call created the
    │   │   room meanwhile reads the room again, as one that exists, checked
    │   │   for the caller's organization as above
+   │   ├── Routed (not provided) to a room that exists, whose lock the caller
+   │   │   holds or in whose admission order it stands (§9.5.1, Reentrance)
+   │   │   → fail at once, nothing written, the room lock not asked for
    │   ├── Room exists, channel not bound to it → under the room lock,
    │   │   the room's due timers applied first (§5.1), attach the channel
    │   │   at its declaration's defaults (read-write, unmuted, visible to
@@ -5775,13 +5820,16 @@ lock, then its delivery lane, reentry passes, and AFTER_BROADCAST hooks. A
 blocking hook therefore yields a `BLOCKED` event and suppresses delivery,
 exactly as for an inbound message. That includes the off-lock check (§9.5.1,
 step 5a): an injected event matched by a `needs_lock = false` hook takes an
-admission ticket like an inbound one — unless it is injected from inside an
-off-lock hook's body or under the room lock, in which case it takes none and
+admission ticket like an inbound one — unless its caller stands in the room's
+admission order (under the room lock, or in an off-lock hook's body, a handler
+of its `hook_error` or a message's parse), in which case it takes none and
 commits ahead of the event being processed (§9.5.1, Reentrance). Made under
 the room lock, it draws on the reentry budget of the cascade that holds it
-(§8.3); made from an off-lock hook's body, on that of the event the hook runs
-for; made from the room's work outside the lock (a turn, a delivery), it is a
-new arrival (§9.5.1).
+(§8.3); made in the admission order, on that of the event the work is for;
+made from the room's work outside the lock (a turn, a delivery), it is a new
+arrival that draws on the budget of the cascade that delivers (§9.5.1), and
+made within a turn it is at least as deep as the turn's response (§8.3). Past
+its budget it is stored `BLOCKED` with `reentry_loop_cap`.
 
 An injection takes §10.1's steps 1 to 4 its own way. The channel it names
 MUST be registered, and the event is admitted as a message is before
@@ -5805,10 +5853,10 @@ instruction (§10.1.1) raise with their reason, and `process_timeout`
 (§13.6), which bounds its wait for the off-lock check and the room lock as it
 bounds its pre-commit phase, raises a process-timeout error once it has
 emitted the `process_timeout` framework event. Nothing of the event is
-written. A record stored `BLOCKED`, by a hook or by a source that cannot
-write, is the committed event and is returned; a replay returns the event
-its key committed (§13.4); an instruction, never committed, returns
-uncommitted (§10.1.1).
+written. A record stored `BLOCKED`, by a hook, by a source that cannot write
+or past the reentry budget (§8.3), is the committed event and is returned; a
+replay returns the event its key committed (§13.4); an instruction, never
+committed, returns uncommitted (§10.1.1).
 
 **A record outside the pipeline.** An integrator MAY commit an event that no
 member is meant to receive (a trace, a display snapshot, a copy a branched
@@ -6293,22 +6341,20 @@ on the executor.
 **TurnHost.** A host tool or hook on the executor reaches a room only through
 `TurnHost`, which it reads with `current_turn_host()` (§21.4). It is bound to
 the turn's room inside a tool call of a turn and inside a hook the executor
-fires while the turn runs, and, after the turn, in work the turn began (a
-task or an `ASYNC` hook that outlives it) for the verbs below; it is empty
-anywhere else, and any other verb called on it after its turn ended is
-refused. Between turns (a background
-thinker's thought, §6.4) it is bound to the room of the turn the work began
-in: `send_event`, `post_status`, `update_room_metadata` and
-`add_observation` cross as `room_call` (§10.6.3), at the chain depth of
-that turn, so that the bound on agent loops (§10.4) holds; `delegate`,
-`wait_task` and the readers of owner-process state are refused there, with
-an error naming the verb. What work a turn began publishes after
-the turn (realtime publications, framework events) crosses as
-`room_publication`: an executor never publishes it on the owner's realtime
-backend or bus itself, and never writes the owner's store. Its surface
-is minimal and enumerated: each verb is one `host_call`, every argument is
-data (no callable crosses), and an implementation documents the set. It MUST
-carry:
+fires while the turn runs, and, after the turn, in work the turn began (a task
+or an `ASYNC` hook that outlives it) for the verbs below; it is empty anywhere
+else, and any other verb called on it after its turn ended is refused. Between
+turns (a background thinker's thought, §6.4) it is bound to the room of the
+turn the work began in: `send_event`, `post_status`, `update_room_metadata`
+and `add_observation` cross as `room_call` (§10.6.3), at least as deep as that
+turn's response (§8.3), so that the bound on agent loops holds; `delegate`,
+`wait_task` and the readers of owner-process state are refused there, with an
+error naming the verb. What work a turn began publishes after the turn
+(realtime publications, framework events) crosses as `room_publication`: an
+executor never publishes it on the owner's realtime backend or bus itself, and
+never writes the owner's store. Its surface is minimal and enumerated: each
+verb is one `host_call`, every argument is data (no callable crosses), and an
+implementation documents the set. It MUST carry:
 
 ```
 TurnHost
@@ -6324,8 +6370,9 @@ documented as one `host_call`.
 A `TurnHost` acts for its turn's room, in that room's organization: the
 owner MUST refuse a verb that names another room or another organization
 than the room's, and an argument the verb does not take. A status post it
-makes names the turn's room (§19.8). An event it sends is at least as deep as
-the turn's response (§8.3), and a task it delegates inherits the turn's depth
+makes names the turn's room (§19.8). An event it sends, during the turn or
+from work the turn began, after the turn too, is at least as deep as the
+turn's response (§8.3), and a task it delegates inherits the turn's depth
 (§23.3), so a chain of turns writing through it stops at the chain-depth
 limit as a local one does. `wait_task` answers for a task a `TurnHost` of the
 turn's room delegated, and answers null for any other, as it does past its
@@ -6355,8 +6402,10 @@ owner's own code, and a tool that waits on the delivery of the event it sent
 gets its completion detached rather than wait on itself. That context is the
 only thing the in-memory backend carries beside the messages, and it is no
 object of the turn. A turn's code also knows the turns it runs under, so a
-close called from one of them does not cut it. An executor of another process
-has no such context: its turns reach a room through `TurnHost`.
+close called from one of them does not cut it, and what it sends into a room
+is at least as deep as the deepest of their responses (§8.3). An executor of
+another process has no such context: its turns reach a room through
+`TurnHost`, whose verbs carry the depth.
 
 **Human input.** A tool waiting for a human's answer runs on the executor, and
 the answer may arrive on the owner, which keeps the open requests of its
