@@ -616,6 +616,8 @@ RoomEvent
 ├── visibility: string                      # Who can see this event: its own and its
 │                                           # source binding's, intersected at commit (§7.3)
 ├── addressed_to: list<string> | null       # Intelligence channels asked to act (§19.3)
+├── response_visibility: string | null      # Where the answers to it may go, at any
+│                                           # depth (§8.5); null = unrestricted
 ├── index: int >= 0                         # Sequential position in room timeline
 ├── chain_depth: int >= 0                   # Response chain depth (loop prevention)
 ├── parent_event_id: string | null          # In-app thread: the root of its thread
@@ -1390,7 +1392,7 @@ InboundMessage
 │                                           # never "internal", the framework's
 ├── addressed_to: list<string> | null       # Intelligence channels asked to act
 │                                           # (Section 19.3); null = any eligible
-├── response_visibility: string | null      # Where its answers may go: each response
+├── response_visibility: string | null      # Where its cascade's answers may go: each
 │                                           # is narrowed to it, never widened
 │                                           # (Section 8.5); null = unrestricted;
 │                                           # never "internal"
@@ -3920,18 +3922,19 @@ warning: it is stored and reaches no channel, as its channel asked, without
 the mark of the framework's own records.
 
 **Where a response may go.** The `response_visibility` of a message (§5.12),
-or of a direct injection (§10.5), applies to each response to its event, or to
-the instruction it is (§10.1.1): every channel's, a transport's included, each
-row of a stream, and the records stored in place of one past the chain-depth
-limit or the reentry budget (§8.3). It scopes those direct responses only: an
-answer to a response answers no message, and keeps the visibility its channel
-gave it. As it writes the response's source, the pipeline intersects the
-visibility the channel gave the response with the response visibility (§7.3),
-so that a response is never visible to more than its channel or its message
-allow: the message narrows what its channel gave, never widens it. The
-response's hooks see it narrowed; a hook's modify may change its visibility as
-on any event (§9.4), and the commit narrows it again to its source binding's
-(§7.3). A null `response_visibility` restricts nothing.
+or of a direct injection (§10.5), scopes its whole cascade: each response to
+its event, or to the instruction it is (§10.1.1), and each answer to such a
+response at any depth, every channel's, a transport's included, each row of a
+stream, and the records stored in place of one past the chain-depth limit or
+the reentry budget (§8.3). As it writes a response's source, the pipeline MUST
+intersect the visibility the channel gave the response with that scope (§7.3),
+a listed channel's category read from the room's bindings as the delivery plan
+that asked the channel read them (§10.1 step 12): the scope narrows what the
+channel gave, never widens it. The response carries the scope as its own
+`response_visibility` (§5.2), intersected with any its channel gave it, so
+that what answers the response stays within both. The commit narrows the
+response again to its source binding's (§7.3). A null `response_visibility`
+restricts nothing.
 
 **What the turn is told.** `BEFORE_AI_GENERATION` receives, with the turn's
 context, the event the turn answers (`trigger`), so a hook can tell the model
