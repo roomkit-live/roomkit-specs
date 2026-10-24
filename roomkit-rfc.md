@@ -2883,6 +2883,18 @@ every part ends up as a `TextContent`, the composite becomes one
 channel that declares TEXT alone receives one message. Otherwise the
 composite keeps its transcoded parts, in order.
 
+**Text form.** Every content has a text form, the one text it reads as: for
+a row above that transcodes to a TextContent, the text of that TextContent;
+for the rows delivered unchanged, a TextContent's body, a SystemContent's
+body, and `[Tool call: {tool_name}]` for a ToolCallContent. A composite reads
+as its parts' text forms in order, joined by a newline, a part whose text
+form is empty skipped. An EditContent reads as "Correction: {the text form of
+its new content}" and a DeleteContent as "[Message deleted]", whatever a
+reader supports. Every reader of a content as text takes its text form: an
+instruction's fingerprint (§10.1.1 step 6), a turn's history and input read
+as text (§6.4), a reader outside a channel (below), and a part a target
+cannot carry (above).
+
 When the target channel supports edits or deletes natively (i.e.,
 `capabilities.supports_edit` or `capabilities.supports_delete` is true), the
 framework MUST deliver the EDIT or DELETE event without transcoding. When the
@@ -2892,11 +2904,11 @@ the fallback representation shown above.
 A reader that takes a room's message as text outside a channel (a delegated
 task's brief, a speak classifier, a discussion's dispatch and the notes of
 its turns, a scoring query, a memory's summary, an ACP agent's catch-up)
-reads it the same way: its text, each media as its label above, a
-composite's parts in order. One that reads names in it (a discussion's
-addressing) or a search query in it (a memory's retrieval) reads the
-author's words alone, a media's caption included, never a file name or a
-type: an agent named in a file name is not addressed.
+reads its text form: its text, each media as its label above, a composite's
+parts in order. One that reads names in it (a discussion's addressing) or a
+search query in it (a memory's retrieval) reads the author's words alone, a
+media's caption included, never a file name or a type: an agent named in a
+file name is not addressed.
 
 **Max length enforcement:** After transcoding, if the target channel declares a
 `max_length`, the framework MUST truncate TextContent to that limit: a text,
@@ -5328,7 +5340,7 @@ response typed `INSTRUCTION` does not re-enter (§8.5).
    delivery set returns, one stored past the reentry budget included,
    replacing whatever the channel wrote under that key, since the pipeline
    cannot check an integrator's channel's write. `sha256` is the lowercase
-   hex SHA-256 of the UTF-8 text the instruction's content reads as (§6.6),
+   hex SHA-256 of the UTF-8 text form of the instruction's content (§6.6),
    as its hooks left it, and `length` that text's length in Unicode code
    points. A hook's modify of the response keeps the fingerprint (§9.4). An
    answer to that response, and the record of an agent not asked at the
