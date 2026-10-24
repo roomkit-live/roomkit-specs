@@ -5140,7 +5140,10 @@ resume after that cleanup. Cancellation cannot revoke external effects already
 committed by a handler, nor implicitly own tasks detached by application code.
 
 The awaited path SHOULD propagate caller cancellation after draining its own
-cascade. A detached-completion handle SHOULD provide explicit cancellation;
+cascade: its turns stop as above, and its committed events are still
+delivered. A caller gone before the call's decision expires the call, and
+one gone after it leaves the delivery running (§13.6, A caller that stops
+waiting). A detached-completion handle SHOULD provide explicit cancellation;
 cancelling a mere completion waiter SHOULD leave detached work running. An
 implementation MAY let the caller name a message's delivery by a key of its own
 (`InboundMessage.delivery_key`), so code that holds no handle, another task or
@@ -13368,6 +13371,23 @@ transaction that stores the event as DELIVERED and updates the room counters:
   source event remaining DELIVERED. A cascade that a failure stops runs no
   further pass, but still delivers every event it committed, an entry nested
   under its lock included: an event stored is delivered.
+
+**A caller that stops waiting.** A caller may stop waiting for its call (a
+cancelled task, a client gone, an outer timeout of its own). Once the call is
+decided (its event committed, a `BLOCKED` record included, or its
+instruction decided, §10.1.1), its delivery runs whether or not its caller
+still waits: every event it committed is delivered, and a cancellation the
+implementation carries from the caller to the call stops the cascade's
+turns, as an explicit cancellation does, never its delivery (§10.1). A
+caller gone before the decision makes the call expire as a passed
+`process_timeout` does, without the `process_timeout` framework event, since
+no deadline passed: nothing more of the trigger is written, the injected
+events, tasks and observations of the hooks that ran are dropped with it, and
+what the call holds (its ticket, the room lock) is released. Every event
+already committed is delivered all the same: the trigger's, when a commit in
+flight wrote it, which decides the call, and an entry's the call adopted
+(§9.5.1). A room step 2 creates is completed whatever becomes of its caller,
+as it is whatever the deadline.
 
 A regeneration re-broadcasts an event already committed, so it has no commit
 point of its own: `process_timeout` bounds its wait for the room lock and its
