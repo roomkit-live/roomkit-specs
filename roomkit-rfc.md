@@ -5345,12 +5345,14 @@ joined even when its executor runs in the owner's process.
 InboundResult
 ├── event: RoomEvent | null                 # The committed event, the record stored
 │                                           # BLOCKED included; null when nothing
-│                                           # was committed, an instruction aside
-│                                           # (§10.1.1)
+│                                           # was committed, save an instruction
+│                                           # its pass decided (§10.1.1)
 ├── blocked: bool                           # Whether the event was blocked
 ├── reason: string | null                   # Block reason
-├── error: Exception | null                 # Generation/stream failure, or a failed
-│                                           # lock release (§13.5), when observed
+├── error: Exception | null                 # Generation/stream failure, the failure
+│                                           # that stopped the cascade (§13.6), or
+│                                           # a failed lock release (§13.5), when
+│                                           # observed
 ├── response_metadata: ResponseMetadata     # Final records of root response turns
 ├── delivery: CompletionHandle | null       # Detached completion only (step 18)
 └── delivery_results: map<string, DeliveryResult>
@@ -5362,7 +5364,10 @@ record stored `BLOCKED` when a hook or its source's permissions blocked it
 index. A replay of the message returns the same, with the record's
 `blocked_by` as its `reason` (§13.4). `event` is null only when nothing was
 committed, as when the room refused the message (§5.1); an instruction,
-which is never committed, is the exception (§10.1.1). `error` carries a
+which is never committed, is the exception once its pass decided it,
+allowed or blocked, and one the room refused carries none (§10.1.1). A
+failure after the decision leaves `event` as it is and is reported on
+`error`. `error` carries a
 failed release of the room lock only when no earlier error was met (§13.5).
 
 `response_metadata` MUST merge the response-metadata records produced by the
@@ -5420,9 +5425,9 @@ response typed `INSTRUCTION` does not re-enter (§8.5).
    hand-back its task (§23.3 step 8). A hook — and an `AFTER_BROADCAST` one — MUST NOT treat
    it as something a participant said: its author is the application. A
    blocked instruction is not stored (the BLOCKED commit of §10.1 steps 10–11
-   does not apply) and the result reports the block; `event_blocked` is still
-   emitted, and the injected events, tasks and observations of its hooks are
-   still processed.
+   does not apply) and the result reports the block (step 5); `event_blocked`
+   is still emitted, and the injected events, tasks and observations of its
+   hooks are still processed.
 5. **It is not committed.** At step 12 nothing is stored, no index is
    consumed (the one step 8 assigned is provisional, for the hooks), and no
    room counter moves (§14.3 holds trivially). It is no activity: neither
@@ -5430,7 +5435,26 @@ response typed `INSTRUCTION` does not re-enter (§8.5).
    response resumes the room (§5.1).
    Its delivery set joins the room's delivery lane without an index, behind
    the room's latest committed event, so it keeps its place in the room's
-   order (§10.2). `InboundResult.event` is the uncommitted instruction.
+   order (§10.2). The result reports what its pass decided, the instruction
+   being `InboundResult.event` uncommitted:
+
+   ```
+   InboundResult of an instruction
+   ├── Allowed → event = the instruction, status DELIVERED
+   ├── Blocked by a hook or the source check (steps 10, 11) → blocked=true,
+   │   the block's reason, event = the instruction, status BLOCKED with
+   │   its blocked_by, never stored
+   │   # Either way at the index the room's next event takes once its hooks
+   │   # are over: step 8's, or step 9a's when a hook ran under the lock,
+   │   # an entry committed ahead of it meanwhile taking step 8's
+   └── Refused by the room's status, at step 6 or at step 9a once a hook
+       closed the room → blocked=true, reason=room_closed, no event:
+       nothing was decided
+   ```
+
+   Once decided, the instruction stays the result's event: a later failure
+   of its cascade (a response's commit, a stream that raises) is reported on
+   the result's `error`, as it is for a committed message (§13.6).
 6. **An intelligence channel takes it as a directive for one turn.** The text
    is the turn's input after the rebuilt history (unless it stands alone, step
    7), marked as the application's instruction and never attributed to a
@@ -5469,6 +5493,12 @@ response typed `INSTRUCTION` does not re-enter (§8.5).
    prompt, tools and skill catalogue are unchanged. It is for a pass that must start from a
    blank page, such as a summary re-run that would otherwise read, and copy,
    its previous answer.
+
+   The pipeline does not empty what it hands the instruction's targets: they
+   receive the room's context as for any event (the room, its bindings, its
+   participants and its recent events), and so do its hooks. Reading none of
+   it is the turn's duty, as above: the history it rebuilds, its memory
+   provider and its working memories are the channel's own reads.
 
    A channel whose conversation lives in a session it does not rebuild (an
    ACP agent, §19.3.2) cannot empty that session, so it MUST run a
@@ -6060,7 +6090,7 @@ emitted the `process_timeout` framework event. Nothing of the event is
 written. A record stored `BLOCKED`, by a hook, by a source that cannot write
 or past the reentry budget (§8.3), is the committed event and is returned; a
 replay returns the event its key committed (§13.4); an instruction, never
-committed, returns uncommitted (§10.1.1).
+committed, returns uncommitted, as its pass decided it (§10.1.1 step 5).
 
 **A record outside the pipeline.** An integrator MAY commit an event that no
 member is meant to receive (a trace, a display snapshot, a copy a branched
