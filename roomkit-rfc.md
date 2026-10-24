@@ -1201,21 +1201,23 @@ name other keys, or none. The defaults:
 | Any other type | As written | — | — |
 
 A channel with no recipient key delivers to a destination of its own (a
-WebSocket's connections, a webhook's URL, a voice or video session) and
-needs no recipient (§10.2 step 3d). A recipient is a value under the key
-that is a string, neither empty nor blank, or a number (a chat id); null, a
-blank string, a boolean, an array and an object are none. Every read of a
-recipient takes this rule: a delivery's (§10.2 step 3d) and routing's (a
-binding's recipient read as its correspondent, the record of a routed
-sender, §10.1 step 2, §10.4). A chat message is its chat's: it is routed by
-the chat its chat key carries, and a room opened for it binds the channel
-naming the chat as correspondent and recipient (§10.1 step 2). On a channel
+WebSocket's connections, a webhook's URL, a voice or video session) and needs
+no recipient (§10.2 step 3d). A recipient is a value under the key that is a
+string, neither empty nor blank, or a number (a chat id); null, a blank
+string, a boolean, an array and an object are none. Every read of a recipient
+takes this rule: a delivery's (§10.2 step 3d) and routing's (a binding's
+recipient read as its correspondent, the record of a routed sender, §10.1
+step 2, §10.4). A chat message is its chat's: it is routed by the chat its
+chat key carries, and a room opened for it binds the channel naming the chat
+as correspondent and recipient (§10.1 step 2). The chat under a chat key
+takes the recipient's rule: a value that is no recipient is no chat, and a
+message that carries only such a value does not carry its chat. On a channel
 that carries private chats and groups, a message that carries the key is its
 group's, any other its sender's. On a channel whose replies go to a chat
 only, a message that does not carry its chat has no address: it records no
 one, and a room opened for it names neither correspondent nor recipient, so
-its deliveries are refused `no_recipient` until the integrator names one.
-Its author is the message's sender either way.
+its deliveries are refused `no_recipient` until the integrator names one. Its
+author is the message's sender either way.
 
 A channel addressed by phone number compares and stores numbers in one form,
 E.164 (`+15550000001`). The inbound sender, a binding's correspondent and
