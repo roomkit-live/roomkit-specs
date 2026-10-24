@@ -4232,6 +4232,13 @@ On a room turn the event's `chain_depth` is the triggering event's plus one,
 and its `visibility` is the triggering event's response visibility (§8.5),
 `all` when it has none. A transport's delivery failure does not fire ON_ERROR.
 
+**The payload and context of a mutation hook.** ON_EVENT_UPDATED and
+ON_EVENT_DELETED carry the event whose stored state changed, never the EDIT
+or the DELETE that changed it, and their hooks' filters read that event: its
+source, its type. Fired for a change the pipeline committed, their context is
+the room as that commit left it, the target rewritten and the change in its
+history (§10.3, Mutation triggers).
+
 **The context of a lifecycle hook.** A hook on a lifecycle trigger
 (ON_ROOM_CREATED, ON_ROOM_PAUSED, ON_ROOM_CLOSED, ON_CHANNEL_ATTACHED,
 ON_CHANNEL_DETACHED, ON_CHANNEL_MUTED, ON_CHANNEL_UNMUTED) receives the room
@@ -5735,9 +5742,23 @@ a hard delete (below) is how a host removes it.
 MUST fire `ON_EVENT_DELETED`, each with the target as the commit left it.
 Firings follow the async-hook locking rule of §10.1: they come once the room
 lock is released, before the change's `AFTER_BROADCAST` hooks. A blocked or
-refused EDIT/DELETE MUST NOT fire either trigger. These triggers let
-observers (e.g. maintainers of denormalized projections over the timeline)
-see every stored-state change regardless of origin.
+refused EDIT/DELETE MUST NOT fire either trigger. Whatever the change's
+origin (an inbound message, a response, an event a hook injects, a direct
+injection) and whether or not it has a target to deliver to:
+
+- The trigger's context MUST be the room as the change's commit left it: the
+  target as rewritten, and the change itself in the history, the newest
+  event, at its committed index and as its hooks left it.
+- The trigger's payload is the target, not the change, and its hooks'
+  filters (§9.1) apply to that payload: `channel_types`, `channel_ids` and
+  `directions` read the target's source, and a filter on event types, where
+  an implementation offers one, reads the target's type. A hook registered
+  for an SMS channel's events observes the correction of an SMS message
+  whichever channel or agent made it, and one filtered on EDIT events
+  observes none, since a target is never a change (rule 2).
+
+These triggers let observers (e.g. maintainers of denormalized projections
+over the timeline) see every stored-state change regardless of origin.
 
 **Direct mutation (host-owned):** The framework SHOULD also expose direct APIs
 — `update_event(room_id, event_id, content|source|metadata)` and
@@ -18655,7 +18676,9 @@ one per change (`CHANNEL_ATTACHED`, `CHANNEL_MUTED`, `CHANNEL_UPDATED`,
    │       └── Updates conversation history with corrected text
    │
    ├── ON_EVENT_UPDATED hooks → evt_003 as edited
-   │   (async, once the room lock is released)
+   │   (async, once the room lock is released; filtered on evt_003's
+   │   source, with the room as the commit left it: evt_003 edited, the
+   │   EDIT at index 7 in the history)
    │
    └── AFTER_BROADCAST hooks → audit log
 ```
@@ -18707,7 +18730,9 @@ one per change (`CHANNEL_ATTACHED`, `CHANNEL_MUTED`, `CHANNEL_UPDATED`,
    │           withheld (§10.3)
    │
    ├── ON_EVENT_DELETED hooks → evt_005 as deleted
-   │   (async, once the room lock is released)
+   │   (async, once the room lock is released; filtered on evt_005's
+   │   source, with the room as the commit left it: evt_005 marked
+   │   deleted, the DELETE at index 8 in the history)
    │
    └── AFTER_BROADCAST hooks → audit log
 ```
