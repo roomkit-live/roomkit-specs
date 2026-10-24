@@ -815,11 +815,16 @@ has the level a composite in the edit's place would have.
 
 Content that holds a sixth level is refused where it is built, before
 anything of its event is written, and no event that holds one is ever
-committed: an inbound message, or the event a channel builds from it
-(§10.1 step 4), fails the message with nothing stored; a hook's replacement
-(§9.4) is an unusable result (§9.3); a direct injection (§10.5) raises before
-anything is read; an edit's new content counts its levels in the edit's
-place (above), which is its target's place once the commit writes it there
+committed. Each boundary content crosses refuses it: an inbound message
+fails before anything is read, no room routed or created, and the event a
+channel builds from it (§10.1 step 4) fails the message with nothing stored;
+a hook's replacement or injected event (§9.4) is an unusable result (§9.3),
+nothing of it applied; a channel's response is the channel's failure,
+reported as that target's failed delivery (§10.2); `send_event()` and
+`commit_event()` (§10.5) and `update_event()` (§10.3) raise before anything
+is read; and a stored event that holds one fails its read, as content that
+cannot be built. An edit's new content counts its levels in the edit's place
+(above), which is its target's place once the commit writes it there
 (§10.3).
 
 **SystemContent** — Framework-generated message:
