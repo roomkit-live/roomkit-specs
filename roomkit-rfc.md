@@ -529,7 +529,10 @@ an ARCHIVED one are such; a reopen has none, since an ACTIVE room was never
 closed. A transition on a room in any other status it does not leave from
 MUST fail with nothing written: a pause or a resume of a CLOSED or ARCHIVED
 room, a reopen of a room that is not CLOSED, and a close of an ARCHIVED
-room. No call takes a room out of ARCHIVED.
+room. No call takes a room out of ARCHIVED. A transition names the
+organization its caller acts for: a room of another organization, or of
+none when the call names one, is not found, and nothing is written in it,
+its due timers included (§17.2).
 
 Reading is unaffected by status: history, participants and bindings remain
 readable at every status, and an implementation MUST NOT make a closed room
@@ -584,16 +587,17 @@ Implementations MUST enforce timer transitions when configured:
 - **When.** Every locked section that reads the room's status (the gate of
   §10.1 step 6, an integrator's transition, an attach or a binding change, a
   direct mutation, a record's commit) first applies the transitions due at its
-  instant, so an event that arrives after its room fell due is refused as if
-  the timer had run on time. A room nobody writes to transitions when the host
-  checks its timers, or on the period of a sweeper the implementation runs. A
-  transition takes the instant it fell due, however late it is applied: a
-  check long after both fell due pauses the room at the first instant and
-  closes it at the second, in one write, and both its hooks then receive the
-  room as that write left it, CLOSED (§9.2). Each emits its framework event
-  once stored (`room_paused`, `room_closed`, with `reason = timer`), before
-  anything the section decides next, so a message a close that fell due
-  refuses reports `room_closed` before its `room_refused_event`; its trigger
+  instant, once the room proves to be the caller's (§17.2), so an event that
+  arrives after its room fell due is refused as if the timer had run on time.
+  A room nobody writes to transitions when the host checks its timers, or on
+  the period of a sweeper the implementation runs. A transition takes the
+  instant it fell due, however late it is applied: a check long after both
+  fell due pauses the room at the first instant and closes it at the second,
+  in one write, and both its hooks then receive the room as that write left
+  it, CLOSED (§9.2). Each emits its framework event once stored
+  (`room_paused`, `room_closed`, with `reason = timer`), before anything the
+  section decides next, so a message a close that fell due refuses reports
+  `room_closed` before its `room_refused_event`; its trigger
   (`ON_ROOM_PAUSED`, `ON_ROOM_CLOSED`) fires as an ASYNC trigger does, once
   the room lock is released (§10.1).
 
@@ -5605,8 +5609,9 @@ observers (e.g. maintainers of denormalized projections over the timeline)
 see every stored-state change regardless of origin.
 
 **Direct mutation (host-owned):** The framework SHOULD also expose direct
-APIs — `update_event(room_id, event_id, content|source|metadata)` and
-`delete_event(room_id, event_id, cascade_replies)` — for host applications
+APIs — `update_event(room_id, event_id, content|source|metadata,
+organization_id | null)` and `delete_event(room_id, event_id,
+cascade_replies, organization_id | null)` — for host applications
 that own authorization on their own surfaces. Direct `update_event()` replaces
 the provided fields wholesale and adds no `edited` marker; direct
 `delete_event()` is a HARD delete that MUST cascade to thread replies by
@@ -5622,9 +5627,12 @@ after the lock is released: `ON_EVENT_UPDATED` once, with the event as it
 now stands, and `ON_EVENT_DELETED` once per event removed, each with the
 event as it was stored, so that a projection over the timeline sees every
 row that went. A room or a target the store does not hold, another room's
-event included, MUST be a no-op that fires nothing: `update_event()`
-returns null and `delete_event()` no id. An update that changes nothing
-writes nothing and fires nothing, and returns the event as stored.
+event included, MUST be a no-op that fires nothing: `update_event()` returns
+null and `delete_event()` no id. So is a room of another organization than
+the one the call names, or of none when it names one, with nothing written in
+it, its due timers included (§17.2); a call that names no organization reads
+the room unscoped. An update that changes nothing writes nothing and fires
+nothing, and returns the event as stored.
 
 **Broadcast behavior:**
 
@@ -14166,6 +14174,17 @@ should live in the integration surface layer.
   organization's rooms only: a room of another organization, or of none, is
   not its own (§10.1 step 2), and a room it creates belongs to the
   organization.
+- The integrator's direct calls name the organization they act for as a
+  message does: a room's transitions (§5.1), a channel's attach, detach and
+  binding changes (§7.5), an update or a delete of a stored event (§10.3), a
+  direct injection and a record's commit (§10.5). Against a room that is not
+  the caller's, each acts as it does on a room that does not exist: a
+  transition, an attach or a binding change, an injection and a record fail
+  as not found, and an update or a delete is a no-op that fires nothing. The
+  room is checked as the room lock finds it, before its due timer
+  transitions are applied, so nothing is written in it, those transitions
+  included: they fall due all the same, and the room's next own call or the
+  check of its timers applies them at the instant each fell due (§5.1).
 
 ### 17.3 Sensitive Data
 
