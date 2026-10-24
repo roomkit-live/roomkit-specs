@@ -1368,7 +1368,8 @@ InboundMessage
 │                                           # never "internal", the framework's
 ├── addressed_to: list<string> | null       # Intelligence channels asked to act
 │                                           # (Section 19.3); null = any eligible
-├── response_visibility: string | null      # Where the answer may go; null = unrestricted
+├── response_visibility: string | null      # Where the answer may go; null =
+│                                           # unrestricted; never "internal"
 ├── chain_depth: int = 0                    # The chain the message continues (Section 8.3)
 ├── standalone: bool = false                # INSTRUCTION only: the turn reads nothing
 │                                           # of the room (Section 10.1.1)
@@ -3373,8 +3374,10 @@ to the room is allowed and matches nothing.
 records it writes itself (an interruption record, §6.4): a value that marks
 the framework's record is not the integrator's to give. An implementation MUST
 refuse it, before anything is read or written, on an attach and a binding
-update, on an inbound message (§5.12) and on a direct injection (§10.5); a
-hook's modify that writes it has the event's visibility put back from the
+update, on an inbound message, as its `visibility` and as its
+`response_visibility` alike (§5.12), and on a direct injection (§10.5); a
+hook's modify that writes it, or that changes the visibility of an event that
+holds it (a framework record), has the event's visibility put back from the
 original (§9.4), and a channel's response that carries it is committed with
 `none` (§8.5). A record committed outside the pipeline (§10.5) is stored as
 its caller gives it, and reaches no channel. An event the integrator wants
@@ -4545,10 +4548,12 @@ hook's other changes stand. The source's write check (§10.1 step 11) and the
 chain-depth limit (§8.3) read these fields after the hooks: no hook can
 commit an event under another source, at another index or chain depth, or
 as the answer to another event. A visibility the hook changed is still
-narrowed at commit by the source binding's visibility (§7.3), and one of
-`internal`, which only the framework writes, is put back from the original
-(§7.3). A router hook that addresses an event (Section 19.4), by its address
-or its routing metadata, is unaffected.
+narrowed at commit by the source binding's visibility (§7.3), and the
+original's is put back whenever either visibility is `internal`, which only
+the framework writes (§7.3): a hook can neither give an event that mark nor
+change the visibility of a framework record that has it. A router hook that
+addresses an event (Section 19.4), by its address or its routing metadata, is
+unaffected.
 
 **InjectedEvent:**
 
