@@ -2684,9 +2684,9 @@ rounds, an interruption), the last message the turn wrote. A response without
 tools records it too; a provider that streams text alone reports no usage, and
 its record carries none. A turn learns its end after its segments are
 written, so the implementation updates the stored message, and ON_EVENT_UPDATED
-fires as for any change to a stored event; it does not deliver the message
-again. Writing that update is best effort: a failure is logged, and the turn's
-outcome stands. A host reads how any turn ended from its reply.
+fires as for a direct `update_event()` (§10.3); it does not deliver the
+message again. Writing that update is best effort: a failure is logged, and
+the turn's outcome stands. A host reads how any turn ended from its reply.
 
 **ACP Agent Channel:**
 
@@ -4239,7 +4239,8 @@ and its `visibility` is the triggering event's response visibility (§8.5),
 
 **The payload and context of a mutation hook.** ON_EVENT_UPDATED and
 ON_EVENT_DELETED carry the event whose stored state changed, and their
-hooks' filters read that event: its source, its type. Fired for an EDIT or a
+hooks' filters read that event: its source, and its type where an
+implementation filters on types. Fired for an EDIT or a
 DELETE the pipeline committed, the payload is its target, never the change
 itself, and their context is the room as that commit left it, the target
 rewritten and the change in its history (§10.3, Mutation triggers). Fired by
@@ -5820,18 +5821,19 @@ Firings follow the async-hook locking rule of §10.1: they come once the room
 lock is released, before the change's `AFTER_BROADCAST` hooks. A blocked or
 refused EDIT/DELETE MUST NOT fire either trigger. Whatever the change's
 origin (an inbound message, a response, an event a hook injects, a direct
-injection) and whether or not it has a target to deliver to:
+injection) and whether or not any channel receives it:
 
 - The trigger's context MUST be the room as the change's commit left it: the
   target as rewritten, and the change itself in the history, the newest
   event, at its committed index and as its hooks left it.
 - The trigger's payload is the target, not the change, and its hooks'
-  filters (§9.1) apply to that payload: `channel_types`, `channel_ids` and
-  `directions` read the target's source, and a filter on event types, where
-  an implementation offers one, reads the target's type. A hook registered
-  for an SMS channel's events observes the correction of an SMS message
-  whichever channel or agent made it, and one filtered on EDIT events
-  observes none, since a target is never a change (rule 2).
+  filters (§9.1) MUST apply to that payload: `channel_types`, `channel_ids`
+  and `directions` read the target's source, and a filter on event types,
+  where an implementation offers one, reads the target's type. A hook
+  registered for an SMS channel's events observes the correction of an SMS
+  message whichever channel or agent made it, and one filtered on EDIT
+  events observes none, since a target is never a change (Validation,
+  rule 2).
 
 These triggers let observers (e.g. maintainers of denormalized projections
 over the timeline) see every stored-state change regardless of origin.
