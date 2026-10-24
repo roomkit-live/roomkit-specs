@@ -3904,13 +3904,8 @@ what code under the cascade's lock injects or sends, what an off-lock hook's
 body, a handler its check's report awaits (`hook_error`, `hook_timeout`) or
 the parse does for the cascade's event, and the calls its deliveries and turns
 make into the room (a routed message once routing has placed it there), and
-so do those of the ASYNC hooks it fires once an event's delivery set has run
-(§10.1 step 16's `AFTER_BROADCAST` hooks, a change's `ON_EVENT_UPDATED` and
-`ON_EVENT_DELETED` hooks, §10.3), while each hook's body runs, and those that
-create a room, routed or named, charged once before the room is created, with
-the cascades those calls start. Work such a hook's body starts (a task it
-spawns) that calls once the body has returned is work of its own, with a
-budget and a depth of its own (§9.5.1). A message is charged once,
+those that create a room, routed or named, charged once before the room is
+created, with the cascades those calls start. A message is charged once,
 wherever routing places it. A buffered response past the budget does not
 re-enter, a chained stream past it is closed unread, so nothing is
 generated, and an injected event past it is not committed as a pass, so its
@@ -3923,6 +3918,26 @@ one naming a room the store does not hold at step 2, before creating it;
 a routed one at step 2, before creating a new room, or, landing in the room
 the work delivers in, after the locked check, what routing wrote kept
 (§9.5.1, Past the cap).
+
+**The hook calls of a cascade.** Apart from its passes, each cascade MUST
+count the calls of the ASYNC hooks it fires once an event's delivery set has
+run (§10.1 step 16's `AFTER_BROADCAST` hooks, a change's `ON_EVENT_UPDATED`
+and `ON_EVENT_DELETED` hooks, §10.3), on a counter of the same size, `10 ×
+max_chain_depth`, shared by reference with the cascades those calls start as
+the passes are. While a hook's body runs, each call it makes into its room
+draws one hook call as it starts, a message that creates a room included, and
+so does each direct `update_event()`, `delete_event()` or regeneration it
+makes there (§10.3): a hook that sends, changes or regenerates on every event
+stops at the cap, and a hook that posts once per event draws one hook call
+per event. Its calls draw no pass, and the cascade's passes draw no hook
+call, so a hook's notices cost the agents no answer and the answers block no
+notice below the cap. Past its hook calls, a hook's direct injection is
+stored `BLOCKED` with `reentry_loop_cap` and its message refused, as past
+the passes (above), and a direct change raises a reentry-loop-cap error,
+nothing of it written (§10.3). Work a hook's
+body starts (a task it spawns, and does not wait for) that calls once the
+body has returned is work of its own, with a budget and a depth of its own
+(§9.5.1).
 
 **Requirements:**
 
@@ -4936,9 +4951,12 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   of the cascade that delivers, the one whose delivery set runs it or that
   fired the hook, and so does the cascade the call starts, so that a
   transport whose delivery sends into its room, or a hook that posts after
-  every event, stops at the cap. A hook body draws on it only while it runs,
-  each body on its own: a hook that posts once per event draws one pass of
-  that event's budget. So MUST a call it makes that
+  every event, stops at the cap. A delivery's or a turn's call draws one of
+  the cascade's passes; a hook body's call draws one of its hook calls, a
+  counter kept apart (§8.3), only while that body runs, each body on its own:
+  a hook that posts once per event draws one hook call per event, and a
+  task the body starts and does not wait for draws nothing of it once the
+  body has returned. So MUST a call it makes that
   creates a room, whether a routed message opens it or the call names a room
   the store does not hold, which step 2 creates with the id (§10.1 step 2,
   §10.4): the room is that cascade's own work, and the call is charged once,
@@ -5421,9 +5439,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   the room lock.
     └── Each hook's body, and that of a change's mutation trigger (§10.3),
         is the cascade's work while it runs: a call it makes into the room
-        is a new arrival drawing on the cascade's reentry budget (§8.3,
-        §9.5.1). Work it starts that calls once the body has returned
-        begins fresh.
+        is a new arrival drawing one of the cascade's hook calls, and so is
+        a direct change it makes (§8.3, §9.5.1, §10.3). Work it starts that
+        calls once the body has returned begins fresh.
 
 17. EMIT FRAMEWORK EVENTS
     └── event_processed, delivery_succeeded/failed, etc.
@@ -6018,6 +6036,25 @@ the call names, or of none when it names one, with nothing written in it,
 its due timers included (§17.2); a call that names no organization reads the
 room unscoped. An update that changes nothing writes nothing and fires
 nothing, and returns the event as stored.
+
+**A direct change from the room's work.** A direct `update_event()` that
+changes something, a direct `delete_event()` of an event the room holds, and
+a regeneration of the last answer (Section 13.6) are no pass, and have no
+budget of their own to bound a hook that repeats them. Made from the body of
+an ASYNC hook a cascade fires once an event's delivery set has run (§10.1
+step 16, the mutation triggers above), each MUST draw one of that cascade's
+hook calls (§8.3) before it writes, the regeneration as it starts; past them,
+it MUST raise a reentry-loop-cap error and write nothing. Made from other
+work of the room, a delivery, a turn, a locked section or an admission, it
+draws nothing. Its own triggers run on the budget of the room's work it is
+made in, the cascade's whose frame it runs in, or on a budget of its own
+when it comes from outside the room's work: the mutation triggers' hook
+bodies draw their calls on it, and a regeneration's cascade its passes and
+its hooks' calls. A hook that updates its event on every update, deletes on
+every deletion, or deletes and regenerates after every answer therefore
+stops at the cap. A change the implementation itself makes for the room's
+work, such as restoring held messages (§11.7.6), runs its triggers on that
+work's budget alike.
 
 **Broadcast behavior:**
 
