@@ -14250,12 +14250,13 @@ should live in the integration surface layer.
   binding changes (§7.5), an update or a delete of a stored event (§10.3), a
   direct injection and a record's commit (§10.5). Against a room that is not
   the caller's, each acts as it does on a room that does not exist: a
-  transition, an attach or a binding change, an injection and a record fail
-  as not found, and an update or a delete is a no-op that fires nothing. The
-  room is checked as the room lock finds it, before its due timer
-  transitions are applied, so nothing is written in it, those transitions
-  included: they fall due all the same, and the room's next own call or the
-  check of its timers applies them at the instant each fell due (§5.1).
+  transition, an attach, a detach or a binding change, an injection and a
+  record fail as not found, and an update or a delete is a no-op that fires
+  nothing. The room is checked as the room lock finds it, before its due
+  timer transitions are applied, so nothing is written in it, those
+  transitions included: they fall due all the same, and the room's next own
+  call or the check of its timers applies them at the instant each fell due
+  (§5.1).
 
 ### 17.3 Sensitive Data
 
