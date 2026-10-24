@@ -4778,14 +4778,13 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │       │   conditions (§10.4), whichever strategy chose it, unless the
    │       │   sender is a participant reached through the channel, which
    │       │   spares this last condition only. The framework's own sender
-   │       │   (`system`) and a message
-   │       │   with no address are no one's correspondent. Nothing is
-   │       │   written, the lock is released, and the message is routed once
-   │       │   more, its identity not read again; a second answer that is
-   │       │   not the message's, like no answer, gives the message a new
-   │       │   room. A routed message is never refused room_closed at
-   │       │   this step; a room closed after its section is refused at
-   │       │   step 6, as for any event
+   │       │   (`system`) and a message with no address are no one's
+   │       │   correspondent. Nothing is written, the lock is released, and
+   │       │   the message is routed once more, its identity not read again;
+   │       │   a second answer that is not the message's, like no answer,
+   │       │   gives the message a new room. A routed message is never
+   │       │   refused room_closed at this step; a room closed after its
+   │       │   section is refused at step 6, as for any event
    │       └── Otherwise, where the binding names no participant and is
    │           not `group`, record the sender on it: a binding update
    │           (§7.5 rule 6) that writes the sender's address as its
