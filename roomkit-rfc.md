@@ -1368,8 +1368,10 @@ InboundMessage
 │                                           # never "internal", the framework's
 ├── addressed_to: list<string> | null       # Intelligence channels asked to act
 │                                           # (Section 19.3); null = any eligible
-├── response_visibility: string | null      # Where the answer may go; null =
-│                                           # unrestricted; never "internal"
+├── response_visibility: string | null      # Where its answers may go: each response
+│                                           # is narrowed to it, never widened
+│                                           # (Section 8.5); null = unrestricted;
+│                                           # never "internal"
 ├── chain_depth: int = 0                    # The chain the message continues (Section 8.3)
 ├── standalone: bool = false                # INSTRUCTION only: the turn reads nothing
 │                                           # of the room (Section 10.1.1)
@@ -3881,6 +3883,19 @@ a stream, that carries the visibility `internal`, which only the framework
 writes (§7.3), is committed with `none`, and the implementation logs a
 warning: it is stored and reaches no channel, as its channel asked, without
 the mark of the framework's own records.
+
+**Where a response may go.** A message's `response_visibility` (§5.12) applies
+to each response to the message's event, or to the instruction the message is
+(§10.1.1): every channel's, a transport's included, each row of a stream, and
+the records stored in place of one past the chain-depth limit or the reentry
+budget (§8.3). As it writes the response's source, the pipeline intersects the
+visibility the channel gave the response with the message's response
+visibility (§7.3), so that a response is never visible to more than its
+channel or its message allow: the message narrows what its channel gave, never
+widens it. The response's hooks see it narrowed; a hook's modify may change
+its visibility as on any event (§9.4), and the commit narrows it again to its
+source binding's (§7.3). A message whose `response_visibility` is null
+restricts nothing.
 
 **What the turn is told.** `BEFORE_AI_GENERATION` receives, with the turn's
 context, the event the turn answers (`trigger`), so a hook can tell the model
