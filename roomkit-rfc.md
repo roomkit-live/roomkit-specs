@@ -5917,7 +5917,7 @@ An injection takes §10.1's steps 1 to 4 its own way. The channel it names
 MUST be registered, and the event is admitted as a message is before anything
 is read: an instruction's refusals (§10.1.1), `standalone` on another type,
 the visibility `internal` (§7.3); and a key in the publication namespace,
-which a message's would lose, is refused too (§5.2). None of step 2 runs. The
+which a message would merely lose, is refused (§5.2). None of step 2 runs. The
 room is read scoped to `organization_id` (§17.2), unscoped when the call
 names none: a room that does not exist, or another organization's, raises. A
 channel the room does not bind is not attached, and the call raises with
