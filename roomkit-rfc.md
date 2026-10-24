@@ -1399,8 +1399,8 @@ InboundMessage
 │                                           # (Section 19.3); null = any eligible
 ├── response_visibility: string | null      # Where its cascade's answers may go: each
 │                                           # is narrowed to it, never widened
-│                                           # (Section 8.5); null alone = unrestricted,
-│                                           # "" = "none"; never "internal"
+│                                           # (Section 8.5); null alone = unrestricted;
+│                                           # never "" nor "internal"
 ├── chain_depth: int = 0                    # The chain the message continues (Section 8.3)
 ├── standalone: bool = false                # INSTRUCTION only: the turn reads nothing
 │                                           # of the room (Section 10.1.1)
@@ -3416,11 +3416,13 @@ channel whose id is one of them MUST be refused when it is registered, and so
 MUST a channel whose id contains a comma or starts or ends with whitespace, so
 that every channel id can be written in a list. Whitespace around the whole
 value and around each id is ignored (`" sms , ws "` is `"sms,ws"`). An empty
-value and an empty item (`""`, `"sms,,ws"`, `"sms,"`) MUST be refused, save an
-empty `response_visibility`, which reads as `none` (§5.12). An id listed twice
-counts once, and a list is written back with each id once, sorted by code
-point. An id that names no channel bound to the room is allowed and matches
-nothing.
+value and an empty item (`""`, `"sms,,ws"`, `"sms,"`) MUST be refused, a
+`response_visibility` at the doors included (an inbound message, §5.12, a
+direct injection, §10.5). An empty value that reaches an event any other way
+(a hook's modify, a custom store) reads as `none`, so that it restricts rather
+than opens. An id listed twice counts once, and a list is written back with
+each id once, sorted by code point. An id that names no channel bound to the
+room is allowed and matches nothing.
 
 **Who writes `internal`.** Only the framework writes `internal`, on the
 records it writes itself (an interruption record, §6.4): a value that marks
@@ -3954,8 +3956,8 @@ stays within both. A response MUST NOT be visible beyond its cascade's scope:
 its hooks may change its visibility (§9.4), and once they are over the
 pipeline MUST intersect the visibility they left with the scope again. The
 commit then narrows the response to its source binding's (§7.3). Only a null
-`response_visibility` restricts nothing; an empty one reads as `none`
-(§5.12).
+`response_visibility` restricts nothing: an empty one is refused at the
+doors, and one that reaches an event any other way reads as `none` (§7.3).
 
 **What the turn is told.** `BEFORE_AI_GENERATION` receives, with the turn's
 context, the event the turn answers (`trigger`), so a hook can tell the model
