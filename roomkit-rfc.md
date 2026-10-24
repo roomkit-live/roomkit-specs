@@ -1187,6 +1187,7 @@ name other keys, or none. The defaults:
 | MESSENGER | As written | `facebook_user_id` | — |
 | TELEGRAM | Its chat, as written | `telegram_chat_id` | `chat_id` |
 | TEAMS | Its chat, as written | `teams_conversation_id` | `conversation_id` |
+| WEBHOOK | As written | — (it posts to its configured URL) | — |
 | Any other type | As written | — | — |
 
 A channel with no recipient key delivers to a destination of its own (a
@@ -4920,7 +4921,10 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
        address, or the chat it was posted in, §5.7); then, for a channel
        other than VOICE and REALTIME_VOICE, whether or not the attach was
        made, fire ON_SESSION_STARTED (§9.2) and emit `session_started`
-       (§8.2)
+       (§8.2). A creation hook that closed the room does not stop the
+       message in this branch: it is neither refused nor routed again here,
+       and step 6 refuses it (room_closed), nothing of it stored, the room
+       kept as the hook left it
 
 3. BUILD CONTEXT
    ├── Fetch room state
@@ -5721,22 +5725,25 @@ missing from the store is created with the id.
    participant who is the sender was reached through this channel (its
    `connected_via` names the channel, whatever the participant's status: a LEFT
    or BANNED record still says whose conversation the room is). Within each
-   lookup the sender is named by their address or by their identity, and the
-   newest room either name finds wins, so an older room found by the address
-   does not hide a newer one found by the identity; a member the integrator
-   added under their identity is found by an address linked to it. The newest
-   is the most recently created, and of rooms created at the same instant the
-   one with the greatest id, so the answer never depends on the order rooms are
-   read in. An id names its participant only on a channel they are reached
-   through (Section 5.5), and an identity reaches every channel its person
-   uses: a room found through a participant record, by the address or the
-   identity, is the sender's only when that participant was reached through
-   this channel, so a message is not carried into a room of another channel,
-   whose messages would then go out on this one. A PAUSED room is the sender's
-   conversation as an ACTIVE one is: its timer paused it for inactivity, and
-   the message's delivered commit resumes it (§5.1); the newest room wins
-   whatever its status. On a chat channel the address routed by is the chat the
-   message was posted in, not its sender (§5.7), here and in step 3.
+   lookup the sender is named by their address or by their identity: a binding
+   names them when its correspondent is either, or, naming none and not
+   `group`, when its recipient is their address (§5.7); a participant record,
+   when its id or its `identity_id` is either. The newest room either name
+   finds wins, so an older room found by the address does not hide a newer one
+   found by the identity; a member the integrator added under their identity is
+   found by an address linked to it. The newest is the most recently created,
+   and of rooms created at the same instant the one with the greatest id, so
+   the answer never depends on the order rooms are read in. An id names its
+   participant only on a channel they are reached through (Section 5.5), and an
+   identity reaches every channel its person uses: a room found through a
+   participant record, by the address or the identity, is the sender's only
+   when that participant was reached through this channel, so a message is not
+   carried into a room of another channel, whose messages would then go out on
+   this one. A PAUSED room is the sender's conversation as an ACTIVE one is:
+   its timer paused it for inactivity, and the message's delivered commit
+   resumes it (§5.1); the newest room wins whatever its status. On a chat
+   channel the address routed by is the chat the message was posted in, not its
+   sender (§5.7), here and in step 3.
 2. If found → return that room.
 3. Otherwise, if the channel is bound to exactly **one** room step 3 reads, and
    that room admits the sender (below) → return that room. Step 3 reads the
@@ -13502,15 +13509,21 @@ ConversationStore (interface)
 │   ├── advance_delivered_index(room_id, index, force = false) → bool
 │   │                                         # compare-and-set from index - 1, or
 │   │                                         # from any lower value when forced
-│   ├── find_room_id_by_binding(channel_id, participant_id, identity_id, filter)
-│   │                             → string | null
+│   ├── find_room_id_by_binding(channel_id, participant_id, identity_id, filter,
+│   │                           recipient_key) → string | null
 │   │                                         # newest room whose binding of
 │   │                                         # channel_id names participant_id
-│   │                                         # or identity_id
+│   │                                         # or identity_id, or, naming no
+│   │                                         # correspondent and not group,
+│   │                                         # holds participant_id under
+│   │                                         # recipient_key, the channel's
+│   │                                         # (§5.7), null on a channel whose
+│   │                                         # recipient names no one
 │   └── find_room_id_by_participant(channel_id, participant_id, identity_id, filter)
 │                                 → string | null
-│                                             # newest room where a participant named
-│                                             # participant_id or identity_id was
+│                                             # newest room holding a participant
+│                                             # whose id or identity_id is
+│                                             # participant_id or identity_id,
 │                                             # reached through channel_id
 │       # Both serve §10.4 step 1: identity_id is the identity the caller
 │       # resolved for the sender (resolve_identity, in the call's
