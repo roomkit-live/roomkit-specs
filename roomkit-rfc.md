@@ -3087,7 +3087,7 @@ AIContext
 ├── response_schema: map<string, any> | null  # JSON Schema of the answer, see below
 ├── room: RoomContext | null                # Current room state
 ├── target_capabilities: ChannelCapabilities | null  # What every transport that sends shares (§4.2)
-├── target_media_types: list<ChannelMediaType>
+├── target_media_types: list<ChannelMediaType>  # The media types every transport that sends shares (§4.2)
 ├── metadata: map<string, any>
 └── response_metadata: ResponseMetadata     # The turn's one record, see below
 
@@ -6315,7 +6315,10 @@ first posts attach the channel once. A room whose status refuses new events
 MUST raise a room-closed error. A room the host channel was detached from
 MUST raise as a channel the room does not bind does: the post does not undo
 the revocation (§7.5 rule 7), which only an explicit attach grants again.
-Nothing is written either way.
+Nothing is written either way. As step 2's attach (§10.1, §13.6), the first
+post's wait for the room lock runs within the call's `process_timeout`, one
+deadline from the call's start to its commit, and the section it opens runs
+to its end whatever becomes of the caller.
 
 `addressed_to` defaults to `[]`: the host's message solicits no intelligence
 channel unless it names one (§19.3). `participant_id` names who speaks, a
