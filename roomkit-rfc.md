@@ -3408,16 +3408,17 @@ to the room is allowed and matches nothing.
 
 **Who writes `internal`.** Only the framework writes `internal`, on the
 records it writes itself (an interruption record, §6.4): a value that marks
-the framework's record is not the integrator's to give. An implementation MUST
-refuse it, before anything is read or written, on an attach and a binding
-update, on an inbound message, as its `visibility` and as its
-`response_visibility` alike (§5.12), and on a direct injection (§10.5); a
-hook's modify that writes it, or that changes the visibility of an event that
-holds it (a framework record), has the event's visibility put back from the
-original (§9.4), and a channel's response that carries it is committed with
-`none` (§8.5). A record committed outside the pipeline (§10.5) is stored as
-its caller gives it, and reaches no channel. An event the integrator wants
-stored and shown to no channel takes `none`.
+the framework's record is not the integrator's to give. An implementation
+MUST refuse it, before anything is read or written, on an attach and a
+binding update, on an inbound message, as its `visibility` and as its
+`response_visibility` alike (§5.12), and on a direct injection, its
+visibility and its response visibility alike (§10.5); a hook's modify that
+writes it, or that changes the visibility of an event that holds it (a
+framework record), has the event's visibility put back from the original
+(§9.4), and a channel's response that carries it is committed with `none`
+(§8.5). A record committed outside the pipeline (§10.5) is stored as its
+caller gives it, and reaches no channel. An event the integrator wants stored
+and shown to no channel takes `none`.
 
 **An event's visibility.** An event carries a visibility of its own (an
 inbound message's `visibility`, §5.12, `"all"` unless the caller sets one),
@@ -3830,10 +3831,10 @@ inbound or directly injected event, one regeneration or one delegated run) and
 the events its hooks inject (§9.4) share a reentry budget of `10 ×
 max_chain_depth` passes, buffered responses, chained streams and injected
 events alike (§10.1 steps 10 to 14), and so do the calls the room's own work
-makes into the room, each drawing one pass as it starts (§9.5.1,
-Reentrance): what code under the cascade's lock injects or sends, what an
-off-lock hook's body, a handler of its `hook_error` or the parse does for the
-cascade's event, and the calls its deliveries and turns make, with the
+makes into the room, each drawing one pass as it starts (§9.5.1, Reentrance):
+what code under the cascade's lock injects or sends, what an off-lock hook's
+body, a handler of its `hook_error` or `hook_timeout` or the parse does for
+the cascade's event, and the calls its deliveries and turns make, with the
 cascades those calls start. A buffered response past the budget does not
 re-enter, a chained stream past it is closed unread, so nothing is generated,
 and an injected event past it is not committed as a pass, so its hooks never
@@ -3918,18 +3919,19 @@ writes (§7.3), is committed with `none`, and the implementation logs a
 warning: it is stored and reaches no channel, as its channel asked, without
 the mark of the framework's own records.
 
-**Where a response may go.** A message's `response_visibility` (§5.12) applies
-to each response to the message's event, or to the instruction the message is
-(§10.1.1): every channel's, a transport's included, each row of a stream, and
-the records stored in place of one past the chain-depth limit or the reentry
-budget (§8.3). As it writes the response's source, the pipeline intersects the
-visibility the channel gave the response with the message's response
-visibility (§7.3), so that a response is never visible to more than its
-channel or its message allow: the message narrows what its channel gave, never
-widens it. The response's hooks see it narrowed; a hook's modify may change
-its visibility as on any event (§9.4), and the commit narrows it again to its
-source binding's (§7.3). A message whose `response_visibility` is null
-restricts nothing.
+**Where a response may go.** The `response_visibility` of a message (§5.12),
+or of a direct injection (§10.5), applies to each response to its event, or to
+the instruction it is (§10.1.1): every channel's, a transport's included, each
+row of a stream, and the records stored in place of one past the chain-depth
+limit or the reentry budget (§8.3). It scopes those direct responses only: an
+answer to a response answers no message, and keeps the visibility its channel
+gave it. As it writes the response's source, the pipeline intersects the
+visibility the channel gave the response with the response visibility (§7.3),
+so that a response is never visible to more than its channel or its message
+allow: the message narrows what its channel gave, never widens it. The
+response's hooks see it narrowed; a hook's modify may change its visibility as
+on any event (§9.4), and the commit narrows it again to its source binding's
+(§7.3). A null `response_visibility` restricts nothing.
 
 **What the turn is told.** `BEFORE_AI_GENERATION` receives, with the turn's
 context, the event the turn answers (`trigger`), so a hook can tell the model
@@ -4191,8 +4193,8 @@ name, or the provider's error code) and `error_category`:
 | `reasoning` | A reasoning backend's turn raised (Section 12.4.1) |
 
 On a room turn the event's `chain_depth` is the triggering event's plus one,
-and its `visibility` is the triggering event's response visibility. A
-transport's delivery failure does not fire ON_ERROR.
+and its `visibility` is the triggering event's response visibility (§8.5),
+`all` when it has none. A transport's delivery failure does not fire ON_ERROR.
 
 **The context of a lifecycle hook.** A hook on a lifecycle trigger
 (ON_ROOM_CREATED, ON_ROOM_PAUSED, ON_ROOM_CLOSED, ON_CHANNEL_ATTACHED,
@@ -4759,27 +4761,30 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   of a routed sender wrote there included. Its history can be stale by the
   time the event commits; a hook that reads the room's state rather than the
   event MUST keep `needs_lock = true`.
-- **Reentrance.** A call into the room (an event injected, §10.5, or a message
-  that names the room, §10.1) made by a caller that already stands in the
-  room's admission order takes no ticket in that room. The caller stands in it
-  while it holds the room lock (a locked hook, code under the lock), and in
-  the work an event's admission runs before the lock: an off-lock hook's body,
-  a handler of the `hook_error` its check reports (§8.2), and the message's
-  parse (a channel's `handle_inbound()`, §10.1 step 4). It stands there only
-  while that work runs: a task the work spawned that outlives it stands in no
-  order. The call is adopted by that work: it would otherwise wait for the
-  ticket its own caller holds or, made from a parse, open a cascade of its own
-  for every message. It runs every hook under the lock and commits ahead of
-  the event whose processing made it. Made under the lock, it MUST draw on the
-  reentry budget of the cascade whose section holds the lock (§8.3), and the
-  events its own hooks inject join that section's queue, committed once the
-  section has released the lock (§9.4); made in the admission order, it MUST
-  draw on the budget of the cascade of the event that work is for, so that a
-  hook or a parse that sends into the room on every event stops at the cap.
-  Code under a room lock the host holds outside any pass (a host serialising
-  its own changes, §13.5) belongs to no cascade: its call draws on a budget of
-  its own, and the events its hooks inject commit once the host has released
-  the lock, after the call returns.
+- **Reentrance.** A call into the room (an event injected, §10.5, or a
+  message that names the room, §10.1) made by a caller that already stands in
+  the room's admission order takes no ticket in that room. The caller stands
+  in it while it holds the room lock (a locked hook, code under the lock),
+  and in the work an event's admission runs before the lock: an off-lock
+  hook's body, a handler of the `hook_error` or `hook_timeout` its check
+  reports (§8.2), and the message's parse (a channel's `handle_inbound()`,
+  §10.1 step 4). It stands there only while that work runs: a task the work
+  spawned that outlives it stands in no order. The call is adopted by that
+  work: it would otherwise wait for the ticket its own caller holds or, made
+  from a parse, open a cascade of its own for every message. It runs every
+  hook under the lock and commits ahead of the event whose processing made
+  it. Made under the lock, it MUST draw on the reentry budget of the cascade
+  whose section holds the lock (§8.3), and the events its own hooks inject
+  join that section's queue, committed once the section has released the lock
+  (§9.4); made in the admission order, it MUST draw on the budget of the
+  cascade of the event that work is for, so that a hook or a parse that sends
+  into the room on every event stops at the cap. Code under a room lock the
+  host holds outside any pass (a host serialising its own changes, §13.5)
+  belongs to no cascade: its call draws on a budget of its own, and the
+  events its hooks inject commit once the host has released the lock, after
+  the call returns. An adopted call answers at its commit, with its
+  completion detached (§10.1 step 18) and no delivery results: its delivery
+  waits in the lane behind the work that made it.
 - **The room's work outside the lock.** A call into the room from its work
   outside the lock and outside its admission order (a delivery set's
   deliveries and turns: a transport's `deliver()`, an agent's turn, a tool
@@ -4791,7 +4796,11 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   the cap. Made within a turn, it is at least as deep as the turn's response
   (§8.3). Such a call that would wait on its own delivery from a context the
   delivery lane cannot progress past returns with its completion detached
-  (§10.1 step 18).
+  (§10.1 step 18). Only a call into its caller's own room is detached so: a
+  call into another room waits for that room's delivery, so a delivery of
+  room A that calls into room B while a delivery of B calls into A waits for
+  B's lane, and B's for A's, and the two wait for each other. Such a cycle
+  holds the deliveries of the two rooms.
 - **Past the cap.** Each call the room's work makes draws one pass on its
   budget as it starts. Past the budget, an injected event is stored `BLOCKED`
   with `reentry_loop_cap`, no hook run, with the visibility its pass would
@@ -4918,18 +4927,20 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │           sender and a message with no address record no one
    └── If new room created → fire ON_ROOM_CREATED and wait for its hooks,
        each within its timeout (§9.3), their context the room as created,
-       with no binding of the channel; emit `room_created`; then, under
-       the room lock, attach the channel unless a binding of it exists by
-       then (a hook's included, §7.5 rule 7), its binding naming the
-       sender (`participant_id = sender_id`, §5.7) and, on a transport,
-       addressing replies where the message came from (the sender's
-       address, or the chat it was posted in, §5.7); then, for a channel
-       other than VOICE and REALTIME_VOICE, whether or not the attach was
-       made, fire ON_SESSION_STARTED (§9.2) and emit `session_started`
-       (§8.2). A creation hook that closed the room does not stop the
-       message in this branch: it is neither refused nor routed again here,
-       and step 6 refuses it (room_closed), nothing of it stored, the room
-       kept as the hook left it
+       with no binding of the channel; emit `room_created`; then, under the
+       room lock, attach the channel unless a binding of it exists by then
+       (a hook's included, §7.5 rule 7) or a creation hook closed the room
+       (no attach is made to a room whose status refuses events, as for a
+       room that exists), its binding naming the sender
+       (`participant_id = sender_id`, §5.7) and, on a transport, addressing
+       replies where the message came from (the sender's address, or the
+       chat it was posted in, §5.7); then, for a channel other than VOICE
+       and REALTIME_VOICE, whether or not the attach was made, fire
+       ON_SESSION_STARTED (§9.2) and emit `session_started` (§8.2). A
+       creation hook that closed the room does not stop the message in this
+       branch: it is neither refused nor routed again here, no attach is
+       made, and step 6 refuses it (room_closed), nothing of it stored, the
+       room kept as the hook left it
 
 3. BUILD CONTEXT
    ├── Fetch room state
@@ -5664,31 +5675,30 @@ refused EDIT/DELETE MUST NOT fire either trigger. These triggers let
 observers (e.g. maintainers of denormalized projections over the timeline)
 see every stored-state change regardless of origin.
 
-**Direct mutation (host-owned):** The framework SHOULD also expose direct
-APIs — `update_event(room_id, event_id, content|source|metadata,
-organization_id | null)` and `delete_event(room_id, event_id,
-cascade_replies, organization_id | null)` — for host applications
-that own authorization on their own surfaces. Direct `update_event()` replaces
-the provided fields wholesale and adds no `edited` marker; direct
-`delete_event()` is a HARD delete that MUST cascade to thread replies by
-default (no self-referential FK protects them) and MUST return the deleted
-event IDs. Whatever `cascade_replies` says, a hard delete also removes the
-edits and deletes of every event it removes: an edit holds its target's
-corrected content, which a host deleting the message means to remove, and a
-change of an event that no longer exists changes nothing. Both MUST
-serialise against inbound processing via the room lock, whatever the room's
-status, its due timers applied first (§5.1): a change to what the room
-stored is no new event. Both MUST fire the corresponding mutation trigger
-after the lock is released: `ON_EVENT_UPDATED` once, with the event as it
-now stands, and `ON_EVENT_DELETED` once per event removed, each with the
-event as it was stored, so that a projection over the timeline sees every
-row that went. A room or a target the store does not hold, another room's
-event included, MUST be a no-op that fires nothing: `update_event()` returns
-null and `delete_event()` no id. So is a room of another organization than
-the one the call names, or of none when it names one, with nothing written in
-it, its due timers included (§17.2); a call that names no organization reads
-the room unscoped. An update that changes nothing writes nothing and fires
-nothing, and returns the event as stored.
+**Direct mutation (host-owned):** The framework SHOULD also expose direct APIs
+— `update_event(room_id, event_id, content|source|metadata)` and
+`delete_event(room_id, event_id, cascade_replies)`, each naming the caller's
+`organization_id` or none — for host applications that own authorization on
+their own surfaces. Direct `update_event()` replaces the provided fields
+wholesale and adds no `edited` marker; direct `delete_event()` is a HARD
+delete that MUST cascade to thread replies by default (no self-referential FK
+protects them) and MUST return the deleted event IDs. Whatever
+`cascade_replies` says, a hard delete also removes the edits and deletes of
+every event it removes: an edit holds its target's corrected content, which a
+host deleting the message means to remove, and a change of an event that no
+longer exists changes nothing. Both MUST serialise against inbound processing
+via the room lock, whatever the room's status, its due timers applied first
+(§5.1): a change to what the room stored is no new event. Both MUST fire the
+corresponding mutation trigger after the lock is released: `ON_EVENT_UPDATED`
+once, with the event as it now stands, and `ON_EVENT_DELETED` once per event
+removed, each with the event as it was stored, so that a projection over the
+timeline sees every row that went. A room or a target the store does not hold,
+another room's event included, MUST be a no-op that fires nothing:
+`update_event()` returns null and `delete_event()` no id. So is a room of
+another organization than the one the call names, or of none when it names
+one, with nothing written in it, its due timers included (§17.2); a call that
+names no organization reads the room unscoped. An update that changes nothing
+writes nothing and fires nothing, and returns the event as stored.
 
 **Broadcast behavior:**
 
@@ -5892,7 +5902,7 @@ message (e.g., from a REST API or MCP tool call):
 
 ```
 send_event(room_id, channel_id, content, event_type, ...,
-           organization_id | null) → RoomEvent
+           response_visibility | null, organization_id | null) → RoomEvent
 ```
 
 The injected event traverses the SAME pipeline as an inbound message (Section
@@ -5903,29 +5913,32 @@ blocking hook therefore yields a `BLOCKED` event and suppresses delivery,
 exactly as for an inbound message. That includes the off-lock check (§9.5.1,
 step 5a): an injected event matched by a `needs_lock = false` hook takes an
 admission ticket like an inbound one — unless its caller stands in the room's
-admission order (under the room lock, or in an off-lock hook's body, a handler
-of its `hook_error` or a message's parse), in which case it takes none and
-commits ahead of the event being processed (§9.5.1, Reentrance). Made under
-the room lock, it draws on the reentry budget of the cascade that holds it
-(§8.3); made in the admission order, on that of the event the work is for;
-made from the room's work outside the lock (a turn, a delivery), it is a new
-arrival that draws on the budget of the cascade that delivers (§9.5.1), and
-made within a turn it is at least as deep as the turn's response (§8.3). Past
-its budget it is stored `BLOCKED` with `reentry_loop_cap`.
+admission order (under the room lock, or in an off-lock hook's body, a
+handler of its `hook_error` or `hook_timeout`, or a message's parse), in
+which case it takes none and commits ahead of the event being processed
+(§9.5.1, Reentrance). Made under the room lock, it draws on the reentry
+budget of the cascade that holds it (§8.3); made in the admission order, on
+that of the event the work is for; made from the room's work outside the lock
+(a turn, a delivery), it is a new arrival that draws on the budget of the
+cascade that delivers (§9.5.1), and made within a turn it is at least as deep
+as the turn's response (§8.3). Past its budget it is stored `BLOCKED` with
+`reentry_loop_cap`.
 
 An injection takes §10.1's steps 1 to 4 its own way. The channel it names
 MUST be registered, and the event is admitted as a message is before anything
 is read: an instruction's refusals (§10.1.1), `standalone` on another type,
-the visibility `internal` (§7.3); and a key in the publication namespace,
-which a message would merely lose, is refused (§5.2). None of step 2 runs. The
-room is read scoped to `organization_id` (§17.2), unscoped when the call
-names none: a room that does not exist, or another organization's, raises. A
-channel the room does not bind is not attached, and the call raises with
-nothing written: the host named the channel itself, so it is a caller's error
-with nothing to audit, unlike a stranger's message (§7.5 rule 2). There is no
-parse. The event's source is the channel it names, `INBOUND` for a transport,
-whose event stands for a message coming in, and `OUTBOUND` for an
-intelligence channel, whose event is its own words going out, as its
+the visibility `internal`, as its visibility or its response visibility
+(§7.3); and a key in the publication namespace, which a message would merely
+lose, is refused (§5.2). None of step 2 runs. The room is read scoped to
+`organization_id` (§17.2), unscoped when the call names none: a room that
+does not exist, or another organization's, raises. A channel the room does
+not bind is not attached, and the call raises with nothing written: the host
+named the channel itself, so it is a caller's error with nothing to audit,
+unlike a stranger's message (§7.5 rule 2). There is no parse. Its
+`response_visibility`, when it carries one, applies to its responses as a
+message's does (§8.5). The event's source is the channel it names, `INBOUND`
+for a transport, whose event stands for a message coming in, and `OUTBOUND`
+for an intelligence channel, whose event is its own words going out, as its
 responses are.
 
 Its result is the committed event, so every refusal before the commit point
@@ -13367,7 +13380,9 @@ leaves behind, and the next locked section asks it for the lock again.
 The room lock MUST be reentrant within one execution context (a task and the
 tasks it awaits as its own): code that holds it may call an operation that
 takes it again, as a host serialising its own changes of a room does (Section
-19.7) and as a tool handler run under the inbound pipeline's lock does.
+19.7), and as a tool handler does where an implementation runs delivery under
+the room lock (§10.2). Under delivery lanes a turn holds no lock, and a tool
+handler's call into its room is a new arrival (§9.5.1).
 
 For single-process deployments, an in-memory lock manager (per-room async mutex)
 is sufficient. When a persistent store is shared across multiple processes an
