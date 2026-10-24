@@ -4951,14 +4951,14 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    └── If new room created → fire ON_ROOM_CREATED and wait for its hooks,
        each within its timeout (§9.3), their context the room as created,
        with no binding of the channel; emit `room_created`; then, under the
-       room lock, attach the channel unless a binding of it exists by then
-       (a hook's included, §7.5 rule 7) or a creation hook closed the room
-       (no attach is made to a room whose status refuses events, as for a
-       room that exists), its binding naming the sender
+       room lock, attach the channel, its binding naming the sender
        (`participant_id = sender_id`, §5.7) and, on a transport, addressing
        replies where the message came from (the sender's address, or the
-       chat it was posted in, §5.7); then, for a channel other than VOICE
-       and REALTIME_VOICE, whether or not the attach was made, fire
+       chat it was posted in, §5.7), unless a binding of it exists by then
+       (a hook's included, §7.5 rule 7) or a creation hook closed the room
+       (no attach is made to a room whose status refuses events, as for a
+       room that exists); then, for a channel other than VOICE and
+       REALTIME_VOICE, whether or not the attach was made, fire
        ON_SESSION_STARTED (§9.2) and emit `session_started` (§8.2). A
        creation hook that closed the room does not stop the message in this
        branch: it is neither refused nor routed again here, no attach is
@@ -5521,12 +5521,11 @@ than being drained inside the trigger's lock tenure.
    │      on_event() alone)
    │      ├── Apply rate limiter
    │      ├── Check circuit breaker
-   │      ├── No recipient in the binding (§5.7: a non-blank string or a
-   │      │   number under the channel's recipient key) → refuse before any
-   │      │   send: delivery_failed (error `no_recipient`), a failed delivery
+   │      ├── No recipient in the binding (§5.7) → refuse before any send:
+   │      │   delivery_failed (error `no_recipient`), a failed delivery
    │      │   result of code `no_recipient`, not retried, not counted by the
-   │      │   circuit breaker (§13.1). A channel whose provider delivers to a
-   │      │   destination of its own (a webhook's configured URL) needs no
+   │      │   circuit breaker (§13.1). A channel whose provider delivers to
+   │      │   a destination of its own (a webhook's configured URL) needs no
    │      │   recipient and is not refused
    │      ├── Call provider
    │      ├── On failure → apply retry policy
@@ -13499,20 +13498,19 @@ transaction that stores the event as DELIVERED and updates the room counters:
 
 **A caller that stops waiting.** A caller may stop waiting for its call (a
 cancelled task, a client gone, an outer timeout of its own). Once the call is
-decided (its event committed, a `BLOCKED` record included, or its
-instruction decided, §10.1.1), its delivery runs whether or not its caller
-still waits: every event it committed is delivered, and a cancellation the
-implementation carries from the caller to the call stops the cascade's
-turns, as an explicit cancellation does, never its delivery (§10.1). A
-caller gone before the decision makes the call expire as a passed
-`process_timeout` does, without the `process_timeout` framework event, since
-no deadline passed: nothing more of the trigger is written, the injected
-events, tasks and observations of the hooks that ran are dropped with it, and
-what the call holds (its ticket, the room lock) is released. Every event
-already committed is delivered all the same: the trigger's, when a commit in
-flight wrote it, which decides the call, and an entry's the call adopted
-(§9.5.1). A room step 2 creates is completed whatever becomes of its caller,
-as it is whatever the deadline.
+decided (its event committed, a `BLOCKED` record included, or its instruction
+decided, §10.1.1), its delivery runs whether or not its caller still waits:
+every event it committed is delivered, and a cancellation the implementation
+carries from the caller to the call stops the cascade's turns, as an explicit
+cancellation does, never its delivery (§10.1). A caller gone before the
+decision makes the call expire as a passed `process_timeout` does, without
+the `process_timeout` framework event, since no deadline passed: nothing more
+of the trigger is written, the injected events, tasks and observations of the
+hooks that ran are dropped with it, and what the call holds (its ticket, the
+room lock) is released. Every event already committed is delivered all the
+same: the trigger's, when a commit in flight wrote it, which decides the
+call, and the event of a call it adopted (§9.5.1). A room step 2 creates is
+completed whatever becomes of its caller, as it is whatever the deadline.
 
 A regeneration re-broadcasts an event already committed, so it has no commit
 point of its own: `process_timeout` bounds its wait for the room lock and its
