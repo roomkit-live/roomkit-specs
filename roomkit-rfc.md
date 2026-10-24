@@ -6380,7 +6380,7 @@ backend gives each executor it serves:
 
 | Message | Answer | Carries |
 |---|---|---|
-| `room_call` | `host_result` | A `TurnHost` verb made after its turn ended (§10.6.5): its `call_id`, the channel and room, the executor's id, the id of the turn the work began in, that turn's chain depth, the verb and its arguments |
+| `room_call` | `host_result` | A `TurnHost` verb made after its turn ended (§10.6.5): its `call_id`, the channel and room, the executor's id, the id of the turn the work began in, the verb and its arguments; the turn being over, the verb is a new arrival at its own event's depth (§10.6.5) |
 | `room_publication` | — | A realtime publication or a framework event made after its turn ended, as `ephemeral` and `framework_event` carry them, with the channel, room, executor and turn |
 
 The owner accepts one only from the executor of the last turn it sent for
