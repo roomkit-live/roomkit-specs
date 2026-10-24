@@ -7,7 +7,7 @@
 | **Contributions** | TchatNSign, Angany AI |
 | **Version** | v18 Draft |
 | **Created** | 2026-01-27 |
-| **Last Updated** | 2026-10-23 |
+| **Last Updated** | 2026-10-24 |
 | **Supersedes** | v17 Draft |
 
 ---
@@ -1608,8 +1608,13 @@ ChannelOutput
 | TELEGRAM | TRANSPORT | Telegram Bot API |
 | CLI | TRANSPORT | Command-line interface (development/testing) |
 | PUSH | TRANSPORT | Push notification channel |
+| HOST | TRANSPORT | The host application's own voice in a room (§10.5) |
 | AI | INTELLIGENCE | AI/LLM agent |
 | SYSTEM | — | Framework-generated events |
+
+`SYSTEM` marks what the framework writes itself. What the application that
+embeds it writes to a room's people is the host's own words, from a `HOST`
+channel (§10.5), never a `SYSTEM` source.
 
 Implementations MAY define additional channel types. A type added by the
 implementation itself — a new transport it ships — is an ordinary member of this
@@ -6220,6 +6225,41 @@ written. A record stored `BLOCKED`, by a hook, by a source that cannot write
 or past the reentry budget (§8.3), is the committed event and is returned; a
 replay returns the event its key committed (§13.4); an instruction, never
 committed, returns uncommitted, as its pass decided it (§10.1.1 step 5).
+
+**The host's own voice.** The host, the application that embeds RoomKit,
+writes to the people of a room in its own name: a notice, a workflow's
+question, a reminder. It speaks through a host channel, a transport of type
+`HOST` (§6.2) whose direction is `INBOUND` (§4.2): it brings the host's words
+into rooms, receives no external payload, and is never delivered to. Its
+event is `INBOUND`, as every transport's is: the room reads it as a party's
+message, broadcasts it to its other transports under the usual visibility
+(§7.3), and it solicits intelligence channels as a message does (§19.3). The
+host's words MUST NOT come from an intelligence channel, which would make them
+an agent's output: an unaddressed one would solicit no agent under
+`ADDRESSED_ONLY` (§19.3.1), and a room holding a discussion refuses to bind an
+intelligence channel that is not one of its agents. Nor do they come from a
+`SYSTEM` source, which marks what the framework writes itself: it carries no
+author record (§10.1 step 12) and may make the changes reserved to the system
+(§10.3).
+
+An implementation SHOULD offer the host's voice as one call:
+
+```
+post(room_id, content, participant_id | null, addressed_to = [],
+     metadata | null, channel_id | null, organization_id | null) → RoomEvent
+```
+
+`post()` injects `content` as `send_event` does (this section), from
+`channel_id` when the call names one, which MUST be a registered channel of
+type `HOST`, else from the kit's own host channel, registered on first use. A
+room that does not bind that channel gets it attached first, an ordinary
+attachment with its `CHANNEL_ATTACHED` record (§5.2). A `channel_id` that names
+a channel of another type, or none registered, MUST be refused before
+anything is written. `addressed_to` defaults to `[]`: the host's message
+solicits no intelligence channel unless it names one (§19.3). `participant_id`
+names who speaks, a participant of the room, so a reader is shown their name
+(§10.1 step 12). `metadata` carries where the message comes from: a workflow,
+its step, a job.
 
 **A record outside the pipeline.** An integrator MAY commit an event that no
 member is meant to receive (a trace, a display snapshot, a copy a branched
@@ -18592,6 +18632,21 @@ CLIChannel
 │   ├── max_length: null (unlimited)
 │   └── supports_rich_text: false
 └── purpose: Development and testing via terminal stdin/stdout
+```
+
+---
+
+### A.14.1 Host Channel
+
+```
+HostChannel
+├── type: HOST
+├── category: TRANSPORT
+├── direction: INBOUND             # brings the host's words in; never delivered to
+├── media_types: any the room's other transports carry
+├── receives: nothing              # no external payload: post() and send_event inject
+└── purpose: The host application writing to a room's people in its own
+             name, through post() (§10.5)
 ```
 
 ---
