@@ -4250,8 +4250,9 @@ ON_EVENT_DELETED carry the event whose stored state changed, and their
 hooks' filters read that event: its source, and its type where an
 implementation filters on types. Fired for an EDIT or a
 DELETE the pipeline committed, the payload is its target, never the change
-itself, and their context is the room as that commit left it, the target
-rewritten and the change in its history (§10.3, Mutation triggers). Fired by
+itself, and their context holds the room's history and counters as that
+commit left them, the target rewritten and the change in its history (§10.3,
+Mutation triggers). Fired by
 a direct `update_event()` or `delete_event()`, the payload is the event
 updated, or each event removed, and their context the room's, read once the
 call has released the room lock (§10.3, Direct mutation).
@@ -5845,9 +5846,11 @@ refused EDIT/DELETE MUST NOT fire either trigger. Whatever the change's
 origin (an inbound message, a response, an event a hook injects, a direct
 injection) and whether or not any channel receives it:
 
-- The trigger's context MUST be the room as the change's commit left it: the
-  target as rewritten, and the change itself in the history, the newest
-  event, at its committed index and as its hooks left it.
+- The trigger's context MUST hold the room's history and counters
+  (`event_count`, `latest_index`) as the change's commit left them: the
+  target as rewritten, every event committed ahead of the change during its
+  hooks, and the change itself in the history, the newest event, at its
+  committed index and as its hooks left it.
 - The trigger's payload is the target, not the change, and its hooks'
   filters (§9.1) MUST apply to that payload: `channel_types`, `channel_ids`
   and `directions` read the target's source, and a filter on event types,
