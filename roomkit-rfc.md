@@ -3794,11 +3794,12 @@ an event chain.
   injected it (§9.4).
 - A call into a room made within a turn (its tool handlers, its `TurnHost`
   verbs, its own code calling the framework) is at least as deep as the
-  turn's response: the event it injects or the message it hands in takes
-  that depth when its own is lower (§9.5.1, §10.6.5). So is a call that work
-  the turn began makes after the turn (a task it spawned, §10.6.5), so that
-  an agent that injects into its room at each turn, through any channel and
-  however late, stops at the limit as its answers do.
+  response depth of the deepest turn it runs within: the event it injects or
+  the message it hands in takes that depth when its own is lower (§9.5.1,
+  §10.6.5). So is a call that work the turn began makes after the turn (a task
+  it spawned, §10.6.5), so that an agent that injects into its room at each
+  turn, through any channel and however late, stops at the limit as its
+  answers do.
 
 **At the limit.** When an event's `chain_depth + 1 >= max_chain_depth`, an
 intelligence channel it solicits (Section 19.3) MUST NOT be asked to act:
@@ -3839,15 +3840,16 @@ max_chain_depth` passes, buffered responses, chained streams and injected
 events alike (§10.1 steps 10 to 14), and so do the calls the room's own work
 makes into the room, each drawing one pass as it starts (§9.5.1, Reentrance):
 what code under the cascade's lock injects or sends, what an off-lock hook's
-body, a handler of its `hook_error` or `hook_timeout` or the parse does for
-the cascade's event, and the calls its deliveries and turns make, with the
-cascades those calls start. A buffered response past the budget does not
-re-enter, a chained stream past it is closed unread, so nothing is generated,
-and an injected event past it is not committed as a pass, so its hooks never
-run. Each is stored `BLOCKED` with `blocked_by = "reentry_loop_cap"`, and with
-the visibility its pass would have committed it with (§7.3); none emits
-`chain_depth_exceeded` nor `event_blocked`. A message past it is refused
-before its parse, with nothing stored (`reason = reentry_loop_cap`).
+body, a handler its check's report awaits (`hook_error`, `hook_timeout`) or
+the parse does for the cascade's event, and the calls its deliveries and turns
+make, with the cascades those calls start. A buffered response past the budget
+does not re-enter, a chained stream past it is closed unread, so nothing is
+generated, and an injected event past it is not committed as a pass, so its
+hooks never run. Each is stored `BLOCKED` with
+`blocked_by = "reentry_loop_cap"`, and with the visibility its pass would have
+committed it with (§7.3); none emits `chain_depth_exceeded` nor
+`event_blocked`. A message past it is refused as it starts, nothing routed,
+created or stored, before §10.1 step 1 (`reason = reentry_loop_cap`).
 
 **Requirements:**
 
@@ -4775,16 +4777,18 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   the room's admission order takes no ticket in that room. The caller stands
   in it while it holds the room lock (a locked hook, code under the lock),
   and in the work an event's admission runs before the lock: an off-lock
-  hook's body, a handler of the `hook_error` or `hook_timeout` its check
-  reports (§8.2), and the message's parse (a channel's `handle_inbound()`,
-  §10.1 step 4). It stands there only while that work runs: a task the work
-  spawned that outlives it stands in no order. The call is adopted by that
-  work: it would otherwise wait for the ticket its own caller holds or, made
-  from a parse, open a cascade of its own for every message. It runs every
-  hook under the lock and commits ahead of the event whose processing made
-  it. Made under the lock, it MUST draw on the reentry budget of the cascade
-  whose section holds the lock (§8.3), and the events its own hooks inject
-  join that section's queue, committed once the section has released the lock
+  hook's body, a handler the check's report of a `hook_error` or a
+  `hook_timeout` awaits (§8.2), and the message's parse (a channel's
+  `handle_inbound()`, §10.1 step 4). It stands there only while that work
+  runs: a task the work spawned that outlives it stands in no order. The call
+  is adopted by that work: it would otherwise wait for the ticket its own
+  caller holds or, made from a parse, open a cascade of its own for every
+  message. It runs every hook under the lock and commits ahead of the event
+  whose processing made it. An adopted call has no place in the ticket order
+  (Order, above): it is ordered only ahead of the event that adopted it. Made
+  under the lock, it MUST draw on the reentry budget of the cascade whose
+  section holds the lock (§8.3), and the events its own hooks inject join
+  that section's queue, committed once the section has released the lock
   (§9.4); made in the admission order, it MUST draw on the budget of the
   cascade of the event that work is for, so that a hook or a parse that sends
   into the room on every event stops at the cap. Code under a room lock the
@@ -4802,19 +4806,23 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   It MUST draw on the reentry budget of the cascade that delivers, the one
   whose delivery set runs that delivery or that turn, and so does the cascade
   it starts, so that a transport whose delivery sends into its room stops at
-  the cap. Made within a turn, it is at least as deep as the turn's response
-  (§8.3). Such a call that would wait on its own delivery from a context the
-  delivery lane cannot progress past returns with its completion detached
-  (§10.1 step 18). Only a call into its caller's own room is detached so: a
-  call into another room waits for that room's delivery, so a delivery of
-  room A that calls into room B while a delivery of B calls into A waits for
-  B's lane, and B's for A's, and the two wait for each other. Such a cycle
-  holds the deliveries of the two rooms.
-- **Past the cap.** Each call the room's work makes draws one pass on its
-  budget as it starts. Past the budget, an injected event is stored `BLOCKED`
-  with `reentry_loop_cap`, no hook run, with the visibility its pass would
-  have committed it with (§7.3), and `send_event()` returns that record
-  (§10.5); a message is refused before its parse, with nothing stored
+  the cap. Made within a turn, it is at least as deep as the response of the
+  deepest turn it runs within (§8.3). Such a call that would wait on its own
+  delivery from a context the delivery lane cannot progress past returns with
+  its completion detached (§10.1 step 18). Only a call into its caller's own
+  room is detached so: a call into another room waits for that room's
+  delivery, so a delivery of room A that calls into room B while a delivery
+  of B calls into A waits for B's lane, and B's for A's, and the two wait for
+  each other. Such a cycle is outside step 18's guarantee (§10.1): an
+  implementation need not detect it, and it lasts until a caller stops
+  waiting (§13.6). An integrator SHOULD make a call into another room from a
+  delivery with detached completion, or from outside that delivery.
+- **Past the cap.** Each call into the room, adopted or a new arrival from
+  its work, draws one pass on its budget as it starts. Past the budget, an
+  injected event is stored `BLOCKED` with `reentry_loop_cap`, no hook run,
+  with the visibility its pass would have committed it with (§7.3), and
+  `send_event()` returns that record (§10.5); a message is refused as it
+  starts, before §10.1 step 1, nothing routed, created or stored
   (`InboundResult(blocked=true, reason=reentry_loop_cap)`).
 - **A message routed back.** A message that names no room and that routing
   lands in the room whose lock its caller holds, or in whose admission order
@@ -4861,6 +4869,10 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 
 ```
 1. RESOLVE CHANNEL
+   ├── A message the room's own work sends past its reentry budget
+   │   (§9.5.1) → refused as it starts, before anything else, nothing
+   │   routed, created or stored: InboundResult(blocked=true,
+   │   reason=reentry_loop_cap)
    ├── Look up registered channel by message.channel_id
    ├── Fail if channel not registered
    └── Write sender_id in the channel's form (E.164 on a channel
@@ -5923,15 +5935,16 @@ exactly as for an inbound message. That includes the off-lock check (§9.5.1,
 step 5a): an injected event matched by a `needs_lock = false` hook takes an
 admission ticket like an inbound one — unless its caller stands in the room's
 admission order (under the room lock, or in an off-lock hook's body, a
-handler of its `hook_error` or `hook_timeout`, or a message's parse), in
-which case it takes none and commits ahead of the event being processed
-(§9.5.1, Reentrance). Made under the room lock, it draws on the reentry
-budget of the cascade that holds it (§8.3); made in the admission order, on
-that of the event the work is for; made from the room's work outside the lock
-(a turn, a delivery), it is a new arrival that draws on the budget of the
-cascade that delivers (§9.5.1), and made within a turn it is at least as deep
-as the turn's response (§8.3). Past its budget it is stored `BLOCKED` with
-`reentry_loop_cap`.
+handler its check's report awaits, or a message's parse), in which case it
+takes none and commits ahead of the event being processed (§9.5.1,
+Reentrance). Made under the room lock, it draws on the reentry budget of the
+cascade that holds it (§8.3), or on a budget of its own under a lock the host
+holds outside any pass (§9.5.1); made in the admission order, on that of the
+event the work is for; made from the room's work outside the lock (a turn, a
+delivery), it is a new arrival that draws on the budget of the cascade that
+delivers (§9.5.1), and made within a turn it is at least as deep as the
+response of the deepest turn it runs within (§8.3). Past its budget it is
+stored `BLOCKED` with `reentry_loop_cap`.
 
 An injection takes §10.1's steps 1 to 4 its own way. The channel it names
 MUST be registered, and the event is admitted as a message is before anything
