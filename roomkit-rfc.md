@@ -717,6 +717,18 @@ removes it from every other event it commits, whoever wrote it (a parser,
 the caller's metadata, a channel, a hook), so that no event claims an
 instruction that did not produce it.
 
+**A key namespace the pipeline reserves.** An `idempotency_key` that starts
+with `roomkit:publication:` is the pipeline's alone, within the
+implementation's own namespace (`roomkit:`, §5.1): a proactive delivery
+stores its publication under `roomkit:publication:<key>`, `<key>` being the
+application's (§22.1), and no other door writes it. A message's key in the
+namespace is no key, whoever wrote it (the sender, the channel's parser): the
+message is processed as one that carries none. `send_event()` and
+`commit_event()` MUST refuse one before anything is read or written (§10.5).
+A response and a hook's injected event carry no key at all (§8.5, §9.4), and
+a hook's modify keeps the original's (§9.4). So only an event a proactive
+delivery published counts as an earlier copy of it (§22.1).
+
 ### 5.3 Event Content
 
 Event content is a **discriminated union** — each event carries exactly one content
@@ -5890,17 +5902,18 @@ made within a turn it is at least as deep as the turn's response (§8.3). Past
 its budget it is stored `BLOCKED` with `reentry_loop_cap`.
 
 An injection takes §10.1's steps 1 to 4 its own way. The channel it names
-MUST be registered, and the event is admitted as a message is before
-anything is read: an instruction's refusals (§10.1.1), `standalone` on
-another type, the visibility `internal` (§7.3). None of step 2 runs. The
+MUST be registered, and the event is admitted as a message is before anything
+is read: an instruction's refusals (§10.1.1), `standalone` on another type,
+the visibility `internal` (§7.3); and a key in the publication namespace,
+which a message's would lose, is refused too (§5.2). None of step 2 runs. The
 room is read scoped to `organization_id` (§17.2), unscoped when the call
-names none: a room that does not exist, or another organization's, raises.
-A channel the room does not bind is not attached, and the call raises with
-nothing written: the host named the channel itself, so it is a caller's
-error with nothing to audit, unlike a stranger's message (§7.5 rule 2).
-There is no parse. The event's source is the channel it names, `INBOUND`
-for a transport, whose event stands for a message coming in, and `OUTBOUND`
-for an intelligence channel, whose event is its own words going out, as its
+names none: a room that does not exist, or another organization's, raises. A
+channel the room does not bind is not attached, and the call raises with
+nothing written: the host named the channel itself, so it is a caller's error
+with nothing to audit, unlike a stranger's message (§7.5 rule 2). There is no
+parse. The event's source is the channel it names, `INBOUND` for a transport,
+whose event stands for a message coming in, and `OUTBOUND` for an
+intelligence channel, whose event is its own words going out, as its
 responses are.
 
 Its result is the committed event, so every refusal before the commit point
@@ -5926,20 +5939,22 @@ commit_event(room_id, event, organization_id) → RoomEvent
 
 The record names the room it is committed to: one whose `room_id` is another
 room's MUST be refused before anything is read or written, so the room checked
-is the room written. The room is read scoped to `organization_id` (§17.2): a
-missing room, or another organization's, is not found. A room whose status
-refuses new events (§5.1) MUST refuse the record before anything is written,
-and emits no framework event: a record reaches no one, and no subscriber waits
-for it. The record is committed under the room lock with the next index, which
-the room's delivery lane MUST pass at its turn with nothing to run, as a
-record stored `BLOCKED` (§13.5): no delivery set, no hook, and no broadcast
-follow it, and the next event of the room waits on its index no longer than on
-the events before it. It counts in `event_count` and `latest_index`, and is no
-activity: `last_activity_at` does not move, and a PAUSED room stays paused
-(§5.1), since a trace nobody receives does not keep a room alive. It is stored
-as the caller gives it (its status, its visibility and the rest), whatever the
-persistence policy, and rule 2 of §7.5 does not apply to it. An event the
-members must receive is injected with `send_event` instead.
+is the room written, and so MUST one whose key is in the publication namespace
+(§5.2), which would stand in for a publication. The room is read scoped to
+`organization_id` (§17.2): a missing room, or another organization's, is not
+found. A room whose status refuses new events (§5.1) MUST refuse the record
+before anything is written, and emits no framework event: a record reaches no
+one, and no subscriber waits for it. The record is committed under the room
+lock with the next index, which the room's delivery lane MUST pass at its turn
+with nothing to run, as a record stored `BLOCKED` (§13.5): no delivery set, no
+hook, and no broadcast follow it, and the next event of the room waits on its
+index no longer than on the events before it. It counts in `event_count` and
+`latest_index`, and is no activity: `last_activity_at` does not move, and a
+PAUSED room stays paused (§5.1), since a trace nobody receives does not keep a
+room alive. It is stored as the caller gives it (its status, its visibility
+and the rest), whatever the persistence policy, and rule 2 of §7.5 does not
+apply to it. An event the members must receive is injected with `send_event`
+instead.
 
 ### 10.6 Turn Execution
 
@@ -13268,7 +13283,8 @@ inbound message and an event injected directly (§10.5) are the events that
 carry a key: the pipeline clears it on the responses it commits (§8.5) and
 on the events a hook injects (§9.4). A proactive delivery's key is the
 application's and names one publication in the room, whatever transport
-carries it (§22.1).
+carries it (§22.1); it is stored in a namespace the pipeline reserves, which
+no message's key enters (§5.2).
 
 If an InboundMessage or a directly injected event carries an
 `idempotency_key`, the framework MUST:
@@ -13650,7 +13666,9 @@ and never inherits the page's cap.
   another's. A proactive delivery's key is the exception: it names one
   publication in its room, whatever transport carries it (§22.1), and is
   looked up within the room, under the same lock, whatever channel
-  committed it.
+  committed it. It is stored in the namespace the pipeline reserves for it
+  (`roomkit:publication:<key>`, §5.2), so the per-channel uniqueness never
+  sets a publication against a message keyed alike.
 
 ### 14.4 Returned-Object Ownership
 
@@ -16357,20 +16375,24 @@ a transport is resolved, and a match returns the original outcome without
 publishing again. A retry that would resolve another transport (one plugged in
 or detached since the first attempt) is still that publication. The key is the
 application's, so the collision of two providers' keys that scopes an inbound
-key by its channel (§13.4) does not arise; an application SHOULD keep its keys
-apart from the message ids its providers give (a prefix of its own), since the
-lookup within the room does not tell them apart. Publication uses the
-ConversationStore's locked publication (§13.4), the key looked up under the
-room lock within the room, whatever channel committed it
-(`get_event_by_idempotency_key` with no channel, §14.1; §14.3). The lookup,
-the transport's resolution and the publication's commit run in one section
-under the room lock, so a concurrent replay waits for the first and finds its
-key. Replays, including concurrent ones, MUST NOT create a second trigger
-event while the key is retained. The same key identifies the same publication
-regardless of subsequent body or address changes. Retention follows the store:
-memory does not survive restart; durable stores retain committed keys until
-the corresponding event/key is removed. Distributed use requires a shared
-store and a lock manager appropriate to that store.
+key by its channel (§13.4) does not arise, and only an event a proactive
+delivery published counts as an earlier copy of it: the publication is stored
+under `roomkit:publication:<key>`, a namespace no other door writes (§5.2),
+and the lookup within the room reads that stored key only, so neither a
+provider's message id nor a sender's message keyed alike blocks the
+publication or stands in for it. The delivery hooks are given the
+application's key (§22.3). Publication uses the ConversationStore's locked
+publication (§13.4), the stored key looked up under the room lock within the
+room, whatever channel committed it (`get_event_by_idempotency_key` with no
+channel, §14.1; §14.3). The lookup, the transport's resolution and the
+publication's commit run in one section under the room lock, so a concurrent
+replay waits for the first and finds its key. Replays, including concurrent
+ones, MUST NOT create a second trigger event while the key is retained. The
+same key identifies the same publication regardless of subsequent body or
+address changes. Retention follows the store: memory does not survive
+restart; durable stores retain committed keys until the corresponding
+event/key is removed. Distributed use requires a shared store and a lock
+manager appropriate to that store.
 
 **Realtime injection identity.** A keyed proactive voice injection MUST reserve
 its attempt atomically in the ConversationStore before calling the provider.
