@@ -3794,14 +3794,14 @@ an event chain.
   that restarts the count at 0 opens a chain the limit never reaches.
 - An event a hook injects keeps the `chain_depth` of the event whose hooks
   injected it (§9.4).
-- A call into a room made within a turn (its tool handlers, its `TurnHost`
-  verbs, its own code calling the framework) is at least as deep as the
-  response depth of the deepest turn it runs within: the event it injects or
-  the message it hands in takes that depth when its own is lower (§9.5.1,
-  §10.6.5). So is a call that work the turn began makes after the turn (a task
-  it spawned, §10.6.5), so that an agent that injects into its room at each
-  turn, through any channel and however late, stops at the limit as its
-  answers do.
+- A call into a room made within a turn while it runs (its tool handlers,
+  its `TurnHost` verbs, its own code calling the framework) is at least as
+  deep as the response depth of the deepest turn it runs within: the event it
+  injects or the message it hands in takes that depth when its own is lower
+  (§9.5.1, §10.6.5), so that an agent that injects into its room at each
+  turn, through any channel, stops at the limit as its answers do. Once the
+  turn is over, work it began (a task it spawned) calls as a new arrival with
+  the depth of its own event, 0 for a message it creates (§9.5.1).
 
 **At the limit.** When an event's `chain_depth + 1 >= max_chain_depth`, an
 intelligence channel it solicits (Section 19.3) MUST NOT be asked to act:
@@ -4805,17 +4805,21 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   deliveries and turns: a transport's `deliver()`, an agent's turn, a tool
   handler, a `TurnHost` verb) is a new arrival: it takes a ticket when an
   off-lock hook fires for its event, and `process_timeout` bounds it (§13.6).
-  It MUST draw on the reentry budget of the cascade that delivers, the one
-  whose delivery set runs that delivery or that turn, and so does the cascade
-  it starts, so that a transport whose delivery sends into its room stops at
-  the cap. Made within a turn, it is at least as deep as the response of the
-  deepest turn it runs within (§8.3). Such a call that would wait on its own
-  delivery from a context the delivery lane cannot progress past returns with
-  its completion detached (§10.1 step 18). Only a call into its caller's own
-  room is detached so: a call into another room waits for that room's
-  delivery, so a delivery of room A that calls into room B while a delivery
-  of B calls into A waits for B's lane, and B's for A's, and the two wait for
-  each other. Such a cycle is outside step 18's guarantee (§10.1): an
+  While that delivery or turn runs, a call into its own room MUST draw on the
+  reentry budget of the cascade that delivers, the one whose delivery set
+  runs it, and so does the cascade the call starts, so that a transport whose
+  delivery sends into its room stops at the cap; a call into another room has
+  a budget of its own. Made within a turn, it is at least as deep as the
+  response of the deepest turn it runs within (§8.3). Once the turn or the
+  delivery is over, work it began (a task it spawned) calls into a room as a
+  new arrival with a budget of its own and the depth of its own event, 0 for
+  a message it creates. Such a call that would wait on its own delivery from
+  a context the delivery lane cannot progress past returns with its
+  completion detached (§10.1 step 18). Only a call into its caller's own room
+  is detached so: a call into another room waits for that room's delivery, so
+  a delivery of room A that calls into room B while a delivery of B calls
+  into A waits for B's lane, and B's for A's, and the two wait for each
+  other. Such a cycle is outside step 18's guarantee (§10.1): an
   implementation need not detect it, and it lasts until a caller stops
   waiting (§13.6). An integrator SHOULD make a call into another room from a
   delivery with detached completion, or from outside that delivery.
@@ -6470,15 +6474,15 @@ or an `ASYNC` hook that outlives it) for the verbs below; it is empty anywhere
 else, and any other verb called on it after its turn ended is refused. Between
 turns (a background thinker's thought, §6.4) it is bound to the room of the
 turn the work began in: `send_event`, `post_status`, `update_room_metadata`
-and `add_observation` cross as `room_call` (§10.6.3), at least as deep as that
-turn's response (§8.3), so that the bound on agent loops holds; `delegate`,
-`wait_task` and the readers of owner-process state are refused there, with an
-error naming the verb. What work a turn began publishes after the turn
-(realtime publications, framework events) crosses as `room_publication`: an
-executor never publishes it on the owner's realtime backend or bus itself, and
-never writes the owner's store. Its surface is minimal and enumerated: each
-verb is one `host_call`, every argument is data (no callable crosses), and an
-implementation documents the set. It MUST carry:
+and `add_observation` cross as `room_call` (§10.6.3), each a new arrival with
+a budget of its own and the depth of its own event, the turn being over
+(§9.5.1); `delegate`, `wait_task` and the readers of owner-process state are
+refused there, with an error naming the verb. What work a turn began publishes
+after the turn (realtime publications, framework events) crosses as
+`room_publication`: an executor never publishes it on the owner's realtime
+backend or bus itself, and never writes the owner's store. Its surface is
+minimal and enumerated: each verb is one `host_call`, every argument is data
+(no callable crosses), and an implementation documents the set. It MUST carry:
 
 ```
 TurnHost
@@ -6491,18 +6495,18 @@ An implementation adds the verbs its own tools and hooks need to write (a
 status post, §19.8; a room-metadata update; an observation, §5.11), each
 documented as one `host_call`.
 
-A `TurnHost` acts for its turn's room, in that room's organization: the
-owner MUST refuse a verb that names another room or another organization
-than the room's, and an argument the verb does not take. A status post it
-makes names the turn's room (§19.8). An event it sends, during the turn or
-from work the turn began, after the turn too, is at least as deep as the
-turn's response (§8.3), and a task it delegates inherits the turn's depth
-(§23.3), so a chain of turns writing through it stops at the chain-depth
-limit as a local one does. `wait_task` answers for a task a `TurnHost` of the
-turn's room delegated, and answers null for any other, as it does past its
-timeout. A room-metadata update through it MUST NOT write a key of the
-implementation's own namespace (§5.1: a detach's revocation, §7.5; what the
-room keeps for a channel, §10.6.2).
+A `TurnHost` acts for its turn's room, in that room's organization: the owner
+MUST refuse a verb that names another room or another organization than the
+room's, and an argument the verb does not take. A status post it makes names
+the turn's room (§19.8). An event it sends while the turn runs is at least as
+deep as the turn's response (§8.3), and a task it delegates inherits the
+turn's depth (§23.3), so a chain of turns writing through it stops at the
+chain-depth limit as a local one does; an event that work the turn began sends
+once the turn is over has the depth of its own event (§9.5.1). `wait_task`
+answers for a task a `TurnHost` of the turn's room delegated, and answers null
+for any other, as it does past its timeout. A room-metadata update through it
+MUST NOT write a key of the implementation's own namespace (§5.1: a detach's
+revocation, §7.5; what the room keeps for a channel, §10.6.2).
 
 Reads go to the store, which the executor shares; every write goes through
 `TurnHost`. Each call carries the room and the turn it is made from, and the
@@ -6527,9 +6531,9 @@ gets its completion detached rather than wait on itself. That context is the
 only thing the in-memory backend carries beside the messages, and it is no
 object of the turn. A turn's code also knows the turns it runs under, so a
 close called from one of them does not cut it, and what it sends into a room
-is at least as deep as the deepest of their responses (§8.3). An executor of
-another process has no such context: its turns reach a room through
-`TurnHost`, whose verbs carry the depth.
+while they run is at least as deep as the deepest of their responses (§8.3).
+An executor of another process has no such context: its turns reach a room
+through `TurnHost`, whose verbs carry the depth.
 
 **Human input.** A tool waiting for a human's answer runs on the executor, and
 the answer may arrive on the owner, which keeps the open requests of its
