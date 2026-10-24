@@ -3855,16 +3855,17 @@ max_chain_depth` passes, buffered responses, chained streams and injected
 events alike (§10.1 steps 10 to 14), and so do the calls the room's own work
 makes into the room, each drawing one pass as it starts (§9.5.1, Reentrance):
 what code under the cascade's lock injects or sends, what an off-lock hook's
-body, a handler its check's report awaits (`hook_error`, `hook_timeout`) or
-the parse does for the cascade's event, and the calls its deliveries and turns
-make, with the cascades those calls start. A buffered response past the budget
-does not re-enter, a chained stream past it is closed unread, so nothing is
-generated, and an injected event past it is not committed as a pass, so its
-hooks never run. Each is stored `BLOCKED` with
-`blocked_by = "reentry_loop_cap"`, and with the visibility its pass would have
-committed it with (§7.3); none emits `chain_depth_exceeded` nor
-`event_blocked`. A message past it is refused as it starts, nothing routed,
-created or stored, before §10.1 step 1 (`reason = reentry_loop_cap`).
+body, a handler its check's report awaits (`hook_error`, `hook_timeout`) or the
+parse does for the cascade's event, and the calls its deliveries and turns make
+into the room or by a routed message that opens a new room, with the cascades
+those calls start. A buffered response past the budget does not re-enter, a
+chained stream past it is closed unread, so nothing is generated, and an
+injected event past it is not committed as a pass, so its hooks never run. Each
+is stored `BLOCKED` with `blocked_by = "reentry_loop_cap"`, and with the
+visibility its pass would have committed it with (§7.3); none emits
+`chain_depth_exceeded` nor `event_blocked`. A message past it is refused as it
+starts, nothing routed, created or stored, before §10.1 step 1
+(`reason = reentry_loop_cap`).
 
 **Requirements:**
 
@@ -4830,23 +4831,25 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   While that delivery or turn runs, a call into its own room MUST draw on the
   reentry budget of the cascade that delivers, the one whose delivery set runs
   it, and so does the cascade the call starts, so that a transport whose
-  delivery sends into its room stops at the cap; a call into another room has
-  a budget of its own. A call into any room made while a turn runs is at least
-  as deep as the response of the deepest turn it runs within, and one made
-  while a tool call outside a turn runs (a realtime or a conference tool call,
-  §12.4) at least as deep as the answer that issued it (§8.3). Once the turn,
-  the tool call or the delivery is over, work it began (a task it spawned)
-  calls into a room as a new arrival with a budget of its own and the depth of
-  its own event, 0 for a message it creates. Such a call that would wait on
-  its own delivery from a context the delivery lane cannot progress past
-  returns with its completion detached (§10.1 step 18). Only a call into its
-  caller's own room is detached so: a call into another room waits for that
-  room's delivery, so a delivery of room A that calls into room B while a
-  delivery of B calls into A waits for B's lane, and B's for A's, and the two
-  wait for each other. Such a cycle is outside step 18's guarantee (§10.1): an
-  implementation need not detect it, and it lasts until a caller stops waiting
-  (§13.6). An integrator SHOULD make a call into another room from a delivery
-  with detached completion, or from outside that delivery.
+  delivery sends into its room stops at the cap. So MUST a routed message it
+  makes that opens a new room: the room it opens is that cascade's own work.
+  Only a call into another room that exists already has a budget of its own. A
+  call into any room made while a turn runs is at least as deep as the
+  response of the deepest turn it runs within, and one made while a tool call
+  outside a turn runs (a realtime or a conference tool call, §12.4) at least
+  as deep as the answer that issued it (§8.3). Once the turn, the tool call or
+  the delivery is over, work it began (a task it spawned) calls into a room as
+  a new arrival with a budget of its own and the depth of its own event, 0 for
+  a message it creates. Such a call that would wait on its own delivery from a
+  context the delivery lane cannot progress past returns with its completion
+  detached (§10.1 step 18). Only a call into its caller's own room is detached
+  so: a call into another room waits for that room's delivery, so a delivery
+  of room A that calls into room B while a delivery of B calls into A waits
+  for B's lane, and B's for A's, and the two wait for each other. Such a cycle
+  is outside step 18's guarantee (§10.1): an implementation need not detect
+  it, and it lasts until a caller stops waiting (§13.6). An integrator SHOULD
+  make a call into another room from a delivery with detached completion, or
+  from outside that delivery.
 - **Past the cap.** Each call into the room, adopted or a new arrival from
   its work, draws one pass on its budget as it starts. Past the budget, an
   injected event is stored `BLOCKED` with `reentry_loop_cap`, no hook run,
@@ -5974,12 +5977,12 @@ cascade that holds it (§8.3), or on a budget of its own under a lock the host
 holds outside any pass (§9.5.1); made in the admission order, on that of the
 event the work is for. Made from the room's work outside the lock (a turn, a
 delivery), it is a new arrival: while that work runs, one into its own room
-draws on the budget of the cascade that delivers and one into another room on
-a budget of its own, and one into any room is at least as deep as the
-response of the deepest turn it runs within, or as the answer that issued a
-tool call outside a turn (§8.3); once the work is over, it is a new arrival
-with a budget and a depth of its own (§9.5.1). Past its budget it is stored
-`BLOCKED` with `reentry_loop_cap`.
+draws on the budget of the cascade that delivers and one into another
+existing room on a budget of its own, and one into any room is at least as
+deep as the response of the deepest turn it runs within, or as the answer
+that issued a tool call outside a turn (§8.3); once the work is over, it is a
+new arrival with a budget and a depth of its own (§9.5.1). Past its budget it
+is stored `BLOCKED` with `reentry_loop_cap`.
 
 An injection takes §10.1's steps 1 to 4 its own way. The channel it names
 MUST be registered, and the event is admitted as a message is before anything
