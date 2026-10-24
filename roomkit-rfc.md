@@ -4233,11 +4233,14 @@ and its `visibility` is the triggering event's response visibility (§8.5),
 `all` when it has none. A transport's delivery failure does not fire ON_ERROR.
 
 **The payload and context of a mutation hook.** ON_EVENT_UPDATED and
-ON_EVENT_DELETED carry the event whose stored state changed, never the EDIT
-or the DELETE that changed it, and their hooks' filters read that event: its
-source, its type. Fired for a change the pipeline committed, their context is
-the room as that commit left it, the target rewritten and the change in its
-history (§10.3, Mutation triggers).
+ON_EVENT_DELETED carry the event whose stored state changed, and their
+hooks' filters read that event: its source, its type. Fired for an EDIT or a
+DELETE the pipeline committed, the payload is its target, never the change
+itself, and their context is the room as that commit left it, the target
+rewritten and the change in its history (§10.3, Mutation triggers). Fired by
+a direct `update_event()` or `delete_event()`, the payload is the event
+updated, or each event removed, and their context the room's, read once the
+call has released the room lock (§10.3, Direct mutation).
 
 **The context of a lifecycle hook.** A hook on a lifecycle trigger
 (ON_ROOM_CREATED, ON_ROOM_PAUSED, ON_ROOM_CLOSED, ON_CHANNEL_ATTACHED,
@@ -5765,19 +5768,34 @@ over the timeline) see every stored-state change regardless of origin.
 `delete_event(room_id, event_id, cascade_replies)`, each naming the caller's
 `organization_id` or none — for host applications that own authorization on
 their own surfaces. Direct `update_event()` replaces the provided fields
-wholesale and adds no `edited` marker; direct `delete_event()` is a HARD
-delete that MUST cascade to thread replies by default (no self-referential FK
-protects them) and MUST return the deleted event IDs. Whatever
-`cascade_replies` says, a hard delete also removes the edits and deletes of
-every event it removes: an edit holds its target's corrected content, which a
-host deleting the message means to remove, and a change of an event that no
-longer exists changes nothing. Both MUST serialise against inbound processing
-via the room lock, whatever the room's status, its due timers applied first
-(§5.1): a change to what the room stored is no new event. Both MUST fire the
-corresponding mutation trigger after the lock is released: `ON_EVENT_UPDATED`
-once, with the event as it now stands, and `ON_EVENT_DELETED` once per event
-removed, each with the event as it was stored, so that a projection over the
-timeline sees every row that went. A room or a target the store does not hold,
+wholesale and adds no `edited` marker. Direct `delete_event()` is a HARD
+delete, which MUST remove:
+
+```
+delete_event(room_id, event_id, cascade_replies = true) → list<string>
+├── The target
+├── Its replies, unless cascade_replies is false: the events whose
+│   parent_event_id names the target (no self-referential FK protects
+│   them). A reply names its thread's root (§5.2), so one level is the
+│   whole thread; an event whose parent is one of those replies, which the
+│   pipeline never writes, is not removed with them
+└── Whatever cascade_replies says, the changes of every event it removes:
+    the EDIT and DELETE events whose target_event_id names one. An edit
+    holds its target's corrected content, which a host deleting the
+    message means to remove, and a change of an event that no longer
+    exists changes nothing
+```
+
+It MUST return the ids it removed, in this order: the target's, then its
+replies' in index order, then the changes' in index order. Both calls MUST
+serialise against inbound processing via the room lock, whatever the room's
+status, its due timers applied first (§5.1): a change to what the room
+stored is no new event. Both MUST fire the corresponding mutation trigger
+after the lock is released, with the room's context read once the lock is
+released: `ON_EVENT_UPDATED` once, with the event as it now stands, and
+`ON_EVENT_DELETED` once per event removed, in the order of the ids returned,
+each with the event as it was stored, so that a projection over the timeline
+sees every row that went. A room or a target the store does not hold,
 another room's event included, MUST be a no-op that fires nothing:
 `update_event()` returns null and `delete_event()` no id. So is a room of
 another organization than the one the call names, or of none when it names
@@ -13651,9 +13669,12 @@ ConversationStore (interface)
 │   ├── get_event_count(room_id, filter | null) → int
 │   ├── update_event(event_id, updates) → RoomEvent
 │   ├── delete_event(room_id, event_id, cascade_replies = true) → list<string>
-│   │                                         # the ids removed (§10.3); a store
-│   │                                         # MAY return the removed events in
-│   │                                         # their place, the framework's call
+│   │                                         # the ids removed, in §10.3's order
+│   │                                         # (the target, its replies by
+│   │                                         # index, the changes by index); a
+│   │                                         # store MAY return the removed
+│   │                                         # events in their place, in that
+│   │                                         # order, the framework's call
 │   │                                         # returning their ids
 │   └── get_event_by_idempotency_key(room_id, channel_id | null, key) → RoomEvent | null
 │                                             # the event of channel_id that key
