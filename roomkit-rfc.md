@@ -1399,8 +1399,8 @@ InboundMessage
 │                                           # (Section 19.3); null = any eligible
 ├── response_visibility: string | null      # Where its cascade's answers may go: each
 │                                           # is narrowed to it, never widened
-│                                           # (Section 8.5); null = unrestricted;
-│                                           # never "internal"
+│                                           # (Section 8.5); null alone = unrestricted,
+│                                           # "" = "none"; never "internal"
 ├── chain_depth: int = 0                    # The chain the message continues (Section 8.3)
 ├── standalone: bool = false                # INSTRUCTION only: the turn reads nothing
 │                                           # of the room (Section 10.1.1)
@@ -3405,14 +3405,15 @@ binding as a string value, and carried by each event (§5.2):
 `internal`, `transport` and `intelligence`, or a list of one or more channel
 ids separated by commas. A keyword is written exactly as above, in lowercase
 (`"All"` is a channel id, not the keyword). The keywords are reserved: a
-channel whose id is one of them MUST be refused when it is registered, and
-so MUST a channel whose id contains a comma or starts or ends with
-whitespace, so that every channel id can be written in a list. Whitespace
-around the whole value and around each id is ignored (`" sms , ws "` is
-`"sms,ws"`). An empty value and an empty item (`""`, `"sms,,ws"`, `"sms,"`)
-MUST be refused. An id listed twice counts once, and a list is written back
-with each id once, sorted by code point. An id that names no channel bound
-to the room is allowed and matches nothing.
+channel whose id is one of them MUST be refused when it is registered, and so
+MUST a channel whose id contains a comma or starts or ends with whitespace, so
+that every channel id can be written in a list. Whitespace around the whole
+value and around each id is ignored (`" sms , ws "` is `"sms,ws"`). An empty
+value and an empty item (`""`, `"sms,,ws"`, `"sms,"`) MUST be refused, save an
+empty `response_visibility`, which reads as `none` (§5.12). An id listed twice
+counts once, and a list is written back with each id once, sorted by code
+point. An id that names no channel bound to the room is allowed and matches
+nothing.
 
 **Who writes `internal`.** Only the framework writes `internal`, on the
 records it writes itself (an interruption record, §6.4): a value that marks
@@ -3944,8 +3945,8 @@ channel gave it, so that what answers the response stays within both. A
 response MUST NOT be visible beyond its cascade's scope: its hooks may change
 its visibility (§9.4), and once they are over the pipeline MUST intersect the
 visibility they left with the scope again. The commit then narrows the
-response to its source binding's (§7.3). A null `response_visibility`
-restricts nothing.
+response to its source binding's (§7.3). Only a null `response_visibility`
+restricts nothing; an empty one reads as `none` (§5.12).
 
 **What the turn is told.** `BEFORE_AI_GENERATION` receives, with the turn's
 context, the event the turn answers (`trigger`), so a hook can tell the model
