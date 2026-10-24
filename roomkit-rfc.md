@@ -719,13 +719,13 @@ removes it from every other event it commits, whoever wrote it (a parser,
 the caller's metadata, a channel, a hook), so that no event claims an
 instruction that did not produce it.
 
-**A key namespace the pipeline reserves.** An `idempotency_key` that starts
-with `roomkit:publication:` is the pipeline's alone, within the
-implementation's own namespace (`roomkit:`, §5.1): a proactive delivery
-stores its publication under `roomkit:publication:<key>`, `<key>` being the
-application's (§22.1), and no other door writes it. A message's key in the
-namespace is no key, whoever wrote it (the sender, the channel's parser): the
-message is processed as one that carries none. `send_event()` and
+**A key namespace the pipeline reserves.** Of the idempotency keys, only the
+prefix `roomkit:publication:` is reserved: an `idempotency_key` that starts
+with it is the pipeline's alone. A proactive delivery stores its publication
+under `roomkit:publication:<key>`, `<key>` being the application's (§22.1),
+and no other door writes it. A message's key in the namespace is no key,
+whoever wrote it (the sender, the channel's parser): the message MUST be
+processed as one that carries none (§10.1 step 4). `send_event()` and
 `commit_event()` MUST refuse one before anything is read or written (§10.5).
 A response and a hook's injected event carry no key at all (§8.5, §9.4), and
 a hook's modify keeps the original's (§9.4). So only an event a proactive
@@ -4973,6 +4973,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 
 4. CHANNEL PROCESSES INBOUND
    ├── channel.handle_inbound(message, context) → RoomEvent
+   ├── Drop a key in the publication namespace (§5.2), whoever wrote it,
+   │   the message's or the parser's: the event carries no key, save the
+   │   one a proactive delivery publishes under (§22.1)
    └── Give the event its id (§8.1), whatever id the channel built it with
 
 5. IDENTITY RESOLUTION (if resolver configured and the sender has an address
