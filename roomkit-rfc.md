@@ -13563,9 +13563,10 @@ ConversationStore (interface)
 │   │                                         # or identity_id, or, naming no
 │   │                                         # correspondent and not group,
 │   │                                         # holds participant_id under
-│   │                                         # recipient_key, the channel's
-│   │                                         # (§5.7), null on a channel whose
-│   │                                         # recipient names no one
+│   │                                         # recipient_key, the channel's;
+│   │                                         # recipient_key is null on a
+│   │                                         # channel with no recipient key
+│   │                                         # (§5.7)
 │   └── find_room_id_by_participant(channel_id, participant_id, identity_id, filter)
 │                                 → string | null
 │                                             # newest room holding a participant
