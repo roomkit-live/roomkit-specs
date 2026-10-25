@@ -1232,8 +1232,8 @@ binding when routing reads such a value, with the value's type and never the
 value, which may be a person's address. Routing and the record of a sender
 compare a recipient, and a chat, in its written form: the integer `12345` and
 the string `"12345"` are one address. The framework writes the addresses it
-records as strings, a chat id included. A chat message is its chat's: it is routed by the chat its
-chat key carries, and a room opened for it binds the channel naming the chat
+records as strings, a chat id included. A chat message is its chat's: it is
+routed by the chat its chat key carries, and a room opened for it binds the channel naming the chat
 as correspondent and recipient (§10.1 step 2). The chat under a chat key
 takes the recipient's rule, no value and a value that is not a recipient
 alike: either is no chat, and a message that carries only such a value does
@@ -6238,8 +6238,8 @@ names no room is routed by the same rule: the newest ACTIVE or PAUSED room
 whose binding of the status's channel names its recipient, as step 1 finds a
 sender's, else the one ACTIVE room bound to the channel unless its binding
 names another correspondent (its participant, else its recipient, a value that
-is not a recipient included, §5.7), else none. A status is no activity, and resumes
-no room (§5.1). It is never dispatched with the context of one room among
+is not a recipient included, §5.7), else none. A status is no activity, and
+resumes no room (§5.1). It is never dispatched with the context of one room among
 several.
 
 **A binding speaks for its own channel.** The sender a binding names is found
