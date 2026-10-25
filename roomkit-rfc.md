@@ -9021,7 +9021,9 @@ carries neither `encryption` nor `storage_encrypted_at_rest = true`
 (Section 17.6): an omitted security decision fails closed instead of producing
 a plaintext recording. With `encryption`, the recorder hands each finished
 file to `encrypt_file()` and reports the path it returns; a file the cipher
-cannot encrypt MUST be deleted rather than kept in the clear.
+cannot encrypt MUST be deleted rather than kept in the clear. With
+`encryption`, a file whose finalisation raises is likewise deleted rather than
+kept in the clear.
 `storage_encrypted_at_rest` is a deployment assertion the implementation
 cannot verify. The same two fields, with the same rule, configure the room
 media recorder (Section 12.11) and conference recording (Section 12.10.8).
@@ -9030,7 +9032,8 @@ The `storage` field is an integrator-defined identifier resolved by the
 implementation at runtime — similar to how provider names reference registered
 providers. Implementations MUST document which storage backends they support
 (e.g., "local", "s3", "gcs") and MUST raise a configuration error if an
-unknown identifier is provided.
+unknown identifier is provided. A storage path containing `..` is a
+configuration error, never replaced by another location.
 
 **RecordingMode** enumeration:
 
@@ -11464,8 +11467,23 @@ VideoRecordingConfig
 ├── format: string (default "mp4")          # Container format
 ├── codec: string (default "auto")          # Video codec
 ├── fps: float (default 15.0)              # Output frame rate
-└── metadata: map<string, any>
+├── metadata: map<string, any>
+├── encryption: RecordingEncryption | null  # Encrypts finished files (Section 17.6)
+└── storage_encrypted_at_rest: bool = false # Integrator's statement: storage encrypts
 ```
+
+The session video recorder applies `encryption` and
+`storage_encrypted_at_rest` when they are set and does not refuse to start
+without them: with neither, the file is stored as written. With `encryption`,
+it hands each finished file to `encrypt_file()` (Section 12.3.7), at `stop()`
+and at `close()` for a recording still open, also when flushing or closing the
+file failed, and `stop()` reports the path it returns as `url`, with
+`metadata["encryption"]` naming the cipher; a file the cipher cannot encrypt
+MUST be deleted rather than kept in the clear. With
+`storage_encrypted_at_rest = true` and no `encryption`, the file stays as
+written and `metadata["encryption"]` is `"storage"`. A `storage` containing
+`..` is a configuration error (Section 12.3.7), and a recording the recorder
+refuses to start fails the session's join before the session is bound.
 
 ```
 VideoRecorder (interface)
@@ -14839,8 +14857,11 @@ should live in the integration surface layer.
 - Audio recordings MUST be encrypted at rest. Implementations MUST support
   configurable encryption for stored recordings. Every recording
   configuration carries it (`encryption`, `storage_encrypted_at_rest`;
-  Sections 12.3.7, 12.10.8, 12.11), and a recorder that stores files fails
-  closed when neither is set.
+  Sections 12.3.7, 12.8.10, 12.10.8, 12.11). The audio recorder (Section
+  12.3.7), the room media recorder (Section 12.11) and conference recording
+  (Section 12.10.8) fail closed when neither is set, a recording of video
+  alone included; the session video recorder (Section 12.8.10) applies them
+  when they are set.
 - Audio streams in transit SHOULD use encrypted transport (TLS, SRTP, DTLS).
 - STT and TTS provider calls transmit audio to external services.
   Implementations SHOULD document which providers receive audio data and
