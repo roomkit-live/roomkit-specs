@@ -1,0 +1,86 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "inbound/an-agent-s-task-is-created",
+  "title": "A task an agent's output carries is stored with the cascade's side effects, and ON_TASK_CREATED fires",
+  "rules": [
+    "§10.1 step 15",
+    "§7.5 rule 3",
+    "§6.1",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ai",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "output": {
+              "tasks": [
+                {
+                  "title": "Send the brochure"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ai"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "tasks",
+        "trigger": "on_task_created",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Send me the brochure"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "tasks": {
+      "room-1": [
+        {
+          "title": "Send the brochure"
+        }
+      ]
+    },
+    "hooks": {
+      "tasks": [
+        {
+          "trigger": "on_task_created"
+        }
+      ]
+    }
+  }
+}

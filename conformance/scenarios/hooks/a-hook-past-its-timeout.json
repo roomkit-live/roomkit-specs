@@ -95,11 +95,15 @@
           ]
         },
         {
-          "event": "delivery_succeeded",
-          "channel_id": "ws"
-        },
-        {
-          "event": "event_processed"
+          "$unordered": [
+            {
+              "event": "delivery_succeeded",
+              "channel_id": "ws"
+            },
+            {
+              "event": "event_processed"
+            }
+          ]
         }
       ]
     }

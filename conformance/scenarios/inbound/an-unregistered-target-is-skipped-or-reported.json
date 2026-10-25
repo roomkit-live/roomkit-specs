@@ -116,11 +116,11 @@
             {
               "event": "broadcast_partial_failure",
               "failed": 1
+            },
+            {
+              "event": "event_processed"
             }
           ]
-        },
-        {
-          "event": "event_processed"
         }
       ]
     }

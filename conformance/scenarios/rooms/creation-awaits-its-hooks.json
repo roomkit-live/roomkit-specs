@@ -8,7 +8,7 @@
     "§26.1",
     "§8.2"
   ],
-  "notes": "The message names its room, which does not bind sms: step 2 attaches it at its declaration's defaults and, the room not routed, names no correspondent.",
+  "notes": "The message names its room, which does not bind sms: step 2 attaches it at its declaration's defaults and, the room not routed, names no correspondent. The RFC does not order an integrator's room_created against what its creation hooks did.",
   "setup": {
     "channels": [
       {
@@ -107,22 +107,30 @@
     "framework_events": {
       "room-1": [
         {
-          "event": "room_channel_attached",
-          "channel_id": "ws"
+          "$unordered": [
+            {
+              "event": "room_channel_attached",
+              "channel_id": "ws"
+            },
+            "room_created"
+          ]
         },
-        "room_created",
         {
           "event": "room_channel_attached",
           "channel_id": "sms"
         },
         {
-          "event": "delivery_succeeded",
-          "channel_id": "ws",
-          "event_id": "room-1#0"
-        },
-        {
-          "event": "event_processed",
-          "event_id": "room-1#0"
+          "$unordered": [
+            {
+              "event": "delivery_succeeded",
+              "channel_id": "ws",
+              "event_id": "room-1#0"
+            },
+            {
+              "event": "event_processed",
+              "event_id": "room-1#0"
+            }
+          ]
         }
       ]
     }

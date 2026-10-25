@@ -110,13 +110,17 @@
     "framework_events": {
       "room-1": [
         {
-          "event": "delivery_succeeded",
-          "channel_id": "sms",
-          "event_id": "room-1#0"
-        },
-        {
-          "event": "event_processed",
-          "event_id": "room-1#0"
+          "$unordered": [
+            {
+              "event": "delivery_succeeded",
+              "channel_id": "sms",
+              "event_id": "room-1#0"
+            },
+            {
+              "event": "event_processed",
+              "event_id": "room-1#0"
+            }
+          ]
         }
       ]
     }

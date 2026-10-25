@@ -17,6 +17,13 @@
         "type": "sms",
         "category": "transport"
       }
+    ],
+    "hooks": [
+      {
+        "name": "attached",
+        "trigger": "on_channel_attached",
+        "execution": "async"
+      }
     ]
   },
   "steps": [
@@ -145,6 +152,20 @@
           "event_id": "$r2#0"
         }
       ]
+    },
+    "hooks": {
+      "attached": {
+        "$unordered": [
+          {
+            "trigger": "on_channel_attached",
+            "room_id": "$r1"
+          },
+          {
+            "trigger": "on_channel_attached",
+            "room_id": "$r2"
+          }
+        ]
+      }
     }
   }
 }

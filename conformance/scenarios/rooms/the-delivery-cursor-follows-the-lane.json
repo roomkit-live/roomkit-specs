@@ -1,0 +1,73 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "rooms/the-delivery-cursor-follows-the-lane",
+  "title": "A room's record writes its delivery cursor, the highest index whose delivery set has run, beside its counters",
+  "rules": [
+    "§5.1",
+    "§1.4",
+    "§13.5 Delivery lanes across processes",
+    "§8.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "one"
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "two"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "rooms": {
+      "room-1": {
+        "event_count": 2,
+        "latest_index": 1,
+        "delivered_index": 1
+      }
+    }
+  }
+}

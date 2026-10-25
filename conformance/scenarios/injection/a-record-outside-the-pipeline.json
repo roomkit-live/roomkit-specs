@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "injection/a-record-outside-the-pipeline",
-  "title": "A record committed outside the pipeline takes the next index as given, runs no hook, reaches no one and is no activity",
+  "title": "A record committed outside the pipeline takes the next index, stored as given, runs no hook, reaches no one and is no activity",
   "rules": [
     "§10.5 A record outside the pipeline",
     "§5.1"
@@ -62,6 +62,19 @@
           "id": "room-1#0",
           "status": "delivered",
           "visibility": "none"
+        }
+      }
+    },
+    {
+      "call": "check_timers",
+      "room_id": "room-1",
+      "expect": {
+        "result": {
+          "timers": {
+            "last_activity_at": null
+          },
+          "event_count": 1,
+          "latest_index": 0
         }
       }
     },

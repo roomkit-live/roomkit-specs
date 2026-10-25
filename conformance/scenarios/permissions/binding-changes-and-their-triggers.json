@@ -7,7 +7,8 @@
     "§7.2 A binding change that changes nothing",
     "§9.2",
     "§8.2",
-    "§26.1"
+    "§26.1",
+    "§5.1 Lifecycle records"
   ],
   "reentrancy": [
     "commit@outside"
@@ -186,6 +187,29 @@
           "channel_id": "ws"
         }
       ]
+    },
+    "lifecycle": {
+      "room-1": [
+        {
+          "type": "channel_attached"
+        },
+        {
+          "type": "channel_attached"
+        },
+        {
+          "type": "channel_muted"
+        },
+        {
+          "type": "channel_unmuted"
+        },
+        {
+          "type": "channel_updated"
+        },
+        {
+          "type": "channel_detached"
+        }
+      ]
     }
-  }
+  },
+  "notes": "An implementation that writes lifecycle records (§5.1) writes one per change that changes something, the setup's attach of sms first, and none for the mute of a muted channel or a detach that fails."
 }

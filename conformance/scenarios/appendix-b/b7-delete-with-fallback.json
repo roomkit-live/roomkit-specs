@@ -138,7 +138,6 @@
           },
           {
             "content": {
-              "type": "text",
               "body": "[Message deleted]"
             }
           }
@@ -158,5 +157,6 @@
         }
       ]
     }
-  }
+  },
+  "notes": "§6.6 lets a channel that does not delete natively receive the delete as a text or a system content: only its body is compared."
 }

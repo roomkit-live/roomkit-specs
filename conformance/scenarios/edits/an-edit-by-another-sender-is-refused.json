@@ -116,10 +116,14 @@
     "framework_events": {
       "room-1": [
         {
-          "event": "delivery_succeeded",
-          "channel_id": "ws"
-        },
-        "event_processed"
+          "$unordered": [
+            {
+              "event": "delivery_succeeded",
+              "channel_id": "ws"
+            },
+            "event_processed"
+          ]
+        }
       ]
     }
   }

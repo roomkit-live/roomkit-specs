@@ -112,12 +112,12 @@
               "event_id": "room-1#0",
               "failed": 1,
               "total": 2
+            },
+            {
+              "event": "event_processed",
+              "event_id": "room-1#0"
             }
           ]
-        },
-        {
-          "event": "event_processed",
-          "event_id": "room-1#0"
         }
       ]
     }

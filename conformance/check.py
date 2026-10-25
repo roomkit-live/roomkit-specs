@@ -11,8 +11,9 @@ For each scenario under conformance/scenarios/:
   Validation rule 4", "Appendix B.2".
 
 It then lists what no scenario asserts yet: the rows of the §26.1 trigger
-and framework-event table, and the cells of the reentrancy table (README,
-"Reentrancy cells").
+and framework-event table (a row is credited only by the scenarios that cite
+the places it names, each of them by one), and the cells of the reentrancy
+table (README, "Reentrancy cells").
 
     python3 conformance/check.py            # check; exit 1 on an error
     python3 conformance/check.py --fix      # rewrite the layout first
@@ -144,15 +145,20 @@ def _prose(lines: list[str]) -> list[str]:
 
 
 def _label(lines: list[str], label: str) -> int | None:
-    pattern = re.compile(r"^(?:- )?\*\*" + re.escape(label))
+    """The line of the paragraph whose bold label is exactly `label`."""
+    pattern = re.compile(r"^(?:- )?\*\*" + re.escape(label) + r"(?:[.:]?\*\*| \()")
     for position, line in enumerate(lines):
         if pattern.match(line):
             return position
     return None
 
 
-def coverage_rows(parts: dict[str, list[str]]) -> list[tuple[str, list[str], list[str]]]:
-    """The §26.1 table's rows: each step or operation, its triggers, its events."""
+_ROW_REF = re.compile(r"§(\d+(?:\.\d+)*)(?: steps? (\d+[a-z]?(?:(?:, | and )\d+[a-z]?)*))?")
+
+
+def coverage_rows(parts: dict[str, list[str]]) -> list[tuple[str, list[Ref], list[str], list[str]]]:
+    """The §26.1 table's rows: each step or operation, the RFC places it
+    names, its triggers and its framework events."""
     events = set()
     for line in parts.get("8.2", []):
         cell = line.split("|")
@@ -163,10 +169,51 @@ def coverage_rows(parts: dict[str, list[str]]) -> list[tuple[str, list[str], lis
         cells = [cell.strip() for cell in line.split("|")[1:-1]]
         if len(cells) != 3 or cells[0] in ("Step or operation", "---") or set(cells[0]) <= {"-"}:
             continue
+        refs: list[Ref] = []
+        for section, steps in _ROW_REF.findall(cells[0]):
+            numbers = re.findall(r"\d+[a-z]?", steps) if steps else [None]
+            refs.extend((section, number) for number in numbers)
         triggers = re.findall(r"\b[A-Z][A-Z_]{3,}\b", cells[1])
         named = [word for word in re.findall(r"[a-z_]+", cells[2]) if word in events]
-        rows.append((cells[0], triggers, named))
+        rows.append((cells[0], refs, triggers, named))
     return rows
+
+
+# An RFC place a §26.1 row names: a section, and one of its steps or none.
+Ref = tuple[str, "str | None"]
+
+
+def cites(scenario: dict[str, Any], ref: Ref) -> bool:
+    """Whether the scenario's rules cite the place: its step, or its section."""
+    section, step = ref
+    for rule in scenario.get("rules", []):
+        match = re.match(r"^§([0-9.]+)(?: step (\d+[a-z]?))?", rule)
+        if match and match[1] == section and (step is None or match[2] == step):
+            return True
+    return False
+
+
+def row_gaps(
+    operation: str, refs: list[Ref], names: list[str], scenarios: list[dict[str, Any]]
+) -> list[str]:
+    """What the row lacks: a name no scenario citing its places asserts, and
+    a place no scenario asserting one of its names cites."""
+    citing = [s for s in scenarios if not refs or any(cites(s, ref) for ref in refs)]
+    credited: set[str] = set()
+    for scenario in citing:
+        triggers, events = asserted(scenario)
+        credited |= triggers | events
+    gaps = []
+    missing = [name for name in names if name not in credited]
+    if missing:
+        gaps.append(f"§26.1 row {operation!r}: nothing citing it asserts {', '.join(missing)}")
+    for ref in refs:
+        if not any(
+            cites(s, ref) and set(names) & set().union(*asserted(s)) for s in scenarios
+        ):
+            place = f"§{ref[0]}" + (f" step {ref[1]}" if ref[1] else "")
+            gaps.append(f"§26.1 row {operation!r}: no scenario citing {place} asserts it")
+    return gaps
 
 
 def asserted(scenario: dict[str, Any]) -> tuple[set[str], set[str]]:
@@ -223,20 +270,12 @@ def main() -> int:
             why = resolve(reference, parts)
             if why is not None:
                 errors.append(f"{name}: rule {reference!r}: {why}")
-    triggers: set[str] = set()
-    events: set[str] = set()
     cells: set[str] = set()
     for scenario in scenarios:
-        found_triggers, found_events = asserted(scenario)
-        triggers |= found_triggers
-        events |= found_events
         cells |= set(scenario.get("reentrancy", []))
     gaps = []
-    for operation, row_triggers, row_events in coverage_rows(parts):
-        missing = [t for t in row_triggers if t not in triggers]
-        missing += [e for e in row_events if e not in events]
-        if missing:
-            gaps.append(f"§26.1 row {operation!r}: nothing asserts {', '.join(missing)}")
+    for operation, refs, row_triggers, row_events in coverage_rows(parts):
+        gaps += row_gaps(operation, refs, row_triggers + row_events, scenarios)
     gaps += [f"reentrancy cell {cell}: no scenario" for cell in CELLS if cell not in cells]
     print(f"{len(scenarios)} scenarios, rules resolved against {source}")
     for line in errors:

@@ -1,0 +1,139 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "edits/a-hard-delete-leaves-the-index-it-took",
+  "title": "A hard delete removes its event and leaves the index it took given out: the next event takes the one after",
+  "rules": [
+    "§8.1",
+    "§10.3 Direct mutation",
+    "§14.3",
+    "§5.1"
+  ],
+  "notes": "The deleted event leaves the timeline, so its id reads $e1.",
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "one"
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "two"
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "three"
+        }
+      }
+    },
+    {
+      "call": "delete_event",
+      "room_id": "room-1",
+      "event_id": "room-1#2",
+      "expect": {
+        "result": [
+          "$e1"
+        ]
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "four"
+        }
+      },
+      "expect": {
+        "result": {
+          "event": {
+            "index": 3
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "one"
+          },
+          "index": 0
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "two"
+          },
+          "index": 1
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "four"
+          },
+          "index": 3
+        }
+      ]
+    },
+    "rooms": {
+      "room-1": {
+        "event_count": 4,
+        "latest_index": 3
+      }
+    }
+  }
+}

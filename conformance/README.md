@@ -21,8 +21,16 @@ it does not yet.
 | `RFC_COMMIT` | The roomkit-specs commit whose `roomkit-rfc.md` the scenarios' `rules` are checked against |
 
 An implementation keeps a copy of `scenarios/`, taken from one commit of this
-repository by its `make conformance-sync`, which records that commit beside the
-copy (`SPECS_COMMIT`). The copy is never edited there.
+repository's `origin/main` by its `make conformance-sync`, which records that
+commit beside the copy (`SPECS_COMMIT`) and the copy's fingerprint
+(`SCENARIOS_SHA256`: `sha256sum` over `sha256sum` of each file of `scenarios/`,
+by path in byte order). The runner's suite checks the fingerprint, so a copy
+edited or synced in part fails. The copy is never edited there: change the
+scenarios here, push them, fetch, and sync again. The target finds this
+repository beside the implementation's main checkout, from a worktree too
+(`SPECS_DIR`), takes `origin/main` by default (`SPECS_REF`), and refuses a commit
+`origin/main` does not hold unless `ALLOW_UNPUSHED=1`, for a copy that is synced
+again before it is pushed.
 
 | Implementation | Copy | Runner | Run it |
 |---|---|---|---|
@@ -52,10 +60,15 @@ It needs `jsonschema`. For each scenario it checks that:
   - `§9.5.1 Reentrance`, `§10.3 Validation rule 4`: a paragraph that opens
     with that bold label, and the numbered item after it.
 
-It then lists, as gaps, the rows of the §26.1 trigger and framework-event table
-that no scenario asserts (a trigger is asserted by a scenario that expects calls
-of a hook on it, a framework event by one that expects it), and the reentrancy
-cells no scenario names. A change to the RFC that moves a rule fails the check
+It then lists, as gaps, what of the §26.1 trigger and framework-event table no
+scenario asserts. A trigger is asserted by a scenario that expects calls of a
+hook on it, a framework event by one that expects it; a row is credited only
+by the scenarios that cite one of the places it names (`§10.1 steps 10, 11 and
+15`: a scenario citing `§10.1 step 11`; `(§7.2)`: one citing §7.2), and each of
+those places must be cited by a scenario that asserts one of the row's names. A
+row that names no place is credited by any scenario. It also lists the
+reentrancy cells no scenario names. A label resolves only as the whole bold
+label of its paragraph, never as a prefix of one. A change to the RFC that moves a rule fails the check
 until `RFC_COMMIT` and the scenarios follow it.
 
 ## A scenario
@@ -128,8 +141,10 @@ of the setup are not compared.
   - `parse`, `deliver` and `on_event` hold its **reactions** (below).
 - `rooms`: each is created (`id`, `organization_id`, `metadata`, `timers`),
   then each of its `bindings` attached (`channel_id`, `category`, `access`,
-  `muted`, `visibility`, `metadata`, `participant_id`); a `status` of
-  `closed` or `archived` is reached through the kit's own transitions.
+  `muted`, `visibility`, `metadata`, `participant_id`), then each of its
+  `participants` stored as the room's record of them (a Participant, §5.5,
+  completed with its room and `joined_at`); a `status` of `closed` or
+  `archived` is reached through the kit's own transitions.
 - `hooks`: each is registered on the kit: `name`, `trigger` (a HookTrigger:
   `before_broadcast`, `after_broadcast`, `on_room_created`...), `execution`
   (default `sync`), `priority`, `timeout_ms`, `channel_types`, `channel_ids`,
@@ -208,8 +223,8 @@ Each takes the RFC's name and the RFC's arguments, and may name an
   context, and the event it runs for;
 - `$r1`, `$r2`...: the rooms the run created that the scenario does not name,
   in the order of their `room_created`;
-- `<room>#<rank>`: the event of that rank in the room's timeline as it stands
-  when the call is made (Normalization);
+- `<room>#<index>`: the event at that index of the room's timeline as it
+  stands when the call is made, read as Normalization reads it;
 - `$<label>`: the event the call labelled `<label>` returned.
 
 ### Expectations
@@ -227,6 +242,7 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `turns` | Per room and intelligence channel, the events its `on_event()` received |
 | `observations`, `tasks` | Per room, the stored side effects |
 | `actions` | Per action label, the outcomes of its runs, in the order they ended |
+| `lifecycle` | Per room, the lifecycle records (§5.1) in index order, when the implementation writes them: an implementation that writes none passes. It says which changes write one, and which write none (a change that changes nothing, §7.2) |
 
 An outcome is `{"result": ...}`, matched as below, or `{"error": name}` (or
 `{"error": {"name": ..., "reason": ...}}`). A call whose outcome names neither
@@ -234,7 +250,14 @@ must not fail. An action with no `expect` must not fail either, unless
 `expect.actions` checks its label.
 
 Each runner also checks, for every scenario, that no lifecycle record was
-delivered or handed to a turn (§5.1).
+delivered or handed to a turn (§5.1), and that each room's indexes, read as
+stored, are given out once each (§8.1).
+
+A member a runner does not know fails the scenario before it runs: a top-level
+member, an expectation, a step of no known kind, a call's argument, a
+reaction's, a hook's or a channel's member, an outcome's. Records in the
+serialized form (messages, contents, templates, capabilities) are each
+implementation's to read.
 
 ### Normalization
 
@@ -243,13 +266,17 @@ the RFC leaves to each implementation:
 
 - **Lifecycle records** (§5.1: the framework's source, the visibility
   `internal`, a system content) MAY be written, so they are left out of the
-  timelines, and every index is read without them: an event's `index`
-  becomes its **rank**, the number of the room's other events at a lower
-  index (an instruction's provisional index too). Appendix B counts the same
-  way.
+  timelines (`lifecycle` compares them), and every index is read without
+  them: an index loses one for each lifecycle record at or below it. That
+  holds for an event's `index` (an instruction's provisional index too) and a
+  room's `latest_index` (null when it reaches below 0) and `delivered_index`
+  (-1 at least); a room's `event_count` loses one for each lifecycle record
+  below it. Every other gap stays: a hard delete leaves its index given out
+  (§8.1). Appendix B counts the same way.
 - **Rooms** the run created and the scenario does not name are `$r1`, `$r2`...
   in the order of their `room_created`.
-- **Events** of a timeline are `<room>#<rank>`, wherever their id appears.
+- **Events** of a timeline are `<room>#<index>`, its index read as above,
+  wherever their id appears.
   Any other event id (an instruction, a refused event, an event a hard delete
   removed) is `$e1`, `$e2`... in the order the step outcomes, then the
   framework events, show it first.
@@ -281,7 +308,11 @@ In `framework_events` a bare string names the event: `"room_created"` is
 A call's error is named by what it means in the RFC, never by an
 implementation's class. A runner maps its errors with the table below, which
 extends roomkit-rs `docs/rfc-gaps.md` G-085's; an error that maps to no name
-fails the scenario.
+fails the scenario. A runner reads a call's arguments before it makes the call,
+and an argument it cannot read (a typo in the scenario) fails the scenario: it
+is never an `invalid_argument`. Only a refusal of the implementation's own
+validators is (roomkit: a pydantic `value_error`; roomkit-rs: a value type that
+refuses its value, a `ChannelId`).
 
 | Name | RFC meaning | roomkit (Python) | roomkit-rs |
 |---|---|---|---|
@@ -315,28 +346,32 @@ at one instant) stay in each implementation's own tests.
 
 ## Coverage
 
-102 scenarios. Counted by the sections their `rules` cite (a scenario counts once
+110 scenarios. Counted by the sections their `rules` cite (a scenario counts once
 under each section it cites):
 
 | Section | Scenarios | Section | Scenarios |
 |---|---|---|---|
-| §5.1 | 13 | §9.5.1 | 13 |
-| §5.2, §5.8, §4.2 | 1 each | §10.1 | 42 |
-| §6.6 | 7 | §10.1.1 | 4 |
-| §7.2 | 4 | §10.2 | 10 |
-| §7.3 | 5 | §10.3 | 11 |
-| §7.4 | 2 | §10.4 | 4 |
-| §7.5 | 15 | §10.5 | 18 |
-| §8.1 | 1 | §13.4 | 3 |
-| §8.2 | 18 | §13.5 | 7 |
-| §8.3 | 6 | §13.6 | 3 |
-| §9.1 | 4 | §17.2 | 2 |
+| §1.4 | 1 | §9.4 | 6 |
+| §4.2, §5.2, §5.5, §5.8 | 1 each | §9.5.1 | 14 |
+| §5.1 | 16 | §10.1 | 46 |
+| §6.1 | 2 | §10.1.1 | 4 |
+| §6.4 | 1 | §10.2 | 13 |
+| §6.6 | 7 | §10.3 | 12 |
+| §7.2 | 4 | §10.4 | 4 |
+| §7.3 | 5 | §10.5 | 19 |
+| §7.4 | 2 | §10.6.8 | 1 |
+| §7.5 | 17 | §13.4 | 3 |
+| §8.1 | 3 | §13.5 | 8 |
+| §8.2 | 19 | §13.6 | 3 |
+| §8.3 | 6 | §14.3 | 1 |
+| §9.1 | 5 | §17.2 | 2 |
 | §9.2 | 11 | §19.3, §19.3.1 | 4, 1 |
-| §9.3 | 8 | §26.1 | 37 |
-| §9.4 | 6 | Appendix B.1, B.2, B.4, B.5, B.6, B.7 | 1 each |
+| §9.3 | 10 | §26.1 | 41 |
+| Appendix B.1, B.2, B.4, B.5, B.6, B.7 | 1 each | | |
 
-Every row of the §26.1 trigger and framework-event table is asserted by at least
-one scenario, and each of the 16 reentrancy cells is named by one.
+Every row of the §26.1 trigger and framework-event table is asserted, by
+scenarios citing each place it names, and each of the 16 reentrancy cells is
+named by one.
 
 **Not covered yet** (M1's second pass):
 
@@ -345,14 +380,13 @@ one scenario, and each of the 16 reentrancy cells is named by one.
   withheld from it (§10.3);
 - §7.5 rule 6 (a binding never widened), which needs delegation;
 - §5.1: the integrator's pause, resume and reopen (roomkit has no `pause_room`
-  or `resume_room` call), the activity a `BLOCKED` record or a record does not
-  count, the shape of a lifecycle record when one is written;
+  or `resume_room` call), the activity a `BLOCKED` record does not count, a
+  lifecycle record's content and source when one is written;
 - §8.5: response visibility and its narrowing; §9.4: the response visibility a
   modify narrows;
 - §9.3: unusable results other than a raise or a timeout (a modify with no
   payload, a payload of the wrong type), `hook_invalid_result`; a failing
-  off-lock hook's `hook_error` and `hook_timeout`; ON_ERROR's categories but
-  `generation`;
+  off-lock hook's `hook_timeout`; ON_ERROR's categories but `generation`;
 - §9.5.1: the ticket's release on every path, a hook body's budget once it
   returned (a spawned task), "Past the cap" for messages and posts;
 - §10.1: step 2's re-routing when the locked check finds the room no longer the
@@ -374,6 +408,13 @@ one scenario, and each of the 16 reentrancy cells is named by one.
 - §19.3.1: `ADDRESSED_ONLY`; the turn backend (§10.6) and streaming, out of
   scope for step 3.
 
+## Waiting for the kit to go idle
+
+roomkit's runner waits for the kit to go idle by reading its internals (its
+lanes, its observers, its held tasks): the Python core offers no public wait for
+its background work. Milestone 5's driver of the Rust core needs an entry point
+that waits until the kit is idle, which the runner will call on both cores.
+
 ## Known failures
 
 A scenario an implementation fails because the implementation breaks the RFC.
@@ -385,9 +426,12 @@ are not made here: roomkit-rs's are milestone 2's, roomkit's cards of their own.
 
 | Scenario | Implementation | The rule broken | Probe |
 |---|---|---|---|
-| `inbound/an-agent-s-output-updates-the-room` | roomkit 5635662c | §10.1 step 15: the room metadata updates of a cascade's channel outputs are never applied. `EventRouter` merges them into `BroadcastResult.metadata_updates`, which nothing reads | An agent answering `ChannelOutput(responded=True, metadata_updates={"stage": "q"})` leaves the room's metadata `{}`; roomkit-rs writes `stage` |
-| `injection/an-injection-from-an-unregistered-channel-raises` | roomkit 5635662c | §10.5 ("The channel it names MUST be registered"): `send_event()` from a channel no one registered raises `ChannelNotFoundError` ("Channel nope not in room room-1"), the error of a channel the room does not bind, not `ChannelNotRegisteredError` | `kit.send_event("room-a", "nope", TextContent(body="x"))` raises `ChannelNotFoundError` |
-| `hooks/an-async-hook-on-a-sync-trigger-observes` | roomkit-rs 8f8be5a | §9.2: on a SYNC trigger, the hooks registered ASYNC run as observers once the chain allowed. A hook registered ASYNC on `BEFORE_BROADCAST` never runs: `HookRegistry::observers` would list it, but the inbound operation fires no observer of `BEFORE_BROADCAST` | The scenario's `watcher` is never called (`hook_order` is `["rewrite"]`); roomkit calls it with the rewritten payload |
+| `inbound/an-agent-s-output-updates-the-room` | roomkit 2d6e6267 | §10.1 step 15: the room metadata updates of a cascade's channel outputs are never applied. `EventRouter` merges them into `BroadcastResult.metadata_updates`, which nothing reads | An agent answering `ChannelOutput(responded=True, metadata_updates={"stage": "q"})` leaves the room's metadata `{}`; roomkit-rs writes `stage` |
+| `injection/an-injection-from-an-unregistered-channel-raises` | roomkit 2d6e6267 | §10.5 ("The channel it names MUST be registered"), RMK-977: `send_event()` from a channel no one registered raises `ChannelNotFoundError` ("Channel nope not in room room-1"), the error of a channel the room does not bind | `kit.send_event("room-a", "nope", TextContent(body="x"))` raises `ChannelNotFoundError`; roomkit-rs raises `UnknownChannel` |
+| `injection/an-injection-from-a-bound-unregistered-channel-raises` | roomkit 2d6e6267 | §10.5, RMK-977: `send_event()` from a channel the room binds and the kit no longer registers commits the event and delivers it | `ws` attached, then `unregister_channel("ws")`, then `send_event(..., "ws", ...)`: the event is stored `DELIVERED` and delivered to `sms`; roomkit-rs refuses it `UnknownChannel`, nothing written |
+| `hooks/an-async-hook-on-a-sync-trigger-observes` | roomkit-rs 15ff0ee | §9.2: on a SYNC trigger, the hooks registered ASYNC run as observers once the chain allowed. A hook registered ASYNC on `BEFORE_BROADCAST` never runs: `HookRegistry::observers` would list it, but the inbound operation fires no observer of `BEFORE_BROADCAST` | The scenario's `watcher` is never called (`hook_order` is `["rewrite"]`); roomkit calls it with the rewritten payload |
+| `inbound/an-author-s-name-and-rank-are-recorded` | roomkit-rs 15ff0ee | §10.1 step 12: an event whose author has a name carries its name, its rank and its source (`metadata.author`), from the room's register of authors. roomkit-rs records none (step 3 decision 2, milestone 2) | No event of the scenario carries `metadata.author`; roomkit records `{"name": "Alice", "rank": 1}`, then `ALICE` at rank 2 |
+| `rooms/the-delivery-cursor-follows-the-lane` | roomkit-rs 15ff0ee | §5.1 and §1.4 (a writer writes every field): the Room record holds `delivered_index`. roomkit-rs's Room has none (step 3 decision 2, milestone 2) | The room record has no `delivered_index`; roomkit writes 1 after two delivered messages |
 
 ## Writing a scenario
 

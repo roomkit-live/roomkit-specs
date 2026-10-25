@@ -209,6 +209,12 @@
             "closed",
             "archived"
           ]
+        },
+        "participants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/record"
+          }
         }
       }
     },
@@ -1028,6 +1034,15 @@
                   }
                 }
               }
+            ]
+          }
+        },
+        "lifecycle": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "array",
+              "object"
             ]
           }
         }

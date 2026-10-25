@@ -1,10 +1,11 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "resilience/concurrent-messages-take-their-own-index",
-  "title": "Messages processed at once into one room are each committed, at an index of their own",
+  "title": "Messages processed at once into one room each take an index of their own, and are delivered in index order",
   "rules": [
     "§8.1",
-    "§13.5"
+    "§13.5",
+    "§10.2"
   ],
   "setup": {
     "channels": [
@@ -102,28 +103,17 @@
     },
     "deliveries": {
       "room-1": {
-        "ws": {
-          "$unordered": [
-            {
-              "content": {
-                "type": "text",
-                "body": "one"
-              }
-            },
-            {
-              "content": {
-                "type": "text",
-                "body": "two"
-              }
-            },
-            {
-              "content": {
-                "type": "text",
-                "body": "three"
-              }
-            }
-          ]
-        }
+        "ws": [
+          {
+            "id": "room-1#0"
+          },
+          {
+            "id": "room-1#1"
+          },
+          {
+            "id": "room-1#2"
+          }
+        ]
       }
     }
   }
