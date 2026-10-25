@@ -5368,7 +5368,16 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   │   so a store shared across processes needs the distributed lock of
     │   │   §13.5. Before the commit, so the rank of a turn never changes once
     │   │   stored: a commit that fails after it leaves a rank unused, never
-    │   │   one held twice. A BLOCKED record (steps 10, 11) takes none
+    │   │   one held twice. A BLOCKED record (steps 10, 11) takes none. The
+    │   │   register is the room's private state under the key
+    │   │   `author_register` (§14.1), apart from the room's metadata, which
+    │   │   clients may read: its digests hash the room's id, which is not
+    │   │   secret, with each source's id and name, a space small enough to
+    │   │   try whole. A register the room's metadata still holds (a room
+    │   │   stored before, or a process of an earlier implementation writing
+    │   │   there) is merged into it at the room's next turn that names its
+    │   │   sender: a register only adds, so the merge gives none of its
+    │   │   ranks again
     ├── Commit atomically, as ONE logical transaction:
     │   ├── Store event with status=DELIVERED and, as its visibility, the
     │   │   intersection of its own and its source binding's (§7.3), an
@@ -14037,6 +14046,19 @@ ConversationStore (interface)
 │   ├── advance_delivered_index(room_id, index, force = false) → bool
 │   │                                         # compare-and-set from index - 1, or
 │   │                                         # from any lower value when forced
+│   ├── get_private_state(room_id, key) → map | null
+│   │                                         # a key the implementation keeps for
+│   │                                         # itself, apart from the room's
+│   │                                         # metadata; the caller's copy (§14.4)
+│   ├── set_private_state(room_id, key, value | null) → void
+│   │                                         # under the room lock; nothing for an
+│   │                                         # unknown room; null removes the key;
+│   │                                         # removes the metadata's copy under the
+│   │                                         # key; deleted with the room
+│   │   # A key is the implementation's (the register of authors is
+│   │   # author_register, §10.1 step 12) and reserves the same key in the
+│   │   # room's metadata: a store that keeps no private state keeps it
+│   │   # there, and set removes the copy there.
 │   ├── find_room_id_by_binding(channel_id, participant_id, identity_id, filter,
 │   │                           recipient_key) → string | null
 │   │                                         # newest room whose binding of
@@ -14261,9 +14283,10 @@ and never inherits the page's cap.
   on neither aliasing nor isolation.
 - A store MUST own its stored representation from the moment a write
   returns: a caller's later mutation of an object it passed to `add_event` /
-  `update_event` MUST NOT alter stored state (copy-in and serialisation both
-  satisfy this).
-- Rooms, bindings and participants returned by reads are caller-owned:
+  `update_event` / `set_private_state` MUST NOT alter stored state (copy-in
+  and serialisation both satisfy this).
+- Rooms, bindings, participants and a room's private state returned by reads
+  are caller-owned:
   mutating a returned object MUST NOT affect stored state — changes are
   applied through the write interface.
 
