@@ -3861,6 +3861,17 @@ an event chain.
   Once the turn or the tool call is over, the floor is gone: work it began (a
   task it spawned) calls as a new arrival with the depth of its own event, 0
   for a message it creates (§9.5.1).
+- A call into a room made from the body of an ASYNC hook a cascade fires once
+  an event's delivery set has run (§10.1 step 16's `AFTER_BROADCAST` hooks, a
+  change's `ON_EVENT_UPDATED` and `ON_EVENT_DELETED` hooks, §10.3), while the
+  body runs, is at least one deeper than the event the hook runs for: the
+  event it injects, the message it hands in or delivers (a delivery queued
+  for later carries that depth), and a regeneration it asks for (§10.3) take
+  that depth when their own is lower, so that a hook that asks an agent again
+  after each of its answers stops at the limit, a discussion's `max_depth`
+  included (Section 19.7.5 rule 11). A direct change's own triggers run within
+  it, under the same floor. Once the body is over, the floor is gone, as a
+  turn's is.
 
 **At the limit.** When an event's `chain_depth + 1 >= max_chain_depth`, an
 intelligence channel it solicits (Section 19.3) MUST NOT be asked to act:
@@ -3922,22 +3933,24 @@ the work delivers in, after the locked check, what routing wrote kept
 **The hook calls of a cascade.** Apart from its passes, each cascade MUST
 count the calls of the ASYNC hooks it fires once an event's delivery set has
 run (§10.1 step 16's `AFTER_BROADCAST` hooks, a change's `ON_EVENT_UPDATED`
-and `ON_EVENT_DELETED` hooks, §10.3), on a counter of the same size, `10 ×
-max_chain_depth`, shared by reference with the cascades those calls start as
-the passes are. While a hook's body runs, each call it makes into its room
-draws one hook call as it starts, a message that creates a room included, and
-so does each direct `update_event()`, `delete_event()` or regeneration it
-makes there (§10.3): a hook that sends, changes or regenerates on every event
-stops at the cap, and a hook that posts once per event draws one hook call
-per event. Its calls draw no pass, and the cascade's passes draw no hook
-call, so a hook's notices cost the agents no answer and the answers block no
-notice below the cap. Past its hook calls, a hook's direct injection is
-stored `BLOCKED` with `reentry_loop_cap` and its message refused, as past
-the passes (above), and a direct change raises a reentry-loop-cap error,
-nothing of it written (§10.3). Work a hook's
-body starts (a task it spawns, and does not wait for) that calls once the
-body has returned is work of its own, with a budget and a depth of its own
-(§9.5.1).
+and `ON_EVENT_DELETED` hooks, §10.3), all its hooks together on one counter of
+the same size, `10 × max_chain_depth`, shared by reference with the cascades
+those calls start as the passes are. While a hook's body runs, each call it
+makes into its room draws one hook call as it starts, a message that creates
+a room included, and so does each direct `update_event()`, `delete_event()`
+or regeneration it makes there (§10.3): a hook that sends or changes on every
+event stops at the cap, and a hook that posts once per event draws one hook
+call per event, a notice blocked only past `10 × max_chain_depth` calls of all
+the cascade's hooks together. Its calls draw no pass, and the cascade's passes
+draw no hook call, so a hook's notices cost the agents no answer and the
+answers block no notice below the cap. The counter bounds the loops that
+solicit no agent; a hook that asks an agent again after each of its answers
+ends at the depth limit first (above). Past its hook calls, a hook's direct
+injection is stored `BLOCKED` with `reentry_loop_cap` and its message refused,
+as past the passes (above), and a direct change raises a reentry-loop-cap
+error, nothing of it written (§10.3). Work a hook's body starts (a task it
+spawns, and does not wait for) that calls once the body has returned is work
+of its own, with a budget and a depth of its own (§9.5.1).
 
 **Requirements:**
 
@@ -4953,10 +4966,11 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   transport whose delivery sends into its room, or a hook that posts after
   every event, stops at the cap. A delivery's or a turn's call draws one of
   the cascade's passes; a hook body's call draws one of its hook calls, a
-  counter kept apart (§8.3), only while that body runs, each body on its own:
-  a hook that posts once per event draws one hook call per event, and a
-  task the body starts and does not wait for draws nothing of it once the
-  body has returned. So MUST a call it makes that
+  counter kept apart (§8.3) that all the cascade's hooks share, only while
+  that body runs, and is at least one deeper than the event the hook runs
+  for (§8.3): a hook that posts once per event draws one hook call per event,
+  and a task the body starts and does not wait for draws nothing of it once
+  the body has returned. So MUST a call it makes that
   creates a room, whether a routed message opens it or the call names a room
   the store does not hold, which step 2 creates with the id (§10.1 step 2,
   §10.4): the room is that cascade's own work, and the call is charged once,
@@ -5440,8 +5454,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     └── Each hook's body, and that of a change's mutation trigger (§10.3),
         is the cascade's work while it runs: a call it makes into the room
         is a new arrival drawing one of the cascade's hook calls, and so is
-        a direct change it makes (§8.3, §9.5.1, §10.3). Work it starts that
-        calls once the body has returned begins fresh.
+        a direct change it makes, each at least one deeper than the event
+        the hook runs for (§8.3, §9.5.1, §10.3). Work it starts that calls
+        once the body has returned begins fresh.
 
 17. EMIT FRAMEWORK EVENTS
     └── event_processed, delivery_succeeded/failed, etc.
@@ -6049,12 +6064,17 @@ work of the room, a delivery, a turn, a locked section or an admission, it
 draws nothing. Its own triggers run on the budget of the room's work it is
 made in, the cascade's whose frame it runs in, or on a budget of its own
 when it comes from outside the room's work: the mutation triggers' hook
-bodies draw their calls on it, and a regeneration's cascade its passes and
-its hooks' calls. A hook that updates its event on every update, deletes on
-every deletion, or deletes and regenerates after every answer therefore
-stops at the cap. A change the implementation itself makes for the room's
-work, such as restoring held messages (§11.7.6), runs its triggers on that
-work's budget alike.
+bodies draw their calls on it, and, in a room no discussion holds, a
+regeneration's cascade its passes and its hooks' calls; a regenerated turn a
+discussion gives has a budget of its own (Section 19.7.5 rule 11). A
+regeneration made within a turn or a hook's body is at least as deep as a
+call made there (§8.3): its re-broadcast, and in a discussion the turn it
+queues, stand at that depth, so its answer is one deeper. A hook that updates
+its event on every update, or deletes on every deletion, therefore stops at
+the cap, and one that deletes and regenerates after every answer at the depth
+limit. A change the implementation itself makes for the room's work, such as
+restoring held messages (§11.7.6), runs its triggers on that work's budget
+alike.
 
 **Broadcast behavior:**
 
@@ -15975,7 +15995,14 @@ SpeakQueue (one per room, readable by the host)
     and its turn answers the next event that asks for it within the limit: a
     person's message, which opens a new chain, or a request from a shallower
     one (rule 8). Each turn has a reentry budget of its own, `10 × max_depth`
-    passes (Section 8.3), as a regeneration does. A turn of its own (rule 7)
+    passes (Section 8.3), whoever asked for it, a regeneration included: the
+    budget of the work a call is made from does not follow it into the
+    discussion's queue. Its depth does: a message, a post or a regeneration
+    an ASYNC hook's body makes stands at least one deeper than the event the
+    hook runs for (Section 8.3), and the turn that answers it at that depth,
+    so `max_depth` ends a hook that asks an agent again after each of its
+    answers, in every process that gives the discussion's turns. A turn of
+    its own (rule 7)
     past the limit does not wait: an instruction's is dropped and reported as
     dropped (rule 16), there being no stored event to record it against; a
     regenerated answer's is recorded once and dropped. An autonomous
