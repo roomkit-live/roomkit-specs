@@ -16485,7 +16485,13 @@ governs, and Tool Search neither hides nor lists a tool it cannot name. A
 call under an alias a handler serves as another tool (an MCP tool called
 `mcp__<server>__<tool>`, which the MCP handler runs as `<tool>`) is judged under
 both names, by the policy and by skill gating: refused when either is, so no
-tool runs under an alias that its own name is refused. The
+tool runs under an alias that its own name is refused. A policy names a server
+through its aliases, which run on the server they name when every provider of
+the chain is labelled (Section 21.2): `deny: ["mcp__archive__*"]` keeps that
+server out, and `allow: ["mcp__crm__*", "delete_records"]` admits one tool of
+one server, both names passing. Such a policy holds only when the tools are
+declared under their aliases alone: a call under a bare name names no server,
+so a policy cannot hold it to one. The
 declaration filter and the execution guard MUST apply one rule, so a tool the
 model is offered is a tool it may call.
 
@@ -16588,6 +16594,7 @@ MCPToolProvider
 │   ├── url: string                         # a remote server (streamable HTTP or SSE)
 │   └── command: string, args: list<string> # a local server started as a subprocess (stdio)
 ├── discover: bool = true                   # List the server's tools when connecting
+├── label: string | null                    # The host's name for the server: the <server> of an MCP alias
 ├── tools() → list<ToolDefinition>          # Discover available tools
 ├── call(name, arguments) → string          # Execute a tool
 ├── server_extensions → map<string, object> # Extensions the server declared
@@ -16601,6 +16608,18 @@ A server named by `command` is started when the provider connects and MUST be
 stopped when it disconnects. Its arguments MUST be passed as a list, never
 through a shell. A connection that fails part-way MUST release what it had
 opened, the server process included, before the error is reported.
+
+`label` is the host's name for the server, never the name the server gives
+itself: an identifier (letters, digits, `_`, `.`, `-`, at most 64 characters)
+that holds no `__` and does not end with `_`, either of which would make an
+alias read another server; a provider given any other label MUST be refused at
+construction. A labelled provider's tool handler serves an MCP alias
+`mcp__<server>__<tool>` (Section 21.1) only when `<server>` is its label: an
+alias naming another server is not served by it (Section 21.4), and the next
+handler of a chain takes it. A provider without a label serves an alias
+whatever server it names, so an alias runs on the server it names whatever the
+order of the chain only when every provider of the chain is labelled. A host
+that composes several servers SHOULD label each.
 
 A provider lists the server's tools once, when it connects, following the
 listing's cursor across every page, and keeps the output schema each tool was
