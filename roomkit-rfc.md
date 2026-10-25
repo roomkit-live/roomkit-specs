@@ -13803,6 +13803,10 @@ channels of one room may carry the same key for two different messages. An
 inbound message, an event injected directly and a record committed outside
 the pipeline (§10.5) are the events that carry a key: the pipeline clears it
 on the responses it commits (§8.5) and on the events a hook injects (§9.4).
+A task's posted result (Section 23.3) carries a key the framework sets: the
+id it was taken under to be posted (Section 19.7.5 rule 19), not the id of
+the message it commits, so a second commit of it, by another process or by
+its holder, is a replay.
 A record committed outside the pipeline is never a replay (§14.3). A
 proactive delivery's key is the
 application's and names one publication in the room, whatever transport
@@ -14056,9 +14060,10 @@ ConversationStore (interface)
 │   │                                         # removes the metadata's copy under the
 │   │                                         # key; deleted with the room
 │   │   # A key is the implementation's (the register of authors is
-│   │   # author_register, §10.1 step 12) and reserves the same key in the
-│   │   # room's metadata: a store that keeps no private state keeps it
-│   │   # there, and set removes the copy there.
+│   │   # author_register, §10.1 step 12; a discussion's task results to
+│   │   # post are _speak_queue_results, §19.7.5 rule 16) and reserves the
+│   │   # same key in the room's metadata: a store that keeps no private
+│   │   # state keeps it there, and set removes the copy there.
 │   ├── find_room_id_by_binding(channel_id, participant_id, identity_id, filter,
 │   │                           recipient_key) → string | null
 │   │                                         # newest room whose binding of
@@ -15662,7 +15667,8 @@ path:
   the agents it attached (an agent bound before the install stays bound), and
   the room state it wrote (`ConversationState`, a discussion's speak queue). A
   strategy MAY have an uninstall step of its own, run first (a discussion
-  stops giving turns). The timeline stays. The room then answers by its
+  stops giving turns and posts the task results it took and has not
+  committed, Section 19.7.5 rule 19). The timeline stays. The room then answers by its
   `agent_response_policy`, and another strategy may be installed. A
   discussion stores the agents its installs attached with it (Section 19.7.5
   rule 16), so any process serving the room uninstalls it, one where no host
@@ -16181,8 +16187,9 @@ SpeakQueue (one per room, readable by the host)
     13.5), so the processes that serve one room keep one queue, and the queue
     and the count of turns given outlive a restart. Uninstalling, in any
     process, one that only follows the discussion included, ends it in all of
-    them and unbinds the agents its installs attached (a configuration stored
-    without them names none). A process that gives no turn, because it only
+    them, posts the task results the discussion took and has not committed
+    (rule 19), then unbinds the agents its installs attached (a configuration
+    stored without them names none). A process that gives no turn, because it only
     follows the discussion or its host installed another configuration, keeps
     no instruction and no task result for a turn: it reports the instruction
     dropped and posts the result at once.
@@ -16220,6 +16227,13 @@ SpeakQueue (one per room, readable by the host)
     does not take the lease within one lease period is dropped. An
     instruction the discussion drops (it is over, uninstalled, or its process
     stopped) is reported through `ON_SPEAK_QUEUE` as dropped.
+    A task's result to post (rule 19) is queued as an instruction is, its
+    entry naming its holder; unlike an instruction, it is also kept, from when
+    the discussion takes it until it is committed, with the room's private
+    state (Section 14.1): its id, agent, chain depth and the message it posts,
+    apart from the room's metadata, which a reader of the room gets whether or
+    not the posted message's visibility (Section 7.3), or a hook that blocks
+    it, would show it to them.
 17. **Following the queue.** The host reads a room's `SpeakQueue` at any time,
     and each change of it fires `ON_SPEAK_QUEUE` (Section 9) with the room,
     the queue as it now is and what changed: an agent queued, a turn given or
@@ -16359,6 +16373,26 @@ SpeakQueue (one per room, readable by the host)
     `ON_TASK_COMPLETED` and the StatusBus; a posted result, which asks no
     turn, is posted once no turn runs, one queued when the discussion ends or
     is uninstalled included.
+
+    Uninstalling, in any process, posts every result the discussion took and
+    has not committed, whichever process holds it and whether it is queued,
+    waits for the floor or is being committed, before it unbinds the agents
+    its installs attached: a posted result is the agent's message, committed
+    through its binding (Section 23.3) and through the hooks of the process
+    that uninstalls, so every process serving a room registers the same hooks.
+    It waits for no commit under way: a host that uninstalls while it holds
+    the room lock, which that commit needs, has the result posted by the
+    uninstall itself. A result's idempotency key is the id the discussion took
+    it under, not the id of the message it commits (Section 13.4): the post
+    that comes second, the holder's own once it learns of the uninstall (its
+    agent detached by then included) or the commit under way once the lock is
+    released, is a replay and stores nothing. A result a closing process did
+    not post, or whose post failed, stays kept, and nothing posts it before
+    the next uninstall, not the process that gives the next turn nor a
+    restarted process that installs the discussion again: it then comes after
+    the room's later messages, and a discussion never uninstalled never posts
+    it. One committed but still kept, whose message was deleted for good
+    meanwhile (Section 10.3), is posted again, its key gone with it.
 
 The rules of Section 19.7 for a strategy in several rooms hold: the speak
 queue and who only listens are the room's, and the same agents may hold a
@@ -17390,7 +17424,9 @@ conversation = 0, hand_back = "relay")` is called:
    the agent binding's visibility allows, so later turns, of every agent,
    read it in the history, where a relayed result lives only in the answer
    its turn gave. It carries the task in its metadata as the relayed
-   delivery does, and the chain depth that delivery would carry.
+   delivery does, the chain depth that delivery would carry and, unlike a
+   response, whose key the pipeline clears (§13.4), an idempotency key the
+   framework sets: the id the result was taken under.
 
 A task cancelled from outside (its caller's timeout, the framework's
 `cancel_task(task_id)`, the task runner's `cancel` or `close`, the framework's
