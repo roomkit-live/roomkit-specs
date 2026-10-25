@@ -1,0 +1,129 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "reentrancy/a-locked-hook-mutes-its-source",
+  "title": "A locked hook that mutes its event's source takes the lock again at once, and the source check reads the mute",
+  "rules": [
+    "§13.5",
+    "§7.5 rule 2",
+    "§10.1 step 9a",
+    "§26.1"
+  ],
+  "reentrancy": [
+    "commit@locked"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "moderator",
+        "trigger": "before_broadcast",
+        "reactions": [
+          {
+            "when": {
+              "text": "trigger"
+            },
+            "do": [
+              {
+                "call": "mute",
+                "room_id": "$room",
+                "channel_id": "sms",
+                "as": "mute"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "muted",
+        "trigger": "on_channel_muted",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "trigger"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": true,
+          "reason": "source_muted"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "trigger"
+          },
+          "status": "blocked",
+          "blocked_by": "source_muted"
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": []
+      }
+    },
+    "bindings": {
+      "room-1": {
+        "sms": {
+          "muted": true
+        }
+      }
+    },
+    "hooks": {
+      "muted": [
+        {
+          "trigger": "on_channel_muted"
+        }
+      ]
+    },
+    "actions": {
+      "mute": [
+        {
+          "result": {
+            "muted": true
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "hooks/registration-refusals",
+  "title": "A registration that breaks a rule of §9.1 is refused, naming nothing it registered",
+  "rules": [
+    "§9.1"
+  ],
+  "notes": "`offlock` would run before `scan` although its priority comes after it: no hook that needs the lock may have a lower priority than one that does not.",
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "scan",
+        "trigger": "before_broadcast",
+        "priority": 0
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "register_hook",
+      "hook": {
+        "name": "scan",
+        "trigger": "before_broadcast"
+      },
+      "expect": {
+        "error": "invalid_argument"
+      }
+    },
+    {
+      "call": "register_hook",
+      "hook": {
+        "name": "late",
+        "trigger": "after_broadcast",
+        "execution": "async",
+        "needs_lock": false
+      },
+      "expect": {
+        "error": "invalid_argument"
+      }
+    },
+    {
+      "call": "register_hook",
+      "hook": {
+        "name": "closed",
+        "trigger": "after_broadcast",
+        "execution": "async",
+        "fail_closed": true
+      },
+      "expect": {
+        "error": "invalid_argument"
+      }
+    },
+    {
+      "call": "register_hook",
+      "hook": {
+        "name": "offlock",
+        "trigger": "before_broadcast",
+        "priority": 1,
+        "needs_lock": false
+      },
+      "expect": {
+        "error": "invalid_argument"
+      }
+    },
+    {
+      "call": "register_hook",
+      "hook": {
+        "name": "source_muted",
+        "trigger": "before_broadcast"
+      },
+      "expect": {
+        "error": "invalid_argument"
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "hooks": {
+      "scan": [
+        {
+          "trigger": "before_broadcast"
+        }
+      ],
+      "late": [],
+      "closed": [],
+      "offlock": [],
+      "source_muted": []
+    }
+  }
+}

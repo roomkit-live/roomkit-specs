@@ -1,0 +1,103 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "hooks/a-failing-fail-closed-hook-blocks",
+  "title": "A fail-closed hook that raises blocks its event, named in blocked_by and in the reason",
+  "rules": [
+    "§9.3",
+    "§9.1",
+    "§8.2",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "pii",
+        "trigger": "before_broadcast",
+        "fail_closed": true,
+        "reactions": [
+          {
+            "fail": "the scanner is down"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": true,
+          "reason": "hook_error:pii",
+          "event": {
+            "status": "blocked",
+            "blocked_by": "pii"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "status": "blocked",
+          "blocked_by": "pii"
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": []
+      }
+    },
+    "framework_events": {
+      "room-1": [
+        {
+          "event": "hook_error",
+          "hook": "pii",
+          "event_id": "room-1#0"
+        },
+        {
+          "event": "event_blocked",
+          "blocked_by": "pii",
+          "event_id": "room-1#0"
+        }
+      ]
+    }
+  }
+}

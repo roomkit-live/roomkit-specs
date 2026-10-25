@@ -1,0 +1,132 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "reentrancy/an-off-lock-hook-updates-an-earlier-event",
+  "title": "A direct update an off-lock hook's body makes waits for the lock as any call and draws nothing",
+  "rules": [
+    "§10.3 A direct change from the room's work",
+    "§9.5.1"
+  ],
+  "reentrancy": [
+    "change@admitted"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "amender",
+        "trigger": "before_broadcast",
+        "needs_lock": false,
+        "reactions": [
+          {
+            "when": {
+              "text": "second"
+            },
+            "do": [
+              {
+                "call": "update_event",
+                "room_id": "$room",
+                "event_id": "room-1#0",
+                "content": {
+                  "type": "text",
+                  "body": "first, amended"
+                },
+                "as": "amend"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "updated",
+        "trigger": "on_event_updated",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "first"
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "second"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "first, amended"
+          }
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "second"
+          }
+        }
+      ]
+    },
+    "hooks": {
+      "updated": [
+        {
+          "event": {
+            "id": "room-1#0"
+          }
+        }
+      ]
+    },
+    "actions": {
+      "amend": [
+        {
+          "result": {
+            "id": "room-1#0"
+          }
+        }
+      ]
+    }
+  }
+}

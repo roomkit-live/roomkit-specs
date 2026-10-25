@@ -1,0 +1,141 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "instructions/an-unaddressed-instruction-is-refused",
+  "title": "An instruction that names no registered agent is refused before anything is written",
+  "rules": [
+    "§10.1.1 rule 1",
+    "§10.1.1 rule 5"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "ai",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "never"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "ai"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Introduce yourself"
+        },
+        "event_type": "instruction"
+      },
+      "expect": {
+        "result": {
+          "blocked": true,
+          "reason": "instruction_unaddressed",
+          "event": null
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Introduce yourself"
+        },
+        "event_type": "instruction",
+        "addressed_to": []
+      },
+      "expect": {
+        "result": {
+          "blocked": true,
+          "reason": "instruction_unaddressed",
+          "event": null
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Introduce yourself"
+        },
+        "event_type": "instruction",
+        "addressed_to": [
+          "ws",
+          "ghost"
+        ]
+      },
+      "expect": {
+        "result": {
+          "blocked": true,
+          "reason": "instruction_unaddressed",
+          "event": null
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": []
+    },
+    "turns": {
+      "room-1": {
+        "ai": []
+      }
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": []
+      }
+    },
+    "framework_events": {
+      "room-1": []
+    }
+  }
+}

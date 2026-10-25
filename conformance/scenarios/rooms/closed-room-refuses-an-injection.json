@@ -1,0 +1,73 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "rooms/closed-room-refuses-an-injection",
+  "title": "A closed room refuses a direct injection: it raises room_closed and stores nothing",
+  "rules": [
+    "§5.1",
+    "§10.5",
+    "§8.2",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ],
+        "status": "closed"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "ws",
+      "content": {
+        "type": "text",
+        "body": "Are you there?"
+      },
+      "expect": {
+        "error": "room_closed"
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": []
+    },
+    "deliveries": {
+      "room-1": {
+        "sms": []
+      }
+    },
+    "framework_events": {
+      "room-1": [
+        {
+          "event": "room_refused_event",
+          "status": "closed",
+          "operation": "inbound",
+          "event_type": "message"
+        }
+      ]
+    }
+  }
+}

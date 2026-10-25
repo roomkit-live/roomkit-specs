@@ -1,0 +1,130 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "rooms/creation-awaits-its-hooks",
+  "title": "An integrator's room creation awaits its ON_ROOM_CREATED hooks before room_created",
+  "rules": [
+    "§9.3",
+    "§9.2",
+    "§26.1",
+    "§8.2"
+  ],
+  "notes": "The message names its room, which does not bind sms: step 2 attaches it at its declaration's defaults and, the room not routed, names no correspondent.",
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "setup_room",
+        "trigger": "on_room_created",
+        "execution": "async",
+        "reactions": [
+          {
+            "do": [
+              {
+                "call": "attach_channel",
+                "room_id": "$room",
+                "channel_id": "ws",
+                "as": "attach"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "create_room",
+      "room": {
+        "id": "room-1"
+      },
+      "expect": {
+        "result": {
+          "id": "room-1",
+          "status": "active"
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false
+        }
+      }
+    }
+  ],
+  "expect": {
+    "bindings": {
+      "room-1": {
+        "ws": {
+          "access": "read_write"
+        },
+        "sms": {
+          "participant_id": null
+        }
+      }
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": [
+          {
+            "content": {
+              "type": "text",
+              "body": "Hello"
+            }
+          }
+        ]
+      }
+    },
+    "hooks": {
+      "setup_room": [
+        {
+          "trigger": "on_room_created",
+          "room_id": "room-1"
+        }
+      ]
+    },
+    "framework_events": {
+      "room-1": [
+        {
+          "event": "room_channel_attached",
+          "channel_id": "ws"
+        },
+        "room_created",
+        {
+          "event": "room_channel_attached",
+          "channel_id": "sms"
+        },
+        {
+          "event": "delivery_succeeded",
+          "channel_id": "ws",
+          "event_id": "room-1#0"
+        },
+        {
+          "event": "event_processed",
+          "event_id": "room-1#0"
+        }
+      ]
+    }
+  }
+}

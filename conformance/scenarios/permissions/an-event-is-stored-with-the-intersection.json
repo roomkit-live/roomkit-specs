@@ -1,0 +1,117 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "permissions/an-event-is-stored-with-the-intersection",
+  "title": "An event's visibility is stored intersected with its source binding's, and delivery reads it alone",
+  "rules": [
+    "§7.3",
+    "§7.3 An event's visibility",
+    "§7.5 rule 4"
+  ],
+  "notes": "The source binding's `transport` and the message's `ws,ai` intersect to the listed channels that are transports: `ws`.",
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "email",
+        "type": "email",
+        "category": "transport"
+      },
+      {
+        "id": "ai",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "Never asked"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms",
+            "visibility": "transport"
+          },
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "email"
+          },
+          {
+            "channel_id": "ai"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "For the console only"
+        },
+        "visibility": "ws,ai"
+      },
+      "expect": {
+        "result": {
+          "event": {
+            "visibility": "ws"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "For the console only"
+          },
+          "visibility": "ws"
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": [
+          {
+            "id": "room-1#0"
+          }
+        ],
+        "email": []
+      }
+    },
+    "turns": {
+      "room-1": {
+        "ai": []
+      }
+    }
+  }
+}

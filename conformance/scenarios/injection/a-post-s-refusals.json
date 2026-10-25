@@ -1,0 +1,74 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "injection/a-post-s-refusals",
+  "title": "A post from a channel that is not a host channel, as a speaker the host channel does not reach, or into no room, is refused with nothing written",
+  "rules": [
+    "§10.5 The host's own voice"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "post",
+      "room_id": "room-1",
+      "content": {
+        "type": "text",
+        "body": "x"
+      },
+      "channel_id": "sms",
+      "expect": {
+        "error": "invalid_argument"
+      }
+    },
+    {
+      "call": "post",
+      "room_id": "room-1",
+      "content": {
+        "type": "text",
+        "body": "x"
+      },
+      "participant_id": "ghost",
+      "expect": {
+        "error": "participant_not_found"
+      }
+    },
+    {
+      "call": "post",
+      "room_id": "nowhere",
+      "content": {
+        "type": "text",
+        "body": "x"
+      },
+      "expect": {
+        "error": "room_not_found"
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": []
+    },
+    "bindings": {
+      "room-1": {
+        "host": null
+      }
+    }
+  }
+}

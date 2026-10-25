@@ -1,0 +1,111 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "inbound/a-retried-blocked-message-replays-its-block",
+  "title": "A replay of a message a hook blocked returns the BLOCKED record, its blocked_by as the reason",
+  "rules": [
+    "§13.4",
+    "§10.1 step 7"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "gate",
+        "trigger": "before_broadcast",
+        "reactions": [
+          {
+            "result": {
+              "action": "block",
+              "reason": "spam"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Buy"
+        },
+        "idempotency_key": "k"
+      },
+      "expect": {
+        "result": {
+          "blocked": true,
+          "reason": "spam"
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Buy"
+        },
+        "idempotency_key": "k"
+      },
+      "expect": {
+        "result": {
+          "blocked": true,
+          "reason": "gate",
+          "event": {
+            "id": "room-1#0",
+            "status": "blocked",
+            "blocked_by": "gate"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "status": "blocked"
+        }
+      ]
+    },
+    "hooks": {
+      "gate": [
+        {
+          "trigger": "before_broadcast"
+        }
+      ]
+    }
+  }
+}

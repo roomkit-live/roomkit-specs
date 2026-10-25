@@ -1,0 +1,300 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "chain/the-reentry-budget-stops-a-delivery-loop",
+  "title": "A transport whose every delivery injects into its room stops at the cascade's reentry budget, the last injection stored BLOCKED",
+  "rules": [
+    "§8.3 Reentry cap",
+    "§9.5.1 The room's work outside the lock",
+    "§9.5.1 Past the cap",
+    "§10.5"
+  ],
+  "reentrancy": [
+    "inject@cascade"
+  ],
+  "notes": "max_chain_depth is 1, so the cascade's budget is 10 passes: ten injections draw them, the eleventh is past it.",
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport",
+        "deliver": [
+          {
+            "repeat": true,
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "sms",
+                "content": {
+                  "type": "text",
+                  "body": "again"
+                },
+                "as": "again"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "kit": {
+      "max_chain_depth": 1
+    }
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "start"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "start"
+          },
+          "status": "delivered",
+          "chain_depth": 0
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "again"
+          },
+          "status": "delivered"
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "again"
+          },
+          "status": "delivered"
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "again"
+          },
+          "status": "delivered"
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "again"
+          },
+          "status": "delivered"
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "again"
+          },
+          "status": "delivered"
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "again"
+          },
+          "status": "delivered"
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "again"
+          },
+          "status": "delivered"
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "again"
+          },
+          "status": "delivered"
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "again"
+          },
+          "status": "delivered"
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "again"
+          },
+          "status": "delivered"
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "again"
+          },
+          "status": "blocked",
+          "blocked_by": "reentry_loop_cap"
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": [
+          {
+            "content": {
+              "type": "text",
+              "body": "start"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
+            }
+          }
+        ]
+      }
+    },
+    "actions": {
+      "again": [
+        {
+          "result": {
+            "status": "delivered"
+          }
+        },
+        {
+          "result": {
+            "status": "delivered"
+          }
+        },
+        {
+          "result": {
+            "status": "delivered"
+          }
+        },
+        {
+          "result": {
+            "status": "delivered"
+          }
+        },
+        {
+          "result": {
+            "status": "delivered"
+          }
+        },
+        {
+          "result": {
+            "status": "delivered"
+          }
+        },
+        {
+          "result": {
+            "status": "delivered"
+          }
+        },
+        {
+          "result": {
+            "status": "delivered"
+          }
+        },
+        {
+          "result": {
+            "status": "delivered"
+          }
+        },
+        {
+          "result": {
+            "status": "delivered"
+          }
+        },
+        {
+          "result": {
+            "status": "blocked",
+            "blocked_by": "reentry_loop_cap"
+          }
+        }
+      ]
+    }
+  }
+}

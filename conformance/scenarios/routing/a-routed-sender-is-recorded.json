@@ -1,0 +1,94 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "routing/a-routed-sender-is-recorded",
+  "title": "The one room a channel is bound to admits the first sender and records them; the next sender gets a room of their own",
+  "rules": [
+    "§10.4",
+    "§10.4 Step 3 admits one conversation",
+    "§10.1 step 2"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hi"
+        }
+      },
+      "expect": {
+        "result": {
+          "event": {
+            "room_id": "room-1"
+          }
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15559876543",
+        "content": {
+          "type": "text",
+          "body": "Hi too"
+        }
+      },
+      "expect": {
+        "result": {
+          "event": {
+            "room_id": "$r1"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "bindings": {
+      "room-1": {
+        "sms": {
+          "participant_id": "+15551234567"
+        }
+      }
+    },
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Hi"
+          }
+        }
+      ],
+      "$r1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Hi too"
+          }
+        }
+      ]
+    }
+  }
+}

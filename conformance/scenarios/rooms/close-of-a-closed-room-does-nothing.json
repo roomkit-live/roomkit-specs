@@ -1,0 +1,74 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "rooms/close-of-a-closed-room-does-nothing",
+  "title": "Closing a closed room writes nothing, fires no hook and emits no framework event",
+  "rules": [
+    "§5.1 A transition from a status it does not leave from",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "closed",
+        "trigger": "on_room_closed",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "close_room",
+      "room_id": "room-1",
+      "expect": {
+        "result": {
+          "status": "closed"
+        }
+      }
+    },
+    {
+      "call": "close_room",
+      "room_id": "room-1",
+      "expect": {
+        "result": {
+          "status": "closed"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "hooks": {
+      "closed": [
+        {
+          "trigger": "on_room_closed"
+        }
+      ]
+    },
+    "framework_events": {
+      "room-1": [
+        {
+          "event": "room_closed",
+          "reason": {
+            "$absent": true
+          }
+        }
+      ]
+    }
+  }
+}

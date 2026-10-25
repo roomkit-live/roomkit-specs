@@ -1,0 +1,215 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "edits/direct-update-and-hard-delete",
+  "title": "A direct update fires ON_EVENT_UPDATED once; a hard delete removes the target, its replies and its changes, firing ON_EVENT_DELETED for each",
+  "rules": [
+    "§10.3 Direct mutation",
+    "§9.2",
+    "§26.1"
+  ],
+  "reentrancy": [
+    "change@outside"
+  ],
+  "notes": "The removed events leave the timeline, so their ids read as $e1 (the root), $e2 (the reply) and $e3 (the edit), in the order the step outcomes show them.",
+  "setup": {
+    "channels": [
+      {
+        "id": "wa",
+        "type": "whatsapp",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "wa"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "updated",
+        "trigger": "on_event_updated",
+        "execution": "async"
+      },
+      {
+        "name": "deleted",
+        "trigger": "on_event_deleted",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "wa",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Root"
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "wa",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Reply"
+        },
+        "parent_event_id": "room-1#0"
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "wa",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "edit",
+          "target_event_id": "room-1#0",
+          "new_content": {
+            "type": "text",
+            "body": "Root, corrected"
+          },
+          "edit_source": "sender"
+        },
+        "event_type": "edit"
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "wa",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Unrelated"
+        }
+      }
+    },
+    {
+      "call": "update_event",
+      "room_id": "room-1",
+      "event_id": "room-1#1",
+      "content": {
+        "type": "text",
+        "body": "Reply, rewritten"
+      },
+      "expect": {
+        "result": {
+          "id": "$e2",
+          "content": {
+            "type": "text",
+            "body": "Reply, rewritten"
+          },
+          "metadata": {
+            "edited": {
+              "$absent": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "call": "update_event",
+      "room_id": "room-1",
+      "event_id": "no-such-event",
+      "content": {
+        "type": "text",
+        "body": "x"
+      },
+      "expect": {
+        "result": null
+      }
+    },
+    {
+      "call": "delete_event",
+      "room_id": "room-1",
+      "event_id": "room-1#0",
+      "expect": {
+        "result": [
+          "$e1",
+          "$e2",
+          "$e3"
+        ]
+      }
+    },
+    {
+      "call": "delete_event",
+      "room_id": "room-1",
+      "event_id": "no-such-event",
+      "expect": {
+        "result": []
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Unrelated"
+          }
+        }
+      ]
+    },
+    "hooks": {
+      "updated": [
+        {
+          "event": {
+            "id": "$e1",
+            "metadata": {
+              "edited": true
+            }
+          }
+        },
+        {
+          "event": {
+            "id": "$e2",
+            "content": {
+              "type": "text",
+              "body": "Reply, rewritten"
+            }
+          }
+        }
+      ],
+      "deleted": [
+        {
+          "event": {
+            "id": "$e1"
+          }
+        },
+        {
+          "event": {
+            "id": "$e2"
+          }
+        },
+        {
+          "event": {
+            "id": "$e3"
+          }
+        }
+      ]
+    }
+  }
+}

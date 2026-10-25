@@ -1,0 +1,170 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "reentrancy/a-turn-s-injection-is-a-new-arrival",
+  "title": "An agent's turn that injects into its room starts a new arrival, at least as deep as the turn's answer, delivered after the caller's set",
+  "rules": [
+    "§9.5.1 The room's work outside the lock",
+    "§8.3",
+    "§10.1 step 18",
+    "§10.5"
+  ],
+  "reentrancy": [
+    "inject@cascade"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "audit",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "ai",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "when": {
+              "text": "trigger"
+            },
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "ai",
+                "content": {
+                  "type": "text",
+                  "body": "from the turn"
+                },
+                "as": "injected"
+              }
+            ],
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "answer"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "audit"
+          },
+          {
+            "channel_id": "ai"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "trigger"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "trigger"
+          },
+          "chain_depth": 0
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "from the turn"
+          },
+          "chain_depth": 1,
+          "source": {
+            "channel_id": "ai",
+            "direction": "outbound"
+          }
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "answer"
+          },
+          "chain_depth": 1,
+          "responds_to": "room-1#0"
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "audit": [
+          {
+            "content": {
+              "type": "text",
+              "body": "trigger"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "from the turn"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "answer"
+            }
+          }
+        ],
+        "sms": [
+          {
+            "content": {
+              "type": "text",
+              "body": "from the turn"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "answer"
+            }
+          }
+        ]
+      }
+    },
+    "actions": {
+      "injected": [
+        {
+          "result": {
+            "id": "room-1#1",
+            "status": "delivered"
+          }
+        }
+      ]
+    }
+  }
+}

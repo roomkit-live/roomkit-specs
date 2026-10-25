@@ -1,0 +1,114 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "addressing/an-empty-address-asks-nobody",
+  "title": "A message addressed to an empty list is stored and delivered, and asks no agent",
+  "rules": [
+    "§19.3 rule 3"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "a1",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "from a1"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "a2",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "from a2"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "a1"
+          },
+          {
+            "channel_id": "a2"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "just a note"
+        },
+        "addressed_to": []
+      }
+    }
+  ],
+  "expect": {
+    "turns": {
+      "room-1": {
+        "a1": [],
+        "a2": []
+      }
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": [
+          {
+            "id": "room-1#0"
+          }
+        ]
+      }
+    },
+    "timeline": {
+      "room-1": [
+        {
+          "addressed_to": []
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "routing/a-sender-returns-to-their-room",
+  "title": "A sender's first message opens their room, the next one finds it, and another sender gets a room of their own",
+  "rules": [
+    "§10.4",
+    "§10.1 step 2",
+    "§26.1"
+  ],
+  "reentrancy": [
+    "routed@outside"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hi, I'm Alice"
+        }
+      },
+      "expect": {
+        "result": {
+          "event": {
+            "room_id": "$r1"
+          }
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Still Alice"
+        }
+      },
+      "expect": {
+        "result": {
+          "event": {
+            "room_id": "$r1"
+          }
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15559876543",
+        "content": {
+          "type": "text",
+          "body": "Hi, I'm Bob"
+        }
+      },
+      "expect": {
+        "result": {
+          "event": {
+            "room_id": "$r2"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "$r1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Hi, I'm Alice"
+          }
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "Still Alice"
+          }
+        }
+      ],
+      "$r2": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Hi, I'm Bob"
+          }
+        }
+      ]
+    },
+    "bindings": {
+      "$r1": {
+        "sms": {
+          "participant_id": "+15551234567"
+        }
+      },
+      "$r2": {
+        "sms": {
+          "participant_id": "+15559876543"
+        }
+      }
+    },
+    "framework_events": {
+      "$r1": [
+        "room_created",
+        {
+          "event": "room_channel_attached",
+          "channel_id": "sms"
+        },
+        {
+          "event": "session_started",
+          "channel_id": "sms",
+          "channel_type": "sms"
+        },
+        {
+          "event": "event_processed",
+          "event_id": "$r1#0"
+        },
+        {
+          "event": "event_processed",
+          "event_id": "$r1#1"
+        }
+      ],
+      "$r2": [
+        "room_created",
+        {
+          "event": "room_channel_attached",
+          "channel_id": "sms"
+        },
+        "session_started",
+        {
+          "event": "event_processed",
+          "event_id": "$r2#0"
+        }
+      ]
+    }
+  }
+}

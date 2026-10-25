@@ -1,0 +1,107 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "hooks/a-hook-past-its-timeout",
+  "title": "A SYNC hook past its timeout is reported as hook_timeout and hook_error, and its event goes through",
+  "rules": [
+    "§9.3",
+    "§9.1",
+    "§8.2",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "slow",
+        "trigger": "before_broadcast",
+        "timeout_ms": 50,
+        "reactions": [
+          {
+            "gate": "never"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false
+        }
+      }
+    },
+    {
+      "open": "never"
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "status": "delivered"
+        }
+      ]
+    },
+    "framework_events": {
+      "room-1": [
+        {
+          "$unordered": [
+            {
+              "event": "hook_timeout",
+              "hook_name": "slow",
+              "trigger": "before_broadcast",
+              "timeout": 0.05
+            },
+            {
+              "event": "hook_error",
+              "hook": "slow",
+              "event_id": "room-1#0"
+            }
+          ]
+        },
+        {
+          "event": "delivery_succeeded",
+          "channel_id": "ws"
+        },
+        {
+          "event": "event_processed"
+        }
+      ]
+    }
+  }
+}

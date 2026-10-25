@@ -1,0 +1,128 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "inbound/an-unregistered-target-is-skipped-or-reported",
+  "title": "An unregistered transport is skipped; an unregistered agent the event solicits is reported channel_not_registered",
+  "rules": [
+    "§10.2 An unregistered channel",
+    "§10.2 step 3",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "ai",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "never"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "ai"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "unregister_channel",
+      "channel_id": "ws"
+    },
+    {
+      "call": "unregister_channel",
+      "channel_id": "ai"
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false
+        }
+      }
+    }
+  ],
+  "expect": {
+    "bindings": {
+      "room-1": {
+        "ws": {
+          "channel_id": "ws"
+        },
+        "ai": {
+          "channel_id": "ai"
+        }
+      }
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": []
+      }
+    },
+    "turns": {
+      "room-1": {
+        "ai": []
+      }
+    },
+    "framework_events": {
+      "room-1": [
+        {
+          "$unordered": [
+            {
+              "event": "delivery_failed",
+              "channel_id": "ai",
+              "error": {
+                "$contains": "channel_not_registered"
+              }
+            },
+            {
+              "event": "broadcast_partial_failure",
+              "failed": 1
+            }
+          ]
+        },
+        {
+          "event": "event_processed"
+        }
+      ]
+    }
+  }
+}

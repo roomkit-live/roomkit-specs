@@ -1,0 +1,182 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "appendix-b/b6-edit-with-fallback",
+  "title": "A sender's edit rewrites its target, reaches an editing channel as an edit and a text channel as a correction",
+  "rules": [
+    "Appendix B.6",
+    "§10.3",
+    "§10.3 Validation rule 4",
+    "§6.6",
+    "§9.2",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "wa",
+        "type": "whatsapp",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport",
+        "capabilities": {
+          "media_types": [
+            "text"
+          ],
+          "supports_edit": true,
+          "supports_delete": true
+        }
+      },
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "wa"
+          },
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "sms"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "updated",
+        "trigger": "on_event_updated",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "wa",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "I need 5000$"
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "wa",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "edit",
+          "target_event_id": "room-1#0",
+          "new_content": {
+            "type": "text",
+            "body": "I need 50000$"
+          },
+          "edit_source": "sender"
+        },
+        "event_type": "edit"
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "event": {
+            "type": "edit",
+            "status": "delivered"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "I need 50000$"
+          },
+          "metadata": {
+            "edited": true
+          },
+          "status": "delivered"
+        },
+        {
+          "type": "edit",
+          "content": {
+            "type": "edit",
+            "target_event_id": "room-1#0",
+            "new_content": {
+              "type": "text",
+              "body": "I need 50000$"
+            },
+            "edit_source": "sender"
+          },
+          "visibility": "all"
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": [
+          {
+            "content": {
+              "type": "text",
+              "body": "I need 5000$"
+            }
+          },
+          {
+            "type": "edit",
+            "content": {
+              "type": "edit",
+              "target_event_id": "room-1#0"
+            }
+          }
+        ],
+        "sms": [
+          {
+            "content": {
+              "type": "text",
+              "body": "I need 5000$"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "Correction: I need 50000$"
+            }
+          }
+        ]
+      }
+    },
+    "hooks": {
+      "updated": [
+        {
+          "trigger": "on_event_updated",
+          "event": {
+            "id": "room-1#0",
+            "content": {
+              "type": "text",
+              "body": "I need 50000$"
+            },
+            "metadata": {
+              "edited": true
+            }
+          }
+        }
+      ]
+    }
+  }
+}

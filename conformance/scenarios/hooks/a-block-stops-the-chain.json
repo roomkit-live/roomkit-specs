@@ -1,0 +1,119 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "hooks/a-block-stops-the-chain",
+  "title": "A BLOCK stops the chain: the hooks after it, and the ASYNC observers of the trigger, do not run",
+  "rules": [
+    "§9.3",
+    "§9.2",
+    "§10.1 step 10",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "gate",
+        "trigger": "before_broadcast",
+        "priority": 0,
+        "reactions": [
+          {
+            "result": {
+              "action": "block",
+              "reason": "spam"
+            }
+          }
+        ]
+      },
+      {
+        "name": "later",
+        "trigger": "before_broadcast",
+        "priority": 1
+      },
+      {
+        "name": "watcher",
+        "trigger": "before_broadcast",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Buy now"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": true,
+          "event": {
+            "blocked_by": "gate"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "status": "blocked",
+          "blocked_by": "gate"
+        }
+      ]
+    },
+    "hooks": {
+      "gate": [
+        {
+          "trigger": "before_broadcast"
+        }
+      ],
+      "later": [],
+      "watcher": []
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": []
+      }
+    },
+    "framework_events": {
+      "room-1": [
+        {
+          "event": "event_blocked",
+          "blocked_by": "gate",
+          "reason": "spam",
+          "channel_id": "sms"
+        }
+      ]
+    }
+  }
+}

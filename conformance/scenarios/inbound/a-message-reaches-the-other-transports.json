@@ -1,0 +1,145 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "inbound/a-message-reaches-the-other-transports",
+  "title": "A message is delivered to every other transport, and each delivery is reported",
+  "rules": [
+    "§10.1",
+    "§10.2 step 3d",
+    "§10.1 step 17",
+    "§8.2",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "email",
+        "type": "email",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "email"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "audit",
+        "trigger": "after_broadcast",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "event": {
+            "status": "delivered",
+            "index": 0
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "type": "message",
+          "content": {
+            "type": "text",
+            "body": "Hello"
+          },
+          "status": "delivered",
+          "chain_depth": 0,
+          "source": {
+            "channel_id": "sms",
+            "channel_type": "sms",
+            "direction": "inbound",
+            "participant_id": "+15551234567"
+          }
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": [
+          {
+            "id": "room-1#0"
+          }
+        ],
+        "email": [
+          {
+            "id": "room-1#0"
+          }
+        ],
+        "sms": []
+      }
+    },
+    "hooks": {
+      "audit": [
+        {
+          "trigger": "after_broadcast",
+          "event": {
+            "id": "room-1#0"
+          }
+        }
+      ]
+    },
+    "framework_events": {
+      "room-1": [
+        {
+          "$unordered": [
+            {
+              "event": "delivery_succeeded",
+              "channel_id": "ws",
+              "event_id": "room-1#0"
+            },
+            {
+              "event": "delivery_succeeded",
+              "channel_id": "email",
+              "event_id": "room-1#0"
+            }
+          ]
+        },
+        {
+          "event": "event_processed",
+          "event_id": "room-1#0"
+        }
+      ]
+    }
+  }
+}

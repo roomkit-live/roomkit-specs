@@ -1,0 +1,174 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "tenancy/another-organization-s-room-is-not-found",
+  "title": "Every call acting for one organization finds no room of another, and writes nothing in it",
+  "rules": [
+    "§17.2",
+    "§10.3 Direct mutation",
+    "§5.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-a",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ],
+        "organization_id": "acme"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-a",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      },
+      "organization_id": "acme",
+      "expect": {
+        "result": {
+          "blocked": false
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-a",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      },
+      "organization_id": "globex",
+      "expect": {
+        "error": "room_not_found"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "room-a",
+      "channel_id": "ws",
+      "content": {
+        "type": "text",
+        "body": "x"
+      },
+      "organization_id": "globex",
+      "expect": {
+        "error": "room_not_found"
+      }
+    },
+    {
+      "call": "commit_event",
+      "room_id": "room-a",
+      "event": {
+        "content": {
+          "type": "text",
+          "body": "x"
+        }
+      },
+      "organization_id": "globex",
+      "expect": {
+        "error": "room_not_found"
+      }
+    },
+    {
+      "call": "update_event",
+      "room_id": "room-a",
+      "event_id": "room-a#0",
+      "content": {
+        "type": "text",
+        "body": "x"
+      },
+      "organization_id": "globex",
+      "expect": {
+        "result": null
+      }
+    },
+    {
+      "call": "delete_event",
+      "room_id": "room-a",
+      "event_id": "room-a#0",
+      "organization_id": "globex",
+      "expect": {
+        "result": []
+      }
+    },
+    {
+      "call": "close_room",
+      "room_id": "room-a",
+      "organization_id": "globex",
+      "expect": {
+        "error": "room_not_found"
+      }
+    },
+    {
+      "call": "mute",
+      "room_id": "room-a",
+      "channel_id": "ws",
+      "organization_id": "globex",
+      "expect": {
+        "error": "room_not_found"
+      }
+    },
+    {
+      "call": "detach_channel",
+      "room_id": "room-a",
+      "channel_id": "ws",
+      "organization_id": "globex",
+      "expect": {
+        "error": "room_not_found"
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-a": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Hello"
+          }
+        }
+      ]
+    },
+    "rooms": {
+      "room-a": {
+        "status": "active",
+        "organization_id": "acme"
+      }
+    },
+    "bindings": {
+      "room-a": {
+        "ws": {
+          "muted": false
+        }
+      }
+    }
+  }
+}

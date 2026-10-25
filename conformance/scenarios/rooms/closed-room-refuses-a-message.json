@@ -1,0 +1,119 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "rooms/closed-room-refuses-a-message",
+  "title": "A closed room refuses a message with room_closed, stores nothing, and says so",
+  "rules": [
+    "§5.1",
+    "§10.1 step 6",
+    "§8.2",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "closed",
+        "trigger": "on_room_closed",
+        "execution": "async"
+      },
+      {
+        "name": "gate",
+        "trigger": "before_broadcast"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "close_room",
+      "room_id": "room-1",
+      "expect": {
+        "result": {
+          "status": "closed"
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello?"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": true,
+          "reason": "room_closed",
+          "event": null
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": []
+    },
+    "rooms": {
+      "room-1": {
+        "status": "closed"
+      }
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": []
+      }
+    },
+    "hooks": {
+      "closed": [
+        {
+          "trigger": "on_room_closed",
+          "room_id": "room-1"
+        }
+      ],
+      "gate": []
+    },
+    "framework_events": {
+      "room-1": [
+        {
+          "event": "room_closed",
+          "reason": {
+            "$absent": true
+          }
+        },
+        {
+          "event": "room_refused_event",
+          "status": "closed",
+          "operation": "inbound",
+          "event_type": "message"
+        }
+      ]
+    }
+  }
+}

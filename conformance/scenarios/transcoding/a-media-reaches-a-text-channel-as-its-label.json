@@ -1,0 +1,120 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "transcoding/a-media-reaches-a-text-channel-as-its-label",
+  "title": "A media reaches a text channel as its caption, else its file name, else its link, never a data URI",
+  "rules": [
+    "§6.6"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "console",
+        "type": "websocket",
+        "category": "transport",
+        "capabilities": {
+          "media_types": [
+            "text",
+            "rich",
+            "media",
+            "location"
+          ]
+        }
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "console"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "console",
+      "content": {
+        "type": "media",
+        "url": "https://example.com/p.jpg",
+        "mime_type": "image/jpeg",
+        "caption": "A photo",
+        "filename": "p.jpg"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "console",
+      "content": {
+        "type": "media",
+        "url": "https://example.com/p.jpg",
+        "mime_type": "image/jpeg",
+        "filename": "p.jpg"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "console",
+      "content": {
+        "type": "media",
+        "url": "https://example.com/p.jpg",
+        "mime_type": "image/jpeg"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "console",
+      "content": {
+        "type": "media",
+        "url": "data:image/png;base64,iVBORw0KGgo=",
+        "mime_type": "image/png"
+      }
+    }
+  ],
+  "expect": {
+    "deliveries": {
+      "room-1": {
+        "sms": [
+          {
+            "content": {
+              "type": "text",
+              "body": "[Media: A photo]"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "[Media: p.jpg]"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "[Media: https://example.com/p.jpg]"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "[Media: image/png]"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

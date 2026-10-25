@@ -1,0 +1,103 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "reentrancy/a-message-a-parse-routes-back-fails",
+  "title": "A message a channel's parse routes back into the room it parses for fails at once, nothing written",
+  "rules": [
+    "§9.5.1 A message routed back",
+    "§9.5.1 Reentrance",
+    "§10.1 step 4"
+  ],
+  "reentrancy": [
+    "routed@admitted"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport",
+        "parse": [
+          {
+            "when": {
+              "text": "trigger"
+            },
+            "do": [
+              {
+                "call": "process_inbound",
+                "message": {
+                  "channel_id": "sms",
+                  "sender_id": "+15551234567",
+                  "content": {
+                    "type": "text",
+                    "body": "routed back"
+                  }
+                },
+                "as": "routed",
+                "expect": {
+                  "error": "reentrant"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms",
+            "participant_id": "+15551234567"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "trigger"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "trigger"
+          }
+        }
+      ]
+    },
+    "actions": {
+      "routed": [
+        {
+          "error": "reentrant"
+        }
+      ]
+    }
+  }
+}

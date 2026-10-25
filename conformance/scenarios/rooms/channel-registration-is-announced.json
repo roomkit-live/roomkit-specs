@@ -1,0 +1,39 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "rooms/channel-registration-is-announced",
+  "title": "Registering and unregistering a channel emit channel_registered and channel_unregistered",
+  "rules": [
+    "§8.2",
+    "§26.1"
+  ],
+  "steps": [
+    {
+      "call": "register_channel",
+      "channel": {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    },
+    {
+      "call": "unregister_channel",
+      "channel_id": "ws"
+    }
+  ],
+  "expect": {
+    "framework_events": {
+      "*": [
+        {
+          "event": "channel_registered",
+          "channel_id": "ws",
+          "channel_type": "websocket"
+        },
+        {
+          "event": "channel_unregistered",
+          "channel_id": "ws",
+          "channel_type": "websocket"
+        }
+      ]
+    }
+  }
+}

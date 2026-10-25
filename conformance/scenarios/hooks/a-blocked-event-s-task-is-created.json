@@ -1,0 +1,96 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "hooks/a-blocked-event-s-task-is-created",
+  "title": "The task of a hook that blocks is still stored, and ON_TASK_CREATED fires",
+  "rules": [
+    "§7.5 rule 3",
+    "§10.1 step 10",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "triage",
+        "trigger": "before_broadcast",
+        "reactions": [
+          {
+            "result": {
+              "action": "block",
+              "reason": "abuse",
+              "tasks": [
+                {
+                  "title": "Review the message"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "tasks",
+        "trigger": "on_task_created",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "abuse"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": true
+        }
+      }
+    }
+  ],
+  "expect": {
+    "tasks": {
+      "room-1": [
+        {
+          "title": "Review the message"
+        }
+      ]
+    },
+    "hooks": {
+      "tasks": [
+        {
+          "trigger": "on_task_created"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,226 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "appendix-b/b2-block-and-inject",
+  "title": "A sensitivity hook blocks a message and injects a notice to each side, with an observation",
+  "rules": [
+    "Appendix B.2",
+    "§9.4 Injected events",
+    "§10.1 step 10",
+    "§7.5 rule 3",
+    "§8.2",
+    "§26.1",
+    "§10.1 step 17"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms_customer",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws_advisor",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms_customer"
+          },
+          {
+            "channel_id": "ws_advisor"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "sensitivity_scanner",
+        "trigger": "before_broadcast",
+        "priority": 0,
+        "reactions": [
+          {
+            "when": {
+              "source_channel_id": "sms_customer"
+            },
+            "result": {
+              "action": "block",
+              "reason": "SIN detected",
+              "injected_events": [
+                {
+                  "target_channel_ids": [
+                    "sms_customer"
+                  ],
+                  "event": {
+                    "content": {
+                      "type": "text",
+                      "body": "Message blocked. Do not send SIN by SMS."
+                    }
+                  }
+                },
+                {
+                  "target_channel_ids": [
+                    "ws_advisor"
+                  ],
+                  "event": {
+                    "content": {
+                      "type": "text",
+                      "body": "Client attempted to send SIN. Blocked."
+                    }
+                  }
+                }
+              ],
+              "observations": [
+                {
+                  "category": "compliance_violation",
+                  "content": "SIN sent by SMS",
+                  "metadata": {
+                    "pattern": "SIN"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "audit",
+        "trigger": "after_broadcast",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms_customer",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Mon NAS est 123-456-789"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": true,
+          "event": {
+            "id": "room-1#0",
+            "status": "blocked",
+            "blocked_by": "sensitivity_scanner"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Mon NAS est 123-456-789"
+          },
+          "status": "blocked",
+          "blocked_by": "sensitivity_scanner",
+          "visibility": "all"
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "Message blocked. Do not send SIN by SMS."
+          },
+          "status": "delivered",
+          "visibility": "sms_customer",
+          "chain_depth": 0,
+          "idempotency_key": null
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "Client attempted to send SIN. Blocked."
+          },
+          "status": "delivered",
+          "visibility": "ws_advisor",
+          "chain_depth": 0
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "sms_customer": [
+          {
+            "id": "room-1#1"
+          }
+        ],
+        "ws_advisor": [
+          {
+            "id": "room-1#2"
+          }
+        ]
+      }
+    },
+    "observations": {
+      "room-1": [
+        {
+          "category": "compliance_violation",
+          "content": "SIN sent by SMS",
+          "metadata": {
+            "pattern": "SIN"
+          }
+        }
+      ]
+    },
+    "hooks": {
+      "sensitivity_scanner": [
+        {
+          "trigger": "before_broadcast",
+          "event": {
+            "id": "room-1#0"
+          }
+        },
+        {
+          "trigger": "before_broadcast",
+          "event": {
+            "id": "room-1#1"
+          }
+        },
+        {
+          "trigger": "before_broadcast",
+          "event": {
+            "id": "room-1#2"
+          }
+        }
+      ],
+      "audit": {
+        "$unordered": [
+          {
+            "event": {
+              "id": "room-1#1"
+            }
+          },
+          {
+            "event": {
+              "id": "room-1#2"
+            }
+          }
+        ]
+      }
+    },
+    "framework_events": {
+      "room-1": [
+        {
+          "event": "event_blocked",
+          "event_id": "room-1#0",
+          "channel_id": "sms_customer",
+          "blocked_by": "sensitivity_scanner"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "reentrancy/a-message-a-delivery-routes-back-is-a-new-arrival",
+  "title": "A message a delivery routes back into its room is a new arrival, committed after the event it was delivered",
+  "rules": [
+    "§9.5.1 A message routed back",
+    "§9.5.1 The room's work outside the lock"
+  ],
+  "reentrancy": [
+    "routed@cascade"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport",
+        "deliver": [
+          {
+            "when": {
+              "text": "trigger"
+            },
+            "do": [
+              {
+                "call": "process_inbound",
+                "message": {
+                  "channel_id": "sms",
+                  "sender_id": "+15551234567",
+                  "content": {
+                    "type": "text",
+                    "body": "routed back"
+                  }
+                },
+                "as": "routed"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms",
+            "participant_id": "+15551234567"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "trigger"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "trigger"
+          }
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "routed back"
+          }
+        }
+      ]
+    },
+    "actions": {
+      "routed": [
+        {
+          "result": {
+            "event": {
+              "id": "room-1#1",
+              "room_id": "room-1"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

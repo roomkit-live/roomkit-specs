@@ -1,0 +1,191 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "permissions/binding-changes-and-their-triggers",
+  "title": "An attach, a mute, an unmute and a detach fire their triggers once each; changes that change nothing fire nothing",
+  "rules": [
+    "§7.2",
+    "§7.2 A binding change that changes nothing",
+    "§9.2",
+    "§8.2",
+    "§26.1"
+  ],
+  "reentrancy": [
+    "commit@outside"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "attached",
+        "trigger": "on_channel_attached",
+        "execution": "async"
+      },
+      {
+        "name": "detached",
+        "trigger": "on_channel_detached",
+        "execution": "async"
+      },
+      {
+        "name": "muted",
+        "trigger": "on_channel_muted",
+        "execution": "async"
+      },
+      {
+        "name": "unmuted",
+        "trigger": "on_channel_unmuted",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "attach_channel",
+      "room_id": "room-1",
+      "channel_id": "ws",
+      "access": "read_only",
+      "visibility": "transport",
+      "expect": {
+        "result": {
+          "channel_id": "ws",
+          "access": "read_only",
+          "visibility": "transport",
+          "muted": false
+        }
+      }
+    },
+    {
+      "call": "mute",
+      "room_id": "room-1",
+      "channel_id": "ws",
+      "expect": {
+        "result": {
+          "muted": true
+        }
+      }
+    },
+    {
+      "call": "mute",
+      "room_id": "room-1",
+      "channel_id": "ws",
+      "expect": {
+        "result": {
+          "muted": true
+        }
+      }
+    },
+    {
+      "call": "unmute",
+      "room_id": "room-1",
+      "channel_id": "ws",
+      "expect": {
+        "result": {
+          "muted": false
+        }
+      }
+    },
+    {
+      "call": "set_access",
+      "room_id": "room-1",
+      "channel_id": "ws",
+      "access": "read_write",
+      "expect": {
+        "result": {
+          "access": "read_write",
+          "visibility": "transport"
+        }
+      }
+    },
+    {
+      "call": "detach_channel",
+      "room_id": "room-1",
+      "channel_id": "ws"
+    },
+    {
+      "call": "detach_channel",
+      "room_id": "room-1",
+      "channel_id": "ws",
+      "expect": {
+        "error": "channel_not_bound"
+      }
+    },
+    {
+      "call": "mute",
+      "room_id": "room-1",
+      "channel_id": "ws",
+      "expect": {
+        "error": "channel_not_bound"
+      }
+    }
+  ],
+  "expect": {
+    "bindings": {
+      "room-1": {
+        "ws": null,
+        "sms": {
+          "access": "read_write"
+        }
+      }
+    },
+    "hooks": {
+      "attached": [
+        {
+          "trigger": "on_channel_attached",
+          "room_id": "room-1"
+        }
+      ],
+      "muted": [
+        {
+          "trigger": "on_channel_muted",
+          "room_id": "room-1"
+        }
+      ],
+      "unmuted": [
+        {
+          "trigger": "on_channel_unmuted",
+          "room_id": "room-1"
+        }
+      ],
+      "detached": [
+        {
+          "trigger": "on_channel_detached",
+          "room_id": "room-1"
+        }
+      ]
+    },
+    "framework_events": {
+      "room-1": [
+        {
+          "event": "room_channel_attached",
+          "channel_id": "ws",
+          "access": "read_only",
+          "visibility": "transport"
+        },
+        {
+          "event": "room_channel_detached",
+          "channel_id": "ws"
+        }
+      ]
+    }
+  }
+}

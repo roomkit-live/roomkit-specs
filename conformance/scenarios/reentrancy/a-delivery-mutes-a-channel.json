@@ -1,0 +1,114 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "reentrancy/a-delivery-mutes-a-channel",
+  "title": "A lifecycle change a delivery makes waits for the lock as any call, and holds from the next event on",
+  "rules": [
+    "§9.5.1 The room's work outside the lock",
+    "§7.5 rule 2",
+    "§13.5"
+  ],
+  "reentrancy": [
+    "commit@cascade"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport",
+        "deliver": [
+          {
+            "when": {
+              "text": "mute the sender"
+            },
+            "do": [
+              {
+                "call": "mute",
+                "room_id": "$room",
+                "channel_id": "sms",
+                "as": "mute"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "mute the sender"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "still talking"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": true,
+          "reason": "source_muted"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "status": "delivered"
+        },
+        {
+          "status": "blocked",
+          "blocked_by": "source_muted"
+        }
+      ]
+    },
+    "actions": {
+      "mute": [
+        {
+          "result": {
+            "muted": true
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "hooks/an-injected-event-stored-only-reads-none",
+  "title": "An injected event with no targets is stored with the visibility none and delivered to no one",
+  "rules": [
+    "§9.4 Injected events"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "note",
+        "trigger": "before_broadcast",
+        "reactions": [
+          {
+            "when": {
+              "text": "Hello"
+            },
+            "result": {
+              "action": "allow",
+              "injected_events": [
+                {
+                  "target_channel_ids": null,
+                  "event": {
+                    "content": {
+                      "type": "text",
+                      "body": "audit note"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Hello"
+          }
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "audit note"
+          },
+          "visibility": "none"
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": [
+          {
+            "content": {
+              "type": "text",
+              "body": "Hello"
+            }
+          }
+        ],
+        "sms": []
+      }
+    }
+  }
+}

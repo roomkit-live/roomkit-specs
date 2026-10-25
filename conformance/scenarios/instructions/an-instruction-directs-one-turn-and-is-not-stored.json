@@ -1,0 +1,153 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "instructions/an-instruction-directs-one-turn-and-is-not-stored",
+  "title": "An instruction reaches the agent it names, is never stored, and the answer carries its fingerprint",
+  "rules": [
+    "§10.1.1",
+    "§10.1.1 rule 3",
+    "§10.1.1 rule 5",
+    "§10.1.1 rule 6"
+  ],
+  "notes": "`other` is not asked by the instruction, which names `ai`; it is asked by ai's answer, as any agent of the room is under AGENT_CHAIN (§19.3.1), and answers nothing.",
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "ai",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "Hello, I am your assistant"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "other",
+        "type": "ai",
+        "category": "intelligence"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "ai"
+          },
+          {
+            "channel_id": "other"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Introduce yourself"
+        },
+        "event_type": "instruction",
+        "addressed_to": [
+          "ai"
+        ]
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "event": {
+            "type": "instruction",
+            "status": "delivered",
+            "visibility": "intelligence",
+            "index": 0
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "source": {
+            "channel_id": "ai",
+            "direction": "outbound"
+          },
+          "content": {
+            "type": "text",
+            "body": "Hello, I am your assistant"
+          },
+          "status": "delivered",
+          "chain_depth": 1,
+          "metadata": {
+            "instruction": {
+              "sha256": "d0247b12d965ab4eccd45b15ca1625ed99756bfa842f3b95d03ef34eeb3539e0",
+              "length": 18
+            }
+          }
+        }
+      ]
+    },
+    "turns": {
+      "room-1": {
+        "ai": [
+          {
+            "type": "instruction",
+            "content": {
+              "type": "text",
+              "body": "Introduce yourself"
+            },
+            "visibility": "intelligence"
+          }
+        ],
+        "other": [
+          {
+            "id": "room-1#0"
+          }
+        ]
+      }
+    },
+    "deliveries": {
+      "room-1": {
+        "sms": [
+          {
+            "id": "room-1#0"
+          }
+        ],
+        "ws": [
+          {
+            "id": "room-1#0"
+          }
+        ]
+      }
+    }
+  }
+}

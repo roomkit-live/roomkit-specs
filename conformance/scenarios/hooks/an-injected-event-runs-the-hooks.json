@@ -1,0 +1,183 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "hooks/an-injected-event-runs-the-hooks",
+  "title": "An injected event takes a pass of its own: its BEFORE_BROADCAST hooks run, and one may block it",
+  "rules": [
+    "§9.4 Injected events",
+    "§10.1 step 14"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "notify",
+        "trigger": "before_broadcast",
+        "priority": 0,
+        "reactions": [
+          {
+            "when": {
+              "text": "Hello"
+            },
+            "result": {
+              "action": "allow",
+              "injected_events": [
+                {
+                  "target_channel_ids": [
+                    "ws"
+                  ],
+                  "event": {
+                    "content": {
+                      "type": "text",
+                      "body": "forbidden notice"
+                    }
+                  }
+                },
+                {
+                  "target_channel_ids": [
+                    "ws"
+                  ],
+                  "event": {
+                    "content": {
+                      "type": "text",
+                      "body": "allowed notice"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "filter",
+        "trigger": "before_broadcast",
+        "priority": 1,
+        "reactions": [
+          {
+            "when": {
+              "text": "forbidden notice"
+            },
+            "result": {
+              "action": "block",
+              "reason": "no"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Hello"
+          },
+          "status": "delivered"
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "forbidden notice"
+          },
+          "status": "blocked",
+          "blocked_by": "filter",
+          "visibility": "ws"
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "allowed notice"
+          },
+          "status": "delivered",
+          "visibility": "ws"
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": [
+          {
+            "content": {
+              "type": "text",
+              "body": "Hello"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "allowed notice"
+            }
+          }
+        ]
+      }
+    },
+    "hooks": {
+      "filter": [
+        {
+          "event": {
+            "content": {
+              "type": "text",
+              "body": "Hello"
+            }
+          }
+        },
+        {
+          "event": {
+            "content": {
+              "type": "text",
+              "body": "forbidden notice"
+            }
+          }
+        },
+        {
+          "event": {
+            "content": {
+              "type": "text",
+              "body": "allowed notice"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

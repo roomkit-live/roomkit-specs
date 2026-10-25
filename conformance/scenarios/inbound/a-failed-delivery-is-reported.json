@@ -1,0 +1,125 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "inbound/a-failed-delivery-is-reported",
+  "title": "A transport whose delivery fails is reported; the event stays DELIVERED",
+  "rules": [
+    "§10.2 step 3d",
+    "§13.6",
+    "§8.2",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport",
+        "deliver": [
+          {
+            "fail": "socket closed"
+          }
+        ]
+      },
+      {
+        "id": "email",
+        "type": "email",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "email"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "event": {
+            "status": "delivered"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "status": "delivered"
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": [
+          {
+            "id": "room-1#0"
+          }
+        ],
+        "email": [
+          {
+            "id": "room-1#0"
+          }
+        ]
+      }
+    },
+    "framework_events": {
+      "room-1": [
+        {
+          "$unordered": [
+            {
+              "event": "delivery_failed",
+              "channel_id": "ws",
+              "error": {
+                "$contains": "socket closed"
+              }
+            },
+            {
+              "event": "delivery_succeeded",
+              "channel_id": "email"
+            },
+            {
+              "event": "broadcast_partial_failure",
+              "event_id": "room-1#0",
+              "failed": 1,
+              "total": 2
+            }
+          ]
+        },
+        {
+          "event": "event_processed",
+          "event_id": "room-1#0"
+        }
+      ]
+    }
+  }
+}

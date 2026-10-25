@@ -1,0 +1,1037 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/roomkit-live/roomkit-specs/conformance/scenario.schema.json",
+  "title": "RoomKit conformance scenario",
+  "description": "One scenario of the shared conformance suite: a setup, the kit's calls, and what the RFC says they come to. Records (rooms, events, messages, contents, hook results) are written in the RFC's serialized form (§1.4). conformance/README.md defines how a runner reads each member.",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "rules",
+    "steps"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "id": {
+      "description": "The scenario's path under scenarios/, without .json.",
+      "type": "string",
+      "pattern": "^[a-z0-9.-]+/[a-z0-9-]+$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rules": {
+      "description": "The RFC's rules the scenario checks, in the RFC's terms: \"§10.1 step 9\", \"§7.5 rule 2\", \"§9.5.1 Reentrance\", \"Appendix B.2\". The checker resolves each at the pinned RFC commit.",
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^(§[0-9]+(\\.[0-9]+)*|Appendix [A-Z](\\.[0-9]+)*)( .+)?$"
+      }
+    },
+    "reentrancy": {
+      "description": "The cells of the reentrancy table (README, \"Reentrancy cells\") the scenario exercises.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/cell"
+      }
+    },
+    "notes": {
+      "type": "string"
+    },
+    "setup": {
+      "$ref": "#/$defs/setup"
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/step"
+      }
+    },
+    "expect": {
+      "$ref": "#/$defs/expect"
+    }
+  },
+  "$defs": {
+    "cell": {
+      "enum": [
+        "inject@locked",
+        "inject@admitted",
+        "inject@cascade",
+        "inject@outside",
+        "routed@locked",
+        "routed@admitted",
+        "routed@cascade",
+        "routed@outside",
+        "commit@locked",
+        "commit@admitted",
+        "commit@cascade",
+        "commit@outside",
+        "change@locked",
+        "change@admitted",
+        "change@cascade",
+        "change@outside"
+      ]
+    },
+    "record": {
+      "description": "A record in the RFC's serialized form; a reader takes an absent member as its default (§1.4).",
+      "type": "object"
+    },
+    "label": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "setup": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kit": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "max_chain_depth": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "process_timeout_ms": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "channels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/channel"
+          }
+        },
+        "rooms": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/room_seed"
+          }
+        },
+        "hooks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/hook"
+          }
+        }
+      }
+    },
+    "channel": {
+      "description": "A scripted channel. Its parse is the default one (README, \"Scripted channels\"), its turn answers nothing and its delivery succeeds, unless a reaction says otherwise.",
+      "type": "object",
+      "required": [
+        "id",
+        "type"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "description": "A ChannelType, serialized (§6.2): sms, websocket, ai, host...",
+          "type": "string"
+        },
+        "category": {
+          "enum": [
+            "transport",
+            "intelligence"
+          ]
+        },
+        "direction": {
+          "enum": [
+            "inbound",
+            "outbound",
+            "bidirectional"
+          ]
+        },
+        "capabilities": {
+          "$ref": "#/$defs/record"
+        },
+        "recipient_key": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "parse": {
+          "$ref": "#/$defs/reactions"
+        },
+        "on_event": {
+          "$ref": "#/$defs/reactions"
+        },
+        "deliver": {
+          "$ref": "#/$defs/reactions"
+        }
+      }
+    },
+    "room_seed": {
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "organization_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "metadata": {
+          "type": "object"
+        },
+        "timers": {
+          "$ref": "#/$defs/record"
+        },
+        "bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/binding_seed"
+          }
+        },
+        "status": {
+          "enum": [
+            "active",
+            "closed",
+            "archived"
+          ]
+        }
+      }
+    },
+    "binding_seed": {
+      "type": "object",
+      "required": [
+        "channel_id"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "channel_id": {
+          "type": "string"
+        },
+        "category": {
+          "enum": [
+            "transport",
+            "intelligence"
+          ]
+        },
+        "access": {
+          "enum": [
+            "read_write",
+            "read_only",
+            "write_only",
+            "none"
+          ]
+        },
+        "muted": {
+          "type": "boolean"
+        },
+        "visibility": {
+          "type": "string"
+        },
+        "metadata": {
+          "type": "object"
+        },
+        "participant_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "hook": {
+      "type": "object",
+      "required": [
+        "name",
+        "trigger"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "trigger": {
+          "description": "A HookTrigger, serialized: before_broadcast, after_broadcast, on_room_created...",
+          "type": "string"
+        },
+        "execution": {
+          "enum": [
+            "sync",
+            "async"
+          ]
+        },
+        "priority": {
+          "type": "integer"
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "channel_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "channel_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "directions": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "inbound",
+              "outbound"
+            ]
+          }
+        },
+        "fail_closed": {
+          "type": "boolean"
+        },
+        "needs_lock": {
+          "type": "boolean"
+        },
+        "reactions": {
+          "$ref": "#/$defs/reactions"
+        }
+      }
+    },
+    "reactions": {
+      "description": "Tried in order on each call: the first whose `when` matches is used, and used once unless it repeats. No reaction left: the default.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/reaction"
+      }
+    },
+    "reaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "when": {
+          "$ref": "#/$defs/condition"
+        },
+        "repeat": {
+          "type": "boolean"
+        },
+        "gate": {
+          "description": "Hold the call at this gate until a step opens it.",
+          "type": "string"
+        },
+        "do": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/action"
+          }
+        },
+        "fail": {
+          "description": "Raise, with this message, once the actions ran.",
+          "type": "string"
+        },
+        "respond": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/record"
+          }
+        },
+        "output": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "tasks": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/record"
+              }
+            },
+            "observations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/record"
+              }
+            },
+            "metadata_updates": {
+              "type": "object"
+            }
+          }
+        },
+        "result": {
+          "$ref": "#/$defs/hook_result"
+        }
+      }
+    },
+    "condition": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "room_id": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "source_channel_id": {
+          "type": "string"
+        },
+        "chain_depth": {
+          "type": "integer"
+        }
+      }
+    },
+    "hook_result": {
+      "description": "A HookResult (§9.4). A modify's `event` is a patch on the payload: its members replace the payload's.",
+      "type": "object",
+      "required": [
+        "action"
+      ],
+      "properties": {
+        "action": {
+          "enum": [
+            "allow",
+            "block",
+            "modify"
+          ]
+        },
+        "event": {
+          "$ref": "#/$defs/record"
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "injected_events": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "event"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "event": {
+                "$ref": "#/$defs/record"
+              },
+              "target_channel_ids": {
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "tasks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/record"
+          }
+        },
+        "observations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/record"
+          }
+        },
+        "metadata": {
+          "type": "object"
+        }
+      }
+    },
+    "action": {
+      "description": "A call a hook or a channel makes into the kit while it runs, in its execution context.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/call"
+        }
+      ],
+      "properties": {
+        "as": {
+          "$ref": "#/$defs/label"
+        },
+        "expect": {
+          "$ref": "#/$defs/outcome"
+        }
+      }
+    },
+    "step": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/call_step"
+        },
+        {
+          "type": "object",
+          "required": [
+            "await"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "await": {
+              "$ref": "#/$defs/label"
+            },
+            "expect": {
+              "$ref": "#/$defs/outcome"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "concurrent"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "concurrent": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "$ref": "#/$defs/call_step"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "wait_for"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "wait_for": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "open"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "open": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "idle"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "idle": {
+              "const": true
+            }
+          }
+        }
+      ]
+    },
+    "call_step": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/call"
+        }
+      ],
+      "properties": {
+        "as": {
+          "$ref": "#/$defs/label"
+        },
+        "background": {
+          "description": "Start the call and go on; an `await` step reads its outcome.",
+          "type": "boolean"
+        },
+        "expect": {
+          "$ref": "#/$defs/outcome"
+        }
+      },
+      "if": {
+        "required": [
+          "background"
+        ],
+        "properties": {
+          "background": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "as"
+        ],
+        "not": {
+          "required": [
+            "expect"
+          ]
+        }
+      }
+    },
+    "call": {
+      "type": "object",
+      "required": [
+        "call"
+      ],
+      "properties": {
+        "call": {
+          "enum": [
+            "process_inbound",
+            "send_event",
+            "post",
+            "commit_event",
+            "update_event",
+            "delete_event",
+            "create_room",
+            "attach_channel",
+            "detach_channel",
+            "mute",
+            "unmute",
+            "set_access",
+            "set_visibility",
+            "close_room",
+            "archive_room",
+            "check_timers",
+            "register_channel",
+            "unregister_channel",
+            "register_hook"
+          ]
+        },
+        "organization_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "process_inbound"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "message"
+            ],
+            "properties": {
+              "message": {
+                "$ref": "#/$defs/record"
+              },
+              "room_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "send_event"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "channel_id",
+              "content"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "post"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "content"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "commit_event"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "event"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "enum": [
+                  "update_event",
+                  "delete_event"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "event_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "create_room"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "enum": [
+                  "attach_channel",
+                  "detach_channel",
+                  "mute",
+                  "unmute"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "channel_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "set_access"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "channel_id",
+              "access"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "set_visibility"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "channel_id",
+              "visibility"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "enum": [
+                  "close_room",
+                  "archive_room",
+                  "check_timers"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "register_channel"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel"
+            ],
+            "properties": {
+              "channel": {
+                "$ref": "#/$defs/channel"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "unregister_channel"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "register_hook"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "hook"
+            ],
+            "properties": {
+              "hook": {
+                "$ref": "#/$defs/hook"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "outcome": {
+      "description": "What a call comes to: its result, matched as an expectation, or its error. Neither given: the call must not fail.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "result": {},
+        "error": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/error_name"
+            },
+            {
+              "type": "object",
+              "required": [
+                "name"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "$ref": "#/$defs/error_name"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "not": {
+        "required": [
+          "result",
+          "error"
+        ]
+      }
+    },
+    "error_name": {
+      "description": "What a call fails with, by its meaning in the RFC (README, \"Errors\").",
+      "enum": [
+        "invalid_argument",
+        "channel_not_registered",
+        "room_not_found",
+        "channel_not_bound",
+        "room_closed",
+        "transition_refused",
+        "change_refused",
+        "process_timeout",
+        "participant_not_found",
+        "reentrant",
+        "reentry_loop_cap"
+      ]
+    },
+    "expect": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "timeline": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "array",
+              "object"
+            ]
+          }
+        },
+        "rooms": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "object",
+              "null"
+            ]
+          }
+        },
+        "bindings": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": [
+                "object",
+                "null"
+              ]
+            }
+          }
+        },
+        "framework_events": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array"
+          }
+        },
+        "hooks": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "array",
+              "object"
+            ]
+          }
+        },
+        "hook_order": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "deliveries": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": [
+                "array",
+                "object"
+              ]
+            }
+          }
+        },
+        "turns": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": [
+                "array",
+                "object"
+              ]
+            }
+          }
+        },
+        "observations": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "array",
+              "object"
+            ]
+          }
+        },
+        "tasks": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "array",
+              "object"
+            ]
+          }
+        },
+        "actions": {
+          "type": "object",
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/outcome"
+                }
+              },
+              {
+                "type": "object",
+                "required": [
+                  "$unordered"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "$unordered": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/outcome"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

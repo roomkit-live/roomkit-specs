@@ -1,0 +1,106 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "permissions/a-detached-channel-is-not-attached-again",
+  "title": "A message on a channel the integrator detached is stored BLOCKED source_unbound, the channel left unbound",
+  "rules": [
+    "§7.5 rule 7",
+    "§7.5 rule 2",
+    "§10.1 step 2",
+    "§10.1 step 11",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "detach_channel",
+      "room_id": "room-1",
+      "channel_id": "sms"
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Still here"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": true,
+          "reason": "source_unbound",
+          "event": {
+            "status": "blocked",
+            "blocked_by": "source_unbound"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Still here"
+          },
+          "status": "blocked",
+          "blocked_by": "source_unbound"
+        }
+      ]
+    },
+    "bindings": {
+      "room-1": {
+        "sms": null
+      }
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": []
+      }
+    },
+    "framework_events": {
+      "room-1": [
+        {
+          "event": "room_channel_detached",
+          "channel_id": "sms"
+        },
+        {
+          "event": "event_blocked",
+          "event_id": "room-1#0",
+          "channel_id": "sms",
+          "blocked_by": "source_unbound"
+        }
+      ]
+    }
+  }
+}

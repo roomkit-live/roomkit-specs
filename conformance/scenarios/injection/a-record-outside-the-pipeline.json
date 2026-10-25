@@ -1,0 +1,143 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "injection/a-record-outside-the-pipeline",
+  "title": "A record committed outside the pipeline takes the next index as given, runs no hook, reaches no one and is no activity",
+  "rules": [
+    "§10.5 A record outside the pipeline",
+    "§5.1"
+  ],
+  "reentrancy": [
+    "commit@outside"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "check",
+        "trigger": "before_broadcast"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "commit_event",
+      "room_id": "room-1",
+      "event": {
+        "content": {
+          "type": "text",
+          "body": "display snapshot"
+        },
+        "status": "delivered",
+        "visibility": "none",
+        "metadata": {
+          "kind": "trace"
+        }
+      },
+      "expect": {
+        "result": {
+          "id": "room-1#0",
+          "status": "delivered",
+          "visibility": "none"
+        }
+      }
+    },
+    {
+      "call": "commit_event",
+      "room_id": "room-1",
+      "event": {
+        "room_id": "room-2",
+        "content": {
+          "type": "text",
+          "body": "misdirected"
+        }
+      },
+      "expect": {
+        "error": "invalid_argument"
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "display snapshot"
+          },
+          "status": "delivered",
+          "visibility": "none",
+          "metadata": {
+            "kind": "trace"
+          }
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "Hello"
+          }
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": [
+          {
+            "content": {
+              "type": "text",
+              "body": "Hello"
+            }
+          }
+        ],
+        "sms": []
+      }
+    },
+    "hooks": {
+      "check": [
+        {
+          "event": {
+            "content": {
+              "type": "text",
+              "body": "Hello"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "hooks/an-off-lock-hook-blocks-before-the-lock",
+  "title": "An off-lock hook's block stops the chain before the hooks that need the lock",
+  "rules": [
+    "§9.5.1",
+    "§9.5.1 Decision",
+    "§10.1 step 5a"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "scan",
+        "trigger": "before_broadcast",
+        "needs_lock": false,
+        "priority": 0,
+        "reactions": [
+          {
+            "result": {
+              "action": "block",
+              "reason": "pii"
+            }
+          }
+        ]
+      },
+      {
+        "name": "locked",
+        "trigger": "before_broadcast",
+        "priority": 1
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "My SIN"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": true,
+          "event": {
+            "blocked_by": "scan"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "status": "blocked",
+          "blocked_by": "scan"
+        }
+      ]
+    },
+    "hooks": {
+      "scan": [
+        {
+          "event": {
+            "content": {
+              "type": "text",
+              "body": "My SIN"
+            }
+          }
+        }
+      ],
+      "locked": []
+    }
+  }
+}

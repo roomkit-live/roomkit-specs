@@ -1,0 +1,49 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "permissions/reserved-channel-ids-are-refused",
+  "title": "A channel whose id is a visibility keyword, or holds a comma, is refused when it is registered",
+  "rules": [
+    "§7.3",
+    "§7.3 Grammar"
+  ],
+  "steps": [
+    {
+      "call": "register_channel",
+      "channel": {
+        "id": "all",
+        "type": "websocket",
+        "category": "transport"
+      },
+      "expect": {
+        "error": "invalid_argument"
+      }
+    },
+    {
+      "call": "register_channel",
+      "channel": {
+        "id": "transport",
+        "type": "websocket",
+        "category": "transport"
+      },
+      "expect": {
+        "error": "invalid_argument"
+      }
+    },
+    {
+      "call": "register_channel",
+      "channel": {
+        "id": "sms,ws",
+        "type": "websocket",
+        "category": "transport"
+      },
+      "expect": {
+        "error": "invalid_argument"
+      }
+    }
+  ],
+  "expect": {
+    "framework_events": {
+      "*": []
+    }
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "hooks/a-failing-hook-lets-the-event-through",
+  "title": "A SYNC BEFORE_BROADCAST hook that raises is read as ALLOW, and hook_error says so",
+  "rules": [
+    "§9.3",
+    "§8.2",
+    "§10.1 step 9",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "broken",
+        "trigger": "before_broadcast",
+        "reactions": [
+          {
+            "fail": "the scanner is down"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "status": "delivered"
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": [
+          {
+            "id": "room-1#0"
+          }
+        ]
+      }
+    },
+    "framework_events": {
+      "room-1": [
+        {
+          "event": "hook_error",
+          "hook": "broken",
+          "event_id": "room-1#0"
+        },
+        {
+          "event": "delivery_succeeded",
+          "channel_id": "ws"
+        },
+        {
+          "event": "event_processed",
+          "event_id": "room-1#0"
+        }
+      ]
+    }
+  }
+}

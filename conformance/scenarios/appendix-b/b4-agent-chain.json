@@ -1,0 +1,204 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "appendix-b/b4-agent-chain",
+  "title": "Two agents answer each other until the next answer would reach max_chain_depth; the agent not asked gets a record",
+  "rules": [
+    "Appendix B.4",
+    "§8.3",
+    "§8.3 At the limit",
+    "§19.3.1",
+    "§10.2 step 3c",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "analyst",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "Based on analysis, key findings are: ..."
+                }
+              }
+            ],
+            "repeat": true
+          }
+        ]
+      },
+      {
+        "id": "writer",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "Here is the report based on the analysis: ..."
+                }
+              }
+            ],
+            "repeat": true
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "analyst"
+          },
+          {
+            "channel_id": "writer"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "ws",
+        "sender_id": "user-1",
+        "content": {
+          "type": "text",
+          "body": "Analyse the quarter"
+        },
+        "addressed_to": [
+          "analyst"
+        ]
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "chain_depth": 0,
+          "content": {
+            "type": "text",
+            "body": "Analyse the quarter"
+          }
+        },
+        {
+          "chain_depth": 1,
+          "source": {
+            "channel_id": "analyst"
+          },
+          "responds_to": "room-1#0",
+          "status": "delivered"
+        },
+        {
+          "chain_depth": 2,
+          "source": {
+            "channel_id": "writer"
+          },
+          "responds_to": "room-1#1",
+          "status": "delivered"
+        },
+        {
+          "chain_depth": 3,
+          "source": {
+            "channel_id": "analyst"
+          },
+          "responds_to": "room-1#2",
+          "status": "delivered"
+        },
+        {
+          "chain_depth": 4,
+          "source": {
+            "channel_id": "writer"
+          },
+          "responds_to": "room-1#3",
+          "status": "delivered"
+        },
+        {
+          "type": "message",
+          "chain_depth": 5,
+          "status": "blocked",
+          "blocked_by": "event_chain_depth_limit",
+          "source": {
+            "channel_id": "analyst",
+            "direction": "outbound"
+          },
+          "content": {
+            "type": "text",
+            "body": ""
+          },
+          "responds_to": "room-1#4"
+        }
+      ]
+    },
+    "turns": {
+      "room-1": {
+        "analyst": [
+          {
+            "id": "room-1#0"
+          },
+          {
+            "id": "room-1#2"
+          }
+        ],
+        "writer": [
+          {
+            "id": "room-1#1"
+          },
+          {
+            "id": "room-1#3"
+          }
+        ]
+      }
+    },
+    "observations": {
+      "room-1": [
+        {
+          "category": "event_chain_depth_exceeded",
+          "metadata": {
+            "chain_depth": 5,
+            "max_chain_depth": 5,
+            "source_channel": "analyst"
+          }
+        }
+      ]
+    },
+    "framework_events": {
+      "room-1": [
+        {
+          "$unordered": [
+            {
+              "event": "chain_depth_exceeded",
+              "event_id": "room-1#5",
+              "channel_id": "analyst",
+              "data": {
+                "chain_depth": 5,
+                "max_chain_depth": 5
+              }
+            },
+            {
+              "event": "event_processed",
+              "event_id": "room-1#0"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

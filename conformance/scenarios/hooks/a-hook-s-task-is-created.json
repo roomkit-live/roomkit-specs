@@ -1,0 +1,93 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "hooks/a-hook-s-task-is-created",
+  "title": "A task a hook's result carries is stored, and ON_TASK_CREATED fires for it",
+  "rules": [
+    "§7.5 rule 3",
+    "§10.1 step 15",
+    "§9.2",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "triage",
+        "trigger": "before_broadcast",
+        "reactions": [
+          {
+            "result": {
+              "action": "allow",
+              "tasks": [
+                {
+                  "title": "Call the customer back"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "tasks",
+        "trigger": "on_task_created",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Please call me"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "tasks": {
+      "room-1": [
+        {
+          "title": "Call the customer back",
+          "status": "pending"
+        }
+      ]
+    },
+    "hooks": {
+      "tasks": [
+        {
+          "trigger": "on_task_created",
+          "room_id": "room-1"
+        }
+      ]
+    }
+  }
+}

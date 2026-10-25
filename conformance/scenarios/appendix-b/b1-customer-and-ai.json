@@ -1,0 +1,215 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "appendix-b/b1-customer-and-ai",
+  "title": "A customer's first SMS opens a room whose creation hook attaches the AI, which answers by SMS",
+  "rules": [
+    "Appendix B.1",
+    "§10.1 step 2",
+    "§9.3",
+    "§10.1 step 14",
+    "§10.1 step 16",
+    "§10.1 step 17",
+    "§8.3",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms_main",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ai",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "Bonjour Jean! How can I help?"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "attach_agent",
+        "trigger": "on_room_created",
+        "execution": "async",
+        "reactions": [
+          {
+            "do": [
+              {
+                "call": "attach_channel",
+                "room_id": "$room",
+                "channel_id": "ai"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "session",
+        "trigger": "on_session_started",
+        "execution": "async"
+      },
+      {
+        "name": "audit",
+        "trigger": "after_broadcast",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "message": {
+        "channel_id": "sms_main",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Bonjour"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "event": {
+            "id": "$r1#0",
+            "room_id": "$r1",
+            "index": 0,
+            "status": "delivered",
+            "chain_depth": 0
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "$r1": [
+        {
+          "type": "message",
+          "source": {
+            "channel_id": "sms_main",
+            "direction": "inbound",
+            "participant_id": "+15551234567"
+          },
+          "content": {
+            "type": "text",
+            "body": "Bonjour"
+          },
+          "status": "delivered",
+          "index": 0,
+          "chain_depth": 0
+        },
+        {
+          "type": "message",
+          "source": {
+            "channel_id": "ai",
+            "direction": "outbound"
+          },
+          "content": {
+            "type": "text",
+            "body": "Bonjour Jean! How can I help?"
+          },
+          "status": "delivered",
+          "index": 1,
+          "chain_depth": 1,
+          "responds_to": "$r1#0"
+        }
+      ]
+    },
+    "bindings": {
+      "$r1": {
+        "sms_main": {
+          "category": "transport",
+          "participant_id": "+15551234567"
+        },
+        "ai": {
+          "category": "intelligence"
+        }
+      }
+    },
+    "turns": {
+      "$r1": {
+        "ai": [
+          {
+            "id": "$r1#0"
+          }
+        ]
+      }
+    },
+    "deliveries": {
+      "$r1": {
+        "sms_main": [
+          {
+            "id": "$r1#1",
+            "content": {
+              "type": "text",
+              "body": "Bonjour Jean! How can I help?"
+            }
+          }
+        ]
+      }
+    },
+    "hooks": {
+      "attach_agent": [
+        {
+          "trigger": "on_room_created",
+          "room_id": "$r1"
+        }
+      ],
+      "session": [
+        {
+          "trigger": "on_session_started",
+          "room_id": "$r1"
+        }
+      ],
+      "audit": {
+        "$unordered": [
+          {
+            "event": {
+              "id": "$r1#0"
+            }
+          },
+          {
+            "event": {
+              "id": "$r1#1"
+            }
+          }
+        ]
+      }
+    },
+    "framework_events": {
+      "$r1": [
+        {
+          "event": "room_channel_attached",
+          "channel_id": "ai"
+        },
+        "room_created",
+        {
+          "event": "room_channel_attached",
+          "channel_id": "sms_main",
+          "access": "read_write",
+          "visibility": "all"
+        },
+        {
+          "event": "session_started",
+          "channel_id": "sms_main",
+          "channel_type": "sms"
+        },
+        {
+          "event": "event_processed",
+          "event_id": "$r1#0"
+        }
+      ]
+    }
+  }
+}

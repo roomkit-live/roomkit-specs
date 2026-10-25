@@ -1,0 +1,107 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "instructions/an-injected-instruction-s-refusals-raise",
+  "title": "A direct injection of an instruction its rules refuse raises, and standalone on another type does too",
+  "rules": [
+    "§10.1.1 rule 2",
+    "§10.1.1 rule 7",
+    "§10.5"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "ai",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "never"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "ai"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "ws",
+      "content": {
+        "type": "text",
+        "body": "Speak"
+      },
+      "event_type": "instruction",
+      "expect": {
+        "error": "invalid_argument"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "ws",
+      "content": {
+        "type": "text",
+        "body": "Speak"
+      },
+      "event_type": "instruction",
+      "addressed_to": [
+        "ai"
+      ],
+      "idempotency_key": "k",
+      "expect": {
+        "error": "invalid_argument"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "ws",
+      "content": {
+        "type": "text",
+        "body": "Hi"
+      },
+      "standalone": true,
+      "expect": {
+        "error": "invalid_argument"
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": []
+    },
+    "turns": {
+      "room-1": {
+        "ai": []
+      }
+    },
+    "framework_events": {
+      "room-1": []
+    }
+  }
+}

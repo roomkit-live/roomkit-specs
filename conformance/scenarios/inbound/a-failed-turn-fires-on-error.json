@@ -1,0 +1,133 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "inbound/a-failed-turn-fires-on-error",
+  "title": "An agent whose turn fails fires ON_ERROR, is reported as a failed delivery, and the caller reads the error",
+  "rules": [
+    "§9.2",
+    "§9.2 ON_ERROR payload",
+    "§13.6",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ai",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "fail": "model unavailable"
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ai"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "errors",
+        "trigger": "on_error",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": {
+            "$contains": "model unavailable"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Hello"
+          },
+          "status": "delivered"
+        }
+      ]
+    },
+    "hooks": {
+      "errors": [
+        {
+          "trigger": "on_error",
+          "event": {
+            "source": {
+              "channel_id": "ai"
+            },
+            "chain_depth": 1,
+            "visibility": "all",
+            "content": {
+              "type": "text",
+              "body": {
+                "$contains": "model unavailable"
+              }
+            },
+            "metadata": {
+              "error": {
+                "$contains": "model unavailable"
+              },
+              "error_category": "generation"
+            }
+          }
+        }
+      ]
+    },
+    "framework_events": {
+      "room-1": [
+        {
+          "$unordered": [
+            {
+              "event": "delivery_failed",
+              "channel_id": "ai",
+              "event_id": "room-1#0"
+            },
+            {
+              "event": "broadcast_partial_failure",
+              "failed": 1,
+              "total": 1
+            }
+          ]
+        },
+        {
+          "event": "event_processed",
+          "event_id": "room-1#0"
+        }
+      ]
+    }
+  }
+}

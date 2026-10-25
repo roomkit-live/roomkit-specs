@@ -1,0 +1,159 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "addressing/an-address-names-the-agents-asked",
+  "title": "An addressed message asks the agents it names alone, and still reaches every transport",
+  "rules": [
+    "§19.3 rule 1",
+    "§19.3 rule 2",
+    "§19.3 rule 4"
+  ],
+  "notes": "The message asks a1 alone. Under AGENT_CHAIN, the default (§19.3.1), a1's unaddressed answer asks a2, whose answer asks a1 again; a1 has said what it had to, and answers nothing.",
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "a1",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "from a1"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "a2",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "from a2"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "a1"
+          },
+          {
+            "channel_id": "a2"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "@a1 hello"
+        },
+        "addressed_to": [
+          "a1"
+        ]
+      },
+      "expect": {
+        "result": {
+          "event": {
+            "addressed_to": [
+              "a1"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "turns": {
+      "room-1": {
+        "a1": [
+          {
+            "id": "room-1#0"
+          },
+          {
+            "id": "room-1#2"
+          }
+        ],
+        "a2": [
+          {
+            "id": "room-1#1"
+          }
+        ]
+      }
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": [
+          {
+            "id": "room-1#0"
+          },
+          {
+            "id": "room-1#1"
+          },
+          {
+            "id": "room-1#2"
+          }
+        ]
+      }
+    },
+    "timeline": {
+      "room-1": [
+        {
+          "addressed_to": [
+            "a1"
+          ]
+        },
+        {
+          "source": {
+            "channel_id": "a1"
+          },
+          "addressed_to": null
+        },
+        {
+          "source": {
+            "channel_id": "a2"
+          },
+          "responds_to": "room-1#1"
+        }
+      ]
+    }
+  }
+}

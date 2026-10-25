@@ -1,0 +1,86 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "transcoding/a-location-reads-in-decimal",
+  "title": "A location reaches a text channel as its label and coordinates, each written as the shortest decimal with a point",
+  "rules": [
+    "§6.6"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "console",
+        "type": "websocket",
+        "category": "transport",
+        "capabilities": {
+          "media_types": [
+            "text",
+            "rich",
+            "media",
+            "location"
+          ]
+        }
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "console"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "console",
+      "content": {
+        "type": "location",
+        "latitude": 45,
+        "longitude": -73.6
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "console",
+      "content": {
+        "type": "location",
+        "latitude": 45.5,
+        "longitude": -73.6,
+        "label": "Office"
+      }
+    }
+  ],
+  "expect": {
+    "deliveries": {
+      "room-1": {
+        "sms": [
+          {
+            "content": {
+              "type": "text",
+              "body": "[Location: (45.0, -73.6)]"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "[Location: Office (45.5, -73.6)]"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

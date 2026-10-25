@@ -1,0 +1,325 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "appendix-b/b5-advisor-joins",
+  "title": "An advisor joins; the integrator mutes the AI, makes it whisper to the advisor, and later lets it answer everyone again",
+  "rules": [
+    "Appendix B.5",
+    "§7.2",
+    "§7.3",
+    "§7.4",
+    "§9.2",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms_customer",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws_advisor",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "ai_support",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "when": {
+              "text": "Bonjour"
+            },
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "Bonjour! How can I help?"
+                }
+              }
+            ]
+          },
+          {
+            "when": {
+              "text": "I need help with my mortgage"
+            },
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "I can help with mortgage info..."
+                }
+              }
+            ]
+          },
+          {
+            "when": {
+              "text": "What rate can I get?"
+            },
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "Suggest offering 4.5% based on..."
+                }
+              }
+            ]
+          },
+          {
+            "when": {
+              "text": "What documents do I need?"
+            },
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "You'll need: 1. ID 2. Income..."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms_customer"
+          },
+          {
+            "channel_id": "ai_support"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "attached",
+        "trigger": "on_channel_attached",
+        "execution": "async"
+      },
+      {
+        "name": "muted",
+        "trigger": "on_channel_muted",
+        "execution": "async"
+      },
+      {
+        "name": "unmuted",
+        "trigger": "on_channel_unmuted",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms_customer",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Bonjour"
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms_customer",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "I need help with my mortgage"
+        }
+      }
+    },
+    {
+      "call": "attach_channel",
+      "room_id": "room-1",
+      "channel_id": "ws_advisor",
+      "access": "read_write",
+      "visibility": "all"
+    },
+    {
+      "call": "mute",
+      "room_id": "room-1",
+      "channel_id": "ai_support"
+    },
+    {
+      "call": "set_visibility",
+      "room_id": "room-1",
+      "channel_id": "ai_support",
+      "visibility": "ws_advisor"
+    },
+    {
+      "call": "unmute",
+      "room_id": "room-1",
+      "channel_id": "ai_support"
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms_customer",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "What rate can I get?"
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "ws_advisor",
+        "sender_id": "advisor-1",
+        "content": {
+          "type": "text",
+          "body": "We can offer you 4.5% fixed."
+        }
+      }
+    },
+    {
+      "call": "set_visibility",
+      "room_id": "room-1",
+      "channel_id": "ai_support",
+      "visibility": "all"
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms_customer",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "What documents do I need?"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Bonjour"
+          },
+          "chain_depth": 0
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "Bonjour! How can I help?"
+          },
+          "chain_depth": 1,
+          "visibility": "all"
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "I need help with my mortgage"
+          },
+          "chain_depth": 0
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "I can help with mortgage info..."
+          },
+          "chain_depth": 1
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "What rate can I get?"
+          },
+          "chain_depth": 0
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "Suggest offering 4.5% based on..."
+          },
+          "visibility": "ws_advisor"
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "We can offer you 4.5% fixed."
+          },
+          "visibility": "all"
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "What documents do I need?"
+          }
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "You'll need: 1. ID 2. Income..."
+          },
+          "visibility": "all"
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "sms_customer": [
+          {
+            "id": "room-1#1"
+          },
+          {
+            "id": "room-1#3"
+          },
+          {
+            "id": "room-1#6"
+          },
+          {
+            "id": "room-1#8"
+          }
+        ],
+        "ws_advisor": [
+          {
+            "id": "room-1#4"
+          },
+          {
+            "id": "room-1#5"
+          },
+          {
+            "id": "room-1#7"
+          },
+          {
+            "id": "room-1#8"
+          }
+        ]
+      }
+    },
+    "hooks": {
+      "attached": [
+        {
+          "trigger": "on_channel_attached"
+        }
+      ],
+      "muted": [
+        {
+          "trigger": "on_channel_muted"
+        }
+      ],
+      "unmuted": [
+        {
+          "trigger": "on_channel_unmuted"
+        }
+      ]
+    }
+  }
+}

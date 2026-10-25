@@ -1,0 +1,86 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "tenancy/routing-stays-within-the-organization",
+  "title": "A routed message acting for one organization never lands in another's room; its new room is its organization's",
+  "rules": [
+    "§17.2",
+    "§10.4",
+    "§10.1 step 2"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-a",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          }
+        ],
+        "organization_id": "acme"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-a",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      },
+      "organization_id": "acme"
+    },
+    {
+      "call": "process_inbound",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello again"
+        }
+      },
+      "organization_id": "globex",
+      "expect": {
+        "result": {
+          "event": {
+            "room_id": "$r1"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "rooms": {
+      "$r1": {
+        "organization_id": "globex"
+      }
+    },
+    "timeline": {
+      "room-a": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Hello"
+          }
+        }
+      ]
+    }
+  }
+}

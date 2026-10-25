@@ -1,0 +1,66 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "inbound/an-unregistered-channel-fails",
+  "title": "A message on a channel no one registered fails before anything is read",
+  "rules": [
+    "§10.1 step 1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "nope",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      },
+      "expect": {
+        "error": "channel_not_registered"
+      }
+    },
+    {
+      "call": "process_inbound",
+      "message": {
+        "channel_id": "nope",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      },
+      "expect": {
+        "error": "channel_not_registered"
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": []
+    },
+    "framework_events": {
+      "room-1": []
+    }
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "permissions/a-muted-agent-reads-but-its-answer-is-blocked",
+  "title": "A muted agent is still asked, and its answer is stored BLOCKED source_muted, broadcast to no one",
+  "rules": [
+    "§7.2",
+    "§7.5 rule 2",
+    "§10.2 step 4",
+    "§10.1 step 14",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ai",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "I would say this"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ai",
+            "muted": true
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Hello"
+          },
+          "status": "delivered"
+        },
+        {
+          "source": {
+            "channel_id": "ai",
+            "direction": "outbound"
+          },
+          "content": {
+            "type": "text",
+            "body": "I would say this"
+          },
+          "status": "blocked",
+          "blocked_by": "source_muted",
+          "chain_depth": 1,
+          "responds_to": "room-1#0"
+        }
+      ]
+    },
+    "turns": {
+      "room-1": {
+        "ai": [
+          {
+            "id": "room-1#0"
+          }
+        ]
+      }
+    },
+    "deliveries": {
+      "room-1": {
+        "sms": []
+      }
+    },
+    "framework_events": {
+      "room-1": [
+        {
+          "$unordered": [
+            {
+              "event": "event_blocked",
+              "event_id": "room-1#1",
+              "channel_id": "ai",
+              "blocked_by": "source_muted"
+            },
+            {
+              "event": "event_processed",
+              "event_id": "room-1#0"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

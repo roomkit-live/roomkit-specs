@@ -1,0 +1,113 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "permissions/read-only-and-muted-reads-as-read-only",
+  "title": "A source both read-only and muted is refused as read-only",
+  "rules": [
+    "§7.5 rule 2",
+    "§10.1 step 11"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms",
+            "access": "read_only",
+            "muted": true
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "check",
+        "trigger": "before_broadcast"
+      },
+      {
+        "name": "audit",
+        "trigger": "after_broadcast",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": true,
+          "reason": "source_read_only",
+          "event": {
+            "id": "room-1#0",
+            "status": "blocked",
+            "blocked_by": "source_read_only"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Hello"
+          },
+          "status": "blocked",
+          "blocked_by": "source_read_only"
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": []
+      }
+    },
+    "hooks": {
+      "check": [
+        {
+          "event": {
+            "id": "room-1#0"
+          }
+        }
+      ],
+      "audit": []
+    },
+    "framework_events": {
+      "room-1": [
+        {
+          "event": "event_blocked",
+          "event_id": "room-1#0",
+          "channel_id": "sms",
+          "blocked_by": "source_read_only"
+        }
+      ]
+    }
+  }
+}

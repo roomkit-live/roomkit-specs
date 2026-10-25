@@ -1,0 +1,124 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "injection/an-injection-is-delivered",
+  "title": "A direct injection traverses the pipeline: its hooks run, it is committed and delivered, and reported",
+  "rules": [
+    "§10.5",
+    "§8.2",
+    "§26.1"
+  ],
+  "reentrancy": [
+    "inject@outside"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "check",
+        "trigger": "before_broadcast"
+      },
+      {
+        "name": "audit",
+        "trigger": "after_broadcast",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "ws",
+      "content": {
+        "type": "text",
+        "body": "From the console"
+      },
+      "expect": {
+        "result": {
+          "id": "room-1#0",
+          "status": "delivered",
+          "source": {
+            "channel_id": "ws",
+            "direction": "inbound"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "From the console"
+          },
+          "status": "delivered"
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "sms": [
+          {
+            "id": "room-1#0"
+          }
+        ],
+        "ws": []
+      }
+    },
+    "hooks": {
+      "check": [
+        {
+          "event": {
+            "id": "room-1#0"
+          }
+        }
+      ],
+      "audit": [
+        {
+          "event": {
+            "id": "room-1#0"
+          }
+        }
+      ]
+    },
+    "framework_events": {
+      "room-1": [
+        {
+          "event": "delivery_succeeded",
+          "channel_id": "sms",
+          "event_id": "room-1#0"
+        },
+        {
+          "event": "event_processed",
+          "event_id": "room-1#0"
+        }
+      ]
+    }
+  }
+}

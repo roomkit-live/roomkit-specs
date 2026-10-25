@@ -1,0 +1,87 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "rooms/timers-pause-then-close-in-one-check",
+  "title": "A check long after both timers fell due pauses and closes the room in one write, each hook reading it CLOSED",
+  "rules": [
+    "§5.1",
+    "§9.2",
+    "§8.2",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "paused",
+        "trigger": "on_room_paused",
+        "execution": "async"
+      },
+      {
+        "name": "closed",
+        "trigger": "on_room_closed",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "create_room",
+      "room": {
+        "id": "room-1",
+        "timers": {
+          "inactive_after_seconds": 0,
+          "closed_after_seconds": 0
+        }
+      }
+    },
+    {
+      "call": "check_timers",
+      "room_id": "room-1",
+      "expect": {
+        "result": {
+          "status": "closed"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "rooms": {
+      "room-1": {
+        "status": "closed"
+      }
+    },
+    "hooks": {
+      "paused": [
+        {
+          "trigger": "on_room_paused",
+          "room_id": "room-1"
+        }
+      ],
+      "closed": [
+        {
+          "trigger": "on_room_closed",
+          "room_id": "room-1"
+        }
+      ]
+    },
+    "framework_events": {
+      "room-1": [
+        "room_created",
+        {
+          "event": "room_paused",
+          "reason": "timer"
+        },
+        {
+          "event": "room_closed",
+          "reason": "timer"
+        }
+      ]
+    }
+  }
+}

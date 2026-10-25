@@ -1,0 +1,93 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "injection/an-injection-replay-by-key",
+  "title": "An injection whose key its channel holds in the room returns the event the key committed",
+  "rules": [
+    "§13.4",
+    "§10.5"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "ws",
+      "content": {
+        "type": "text",
+        "body": "Once"
+      },
+      "idempotency_key": "out-1",
+      "expect": {
+        "result": {
+          "id": "room-1#0"
+        }
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "ws",
+      "content": {
+        "type": "text",
+        "body": "Twice"
+      },
+      "idempotency_key": "out-1",
+      "expect": {
+        "result": {
+          "id": "room-1#0",
+          "content": {
+            "type": "text",
+            "body": "Once"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Once"
+          }
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "sms": [
+          {
+            "id": "room-1#0"
+          }
+        ]
+      }
+    }
+  }
+}

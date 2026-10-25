@@ -1,0 +1,162 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "appendix-b/b7-delete-with-fallback",
+  "title": "A sender's delete marks its target deleted, reaches a deleting channel as a delete and a text channel as a notice",
+  "rules": [
+    "Appendix B.7",
+    "§10.3",
+    "§6.6",
+    "§9.2",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "wa",
+        "type": "whatsapp",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport",
+        "capabilities": {
+          "media_types": [
+            "text"
+          ],
+          "supports_edit": true,
+          "supports_delete": true
+        }
+      },
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "wa"
+          },
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "sms"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "deleted",
+        "trigger": "on_event_deleted",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "wa",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Oops"
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "wa",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "delete",
+          "target_event_id": "room-1#0",
+          "delete_type": "sender"
+        },
+        "event_type": "delete"
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "event": {
+            "type": "delete"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Oops"
+          },
+          "metadata": {
+            "deleted": true
+          }
+        },
+        {
+          "type": "delete",
+          "content": {
+            "type": "delete",
+            "target_event_id": "room-1#0",
+            "delete_type": "sender"
+          }
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": [
+          {
+            "content": {
+              "type": "text",
+              "body": "Oops"
+            }
+          },
+          {
+            "type": "delete"
+          }
+        ],
+        "sms": [
+          {
+            "content": {
+              "type": "text",
+              "body": "Oops"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "[Message deleted]"
+            }
+          }
+        ]
+      }
+    },
+    "hooks": {
+      "deleted": [
+        {
+          "trigger": "on_event_deleted",
+          "event": {
+            "id": "room-1#0",
+            "metadata": {
+              "deleted": true
+            }
+          }
+        }
+      ]
+    }
+  }
+}

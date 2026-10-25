@@ -1,0 +1,47 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "injection/an-injection-from-an-unregistered-channel-raises",
+  "title": "An injection from a channel no one registered raises as an unregistered channel, nothing written",
+  "rules": [
+    "§10.5",
+    "§10.1 step 1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "nope",
+      "content": {
+        "type": "text",
+        "body": "x"
+      },
+      "expect": {
+        "error": "channel_not_registered"
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": []
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "instructions/an-instruction-with-a-key-is-refused",
+  "title": "An instruction that carries an idempotency key is refused before anything is written",
+  "rules": [
+    "§10.1.1 rule 2"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ai",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "never"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ai"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Introduce yourself"
+        },
+        "event_type": "instruction",
+        "addressed_to": [
+          "ai"
+        ],
+        "idempotency_key": "k"
+      },
+      "expect": {
+        "result": {
+          "blocked": true,
+          "reason": "instruction_not_idempotent",
+          "event": null
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": []
+    },
+    "turns": {
+      "room-1": {
+        "ai": []
+      }
+    }
+  }
+}

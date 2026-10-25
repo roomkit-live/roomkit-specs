@@ -1,0 +1,46 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "injection/an-injection-into-no-room-raises",
+  "title": "An injection into a room that does not exist raises room_not_found",
+  "rules": [
+    "§10.5"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "send_event",
+      "room_id": "nowhere",
+      "channel_id": "sms",
+      "content": {
+        "type": "text",
+        "body": "x"
+      },
+      "expect": {
+        "error": "room_not_found"
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": []
+    }
+  }
+}

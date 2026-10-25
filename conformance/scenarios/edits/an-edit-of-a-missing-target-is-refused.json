@@ -1,0 +1,126 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "edits/an-edit-of-a-missing-target-is-refused",
+  "title": "An edit naming no event of the room, or a blocked one, is refused target_event_not_found",
+  "rules": [
+    "§10.3 Validation rule 2",
+    "§10.1 step 8a"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "wa",
+        "type": "whatsapp",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "wa"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "gate",
+        "trigger": "before_broadcast",
+        "reactions": [
+          {
+            "when": {
+              "text": "blocked"
+            },
+            "result": {
+              "action": "block",
+              "reason": "moderated"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "wa",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "blocked"
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "wa",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "edit",
+          "target_event_id": "no-such-event",
+          "new_content": {
+            "type": "text",
+            "body": "x"
+          },
+          "edit_source": "sender"
+        },
+        "event_type": "edit"
+      },
+      "expect": {
+        "result": {
+          "blocked": true,
+          "reason": "target_event_not_found",
+          "event": null
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "wa",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "edit",
+          "target_event_id": "room-1#0",
+          "new_content": {
+            "type": "text",
+            "body": "x"
+          },
+          "edit_source": "sender"
+        },
+        "event_type": "edit"
+      },
+      "expect": {
+        "result": {
+          "blocked": true,
+          "reason": "target_event_not_found",
+          "event": null
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "status": "blocked"
+        }
+      ]
+    }
+  }
+}

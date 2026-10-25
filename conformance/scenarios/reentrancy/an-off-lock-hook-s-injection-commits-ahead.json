@@ -1,0 +1,140 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "reentrancy/an-off-lock-hook-s-injection-commits-ahead",
+  "title": "An injection an off-lock hook's body makes into its room is adopted beside the event, and commits ahead of it",
+  "rules": [
+    "§9.5.1 Reentrance",
+    "§10.5"
+  ],
+  "reentrancy": [
+    "inject@admitted"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "audit",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "audit"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "inject",
+        "trigger": "before_broadcast",
+        "needs_lock": false,
+        "reactions": [
+          {
+            "when": {
+              "text": "trigger"
+            },
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "ws",
+                "content": {
+                  "type": "text",
+                  "body": "notice"
+                },
+                "as": "notice"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "trigger"
+        }
+      },
+      "expect": {
+        "result": {
+          "event": {
+            "index": 1
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "notice"
+          }
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "trigger"
+          }
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "audit": [
+          {
+            "content": {
+              "type": "text",
+              "body": "notice"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "trigger"
+            }
+          }
+        ]
+      }
+    },
+    "actions": {
+      "notice": [
+        {
+          "result": {
+            "id": "room-1#0",
+            "status": "delivered"
+          }
+        }
+      ]
+    }
+  }
+}

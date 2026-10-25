@@ -1,0 +1,123 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "inbound/a-thread-parent-is-rooted",
+  "title": "A reply to a reply is stored under its thread's root, and a parent naming no event is dropped",
+  "rules": [
+    "§10.1 step 8",
+    "§5.2"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Root"
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Reply"
+        },
+        "parent_event_id": "room-1#0"
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Reply to the reply"
+        },
+        "parent_event_id": "room-1#1"
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Orphan"
+        },
+        "parent_event_id": "no-such-event"
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Root"
+          },
+          "parent_event_id": null
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "Reply"
+          },
+          "parent_event_id": "room-1#0"
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "Reply to the reply"
+          },
+          "parent_event_id": "room-1#0"
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "Orphan"
+          },
+          "parent_event_id": null
+        }
+      ]
+    }
+  }
+}

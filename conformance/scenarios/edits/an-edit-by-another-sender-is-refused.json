@@ -1,0 +1,126 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "edits/an-edit-by-another-sender-is-refused",
+  "title": "An edit of someone else's message is refused not_original_author, nothing of it stored",
+  "rules": [
+    "§10.3 Validation rule 4",
+    "§10.1 step 8a",
+    "§10.3 Validation rule 7"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "wa",
+        "type": "whatsapp",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "wa"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "updated",
+        "trigger": "on_event_updated",
+        "execution": "async"
+      },
+      {
+        "name": "check",
+        "trigger": "before_broadcast"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "wa",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Mine"
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "wa",
+        "sender_id": "+15559876543",
+        "content": {
+          "type": "edit",
+          "target_event_id": "room-1#0",
+          "new_content": {
+            "type": "text",
+            "body": "Yours now"
+          },
+          "edit_source": "sender"
+        },
+        "event_type": "edit"
+      },
+      "expect": {
+        "result": {
+          "blocked": true,
+          "reason": "not_original_author",
+          "event": null
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Mine"
+          },
+          "metadata": {
+            "edited": {
+              "$absent": true
+            }
+          }
+        }
+      ]
+    },
+    "hooks": {
+      "updated": [],
+      "check": [
+        {
+          "event": {
+            "content": {
+              "type": "text",
+              "body": "Mine"
+            }
+          }
+        }
+      ]
+    },
+    "framework_events": {
+      "room-1": [
+        {
+          "event": "delivery_succeeded",
+          "channel_id": "ws"
+        },
+        "event_processed"
+      ]
+    }
+  }
+}

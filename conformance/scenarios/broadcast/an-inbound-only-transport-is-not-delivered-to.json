@@ -1,0 +1,75 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "broadcast/an-inbound-only-transport-is-not-delivered-to",
+  "title": "A transport whose direction is INBOUND gets no deliver(); the others that send do",
+  "rules": [
+    "§10.2 step 3d",
+    "§4.2"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "intake",
+        "type": "websocket",
+        "category": "transport",
+        "direction": "inbound"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport",
+        "direction": "outbound"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "intake"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "deliveries": {
+      "room-1": {
+        "intake": [],
+        "ws": [
+          {
+            "content": {
+              "type": "text",
+              "body": "Hello"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

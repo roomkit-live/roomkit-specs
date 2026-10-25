@@ -1,0 +1,134 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "rooms/a-hook-that-closes-the-room-refuses-its-event",
+  "title": "A locked hook that closes its room has the event refused room_closed, nothing stored, its injected events dropped",
+  "rules": [
+    "§10.1 step 9a",
+    "§5.1",
+    "§9.4 Injected events",
+    "§13.5",
+    "§26.1"
+  ],
+  "reentrancy": [
+    "commit@locked"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "closer",
+        "trigger": "before_broadcast",
+        "reactions": [
+          {
+            "when": {
+              "text": "goodbye"
+            },
+            "do": [
+              {
+                "call": "close_room",
+                "room_id": "$room",
+                "as": "close"
+              }
+            ],
+            "result": {
+              "action": "allow",
+              "injected_events": [
+                {
+                  "target_channel_ids": [
+                    "ws"
+                  ],
+                  "event": {
+                    "content": {
+                      "type": "text",
+                      "body": "dropped"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "goodbye"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": true,
+          "reason": "room_closed",
+          "event": null
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": []
+    },
+    "rooms": {
+      "room-1": {
+        "status": "closed"
+      }
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": []
+      }
+    },
+    "actions": {
+      "close": [
+        {
+          "result": {
+            "status": "closed"
+          }
+        }
+      ]
+    },
+    "framework_events": {
+      "room-1": [
+        "room_closed",
+        {
+          "event": "room_refused_event",
+          "status": "closed",
+          "operation": "inbound",
+          "event_type": "message"
+        }
+      ]
+    }
+  }
+}

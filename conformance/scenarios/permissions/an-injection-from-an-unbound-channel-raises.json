@@ -1,0 +1,65 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "permissions/an-injection-from-an-unbound-channel-raises",
+  "title": "A direct injection naming a channel the room does not bind raises, with nothing written",
+  "rules": [
+    "§10.5",
+    "§7.5 rule 2"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "ws",
+      "content": {
+        "type": "text",
+        "body": "Hi"
+      },
+      "expect": {
+        "error": "channel_not_bound"
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": []
+    },
+    "bindings": {
+      "room-1": {
+        "ws": null
+      }
+    },
+    "deliveries": {
+      "room-1": {
+        "sms": []
+      }
+    },
+    "framework_events": {
+      "room-1": []
+    }
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "reentrancy/a-locked-hook-commits-a-record",
+  "title": "A record a locked hook commits takes the room lock again at once and commits ahead of the event",
+  "rules": [
+    "§13.5",
+    "§10.5 A record outside the pipeline",
+    "§10.1 step 9a"
+  ],
+  "reentrancy": [
+    "commit@locked"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "tracer",
+        "trigger": "before_broadcast",
+        "reactions": [
+          {
+            "when": {
+              "text": "trigger"
+            },
+            "do": [
+              {
+                "call": "commit_event",
+                "room_id": "$room",
+                "event": {
+                  "content": {
+                    "type": "text",
+                    "body": "trace"
+                  },
+                  "status": "delivered",
+                  "visibility": "none"
+                },
+                "as": "trace"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "trigger"
+        }
+      },
+      "expect": {
+        "result": {
+          "event": {
+            "index": 1
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "trace"
+          },
+          "visibility": "none"
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "trigger"
+          }
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": [
+          {
+            "content": {
+              "type": "text",
+              "body": "trigger"
+            }
+          }
+        ]
+      }
+    },
+    "actions": {
+      "trace": [
+        {
+          "result": {
+            "id": "room-1#0"
+          }
+        }
+      ]
+    }
+  }
+}

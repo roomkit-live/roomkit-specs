@@ -1,0 +1,99 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "permissions/targets-by-access-and-self",
+  "title": "A broadcast reaches the bindings that read, never its own source, whatever their mute",
+  "rules": [
+    "§7.5 rule 1",
+    "§7.5 rule 5",
+    "§10.2 step 2",
+    "§10.2 step 4"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "reader",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "writer",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "off",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "quiet",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "reader",
+            "access": "read_only"
+          },
+          {
+            "channel_id": "writer",
+            "access": "write_only"
+          },
+          {
+            "channel_id": "off",
+            "access": "none"
+          },
+          {
+            "channel_id": "quiet",
+            "muted": true
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "deliveries": {
+      "room-1": {
+        "sms": [],
+        "reader": [
+          {
+            "id": "room-1#0"
+          }
+        ],
+        "writer": [],
+        "off": [],
+        "quiet": [
+          {
+            "id": "room-1#0"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "hooks/an-async-hook-on-a-sync-trigger-observes",
+  "title": "A hook registered ASYNC on BEFORE_BROADCAST runs as an observer, once the chain allowed, on the payload it left",
+  "rules": [
+    "§9.2",
+    "§9.3"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "rewrite",
+        "trigger": "before_broadcast",
+        "reactions": [
+          {
+            "result": {
+              "action": "modify",
+              "event": {
+                "content": {
+                  "type": "text",
+                  "body": "rewritten"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "watcher",
+        "trigger": "before_broadcast",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "original"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "hook_order": [
+      "rewrite",
+      "watcher"
+    ],
+    "hooks": {
+      "watcher": [
+        {
+          "trigger": "before_broadcast",
+          "event": {
+            "content": {
+              "type": "text",
+              "body": "rewritten"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

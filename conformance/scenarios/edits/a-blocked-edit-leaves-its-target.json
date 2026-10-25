@@ -1,0 +1,125 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "edits/a-blocked-edit-leaves-its-target",
+  "title": "An edit a hook blocks is stored BLOCKED and leaves its target unchanged, firing no ON_EVENT_UPDATED",
+  "rules": [
+    "§10.3 State updates",
+    "§10.1 step 12",
+    "§10.3 Mutation triggers"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "wa",
+        "type": "whatsapp",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "wa"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "updated",
+        "trigger": "on_event_updated",
+        "execution": "async"
+      },
+      {
+        "name": "gate",
+        "trigger": "before_broadcast",
+        "reactions": [
+          {
+            "when": {
+              "type": "edit"
+            },
+            "result": {
+              "action": "block",
+              "reason": "no edits"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "wa",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Original"
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "wa",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "edit",
+          "target_event_id": "room-1#0",
+          "new_content": {
+            "type": "text",
+            "body": "Changed"
+          },
+          "edit_source": "sender"
+        },
+        "event_type": "edit"
+      },
+      "expect": {
+        "result": {
+          "blocked": true,
+          "event": {
+            "status": "blocked",
+            "blocked_by": "gate"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Original"
+          },
+          "metadata": {
+            "edited": {
+              "$absent": true
+            }
+          }
+        },
+        {
+          "type": "edit",
+          "status": "blocked",
+          "blocked_by": "gate"
+        }
+      ]
+    },
+    "hooks": {
+      "updated": []
+    }
+  }
+}

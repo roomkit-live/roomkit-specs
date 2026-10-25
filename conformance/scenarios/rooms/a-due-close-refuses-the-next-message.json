@@ -1,0 +1,85 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "rooms/a-due-close-refuses-the-next-message",
+  "title": "A message into a room whose timers fell due is refused as if they had run on time, room_closed reported first",
+  "rules": [
+    "§5.1",
+    "§10.1 step 2",
+    "§10.1 step 6",
+    "§8.2",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "create_room",
+      "room": {
+        "id": "room-1",
+        "timers": {
+          "inactive_after_seconds": 0,
+          "closed_after_seconds": 0
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello?"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": true,
+          "reason": "room_closed",
+          "event": null
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": []
+    },
+    "rooms": {
+      "room-1": {
+        "status": "closed"
+      }
+    },
+    "bindings": {
+      "room-1": {
+        "sms": null
+      }
+    },
+    "framework_events": {
+      "room-1": [
+        "room_created",
+        {
+          "event": "room_paused",
+          "reason": "timer"
+        },
+        {
+          "event": "room_closed",
+          "reason": "timer"
+        },
+        {
+          "event": "room_refused_event",
+          "status": "closed",
+          "operation": "inbound"
+        }
+      ]
+    }
+  }
+}

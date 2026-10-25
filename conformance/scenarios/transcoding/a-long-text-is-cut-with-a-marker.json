@@ -1,0 +1,134 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "transcoding/a-long-text-is-cut-with-a-marker",
+  "title": "A text past a target's max_length is cut to it, counted in code points, with three full stops within the limit",
+  "rules": [
+    "§6.6",
+    "§10.2 step 3c"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "console",
+        "type": "websocket",
+        "category": "transport",
+        "capabilities": {
+          "media_types": [
+            "text",
+            "rich",
+            "media",
+            "location"
+          ]
+        }
+      },
+      {
+        "id": "short",
+        "type": "sms",
+        "category": "transport",
+        "capabilities": {
+          "media_types": [
+            "text"
+          ],
+          "max_length": 8
+        }
+      },
+      {
+        "id": "tiny",
+        "type": "sms",
+        "category": "transport",
+        "capabilities": {
+          "media_types": [
+            "text"
+          ],
+          "max_length": 3
+        }
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "console"
+          },
+          {
+            "channel_id": "short"
+          },
+          {
+            "channel_id": "tiny"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "console",
+      "content": {
+        "type": "text",
+        "body": "Thank you for calling"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "console",
+      "content": {
+        "type": "text",
+        "body": "Thanks"
+      }
+    }
+  ],
+  "expect": {
+    "deliveries": {
+      "room-1": {
+        "short": [
+          {
+            "content": {
+              "type": "text",
+              "body": "Thank..."
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "Thanks"
+            }
+          }
+        ],
+        "tiny": [
+          {
+            "content": {
+              "type": "text",
+              "body": "Tha"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "Tha"
+            }
+          }
+        ]
+      }
+    },
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Thank you for calling"
+          }
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "Thanks"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "hooks/off-lock-tickets-keep-arrival-order",
+  "title": "Two messages that took tickets commit in arrival order, even when the second's check ends first",
+  "rules": [
+    "§9.5.1",
+    "§9.5.1 Order",
+    "§10.1 step 5a"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "scan",
+        "trigger": "before_broadcast",
+        "needs_lock": false,
+        "reactions": [
+          {
+            "when": {
+              "text": "first"
+            },
+            "gate": "first"
+          },
+          {
+            "when": {
+              "text": "second"
+            },
+            "gate": "second"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "first"
+        }
+      },
+      "background": true,
+      "as": "first"
+    },
+    {
+      "wait_for": "first"
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "second"
+        }
+      },
+      "background": true,
+      "as": "second"
+    },
+    {
+      "wait_for": "second"
+    },
+    {
+      "open": "second"
+    },
+    {
+      "open": "first"
+    },
+    {
+      "await": "first",
+      "expect": {
+        "result": {
+          "event": {
+            "index": 0
+          }
+        }
+      }
+    },
+    {
+      "await": "second",
+      "expect": {
+        "result": {
+          "event": {
+            "index": 1
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "first"
+          }
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "second"
+          }
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": [
+          {
+            "content": {
+              "type": "text",
+              "body": "first"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "second"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

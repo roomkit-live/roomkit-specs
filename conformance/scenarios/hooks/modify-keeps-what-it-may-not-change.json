@@ -1,0 +1,124 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "hooks/modify-keeps-what-it-may-not-change",
+  "title": "A BEFORE_BROADCAST modify replaces what the event says, and the fields that say which event it is are put back",
+  "rules": [
+    "§9.4 A `BEFORE_BROADCAST` replacement",
+    "§10.1 step 9"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "redact",
+        "trigger": "before_broadcast",
+        "reactions": [
+          {
+            "result": {
+              "action": "modify",
+              "event": {
+                "content": {
+                  "type": "text",
+                  "body": "My card is [redacted]"
+                },
+                "metadata": {
+                  "redacted": true
+                },
+                "chain_depth": 3,
+                "source": {
+                  "channel_id": "ws",
+                  "channel_type": "websocket",
+                  "direction": "inbound"
+                },
+                "idempotency_key": "forged"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "My card is 4111"
+        },
+        "idempotency_key": "k-1"
+      },
+      "expect": {
+        "result": {
+          "event": {
+            "content": {
+              "type": "text",
+              "body": "My card is [redacted]"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "My card is [redacted]"
+          },
+          "metadata": {
+            "redacted": true
+          },
+          "chain_depth": 0,
+          "source": {
+            "channel_id": "sms",
+            "direction": "inbound"
+          },
+          "idempotency_key": "k-1",
+          "status": "delivered"
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": [
+          {
+            "content": {
+              "type": "text",
+              "body": "My card is [redacted]"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

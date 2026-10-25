@@ -1,0 +1,64 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "edits/an-injected-change-s-refusal-raises",
+  "title": "A direct injection of an edit step 8a refuses raises with its reason, nothing written",
+  "rules": [
+    "§10.5",
+    "§10.3 Validation rule 7"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "sms"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "ws",
+      "event_type": "edit",
+      "content": {
+        "type": "edit",
+        "target_event_id": "no-such-event",
+        "new_content": {
+          "type": "text",
+          "body": "x"
+        },
+        "edit_source": "sender"
+      },
+      "expect": {
+        "error": {
+          "name": "change_refused",
+          "reason": "target_event_not_found"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": []
+    }
+  }
+}

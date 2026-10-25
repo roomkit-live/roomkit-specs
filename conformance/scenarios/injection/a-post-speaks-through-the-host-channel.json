@@ -1,0 +1,146 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "injection/a-post-speaks-through-the-host-channel",
+  "title": "A post attaches the host channel on first use, reaches the room's transports and asks no agent",
+  "rules": [
+    "§10.5 The host's own voice",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ai",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "never"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ai"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "post",
+      "room_id": "room-1",
+      "content": {
+        "type": "text",
+        "body": "Your appointment is at 3 pm"
+      },
+      "expect": {
+        "result": {
+          "id": "room-1#0",
+          "source": {
+            "channel_id": "host",
+            "channel_type": "host",
+            "direction": "inbound"
+          },
+          "addressed_to": []
+        }
+      }
+    },
+    {
+      "call": "post",
+      "room_id": "room-1",
+      "content": {
+        "type": "text",
+        "body": "See you then"
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Your appointment is at 3 pm"
+          }
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "See you then"
+          }
+        }
+      ]
+    },
+    "bindings": {
+      "room-1": {
+        "host": {
+          "channel_type": "host",
+          "category": "transport"
+        }
+      }
+    },
+    "deliveries": {
+      "room-1": {
+        "sms": [
+          {
+            "id": "room-1#0"
+          },
+          {
+            "id": "room-1#1"
+          }
+        ]
+      }
+    },
+    "turns": {
+      "room-1": {
+        "ai": []
+      }
+    },
+    "framework_events": {
+      "room-1": [
+        {
+          "event": "room_channel_attached",
+          "channel_id": "host"
+        },
+        {
+          "event": "delivery_succeeded",
+          "channel_id": "sms",
+          "event_id": "room-1#0"
+        },
+        {
+          "event": "event_processed",
+          "event_id": "room-1#0"
+        },
+        {
+          "event": "delivery_succeeded",
+          "channel_id": "sms",
+          "event_id": "room-1#1"
+        },
+        {
+          "event": "event_processed",
+          "event_id": "room-1#1"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "reentrancy/a-locked-hook-updates-an-earlier-event",
+  "title": "A direct update a locked hook makes takes the lock again at once, and its trigger fires once the lock is released",
+  "rules": [
+    "§10.3 Direct mutation",
+    "§10.3 A direct change from the room's work",
+    "§13.5"
+  ],
+  "reentrancy": [
+    "change@locked"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "amender",
+        "trigger": "before_broadcast",
+        "reactions": [
+          {
+            "when": {
+              "text": "second"
+            },
+            "do": [
+              {
+                "call": "update_event",
+                "room_id": "$room",
+                "event_id": "room-1#0",
+                "content": {
+                  "type": "text",
+                  "body": "first, amended"
+                },
+                "as": "amend"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "updated",
+        "trigger": "on_event_updated",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "first"
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "second"
+        }
+      },
+      "expect": {
+        "result": {
+          "event": {
+            "index": 1
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "first, amended"
+          }
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "second"
+          }
+        }
+      ]
+    },
+    "hooks": {
+      "updated": [
+        {
+          "event": {
+            "id": "room-1#0",
+            "content": {
+              "type": "text",
+              "body": "first, amended"
+            }
+          }
+        }
+      ]
+    },
+    "actions": {
+      "amend": [
+        {
+          "result": {
+            "id": "room-1#0"
+          }
+        }
+      ]
+    }
+  }
+}

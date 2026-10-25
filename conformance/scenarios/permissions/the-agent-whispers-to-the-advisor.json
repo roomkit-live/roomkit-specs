@@ -1,0 +1,107 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "permissions/the-agent-whispers-to-the-advisor",
+  "title": "An agent whose binding is visible to the advisor alone answers the advisor, not the customer",
+  "rules": [
+    "§7.3",
+    "§7.4",
+    "§7.5 rule 4",
+    "§10.2 step 2"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws_advisor",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "ai",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "Suggest 4.5%"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws_advisor"
+          },
+          {
+            "channel_id": "ai",
+            "visibility": "ws_advisor"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "What rate can I get?"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "What rate can I get?"
+          },
+          "visibility": "all"
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "Suggest 4.5%"
+          },
+          "visibility": "ws_advisor",
+          "status": "delivered"
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "sms": [],
+        "ws_advisor": [
+          {
+            "id": "room-1#0"
+          },
+          {
+            "id": "room-1#1"
+          }
+        ]
+      }
+    }
+  }
+}

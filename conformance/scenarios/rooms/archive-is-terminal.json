@@ -1,0 +1,130 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "rooms/archive-is-terminal",
+  "title": "An archived room refuses events, a close of it is refused, and an archive of it does nothing",
+  "rules": [
+    "§5.1",
+    "§5.1 A transition from a status it does not leave from",
+    "§8.2",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "closed",
+        "trigger": "on_room_closed",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "close_room",
+      "room_id": "room-1",
+      "expect": {
+        "result": {
+          "status": "closed"
+        }
+      }
+    },
+    {
+      "call": "archive_room",
+      "room_id": "room-1",
+      "expect": {
+        "result": {
+          "status": "archived"
+        }
+      }
+    },
+    {
+      "call": "archive_room",
+      "room_id": "room-1",
+      "expect": {
+        "result": {
+          "status": "archived"
+        }
+      }
+    },
+    {
+      "call": "close_room",
+      "room_id": "room-1",
+      "expect": {
+        "error": "transition_refused"
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello?"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": true,
+          "reason": "room_closed",
+          "event": null
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": []
+    },
+    "rooms": {
+      "room-1": {
+        "status": "archived"
+      }
+    },
+    "hooks": {
+      "closed": [
+        {
+          "trigger": "on_room_closed",
+          "room_id": "room-1"
+        }
+      ]
+    },
+    "framework_events": {
+      "room-1": [
+        "room_closed",
+        "room_archived",
+        {
+          "event": "room_refused_event",
+          "status": "archived",
+          "operation": "inbound",
+          "event_type": "message"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,463 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "reentrancy/hook-bodies-that-update-stop-at-the-hook-calls",
+  "title": "Direct updates made from ASYNC hook bodies each draw one of the cascade's hook calls; past them, one raises and writes nothing",
+  "rules": [
+    "§10.3 A direct change from the room's work",
+    "§8.3 The hook calls of a cascade",
+    "§10.1 step 16"
+  ],
+  "reentrancy": [
+    "change@cascade"
+  ],
+  "notes": "max_chain_depth is 1, so the cascade has 10 hook calls: the AFTER_BROADCAST body's update draws the first, each ON_EVENT_UPDATED body's the next; the eleventh raises.",
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "after",
+        "trigger": "after_broadcast",
+        "execution": "async",
+        "reactions": [
+          {
+            "when": {
+              "text": "start"
+            },
+            "do": [
+              {
+                "call": "update_event",
+                "room_id": "$room",
+                "event_id": "room-1#0",
+                "content": {
+                  "type": "text",
+                  "body": "v1"
+                },
+                "as": "update"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "updated",
+        "trigger": "on_event_updated",
+        "execution": "async",
+        "reactions": [
+          {
+            "when": {
+              "text": "v1"
+            },
+            "do": [
+              {
+                "call": "update_event",
+                "room_id": "$room",
+                "event_id": "room-1#0",
+                "content": {
+                  "type": "text",
+                  "body": "v2"
+                },
+                "as": "update"
+              }
+            ]
+          },
+          {
+            "when": {
+              "text": "v2"
+            },
+            "do": [
+              {
+                "call": "update_event",
+                "room_id": "$room",
+                "event_id": "room-1#0",
+                "content": {
+                  "type": "text",
+                  "body": "v3"
+                },
+                "as": "update"
+              }
+            ]
+          },
+          {
+            "when": {
+              "text": "v3"
+            },
+            "do": [
+              {
+                "call": "update_event",
+                "room_id": "$room",
+                "event_id": "room-1#0",
+                "content": {
+                  "type": "text",
+                  "body": "v4"
+                },
+                "as": "update"
+              }
+            ]
+          },
+          {
+            "when": {
+              "text": "v4"
+            },
+            "do": [
+              {
+                "call": "update_event",
+                "room_id": "$room",
+                "event_id": "room-1#0",
+                "content": {
+                  "type": "text",
+                  "body": "v5"
+                },
+                "as": "update"
+              }
+            ]
+          },
+          {
+            "when": {
+              "text": "v5"
+            },
+            "do": [
+              {
+                "call": "update_event",
+                "room_id": "$room",
+                "event_id": "room-1#0",
+                "content": {
+                  "type": "text",
+                  "body": "v6"
+                },
+                "as": "update"
+              }
+            ]
+          },
+          {
+            "when": {
+              "text": "v6"
+            },
+            "do": [
+              {
+                "call": "update_event",
+                "room_id": "$room",
+                "event_id": "room-1#0",
+                "content": {
+                  "type": "text",
+                  "body": "v7"
+                },
+                "as": "update"
+              }
+            ]
+          },
+          {
+            "when": {
+              "text": "v7"
+            },
+            "do": [
+              {
+                "call": "update_event",
+                "room_id": "$room",
+                "event_id": "room-1#0",
+                "content": {
+                  "type": "text",
+                  "body": "v8"
+                },
+                "as": "update"
+              }
+            ]
+          },
+          {
+            "when": {
+              "text": "v8"
+            },
+            "do": [
+              {
+                "call": "update_event",
+                "room_id": "$room",
+                "event_id": "room-1#0",
+                "content": {
+                  "type": "text",
+                  "body": "v9"
+                },
+                "as": "update"
+              }
+            ]
+          },
+          {
+            "when": {
+              "text": "v9"
+            },
+            "do": [
+              {
+                "call": "update_event",
+                "room_id": "$room",
+                "event_id": "room-1#0",
+                "content": {
+                  "type": "text",
+                  "body": "v10"
+                },
+                "as": "update"
+              }
+            ]
+          },
+          {
+            "when": {
+              "text": "v10"
+            },
+            "do": [
+              {
+                "call": "update_event",
+                "room_id": "$room",
+                "event_id": "room-1#0",
+                "content": {
+                  "type": "text",
+                  "body": "v11"
+                },
+                "as": "update"
+              }
+            ]
+          },
+          {
+            "when": {
+              "text": "v11"
+            },
+            "do": [
+              {
+                "call": "update_event",
+                "room_id": "$room",
+                "event_id": "room-1#0",
+                "content": {
+                  "type": "text",
+                  "body": "v12"
+                },
+                "as": "update"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "kit": {
+      "max_chain_depth": 1
+    }
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "start"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "v10"
+          }
+        }
+      ]
+    },
+    "hooks": {
+      "updated": [
+        {
+          "event": {
+            "content": {
+              "type": "text",
+              "body": "v1"
+            }
+          }
+        },
+        {
+          "event": {
+            "content": {
+              "type": "text",
+              "body": "v2"
+            }
+          }
+        },
+        {
+          "event": {
+            "content": {
+              "type": "text",
+              "body": "v3"
+            }
+          }
+        },
+        {
+          "event": {
+            "content": {
+              "type": "text",
+              "body": "v4"
+            }
+          }
+        },
+        {
+          "event": {
+            "content": {
+              "type": "text",
+              "body": "v5"
+            }
+          }
+        },
+        {
+          "event": {
+            "content": {
+              "type": "text",
+              "body": "v6"
+            }
+          }
+        },
+        {
+          "event": {
+            "content": {
+              "type": "text",
+              "body": "v7"
+            }
+          }
+        },
+        {
+          "event": {
+            "content": {
+              "type": "text",
+              "body": "v8"
+            }
+          }
+        },
+        {
+          "event": {
+            "content": {
+              "type": "text",
+              "body": "v9"
+            }
+          }
+        },
+        {
+          "event": {
+            "content": {
+              "type": "text",
+              "body": "v10"
+            }
+          }
+        }
+      ]
+    },
+    "actions": {
+      "update": {
+        "$unordered": [
+          {
+            "result": {
+              "content": {
+                "type": "text",
+                "body": "v1"
+              }
+            }
+          },
+          {
+            "result": {
+              "content": {
+                "type": "text",
+                "body": "v2"
+              }
+            }
+          },
+          {
+            "result": {
+              "content": {
+                "type": "text",
+                "body": "v3"
+              }
+            }
+          },
+          {
+            "result": {
+              "content": {
+                "type": "text",
+                "body": "v4"
+              }
+            }
+          },
+          {
+            "result": {
+              "content": {
+                "type": "text",
+                "body": "v5"
+              }
+            }
+          },
+          {
+            "result": {
+              "content": {
+                "type": "text",
+                "body": "v6"
+              }
+            }
+          },
+          {
+            "result": {
+              "content": {
+                "type": "text",
+                "body": "v7"
+              }
+            }
+          },
+          {
+            "result": {
+              "content": {
+                "type": "text",
+                "body": "v8"
+              }
+            }
+          },
+          {
+            "result": {
+              "content": {
+                "type": "text",
+                "body": "v9"
+              }
+            }
+          },
+          {
+            "result": {
+              "content": {
+                "type": "text",
+                "body": "v10"
+              }
+            }
+          },
+          {
+            "error": "reentry_loop_cap"
+          }
+        ]
+      }
+    }
+  }
+}

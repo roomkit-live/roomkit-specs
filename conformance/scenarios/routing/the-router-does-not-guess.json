@@ -1,0 +1,70 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "routing/the-router-does-not-guess",
+  "title": "A channel bound to several rooms that name no one routes a stranger to a new room",
+  "rules": [
+    "§10.4 A router MUST NOT guess",
+    "§10.4"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-a",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          }
+        ]
+      },
+      {
+        "id": "room-b",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello?"
+        }
+      },
+      "expect": {
+        "result": {
+          "event": {
+            "room_id": "$r1"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-a": [],
+      "room-b": [],
+      "$r1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Hello?"
+          }
+        }
+      ]
+    }
+  }
+}

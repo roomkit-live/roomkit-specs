@@ -1,0 +1,68 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "injection/an-agent-s-injection-goes-out",
+  "title": "An event injected from an intelligence channel is its own words going out: OUTBOUND",
+  "rules": [
+    "§10.5"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ai",
+        "type": "ai",
+        "category": "intelligence"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ai"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "ai",
+      "content": {
+        "type": "text",
+        "body": "A reminder"
+      },
+      "expect": {
+        "result": {
+          "source": {
+            "channel_id": "ai",
+            "direction": "outbound"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "deliveries": {
+      "room-1": {
+        "sms": [
+          {
+            "content": {
+              "type": "text",
+              "body": "A reminder"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

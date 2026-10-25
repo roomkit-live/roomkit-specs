@@ -1,0 +1,109 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "hooks/sync-hooks-run-in-priority-order",
+  "title": "SYNC hooks run by priority, lower first, each reading the payload the previous one left",
+  "rules": [
+    "§9.3",
+    "§9.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "third",
+        "trigger": "before_broadcast",
+        "priority": 2
+      },
+      {
+        "name": "first",
+        "trigger": "before_broadcast",
+        "priority": 0,
+        "reactions": [
+          {
+            "result": {
+              "action": "modify",
+              "event": {
+                "content": {
+                  "type": "text",
+                  "body": "rewritten"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "second",
+        "trigger": "before_broadcast",
+        "priority": 1
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "original"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "hook_order": [
+      "first",
+      "second",
+      "third"
+    ],
+    "hooks": {
+      "first": [
+        {
+          "event": {
+            "content": {
+              "type": "text",
+              "body": "original"
+            }
+          }
+        }
+      ],
+      "second": [
+        {
+          "event": {
+            "content": {
+              "type": "text",
+              "body": "rewritten"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

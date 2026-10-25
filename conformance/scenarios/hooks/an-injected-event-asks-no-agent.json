@@ -1,0 +1,146 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "hooks/an-injected-event-asks-no-agent",
+  "title": "An injected event reaches its transport targets only; an agent it names reads it, unasked",
+  "rules": [
+    "§9.4 Injected events",
+    "§19.3 rule 6"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "ai",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "never"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "ai"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "notify",
+        "trigger": "before_broadcast",
+        "reactions": [
+          {
+            "when": {
+              "text": "Hello"
+            },
+            "result": {
+              "action": "allow",
+              "injected_events": [
+                {
+                  "target_channel_ids": [
+                    "ws",
+                    "ai",
+                    "nobody"
+                  ],
+                  "event": {
+                    "content": {
+                      "type": "text",
+                      "body": "notice"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        },
+        "addressed_to": []
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Hello"
+          }
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "notice"
+          },
+          "visibility": "ai,ws",
+          "chain_depth": 0
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": [
+          {
+            "content": {
+              "type": "text",
+              "body": "Hello"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "notice"
+            }
+          }
+        ],
+        "sms": []
+      }
+    },
+    "turns": {
+      "room-1": {
+        "ai": []
+      }
+    }
+  }
+}

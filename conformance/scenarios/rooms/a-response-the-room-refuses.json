@@ -1,0 +1,115 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "rooms/a-response-the-room-refuses",
+  "title": "An answer whose room closed during its turn is refused at its commit, nothing of it stored, and room_refused_event says so",
+  "rules": [
+    "§5.1",
+    "§8.2",
+    "§10.1 step 14",
+    "§26.1"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ai",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "do": [
+              {
+                "call": "close_room",
+                "room_id": "$room",
+                "as": "close"
+              }
+            ],
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "Too late"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ai"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "event": {
+            "status": "delivered"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Hello"
+          }
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "sms": []
+      }
+    },
+    "framework_events": {
+      "room-1": [
+        "room_closed",
+        {
+          "$unordered": [
+            {
+              "event": "room_refused_event",
+              "status": "closed",
+              "operation": "reentry",
+              "event_type": "message"
+            },
+            {
+              "event": "event_processed",
+              "event_id": "room-1#0"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

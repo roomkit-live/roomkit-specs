@@ -1,0 +1,79 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "transcoding/a-composite-flattens-to-one-text",
+  "title": "A composite whose parts all become text reaches a text channel as one text, the parts joined by a newline",
+  "rules": [
+    "§6.6"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "console",
+        "type": "websocket",
+        "category": "transport",
+        "capabilities": {
+          "media_types": [
+            "text",
+            "rich",
+            "media",
+            "location"
+          ]
+        }
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "console"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "console",
+      "content": {
+        "type": "composite",
+        "parts": [
+          {
+            "type": "text",
+            "body": "Look at this"
+          },
+          {
+            "type": "media",
+            "url": "https://example.com/p.jpg",
+            "mime_type": "image/jpeg",
+            "caption": "Pic"
+          }
+        ]
+      }
+    }
+  ],
+  "expect": {
+    "deliveries": {
+      "room-1": {
+        "sms": [
+          {
+            "content": {
+              "type": "text",
+              "body": "Look at this\n[Media: Pic]"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

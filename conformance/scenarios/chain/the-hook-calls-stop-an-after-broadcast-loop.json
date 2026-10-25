@@ -1,0 +1,308 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "chain/the-hook-calls-stop-an-after-broadcast-loop",
+  "title": "An AFTER_BROADCAST hook that injects after every event stops at its cascade's hook calls, each injection one deeper",
+  "rules": [
+    "§8.3 The hook calls of a cascade",
+    "§8.3",
+    "§10.1 step 16",
+    "§9.5.1 The room's work outside the lock"
+  ],
+  "notes": "A call from an ASYNC hook's body draws one of the cascade's 10 x max_chain_depth hook calls and is one deeper than the hook's event.",
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "echo",
+        "trigger": "after_broadcast",
+        "execution": "async",
+        "reactions": [
+          {
+            "repeat": true,
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "ws",
+                "content": {
+                  "type": "text",
+                  "body": "again"
+                },
+                "as": "again"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "kit": {
+      "max_chain_depth": 1
+    }
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "start"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "start"
+          },
+          "chain_depth": 0
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "again"
+          },
+          "status": "delivered",
+          "chain_depth": 1
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "again"
+          },
+          "status": "delivered",
+          "chain_depth": 2
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "again"
+          },
+          "status": "delivered",
+          "chain_depth": 3
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "again"
+          },
+          "status": "delivered",
+          "chain_depth": 4
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "again"
+          },
+          "status": "delivered",
+          "chain_depth": 5
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "again"
+          },
+          "status": "delivered",
+          "chain_depth": 6
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "again"
+          },
+          "status": "delivered",
+          "chain_depth": 7
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "again"
+          },
+          "status": "delivered",
+          "chain_depth": 8
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "again"
+          },
+          "status": "delivered",
+          "chain_depth": 9
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "again"
+          },
+          "status": "delivered",
+          "chain_depth": 10
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "again"
+          },
+          "status": "blocked",
+          "blocked_by": "reentry_loop_cap",
+          "chain_depth": 11
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "sms": [
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
+            }
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
+            }
+          }
+        ]
+      }
+    },
+    "actions": {
+      "again": [
+        {
+          "result": {
+            "status": "delivered"
+          }
+        },
+        {
+          "result": {
+            "status": "delivered"
+          }
+        },
+        {
+          "result": {
+            "status": "delivered"
+          }
+        },
+        {
+          "result": {
+            "status": "delivered"
+          }
+        },
+        {
+          "result": {
+            "status": "delivered"
+          }
+        },
+        {
+          "result": {
+            "status": "delivered"
+          }
+        },
+        {
+          "result": {
+            "status": "delivered"
+          }
+        },
+        {
+          "result": {
+            "status": "delivered"
+          }
+        },
+        {
+          "result": {
+            "status": "delivered"
+          }
+        },
+        {
+          "result": {
+            "status": "delivered"
+          }
+        },
+        {
+          "result": {
+            "status": "blocked",
+            "blocked_by": "reentry_loop_cap"
+          }
+        }
+      ]
+    }
+  }
+}

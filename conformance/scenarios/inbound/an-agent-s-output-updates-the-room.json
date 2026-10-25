@@ -1,0 +1,72 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "inbound/an-agent-s-output-updates-the-room",
+  "title": "A channel output's metadata updates are merged into the room; a key of the implementation's namespace is dropped",
+  "rules": [
+    "§10.1 step 15",
+    "§5.1 The implementation's metadata keys"
+  ],
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ai",
+        "type": "ai",
+        "category": "intelligence",
+        "on_event": [
+          {
+            "output": {
+              "metadata_updates": {
+                "stage": "qualified",
+                "roomkit:forged": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ai"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "I want a loan"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "rooms": {
+      "room-1": {
+        "metadata": {
+          "stage": "qualified",
+          "roomkit:forged": {
+            "$absent": true
+          }
+        }
+      }
+    }
+  }
+}
