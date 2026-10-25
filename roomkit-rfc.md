@@ -1711,24 +1711,29 @@ This allows the AI to tailor its response (e.g., short text for SMS, rich for Em
 
 **Answer text events:** `AIChannel` MAY project the text of its answer onto
 the realtime bus as `TEXT_DELTA` while it is written, and does so only when
-the host turns it on: it is off by default. It serves an observer that is not
-a transport of the room (a debugger, a dashboard, the code that delegated a
-task): the live pipe to transports (§10.2) reaches only bound transports, and
-a delegated turn's text, collected for its result (§23.3), reaches none.
-`BEFORE_BROADCAST` (§9.5) judges the message the room stores, never this
-stream: while it is on, an answer a hook blocks or redacts reaches a
-subscriber whole, so a host that filters or redacts answers MUST NOT turn it
-on. Turned on, it publishes in the room it speaks in, a delegated task's child
-room included, the text coalesced on a window (a time and a size), each event
-carrying `text`, `round` (the model round the text belongs to) and
+the host turns it on: it is off by default. It serves the code that delegated
+a task (§23.3), whose agent's text, collected for its result, reaches no
+transport: the live pipe to transports (§10.2) reaches only bound ones. Turned
+on, the channel publishes the text coalesced on a window (a time and a size),
+each event carrying `text`, `round` (the model round the text belongs to) and
 `channel_id`. A round's buffered text MUST be published before that round's
 tool-call events and at its end, so an observer reads text and calls in the
 order they came; joined in order, a turn's `TEXT_DELTA` texts are its answer's
 text, every round's, where a delegated task's result holds the last segment
-only. Like every ephemeral of a turn, it reaches no one the answer would not
-reach (§8.4), and it is never persisted: the stored message remains the
-answer. Turned off, the channel publishes no `TEXT_DELTA`, and its window has
-no effect.
+only. `BEFORE_BROADCAST` (§9.5) judges the message a room stores, never this
+stream. The owner MUST therefore publish a turn's `TEXT_DELTA` only when the
+turn's reader commits its rows as a delegated task's trace, without crossing
+`BEFORE_BROADCAST` (§23.3 step 5). It drops every other turn's (an answer in a
+room, in a child room a transport is shared into, or to another channel's
+message in a child room) and one published after its turn; an executor
+publishes none outside a turn. The reader says so before its first read, so
+before any of the turn's text is produced (§10.6.4). A subscriber thus reads
+no answer text a hook judges, only the trace's; a delegation cut short may
+store less of it than was published, the text its executor read ahead of the
+reader (§10.6.4). Like every ephemeral of a turn, it also reaches no one the
+answer would not reach (§8.4), and it is never persisted: the trace's stored
+messages remain the answer. Turned off, the channel publishes no `TEXT_DELTA`,
+and its window has no effect.
 
 **Tool-call composition events:** A provider whose structured stream exposes
 tool-call argument fragments MAY yield `StreamToolCallDelta` before the complete
@@ -4019,7 +4024,8 @@ event the room stores; what a turn publishes live is neither blocked nor
 modified by it. A turn's reasoning and its tool calls' arguments and results
 are published as they are produced, whatever a hook later decides about the
 answer, and an ephemeral that carries the answer's own text (`TEXT_DELTA`,
-§6.4) is published only when the host turns it on.
+§6.4) is published only when the host turns it on, and only for a turn read as
+a delegated task's trace, whose rows no hook judges either.
 
 ### 8.5 Responses: What They Answer, and Whether They Were Consumed
 
@@ -17347,7 +17353,9 @@ conversation = 0, hand_back = "relay")` is called:
    crossing `BEFORE_BROADCAST` or a delivery lane: a TOOL_CALL_END keeps the
    call's structured copy, and a delegation cancelled or failed while a call
    runs closes that call with `status = failed`, so no start row stays
-   pending. When a transport is shared, the response is committed as a
+   pending. The trace's text is the only answer text whose `TEXT_DELTA` is
+   published while it is written (§6.4). When a transport is shared, the
+   response is committed as a
    room's response is (§10.1 steps 9 to 14, §7.5 rule 2): each row, buffered
    or streamed, crosses `BEFORE_BROADCAST` and the agent's right to write and
    rides the child room's delivery lane, so the shared transport receives the
