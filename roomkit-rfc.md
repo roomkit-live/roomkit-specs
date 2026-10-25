@@ -1709,21 +1709,26 @@ The AI channel MUST skip events originating from itself to prevent infinite loop
 channel's capabilities to the AI at generation time, NOT post-process the output.
 This allows the AI to tailor its response (e.g., short text for SMS, rich for Email).
 
-**Answer text events:** `AIChannel` SHOULD project the text of its answer
-onto the realtime bus as `TEXT_DELTA` while it is written, for an observer
-that is not a transport of the room (a debugger, a dashboard, the code that
-delegated a task): the live pipe to transports (§10.2) reaches only bound
-transports, and a delegated turn's text, collected for its result (§23.3),
-reaches none. It publishes in the room it speaks in, a delegated task's child
+**Answer text events:** `AIChannel` MAY project the text of its answer onto
+the realtime bus as `TEXT_DELTA` while it is written, and does so only when
+the host turns it on: it is off by default. It serves an observer that is not
+a transport of the room (a debugger, a dashboard, the code that delegated a
+task): the live pipe to transports (§10.2) reaches only bound transports, and
+a delegated turn's text, collected for its result (§23.3), reaches none.
+`BEFORE_BROADCAST` (§9.5) judges the message the room stores, never this
+stream: while it is on, an answer a hook blocks or redacts reaches a
+subscriber whole, so a host that filters or redacts answers MUST NOT turn it
+on. Turned on, it publishes in the room it speaks in, a delegated task's child
 room included, the text coalesced on a window (a time and a size), each event
 carrying `text`, `round` (the model round the text belongs to) and
 `channel_id`. A round's buffered text MUST be published before that round's
 tool-call events and at its end, so an observer reads text and calls in the
-order they came; joined in order, a turn's `TEXT_DELTA` texts are its
-answer's text, every round's, where a delegated task's result holds the last
-segment only. Like every ephemeral of a turn, it reaches no one the answer
-would not reach (§8.4), and it is never persisted: the stored message remains
-the answer.
+order they came; joined in order, a turn's `TEXT_DELTA` texts are its answer's
+text, every round's, where a delegated task's result holds the last segment
+only. Like every ephemeral of a turn, it reaches no one the answer would not
+reach (§8.4), and it is never persisted: the stored message remains the
+answer. Turned off, the channel publishes no `TEXT_DELTA`, and its window has
+no effect.
 
 **Tool-call composition events:** A provider whose structured stream exposes
 tool-call argument fragments MAY yield `StreamToolCallDelta` before the complete
@@ -4009,6 +4014,13 @@ supervisor, an internal agent, or one the room keeps from writing shows no
 live activity to the room's subscribers. Framework events (§8.2) are not
 ephemerals and are unaffected.
 
+**No hook judges a turn's ephemerals.** `BEFORE_BROADCAST` (§9.5) runs on the
+event the room stores; what a turn publishes live is neither blocked nor
+modified by it. A turn's reasoning and its tool calls' arguments and results
+are published as they are produced, whatever a hook later decides about the
+answer, and an ephemeral that carries the answer's own text (`TEXT_DELTA`,
+§6.4) is published only when the host turns it on.
+
 ### 8.5 Responses: What They Answer, and Whether They Were Consumed
 
 An intelligence channel answers events: a participant's message, an
@@ -5027,7 +5039,9 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   `send_event()` returns that record (§10.5); a message is refused with no
   event, nothing of it stored
   (`InboundResult(blocked=true, reason=reentry_loop_cap)`):
-  - one that names its room, first thing at §10.1 step 1, nothing created;
+  - one that names its room, first thing at §10.1 step 1, once a call
+    acting for an organization has had the room read with it (§17.2),
+    nothing created;
   - one that names a room the store does not hold, at step 2, before
     creating it;
   - a routed one, at step 2: before creating a new room, or, when it lands
@@ -5082,8 +5096,11 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 1. RESOLVE CHANNEL
    ├── A message that names its room and draws on the reentry budget of
    │   that room's work (§9.5.1: made under its lock, in its admission
-   │   order, or from its deliveries and turns), past that budget →
-   │   refused first thing, nothing created or stored:
+   │   order, or from its deliveries and turns): when the call acts for
+   │   an organization, the room is read with it first, and a room of
+   │   another organization fails as not found, nothing drawn (§17.2);
+   │   past that budget → refused first thing after that read, nothing
+   │   created or stored:
    │   InboundResult(blocked=true, reason=reentry_loop_cap). A routed
    │   message of its deliveries and turns, and one of theirs naming a room
    │   the store does not hold, are charged at step 2, once their room is
@@ -6424,7 +6441,11 @@ the revocation (§7.5 rule 7), which only an explicit attach grants again.
 Nothing is written either way. As step 2's attach (§10.1, §13.6), the first
 post's wait for the room lock runs within the call's `process_timeout`, one
 deadline from the call's start to its commit, and the section it opens runs
-to its end whatever becomes of the caller.
+to its end whatever becomes of the caller. Made from the room's own work
+(§9.5.1), the post draws its pass before the attach, after the room's scoped
+read and the check of a revocation: past the budget, its event is stored
+`BLOCKED` with `reentry_loop_cap` and the channel is not attached, no
+`CHANNEL_ATTACHED` record written nor hook run.
 
 `addressed_to` defaults to `[]`: the host's message solicits no intelligence
 channel unless it names one (§19.3). `participant_id` names who speaks: it
@@ -9744,6 +9765,9 @@ PipelineDebugTaps
 ├── session_scoped: bool = true             # Prefix files with session ID + timestamp
 └── sample_rate: int | null                 # Override sample rate for output files (null = use internal format)
 ```
+
+An `output_dir` with a `..` component is a configuration error: the
+implementation refuses it and never writes the taps elsewhere.
 
 When `stages` is `"all"`, taps are inserted at every stage boundary. When a
 list is provided, only the named stages are captured. Valid stage names:
@@ -14868,9 +14892,10 @@ should live in the integration surface layer.
   caller's, each acts as it does on a room that does not exist: a transition,
   a membership change or read, an attach, a detach or a binding change, a
   publication or a subscription, a room hook's registration, enabling,
-  disabling and removal, and a claim for a strategy, fail as not found, as do
-  an injection, a record, a steer that names the room, a delivery, a
-  delegation, a task, a greeting, a regeneration and a feedback, before any
+  disabling and removal, and a claim for a strategy, fail as not found, as
+  do a message that names the room (§10.1 step 1), an injection, a record, a
+  steer that names the room, a delivery, a delegation, a task, a greeting, a
+  regeneration and a feedback, before any
   hook runs, anything is queued or drawn from a reentry budget, a turn starts
   or is steered, or a room is created; an update or a delete is a no-op that
   fires nothing, and a task's cancel cancels nothing. A steer that names no
