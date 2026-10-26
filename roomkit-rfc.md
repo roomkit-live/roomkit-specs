@@ -6622,7 +6622,16 @@ MUST serialize each message and parse it on the other side, for two reasons.
 Every test run against it then checks the exact messages a distributed
 backend carries. And no object of the turn is shared between the owner and
 the executor: neither the channel's stream, its response-metadata record, its
-tool-call markers nor an exception crosses as a live object. An
+tool-call markers nor an exception crosses as a live object. One part of a
+message is exempt: the committed events a `turn_request` carries (its
+`event` and its context's history) are frozen records the store already
+shares with every reader (§14.4), and the in-memory backend MAY hand them to
+the executor as they are, the rest of the request serialized and parsed. A
+history is most of a request (51 events made 87 % of one in the reference
+implementation), so its parse is most of an in-memory turn's cost. A value
+of an event's metadata that JSON has no form for then reaches an in-memory
+executor as itself and a distributed one as its text; a suite that checks
+the wire runs against a distributed backend. An
 implementation MUST NOT keep a local shortcut that hands the owner the
 channel's objects; a distributed backend carries the in-memory backend's
 messages on another transport, never a second path. The behaviour
