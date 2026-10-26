@@ -14395,27 +14395,28 @@ and never inherits the page's cap.
 - A committed event changes only through the write interface (§4.3). An
   event, room, binding or participant object returned by a read
   (`get_event`, `list_events`, conversation reads, `get_room`,
-  `list_rooms`, `find_rooms`, `get_binding`, `list_bindings`,
-  `get_participant`, `list_participants`) or by the write that stored it is
-  a snapshot of the stored record: the caller MUST treat it as frozen and
-  MUST NOT mutate it, and changes it through a copy and a write. A store MAY
+  `list_rooms`, `find_room`, `find_latest_room`, `get_binding`,
+  `list_bindings`, `get_participant`, `list_participants`) or by the write
+  that stored it is a snapshot of the stored record: the caller MUST treat
+  it as frozen and MUST NOT mutate it, and changes it through a copy and a
+  write. So are the room, bindings and participants of the `RoomContext` a
+  hook or a channel receives, which are read from the store. A store MAY
   return the same object to multiple readers (an in-memory store sharing
   its stored objects) or a fresh object per read (a SQL store deserialising
   rows) — both are conformant, and a portable caller can rely on neither
   aliasing nor isolation.
 - A store MUST own its stored representation from the moment a write
   returns: a caller's later mutation of an object it passed to `add_event`
-  / `update_event` / `create_room` / `update_room` / `add_binding` /
-  `update_binding` / `add_participant` / `update_participant` /
+  / `update_event` / `create_room` / `update_room` / `create_binding` /
+  `update_binding` / `create_participant` / `update_participant` /
   `set_private_state` MUST NOT alter stored state (copy-in and
   serialisation both satisfy this).
 - A room's private state returned by a read is caller-owned: mutating it
   MUST NOT affect stored state — changes are applied through
   `set_private_state`.
 
-Sharing a read is what a per-message cost asks for: a message to an agent
-reads its room, bindings and participants about twenty times, and a copy
-per read was a sixth of its time in the reference implementation.
+A message reads its room's records many times, so a store that shares its
+reads saves a copy each time; one that copies per read stays conformant.
 
 ---
 
