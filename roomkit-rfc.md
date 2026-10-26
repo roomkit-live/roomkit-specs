@@ -3932,7 +3932,9 @@ it MUST NOT be asked either: a text injected into the model's session at a
 depth whose `chain_depth + 1 >= max_chain_depth` enters it silently, which
 takes it into its context and asks no answer, whatever brings it: a
 broadcast, a delivery (`deliver()`, §22), a pipeline's handoff greeting, or
-a direct injection naming that depth. It leaves no record: the model
+a direct injection. A text injected directly from a turn, a tool call or a
+hook's body is at least as deep as that work, whatever depth the caller
+names, as a delivery's is (above). It leaves no record: the model
 answers what it heard last (§12.4), not one event. A loop of a tool call's
 observer posting into the room, the model answering the post and calling
 again then ends at the limit, as one between two agents does. The depth of
