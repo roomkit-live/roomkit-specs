@@ -1,0 +1,118 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "hooks/an-observer-s-call-into-its-room-waits-for-its-delivery",
+  "title": "A call an ASYNC hook of BEFORE_BROADCAST makes into its room returns once its delivery set has run, with its delivery results",
+  "rules": [
+    "§9.2",
+    "§10.1 step 18",
+    "§9.5.1 The room's work outside the lock"
+  ],
+  "notes": "Nothing waits for an observer of a SYNC trigger, so its call into the room waits for nothing it holds and returns as a caller's does, once its delivery set has run: its delivery results name the channel it reached.",
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "watcher",
+        "trigger": "before_broadcast",
+        "execution": "async",
+        "reactions": [
+          {
+            "when": {
+              "text": "start"
+            },
+            "do": [
+              {
+                "call": "process_inbound",
+                "room_id": "$room",
+                "message": {
+                  "channel_id": "ws",
+                  "sender_id": "u-1",
+                  "content": {
+                    "type": "text",
+                    "body": "again"
+                  }
+                },
+                "as": "again"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "start"
+        }
+      }
+    },
+    {
+      "idle": true
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "start"
+          },
+          "status": "delivered"
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "again"
+          },
+          "status": "delivered"
+        }
+      ]
+    },
+    "actions": {
+      "again": [
+        {
+          "result": {
+            "blocked": false,
+            "delivery_results": {
+              "sms": {
+                "$present": true
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
