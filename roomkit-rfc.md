@@ -550,7 +550,9 @@ the state the host sets for a channel (§10.6.2). Only the framework writes
 them. A room's creation and an integrator's metadata update that name such a
 key MUST be refused, and so MUST a `TurnHost` verb that does (§10.6.5); a
 channel's `metadata_updates` that name one have it dropped with a warning,
-the rest applied (§10.1 step 15).
+the rest applied (§10.1 step 15). A key the implementation keeps as a room's
+private state (§14.1) reserves the same key of the metadata, whatever its
+prefix, and falls under the same rule: only the framework writes it there.
 
 **RoomTimers:**
 
@@ -3956,7 +3958,9 @@ the work delivers in, after the locked check, what routing wrote kept
 **The hook calls of a cascade.** Apart from its passes, each cascade MUST
 count the calls of the ASYNC hooks it fires once an event's delivery set has
 run (§10.1 step 16's `AFTER_BROADCAST` hooks, a change's `ON_EVENT_UPDATED`
-and `ON_EVENT_DELETED` hooks, §10.3), all its hooks together on one counter of
+and `ON_EVENT_DELETED` hooks, §10.3) and of those its work fires on a SYNC
+trigger, which observe the payload the chain left (§9.2), all its hooks
+together on one counter of
 the same size, `10 × max_chain_depth`, shared by reference with the cascades
 those calls start as the passes are. While a hook's body runs, each call it
 makes into its room draws one hook call as it starts, a message that creates
@@ -4232,7 +4236,8 @@ restrict registration, and a hook may be registered SYNC or ASYNC on any
 trigger. On a SYNC trigger the hooks registered SYNC run as the chain of
 Section 9.3, which may block or modify; then, unless the chain blocked, the
 hooks registered ASYNC run as observers on the payload it left (ON_TOOL_CALL
-tells its observers of a block too, Section 9.3). On an ASYNC trigger every
+tells its observers of a block too, Section 9.3), as the work of the cascade
+that fired the trigger (§8.3, §9.5.1). On an ASYNC trigger every
 registered hook runs, concurrently, whatever its declared mode, and what it
 returns is discarded. ON_IDENTITY_AMBIGUOUS and ON_IDENTITY_UNKNOWN are decided
 by the identity hooks of Section 11.2, registered apart; a hook registered on
@@ -4955,7 +4960,13 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   hook's body, a handler the check's report of a `hook_error` or a
   `hook_timeout` awaits (§8.2), and the message's parse (a channel's
   `handle_inbound()`, §10.1 step 4). It stands there only while that work
-  runs: a task the work spawned that outlives it stands in no order. The call
+  runs: a task the work spawned that outlives it stands in no order. A locked
+  hook stands there only while its body runs, though its section holds the
+  lock longer: a task the body spawned acts for it while the body runs,
+  awaited or not, and once the body has returned the task's calls are new
+  arrivals, neither refused nor adopted. They wait for the lock the section
+  holds, so a later hook of that section that awaits the task, when the task
+  calls the room, waits until its own timeout (§9.3). The call
   is adopted by that work: it would otherwise wait for the ticket its own
   caller holds or, made from a parse, open a cascade of its own for every
   message. It runs every hook under the lock and commits ahead of the event
@@ -4988,11 +4999,14 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   deliveries and turns: a transport's `deliver()`, an agent's turn, a tool
   handler, a `TurnHost` verb; and the body of an ASYNC hook a cascade fires
   once an event's delivery set has run: §10.1 step 16's `AFTER_BROADCAST`
-  hooks, a change's `ON_EVENT_UPDATED` and `ON_EVENT_DELETED` hooks, §10.3)
-  is a new arrival: it takes a ticket when an off-lock hook fires for its
-  event, and `process_timeout` bounds it (§13.6). While that delivery, turn
-  or hook body runs, a call into its own room MUST draw on the reentry budget
-  of the cascade that delivers, the one whose delivery set runs it or that
+  hooks, a change's `ON_EVENT_UPDATED` and `ON_EVENT_DELETED` hooks, §10.3;
+  and the body of an ASYNC hook observing a SYNC trigger the room's work
+  fires, §9.2, an observer of a trigger fired outside any cascade having a
+  budget of its own) is a new arrival: it takes a ticket when an off-lock
+  hook fires for its event, and `process_timeout` bounds it (§13.6). While
+  that delivery, turn or hook body runs, a call into its own room MUST draw
+  on the reentry budget of the cascade that delivers, the one whose delivery
+  set runs it or that
   fired the hook, and so does the cascade the call starts, so that a
   transport whose delivery sends into its room, or a hook that posts after
   every event, stops at the cap. A delivery's or a turn's call draws one of
@@ -5386,9 +5400,12 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   │   room's register of the sources and names it has seen fixes the
     │   │   rank of this source among those whose names read like its own,
     │   │   and the event carries its name, its rank and its source
-    │   │   (metadata.author, any value the event came with dropped); a
-    │   │   reader reads that record while the event's source is the one
-    │   │   recorded. The room's named participants take their seats first,
+    │   │   (metadata.author, any value the event came with dropped), a
+    │   │   record fixed at the commit: a direct update of the event (§10.3)
+    │   │   keeps it, and writes none on an event committed with none,
+    │   │   whatever the update carries under the key; a reader reads that
+    │   │   record while the event's source is the one recorded. The room's
+    │   │   named participants take their seats first,
     │   │   in the order they joined, each the lowest rank no source whose
     │   │   name reads like theirs holds; a source new to the names it uses
     │   │   takes one more than the highest rank those sources hold; a source
@@ -5417,7 +5434,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   │   stored before, or a process of an earlier implementation writing
     │   │   there) is merged into it at the room's next turn that names its
     │   │   sender: a register only adds, so the merge gives none of its
-    │   │   ranks again
+    │   │   ranks again. Only the runtime writes that key of the metadata
+    │   │   (§5.1), so no other writer plants a register whose ranks the
+    │   │   merge would take
     ├── Commit atomically, as ONE logical transaction:
     │   ├── Store event with status=DELIVERED and, as its visibility, the
     │   │   intersection of its own and its source binding's (§7.3), an
@@ -5489,10 +5508,11 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     ├── Store all tasks and observations from hooks + channels
     └── Apply the room metadata updates of the cascade's channel outputs
         (§6.1), from on_event() and deliver() alike: merged key by key in
-        the order the targets answered, and written once, as a partial
-        update of the room (update_room, §14.1); a key of the
-        implementation's namespace (§5.1) is dropped with a warning, the
-        rest applied
+        the order the targets answered, and written once per delivery set,
+        under the room lock, as a partial update of the room (update_room,
+        §14.1); a key of the implementation's namespace, or one a key of
+        the room's private state reserves (§5.1, §14.1), is dropped with a
+        warning, the rest applied
 
 16. RUN AFTER_BROADCAST ASYNC HOOKS
     ├── After the event's delivery set completes — "all channels have
@@ -6056,7 +6076,8 @@ over the timeline) see every stored-state change regardless of origin.
 `delete_event(room_id, event_id, cascade_replies)`, each naming the caller's
 `organization_id` or none — for host applications that own authorization on
 their own surfaces. Direct `update_event()` replaces the provided fields
-wholesale and adds no `edited` marker. Direct `delete_event()` is a HARD
+wholesale and adds no `edited` marker; the record of the event's author stays
+the one fixed at its commit (§10.1 step 12). Direct `delete_event()` is a HARD
 delete, which MUST remove:
 
 ```
@@ -6361,8 +6382,10 @@ with a budget and a depth of its own (§9.5.1). Past its budget it is stored
 draws nothing and returns the event its key committed (§13.4).
 
 An injection takes §10.1's steps 1 to 4 its own way. The channel it names
-MUST be registered, and the event is admitted as a message is before anything
-is read: an instruction's refusals (§10.1.1), `standalone` on another type,
+MUST be registered, a channel the room still binds included (a binding
+outlives an unregistration), and the event is admitted as a message is before
+anything is read: an instruction's refusals (§10.1.1), `standalone` on
+another type,
 the visibility `internal`, as its visibility or its response visibility
 (§7.3); and a key in the publication namespace, which a message would merely
 lose, is refused (§5.2). None of step 2 runs. The room is read scoped to
@@ -13943,7 +13966,11 @@ tasks it awaits as its own): code that holds it may call an operation that
 takes it again, as a host serialising its own changes of a room does (Section
 19.7), and as a tool handler does where an implementation runs delivery under
 the room lock (§10.2). Under delivery lanes a turn holds no lock, and a tool
-handler's call into its room is a new arrival (§9.5.1).
+handler's call into its room is a new arrival (§9.5.1). A hook's body lends
+the lock its section holds only while the body runs: a task the body spawned,
+awaited or not, takes the lock again while the body runs, and once the body
+has returned it takes it as any later caller does, though the section still
+holds it (§9.5.1).
 
 For single-process deployments, an in-memory lock manager (per-room async mutex)
 is sufficient. When a persistent store is shared across multiple processes an
@@ -14114,7 +14141,8 @@ ConversationStore (interface)
 │   │   # author_register, §10.1 step 12; a discussion's task results to
 │   │   # post are _speak_queue_results, §19.7.5 rule 16) and reserves the
 │   │   # same key in the room's metadata: a store that keeps no private
-│   │   # state keeps it there, and set removes the copy there.
+│   │   # state keeps it there, and set removes the copy there. Only the
+│   │   # runtime writes the key there (§5.1).
 │   ├── find_room_id_by_binding(channel_id, participant_id, identity_id, filter,
 │   │                           recipient_key) → string | null
 │   │                                         # newest room whose binding of
