@@ -173,6 +173,14 @@
         "deliver": {
           "$ref": "#/$defs/reactions"
         },
+        "streams": {
+          "description": "Whether the channel takes a streamed response as it is written (§6.1 `supports_streaming_delivery`): its `deliver_stream` reads what it is handed, each item recorded under `streamed`, to the stream's end unless a reaction stops it.",
+          "type": "boolean"
+        },
+        "deliver_stream": {
+          "description": "Reactions of a streaming channel's `deliver_stream` (§6.1), tried once per stream it is handed: `stop_after` stops its reading after that text delta, `fail` raises once it stopped.",
+          "$ref": "#/$defs/reactions"
+        },
         "model": {
           "$ref": "#/$defs/model"
         },
@@ -411,6 +419,10 @@
         },
         "result": {
           "$ref": "#/$defs/hook_result"
+        },
+        "stop_after": {
+          "description": "In a `deliver_stream` reaction: the channel stops reading the stream once it was handed the text delta this string equals (§12.2 step 13s).",
+          "type": "string"
         }
       }
     },
@@ -1011,6 +1023,19 @@
             }
           }
         },
+        "streamed": {
+          "description": "Per room and streaming channel, the items its `deliver_stream` read, in order: `{\"text\": ...}` for a text delta, `{\"row\": event}` for a stored row, `{\"failed\": true}` where the stream raised.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": [
+                "array",
+                "object"
+              ]
+            }
+          }
+        },
         "turns": {
           "type": "object",
           "additionalProperties": {
@@ -1128,12 +1153,19 @@
       }
     },
     "model_round": {
-      "description": "One generation's answer: its text, the calls it makes, why it stopped, and what it used.",
+      "description": "One generation's answer: its text, the calls it makes, why it stopped, and what it used; or its text, then a failure.",
       "type": "object",
       "additionalProperties": false,
       "properties": {
         "text": {
           "type": "string"
+        },
+        "deltas": {
+          "description": "The round's text, in the pieces the model writes it, waiting between two, so a reader is handed each apart (§10.6.4): in place of `text`.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
         "calls": {
           "type": "array",
@@ -1149,6 +1181,10 @@
           "additionalProperties": {
             "type": "integer"
           }
+        },
+        "fails": {
+          "description": "The model fails with this message once it wrote its text, before its calls and its end: the response stream raises (§12.2 step 13s).",
+          "type": "string"
         }
       }
     },

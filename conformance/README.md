@@ -7,9 +7,9 @@ calls, and what the RFC says they come to. Each implementation has a runner
 that reads the scenarios and runs them on its own core; the suite says nothing
 of either implementation's API.
 
-This is the first cut (roomkit-rs step 3, milestone 1). It covers Level 0
-without the turn backend and streaming; "Coverage" says what it holds and what
-it does not yet.
+This is the first cut (roomkit-rs step 3, milestone 1), with streamed
+responses since roomkit-rs step 4, milestone 6. It covers Level 0 without the
+turn backend; "Coverage" says what it holds and what it does not yet.
 
 ## Layout
 
@@ -142,6 +142,11 @@ of the setup are not compared.
   - its delivery succeeds, and its turn (`on_event` of an intelligence
     channel) answers nothing;
   - `parse`, `deliver` and `on_event` hold its **reactions** (below);
+  - with `streams`, it takes a streamed response as it is written (§6.1
+    `supports_streaming_delivery`): its `deliver_stream` reads what it is
+    handed to the stream's end, recording each item under `streamed`, and
+    its `deliver_stream` reactions may stop it (`stop_after`) or make it
+    raise once it stopped (`fail`);
   - an `ai` channel with a `model` is a **scripted agent** instead (below).
 - `rooms`: each is created (`id`, `organization_id`, `metadata`, `timers`),
   then each of its `bindings` attached (`channel_id`, `category`, `access`,
@@ -170,6 +175,7 @@ left, the call does what it does by default. A reaction:
 | `fail` | Then raises, with this message |
 | `respond` | Event templates: the turn's response events (`on_event` only) |
 | `output` | `tasks`, `observations` and `metadata_updates` of the channel's output |
+| `stop_after` | In a `deliver_stream` reaction: the channel stops reading the stream once it was handed the text delta this string equals |
 | `result` | A hook's HookResult (§9.4). A modify's `event` is a patch on the payload: its members replace the payload's. Its injected events, tasks and observations are templates |
 
 **Templates.** A runner completes a template, written in the serialized form,
@@ -198,7 +204,12 @@ scripted.
   `arguments` (an object, default `{}`), and `cut` when the response was
   cut short over its arguments, which never arrived whole: the round's last
   call, under a `finish_reason` that cuts calls (§6.4). A generation past
-  the last round fails the turn.
+  the last round fails the turn. `deltas` writes the round's text in those
+  pieces, in place of `text`: the model waits between two, so a reader is
+  handed each apart (deltas yielded without waiting may cross as one,
+  §10.6.4). `fails` makes the model fail with that message once it wrote
+  its text, before its calls and its end: its response stream raises
+  (§12.2 step 13s).
 - `tools`: what the agent serves, each declared with its `name`,
   `description` and `parameters` (a JSON Schema), and answering every call
   one way: `returns` a text, `raises` an error of a `kind` with a `message`
@@ -274,6 +285,7 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `hooks` | Per scripted hook, its calls in order: `trigger`, `room_id`, `event` (the payload, when an event), `tool_call` (the payload, when a tool call: `name`, `tool_call_id`, `arguments` as the call runs or was stopped with, and, on `on_tool_call`, `result` as the model reads it, `is_error`, `refused`, `cancelled` and `error_detail`) |
 | `hook_order` | The order in which the hooks it lists were called |
 | `deliveries` | Per room and channel, the events a scripted channel's `deliver()` received, as delivered, in order |
+| `streamed` | Per room and streaming channel, the items its `deliver_stream` read, in order: `{"text": ...}` for a text delta, `{"row": event}` for a row the store holds, `{"failed": true}` where the stream raised |
 | `turns` | Per room and intelligence channel, the events its `on_event()` received |
 | `observations`, `tasks` | Per room, the stored side effects |
 | `actions` | Per action label, the outcomes of its runs, in the order they ended |
@@ -382,29 +394,33 @@ at one instant) stay in each implementation's own tests.
 
 ## Coverage
 
-117 scenarios. Counted by the sections their `rules` cite (a scenario counts once
+121 scenarios. Counted by the sections their `rules` cite (a scenario counts once
 under each section it cites):
 
 | Section | Scenarios | Section | Scenarios |
 |---|---|---|---|
-| §1.4 | 1 | §9.4 | 6 |
-| §4.2, §5.2, §5.5, §5.8 | 1 each | §9.5.1 | 14 |
-| §5.1 | 16 | §10.1 | 46 |
-| §6.1 | 2 | §10.1.1 | 4 |
-| §6.4 | 4 | §10.2 | 13 |
-| §6.6 | 7 | §10.3 | 12 |
-| §7.2 | 4 | §10.4 | 4 |
-| §7.3 | 5 | §10.5 | 19 |
-| §7.4 | 2 | §10.6.8 | 1 |
-| §7.5 | 17 | §13.4 | 3 |
-| §8.1 | 3 | §13.5 | 8 |
-| §8.2 | 19 | §13.6 | 3 |
-| §8.3 | 8 | §14.3 | 1 |
-| §9.1 | 5 | §17.2 | 2 |
-| §9.2 | 11 | §19.3, §19.3.1 | 4, 1 |
+| §1.4 | 1 | §10.1 | 48 |
+| §4.2 | 1 | §10.1.1 | 4 |
+| §5.1 | 16 | §10.2 | 13 |
+| §5.2 | 1 | §10.3 | 12 |
+| §5.5 | 1 | §10.4 | 4 |
+| §5.8 | 1 | §10.5 | 19 |
+| §6.1 | 4 | §10.6.4 | 1 |
+| §6.4 | 6 | §10.6.8 | 1 |
+| §6.6 | 7 | §12.2 | 3 |
+| §7.2 | 4 | §13.4 | 3 |
+| §7.3 | 5 | §13.5 | 8 |
+| §7.4 | 2 | §13.6 | 3 |
+| §7.5 | 17 | §14.3 | 1 |
+| §8.1 | 3 | §17.2 | 2 |
+| §8.2 | 19 | §19.3 | 4 |
+| §8.3 | 9 | §19.3.1 | 1 |
+| §9.1 | 5 | §21.1 | 2 |
+| §9.2 | 14 | §21.6 | 1 |
 | §9.3 | 14 | §26.1 | 41 |
-| §21.1 | 2 | §21.6 | 1 |
-| Appendix A.9 | 2 | Appendix B.1, B.2, B.4, B.5, B.6, B.7 | 1 each |
+| §9.4 | 6 | Appendix A.9 | 2 |
+| §9.5 | 1 | Appendix B.1, B.2, B.4, B.5, B.6, B.7 | 1 each |
+| §9.5.1 | 16 |  |  |
 
 Every row of the §26.1 trigger and framework-event table is asserted, by
 scenarios citing each place it names, and each of the 16 reentrancy cells is
@@ -412,6 +428,10 @@ named by one.
 
 **Not covered yet** (M1's second pass):
 
+- §12.2 step 13s: a reader that stops while a call runs or before it starts,
+  a streaming channel that fails, a stream with no streaming target; a
+  connection that does not stream receiving the rows only, never an event the
+  store lacks (`no-event-the-store-lacks`, after RMK-994's fix in roomkit);
 - §7.5 rule 8 and §10.1.1 rule 7: what a channel is handed of the room's history
   (a scripted turn does not record its context yet), a deleted event's content
   withheld from it (§10.3);

@@ -1,0 +1,180 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "streaming/stream-fails-mid-answer",
+  "title": "A model that fails mid-answer: the text it produced is stored, not marked cancelled, handed to the streaming channel before the failure, and the turn's error reaches the caller and ON_ERROR",
+  "rules": [
+    "§12.2 step 13s",
+    "§12.2 step 14s",
+    "§6.1",
+    "§9.2"
+  ],
+  "notes": "The stored text reaches the streaming channel through the stream, before the failure, and never again through deliver(); the other targets receive it as an ordinary delivery. The failure fires ON_ERROR and is the call's error.",
+  "setup": {
+    "channels": [
+      {
+        "id": "web",
+        "type": "webhook",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport",
+        "streams": true
+      },
+      {
+        "id": "agent",
+        "type": "ai",
+        "model": {
+          "rounds": [
+            {
+              "deltas": [
+                "The ",
+                "answer "
+              ],
+              "fails": "the provider went away"
+            }
+          ]
+        }
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "web"
+          },
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "agent",
+            "category": "intelligence"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "errors",
+        "trigger": "on_error",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "web",
+        "sender_id": "alice",
+        "content": {
+          "type": "text",
+          "body": "What is the answer?"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": {
+            "$contains": "the provider went away"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "index": 0,
+          "type": "message",
+          "source": {
+            "channel_id": "web"
+          }
+        },
+        {
+          "index": 1,
+          "type": "message",
+          "status": "delivered",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "responds_to": "room-1#0",
+          "content": {
+            "type": "text",
+            "body": "The answer "
+          },
+          "metadata": {
+            "cancelled": {
+              "$absent": true
+            },
+            "loop_end_reason": {
+              "$absent": true
+            }
+          }
+        }
+      ]
+    },
+    "streamed": {
+      "room-1": {
+        "ws": [
+          {
+            "text": "The "
+          },
+          {
+            "text": "answer "
+          },
+          {
+            "row": {
+              "id": "room-1#1",
+              "index": 1,
+              "content": {
+                "body": "The answer "
+              }
+            }
+          },
+          {
+            "failed": true
+          }
+        ]
+      }
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": [
+          {
+            "index": 0
+          }
+        ],
+        "web": [
+          {
+            "id": "room-1#1",
+            "content": {
+              "body": "The answer "
+            }
+          }
+        ]
+      }
+    },
+    "hooks": {
+      "errors": [
+        {
+          "trigger": "on_error",
+          "room_id": "room-1"
+        }
+      ]
+    },
+    "models": {
+      "agent": [
+        {
+          "tool_results": []
+        }
+      ]
+    }
+  }
+}

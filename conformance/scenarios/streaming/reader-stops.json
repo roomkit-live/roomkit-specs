@@ -1,0 +1,155 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "streaming/reader-stops",
+  "title": "A streaming channel that stops reading mid-answer: the text it was handed is stored marked cancelled, the turn records cancelled, and nothing more is generated",
+  "rules": [
+    "§12.2 step 13s",
+    "§6.4",
+    "§10.6.4"
+  ],
+  "notes": "The reader sets the pace: the model's next piece is never read, and the generation is closed. The text the reader was handed is stored as the turn's answer with metadata.cancelled true, and the turn's record says cancelled. The streaming channel, which stopped reading, is not delivered that row; the others are.",
+  "setup": {
+    "channels": [
+      {
+        "id": "web",
+        "type": "webhook",
+        "category": "transport"
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport",
+        "streams": true,
+        "deliver_stream": [
+          {
+            "stop_after": "answer "
+          }
+        ]
+      },
+      {
+        "id": "agent",
+        "type": "ai",
+        "model": {
+          "rounds": [
+            {
+              "deltas": [
+                "The ",
+                "answer ",
+                "is 42."
+              ],
+              "usage": {
+                "input_tokens": 20,
+                "output_tokens": 5
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "web"
+          },
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "agent",
+            "category": "intelligence"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "web",
+        "sender_id": "alice",
+        "content": {
+          "type": "text",
+          "body": "What is the answer?"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "index": 0,
+          "type": "message",
+          "source": {
+            "channel_id": "web"
+          }
+        },
+        {
+          "index": 1,
+          "type": "message",
+          "status": "delivered",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "responds_to": "room-1#0",
+          "content": {
+            "type": "text",
+            "body": "The answer "
+          },
+          "metadata": {
+            "cancelled": true,
+            "loop_end_reason": "cancelled"
+          }
+        }
+      ]
+    },
+    "streamed": {
+      "room-1": {
+        "ws": [
+          {
+            "text": "The "
+          },
+          {
+            "text": "answer "
+          }
+        ]
+      }
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": [
+          {
+            "index": 0
+          }
+        ],
+        "web": [
+          {
+            "id": "room-1#1",
+            "content": {
+              "body": "The answer "
+            }
+          }
+        ]
+      }
+    },
+    "models": {
+      "agent": [
+        {
+          "tool_results": []
+        }
+      ]
+    }
+  }
+}
