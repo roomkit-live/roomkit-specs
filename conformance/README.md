@@ -30,7 +30,10 @@ scenarios here, push them, fetch, and sync again. The target finds this
 repository beside the implementation's main checkout, from a worktree too
 (`SPECS_DIR`), takes `origin/main` by default (`SPECS_REF`), and refuses a commit
 `origin/main` does not hold unless `ALLOW_UNPUSHED=1`, for a copy that is synced
-again before it is pushed.
+again before it is pushed. Each implementation's `make all` runs
+`conformance-check` first, which fails while the copy's commit is not on
+`origin/main` (a warning under `ALLOW_UNPUSHED=1`), and is skipped where no
+roomkit-specs checkout sits beside it, as in CI.
 
 | Implementation | Copy | Runner | Run it |
 |---|---|---|---|
