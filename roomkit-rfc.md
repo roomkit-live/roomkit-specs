@@ -3906,7 +3906,9 @@ an event chain.
   tool call, §12.4, §21.4), at least as deep as the answer that issued it.
   Once the turn or the tool call is over, the floor is gone: work it began (a
   task it spawned) calls as a new arrival with the depth of its own event, 0
-  for a message it creates (§9.5.1).
+  for a message it creates (§9.5.1). The observers of a trigger it fired per
+  tool call are the exception: they keep the floor (below), as do those of a
+  speech-to-speech model's words.
 - A call into a room made from the body of an ASYNC hook a cascade fires once
   an event's delivery set has run (§10.1 step 16's `AFTER_BROADCAST` hooks, a
   change's `ON_EVENT_UPDATED` and `ON_EVENT_DELETED` hooks, §10.3; and an
@@ -4025,7 +4027,14 @@ is at least as deep as the turn was when the trigger fired, once the turn is
 over too. The observers of a tool call outside a turn (a realtime or a
 conference tool call) send at least as deep as the answer that issued it
 (above), once the call is over too, whichever report fires them: its gate,
-its outcome, or an ending that cut it.
+its outcome, or an ending that cut it. The hooks a speech-to-speech model's
+answer fires (its transcription, final or partial, §12.4) run at least as
+deep as that answer, and their observers send at least that deep once the
+answer's processing is over too; the user's words open a chain. A hook on
+a model's words that tells it something at each of its answers, by a post
+or an injection, then ends at the limit. An observer of any other trigger
+that calls once the work that fired it is over calls as work of its own
+(§9.5.1).
 
 **Requirements:**
 
@@ -5082,7 +5091,9 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   or the hook's body is over, work it began (a task it spawned) calls into a
   room as a new arrival with a budget of its own and the depth of its own
   event, 0 for a message it creates, or the depth the call names (a
-  `chain_depth` it passes to continue a chain, §10.5). Such a call that would
+  `chain_depth` it passes to continue a chain, §10.5); an observer of a
+  trigger fired per tool call, or of a speech-to-speech model's words, keeps
+  the floor its trigger fired under (§8.3). Such a call that would
   wait on its own delivery from a context the delivery lane cannot progress
   past returns with its completion detached (§10.1 step 18). Only a call into
   its caller's own room is detached so: a call into another room waits for
