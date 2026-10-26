@@ -2751,6 +2751,26 @@ fires as for a direct `update_event()` (§10.3); it does not deliver the
 message again. Writing that update is best effort: a failure is logged, and
 the turn's outcome stands. A host reads how any turn ended from its reply.
 
+**A room's turns one after the other.** An AI channel MAY take a room's turns
+one at a time (`serialize_room_turns`, declared as `serializes_room_turns`,
+Section 10.6.2). Its turns in a room then run in the order they were asked,
+which the room's owner keeps: a waiting turn MUST NOT start before the turn
+before it has written what it said, so that it reads that answer. A turn that
+waited reads the room as it stood when it was asked, followed by the events
+the channel wrote since. A message committed after it was asked MUST NOT be in
+its context: that message waits a turn of its own, and a turn that read it
+unanswered could do its task too. A waiting turn MUST wait outside the room's
+delivery lane (Section 10.2), through which the turn before it delivers its
+answer. A waiting turn whose delivery is cancelled (Section 10.1, *Explicit
+delivery cancellation*) never starts, and a running turn cut lets the next one
+start. A turn whose channel was detached from the room while it waited does
+not start. A strategy that takes the channel's turns in the room (Section
+19.7) orders its generations itself, and they do not wait. The order is the
+owner's process's: two processes each handed a delivery of the room run their
+turns side by side, as an ACP agent channel's prompts are serialized by its
+process. Without it, the channel's turns in a room run side by side, each on
+the room as it stood when it was asked.
+
 **ACP Agent Channel:**
 
 An ACP agent channel connects a Room to an external
@@ -6667,8 +6687,11 @@ ChannelDeclaration
 ├── takes_owner_tools: bool                 # its turns declare the tools the
 │                                           # owner serves (§10.6.5); an external
 │                                           # agent's (§6.4) do not
-└── recent_events_window: int               # the history the owner's context
-                                            # build reads for its turns
+├── recent_events_window: int               # the history the owner's context
+│                                           # build reads for its turns
+└── serializes_room_turns: bool             # its turns in a room run one after
+                                            # the other, in the order the owner
+                                            # keeps (§6.4)
 
 AgentIdentity                               # an Agent's identity fields (§19.1)
 ├── name: string | null
