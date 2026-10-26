@@ -423,15 +423,13 @@ that waits until the kit is idle, which the runner will call on both cores.
 A scenario an implementation fails because the implementation breaks the RFC.
 Its runner lists it (roomkit `KNOWN_FAILURES` in
 `tests/conformance/test_conformance.py`, roomkit-rs `KNOWN_FAILURES` in
-`crates/roomkit/tests/conformance/main.rs`); the runner expects it to fail and
-fails once it passes, so a fix shows and takes it off both lists. The fixes
-are not made here: roomkit-rs's are milestone 2's, roomkit's cards of their own.
+`crates/roomkit/tests/conformance/main.rs`) with its probe, in a table here
+naming the scenario, the implementation and its commit, the rule broken and
+the probe; the runner expects it to fail and fails once it passes, so a fix
+shows and takes it off both lists.
 
-| Scenario | Implementation | The rule broken | Probe |
-|---|---|---|---|
-| `hooks/an-async-hook-on-a-sync-trigger-observes` | roomkit-rs 15ff0ee | §9.2: on a SYNC trigger, the hooks registered ASYNC run as observers once the chain allowed. A hook registered ASYNC on `BEFORE_BROADCAST` never runs: `HookRegistry::observers` would list it, but the inbound operation fires no observer of `BEFORE_BROADCAST` | The scenario's `watcher` is never called (`hook_order` is `["rewrite"]`); roomkit calls it with the rewritten payload |
-| `inbound/an-author-s-name-and-rank-are-recorded` | roomkit-rs 15ff0ee | §10.1 step 12: an event whose author has a name carries its name, its rank and its source (`metadata.author`), from the room's register of authors. roomkit-rs records none (step 3 decision 2, milestone 2) | No event of the scenario carries `metadata.author`; roomkit records `{"name": "Alice", "rank": 1}`, then `ALICE` at rank 2 |
-| `rooms/the-delivery-cursor-follows-the-lane` | roomkit-rs 15ff0ee | §5.1 and §1.4 (a writer writes every field): the Room record holds `delivered_index`. roomkit-rs's Room has none (step 3 decision 2, milestone 2) | The room record has no `delivered_index`; roomkit writes 1 after two delivered messages |
+There are none today: roomkit's three were fixed by RMK-976 and RMK-977, and
+roomkit-rs's three by step 3's milestone 2.
 
 ## Writing a scenario
 
