@@ -3890,9 +3890,9 @@ an event chain.
 - A call into a room made from the body of an ASYNC hook a cascade fires once
   an event's delivery set has run (§10.1 step 16's `AFTER_BROADCAST` hooks, a
   change's `ON_EVENT_UPDATED` and `ON_EVENT_DELETED` hooks, §10.3; and an
-  ASYNC hook observing a SYNC trigger, §9.2), while the body runs, is at
-  least one deeper than the event the hook runs for, or than the turn's
-  answer for a trigger that fires per tool call: the
+  ASYNC hook observing a SYNC trigger that fires once per event, §9.2),
+  while the body runs, is at least one deeper than the event the hook runs
+  for: the
   event it injects, the message it hands in or delivers (a delivery queued
   for later carries that depth), and a regeneration it asks for (§10.3) take
   that depth when their own is lower, so that a hook that asks an agent again
@@ -3982,9 +3982,12 @@ error, nothing of it written (§10.3). Work a hook's body starts (a task it
 spawns, and does not wait for) that calls once the body has returned is work
 of its own, with a budget and a depth of its own (§9.5.1). The observers of a
 trigger that fires per tool call (`BEFORE_TOOL_USE`, `ON_TOOL_CALL`,
-`AFTER_TOOL_ROUND`, `ON_USER_INPUT_REQUIRED`) draw on a budget of their own,
-fresh at each firing, so a hook that reports every tool call of a long turn
-is never capped; the depth floor (above) bounds what they start.
+`AFTER_TOOL_ROUND`, `ON_USER_INPUT_REQUIRED`), which a turn may fire hundreds
+of times, are not the cascade's work: they run as a task the turn's work
+starts does, so a post they make while the turn's delivery runs draws one of
+the cascade's passes and a direct change draws nothing, and what they send
+is at least as deep as the turn was when the trigger fired, once the turn is
+over too.
 
 **Requirements:**
 
@@ -5006,12 +5009,12 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   once an event's delivery set has run: §10.1 step 16's `AFTER_BROADCAST`
   hooks, a change's `ON_EVENT_UPDATED` and `ON_EVENT_DELETED` hooks, §10.3;
   and the body of an ASYNC hook observing a SYNC trigger the room's work
-  fires, §9.2, with a budget of its own for a trigger fired per tool call or
-  outside any cascade, §8.3) is a new arrival: it takes a ticket when an
-  off-lock hook fires for its event, and `process_timeout` bounds it
-  (§13.6). While that delivery, turn or hook body runs, a call into its own
-  room MUST draw on the reentry budget of the cascade that delivers, the one
-  whose delivery set runs it or that
+  fires once per event, §9.2, an observer of a trigger fired outside any
+  cascade having a budget of its own, §8.3) is a new arrival: it takes a
+  ticket when an off-lock hook fires for its event, and `process_timeout`
+  bounds it (§13.6). While that delivery, turn or hook body runs, a call into
+  its own room MUST draw on the reentry budget of the cascade that delivers,
+  the one whose delivery set runs it or that
   fired the hook, and so does the cascade the call starts, so that a
   transport whose delivery sends into its room, or a hook that posts after
   every event, stops at the cap. A delivery's or a turn's call draws one of
@@ -6727,8 +6730,9 @@ through a channel call and is needed again on another executor (an ACP
 session's configuration values, §6.4). That state is the room's, not the
 executor's. A channel's result reports it when the verb changed it. The owner
 MUST store it in the room's metadata (§5.1), under a key of the
-implementation's own namespace (`roomkit:`), which drops that key from any
-other write (a room's creation or metadata update, a `TurnHost` verb, §5.1). It
+implementation's own namespace (`roomkit:`), and MUST drop that key, with a
+warning, from any other write (a room's creation or metadata update, a
+`TurnHost` verb, §5.1). It
 hands it to the executor with each request, in the room its `RoomContext`
 carries, and with each channel call, before the turn or the verb runs. The
 channel takes it back when it holds none for the room. A detach forgets it.
