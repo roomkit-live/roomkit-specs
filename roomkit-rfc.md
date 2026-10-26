@@ -2754,22 +2754,30 @@ the turn's outcome stands. A host reads how any turn ended from its reply.
 **A room's turns one after the other.** An AI channel MAY take a room's turns
 one at a time (`serialize_room_turns`, declared as `serializes_room_turns`,
 Section 10.6.2). Its turns in a room then run in the order they were asked,
-which the room's owner keeps: a waiting turn MUST NOT start before the turn
-before it has written what it said, so that it reads that answer. A turn that
-waited reads the room as it stood when it was asked, followed by the events
-the channel wrote since. A message committed after it was asked MUST NOT be in
-its context: that message waits a turn of its own, and a turn that read it
-unanswered could do its task too. A waiting turn MUST wait outside the room's
-delivery lane (Section 10.2), through which the turn before it delivers its
-answer. A waiting turn whose delivery is cancelled (Section 10.1, *Explicit
+which the room's owner keeps: a turn takes its place when its delivery set
+executes (Section 10.2), in the room's delivery order, and MUST NOT start
+before the turn before it has written what it said, the text a cut turn keeps
+included, so that it reads that answer. A waiting turn MUST wait outside the
+room's delivery lane, through which the turn before it delivers its answer.
+A turn that waited reads the room as it is when it starts, less the events
+committed after it was asked that the channel did not write: a message
+committed after it MUST NOT be in the history it is handed, since that message
+waits a turn of its own and a turn that read it unanswered could do its task
+too, and a change accepted meanwhile (an edit, a deletion, Section 10.3)
+applies. A waiting turn whose delivery is cancelled (Section 10.1, *Explicit
 delivery cancellation*) never starts, and a running turn cut lets the next one
 start. A turn whose channel was detached from the room while it waited does
-not start. A strategy that takes the channel's turns in the room (Section
-19.7) orders its generations itself, and they do not wait. The order is the
-owner's process's: two processes each handed a delivery of the room run their
-turns side by side, as an ACP agent channel's prompts are serialized by its
-process. Without it, the channel's turns in a room run side by side, each on
-the room as it stood when it was asked.
+not start. A muted channel takes no place: it reacts to each event as it comes,
+its answer not delivered (Section 7.2). A message the running turn sends into
+its own room (a tool's call, Section 10.1) that asks the same channel is
+answered after that turn: the call, awaited or deferred, returns without
+waiting for that answer, since waiting would wait on the turn that made it. A
+strategy that takes the channel's turns in the room (Section 19.7) orders its
+generations itself, and they do not wait. The order is the owner's process's:
+two processes each handed a delivery of the room run their turns side by side,
+as an ACP agent channel's prompts are serialized by its process. Without it,
+the channel's turns in a room run side by side, each on the room as it stood
+when it was asked.
 
 **ACP Agent Channel:**
 
