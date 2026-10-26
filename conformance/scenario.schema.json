@@ -514,7 +514,7 @@
               "type": "array",
               "minItems": 2,
               "items": {
-                "$ref": "#/$defs/call_step"
+                "$ref": "#/$defs/concurrent_call"
               }
             }
           }
@@ -1046,6 +1046,27 @@
             ]
           }
         }
+      }
+    },
+    "concurrent_call": {
+      "description": "A call of a concurrent step: started with the others, and waited for with them, so never in the background.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/call"
+        }
+      ],
+      "properties": {
+        "as": {
+          "$ref": "#/$defs/label"
+        },
+        "expect": {
+          "$ref": "#/$defs/outcome"
+        }
+      },
+      "not": {
+        "required": [
+          "background"
+        ]
       }
     }
   }
