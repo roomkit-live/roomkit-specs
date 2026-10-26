@@ -3928,13 +3928,16 @@ same `blocked_by`.
 
 A transport hosting a model (a realtime voice channel, a conference with a
 realtime model plugged in, §12.4) is an agent too (§9.4), and at the limit
-it MUST NOT be asked either: the text of an event whose `chain_depth + 1 >=
-max_chain_depth` enters the model's session silently, which takes it into
-its context and asks no answer, whether a broadcast, a conference or a
-delivery (`deliver()`, §22) brings it. It leaves no record: the model
+it MUST NOT be asked either: a text injected into the model's session at a
+depth whose `chain_depth + 1 >= max_chain_depth` enters it silently, which
+takes it into its context and asks no answer, whatever brings it: a
+broadcast, a delivery (`deliver()`, §22), a pipeline's handoff greeting, or
+a direct injection naming that depth. It leaves no record: the model
 answers what it heard last (§12.4), not one event. A loop of a tool call's
 observer posting into the room, the model answering the post and calling
-again then ends at the limit, as one between two agents does.
+again then ends at the limit, as one between two agents does. The depth of
+a realtime or conference tool call is that of the model's answer when the
+call arrives.
 
 **Below the limit, a response that was started is read.** A buffered
 response's events re-enter (§10.1 step 14), and a streamed response is
@@ -10392,7 +10395,8 @@ session boundaries.
    transcription has `chain_depth` 0. An assistant transcription answers
    what the model last heard, and carries that depth plus one (§8.3): 1
    after the user spoke, the injected event's depth plus one after a text
-   injection.
+   injection. A silent injection asks no answer and leaves that depth as
+   it was.
 5. Tool calls pass the pre-execution gate, then are handled via:
    ├── Async tool handler function (if provided)
    └── ON_TOOL_CALL hook (fallback)
