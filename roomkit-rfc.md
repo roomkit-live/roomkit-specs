@@ -3914,9 +3914,9 @@ an event chain.
   tool call, §12.4, §21.4), at least as deep as the answer that issued it.
   Once the turn or the tool call is over, the floor is gone: work it began (a
   task it spawned) calls as a new arrival with the depth of its own event, 0
-  for a message it creates (§9.5.1). The observers of a trigger it fired per
-  tool call are the exception: they keep the floor (below), as do those of a
-  speech-to-speech model's words.
+  for a message it creates (§9.5.1). The body of a hook it fired that runs
+  asynchronously is the exception: it keeps the floor for as long as it runs
+  (below).
 - A call into a room made from the body of an ASYNC hook a cascade fires once
   an event's delivery set has run (§10.1 step 16's `AFTER_BROADCAST` hooks, a
   change's `ON_EVENT_UPDATED` and `ON_EVENT_DELETED` hooks, §10.3; and an
@@ -3930,6 +3930,21 @@ an event chain.
   included (Section 19.7.5 rule 11). A direct change's own triggers run within
   it, under the same floor. Once the body is over, the floor is gone, as a
   turn's is.
+- A call into a room made from the body of any hook run asynchronously (an
+  ASYNC hook, and a hook registered SYNC on an ASYNC trigger, §9.2) is at
+  least as deep as the work that fired the hook was when its trigger fired:
+  the response of the turn it runs within, the answer that issued a tool
+  call (§12.4, §21.4), a speech-to-speech model's answer, or the floor of the
+  hook body whose call fired it; 0 outside them all. It holds for as long as
+  the body runs, that work over or not, so that a hook on a turn's trigger
+  (`BEFORE_AI_GENERATION`, `ON_AI_RESPONSE`), whose event carries no depth of
+  its own, that tells the agent something from its body at each turn stops at
+  the limit. A task the body starts, awaited or not, has that floor while the
+  body runs; once the body has returned, the task's calls are at the depth of
+  their own event (§9.5.1), whether the work that fired the hook, or the other
+  hooks of the same trigger, still run or not: a hook that relaunches an agent
+  on a new chain (a quality gate) does so from such a task. A hook a turn
+  executor fires carries its floor with the verb it makes (§10.6.5).
 
 **At the limit.** When an event's `chain_depth + 1 >= max_chain_depth`, an
 intelligence channel it solicits (Section 19.3) MUST NOT be asked to act:
@@ -4025,24 +4040,24 @@ injection is stored `BLOCKED` with `reentry_loop_cap` and its message refused,
 as past the passes (above), and a direct change raises a reentry-loop-cap
 error, nothing of it written (§10.3). Work a hook's body starts (a task it
 spawns, and does not wait for) that calls once the body has returned is work
-of its own, with a budget and a depth of its own (§9.5.1). The observers of a
+of its own: at the depth of its own event, and on a budget of its own once
+the room's delivery the hook was fired within, if any, is over (§9.5.1). The
+observers of a
 trigger that fires per tool call (`BEFORE_TOOL_USE`, `ON_TOOL_CALL`,
 `AFTER_TOOL_ROUND`, `ON_USER_INPUT_REQUIRED`), which a turn may fire hundreds
 of times, are not the cascade's work: they run as a task the turn's work
 starts does, so a post they make while the turn's delivery runs draws one of
-the cascade's passes and a direct change draws nothing, and what they send
-is at least as deep as the turn was when the trigger fired, once the turn is
-over too. The observers of a tool call outside a turn (a realtime or a
-conference tool call) send at least as deep as the answer that issued it
-(above), once the call is over too, whichever report fires them: its gate,
-its outcome, or an ending that cut it. The hooks a speech-to-speech model's
-answer fires (its transcription, final or partial, §12.4) run at least as
-deep as that answer, and their observers send at least that deep once the
-answer's processing is over too; the user's words open a chain. A hook on
-a model's words that tells it something at each of its answers, by a post
-or an injection, then ends at the limit. An observer of any other trigger
-that calls once the work that fired it is over calls as work of its own
-(§9.5.1).
+the cascade's passes and a direct change draws nothing. The body of every
+hook run asynchronously sends at least as deep as the work that fired it was when its trigger
+fired, for as long as the body runs, that work over or not (§8.3): an
+observer of a tool call outside a turn (a realtime or a conference tool
+call) at least as deep as the answer that issued it, whichever report fires
+it (its gate, its outcome, or an ending that cut it); a hook on a
+speech-to-speech model's words (its transcription, final or partial, §12.4)
+at least as deep as that answer, which its SYNC hooks run at too, the user's
+words opening a chain. A hook that tells an agent or a model something from
+its body at each of its answers, by a post or an injection, then ends at the
+limit.
 
 **Requirements:**
 
@@ -5095,13 +5110,16 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   room made while a turn runs is at least as deep as the response of the
   deepest turn it runs within, and one made while a tool call outside a turn
   runs (a realtime or a conference tool call, §12.4) at least as deep as the
-  answer that issued it (§8.3). Once the turn, the tool call, the delivery
-  or the hook's body is over, work it began (a task it spawned) calls into a
-  room as a new arrival with a budget of its own and the depth of its own
-  event, 0 for a message it creates, or the depth the call names (a
-  `chain_depth` it passes to continue a chain, §10.5); an observer of a
-  trigger fired per tool call, or of a speech-to-speech model's words, keeps
-  the floor its trigger fired under (§8.3). Such a call that would
+  answer that issued it (§8.3). Once the turn, the tool call or the hook's
+  body is over, work it began (a task it spawned) calls into a room as a new
+  arrival at the depth of its own event, 0 for a message it creates, or the
+  depth the call names (a `chain_depth` it passes to continue a chain,
+  §10.5); it draws on the budget of the room's delivery it was started
+  within while that delivery runs, as any of the delivery's work does, and
+  on a budget of its own once the delivery is over. The body of a hook run
+  asynchronously keeps the floor its trigger fired under for as long as it
+  runs (§8.3); once it has returned, what it began calls at the depth of its
+  own event, whatever the work that fired the hook still does. Such a call that would
   wait on its own delivery from a context the delivery lane cannot progress
   past returns with its completion detached (§10.1 step 18). Only a call into
   its caller's own room is detached so: a call into another room waits for
@@ -7076,7 +7094,9 @@ turns (a background thinker's thought, §6.4) it is bound to the room of the
 turn the work began in: `send_event`, `post_status`, `update_room_metadata`
 and `add_observation` cross as `room_call` (§10.6.3), each a new arrival with
 a budget of its own and the depth of its own event, the turn being over
-(§9.5.1); `delegate`, `wait_task` and the readers of owner-process state are
+(§9.5.1); a `send_event` made from the body of a hook run asynchronously names at least
+the depth that body runs at (§8.3), which the owner keeps. `delegate`,
+`wait_task` and the readers of owner-process state are
 refused there, with an error naming the verb. What work a turn began publishes
 after the turn (realtime publications, framework events) crosses as
 `room_publication`: an executor never publishes it on the owner's realtime
