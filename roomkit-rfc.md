@@ -4054,10 +4054,18 @@ observer of a tool call outside a turn (a realtime or a conference tool
 call) at least as deep as the answer that issued it, whichever report fires
 it (its gate, its outcome, or an ending that cut it); a hook on a
 speech-to-speech model's words (its transcription, final or partial, §12.4)
-at least as deep as that answer, which its SYNC hooks run at too, the user's
-words opening a chain. A hook that tells an agent or a model something from
-its body at each of its answers, by a post or an injection, then ends at the
-limit.
+or on its delegation (`ON_REALTIME_DELEGATION`, §12.4.1) at least as deep as
+the answer it hears or that delegated, read as that answer's words or its
+delegation arrive (once the session is the room's for one issued while it
+started), which its SYNC hooks run at too, the user's words opening
+a chain; and a hook on what a voice agent built from speech to text, an
+agent and text to speech says (`BEFORE_TTS`, on each sentence of a streamed
+reply too, and `AFTER_TTS`, §12.2, on a voice channel and a conference's
+voice lane) at least as deep as the answer it speaks, its SYNC hooks too.
+The floor covers those hooks, not the playback: work started while the
+audio plays keeps its own depth. A hook that tells an agent or a model
+something from its body at each of its answers, by a post or an injection,
+then ends at the limit.
 
 **Requirements:**
 
@@ -5108,9 +5116,11 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   exists; its cascade has a budget of its own. A message already charged is
   not charged again, wherever routing places it once more. A call into any
   room made while a turn runs is at least as deep as the response of the
-  deepest turn it runs within, and one made while a tool call outside a turn
+  deepest turn it runs within, one made while a tool call outside a turn
   runs (a realtime or a conference tool call, §12.4) at least as deep as the
-  answer that issued it (§8.3). Once the turn, the tool call or the hook's
+  answer that issued it, and one made from a hook on a model's words or
+  delegation, or on what a voice agent says, at least as deep as the answer
+  it hears, delegated or speaks (§8.3). Once the turn, the tool call or the hook's
   body is over, work it began (a task it spawned) calls into a room as a new
   arrival at the depth of its own event, 0 for a message it creates, or the
   depth the call names (a `chain_depth` it passes to continue a chain,
@@ -17374,7 +17384,13 @@ sessions, intents (message or instruction) and metadata separate. Keyed
 requests MUST preserve their individual publication keys and outcome
 attribution rather than merging into an event with a different key. Every
 waiting caller MUST receive its own outcome, including requests arriving
-while a batch is being delivered.
+while a batch is being delivered. A caller that holds a room's lock while
+another caller drains the queue MUST NOT wait behind it, whichever room it
+delivers into: it is nested in the section that holds the lock (§9.5.1), and
+a batch for that room ahead of it, or its own request batched into one,
+needs that lock to be delivered (one strategy may queue for several rooms,
+as the kit's does). It delivers at once, unbatched, as `Immediate`; a caller
+holding a lock that finds no drain under way drains as any caller does.
 
 Delivery backends MUST preserve addresses, keys, session targets and the
 instruction flag in their serialized items and across retries. Enqueue
