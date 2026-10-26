@@ -3926,6 +3926,16 @@ that no agent answers, and gets no record. Response events a channel other
 than an intelligence one returns at the limit are stored BLOCKED with the
 same `blocked_by`.
 
+A transport hosting a model (a realtime voice channel, a conference with a
+realtime model plugged in, §12.4) is an agent too (§9.4), and at the limit
+it MUST NOT be asked either: the text of an event whose `chain_depth + 1 >=
+max_chain_depth` enters the model's session silently, which takes it into
+its context and asks no answer, whether a broadcast, a conference or a
+delivery (`deliver()`, §22) brings it. It leaves no record: the model
+answers what it heard last (§12.4), not one event. A loop of a tool call's
+observer posting into the room, the model answering the post and calling
+again then ends at the limit, as one between two agents does.
+
 **Below the limit, a response that was started is read.** A buffered
 response's events re-enter (§10.1 step 14), and a streamed response is
 consumed to its end, whichever pass started it: the trigger's delivery set,
@@ -3987,7 +3997,10 @@ of times, are not the cascade's work: they run as a task the turn's work
 starts does, so a post they make while the turn's delivery runs draws one of
 the cascade's passes and a direct change draws nothing, and what they send
 is at least as deep as the turn was when the trigger fired, once the turn is
-over too.
+over too. The observers of a tool call outside a turn (a realtime or a
+conference tool call) send at least as deep as the answer that issued it
+(above), once the call is over too, whichever report fires them: its gate,
+its outcome, or an ending that cut it.
 
 **Requirements:**
 
