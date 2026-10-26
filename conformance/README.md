@@ -141,7 +141,8 @@ of the setup are not compared.
     rest;
   - its delivery succeeds, and its turn (`on_event` of an intelligence
     channel) answers nothing;
-  - `parse`, `deliver` and `on_event` hold its **reactions** (below).
+  - `parse`, `deliver` and `on_event` hold its **reactions** (below);
+  - an `ai` channel with a `model` is a **scripted agent** instead (below).
 - `rooms`: each is created (`id`, `organization_id`, `metadata`, `timers`),
   then each of its `bindings` attached (`channel_id`, `category`, `access`,
   `muted`, `visibility`, `metadata`, `participant_id`), then each of its
@@ -181,6 +182,37 @@ observation an `id`, the room, and for an observation the channel that made it
 (`system` for a hook). Members the template gives win, and a member it does not
 give takes each implementation's default: a scenario that asserts a member gives
 it.
+
+### Scripted agents
+
+An `ai` channel with a `model` is the implementation's own AI channel (§6.4),
+run on a scripted model and scripted tools, so that its tool loop is the one
+under test. Its turn builds the conversation and runs the loop as the
+implementation's AI channel does; only the provider and the tools are
+scripted.
+
+- `model.rounds`: the model's answer to the agent's n-th generation of the
+  run is its n-th round: `text` (default empty), `calls`, `finish_reason`
+  (default `tool_calls` when it calls, else `stop`) and `usage`, counters
+  the turn's record sums (§6.4, The turn's record). A call is `id`, `name`,
+  `arguments` (an object, default `{}`), and `cut` when the response was
+  cut short over its arguments, which never arrived whole: the round's last
+  call, under a `finish_reason` that cuts calls (§6.4). A generation past
+  the last round fails the turn.
+- `tools`: what the agent serves, each declared with its `name`,
+  `description` and `parameters` (a JSON Schema), and answering every call
+  one way: `returns` a text, `raises` an error of a `kind` with a `message`
+  (the model reads the kind, the observers the message, §9.3), `fails` or
+  `refuses` with words the model reads (§9.3), or `hangs`, never answering.
+- `tool_policy`: a ToolPolicy's `allow` and `deny` patterns (§21.1);
+  `max_tool_rounds`: the loop's bound on rounds of calls (Appendix A.9,
+  default 50).
+
+A hook on `before_tool_use` or `on_tool_call` is registered on the kit as the
+implementation registers a hook on those triggers. Its payload is a tool
+call, which it records as `tool_call` (below), and its `result` is a
+HookResult as for any hook: a `block` with its `reason`, or a `modify` whose
+`event` is a patch on the tool call (`arguments`, `result`).
 
 ### Steps
 
@@ -239,12 +271,13 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `timeline` | Per room, the whole timeline in index order, `BLOCKED` records included, lifecycle records left out |
 | `rooms`, `bindings` | Per room, the room record; per room and channel, the binding, `null` for none |
 | `framework_events` | Per room (`*` for the events of no room), every framework event of the §26.1 table and `process_timeout`, in emission order |
-| `hooks` | Per scripted hook, its calls in order: `trigger`, `room_id`, `event` (the payload, when an event) |
+| `hooks` | Per scripted hook, its calls in order: `trigger`, `room_id`, `event` (the payload, when an event), `tool_call` (the payload, when a tool call: `name`, `tool_call_id`, `arguments` as the call runs or was stopped with, and, on `on_tool_call`, `result` as the model reads it, `is_error`, `refused`, `cancelled` and `error_detail`) |
 | `hook_order` | The order in which the hooks it lists were called |
 | `deliveries` | Per room and channel, the events a scripted channel's `deliver()` received, as delivered, in order |
 | `turns` | Per room and intelligence channel, the events its `on_event()` received |
 | `observations`, `tasks` | Per room, the stored side effects |
 | `actions` | Per action label, the outcomes of its runs, in the order they ended |
+| `models` | Per scripted agent, each generation's request as its model received it, in order: the `tool_results` it carries, each `{tool_call_id, content}`, `content` as the model reads it |
 | `lifecycle` | Per room, the lifecycle records (§5.1) in index order, when the implementation writes them: an implementation that writes none passes. It says which changes write one, and which write none (a change that changes nothing, §7.2) |
 
 An outcome is `{"result": ...}`, matched as below, or `{"error": name}` (or
@@ -349,7 +382,7 @@ at one instant) stay in each implementation's own tests.
 
 ## Coverage
 
-110 scenarios. Counted by the sections their `rules` cite (a scenario counts once
+117 scenarios. Counted by the sections their `rules` cite (a scenario counts once
 under each section it cites):
 
 | Section | Scenarios | Section | Scenarios |
@@ -358,7 +391,7 @@ under each section it cites):
 | §4.2, §5.2, §5.5, §5.8 | 1 each | §9.5.1 | 14 |
 | §5.1 | 16 | §10.1 | 46 |
 | §6.1 | 2 | §10.1.1 | 4 |
-| §6.4 | 1 | §10.2 | 13 |
+| §6.4 | 4 | §10.2 | 13 |
 | §6.6 | 7 | §10.3 | 12 |
 | §7.2 | 4 | §10.4 | 4 |
 | §7.3 | 5 | §10.5 | 19 |
@@ -366,11 +399,12 @@ under each section it cites):
 | §7.5 | 17 | §13.4 | 3 |
 | §8.1 | 3 | §13.5 | 8 |
 | §8.2 | 19 | §13.6 | 3 |
-| §8.3 | 6 | §14.3 | 1 |
+| §8.3 | 8 | §14.3 | 1 |
 | §9.1 | 5 | §17.2 | 2 |
 | §9.2 | 11 | §19.3, §19.3.1 | 4, 1 |
-| §9.3 | 10 | §26.1 | 41 |
-| Appendix B.1, B.2, B.4, B.5, B.6, B.7 | 1 each | | |
+| §9.3 | 14 | §26.1 | 41 |
+| §21.1 | 2 | §21.6 | 1 |
+| Appendix A.9 | 2 | Appendix B.1, B.2, B.4, B.5, B.6, B.7 | 1 each |
 
 Every row of the §26.1 trigger and framework-event table is asserted, by
 scenarios citing each place it names, and each of the 16 reentrancy cells is
@@ -409,7 +443,11 @@ named by one.
   post, a room's creation), a routed message's identity read in its
   organization;
 - §19.3.1: `ADDRESSED_ONLY`; the turn backend (§10.6) and streaming, out of
-  scope for step 3.
+  scope for step 3;
+- tools (`tools/`, roomkit-rs step 4): an `ON_TOOL_CALL` SYNC hook that
+  replaces or withholds a served result, a rewrite by `BEFORE_TOOL_USE`, a
+  call past its bound (§21.6), a tool nothing serves, and the observers'
+  depth and budget (§8.3, The hook calls of a cascade).
 
 ## Waiting for the kit to go idle
 

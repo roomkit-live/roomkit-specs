@@ -1,0 +1,424 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "tools/refusal-per-cause",
+  "title": "Each refusal reads its cause's text, in the order of §21.1, and no refused call reaches BEFORE_TOOL_USE",
+  "rules": [
+    "§21.1",
+    "§9.3",
+    "§6.4"
+  ],
+  "notes": "The round's last call is cut: the response ran out of room (length) over its arguments, so it never runs (§6.4). admin_wipe is declared by the host and denied by the policy, so the policy refuses it before its arguments, which do not fit its schema, are read (§21.1, One refusal per cause). A refused call fires ON_TOOL_CALL's ASYNC observers only, marked refused (§9.3).",
+  "setup": {
+    "channels": [
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "agent",
+        "type": "ai",
+        "model": {
+          "rounds": [
+            {
+              "calls": [
+                {
+                  "id": "call-1",
+                  "name": "no_such_tool",
+                  "arguments": {}
+                },
+                {
+                  "id": "call-2",
+                  "name": "admin_wipe",
+                  "arguments": {
+                    "town": "Paris"
+                  }
+                },
+                {
+                  "id": "call-3",
+                  "name": "lookup_order",
+                  "arguments": {
+                    "town": "Paris"
+                  }
+                },
+                {
+                  "id": "call-4",
+                  "name": "lookup_order",
+                  "cut": true
+                }
+              ],
+              "finish_reason": "length"
+            },
+            {
+              "text": "Sorry, I could not do it.",
+              "finish_reason": "stop"
+            }
+          ]
+        },
+        "tools": [
+          {
+            "name": "lookup_order",
+            "description": "Find an order by its number",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "order": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "order"
+              ]
+            },
+            "returns": "{\"order\": \"42\", \"status\": \"shipped\"}"
+          },
+          {
+            "name": "admin_wipe",
+            "description": "Wipe the orders",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "town": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "confirm"
+              ]
+            },
+            "returns": "wiped"
+          }
+        ],
+        "tool_policy": {
+          "deny": [
+            "admin_*"
+          ]
+        }
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "agent",
+            "category": "intelligence"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "gate",
+        "trigger": "before_tool_use"
+      },
+      {
+        "name": "audit",
+        "trigger": "on_tool_call",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "ws",
+        "sender_id": "alice",
+        "content": {
+          "type": "text",
+          "body": "Wipe and find order 42."
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "index": 0,
+          "type": "message",
+          "source": {
+            "channel_id": "ws"
+          },
+          "content": {
+            "type": "text",
+            "body": "Wipe and find order 42."
+          }
+        },
+        {
+          "index": 1,
+          "type": "tool_call_start",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "no_such_tool",
+            "tool_id": "call-1",
+            "arguments": {},
+            "status": "pending",
+            "result": null
+          }
+        },
+        {
+          "index": 2,
+          "type": "tool_call_start",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "admin_wipe",
+            "tool_id": "call-2",
+            "arguments": {
+              "town": "Paris"
+            },
+            "status": "pending",
+            "result": null
+          }
+        },
+        {
+          "index": 3,
+          "type": "tool_call_start",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "lookup_order",
+            "tool_id": "call-3",
+            "arguments": {
+              "town": "Paris"
+            },
+            "status": "pending",
+            "result": null
+          }
+        },
+        {
+          "index": 4,
+          "type": "tool_call_start",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "lookup_order",
+            "tool_id": "call-4",
+            "arguments": {},
+            "status": "pending",
+            "result": null
+          }
+        },
+        {
+          "index": 5,
+          "type": "tool_call_end",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "no_such_tool",
+            "tool_id": "call-1",
+            "arguments": {},
+            "status": "failed",
+            "outcome": "refused",
+            "result": "{\"error\": \"Tool 'no_such_tool' is not declared.\"}",
+            "error": "{\"error\": \"Tool 'no_such_tool' is not declared.\"}"
+          }
+        },
+        {
+          "index": 6,
+          "type": "tool_call_end",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "admin_wipe",
+            "tool_id": "call-2",
+            "arguments": {
+              "town": "Paris"
+            },
+            "status": "failed",
+            "outcome": "refused",
+            "result": "{\"error\": \"Tool 'admin_wipe' is not permitted by the agent's tool policy.\"}",
+            "error": "{\"error\": \"Tool 'admin_wipe' is not permitted by the agent's tool policy.\"}"
+          }
+        },
+        {
+          "index": 7,
+          "type": "tool_call_end",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "lookup_order",
+            "tool_id": "call-3",
+            "arguments": {
+              "town": "Paris"
+            },
+            "status": "failed",
+            "outcome": "refused",
+            "result": "{\"error\": \"Invalid arguments for 'lookup_order': missing required argument 'order'\"}",
+            "error": "{\"error\": \"Invalid arguments for 'lookup_order': missing required argument 'order'\"}"
+          }
+        },
+        {
+          "index": 8,
+          "type": "tool_call_end",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "lookup_order",
+            "tool_id": "call-4",
+            "arguments": {},
+            "status": "failed",
+            "outcome": "refused",
+            "result": "{\"error\": \"Tool call cut off\", \"tool\": \"lookup_order\", \"hint\": \"This call was cut off before its arguments were complete, so it did not run. Call it again if it is still needed, with shorter arguments if the response ran out of room.\"}",
+            "error": "{\"error\": \"Tool call cut off\", \"tool\": \"lookup_order\", \"hint\": \"This call was cut off before its arguments were complete, so it did not run. Call it again if it is still needed, with shorter arguments if the response ran out of room.\"}"
+          }
+        },
+        {
+          "index": 9,
+          "type": "message",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "text",
+            "body": "Sorry, I could not do it."
+          },
+          "metadata": {
+            "loop_end_reason": "completed"
+          }
+        }
+      ]
+    },
+    "hooks": {
+      "gate": [],
+      "audit": {
+        "$unordered": [
+          {
+            "trigger": "on_tool_call",
+            "room_id": "room-1",
+            "tool_call": {
+              "name": "no_such_tool",
+              "tool_call_id": "call-1",
+              "arguments": {},
+              "result": "{\"error\": \"Tool 'no_such_tool' is not declared.\"}",
+              "is_error": true,
+              "refused": true,
+              "cancelled": false,
+              "error_detail": null
+            }
+          },
+          {
+            "trigger": "on_tool_call",
+            "room_id": "room-1",
+            "tool_call": {
+              "name": "admin_wipe",
+              "tool_call_id": "call-2",
+              "arguments": {
+                "town": "Paris"
+              },
+              "result": "{\"error\": \"Tool 'admin_wipe' is not permitted by the agent's tool policy.\"}",
+              "is_error": true,
+              "refused": true,
+              "cancelled": false,
+              "error_detail": null
+            }
+          },
+          {
+            "trigger": "on_tool_call",
+            "room_id": "room-1",
+            "tool_call": {
+              "name": "lookup_order",
+              "tool_call_id": "call-3",
+              "arguments": {
+                "town": "Paris"
+              },
+              "result": "{\"error\": \"Invalid arguments for 'lookup_order': missing required argument 'order'\"}",
+              "is_error": true,
+              "refused": true,
+              "cancelled": false,
+              "error_detail": null
+            }
+          },
+          {
+            "trigger": "on_tool_call",
+            "room_id": "room-1",
+            "tool_call": {
+              "name": "lookup_order",
+              "tool_call_id": "call-4",
+              "arguments": {},
+              "result": "{\"error\": \"Tool call cut off\", \"tool\": \"lookup_order\", \"hint\": \"This call was cut off before its arguments were complete, so it did not run. Call it again if it is still needed, with shorter arguments if the response ran out of room.\"}",
+              "is_error": true,
+              "refused": true,
+              "cancelled": false,
+              "error_detail": null
+            }
+          }
+        ]
+      }
+    },
+    "models": {
+      "agent": [
+        {
+          "tool_results": []
+        },
+        {
+          "tool_results": [
+            {
+              "tool_call_id": "call-1",
+              "content": "{\"error\": \"Tool 'no_such_tool' is not declared.\"}"
+            },
+            {
+              "tool_call_id": "call-2",
+              "content": "{\"error\": \"Tool 'admin_wipe' is not permitted by the agent's tool policy.\"}"
+            },
+            {
+              "tool_call_id": "call-3",
+              "content": "{\"error\": \"Invalid arguments for 'lookup_order': missing required argument 'order'\"}"
+            },
+            {
+              "tool_call_id": "call-4",
+              "content": "{\"error\": \"Tool call cut off\", \"tool\": \"lookup_order\", \"hint\": \"This call was cut off before its arguments were complete, so it did not run. Call it again if it is still needed, with shorter arguments if the response ran out of room.\"}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

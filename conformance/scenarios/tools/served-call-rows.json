@@ -1,0 +1,265 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "tools/served-call-rows",
+  "title": "A served call: the round's text as a message, the call's start and end rows, then the answer, which carries the turn's record; each row reaches the room's transports in index order",
+  "rules": [
+    "§6.4",
+    "§9.3",
+    "§8.3",
+    "Appendix A.9"
+  ],
+  "notes": "The record is the last MESSAGE's: loop_end_reason and the usage its rounds summed (§6.4, The turn's record). A call's end rows follow its round's start rows; the model reads the result as the tool returned it.",
+  "setup": {
+    "channels": [
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "agent",
+        "type": "ai",
+        "model": {
+          "rounds": [
+            {
+              "text": "Let me check.",
+              "calls": [
+                {
+                  "id": "call-1",
+                  "name": "lookup_order",
+                  "arguments": {
+                    "order": "42"
+                  }
+                }
+              ],
+              "finish_reason": "tool_calls",
+              "usage": {
+                "input_tokens": 100,
+                "output_tokens": 10
+              }
+            },
+            {
+              "text": "Order 42 shipped on Monday.",
+              "finish_reason": "stop",
+              "usage": {
+                "input_tokens": 150,
+                "output_tokens": 8
+              }
+            }
+          ]
+        },
+        "tools": [
+          {
+            "name": "lookup_order",
+            "description": "Find an order by its number",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "order": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "order"
+              ]
+            },
+            "returns": "{\"order\": \"42\", \"status\": \"shipped\"}"
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "agent",
+            "category": "intelligence"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "audit",
+        "trigger": "on_tool_call",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "ws",
+        "sender_id": "alice",
+        "content": {
+          "type": "text",
+          "body": "Where is order 42?"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "index": 0,
+          "type": "message",
+          "source": {
+            "channel_id": "ws"
+          },
+          "content": {
+            "type": "text",
+            "body": "Where is order 42?"
+          }
+        },
+        {
+          "index": 1,
+          "type": "message",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "text",
+            "body": "Let me check."
+          },
+          "metadata": {
+            "loop_end_reason": {
+              "$absent": true
+            }
+          }
+        },
+        {
+          "index": 2,
+          "type": "tool_call_start",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "lookup_order",
+            "tool_id": "call-1",
+            "arguments": {
+              "order": "42"
+            },
+            "status": "pending",
+            "result": null
+          }
+        },
+        {
+          "index": 3,
+          "type": "tool_call_end",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "lookup_order",
+            "tool_id": "call-1",
+            "arguments": {
+              "order": "42"
+            },
+            "status": "completed",
+            "outcome": "served",
+            "result": "{\"order\": \"42\", \"status\": \"shipped\"}",
+            "error": null
+          }
+        },
+        {
+          "index": 4,
+          "type": "message",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "text",
+            "body": "Order 42 shipped on Monday."
+          },
+          "metadata": {
+            "loop_end_reason": "completed",
+            "ai_usage": {
+              "input_tokens": 250,
+              "output_tokens": 18
+            }
+          }
+        }
+      ]
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": [
+          {
+            "index": 1,
+            "type": "message"
+          },
+          {
+            "index": 2,
+            "type": "tool_call_start"
+          },
+          {
+            "index": 3,
+            "type": "tool_call_end"
+          },
+          {
+            "index": 4,
+            "type": "message"
+          }
+        ]
+      }
+    },
+    "hooks": {
+      "audit": [
+        {
+          "trigger": "on_tool_call",
+          "room_id": "room-1",
+          "tool_call": {
+            "name": "lookup_order",
+            "tool_call_id": "call-1",
+            "arguments": {
+              "order": "42"
+            },
+            "result": "{\"order\": \"42\", \"status\": \"shipped\"}",
+            "is_error": false,
+            "refused": false,
+            "cancelled": false,
+            "error_detail": null
+          }
+        }
+      ]
+    },
+    "models": {
+      "agent": [
+        {
+          "tool_results": []
+        },
+        {
+          "tool_results": [
+            {
+              "tool_call_id": "call-1",
+              "content": "{\"order\": \"42\", \"status\": \"shipped\"}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

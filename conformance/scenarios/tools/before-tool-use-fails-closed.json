@@ -1,0 +1,531 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "tools/before-tool-use-fails-closed",
+  "title": "BEFORE_TOOL_USE gates each call: a BLOCK refuses it with the hook's reason, a hook that raises or times out refuses it with the fixed text, and a hook that allows lets it run",
+  "rules": [
+    "§9.3",
+    "§21.1"
+  ],
+  "notes": "BEFORE_TOOL_USE fails closed (§9.3): an error or a timeout refuses the call. The model reads the fixed refusal, never the hook's error, which reaches the observers on error_detail with the hook's name. One call per round, so the hook's reactions are used in the rounds' order.",
+  "setup": {
+    "channels": [
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "agent",
+        "type": "ai",
+        "model": {
+          "rounds": [
+            {
+              "calls": [
+                {
+                  "id": "call-1",
+                  "name": "lookup_order",
+                  "arguments": {
+                    "order": "1"
+                  }
+                }
+              ],
+              "finish_reason": "tool_calls"
+            },
+            {
+              "calls": [
+                {
+                  "id": "call-2",
+                  "name": "lookup_order",
+                  "arguments": {
+                    "order": "2"
+                  }
+                }
+              ],
+              "finish_reason": "tool_calls"
+            },
+            {
+              "calls": [
+                {
+                  "id": "call-3",
+                  "name": "lookup_order",
+                  "arguments": {
+                    "order": "3"
+                  }
+                }
+              ],
+              "finish_reason": "tool_calls"
+            },
+            {
+              "calls": [
+                {
+                  "id": "call-4",
+                  "name": "lookup_order",
+                  "arguments": {
+                    "order": "4"
+                  }
+                }
+              ],
+              "finish_reason": "tool_calls"
+            },
+            {
+              "text": "Order 4 is ready.",
+              "finish_reason": "stop"
+            }
+          ]
+        },
+        "tools": [
+          {
+            "name": "lookup_order",
+            "description": "Find an order by its number",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "order": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "order"
+              ]
+            },
+            "returns": "{\"order\": \"4\", \"status\": \"ready\"}"
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "agent",
+            "category": "intelligence"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "approve",
+        "trigger": "before_tool_use",
+        "timeout_ms": 50,
+        "reactions": [
+          {
+            "result": {
+              "action": "block",
+              "reason": "Needs a manager's approval"
+            }
+          },
+          {
+            "fail": "approval service down"
+          },
+          {
+            "gate": "never-opened"
+          }
+        ]
+      },
+      {
+        "name": "audit",
+        "trigger": "on_tool_call",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "ws",
+        "sender_id": "alice",
+        "content": {
+          "type": "text",
+          "body": "Where are my orders?"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "index": 0,
+          "type": "message",
+          "source": {
+            "channel_id": "ws"
+          },
+          "content": {
+            "type": "text",
+            "body": "Where are my orders?"
+          }
+        },
+        {
+          "index": 1,
+          "type": "tool_call_start",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "lookup_order",
+            "tool_id": "call-1",
+            "arguments": {
+              "order": "1"
+            },
+            "status": "pending",
+            "result": null
+          }
+        },
+        {
+          "index": 2,
+          "type": "tool_call_end",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "lookup_order",
+            "tool_id": "call-1",
+            "arguments": {
+              "order": "1"
+            },
+            "status": "failed",
+            "outcome": "refused",
+            "result": "{\"error\": \"Needs a manager's approval\"}",
+            "error": "{\"error\": \"Needs a manager's approval\"}"
+          }
+        },
+        {
+          "index": 3,
+          "type": "tool_call_start",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "lookup_order",
+            "tool_id": "call-2",
+            "arguments": {
+              "order": "2"
+            },
+            "status": "pending",
+            "result": null
+          }
+        },
+        {
+          "index": 4,
+          "type": "tool_call_end",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "lookup_order",
+            "tool_id": "call-2",
+            "arguments": {
+              "order": "2"
+            },
+            "status": "failed",
+            "outcome": "refused",
+            "result": "{\"error\": \"Tool 'lookup_order' denied by pre-execution hook.\"}",
+            "error": "{\"error\": \"Tool 'lookup_order' denied by pre-execution hook.\"}"
+          }
+        },
+        {
+          "index": 5,
+          "type": "tool_call_start",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "lookup_order",
+            "tool_id": "call-3",
+            "arguments": {
+              "order": "3"
+            },
+            "status": "pending",
+            "result": null
+          }
+        },
+        {
+          "index": 6,
+          "type": "tool_call_end",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "lookup_order",
+            "tool_id": "call-3",
+            "arguments": {
+              "order": "3"
+            },
+            "status": "failed",
+            "outcome": "refused",
+            "result": "{\"error\": \"Tool 'lookup_order' denied by pre-execution hook.\"}",
+            "error": "{\"error\": \"Tool 'lookup_order' denied by pre-execution hook.\"}"
+          }
+        },
+        {
+          "index": 7,
+          "type": "tool_call_start",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "lookup_order",
+            "tool_id": "call-4",
+            "arguments": {
+              "order": "4"
+            },
+            "status": "pending",
+            "result": null
+          }
+        },
+        {
+          "index": 8,
+          "type": "tool_call_end",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "lookup_order",
+            "tool_id": "call-4",
+            "arguments": {
+              "order": "4"
+            },
+            "status": "completed",
+            "outcome": "served",
+            "result": "{\"order\": \"4\", \"status\": \"ready\"}",
+            "error": null
+          }
+        },
+        {
+          "index": 9,
+          "type": "message",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "text",
+            "body": "Order 4 is ready."
+          },
+          "metadata": {
+            "loop_end_reason": "completed"
+          }
+        }
+      ]
+    },
+    "hooks": {
+      "approve": [
+        {
+          "trigger": "before_tool_use",
+          "room_id": "room-1",
+          "tool_call": {
+            "name": "lookup_order",
+            "tool_call_id": "call-1",
+            "arguments": {
+              "order": "1"
+            }
+          }
+        },
+        {
+          "trigger": "before_tool_use",
+          "room_id": "room-1",
+          "tool_call": {
+            "name": "lookup_order",
+            "tool_call_id": "call-2",
+            "arguments": {
+              "order": "2"
+            }
+          }
+        },
+        {
+          "trigger": "before_tool_use",
+          "room_id": "room-1",
+          "tool_call": {
+            "name": "lookup_order",
+            "tool_call_id": "call-3",
+            "arguments": {
+              "order": "3"
+            }
+          }
+        },
+        {
+          "trigger": "before_tool_use",
+          "room_id": "room-1",
+          "tool_call": {
+            "name": "lookup_order",
+            "tool_call_id": "call-4",
+            "arguments": {
+              "order": "4"
+            }
+          }
+        }
+      ],
+      "audit": [
+        {
+          "trigger": "on_tool_call",
+          "room_id": "room-1",
+          "tool_call": {
+            "name": "lookup_order",
+            "tool_call_id": "call-1",
+            "arguments": {
+              "order": "1"
+            },
+            "result": "{\"error\": \"Needs a manager's approval\"}",
+            "is_error": true,
+            "refused": true,
+            "cancelled": false,
+            "error_detail": null
+          }
+        },
+        {
+          "trigger": "on_tool_call",
+          "room_id": "room-1",
+          "tool_call": {
+            "name": "lookup_order",
+            "tool_call_id": "call-2",
+            "arguments": {
+              "order": "2"
+            },
+            "result": "{\"error\": \"Tool 'lookup_order' denied by pre-execution hook.\"}",
+            "is_error": true,
+            "refused": true,
+            "cancelled": false,
+            "error_detail": {
+              "$contains": "approval service down"
+            }
+          }
+        },
+        {
+          "trigger": "on_tool_call",
+          "room_id": "room-1",
+          "tool_call": {
+            "name": "lookup_order",
+            "tool_call_id": "call-3",
+            "arguments": {
+              "order": "3"
+            },
+            "result": "{\"error\": \"Tool 'lookup_order' denied by pre-execution hook.\"}",
+            "is_error": true,
+            "refused": true,
+            "cancelled": false,
+            "error_detail": {
+              "$contains": "approve"
+            }
+          }
+        },
+        {
+          "trigger": "on_tool_call",
+          "room_id": "room-1",
+          "tool_call": {
+            "name": "lookup_order",
+            "tool_call_id": "call-4",
+            "arguments": {
+              "order": "4"
+            },
+            "result": "{\"order\": \"4\", \"status\": \"ready\"}",
+            "is_error": false,
+            "refused": false,
+            "cancelled": false,
+            "error_detail": null
+          }
+        }
+      ]
+    },
+    "models": {
+      "agent": [
+        {
+          "tool_results": []
+        },
+        {
+          "tool_results": [
+            {
+              "tool_call_id": "call-1",
+              "content": "{\"error\": \"Needs a manager's approval\"}"
+            }
+          ]
+        },
+        {
+          "tool_results": [
+            {
+              "tool_call_id": "call-1",
+              "content": "{\"error\": \"Needs a manager's approval\"}"
+            },
+            {
+              "tool_call_id": "call-2",
+              "content": "{\"error\": \"Tool 'lookup_order' denied by pre-execution hook.\"}"
+            }
+          ]
+        },
+        {
+          "tool_results": [
+            {
+              "tool_call_id": "call-1",
+              "content": "{\"error\": \"Needs a manager's approval\"}"
+            },
+            {
+              "tool_call_id": "call-2",
+              "content": "{\"error\": \"Tool 'lookup_order' denied by pre-execution hook.\"}"
+            },
+            {
+              "tool_call_id": "call-3",
+              "content": "{\"error\": \"Tool 'lookup_order' denied by pre-execution hook.\"}"
+            }
+          ]
+        },
+        {
+          "tool_results": [
+            {
+              "tool_call_id": "call-1",
+              "content": "{\"error\": \"Needs a manager's approval\"}"
+            },
+            {
+              "tool_call_id": "call-2",
+              "content": "{\"error\": \"Tool 'lookup_order' denied by pre-execution hook.\"}"
+            },
+            {
+              "tool_call_id": "call-3",
+              "content": "{\"error\": \"Tool 'lookup_order' denied by pre-execution hook.\"}"
+            },
+            {
+              "tool_call_id": "call-4",
+              "content": "{\"order\": \"4\", \"status\": \"ready\"}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

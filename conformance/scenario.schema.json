@@ -127,7 +127,7 @@
       }
     },
     "channel": {
-      "description": "A scripted channel. Its parse is the default one (README, \"Scripted channels\"), its turn answers nothing and its delivery succeeds, unless a reaction says otherwise.",
+      "description": "A scripted channel. Its parse is the default one (README, \"Scripted channels\"), its turn answers nothing and its delivery succeeds, unless a reaction says otherwise. An `ai` channel with a `model` is a scripted agent instead: the implementation's own AI channel over a scripted model (README, \"Scripted agents\").",
       "type": "object",
       "required": [
         "id",
@@ -172,6 +172,38 @@
         },
         "deliver": {
           "$ref": "#/$defs/reactions"
+        },
+        "model": {
+          "$ref": "#/$defs/model"
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/scripted_tool"
+          }
+        },
+        "tool_policy": {
+          "description": "A ToolPolicy (§21.1): glob patterns.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "allow": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "deny": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "max_tool_rounds": {
+          "type": "integer",
+          "minimum": 1
         }
       }
     },
@@ -1045,6 +1077,16 @@
               "object"
             ]
           }
+        },
+        "models": {
+          "description": "Per scripted agent, each generation's request as the model received it, in order: the `tool_results` it carries, each `{tool_call_id, content}`.",
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "array",
+              "object"
+            ]
+          }
         }
       }
     },
@@ -1068,6 +1110,144 @@
           "background"
         ]
       }
+    },
+    "model": {
+      "description": "A scripted model: its answer to the agent's n-th generation of the run is its n-th round. A generation past the last round fails the turn.",
+      "type": "object",
+      "required": [
+        "rounds"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "rounds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/model_round"
+          }
+        }
+      }
+    },
+    "model_round": {
+      "description": "One generation's answer: its text, the calls it makes, why it stopped, and what it used.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "calls": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/model_call"
+          }
+        },
+        "finish_reason": {
+          "type": "string"
+        },
+        "usage": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "model_call": {
+      "description": "A call the round makes. `cut`: the response was cut short over its arguments, which never arrived whole (§6.4); only a round's last call, under a finish_reason that cuts calls.",
+      "type": "object",
+      "required": [
+        "id",
+        "name"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "arguments": {
+          "type": "object"
+        },
+        "cut": {
+          "type": "boolean"
+        }
+      }
+    },
+    "scripted_tool": {
+      "description": "A tool the scripted agent serves, declared with its definition, answering every call one way: `returns` a text; `raises` an error of a kind (§9.3: the model reads the kind, the observers the message); `fails` or `refuses` with words the model reads (§9.3); `hangs`, never answering.",
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "parameters": {
+          "type": "object"
+        },
+        "returns": {
+          "type": "string"
+        },
+        "raises": {
+          "type": "object",
+          "required": [
+            "kind",
+            "message"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "message": {
+              "type": "string"
+            }
+          }
+        },
+        "fails": {
+          "type": "string"
+        },
+        "refuses": {
+          "type": "string"
+        },
+        "hangs": {
+          "type": "boolean"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "returns"
+          ]
+        },
+        {
+          "required": [
+            "raises"
+          ]
+        },
+        {
+          "required": [
+            "fails"
+          ]
+        },
+        {
+          "required": [
+            "refuses"
+          ]
+        },
+        {
+          "required": [
+            "hangs"
+          ]
+        }
+      ]
     }
   }
 }

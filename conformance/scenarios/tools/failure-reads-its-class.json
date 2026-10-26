@@ -1,0 +1,372 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "tools/failure-reads-its-class",
+  "title": "A tool that raises reads as its failure named by its class; the error's message reaches the observers only. Words a tool gives as a failure or a refusal pass as they are",
+  "rules": [
+    "§9.3",
+    "§21.6"
+  ],
+  "notes": "The raised error's message, which here holds a password, is on the observers' error_detail and nowhere the model or the room reads: not in the stored TOOL_CALL_END, not in the result the next round carries (§9.3, ON_TOOL_CALL, where the call was refused or failed).",
+  "setup": {
+    "channels": [
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "agent",
+        "type": "ai",
+        "model": {
+          "rounds": [
+            {
+              "calls": [
+                {
+                  "id": "call-1",
+                  "name": "lookup_order",
+                  "arguments": {
+                    "order": "42"
+                  }
+                },
+                {
+                  "id": "call-2",
+                  "name": "cancel_order",
+                  "arguments": {
+                    "order": "42"
+                  }
+                },
+                {
+                  "id": "call-3",
+                  "name": "refund_order",
+                  "arguments": {
+                    "order": "42"
+                  }
+                }
+              ],
+              "finish_reason": "tool_calls"
+            },
+            {
+              "text": "Sorry, I cannot.",
+              "finish_reason": "stop"
+            }
+          ]
+        },
+        "tools": [
+          {
+            "name": "lookup_order",
+            "description": "Find an order",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "order": {
+                  "type": "string"
+                }
+              }
+            },
+            "raises": {
+              "kind": "RuntimeError",
+              "message": "db unreachable: postgres://admin:hunter2@db"
+            }
+          },
+          {
+            "name": "cancel_order",
+            "description": "Cancel an order",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "order": {
+                  "type": "string"
+                }
+              }
+            },
+            "fails": "Order 42 is already shipped"
+          },
+          {
+            "name": "refund_order",
+            "description": "Refund an order",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "order": {
+                  "type": "string"
+                }
+              }
+            },
+            "refuses": "Refunds are made by staff only"
+          }
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "agent",
+            "category": "intelligence"
+          }
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "audit",
+        "trigger": "on_tool_call",
+        "execution": "async"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "ws",
+        "sender_id": "alice",
+        "content": {
+          "type": "text",
+          "body": "Cancel or refund order 42."
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "index": 0,
+          "type": "message",
+          "source": {
+            "channel_id": "ws"
+          },
+          "content": {
+            "type": "text",
+            "body": "Cancel or refund order 42."
+          }
+        },
+        {
+          "index": 1,
+          "type": "tool_call_start",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "lookup_order",
+            "tool_id": "call-1",
+            "arguments": {
+              "order": "42"
+            },
+            "status": "pending",
+            "result": null
+          }
+        },
+        {
+          "index": 2,
+          "type": "tool_call_start",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "cancel_order",
+            "tool_id": "call-2",
+            "arguments": {
+              "order": "42"
+            },
+            "status": "pending",
+            "result": null
+          }
+        },
+        {
+          "index": 3,
+          "type": "tool_call_start",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "refund_order",
+            "tool_id": "call-3",
+            "arguments": {
+              "order": "42"
+            },
+            "status": "pending",
+            "result": null
+          }
+        },
+        {
+          "index": 4,
+          "type": "tool_call_end",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "lookup_order",
+            "tool_id": "call-1",
+            "arguments": {
+              "order": "42"
+            },
+            "status": "failed",
+            "outcome": "failed",
+            "result": "{\"error\": \"Tool 'lookup_order' failed (RuntimeError)\"}",
+            "error": "{\"error\": \"Tool 'lookup_order' failed (RuntimeError)\"}"
+          }
+        },
+        {
+          "index": 5,
+          "type": "tool_call_end",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "cancel_order",
+            "tool_id": "call-2",
+            "arguments": {
+              "order": "42"
+            },
+            "status": "failed",
+            "outcome": "failed",
+            "result": "Order 42 is already shipped",
+            "error": "Order 42 is already shipped"
+          }
+        },
+        {
+          "index": 6,
+          "type": "tool_call_end",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "tool_call",
+            "tool_name": "refund_order",
+            "tool_id": "call-3",
+            "arguments": {
+              "order": "42"
+            },
+            "status": "failed",
+            "outcome": "refused",
+            "result": "Refunds are made by staff only",
+            "error": "Refunds are made by staff only"
+          }
+        },
+        {
+          "index": 7,
+          "type": "message",
+          "source": {
+            "channel_id": "agent",
+            "direction": "outbound"
+          },
+          "chain_depth": 1,
+          "content": {
+            "type": "text",
+            "body": "Sorry, I cannot."
+          },
+          "metadata": {
+            "loop_end_reason": "completed"
+          }
+        }
+      ]
+    },
+    "hooks": {
+      "audit": {
+        "$unordered": [
+          {
+            "trigger": "on_tool_call",
+            "room_id": "room-1",
+            "tool_call": {
+              "name": "lookup_order",
+              "tool_call_id": "call-1",
+              "arguments": {
+                "order": "42"
+              },
+              "result": "{\"error\": \"Tool 'lookup_order' failed (RuntimeError)\"}",
+              "is_error": true,
+              "refused": false,
+              "cancelled": false,
+              "error_detail": "RuntimeError: db unreachable: postgres://admin:hunter2@db"
+            }
+          },
+          {
+            "trigger": "on_tool_call",
+            "room_id": "room-1",
+            "tool_call": {
+              "name": "cancel_order",
+              "tool_call_id": "call-2",
+              "arguments": {
+                "order": "42"
+              },
+              "result": "Order 42 is already shipped",
+              "is_error": true,
+              "refused": false,
+              "cancelled": false,
+              "error_detail": "Order 42 is already shipped"
+            }
+          },
+          {
+            "trigger": "on_tool_call",
+            "room_id": "room-1",
+            "tool_call": {
+              "name": "refund_order",
+              "tool_call_id": "call-3",
+              "arguments": {
+                "order": "42"
+              },
+              "result": "Refunds are made by staff only",
+              "is_error": true,
+              "refused": true,
+              "cancelled": false,
+              "error_detail": null
+            }
+          }
+        ]
+      }
+    },
+    "models": {
+      "agent": [
+        {
+          "tool_results": []
+        },
+        {
+          "tool_results": [
+            {
+              "tool_call_id": "call-1",
+              "content": "{\"error\": \"Tool 'lookup_order' failed (RuntimeError)\"}"
+            },
+            {
+              "tool_call_id": "call-2",
+              "content": "Order 42 is already shipped"
+            },
+            {
+              "tool_call_id": "call-3",
+              "content": "Refunds are made by staff only"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
