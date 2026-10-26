@@ -547,10 +547,11 @@ still-attached channel can append to the closed room.
 start with `roomkit:` are the implementation's own namespace: what the
 framework keeps for the room, such as a detach's revocation (§7.5 rule 7) or
 the state the host sets for a channel (§10.6.2). Only the framework writes
-them. A room's creation and an integrator's metadata update that name such a
-key MUST be refused, and so MUST a `TurnHost` verb that does (§10.6.5); a
-channel's `metadata_updates` that name one have it dropped with a warning,
-the rest applied (§10.1 step 15). A key the implementation keeps as a room's
+them. A room's creation, an integrator's metadata update (a hook's body's
+included), a `TurnHost` verb (§10.6.5) and a channel's `metadata_updates`
+(§10.1 step 15) that name such a key have it dropped with a warning, the
+rest written, so a write that copies the room's metadata back still works.
+A key the implementation keeps as a room's
 private state (§14.1) reserves the same key of the metadata, whatever its
 prefix, and falls under the same rule: only the framework writes it there.
 
@@ -3888,8 +3889,10 @@ an event chain.
   for a message it creates (§9.5.1).
 - A call into a room made from the body of an ASYNC hook a cascade fires once
   an event's delivery set has run (§10.1 step 16's `AFTER_BROADCAST` hooks, a
-  change's `ON_EVENT_UPDATED` and `ON_EVENT_DELETED` hooks, §10.3), while the
-  body runs, is at least one deeper than the event the hook runs for: the
+  change's `ON_EVENT_UPDATED` and `ON_EVENT_DELETED` hooks, §10.3; and an
+  ASYNC hook observing a SYNC trigger, §9.2), while the body runs, is at
+  least one deeper than the event the hook runs for, or than the turn's
+  answer for a trigger that fires per tool call: the
   event it injects, the message it hands in or delivers (a delivery queued
   for later carries that depth), and a regeneration it asks for (§10.3) take
   that depth when their own is lower, so that a hook that asks an agent again
@@ -3959,8 +3962,8 @@ the work delivers in, after the locked check, what routing wrote kept
 count the calls of the ASYNC hooks it fires once an event's delivery set has
 run (§10.1 step 16's `AFTER_BROADCAST` hooks, a change's `ON_EVENT_UPDATED`
 and `ON_EVENT_DELETED` hooks, §10.3) and of those its work fires on a SYNC
-trigger, which observe the payload the chain left (§9.2), all its hooks
-together on one counter of
+trigger once per event, which observe the payload the chain left (§9.2), all
+its hooks together on one counter of
 the same size, `10 × max_chain_depth`, shared by reference with the cascades
 those calls start as the passes are. While a hook's body runs, each call it
 makes into its room draws one hook call as it starts, a message that creates
@@ -3977,7 +3980,11 @@ injection is stored `BLOCKED` with `reentry_loop_cap` and its message refused,
 as past the passes (above), and a direct change raises a reentry-loop-cap
 error, nothing of it written (§10.3). Work a hook's body starts (a task it
 spawns, and does not wait for) that calls once the body has returned is work
-of its own, with a budget and a depth of its own (§9.5.1).
+of its own, with a budget and a depth of its own (§9.5.1). The observers of a
+trigger that fires per tool call (`BEFORE_TOOL_USE`, `ON_TOOL_CALL`,
+`AFTER_TOOL_ROUND`, `ON_USER_INPUT_REQUIRED`) draw on a budget of their own,
+fresh at each firing, so a hook that reports every tool call of a long turn
+is never capped; the depth floor (above) bounds what they start.
 
 **Requirements:**
 
@@ -4960,13 +4967,11 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   hook's body, a handler the check's report of a `hook_error` or a
   `hook_timeout` awaits (§8.2), and the message's parse (a channel's
   `handle_inbound()`, §10.1 step 4). It stands there only while that work
-  runs: a task the work spawned that outlives it stands in no order. A locked
-  hook stands there only while its body runs, though its section holds the
-  lock longer: a task the body spawned acts for it while the body runs,
-  awaited or not, and once the body has returned the task's calls are new
-  arrivals, neither refused nor adopted. They wait for the lock the section
-  holds, so a later hook of that section that awaits the task, when the task
-  calls the room, waits until its own timeout (§9.3). The call
+  runs: a task the work spawned that outlives it stands in no order. So does
+  a locked hook, only while its body runs, though its section holds the lock
+  longer: a task the body spawned acts for it while the body runs, awaited or
+  not, and once the body has returned its calls are new arrivals, which wait
+  for the lock. A call that work makes
   is adopted by that work: it would otherwise wait for the ticket its own
   caller holds or, made from a parse, open a cascade of its own for every
   message. It runs every hook under the lock and commits ahead of the event
@@ -5001,12 +5006,12 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   once an event's delivery set has run: §10.1 step 16's `AFTER_BROADCAST`
   hooks, a change's `ON_EVENT_UPDATED` and `ON_EVENT_DELETED` hooks, §10.3;
   and the body of an ASYNC hook observing a SYNC trigger the room's work
-  fires, §9.2, an observer of a trigger fired outside any cascade having a
-  budget of its own) is a new arrival: it takes a ticket when an off-lock
-  hook fires for its event, and `process_timeout` bounds it (§13.6). While
-  that delivery, turn or hook body runs, a call into its own room MUST draw
-  on the reentry budget of the cascade that delivers, the one whose delivery
-  set runs it or that
+  fires, §9.2, with a budget of its own for a trigger fired per tool call or
+  outside any cascade, §8.3) is a new arrival: it takes a ticket when an
+  off-lock hook fires for its event, and `process_timeout` bounds it
+  (§13.6). While that delivery, turn or hook body runs, a call into its own
+  room MUST draw on the reentry budget of the cascade that delivers, the one
+  whose delivery set runs it or that
   fired the hook, and so does the cascade the call starts, so that a
   transport whose delivery sends into its room, or a hook that posts after
   every event, stops at the cap. A delivery's or a turn's call draws one of
@@ -6722,8 +6727,8 @@ through a channel call and is needed again on another executor (an ACP
 session's configuration values, §6.4). That state is the room's, not the
 executor's. A channel's result reports it when the verb changed it. The owner
 MUST store it in the room's metadata (§5.1), under a key of the
-implementation's own namespace (`roomkit:`), and MUST refuse that key in any
-other write (a room's creation or metadata update, a `TurnHost` verb). It
+implementation's own namespace (`roomkit:`), which drops that key from any
+other write (a room's creation or metadata update, a `TurnHost` verb, §5.1). It
 hands it to the executor with each request, in the room its `RoomContext`
 carries, and with each channel call, before the turn or the verb runs. The
 channel takes it back when it holds none for the room. A detach forgets it.
