@@ -12667,12 +12667,14 @@ the shutdown, never run against a resource being released.
 The framework has one shutdown too, held to the channel's rule above. A
 `close()` that overlaps another MUST join the shutdown already running:
 concurrent callers await one shared attempt, and a caller being cancelled
-(a timeout around it, a process interrupted in its last `finally`) cancels
-only its own wait, never the shutdown, which still closes every channel and
-releases the shared resources. Once the shutdown reaches its terminal
-result, that result answers every later call: a return after a success, the
-same failure after a failure (a channel that failed to close), never a
-second run of the steps.
+(a timeout around it, its task cancelled) cancels only its own wait, never
+the shutdown, which still closes every channel and releases the shared
+resources. Once the shutdown reaches its terminal result, that result
+answers every later call: a return after a success, the same failure after
+a failure (a channel that failed to close), never a second run of the
+steps. A shutdown cut itself, as when a process cancels every task as it
+ends, is no cancellation of a later caller: that caller gets an error
+saying the shutdown did not finish.
 
 A `close()` called from the framework's own work (a hook's body, a tool's
 call, a background run, the aftermath of a delivery, a session's teardown)
@@ -12681,8 +12683,13 @@ call returns, so waiting for it waits for itself, and cutting it cuts the
 call. The shutdown spares the work the call runs under, with the delivery
 lane, the teardown or the task that carries it; it closes and releases
 everything else as usual, the call returns once it has ended, and the work
-spared ends on its own. A `close()` called from the shutdown's own work (a
-hook it fires as it closes) returns at once.
+spared ends on its own. The rule holds for every caller, the one that
+started the shutdown or one that joined it: work the shutdown already waits
+for when its caller joins stops being waited for, and work it has not
+reached yet is spared when reached. A spared delivery lane is neither
+drained nor cut; the deliveries queued behind its own are dropped, as those
+left when a lane's drain runs out are. A `close()` called from the
+shutdown's own work (a hook it fires as it closes) returns at once.
 
 **Admitting participants:** the channel exposes `mint_access()` for a
 participant of the room, applying `default_grants` unless the caller
