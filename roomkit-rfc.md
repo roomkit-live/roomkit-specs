@@ -12664,6 +12664,26 @@ shutdown could not see — a callback parked in a backend past every closing
 budget — and that resumes afterwards MUST be refused with an error naming
 the shutdown, never run against a resource being released.
 
+The framework has one shutdown too, held to the channel's rule above. A
+`close()` that overlaps another MUST join the shutdown already running:
+concurrent callers await one shared attempt, and a caller being cancelled
+(a timeout around it, a process interrupted in its last `finally`) cancels
+only its own wait, never the shutdown, which still closes every channel and
+releases the shared resources. Once the shutdown reaches its terminal
+result, that result answers every later call: a return after a success, the
+same failure after a failure (a channel that failed to close), never a
+second run of the steps.
+
+A `close()` called from the framework's own work (a hook's body, a tool's
+call, a background run, the aftermath of a delivery, a session's teardown)
+MUST NOT wait for that work nor cut it: the work cannot move on before the
+call returns, so waiting for it waits for itself, and cutting it cuts the
+call. The shutdown spares the work the call runs under, with the delivery
+lane, the teardown or the task that carries it; it closes and releases
+everything else as usual, the call returns once it has ended, and the work
+spared ends on its own. A `close()` called from the shutdown's own work (a
+hook it fires as it closes) returns at once.
+
 **Admitting participants:** the channel exposes `mint_access()` for a
 participant of the room, applying `default_grants` unless the caller
 overrides them. The integrator delivers the resulting ConferenceAccess to
