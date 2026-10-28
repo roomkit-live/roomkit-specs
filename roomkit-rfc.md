@@ -1755,11 +1755,11 @@ served by nothing or cancelled ends `failed`, so a live surface does not read
 the outcome out of the result preview. The stored `TOOL_CALL_END` also carries
 the call's `outcome`, the way it ended as the channel determined it (Section
 9.3): `served`, `refused`, `failed`, `blocked`, `unserved` or `cancelled`. A
-reader that rebuilds what earlier turns did from the store, as a tool-usage
-digest reseeded after a restart does, reads that outcome rather than inferring
-it from the body: such a digest keeps the calls the live one keeps (served,
-failed, blocked; never a refusal, a call nothing served or one cancelled). A
-row stored without it is read by its `status`.
+reader that rebuilds what earlier turns did from the store, as an AI
+channel's history does with its earlier tool calls (Section 6.4), reads that
+outcome rather than inferring it from the body: it keeps the calls the live
+tool memory keeps (served, failed, blocked; never a refusal, a call nothing
+served or one cancelled). A row stored without it is read by its `status`.
 
 **What a provider hands the loop of its reasoning (normative).** A provider
 whose reasoning comes in blocks, each with its own signature (Anthropic), hands
@@ -2290,12 +2290,41 @@ channel's tool loop: a realtime session does not fire it, nor does a
 reasoning backend's agent (not a registered channel), nor an external agent
 that runs its own loop (Section 6.4, ACP).
 
+**The tools of earlier turns (normative).** An AI channel's history MUST carry
+the rounds of tool calls its own earlier turns made, each at its place in the
+conversation (after the turn's input, before its answer), the way the turn
+itself sent it: the assistant's calls, then their results, as the tool
+messages the provider's API carries. A recall of them riding the turn's
+input instead reads to a model as something the participant asked, and
+models answer it. A round replays what the model was given:
+
+- the arguments it wrote, never a BEFORE_TOOL_USE rewrite of them;
+- the result it read: an ON_TOOL_CALL rewrite, or an oversized result's
+  placeholder while the room still stores what it points to (Section 21.5);
+  once it no longer does, the result's size alone.
+
+The calls replayed are the ones the tool memory keeps: served, failed,
+blocked; never a refusal, a call nothing served or one cancelled, nor a
+discovery or housekeeping call of the channel's own. They are the channel's
+own only, read from its stored rows (`TOOL_CALL_START`'s arguments,
+`TOOL_CALL_END`'s result and outcome), so they outlive the executor. A turn
+with no store to read, or whose store cannot be read, goes without them rather
+than failing.
+
+A round older than the history window is not replayed: a history never opens
+on the assistant's calls. A discussion's turn, which reads its event at its
+place (Section 19.7.5), reads after it the rounds of the turns that followed. An implementation bounds the rounds; the reference
+keeps the last 8 calls, the 3 most recent with their result whole up to 6,000
+characters (never more than its eviction threshold lets the turn see), the
+older ones a preview that says the rest is not shown. A standalone turn
+replays none (Section 10.1.1), and the turn's footprint counts them
+(Section 20).
+
 **The prompt from turn to turn.** For the same reason, the system prompt SHOULD
 stay the same from one turn to the next: a system prompt that changes
 invalidates everything cached after it, the whole history included. What changes
 between turns as the conversation works travels with the turn's input instead,
-as notes: what the channel recalls of the tools used in the room (and what they
-returned), the room's plan, the room's background tasks and how far each got
+as notes: the room's plan, the room's background tasks and how far each got
 (Section 23.4), how speakers are named when the history window holds
 several (which speakers it holds changes as it slides), who takes part
 when two people or more do (below; who is present changes as people come
@@ -2304,8 +2333,8 @@ reads while the window holds one (above, "A cut answer"), what a vision
 provider last saw (Section 12.8.7), and what a memory provider retrieved for this turn
 alone (Section 20.2), each passage set apart as data. The notes follow the
 turn's input (the participant's words, or the application's instruction) in the
-same message, marked as the channel's, asking for nothing, with any tool result
-they quote set apart as data; when the conversation does not end on such a
+same message, marked as the channel's, asking for nothing; when the
+conversation does not end on such a
 message, they are a message of their own. They come after the input, so what
 changes comes last and a provider that caches a prefix keeps the input in it;
 they are not a message of their own when the input is one, since a model whose
@@ -2314,8 +2343,9 @@ that sees, the latest images the channel's own tool calls in the room returned
 (two, newest last) follow the notes in the same message, each after the call
 that returned it, under a header that sets them apart as data a tool returned,
 never instructions; the notes then take a text part of their own, which a
-hook's block joins. The notes say what a result showed in its tool's words,
-never what it looks like, and a follow-up about a picture needs the picture.
+hook's block joins. A replayed result says what an image showed in its tool's
+words, never what it looks like, and a follow-up about a picture needs the
+picture.
 They ride the turn's input, never an assistant's message, where several
 providers refuse an image. Only an image every vision provider takes is kept:
 inline (a data URI, never a link, which may expire or be out of the vendor's
@@ -2326,8 +2356,8 @@ provider refused would fail every later turn. The content is refused when the
 turn's first request fails, before anything of it streamed, on a provider
 error not retried that is no authentication, payment, permission, missing model
 or rate limit: a later round, or a stream already under way, shows the images were
-taken. The labels quote the calls as the digest does,
-each copy of a runtime mark replaced, and the images count in what the turn
+taken. Each label names its call as the input names a call (below), each
+copy of a runtime mark replaced, and the images count in what the turn
 measures before its history (Section 20). A model that does not see reads the
 notes alone. A
 BEFORE_AI_GENERATION hook MAY add a block to the turn's notes: it joins the
@@ -2390,8 +2420,9 @@ the one the channel placed, a paragraph of its own with a block after it:
 the block a hook adds joins the notes it marks, and a reader that separates
 the input from its notes cuts there (an input with images carries its notes
 in a text part of their own, which such a reader leaves out). The turn's own
-rounds are not rewritten: what the agent writes between its tool calls, and
-a tool's result, which the tool role frames. Only a copy a hook writes into
+rounds, and the earlier rounds its history replays, are not rewritten: what
+the agent writes between its tool calls, and a tool's result, which the tool
+role frames. Only a copy a hook writes into
 the messages itself is what both misread. An active
 skill's instructions stay in the system prompt (Section 24.4): they change only
 when a skill is activated, and they are instructions, not notes. Those of a
@@ -2613,8 +2644,9 @@ source the room saw, and each later one carries it with its rank (`Alice
 are fixed when the turn enters the room (Section 10.1, step 12) and recorded
 on the event, so every surface and every later prompt reads the same, and a
 participant renamed later keeps on their earlier turns the name they spoke
-under. A tool call the channel recalls in the turn's notes names its tool and
-its arguments' keys as identifiers and quotes each text value. The
+under. A tool call the channel names in the turn's input (an image's label)
+names its tool and its arguments' keys as identifiers and quotes each text
+value. The
 conversation itself (a participant's message, the agent's own answers, the
 application's instruction) keeps its author's role and is not quoted beyond
 the line labels above, a copy of the turn's notes' header it holds replaced as
@@ -5851,9 +5883,8 @@ response typed `INSTRUCTION` does not re-enter (§8.5).
    an empty view is not enough, since a provider MAY return `messages` of its
    own (a summary, a minimum it always keeps). Nor does it read the room's
    working memories, which are its past in another form: skills activated in
-   the room, the room's plan, the room's background tasks, and what the
-   channel recalls of tools used there (a digest that may quote their
-   results). The channel's own system
+   the room, the room's plan, the room's background tasks, and the rounds of
+   tool calls its earlier turns made there, with their results. The channel's own system
    prompt, tools and skill catalogue are unchanged. It is for a pass that must start from a
    blank page, such as a summary re-run that would otherwise read, and copy,
    its previous answer.
@@ -6791,13 +6822,13 @@ the kit gives a channel it registers, each on the executor's side:
 **Per-room state.** A channel MAY keep state per room between two turns on its
 executor. An AI channel keeps a room's thought and its speak policy's
 listening state (§6.4), its plan, the results it evicted and reads back, the
-skills it activated, the tools Tool Search revealed and its tool-usage digest;
+skills it activated, and the tools Tool Search revealed or it used;
 an ACP agent channel keeps the room's session. That state is the executor's,
 not the room's, and is one of two kinds, which an implementation documents per
 state:
 
-- a **cache**, rebuilt from the timeline and the store when absent (a digest
-  reseeded from its rows, §6.4);
+- a **cache**, rebuilt from the timeline and the store when absent (the tools
+  it used, reseeded from its rows, §6.4);
 - **session state**, which starts empty when absent, as after a restart (a
   plan, a thought). Some of it the room needs: an ACP session, whose agent
   holds the conversation, and a speak policy's listening state, a request to
@@ -16777,8 +16808,9 @@ tool results, and recent events.
 
 **The turn's footprint.** What the history may take is what the window leaves
 once the rest of the turn is in it: the system prompt, the tools declared, the
-notes the channel itself adds to the turn's input (the room's plan, the digest
-of the tools already used, the speaker attribution) and the reply budget. A
+notes the channel itself adds to the turn's input (the room's plan, the
+speaker attribution), the earlier rounds of tool calls its history replays
+(Section 6.4) and the reply budget. A
 host cannot always name that rest, since the prompt is composed per turn
 (skills, Tool Search, the agent's identity, a binding's tools). So an AI channel
 MUST measure it, as it will send it, before it reads its memory, and make the
