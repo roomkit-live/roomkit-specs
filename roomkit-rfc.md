@@ -3482,6 +3482,17 @@ every question or none. A speak policy built on judgments (Section 6.4) is a
 classifier's first consumer; a discussion's dispatch policy (Section 19.7.5) is
 another.
 
+RoomKit also provides a classifier on any server of the System One API, the API
+Jev answers on (`POST {base_url}/v1/systemone`): TypeSafe, a LiteLLM proxy,
+Ollama, llama.cpp's server and vLLM serve decision models on it. A second one
+runs a decision model on the integrator's machine through llama.cpp: the first
+question downloads and starts it, `close()` stops it. Both sit behind optional
+extras and send the model they were given with every call. A server does not
+always put the expected level in its `score` (llama.cpp sent the likeliest
+level), so these classifiers compute the score from the levels' probabilities
+when the server sends them, as every server probed does, and a score means the
+same whichever server answered.
+
 ---
 
 ## 7. Permission Model
