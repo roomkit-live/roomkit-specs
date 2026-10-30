@@ -5673,12 +5673,15 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     └── As the pass ends, its BEFORE_BROADCAST observers start (§9.2): the
         hooks registered ASYNC observe the event its chain allowed, as its
         SYNC hooks left it, in the context they were handed. They MUST NOT
-        start before the pass is over: its event committed and its delivery
-        set placed in the lane (or its BLOCKED record stored at step 11, or
-        the event refused at step 9a), whatever the store's commit takes.
+        start before the pass is over, whatever the store's commit takes:
+        its event committed and its delivery set placed in the lane, or the
+        pass ended otherwise once its chain allowed the event (its BLOCKED
+        record stored at step 11, the event refused at step 9a, the pass's
+        `process_timeout` run out, §13.6, or its commit failed). Those
+        still start then, on an event that may never have been stored.
         The same holds on every pass that runs the chain: an inbound
         message, a direct injection (§10.5), a response's pass, an injected
-        event's, a streamed segment's. An event its chain blocked has none
+        event's, a streamed segment's. An event its chain blocked has none.
 
 14. EXECUTE DELIVERY LANE (§10.2) — per-room FIFO, after lock release:
     ├── An event's delivery set MUST complete before the next event's
