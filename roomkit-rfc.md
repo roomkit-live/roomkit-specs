@@ -905,8 +905,12 @@ ToolCallContent
 │       | "cancelled" | null
 │       # How the call ended, on an end row (Section 6.4); null on a row
 │       # written without it, which a reader takes by its status
-└── refused_but_ran: bool = false
-        # The call ran although RoomKit refused it (Section 9.3)
+├── refused_but_ran: bool = false
+│       # The call ran although RoomKit refused it (Section 9.3)
+└── intent: string | null
+        # What the call does, in the sentence its model wrote for the
+        # person (Section 6.4); written only when set, null on a row
+        # written without it
 ```
 
 ### 5.4 Channel Data (Typed, Per-Channel)
@@ -1760,6 +1764,8 @@ channel's history does with its earlier tool calls (Section 6.4), reads that
 outcome rather than inferring it from the body: it keeps the calls the live
 tool memory keeps (served, failed, blocked; never a refusal, a call nothing
 served or one cancelled). A row stored without it is read by its `status`.
+Both ephemeral events carry a call's `intent` beside its id when it has one
+(A call's intent, above).
 
 **What a provider hands the loop of its reasoning (normative).** A provider
 whose reasoning comes in blocks, each with its own signature (Anthropic), hands
@@ -1847,6 +1853,60 @@ out of room before any answer after a tool round ends the turn `truncated`
 and is not tried again, since the same room runs out again: the output cap
 and the context window alike, read by the same rule as a response schema's
 `truncated` (Section 6.7).
+
+**A call's intent (normative).** An AI channel MAY ask its model to write,
+with each call, one short sentence for the person saying what the call does,
+so that a surface can show the agent's work ("Je recherche les fichiers texte
+du projet.") rather than a tool's name and raw arguments. The option is the
+agent's (`tool_call_intents`), off by default; off, nothing below applies and
+schemas, arguments, events and rows are the same as without it. On:
+
+- **What the model is shown.** Each tool schema a request declares carries
+  one optional string property more, `_roomkit_intent`, which asks for that
+  sentence in the language of the conversation. It is added to the request's
+  copy only: the tools' own schemas, which a call's arguments are checked
+  against, a hook reads and a turn reports as declared, stay as their tools
+  declared them. A schema that already declares `_roomkit_intent`, or is no
+  object schema, is shown as it is, and the implementation logs it.
+- **Where it is taken.** At the one point a complete call enters the loop,
+  before its start row, its `TOOL_CALL_START` and its gate, the property is
+  removed from the arguments of a call the loop serves, whatever its value,
+  and its value becomes the call's `intent`. A tool whose own schema declares
+  the property keeps it as its argument and its call has no intent; a call
+  whose arguments do not read (marked partial) is left as it is. So the
+  handler, `BEFORE_TOOL_USE`, the policy and the schema check see the tool's
+  arguments only, and a closed schema (`additionalProperties: false`) does
+  not refuse the call over the property.
+- **What it becomes.** Only a string is an intent. Each control character
+  (general category Cc) becomes a space, the bidirectional formatting
+  characters (U+061C, U+200E, U+200F, U+202A to U+202E, U+2066 to U+2069) are
+  removed, each run of white space (Unicode White_Space) becomes one space,
+  and the text is trimmed, cut at 200 characters (Unicode scalar values) and
+  trimmed again. Absent, null, not a string or empty after this, the call has
+  no intent. An intent never fails a call, never changes its outcome, and is
+  never interpreted as markup or code.
+- **Where it rides.** On the call, on every report of it (`BEFORE_TOOL_USE`,
+  `ON_TOOL_CALL`, a refusal, a cut call, Section 9.3), on the ephemeral
+  `TOOL_CALL_START` and `TOOL_CALL_END` beside each call's id, on both stored
+  rows (`ToolCallContent.intent`, Section 5.3) and on a turn's stream items
+  across processes (Section 10.6.4); each carries it only when the call has
+  one, so a payload, a row or a frame without one is the same as before, and
+  a reader takes a row written before intents as a call without one. Calls
+  under one id in one round keep their own (Section 12.4).
+- **What the model reads back.** A replay shows the model its call as it
+  wrote it: its intent back in `_roomkit_intent` among its arguments, in the
+  turn's next rounds and in later turns (The tools of earlier turns, below)
+  while the option is on; off, a later turn replays the arguments alone. A
+  `BEFORE_TOOL_USE` rewrite never reaches the model's history, as without it.
+- **What it is not.** Display text the model wrote: it grants nothing, it is
+  not what an approval shows of the call (its arguments are), and it says
+  nothing of what the call did; states and outcomes stay the engine's. A hook
+  cannot change it.
+- **Where it does not apply.** A realtime session's own calls (Section
+  12.4), an external agent's calls (Section 6.4, ACP) and the calls a
+  provider serves itself carry no intent: their schemas are not the
+  channel's to show. An agent with the option that a realtime session
+  delegates to runs its own loop, whose calls carry it (Section 12.4.1).
 
 **An answer that did not act.** An AI channel MAY carry a continuation policy:
 given the text a round ended on, the instruction that makes the model go on, or
@@ -2298,7 +2358,9 @@ messages the provider's API carries. A recall of them riding the turn's
 input instead reads to a model as something the participant asked, and
 models answer it. A round replays what the model was given:
 
-- the arguments it wrote, never a BEFORE_TOOL_USE rewrite of them;
+- the arguments it wrote, never a BEFORE_TOOL_USE rewrite of them, with its
+  intent back among them while the agent asks for one (A call's intent,
+  above);
 - the result it read: an ON_TOOL_CALL rewrite, or an oversized result's
   placeholder while the room still stores what it points to (Section 21.5);
   once it no longer does, the result's size alone.
@@ -2306,8 +2368,8 @@ models answer it. A round replays what the model was given:
 The calls replayed are the ones the tool memory keeps: served, failed,
 blocked; never a refusal, a call nothing served or one cancelled, nor a
 discovery or housekeeping call of the channel's own. They are the channel's
-own only, read from its stored rows (`TOOL_CALL_START`'s arguments,
-`TOOL_CALL_END`'s result and outcome), so they outlive the executor. A turn
+own only, read from its stored rows (`TOOL_CALL_START`'s arguments and
+intent, `TOOL_CALL_END`'s result and outcome), so they outlive the executor. A turn
 with no store to read, or whose store cannot be read, goes without them rather
 than failing.
 
@@ -6931,7 +6993,7 @@ OwnerTool
 | `accepted` | The executor's id: it took the turn |
 | `heartbeat` | Nothing: the turn is still running |
 | `output` | `on_event()` returned: the `ChannelOutput` without its stream (`responded`, `response_events`, `response_metadata`, `tasks`, `observations`, `metadata_updates`, its error as an error record), and whether a stream follows |
-| `item` | One item of the stream, within what the `pull` messages granted: a text delta (or the text deltas the channel yielded together, joined, with their number), a reasoning delta, a call's start (its id, name, arguments), a call's end (its id, the sequence number of its start's frame, name, arguments, result, status, outcome, duration, error, structured content, `refused_but_ran`), a segment break, the loop's end (reason, rounds, usage, the limits it ran under), or the stream's end |
+| `item` | One item of the stream, within what the `pull` messages granted: a text delta (or the text deltas the channel yielded together, joined, with their number), a reasoning delta, a call's start (its id, name, arguments, and its intent when it has one), a call's end (its id, the sequence number of its start's frame, name, arguments, result, status, outcome, duration, error, structured content, `refused_but_ran`, and its intent when it has one), a segment break, the loop's end (reason, rounds, usage, the limits it ran under), or the stream's end |
 | `tool_args` | The arguments a call runs with once its gate fixed them (a `BEFORE_TOOL_USE` rewrite, §9.3), naming the call's start frame |
 | `tool_ended` | A call's end known before the `item` carrying it was read (§10.6.4): the start's frame and the end |
 | `record` | The turn's response-metadata record as it stands (§6.7), sent before the `item` it was read with whenever it changed (§10.6.4) |
