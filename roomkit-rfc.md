@@ -12831,12 +12831,16 @@ The framework's close runs in this order, from the moment `close()` starts:
 2. **What has not started MUST be cut at once.** Every delivery queued in a
    room's lane behind another (one the lane runs, or one ahead of it in
    index order, §10.2) is dropped, never executed (§10.1). A delivery placed
-   in its lane while the lane was idle, running no set and holding none
+   in its lane while the lane was idle, sending no set and holding none
    queued, runs from its placement until one placed after it comes ahead of
    it: the close MUST NOT drop it, whether or not the lane has taken it yet,
-   whatever the store, and it gets the grace as running work (step 4). An
-   ASYNC `BEFORE_BROADCAST` observer that closes the framework thus finds
-   its event's delivery placed (§10.1 step 13): delivered when the lane was
+   whatever the store, and it gets the grace as running work (step 4). A
+   set sends until its targets have answered; its `AFTER_BROADCAST` hooks
+   and its responses' passes come after and leave the lane idle, so an
+   answer placed meanwhile (a channel's response, a send from an
+   `AFTER_BROADCAST` hook) runs from its placement. An ASYNC
+   `BEFORE_BROADCAST` observer that closes the framework thus finds its
+   event's delivery placed (§10.1 step 13): delivered when the lane was
    idle, dropped when queued behind another. A call waiting for its room's
    lock is cut, nothing of it stored; the framework's background runs
    (§19.7) and its verification timers (§11.7.5) are cut.
@@ -12948,7 +12952,11 @@ and work it has not reached yet is spared when reached. A caller whose work
 the close already cut (a tool whose turn it cut, closing the framework in
 its cleanup) is spared from its join on: its work is neither cut again nor
 waited for. A spared delivery lane is neither waited for nor cut; the
-deliveries queued behind its own are dropped, as every queued delivery is.
+deliveries queued behind its own are dropped, as every queued delivery is,
+and so is the one it holds placed while it was idle (step 2), once the grace
+is over: the lane could run it only after the store is released. An ASYNC
+hook's observer is not the work that fired it, which does not wait for it:
+a `close()` it calls waits for that work and cuts it as any other.
 A `close()` called from the shutdown's own work (a hook it fires as it
 closes) returns at once.
 
