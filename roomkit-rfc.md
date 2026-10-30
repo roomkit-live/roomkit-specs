@@ -1765,7 +1765,7 @@ outcome rather than inferring it from the body: it keeps the calls the live
 tool memory keeps (served, failed, blocked; never a refusal, a call nothing
 served or one cancelled). A row stored without it is read by its `status`.
 Both ephemeral events carry a call's `intent` beside its id when it has one
-(A call's intent, above).
+(A call's intent, below).
 
 **What a provider hands the loop of its reasoning (normative).** A provider
 whose reasoning comes in blocks, each with its own signature (Anthropic), hands
@@ -1890,13 +1890,14 @@ schemas, arguments, events and rows are the same as without it. On:
   `TOOL_CALL_START` and `TOOL_CALL_END` beside each call's id, on both stored
   rows (`ToolCallContent.intent`, Section 5.3) and on a turn's stream items
   across processes (Section 10.6.4); each carries it only when the call has
-  one, so a payload, a row or a frame without one is the same as before, and
-  a reader takes a row written before intents as a call without one. Calls
-  under one id in one round keep their own (Section 12.4).
-- **What the model reads back.** A replay shows the model its call as it
-  wrote it: its intent back in `_roomkit_intent` among its arguments, in the
-  turn's next rounds and in later turns (The tools of earlier turns, below)
-  while the option is on; off, a later turn replays the arguments alone. A
+  one: a payload, a row or a frame of a call without one has no `intent`
+  key, and a reader takes a row with no `intent` key as a call without one.
+  Calls under one id in one round keep their own (Section 12.4).
+- **What the model reads back.** A replay shows the model its call with its
+  intent, as normalized, back in `_roomkit_intent` among its arguments (a
+  value that made no intent is not replayed), in the turn's next rounds and
+  in later turns (The tools of earlier turns, below) while the option is
+  on; off, a later turn replays the arguments alone. A
   `BEFORE_TOOL_USE` rewrite never reaches the model's history, as without it.
 - **What it is not.** Display text the model wrote: it grants nothing, it is
   not what an approval shows of the call (its arguments are), and it says
@@ -1906,7 +1907,9 @@ schemas, arguments, events and rows are the same as without it. On:
   12.4), an external agent's calls (Section 6.4, ACP) and the calls a
   provider serves itself carry no intent: their schemas are not the
   channel's to show. An agent with the option that a realtime session
-  delegates to runs its own loop, whose calls carry it (Section 12.4.1).
+  delegates to takes the property out of its calls' arguments in its own
+  loop, but its calls are reported through the session's door, whose
+  reports carry no intent (Section 12.4.1).
 
 **An answer that did not act.** An AI channel MAY carry a continuation policy:
 given the text a round ended on, the instruction that makes the model go on, or
