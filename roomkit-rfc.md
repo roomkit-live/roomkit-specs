@@ -4433,7 +4433,9 @@ trigger. On a SYNC trigger the hooks registered SYNC run as the chain of
 Section 9.3, which may block or modify; then, unless the chain blocked, the
 hooks registered ASYNC run as observers on the payload it left (ON_TOOL_CALL
 tells its observers of a block too, Section 9.3), as the work of the cascade
-that fired the trigger (§8.3, §9.5.1). On an ASYNC trigger every
+that fired the trigger (§8.3, §9.5.1). BEFORE_BROADCAST's observers start
+once the event's pass is over, its delivery set placed in the room's lane
+(§10.1 step 13). On an ASYNC trigger every
 registered hook runs, concurrently, whatever its declared mode, and what it
 returns is discarded. ON_IDENTITY_AMBIGUOUS and ON_IDENTITY_UNKNOWN are decided
 by the identity hooks of Section 11.2, registered apart; a hook registered on
@@ -4443,7 +4445,7 @@ on the room's owner.
 
 | Trigger | Execution | Status | When It Fires |
 |---|---|---|---|
-| BEFORE_BROADCAST | SYNC | Implemented | Before event reaches channels — can block/modify |
+| BEFORE_BROADCAST | SYNC | Implemented | Before event reaches channels — can block/modify; its ASYNC observers start once the event's pass is over (§10.1 step 13) |
 | AFTER_BROADCAST | ASYNC | Implemented | After all channels have processed the event |
 | ON_EVENT_UPDATED | ASYNC | Implemented | A persisted event's stored state was mutated (an EDIT committed, §10.3, or direct `update_event()`) |
 | ON_EVENT_DELETED | ASYNC | Implemented | A persisted event was deleted (a soft DELETE committed, §10.3, or direct hard `delete_event()`, once per event removed) |
@@ -5668,6 +5670,15 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     # provider MUST NOT extend the room's critical section (§13.5).
     # A release that fails changes nothing steps 6–12 decided or wrote
     # (§13.5).
+    └── As the pass ends, its BEFORE_BROADCAST observers start (§9.2): the
+        hooks registered ASYNC observe the event its chain allowed, as its
+        SYNC hooks left it, in the context they were handed. They MUST NOT
+        start before the pass is over: its event committed and its delivery
+        set placed in the lane (or its BLOCKED record stored at step 11, or
+        the event refused at step 9a), whatever the store's commit takes.
+        The same holds on every pass that runs the chain: an inbound
+        message, a direct injection (§10.5), a response's pass, an injected
+        event's, a streamed segment's. An event its chain blocked has none
 
 14. EXECUTE DELIVERY LANE (§10.2) — per-room FIFO, after lock release:
     ├── An event's delivery set MUST complete before the next event's
@@ -12820,10 +12831,12 @@ The framework's close runs in this order, from the moment `close()` starts:
    in its lane while the lane was idle, running no set and holding none
    queued, runs from its placement until one placed after it comes ahead of
    it: the close MUST NOT drop it, whether or not the lane has taken it yet,
-   whatever the store, and it gets the grace as running work (step 4). A
-   call waiting for its room's lock is cut, nothing of it stored; the
-   framework's background runs (§19.7) and its verification timers
-   (§11.7.5) are cut.
+   whatever the store, and it gets the grace as running work (step 4). An
+   ASYNC `BEFORE_BROADCAST` observer that closes the framework thus finds
+   its event's delivery placed (§10.1 step 13): delivered when the lane was
+   idle, dropped when queued behind another. A call waiting for its room's
+   lock is cut, nothing of it stored; the framework's background runs
+   (§19.7) and its verification timers (§11.7.5) are cut.
 3. **A model turn under way MUST be cut at once**, its stream and its tool
    calls: its cascade is cancelled with the reason `kit_closed` (§10.6.8).
    The text it streamed is stored marked cancelled and an open tool call
