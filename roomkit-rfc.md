@@ -5810,8 +5810,9 @@ a turn another process runs is cancelled, and its drainage reported, as
 joined even when its executor runs in the owner's process.
 The kit's close is no explicit cancellation: as it starts it cancels the
 turns of every cascade under way with the reason `kit_closed` and drops every
-delivery still queued, never executed, and once its grace is over it cuts the
-deliveries still running too (§12.10.4).
+delivery queued behind another, never executed (one placed in its idle lane
+runs from its placement), and once its grace is over it cuts the deliveries
+still running too (§12.10.4).
 
 **InboundResult:**
 
@@ -12813,10 +12814,16 @@ The framework's close runs in this order, from the moment `close()` starts:
      the same way (a realtime session's start, a participant's arrival in a
      conference, which is no failure to log), and so does entering a closed
      framework's context again.
-2. **What has not started MUST be cut at once.** Every delivery waiting in a
-   room's lane is dropped, never executed (§10.1); a call waiting for its
-   room's lock is cut, nothing of it stored; the framework's background runs
-   (§19.7) and its verification timers (§11.7.5) are cut.
+2. **What has not started MUST be cut at once.** Every delivery queued in a
+   room's lane behind another (one the lane runs, or one ahead of it in
+   index order, §10.2) is dropped, never executed (§10.1). A delivery placed
+   in its lane while the lane was idle, running no set and holding none
+   queued, runs from its placement until one placed after it comes ahead of
+   it: the close MUST NOT drop it, whether or not the lane has taken it yet,
+   whatever the store, and it gets the grace as running work (step 4). A
+   call waiting for its room's lock is cut, nothing of it stored; the
+   framework's background runs (§19.7) and its verification timers
+   (§11.7.5) are cut.
 3. **A model turn under way MUST be cut at once**, its stream and its tool
    calls: its cascade is cancelled with the reason `kit_closed` (§10.6.8).
    The text it streamed is stored marked cancelled and an open tool call
@@ -12837,10 +12844,12 @@ The framework's close runs in this order, from the moment `close()` starts:
    own steps run side by side within that grace, so a slow one holds no
    other back; every source's task is cut whatever its stop does, and no
    source is restarted once the close started. A call that commits within
-   the grace is stored and its delivery dropped: it is delivered to no one,
-   its delivery results empty. What is left then MUST be cut, and given at
-   most 1 second to unwind; a lane's round stops at the entry it runs. Then
-   the turn backend closes, one of the framework's own backends: its turns
+   the grace is stored and its delivery dropped, its lane idle or not: once
+   the close started, no delivery takes a place in a lane, so it is
+   delivered to no one, its delivery results empty. What is left then MUST
+   be cut, and given at most 1 second to unwind; a lane's round stops at
+   the entry it runs. Then the turn backend closes, one of the framework's
+   own backends: its turns
    and the calls they made are cut and waited for on its own budget (one
    unwind for the turns its executor runs in the owner's process and their
    calls; across processes, then one cancel bound for its backend's close,
@@ -14450,10 +14459,11 @@ cancelled task, a client gone, an outer timeout of its own). Once the call is
 decided (its event committed, a `BLOCKED` record included, or its instruction
 decided, §10.1.1), its delivery runs whether or not its caller still waits:
 every event it committed is delivered, unless the kit's close has started
-(§12.10.4: a delivery not started is dropped, one still running once the
-close's grace is over is cut), and a cancellation the implementation
-carries from the caller to the call stops the cascade's turns, as an explicit
-cancellation does, never its delivery (§10.1). A caller gone before the
+(§12.10.4: a delivery queued behind another is dropped, one running, from
+its placement in an idle lane on, is cut once the close's grace is over), and
+a cancellation the implementation carries from the caller to the call stops
+the cascade's turns, as an explicit cancellation does, never its delivery
+(§10.1). A caller gone before the
 decision makes the call expire as a passed `process_timeout` does, without
 the `process_timeout` framework event, since no deadline passed: nothing more
 of the trigger is written, the injected events, tasks and observations of the
