@@ -12777,13 +12777,17 @@ The framework's close runs in this order, from the moment `close()` starts:
    most 1 second to unwind; a lane's round stops at the entry it runs. Then
    the turn backend closes, one of the framework's own backends: its turns
    and the calls they made are cut and waited for on its own budget (one
-   unwind when its executor runs in the owner's process, its cancel bound
-   across processes, §10.6.8); then the channels close, as above. What their
+   unwind when its executor runs in the owner's process, one cancel bound
+   for its whole close across processes, §10.6.8, what it still runs then
+   named with the rest); then the channels close, as above. What their
    closes start MUST be cut at once, with the same unwind, within which the
    operations the store and the lock manager already have are waited for
    (above). The store, the lock manager and the status bus are then
-   released; a connection pool the store or the lock manager opened itself
-   is closed within a bound, its connections still in use then terminated.
+   released; the framework's close closes a connection pool the store or
+   the lock manager opened itself within a bound, its connections still in
+   use then terminated (their own close, called by their owner, waits for
+   them: only the framework's close bounds it, so a lock held is never
+   given to another holder by a close its owner called).
    The close takes the grace, plus the turn backend's budget, plus the
    channels' and the framework's other backends' closes, each on its own
    budget, plus at most two unwinds of 1 second, which only work that
