@@ -5743,6 +5743,9 @@ process;
 a turn another process runs is cancelled, and its drainage reported, as
 §10.6.8 says, and so is a turn its owner gave up as it closed, which is not
 joined even when its executor runs in the owner's process.
+The kit's close is no explicit cancellation: as it starts it cancels the
+turns of every cascade under way with the reason `kit_closed`, and once its
+grace is over it cuts their delivery too (§12.10.4).
 
 **InboundResult:**
 
@@ -5757,6 +5760,9 @@ InboundResult
 ├── error: Exception | null                 # A failure after the commit point
 │                                           # (§13.6), or a failed lock release
 │                                           # (§13.5), when observed
+├── cancellation_reason: string | null      # Why its delivery's turns were cut
+│                                           # (explicit cancellation; `kit_closed`
+│                                           # for the kit's close, §12.10.4)
 ├── response_metadata: ResponseMetadata     # Final records of root response turns
 ├── delivery: CompletionHandle | null       # Detached completion only (step 18)
 └── delivery_results: map<string, DeliveryResult>
@@ -7383,7 +7389,8 @@ meaning, each its own message:
 
 - the reader stops reading: `close` (§10.6.4), a reader's close;
 - the turn's cascade is cancelled (§10.1, *Explicit delivery cancellation*;
-  the kit closing): `cancel`, with the cascade's reason; the executor cancels
+  the kit's close, as it starts, with the reason `kit_closed`, §12.10.4):
+  `cancel`, with the cascade's reason; the executor cancels
   the turn's work as its own process would cancel it locally, its running
   tool handlers included (§21.6). A turn its cascade would start once
   cancelled is never submitted, and a submission the cancellation interrupts
@@ -7403,15 +7410,18 @@ failed, the owner drops its later frames, and nothing reports its cleanup
 done. After `close`, the owner waits for `end` while the executor keeps
 beating: a call already running is let finish (§12.2 step 13s), within its
 own bound (§21.6). A turn still open when its owner itself closes (the kit's
-close, after it cancelled the turn's cascade) is given up and owes no `end`:
+close, once the grace it gives its running work is over, §12.10.4) is given
+up and owes no `end`:
 the owner waits for nothing more from its executor and drops its later
 frames, and its reader fails it with `backend_closed`, a reason of its own (the
 owner's backend closed; its executor is not lost, so never `executor_lost`),
-which a host reads on the error a turn link raises; the backend releases the
-turn, and its executor cuts it as it would
+which a host reads on the error a turn link raises; the call the kit's close
+cut reads its cut (`kit_closed`), never that failure as its error. The
+backend releases the turn, and its executor cuts it as it would
 cut one whose owner was lost, at once when the release reaches it, else after
-`heartbeat_timeout` of silence, except the turn the close runs under
-(§10.6.5); a cascade that read it counts its cleanup done. A turn already over
+`heartbeat_timeout` of silence, except the turns the close runs under, those
+of every `close()` the kit's shutdown answers (§10.6.5, §12.10.4); a cascade
+that read it counts its cleanup done. A turn already over
 keeps what its end reported: one whose `end` is owed stays incomplete.
 
 **Steering.** The owner offers the host an asynchronous `steer(directive,
@@ -8327,8 +8337,9 @@ enters a room as any other audio.
      TOOL_CALL_END is stored with its real result, and the stream is closed
      before the model's next round. A call announced but not yet executing never
      runs; its TOOL_CALL_END is stored with `status = failed`, so no start row
-     stays pending. A turn cancelled from outside (e.g. an operator aborting it)
-     stores its text the same way, but aborts a running tool, whose
+     stays pending. A turn cancelled from outside (e.g. an operator aborting it,
+     or the kit's close, which cuts every turn as it starts, §12.10.4) stores
+     its text the same way, but aborts a running tool, whose
      TOOL_CALL_END is stored with `status = failed` as well, and so does a turn
      that fails while a tool runs. A TOOL_CALL_END written once the stream no
      longer carries rows goes to every channel, the streaming one included. With
@@ -12696,15 +12707,59 @@ operation.
 Two boundaries keep that promise finite. It covers the operations the
 framework and its channels start of their own accord — participant
 callbacks, roster bookkeeping, announcements — which never suspend in
-integrator code while holding the resources, so the wait terminates. An
-operation the *integrator* starts through the public API is the
-integrator's to order against `close()`, as with any resource-owning
-library: the framework does not hold its shutdown open for a call the
-caller left suspended across it. And the wait has an end: once it
-concludes, the resources are sealed. Work that was suspended somewhere the
-shutdown could not see — a callback parked in a backend past every closing
-budget — and that resumes afterwards MUST be refused with an error naming
-the shutdown, never run against a resource being released.
+integrator code while holding the resources, so the wait terminates. The
+calls the integrator makes are not among them: the close below refuses the
+new ones and cuts the ones still running once its grace is over. And the
+wait has an end: once it concludes, the resources are sealed. Work that was
+suspended somewhere the shutdown could not see — a callback parked in a
+backend past every closing budget — and that resumes afterwards MUST be
+refused with an error naming the shutdown, never run against a resource
+being released.
+
+The framework's close runs in this order, from the moment `close()` starts:
+
+1. **Admission stops at once.** Every call the framework offers that writes
+   or delivers (a message, an injection, a record, a room's or a binding's
+   change, a delegation, a regeneration, a publication) MUST be refused from
+   then on with an error naming the close (`KitClosedError`), whoever makes
+   it: the integrator, or the framework's own work still running (a hook's
+   body, a tool's call, a channel's `close()`). A read (a room, its
+   timeline, its bindings, its members, its tasks and observations) is not
+   refused, during the close or after it.
+2. **What has not started is cut at once.** Every delivery waiting in a
+   room's lane is dropped, never executed, and a call waiting for its room's
+   lock is cut, nothing of it stored.
+3. **A model turn under way is cut at once**, its stream and its tool calls:
+   its cascade is cancelled with the reason `kit_closed` (§10.6.8). The text
+   it streamed is stored marked cancelled and an open tool call gets its end
+   row, `failed` (§12.2 step 13s), so the history stays valid.
+4. **The rest of the running work gets one grace**, 5 seconds from the
+   close's start: a hook, a store write past a call's decision (§13.6), a
+   transport send, a call still running its hooks before its commit. What
+   is left then is cut, and given at most 1 second to unwind; a lane's
+   round stops at the entry it runs. Then the channels close, as above;
+   what their closes start is cut at once, with the same unwind. The store
+   and the lock manager are then released once the operations they already
+   have have ended (above). Nothing is written or delivered after `close()`
+   returns. The close takes the grace plus the channels' closes, and at most
+   the two unwinds, which only work that ignores its cancellation spends.
+
+Every call the close cuts returns one result. Its cancellation reason is
+`kit_closed` (§10.1, step 18), whatever the call's place: the delivery a
+lane runs and the ones queued behind it alike, never a reason by position.
+It carries the answers already stored and each target's delivery: a target
+already delivered keeps its result, and a send cut once the grace ran out is
+`failed`, code `kit_closed`, retryable (§5.13). A call in flight when the
+close starts reads `kit_closed` even when its sends end within the grace;
+its delivery results say what was delivered. A detached call's completion
+handle (step 18) waits for its delivery set to end or be cut, then reports
+it. A call cut before its commit stores nothing: the inbound path and a
+regeneration return a refusal (`blocked`, reason `kit_closed`), and direct
+injection and a record's commit, whose result has no place for one, raise
+`KitClosedError`. A call cut once the grace ran out, just as its commit
+landed, reads that refusal too while its event is stored: a caller that may
+retry a message gives it an idempotency key (§13.4), so the retry returns
+the stored event instead of storing it again.
 
 The framework has one shutdown too, held to the channel's rule above. A
 `close()` that overlaps another MUST join the shutdown already running:
@@ -12716,7 +12771,7 @@ answers every later call: a return after a success, the same failure after
 a failure (a channel that failed to close), never a second run of the
 steps. A shutdown cut itself, as when a process cancels every task as it
 ends, is no cancellation of a later caller: that caller gets an error
-saying the shutdown did not finish.
+saying the shutdown did not finish (`ShutdownCancelledError`).
 
 A `close()` called from the framework's own work (a hook's body, a tool's
 call, a background run, the aftermath of a delivery, a session's teardown)
@@ -12726,12 +12781,18 @@ call. The shutdown spares the work the call runs under, with the delivery
 lane, the teardown or the task that carries it; it closes and releases
 everything else as usual, the call returns once it has ended, and the work
 spared ends on its own. The rule holds for every caller, the one that
-started the shutdown or one that joined it: work the shutdown already waits
-for when its caller joins stops being waited for, and work it has not
-reached yet is spared when reached. A spared delivery lane is neither
-drained nor cut; the deliveries queued behind its own are dropped, as those
-left when a lane's drain runs out are. A `close()` called from the
-shutdown's own work (a hook it fires as it closes) returns at once.
+started the shutdown or one that joined it, and by whatever marks the work
+as the caller's: the task it runs as, the work it runs under, the turn it
+runs in (§10.6.5), the realtime call its handler serves (§12.4), the
+conference activity or participant callback it runs inside. Work the
+shutdown already waits for when its caller joins stops being waited for,
+and work it has not reached yet is spared when reached. A caller whose work
+the close already cut (a tool whose turn it cut, closing the framework in
+its cleanup) is spared from its join on: its work is neither cut again nor
+waited for. A spared delivery lane is neither waited for nor cut; the
+deliveries queued behind its own are dropped, as every queued delivery is.
+A `close()` called from the shutdown's own work (a hook it fires as it
+closes) returns at once.
 
 **Admitting participants:** the channel exposes `mint_access()` for a
 participant of the room, applying `default_grants` unless the caller
@@ -14255,7 +14316,9 @@ transaction that stores the event as DELIVERED and updates the room counters:
 cancelled task, a client gone, an outer timeout of its own). Once the call is
 decided (its event committed, a `BLOCKED` record included, or its instruction
 decided, §10.1.1), its delivery runs whether or not its caller still waits:
-every event it committed is delivered, and a cancellation the implementation
+every event it committed is delivered, unless the kit's close has started
+(§12.10.4: a delivery not started is dropped, one still running once the
+close's grace is over is cut), and a cancellation the implementation
 carries from the caller to the call stops the cascade's turns, as an explicit
 cancellation does, never its delivery (§10.1). A caller gone before the
 decision makes the call expire as a passed `process_timeout` does, without
