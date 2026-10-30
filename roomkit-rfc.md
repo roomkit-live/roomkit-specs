@@ -7210,8 +7210,9 @@ owner's own code, and a tool that waits on the delivery of the event it sent
 gets its completion detached rather than wait on itself. That context is the
 only thing the in-memory backend carries beside the messages, and it is no
 object of the turn. A turn's code also knows the turns it runs under, so a
-close called from one of them does not cut it, and what it sends into a room
-while they run is at least as deep as the deepest of their responses (§8.3).
+close called from one of them cuts them without cutting the call that awaits
+it, nor waiting for it (§12.10.4), and what it sends into a room while they
+run is at least as deep as the deepest of their responses (§8.3).
 An executor of another process has no such context: its turns reach a room
 through `TurnHost`, whose verbs carry the depth.
 
@@ -8342,8 +8343,10 @@ enters a room as any other audio.
      stays pending. A turn cancelled from outside (e.g. an operator aborting it,
      or the kit's close, which cuts every turn as it starts, §12.10.4) stores
      its text the same way, but aborts a running tool, whose
-     TOOL_CALL_END is stored with `status = failed` as well, and so does a turn
-     that fails while a tool runs. A TOOL_CALL_END written once the stream no
+     TOOL_CALL_END is stored with `status = failed` as well (error
+     `kit_closed` for the kit's close, which leaves running the call that
+     awaits the close itself, its row stored all the same), and so does a
+     turn that fails while a tool runs. A TOOL_CALL_END written once the stream no
      longer carries rows goes to every channel, the streaming one included. With
      `flush_partial_tts = false` the sessions keep reading, so the stream runs
      to its end and nothing is cancelled.
@@ -12754,10 +12757,12 @@ The framework's close runs in this order, from the moment `close()` starts:
    The text it streamed is stored marked cancelled and an open tool call
    gets its end row, `failed`, error `kit_closed` (§12.2 step 13s), so the
    history stays valid. The turn a `close()` is called from (a tool's call)
-   is cut the same way, but for the call that runs the close, which runs
-   on: its open call's end row is stored before the store is released, and
-   what the turn does once the call returned is refused, as a failure that
-   is the close's own, never logged as an error.
+   is cut the same way, but for the call that awaits `close()` itself, which
+   runs on: its open call's end row is stored before the store is released,
+   and what the turn does once the call returned is refused, as a failure
+   that is the close's own, never logged as an error. A call that awaits a
+   close it started on a task of its own is cut with its turn, and the close
+   runs on.
 4. **The rest of the running work MUST get one grace**, 5 seconds from the
    close's start: a hook, a store write past a call's decision (§13.6), a
    room change, a transport send, a call still running its hooks before its
@@ -12770,18 +12775,20 @@ The framework's close runs in this order, from the moment `close()` starts:
    the grace is stored and its delivery dropped: it is delivered to no one,
    its delivery results empty. What is left then MUST be cut, and given at
    most 1 second to unwind; a lane's round stops at the entry it runs. Then
-   the channels close, as above, and the turn backend; what their closes
-   start MUST be cut at once, with the same unwind, within which the
-   operations the store and the lock manager already have, and the calls
-   the turn backend's turns made, are waited for (above). The store, the
-   lock manager and the status bus are then released. The close takes the
-   grace, plus the channels' and the framework's own backends' closes, plus
-   at most two unwinds of 1 second, which only work that ignores its
-   cancellation spends.
+   the turn backend closes, its turns and the calls they made cut and waited
+   for 1 second at most; then the channels close, as above. What their
+   closes start MUST be cut at once, with the same unwind, within which the
+   operations the store and the lock manager already have are waited for
+   (above). The store, the lock manager and the status bus are then
+   released. The close takes the grace, plus the turn backend's 1 second,
+   plus the channels' and the framework's own backends' closes, each on its
+   own budget, plus at most two unwinds of 1 second, which only work that
+   ignores its cancellation spends.
 
 Nothing is written or delivered after `close()` returns by work that honours
 its cut. Work that ignores it past its unwind is abandoned: the framework
-MUST name it in its log, once. A store the framework closed then refuses its
+MUST name it in its log, in one line once its last unwind ran out, each task
+by the work it runs (a source's stop, a turn). A store the framework closed then refuses its
 writes; a store that stays open (an in-memory one, a pool the integrator
 handed in) takes them; a send it still makes is its channel's own act, not
 the framework's.
@@ -12829,8 +12836,9 @@ call. The shutdown spares the work the call runs under, with the delivery
 lane, the teardown or the task that carries it; it closes and releases
 everything else as usual, the call returns once it has ended, and the work
 spared ends on its own. A model turn the call runs in is the exception
-(step 3): it is cut as every turn is, the call itself spared, and its end
-for its owner does not wait for the call. The rule holds for every caller,
+(step 3): it is cut as every turn is, the call that awaits `close()` itself
+spared, and its end for its owner does not wait for that call; a call that
+awaits a close it started on a task of its own is cut with its turn. The rule holds for every caller,
 the one that started the shutdown or one that joined it, and by whatever
 marks the work as the caller's: the task it runs as, the work it runs
 under, the turn it runs in (§10.6.5), the realtime call its handler serves
@@ -17837,8 +17845,9 @@ releases the store. Its completion callback is the framework's running work
 its cut is abandoned once the unwind ran out and named in the log. A task
 its delegation announced as the close began ends the same way, before it
 runs. Steps 7 and 8 still run, to their end though the task is being
-cancelled, the completion callback with them, and a notified agent is told
-the task was cancelled; then the cancellation goes on. The one exception is
+cancelled (the completion callback within the close's grace when the
+framework closes, then cut), and a notified agent is told the task was
+cancelled; then the cancellation goes on. The one exception is
 an agent that cancelled the task itself (its `cancel_task` call, Section
 23.4): the tool's answer has told it, and step 8 hands it nothing, or it
 would say the cancellation twice. A step 8 whose notified agent's turn fails leaves the log line to
@@ -17848,7 +17857,8 @@ logged, step 7 still runs. A step 8 already under way when the framework
 closes is cut with it, as a strategy's background run's hand-back is: the
 turn it started is cancelled, what it had produced kept as a cancelled
 response (Section 12.2 step 13s) and nothing more stored, and the task's
-completion callback and its waiters still run. A task whose work already ran when the
+completion callback (within the close's grace, then cut) and its waiters
+still run. A task whose work already ran when the
 cancellation arrives ends as it stands. A delegation's span ends with its
 task's status: `ok` completed, `error` failed, `cancelled` cancelled.
 
