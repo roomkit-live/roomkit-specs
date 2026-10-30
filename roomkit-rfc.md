@@ -5744,8 +5744,9 @@ a turn another process runs is cancelled, and its drainage reported, as
 §10.6.8 says, and so is a turn its owner gave up as it closed, which is not
 joined even when its executor runs in the owner's process.
 The kit's close is no explicit cancellation: as it starts it cancels the
-turns of every cascade under way with the reason `kit_closed`, and once its
-grace is over it cuts their delivery too (§12.10.4).
+turns of every cascade under way with the reason `kit_closed` and drops every
+delivery still queued, never executed, and once its grace is over it cuts the
+deliveries still running too (§12.10.4).
 
 **InboundResult:**
 
@@ -5761,8 +5762,9 @@ InboundResult
 │                                           # (§13.6), or a failed lock release
 │                                           # (§13.5), when observed
 ├── cancellation_reason: string | null      # Why its delivery's turns were cut
-│                                           # (explicit cancellation; `kit_closed`
-│                                           # for the kit's close, §12.10.4)
+│                                           # (explicit cancellation); `kit_closed`
+│                                           # for every call the kit's close found
+│                                           # under way, a turn or not (§12.10.4)
 ├── response_metadata: ResponseMetadata     # Final records of root response turns
 ├── delivery: CompletionHandle | null       # Detached completion only (step 18)
 └── delivery_results: map<string, DeliveryResult>
@@ -12694,15 +12696,16 @@ shutdown that returns cleanly over that turns a logged error into an
 operational and disclosure risk.
 
 The framework's: `close()` MUST NOT release the store or the lock manager
-while an operation issued through them is still in flight. An operation a
-shared resource has been given cannot be taken back, and releasing the
-resource underneath it does not stop the work — it arranges a failure for a
-write that was already accepted. So the wait for such operations belongs to
-the owner of the resources, and it comes after every channel has closed and
-every channel's media is released, where a slow store costs the shutdown its
-latency and nothing else. There it is bounded by nothing, because there is
-no third option: giving up on the wait *is* releasing the resource under the
-operation.
+while an operation issued through them is still in flight, within the close's
+last unwind (below). An operation a shared resource has been given cannot be
+taken back, and releasing the resource underneath it does not stop the work —
+it arranges a failure for a write that was already accepted. So the wait for
+such operations belongs to the owner of the resources, and it comes after
+every channel has closed and every channel's media is released, where a slow
+store costs the shutdown its latency and nothing else. It is bounded all the
+same, since the close is: an operation still running once that unwind ran
+out MUST be named in the log, and the resources are released under it, its
+write failing.
 
 Two boundaries keep that promise finite. It covers the operations the
 framework and its channels start of their own accord — participant
@@ -12718,48 +12721,73 @@ being released.
 
 The framework's close runs in this order, from the moment `close()` starts:
 
-1. **Admission stops at once.** Every call the framework offers that writes
-   or delivers (a message, an injection, a record, a room's or a binding's
-   change, a delegation, a regeneration, a publication) MUST be refused from
-   then on with an error naming the close (`KitClosedError`), whoever makes
-   it: the integrator, or the framework's own work still running (a hook's
-   body, a tool's call, a channel's `close()`). A read (a room, its
-   timeline, its bindings, its members, its tasks and observations) is not
-   refused, during the close or after it.
-2. **What has not started is cut at once.** Every delivery waiting in a
-   room's lane is dropped, never executed, and a call waiting for its room's
-   lock is cut, nothing of it stored.
-3. **A model turn under way is cut at once**, its stream and its tool calls:
-   its cascade is cancelled with the reason `kit_closed` (§10.6.8). The text
-   it streamed is stored marked cancelled and an open tool call gets its end
-   row, `failed` (§12.2 step 13s), so the history stays valid.
-4. **The rest of the running work gets one grace**, 5 seconds from the
+1. **Admission stops at once.** From then on, the framework's calls fall in
+   three classes, whoever makes them: the integrator, or the framework's own
+   work still running (a hook's body, a tool's call, a channel's `close()`).
+   - A read (a room, its timeline, its bindings, its members, its tasks and
+     observations, a verification, a source's health) MUST be answered,
+     during the close and after it while the store is open. A store the
+     framework closed MUST refuse it with an error naming the close
+     (`KitClosedError`), never the store's own; one the integrator owns (a
+     pool it handed in) stays open, and answers.
+   - A teardown call (a delivery's or a task's cancellation, a session's
+     disconnection, leaving a session, unsubscribing from a room) MUST
+     return doing nothing: the close tears down what it would.
+   - Every other call MUST be refused with `KitClosedError`: one that writes
+     or delivers (a message, an injection, a record, a room's or a binding's
+     change, a delegation, a regeneration, a publication), and any other (a
+     steer, a transcription, a synthesis, a channel's registration). A
+     channel's own doors refuse the same way (a realtime session's start, a
+     participant's arrival in a conference), and so does entering a closed
+     framework's context again.
+2. **What has not started MUST be cut at once.** Every delivery waiting in a
+   room's lane is dropped, never executed (§10.1); a call waiting for its
+   room's lock is cut, nothing of it stored; the framework's background runs
+   (§19.7) and its verification timers (§11.7.5) are cut.
+3. **A model turn under way MUST be cut at once**, its stream and its tool
+   calls: its cascade is cancelled with the reason `kit_closed` (§10.6.8).
+   The text it streamed is stored marked cancelled and an open tool call
+   gets its end row, `failed` (§12.2 step 13s), so the history stays valid.
+4. **The rest of the running work MUST get one grace**, 5 seconds from the
    close's start: a hook, a store write past a call's decision (§13.6), a
-   transport send, a call still running its hooks before its commit. What
-   is left then is cut, and given at most 1 second to unwind; a lane's
-   round stops at the entry it runs. Then the channels close, as above;
-   what their closes start is cut at once, with the same unwind. The store
-   and the lock manager are then released once the operations they already
-   have have ended (above). Nothing is written or delivered after `close()`
-   returns. The close takes the grace plus the channels' closes, and at most
-   the two unwinds, which only work that ignores its cancellation spends.
+   room change, a transport send, a call still running its hooks before its
+   commit, the framework's own steps that wait on integrator code (a
+   source's stop, a delegation's completion callback, §23.3), and the
+   handlers a channel runs for a session's start or end. A call that
+   commits within the grace is stored and its delivery dropped: it is
+   delivered to no one, its delivery results empty. What is left then MUST
+   be cut, and given at most 1 second to unwind; a lane's round stops at
+   the entry it runs. Then the channels close, as above; what their closes
+   start MUST be cut at once, with the same unwind, within which the
+   operations the store and the lock manager already have are waited for
+   (above). The store and the lock manager are then released. Nothing the
+   framework takes is written or delivered after `close()` returns. The
+   close takes the grace, plus the channels' closes, plus at most two
+   unwinds of 1 second, which only work that ignores its cancellation
+   spends.
 
-Every call the close cuts returns one result. Its cancellation reason is
+Work that ignores its cancellation past its unwind is abandoned: the
+framework MUST name it in its log and releases the store under it, which
+then refuses its writes. A send it still makes is its channel's own act, not
+the framework's.
+
+Every call the close cuts MUST return one result. Its cancellation reason is
 `kit_closed` (§10.1, step 18), whatever the call's place: the delivery a
 lane runs and the ones queued behind it alike, never a reason by position.
 It carries the answers already stored and each target's delivery: a target
-already delivered keeps its result, and a send cut once the grace ran out is
-`failed`, code `kit_closed`, retryable (§5.13). A call in flight when the
-close starts reads `kit_closed` even when its sends end within the grace;
-its delivery results say what was delivered. A detached call's completion
-handle (step 18) waits for its delivery set to end or be cut, then reports
-it. A call cut before its commit stores nothing: the inbound path and a
-regeneration return a refusal (`blocked`, reason `kit_closed`), and direct
-injection and a record's commit, whose result has no place for one, raise
-`KitClosedError`. A call cut once the grace ran out, just as its commit
-landed, reads that refusal too while its event is stored: a caller that may
-retry a message gives it an idempotency key (§13.4), so the retry returns
-the stored event instead of storing it again.
+already delivered keeps its result, and a send cut once the grace ran out,
+or one that ignored its cut, is `failed`, code `kit_closed`, retryable
+(§5.13). A call in flight when the close starts reads `kit_closed` even when
+its sends end within the grace; its delivery results say what was
+delivered. A detached call's completion handle (step 18) waits for its
+delivery set to end or be cut, then reports it. A call cut before its commit
+stores nothing: the inbound path and a regeneration return a refusal
+(`blocked`, reason `kit_closed`), and direct injection and a record's
+commit, whose result has no place for one, raise `KitClosedError`. A call
+cut once its commit had started MUST read its event back by its id within
+its unwind: when it is stored, the call returns it, its cancellation reason
+`kit_closed`, never a refusal (a `BLOCKED` record reads blocked by its
+hooks' reason, as it would uncut); when it is not, the call stores nothing.
 
 The framework has one shutdown too, held to the channel's rule above. A
 `close()` that overlaps another MUST join the shutdown already running:
@@ -14326,8 +14354,9 @@ the `process_timeout` framework event, since no deadline passed: nothing more
 of the trigger is written, the injected events, tasks and observations of the
 hooks that ran are dropped with it, and what the call holds (its ticket, the
 room lock) is released. Every event already committed is delivered all the
-same: the trigger's, when a commit in flight wrote it, which decides the
-call, and the event of a call it adopted (§9.5.1). A room step 2 creates is
+same, unless the kit's close has started (§12.10.4): the trigger's, when a
+commit in flight wrote it, which decides the call, and the event of a call it
+adopted (§9.5.1). A room step 2 creates is
 completed whatever becomes of its caller, as it is whatever the deadline.
 
 A regeneration re-broadcasts an event already committed, so it has no commit
@@ -17780,8 +17809,10 @@ read cancelled from outside (Section 6.4); one cut before its turn began
 carries none. The framework holds an inline task as it holds
 the background ones, so its `close()` cuts it and waits for its end, its
 completion included (step 7, and step 8 for a background task), before it
-releases the store; a task its delegation announced as the close began ends
-the same way, before it runs. Steps 7 and 8 still run, to their end though the task is being
+releases the store, within the close's grace and its unwind (Section
+12.10.4) and no longer: a completion callback still running then runs on,
+abandoned. A task its delegation announced as the close began ends the same
+way, before it runs. Steps 7 and 8 still run, to their end though the task is being
 cancelled, the completion callback with them, and a notified agent is told
 the task was cancelled; then the cancellation goes on. The one exception is
 an agent that cancelled the task itself (its `cancel_task` call, Section
