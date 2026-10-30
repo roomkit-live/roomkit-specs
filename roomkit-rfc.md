@@ -12777,9 +12777,10 @@ The framework's close runs in this order, from the moment `close()` starts:
    most 1 second to unwind; a lane's round stops at the entry it runs. Then
    the turn backend closes, one of the framework's own backends: its turns
    and the calls they made are cut and waited for on its own budget (one
-   unwind when its executor runs in the owner's process, one cancel bound
-   for its whole close across processes, §10.6.8, what it still runs then
-   named with the rest); then the channels close, as above. What their
+   unwind for the turns its executor runs in the owner's process and their
+   calls; across processes, then one cancel bound for its backend's close,
+   §10.6.8; what it still runs then named with the rest); then the
+   channels close, as above. What their
    closes start MUST be cut at once, with the same unwind, within which the
    operations the store and the lock manager already have are waited for
    (above). The store, the lock manager and the status bus are then
