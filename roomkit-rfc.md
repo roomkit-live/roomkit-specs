@@ -4486,7 +4486,7 @@ on the room's owner.
 | ON_TURN_INCOMPLETE | ASYNC | Implemented | Turn detector determined user is still speaking (for logging) |
 | ON_BACKCHANNEL | ASYNC | Implemented | Backchannel detector classified speech as backchannel |
 | ON_SESSION_STARTED | ASYNC | Implemented | Session started on any channel type (voice: audio path live; text: room auto-created) |
-| ON_RECORDING_STARTED | ASYNC | Implemented | Recording started for a voice session, a conference track (Section 12.10.8) or a room (Section 12.11) |
+| ON_RECORDING_STARTED | ASYNC | Implemented | Recording started for a voice session, a conference track (Section 12.10.8) or a room (Section 12.11); the start awaits its hooks (§9.3) |
 | ON_RECORDING_STOPPED | ASYNC | Implemented | Recording stopped for a voice session, a conference track or a room, result available |
 | ON_REALTIME_TOOL_CALL | SYNC | Superseded | Speech-to-speech tool call — superseded by `ON_TOOL_CALL` (unified across AI and realtime channels) |
 | ON_REALTIME_TEXT_INJECTED | ASYNC | Implemented | Text injected into realtime session |
@@ -4662,12 +4662,27 @@ hook (§10.1 step 2).
 
 **ASYNC hooks:**
 
-- Run concurrently after the triggering operation completes, but for
-  ON_ROOM_CREATED, whose hooks a room's creation awaits: every creation, the
-  integrator's and §10.1 step 2's alike, returns once they have finished or
-  timed out, each within its own timeout, so that a hook that attaches the
-  room's agent (Appendix B.1) has done so before anything is sent into the
-  room.
+- Run concurrently after the triggering operation completes, which does not
+  wait for them, but for three, which it awaits, each hook within its own
+  timeout:
+  - ON_ROOM_CREATED: every creation, the integrator's and §10.1 step 2's
+    alike, returns once its hooks have finished or timed out, so that a hook
+    that attaches the room's agent (Appendix B.1) has done so before anything
+    is sent into the room.
+  - ON_RECORDING_STARTED, a room's, a voice session's or a conference
+    track's: the recording's start is the consent point no media reaches it
+    before (Section 12.11), so its hooks have finished before the first frame
+    is recorded.
+  - The triggers a session's media stream fires (a voice, speech-to-speech,
+    conference or video session's: its start, its speech and turn edges,
+    partial transcriptions, barge-ins, DTMF, levels, `AFTER_TTS`, vision and
+    detection results): the stream awaits them in order, so that each is
+    observed before the stream's next trigger, a SYNC one included. A
+    partial transcription observed after its final would bring back an
+    utterance the final closed.
+- The framework event that reports the operation (§8.2: `event_processed`,
+  `ai_response`, `feedback`, `recording_started`, `recording_stopped`) comes
+  once the trigger's hooks have ended, the operation not waiting for them.
 - Cannot block or modify events.
 - Exceptions MUST be caught and logged, never propagated.
 - Used for observability, logging, side effects.
