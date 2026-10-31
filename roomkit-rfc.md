@@ -388,10 +388,9 @@ read the event (§10.2). Direction does not filter intelligence channels.
 Everything in a Room is a RoomEvent — messages, system notifications, typing
 indicators, channel state changes, participant joins/leaves. Once stored, an
 event keeps its index and status. Its content and source change only through
-§10.3 (an EDIT event or a direct `update_event()`); its metadata and
-`consumption` can also be written afterwards, by §10.3 and by the framework's
-own records of what became of it (the end of a streamed turn, a response
-cancelled as `superseded`, a response read or heard, §8.5); its
+§10.3 (an EDIT event or a direct `update_event()`); its metadata can also be
+written afterwards, by §10.3 and by the framework's own records of what became
+of it (the end of a streamed turn, a response cancelled as `superseded`); its
 `delivery_results` is written only by the record of its deliveries (§14.3),
 which every other write keeps; a direct `delete_event()` removes it (§10.3).
 Events are sequentially indexed within their room.
@@ -633,7 +632,6 @@ RoomEvent
 │                                           # as every path that commits the event
 │                                           # stores it (§10.1 step 8)
 ├── responds_to: string | null              # The event this response answers (§8.5)
-├── consumption: map<string, Consumption>   # Per delivering channel: taken in? (§8.5)
 ├── correlation_id: string | null           # Integrator's external reference
 ├── idempotency_key: string | null          # Duplicate prevention key
 ├── created_at: datetime                    # When the event was created
@@ -1113,9 +1111,12 @@ Identity
 ├── id: string                              # Unique identifier
 ├── organization_id: string | null          # Multi-tenant scope
 ├── display_name: string | null             # Human-readable name
+├── email: string | null                    # The person's email address
+├── phone: string | null                    # The person's phone number
 ├── channel_addresses: map<ChannelType, list<string>>
 │       # Cross-channel addresses, e.g., {SMS: ["+15551234"], EMAIL: ["john@example.com"]}
 ├── external_id: string | null              # CRM or external system reference
+├── external_ids: map<string, string>       # Other systems' references, by system
 └── metadata: map<string, any>              # Integrator-defined data
 ```
 
@@ -1326,7 +1327,11 @@ ChannelCapabilities
 │
 │   # Audio/Video features:
 ├── supports_audio: bool
+├── max_audio_duration_seconds: int | null  # Longest audio taken, in seconds
+├── supported_audio_formats: list<string>   # Empty takes every format
 ├── supports_video: bool
+├── max_video_duration_seconds: int | null  # Longest video taken, in seconds
+├── supported_video_formats: list<string>   # Empty takes every format
 │
 │   # Delivery features:
 ├── supports_threading: bool
@@ -1335,7 +1340,6 @@ ChannelCapabilities
 ├── supports_reactions: bool
 ├── supports_edit: bool
 ├── supports_delete: bool
-├── rate_limit: RateLimit | null
 │
 │   # Extensible:
 └── custom: map<string, any>
@@ -4250,9 +4254,9 @@ An intelligence channel answers events: a participant's message, an
 instruction (Section 10.1.1), a delegated task's hand-back (Section 23.3).
 Several answers can be under way in one room at once: the room lock does not
 cover generation (Section 13.5). An answer therefore says which event it
-answers, and the room records whether each answer reached the person it was
-delivered to. With both, a host can tell each turn what it answers and where
-the room's other requests stand: answered, being answered, taken in or not.
+answers, so a host can tell each turn what it answers and where the room's
+other requests stand: answered or being answered. Whether each answer reached
+the person it was delivered to is its consumption (Planned, below).
 
 **What a response answers.** Every event an intelligence channel produces for a
 turn (each message, streamed segment and tool row of it) MUST carry
@@ -4323,9 +4327,12 @@ stand-in an orchestration strategy hands a turn in place of the event it
 answers (a supervisor's workers' results, Section 19.7) names that event in its
 own `responds_to`, which is what the turn's answer names.
 
-**Consumption.** A response is delivered to channels (Section 10.2). Whether
-the people it was delivered to took it in is its consumption, recorded per
-delivering channel and, where the channel can tell them apart, per participant:
+**Consumption (Planned).** No implementation records consumption yet: a
+RoomEvent carries no `consumption`, and `ON_CONSUMPTION` does not fire. This
+paragraph is what it will be. A response is delivered to channels (Section
+10.2). Whether the people it was delivered to took it in is its consumption,
+recorded per delivering channel and, where the channel can tell them apart,
+per participant:
 
 ```
 Consumption                                 # One delivering channel's record
@@ -5008,7 +5015,7 @@ MAY change the event's `content`, its address (`addressed_to`), its
 `visibility`, its thread (`parent_event_id`), its `correlation_id` and its
 `metadata`, and its `channel_data`. Implementations MUST keep the original's
 `id`, `room_id`, `type`, `source`, `index`, `chain_depth`, `responds_to`,
-`idempotency_key`, `created_at`, `status`, `blocked_by`, `consumption` and
+`idempotency_key`, `created_at`, `status`, `blocked_by` and
 `delivery_results` on it, and with them the checks already passed: the event
 an EDIT or a DELETE targets (`target_event_id`), its `edit_source` or
 `delete_type` and its kind of content, which keeps a change from hiding in its
@@ -8503,8 +8510,9 @@ enters a room as any other audio.
      produced, its last partial sentence included: the sessions that heard it
      get that text as their final transcript and AFTER_TTS fires with it, then
      the failure propagates.
-16s. When a served session's playback of the response reaches its end, the
-     response is recorded `consumed` on the voice channel (Section 8.5); a cut
+16s. (Planned, with consumption, Section 8.5.) When a served session's
+     playback of the response reaches its end, the response is recorded
+     `consumed` on the voice channel (Section 8.5); a cut
      records `partial` (Section 12.3.13), and a response superseded before any
      audio records `unconsumed` (Section 12.2).
 
@@ -9734,8 +9742,8 @@ speech segment is measured from its own onset. When the speech ends:
   have, unless new speech has started meanwhile, which holds it in turn.
 
 A response cancelled as `superseded` was never heard, so it is not part of the
-conversation, and its consumption on the voice channel is `unconsumed`
-(Section 8.5). Its text may already be stored as finished (generation often ends
+conversation (its consumption on the voice channel, Planned in Section 8.5, is
+`unconsumed`). Its text may already be stored as finished (generation often ends
 before playback starts): the channel marks every MESSAGE response event of the
 turn `metadata.cancelled = true` and `metadata.cancellation_reason =
 "superseded"`, and an intelligence channel MUST NOT replay such an event as
@@ -14307,24 +14315,31 @@ RetryPolicy
 ├── base_delay_seconds: float               # Initial delay
 ├── exponential_base: float                 # Multiplier per attempt (default: 2.0)
 ├── max_delay_seconds: float                # Maximum delay cap
-└── retryable_errors: list<string> | null   # Error codes eligible for retry
+└── retryable_errors: list<string> | null   # Exception type names eligible for retry
 ```
 
 Retry delay formula: `delay = min(base_delay * exponential_base ^ attempt, max_delay)`
 
-Retry policies are configured per-channel-binding. Only errors marked as
-`retryable = true` in the DeliveryError SHOULD trigger retries.
+Retry policies are configured per-channel-binding. An error that says whether
+it may be retried (a DeliveryError's `retryable`, a provider error's own) is
+believed, whatever the policy names: a permanent refusal is not replayed with
+the full backoff. Another error is retried when `retryable_errors` is null, or
+when the list names its type or a type it derives from; any other error fails
+on its first attempt.
 
 ### 13.3 Rate Limiting
 
 ```
 RateLimit
-├── max_per_second: float | null            # Maximum events per second
-├── max_per_minute: float | null            # Maximum events per minute
-└── burst: int | null                       # Burst allowance
+├── max_per_second: float | null            # Maximum events per second, > 0
+├── max_per_minute: float | null            # Maximum events per minute, > 0
+└── max_per_hour: float | null              # Maximum events per hour, > 0
 ```
 
-Implementations SHOULD use a token bucket algorithm. When rate-limited,
+The rate is the first of `max_per_second`, `max_per_minute` / 60 and
+`max_per_hour` / 3600 that is set; with none set, deliveries are not limited.
+Implementations SHOULD use a token bucket algorithm; the reference one holds
+one second of the rate, and at least one delivery. When rate-limited,
 deliveries MUST be queued (not dropped).
 
 ### 13.4 Idempotency
@@ -14576,16 +14591,33 @@ interface:
 ConversationStore (interface)
 │
 ├── Rooms
-│   ├── create_room(organization_id, metadata, room_id | null) → Room
-│   │                                         # the id §10.1 step 2 gives, or a
-│   │                                         # fresh one; refuses an id the store
-│   │                                         # holds (§14.3)
+│   ├── create_room(room) → Room
+│   │                                         # the room as the framework built
+│   │                                         # it, its id §10.1 step 2's or a
+│   │                                         # fresh one; refuses an id the
+│   │                                         # store holds (§14.3)
 │   ├── get_room(room_id) → Room | null
-│   ├── update_room(room_id, updates) → Room
+│   ├── update_room(room) → Room              # the whole record, under the
+│   │                                         # room lock; keeps the counters
+│   │                                         # and the delivered index the
+│   │                                         # store holds (§14.3)
+│   ├── patch_room_metadata(room_id, patch, unset = []) → Room | null
+│   │                                         # merges patch into the metadata,
+│   │                                         # unset's keys removed first, and
+│   │                                         # writes nothing else of the room;
+│   │                                         # null for an unknown room
 │   ├── delete_room(room_id) → void
-│   ├── list_rooms(filters) → list<Room>
-│   ├── find_room(filters) → Room | null
+│   ├── list_rooms(offset = 0, limit = 50) → list<Room>
+│   ├── find_rooms(organization_id | null, status | null, metadata_filter | null,
+│   │              limit = 100, offset = 0) → list<Room>
 │   ├── find_latest_room(filters) → Room | null
+│   ├── load_room_context(room_id) → (Room | null, list<ChannelBinding>,
+│   │                                 list<Participant>)
+│   │                                         # the three reads a room's context
+│   │                                         # takes (§10.1 step 3), together
+│   ├── get_conversation(room_id, limit = 50, after_index | null) → list<RoomEvent>
+│   │                                         # the conversation a context holds
+│   │                                         # (§7.5 rule 8)
 │   ├── get_delivered_index(room_id) → int    # -1 before any set ran (§13.5)
 │   ├── advance_delivered_index(room_id, index, force = false) → bool
 │   │                                         # compare-and-set from index - 1, or
@@ -14629,20 +14661,23 @@ ConversationStore (interface)
 │       # ordered as step 1 orders rooms, whichever name found it
 │
 ├── Events
-│   ├── add_event(room_id, event) → RoomEvent
-│   │                                         # a DELIVERED edit or delete also
-│   │                                         # writes its target's change, in the
-│   │                                         # same transaction (§14.3); refuses
-│   │                                         # an event whose source channel
-│   │                                         # and idempotency key an event of
-│   │                                         # the room carries, as a
-│   │                                         # duplicate key (§14.3)
+│   ├── commit_event(room_id, event, target | null, activity = true) → RoomEvent
+│   │                                         # the commit (§10.1 step 12): its
+│   │                                         # index, the event and the room's
+│   │                                         # counters in one transaction, the
+│   │                                         # room's activity too unless
+│   │                                         # activity is false (§5.1); target,
+│   │                                         # a DELIVERED edit or delete's,
+│   │                                         # written in it (§14.3); refuses an
+│   │                                         # event whose source channel and
+│   │                                         # idempotency key an event of the
+│   │                                         # room carries, as a duplicate key
+│   │                                         # (§14.3)
 │   ├── get_event(event_id) → RoomEvent | null
 │   ├── list_events(room_id, filters) → list<RoomEvent>
 │   ├── get_event_count(room_id, filter | null) → int
-│   ├── update_event(event_id, updates) → RoomEvent
-│   │                                         # keeps the stored
-│   │                                         # delivery_results (§14.3)
+│   ├── update_event(event) → RoomEvent      # the whole record; keeps the
+│   │                                         # stored delivery_results (§14.3)
 │   ├── record_delivery_results(room_id, event_id, results) → void
 │   │                                         # replaces the event's
 │   │                                         # delivery_results with results,
@@ -14657,21 +14692,24 @@ ConversationStore (interface)
 │   │                                         # events in their place, in that
 │   │                                         # order, the framework's call
 │   │                                         # returning their ids
-│   └── get_event_by_idempotency_key(room_id, channel_id | null, key) → RoomEvent | null
-│                                             # the event of channel_id that key
-│                                             # committed, BLOCKED included (§13.4);
-│                                             # null: any channel of the room, for a
-│                                             # proactive delivery's key (§22.1)
+│   ├── get_event_by_idempotency_key(room_id, key, channel_id | null) → RoomEvent | null
+│   │                                         # the event of channel_id that key
+│   │                                         # committed, BLOCKED included (§13.4);
+│   │                                         # null: any channel of the room, for a
+│   │                                         # proactive delivery's key (§22.1)
+│   └── check_idempotency(room_id, key, channel_id | null) → bool
+│                                             # whether that event exists
 │
 ├── Bindings
-│   ├── create_binding(room_id, binding) → ChannelBinding
+│   ├── add_binding(binding) → ChannelBinding
 │   ├── get_binding(room_id, channel_id) → ChannelBinding | null
 │   ├── update_binding(binding) → ChannelBinding
-│   ├── delete_binding(room_id, channel_id) → void
+│   ├── remove_binding(room_id, channel_id) → bool
+│   │                                         # whether the channel was attached
 │   └── list_bindings(room_id) → list<ChannelBinding>
 │
 ├── Participants
-│   ├── create_participant(room_id, participant) → Participant
+│   ├── add_participant(participant) → Participant
 │   ├── get_participant(room_id, participant_id) → Participant | null
 │   ├── update_participant(participant) → Participant
 │   │                                         # writes the whole record, keyed
@@ -14699,12 +14737,12 @@ ConversationStore (interface)
 │   └── update_verification_request(request) → VerificationRequest
 │
 ├── Tasks
-│   ├── create_task(room_id, task) → Task
+│   ├── add_task(task) → Task
 │   ├── list_tasks(room_id, status | null) → list<Task>
 │   └── update_task(task) → Task
 │
 └── Observations
-    ├── create_observation(room_id, observation) → Observation
+    ├── add_observation(observation) → Observation
     └── list_observations(room_id) → list<Observation>
 ```
 
@@ -14780,6 +14818,13 @@ and never inherits the page's cap.
   again, so a store refuses a commit at an index below the room's
   `event_count`, a removed one included. A removed event's idempotency key
   goes with it (§13.4).
+- A whole-record write of a room (`update_room`) is made under the room
+  lock, from the room as read under that lock: a copy read before it would
+  undo what was written since. It keeps the counters (`event_count`,
+  `latest_index`) and the delivered index the store holds, which only a
+  commit and the cursor's compare-and-set move. A change of the room's
+  metadata alone goes through `patch_room_metadata`, which merges its keys
+  and writes nothing else, so a concurrent writer's keys stand.
 - Once committed (DELIVERED), an event MUST NOT be retroactively re-marked
   BLOCKED or FAILED. A processing timeout or a delivery failure after the
   commit point (§13.6) MUST NOT alter the event's committed status.
@@ -14822,7 +14867,7 @@ and never inherits the page's cap.
 - A committed event changes only through the write interface (§4.3). An
   event, room, binding or participant object returned by a read
   (`get_event`, `list_events`, conversation reads, `get_room`,
-  `list_rooms`, `find_room`, `find_latest_room`, `get_binding`,
+  `list_rooms`, `find_rooms`, `find_latest_room`, `get_binding`,
   `list_bindings`, `get_participant`, `list_participants`) or by the write
   that stored it is a snapshot of the stored record: the caller MUST treat
   it as frozen and MUST NOT mutate it, and changes it through a copy and a
@@ -14833,9 +14878,9 @@ and never inherits the page's cap.
   rows) — both are conformant, and a portable caller can rely on neither
   aliasing nor isolation.
 - A store MUST own its stored representation from the moment a write
-  returns: a caller's later mutation of an object it passed to `add_event`
-  / `update_event` / `create_room` / `update_room` / `create_binding` /
-  `update_binding` / `create_participant` / `update_participant` /
+  returns: a caller's later mutation of an object it passed to
+  `commit_event` / `update_event` / `create_room` / `update_room` /
+  `add_binding` / `update_binding` / `add_participant` / `update_participant` /
   `set_private_state` MUST NOT alter stored state (copy-in and
   serialisation both satisfy this).
 - A room's private state returned by a read is caller-owned: mutating it
