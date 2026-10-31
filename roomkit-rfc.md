@@ -434,6 +434,10 @@ room events but CAN produce tasks ("customer at risk of churning") and observati
 
 ## 5. Data Models
 
+An id the models below hold, a room's, a channel's, an event's, a
+participant's or an identity's, is a non-empty string: an empty one MUST be
+refused, since it names nothing a later read could find again.
+
 ### 5.1 Room
 
 ```
@@ -1657,7 +1661,8 @@ its addressing, by default the one Appendix A gives its well-known name, and
 for any other name addresses as written, with no recipient key. Everywhere
 else the type is a label: identity keys, hook filters, traces. `HOST` and
 `SYSTEM` are reserved: only a host channel claims `HOST` (§10.5), and `SYSTEM`
-names the framework's own records.
+names the framework's own records, so registering a channel of that type MUST
+be refused.
 
 ### 6.3 Transport Channels
 
@@ -6247,10 +6252,10 @@ message's, a response's (§10.1 step 14), that of an event a hook injects
    refused with `identity_required_for_edit`.
 6. For `DeleteContent` with `delete_type = SYSTEM`, or `EditContent` with
    `edit_source = "system"`, which claim the system's authority, the framework
-   MUST verify that the event comes from a SYSTEM channel or a hook; otherwise
-   `not_authorized`. `edit_source` is `"sender"`, `"system"` or null: an
-   implementation that accepts another value checks it as the sender's (rule
-   4), never as the system's. An EDIT or a DELETE a hook injects (§9.4) is the
+   MUST verify that the event comes from a hook, since no channel is of the
+   type SYSTEM (§6.2); otherwise `not_authorized`. `edit_source` is
+   `"sender"`, `"system"` or null: an implementation that accepts another
+   value checks it as the sender's (rule 4), never as the system's. An EDIT or a DELETE a hook injects (§9.4) is the
    hook's, whatever source it names, and makes a SYSTEM change only (a SYSTEM
    delete, an edit whose `edit_source` is `system`): any other, one that claims
    the sender's or an administrator's authority included, is refused
