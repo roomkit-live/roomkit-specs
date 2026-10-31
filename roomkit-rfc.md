@@ -17129,7 +17129,7 @@ ToolPolicy
    the tool is DENIED (whitelist mode).
 3. Otherwise, the tool is ALLOWED.
 
-Glob patterns support `*` (any characters) and `?` (single character).
+Glob patterns support `*` (any characters) and `?` (single character). Every other character stands for itself, and a pattern holding `[` or `]` MUST be refused where it is configured: a rule written as a character class (`rm_[a-z]*`) read as written would cover none of the names it was written for, and a deny rule or a skill's gate would open. The same holds for a skill's `allowed_tools` and `requires` (Section 24.2).
 Example: `allow: ["search_*", "get_*"]` permits all search and get tools.
 
 **Tools the channel provides.** A channel MUST apply its policy to every tool
