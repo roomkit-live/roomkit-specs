@@ -1611,7 +1611,7 @@ ChannelOutput
         # raised: ON_ERROR fires and InboundResult.error carries it
 ```
 
-### 6.2 ChannelType Enumeration
+### 6.2 ChannelType
 
 | Value | Category | Description |
 |---|---|---|
@@ -1643,15 +1643,21 @@ embeds it writes to a room's people is the host's own words, from a `HOST`
 channel (§10.5), never a `SYSTEM` source. A `HOST` channel is a transport
 only: binding one as an intelligence channel MUST be refused (§10.5).
 
-Implementations MAY define additional channel types. A type added by the
-implementation itself — a new transport it ships — is an ordinary member of this
-table and needs no marking; the list above is expected to grow.
+A channel type is an open name: lowercase ASCII letters, digits, `_` and `-`,
+written as a plain string (`sms`, `teams`). The table holds the well-known
+names, and an implementation MAY ship more (`discord`); any other valid name is
+a type too, so that an integrator's channel for a platform this document does
+not list (`slack`, `signal`) names its own type rather than a wrong one, and a
+record naming it is read and written back as it is. A name holding another
+character MUST be refused.
 
-This document does not define a registration mechanism for channel types added
-by a *third party*, and a naming convention alone would not be one: a closed
-enumeration is a legitimate implementation of the table, and a third party
-cannot add to it whatever it calls the value. An implementation that does want
-to admit external types owns both the mechanism and its naming.
+What a type means for its channels, how their senders and recipients are
+addressed (§5.7, Appendix A), is the channel's declaration: a channel declares
+its addressing, by default the one Appendix A gives its well-known name, and
+for any other name addresses as written, with no recipient key. Everywhere
+else the type is a label: identity keys, hook filters, traces. `HOST` and
+`SYSTEM` are reserved: only a host channel claims `HOST` (§10.5), and `SYSTEM`
+names the framework's own records.
 
 ### 6.3 Transport Channels
 
