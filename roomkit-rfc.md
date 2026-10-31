@@ -12962,13 +12962,12 @@ its cleanup) is spared from its join on: its work is neither cut again nor
 waited for. A spared delivery lane is neither waited for nor cut; the
 deliveries queued behind its own are dropped, as every queued delivery is,
 and so is the one it holds placed while it was idle (step 2), once the grace
-is over: the lane could run it only after the store is released. The
-`AFTER_BROADCAST` hooks of an event and a change's mutation trigger (§10.3)
-are that delivery's aftermath: their `close()` spares the room's lane too,
-which drops, as the close starts, the delivery that work placed and still
-holds (a hook that sends, then closes the framework). Any other ASYNC
-hook's observer is not the work that fired it, which does not wait for it:
-a `close()` it calls waits for that work and cuts it as any other.
+is over: the lane could run it only after the store is released. A delivery
+the closing work itself placed, which its room's lane still holds (an
+`AFTER_BROADCAST` hook that sends, then closes the framework), is dropped as
+the close starts, whether or not that lane is spared. An ASYNC hook's
+observer is not the work that fired it, which does not wait for it: a
+`close()` it calls waits for that work and cuts it as any other.
 A `close()` called from the shutdown's own work (a hook it fires as it
 closes) returns at once.
 
