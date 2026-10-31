@@ -14823,7 +14823,9 @@ and never inherits the page's cap.
   (room not found), `update_event` of an event it does not hold (event not
   found). A store that wrote it would keep an event no timeline read finds,
   or a participant of no room. `add_participant` under an id the room has is
-  refused too (participant exists, §5.5), the record it holds kept.
+  refused too (participant exists, §5.5), the record it holds kept, and
+  `update_participant` of a record the room does not hold (participant not
+  found).
 - A room is created once: a store MUST refuse to create a room under an id it
   already holds, and never replaces the room it holds. §10.1 step 2 creates
   a room under an id in hand, and a store that replaced the room would
