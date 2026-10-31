@@ -1050,7 +1050,9 @@ per (`room_id`, `id`). Section 4.4 says a participant is connected via one
 or more channels, and this is the record all of them share — the same
 person reached by SMS and then by email is one participant, not two.
 `channel_id` is their *primary* channel; `connected_via` is every channel
-the room has reached them through, the primary included.
+the room has reached them through, the primary included. A store refuses to
+add a participant under an id the room has (participant exists, §14.3) and
+keeps the record it holds; a record is rewritten by `update_participant`.
 
 **Who a sender is (normative):** an event's `participant_id` names a
 Participant only on a channel that participant was reached through
@@ -1574,7 +1576,10 @@ Channel (interface)
 │       # Whether this channel accepts streaming text delivery
 │
 ├── deliver_stream(text_stream, event, binding, context) → ChannelOutput
-│       # Deliver streaming text to this channel
+│       # Deliver streaming text to this channel. The stream yields the
+│       # response's text as it is written, a thinking delta per chunk of
+│       # the model's reasoning (Section 6.4), and each row of the response
+│       # once the store holds it (a text segment, a call's start or end)
 │       # Default: accumulate text, deliver as complete event via deliver()
 │       # A stream that raises: deliver what was accumulated, then propagate
 │       # the failure (Section 12.2 step 13s)
@@ -14817,7 +14822,8 @@ and never inherits the page's cap.
   `update_room` of a room it does not hold and `add_participant` into one
   (room not found), `update_event` of an event it does not hold (event not
   found). A store that wrote it would keep an event no timeline read finds,
-  or a participant of no room.
+  or a participant of no room. `add_participant` under an id the room has is
+  refused too (participant exists, §5.5), the record it holds kept.
 - A room is created once: a store MUST refuse to create a room under an id it
   already holds, and never replaces the room it holds. §10.1 step 2 creates
   a room under an id in hand, and a store that replaced the room would
