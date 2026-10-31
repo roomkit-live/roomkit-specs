@@ -4655,6 +4655,13 @@ hook (§10.1 step 2).
   payload replaces nothing: it is an unusable result, which the trigger's or
   the hook's fail-open or fail-closed rule decides, as it decides a payload
   of the wrong type.
+- **The arguments a BEFORE_TOOL_USE chain leaves are the call's.** The call
+  runs with those the chain ended with: a MODIFY's payload, or the payload a
+  hook edited in place, each read by the next hook. A hook may instead
+  return arguments under `metadata["arguments"]`, which no later hook reads
+  and which has the last word over the chain's, the last such rewrite
+  winning. Either way the arguments are validated again before the call
+  runs (§21.1); arguments that are not an object refuse it.
 - An unusable result's tasks and observations are collected, as side
   effects always are (§7.5 rule 3), save a result holding a sixth composite
   level (§5.3), of which nothing is collected; the events it would inject are

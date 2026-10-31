@@ -1212,7 +1212,7 @@
       }
     },
     "scripted_tool": {
-      "description": "A tool the scripted agent serves, declared with its definition, answering every call one way: `returns` a text; `raises` an error of a kind (§9.3: the model reads the kind, the observers the message); `fails` or `refuses` with words the model reads (§9.3); `hangs`, never answering.",
+      "description": "A tool the scripted agent serves, declared with its definition, answering every call one way: `returns` a text; `raises` an error of a kind (§9.3: the model reads the kind, the observers the message); `fails` or `refuses` with words the model reads (§9.3); `hangs`, never answering; `declines`, served by nothing.",
       "type": "object",
       "required": [
         "name"
@@ -1255,6 +1255,10 @@
         },
         "hangs": {
           "type": "boolean"
+        },
+        "declines": {
+          "description": "The tool's handler declines every call as not its own (§21.4): a call served by nothing, which an `on_tool_call` SYNC hook may serve (§9.3).",
+          "type": "boolean"
         }
       },
       "oneOf": [
@@ -1281,6 +1285,11 @@
         {
           "required": [
             "hangs"
+          ]
+        },
+        {
+          "required": [
+            "declines"
           ]
         }
       ]
