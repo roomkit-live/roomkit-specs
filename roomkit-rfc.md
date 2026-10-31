@@ -5737,6 +5737,12 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   later than under pre-lane implementations. Non-blocking,
     │   exceptions swallowed (§9.3) — a slow observer hook MUST NOT hold
     │   the room lock.
+    ├── Neither the call nor the room waits for them, nor for a change's
+    │   mutation trigger (§10.3), `ON_TASK_CREATED` or an agent's
+    │   `ON_ERROR`: the call returns once its delivery set and its
+    │   responses' passes are done (step 18), and the room's next delivery
+    │   and a response's go on while they run. `event_processed` comes once
+    │   the event's `AFTER_BROADCAST` hooks have ended (§8.2).
     └── Each hook's body, and that of a change's mutation trigger (§10.3),
         is the cascade's work while it runs: a call it makes into the room
         is a new arrival drawing one of the cascade's hook calls, and so is
@@ -12956,7 +12962,11 @@ its cleanup) is spared from its join on: its work is neither cut again nor
 waited for. A spared delivery lane is neither waited for nor cut; the
 deliveries queued behind its own are dropped, as every queued delivery is,
 and so is the one it holds placed while it was idle (step 2), once the grace
-is over: the lane could run it only after the store is released. An ASYNC
+is over: the lane could run it only after the store is released. The
+`AFTER_BROADCAST` hooks of an event and a change's mutation trigger (§10.3)
+are that delivery's aftermath: their `close()` spares the room's lane too,
+which drops, as the close starts, the delivery that work placed and still
+holds (a hook that sends, then closes the framework). Any other ASYNC
 hook's observer is not the work that fired it, which does not wait for it:
 a `close()` it calls waits for that work and cuts it as any other.
 A `close()` called from the shutdown's own work (a hook it fires as it
