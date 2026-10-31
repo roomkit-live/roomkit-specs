@@ -596,7 +596,9 @@ Implementations MUST enforce timer transitions when configured:
   instant, once the room proves to be the caller's (§17.2), so an event that
   arrives after its room fell due is refused as if the timer had run on time.
   A room nobody writes to transitions when the host checks its timers, or on
-  the period of a sweeper the implementation runs. A transition takes the
+  the period of a sweeper the implementation runs; a check of every room
+  reaches every ACTIVE and PAUSED room, however many there are, never the
+  first page of a store read only. A transition takes the
   instant it fell due, however late it is applied: a check long after both
   fell due pauses the room at the first instant and closes it at the second,
   in one write, and both its hooks then receive the room as that write left
@@ -14748,7 +14750,9 @@ ConversationStore (interface)
 
 **Reading a timeline (`list_events`).** Two pagination modes exist:
 offset-based (`offset` + `limit`) and cursor-based (`after_index` or
-`before_index`, mutually exclusive; `offset` is then ignored). *Which* events a
+`before_index`, mutually exclusive; `offset` is then ignored). `limit` is 50
+by default, for `list_events` and the timeline reads built on it, and a
+`limit` of 0 returns no event, whatever the window. *Which* events a
 page holds and the *order* they come back in are two different answers.
 `before_index`, and in offset mode the `newest_first` flag (ignored under a
 cursor), select the **window**: the `limit` events nearest the cursor, or the
@@ -14809,6 +14813,11 @@ and never inherits the page's cap.
   its target's update (§10.3) are part of that commit: the store writes the
   change, the counters and the target in one transaction, and fails the
   whole commit when the target is gone.
+- A write naming what the store does not hold is refused, nothing written:
+  `update_room` of a room it does not hold and `add_participant` into one
+  (room not found), `update_event` of an event it does not hold (event not
+  found). A store that wrote it would keep an event no timeline read finds,
+  or a participant of no room.
 - A room is created once: a store MUST refuse to create a room under an id it
   already holds, and never replaces the room it holds. §10.1 step 2 creates
   a room under an id in hand, and a store that replaced the room would
@@ -17324,6 +17333,7 @@ MCPToolProvider
 ├── server: one of
 │   ├── url: string                         # a remote server (streamable HTTP or SSE)
 │   └── command: string, args: list<string> # a local server started as a subprocess (stdio)
+├── connect_timeout: seconds = 60           # command only: its start, handshake and listing
 ├── discover: bool = true                   # List the server's tools when connecting
 ├── label: string | null                    # The host's name for the server: the <server> of an MCP alias
 ├── tools() → list<ToolDefinition>          # Discover available tools
@@ -17338,7 +17348,12 @@ MCPToolProvider
 A server named by `command` is started when the provider connects and MUST be
 stopped when it disconnects. Its arguments MUST be passed as a list, never
 through a shell. A connection that fails part-way MUST release what it had
-opened, the server process included, before the error is reported.
+opened, the server process included, before the error is reported. Connecting
+to it is bounded by `connect_timeout`, its start, the handshake and the
+listing together: past it the server is stopped and the connection fails
+with a timeout, so a server that never answers does not hold its host. Its
+stop gives it a grace to exit once its input is closed (2 seconds in the
+reference implementation), then terminates it, then kills it.
 
 `label` is the host's name for the server, never the name the server gives
 itself: an identifier (letters, digits, `_`, `.`, `-`, at most 64 characters)
