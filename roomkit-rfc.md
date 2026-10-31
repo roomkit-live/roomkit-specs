@@ -5678,7 +5678,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
         pass ended otherwise once its chain allowed the event (its BLOCKED
         record stored at step 11, the event refused at step 9a, the pass's
         `process_timeout` run out, §13.6, or its commit failed). Those
-        still start then, on an event that may never have been stored.
+        still start then, on an event that may never have been stored. A
+        pass the framework's close cuts starts none: nothing new starts
+        once the close began (§12.10.4).
         The same holds on every pass that runs the chain: an inbound
         message, a direct injection (§10.5), a response's pass, an injected
         event's, a streamed segment's. An event its chain blocked has none.
