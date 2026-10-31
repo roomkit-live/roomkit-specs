@@ -1279,6 +1279,12 @@ the provider's own spelling. A number is written as follows:
 - A result of more than 15 digits, or one whose first digit is `0`, which no
   country code is, is kept as written.
 
+The country code a channel declares is one to three digits, the first not
+`0`, written with or without its `+` (`1`, `+33`). An implementation MUST
+refuse another as the channel is configured, or as a number is written with
+it: a code that is none would leave every national number as written, and
+the mistake unseen.
+
 So, on a channel declaring the country code 1, `whatsapp:+15550000001`,
 `15550000001` and `+1 (555) 000-0001` are one person. An email channel
 compares and stores an address lower-case and without a display name
@@ -18386,6 +18392,12 @@ the registry a caller observes afterwards MUST be either the state that preceded
 the call or the state with every discovered skill present. A half-filled
 catalogue reproduces exactly the silent gap this section exists to prevent, and
 does so at the moment the caller has most reason to believe the opposite.
+
+The registry's manifest, which every system prompt carries (§24.3), MUST NOT
+pass 65,536 characters. A discovery or a registration that would make it pass
+them fails, says so, and leaves the registry as it was: a manifest without a
+bound grows each prompt, and every turn's cost, with each skill a deployment
+adds.
 
 ### 24.6 Access to Bundled Files
 
