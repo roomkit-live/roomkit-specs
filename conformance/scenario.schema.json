@@ -116,6 +116,21 @@
                   "type": "string"
                 }
               }
+            },
+            "identity_resolver": {
+              "$ref": "#/$defs/identity_resolver"
+            },
+            "identity_channel_types": {
+              "description": "The channel types identity resolution runs for (§11.4); absent, every type.",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "identity_timeout_ms": {
+              "description": "How long the resolver may take (§11.5); the implementation's default when absent.",
+              "type": "integer",
+              "minimum": 1
             }
           }
         },
@@ -135,6 +150,12 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/hook"
+          }
+        },
+        "identity_hooks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/identity_hook"
           }
         }
       }
@@ -253,6 +274,10 @@
           "description": "How many of the room's latest events the channel declares it reads (§6.1 `recent_events_window`), 0 by default.",
           "type": "integer",
           "minimum": 0
+        },
+        "sender_is_participant": {
+          "description": "Whether the channel names its own senders: its inbound `sender_id` is a room's `Participant.id`, not an address (§11.6), which no resolver is asked about.",
+          "type": "boolean"
         }
       }
     },
@@ -1735,6 +1760,23 @@
               "object"
             ]
           }
+        },
+        "participants": {
+          "description": "Per room, the participants the store holds (§5.5), in the store's order.",
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "array",
+              "object"
+            ]
+          }
+        },
+        "resolver": {
+          "description": "The scripted resolver's calls, in order: the `room_id` of its context, the message's `channel_id` and `sender_id`.",
+          "type": [
+            "array",
+            "object"
+          ]
         }
       }
     },
@@ -2393,6 +2435,128 @@
           }
         }
       ]
+    },
+    "identity_resolver": {
+      "description": "A scripted identity resolver (§11.1), the kit's: it records each call (`expect.resolver`), then answers with the first of its `answers` whose `when` holds, `{\"status\": \"unknown\"}` when none does.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "answers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/resolver_answer"
+          }
+        }
+      }
+    },
+    "resolver_answer": {
+      "description": "One answer of a scripted resolver, used once unless it repeats: it holds at its `gate` first, then raises with `fail`, or answers `result`, an IdentityResult (§11.1).",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "when": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "sender_id": {
+              "type": "string"
+            },
+            "channel_id": {
+              "type": "string"
+            },
+            "room_id": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            }
+          }
+        },
+        "repeat": {
+          "type": "boolean"
+        },
+        "gate": {
+          "type": "string"
+        },
+        "fail": {
+          "type": "string"
+        },
+        "result": {
+          "$ref": "#/$defs/record"
+        }
+      }
+    },
+    "identity_hook": {
+      "description": "An identity hook (§11.2), registered apart from the hooks of §9.1: it records each call, its payload the event and the IdentityResult it is handed, then answers with its reaction's `result`, an IdentityHookResult (§11.3), or null with none.",
+      "type": "object",
+      "required": [
+        "name",
+        "trigger"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "trigger": {
+          "enum": [
+            "on_identity_ambiguous",
+            "on_identity_unknown"
+          ]
+        },
+        "channel_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "channel_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "directions": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "inbound",
+              "outbound"
+            ]
+          }
+        },
+        "reactions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/identity_hook_reaction"
+          }
+        }
+      }
+    },
+    "identity_hook_reaction": {
+      "description": "A reaction of an identity hook: `when` as a hook's, used once unless it repeats; it holds at its `gate`, then raises with `fail`, or answers `result`. An `inject`'s `event` is a template, completed as a hook's injected event.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "when": {
+          "$ref": "#/$defs/condition"
+        },
+        "repeat": {
+          "type": "boolean"
+        },
+        "gate": {
+          "type": "string"
+        },
+        "fail": {
+          "type": "string"
+        },
+        "result": {
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      }
     }
   }
 }

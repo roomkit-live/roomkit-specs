@@ -127,7 +127,11 @@ of the setup are not compared.
 - `kit`: `max_chain_depth` (default 5), `process_timeout_ms` (the
   implementation's default when absent), and `router`, a scripted router in
   place of the default one, answering every routed message with its
-  `room_id`, an answer the kit holds to §10.1 step 2's rules.
+  `room_id`, an answer the kit holds to §10.1 step 2's rules; for identity
+  resolution (§11), `identity_resolver`, a **scripted resolver** (below),
+  `identity_channel_types`, the channel types it runs for (§11.4, every type
+  when absent), and `identity_timeout_ms` (§11.5, the implementation's
+  default when absent).
 - `channels`: each is registered. A channel of type `host` is the
   implementation's host channel (§10.5); any other is a **scripted channel**:
   - `id`, `type` (a ChannelType: `sms`, `websocket`, `whatsapp`, `email`,
@@ -161,6 +165,9 @@ of the setup are not compared.
     read the recipient under that key; without it, an address is written as
     given, a conversation is its sender's, and a routed sender is recorded
     with no recipient;
+  - with `sender_is_participant`, it names its own senders: its inbound
+    `sender_id` is a room's `Participant.id`, which no resolver is asked
+    about (§11.6);
   - an `ai` channel with a `model` is a **scripted agent** instead (below).
 - `rooms`: each is created (`id`, `organization_id`, `metadata`, `timers`),
   then each of its `bindings` attached (`channel_id`, `category`, `access`,
@@ -174,6 +181,24 @@ of the setup are not compared.
   `directions`, `fail_closed`, `needs_lock`, and its `reactions`. A
   **scripted hook** records each call (its trigger, the room of its context,
   its payload), then reacts; with no reaction it allows.
+- `identity_hooks`: each is registered as an identity hook (§11.2), apart
+  from the hooks of §9.1: `name`, `trigger` (`on_identity_ambiguous` or
+  `on_identity_unknown`), `channel_types`, `channel_ids`, `directions`, and
+  its `reactions` (`when`, `repeat`, `gate`, `fail`, `result`). It records
+  each call under `hooks`, with the IdentityResult it is handed as
+  `identity_result`, then answers its reaction's `result`, an
+  IdentityHookResult (§11.3), whose `inject.event` is a template completed
+  as a hook's injected event; with no reaction, or a `result` of null, it
+  answers null.
+
+### Identity resolution
+
+The **scripted resolver** records each call under `resolver` (the room of
+its context, the message's `channel_id` and `sender_id`), then answers with
+the first of its `answers` whose `when` holds (`sender_id`, `channel_id`,
+`room_id`, `text`), used once unless it has `"repeat": true`: it holds at
+its `gate`, then raises with `fail`, or answers `result`, an IdentityResult
+(§11.1). With no answer left, it answers `{"status": "unknown"}`.
 
 ### Reactions
 
@@ -373,8 +398,8 @@ refuses one made anywhere else, where no turn's host is.
 |---|---|
 | `timeline` | Per room, the whole timeline in index order, `BLOCKED` records included, lifecycle records left out |
 | `rooms`, `bindings` | Per room, the room record; per room and channel, the binding, `null` for none |
-| `framework_events` | Per room (`*` for the events of no room), every framework event of the §26.1 table and `process_timeout`, and of the Level 2 features the suite exercises, `status_posted` (§19.8) and `feedback` (§15.9), in emission order |
-| `hooks` | Per scripted hook, its calls in order: `trigger`, `room_id`, `event` (the payload, when an event), `tool_call` (the payload, when a tool call: `name`, `tool_call_id`, `arguments` as the call runs or was stopped with, and, on `on_tool_call`, `result` as the model reads it, `is_error`, `refused`, `cancelled` and `error_detail`), `delivery_status` (the payload, when a delivery status, §10.4), `status_entry` (the payload, when a status entry: `on_status_posted`), `observation` (the payload, when an observation: `on_feedback`) |
+| `framework_events` | Per room (`*` for the events of no room), every framework event of the §26.1 table and `process_timeout`, and of the Level 2 features the suite exercises, `status_posted` (§19.8) and `feedback` (§15.9), and identity resolution's `identity_resolved` and `identity_timeout` (§8.2), in emission order |
+| `hooks` | Per scripted hook, its calls in order: `trigger`, `room_id`, `event` (the payload, when an event), `tool_call` (the payload, when a tool call: `name`, `tool_call_id`, `arguments` as the call runs or was stopped with, and, on `on_tool_call`, `result` as the model reads it, `is_error`, `refused`, `cancelled` and `error_detail`), `delivery_status` (the payload, when a delivery status, §10.4), `status_entry` (the payload, when a status entry: `on_status_posted`), `observation` (the payload, when an observation: `on_feedback`), `identity_result` (what an identity hook is handed, §11.2) |
 | `hook_order` | The order in which the hooks it lists were called |
 | `deliveries` | Per room and channel, the events a scripted channel's `deliver()` received, as delivered, in order |
 | `contexts` | Per room and scripted channel, the context each of its `deliver()` calls and, for an intelligence channel, each of its turns (`on_event()`) was handed, in order: `call` (`deliver` or `on_event`) and `recent_events`, the ids of its events read as Normalization reads them, lifecycle records left out |
@@ -384,6 +409,8 @@ refuses one made anywhere else, where no turn's host is.
 | `actions` | Per action label, the outcomes of its runs, in the order they ended |
 | `models` | Per scripted agent, each generation's request as its model received it, in order: the `tool_results` it carries, each `{tool_call_id, content}`, `content` as the model reads it |
 | `lifecycle` | Per room, the lifecycle records (§5.1) in index order, when the implementation writes them: an implementation that writes none passes. It says which changes write one, and which write none (a change that changes nothing, §7.2) |
+| `participants` | Per room, the participants the store holds (§5.5), in the store's order |
+| `resolver` | The scripted resolver's calls, in order |
 
 An outcome is `{"result": ...}`, matched as below, or `{"error": name}` (or
 `{"error": {"name": ..., "reason": ...}}`). A call whose outcome names neither
@@ -420,7 +447,8 @@ the RFC leaves to each implementation:
   wherever their id appears, an object's key included.
   Any other event id (an instruction, a refused event, an event a hard delete
   removed) is `$e1`, `$e2`... in the order the step outcomes, then the
-  framework events, show it first.
+  framework events, show it first. A participant's or an identity's `id`
+  is the scenario's own, kept as written.
 - **Instants** (an RFC 3339 string) are `@1`, `@2`... by their order among the
   run's instants, equal ones alike.
 - A **framework event** is an object: `event`, its name, and the members its row
