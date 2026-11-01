@@ -280,6 +280,7 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `unregister_channel` | `channel_id` | null |
 | `register_hook` | `hook` (as in the setup) | null |
 | `process_delivery_status` | `status` (a DeliveryStatus: `room_id`, `channel_id`, `provider`, `message_id`, `status`, `recipient`, `sender`, `error_code`, `error_message`, `timestamp`, `raw`) | null |
+| `deliver` | `room_id`, `content` (a text), `channel_id`, `strategy` (`immediate`, `wait_for_idle`, `queued`), `metadata`, `addressed_to`, `idempotency_key`, `session_id`, `chain_depth`, `instruction` (§22.1) | a DeliveryOutcome: `status`, `reason`, `delivery_item_id`, `event_id`, `duplicate`, `unavailable_targets`, `session_ids`, `session_outcomes`, `error`, `turn_complete` |
 | `process_webhook` | `meta` (a WebhookMeta: `provider`, `sender`, `recipient`, `body`, `external_id`, `timestamp`, `raw`, `media_urls`, `direction`, `event_type`), `channel_id` | null |
 | `mark_read` | `room_id`, `channel_id`, `event_id` | null |
 | `mark_all_read` | `room_id`, `channel_id` | null |

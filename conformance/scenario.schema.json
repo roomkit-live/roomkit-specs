@@ -778,7 +778,8 @@
             "host.send_event",
             "host.post_status",
             "host.update_room_metadata",
-            "host.add_observation"
+            "host.add_observation",
+            "deliver"
           ]
         },
         "organization_id": {
@@ -1439,6 +1440,72 @@
             "properties": {
               "observation": {
                 "$ref": "#/$defs/record"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "deliver"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "content"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              },
+              "content": {
+                "type": "string"
+              },
+              "channel_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "strategy": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "metadata": {
+                "type": "object"
+              },
+              "addressed_to": {
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": "string"
+                }
+              },
+              "idempotency_key": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "session_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "chain_depth": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "instruction": {
+                "type": "boolean"
               }
             }
           }
