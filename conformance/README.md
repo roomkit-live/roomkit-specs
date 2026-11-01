@@ -394,6 +394,7 @@ else, where no turn's host is.
 | `host.room_tasks` | none | the turn's room's tasks, as `task_status` reads them (§23.4) |
 | `delegate` | `room_id`, `agent_id`, `task`, `wait` (default false), `context`, `share_channels`, `notify`, `post_status` (default true), `brief`, `conversation` (default 0), `hand_back` (default `relay`) (§23.3) | the task: `id`, `child_room_id`, `parent_room_id`, `agent_id`, `task`, `brief`, `description`, `hand_back`, `status` and `result`, its DelegatedTaskResult once it ended (`task_id`, `child_room_id`, `parent_room_id`, `agent_id`, `status`, `output`, `error`, `duration_ms`, `metadata`); its `as` label names the task's id |
 | `task.wait` | `task_id`: a task `delegate` returned, named by its label | its DelegatedTaskResult, once it ended |
+| `cancel_task` | `task_id` | whether a background task the kit's task runner held was running and is now cancelled (§23.3); false for any other, or one of a room of another organization than the call's `organization_id` (§17.2) |
 
 The room's members (§5.5, Appendix B.3), each under the room's lock:
 
