@@ -235,6 +235,11 @@
           "items": {
             "type": "string"
           }
+        },
+        "recent_events_window": {
+          "description": "How many of the room's latest events the channel declares it reads (§6.1 `recent_events_window`), 0 by default.",
+          "type": "integer",
+          "minimum": 0
         }
       }
     },
@@ -1199,6 +1204,19 @@
           }
         },
         "deliveries": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": [
+                "array",
+                "object"
+              ]
+            }
+          }
+        },
+        "contexts": {
+          "description": "Per room and scripted channel, the context each of its `deliver()` and `on_event()` calls was handed, in order: `call` (`deliver` or `on_event`) and `recent_events`, the ids of its events, lifecycle records left out.",
           "type": "object",
           "additionalProperties": {
             "type": "object",

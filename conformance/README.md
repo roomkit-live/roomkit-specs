@@ -148,6 +148,8 @@ of the setup are not compared.
     its `deliver_stream` reactions may stop it (`stop_after`) or make it
     raise once it stopped (`fail`); with `streams_in`, it takes one only in
     the rooms listed (§6.1 `supports_streaming_delivery_for`);
+  - `recent_events_window` (default 0): how many of the room's latest
+    events it declares it reads (§6.1), which sizes the room's context;
   - with `addresses`, its own address methods answer in place of the
     defaults (§5.7, §10.4): `normalizes` lists the addresses
     `normalize_address` writes otherwise, `conversation_key` the metadata
@@ -349,6 +351,7 @@ no lifecycle record, so it reads as normalized.
 | `hooks` | Per scripted hook, its calls in order: `trigger`, `room_id`, `event` (the payload, when an event), `tool_call` (the payload, when a tool call: `name`, `tool_call_id`, `arguments` as the call runs or was stopped with, and, on `on_tool_call`, `result` as the model reads it, `is_error`, `refused`, `cancelled` and `error_detail`) |
 | `hook_order` | The order in which the hooks it lists were called |
 | `deliveries` | Per room and channel, the events a scripted channel's `deliver()` received, as delivered, in order |
+| `contexts` | Per room and scripted channel, the context each of its `deliver()` and `on_event()` calls was handed, in order: `call` (`deliver` or `on_event`) and `recent_events`, the ids of its events read as Normalization reads them, lifecycle records left out |
 | `streamed` | Per room and streaming channel, the items its `deliver_stream` read, in order: `{"text": ...}` for a text delta, `{"row": event}` for a row the store holds, `{"failed": true}` where the stream raised |
 | `turns` | Per room and intelligence channel, the events its `on_event()` received |
 | `observations`, `tasks` | Per room, the stored side effects |
