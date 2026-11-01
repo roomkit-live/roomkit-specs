@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "delivery/queued-delivers-a-lone-request-as-it-is",
-  "title": "Queued delivers a request no other request waits beside as it is, its content unjoined; with no transport it is unavailable",
+  "title": "Queued delivers a request no other request waits beside as it is, its content unjoined, and reports it sent at its publication, the turn going on; with no transport it is unavailable",
   "rules": [
     "§22.2",
     "§22.1"
@@ -51,7 +51,7 @@
         "result": {
           "status": "sent",
           "event_id": "room-1#0",
-          "turn_complete": true
+          "turn_complete": false
         }
       }
     },
