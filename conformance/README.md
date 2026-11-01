@@ -279,6 +279,8 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `register_channel` | `channel` (as in the setup) | null |
 | `unregister_channel` | `channel_id` | null |
 | `register_hook` | `hook` (as in the setup) | null |
+| `process_delivery_status` | `status` (a DeliveryStatus: `room_id`, `channel_id`, `provider`, `message_id`, `status`, `recipient`, `sender`, `error_code`, `error_message`, `timestamp`, `raw`) | null |
+| `process_webhook` | `meta` (a WebhookMeta: `provider`, `sender`, `recipient`, `body`, `external_id`, `timestamp`, `raw`, `media_urls`, `direction`, `event_type`), `channel_id` | null |
 | `mark_read` | `room_id`, `channel_id`, `event_id` | null |
 | `mark_all_read` | `room_id`, `channel_id` | null |
 | `list_read_markers` | `room_id` | each channel's marker, an index |
@@ -351,7 +353,7 @@ no lifecycle record, so it reads as normalized.
 | `timeline` | Per room, the whole timeline in index order, `BLOCKED` records included, lifecycle records left out |
 | `rooms`, `bindings` | Per room, the room record; per room and channel, the binding, `null` for none |
 | `framework_events` | Per room (`*` for the events of no room), every framework event of the §26.1 table and `process_timeout`, in emission order |
-| `hooks` | Per scripted hook, its calls in order: `trigger`, `room_id`, `event` (the payload, when an event), `tool_call` (the payload, when a tool call: `name`, `tool_call_id`, `arguments` as the call runs or was stopped with, and, on `on_tool_call`, `result` as the model reads it, `is_error`, `refused`, `cancelled` and `error_detail`) |
+| `hooks` | Per scripted hook, its calls in order: `trigger`, `room_id`, `event` (the payload, when an event), `tool_call` (the payload, when a tool call: `name`, `tool_call_id`, `arguments` as the call runs or was stopped with, and, on `on_tool_call`, `result` as the model reads it, `is_error`, `refused`, `cancelled` and `error_detail`), `delivery_status` (the payload, when a delivery status, §10.4) |
 | `hook_order` | The order in which the hooks it lists were called |
 | `deliveries` | Per room and channel, the events a scripted channel's `deliver()` received, as delivered, in order |
 | `contexts` | Per room and scripted channel, the context each of its `deliver()` calls and, for an intelligence channel, each of its turns (`on_event()`) was handed, in order: `call` (`deliver` or `on_event`) and `recent_events`, the ids of its events read as Normalization reads them, lifecycle records left out |
