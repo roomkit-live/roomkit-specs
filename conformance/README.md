@@ -375,6 +375,7 @@ refuses one made anywhere else, where no turn's host is.
 | `update_room_metadata` | `room_id`, `metadata` | the room |
 | `submit_feedback` | `room_id`, `rating`, `event_id`, `channel_id`, `comment`, `dimension`, `metadata` | null |
 | `list_observations` | `room_id` | the room's observations |
+| `list_tasks` | `room_id`, `status` | the room's tasks, of that status when it names one |
 | `host.send_event` | as `send_event` | the event |
 | `host.post_status` | as `status.post` | null |
 | `host.update_room_metadata` | `room_id`, `metadata` | the room |

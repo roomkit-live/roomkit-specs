@@ -804,7 +804,8 @@
             "host.post_status",
             "host.update_room_metadata",
             "host.add_observation",
-            "deliver"
+            "deliver",
+            "list_tasks"
           ]
         },
         "organization_id": {
@@ -1531,6 +1532,35 @@
               },
               "instruction": {
                 "type": "boolean"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "list_tasks"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "pending",
+                  "in_progress",
+                  "completed",
+                  "failed",
+                  "cancelled",
+                  null
+                ]
               }
             }
           }
