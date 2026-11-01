@@ -1216,7 +1216,7 @@
           }
         },
         "contexts": {
-          "description": "Per room and scripted channel, the context each of its `deliver()` and `on_event()` calls was handed, in order: `call` (`deliver` or `on_event`) and `recent_events`, the ids of its events, lifecycle records left out.",
+          "description": "Per room and scripted channel, the context each of its `deliver()` calls and, for an intelligence channel, each of its turns (`on_event()`) was handed, in order: `call` (`deliver` or `on_event`) and `recent_events`, the ids of its events, lifecycle records left out.",
           "type": "object",
           "additionalProperties": {
             "type": "object",
