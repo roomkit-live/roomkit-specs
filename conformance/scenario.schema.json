@@ -512,6 +512,13 @@
               "type": "string"
             }
           }
+        },
+        "after_turn": {
+          "description": "In an `on_event` reaction: actions the turn leaves to work it began, a task in the turn's execution context that makes them in order once the turn ended (§10.6.5): a verb of the turn's host then crosses as a `room_call`.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/action"
+          }
         }
       }
     },

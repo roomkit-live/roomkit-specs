@@ -211,6 +211,7 @@ left, the call does what it does by default. A reaction:
 | `when` | Holds when every member equals the call's: `room_id`, `text` (a text content's body), `type` (the event type), `source_channel_id`, `chain_depth` |
 | `gate` | Holds the call at this gate until a step opens it |
 | `do` | Kit calls the hook or the channel makes while it runs, in its execution context, in order: an **action** is a call (below) with an optional `as` and `expect`. Its error is caught, kept and checked, never raised into the kit |
+| `after_turn` | In an `on_event` reaction: actions the turn leaves to work it began, a task in the turn's execution context that makes them in order once the turn ended (§10.6.5): a `host.<verb>` then crosses as a `room_call`. A runner waits for that work when it waits for the kit to go idle |
 | `fail` | Then raises, with this message |
 | `refuse` | In a `deliver` or `on_event` reaction: then fails with the provider's explicit refusal (§5.13), its `error`, the `code` and `retryable` it declares, and the `provider_message_id` it names |
 | `respond` | Event templates: the turn's response events (`on_event` only) |
@@ -365,8 +366,9 @@ no lifecycle record, so it reads as normalized.
 A call `status.<operation>` is the operation of the kit's status bus (§19.8);
 `status.post` is its `post_async`, which returns once the bus's subscribers
 ran. A call `host.<verb>` is a verb of the turn's host (§10.6.5), made by an
-action of a scripted intelligence channel's turn (`on_event`): a runner
-refuses one made anywhere else, where no turn's host is.
+action of a scripted intelligence channel's turn (`on_event`), during the
+turn (`do`) or after it (`after_turn`): a runner refuses one made anywhere
+else, where no turn's host is.
 
 | Call | Arguments | Result |
 |---|---|---|
