@@ -119,7 +119,9 @@
             "dimension": "speed",
             "rating": 1.0,
             "comment": "Fast",
-            "event_id": "e-9",
+            "event_id": {
+              "$present": true
+            },
             "source": "survey"
           }
         },
@@ -163,7 +165,9 @@
         {
           "event": "feedback",
           "channel_id": "sms",
-          "event_id": "e-9",
+          "event_id": {
+            "$present": true
+          },
           "dimension": "speed",
           "rating": 1.0
         },
