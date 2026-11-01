@@ -185,6 +185,9 @@ of the setup are not compared.
   `directions`, `fail_closed`, `needs_lock`, and its `reactions`. A
   **scripted hook** records each call (its trigger, the room of its context,
   its payload), then reacts; with no reaction it allows.
+- `identities`: each stored in the kit's store before the rooms are made,
+  an Identity (§5.6) in the serialized form: what `resolve_participant`
+  reads.
 - `identity_hooks`: each is registered as an identity hook (§11.2), apart
   from the hooks of §9.1: `name`, `trigger` (`on_identity_ambiguous` or
   `on_identity_unknown`), `channel_types`, `channel_ids`, `directions`, and
@@ -392,6 +395,17 @@ else, where no turn's host is.
 | `delegate` | `room_id`, `agent_id`, `task`, `wait` (default false), `context`, `share_channels`, `notify`, `post_status` (default true), `brief`, `conversation` (default 0), `hand_back` (default `relay`) (§23.3) | the task: `id`, `child_room_id`, `parent_room_id`, `agent_id`, `task`, `brief`, `description`, `hand_back`, `status` and `result`, its DelegatedTaskResult once it ended (`task_id`, `child_room_id`, `parent_room_id`, `agent_id`, `status`, `output`, `error`, `duration_ms`, `metadata`); its `as` label names the task's id |
 | `task.wait` | `task_id`: a task `delegate` returned, named by its label | its DelegatedTaskResult, once it ended |
 
+The room's members (§5.5, Appendix B.3), each under the room's lock:
+
+| Call | Arguments | Result |
+|---|---|---|
+| `ensure_participant` | `room_id`, `channel_id`, `participant_id`, `display_name` | the participant, created reached through the channel, or the room's record of that id with the channel recorded among those it was reached through |
+| `resolve_participant` | `room_id`, `participant_id`, `identity_id`, `resolved_by` (default `manual`) | the participant, identified as the stored identity |
+| `add_member` | `room_id`, `channel_id`, `participant_id`, `identity_id`, `display_name`, `role` (default `member`) | the member |
+| `remove_member` | `room_id`, `participant_id`, `status` (default `left`) | the participant |
+| `rename_member` | `room_id`, `participant_id`, `display_name` | the participant |
+| `is_member` | `room_id`, `identity_id` | whether an active participant of the room is that identity |
+
 **References.** A string argument may name what the run made:
 
 - `$room`, `$event`: in an action, the room of the hook's or the channel's
@@ -505,7 +519,8 @@ refuses its value, a `ChannelId`).
 | `transition_refused` | A transition from a status it does not leave from (§5.1) | `TransitionRefusedError` | `LifecycleError::TransitionRefused` |
 | `change_refused` | An edit or a delete step 8a refuses, with its `reason` (§10.1 step 8a, §10.5) | `ChangeRefusedError` | `Refused` with one of step 8a's reasons |
 | `process_timeout` | `process_timeout` passed before the commit (§13.6) | `ProcessTimeoutError` | `Refused { reason: "process_timeout" }` |
-| `participant_not_found` | A post's speaker is no participant the host channel reaches (§10.5) | `ParticipantNotFoundError` | `InboundError::ParticipantNotFound` |
+| `participant_not_found` | A post's speaker is no participant the host channel reaches (§10.5); a member call names no participant of the room (§5.5) | `ParticipantNotFoundError` | `InboundError::ParticipantNotFound`, `RoomKitError::ParticipantNotFound` |
+| `identity_not_found` | No such identity, or another organization's (§5.6, §17.2) | `IdentityNotFoundError` | `RoomKitError::IdentityNotFound` |
 | `reentrant` | A message routed back into the room whose lock or admission order its caller holds (§9.5.1 A message routed back) | `ReentrantCallError` | `KitError::Reentrant` |
 | `reentry_loop_cap` | A direct change past its cascade's hook calls (§8.3, §10.3) | `ReentryLoopCapError` | `MutationError::ReentryLoopCap` |
 | `event_not_found` | A write naming an event its room does not hold: a change's target, `update_event` (§14.3) | `EventNotFoundError` | `StoreError::EventNotFound` |
