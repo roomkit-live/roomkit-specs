@@ -853,8 +853,7 @@
             "add_member",
             "remove_member",
             "rename_member",
-            "is_member",
-            "cancel_task"
+            "is_member"
           ]
         },
         "organization_id": {
@@ -1968,25 +1967,6 @@
                 "type": "string"
               },
               "identity_id": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "call": {
-                "const": "cancel_task"
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "task_id"
-            ],
-            "properties": {
-              "task_id": {
                 "type": "string"
               }
             }
