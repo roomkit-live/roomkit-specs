@@ -767,7 +767,9 @@
             "store.add_task",
             "store.get_task",
             "store.update_task",
-            "store.list_tasks"
+            "store.list_tasks",
+            "process_delivery_status",
+            "process_webhook"
           ]
         },
         "organization_id": {
@@ -1122,6 +1124,49 @@
               "room_id",
               "channel_id"
             ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "process_delivery_status"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "status"
+            ],
+            "properties": {
+              "status": {
+                "$ref": "#/$defs/record"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "process_webhook"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "meta",
+              "channel_id"
+            ],
+            "properties": {
+              "meta": {
+                "description": "A WebhookMeta: provider, sender, recipient, body, external_id, timestamp, raw, media_urls, direction, event_type",
+                "type": "object"
+              },
+              "channel_id": {
+                "type": "string"
+              }
+            }
           }
         }
       ]
