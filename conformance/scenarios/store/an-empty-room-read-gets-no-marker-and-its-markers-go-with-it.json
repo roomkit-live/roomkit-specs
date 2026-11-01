@@ -33,7 +33,11 @@
       "call": "store.add_event",
       "event": {
         "room_id": "room-1",
-        "index": 0
+        "index": 0,
+        "content": {
+          "type": "text",
+          "body": "0"
+        }
       }
     },
     {

@@ -23,7 +23,11 @@
       "call": "store.add_event",
       "event": {
         "room_id": "room-1",
-        "index": 1
+        "index": 1,
+        "content": {
+          "type": "text",
+          "body": "1"
+        }
       },
       "as": "one"
     },
@@ -31,7 +35,11 @@
       "call": "store.add_event",
       "event": {
         "room_id": "room-1",
-        "index": 0
+        "index": 0,
+        "content": {
+          "type": "text",
+          "body": "0"
+        }
       },
       "as": "zero"
     },
@@ -39,7 +47,11 @@
       "call": "store.add_event",
       "event": {
         "room_id": "room-1",
-        "index": 2
+        "index": 2,
+        "content": {
+          "type": "text",
+          "body": "2"
+        }
       },
       "as": "two"
     },
@@ -47,7 +59,11 @@
       "call": "store.add_event",
       "event": {
         "room_id": "room-1",
-        "index": 3
+        "index": 3,
+        "content": {
+          "type": "text",
+          "body": "3"
+        }
       },
       "as": "three"
     },
@@ -55,7 +71,11 @@
       "call": "store.add_event",
       "event": {
         "room_id": "room-2",
-        "index": 0
+        "index": 0,
+        "content": {
+          "type": "text",
+          "body": "0"
+        }
       },
       "as": "elsewhere"
     },
