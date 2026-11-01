@@ -1026,7 +1026,8 @@ creates the participant ACTIVE, or reactivates an existing record that is not
 ACTIVE (a re-join keeps `joined_at`), then fires `ON_PARTICIPANT_JOINED` with
 a `PARTICIPANT_JOINED` event as its payload; on a member already ACTIVE it
 only records a newly reached channel, with no event. With an `identity_id` the
-participant is IDENTIFIED, otherwise PENDING. Leaving is `remove_member`: it
+participant is IDENTIFIED; a new member without one is PENDING, and a re-join
+without one keeps the identification and the identity the record had. Leaving is `remove_member`: it
 sets the participant's status to LEFT, or to BANNED when asked, keeping the
 record, then fires `ON_PARTICIPANT_LEFT` with a `PARTICIPANT_LEFT` event as
 its payload; an unknown participant is an error. Both hooks are ASYNC; their
