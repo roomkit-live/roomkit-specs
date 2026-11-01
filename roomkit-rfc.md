@@ -3617,6 +3617,10 @@ A boolean flag on the binding. When `muted = true`:
 
 Muting is temporary. The integrator calls `mute()` and `unmute()` as needed.
 
+A binding's `output_muted` (§5.7) is no mute: the integrator sets it with
+`mute_output()` and `unmute_output()`, which fire no trigger and write no
+lifecycle record, and the channel still receives every event.
+
 **A binding change that changes nothing.** Detaching or updating a channel
 the room does not bind fails, with nothing written. An update applies to the
 binding as stored, carrying over every field it does not name (§7.5 rule 6),
@@ -4412,7 +4416,12 @@ HookRegistration
                                             # the hook off the room lock (§9.5.1)
 ```
 
-Hooks MAY be registered globally (apply to all rooms) or per-room. On a
+Hooks MAY be registered globally (apply to all rooms) or per-room. A room's
+hook fires for that room's payloads alone, its turns' tool calls among them,
+in the room's chains beside the global hooks (§9.3). Its registration reads no
+room unless it names an organization (§17.2): registered for a room id no room
+holds yet, the hook is held for that room and fires once a room of that id is
+created. On a
 trigger that fires on the turn executor (§10.6.6), the channel filters read the
 turn's agent: `channel_ids` its id, `channel_types` its type when the trigger's
 payload carries it. A hook on such a trigger registered on the kit is a
