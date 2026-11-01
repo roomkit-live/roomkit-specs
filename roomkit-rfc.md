@@ -4226,10 +4226,36 @@ published in real-time but not stored in the timeline.
 
 ```
 RealtimeBackend (interface)
-├── publish(room_id: string, event_type: string, data: map) → void
-├── subscribe(room_id: string, callback: function) → subscription
-└── unsubscribe(subscription) → void
+├── publish(channel: string, event: EphemeralEvent) → void
+├── subscribe(channel: string, callback: function) → string
+│                                    # the subscription's id
+├── unsubscribe(subscription_id: string) → bool
+│                                    # whether it existed
+├── publish_to_room(room_id, event) → void      # the channel room:<room_id>
+├── subscribe_to_room(room_id, callback) → string
+└── close() → void                   # ends every subscription
+
+EphemeralEvent
+├── room_id, type, user_id
+├── id                               # fresh by default
+├── channel_id | null
+├── data: map
+└── timestamp
 ```
+
+`type` is one of `typing_start`, `typing_stop`, `presence_online`,
+`presence_away`, `presence_offline`, `read_receipt`, `reaction`,
+`tool_call_delta`, `tool_call_start`, `tool_call_end`, `thinking_start`,
+`thinking_delta`, `thinking_end`, `text_delta` and `custom`. The
+framework's own publications follow the same form: a typing indicator, a
+presence (`online`, `away` and `offline` each its type, any other status a
+`custom` event carrying it under `data.status`), a read receipt
+(`data.event_id`), a reaction (`data.target_event_id`, `emoji`, `action`)
+and a channel's tool calls (`data.tool_calls`, `channel_id`, and
+`duration_ms` for an end), each published to the room's subscribers for the
+organization the call names (§17.2). A subscription's callback that fails
+is logged and the subscription goes on; the in-memory backend holds a
+bounded queue per subscription, the oldest event dropped past it.
 
 Implementations SHOULD provide at least an in-memory realtime backend for
 single-process deployments.
@@ -14613,6 +14639,7 @@ ConversationStore (interface)
 │   │                                         # fresh one; refuses an id the
 │   │                                         # store holds (§14.3)
 │   ├── get_room(room_id) → Room | null
+│   ├── room_exists(room_id) → bool        # get_room's answer, the room unread
 │   ├── update_room(room) → Room              # the whole record, under the
 │   │                                         # room lock; keeps the counters
 │   │                                         # and the delivered index the
@@ -14626,7 +14653,28 @@ ConversationStore (interface)
 │   ├── list_rooms(offset = 0, limit = 50) → list<Room>
 │   ├── find_rooms(organization_id | null, status | null, metadata_filter | null,
 │   │              limit = 100, offset = 0) → list<Room>
-│   ├── find_latest_room(filters) → Room | null
+│   ├── find_latest_room(participant_id, channel_type | null, status | null)
+│   │                         → Room | null
+│   │                                         # the newest room holding the
+│   │                                         # participant's record, on any
+│   │                                         # channel, or a binding naming
+│   │                                         # them, of channel_type when
+│   │                                         # given: the last created, the
+│   │                                         # greatest id by code point
+│   │                                         # breaking a tie
+│   ├── find_room_id_by_channel(channel_id, status | null) → string | null
+│   │                                         # the oldest room binding the
+│   │                                         # channel, as
+│   │                                         # find_room_ids_by_channel
+│   │                                         # orders rooms
+│   ├── update_room_if(room, status, paused_at, last_activity_at) → Room | null
+│   │                                         # update_room, only while the
+│   │                                         # stored room holds the status,
+│   │                                         # pause and last activity the
+│   │                                         # write was computed from: the
+│   │                                         # compare-and-set a timer
+│   │                                         # transition writes (§5.1); null
+│   │                                         # and nothing written otherwise
 │   ├── load_room_context(room_id) → (Room | null, list<ChannelBinding>,
 │   │                                 list<Participant>)
 │   │                                         # the three reads a room's context
@@ -14634,6 +14682,10 @@ ConversationStore (interface)
 │   ├── get_conversation(room_id, limit = 50, after_index | null) → list<RoomEvent>
 │   │                                         # the conversation a context holds
 │   │                                         # (§7.5 rule 8)
+│   ├── get_timeline(room_id, event_filter | null, limit = 50, after_index | null,
+│   │                newest_first = false) → list<RoomEvent>
+│   │                                         # list_events of every type the
+│   │                                         # room received
 │   ├── get_delivered_index(room_id) → int    # -1 before any set ran (§13.5)
 │   ├── advance_delivered_index(room_id, index, force = false) → bool
 │   │                                         # compare-and-set from index - 1, or
@@ -14689,8 +14741,21 @@ ConversationStore (interface)
 │   │                                         # idempotency key an event of the
 │   │                                         # room carries, as a duplicate key
 │   │                                         # (§14.3)
+│   ├── add_event(event) → RoomEvent         # the event as it is, its index
+│   │                                         # the caller's; the counters
+│   │                                         # unmoved, the room's next
+│   │                                         # index kept past it
+│   ├── add_event_auto_index(room_id, event) → RoomEvent
+│   │                                         # at the room's next index, never
+│   │                                         # one given out before; the
+│   │                                         # counters unmoved
 │   ├── get_event(event_id) → RoomEvent | null
 │   ├── list_events(room_id, filters) → list<RoomEvent>
+│   ├── get_thread_summaries(room_id, root_event_ids) → map<string, ThreadSummary>
+│   │                                         # per root with replies: their
+│   │                                         # count and the last one's
+│   │                                         # instant, a reply the room
+│   │                                         # refused not counted
 │   ├── get_event_count(room_id, filter | null) → int
 │   ├── update_event(event) → RoomEvent      # the whole record; keeps the
 │   │                                         # stored delivery_results (§14.3)
@@ -14700,6 +14765,13 @@ ConversationStore (interface)
 │   │                                         # and writes nothing else of it;
 │   │                                         # an event_id that is not an
 │   │                                         # event of room_id is left alone
+│   ├── write_change_target(room_id, target) → void
+│   │                                         # a change's target written alone,
+│   │                                         # its delivery_results kept, the
+│   │                                         # counters unmoved, its edits
+│   │                                         # marked deleted with it (§10.3);
+│   │                                         # a target the room lacks is not
+│   │                                         # found, nothing written
 │   ├── delete_event(room_id, event_id, cascade_replies = true) → list<string>
 │   │                                         # the ids removed, in §10.3's order
 │   │                                         # (the target, its replies by
@@ -14719,6 +14791,9 @@ ConversationStore (interface)
 ├── Bindings
 │   ├── add_binding(binding) → ChannelBinding
 │   ├── get_binding(room_id, channel_id) → ChannelBinding | null
+│   ├── binding_exists(room_id, channel_id) → bool
+│   │                                         # get_binding's answer, the
+│   │                                         # binding unread
 │   ├── update_binding(binding) → ChannelBinding
 │   ├── remove_binding(room_id, channel_id) → bool
 │   │                                         # whether the channel was attached
@@ -14752,10 +14827,29 @@ ConversationStore (interface)
 │   ├── get_verification_request(request_id) → VerificationRequest | null
 │   └── update_verification_request(request) → VerificationRequest
 │
+├── Read markers
+│   ├── mark_read(room_id, channel_id, event_id) → void
+│   │                                         # the channel's marker, the highest
+│   │                                         # index it read, moves to the
+│   │                                         # event's, never back; an event
+│   │                                         # the room does not hold marks
+│   │                                         # nothing
+│   ├── mark_all_read(room_id, channel_id) → void
+│   │                                         # to the room's highest index; an
+│   │                                         # empty room gets no marker
+│   ├── get_unread_count(room_id, channel_id) → int
+│   │                                         # the events above the marker,
+│   │                                         # every one without it
+│   └── list_read_markers(room_id) → map<string, int>
+│                                             # each channel's marker; deleted
+│                                             # with the room
+│
 ├── Tasks
 │   ├── add_task(task) → Task
+│   ├── get_task(task_id) → Task | null
 │   ├── list_tasks(room_id, status | null) → list<Task>
-│   └── update_task(task) → Task
+│   └── update_task(task) → Task              # refuses a task the store does
+│                                             # not hold (§14.3)
 │
 └── Observations
     ├── add_observation(observation) → Observation
@@ -14834,7 +14928,8 @@ and never inherits the page's cap.
   or a participant of no room. `add_participant` under an id the room has is
   refused too (participant exists, §5.5), the record it holds kept, and
   `update_participant` of a record the room does not hold (participant not
-  found).
+  found), and `update_task` of a task the store does not hold (task not
+  found): an update is no creation, which `add_task` makes.
 - A room is created once: a store MUST refuse to create a room under an id it
   already holds, and never replaces the room it holds. §10.1 step 2 creates
   a room under an id in hand, and a store that replaced the room would
