@@ -263,6 +263,9 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `register_channel` | `channel` (as in the setup) | null |
 | `unregister_channel` | `channel_id` | null |
 | `register_hook` | `hook` (as in the setup) | null |
+| `mark_read` | `room_id`, `channel_id`, `event_id` | null |
+| `mark_all_read` | `room_id`, `channel_id` | null |
+| `list_read_markers` | `room_id` | each channel's marker, an index |
 | `add_room_hook` | `room_id`, `hook`: a hook as in the setup, for that room alone, with no filter and the default timeout (`name`, `trigger`, `execution`, `priority`, `fail_closed`, `needs_lock`, `reactions`) | unspecified |
 | `remove_room_hook` | `room_id`, `name` | whether the room held a hook of that name |
 
@@ -292,6 +295,26 @@ scenarios of `store/` on each store it ships that needs no server.
 | `store.find_room_id_by_channel` | `channel_id`, `status` | the room's id, or null |
 | `store.get_timeline` | `room_id`, `event_filter`, `limit`, `after_index`, `newest_first` | the events |
 | `store.get_thread_summaries` | `room_id`, `root_event_ids` | each summary by its root's id |
+| `store.add_event` | `event`, its room the template's | the event |
+| `store.add_event_auto_index` | `room_id`, `event` | the event |
+| `store.get_event` | `event_id` | the event, or null |
+| `store.update_event` | `event` | the event |
+| `store.delete_event` | `room_id`, `event_id`, `cascade_replies` (default true) | the events removed |
+| `store.record_delivery_results` | `room_id`, `event_id`, `results` | null |
+| `store.write_change_target` | `room_id`, `target` | null |
+| `store.get_room` | `room_id` | the room, or null |
+| `store.update_room_if` | `room`, `status`, `paused_at`, `last_activity_at` | the room written, or null |
+| `store.mark_read` | `room_id`, `channel_id`, `event_id` | null |
+| `store.mark_all_read` | `room_id`, `channel_id` | null |
+| `store.get_unread_count` | `room_id`, `channel_id` | a count |
+| `store.list_read_markers` | `room_id` | each channel's marker, an index |
+| `store.add_task`, `store.update_task` | `task` | the task |
+| `store.get_task` | `task_id` | the task, or null |
+| `store.list_tasks` | `room_id`, `status` | the tasks |
+
+A task's template is completed with an `id`, its room and a `created_at`. An
+index a store call returns is the store's: the scenarios of `store/` write
+no lifecycle record, so it reads as normalized.
 
 **References.** A string argument may name what the run made:
 
@@ -405,6 +428,8 @@ refuses its value, a `ChannelId`).
 | `participant_not_found` | A post's speaker is no participant the host channel reaches (§10.5) | `ParticipantNotFoundError` | `InboundError::ParticipantNotFound` |
 | `reentrant` | A message routed back into the room whose lock or admission order its caller holds (§9.5.1 A message routed back) | `ReentrantCallError` | `KitError::Reentrant` |
 | `reentry_loop_cap` | A direct change past its cascade's hook calls (§8.3, §10.3) | `ReentryLoopCapError` | `MutationError::ReentryLoopCap` |
+| `event_not_found` | A write naming an event its room does not hold: a change's target, `update_event` (§14.3) | `EventNotFoundError` | `StoreError::EventNotFound` |
+| `task_not_found` | An update of a task the store does not hold (§14.3) | `TaskNotFoundError` | `StoreError::TaskNotFound` |
 
 ## Reentrancy cells
 
