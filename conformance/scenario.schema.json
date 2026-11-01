@@ -681,7 +681,17 @@
             "store.find_latest_room",
             "store.find_room_id_by_channel",
             "store.get_timeline",
-            "store.get_thread_summaries"
+            "store.get_thread_summaries",
+            "store.add_event",
+            "store.add_event_auto_index",
+            "store.delete_event",
+            "store.mark_read",
+            "store.mark_all_read",
+            "store.get_unread_count",
+            "store.list_read_markers",
+            "mark_read",
+            "mark_all_read",
+            "list_read_markers"
           ]
         },
         "organization_id": {
@@ -973,6 +983,51 @@
           },
           "then": {
             "$ref": "#/$defs/store_call"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "mark_read"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "channel_id",
+              "event_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "mark_all_read"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "channel_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "list_read_markers"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id"
+            ]
           }
         }
       ]
@@ -1589,6 +1644,110 @@
             "required": [
               "room_id",
               "root_event_ids"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.add_event"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "event"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.add_event_auto_index"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "event"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.delete_event"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "event_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.mark_read"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "channel_id",
+              "event_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.mark_all_read"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "channel_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.get_unread_count"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "channel_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.list_read_markers"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id"
             ]
           }
         }
