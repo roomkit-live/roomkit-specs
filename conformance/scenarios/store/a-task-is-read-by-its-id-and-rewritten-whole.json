@@ -5,7 +5,7 @@
   "rules": [
     "§14.1"
   ],
-  "notes": "Python: tests/test_store_memory.py::TestTaskOperations::test_add_and_get, test_get_nonexistent, test_update_task, test_list_tasks_by_room, test_list_tasks_by_status.",
+  "notes": "Python: tests/test_store_memory.py::TestTaskOperations::test_add_and_get, test_get_nonexistent, test_update_task, test_list_tasks_by_room, test_list_tasks_by_status. A task's id is normalized as any id of no timeline ($e1, $e2... by first appearance).",
   "steps": [
     {
       "call": "store.create_room",
@@ -48,7 +48,7 @@
       "task_id": "t1",
       "expect": {
         "result": {
-          "id": "t1",
+          "id": "$e1",
           "room_id": "room-1",
           "title": "Follow up",
           "status": "pending"
@@ -101,7 +101,7 @@
       "expect": {
         "result": [
           {
-            "id": "t1"
+            "id": "$e1"
           }
         ]
       }
@@ -113,7 +113,7 @@
       "expect": {
         "result": [
           {
-            "id": "t2"
+            "id": "$e2"
           }
         ]
       }
@@ -125,10 +125,10 @@
         "result": {
           "$unordered": [
             {
-              "id": "t1"
+              "id": "$e1"
             },
             {
-              "id": "t2"
+              "id": "$e2"
             }
           ]
         }
