@@ -1,14 +1,15 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "identity/an-identified-sender-joins-the-room",
-  "title": "A sender the resolver identifies is stamped with its identity and joins the room identified, once, its resolution announced",
+  "title": "A sender the resolver identifies is stamped with its identity and joins the room identified, once, its resolution announced and its events named after it",
   "rules": [
     "§10.1 step 5",
     "§11.1",
     "§11.2",
     "§5.5",
     "§5.1",
-    "§8.2"
+    "§8.2",
+    "§10.1 step 12"
   ],
   "setup": {
     "kit": {
@@ -120,6 +121,12 @@
           "source": {
             "channel_id": "sms",
             "participant_id": "alice-id"
+          },
+          "metadata": {
+            "author": {
+              "name": "Alice",
+              "rank": 1
+            }
           }
         },
         {
@@ -130,6 +137,12 @@
           "source": {
             "channel_id": "sms",
             "participant_id": "alice-id"
+          },
+          "metadata": {
+            "author": {
+              "name": "Alice",
+              "rank": 1
+            }
           }
         }
       ]
