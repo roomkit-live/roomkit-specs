@@ -17512,7 +17512,7 @@ MCPToolProvider
 ├── server: one of
 │   ├── url: string                         # a remote server (streamable HTTP or SSE)
 │   └── command: string, args: list<string> # a local server started as a subprocess (stdio)
-├── connect_timeout: seconds = 60           # command only: its start, handshake and listing
+├── connect_timeout: seconds = 60           # handshake and listing, a command's start too
 ├── discover: bool = true                   # List the server's tools when connecting
 ├── label: string | null                    # The host's name for the server: the <server> of an MCP alias
 ├── tools() → list<ToolDefinition>          # Discover available tools
@@ -17528,11 +17528,21 @@ A server named by `command` is started when the provider connects and MUST be
 stopped when it disconnects. Its arguments MUST be passed as a list, never
 through a shell. A connection that fails part-way MUST release what it had
 opened, the server process included, before the error is reported. Connecting
-to it is bounded by `connect_timeout`, its start, the handshake and the
-listing together: past it the server is stopped and the connection fails
-with a timeout, so a server that never answers does not hold its host. Its
-stop gives it a grace to exit once its input is closed (2 seconds in the
-reference implementation), then terminates it, then kills it.
+to a server is bounded by `connect_timeout`, the handshake and the listing
+together, and a command's start with them: past it a started server is
+stopped, a remote one's connection closed and its session deleted, and the
+connection fails with a timeout, so a server that never answers does not
+hold its host. A started server's stop gives it a grace to exit once its
+input is closed (2 seconds in the reference implementation), then terminates
+it, then kills it.
+
+A provider given a `url` MUST be refused at construction when the URL is not
+HTTP(S), names no host, or carries credentials (which every log and proxy of
+the URL would see: a credential goes in a header) or a fragment, and when a
+header it is given is one its transport writes itself (HTTP's framing, the
+content it accepts and sends, MCP's `mcp-*` negotiation), is not a valid
+header, or exceeds the bounds of the reference implementation (32 headers,
+8192 bytes a value).
 
 `label` is the host's name for the server, never the name the server gives
 itself: an identifier (letters, digits, `_`, `.`, `-`, at most 64 characters)
