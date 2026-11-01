@@ -7,7 +7,7 @@
     "§13.6",
     "§13.5"
   ],
-  "notes": "A message held at a gate in a hook under the room lock keeps the lock past the delivery's process_timeout.",
+  "notes": "A message held at a gate in a hook under the room lock keeps the lock past the delivery's process_timeout; held past its own, it is refused too, so the room stores nothing.",
   "setup": {
     "kit": {
       "process_timeout_ms": 100
@@ -95,25 +95,11 @@
   ],
   "expect": {
     "timeline": {
-      "room-1": [
-        {
-          "content": {
-            "type": "text",
-            "body": "hold"
-          }
-        }
-      ]
+      "room-1": []
     },
     "turns": {
       "room-1": {
-        "a": [
-          {
-            "content": {
-              "type": "text",
-              "body": "hold"
-            }
-          }
-        ]
+        "a": []
       }
     }
   }
