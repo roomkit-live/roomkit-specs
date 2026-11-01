@@ -5558,6 +5558,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 
 4. CHANNEL PROCESSES INBOUND
    ├── channel.handle_inbound(message, context) → RoomEvent
+   ├── The event is sourced from the channel that received the message,
+   │   whatever channel its parse named: a parse never passes a message off
+   │   as another channel's
    ├── What the channel set on the event stands, read off its own wire
    │   (a type, its source's type, a visibility, an address, a thread, an
    │   idempotency key, a depth, a response scope, an instant); the
