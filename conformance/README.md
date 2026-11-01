@@ -262,6 +262,8 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `register_channel` | `channel` (as in the setup) | null |
 | `unregister_channel` | `channel_id` | null |
 | `register_hook` | `hook` (as in the setup) | null |
+| `add_room_hook` | `room_id`, `hook`: a hook as in the setup, for that room alone, with no filter and the default timeout (`name`, `trigger`, `execution`, `priority`, `fail_closed`, `needs_lock`, `reactions`) | unspecified |
+| `remove_room_hook` | `room_id`, `name` | whether the room held a hook of that name |
 
 **References.** A string argument may name what the run made:
 

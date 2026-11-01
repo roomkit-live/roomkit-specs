@@ -666,7 +666,9 @@
             "check_timers",
             "register_channel",
             "unregister_channel",
-            "register_hook"
+            "register_hook",
+            "add_room_hook",
+            "remove_room_hook"
           ]
         },
         "organization_id": {
@@ -898,6 +900,52 @@
             "properties": {
               "hook": {
                 "$ref": "#/$defs/hook"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "add_room_hook"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "hook"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              },
+              "hook": {
+                "$ref": "#/$defs/room_hook"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "remove_room_hook"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "name"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
               }
             }
           }
@@ -1293,6 +1341,42 @@
           ]
         }
       ]
+    },
+    "room_hook": {
+      "description": "A hook registered for one room (§9.1): what a registration for a room declares, a hook's name, trigger, execution, priority, fail_closed and needs_lock, with no filter and the default timeout.",
+      "type": "object",
+      "required": [
+        "name",
+        "trigger"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "trigger": {
+          "description": "A HookTrigger, serialized: before_broadcast, after_broadcast, on_room_created...",
+          "type": "string"
+        },
+        "execution": {
+          "enum": [
+            "sync",
+            "async"
+          ]
+        },
+        "priority": {
+          "type": "integer"
+        },
+        "fail_closed": {
+          "type": "boolean"
+        },
+        "needs_lock": {
+          "type": "boolean"
+        },
+        "reactions": {
+          "$ref": "#/$defs/reactions"
+        }
+      }
     }
   }
 }
