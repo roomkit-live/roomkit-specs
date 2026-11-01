@@ -386,6 +386,9 @@ else, where no turn's host is.
 | `host.post_status` | as `status.post` | null |
 | `host.update_room_metadata` | `room_id`, `metadata` | the room |
 | `host.add_observation` | `observation`: an observation's template, its `room_id` and `channel_id` given, completed with an `id` and a `created_at` | null |
+| `host.delegate` | `room_id`, `agent_id`, `task`, and `delegate`'s `context`, `share_channels`, `notify`, `post_status`, `brief`, `conversation`, `hand_back` | the task's id, which its `as` label names |
+| `host.wait_task` | `task_id` | `{result, exception}` once the task ended: its DelegatedTaskResult and its failure's error record; null for a task the room's hosts did not delegate |
+| `host.room_tasks` | none | the turn's room's tasks, as `task_status` reads them (§23.4) |
 | `delegate` | `room_id`, `agent_id`, `task`, `wait` (default false), `context`, `share_channels`, `notify`, `post_status` (default true), `brief`, `conversation` (default 0), `hand_back` (default `relay`) (§23.3) | the task: `id`, `child_room_id`, `parent_room_id`, `agent_id`, `task`, `brief`, `description`, `hand_back`, `status` and `result`, its DelegatedTaskResult once it ended (`task_id`, `child_room_id`, `parent_room_id`, `agent_id`, `status`, `output`, `error`, `duration_ms`, `metadata`); its `as` label names the task's id |
 | `task.wait` | `task_id`: a task `delegate` returned, named by its label | its DelegatedTaskResult, once it ended |
 

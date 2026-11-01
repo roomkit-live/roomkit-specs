@@ -837,7 +837,10 @@
             "deliver",
             "list_tasks",
             "delegate",
-            "task.wait"
+            "task.wait",
+            "host.delegate",
+            "host.wait_task",
+            "host.room_tasks"
           ]
         },
         "organization_id": {
@@ -1668,6 +1671,88 @@
             "properties": {
               "call": {
                 "const": "task.wait"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "task_id"
+            ],
+            "properties": {
+              "task_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "host.delegate"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "agent_id",
+              "task"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              },
+              "agent_id": {
+                "type": "string"
+              },
+              "task": {
+                "type": "string"
+              },
+              "context": {
+                "type": [
+                  "object",
+                  "null"
+                ]
+              },
+              "share_channels": {
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": "string"
+                }
+              },
+              "notify": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "post_status": {
+                "type": "boolean"
+              },
+              "brief": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "conversation": {
+                "type": "integer"
+              },
+              "hand_back": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "host.wait_task"
               }
             }
           },
