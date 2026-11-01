@@ -668,7 +668,20 @@
             "unregister_channel",
             "register_hook",
             "add_room_hook",
-            "remove_room_hook"
+            "remove_room_hook",
+            "store.create_room",
+            "store.delete_room",
+            "store.add_binding",
+            "store.update_binding",
+            "store.remove_binding",
+            "store.add_participant",
+            "store.commit_event",
+            "store.room_exists",
+            "store.binding_exists",
+            "store.find_latest_room",
+            "store.find_room_id_by_channel",
+            "store.get_timeline",
+            "store.get_thread_summaries"
           ]
         },
         "organization_id": {
@@ -948,6 +961,18 @@
                 "type": "string"
               }
             }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "pattern": "^store\\."
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/store_call"
           }
         }
       ]
@@ -1377,6 +1402,197 @@
           "$ref": "#/$defs/reactions"
         }
       }
+    },
+    "store_call": {
+      "description": "A call of the store's own interface (RFC §14.1), `store.` and the operation's name, with the operation's arguments by name: what the store answers, whatever the kit does.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.create_room"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.delete_room"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.add_binding"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "binding"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.update_binding"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "binding"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.remove_binding"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "channel_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.add_participant"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "participant"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.commit_event"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "event"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.room_exists"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.binding_exists"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "channel_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.find_latest_room"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "participant_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.find_room_id_by_channel"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.get_timeline"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.get_thread_summaries"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "root_event_ids"
+            ]
+          }
+        }
+      ]
     }
   }
 }
