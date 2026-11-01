@@ -1517,6 +1517,12 @@ ProviderResult                              # What a provider's send() returns
 └── metadata: map<string, any>              # Provider-specific data
 ```
 
+A target whose call raised an error that declares its `code` and whether a
+retry may succeed (a provider's explicit refusal names them in its result's
+metadata) reads them in its `DeliveryError`, `retryable` true when it
+declares none. An agent's error keeps them across the turn backend (§10.6.8),
+its provider's message id and answer left out.
+
 ### 5.14 Protocol Trace
 
 An immutable record of a transport-level protocol exchange, used for
@@ -5423,7 +5429,13 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    ├── Fail if the channel is a host channel, which receives no external
    │   payload (§10.5): nothing read, nothing routed, opened or attached
    └── Write sender_id in the channel's form (E.164 on a channel
-       addressed by phone number, §5.7) before anything reads it
+       addressed by phone number, §5.7) before anything reads it: the
+       channel's own `normalize_address`, which also writes the
+       correspondent an attach names. The message's conversation and where
+       a reply to it goes are the channel's answers too
+       (`conversation_address`, `reply_metadata`): step 2 routes and
+       records the sender by them, and a channel that names no reply
+       address records the sender with no recipient
 
 2. ROUTE TO ROOM
    ├── If room_id provided → use it
@@ -5545,6 +5557,15 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 
 4. CHANNEL PROCESSES INBOUND
    ├── channel.handle_inbound(message, context) → RoomEvent
+   ├── What the channel set on the event stands, read off its own wire
+   │   (a type, its source's type, a visibility, an address, a thread, an
+   │   idempotency key, a depth, a response scope, an instant); the
+   │   message's fields fill only those it left at their default: no
+   │   type but the message's, a visibility of all, no address, thread,
+   │   key or response scope, depth 0. An instruction is the caller's
+   │   decision (§10.1.1): a message sent as one is one, addressed as
+   │   sent; one its channel parsed as one stays what the caller sent,
+   │   the parser's `standalone` word dropped
    ├── Drop a key in the publication namespace (§5.2), whoever wrote it,
    │   the message's or the parser's: the event carries no key, save the
    │   one a proactive delivery publishes under (§22.1)
@@ -6220,6 +6241,18 @@ than being drained inside the trigger's lock tenure.
 5. RETURN BroadcastResult
 ```
 
+**A delivery's context.** Each target is handed the room's latest events as
+read before the event's commit, then the committed event as its newest, at
+the index the store gave it: a channel declaring a window of 3 is handed 4
+events. An instruction, never committed, joins none. The hooks read the
+window alone.
+
+**What a delivery set reports.** Once its targets answered, the set of the
+inbound event reports `broadcast_partial_failure` first when any target
+failed, then `delivery_succeeded` for each delivery that succeeded, then
+`delivery_failed` for each that failed (§8.2); `event_processed` follows its
+`AFTER_BROADCAST` hooks.
+
 **An unregistered channel.** Unregistering a channel leaves its bindings in
 their rooms. A message on it is refused as one on an unknown channel (§10.1
 step 1), and a delivery set does not call it (step 3): a transport is
@@ -6588,7 +6621,9 @@ the first and is routed again. Under that lock the framework checks again the
 admission that chose the room, not only the binding (§10.1 step 2): someone
 else may have been heard on the channel, or reached through it, since the
 router read the room, and recording the sender there would send that person's
-answers to them. A room CLOSED or ARCHIVED by then, one PAUSED by then that is
+answers to them. What the room heard is read from its whole timeline on the
+channel, refused events set aside, however long ago it was written, as step
+3 reads it. A room CLOSED or ARCHIVED by then, one PAUSED by then that is
 neither the sender's conversation by step 1 nor bound to the channel as
 `group`, or one no longer admitting the sender, is no longer the message's:
 nothing is written, and the message is routed once more, a second failure
@@ -8457,7 +8492,9 @@ enters a room as any other audio.
 9s. AIChannel.on_event() returns ChannelOutput(response_stream=…), the text of the
     turn's tool loop (Section 6.4, One loop)
 10s. Framework detects response_stream in broadcast result
-11s. Framework finds streaming delivery targets (channels with supports_streaming_delivery)
+11s. Framework finds streaming delivery targets (channels with supports_streaming_delivery,
+     each asked, once the room is read, whether it streams in that room:
+     supports_streaming_delivery_for(room_id); one that does not is delivered the answer whole)
 12s. Framework pipes stream → VoiceChannel.deliver_stream():
      a. Sentence splitter buffers tokens → yields at sentence boundaries (.!?)
         (min_chunk_chars threshold prevents very short TTS fragments), and at
