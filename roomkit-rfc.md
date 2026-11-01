@@ -1045,6 +1045,22 @@ MUST NOT be changed through it: they are what attribution, correlation
 (Section 12.10.2) and moderation stand on. A rename that changes nothing is a
 no-op — no write, no event.
 
+**Resolving:** an advisor's identification of a participant
+(`resolve_participant`, Appendix B.3) sets it IDENTIFIED as an identity the
+store holds: its `identity_id`, `resolved_by` (`manual` when the caller names
+no one) and `resolved_at` set, its candidates dropped, the identity's
+display name taken when the identity has one. The binding of the
+participant's primary channel names the identity from then on, whatever
+correspondent it named before, and
+`ON_PARTICIPANT_IDENTIFIED` fires with a `PARTICIPANT_IDENTIFIED` event as its
+payload, whose data carries `participant_id` and `identity_id` (stored as a
+lifecycle record only by an implementation that writes them, §5.1). A
+participant the room does not have, an identity the store does not hold or
+one of another organization than the caller acts for (§17.2), is an error,
+and nothing is written. A host's get-or-create (`ensure_participant`) that
+creates a record writes no `PARTICIPANT_JOINED` record and fires no hook:
+it is bookkeeping, as recording a channel is.
+
 **One record, several channels (normative):** a Participant is one record
 per (`room_id`, `id`). Section 4.4 says a participant is connected via one
 or more channels, and this is the record all of them share — the same
@@ -1060,7 +1076,9 @@ Participant only on a channel that participant was reached through
 channel is reached by a deliberate join (a member added, a session joined),
 and by the identity pipeline, which records the channel it resolved a sender
 on (Section 11); an identity's id names its person on a channel one of their
-records was reached through. A sender whose id names nobody on its channel is
+records was reached through; and a sender's address names, on its channel,
+the record of their own the identity pipeline left them pending under there
+(Section 11.2). A sender whose id names nobody on its channel is
 no participant of the room: it carries no participant's name, role,
 authority, identification nor verification. Every reading of who a sender is
 follows this one rule: the label a transcript gives them (Section 6.4), the
@@ -1074,12 +1092,13 @@ transports' ids that happen to be equal.
 - A **lazy materialisation** — the get-or-create that materialises a sender
   the first time they speak — MUST NOT re-home an existing record: the
   `channel_id` it is given applies to a record being created, and to no
-  other. Nor does it adopt one for a sender the identity pipeline has not
-  identified (a pending participant, Section 11.3) whose id names a record
-  reached through other channels only: that id names nobody on the sender's
-  channel (above), so the sender gets a record of its own, one per sender and
-  channel, and the event is sent under its id, so their next message finds it
-  and a later resolution of it (Section 11.3) is theirs. A host's own
+  other. Nor does the identity pipeline create a record under the id a
+  sender's channel gave: a sender it leaves pending (Section 11.2) stays on
+  the room's record of that id when one was reached through the channel (a
+  member the host added), and otherwise gets a record of their own, one per
+  sender and channel; the event is sent under that record's id, so their
+  next message finds it and a later resolution of it (resolving, above) is
+  theirs. A host's own
   get-or-create (`ensure_participant`) is a deliberate reach, as a join is: the
   host vouches for the sender, and the channel it names is recorded. A
   **deliberate join** MAY set `channel_id` to the channel joined through,
@@ -5595,11 +5614,12 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    ├── Call resolver.resolve(message, context) with timeout
    ├── Handle result:
    │   ├── IDENTIFIED → create/update identified participant
-   │   ├── AMBIGUOUS → fire ON_IDENTITY_AMBIGUOUS hook
-   │   ├── UNKNOWN → fire ON_IDENTITY_UNKNOWN hook
+   │   ├── AMBIGUOUS or PENDING → fire ON_IDENTITY_AMBIGUOUS hook
+   │   ├── UNKNOWN or REJECTED → fire ON_IDENTITY_UNKNOWN hook (§11.2)
    │   └── CHALLENGE_SENT → commit the challenge as an injected event
    │       (§9.4), block processing
-   └── Stamp participant_id on event
+   └── Stamp participant_id on event: the identity's, or a pending
+       sender's record (§11.2)
 
 5b. VERIFICATION (§11.7; when verification is configured and the sender is
     IDENTIFIED)
@@ -6562,7 +6582,9 @@ missing from the store is created with the id.
    lookup the sender is named by their address or by their identity: a binding
    names them when its correspondent is either, or, naming none and not
    `group`, when its recipient is their address (§5.7); a participant record,
-   when its id or its `identity_id` is either. The newest room either name
+   when its id or its `identity_id` is either, or when it is the record of
+   their own the identity pipeline left them pending under on this channel
+   (§11.2). The newest room either name
    finds wins, so an older room found by the address does not hide a newer one
    found by the identity; a member the integrator added under their identity is
    found by an address linked to it. The newest is the most recently created,
@@ -6610,9 +6632,13 @@ following hold:
   stored event of the channel, a `BLOCKED` one excepted, whose source names a
   participant other than the sender.
 
-The sender is known to the room by their address, and by the identity the
-store resolves that address to (`resolve_identity`, §14.1): a participant or
-an event named by either is the sender's own. A message the framework writes
+The sender is known to the room by their address, by the identity the store
+resolves that address to (`resolve_identity`, §14.1), and on the channel by
+the record of their own the identity pipeline left them pending under
+(§11.2): a participant or an event named by any of them is the sender's own.
+When the sender is recorded under the lock (§10.1 step 2), a binding naming
+the identity of a participant reached through the channel who is the sender,
+as an advisor's resolution names it (§5.5), names the sender too. A message the framework writes
 itself, under the sender `system` (a `deliver()` to the room, an
 orchestration cue), names no correspondent: it is never recorded on a
 binding, and a message routed under that sender is never admitted by step 3
@@ -7795,14 +7821,16 @@ Returns IdentityResult
       │       ├── challenge(inject) → commit the challenge (§9.4), block processing
       │       └── reject() → reject the message
       │
-      └── UNKNOWN (0 matches)
+      └── UNKNOWN (0 matches), or the resolver's REJECTED
           ├── Fire ON_IDENTITY_UNKNOWN hook
           └── Hook returns:
               ├── resolved(identity) → use that identity
               ├── pending(candidates) → create pending participant
               ├── challenge(inject) → commit the challenge (§9.4), block processing
               ├── reject() → reject the message
-              └── null → process the message, its sender unresolved
+              └── null → UNKNOWN: process the message, its sender unresolved;
+                         REJECTED: block it with the resolver's message,
+                         else identity_rejected
 ```
 
 Identity hooks receive the event, the room context and the IdentityResult, and
@@ -7813,6 +7841,25 @@ through HookRegistration (Section 9.1) runs after them as an observer and
 cannot decide. The pending participant carries the resolver's candidates on
 ON_IDENTITY_AMBIGUOUS, and on ON_IDENTITY_UNKNOWN the hook's, else the
 resolver's.
+
+A resolver's REJECTED is its refusal: the identity hooks of
+ON_IDENTITY_UNKNOWN read it as REJECTED, with its message, and may still
+name, pend, challenge or reject the sender, but when none of them decides,
+the message is blocked with the resolver's message, else `identity_rejected`,
+and nothing of it is stored.
+
+A pending sender is never given a record under the id the channel gave: the
+event is sent under the room's record of that id when one was reached through
+the channel (a member the host added), else under the sender's own record,
+created for them: `pending-` and the first 16 hexadecimal digits of the
+SHA-256 of the channel id, U+001F and the sender id, one per sender and
+channel. A sender who chooses their id (on a WebSocket, in an HTTP body) could
+otherwise take an identity's id: the pending record under it
+would be completed when that identity is resolved on another channel, and
+its impostor's next message would pass for an identified sender (§11.6). The
+sender's address names that record on its channel (§5.5): an advisor's
+resolution of it spares the sender resolution (§11.6), and routing finds
+their room by it (§10.4 step 1).
 
 ### 11.3 Identity Hook Result
 
@@ -7864,8 +7911,9 @@ resolution for them:
    "resolve on the opaque identity" Section 12.10.2 rule 3 rules out.
 2. **The room has already identified the sender.** Where the event's
    `participant_id` names, on the event's channel (Section 5.5), a Participant
-   of the room whose `identification` is IDENTIFIED, the question has been
-   answered and the answer is on the roster. The same id on a channel the
+   of the room whose `identification` is IDENTIFIED, the sender's own record
+   (Section 11.2) included, the question has been answered and the answer is
+   on the roster. The same id on a channel the
    participant was never reached through answers nothing, and is resolved.
 
 Case 1 is not the conference alone. The test is where the `sender_id` comes
@@ -7891,8 +7939,11 @@ implementation itself identified. Skipping it is what keeps that pattern
 composable with channels that name their own participants.
 
 When resolution is skipped, the event's `participant_id` MUST be left as the
-channel set it, and no participant record is created or modified: the sender is
-either already a participant or deliberately unattributed.
+channel set it, but in case 2 for an event the sender's own record (Section
+11.2) names, which is sent under that record's id as their events were while
+it was pending; and no
+participant record is created or modified: the sender is either already a
+participant or deliberately unattributed.
 
 ### 11.7 Identity Verification
 
@@ -20023,7 +20074,7 @@ and the events after it the indexes that follow.
 ### B.3 Ambiguous Identity — Shared Family Phone
 
 ```
-1. SMS from +15551234567: "I need to check my account"
+1. SMS from +15551234567 on the channel sms: "I need to check my account"
    │
    ▼
 2. Identity resolution:
@@ -20040,9 +20091,10 @@ and the events after it the indexes that follow.
    │
    ▼
 4. Create Participant {
+     id: "pending-915e25f899c26f82"  (the sender's own record, §11.2),
      identification: PENDING,
      candidates: ["id_jean", "id_marie", "id_pierre"],
-     display_name: "+15551234567"  (fallback)
+     display_name: null
    }
    │
    ▼
@@ -20051,8 +20103,8 @@ and the events after it the indexes that follow.
    │
    ▼
 6. Later: Advisor resolves via REST API:
-   POST /rooms/{id}/participants/{pid}/resolve
-   {identity_id: "id_marie"}
+   POST /rooms/{id}/participants/pending-915e25f899c26f82/resolve
+   {identity_id: "id_marie"}  (resolve_participant, §5.5)
    │
    ▼
 7. Participant updated: identification=IDENTIFIED, identity_id="id_marie"
