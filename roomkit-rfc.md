@@ -4253,9 +4253,11 @@ presence (`online`, `away` and `offline` each its type, any other status a
 (`data.event_id`), a reaction (`data.target_event_id`, `emoji`, `action`)
 and a channel's tool calls (`data.tool_calls`, `channel_id`, and
 `duration_ms` for an end), each published to the room's subscribers for the
-organization the call names (§17.2). A subscription's callback that fails
-is logged and the subscription goes on; the in-memory backend holds a
-bounded queue per subscription, the oldest event dropped past it.
+organization the call names (§17.2). A subscription hands its events to its
+callback in order, one at a time; a callback that fails is logged and the
+subscription goes on. The in-memory backend holds a bounded queue per
+subscription, the oldest event dropped past it, one event per id; a
+publication after its close reaches no one.
 
 Implementations SHOULD provide at least an in-memory realtime backend for
 single-process deployments.
@@ -12906,7 +12908,7 @@ The framework's close runs in this order, from the moment `close()` starts:
    integrator, or the framework's own work still running (a hook's body, a
    tool's call, a channel's `close()`).
    - A read (a room, its timeline, its bindings, its members, its tasks and
-     observations, a verification, a source's health, a registered channel,
+     observations, its read markers, a verification, a source's health, a registered channel,
      a room's strategy) MUST be answered, during the close and after it
      while the store is open. Once the framework has closed the store, it
      MUST refuse a read with an error naming the close (`KitClosedError`),
@@ -14752,10 +14754,12 @@ ConversationStore (interface)
 │   ├── get_event(event_id) → RoomEvent | null
 │   ├── list_events(room_id, filters) → list<RoomEvent>
 │   ├── get_thread_summaries(room_id, root_event_ids) → map<string, ThreadSummary>
-│   │                                         # per root with replies: their
-│   │                                         # count and the last one's
-│   │                                         # instant, a reply the room
-│   │                                         # refused not counted
+│   │                                         # per root with replies, a
+│   │                                         # ThreadSummary {root_event_id,
+│   │                                         # reply_count, last_reply_at}:
+│   │                                         # their count and the latest
+│   │                                         # one's created_at, a reply the
+│   │                                         # room refused not counted
 │   ├── get_event_count(room_id, filter | null) → int
 │   ├── update_event(event) → RoomEvent      # the whole record; keeps the
 │   │                                         # stored delivery_results (§14.3)
@@ -15554,7 +15558,8 @@ should live in the integration surface layer.
   among them a room's transitions (§5.1), a member's join, leave and rename
   and the reads of its roster (§5.5), a channel's attach, detach and binding
   changes (§7.5), an ephemeral's publication and a subscription to a room's
-  ephemerals (§8.4), a room hook's registration, enabling, disabling and
+  ephemerals (§8.4), a room's read markers, marked and listed (§14.1), a
+  room hook's registration, enabling, disabling and
   removal (§9.1, §10.6.6), an update or a delete of a stored event (§10.3), a
   direct injection and a record's commit (§10.5), a claim for a strategy
   (§19.7), a steer of a room's turns (§21.3), a delivery (§22), a delegation,
@@ -15562,7 +15567,8 @@ should live in the integration surface layer.
   regeneration of an answer and a feedback. Against a room that is not the
   caller's, each acts as it does on a room that does not exist: a transition,
   a membership change or read, an attach, a detach or a binding change, a
-  publication or a subscription, a room hook's registration, enabling,
+  publication or a subscription, a read marker marked or listed, a room
+  hook's registration, enabling,
   disabling and removal, and a claim for a strategy, fail as not found, as
   do a message that names the room (§10.1 step 1), an injection, a record, a
   steer that names the room, a delivery, a delegation, a task, a greeting, a
