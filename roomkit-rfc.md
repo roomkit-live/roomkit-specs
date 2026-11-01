@@ -6660,6 +6660,18 @@ is not a recipient included, §5.7), else none. A status is no activity, and
 resumes no room (§5.1). It is never dispatched with the context of one room among
 several.
 
+Every `ON_DELIVERY_STATUS` hook runs in that room, its filter unread, a status
+being no event; the call that dispatched the status returns while they run. A
+status naming a room is dispatched in it if it exists and, for a caller acting
+for an organization, is that organization's; one naming a room that is missing
+or another organization's is dispatched nowhere. A provider's webhook, once
+read, is a message received unless its direction says `outbound` or its event
+type `message.sent` or `message.finalized` (a direction `inbound` wins),
+processed as an inbound message keyed by the provider's message id; else a
+delivery status on its channel when its direction is `outbound` and its event
+type `message.sent`, `message.delivered`, `message.failed` or
+`message.finalized`; and it is acknowledged and ignored otherwise.
+
 **A binding speaks for its own channel.** The sender a binding names is found
 through it on that channel only. A correspondent recorded on one number's
 binding, writing to another number of the same type, is not taken to the first
@@ -17875,6 +17887,30 @@ replace explicit `addressed_to`. Applications select intelligence channels
 with `addressed_to`, and realtime provider sessions with `channel_id` and
 `session_id`; the latter are not intelligence channel ids (§19.3).
 
+**The publication.** A text delivery enters its room as a message the
+framework's own sender, `system`, writes on the transport that carries it,
+through the inbound pipeline (§10.1), its delivery deferred: the room's agents
+read it and answer, the transport is not delivered its own message (§7.5), and
+the correspondent receives the agents' answer, never the content itself. A
+delivery naming no channel takes the room's voice transport (a channel of type
+`voice`, `realtime_voice` or `realtime_audio_video`, or one hosting a realtime
+model), else the first other transport bound to the room; an intelligence
+channel attached with the transport category is none. The call waits for the
+turn its publication asks for, and `turn_complete` says the turn is over only
+when it waited for it: a strategy that delivers a batch for others (`Queued`)
+reports `sent` at the publication. Among the reasons its unsuccessful outcomes
+carry: `no_transport` (no transport to carry it), `channel_unavailable` (a
+channel named that is not registered or the room does not bind, among
+`unavailable_targets`), `addressed_targets_unavailable` (published, an
+addressed target unreachable, the error not retryable),
+`session_requires_realtime` (a session named on a channel hosting no realtime
+model), `invalid_session_target` (a session with no channel, or with an
+address), `empty_idempotency_key`, `instruction_unaddressed`, and the refusal
+of the room or a hook (`source_unbound`, a hook's reason); a replay that is
+`sent` carries `duplicate_publication`. The doors that store a caller's event
+as given, `send_event()`, `post()` and `commit_event()`, refuse a key in the
+publication namespace as an invalid argument.
+
 **Instruction delivery.** `instruction = true` delivers the content as the
 application's direction to an agent rather than as something a participant
 said. Through the text pipeline it is an `INSTRUCTION` event (§10.1.1), with
@@ -18003,6 +18039,17 @@ acceptance is not transmission.
 Workers MUST distinguish a refusal from a retryable unavailable/failed target;
 an absent recipient MUST NOT be acknowledged as successful transmission.
 
+With a backend, `deliver()` reports a request its form refuses at once, else
+`queued`, the outcome naming the item (`delivery_item_id`) and no event. The
+backend's worker executes each item with its strategy and the delivery hooks,
+then acknowledges its outcome unless it is a failure: `unavailable`, `failed`,
+or `unknown` with an error. A failure is attempted again after its retry delay,
+doubling from the first (§13.2, base 2) up to a cap, and dead-lettered once its
+retries are spent, or at once when its error is not retryable. An item made
+within a turn, a tool call or a hook's body carries at least that work's depth
+(§8.3), which the worker publishes it at. The worker starts when the kit is
+entered (started) and stops at its close, the items it held queued again.
+
 ### 22.3 Delivery Hooks
 
 | Hook | Execution | When |
@@ -18015,6 +18062,21 @@ missing destination and duplicate publication. Its payload MUST include the
 effective content and targeting information; a rewrite in `BEFORE_DELIVER`
 must be reflected. Hook observation remains best-effort and MUST NOT change
 the delivery outcome.
+
+Both hooks are handed an event the framework writes: its source the `system`
+channel, its visibility `internal`, its content the delivery's text, its
+address and its key the delivery's; for `AFTER_DELIVER` of a delivery that
+published an event, that event's content and address, and its key the
+application's. `BEFORE_DELIVER`'s is `PENDING`; `AFTER_DELIVER`'s takes the
+outcome's status (`sent` `DELIVERED`, `blocked` `BLOCKED`, `unavailable` and
+`failed` `FAILED`, `queued` and `unknown` `PENDING`). Its metadata is the
+delivery's, with `delivery_item_id`, `session_id`, `channel_id` and `strategy`
+(the strategy's serialized type), and for `AFTER_DELIVER` `delivery_outcome`,
+the outcome serialized, and `error`, the error's message, else the reason, of
+an unsuccessful outcome, null when it has neither. `BEFORE_DELIVER` fails open
+(§9.3): a hook that raises lets the delivery through. A request its form
+refuses (`empty_idempotency_key`, `invalid_session_target`) is reported to
+`AFTER_DELIVER` before anything is enqueued or executed.
 
 Both hooks see an instruction delivery as an event of type `INSTRUCTION`,
 so a hook that gates proactive content gates it too.
