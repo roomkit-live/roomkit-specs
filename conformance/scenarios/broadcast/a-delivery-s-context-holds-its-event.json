@@ -104,21 +104,15 @@
         "reader": [
           {
             "call": "deliver",
-            "recent_events": {
-              "$any": true
-            }
+            "recent_events": "$any"
           },
           {
             "call": "deliver",
-            "recent_events": {
-              "$any": true
-            }
+            "recent_events": "$any"
           },
           {
             "call": "deliver",
-            "recent_events": {
-              "$any": true
-            }
+            "recent_events": "$any"
           },
           {
             "call": "deliver",
