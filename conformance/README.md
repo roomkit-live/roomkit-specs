@@ -146,7 +146,17 @@ of the setup are not compared.
     `supports_streaming_delivery`): its `deliver_stream` reads what it is
     handed to the stream's end, recording each item under `streamed`, and
     its `deliver_stream` reactions may stop it (`stop_after`) or make it
-    raise once it stopped (`fail`);
+    raise once it stopped (`fail`); with `streams_in`, it takes one only in
+    the rooms listed (§6.1 `supports_streaming_delivery_for`);
+  - with `addresses`, its own address methods answer in place of the
+    defaults (§5.7, §10.4): `normalizes` lists the addresses
+    `normalize_address` writes otherwise, `conversation_key` the metadata
+    key `conversation_address` reads a message's conversation under (its
+    sender when absent), and on a channel with a `recipient_key`,
+    `reply_metadata`, `recipient_metadata` and `recipient_address` name and
+    read the recipient under that key; without it, an address is written as
+    given, a conversation is its sender's, and a routed sender is recorded
+    with no recipient;
   - an `ai` channel with a `model` is a **scripted agent** instead (below).
 - `rooms`: each is created (`id`, `organization_id`, `metadata`, `timers`),
   then each of its `bindings` attached (`channel_id`, `category`, `access`,
@@ -176,6 +186,7 @@ left, the call does what it does by default. A reaction:
 | `respond` | Event templates: the turn's response events (`on_event` only) |
 | `output` | `tasks`, `observations` and `metadata_updates` of the channel's output |
 | `stop_after` | In a `deliver_stream` reaction: the channel stops reading the stream once it was handed the text delta this string equals |
+| `parsed` | In a `parse` reaction: a patch on the event the channel builds, what it reads off its own wire: its members replace the event's, those of its `source` the source's; its strings name what the run made (References) |
 | `result` | A hook's HookResult (§9.4). A modify's `event` is a patch on the payload: its members replace the payload's. Its injected events, tasks and observations are templates |
 
 **Templates.** A runner completes a template, written in the serialized form,

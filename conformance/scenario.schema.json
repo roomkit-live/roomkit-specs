@@ -212,6 +212,29 @@
         "max_tool_rounds": {
           "type": "integer",
           "minimum": 1
+        },
+        "addresses": {
+          "description": "What the channel's own address methods answer (§5.7, §10.4), in place of the defaults, which write an address as given, name a message's conversation by its sender and record no recipient: `normalize_address` writes each address `normalizes` lists as its value, any other as given; `conversation_address` reads the message's metadata under `conversation_key`, a string not blank, else its sender; with a `recipient_key`, `reply_metadata` names the conversation under that key, `recipient_metadata` an address, and `recipient_address` reads a binding's value under it, written by `normalize_address`.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "normalizes": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "conversation_key": {
+              "type": "string"
+            }
+          }
+        },
+        "streams_in": {
+          "description": "With `streams`: the rooms the channel takes a streamed response in (§6.1 `supports_streaming_delivery_for`); in any other room it is delivered the answer whole. Every room when absent.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },

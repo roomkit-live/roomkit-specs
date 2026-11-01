@@ -1,0 +1,97 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "routing/a-sender-is-read-in-the-channel-s-own-form",
+  "title": "A sender is written by the channel's own normalize_address before anything reads it: two spellings of one number are one sender in one room",
+  "rules": [
+    "§10.1 step 1",
+    "§5.7",
+    "§10.4"
+  ],
+  "notes": "The channel writes its senders in E.164 by its own normalize_address, whatever its declared addressing. The framework reads every inbound sender through it before routing, so the room, its binding and the events name one sender.",
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport",
+        "addresses": {
+          "normalizes": {
+            "+1 555 123 4567": "+15551234567"
+          }
+        }
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+1 555 123 4567",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      },
+      "expect": {
+        "result": {
+          "event": {
+            "room_id": "$r1",
+            "source": {
+              "participant_id": "+15551234567"
+            }
+          }
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Again"
+        }
+      },
+      "expect": {
+        "result": {
+          "event": {
+            "room_id": "$r1"
+          }
+        }
+      }
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "$r1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Hello"
+          },
+          "source": {
+            "participant_id": "+15551234567"
+          }
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "Again"
+          },
+          "source": {
+            "participant_id": "+15551234567"
+          }
+        }
+      ]
+    },
+    "bindings": {
+      "$r1": {
+        "sms": {
+          "participant_id": "+15551234567"
+        }
+      }
+    }
+  }
+}
