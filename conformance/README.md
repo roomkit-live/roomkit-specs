@@ -334,6 +334,26 @@ A task's template is completed with an `id`, its room and a `created_at`. An
 index a store call returns is the store's: the scenarios of `store/` write
 no lifecycle record, so it reads as normalized.
 
+### Calls on the status bus, a room's observations and the turn's host
+
+A call `status.<operation>` is the operation of the kit's status bus (§19.8);
+`status.post` is its `post_async`, which returns once the bus's subscribers
+ran. A call `host.<verb>` is a verb of the turn's host (§10.6.5), made by an
+action of a scripted intelligence channel's turn (`on_event`): a runner
+refuses one made anywhere else, where no turn's host is.
+
+| Call | Arguments | Result |
+|---|---|---|
+| `status.post` | `agent_id`, `action`, `status` (a StatusLevel: `ok`, `failed`, `pending`, `info`, `completed`), `detail`, `metadata` | the entry |
+| `status.recent` | `n` (default 10), `agent_id`, `status` | the entries, oldest first |
+| `update_room_metadata` | `room_id`, `metadata` | the room |
+| `submit_feedback` | `room_id`, `rating`, `event_id`, `channel_id`, `comment`, `dimension`, `metadata` | null |
+| `list_observations` | `room_id` | the room's observations |
+| `host.send_event` | as `send_event` | the event |
+| `host.post_status` | as `status.post` | null |
+| `host.update_room_metadata` | `room_id`, `metadata` | the room |
+| `host.add_observation` | `observation`: an observation's template, its `room_id` and `channel_id` given, completed with an `id` and a `created_at` | null |
+
 **References.** A string argument may name what the run made:
 
 - `$room`, `$event`: in an action, the room of the hook's or the channel's
@@ -352,8 +372,8 @@ no lifecycle record, so it reads as normalized.
 |---|---|
 | `timeline` | Per room, the whole timeline in index order, `BLOCKED` records included, lifecycle records left out |
 | `rooms`, `bindings` | Per room, the room record; per room and channel, the binding, `null` for none |
-| `framework_events` | Per room (`*` for the events of no room), every framework event of the §26.1 table and `process_timeout`, in emission order |
-| `hooks` | Per scripted hook, its calls in order: `trigger`, `room_id`, `event` (the payload, when an event), `tool_call` (the payload, when a tool call: `name`, `tool_call_id`, `arguments` as the call runs or was stopped with, and, on `on_tool_call`, `result` as the model reads it, `is_error`, `refused`, `cancelled` and `error_detail`), `delivery_status` (the payload, when a delivery status, §10.4) |
+| `framework_events` | Per room (`*` for the events of no room), every framework event of the §26.1 table and `process_timeout`, and of the Level 2 features the suite exercises, `status_posted` (§19.8) and `feedback` (§15.9), in emission order |
+| `hooks` | Per scripted hook, its calls in order: `trigger`, `room_id`, `event` (the payload, when an event), `tool_call` (the payload, when a tool call: `name`, `tool_call_id`, `arguments` as the call runs or was stopped with, and, on `on_tool_call`, `result` as the model reads it, `is_error`, `refused`, `cancelled` and `error_detail`), `delivery_status` (the payload, when a delivery status, §10.4), `status_entry` (the payload, when a status entry: `on_status_posted`), `observation` (the payload, when an observation: `on_feedback`) |
 | `hook_order` | The order in which the hooks it lists were called |
 | `deliveries` | Per room and channel, the events a scripted channel's `deliver()` received, as delivered, in order |
 | `contexts` | Per room and scripted channel, the context each of its `deliver()` calls and, for an intelligence channel, each of its turns (`on_event()`) was handed, in order: `call` (`deliver` or `on_event`) and `recent_events`, the ids of its events read as Normalization reads them, lifecycle records left out |
