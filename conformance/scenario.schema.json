@@ -693,7 +693,17 @@
             "mark_all_read",
             "list_read_markers",
             "mute_output",
-            "unmute_output"
+            "unmute_output",
+            "store.get_event",
+            "store.update_event",
+            "store.record_delivery_results",
+            "store.write_change_target",
+            "store.update_room_if",
+            "store.get_room",
+            "store.add_task",
+            "store.get_task",
+            "store.update_task",
+            "store.list_tasks"
           ]
         },
         "organization_id": {
@@ -1101,7 +1111,9 @@
         "process_timeout",
         "participant_not_found",
         "reentrant",
-        "reentry_loop_cap"
+        "reentry_loop_cap",
+        "event_not_found",
+        "task_not_found"
       ]
     },
     "expect": {
@@ -1762,6 +1774,152 @@
             "properties": {
               "call": {
                 "const": "store.list_read_markers"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.get_event"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "event_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.update_event"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "event"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.record_delivery_results"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "event_id",
+              "results"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.write_change_target"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "target"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.update_room_if"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room",
+              "status",
+              "paused_at",
+              "last_activity_at"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.get_room"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.add_task"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "task"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.get_task"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "task_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.update_task"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "task"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.list_tasks"
               }
             }
           },
