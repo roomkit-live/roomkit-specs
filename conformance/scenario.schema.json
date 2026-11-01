@@ -691,7 +691,9 @@
             "store.list_read_markers",
             "mark_read",
             "mark_all_read",
-            "list_read_markers"
+            "list_read_markers",
+            "mute_output",
+            "unmute_output"
           ]
         },
         "organization_id": {
@@ -1027,6 +1029,24 @@
           "then": {
             "required": [
               "room_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "enum": [
+                  "mute_output",
+                  "unmute_output"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "channel_id"
             ]
           }
         }

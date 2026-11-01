@@ -256,6 +256,7 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `attach_channel` | `room_id`, `channel_id`, and a binding's `category`, `access`, `visibility`, `muted`, `metadata`, `participant_id` | the binding |
 | `detach_channel` | `room_id`, `channel_id` | unspecified |
 | `mute`, `unmute` | `room_id`, `channel_id` | the binding |
+| `mute_output`, `unmute_output` | `room_id`, `channel_id` | the binding |
 | `set_access`, `set_visibility` | `room_id`, `channel_id`, `access` or `visibility` | the binding |
 | `close_room`, `archive_room` | `room_id` | the room |
 | `check_timers` | `room_id` | the room, once its due transitions are applied |
