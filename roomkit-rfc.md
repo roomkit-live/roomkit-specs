@@ -17248,8 +17248,19 @@ same text for the same cause on every door: an AI channel's turn, a reasoning
 backend's (Section 12.4.1), a realtime session, a conference. The order is: a
 call cut short, a tool withdrawn for the turn, the declared check, the policy,
 skill gating, the arguments, then BEFORE_TOOL_USE, so a tool refused for
-access never has its arguments read. Arguments that do not fit the declared
-schema read `Invalid arguments for '<name>': <why>`; arguments a
+access never has its arguments read. The arguments' check is a first gate,
+not a validator: a name the schema's `required` lists that the call lacks
+reads `missing required argument '<arg>'`; a top-level argument whose
+property declares a primitive `type` (`string`, `boolean`, `integer`,
+`number`, `object`, `array`, `null`) of another type reads `argument '<arg>'
+must be of type <type>`; and on a schema that closes itself
+(`additionalProperties: false`) with `properties`, an argument it does not
+declare reads `unknown argument '<arg>' (this tool accepts: <names>)`, the
+declared names sorted and joined by `, ` (`none` when it declares none), so
+the model can correct the call; an open schema passes it. Nothing deeper
+(nested objects, `$ref`, `anyOf`, `format`, `pattern`) is checked. Arguments
+that do not fit the declared schema read `Invalid arguments for '<name>':
+<why>`; arguments a
 BEFORE_TOOL_USE hook left that do not fit it, whether it returned them or
 edited them in place, read `Invalid rewritten arguments for '<name>': <why>`. A tool the policy denies reads `Tool
 '<name>' is not permitted by the agent's tool policy.`; a tool a skill keeps
