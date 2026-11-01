@@ -258,7 +258,8 @@ scripted.
   handed each apart (deltas yielded without waiting may cross as one,
   §10.6.4). `fails` makes the model fail with that message once it wrote
   its text, before its calls and its end: its response stream raises
-  (§12.2 step 13s).
+  (§12.2 step 13s). `done: false` ends its stream after its text and its
+  calls without the done event that carries its finish reason and usage.
 - `tools`: what the agent serves, each declared with its `name`,
   `description` and `parameters` (a JSON Schema), and answering every call
   one way: `returns` a text, `raises` an error of a `kind` with a `message`
@@ -435,7 +436,7 @@ The room's members (§5.5, Appendix B.3), each change under the room's lock:
 | `turns` | Per room and intelligence channel, the events its `on_event()` received |
 | `observations`, `tasks` | Per room, the stored side effects |
 | `actions` | Per action label, the outcomes of its runs, in the order they ended |
-| `models` | Per scripted agent, each generation's request as its model received it, in order: the `tool_results` it carries, each `{tool_call_id, content}`, `content` as the model reads it |
+| `models` | Per scripted agent, each generation's request as its model received it, in order: the `tool_results` it carries, each `{tool_call_id, content, is_error}`, `content` as the model reads it, `is_error` whether it reads the call as failed |
 | `lifecycle` | Per room, the lifecycle records (§5.1) in index order, when the implementation writes them: an implementation that writes none passes. It says which changes write one, and which write none (a change that changes nothing, §7.2) |
 | `participants` | Per room, the participants the store holds (§5.5), in the store's order |
 | `resolver` | The scripted resolver's calls, in order |

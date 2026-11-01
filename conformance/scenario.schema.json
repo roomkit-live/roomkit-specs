@@ -2244,7 +2244,7 @@
           }
         },
         "models": {
-          "description": "Per scripted agent, each generation's request as the model received it, in order: the `tool_results` it carries, each `{tool_call_id, content}`.",
+          "description": "Per scripted agent, each generation's request as the model received it, in order: the `tool_results` it carries, each `{tool_call_id, content, is_error}`.",
           "type": "object",
           "additionalProperties": {
             "type": [
@@ -2342,6 +2342,10 @@
         "fails": {
           "description": "The model fails with this message once it wrote its text, before its calls and its end: the response stream raises (§12.2 step 13s).",
           "type": "string"
+        },
+        "done": {
+          "description": "Whether the round's response stream ends with its done event (default true): false ends it after its text and its calls, without one.",
+          "type": "boolean"
         }
       }
     },
