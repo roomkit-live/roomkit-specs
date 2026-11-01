@@ -835,7 +835,9 @@
             "host.update_room_metadata",
             "host.add_observation",
             "deliver",
-            "list_tasks"
+            "list_tasks",
+            "delegate",
+            "task.wait"
           ]
         },
         "organization_id": {
@@ -1591,6 +1593,91 @@
                   "cancelled",
                   null
                 ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "delegate"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "agent_id",
+              "task"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              },
+              "agent_id": {
+                "type": "string"
+              },
+              "task": {
+                "type": "string"
+              },
+              "wait": {
+                "type": "boolean"
+              },
+              "context": {
+                "type": [
+                  "object",
+                  "null"
+                ]
+              },
+              "share_channels": {
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": "string"
+                }
+              },
+              "notify": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "post_status": {
+                "type": "boolean"
+              },
+              "brief": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "conversation": {
+                "type": "integer"
+              },
+              "hand_back": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "task.wait"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "task_id"
+            ],
+            "properties": {
+              "task_id": {
+                "type": "string"
               }
             }
           }
