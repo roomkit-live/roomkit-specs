@@ -265,6 +265,33 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `add_room_hook` | `room_id`, `hook`: a hook as in the setup, for that room alone, with no filter and the default timeout (`name`, `trigger`, `execution`, `priority`, `fail_closed`, `needs_lock`, `reactions`) | unspecified |
 | `remove_room_hook` | `room_id`, `name` | whether the room held a hook of that name |
 
+### Calls on the store
+
+A call `store.<operation>` is the operation of the store's own interface
+(§14.1), made on the kit's store, whatever the kit does: its arguments are the
+operation's, by name, and its result is the operation's in the serialized
+form, a map's values included. A record it takes is a template, completed as
+the record requires (Templates): a room's `created_at` and `updated_at`, a
+binding's `attached_at`, a participant's `joined_at` and an event's `id`,
+`type` and `created_at` are now when it leaves them out, and an event's room
+is the call's `room_id`, its source the framework's. A runner runs the
+scenarios of `store/` on each store it ships that needs no server.
+
+| Call | Arguments | Result |
+|---|---|---|
+| `store.create_room` | `room` | the room |
+| `store.delete_room` | `room_id` | whether the store held it |
+| `store.add_binding`, `store.update_binding` | `binding` | the binding |
+| `store.remove_binding` | `room_id`, `channel_id` | whether the room bound it |
+| `store.add_participant` | `participant` | the participant |
+| `store.commit_event` | `room_id`, `event`, `target`, `activity` (default true) | the event |
+| `store.room_exists` | `room_id` | a boolean |
+| `store.binding_exists` | `room_id`, `channel_id` | a boolean |
+| `store.find_latest_room` | `participant_id`, `channel_type`, `status` | the room, or null |
+| `store.find_room_id_by_channel` | `channel_id`, `status` | the room's id, or null |
+| `store.get_timeline` | `room_id`, `event_filter`, `limit`, `after_index`, `newest_first` | the events |
+| `store.get_thread_summaries` | `room_id`, `root_event_ids` | each summary by its root's id |
+
 **References.** A string argument may name what the run made:
 
 - `$room`, `$event`: in an action, the room of the hook's or the channel's
@@ -326,7 +353,7 @@ the RFC leaves to each implementation:
 - **Rooms** the run created and the scenario does not name are `$r1`, `$r2`...
   in the order of their `room_created`.
 - **Events** of a timeline are `<room>#<index>`, its index read as above,
-  wherever their id appears.
+  wherever their id appears, an object's key included.
   Any other event id (an instruction, a refused event, an event a hard delete
   removed) is `$e1`, `$e2`... in the order the step outcomes, then the
   framework events, show it first.
