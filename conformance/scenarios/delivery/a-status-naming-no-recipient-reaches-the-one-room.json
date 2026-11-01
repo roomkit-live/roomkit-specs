@@ -11,7 +11,10 @@
         "id": "sms",
         "type": "sms",
         "category": "transport",
-        "recipient_key": "phone_number"
+        "recipient_key": "phone_number",
+        "addresses": {
+          "normalizes": {}
+        }
       }
     ],
     "rooms": [

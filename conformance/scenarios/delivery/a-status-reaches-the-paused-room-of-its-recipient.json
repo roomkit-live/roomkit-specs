@@ -6,14 +6,17 @@
     "§10.4 A delivery status follows its message",
     "§5.1"
   ],
-  "notes": "A status is no activity: its room stays PAUSED, with no framework event.",
+  "notes": "A status is no activity: its room stays PAUSED, with no framework event. The room's inactivity timer is 0 seconds: the attach's section applies it first, so the room is PAUSED before the channel is attached.",
   "setup": {
     "channels": [
       {
         "id": "sms",
         "type": "sms",
         "category": "transport",
-        "recipient_key": "phone_number"
+        "recipient_key": "phone_number",
+        "addresses": {
+          "normalizes": {}
+        }
       }
     ],
     "rooms": [
@@ -95,8 +98,8 @@
     "framework_events": {
       "room-alice": [
         "room_created",
-        "room_channel_attached",
-        "room_paused"
+        "room_paused",
+        "room_channel_attached"
       ]
     }
   }
