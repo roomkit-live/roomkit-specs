@@ -131,7 +131,11 @@ of the setup are not compared.
   resolution (§11), `identity_resolver`, a **scripted resolver** (below),
   `identity_channel_types`, the channel types it runs for (§11.4, every type
   when absent), and `identity_timeout_ms` (§11.5, the implementation's
-  default when absent).
+  default when absent); and `delivery_backend`, the in-memory delivery
+  backend (§22.2) the kit is built and started with, its `retry_delay_ms`,
+  `max_retry_delay_ms`, `max_queue_size` and `max_dead_letter_size`: a
+  runner's idle wait then waits for its queue, its items waiting out a
+  retry and those its worker holds.
 - `channels`: each is registered. A channel of type `host` is the
   implementation's host channel (§10.5); any other is a **scripted channel**:
   - `id`, `type` (a ChannelType: `sms`, `websocket`, `whatsapp`, `email`,

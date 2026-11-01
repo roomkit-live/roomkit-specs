@@ -131,6 +131,29 @@
               "description": "How long the resolver may take (§11.5); the implementation's default when absent.",
               "type": "integer",
               "minimum": 1
+            },
+            "delivery_backend": {
+              "description": "The kit's delivery backend (§22.2), the in-memory one, started with the kit: deliver() then queues its requests and the backend's worker executes them. Each member is a bound of its own; absent, the implementation's default.",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "retry_delay_ms": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "max_retry_delay_ms": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "max_queue_size": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "max_dead_letter_size": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
             }
           }
         },
