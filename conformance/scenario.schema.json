@@ -769,7 +769,16 @@
             "store.update_task",
             "store.list_tasks",
             "process_delivery_status",
-            "process_webhook"
+            "process_webhook",
+            "status.post",
+            "status.recent",
+            "update_room_metadata",
+            "submit_feedback",
+            "list_observations",
+            "host.send_event",
+            "host.post_status",
+            "host.update_room_metadata",
+            "host.add_observation"
           ]
         },
         "organization_id": {
@@ -1165,6 +1174,271 @@
               },
               "channel_id": {
                 "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "status.post"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "agent_id",
+              "action",
+              "status"
+            ],
+            "properties": {
+              "agent_id": {
+                "type": "string"
+              },
+              "action": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "ok",
+                  "failed",
+                  "pending",
+                  "info",
+                  "completed"
+                ]
+              },
+              "detail": {
+                "type": "string"
+              },
+              "metadata": {
+                "type": [
+                  "object",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "status.recent"
+              }
+            }
+          },
+          "then": {
+            "required": [],
+            "properties": {
+              "n": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "agent_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "status": {
+                "enum": [
+                  "ok",
+                  "failed",
+                  "pending",
+                  "info",
+                  "completed",
+                  null
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "update_room_metadata"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "metadata"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              },
+              "metadata": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "submit_feedback"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "rating"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              },
+              "rating": {
+                "type": "number"
+              },
+              "event_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "channel_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "comment": {
+                "type": "string"
+              },
+              "dimension": {
+                "type": "string"
+              },
+              "metadata": {
+                "type": [
+                  "object",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "list_observations"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "host.send_event"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "channel_id",
+              "content"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "host.post_status"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "agent_id",
+              "action",
+              "status"
+            ],
+            "properties": {
+              "agent_id": {
+                "type": "string"
+              },
+              "action": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "ok",
+                  "failed",
+                  "pending",
+                  "info",
+                  "completed"
+                ]
+              },
+              "detail": {
+                "type": "string"
+              },
+              "metadata": {
+                "type": [
+                  "object",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "host.update_room_metadata"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "metadata"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              },
+              "metadata": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "host.add_observation"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "observation"
+            ],
+            "properties": {
+              "observation": {
+                "$ref": "#/$defs/record"
               }
             }
           }
