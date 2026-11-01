@@ -5560,7 +5560,13 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    ├── channel.handle_inbound(message, context) → RoomEvent
    ├── The event is sourced from the channel that received the message,
    │   whatever channel its parse named: a parse never passes a message off
-   │   as another channel's
+   │   as another channel's. The rest of its source stands as parsed, its
+   │   direction too: a channel's echo of its own output travelled OUTBOUND
+   │   and is the channel's own (§10.3 Validation rule 3)
+   ├── The event is in the room the message was routed to (step 2) and
+   │   answers no event (`responds_to = null`, §8.5), whatever room or
+   │   answer its parse named: a parse never moves a message, nor makes it
+   │   a response
    ├── What the channel set on the event stands, read off its own wire
    │   (a type, its source's type, a visibility, an address, a thread, an
    │   idempotency key, a depth, a response scope, an instant); the
