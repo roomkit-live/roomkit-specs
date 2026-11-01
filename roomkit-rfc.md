@@ -1517,10 +1517,11 @@ ProviderResult                              # What a provider's send() returns
 └── metadata: map<string, any>              # Provider-specific data
 ```
 
-A target whose call raised an error that declares its `code` and whether a
-retry may succeed (a provider's explicit refusal names them in its result's
-metadata) reads them in its `DeliveryError`, `retryable` true when it
-declares none. An agent's error keeps them across the turn backend (§10.6.8),
+A target whose call raised an error reads, in its `DeliveryError`, the
+`code` the error declares (its type when it declares none) and whether it
+declares a retry may succeed (`retryable` true when it says nothing), each
+on its own; a provider's explicit refusal declares them in its result's
+metadata. An agent's error keeps them across the turn backend (§10.6.8),
 its provider's message id and answer left out.
 
 ### 5.14 Protocol Trace
@@ -5565,7 +5566,10 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   key or response scope, depth 0. An instruction is the caller's
    │   decision (§10.1.1): a message sent as one is one, addressed as
    │   sent; one its channel parsed as one stays what the caller sent,
-   │   the parser's `standalone` word dropped
+   │   the parser's `standalone` word dropped. The event is at least as
+   │   deep as the turn the call runs within (§8.3), whatever depth the
+   │   parse set; an instruction whose parse set a key is refused as one
+   │   the caller keyed (§10.1.1 rule 2)
    ├── Drop a key in the publication namespace (§5.2), whoever wrote it,
    │   the message's or the parser's: the event carries no key, save the
    │   one a proactive delivery publishes under (§22.1)
@@ -6244,14 +6248,14 @@ than being drained inside the trigger's lock tenure.
 **A delivery's context.** Each target is handed the room's latest events as
 read before the event's commit, then the committed event as its newest, at
 the index the store gave it: a channel declaring a window of 3 is handed 4
-events. An instruction, never committed, joins none. The hooks read the
-window alone.
+events. An instruction, never committed, joins none.
 
 **What a delivery set reports.** Once its targets answered, the set of the
 inbound event reports `broadcast_partial_failure` first when any target
 failed, then `delivery_succeeded` for each delivery that succeeded, then
-`delivery_failed` for each that failed (§8.2); `event_processed` follows its
-`AFTER_BROADCAST` hooks.
+`delivery_failed` for each that failed (§8.2), its `total` the deliveries
+that succeeded or failed; `event_processed` follows its `AFTER_BROADCAST`
+hooks.
 
 **An unregistered channel.** Unregistering a channel leaves its bindings in
 their rooms. A message on it is refused as one on an unknown channel (§10.1
@@ -8492,9 +8496,9 @@ enters a room as any other audio.
 9s. AIChannel.on_event() returns ChannelOutput(response_stream=…), the text of the
     turn's tool loop (Section 6.4, One loop)
 10s. Framework detects response_stream in broadcast result
-11s. Framework finds streaming delivery targets (channels with supports_streaming_delivery,
-     each asked, once the room is read, whether it streams in that room:
-     supports_streaming_delivery_for(room_id); one that does not is delivered the answer whole)
+11s. Framework finds streaming delivery targets: once the room is read, each transport the answer
+     reaches is asked whether it streams in that room (supports_streaming_delivery_for(room_id),
+     supports_streaming_delivery by default); one that does not is delivered the answer whole
 12s. Framework pipes stream → VoiceChannel.deliver_stream():
      a. Sentence splitter buffers tokens → yields at sentence boundaries (.!?)
         (min_chunk_chars threshold prevents very short TTS fragments), and at
