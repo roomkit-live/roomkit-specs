@@ -468,6 +468,25 @@
         "parsed": {
           "description": "In a `parse` reaction: a patch on the event the channel builds (§10.1 step 4), what a channel reads off its own wire. Its members replace the built event's, those of its `source` the built source's; its strings name what the run made, as an action's arguments do.",
           "$ref": "#/$defs/record"
+        },
+        "refuse": {
+          "description": "In a `deliver` or `on_event` reaction: then the call fails with the provider's explicit refusal (§5.13): `error`, its words, `code` and `retryable`, what the refusal declares, and the `provider_message_id` it names.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "error": {
+              "type": "string"
+            },
+            "code": {
+              "type": "string"
+            },
+            "retryable": {
+              "type": "boolean"
+            },
+            "provider_message_id": {
+              "type": "string"
+            }
+          }
         }
       }
     },

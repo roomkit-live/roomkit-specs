@@ -187,6 +187,7 @@ left, the call does what it does by default. A reaction:
 | `gate` | Holds the call at this gate until a step opens it |
 | `do` | Kit calls the hook or the channel makes while it runs, in its execution context, in order: an **action** is a call (below) with an optional `as` and `expect`. Its error is caught, kept and checked, never raised into the kit |
 | `fail` | Then raises, with this message |
+| `refuse` | In a `deliver` or `on_event` reaction: then fails with the provider's explicit refusal (§5.13), its `error`, the `code` and `retryable` it declares, and the `provider_message_id` it names |
 | `respond` | Event templates: the turn's response events (`on_event` only) |
 | `output` | `tasks`, `observations` and `metadata_updates` of the channel's output |
 | `stop_after` | In a `deliver_stream` reaction: the channel stops reading the stream once it was handed the text delta this string equals |
