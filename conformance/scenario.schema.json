@@ -854,7 +854,8 @@
             "remove_member",
             "rename_member",
             "is_member",
-            "cancel_task"
+            "cancel_task",
+            "start_task"
           ]
         },
         "organization_id": {
@@ -1988,6 +1989,39 @@
             "properties": {
               "task_id": {
                 "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "start_task"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "agent_id",
+              "task"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              },
+              "agent_id": {
+                "type": "string"
+              },
+              "task": {
+                "type": "string"
+              },
+              "hand_back": {
+                "type": [
+                  "string",
+                  "null"
+                ]
               }
             }
           }
