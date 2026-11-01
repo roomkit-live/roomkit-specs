@@ -103,6 +103,19 @@
             "process_timeout_ms": {
               "type": "integer",
               "minimum": 1
+            },
+            "router": {
+              "description": "A scripted router (§10.4), the kit's in place of the default: it answers every routed message with `room_id`, whoever sent it, an answer the kit holds to §10.1 step 2's rules.",
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "room_id"
+              ],
+              "properties": {
+                "room_id": {
+                  "type": "string"
+                }
+              }
             }
           }
         },

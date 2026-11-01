@@ -124,8 +124,10 @@ alone does not make it plain.
 Made before anything is recorded: framework events, hook calls and deliveries
 of the setup are not compared.
 
-- `kit`: `max_chain_depth` (default 5) and `process_timeout_ms` (the
-  implementation's default when absent).
+- `kit`: `max_chain_depth` (default 5), `process_timeout_ms` (the
+  implementation's default when absent), and `router`, a scripted router in
+  place of the default one, answering every routed message with its
+  `room_id`, an answer the kit holds to §10.1 step 2's rules.
 - `channels`: each is registered. A channel of type `host` is the
   implementation's host channel (§10.5); any other is a **scripted channel**:
   - `id`, `type` (a ChannelType: `sms`, `websocket`, `whatsapp`, `email`,
