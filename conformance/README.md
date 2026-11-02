@@ -398,6 +398,8 @@ else, where no turn's host is.
 | `delegate` | `room_id`, `agent_id`, `task`, `wait` (default false), `context`, `share_channels`, `notify`, `post_status` (default true), `brief`, `conversation` (default 0), `hand_back` (default `relay`) (§23.3) | the task: `id`, `child_room_id`, `parent_room_id`, `agent_id`, `task`, `brief`, `description`, `hand_back`, `status` and `result`, its DelegatedTaskResult once it ended (`task_id`, `child_room_id`, `parent_room_id`, `agent_id`, `status`, `output`, `error`, `duration_ms`, `metadata`); its `as` label names the task's id |
 | `task.wait` | `task_id`: a task `delegate` returned, named by its label | its DelegatedTaskResult, once it ended |
 | `start_task` | `room_id`, `agent_id`, `task`, `hand_back` (default: the agent's background setup's) | the task, as `delegate` returns it, started for the agent as its `work_in_background` call would (§23.4) |
+| `setup_background` | `agent_id`, `worker`, `hand_back` (default `relay`) | null; the agent is given `work_in_background`, served by the room's owner (§23.4, §10.6.5) |
+| `setup_task_tools` | `agent_id` | null; the agent is given `task_status` and `cancel_task`, served by the room's owner (§23.4, §10.6.5) |
 | `cancel_task` | `task_id` | whether a background task the kit's task runner held was running and is now cancelled (§23.3); false for any other, or one of a room of another organization than the call's `organization_id` (§17.2) |
 
 The room's members (§5.5, Appendix B.3), each change under the room's lock:
