@@ -3032,8 +3032,9 @@ history labels the room's speakers, as above: the turn
 reads it at its next stop, and no turn of its own starts. When the turn cannot
 take it (its loop is not reachable yet, or reads its queue no more) or the
 message reads as no text, the message waits a turn of its own, as above. An
-edit or a delete is no message for the running turn: it waits its place, and
-no turn answers it (Section 10.3).
+edit or a delete is no message for the running turn: it waits its place as
+such a message does, and no turn answers it (Section 10.3); while it waits,
+a message that comes after it waits a turn of its own too.
 
 **ACP Agent Channel:**
 
@@ -6676,7 +6677,8 @@ During broadcast, for each target channel:
    text (`[Message deleted]`, or `Correction: …`) no request. No speak policy
    is asked about it (Section 6.4), and a turn of the channel that runs
    meanwhile is not handed it as a message (Section 6.4, "A message for the
-   running turn"): it waits its place, for no turn. A strategy that takes an
+   running turn"): a channel that takes the room's turns one at a time keeps
+   its place in line, for no turn. A strategy that takes an
    agent's turns (Section 19.7) asks none on it either: it is no task for a
    producer, reviewer or worker. The agent answers the next message, in the
    room the change left: the target as edited, or the message deleted
