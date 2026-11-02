@@ -268,6 +268,8 @@ scripted.
 - `tool_policy`: a ToolPolicy's `allow` and `deny` patterns (§21.1);
   `max_tool_rounds`: the loop's bound on rounds of calls (Appendix A.9,
   default 50).
+- `max_context_events`: the window of the agent's default memory, a sliding
+  window of the room's latest events (§20.3, default 50).
 
 A hook on `before_tool_use` or `on_tool_call` is registered on the kit as the
 implementation registers a hook on those triggers. Its payload is a tool
@@ -436,7 +438,7 @@ The room's members (§5.5, Appendix B.3), each change under the room's lock:
 | `turns` | Per room and intelligence channel, the events its `on_event()` received |
 | `observations`, `tasks` | Per room, the stored side effects |
 | `actions` | Per action label, the outcomes of its runs, in the order they ended |
-| `models` | Per scripted agent, each generation's request as its model received it, in order: the `tool_results` it carries, each `{tool_call_id, content, is_error}`, `content` as the model reads it, `is_error` whether it reads the call as failed |
+| `models` | Per scripted agent, each generation's request as its model received it, in order: the `messages` it carries, each `{role, text}`, `text` its text parts joined (empty for a message with none, a tool's result among them), and the `tool_results`, each `{tool_call_id, content, is_error}`, `content` as the model reads it, `is_error` whether it reads the call as failed |
 | `lifecycle` | Per room, the lifecycle records (§5.1) in index order, when the implementation writes them: an implementation that writes none passes. It says which changes write one, and which write none (a change that changes nothing, §7.2) |
 | `participants` | Per room, the participants the store holds (§5.5), in the store's order |
 | `resolver` | The scripted resolver's calls, in order |

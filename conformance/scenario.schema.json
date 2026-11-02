@@ -277,6 +277,11 @@
           "type": "integer",
           "minimum": 1
         },
+        "max_context_events": {
+          "description": "A scripted agent's max_context_events: the window of its default memory, a sliding window of the room's latest events (§20.3).",
+          "type": "integer",
+          "minimum": 1
+        },
         "addresses": {
           "description": "What the channel's own address methods answer (§5.7, §10.4), in place of the defaults, which write an address as given, name a message's conversation by its sender and record no recipient: `normalize_address` writes each address `normalizes` lists as its value, any other as given; `conversation_address` reads the message's metadata under `conversation_key`, a string not blank, else its sender; with a `recipient_key`, `reply_metadata` names the conversation under that key, `recipient_metadata` an address, and `recipient_address` reads a binding's value under it, written by `normalize_address`.",
           "type": "object",
@@ -2244,7 +2249,7 @@
           }
         },
         "models": {
-          "description": "Per scripted agent, each generation's request as the model received it, in order: the `tool_results` it carries, each `{tool_call_id, content, is_error}`.",
+          "description": "Per scripted agent, each generation's request as the model received it, in order: the `messages` it carries, each `{role, text}`, and the `tool_results`, each `{tool_call_id, content, is_error}`.",
           "type": "object",
           "additionalProperties": {
             "type": [
