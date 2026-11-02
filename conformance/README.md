@@ -289,7 +289,9 @@ scripted.
   wrap the memories before them in the implementation's compacting and
   summarizing memories (§20.3), of the parameters the schema names, which
   summarize with `summarizer`, a scripted model whose requests `models`
-  holds under `<agent>/summarizer`.
+  holds under `<agent>/summarizer`; `retrieval` wraps them in the
+  implementation's retrieval memory, which searches its scripted knowledge
+  `sources` for the turn's words (§20.2).
 - `human_input`: its human-input handler (§9.3, ON_USER_INPUT_REQUIRED,
   where the other party is a human; §10.6.5, Human input): the agent
   declares `tools` (each `name`, `description`, `parameters`) and serves

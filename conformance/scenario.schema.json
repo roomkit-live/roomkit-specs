@@ -3443,6 +3443,63 @@
         "summarizer": {
           "description": "The scripted model a compacting or summarizing memory summarizes with: its n-th summary is its n-th round's text; `expect.models` holds its requests under `<agent>/summarizer`.",
           "$ref": "#/$defs/model"
+        },
+        "retrieval": {
+          "description": "The retrieval memory's knowledge `sources`, `max_results` (default 5) and `min_query_length` (default 3), wrapping the memories above it (§20.2): each source answers every search with its `results` (each `content`, `score`, default 0, and `source`, default empty), at most the search's limit, or `fails` with that message.",
+          "type": "object",
+          "required": [
+            "sources"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "sources": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "results": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "content"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "content": {
+                          "type": "string"
+                        },
+                        "score": {
+                          "type": "number"
+                        },
+                        "source": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "fails": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "max_results": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "min_query_length": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
         }
       }
     }
