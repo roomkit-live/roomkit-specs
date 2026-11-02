@@ -1036,7 +1036,8 @@
             "verification_of",
             "check_verifications",
             "sender_verification",
-            "cancel_delivery"
+            "cancel_delivery",
+            "steer"
           ]
         },
         "organization_id": {
@@ -2417,6 +2418,47 @@
               "reason": {
                 "description": "Why: the deliveries' cancellation reason; the implementation's default when absent.",
                 "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "steer"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "directive"
+            ],
+            "properties": {
+              "channel_id": {
+                "description": "The intelligence channel whose running turns it steers.",
+                "type": "string"
+              },
+              "room_id": {
+                "description": "The room whose turns it steers: every one for a Cancel, the most recent for any other directive; the channel's most recent turn when absent.",
+                "type": "string"
+              },
+              "directive": {
+                "description": "A steering directive in the serialized form (§21.3): `{\"type\": \"cancel\", \"reason\": ...}`, `{\"type\": \"inject_message\", \"content\": ...}` or `{\"type\": \"update_system_prompt\", \"append\": ...}`.",
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "cancel",
+                      "inject_message",
+                      "update_system_prompt"
+                    ]
+                  }
+                }
               }
             }
           }

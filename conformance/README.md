@@ -399,6 +399,7 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `add_room_hook` | `room_id`, `hook`: a hook as in the setup, for that room alone, with no filter and the default timeout (`name`, `trigger`, `execution`, `priority`, `fail_closed`, `needs_lock`, `reactions`) | unspecified |
 | `remove_room_hook` | `room_id`, `name` | whether the room held a hook of that name |
 | `cancel_delivery` | `key`, the `delivery_key` of the messages whose delivery it cancels, and `reason` (§10.1 Explicit delivery cancellation) | how many deliveries it cancelled |
+| `steer` | `channel_id`, `directive` (a SteeringDirective in the serialized form: `{"type": "cancel", "reason"}`, ...), `room_id` (§21.3) | how many of the channel's running loops it reached |
 
 ### Calls on the store
 
