@@ -3455,7 +3455,11 @@ it ended and two agents replying to one inbound never overwrite each other's
 end. An answer to an answer is no reply to the caller and has no entry, nor
 has an ACP turn never prompted (a transport that read nothing). `turns` is the
 framework's key: a value a turn's hooks or tools write under it is not
-carried to the caller, and never on a MESSAGE. The framework MUST merge the record
+carried to the caller, and never on a MESSAGE. Nor are a reply's
+`loop_end_reason` and `ai_usage` at the top of the caller's copy, which reads
+them under `turns` alone; every other key of the reply's record is the
+caller's, and a buffered reply's end, with the usage beside it, is read off its
+record, else off the last of its MESSAGEs that names one. The framework MUST merge the record
 into the metadata of every MESSAGE event the turn produces, as the record
 stands when that event is created — a streamed segment persisted before a tool
 round carries what was known then, the final answer carries everything the
