@@ -335,6 +335,13 @@ scripted.
   default false); `steer_room_turns`: a message for a room where its turn
   runs is steered into that turn rather than a turn of its own (§6.4,
   §21.3, default false), its turns serialized.
+- `agent`: the agent is an implementation's Agent, an AI channel with an
+  identity (§19.7): its `name`, `role`, `description`, `purpose`, `scope`
+  and `language`, each unset by default; its turns end their system prompt
+  with its identity block (`role`, `description`, `scope`, then `language`,
+  each on a line under `--- Agent Identity ---`), in the language the room's
+  conversation state sets (`metadata._conversation_state.context.language`)
+  over its own, unless `identity_in_prompt` is false (default true).
 - `memory`: a **scripted memory** in place of the default (§20): the room's
   latest `max_events` events as a sliding window reads them (default the
   agent's `max_context_events`), with the `messages` it built (each `role`
