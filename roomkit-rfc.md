@@ -2594,11 +2594,13 @@ reader: a callable `(event) → list of MediaContent` handed to the framework
 (`attached_media`), which serves every AI channel registered on it. A channel
 reads each event of the room through it, the history it gives its memory
 provider and the event it answers alike, an instruction (Section 10.1.1)
-and a deleted event, whose content is withheld (Section 10.3), excepted: the
-media the reader names follow the event's own content, in the
-order given, as the parts of a `CompositeContent` (a text without words gives
-them its place), and every rule of this paragraph and of Section 20 applies to
-them as to the event's own. The reader is asked again on every turn, so it
+and a deleted event, whose content is withheld (Section 10.3), excepted; for
+an instruction that stands alone, which reads none of the room (Section
+10.1.1 rule 7), it asks the reader of no event. The media the reader names
+follow the event's own content, in the order given, as the parts of a
+`CompositeContent` (a text without words gives them its place), and every
+rule of this paragraph and of Section 20 applies to them as to the event's
+own. The reader is asked again on every turn, so it
 MUST name the same media for the same event, in the same order: an image is
 known by its event and its place among the parts, which is what a refusal
 records. A reader that fails names none for that event, never a failed turn.
