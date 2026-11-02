@@ -73,22 +73,14 @@
       "idle": true
     },
     {
-      "call": "process_inbound",
+      "call": "send_event",
       "room_id": "room-1",
-      "message": {
-        "channel_id": "ws",
-        "sender_id": "alice",
-        "content": {
-          "type": "text",
-          "body": "what colour is its foot?"
-        }
+      "channel_id": "ws",
+      "content": {
+        "type": "text",
+        "body": "what colour is its foot?"
       },
-      "expect": {
-        "result": {
-          "blocked": false,
-          "error": null
-        }
-      }
+      "metadata": {}
     },
     {
       "idle": true
@@ -123,7 +115,8 @@
           "content": {
             "type": "text",
             "body": "what colour is its foot?"
-          }
+          },
+          "metadata": {}
         },
         {
           "content": {

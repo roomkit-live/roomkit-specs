@@ -87,22 +87,14 @@
       "idle": true
     },
     {
-      "call": "process_inbound",
+      "call": "send_event",
       "room_id": "room-1",
-      "message": {
-        "channel_id": "ws",
-        "sender_id": "alice",
-        "content": {
-          "type": "text",
-          "body": "and now?"
-        }
+      "channel_id": "ws",
+      "content": {
+        "type": "text",
+        "body": "and now?"
       },
-      "expect": {
-        "result": {
-          "blocked": false,
-          "error": null
-        }
-      }
+      "metadata": {}
     },
     {
       "idle": true
