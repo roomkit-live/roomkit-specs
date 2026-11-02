@@ -6,7 +6,7 @@
     "§10.6.5",
     "§9.3"
   ],
-  "notes": "Python: tests/test_turns_inputs.py::test_a_request_a_hook_blocks_is_closed_on_the_owner; tests/test_human_input_doors.py::test_a_blocked_request_is_a_refusal. Settled on the executor, the request is closed on the owner (input_closed).",
+  "notes": "Python: tests/test_turns_inputs.py::test_a_request_a_hook_blocks_is_closed_on_the_owner; tests/test_human_input_doors.py::test_a_blocked_request_is_a_refusal; tests/test_human_input.py::test_callback_deny_rejects_the_request. Settled on the executor, the request is closed on the owner (input_closed).",
   "setup": {
     "channels": [
       {
