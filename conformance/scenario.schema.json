@@ -1041,6 +1041,8 @@
             "check_verifications",
             "sender_verification",
             "cancel_delivery",
+            "delivery.cancel",
+            "delivery.wait",
             "steer"
           ]
         },
@@ -1073,6 +1075,10 @@
                   "string",
                   "null"
                 ]
+              },
+              "defer_delivery": {
+                "type": "boolean",
+                "description": "Returns at the commit, the call's completion handle (§10.1 step 18) named by the call's `as` label for `delivery.cancel` and `delivery.wait`."
               }
             }
           }
@@ -2471,6 +2477,53 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "delivery.cancel"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "of"
+            ],
+            "properties": {
+              "of": {
+                "type": "string",
+                "description": "The label of a deferred process_inbound whose handle it cancels."
+              },
+              "reason": {
+                "type": "string"
+              },
+              "timeout_ms": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "delivery.wait"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "of"
+            ],
+            "properties": {
+              "of": {
+                "type": "string",
+                "description": "The label of a deferred process_inbound whose handle it waits on."
+              }
+            }
+          }
         }
       ]
     },
@@ -2527,7 +2580,8 @@
         "event_not_found",
         "task_not_found",
         "identity_not_found",
-        "verification_refused"
+        "verification_refused",
+        "waits_for_itself"
       ]
     },
     "expect": {

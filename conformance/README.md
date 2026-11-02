@@ -374,6 +374,9 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | Call | Arguments | Result |
 |---|---|---|
 | `process_inbound` | `message` (an InboundMessage), `room_id` | an InboundResult: `event`, `blocked`, `reason`, `error` (its message), `response_metadata`, `delivery_results`, `cancellation_reason` |
+| `process_inbound` with `defer_delivery: true` | as above | the InboundResult at the commit (§10.1 step 18); its completion handle is named by the call's `as` label |
+| `delivery.cancel` | `of`, the label of a deferred `process_inbound`; `reason` (default `caller_cancelled`), `timeout_ms` (default 5000) | the handle's InboundResult once the turns it cut are over (§10.1 Explicit delivery cancellation); a handle done returns its result unchanged |
+| `delivery.wait` | `of`, as above | the handle's InboundResult once its delivery is over (§10.1 step 18) |
 | `send_event` | `room_id`, `channel_id`, `content`, `event_type`, `participant_id`, `visibility`, `response_visibility`, `addressed_to`, `parent_event_id`, `idempotency_key`, `metadata`, `chain_depth`, `standalone` | the event |
 | `post` | `room_id`, `content`, `participant_id`, `addressed_to`, `metadata`, `channel_id`, `idempotency_key`, `chain_depth` | the event |
 | `commit_event` | `room_id`, `event` (a template) | the event |
@@ -642,6 +645,7 @@ refuses its value, a `ChannelId`).
 | `participant_not_found` | A post's speaker is no participant the host channel reaches (§10.5); a member call names no participant of the room (§5.5) | `ParticipantNotFoundError` | `InboundError::ParticipantNotFound`, `RoomKitError::ParticipantNotFound` |
 | `identity_not_found` | No such identity, or another organization's (§5.6, §17.2) | `IdentityNotFoundError` | `RoomKitError::IdentityNotFound` |
 | `reentrant` | A message routed back into the room whose lock or admission order its caller holds (§9.5.1 A message routed back) | `ReentrantCallError` | `KitError::Reentrant` |
+| `waits_for_itself` | A completion handle's cancel from the room's lane or under its lock, where its cleanup would wait for its caller (§10.1 step 18) | `RuntimeError` from `DeliveryHandle.cancel` | `RoomKitError::Runtime` from `DeliveryHandle::cancel` |
 | `reentry_loop_cap` | A direct change past its cascade's hook calls (§8.3, §10.3) | `ReentryLoopCapError` | `MutationError::ReentryLoopCap` |
 | `event_not_found` | A write naming an event its room does not hold: a change's target, `update_event` (§14.3) | `EventNotFoundError` | `StoreError::EventNotFound` |
 | `task_not_found` | An update of a task the store does not hold (§14.3) | `TaskNotFoundError` | `StoreError::TaskNotFound` |
@@ -720,7 +724,7 @@ named by one.
 - §10.1: step 2's re-routing when the locked check finds the room no longer the
   sender's, `group` bindings, recipient keys and replies to a chat (§5.7), a
   room created concurrently by two calls; step 18's detached completion;
-  explicit delivery cancellation through a completion handle;
+  a completion handle's cancel whose cleanup outlasts its `timeout`;
 - §10.3: ADMIN and SYSTEM deletes, a hook's injected change, an edit's
   visibility narrowed to its target's, `cascade_replies = false`;
 - §10.4: identity-based routing (`resolve_identity`), a PAUSED room, a
