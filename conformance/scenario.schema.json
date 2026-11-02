@@ -3379,6 +3379,70 @@
               "minimum": 0
             }
           }
+        },
+        "compacting": {
+          "description": "The compacting memory's `max_context_tokens`, `summary_ratio` (default 0.10), `safety_margin_ratio` (default 0.15) and `min_events` (default 5), wrapping the memory and the budget-aware one when given; its summarizer is `summarizer`.",
+          "type": "object",
+          "required": [
+            "max_context_tokens"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "max_context_tokens": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "summary_ratio": {
+              "type": "number",
+              "minimum": 0
+            },
+            "safety_margin_ratio": {
+              "type": "number",
+              "minimum": 0
+            },
+            "min_events": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "summarizing": {
+          "description": "The summarizing memory's `max_context_tokens`, `tier1_ratio` (default 0.50), `tier2_ratio` (default 0.85), `truncate_chars` (default 2000), `summary_max_tokens` (default 1000) and `min_events` (default 5), wrapping the memories above it when given; its summarizer is `summarizer`.",
+          "type": "object",
+          "required": [
+            "max_context_tokens"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "max_context_tokens": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "tier1_ratio": {
+              "type": "number",
+              "minimum": 0
+            },
+            "tier2_ratio": {
+              "type": "number",
+              "minimum": 0
+            },
+            "truncate_chars": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "summary_max_tokens": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "min_events": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "summarizer": {
+          "description": "The scripted model a compacting or summarizing memory summarizes with: its n-th summary is its n-th round's text; `expect.models` holds its requests under `<agent>/summarizer`.",
+          "$ref": "#/$defs/model"
         }
       }
     }

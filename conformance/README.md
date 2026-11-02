@@ -285,7 +285,11 @@ scripted.
   `speakers` its messages name (§20.2); `budget_aware` wraps it in the
   implementation's budget-aware memory, of its `max_context_tokens`,
   `safety_margin_ratio` (default 0.15), `min_events` (default 3) and
-  `reserved_tokens` (default 0) (§20.3).
+  `reserved_tokens` (default 0) (§20.3); `compacting` and `summarizing`
+  wrap the memories before them in the implementation's compacting and
+  summarizing memories (§20.3), of the parameters the schema names, which
+  summarize with `summarizer`, a scripted model whose requests `models`
+  holds under `<agent>/summarizer`.
 - `human_input`: its human-input handler (§9.3, ON_USER_INPUT_REQUIRED,
   where the other party is a human; §10.6.5, Human input): the agent
   declares `tools` (each `name`, `description`, `parameters`) and serves
