@@ -2792,7 +2792,7 @@
           }
         },
         "models": {
-          "description": "Per scripted agent, each generation's request as the model received it, in order: the `messages` it carries, each `{role, text, parts}` (`parts` its text and image parts in order, each `{text}` or `{image, mime_type}`, null for a text content), the `tool_results`, each `{tool_call_id, content, is_error}`, its `system_prompt`, and the names of the `tools` it declares, in order.",
+          "description": "Per scripted agent, each generation's request as the model received it, in order: the `messages` it carries, each `{role, text, parts}` (`parts` its text and image parts in order, each `{text}` or `{image, mime_type}`, null for a text content), the `tool_results`, each `{tool_call_id, content, is_error}` (`content` a text, or a result's text and image parts in order, written as `parts`), its `system_prompt`, and the names of the `tools` it declares, in order.",
           "type": "object",
           "additionalProperties": {
             "type": [
@@ -3025,7 +3025,46 @@
           "type": "boolean"
         },
         "returns_json": {
-          "description": "The tool answers this JSON value, not a text: the model reads it as JSON (§6.7), an object's members in the order written."
+          "description": "The tool answers this JSON value, not a text: the model reads it as JSON (§6.7), an object's members in the order written; a list whose every item is a mapping in a part's exact shape (`{\"type\": \"text\", \"text\"}`, `{\"type\": \"image\", \"url\", \"mime_type\"}`) as those parts (§21.4)."
+        },
+        "returns_parts": {
+          "description": "The tool answers these content parts in order, each `{text}` or `{image, mime_type}` (§21.4): a text and the images a model that sees reads in the round (§6.4).",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": [
+                  "text"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "text": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "required": [
+                  "image"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "image": {
+                    "type": "string"
+                  },
+                  "mime_type": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
         }
       },
       "oneOf": [
@@ -3037,6 +3076,11 @@
         {
           "required": [
             "returns_json"
+          ]
+        },
+        {
+          "required": [
+            "returns_parts"
           ]
         },
         {

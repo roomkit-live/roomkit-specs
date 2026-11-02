@@ -287,7 +287,9 @@ scripted.
 - `tools`: what the agent serves, each declared with its `name`,
   `description` and `parameters` (a JSON Schema), and answering every call
   one way: `returns` a text, `returns_json` a JSON value (the model reads
-  it as JSON, §6.7), `raises` an error of a `kind` with a `message`
+  it as JSON, §6.7, and a list of mappings each in a part's exact shape as
+  those parts, §21.4), `returns_parts` content parts in order, each
+  `{text}` or `{image, mime_type}` (a text and its images, §6.4), `raises` an error of a `kind` with a `message`
   (the model reads the kind, the observers the message, §9.3), `fails` or
   `refuses` with words the model reads (§9.3), or `hangs`, never answering;
   with `gate`, each call is held at that gate until a step opens it, then
@@ -573,7 +575,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `observations`, `tasks` | Per room, the stored side effects |
 | `actions` | Per action label, the outcomes of its runs, in the order they ended |
 | `ai_events` | Per room, the framework events of an AI channel's turn (§8.2, Level 1): `before_ai_generation` and `ai_response`, in emission order, matched as `framework_events`, which does not hold them |
-| `models` | Per scripted agent, each generation's request as its model received it, in order: the `messages` it carries, each `{role, text, parts}`, `text` its text parts joined (empty for a message with none, a tool's result among them), `parts` its text and image parts in order, each `{"text": ...}` or `{"image": url, "mime_type": ...}`, null for a message whose content is a text, and the `tool_results`, each `{tool_call_id, content, is_error}`, `content` as the model reads it, `is_error` whether it reads the call as failed, its `system_prompt`, and the `tools` it declares, by name: each one's position in the declaration, so that a scenario names those it asserts, declared or `$absent` |
+| `models` | Per scripted agent, each generation's request as its model received it, in order: the `messages` it carries, each `{role, text, parts}`, `text` its text parts joined (empty for a message with none, a tool's result among them), `parts` its text and image parts in order, each `{"text": ...}` or `{"image": url, "mime_type": ...}`, null for a message whose content is a text, and the `tool_results`, each `{tool_call_id, content, is_error}`, `content` as the model reads it (a text, or a result's text and image parts in order, written as `parts` are), `is_error` whether it reads the call as failed, its `system_prompt`, and the `tools` it declares, by name: each one's position in the declaration, so that a scenario names those it asserts, declared or `$absent` |
 | `lifecycle` | Per room, the lifecycle records (§5.1) in index order, when the implementation writes them: an implementation that writes none passes. It says which changes write one, and which write none (a change that changes nothing, §7.2) |
 | `participants` | Per room, the participants the store holds (§5.5), in the store's order |
 | `resolver` | The scripted resolver's calls, in order |
