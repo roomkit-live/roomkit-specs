@@ -2466,8 +2466,10 @@ alone (Section 20.2), each passage set apart as data. The notes follow the
 turn's input (the participant's words, or the application's instruction) in the
 same message, marked as the channel's, asking for nothing; when the
 conversation does not end on such a
-message, they are a message of their own. They come after the input, so what
-changes comes last and a provider that caches a prefix keeps the input in it;
+message (an input that reads as nothing is left out), they follow its last
+message when it is a user's, and are a message of their own otherwise. They
+come after the input, so what changes comes last and a provider that caches
+a prefix keeps the input in it;
 they are not a message of their own when the input is one, since a model whose
 chat format requires alternating roles would refuse two in a row. For a model
 that sees, the latest images the channel's own tool calls in the room returned
@@ -2847,6 +2849,15 @@ signature, each call with its metadata (a thought signature among them), and
 the usage and metadata of the done event. A provider that streams text alone
 streams a turn without tools through `generate_stream`. Every rule this
 section gives a turn therefore holds once, for every provider.
+
+**A round's results.** The next generation reads a round of calls as two
+messages: the assistant's message making the calls, then one `tool` message
+holding every call's result in call order, those the provider served first;
+a later turn's history replays a round the same way. A provider whose wire
+takes a message per result writes one per result. A round counts toward the
+turn's rounds (`ON_AI_RESPONSE`'s `round_count`, the end marker's `rounds`)
+once its calls ran: a `Cancel` that came while they were announced runs none
+of them, and the turn ends `cancelled` without counting it.
 
 **A turn cut short.** A tool loop that ends before its answer (the provider
 failed after at least one round, or the turn was cancelled between rounds)
