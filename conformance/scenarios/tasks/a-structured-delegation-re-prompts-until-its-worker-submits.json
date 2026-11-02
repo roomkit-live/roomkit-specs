@@ -85,7 +85,12 @@
           "tool_results": []
         },
         {
-          "tool_results": []
+          "tool_results": [],
+          "messages": [
+            {
+              "role": "probe"
+            }
+          ]
         },
         {
           "tool_results": [
