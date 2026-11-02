@@ -121,8 +121,8 @@ alone does not make it plain.
 
 ### Setup
 
-Made before anything is recorded: framework events, hook calls and deliveries
-of the setup are not compared.
+Made before anything is recorded: framework events, hook calls, deliveries and
+room callbacks of the setup are not compared.
 
 - `kit`: `max_chain_depth` (default 5), `process_timeout_ms` (the
   implementation's default when absent), and `router`, a scripted router in
@@ -164,6 +164,10 @@ of the setup are not compared.
   - its delivery succeeds, and its turn (`on_event` of an intelligence
     channel) answers nothing;
   - `parse`, `deliver` and `on_event` hold its **reactions** (below);
+  - `on_room_attached` and `on_room_detached` hold the reactions of its
+    room callbacks (§6.1): it records each call under `room_callbacks`, and
+    in `hook_order` as `<id>.on_room_attached` or `<id>.on_room_detached`,
+    then reacts (`gate`, `do`, `fail`); with no reaction it does nothing;
   - with `streams`, it takes a streamed response as it is written (§6.1
     `supports_streaming_delivery`): its `deliver_stream` reads what it is
     handed to the stream's end, recording each item under `streamed`, and
@@ -567,7 +571,8 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `rooms`, `bindings` | Per room, the room record; per room and channel, the binding, `null` for none |
 | `framework_events` | Per room (`*` for the events of no room), every framework event of the §26.1 table and `process_timeout`, and of the Level 2 features the suite exercises, `status_posted` (§19.8) and `feedback` (§15.9), identity resolution's `identity_resolved` and `identity_timeout` (§8.2), a human-input request's `user_input_required` (§9.3), and identity verification's `verification_requested`, `verification_completed` and `verification_ended` (§8.2, §11.7), in emission order |
 | `hooks` | Per scripted hook, its calls in order: `trigger`, `room_id`, `event` (the payload, when an event), `tool_call` (the payload, when a tool call: `name`, `tool_call_id`, `arguments` as the call runs or was stopped with, and, on `on_tool_call`, `result` as the model reads it, `is_error`, `refused`, `cancelled` and `error_detail`), `delivery_status` (the payload, when a delivery status, §10.4), `status_entry` (the payload, when a status entry: `on_status_posted`), `observation` (the payload, when an observation: `on_feedback`), `request` (the payload, when a human-input request: `pending_id`, `tool_name`, `arguments`, `room_id`, `tool_call_id`, `channel_id`, `channel_type`, `actor_id`), `identity_result` (what an identity hook is handed, §11.2), `generation` (the payload, on `before_ai_generation`: `channel_id`, `provider_name`, `purpose`, `trigger` the event the turn answers, and its context's `system_prompt`, `messages` as `models` reads them and the names of its `tools`), `tool_round` (on `after_tool_round`: `channel_id`, `round_index`, its `calls`, each `{tool_call_id, name, arguments}`, its `results` as `models` reads them, and the names of the turn's `tools`), `response` (on `on_ai_response`: `channel_id`, `response_content`, `segments`, `tool_calls_count`, `round_count`, `loop_end_reason`, `usage`, `streaming`, `thinking`, and `declared_tools`, by name: `position`, `description`, `parameters`, `origin`) |
-| `hook_order` | The order in which the hooks it lists were called |
+| `hook_order` | The order in which the hooks it lists were called, a scripted channel's room callbacks among them (`<id>.on_room_attached`, `<id>.on_room_detached`) |
+| `room_callbacks` | Per room and scripted channel, its room callbacks (§6.1) in order: `{"call": "on_room_attached", "binding": ...}`, the binding it was handed, or `{"call": "on_room_detached"}` |
 | `deliveries` | Per room and channel, the events a scripted channel's `deliver()` received, as delivered, in order |
 | `contexts` | Per room and scripted channel, the context each of its `deliver()` calls and, for an intelligence channel, each of its turns (`on_event()`) was handed, in order: `call` (`deliver` or `on_event`) and `recent_events`, the ids of its events read as Normalization reads them, lifecycle records left out |
 | `streamed` | Per room and streaming channel, the items its `deliver_stream` read, in order: `{"text": ...}` for a text delta, `{"row": event}` for a row the store holds, `{"failed": true}` where the stream raised |
@@ -672,6 +677,7 @@ refuses its value, a `ChannelId`).
 | `event_not_found` | A write naming an event its room does not hold: a change's target, `update_event` (§14.3) | `EventNotFoundError` | `StoreError::EventNotFound` |
 | `task_not_found` | An update of a task the store does not hold (§14.3) | `TaskNotFoundError` | `StoreError::TaskNotFound` |
 | `verification_refused` | A verification request refused, with its `reason`: `not_found` (none in the caller's organization), `not_open`, `expired`, `mismatch` (a wrong secret, counted) or `failed` (the last attempt) (§11.7.2) | `VerificationRefusedError` | `RoomKitError::VerificationRefused` |
+| `channel_failed` | A channel's own error, which the caller is handed (§6.1): a transport's `on_room_attached` refusing an attach, its `on_room_detached` failing a detach | the scripted channel's failure, raised as it is | `RoomKitError::Channel` |
 
 ## Reentrancy cells
 

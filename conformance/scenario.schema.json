@@ -319,6 +319,14 @@
           "description": "Reactions of a streaming channel's `deliver_stream` (§6.1), tried once per stream it is handed: `stop_after` stops its reading after that text delta, `fail` raises once it stopped.",
           "$ref": "#/$defs/reactions"
         },
+        "on_room_attached": {
+          "description": "Reactions of the channel's `on_room_attached` (§6.1), tried once per call: `fail` raises, refusing the attach. Each call is recorded under `room_callbacks`.",
+          "$ref": "#/$defs/reactions"
+        },
+        "on_room_detached": {
+          "description": "Reactions of the channel's `on_room_detached` (§6.1), tried once per call: `fail` raises. Each call is recorded under `room_callbacks`.",
+          "$ref": "#/$defs/reactions"
+        },
         "model": {
           "$ref": "#/$defs/model"
         },
@@ -2628,7 +2636,8 @@
         "task_not_found",
         "identity_not_found",
         "verification_refused",
-        "waits_for_itself"
+        "waits_for_itself",
+        "channel_failed"
       ]
     },
     "expect": {
@@ -2713,6 +2722,19 @@
         },
         "streamed": {
           "description": "Per room and streaming channel, the items its `deliver_stream` read, in order: `{\"text\": ...}` for a text delta, `{\"row\": event}` for a stored row, `{\"failed\": true}` where the stream raised.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": [
+                "array",
+                "object"
+              ]
+            }
+          }
+        },
+        "room_callbacks": {
+          "description": "Per room and scripted channel, the room callbacks the kit made (§6.1), in order: `{\"call\": \"on_room_attached\", \"binding\": ...}` with the binding it was handed, `{\"call\": \"on_room_detached\"}`.",
           "type": "object",
           "additionalProperties": {
             "type": "object",
