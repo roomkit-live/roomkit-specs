@@ -2936,6 +2936,19 @@ as an ACP agent channel's prompts are serialized by its process. Without it,
 the channel's turns in a room run side by side, each on the room as it stood
 when it was asked.
 
+**A message for the running turn.** An AI channel MAY hand a running turn the
+room's next message rather than give that message a turn of its own
+(`steer_room_turns`, declared as `steers_room_turns`, Section 10.6.2); it then
+takes the room's turns one at a time as above. A message that comes while the
+channel's turn runs in the room, when no other turn of the channel waits in the
+room, is committed and delivered as any message (Section 10.1), and the room's
+owner steers it into that turn (Section 21.3) as an `InjectMessage` of the text
+its content reads as (Section 6.6), under its speaker's label when the turn's
+history labels the room's speakers, as above: the turn
+reads it at its next stop, and no turn of its own starts. When the turn cannot
+take it (its loop is not reachable yet, or reads its queue no more) or the
+message reads as no text, the message waits a turn of its own, as above.
+
 **ACP Agent Channel:**
 
 An ACP agent channel connects a Room to an external
@@ -7056,9 +7069,11 @@ ChannelDeclaration
 │                                           # agent's (§6.4) do not
 ├── recent_events_window: int               # the history the owner's context
 │                                           # build reads for its turns
-└── serializes_room_turns: bool             # its turns in a room run one after
-                                            # the other, in the order the owner
-                                            # keeps (§6.4)
+├── serializes_room_turns: bool             # its turns in a room run one after
+│                                           # the other, in the order the owner
+│                                           # keeps (§6.4)
+└── steers_room_turns: bool                 # a message for the room's running
+                                            # turn is read by it (§6.4, §21.3)
 
 AgentIdentity                               # an Agent's identity fields (§19.1)
 ├── name: string | null
@@ -17704,6 +17719,13 @@ tools are one such point: a Cancel that arrives after the model's last event
 of a round, while its calls are announced but before they run, MUST stop them.
 None of them runs, and each announced call ends with `status = failed`, so no
 start row stays pending. The loop honours the same points for every provider.
+
+**The answer is a stop too.** A loop reads its directives before each round
+and once the model has answered. An `InjectMessage` that came while the model
+wrote its answer MUST be read: the same turn asks the model again, the answer
+then the message in its conversation, one round more. Once the loop has read
+its directives for the last time it MUST NOT be reached any more, so a
+directive the host is told reached a loop is one that loop reads.
 
 **Which loop a directive reaches.** One AI channel object serves every room it
 is bound to, so its running tool loops can belong to several rooms' turns at
