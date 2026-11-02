@@ -6022,7 +6022,8 @@ before it cancels, and an implementation that scopes operations to an
 organization (§17.2) scopes a cancellation by key alike, reaching only the
 deliveries of that organization's rooms, so two tenants that chose the same
 key never cancel each other's. A delivery whose call named no organization
-belongs to none until the call reads its room (step 3): a scoped cancellation
+belongs to none until the call reads its room (step 3), a call the room's own
+work adopted (§9.5.1, *Reentrance*) as any: a scoped cancellation
 reaching it before then takes effect once the room proves the organization's,
 and is not counted, since counting it would tell one tenant of a delivery
 another may own.
@@ -8187,11 +8188,15 @@ alone, never again to a transport, and nothing of its first delivery runs
 again. A completion releases within its call: a code reply's (§11.7.4)
 before the reply's call returns; one made under the room's lock, from a hook,
 places the answer in the room's lane after that work, where it runs once that
-work's delivery is over. The answer is a regeneration of the released event
-(§13.6): `process_timeout` bounds its wait for the room's lock
-(`process_timeout` with `operation = regenerate`), and a room closed while it
-waited in the lane refuses it before any agent runs (`room_refused_event`,
-`operation = regenerate`).
+work's delivery is over, on the room as that work left it: a hook that
+completes the request and then closes the room has no agent answer it. The
+answer is a regeneration of the released event (§13.6): `process_timeout`
+bounds its wait for the room's lock (`process_timeout` with
+`operation = regenerate`), and a room closed or deleted while it waited in the
+lane refuses it before any agent runs (`room_refused_event`,
+`operation = regenerate`, its `status` null for a room deleted, §8.2); a read
+of the room that fails there runs no agent either, the failure recorded as the
+regeneration's error.
 
 A held message whose delivery was cancelled (§10.1, *Explicit delivery
 cancellation*), before its commit, while it was delivered or while it waited
@@ -8201,8 +8206,9 @@ not answered in its place, since their answer would read the cancelled
 message as context. The cancellation is recorded with the held event, so a
 release in any process honours it; a cancellation by key reaches the held
 messages of the process that received them. The key names the held message
-from its call's decision on, so a release during the message's own delivery
-set names its answer too; a message nothing will release, blocked after it
+from its call's decision on, a message the room's own work adopted (a hook's
+call into its room, §9.5.1) as any, so a release during the message's own
+delivery set names its answer too; a message nothing will release, blocked after it
 was held or held under a policy that releases nothing, is named no longer
 than its call. A completion handle (§10.1, step 18) follows the delivery set
 alone: it cancels a held message while that set runs, and past it the key is
