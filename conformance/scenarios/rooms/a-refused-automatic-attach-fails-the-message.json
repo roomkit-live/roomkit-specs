@@ -15,7 +15,8 @@
         "category": "transport",
         "on_room_attached": [
           {
-            "fail": "the outside world said no"
+            "fail": "the outside world said no",
+            "repeat": true
           }
         ]
       },
