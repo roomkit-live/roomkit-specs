@@ -363,6 +363,7 @@ it was answered first.
 | `{"wait_for": gate}` | Waits until a call is held at the gate (a runner fails after 5 s) |
 | `{"open": gate}` | Opens the gate: every call held there, and every later one, goes on |
 | `{"idle": true}` | Waits until the kit runs nothing in the background |
+| `{"wait_for_lock": room, "waiters": n}` | Waits until `n` calls (1 by default) wait for the room's lock (a runner fails after 5 s): calls started in the background are then known to overlap |
 
 A call that has not returned after 10 s fails the scenario.
 

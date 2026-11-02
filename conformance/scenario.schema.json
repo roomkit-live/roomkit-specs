@@ -890,6 +890,24 @@
               "const": true
             }
           }
+        },
+        {
+          "type": "object",
+          "required": [
+            "wait_for_lock"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "wait_for_lock": {
+              "description": "The room whose lock the calls wait for.",
+              "type": "string"
+            },
+            "waiters": {
+              "description": "How many calls wait for it; 1 by default.",
+              "type": "integer",
+              "minimum": 1
+            }
+          }
         }
       ]
     },
