@@ -159,8 +159,8 @@ of the setup are not compared.
   - with `streams`, it takes a streamed response as it is written (§6.1
     `supports_streaming_delivery`): its `deliver_stream` reads what it is
     handed to the stream's end, recording each item under `streamed`, and
-    its `deliver_stream` reactions may stop it (`stop_after`) or make it
-    raise once it stopped (`fail`); with `streams_in`, it takes one only in
+    its `deliver_stream` reactions may stop it (`stop_after`), make it
+    raise once it stopped (`fail`) or return an `output`; with `streams_in`, it takes one only in
     the rooms listed (§6.1 `supports_streaming_delivery_for`);
   - `recent_events_window` (default 0): how many of the room's latest
     events it declares it reads (§6.1), which sizes the room's context;
