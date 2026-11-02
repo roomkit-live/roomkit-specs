@@ -1972,6 +1972,11 @@
             "properties": {
               "task_id": {
                 "type": "string"
+              },
+              "timeout_ms": {
+                "description": "The bound on the wait, the RFC's `timeout` in milliseconds (§10.6.5): null once it passes first. None by default.",
+                "type": "integer",
+                "minimum": 1
               }
             }
           }
