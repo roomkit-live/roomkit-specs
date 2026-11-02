@@ -18167,7 +18167,24 @@ publication (§13.4), the stored key looked up under the room lock within the
 room, whatever channel committed it (`get_event_by_idempotency_key` with no
 channel, §14.1; §14.3). The lookup, the transport's resolution and the
 publication's commit run in one section under the room lock, so a concurrent
-replay waits for the first and finds its key. Replays, including concurrent
+replay waits for the first and finds its key. Every caller takes that section,
+whatever work of the room it runs in: an off-lock hook's body or a parse
+(§9.5.1) waits for the lock as any caller does, behind the calls queued for it
+before; a caller that holds the lock already (a locked hook) runs it within
+its own section. The wait for the lock is bounded by `process_timeout`
+(§13.6): past it the delivery is `blocked`, reason `process_timeout`, and
+nothing is written. A transport detached while the delivery waits for the
+lock is seen by the section's check: the delivery is `unavailable`, reason
+`channel_unavailable`, and nothing is stored under its key, so a retry once
+the transport is back is a first publication. The publication's call is code
+under the section's lock (§9.5.1, Reentrance): it takes no admission ticket,
+so it never waits behind an arrival whose off-lock check holds one, and what
+it runs before its commit, its transport's parse and its hooks, the off-lock
+ones among them, runs under that lock, where a change of the room they make
+takes the lock again at once and a call they make into the room commits
+within the section, ahead of the publication. Its cascade's later passes, an
+agent's answer among them, take the lock as any section does once the section
+has released it. Replays, including concurrent
 ones, MUST NOT create a second trigger event while the key is retained. The
 same key identifies the same publication regardless of subsequent body or
 address changes. Retention follows the store: memory does not survive
