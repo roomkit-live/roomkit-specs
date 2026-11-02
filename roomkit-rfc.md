@@ -17985,11 +17985,11 @@ round of the tool loop that carries it.
 - A result made of content parts has its text bounded and its images kept in
   place.
 - A model that cannot take images MUST be given the text of a content-part
-  result, its parts one per line, each image an `[image]` mark, the way
-  it is given a message's; its ON_TOOL_CALL hooks read that text, as the
-  model does.
+  result, its parts one per line, each image an `[image]` mark; its
+  ON_TOOL_CALL hooks read that text, as the model does.
 - The bound applies to the model's copy, and it runs after ON_TOOL_CALL: the
-  hook receives the handler's whole result, and what it returns (the result,
+  hook receives the handler's whole result (as text for a model that cannot
+  take images), and what it returns (the result,
   or its override) is what is bounded and stored. Everything the model can
   read back has then passed through the hook, so a hook that redacts covers
   the full text; bounding first would let the model page the raw text back
