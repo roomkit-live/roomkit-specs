@@ -4695,7 +4695,11 @@ name, or the provider's error code) and `error_category`:
 
 On a room turn the event's `chain_depth` is the triggering event's plus one,
 and its `visibility` is the triggering event's response visibility (§8.5),
-`all` when it has none. A transport's delivery failure does not fire ON_ERROR.
+`all` when it has none. The event is a `message`, its source with the default
+direction (`inbound`); it answers the triggering event (`responds_to`) in that
+event's thread (its `parent_event_id`). A failed stream's carries the stream's
+`correlation_id`, the one its rows carry, whether it wrote any; a turn that
+raised carries none. A transport's delivery failure does not fire ON_ERROR.
 
 **The payload and context of a mutation hook.** ON_EVENT_UPDATED and
 ON_EVENT_DELETED carry the event whose stored state changed, and their
@@ -17364,7 +17368,11 @@ middle of a word or a number. A `completed` entry whose detail was cut keeps the
 whole outcome in `metadata.result`, bounded at 4,000 characters and its cut
 marked the same way: an agent reads an outcome back from it (Section 23.4),
 never from the summary, which once turned a 14.9 °C forecast into "1". Status posts fire `ON_STATUS_POSTED` hooks in that room; an
-entry that names no room reaches no room's hooks. Its framework event,
+entry that names no room reaches no room's hooks. The hooks fire at least as
+deep as the work that posted, read as it posts (§8.3): what a hook sends into
+the room is that deep, so a hook that tells the posting agent again ends at
+the depth limit. They fire during the framework's close too, until it seals
+its store (Section 12.10.4): the end of a task the close cuts reaches them. Its framework event,
 `status_posted` (§8.2), is the bus's and names no room, whichever room the
 entry names: a reader finds that room in the entry's `metadata.room_id`. Agents MAY use the StatusBus to
 signal completion, progress, or request attention without sending room events.
@@ -18329,7 +18337,12 @@ max_result_retries = 3, result_tool = null)` is called:
    or streamed, crosses `BEFORE_BROADCAST` and the agent's right to write and
    rides the child room's delivery lane, so the shared transport receives the
    agent's answers as its binding's access and the agent binding's visibility
-   allow, and the rows the room stored are the trace.
+   allow, and the rows the room stored are the trace. Either way the child
+   room is a room: an agent whose answer would reach `max_chain_depth` is not
+   asked, its record and its observation stored there and
+   `chain_depth_exceeded` emitted (§8.3), and the room metadata updates the
+   agents return are written as a room's are, a key only the framework
+   writes dropped (§10.1 step 15).
 6. Collect the agent's response as the task result: the answer the child
    room kept. With a shared transport, that is what the hooks decided — a
    rewrite holds for the result as for the delivery, and an answer the gate
