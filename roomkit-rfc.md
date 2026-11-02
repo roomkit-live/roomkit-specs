@@ -2610,8 +2610,12 @@ default, a bound the channel's configuration MAY change or remove
 (`max_author_images`). Only an image every vision provider takes is sent: PNG,
 JPEG, GIF or WebP (`image/jpg` read as JPEG, case and parameters aside), with
 data, up to 5 MiB of it (5,242,880 bytes, a data URI's read off its base64's
-length), and it is sent under the type it was read as, its data
-URI's header included: a provider refuses `image/jpg`. Anything else takes the image's place as a text mention, never a
+length, a resolved image's on its bytes), and it is sent under the type it was read as, its data
+URI's header included: a provider refuses `image/jpg`. A data URI is otherwise
+sent as written, its header's parameters in lower case: the form of its data
+(unpadded, URL-safe or wrapped base64) is the provider's to judge, and one its
+provider cannot read fails the turn before its request leaves, its images
+then refused as below. Anything else takes the image's place as a text mention, never a
 failed turn: a media of another type reads as its transcoded form (Section
 6.6), save that one alone in its event without a caption reads, for a model
 that does not see, as what the channel's `describe_empty_event` says of the
