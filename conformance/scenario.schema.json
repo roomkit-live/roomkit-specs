@@ -366,6 +366,17 @@
               }
             }
           }
+        },
+        "kit_tools": {
+          "description": "Tools the kit makes that a scripted agent is given as its own, among its tools (§23.4): `task_status`, the implementation's TaskStatusTool over the kit, and `cancel_task`, its CancelTaskTool, each reading the room and the channel of the call it serves, with their default windows.",
+          "type": "array",
+          "items": {
+            "enum": [
+              "task_status",
+              "cancel_task"
+            ]
+          },
+          "uniqueItems": true
         }
       }
     },

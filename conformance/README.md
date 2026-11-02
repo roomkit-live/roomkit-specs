@@ -303,6 +303,11 @@ scripted.
   (`{"error": "Human input rejected: <reason>"}`); no answer in time as a
   failure (`{"error": "Human input timed out after <s>s for tool '<name>'"}`,
   the seconds as Python writes a float).
+- `kit_tools`: tools the kit makes that the agent is given as its own,
+  among its tools (§23.4): `task_status` is the implementation's
+  TaskStatusTool over the kit, `cancel_task` its CancelTaskTool, each with
+  its default window, reading the room and the channel of the call it
+  serves; a call its scripted tools do not name goes on to them.
 
 A hook on `before_tool_use` or `on_tool_call` is registered on the kit as the
 implementation registers a hook on those triggers. Its payload is a tool
@@ -572,7 +577,7 @@ refuses its value, a `ChannelId`).
 
 | Name | RFC meaning | roomkit (Python) | roomkit-rs |
 |---|---|---|---|
-| `invalid_argument` | An argument refused before anything is read or written: the visibility `internal` (§7.3), a channel id the grammar refuses (§7.3), `standalone` on another type and an instruction's refusals on a direct injection (§10.1.1), a record naming another room (§10.5), a post from a channel that is not a host channel, a message on a host channel (§10.5), a host channel bound as an intelligence channel, a reserved room metadata key (§5.1), a hook registration §9.1 refuses | `ValueError` | `InboundError::{NotAHostChannel, InboundOnHostChannel, HostAsIntelligence, StandaloneOutsideInstruction, InternalVisibility}`, `Refused` with an instruction's reason, `LifecycleError::{InternalVisibility, HostAsIntelligence, ReservedMetadataKey}`, `MutationError::OtherRoom`, `KitError::{Config, Registration}`, a `ChannelId` refused |
+| `invalid_argument` | An argument refused before anything is read or written: the visibility `internal` (§7.3), a channel id the grammar refuses (§7.3), `standalone` on another type and an instruction's refusals on a direct injection (§10.1.1), a record naming another room (§10.5), a post from a channel that is not a host channel, a message on a host channel (§10.5), a host channel bound as an intelligence channel, a reserved room metadata key (§5.1), a hook registration §9.1 refuses, a tool set up on an agent under a name it serves already (§21.1) | `ValueError` | `InboundError::{NotAHostChannel, InboundOnHostChannel, HostAsIntelligence, StandaloneOutsideInstruction, InternalVisibility}`, `Refused` with an instruction's reason, `LifecycleError::{InternalVisibility, HostAsIntelligence, ReservedMetadataKey}`, `MutationError::OtherRoom`, `KitError::{Config, Registration}`, `RoomKitError::ToolNameCollision`, a `ChannelId` refused |
 | `channel_not_registered` | The channel named is not registered (§10.1 step 1, §10.5) | `ChannelNotRegisteredError` | `InboundError::UnknownChannel`, `KitError::UnknownChannel` |
 | `room_not_found` | No such room, or another organization's (§17.2) | `RoomNotFoundError` | `InboundError::{RoomNotFound, OtherOrganization}`, `LifecycleError::RoomNotFound`, `MutationError::RoomNotFound` |
 | `channel_not_bound` | The room does not bind the channel: a direct injection or a post from it (§10.5), a detach or a binding change of it (§7.2) | `ChannelNotFoundError`; `detach_channel()` answering `False` | `Refused { reason: "source_unbound" }`, `LifecycleError::ChannelNotBound` |
