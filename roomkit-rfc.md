@@ -2482,7 +2482,8 @@ picture.
 They ride the turn's input, never an assistant's message, where several
 providers refuse an image. Only an image every vision provider takes is kept:
 inline (a data URI, never a link, which may expire or be out of the vendor's
-reach), PNG, JPEG, GIF or WebP, up to 2 MB of data, from a live result (never
+reach), PNG, JPEG, GIF or WebP, its data URI 2,000,000 characters at most, its
+scheme and type read in any case, from a live result (never
 history rebuilt from the store). A turn that replayed them and whose content
 the provider refused replays none of the room's images after it: one the
 provider refused would fail every later turn. The content is refused when the
@@ -17984,7 +17985,9 @@ round of the tool loop that carries it.
 - A result made of content parts has its text bounded and its images kept in
   place.
 - A model that cannot take images MUST be given the text of a content-part
-  result, its images marked, the way it is given a message's.
+  result, its parts one per line, each image an `[image]` mark, the way
+  it is given a message's; its ON_TOOL_CALL hooks read that text, as the
+  model does.
 - The bound applies to the model's copy, and it runs after ON_TOOL_CALL: the
   hook receives the handler's whole result, and what it returns (the result,
   or its override) is what is bounded and stored. Everything the model can
