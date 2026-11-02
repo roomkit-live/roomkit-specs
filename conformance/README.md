@@ -144,9 +144,10 @@ of the setup are not compared.
   for an author's media (§6.4), serving every AI channel registered on the
   kit, `media_resolver`, the kit's media resolver, answering each reference
   its `media` names with those bytes (written in base64) and any other with
-  none, and `attached_media`, the kit's attached-media reader, naming as an
-  event's media the media contents (in the serialized form) its metadata
-  lists under `key`.
+  none, whatever the room, and recording each call under `media_resolver`
+  (the media's `url`, the `room_id` of the turn), and `attached_media`, the
+  kit's attached-media reader, naming as an event's media the media
+  contents (in the serialized form) its metadata lists under `key`.
 - `channels`: each is registered. A channel of type `host` is the
   implementation's host channel (§10.5); any other is a **scripted channel**:
   - `id`, `type` (a ChannelType: `sms`, `websocket`, `whatsapp`, `email`,
@@ -273,7 +274,9 @@ scripted.
   calls without the done event that carries its finish reason and usage.
   `refuses` makes the provider refuse the request once the model wrote its
   text, before its calls and its end: an error it does not retry, with that
-  `status` (an HTTP status) and `message` (§6.4).
+  `status` (an HTTP status) and `message` (§6.4), classed as a context too
+  long for the model when `context_overflow` is true, as not one when it is
+  false, unclassed when it is absent.
   `gate` holds the round at that gate, before it writes anything, until a
   step opens it. `model.vision`: whether the model sees images (§6.4, a
   provider's `supports_vision`), false by default.
@@ -568,6 +571,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `lifecycle` | Per room, the lifecycle records (§5.1) in index order, when the implementation writes them: an implementation that writes none passes. It says which changes write one, and which write none (a change that changes nothing, §7.2) |
 | `participants` | Per room, the participants the store holds (§5.5), in the store's order |
 | `resolver` | The scripted resolver's calls, in order |
+| `media_resolver` | The kit's media resolver's calls, in order: `{url, room_id}` |
 
 An outcome is `{"result": ...}`, matched as below, or `{"error": name}` (or
 `{"error": {"name": ..., "reason": ...}}`). A call whose outcome names neither

@@ -2818,6 +2818,13 @@
             "object"
           ]
         },
+        "media_resolver": {
+          "description": "The kit's media resolver's calls (§6.4), in order: the `url` of each media it is asked for and the `room_id` of the turn that asks.",
+          "type": [
+            "array",
+            "object"
+          ]
+        },
         "ai_events": {
           "description": "Per room, the framework events an AI channel's turn emits (§8.2, Level 1: `before_ai_generation`, `ai_response`), in emission order, matched as `framework_events`.",
           "type": "object",
@@ -2924,6 +2931,10 @@
             },
             "message": {
               "type": "string"
+            },
+            "context_overflow": {
+              "description": "Whether the provider classes the refusal as a context too long for the model (§6.4, a provider error's `context_overflow`); unclassed when absent.",
+              "type": "boolean"
             }
           }
         }
