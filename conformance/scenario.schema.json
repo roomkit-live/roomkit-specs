@@ -518,6 +518,34 @@
               ]
             }
           }
+        },
+        "agent": {
+          "description": "A scripted agent built as an Agent (RFC §19.7) with this identity: its role, description and scope written at the end of its turns' system prompt as an identity block, in its language unless the room's conversation state sets one, unless identity_in_prompt is false.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "purpose": {
+              "type": "string"
+            },
+            "scope": {
+              "type": "string"
+            },
+            "language": {
+              "type": "string"
+            },
+            "identity_in_prompt": {
+              "type": "boolean"
+            }
+          }
         }
       }
     },
