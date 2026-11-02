@@ -786,9 +786,6 @@ shows and takes it off both lists.
 | `verification/a-release-from-a-hook-that-closes-the-room-is-answered-by-no-agent` | roomkit-rs | §11.7.6: a hook's release is answered once its section is over | RMK-1200 |
 | `delivery/a-keyed-delivery-whose-transport-is-detached-before-its-section-writes-nothing` | roomkit-rs | §22.1: a keyed publication's lookup, transport check and commit run in one section under the room lock | RMK-1207 |
 | `tasks/a-hand-back-leaves-the-notified-agent-s-prompt-as-its-binding-holds-it` | roomkit-rs | §6.4: a binding's metadata system_prompt is the agent's turn prompt | RMK-1208 |
-| `tasks/a-delegated-turn-failing-after-a-tool-round-keeps-its-end` | roomkit-rs | §23.3 step 6: a delegated turn that failed after it began keeps its end on the task | RMK-1208 |
-| `streaming/a-room-turn-its-reader-stopped-tells-its-caller-cancelled` | roomkit-rs | §6.4: the caller's record names each streamed reply's end under turns | RMK-1208 |
-| `tasks/a-task-cut-before-its-worker-wrote-any-text-fails-with-no-output` | roomkit-rs | §23.3 step 6: a delegated turn cut before any text fails its task naming its end | RMK-1208 |
 | `tasks/a-failed-task-keeps-the-error-its-worker-s-turn-raised` | roomkit-rs | §23.3 step 6: a failed task keeps the failure its turn raised, its type unchanged | RMK-1208 |
 
 roomkit's earlier three were fixed by RMK-976 and RMK-977, and roomkit-rs's
