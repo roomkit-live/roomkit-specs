@@ -260,16 +260,24 @@ scripted.
   its text, before its calls and its end: its response stream raises
   (§12.2 step 13s). `done: false` ends its stream after its text and its
   calls without the done event that carries its finish reason and usage.
+  `gate` holds the round at that gate, before it writes anything, until a
+  step opens it.
 - `tools`: what the agent serves, each declared with its `name`,
   `description` and `parameters` (a JSON Schema), and answering every call
   one way: `returns` a text, `raises` an error of a `kind` with a `message`
   (the model reads the kind, the observers the message, §9.3), `fails` or
-  `refuses` with words the model reads (§9.3), or `hangs`, never answering.
+  `refuses` with words the model reads (§9.3), or `hangs`, never answering;
+  with `gate`, each call is held at that gate until a step opens it, then
+  answered so.
 - `tool_policy`: a ToolPolicy's `allow` and `deny` patterns (§21.1);
   `max_tool_rounds`: the loop's bound on rounds of calls (Appendix A.9,
   default 50).
 - `max_context_events`: the window of the agent's default memory, a sliding
   window of the room's latest events (§20.3, default 50).
+- `serialize_room_turns`: its turns in a room run one after the other (§6.4,
+  default false); `steer_room_turns`: a message for a room where its turn
+  runs is steered into that turn rather than a turn of its own (§6.4,
+  §21.3, default false), its turns serialized.
 
 A hook on `before_tool_use` or `on_tool_call` is registered on the kit as the
 implementation registers a hook on those triggers. Its payload is a tool

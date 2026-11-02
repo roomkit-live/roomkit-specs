@@ -313,6 +313,14 @@
         "sender_is_participant": {
           "description": "Whether the channel names its own senders: its inbound `sender_id` is a room's `Participant.id`, not an address (§11.6), which no resolver is asked about.",
           "type": "boolean"
+        },
+        "serialize_room_turns": {
+          "description": "A scripted agent's serialize_room_turns: its turns in a room run one after the other, each reading the answers before it (§6.4, A room's turns one after the other).",
+          "type": "boolean"
+        },
+        "steer_room_turns": {
+          "description": "A scripted agent's steer_room_turns: a message for a room where its turn runs is handed to that turn, read at its next stop, rather than a turn of its own (§6.4, A message for the running turn; §21.3). It implies serialize_room_turns.",
+          "type": "boolean"
         }
       }
     },
@@ -2424,6 +2432,10 @@
         "done": {
           "description": "Whether the round's response stream ends with its done event (default true): false ends it after its text and its calls, without one.",
           "type": "boolean"
+        },
+        "gate": {
+          "description": "The model holds the round at this gate, before it writes anything, until a step opens it.",
+          "type": "string"
         }
       }
     },
@@ -2498,6 +2510,10 @@
         "declines": {
           "description": "The tool's handler declines every call as not its own (§21.4): a call served by nothing, which an `on_tool_call` SYNC hook may serve (§9.3).",
           "type": "boolean"
+        },
+        "gate": {
+          "description": "Each call is held at this gate until a step opens it, then answered as the tool's other member says.",
+          "type": "string"
         }
       },
       "oneOf": [
