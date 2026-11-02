@@ -224,7 +224,8 @@ room callbacks of the setup are not compared.
   its own uninstall step do, each as a reaction does: it holds at its
   `gate`, makes the actions of its `do` in order, `$room` naming the room
   it is installed in, then, for an install, refuses the room with
-  `refuse`, the strategy's own refusal, an `invalid_argument`.
+  `refuse`, the strategy's own refusal, an `invalid_argument` (an
+  uninstall step refuses nothing).
 
 ### Identity resolution
 

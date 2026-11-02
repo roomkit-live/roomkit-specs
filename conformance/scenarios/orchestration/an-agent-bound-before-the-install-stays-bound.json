@@ -40,7 +40,19 @@
         "agents": [
           "assistant",
           "helper"
-        ]
+        ],
+        "install": {
+          "do": [
+            {
+              "call": "store.binding_exists",
+              "room_id": "$room",
+              "channel_id": "helper",
+              "expect": {
+                "result": true
+              }
+            }
+          ]
+        }
       }
     ]
   },

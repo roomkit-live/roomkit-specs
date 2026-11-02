@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "orchestration/create-room-installs-through-the-same-path",
-  "title": "A room created with a strategy installs it as install_strategy does: its agents attached, and taken back by uninstall_strategy",
+  "title": "A room created with a strategy installs it as install_strategy does: its agents attached before its install runs, and taken back by uninstall_strategy",
   "rules": [
     "§19.7"
   ],
@@ -22,7 +22,27 @@
         "agents": [
           "sales",
           "billing"
-        ]
+        ],
+        "install": {
+          "do": [
+            {
+              "call": "store.binding_exists",
+              "room_id": "$room",
+              "channel_id": "sales",
+              "expect": {
+                "result": true
+              }
+            },
+            {
+              "call": "store.binding_exists",
+              "room_id": "$room",
+              "channel_id": "billing",
+              "expect": {
+                "result": true
+              }
+            }
+          ]
+        }
       }
     ]
   },

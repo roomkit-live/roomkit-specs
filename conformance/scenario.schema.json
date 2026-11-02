@@ -4087,7 +4087,7 @@
       }
     },
     "strategy_step": {
-      "description": "What a scripted strategy's install or uninstall does (§19.7), as a reaction does: it holds at its `gate`, makes its actions in order (`$room` the room it is installed in), then, for an install, refuses the room with `refuse`.",
+      "description": "What a scripted strategy's install does (§19.7), as a reaction does: it holds at its `gate`, makes its actions in order (`$room` the room it is installed in), then refuses the room with `refuse`.",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -4130,7 +4130,24 @@
           "$ref": "#/$defs/strategy_step"
         },
         "uninstall": {
-          "$ref": "#/$defs/strategy_step"
+          "$ref": "#/$defs/strategy_uninstall_step"
+        }
+      }
+    },
+    "strategy_uninstall_step": {
+      "description": "What a scripted strategy's own uninstall step does (§19.7): it holds at its `gate`, then makes its actions in order, `$room` the room it is installed in.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "gate": {
+          "description": "Hold at this gate until a step opens it.",
+          "type": "string"
+        },
+        "do": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/action"
+          }
         }
       }
     }
