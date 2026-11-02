@@ -273,7 +273,8 @@ scripted.
   (the model reads the kind, the observers the message, §9.3), `fails` or
   `refuses` with words the model reads (§9.3), or `hangs`, never answering;
   with `gate`, each call is held at that gate until a step opens it, then
-  answered so.
+  answered so; with `declared: false`, the agent does not declare it, and
+  its tool handler serves it all the same, for a hook that declares it.
 - `tool_policy`: a ToolPolicy's `allow` and `deny` patterns (§21.1);
   `max_tool_rounds`: the loop's bound on rounds of calls (Appendix A.9,
   default 50).
@@ -339,8 +340,10 @@ hands, and records it (below): on `before_ai_generation` the generation
 (`ToolRoundEvent`), as `tool_round`; on `on_ai_response` the turn's response
 (`AIResponseEvent`), as `response`. A `modify`'s `event` is a patch: on a
 generation, the replacement event whose context's `system_prompt` and
-`messages` (each `{role, text}`) are the patch's, and whose `tools` are
-those of the context the patch names; on a round, what the hook does to the
+`messages` (each `{role, text}`) are the patch's, whose `tools` are
+those of the context the patch names, and then each tool `define` gives
+(`name`, `description`, `parameters`) in place of the tool of its name, or
+after them; on a round, what the hook does to the
 event in place (§6.4, Between two rounds): each name of `withdrawn`
 withdrawn, each text of `messages` added.
 

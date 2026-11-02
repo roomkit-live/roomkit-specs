@@ -2807,6 +2807,10 @@
         "gate": {
           "description": "Each call is held at this gate until a step opens it, then answered as the tool's other member says.",
           "type": "string"
+        },
+        "declared": {
+          "description": "Whether the agent declares the tool among its own (§21.1), true by default: an undeclared tool is served by the agent's tool handler all the same, for a hook that declares it (§6.4, What the generation hooks see).",
+          "type": "boolean"
         }
       },
       "oneOf": [
