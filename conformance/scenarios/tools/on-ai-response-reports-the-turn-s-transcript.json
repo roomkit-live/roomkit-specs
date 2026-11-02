@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "tools/on-ai-response-reports-the-turn-s-transcript",
-  "title": "ON_AI_RESPONSE reports the completed turn: its text one segment per stretch between calls, joined by a blank line, the calls and rounds it ran, why it ended, what its generations used, and the tools it declared",
+  "title": "ON_AI_RESPONSE reports the completed turn: its text one segment per stretch between calls, joined by a blank line, the calls and rounds it ran, why it ended, what its generations used, and the tools it declared; an observer that fails changes nothing of it",
   "rules": [
     "§6.4",
     "§9.2",
@@ -88,6 +88,16 @@
         "name": "report",
         "trigger": "on_ai_response",
         "execution": "async"
+      },
+      {
+        "name": "broken",
+        "trigger": "on_ai_response",
+        "execution": "async",
+        "reactions": [
+          {
+            "fail": "observer unavailable"
+          }
+        ]
       }
     ]
   },
@@ -115,7 +125,55 @@
     }
   ],
   "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "index": 0,
+          "type": "message"
+        },
+        {
+          "index": 1,
+          "type": "message",
+          "content": {
+            "type": "text",
+            "body": "Let me look."
+          }
+        },
+        {
+          "index": 2,
+          "type": "tool_call_start"
+        },
+        {
+          "index": 3,
+          "type": "tool_call_end"
+        },
+        {
+          "index": 4,
+          "type": "tool_call_start"
+        },
+        {
+          "index": 5,
+          "type": "tool_call_end"
+        },
+        {
+          "index": 6,
+          "type": "message",
+          "content": {
+            "type": "text",
+            "body": "Done."
+          },
+          "metadata": {
+            "loop_end_reason": "completed"
+          }
+        }
+      ]
+    },
     "hooks": {
+      "broken": [
+        {
+          "trigger": "on_ai_response"
+        }
+      ],
       "report": [
         {
           "trigger": "on_ai_response",
