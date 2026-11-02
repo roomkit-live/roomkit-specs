@@ -3586,7 +3586,11 @@ when its message names a retryable status, a rate limit or an overload, as
 whole words. One exception is kept: Ollama reports a stream its server
 aborted (its template failed to parse the model's own output) with no
 status, a generation defect that a new sample may not repeat, and it reads
-as a lost connection.
+as a lost connection. The failure's text, as a turn's error record, `ON_ERROR`
+and a log line read it, leads with the provider's name and the status it
+answered, `cerebras (402): Payment required`, `anthropic: connection reset`,
+unless its message already names the provider as a word, in any case, or it
+names no provider; its message keeps the provider's own text.
 
 **SMS Provider interface:**
 
