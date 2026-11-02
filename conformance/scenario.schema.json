@@ -2957,6 +2957,10 @@
             "context_overflow": {
               "description": "Whether the provider classes the refusal as a context too long for the model (§6.4, a provider error's `context_overflow`); unclassed when absent.",
               "type": "boolean"
+            },
+            "provider": {
+              "description": "The provider that refuses, by its name (a provider error's `provider`); none when absent.",
+              "type": "string"
             }
           }
         },
