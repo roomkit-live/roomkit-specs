@@ -184,7 +184,7 @@
             "tool_name": "delete_account",
             "tool_id": "c1",
             "outcome": "refused",
-            "result": "$any",
+            "result": "{\"error\": \"Tool 'delete_account' is not available in this turn.\"}",
             "arguments": {}
           }
         },
