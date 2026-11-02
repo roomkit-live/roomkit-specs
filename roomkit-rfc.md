@@ -2754,16 +2754,24 @@ marks, digits, spaces, `.`, `-`, `_`, `#`, apostrophes, a letter that reads
 as a colon or a double quote left out, a mark such as the Devanagari
 visarga included), on one line and bounded, as the
 `Name: ` prefix of a transcript gives it. When the history window holds
-several speakers (a person by name, or, for turns whose sender has no name,
-the channel they came through; the runtime's own system events aside, and a
-one-to-one conversation left as it is), or two people or more take part
+several speakers, counted by source (a participant, whichever channel
+reached them, else a sender on its channel, else the channel: two senders
+with no name on one channel are two speakers, one sender whose name changed
+is one; the runtime's own system events aside, and a one-to-one
+conversation left as it is), or two people or more take part
 (below), every line of a participant's turn
 in the conversation opens with such a label, which the runtime alone places:
 the speaker's name, or, for a turn whose speaker has no name, its channel as
 the room addresses it (`@sms1`; an agent of a discussion by its handle,
 `@Jev`, which its turn's notes give too, Section 19.7.5), kept to an
 identifier's characters and never a participant's id, a form no name takes,
-so that a person named like an agent or a channel does not read as one. What the participant typed on the
+so that a person named like an agent or a channel does not read as one.
+Senders with no name are told apart within their channel: the second source
+under one channel's label carries its rank after it (`@sms1 (2)`), and so on,
+in the order they first speak in the turns the reader reads, so that two
+numbers texting through one channel do not read as one person. That rank is
+not recorded on the event (Section 10.1, step 12), and may change as the
+window slides. What the participant typed on the
 line follows as a JSON string, its `"` and backslashes escaped, every other
 double quote mark made a single one and the marks that reorder text dropped
 as inside a quote (a `”` left as typed read as the string's end), and its
