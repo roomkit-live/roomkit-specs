@@ -762,8 +762,13 @@ naming the scenario, the implementation and its commit, the rule broken and
 the probe; the runner expects it to fail and fails once it passes, so a fix
 shows and takes it off both lists.
 
-There are none today: roomkit's three were fixed by RMK-976 and RMK-977, and
-roomkit-rs's three by step 3's milestone 2.
+| Scenario | Implementation | Rule broken | Card |
+|---|---|---|---|
+| `verification/a-release-from-a-hook-that-closes-the-room-is-answered-by-no-agent` | roomkit-rs | §11.7.6: a hook's release is answered once its section is over | RMK-1200 |
+| `delivery/a-keyed-delivery-whose-transport-is-detached-before-its-section-writes-nothing` | roomkit-rs | §22.1: a keyed publication's lookup, transport check and commit run in one section under the room lock | RMK-1207 |
+
+roomkit's earlier three were fixed by RMK-976 and RMK-977, and roomkit-rs's
+earlier three by step 3's milestone 2.
 
 ## Writing a scenario
 
