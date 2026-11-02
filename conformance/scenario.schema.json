@@ -694,7 +694,31 @@
         "router": {
           "$ref": "#/$defs/conversation_router"
         }
-      }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "router",
+              "reactions"
+            ]
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "router"
+            ]
+          },
+          "then": {
+            "properties": {
+              "trigger": {
+                "const": "before_broadcast"
+              }
+            }
+          }
+        }
+      ]
     },
     "reactions": {
       "description": "Tried in order on each call: the first whose `when` matches is used, and used once unless it repeats. No reaction left: the default.",
@@ -3340,7 +3364,31 @@
         "router": {
           "$ref": "#/$defs/conversation_router"
         }
-      }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "router",
+              "reactions"
+            ]
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "router"
+            ]
+          },
+          "then": {
+            "properties": {
+              "trigger": {
+                "const": "before_broadcast"
+              }
+            }
+          }
+        }
+      ]
     },
     "store_call": {
       "description": "A call of the store's own interface (RFC §14.1), `store.` and the operation's name, with the operation's arguments by name: what the store answers, whatever the kit does.",
