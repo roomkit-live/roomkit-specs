@@ -3026,10 +3026,10 @@ room's next message rather than give that message a turn of its own
 takes the room's turns one at a time as above. So does any channel that steers
 its room turns: a channel's `serializes_room_turns` defaults to its
 `steers_room_turns`, the owner holding a channel by a declaration that steers
-them takes them as serialized, and registering a channel that says it steers
-them but does not serialize them MUST fail, its steering otherwise dead. A
-message that comes while the
-channel's turn runs in the room, when no other turn of the channel waits in the
+them takes them as serialized, and registering a live channel that says it
+steers them but does not serialize them MUST fail, its steering otherwise
+dead. A message that comes while the channel's turn runs in the room, when no
+other turn of the channel waits in the
 room, is committed and delivered as any message (Section 10.1), and the room's
 owner steers it into that turn (Section 21.3) as an `InjectMessage` of the text
 its content reads as (Section 6.6), under its speaker's label when the turn's
