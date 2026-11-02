@@ -672,6 +672,10 @@
             },
             "metadata_updates": {
               "type": "object"
+            },
+            "error": {
+              "description": "In an `on_event` reaction: the error the channel met while producing its output, with this message (§6.1, a ChannelOutput's error): the output goes on, its response events kept, and the error surfaces as a raised one's (§9.3 ON_ERROR).",
+              "type": "string"
             }
           }
         },
