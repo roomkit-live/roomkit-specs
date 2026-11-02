@@ -2487,9 +2487,9 @@ history rebuilt from the store). A turn that replayed them and whose content
 the provider refused replays none of the room's images after it: one the
 provider refused would fail every later turn. The content is refused when the
 turn's first request fails, before anything of it streamed, on a provider
-error not retried that is no authentication, payment, permission, missing model
-or rate limit: a later round, or a stream already under way, shows the images were
-taken. Each label names its call as the input names a call (below), each
+error that is not retryable and is no authentication, payment, permission,
+missing model or rate limit (HTTP 401, 402, 403, 404 or 429): a later round, or
+a stream already under way, shows the images were taken. Each label names its call as the input names a call (below), each
 copy of a runtime mark replaced, and the images count in what the turn
 measures before its history (Section 20). A model that does not see reads the
 notes alone. A
@@ -2594,7 +2594,8 @@ reader: a callable `(event) → list of MediaContent` handed to the framework
 (`attached_media`), which serves every AI channel registered on it. A channel
 reads each event of the room through it, the history it gives its memory
 provider and the event it answers alike, an instruction (Section 10.1.1)
-excepted: the media the reader names follow the event's own content, in the
+and a deleted event, whose content is withheld (Section 10.3), excepted: the
+media the reader names follow the event's own content, in the
 order given, as the parts of a `CompositeContent` (a text without words gives
 them its place), and every rule of this paragraph and of Section 20 applies to
 them as to the event's own. The reader is asked again on every turn, so it
@@ -2625,10 +2626,11 @@ model sees (its capabilities name TEXT, RICH and MEDIA), so that the event it
 answers reads as the same event does in its history. The name a mention gives (the caption, else the
 filename, else the type) is quoted (Section 6.4), and a mention never carries
 a data URI or a reference. A turn whose content the provider refused, as for
-the images tools returned above, marks the author images its request carried
-refused in the room, and the turns after it carry a mention in their place:
-one the provider refused would fail every later turn while it stays in the
-window. The images
+the images tools returned above, marks the author images its request carried,
+attached ones alike, refused in the room, and the turns after it carry in
+their place a mention that the model's provider refused the image, which takes
+no place among the newest images a turn sends: one the provider refused would
+fail every later turn while it stays in the window. The images
 an author sent count in what the turn measures (Section 20); a media that is
 not an image counts as its mention.
 
