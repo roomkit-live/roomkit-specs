@@ -278,6 +278,14 @@ scripted.
   default false); `steer_room_turns`: a message for a room where its turn
   runs is steered into that turn rather than a turn of its own (§6.4,
   §21.3, default false), its turns serialized.
+- `memory`: a **scripted memory** in place of the default (§20): the room's
+  latest `max_events` events as a sliding window reads them (default the
+  agent's `max_context_events`), with the `messages` it built (each `role`
+  and `text`), the `notes` it retrieved for the turn alone and the
+  `speakers` its messages name (§20.2); `budget_aware` wraps it in the
+  implementation's budget-aware memory, of its `max_context_tokens`,
+  `safety_margin_ratio` (default 0.15), `min_events` (default 3) and
+  `reserved_tokens` (default 0) (§20.3).
 
 A hook on `before_tool_use` or `on_tool_call` is registered on the kit as the
 implementation registers a hook on those triggers. Its payload is a tool

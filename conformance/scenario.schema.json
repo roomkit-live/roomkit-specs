@@ -321,6 +321,9 @@
         "steer_room_turns": {
           "description": "A scripted agent's steer_room_turns: a message for a room where its turn runs is handed to that turn, read at its next stop, rather than a turn of its own (§6.4, A message for the running turn; §21.3). It implies serialize_room_turns.",
           "type": "boolean"
+        },
+        "memory": {
+          "$ref": "#/$defs/scripted_memory"
         }
       }
     },
@@ -3215,6 +3218,78 @@
             "object",
             "null"
           ]
+        }
+      }
+    },
+    "scripted_memory": {
+      "description": "A scripted agent's memory (§20), in place of its default: the room's latest `max_events` events as a sliding window reads them (§20.3, the agent's max_context_events by default), with the `messages` it built, read before them, the `notes` it retrieved for the turn alone and the `speakers` its messages name (§20.2). `budget_aware` wraps it in the implementation's budget-aware memory (§20.3), which trims the oldest events to what the window leaves once the rest of the turn is paid for.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_events": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "messages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "role",
+              "text"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "role": {
+                "enum": [
+                  "system",
+                  "user",
+                  "assistant"
+                ]
+              },
+              "text": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "speakers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "budget_aware": {
+          "description": "The budget-aware memory's `max_context_tokens`, `safety_margin_ratio` (default 0.15), `min_events` (default 3) and `reserved_tokens` (default 0).",
+          "type": "object",
+          "required": [
+            "max_context_tokens"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "max_context_tokens": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "safety_margin_ratio": {
+              "type": "number",
+              "minimum": 0
+            },
+            "min_events": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "reserved_tokens": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
         }
       }
     }
