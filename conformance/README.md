@@ -203,7 +203,14 @@ room callbacks of the setup are not compared.
   (default `sync`), `priority`, `timeout_ms`, `channel_types`, `channel_ids`,
   `directions`, `fail_closed`, `needs_lock`, and its `reactions`. A
   **scripted hook** records each call (its trigger, the room of its context,
-  its payload), then reacts; with no reaction it allows.
+  its payload), then reacts; with no reaction it allows. A hook with a
+  `router` is a **conversation router's** hook instead (§19.4), on
+  `before_broadcast`: the implementation's ConversationRouter built from
+  its `rules` (each `agent_id`, `priority` (default 0) and `conditions`:
+  `phases`, `channel_types`, `intents`, `source_channel_ids`, each a list,
+  absent for no condition), `default_agent_id` and `supervisor_id`, the
+  hook its router gives. It records no call and has no reactions. A room's
+  hook (`add_room_hook`) may have one too.
 - `identities`: each stored in the kit's store before the rooms are made,
   an Identity (§5.6) in the serialized form: what `resolve_participant`
   reads.
@@ -452,6 +459,7 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `uninstall_strategy` | `room_id` (§19.7) | whether the room held a strategy |
 | `claim_room_strategy` | `room_id`, `strategy`: claims the room for the strategy, or refuses, installing nothing (§19.7) | null |
 | `room_strategy` | `room_id` | the id of the scripted strategy installed in the room, null for none (§19.7) |
+| `save_conversation_state` | `room_id`, `transitions`: each a phase transition (`to_phase`, `to_agent`, `reason`, `metadata`) made in order from the conversation state of the room the store holds, the default state for a room it lacks; the state the last one leaves is saved as the room's (§19.2) | null |
 
 ### Calls on the store
 

@@ -690,6 +690,9 @@
         },
         "reactions": {
           "$ref": "#/$defs/reactions"
+        },
+        "router": {
+          "$ref": "#/$defs/conversation_router"
         }
       }
     },
@@ -1145,7 +1148,8 @@
             "install_strategy",
             "uninstall_strategy",
             "claim_room_strategy",
-            "room_strategy"
+            "room_strategy",
+            "save_conversation_state"
           ]
         },
         "organization_id": {
@@ -2695,6 +2699,53 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "save_conversation_state"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "transitions"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              },
+              "transitions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "to_phase"
+                  ],
+                  "properties": {
+                    "to_phase": {
+                      "type": "string"
+                    },
+                    "to_agent": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "reason": {
+                      "type": "string"
+                    },
+                    "metadata": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       ]
     },
@@ -3285,6 +3336,9 @@
         },
         "reactions": {
           "$ref": "#/$defs/reactions"
+        },
+        "router": {
+          "$ref": "#/$defs/conversation_router"
         }
       }
     },
@@ -4175,6 +4229,79 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/action"
+          }
+        }
+      }
+    },
+    "conversation_router": {
+      "description": "A conversation router (§19.4), the implementation's ConversationRouter: its hook is the hook's handler, which records no call.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/routing_rule"
+          }
+        },
+        "default_agent_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "supervisor_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "routing_rule": {
+      "description": "A RoutingRule (§19.4): the agent its conditions select, tried in ascending priority.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agent_id",
+        "conditions"
+      ],
+      "properties": {
+        "agent_id": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "integer"
+        },
+        "conditions": {
+          "description": "RoutingConditions, each absent for no condition, all of them holding for the rule to match.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "phases": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "channel_types": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "intents": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "source_channel_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           }
         }
       }
