@@ -171,7 +171,7 @@
           "source": {
             "channel_id": "sms",
             "participant_id": "alice-id",
-            "verification": "unverified"
+            "verification": "pending"
           },
           "metadata": {
             "roomkit:verification_held": {

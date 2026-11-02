@@ -495,6 +495,7 @@ its others:
 | `revoke_verification` | `identity_id`, `reason` (default `revoked`) | the verification ended, or null when none was in force |
 | `verification_of` | `identity_id` | the identity's verification as it stands now, unverified for none (§11.7.1) |
 | `check_verifications` | none | the verifications whose time had passed, which it ended (§11.7.5) |
+| `sender_verification` | none: an action of a scripted hook, it reads the event and the context the hook was handed | the verification of the event's sender in the room's organization, or null when the pipeline did not label the event (§11.7.3) |
 
 A verification's expiry and a request's are timers: a scenario waits for one
 through a gate of a hook on `on_verification_ended`, never through a delay.
