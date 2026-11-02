@@ -137,7 +137,10 @@
         },
         {
           "tool_round": {
-            "round_index": 1
+            "round_index": 1,
+            "tools": [
+              "safe_read"
+            ]
           }
         }
       ]
