@@ -3023,7 +3023,11 @@ when it was asked.
 **A message for the running turn.** An AI channel MAY hand a running turn the
 room's next message rather than give that message a turn of its own
 (`steer_room_turns`, declared as `steers_room_turns`, Section 10.6.2); it then
-takes the room's turns one at a time as above. A message that comes while the
+takes the room's turns one at a time as above. So does any channel that steers
+its room turns: a channel's `serializes_room_turns` defaults to its
+`steers_room_turns`, and the owner holding a channel by a declaration that
+steers them takes them as serialized, so that what the channel says, what its
+declaration says and what the owner does agree. A message that comes while the
 channel's turn runs in the room, when no other turn of the channel waits in the
 room, is committed and delivered as any message (Section 10.1), and the room's
 owner steers it into that turn (Section 21.3) as an `InjectMessage` of the text
@@ -7195,7 +7199,8 @@ ChannelDeclaration
 │                                           # the other, in the order the owner
 │                                           # keeps (§6.4)
 └── steers_room_turns: bool                 # a message for the room's running
-                                            # turn is read by it (§6.4, §21.3)
+                                            # turn is read by it, its turns
+                                            # serialized (§6.4, §21.3)
 
 AgentIdentity                               # an Agent's identity fields (§19.1)
 ├── name: string | null
