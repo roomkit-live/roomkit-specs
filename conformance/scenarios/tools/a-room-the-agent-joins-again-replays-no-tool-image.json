@@ -7,7 +7,7 @@
     "§6.4",
     "§10.6.3"
   ],
-  "notes": "Python's AIChannel._forget_room, which on_room_detached calls, drops the room's ToolUsageMemory; its next turn seeds the record from the store without images (RMK-1240).",
+  "notes": "Python's AIChannel._forget_room, which on_room_attached and on_room_detached call, drops the room's ToolUsageMemory; its next turn seeds the record from the store without images (RMK-1240).",
   "setup": {
     "channels": [
       {
