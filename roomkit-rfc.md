@@ -8212,11 +8212,11 @@ alone, never again to a transport, and nothing of its first delivery runs
 again. A completion releases within its call: a code reply's (§11.7.4)
 before the reply's call returns; one made under the room's lock, from a hook,
 places the answer in the room's lane at the release, ahead of that work's own
-delivery, where it runs once that work is over, on the room as that work left
-it: a hook that completes the request and lets its event through has the
-released message answered first, and one that then closes the room has no
-agent answer it. The
-answer is a regeneration of the released event (§13.6): `process_timeout`
+delivery, and the answer leaves its place once that work is over, on the room
+as that work left it: a hook that completes the request and lets its event
+through has the released message answered first, and one that then closes the
+room has no agent answer it. The answer is a regeneration of the released
+event (§13.6): `process_timeout`
 bounds its wait for the room's lock (`process_timeout` with
 `operation = regenerate`), and a room closed or deleted while it waited in the
 lane refuses it before any agent runs (`room_refused_event`,
