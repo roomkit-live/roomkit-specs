@@ -17896,7 +17896,7 @@ exactly a part's shape (a text part's type and text, an image part's type and
 image fields): one that carries a `type` key among other data is a value, and
 reading it as a part would drop the rest. Any other value it returns (a
 mapping, a list of values, a number, a null) MUST reach the model as its JSON
-serialization, the
+serialization, a mapping's members in the order the handler gave them, the
 same on every channel, and a result a SYNC ON_TOOL_CALL hook supplies in its
 place (Section 9.3) is read the same way. A value outside the contract MUST NOT
 fail the turn, nor reach the model as a language's own printing of it. A
