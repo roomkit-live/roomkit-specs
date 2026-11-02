@@ -319,6 +319,17 @@ call, which it records as `tool_call` (below), and its `result` is a
 HookResult as for any hook: a `block` with its `reason`, or a `modify` whose
 `event` is a patch on the tool call (`arguments`, `result`).
 
+A hook on the triggers of an agent's loop (§6.4) is handed what its trigger
+hands, and records it (below): on `before_ai_generation` the generation
+(`AIGenerationEvent`), as `generation`; on `after_tool_round` the round
+(`ToolRoundEvent`), as `tool_round`; on `on_ai_response` the turn's response
+(`AIResponseEvent`), as `response`. A `modify`'s `event` is a patch: on a
+generation, the replacement event whose context's `system_prompt` and
+`messages` (each `{role, text}`) are the patch's, and whose `tools` are
+those of the context the patch names; on a round, what the hook does to the
+event in place (§6.4, Between two rounds): each name of `withdrawn`
+withdrawn, each text of `messages` added.
+
 A hook on `on_user_input_required` is handed the request (`PendingInputEvent`),
 which it records as `request` (below); a `block` rejects the request, unless
 it was answered first.
@@ -510,7 +521,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `timeline` | Per room, the whole timeline in index order, `BLOCKED` records included, lifecycle records left out |
 | `rooms`, `bindings` | Per room, the room record; per room and channel, the binding, `null` for none |
 | `framework_events` | Per room (`*` for the events of no room), every framework event of the §26.1 table and `process_timeout`, and of the Level 2 features the suite exercises, `status_posted` (§19.8) and `feedback` (§15.9), identity resolution's `identity_resolved` and `identity_timeout` (§8.2), a human-input request's `user_input_required` (§9.3), and identity verification's `verification_requested`, `verification_completed` and `verification_ended` (§8.2, §11.7), in emission order |
-| `hooks` | Per scripted hook, its calls in order: `trigger`, `room_id`, `event` (the payload, when an event), `tool_call` (the payload, when a tool call: `name`, `tool_call_id`, `arguments` as the call runs or was stopped with, and, on `on_tool_call`, `result` as the model reads it, `is_error`, `refused`, `cancelled` and `error_detail`), `delivery_status` (the payload, when a delivery status, §10.4), `status_entry` (the payload, when a status entry: `on_status_posted`), `observation` (the payload, when an observation: `on_feedback`), `request` (the payload, when a human-input request: `pending_id`, `tool_name`, `arguments`, `room_id`, `tool_call_id`, `channel_id`, `channel_type`, `actor_id`), `identity_result` (what an identity hook is handed, §11.2) |
+| `hooks` | Per scripted hook, its calls in order: `trigger`, `room_id`, `event` (the payload, when an event), `tool_call` (the payload, when a tool call: `name`, `tool_call_id`, `arguments` as the call runs or was stopped with, and, on `on_tool_call`, `result` as the model reads it, `is_error`, `refused`, `cancelled` and `error_detail`), `delivery_status` (the payload, when a delivery status, §10.4), `status_entry` (the payload, when a status entry: `on_status_posted`), `observation` (the payload, when an observation: `on_feedback`), `request` (the payload, when a human-input request: `pending_id`, `tool_name`, `arguments`, `room_id`, `tool_call_id`, `channel_id`, `channel_type`, `actor_id`), `identity_result` (what an identity hook is handed, §11.2), `generation` (the payload, on `before_ai_generation`: `channel_id`, `provider_name`, `purpose`, `trigger` the event the turn answers, and its context's `system_prompt`, `messages` as `models` reads them and the names of its `tools`), `tool_round` (on `after_tool_round`: `channel_id`, `round_index`, its `calls`, each `{tool_call_id, name, arguments}`, its `results` as `models` reads them, and the names of the turn's `tools`), `response` (on `on_ai_response`: `channel_id`, `response_content`, `segments`, `tool_calls_count`, `round_count`, `loop_end_reason`, `usage`, `streaming`, `thinking`, and `declared_tools`, by name: `position`, `description`, `parameters`, `origin`) |
 | `hook_order` | The order in which the hooks it lists were called |
 | `deliveries` | Per room and channel, the events a scripted channel's `deliver()` received, as delivered, in order |
 | `contexts` | Per room and scripted channel, the context each of its `deliver()` calls and, for an intelligence channel, each of its turns (`on_event()`) was handed, in order: `call` (`deliver` or `on_event`) and `recent_events`, the ids of its events read as Normalization reads them, lifecycle records left out |
@@ -518,7 +529,8 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `turns` | Per room and intelligence channel, the events its `on_event()` received |
 | `observations`, `tasks` | Per room, the stored side effects |
 | `actions` | Per action label, the outcomes of its runs, in the order they ended |
-| `models` | Per scripted agent, each generation's request as its model received it, in order: the `messages` it carries, each `{role, text}`, `text` its text parts joined (empty for a message with none, a tool's result among them), and the `tool_results`, each `{tool_call_id, content, is_error}`, `content` as the model reads it, `is_error` whether it reads the call as failed |
+| `ai_events` | Per room, the framework events of an AI channel's turn (§8.2, Level 1): `before_ai_generation` and `ai_response`, in emission order, matched as `framework_events`, which does not hold them |
+| `models` | Per scripted agent, each generation's request as its model received it, in order: the `messages` it carries, each `{role, text}`, `text` its text parts joined (empty for a message with none, a tool's result among them), and the `tool_results`, each `{tool_call_id, content, is_error}`, `content` as the model reads it, `is_error` whether it reads the call as failed, its `system_prompt`, and the `tools` it declares, by name: each one's position in the declaration, so that a scenario names those it asserts, declared or `$absent` |
 | `lifecycle` | Per room, the lifecycle records (§5.1) in index order, when the implementation writes them: an implementation that writes none passes. It says which changes write one, and which write none (a change that changes nothing, §7.2) |
 | `participants` | Per room, the participants the store holds (§5.5), in the store's order |
 | `resolver` | The scripted resolver's calls, in order |
