@@ -3,7 +3,8 @@
   "id": "orchestration/an-agent-s-turn-prompt-ends-with-its-identity",
   "title": "An agent's turns end their system prompt with its identity block, in the language the room's conversation state sets, unless the agent keeps its identity out of the prompt",
   "rules": [
-    "§19.7",
+    "§19.1",
+    "§19.2",
     "§6.4"
   ],
   "notes": "Python's Agent writes its role, description and scope, then its language, under an identity header after everything else of the turn's prompt; the room's conversation state (metadata _conversation_state, context.language) gives the language over the agent's own.",
