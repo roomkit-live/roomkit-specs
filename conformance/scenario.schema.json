@@ -710,6 +710,10 @@
             "metadata_updates": {
               "type": "object"
             },
+            "response_metadata": {
+              "description": "In an `on_event` reaction: the record the channel's turn writes (§6.4, a ChannelOutput's response_metadata), which its caller's record reads.",
+              "type": "object"
+            },
             "error": {
               "description": "In an `on_event` reaction: the error the channel met while producing its output, with this message (§6.1, a ChannelOutput's error): the output goes on, its response events kept, and the error surfaces as a raised one's (§9.3 ON_ERROR).",
               "type": "string"
@@ -2814,7 +2818,7 @@
           }
         },
         "models": {
-          "description": "Per scripted agent, each generation's request as the model received it, in order: the `messages` it carries, each `{role, text, parts}` (`parts` its text and image parts in order, each `{text}` or `{image, mime_type}`, null for a text content), the `tool_results`, each `{tool_call_id, content, is_error}` (`content` a text, or a result's text and image parts in order, written as `parts`), its `system_prompt`, and the names of the `tools` it declares, in order.",
+          "description": "Per scripted agent, each generation's request as the model received it, in order: the `messages` it carries, each `{role, text, parts}` (`parts` its text and image parts in order, each `{text}` or `{image, mime_type}`, null for a text content), the `tool_results`, each `{tool_call_id, content, is_error}` (`content` a text, or a result's text and image parts in order, written as `parts`), its `system_prompt`, its `temperature` and `max_tokens` (§6.4), and the names of the `tools` it declares, in order.",
           "type": "object",
           "additionalProperties": {
             "type": [
