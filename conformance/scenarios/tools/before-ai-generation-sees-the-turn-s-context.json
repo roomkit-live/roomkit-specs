@@ -149,14 +149,14 @@
     "models": {
       "agent": [
         {
-          "tools": [
-            "lookup_order"
-          ]
+          "tools": {
+            "lookup_order": 0
+          }
         },
         {
-          "tools": [
-            "lookup_order"
-          ]
+          "tools": {
+            "lookup_order": 0
+          }
         }
       ]
     },

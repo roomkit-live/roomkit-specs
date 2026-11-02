@@ -81,8 +81,7 @@
       },
       "expect": {
         "result": {
-          "blocked": false,
-          "error": null
+          "blocked": false
         }
       }
     },

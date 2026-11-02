@@ -201,15 +201,18 @@
     "models": {
       "agent": [
         {
-          "tools": [
-            "safe_read",
-            "delete_account"
-          ]
+          "tools": {
+            "safe_read": 0,
+            "delete_account": 1
+          }
         },
         {
-          "tools": [
-            "safe_read"
-          ],
+          "tools": {
+            "safe_read": 0,
+            "delete_account": {
+              "$absent": true
+            }
+          },
           "messages": [
             {
               "role": "user",
@@ -232,9 +235,12 @@
           ]
         },
         {
-          "tools": [
-            "safe_read"
-          ]
+          "tools": {
+            "safe_read": 0,
+            "delete_account": {
+              "$absent": true
+            }
+          }
         }
       ]
     }

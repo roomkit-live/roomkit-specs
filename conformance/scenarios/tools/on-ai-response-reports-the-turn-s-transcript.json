@@ -136,9 +136,9 @@
             },
             "streaming": true,
             "thinking": "",
-            "declared_tools": [
-              {
-                "name": "search",
+            "declared_tools": {
+              "search": {
+                "position": 0,
                 "description": "Search",
                 "parameters": {
                   "type": "object",
@@ -146,7 +146,7 @@
                 },
                 "origin": "always"
               }
-            ]
+            }
           }
         }
       ]

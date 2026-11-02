@@ -124,12 +124,12 @@
             "round_index": 0,
             "calls": [
               {
-                "id": "c0",
+                "tool_call_id": "c0",
                 "name": "safe_read",
                 "arguments": {}
               },
               {
-                "id": "c1",
+                "tool_call_id": "c1",
                 "name": "lookup_order",
                 "arguments": {
                   "order": "42"
