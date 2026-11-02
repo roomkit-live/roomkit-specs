@@ -5885,7 +5885,15 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
         # never timeline adjacency.
 
 15. PERSIST SIDE EFFECTS
-    ├── Store all tasks and observations from hooks + channels
+    ├── Store all tasks and observations from hooks + channels: of a
+    │   channel's outputs, those of on_event(); a transport's deliver()
+    │   gives the room its metadata updates alone, and a streaming target's
+    │   deliver_stream() nothing but its failure (§12.2 step 13s)
+    ├── Fire `ON_TASK_CREATED` (§9.2) for each task stored, its payload an
+    │   internal `task_created` event of the room carrying the source and
+    │   the content of the event the task was made for (the event a hook
+    │   ran on, or the one a channel's output answered), the task's
+    │   `task_id` and `task_title` in its metadata
     └── Apply the room metadata updates of the cascade's channel outputs
         (§6.1), from on_event() and deliver() alike: merged key by key in
         the order the targets answered, and written once per delivery set,
@@ -17337,7 +17345,9 @@ middle of a word or a number. A `completed` entry whose detail was cut keeps the
 whole outcome in `metadata.result`, bounded at 4,000 characters and its cut
 marked the same way: an agent reads an outcome back from it (Section 23.4),
 never from the summary, which once turned a 14.9 °C forecast into "1". Status posts fire `ON_STATUS_POSTED` hooks in that room; an
-entry that names no room reaches no room's hooks. Agents MAY use the StatusBus to
+entry that names no room reaches no room's hooks. Its framework event,
+`status_posted` (§8.2), is the bus's and names no room, whichever room the
+entry names: a reader finds that room in the entry's `metadata.room_id`. Agents MAY use the StatusBus to
 signal completion, progress, or request attention without sending room events.
 The framework posts each delegated task on the bus (Section 23.3), and an agent
 reads its room's tasks through the `task_status` tool (Section 23.4); an agent is
@@ -18237,7 +18247,8 @@ DelegatedTaskResult
 ### 23.3 Delegation Protocol
 
 When `delegate(room_id, agent_id, task, notify, post_status = true, brief = null,
-conversation = 0, hand_back = "relay")` is called:
+conversation = 0, hand_back = "relay", require_structured_result = false,
+max_result_retries = 3, result_tool = null)` is called:
 
 1. Create a **child room** linked to the parent room, in the parent room's
    organization (Section 17.2). A tool, a hook or a provider acting in the
@@ -18305,7 +18316,11 @@ conversation = 0, hand_back = "relay")` is called:
    task's error being the error's own text, and the task still carries what
    the child room's record holds of the turn: its `loop_end_reason` (`error`,
    an ACP agent's `interrupted`) in its metadata and on `ON_TASK_COMPLETED`,
-   its narration as its output; the failure is logged as its error is. The
+   its narration as its output; the failure is logged as its error is. A
+   delegated agent's turn that raises, or whose stream fails, fires
+   `ON_ERROR` once in the child room, as a room's turn does, one deeper than
+   the description: `generation` for a raise, `streaming` for a stream,
+   whether a transport is shared or not. The
    end is the failing agent's own: with several agents in the child room, one
    agent's failure never carries another's end. The task is its delegated
    agent's: the failed turn of another agent of the child room (a helper or a
@@ -18400,6 +18415,24 @@ conversation = 0, hand_back = "relay")` is called:
    delivery does, the chain depth that delivery would carry and, unlike a
    response, whose key the pipeline clears (§13.4), an idempotency key the
    framework sets: the id the result was taken under.
+
+**A structured result.** With `require_structured_result`, which only an
+inline delegation (`wait`) honours, a background one running without it and
+a `TurnHost`'s refusing it (Section 10.6.5), the agent hands its work back by calling a result tool, `result_tool` or
+`submit_result` by default (status, summary, data, deliverables, reason). The
+tool is served in the child room alone, by the owner (Section 10.6.5): the
+same agent delegated from another room never sees it, and it answers the call
+`{"status": "received"}`. The result is read from the room's trace as step 6
+says, and the task's output is its payload, normalized, as JSON. A turn that
+ends without the call is re-prompted with the tool's reminder, a system
+message only intelligence reads (step 4), up to `max_result_retries` times;
+once they are spent the output is the tool's missing payload, for
+`submit_result` `{"status": "failed", "by": "orchestration", "reason":
+"no_structured_result_after_<n>_attempts", "role", "last_output"}`, `n` the
+turns run, `role` the agent's role, else its description, else its id, and
+`last_output` its last text. The task still completes: the payload says the
+mechanism failed. A channel whose turns do not take the owner's tools is not
+given the tool, and its result is its text.
 
 A task cancelled from outside (its caller's timeout, the framework's
 `cancel_task(task_id)`, the task runner's `cancel` or `close`, the framework's
