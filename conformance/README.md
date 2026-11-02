@@ -784,7 +784,6 @@ shows and takes it off both lists.
 | Scenario | Implementation | Rule broken | Card |
 |---|---|---|---|
 | `verification/a-release-from-a-hook-that-closes-the-room-is-answered-by-no-agent` | roomkit-rs | §11.7.6: a hook's release is answered once its section is over | RMK-1200 |
-| `delivery/a-keyed-delivery-whose-transport-is-detached-before-its-section-writes-nothing` | roomkit-rs | §22.1: a keyed publication's lookup, transport check and commit run in one section under the room lock | RMK-1207 |
 | `tasks/a-hand-back-leaves-the-notified-agent-s-prompt-as-its-binding-holds-it` | roomkit-rs | §6.4: a binding's metadata system_prompt is the agent's turn prompt | RMK-1208 |
 | `tasks/a-failed-task-keeps-the-error-its-worker-s-turn-raised` | roomkit-rs | §23.3 step 6: a failed task keeps the failure its turn raised, its type unchanged | RMK-1208 |
 
