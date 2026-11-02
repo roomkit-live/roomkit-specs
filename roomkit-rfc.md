@@ -5076,7 +5076,9 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
 - These hooks keep every SYNC property that matters to their authors — priority
   order, and a BLOCK that rejects the request. What a BLOCK does not do is
   retract an answer already recorded; a request that has been answered is
-  settled.
+  settled. A MODIFY hands the next hook and the ASYNC observers the request
+  as it left it, and changes nothing else: the request stays the tool's, and
+  `user_input_required` names it as the tool asked it.
 - Implementations MUST NOT report an answer that was recorded as a failure to
   the caller that asked for it. An outcome already delivered SHOULD stay
   readable for long enough that a second read, or a caller that lost track of
@@ -18363,7 +18365,10 @@ max_result_retries = 3, result_tool = null)` is called:
 5. The agent processes the task and generates a response. When no transport
    is shared into the child room, nobody is delivered the response, and the
    child room keeps the agent's trace (tool calls and text), written as any
-   streamed turn's rows are (Section 12.2 step 13s) but committed without
+   streamed turn's rows are (Section 12.2 step 13s), a buffered answer's rows
+   as the pipeline writes a response (§8.5: the responder's, one deeper than
+   the description and answering it, with no idempotency key, an instruction
+   among them dropped), but committed without
    crossing `BEFORE_BROADCAST` or a delivery lane: a TOOL_CALL_END keeps the
    call's structured copy, and a delegation cancelled or failed while a call
    runs closes that call with `status = failed`, so no start row stays
@@ -18415,7 +18420,10 @@ max_result_retries = 3, result_tool = null)` is called:
    agent's: the failed turn of another agent of the child room (a helper or a
    responder shared into it) does not fail the task, which ends as its agent's
    turn did, and stays that agent's turn in the child room, `ON_ERROR`
-   firing there as for any room's turn.
+   firing there as for any room's turn. A failure of the delegated agent's
+   turn, reported there, marks the task's metadata `error_reported`, so that
+   whoever reads the task hands it on without reporting it again; a turn cut
+   short is no reported failure.
    Whatever ended the turn, the task's metadata carries the turn's record
    under `turns`, keyed by the agent, as a room turn's caller reads it
    (Section 6.4): how it ended and its `ai_usage`, the last turn's when a
