@@ -154,6 +154,48 @@
                   "minimum": 1
                 }
               }
+            },
+            "verification_policy": {
+              "description": "The kit's identity verification policy (§11.7), the kit built with it: each member a bound or a switch of its own, the implementation's default when absent.",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ttl_ms": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "request_ttl_ms": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "code_request_ttl_ms": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "max_attempts": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "code_length": {
+                  "type": "integer",
+                  "minimum": 6,
+                  "maximum": 12
+                },
+                "release_on_verify": {
+                  "type": "boolean"
+                },
+                "release_max_messages": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "release_max_age_ms": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "hold_unverified": {
+                  "type": "boolean"
+                }
+              }
             }
           }
         },
@@ -935,7 +977,13 @@
             "store.get_verification_request",
             "store.update_verification_request",
             "answer_input",
-            "reject_input"
+            "reject_input",
+            "request_verification",
+            "complete_verification",
+            "record_failed_attempt",
+            "revoke_verification",
+            "verification_of",
+            "check_verifications"
           ]
         },
         "organization_id": {
@@ -2214,6 +2262,79 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "request_verification"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "identity_id",
+              "room_id",
+              "channel_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "complete_verification"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "request_id",
+              "secret"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "record_failed_attempt"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "request_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "revoke_verification"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "identity_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "verification_of"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "identity_id"
+            ]
+          }
         }
       ]
     },
@@ -2269,7 +2390,8 @@
         "reentry_loop_cap",
         "event_not_found",
         "task_not_found",
-        "identity_not_found"
+        "identity_not_found",
+        "verification_refused"
       ]
     },
     "expect": {

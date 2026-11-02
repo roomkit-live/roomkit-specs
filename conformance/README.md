@@ -135,7 +135,11 @@ of the setup are not compared.
   backend (§22.2) the kit is built and started with, its `retry_delay_ms`,
   `max_retry_delay_ms`, `max_queue_size` and `max_dead_letter_size`: a
   runner's idle wait then waits for its queue, its items waiting out a
-  retry and those its worker holds.
+  retry and those its worker holds; and `verification_policy`, the kit's
+  identity verification policy (§11.7) the kit is built with: `ttl_ms`,
+  `request_ttl_ms`, `code_request_ttl_ms`, `max_attempts`, `code_length`,
+  `release_on_verify`, `release_max_messages`, `release_max_age_ms` and
+  `hold_unverified`, the implementation's default for each member absent.
 - `channels`: each is registered. A channel of type `host` is the
   implementation's host channel (§10.5); any other is a **scripted channel**:
   - `id`, `type` (a ChannelType: `sms`, `websocket`, `whatsapp`, `email`,
@@ -465,6 +469,21 @@ The room's members (§5.5, Appendix B.3), each change under the room's lock:
 | `rename_member` | `room_id`, `participant_id`, `display_name` | the participant |
 | `is_member` | `room_id`, `identity_id` | whether an active participant of the room is that identity |
 
+Identity verification (§11.7), each transition of an identity serialized with
+its others:
+
+| Call | Arguments | Result |
+|---|---|---|
+| `request_verification` | `identity_id`, `room_id`, `channel_id`, `method` (default `link`), `window_start` | `{request, secret}`: the request opened (§11.7.2) and its secret, returned once; its `as` label names the request's id, and `<label>.secret` its secret |
+| `complete_verification` | `request_id`, `secret`, `method` (default: the request's) | the verification the request completed |
+| `record_failed_attempt` | `request_id` | the request, one attempt more, or failed by the last one |
+| `revoke_verification` | `identity_id`, `reason` (default `revoked`) | the verification ended, or null when none was in force |
+| `verification_of` | `identity_id` | the identity's verification as it stands now, unverified for none (§11.7.1) |
+| `check_verifications` | none | the verifications whose time had passed, which it ended (§11.7.5) |
+
+A verification's expiry and a request's are timers: a scenario waits for one
+through a gate of a hook on `on_verification_ended`, never through a delay.
+
 **References.** A string argument may name what the run made:
 
 - `$room`, `$event`: in an action, the room of the hook's or the channel's
@@ -474,6 +493,8 @@ The room's members (§5.5, Appendix B.3), each change under the room's lock:
 - `<room>#<index>`: the event at that index of the room's timeline as it
   stands when the call is made, read as Normalization reads it;
 - `$<label>`: the event the call labelled `<label>` returned;
+- `$<label>.secret`: the secret of the verification request the call
+  labelled `<label>` opened;
 - `$request`: in an action of a hook on `on_user_input_required`, the id of
   the request the hook was handed;
 - `$p1`, `$p2`...: the human-input requests the run raised, in the order it
@@ -488,7 +509,7 @@ The room's members (§5.5, Appendix B.3), each change under the room's lock:
 |---|---|
 | `timeline` | Per room, the whole timeline in index order, `BLOCKED` records included, lifecycle records left out |
 | `rooms`, `bindings` | Per room, the room record; per room and channel, the binding, `null` for none |
-| `framework_events` | Per room (`*` for the events of no room), every framework event of the §26.1 table and `process_timeout`, and of the Level 2 features the suite exercises, `status_posted` (§19.8) and `feedback` (§15.9), identity resolution's `identity_resolved` and `identity_timeout` (§8.2), and a human-input request's `user_input_required` (§9.3), in emission order |
+| `framework_events` | Per room (`*` for the events of no room), every framework event of the §26.1 table and `process_timeout`, and of the Level 2 features the suite exercises, `status_posted` (§19.8) and `feedback` (§15.9), identity resolution's `identity_resolved` and `identity_timeout` (§8.2), a human-input request's `user_input_required` (§9.3), and identity verification's `verification_requested`, `verification_completed` and `verification_ended` (§8.2, §11.7), in emission order |
 | `hooks` | Per scripted hook, its calls in order: `trigger`, `room_id`, `event` (the payload, when an event), `tool_call` (the payload, when a tool call: `name`, `tool_call_id`, `arguments` as the call runs or was stopped with, and, on `on_tool_call`, `result` as the model reads it, `is_error`, `refused`, `cancelled` and `error_detail`), `delivery_status` (the payload, when a delivery status, §10.4), `status_entry` (the payload, when a status entry: `on_status_posted`), `observation` (the payload, when an observation: `on_feedback`), `request` (the payload, when a human-input request: `pending_id`, `tool_name`, `arguments`, `room_id`, `tool_call_id`, `channel_id`, `channel_type`, `actor_id`), `identity_result` (what an identity hook is handed, §11.2) |
 | `hook_order` | The order in which the hooks it lists were called |
 | `deliveries` | Per room and channel, the events a scripted channel's `deliver()` received, as delivered, in order |
@@ -591,6 +612,7 @@ refuses its value, a `ChannelId`).
 | `reentry_loop_cap` | A direct change past its cascade's hook calls (§8.3, §10.3) | `ReentryLoopCapError` | `MutationError::ReentryLoopCap` |
 | `event_not_found` | A write naming an event its room does not hold: a change's target, `update_event` (§14.3) | `EventNotFoundError` | `StoreError::EventNotFound` |
 | `task_not_found` | An update of a task the store does not hold (§14.3) | `TaskNotFoundError` | `StoreError::TaskNotFound` |
+| `verification_refused` | A verification request refused, with its `reason`: `not_found` (none in the caller's organization), `not_open`, `expired`, `mismatch` (a wrong secret, counted) or `failed` (the last attempt) (§11.7.2) | `VerificationRefusedError` | `RoomKitError::VerificationRefused` |
 
 ## Reentrancy cells
 
