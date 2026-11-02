@@ -278,7 +278,9 @@ scripted.
   text, before its calls and its end: an error it does not retry, with that
   `status` (an HTTP status) and `message` (§6.4), classed as a context too
   long for the model when `context_overflow` is true, as not one when it is
-  false, unclassed when it is absent.
+  false, unclassed when it is absent. `failure_after_calls: true` moves the
+  round's `fails` or `refuses` after its calls: the model writes its text,
+  then its calls, then fails, never reaching its end.
   `gate` holds the round at that gate, before it writes anything, until a
   step opens it. `model.vision`: whether the model sees images (§6.4, a
   provider's `supports_vision`), false by default.

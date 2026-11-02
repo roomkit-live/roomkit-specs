@@ -2937,6 +2937,10 @@
               "type": "boolean"
             }
           }
+        },
+        "failure_after_calls": {
+          "description": "Whether the round's `fails` or `refuses` comes after its calls (default false): the model writes its text, then its calls, then fails, never reaching its end.",
+          "type": "boolean"
         }
       }
     },
