@@ -5,7 +5,7 @@
   "rules": [
     "§6.4"
   ],
-  "notes": "Python sets the turn's input from the context the hook left (_fire_before_generation_hook: loop_ctx.turn_input = turn_input(messages)).",
+  "notes": "Python sets the turn's input from the context the hook left (_fire_before_generation_hook: loop_ctx.turn_input = turn_input(messages)). The hook leaves two messages where the conversation had three: the input it left is at index 1, not 2.",
   "setup": {
     "channels": [
       {
@@ -109,10 +109,6 @@
                     "text": "q1"
                   },
                   {
-                    "role": "assistant",
-                    "text": "a1"
-                  },
-                  {
                     "role": "user",
                     "text": "q2 [ok]"
                   }
@@ -163,7 +159,7 @@
           "messages": [
             {
               "role": "user",
-              "text": "[Context compacted — earlier conversation summary]\n[user]: “q1”\n[assistant]: “a1”\n\nq2 [ok]"
+              "text": "[Context compacted — earlier conversation summary]\n[user]: “q1”\n\nq2 [ok]"
             },
             {
               "role": "assistant",

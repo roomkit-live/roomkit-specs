@@ -99,6 +99,58 @@
         {},
         {}
       ]
+    },
+    "timeline": {
+      "room-1": [
+        {
+          "index": 0,
+          "type": "message",
+          "content": {
+            "type": "text",
+            "body": "q1"
+          }
+        },
+        {
+          "index": 1,
+          "type": "message",
+          "content": {
+            "type": "text",
+            "body": "a1"
+          }
+        },
+        {
+          "index": 2,
+          "type": "message",
+          "content": {
+            "type": "text",
+            "body": "q2"
+          }
+        },
+        {
+          "index": 3,
+          "type": "message",
+          "content": {
+            "type": "text",
+            "body": "a2"
+          }
+        },
+        {
+          "index": 4,
+          "type": "message",
+          "content": {
+            "type": "text",
+            "body": "q3"
+          }
+        },
+        {
+          "index": 5,
+          "type": "message",
+          "content": {
+            "type": "text",
+            "body": "Let me"
+          }
+        }
+      ]
     }
   }
 }
