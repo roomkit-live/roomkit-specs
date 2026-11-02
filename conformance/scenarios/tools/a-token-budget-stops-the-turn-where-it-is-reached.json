@@ -65,7 +65,8 @@
                 "input_tokens": 300,
                 "cache_read_input_tokens": 100,
                 "output_tokens": 100
-              }
+              },
+              "text": "Looking again."
             },
             {
               "calls": [
@@ -157,7 +158,13 @@
         ]
       }
     ],
-    "hooks": []
+    "hooks": [
+      {
+        "name": "report",
+        "trigger": "on_ai_response",
+        "execution": "async"
+      }
+    ]
   },
   "steps": [
     {
@@ -216,6 +223,10 @@
         {
           "index": 5,
           "type": "message",
+          "content": {
+            "type": "text",
+            "body": "Looking again."
+          },
           "metadata": {
             "loop_end_reason": "budget_exceeded"
           }
@@ -232,6 +243,17 @@
         },
         {
           "tool_results": "$any"
+        }
+      ]
+    },
+    "hooks": {
+      "report": [
+        {
+          "response": {
+            "loop_end_reason": "budget_exceeded",
+            "tool_calls_count": 2,
+            "round_count": 2
+          }
         }
       ]
     }

@@ -85,7 +85,13 @@
         ]
       }
     ],
-    "hooks": []
+    "hooks": [
+      {
+        "name": "report",
+        "trigger": "on_ai_response",
+        "execution": "async"
+      }
+    ]
   },
   "steps": [
     {
@@ -128,13 +134,6 @@
             "tool_id": "c0",
             "outcome": "served"
           }
-        },
-        {
-          "index": 3,
-          "type": "message",
-          "metadata": {
-            "loop_end_reason": "budget_exceeded"
-          }
         }
       ]
     },
@@ -145,6 +144,17 @@
         },
         {
           "tool_results": "$any"
+        }
+      ]
+    },
+    "hooks": {
+      "report": [
+        {
+          "response": {
+            "loop_end_reason": "budget_exceeded",
+            "tool_calls_count": 1,
+            "round_count": 1
+          }
         }
       ]
     }
