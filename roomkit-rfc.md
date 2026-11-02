@@ -1611,6 +1611,37 @@ Channel (interface)
 │       # A stream that raises: deliver what was accumulated, then propagate
 │       # the failure (Section 12.2 step 13s)
 │
+├── on_room_attached(room_id: string, binding: ChannelBinding) → void
+│       # Establish what the new binding claims exists (a conference's SFU
+│       # room, Section 12.10.4), and start the room afresh: an AI channel
+│       # drops what it kept for an earlier attachment (Section 6.4).
+│       # Awaited by the attach, under the room's lock, with the binding it
+│       # stored, before anything announces the attach: its lifecycle
+│       # record, ON_CHANNEL_ATTACHED, room_channel_attached. An inbound
+│       # message's automatic attach (Section 10.1 step 2) calls it too.
+│       # Raising refuses the attach: the binding it replaced is put back,
+│       # or the binding removed, and the call, or the message, fails with
+│       # what the channel raised. The channel's revocation the attach
+│       # cleared (Section 7.5 rule 7) stays cleared. An INTELLIGENCE
+│       # channel's runs on its executor (Section 10.6.3), which logs what
+│       # it raises: its binding is kept. Default: no-op
+│
+├── on_room_detached(room_id: string) → void
+│       # Let go of what on_room_attached established and of everything the
+│       # channel keeps for the room: an AI channel's thought, speak-policy
+│       # state and plan, the author images its provider refused, the tool
+│       # images it replays, its records of tools used and skills
+│       # activated, which its next turn reads again from the store
+│       # (Section 6.4). Awaited by the detach, under the room's lock, once
+│       # the binding is removed and the detach recorded, before
+│       # ON_CHANNEL_DETACHED and room_channel_detached. A channel no longer
+│       # registered is not told, nor is a channel the room does not bind.
+│       # Raising undoes nothing: the detach is announced, then the call
+│       # fails with what the channel raised. An INTELLIGENCE channel's runs
+│       # on its executor (Section 10.6.3), which logs what it raises, the
+│       # detach not failing, and also calls it to drop a room's state a
+│       # turn elsewhere made stale (Section 10.6.2). Default: no-op
+│
 ├── connect_session(session: VoiceSession, room_id: string, binding: ChannelBinding) → void
 │       # Connect a voice session to this channel (voice/realtime channels only)
 │       # Default: no-op for non-voice channels
