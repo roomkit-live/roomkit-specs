@@ -105,7 +105,7 @@
               "minimum": 1
             },
             "router": {
-              "description": "A scripted router (§10.4), the kit's in place of the default: it answers every routed message with `room_id`, whoever sent it, an answer the kit holds to §10.1 step 2's rules.",
+              "description": "A scripted router (§10.4), the kit's in place of the default: it answers every routed message with `room_id`, whoever sent it, an answer the kit holds to §10.1 step 2's rules; with a `gate`, it holds each routing there first.",
               "type": "object",
               "additionalProperties": false,
               "required": [
@@ -113,6 +113,9 @@
               ],
               "properties": {
                 "room_id": {
+                  "type": "string"
+                },
+                "gate": {
                   "type": "string"
                 }
               }
@@ -1032,7 +1035,8 @@
             "revoke_verification",
             "verification_of",
             "check_verifications",
-            "sender_verification"
+            "sender_verification",
+            "cancel_delivery"
           ]
         },
         "organization_id": {
@@ -2391,6 +2395,30 @@
             "required": [
               "identity_id"
             ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "cancel_delivery"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "key"
+            ],
+            "properties": {
+              "key": {
+                "description": "The delivery key the call cancels (§10.1 Explicit delivery cancellation).",
+                "type": "string"
+              },
+              "reason": {
+                "description": "Why: the deliveries' cancellation reason; the implementation's default when absent.",
+                "type": "string"
+              }
+            }
           }
         }
       ]

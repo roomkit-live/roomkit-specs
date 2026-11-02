@@ -127,7 +127,8 @@ of the setup are not compared.
 - `kit`: `max_chain_depth` (default 5), `process_timeout_ms` (the
   implementation's default when absent), and `router`, a scripted router in
   place of the default one, answering every routed message with its
-  `room_id`, an answer the kit holds to §10.1 step 2's rules; for identity
+  `room_id`, an answer the kit holds to §10.1 step 2's rules, held first at
+  its `gate` when it names one; for identity
   resolution (§11), `identity_resolver`, a **scripted resolver** (below),
   `identity_channel_types`, the channel types it runs for (§11.4, every type
   when absent), and `identity_timeout_ms` (§11.5, the implementation's
@@ -372,7 +373,7 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 
 | Call | Arguments | Result |
 |---|---|---|
-| `process_inbound` | `message` (an InboundMessage), `room_id` | an InboundResult: `event`, `blocked`, `reason`, `error` (its message), `response_metadata`, `delivery_results` |
+| `process_inbound` | `message` (an InboundMessage), `room_id` | an InboundResult: `event`, `blocked`, `reason`, `error` (its message), `response_metadata`, `delivery_results`, `cancellation_reason` |
 | `send_event` | `room_id`, `channel_id`, `content`, `event_type`, `participant_id`, `visibility`, `response_visibility`, `addressed_to`, `parent_event_id`, `idempotency_key`, `metadata`, `chain_depth`, `standalone` | the event |
 | `post` | `room_id`, `content`, `participant_id`, `addressed_to`, `metadata`, `channel_id`, `idempotency_key`, `chain_depth` | the event |
 | `commit_event` | `room_id`, `event` (a template) | the event |
@@ -397,6 +398,7 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `list_read_markers` | `room_id` | each channel's marker, an index |
 | `add_room_hook` | `room_id`, `hook`: a hook as in the setup, for that room alone, with no filter and the default timeout (`name`, `trigger`, `execution`, `priority`, `fail_closed`, `needs_lock`, `reactions`) | unspecified |
 | `remove_room_hook` | `room_id`, `name` | whether the room held a hook of that name |
+| `cancel_delivery` | `key`, the `delivery_key` of the messages whose delivery it cancels, and `reason` (§10.1 Explicit delivery cancellation) | how many deliveries it cancelled |
 
 ### Calls on the store
 
@@ -717,7 +719,7 @@ named by one.
 - §10.1: step 2's re-routing when the locked check finds the room no longer the
   sender's, `group` bindings, recipient keys and replies to a chat (§5.7), a
   room created concurrently by two calls; step 18's detached completion;
-  explicit delivery cancellation;
+  explicit delivery cancellation through a completion handle;
 - §10.3: ADMIN and SYSTEM deletes, a hook's injected change, an edit's
   visibility narrowed to its target's, `cascade_replies = false`;
 - §10.4: identity-based routing (`resolve_identity`), a PAUSED room, a
