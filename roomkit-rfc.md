@@ -2611,8 +2611,9 @@ default, a bound the channel's configuration MAY change or remove
 JPEG, GIF or WebP (`image/jpg` read as JPEG, case and parameters aside), with
 data, up to 5 MiB of it (5,242,880 bytes, a data URI's read off its base64's
 length, a resolved image's on its bytes), and it is sent under the type it was read as, its data
-URI's header included: a provider refuses `image/jpg`. A data URI is otherwise
-sent as written, its header's parameters in lower case: the form of its data
+URI's header included (a header that declares no type reads as the media's):
+a provider refuses `image/jpg`. A data URI is otherwise sent as written, its
+header's parameters trimmed and in lower case: the form of its data
 (unpadded, URL-safe or wrapped base64) is the provider's to judge, and one its
 provider cannot read fails the turn before its request leaves, its images
 then refused as below. Anything else takes the image's place as a text mention, never a
