@@ -784,8 +784,6 @@ shows and takes it off both lists.
 | Scenario | Implementation | Rule broken | Card |
 |---|---|---|---|
 | `verification/a-release-from-a-hook-that-closes-the-room-is-answered-by-no-agent` | roomkit-rs | §11.7.6: a hook's release is answered once its section is over | RMK-1200 |
-| `tasks/a-hand-back-leaves-the-notified-agent-s-prompt-as-its-binding-holds-it` | roomkit-rs | §6.4: a binding's metadata system_prompt is the agent's turn prompt | RMK-1208 |
-| `tasks/a-failed-task-keeps-the-error-its-worker-s-turn-raised` | roomkit-rs | §23.3 step 6: a failed task keeps the failure its turn raised, its type unchanged | RMK-1208 |
 
 roomkit's earlier three were fixed by RMK-976 and RMK-977, and roomkit-rs's
 earlier three by step 3's milestone 2.
