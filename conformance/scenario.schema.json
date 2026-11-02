@@ -863,7 +863,13 @@
             "start_task",
             "setup_background",
             "setup_task_tools",
-            "status.recent_text"
+            "status.recent_text",
+            "store.put_verification",
+            "store.get_verification",
+            "store.list_verifications_in_force",
+            "store.create_verification_request",
+            "store.get_verification_request",
+            "store.update_verification_request"
           ]
         },
         "organization_id": {
@@ -2999,6 +3005,76 @@
           "then": {
             "required": [
               "room_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.put_verification"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "verification"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.get_verification"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "identity_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.create_verification_request"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "request"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.get_verification_request"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "request_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.update_verification_request"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "request"
             ]
           }
         }

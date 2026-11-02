@@ -366,8 +366,15 @@ scenarios of `store/` on each store it ships that needs no server.
 | `store.add_task`, `store.update_task` | `task` | the task |
 | `store.get_task` | `task_id` | the task, or null |
 | `store.list_tasks` | `room_id`, `status` | the tasks |
+| `store.put_verification` | `verification` | the verification |
+| `store.get_verification` | `identity_id`, `organization_id` | the verification, or null |
+| `store.list_verifications_in_force` | none | the verifications |
+| `store.create_verification_request`, `store.update_verification_request` | `request` | the request |
+| `store.get_verification_request` | `request_id` | the request, or null |
 
-A task's template is completed with an `id`, its room and a `created_at`. An
+A task's template is completed with an `id`, its room and a `created_at`. A
+verification and a verification request (§11.7.1, §11.7.2) are taken as
+written, with their records' defaults. An
 index a store call returns is the store's: the scenarios of `store/` write
 no lifecycle record, so it reads as normalized.
 
