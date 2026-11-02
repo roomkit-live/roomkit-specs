@@ -286,12 +286,27 @@ scripted.
   implementation's budget-aware memory, of its `max_context_tokens`,
   `safety_margin_ratio` (default 0.15), `min_events` (default 3) and
   `reserved_tokens` (default 0) (§20.3).
+- `human_input`: its human-input handler (§9.3, ON_USER_INPUT_REQUIRED,
+  where the other party is a human; §10.6.5, Human input): the agent
+  declares `tools` (each `name`, `description`, `parameters`) and serves
+  every name of `tool_names` itself, before its tools' handler, a name it
+  does not define served when another of its tools declares it. Each call
+  opens a request, which fires `on_user_input_required`, and waits for its
+  answer at most `timeout_ms` (default 300000), bounded by that alone: the
+  model reads the answer; a rejection, or a hook's block, as a refusal
+  (`{"error": "Human input rejected: <reason>"}`); no answer in time as a
+  failure (`{"error": "Human input timed out after <s>s for tool '<name>'"}`,
+  the seconds as Python writes a float).
 
 A hook on `before_tool_use` or `on_tool_call` is registered on the kit as the
 implementation registers a hook on those triggers. Its payload is a tool
 call, which it records as `tool_call` (below), and its `result` is a
 HookResult as for any hook: a `block` with its `reason`, or a `modify` whose
 `event` is a patch on the tool call (`arguments`, `result`).
+
+A hook on `on_user_input_required` is handed the request (`PendingInputEvent`),
+which it records as `request` (below); a `block` rejects the request, unless
+it was answered first.
 
 ### Steps
 
@@ -424,6 +439,8 @@ else, where no turn's host is.
 | `start_task` | `room_id`, `agent_id`, `task`, `hand_back` (default: the agent's background setup's) | the task, as `delegate` returns it, started for the agent as its `work_in_background` call would (§23.4) |
 | `setup_background` | `agent_id`, `worker`, `hand_back` (default `relay`) | null; the agent is given `work_in_background`, served by the room's owner (§23.4, §10.6.5) |
 | `setup_task_tools` | `agent_id` | null; the agent is given `task_status` and `cancel_task`, served by the room's owner (§23.4, §10.6.5) |
+| `answer_input` | `request_id`, `value` | whether the tool waiting on the human-input request reads the answer (§10.6.5): false for one settled otherwise first, or answered already |
+| `reject_input` | `request_id`, `reason` (default empty) | whether the waiting tool reads the rejection, as a refusal (§10.6.5, §9.3) |
 | `cancel_task` | `task_id` | whether a background task the kit's task runner held was running and is now cancelled (§23.3); false for any other, or one of a room of another organization than the call's `organization_id` (§17.2) |
 
 The room's members (§5.5, Appendix B.3), each change under the room's lock:
@@ -445,7 +462,12 @@ The room's members (§5.5, Appendix B.3), each change under the room's lock:
   in the order of their `room_created`;
 - `<room>#<index>`: the event at that index of the room's timeline as it
   stands when the call is made, read as Normalization reads it;
-- `$<label>`: the event the call labelled `<label>` returned.
+- `$<label>`: the event the call labelled `<label>` returned;
+- `$request`: in an action of a hook on `on_user_input_required`, the id of
+  the request the hook was handed;
+- `$p1`, `$p2`...: the human-input requests the run raised, in the order it
+  first showed them (a hook's payload, a `user_input_required` framework
+  event).
 
 ### Expectations
 
@@ -455,8 +477,8 @@ The room's members (§5.5, Appendix B.3), each change under the room's lock:
 |---|---|
 | `timeline` | Per room, the whole timeline in index order, `BLOCKED` records included, lifecycle records left out |
 | `rooms`, `bindings` | Per room, the room record; per room and channel, the binding, `null` for none |
-| `framework_events` | Per room (`*` for the events of no room), every framework event of the §26.1 table and `process_timeout`, and of the Level 2 features the suite exercises, `status_posted` (§19.8) and `feedback` (§15.9), and identity resolution's `identity_resolved` and `identity_timeout` (§8.2), in emission order |
-| `hooks` | Per scripted hook, its calls in order: `trigger`, `room_id`, `event` (the payload, when an event), `tool_call` (the payload, when a tool call: `name`, `tool_call_id`, `arguments` as the call runs or was stopped with, and, on `on_tool_call`, `result` as the model reads it, `is_error`, `refused`, `cancelled` and `error_detail`), `delivery_status` (the payload, when a delivery status, §10.4), `status_entry` (the payload, when a status entry: `on_status_posted`), `observation` (the payload, when an observation: `on_feedback`), `identity_result` (what an identity hook is handed, §11.2) |
+| `framework_events` | Per room (`*` for the events of no room), every framework event of the §26.1 table and `process_timeout`, and of the Level 2 features the suite exercises, `status_posted` (§19.8) and `feedback` (§15.9), identity resolution's `identity_resolved` and `identity_timeout` (§8.2), and a human-input request's `user_input_required` (§9.3), in emission order |
+| `hooks` | Per scripted hook, its calls in order: `trigger`, `room_id`, `event` (the payload, when an event), `tool_call` (the payload, when a tool call: `name`, `tool_call_id`, `arguments` as the call runs or was stopped with, and, on `on_tool_call`, `result` as the model reads it, `is_error`, `refused`, `cancelled` and `error_detail`), `delivery_status` (the payload, when a delivery status, §10.4), `status_entry` (the payload, when a status entry: `on_status_posted`), `observation` (the payload, when an observation: `on_feedback`), `request` (the payload, when a human-input request: `pending_id`, `tool_name`, `arguments`, `room_id`, `tool_call_id`, `channel_id`, `channel_type`, `actor_id`), `identity_result` (what an identity hook is handed, §11.2) |
 | `hook_order` | The order in which the hooks it lists were called |
 | `deliveries` | Per room and channel, the events a scripted channel's `deliver()` received, as delivered, in order |
 | `contexts` | Per room and scripted channel, the context each of its `deliver()` calls and, for an intelligence channel, each of its turns (`on_event()`) was handed, in order: `call` (`deliver` or `on_event`) and `recent_events`, the ids of its events read as Normalization reads them, lifecycle records left out |
@@ -506,6 +528,8 @@ the RFC leaves to each implementation:
   removed) is `$e1`, `$e2`... in the order the step outcomes, then the
   framework events, show it first. A participant's or an identity's `id`
   is the scenario's own, kept as written.
+- **Human-input requests** are `$p1`, `$p2`... wherever their id appears, in
+  the order the run first showed them.
 - **Instants** (an RFC 3339 string) are `@1`, `@2`... by their order among the
   run's instants, equal ones alike.
 - A **framework event** is an object: `event`, its name, and the members its row

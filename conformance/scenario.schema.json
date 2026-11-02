@@ -324,6 +324,48 @@
         },
         "memory": {
           "$ref": "#/$defs/scripted_memory"
+        },
+        "human_input": {
+          "description": "A scripted agent's human_input_handler: the tools that ask a person (§9.3 ON_USER_INPUT_REQUIRED, where the other party is a human; §10.6.5 Human input). The agent declares `tools` and serves every name of `tool_names` itself, before its tools' handler, a name it does not define served when another of the agent's tools declares it; each call opens a request, which fires `on_user_input_required` and waits for its answer at most `timeout_ms` (300000 by default), bounded by that alone.",
+          "type": "object",
+          "required": [
+            "tool_names"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "tool_names": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string"
+              }
+            },
+            "timeout_ms": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "tools": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "parameters": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -880,7 +922,9 @@
             "store.list_verifications_in_force",
             "store.create_verification_request",
             "store.get_verification_request",
-            "store.update_verification_request"
+            "store.update_verification_request",
+            "answer_input",
+            "reject_input"
           ]
         },
         "organization_id": {
@@ -2111,6 +2155,51 @@
               "n": {
                 "type": "integer",
                 "minimum": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "answer_input"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "request_id",
+              "value"
+            ],
+            "properties": {
+              "request_id": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "reject_input"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "request_id"
+            ],
+            "properties": {
+              "request_id": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
               }
             }
           }
