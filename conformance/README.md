@@ -280,6 +280,9 @@ scripted.
   bounding nothing, the implementation's default when absent;
   `tool_timeouts_ms`: a bound per tool name, above that default and above a
   tool's own bound, `null` leaving the tool unbounded.
+- `turn_budget_tokens`: the turn's budget of billed tokens (§6.4), a
+  round's `usage` counting its `input_tokens`, `output_tokens`,
+  `cache_read_input_tokens` and `cache_creation_input_tokens`.
 - `max_context_events`: the window of the agent's default memory, a sliding
   window of the room's latest events (§20.3, default 50).
 - `serialize_room_turns`: its turns in a room run one after the other (§6.4,

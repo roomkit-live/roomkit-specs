@@ -438,6 +438,11 @@
             ],
             "minimum": 1
           }
+        },
+        "turn_budget_tokens": {
+          "description": "A scripted agent's budget of billed tokens per turn (§6.4): its input, output, cache read and cache creation tokens, counted as each generation reports them; past it the turn ends budget_exceeded at its next round boundary.",
+          "type": "integer",
+          "minimum": 1
         }
       }
     },
