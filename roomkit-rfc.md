@@ -17877,14 +17877,23 @@ connection holds: a skill's identity, the entry it was loaded from and the
 content verified are the registry's, so a transport without a session
 serves them alike.
 
-`call` returns a string whatever the server sent. The tool handler a provider
+`call` returns a string whatever the server sent: a text as itself, a text
+resource as its text, and what is not text (an image, audio, a blob
+resource, a link to a resource) as the short note below, never its encoding
+nor an object's printing. The tool handler a provider
 hands to an AI channel SHOULD instead hand an image the server returns to the
 model as an image, when it is in a format vision vendors accept (PNG, JPEG,
 GIF, WebP) and its payload decodes. Binary content the model cannot take (an
 image in another format or with a corrupt payload, audio, a blob resource)
 SHOULD reach it as a short note naming what was left out, never as its
 encoding: base64 read as text is noise the model pays for, and a bad image
-fails the whole request at the vendor.
+fails the whole request at the vendor. The reference implementation's note
+names the content's kind and its media type (`[image content (image/png)
+not shown to the model]`), the type kept to the characters a media type
+has, at most 64, so that it carries no text of the server's; for a type the
+server did not name, `image/png` for an image, `audio` for audio, `binary`
+for a resource, `unknown` for a link and for a kind of content it does not
+know (`[other content (unknown) not shown to the model]`).
 
 A result the model sees an image of SHOULD be bounded, so that a server
 cannot fill the model's request with it. The reference implementation holds
