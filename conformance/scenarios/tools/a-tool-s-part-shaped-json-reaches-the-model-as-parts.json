@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "tools/a-tool-s-part-shaped-json-reaches-the-model-as-parts",
-  "title": "A tool that answers a list of mappings each in a part's exact shape reaches the model with those parts; a list of other mappings reaches it as JSON",
+  "title": "A tool that answers a list of mappings each in a part's exact shape reaches the model with those parts; a list of other mappings, one with a part's type among other data included, reaches it as JSON",
   "rules": [
     "§6.4",
     "§21.4"
@@ -30,6 +30,11 @@
                 {
                   "id": "c2",
                   "name": "list_orders",
+                  "arguments": {}
+                },
+                {
+                  "id": "c3",
+                  "name": "read_note",
                   "arguments": {}
                 }
               ]
@@ -68,6 +73,21 @@
             "returns_json": [
               {
                 "id": 1
+              }
+            ]
+          },
+          {
+            "name": "read_note",
+            "description": "Read a note",
+            "parameters": {
+              "type": "object",
+              "properties": {}
+            },
+            "returns_json": [
+              {
+                "type": "text",
+                "text": "a note",
+                "author": "bob"
               }
             ]
           }
@@ -128,6 +148,11 @@
             {
               "tool_call_id": "c2",
               "content": "[{\"id\": 1}]",
+              "is_error": false
+            },
+            {
+              "tool_call_id": "c3",
+              "content": "[{\"type\": \"text\", \"text\": \"a note\", \"author\": \"bob\"}]",
               "is_error": false
             }
           ]
