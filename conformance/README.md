@@ -140,7 +140,13 @@ of the setup are not compared.
   identity verification policy (§11.7) the kit is built with: `ttl_ms`,
   `request_ttl_ms`, `code_request_ttl_ms`, `max_attempts`, `code_length`,
   `release_on_verify`, `release_max_messages`, `release_max_age_ms` and
-  `hold_unverified`, the implementation's default for each member absent.
+  `hold_unverified`, the implementation's default for each member absent;
+  for an author's media (§6.4), serving every AI channel registered on the
+  kit, `media_resolver`, the kit's media resolver, answering each reference
+  its `media` names with those bytes (written in base64) and any other with
+  none, and `attached_media`, the kit's attached-media reader, naming as an
+  event's media the media contents (in the serialized form) its metadata
+  lists under `key`.
 - `channels`: each is registered. A channel of type `host` is the
   implementation's host channel (§10.5); any other is a **scripted channel**:
   - `id`, `type` (a ChannelType: `sms`, `websocket`, `whatsapp`, `email`,
@@ -265,6 +271,9 @@ scripted.
   its text, before its calls and its end: its response stream raises
   (§12.2 step 13s). `done: false` ends its stream after its text and its
   calls without the done event that carries its finish reason and usage.
+  `refuses` makes the provider refuse the request once the model wrote its
+  text, before its calls and its end: an error it does not retry, with that
+  `status` (an HTTP status) and `message` (§6.4).
   `gate` holds the round at that gate, before it writes anything, until a
   step opens it. `model.vision`: whether the model sees images (§6.4, a
   provider's `supports_vision`), false by default.

@@ -199,6 +199,35 @@
                   "type": "boolean"
                 }
               }
+            },
+            "media_resolver": {
+              "description": "The kit's media resolver (§6.4), serving every AI channel registered on it: the bytes of each reference `media` names, in base64; none for another reference.",
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "media"
+              ],
+              "properties": {
+                "media": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "attached_media": {
+              "description": "The kit's attached-media reader (§6.4), serving every AI channel registered on it: the media an event carries outside its content are the media contents, in the serialized form, its metadata lists under `key`.",
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "key"
+              ],
+              "properties": {
+                "key": {
+                  "type": "string"
+                }
+              }
             }
           }
         },
@@ -2880,6 +2909,23 @@
         "gate": {
           "description": "The model holds the round at this gate, before it writes anything, until a step opens it.",
           "type": "string"
+        },
+        "refuses": {
+          "description": "The provider refuses the request once the model wrote its text, before its calls and its end: an error it does not retry, with this HTTP status and message (§6.4).",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "message"
+          ],
+          "properties": {
+            "status": {
+              "type": "integer"
+            },
+            "message": {
+              "type": "string"
+            }
+          }
         }
       }
     },
