@@ -8005,8 +8005,10 @@ VerificationRequest
 ├── method: string                         # "link", "code", or the integrator's
 ├── secret_hash: string                     # The secret is never stored in clear
 ├── window_start: datetime                 # Reception of the message that opened it
+├── created_at: datetime
 ├── expires_at: datetime
-├── attempts: int
+├── attempts: int                          # Failed attempts so far
+├── max_attempts: int                      # The policy's bound when it was opened
 └── status: OPEN | COMPLETED | FAILED | EXPIRED | CANCELLED
 ```
 
@@ -8048,14 +8050,26 @@ identity is not VERIFIED, every such event fires ON_VERIFICATION_REQUIRED
   reached — those both its own visibility and its source binding's include
   (§7.3) — so the room's people and transports (an advisor's console) see
   it and no intelligence channel reads it, in delivery or in context.
-  Holding never widens what a message reached;
-- **pass**: the event goes on unchanged, labelled — where an integrator lets
-  a general question through. A hook passes a message explicitly; a hook
-  that merely allows it (as one that only watches does) does not;
-- **block**: as any blocked event (§9.4).
+  Holding never widens what a message reached. The mark is the event's
+  metadata `roomkit:verification_held`: `{visibility, identity_id,
+  organization_id}`, the scope it was committed with, which its release
+  restores, and whose message it is;
+- **pass**: the event goes on as the hooks left it, labelled — where an
+  integrator lets a general question through. A hook passes a message
+  explicitly, its result's metadata `roomkit:verification` set to `pass`
+  (`HookResult.allow_unverified()`); a hook that merely allows it (as one
+  that only watches does) does not, nor does a hook that fails, one past
+  its timeout among them: the trigger fails open (§9.3), and the message
+  is held;
+- **block**: the message is refused with the hook's reason,
+  `verification_required` when it gives none, before anything of it is
+  stored: no record, no delivery.
 
-An edit or a deletion (§10.3) from an unverified sender is refused unless a
-hook passes it: held, it would still change a message the agents read.
+Where the policy holds, an edit or a deletion (§10.3) from an unverified
+sender is refused `verification_required` unless a hook passes it, nothing
+of it stored: held, it would still change a message the agents read. The
+trigger's ASYNC hooks observe the message the chain let through, never a
+blocked one.
 
 Labelling and holding apply where the integrator configured verification;
 a configuration MAY label without holding. Opening a request and telling
@@ -8087,11 +8101,14 @@ session. The implementation does not claim to hold anything there.
 
 With the method `code`, the secret is a short code the person replies with in
 the conversation. A message from the request's identity, in its room, whose
-whole text has the code's form is an attempt and is consumed (§10.1 step 5b):
-its text is never stored nor broadcast, no agent reads it, and the attempt is
-recorded by the framework events alone. Any other message is an ordinary
-one. A code is short, so its request's time and attempts MUST be bounded
-tightly.
+whole text has the code's form (the policy's code length of characters
+Unicode gives a digit value, the whitespace around them left out) is an
+attempt and is consumed (§10.1 step 5b): the call is refused `verification_code`, its text is never stored nor
+broadcast, no agent reads it, and the attempt is recorded by the framework
+events alone. A wrong code counts as an attempt and is consumed all the
+same. Any other message is an ordinary one: digits with no code request
+open, or a code sent in another room. A code is short, so its request's time
+and attempts MUST be bounded tightly.
 
 #### 11.7.5 The end of a verification
 
@@ -8150,6 +8167,12 @@ request that failed — may not be the verified person's.
 - A link is a bearer secret: forwarded, it verifies whoever opens it and
   passes the method's own check. That check (a PIN, a login) is the
   method's; a method with none SHOULD NOT guard anything that matters.
+
+A request's bound on attempts holds within the reach of the lock manager the
+implementation serializes an identity's transitions with (§13.5), under the
+key `verification:<organization>:<identity>`: two attempts at a request's
+last one count once. A deployment of several processes on one store shares
+its lock manager, as it must for its rooms.
 
 Verification state is scoped to the organization as identities are (§17.2).
 A message is labelled by the verification of its **room's** organization:
