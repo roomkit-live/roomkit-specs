@@ -276,6 +276,10 @@ scripted.
 - `tool_policy`: a ToolPolicy's `allow` and `deny` patterns (§21.1);
   `max_tool_rounds`: the loop's bound on rounds of calls (Appendix A.9,
   default 50).
+- `tool_timeout_ms`: the bound on each call of its tools (§21.6), `null`
+  bounding nothing, the implementation's default when absent;
+  `tool_timeouts_ms`: a bound per tool name, above that default and above a
+  tool's own bound, `null` leaving the tool unbounded.
 - `max_context_events`: the window of the agent's default memory, a sliding
   window of the room's latest events (§20.3, default 50).
 - `serialize_room_turns`: its turns in a room run one after the other (§6.4,

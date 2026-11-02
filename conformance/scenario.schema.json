@@ -419,6 +419,25 @@
             ]
           },
           "uniqueItems": true
+        },
+        "tool_timeout_ms": {
+          "description": "A scripted agent's bound on each call of its tools (§21.6), in milliseconds; null bounds nothing. The implementation's default when absent.",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "tool_timeouts_ms": {
+          "description": "A scripted agent's bound per tool name (§21.6), in milliseconds, above its default and above a tool's own bound; null leaves that tool unbounded.",
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1
+          }
         }
       }
     },
