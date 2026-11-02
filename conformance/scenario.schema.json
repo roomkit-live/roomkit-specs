@@ -3023,12 +3023,20 @@
         "declared": {
           "description": "Whether the agent declares the tool among its own (§21.1), true by default: an undeclared tool is served by the agent's tool handler all the same, for a hook that declares it (§6.4, What the generation hooks see).",
           "type": "boolean"
+        },
+        "returns_json": {
+          "description": "The tool answers this JSON value, not a text: the model reads it as JSON (§6.7), an object's members in the order written."
         }
       },
       "oneOf": [
         {
           "required": [
             "returns"
+          ]
+        },
+        {
+          "required": [
+            "returns_json"
           ]
         },
         {

@@ -286,7 +286,8 @@ scripted.
   provider's `supports_vision`), false by default.
 - `tools`: what the agent serves, each declared with its `name`,
   `description` and `parameters` (a JSON Schema), and answering every call
-  one way: `returns` a text, `raises` an error of a `kind` with a `message`
+  one way: `returns` a text, `returns_json` a JSON value (the model reads
+  it as JSON, §6.7), `raises` an error of a `kind` with a `message`
   (the model reads the kind, the observers the message, §9.3), `fails` or
   `refuses` with words the model reads (§9.3), or `hangs`, never answering;
   with `gate`, each call is held at that gate until a step opens it, then
