@@ -2076,7 +2076,8 @@ again once the agent thought, the thought it was decided with and whether the
 decision is late (below), so that what an agent left unanswered, why, and what
 deciding cost can be followed and measured without wrapping the policy. A
 channel without a policy
-answers every event, as before, and decides nothing; a policy that always
+answers every event but an edit or a delete, which opens no turn and is
+submitted to no policy (Section 10.3), and decides nothing; a policy that always
 speaks reports each decision, a baseline to measure another against. A turn the
 channel's strategy takes in a room (Section 19.7) is not submitted to it
 either, save a turn a discussion gives in answer to a message (Section
@@ -3030,7 +3031,9 @@ its content reads as (Section 6.6), under its speaker's label when the turn's
 history labels the room's speakers, as above: the turn
 reads it at its next stop, and no turn of its own starts. When the turn cannot
 take it (its loop is not reachable yet, or reads its queue no more) or the
-message reads as no text, the message waits a turn of its own, as above.
+message reads as no text, the message waits a turn of its own, as above. An
+edit or a delete is no message for the running turn: it waits its place, and
+no turn answers it (Section 10.3).
 
 **ACP Agent Channel:**
 
@@ -6668,13 +6671,16 @@ During broadcast, for each target channel:
    MUST deliver the event natively.
 2. If the target channel does NOT support the operation, the framework MUST
    apply transcoding fallback (see Section 6.6).
-3. An intelligence channel is handed the change as any target, and an agent
-   MUST open no turn on it: a change is no message a turn may answer, its
-   fallback text (`[Message deleted]`, or the edit's words) no request. A
-   strategy that takes an agent's turns (Section 19.7) asks none on it either:
-   it is no task for a producer, reviewer or worker. The agent answers the next
-   message, in the room the change left: the target as edited, or the message
-   deleted withheld (§7.5 rule 8). A host that reacts to a change does so with
+3. An intelligence channel is handed the change as any target, and MUST
+   open no turn on it: a change is no message a turn may answer, its fallback
+   text (`[Message deleted]`, or `Correction: …`) no request. No speak policy
+   is asked about it (Section 6.4), and a turn of the channel that runs
+   meanwhile is not handed it as a message (Section 6.4, "A message for the
+   running turn"): it waits its place, for no turn. A strategy that takes an
+   agent's turns (Section 19.7) asks none on it either: it is no task for a
+   producer, reviewer or worker. The agent answers the next message, in the
+   room the change left: the target as edited, or the message deleted
+   withheld (§7.5 rule 8). A host that reacts to a change does so with
    `ON_EVENT_UPDATED` or `ON_EVENT_DELETED` (above).
 
 ### 10.4 Inbound Room Routing
