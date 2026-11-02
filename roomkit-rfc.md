@@ -17468,7 +17468,10 @@ middle of a word or a number. A `completed` entry whose detail was cut keeps the
 whole outcome in `metadata.result`, bounded at 4,000 characters and its cut
 marked the same way: an agent reads an outcome back from it (Section 23.4),
 never from the summary, which once turned a 14.9 °C forecast into "1". Status posts fire `ON_STATUS_POSTED` hooks in that room; an
-entry that names no room reaches no room's hooks. The hooks fire at least as
+entry that names no room reaches no room's hooks. The framework follows its bus
+from its first room activity on, which waits for the subscription when the
+backend's does not end at once: an entry posted once that activity is over
+reaches the room's hooks. The hooks fire at least as
 deep as the work that posted, read as it posts (§8.3): what a hook sends into
 the room is that deep, so a hook that tells the posting agent again ends at
 the depth limit. They fire during the framework's close too, until it seals
@@ -19935,7 +19938,15 @@ a more specific level still states the switch. A setting with no value that
 states off (`temperature`, `max_tokens`, `response_schema`, and the turn
 budgets of Section 6.4) cannot be lifted for a room once a less specific level
 sets it, only replaced. The binding's `tools` is a toolset of its own, and a
-`null` there declares none, like an absent key.
+`null` there declares none, like an absent key. A binding's value is read as
+its setting's type reads one of another kind: a number written as a text, a
+whole float or a whole number's text for an integer, a boolean for a number
+(`"0.3"` reads 0.3, `64.0` and `"100"` read 64 and 100). One that does not read
+so (a `temperature` of `"hot"`, a `max_tokens` of `1.5`, a `system_prompt` that
+is no text) fails the turn before its model is asked, its error naming every
+setting refused, and so does a `turn_budget_tokens` that is not a positive
+integer: a binding written wrong shows at its first turn, never replaced by
+the next level's value.
 
 **Constrained turn.** A turn's `response_schema` resolves like the other
 per-turn settings. When it is set, the channel MUST NOT
