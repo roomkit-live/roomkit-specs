@@ -17883,13 +17883,13 @@ SHOULD reach it as a short note naming what was left out, never as its
 encoding: base64 read as text is noise the model pays for, and a bad image
 fails the whole request at the vendor.
 
-A result the model sees an image of SHOULD be bounded as much as a text
-result, so that a server cannot fill the model's request with it. The
-reference implementation holds its texts within 100,000 characters in all,
-the text past the bound cut with a note saying how long it was and the
-texts after it left out, and shows the model at most four of its images
-within 5 MiB of data URL in all; each image past either reaches the model as
-its note, which counts as a text.
+A result the model sees an image of SHOULD be bounded, so that a server
+cannot fill the model's request with it. The reference implementation holds
+its texts within 100,000 characters in all, the text past the bound cut,
+with a note saying how long it was when the note fits, and the texts after
+it left out, and shows the model at most four of its images within 5 MiB of
+data URL in all; each image past either reaches the model as its note,
+which counts as a text.
 
 ### 21.3 AI Steering Directives
 
