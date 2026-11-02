@@ -262,7 +262,9 @@ scripted.
   run is its n-th round: `text` (default empty), `calls`, `finish_reason`
   (default `tool_calls` when it calls, else `stop`) and `usage`, counters
   the turn's record sums (§6.4, The turn's record). A call is `id`, `name`,
-  `arguments` (an object, default `{}`), and `cut` when the response was
+  `arguments` (an object, default `{}`; a text `$<label>` in it is read,
+  once the model writes the call, as References read it: the id of the
+  task a step labelled `<label>` delegated), and `cut` when the response was
   cut short over its arguments, which never arrived whole: the round's last
   call, under a `finish_reason` that cuts calls (§6.4). A generation past
   the last round fails the turn. `deltas` writes the round's text in those
@@ -540,7 +542,8 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
   in the order of their `room_created`;
 - `<room>#<index>`: the event at that index of the room's timeline as it
   stands when the call is made, read as Normalization reads it;
-- `$<label>`: the event the call labelled `<label>` returned;
+- `$<label>`: the event the call labelled `<label>` returned, the task's
+  id for a `delegate`;
 - `$<label>.secret`: the secret of the verification request the call
   labelled `<label>` opened;
 - `$request`: in an action of a hook on `on_user_input_required`, the id of
