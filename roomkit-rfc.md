@@ -2637,15 +2637,26 @@ an author sent count in what the turn measures (Section 20); a media that is
 not an image counts as its mention.
 
 **A turn compacted.** When a provider refuses a turn's context as too long, the
-channel MAY compact the context once and replay the call. A compaction keeps the
-turn's input and its notes whole. When the input falls in the older half of the
-messages, it summarizes the history that precedes the input and shortens the
-long results of the turn's older tool rounds by storing each as a large result
+channel MAY compact the context once and replay the call. A refusal reads as
+one when the provider classed it so, whatever its words, or, when it classed
+it neither way, when its words say so; one it classed as no such refusal is
+not compacted. A channel that compacts does so before any retry or fallback,
+only while nothing of the call's answer has reached the room (a replay would
+hand it twice), and once per call: a replay refused again is not compacted
+again. The turn's later rounds build on the compacted context, and a replay
+that answers refuses none of the author images the request carried. A
+compaction keeps the turn's input, as the hooks before generation left it,
+and its notes whole. When the input falls in the older half of the messages,
+it summarizes the history that precedes the input and shortens the long
+results of the turn's older tool rounds by storing each as a large result
 is (Section 21.5), so the model keeps a preview and can read the rest back; a
 skill's instructions (Section 24.4) and a page already read back stay whole.
-Otherwise it summarizes the older half. It keeps every tool call with its
-result, never quotes part of a delimited block, and fails the call rather than
-cut the input when nothing before the input can be shortened. Text the runtime
+Otherwise it summarizes the older half. Its summary opens with a mark of the
+runtime's, `[Context compacted — earlier conversation summary]`, then gives
+each summarized message a line, its role then its text quoted. It keeps every
+tool call with its result, never quotes part of a delimited block, and fails
+the call rather than cut the input when nothing before the input can be
+shortened, or when the context holds four messages or fewer. Text the runtime
 places next to a user message (the turn's notes, a compaction's summary, a
 summary a memory provider returns) joins that message rather than forming a
 second user message in a row.
