@@ -8,7 +8,7 @@
     "§10.1.1",
     "§22"
   ],
-  "notes": "Python: tests/tasks/test_delegation_result_delivery.py, tests/tasks/test_integration.py::test_full_delegate_flow; core/mixins/delegation.py _run_background, _deliver_delegation_result, _delegation_result_text; tasks/handback.py hand_back, RESULT_TURN_NOTE.",
+  "notes": "Python: tests/tasks/test_delegation_result_delivery.py, tests/tasks/test_integration.py::test_full_delegate_flow, tests/tasks/test_runner.py::TestInMemoryTaskRunner::test_submit_and_wait_completed (its duration_ms > 0 read as present); core/mixins/delegation.py _run_background, _deliver_delegation_result, _delegation_result_text; tasks/handback.py hand_back, RESULT_TURN_NOTE.",
   "setup": {
     "channels": [
       {
@@ -83,9 +83,17 @@
       "task_id": "$t",
       "expect": {
         "result": {
+          "task_id": {
+            "$present": true
+          },
           "status": "completed",
           "output": "Found it.",
-          "child_room_id": "$r1"
+          "child_room_id": "$r1",
+          "parent_room_id": "room-1",
+          "agent_id": "worker",
+          "duration_ms": {
+            "$present": true
+          }
         }
       }
     },
