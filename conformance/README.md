@@ -265,7 +265,8 @@ scripted.
   (§12.2 step 13s). `done: false` ends its stream after its text and its
   calls without the done event that carries its finish reason and usage.
   `gate` holds the round at that gate, before it writes anything, until a
-  step opens it.
+  step opens it. `model.vision`: whether the model sees images (§6.4, a
+  provider's `supports_vision`), false by default.
 - `tools`: what the agent serves, each declared with its `name`,
   `description` and `parameters` (a JSON Schema), and answering every call
   one way: `returns` a text, `raises` an error of a `kind` with a `message`
@@ -285,6 +286,12 @@ scripted.
   `cache_read_input_tokens` and `cache_creation_input_tokens`.
 - `max_context_events`: the window of the agent's default memory, a sliding
   window of the room's latest events (§20.3, default 50).
+- `max_author_images`: how many of the newest author images a turn sends as
+  images, its history and its input counted together (§6.4, default 4),
+  `null` bounding nothing; `describe_empty_event`: the host's describer,
+  asked of an event that reads as nothing in the turn's transcript (§6.4),
+  answering every event it is asked about with `says`, `null` leaving the
+  event out.
 - `serialize_room_turns`: its turns in a room run one after the other (§6.4,
   default false); `steer_room_turns`: a message for a room where its turn
   runs is steered into that turn rather than a turn of its own (§6.4,
@@ -538,7 +545,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `observations`, `tasks` | Per room, the stored side effects |
 | `actions` | Per action label, the outcomes of its runs, in the order they ended |
 | `ai_events` | Per room, the framework events of an AI channel's turn (§8.2, Level 1): `before_ai_generation` and `ai_response`, in emission order, matched as `framework_events`, which does not hold them |
-| `models` | Per scripted agent, each generation's request as its model received it, in order: the `messages` it carries, each `{role, text}`, `text` its text parts joined (empty for a message with none, a tool's result among them), and the `tool_results`, each `{tool_call_id, content, is_error}`, `content` as the model reads it, `is_error` whether it reads the call as failed, its `system_prompt`, and the `tools` it declares, by name: each one's position in the declaration, so that a scenario names those it asserts, declared or `$absent` |
+| `models` | Per scripted agent, each generation's request as its model received it, in order: the `messages` it carries, each `{role, text, parts}`, `text` its text parts joined (empty for a message with none, a tool's result among them), `parts` its text and image parts in order, each `{"text": ...}` or `{"image": url, "mime_type": ...}`, null for a message whose content is a text, and the `tool_results`, each `{tool_call_id, content, is_error}`, `content` as the model reads it, `is_error` whether it reads the call as failed, its `system_prompt`, and the `tools` it declares, by name: each one's position in the declaration, so that a scenario names those it asserts, declared or `$absent` |
 | `lifecycle` | Per room, the lifecycle records (§5.1) in index order, when the implementation writes them: an implementation that writes none passes. It says which changes write one, and which write none (a change that changes nothing, §7.2) |
 | `participants` | Per room, the participants the store holds (§5.5), in the store's order |
 | `resolver` | The scripted resolver's calls, in order |

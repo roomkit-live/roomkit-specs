@@ -443,6 +443,30 @@
           "description": "A scripted agent's budget of billed tokens per turn (§6.4): its input, output, cache read and cache creation tokens, counted as each generation reports them; past it the turn ends budget_exceeded at its next round boundary.",
           "type": "integer",
           "minimum": 1
+        },
+        "max_author_images": {
+          "description": "A scripted agent's max_author_images: how many of the newest author images a turn sends as images, its history and its input counted together (§6.4), the rest read as a mention; null bounds nothing. 4 by default.",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "describe_empty_event": {
+          "description": "A scripted agent's describe_empty_event: the host's describer, asked of an event whose content reads as nothing in the turn's transcript (§6.4), which answers every event it is asked about with `says`; null keeps the event left out.",
+          "type": "object",
+          "required": [
+            "says"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "says": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
         }
       }
     },
@@ -2588,7 +2612,7 @@
           }
         },
         "models": {
-          "description": "Per scripted agent, each generation's request as the model received it, in order: the `messages` it carries, each `{role, text}`, the `tool_results`, each `{tool_call_id, content, is_error}`, its `system_prompt`, and the names of the `tools` it declares, in order.",
+          "description": "Per scripted agent, each generation's request as the model received it, in order: the `messages` it carries, each `{role, text, parts}` (`parts` its text and image parts in order, each `{text}` or `{image, mime_type}`, null for a text content), the `tool_results`, each `{tool_call_id, content, is_error}`, its `system_prompt`, and the names of the `tools` it declares, in order.",
           "type": "object",
           "additionalProperties": {
             "type": [
@@ -2657,6 +2681,10 @@
           "items": {
             "$ref": "#/$defs/model_round"
           }
+        },
+        "vision": {
+          "description": "Whether the model sees images (§6.4, a provider's supports_vision): false by default.",
+          "type": "boolean"
         }
       }
     },
