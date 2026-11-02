@@ -1002,7 +1002,8 @@
             "record_failed_attempt",
             "revoke_verification",
             "verification_of",
-            "check_verifications"
+            "check_verifications",
+            "sender_verification"
           ]
         },
         "organization_id": {
