@@ -104,12 +104,8 @@
           "body": "Run the report."
         }
       },
-      "expect": {
-        "result": {
-          "blocked": false,
-          "error": null
-        }
-      }
+      "background": true,
+      "as": "inbound"
     },
     {
       "wait_for": "ping-ended"
@@ -119,6 +115,15 @@
     },
     {
       "open": "ping-ended"
+    },
+    {
+      "await": "inbound",
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
     },
     {
       "idle": true
@@ -158,7 +163,7 @@
             "tool_name": "ping",
             "tool_id": "c2",
             "outcome": "failed",
-            "result": "PROBE"
+            "result": "{\"error\": \"Tool 'ping' failed (ToolTimeoutError)\"}"
           }
         },
         {

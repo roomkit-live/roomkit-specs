@@ -107,7 +107,7 @@
             "tool_name": "report",
             "tool_id": "c1",
             "outcome": "failed",
-            "result": "PROBE"
+            "result": "{\"error\": \"Tool 'report' failed (ToolTimeoutError)\"}"
           }
         },
         {
@@ -129,7 +129,7 @@
           "tool_results": [
             {
               "tool_call_id": "c1",
-              "content": "PROBE",
+              "content": "{\"error\": \"Tool 'report' failed (ToolTimeoutError)\"}",
               "is_error": true
             }
           ]
