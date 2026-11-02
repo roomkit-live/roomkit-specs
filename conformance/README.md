@@ -384,6 +384,7 @@ else, where no turn's host is.
 |---|---|---|
 | `status.post` | `agent_id`, `action`, `status` (a StatusLevel: `ok`, `failed`, `pending`, `info`, `completed`), `detail`, `metadata` | the entry |
 | `status.recent` | `n` (default 10), `agent_id`, `status` | the entries, oldest first |
+| `status.recent_text` | `n` (default 10) | the newest entries as an agent's context reads them, one line each: `[HH:MM:SS] <agent>: <action> → <status> | “<detail>”`, the agent and the action as identifiers, the detail quoted (§19.8, §6.4); `No activity yet.` for none |
 | `update_room_metadata` | `room_id`, `metadata` | the room |
 | `submit_feedback` | `room_id`, `rating`, `event_id`, `channel_id`, `comment`, `dimension`, `metadata` | null |
 | `list_observations` | `room_id` | the room's observations |

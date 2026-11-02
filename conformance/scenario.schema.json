@@ -862,7 +862,8 @@
             "cancel_task",
             "start_task",
             "setup_background",
-            "setup_task_tools"
+            "setup_task_tools",
+            "status.recent_text"
           ]
         },
         "organization_id": {
@@ -2076,6 +2077,23 @@
             "properties": {
               "agent_id": {
                 "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "status.recent_text"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "n": {
+                "type": "integer",
+                "minimum": 0
               }
             }
           }
