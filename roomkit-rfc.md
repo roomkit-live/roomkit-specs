@@ -2313,7 +2313,11 @@ declared at any later round of the turn, MUST NOT be named by `find_tools` or
 `list_tools` nor recovered at call time, and a call naming it MUST be refused,
 a tool the channel provides itself included; a tool it adds or edits stays as
 the hook left it, subject to the tool policy and skill gating, and a tool it
-adds is declared at every round of the turn, never deferred by Tool Search. A
+adds is declared at every round of the turn, never deferred by Tool Search.
+A tool it adds is served by the channel's tool handler, and a call to a tool
+it edited is checked against the schema it left (Section 21.1); a tool the
+channel serves itself keeps its own definition, the hook able to withdraw it,
+never to redefine it nor to add a tool under its name. A
 hook that withdraws a tool from the first round only has withdrawn nothing.
 A tool the hook adds is never named by `find_tools`, being declared already.
 Once the turn's toolset is resolved, a call MUST name a tool the round
@@ -2405,7 +2409,9 @@ results. A withdrawal changes the declaration of the next round, the one
 exception this hook makes to the declaration staying the same, and costs what a
 changed declaration costs. A hook acts on the event it receives, in place: the
 event a MODIFY returns is not read, but a MODIFY that returns none is an
-unusable result (Section 9.3). A BLOCK stops the hooks after it, as on any
+unusable result (Section 9.3). An implementation whose hooks receive a copy of
+their own rather than the event reads instead the withdrawals and messages of
+the event a MODIFY returns, to the same effect. A BLOCK stops the hooks after it, as on any
 SYNC trigger, and changes nothing of the round, which has run; a hook that
 raises, times out or returns an unusable result is skipped, or, registered
 fail-closed, stops the hooks after it. The hook belongs to a registered AI
@@ -2557,7 +2563,8 @@ turn carries none of the room's memories (Section 10.1.1).
 
 **Images an author sent.** A `MediaContent` an event brings (alone, or a part
 of a `CompositeContent`) reaches a model that sees as an image after its
-caption, with the words of the event, in the history and in the input alike.
+caption, at its place among the event's parts, with the words of the event,
+in the history and in the input alike.
 Its URL is a data URI, which carries the image; a link (`http` or `https`),
 handed to the provider as it is; or a reference, `<scheme>://…` in a scheme
 the application chooses and RoomKit never interprets, naming a media the
@@ -2597,7 +2604,8 @@ newest images its authors sent, history and input counted together: four by
 default, a bound the channel's configuration MAY change or remove
 (`max_author_images`). Only an image every vision provider takes is sent: PNG,
 JPEG, GIF or WebP (`image/jpg` read as JPEG, case and parameters aside), with
-data, up to 5 MB of it, and it is sent under the type it was read as, its data
+data, up to 5 MiB of it (5,242,880 bytes, a data URI's read off its base64's
+length), and it is sent under the type it was read as, its data
 URI's header included: a provider refuses `image/jpg`. Anything else takes the image's place as a text mention, never a
 failed turn: a media of another type reads as its transcoded form (Section
 6.6), save that one alone in its event without a caption reads, for a model
@@ -2607,8 +2615,11 @@ shown because the model does not see images, so that the model says it cannot
 see it rather than answer as if it had; an image past the
 bound reads as an earlier image not shown; an image with no data or past the
 size, and a reference no resolver serves, that the resolver fails on or answers
-none for, reads as an image unavailable. An AI channel takes every media
-whatever its model sees (its capabilities name MEDIA), so that the event it
+none for, reads as an image unavailable. Any other event whose content reads as
+nothing (an empty text) reads as what `describe_empty_event` says of it, and is
+left out of the turn when it says nothing, a media alone in its event then
+reading as its transcoded form. An AI channel takes every media whatever its
+model sees (its capabilities name TEXT, RICH and MEDIA), so that the event it
 answers reads as the same event does in its history. The name a mention gives (the caption, else the
 filename, else the type) is quoted (Section 6.4), and a mention never carries
 a data URI or a reference. A turn whose content the provider refused, as for
@@ -2848,6 +2859,14 @@ caller learns the provider's error), and its rounds are kept, the calls that
 ran included. No message is added to say so: the turn's record (below) says
 how it ended, and the provider's error never reaches the room. A cancellation
 adds nothing a round already said.
+
+**A round that repeats the one before.** A model may open a round's text by
+repeating the text of the last round of calls that said something (`Let me
+look.` again after the call). The repeated opening is not delivered again: the
+round is delivered from where its text goes on, and whole when its text is no
+more than that opening, which may be the whole answer. The model reads its own
+text whole; the turn's record (`ON_AI_RESPONSE`'s segments) says what the room
+saw.
 
 A stored interruption marker (`[Response interrupted]`, a message carrying
 `metadata["interruption_marker"] = true`, a key distinct from the
@@ -17394,13 +17413,21 @@ leave the model answering an event it cannot read.
 MemoryResult
 ├── messages: list<AIMessage>               # Pre-built AI messages (summaries, instructions)
 ├── events: list<RoomEvent>                 # Raw events for AIChannel to convert
-└── notes: list<string>                     # What was retrieved for this turn alone
+├── notes: list<string>                     # What was retrieved for this turn alone
+└── speakers: list<string>                  # The labels the messages name participants by
 ```
 
 When `messages` is non-empty, the AIChannel uses them directly as conversation
 history. When `events` is provided, the AIChannel converts them to AI messages
 using its standard conversion logic. Both MAY be combined — `messages` are
-prepended before converted `events`.
+prepended before converted `events`. A user text the `messages` end on joins
+the user message that follows it, a blank line between, rather than standing
+as a second user message in a row; a system message stays a message of its own.
+
+`speakers` names the participants the `messages` speak of by the labels they
+use (a summary's lines, `Alice`, `@sms`): each counts as a speaker toward
+labelling the turns (Section 6.4), unless a turn's speaker already has it, so a
+conversation a summary named several people in reads as labelled turns.
 
 `notes` carries what a provider retrieved for the current turn only, knowledge
 passages for one: it changes from one turn to the next, so it rides the turn's
@@ -17421,10 +17448,16 @@ trims the turn's notes, so the history is what makes room for them.
 | BudgetAwareMemory | Token-based truncation with priorities | Strict token budget enforcement |
 
 **SlidingWindowMemory** is the default when no MemoryProvider is configured.
-It returns the most recent `max_context_events` from the room timeline.
+It returns the most recent `max_context_events` events of the room as the
+channel reads it, the turn's event the newest among them, which the channel
+places as the input: the turn reads at most one fewer before it. The agent's
+tool rows are not counted: its earlier rounds are replayed apart, at their
+place (Section 6.4).
 
 **SummarizingMemory** calls an AI provider to summarize older history,
-keeping recent events intact. The summary is cached and refreshed
+keeping recent events intact: each older turn is read on one line after its
+author's label, and the summary's message stands for them, a user text joined
+to the turn after it. The summary is cached and refreshed
 periodically or when the event count exceeds a threshold.
 
 **RetrievalMemory** wraps another provider and queries its knowledge sources
@@ -17433,9 +17466,15 @@ turn; the passages it retrieves are the turn's `notes`, each set apart as
 data, while the inner provider supplies the history. It indexes each ingested
 event in its sources.
 
-**BudgetAwareMemory** counts tokens and evicts oldest events when the total
-exceeds `evict_threshold_tokens`. It prioritizes keeping system messages,
-tool results, and recent events.
+**BudgetAwareMemory** keeps the room's latest events that fit what its
+`max_context_tokens` leaves once its safety margin, the turn's footprint
+(below), the current event and the messages and notes of the memory it wraps
+are paid for, dropping the oldest, its `min_events` latest always kept.
+
+**CompactingMemory** keeps the latest events that fit its window less its
+safety margin and the summary's share, its `min_events` latest always kept,
+and has a model summarize the events it trims; the summary's message comes
+after the messages of the memory it wraps, before the events it keeps.
 
 **The turn's footprint.** What the history may take is what the window leaves
 once the rest of the turn is in it: the system prompt, the tools declared, the
