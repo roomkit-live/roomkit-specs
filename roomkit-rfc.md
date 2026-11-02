@@ -6668,6 +6668,14 @@ During broadcast, for each target channel:
    MUST deliver the event natively.
 2. If the target channel does NOT support the operation, the framework MUST
    apply transcoding fallback (see Section 6.6).
+3. An intelligence channel is handed the change as any target, and an agent
+   MUST open no turn on it: a change is no message a turn may answer, its
+   fallback text (`[Message deleted]`, or the edit's words) no request. A
+   strategy that takes an agent's turns (Section 19.7) asks none on it either:
+   it is no task for a producer, reviewer or worker. The agent answers the next
+   message, in the room the change left: the target as edited, or the message
+   deleted withheld (§7.5 rule 8). A host that reacts to a change does so with
+   `ON_EVENT_UPDATED` or `ON_EVENT_DELETED` (above).
 
 ### 10.4 Inbound Room Routing
 
