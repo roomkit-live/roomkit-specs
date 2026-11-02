@@ -8161,12 +8161,26 @@ once; otherwise the sender's next message meets ON_VERIFICATION_REQUIRED.
 When a request completes, the messages its sender wrote while it was open
 are released to the room's intelligence channels, unless the policy says
 otherwise: the held events of that room whose sender is the identity,
-received from `window_start` to the completion, never released before,
-within the policy's bounds of number and age. Releasing an event restores the
-visibility it had before it was held (`update_event`, ON_EVENT_UPDATED), and
-the room's intelligence channels act on it as on any inbound message of its
-author: nothing is copied, and the last released event alone solicits an
-answer, the earlier ones being its context.
+received from `window_start` to the completion, never released before and
+not deleted since (a deleted message is no longer said, §10.3), within the
+policy's bounds of number and age, the latest by index when more qualify.
+Only a message the pipeline itself held is released: its hold mark is the
+pipeline's own (§11.7.3), and a mark a sender's message carries releases
+nothing. Releasing an event restores the visibility it had before it was held
+(`update_event`), its ON_EVENT_UPDATED hooks running on the budget of the
+work the release is made in (§9.5.1, §10.3), and the room's intelligence
+channels act on it as on any inbound message of its author: nothing is
+copied, and the last released event alone solicits an answer, the earlier
+ones being its context. The event is handed to the intelligence channels
+alone, never again to a transport, and nothing of its first delivery runs
+again. A completion releases within its call: a code reply's (§11.7.4)
+before the reply's call returns; one made under the room's lock, from a hook,
+places the answer in the room's lane after that work, where it runs once that
+work's delivery is over. The answer is a regeneration of the released event
+(§13.6): `process_timeout` bounds its wait for the room's lock
+(`process_timeout` with `operation = regenerate`), and a room closed while it
+waited in the lane refuses it before any agent runs (`room_refused_event`,
+`operation = regenerate`).
 
 A held message whose delivery was cancelled (§10.1, *Explicit delivery
 cancellation*), before its commit, while it was delivered or while it waited
@@ -8175,9 +8189,13 @@ the last released, no agent answers the release, and the earlier ones are
 not answered in its place, since their answer would read the cancelled
 message as context. The cancellation is recorded with the held event, so a
 release in any process honours it; a cancellation by key reaches the held
-messages of the process that received them. A completion handle (§10.1,
-step 18) follows the delivery set alone: it cancels a held message while
-that set runs, and past it the key is what names the message.
+messages of the process that received them. The key names the held message
+from its call's decision on, so a release during the message's own delivery
+set names its answer too; a message nothing will release, blocked after it
+was held or held under a policy that releases nothing, is named no longer
+than its call. A completion handle (§10.1, step 18) follows the delivery set
+alone: it cancels a held message while that set runs, and past it the key is
+what names the message.
 
 A released message MUST reach an agent as its **author's own turn**, never as
 an instruction or anything else carrying the application's authority: a
