@@ -228,6 +228,10 @@
                   "type": "string"
                 }
               }
+            },
+            "orchestration": {
+              "description": "The id of the scripted strategy the kit is built with as its default: every room it creates takes it unless the creation names another or none (§19.7).",
+              "type": "string"
             }
           }
         },
@@ -260,6 +264,13 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/record"
+          }
+        },
+        "strategies": {
+          "description": "The scripted strategies the calls name (§19.7), none installed yet.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/strategy"
           }
         }
       }
@@ -1102,7 +1113,11 @@
             "cancel_delivery",
             "delivery.cancel",
             "delivery.wait",
-            "steer"
+            "steer",
+            "install_strategy",
+            "uninstall_strategy",
+            "claim_room_strategy",
+            "room_strategy"
           ]
         },
         "organization_id": {
@@ -2583,6 +2598,75 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "enum": [
+                  "install_strategy",
+                  "claim_room_strategy"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "strategy"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              },
+              "strategy": {
+                "description": "A scripted strategy's id.",
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "enum": [
+                  "uninstall_strategy",
+                  "room_strategy"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "create_room"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "orchestration": {
+                "description": "The id of the scripted strategy the room is created with, `null` for none; absent, the kit's default (§19.7).",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
         }
       ]
     },
@@ -3999,6 +4083,54 @@
               "minimum": 0
             }
           }
+        }
+      }
+    },
+    "strategy_step": {
+      "description": "What a scripted strategy's install or uninstall does (§19.7), as a reaction does: it holds at its `gate`, makes its actions in order (`$room` the room it is installed in), then, for an install, refuses the room with `refuse`.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "gate": {
+          "description": "Hold at this gate until a step opens it.",
+          "type": "string"
+        },
+        "do": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/action"
+          }
+        },
+        "refuse": {
+          "description": "Then refuse the room with this message: the strategy's own refusal, an `invalid_argument`.",
+          "type": "string"
+        }
+      }
+    },
+    "strategy": {
+      "description": "A scripted strategy (§19.7), a host's own: the agents it names by their channel ids, which the kit holds, and what its install and its own uninstall step do.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "description": "How the calls name it; one object whatever the room it is installed in.",
+          "type": "string"
+        },
+        "agents": {
+          "description": "The channel ids of its agents, each a channel the kit holds: attached to the room as intelligence channels before its install runs.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "install": {
+          "$ref": "#/$defs/strategy_step"
+        },
+        "uninstall": {
+          "$ref": "#/$defs/strategy_step"
         }
       }
     }

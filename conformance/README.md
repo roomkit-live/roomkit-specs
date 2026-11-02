@@ -147,7 +147,10 @@ room callbacks of the setup are not compared.
   none, whatever the room, and recording each call under `media_resolver`
   (the media's `url`, the `room_id` of the turn), and `attached_media`, the
   kit's attached-media reader, naming as an event's media the media
-  contents (in the serialized form) its metadata lists under `key`.
+  contents (in the serialized form) its metadata lists under `key`; and
+  `orchestration`, the id of a scripted strategy (below) the kit is built
+  with as its default, which every room it creates takes unless the
+  creation names another or none (§19.7).
 - `channels`: each is registered. A channel of type `host` is the
   implementation's host channel (§10.5); any other is a **scripted channel**:
   - `id`, `type` (a ChannelType: `sms`, `websocket`, `whatsapp`, `email`,
@@ -213,6 +216,15 @@ room callbacks of the setup are not compared.
   IdentityHookResult (§11.3), whose `inject.event` is a template completed
   as a hook's injected event; with no reaction, or a `result` of null, it
   answers null.
+- `strategies`: each a **scripted strategy** (§19.7), a host's own, none
+  installed: `id`, how the calls name it, one object whatever the room it
+  is installed in; `agents`, the channel ids of its agents, channels the
+  kit holds, which the kit attaches to the room as intelligence channels
+  before the install runs; `install` and `uninstall`, what its install and
+  its own uninstall step do, each as a reaction does: it holds at its
+  `gate`, makes the actions of its `do` in order, `$room` naming the room
+  it is installed in, then, for an install, refuses the room with
+  `refuse`, the strategy's own refusal, an `invalid_argument`.
 
 ### Identity resolution
 
@@ -407,7 +419,7 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `commit_event` | `room_id`, `event` (a template) | the event |
 | `update_event` | `room_id`, `event_id`, `content`, `source`, `metadata` | the event, or null |
 | `delete_event` | `room_id`, `event_id`, `cascade_replies` (default true) | the ids removed |
-| `create_room` | `room`: `id`, `organization_id`, `metadata`, `timers` | the room |
+| `create_room` | `room`: `id`, `organization_id`, `metadata`, `timers`; `orchestration`, a scripted strategy's id, `null` for none, the kit's default when absent (§19.7) | the room |
 | `attach_channel` | `room_id`, `channel_id`, and a binding's `category`, `access`, `visibility`, `muted`, `metadata`, `participant_id` | the binding |
 | `detach_channel` | `room_id`, `channel_id` | unspecified |
 | `mute`, `unmute` | `room_id`, `channel_id` | the binding |
@@ -428,6 +440,10 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `remove_room_hook` | `room_id`, `name` | whether the room held a hook of that name |
 | `cancel_delivery` | `key`, the `delivery_key` of the messages whose delivery it cancels, and `reason` (§10.1 Explicit delivery cancellation) | how many deliveries it cancelled |
 | `steer` | `channel_id`, `directive` (a SteeringDirective in the serialized form: `{"type": "cancel", "reason"}`, ...), `room_id` (§21.3) | how many of the channel's running loops it reached |
+| `install_strategy` | `room_id`, `strategy` (a scripted strategy's id) (§19.7) | null |
+| `uninstall_strategy` | `room_id` (§19.7) | whether the room held a strategy |
+| `claim_room_strategy` | `room_id`, `strategy`: claims the room for the strategy, or refuses, installing nothing (§19.7) | null |
+| `room_strategy` | `room_id` | the id of the scripted strategy installed in the room, null for none (§19.7) |
 
 ### Calls on the store
 
@@ -662,7 +678,7 @@ refuses its value, a `ChannelId`).
 
 | Name | RFC meaning | roomkit (Python) | roomkit-rs |
 |---|---|---|---|
-| `invalid_argument` | An argument refused before anything is read or written: the visibility `internal` (§7.3), a channel id the grammar refuses (§7.3), `standalone` on another type and an instruction's refusals on a direct injection (§10.1.1), a record naming another room (§10.5), a post from a channel that is not a host channel, a message on a host channel (§10.5), a host channel bound as an intelligence channel, a reserved room metadata key (§5.1), a hook registration §9.1 refuses, a tool set up on an agent under a name it serves already (§21.1) | `ValueError` | `InboundError::{NotAHostChannel, InboundOnHostChannel, HostAsIntelligence, StandaloneOutsideInstruction, InternalVisibility}`, `Refused` with an instruction's reason, `LifecycleError::{InternalVisibility, HostAsIntelligence, ReservedMetadataKey}`, `MutationError::OtherRoom`, `KitError::{Config, Registration}`, `RoomKitError::ToolNameCollision`, a `ChannelId` refused |
+| `invalid_argument` | An argument refused before anything is read or written: the visibility `internal` (§7.3), a channel id the grammar refuses (§7.3), `standalone` on another type and an instruction's refusals on a direct injection (§10.1.1), a record naming another room (§10.5), a post from a channel that is not a host channel, a message on a host channel (§10.5), a host channel bound as an intelligence channel, a reserved room metadata key (§5.1), a hook registration §9.1 refuses, a tool set up on an agent under a name it serves already (§21.1), a strategy for a room that holds one, or that the strategy refuses (§19.7) | `ValueError` | `InboundError::{NotAHostChannel, InboundOnHostChannel, HostAsIntelligence, StandaloneOutsideInstruction, InternalVisibility}`, `Refused` with an instruction's reason, `LifecycleError::{InternalVisibility, HostAsIntelligence, ReservedMetadataKey}`, `MutationError::OtherRoom`, `KitError::{Config, Registration}`, `RoomKitError::ToolNameCollision`, a `ChannelId` refused |
 | `channel_not_registered` | The channel named is not registered (§10.1 step 1, §10.5) | `ChannelNotRegisteredError` | `InboundError::UnknownChannel`, `KitError::UnknownChannel` |
 | `room_not_found` | No such room, or another organization's (§17.2) | `RoomNotFoundError` | `InboundError::{RoomNotFound, OtherOrganization}`, `LifecycleError::RoomNotFound`, `MutationError::RoomNotFound` |
 | `channel_not_bound` | The room does not bind the channel: a direct injection or a post from it (§10.5), a detach or a binding change of it (§7.2) | `ChannelNotFoundError`; `detach_channel()` answering `False` | `Refused { reason: "source_unbound" }`, `LifecycleError::ChannelNotBound` |
