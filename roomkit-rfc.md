@@ -1044,11 +1044,12 @@ them, §5.1), so an interface reflecting the room learns of the change the same
 way it learned of the join. `id` and `identity_id` are not presentation and
 MUST NOT be changed through it: they are what attribution, correlation
 (Section 12.10.2) and moderation stand on. A rename that changes nothing is a
-no-op — no write, no event. The record's text quotes the new name with every
-character that does not print escaped (a control, a format or separator
-character, a no-break space, a right-to-left override: `'Bob\xa0Smith'`), so
-a name cannot hide or reverse what a reader of the record sees; its data
-keeps the name as given.
+no-op — no write, no event. The record's text quotes the new name as
+Python's `repr` writes a string: every character `str.isprintable` refuses (a
+control, format, separator other than the space, private-use or unassigned
+character) is escaped, `\xNN` below U+0100, `\uNNNN` below U+10000,
+`\UNNNNNNNN` past it (`'Bob\xa0Smith'`, `'\u202e'`), so a name cannot hide or
+reverse what a reader of the record sees; its data keeps the name as given.
 
 **Resolving:** an advisor's identification of a participant
 (`resolve_participant`, Appendix B.3) sets it IDENTIFIED as an identity the
