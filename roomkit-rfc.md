@@ -5770,8 +5770,13 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
        (a hook's included, §7.5 rule 7) or a creation hook closed the room
        (no attach is made to a room whose status refuses events, as for a
        room that exists); then, for a channel other than VOICE and
-       REALTIME_VOICE, whether or not the attach was made, fire
-       ON_SESSION_STARTED (§9.2) and emit `session_started` (§8.2). A
+       REALTIME_VOICE, whether or not the attach was made, the session
+       starts: the ON_SESSION_STARTED hooks whose name starts with `_`, an
+       agent's greeting among them (§19.1), run and are waited for, within
+       the call's `process_timeout` (§13.6): past it they are cut and the
+       message is refused, `session_started` not emitted and no other hook
+       fired, the room and its attach standing. Then emit `session_started`
+       (§8.2) and fire the other hooks (§9.2), which no message waits for. A
        creation hook that closed the room does not stop the message in this
        branch: it is neither refused nor routed again here, no attach is
        made, and step 6 refuses it (room_closed), nothing of it stored, the
@@ -16355,7 +16360,7 @@ Agent (extends AIChannel)
 ├── voice: string | null                    # TTS voice identifier
 ├── greeting: string | null                 # Auto-greeting text on session start
 ├── language: string | null                 # Preferred language
-├── auto_greet: bool (default true)         # Play greeting on voice session start
+├── auto_greet: bool (default true)         # Greet on a session's start
 ├── identity_in_prompt: bool (default true) # false: the host renders identity itself
 │
 ├── is_config_only: bool (read-only)        # True when no AI provider (speech-to-speech mode)
@@ -16374,6 +16379,49 @@ metadata). A null provider MUST be accepted — no generation calls are made.
 Multiple Agents MAY be attached to a single room. The orchestration system
 determines which Agent handles each event, unless the event names its
 recipients itself (§19.3).
+
+**The greeting.** `send_greeting(room_id, channel_id?, agent_id?, greeting?,
+organization_id?)` says an agent's greeting in a room. The agent is the one
+`agent_id`, then `channel_id`, names when it is an intelligence channel with an
+identity, else the first such channel the room binds; the words are `greeting`,
+else the agent's. With no agent or no words nothing happens. With an
+`organization_id`, the room is read first, and one it does not reach is not
+found (§17.2).
+
+With no voice or realtime session, the greeting is a MESSAGE from the agent,
+OUTBOUND, of channel type AI, DELIVERED, its metadata `auto_greeting: true`. It
+is committed under the room lock, the room's due timers applied (§5.1); a room
+missing, or whose status refuses events, takes nothing and fails no one. It is
+committed by a path of its own (§7.5 rule 2): no BEFORE_BROADCAST hook runs for
+it and its source's right to write is not checked. Its visibility is narrowed
+by its agent's binding (§7.3). It is delivered on the room's lane (§10.2), the
+other agents' answers re-entering, and AFTER_BROADCAST observes it; an agent
+that cannot write has it stored and delivered to no one, and one the room does
+not bind has it stored with no delivery set and no AFTER_BROADCAST. Its
+deliveries are not reported and no `event_processed` follows it (§8.2): it
+entered neither through the inbound pipeline nor by direct injection. A stream
+that answers it is a chained stream (§8.3). The call returns once its delivery
+is over; made under the room's lock or from its lane, at its commit.
+
+Made in the room's own work, a hook's body or a delivery, a greeting is that
+work's write, as a direct injection is (§9.5.1, §8.3): at the work's depth, and
+drawing a pass, or a hook call from an ASYNC hook's body, on the work's budget,
+which what answers it draws on too; past the budget it is stored BLOCKED
+`reentry_loop_cap`, with no delivery, so that a hook greeting on every answer,
+or on its own greeting, stops at the limit. A call made outside the room's work
+has a budget of its own, at depth 0.
+
+An Agent with a greeting and `auto_greet` greets on a session's start, through
+a hook on ON_SESSION_STARTED of the kit, named `_agent_auto_greet:<agent>`, so
+that the message that started the session waits for it (§10.1 step 2); it goes
+when the Agent is unregistered. It greets a room once, and only one that binds
+it: a room it was not bound to at a session's start may be greeted at the next.
+An implementation MAY bound what it remembers (the reference keeps 10 000 rooms
+per Agent, dropping the oldest tenth when full). No greeting gate holds a text
+session: another agent that reads the greeting and answers it delays the message
+only within the message's `process_timeout`. A voice session's greeting is said
+behind a gate the agents' deliveries wait for, and a realtime session's is
+injected as the model's own turn (§12.4).
 
 ### 19.2 ConversationState
 
