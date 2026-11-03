@@ -3807,6 +3807,9 @@ A boolean flag on the binding. When `muted = true`:
   each re-enters and its commit pass stores it `BLOCKED` with
   `source_muted` (`source_read_only` when its access does not write either),
   after its hooks (§7.5 rule 2); a streamed one MAY be closed unread instead.
+  A mute that lands while the response streams holds from the next row it
+  commits: that row and the ones after are stored `BLOCKED`, and the
+  streaming target reads nothing more of the stream (§7.5 rule 2).
 - Side effects (tasks, observations) are STILL collected.
 
 Muting is temporary. The integrator calls `mute()` and `unmute()` as needed.
@@ -3958,7 +3961,16 @@ Implementations MUST enforce these rules:
    block. A streamed response from a source that cannot write is piped live
    to no channel: a read-only source's stream is read to its end and each row
    stored `BLOCKED`; a muted source's MAY be closed unread, the reply never
-   generated. A source both read-only and muted is refused as read-only, so
+   generated. Each row of a streamed response reads the room's bindings at
+   its commit, under the room lock, and is checked and planned with them: a
+   binding changed while the response streams (its source muted, made
+   read-only or detached; a transport made write-only or detached) holds from
+   the next row. Once the room no longer lets the streaming target read the
+   response (its source can no longer write, the room refuses the row,
+   §5.1, or the target is no longer one the answer reaches, §12.2 step
+   11s), the target is handed nothing more of
+   the stream, neither text nor rows, and the rows after are delivered as
+   their plans say. A source both read-only and muted is refused as read-only, so
    its stream is read to its end. An event a hook injects takes no source
    check: it is the hook's, not a channel's (§9.4). Nor does an event the
    framework itself writes through the pipeline, such as a delegation's task
@@ -8910,7 +8922,9 @@ enters a room as any other audio.
      included.
 14s. Framework re-broadcasts complete event to non-streaming channels (exclude_delivery
      skips channels that already received streaming content, whether the
-     response completed or failed)
+     response completed or failed; a row committed once the target may no
+     longer read the response is delivered as its plan says, Section 7.5
+     rule 2)
 15s. Fire AFTER_TTS hook with the text the sessions were sent: the sentences as
      BEFORE_TTS left them (12s.b) when a hook changed or dropped one, or as many
      as the budget let through when it ended the reply (12s.e), the whole
