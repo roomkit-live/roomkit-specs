@@ -116,17 +116,13 @@
       "expect": {
         "result": {
           "blocked": false,
-          "error": {
-            "$contains": "turn_budget_usd must be a positive number, got '0.05'"
-          },
+          "error": "turn_budget_usd must be a positive number, got '0.05'",
           "delivery_results": {
             "agent": {
               "status": "failed",
               "error": {
                 "code": "ValueError",
-                "message": {
-                  "$contains": "turn_budget_usd must be a positive number, got '0.05'"
-                }
+                "message": "turn_budget_usd must be a positive number, got '0.05'"
               }
             }
           }
@@ -147,17 +143,13 @@
       "expect": {
         "result": {
           "blocked": false,
-          "error": {
-            "$contains": "turn_budget_usd must be a positive number, got True"
-          },
+          "error": "turn_budget_usd must be a positive number, got True",
           "delivery_results": {
             "agent": {
               "status": "failed",
               "error": {
                 "code": "ValueError",
-                "message": {
-                  "$contains": "turn_budget_usd must be a positive number, got True"
-                }
+                "message": "turn_budget_usd must be a positive number, got True"
               }
             }
           }
@@ -178,17 +170,13 @@
       "expect": {
         "result": {
           "blocked": false,
-          "error": {
-            "$contains": "turn_budget_usd must be a positive number, got 0"
-          },
+          "error": "turn_budget_usd must be a positive number, got 0",
           "delivery_results": {
             "agent": {
               "status": "failed",
               "error": {
                 "code": "ValueError",
-                "message": {
-                  "$contains": "turn_budget_usd must be a positive number, got 0"
-                }
+                "message": "turn_budget_usd must be a positive number, got 0"
               }
             }
           }
