@@ -529,6 +529,33 @@
           "type": "number",
           "exclusiveMinimum": 0
         },
+        "system_prompt": {
+          "description": "A scripted agent's system_prompt (§6.4, Appendix A.9): what its turns' system prompt opens with, under the one its binding's metadata or its config_provider sets. None when absent.",
+          "type": "string"
+        },
+        "temperature": {
+          "description": "A scripted agent's temperature (§6.4): how freely its model samples, under the one its binding's metadata or its config_provider sets; 0.7 when absent.",
+          "type": "number"
+        },
+        "max_tokens": {
+          "description": "A scripted agent's max_tokens (§6.4): the most tokens a generation writes, under the one its binding's metadata or its config_provider sets. None when absent.",
+          "type": "integer",
+          "minimum": 1
+        },
+        "config_provider": {
+          "description": "A scripted agent's config_provider (Appendix A.9, per-turn settings): what it returns for each turn, as Python's AIChannelTurnConfig, by the room id of the binding it is called with, which the room of the context it is called with must carry; a room it does not name, or null, returns None (no per-turn configuration).",
+          "type": "object",
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/$defs/turn_config"
+              }
+            ]
+          }
+        },
         "reasoning_effort": {
           "description": "A scripted agent's reasoning_effort (§6.7): the effort its turns ask for, under the one its binding's metadata sets; null, as absent, sets none.",
           "type": [
@@ -3358,6 +3385,79 @@
         },
         "cut": {
           "type": "boolean"
+        }
+      }
+    },
+    "turn_config": {
+      "description": "One turn's configuration (Appendix A.9, per-turn settings), Python's AIChannelTurnConfig: each setting under the binding's metadata and over the agent's own, a null or absent one not set. `tools` replaces the toolset the binding's metadata declares, the agent's own tools still added after it; `tool_handler` serves the host's tools for this turn alone, in place of the agent's handler: each a scripted tool answering its calls, a name it does not hold unserved.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "system_prompt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tools": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "parameters": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "temperature": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "max_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "reasoning_effort": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "turn_budget_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "turn_budget_usd": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tool_handler": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/scripted_tool"
+          }
         }
       }
     },

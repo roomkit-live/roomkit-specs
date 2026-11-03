@@ -365,6 +365,22 @@ scripted.
   `verified`), the costs added up; a model with no `pricing` refuses it.
 - `reasoning_effort`: the effort the agent's turns ask for (§6.7), under
   the one its binding's metadata sets (`null` there keeps the agent's).
+- `system_prompt`, `temperature` and `max_tokens`: the agent's own
+  settings (§6.4), each under the one its binding's metadata or its
+  `config_provider` sets (Appendix A.9, per-turn settings). The binding's
+  `tools` declare tools the agent's handler serves, before the agent's own
+  (definitions: `name`, `description`, `parameters`).
+- `config_provider`: what the agent's per-turn configuration returns for a
+  turn, by the room id of the binding it is called with (the room of the
+  context must be the same): a `turn_config`, Python's
+  `AIChannelTurnConfig`, or `null`, as a room it does not name, for none.
+  Its `system_prompt`, `temperature`, `max_tokens`, `reasoning_effort`,
+  `turn_budget_tokens` and `turn_budget_usd` sit under the binding's
+  metadata and over the agent's own, a `null` not set; its `tools`
+  replace the toolset the binding's metadata declares, the agent's own
+  tools after them; its `tool_handler`, scripted tools as `tools`
+  describes them, serves the host's tools for that turn alone, in place of
+  the agent's handler, a name it does not hold unserved.
 - `retry_policy`: the agent's retry policy (§6.4): a generation its
   provider refused as worth another try (`refuses.retryable`) before it
   handed anything is tried again, at most `max_retries` times (default 3),
