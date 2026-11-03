@@ -6222,6 +6222,16 @@ call that ran no response turn returns an empty record. When several channels
 contribute metadata they SHOULD namespace their top-level keys; the merge
 order for colliding keys is unspecified.
 
+**Keys a sender never supplies (normative).** The inbound pipeline removes
+from a message's event, whatever a sender, its caller or a channel's parse
+wrote, the metadata keys only the runtime writes: `runtime_record` (Section
+6.4), the mark of a message held for verification (Section 11.7.3), the key a
+response to an instruction records (Section 10.1.1) and
+`_orchestration_internal` (Section 19.6); and, before the `BEFORE_BROADCAST`
+hooks run, the routing stamps `_routed_to` and `_always_process` (Section 19.4).
+A dropped `_orchestration_internal` or routing stamp is logged as a warning.
+Code the host runs (`send_event`) is no sender: what it passes is kept.
+
 #### 10.1.1 Instructions
 
 An application sometimes needs an agent to speak because of something nobody in
@@ -16557,6 +16567,14 @@ the sender and outranks both the affinity and the rules.
 The router stamps routing metadata on the event. The Event Router skips
 non-targeted intelligence channels during broadcast.
 
+`_routed_to` and `_always_process`, the keys it stamps, are the framework's:
+only a hook writes them, the router among hooks, and a sender's are dropped
+(Section 10.1), so that a sender never chooses the agent that answers it.
+`intent`, which a rule's `intents` reads from the event's metadata, is the
+caller's data, not a framework key: whoever wrote it is read, and a host that
+does not trust what its channel copies from the wire sets it itself, in a
+`BEFORE_BROADCAST` hook that runs before the router.
+
 ### 19.5 ConversationPipeline
 
 A `ConversationPipeline` generates `RoutingRule` entries from a linear stage
@@ -16686,6 +16704,12 @@ has continuity, set apart as a summary of the conversation
 (`<conversation_summary>`, Section 6.4) under the previous agent's id kept to
 an identifier's characters. The reason the room's timeline records for the
 handoff is quoted.
+
+The timeline's record of a handoff is a system event from the calling agent,
+visible to all, carrying `_orchestration_internal` in its metadata: an event
+that carries it asks no agent, whatever its type, and still reaches the room's
+transports. The key is the runtime's alone: a sender's is dropped at the door
+(Section 10.1), or a sender would silence the room's agents.
 
 `setup_handoff(agent, handler, tool, room_id)` wires the handoff tool into an
 AI channel and serves its calls with the `HandoffHandler`. `tool` (default
