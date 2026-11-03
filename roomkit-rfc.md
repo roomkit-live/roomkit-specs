@@ -2574,8 +2574,12 @@ transcript a realtime delegation's reasoning backend reads MUST be replaced
 by a fixed mark
 saying the runtime did not write it; a mark whose fixed part is a short
 phrase (the room context's opening) counts only with its opening bracket, so
-that prose naming the same words is left as written. The marks the runtime
-places itself are kept. The runtime also writes marks into the timeline and
+that prose naming the same words is left as written, a square or fullwidth
+bracket alone for the handoff's and the handed-on context's. The note on who
+takes part counts behind any opening bracket, since it reads as the runtime's
+whatever bracket it wears, and a combining mark, which no reader sees, is read
+past wherever it sits in a copy, in any script. The marks the runtime places
+itself are kept. The runtime also writes marks into the timeline and
 into memory: the handoff relay (`[Handoff: …]`, whose bracketed opening
 counts with its colon or without it, `[HANDOFF] notes` included, since a copy
 without the colon reads as the relay too) and the header of the context a
