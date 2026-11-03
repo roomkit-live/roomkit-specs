@@ -233,6 +233,10 @@ room callbacks of the setup are not compared.
   it is installed in, then, for an install, refuses the room with
   `refuse`, the strategy's own refusal, an `invalid_argument` (an
   uninstall step refuses nothing).
+- `session_auditor`: the run's **session auditor** (§15.8.2), the
+  implementation's JSONL session auditor over a file of its own, which
+  `expect.session_audit` reads; with `attached: true`, attached to the kit
+  before the steps, as the implementation's `attach` registers its hooks.
 
 ### Identity resolution
 
@@ -379,6 +383,12 @@ scripted.
   TaskStatusTool over the kit, `cancel_task` its CancelTaskTool, each with
   its default window, reading the room and the channel of the call it
   serves; a call its scripted tools do not name goes on to them.
+- `audit`: the auditor its tool calls are recorded to (§15.8): its tool
+  handler, serving every scripted tool, is wrapped in the implementation's
+  `audit_tool_handler` under the agent's id, recording to the run's **tool
+  auditor**, the implementation's JSONL tool auditor over a file of its own
+  (`tool_auditor`), or to the run's session auditor through its
+  `tool_auditor` bridge (`session_auditor`).
 
 A hook on `before_tool_use` or `on_tool_call` is registered on the kit as the
 implementation registers a hook on those triggers. Its payload is a tool
@@ -618,6 +628,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `participants` | Per room, the participants the store holds (§5.5), in the store's order |
 | `resolver` | The scripted resolver's calls, in order |
 | `media_resolver` | The kit's media resolver's calls, in order: `{url, room_id}` |
+| `tool_audit`, `session_audit` | The run's tool auditor's and session auditor's entries, in the order each recorded them, each entry's members (§15.8.3: a tool entry's `ts`, `agent_id`, `tool_name`, `arguments`, `result`, `status`, `duration_ms`, `metadata`; a session entry's `ts`, `type`, `role`, `content`, `duration_ms`, `metadata`); the runner also checks that the auditor's JSONL file holds one line per entry, those members |
 
 An outcome is `{"result": ...}`, matched as below, or `{"error": name}` (or
 `{"error": {"name": ..., "reason": ...}}`). A call whose outcome names neither

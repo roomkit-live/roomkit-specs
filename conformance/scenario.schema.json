@@ -272,6 +272,16 @@
           "items": {
             "$ref": "#/$defs/strategy"
           }
+        },
+        "session_auditor": {
+          "description": "The run's session auditor (§15.8.2), the implementation's JSONL session auditor over a file of its own; with `attached`, attached to the kit before the steps, as the implementation's attach registers its hooks.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "attached": {
+              "type": "boolean"
+            }
+          }
         }
       }
     },
@@ -546,6 +556,13 @@
               "type": "boolean"
             }
           }
+        },
+        "audit": {
+          "description": "The auditor the agent's tool calls are recorded to (§15.8): its tool handler, serving every scripted tool, wrapped in the implementation's audit_tool_handler under the agent's id, recording to the run's tool auditor (`tool_auditor`) or to the run's session auditor through its tool_auditor bridge (`session_auditor`).",
+          "enum": [
+            "tool_auditor",
+            "session_auditor"
+          ]
         }
       }
     },
@@ -3044,6 +3061,20 @@
           "additionalProperties": {
             "type": "array"
           }
+        },
+        "tool_audit": {
+          "description": "The run's tool auditor's entries in the order it recorded them, each with its entry's members (§15.8.3); its JSONL file holds one line per entry, those members.",
+          "type": [
+            "array",
+            "object"
+          ]
+        },
+        "session_audit": {
+          "description": "The run's session auditor's entries in the order it recorded them, each with its entry's members (§15.8.3); its JSONL file holds one line per entry, those members.",
+          "type": [
+            "array",
+            "object"
+          ]
         }
       }
     },
