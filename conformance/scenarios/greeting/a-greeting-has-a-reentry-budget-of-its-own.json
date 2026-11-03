@@ -1,0 +1,542 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "greeting/a-greeting-has-a-reentry-budget-of-its-own",
+  "title": "A greeting made from a delivery draws on nothing of the cascade that delivers, and what answers it has a reentry budget of its own",
+  "rules": [
+    "§8.3",
+    "§19.1"
+  ],
+  "notes": "At max_chain_depth 2 a cascade's budget is 20 passes. sms's delivery of the message injects 20 notes for email, which spend all of it, then greets. helper answers the greeting at its own budget: delivered, not BLOCKED reentry_loop_cap.",
+  "setup": {
+    "kit": {
+      "max_chain_depth": 2
+    },
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport",
+        "deliver": [
+          {
+            "when": {
+              "text": "Hi"
+            },
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "sms",
+                "content": {
+                  "type": "text",
+                  "body": "Note 1"
+                },
+                "visibility": "email"
+              },
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "sms",
+                "content": {
+                  "type": "text",
+                  "body": "Note 2"
+                },
+                "visibility": "email"
+              },
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "sms",
+                "content": {
+                  "type": "text",
+                  "body": "Note 3"
+                },
+                "visibility": "email"
+              },
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "sms",
+                "content": {
+                  "type": "text",
+                  "body": "Note 4"
+                },
+                "visibility": "email"
+              },
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "sms",
+                "content": {
+                  "type": "text",
+                  "body": "Note 5"
+                },
+                "visibility": "email"
+              },
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "sms",
+                "content": {
+                  "type": "text",
+                  "body": "Note 6"
+                },
+                "visibility": "email"
+              },
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "sms",
+                "content": {
+                  "type": "text",
+                  "body": "Note 7"
+                },
+                "visibility": "email"
+              },
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "sms",
+                "content": {
+                  "type": "text",
+                  "body": "Note 8"
+                },
+                "visibility": "email"
+              },
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "sms",
+                "content": {
+                  "type": "text",
+                  "body": "Note 9"
+                },
+                "visibility": "email"
+              },
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "sms",
+                "content": {
+                  "type": "text",
+                  "body": "Note 10"
+                },
+                "visibility": "email"
+              },
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "sms",
+                "content": {
+                  "type": "text",
+                  "body": "Note 11"
+                },
+                "visibility": "email"
+              },
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "sms",
+                "content": {
+                  "type": "text",
+                  "body": "Note 12"
+                },
+                "visibility": "email"
+              },
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "sms",
+                "content": {
+                  "type": "text",
+                  "body": "Note 13"
+                },
+                "visibility": "email"
+              },
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "sms",
+                "content": {
+                  "type": "text",
+                  "body": "Note 14"
+                },
+                "visibility": "email"
+              },
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "sms",
+                "content": {
+                  "type": "text",
+                  "body": "Note 15"
+                },
+                "visibility": "email"
+              },
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "sms",
+                "content": {
+                  "type": "text",
+                  "body": "Note 16"
+                },
+                "visibility": "email"
+              },
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "sms",
+                "content": {
+                  "type": "text",
+                  "body": "Note 17"
+                },
+                "visibility": "email"
+              },
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "sms",
+                "content": {
+                  "type": "text",
+                  "body": "Note 18"
+                },
+                "visibility": "email"
+              },
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "sms",
+                "content": {
+                  "type": "text",
+                  "body": "Note 19"
+                },
+                "visibility": "email"
+              },
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "sms",
+                "content": {
+                  "type": "text",
+                  "body": "Note 20"
+                },
+                "visibility": "email"
+              },
+              {
+                "call": "send_greeting",
+                "room_id": "$room"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "email",
+        "type": "email",
+        "category": "transport"
+      },
+      {
+        "id": "agent",
+        "type": "ai",
+        "category": "intelligence",
+        "model": {
+          "rounds": []
+        },
+        "agent": {
+          "greeting": "Welcome!",
+          "auto_greet": false
+        }
+      },
+      {
+        "id": "helper",
+        "type": "ai",
+        "category": "intelligence",
+        "model": {
+          "rounds": [
+            {
+              "deltas": [
+                "Hello from the helper"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "email"
+          },
+          {
+            "channel_id": "agent",
+            "category": "intelligence",
+            "access": "write_only"
+          },
+          {
+            "channel_id": "helper",
+            "category": "intelligence"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "email",
+      "content": {
+        "type": "text",
+        "body": "Hi"
+      },
+      "visibility": "sms"
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "index": 0,
+          "source": {
+            "channel_id": "email"
+          },
+          "content": {
+            "body": "Hi"
+          }
+        },
+        {
+          "index": 1,
+          "source": {
+            "channel_id": "sms"
+          },
+          "content": {
+            "body": "Note 1"
+          },
+          "status": "delivered"
+        },
+        {
+          "index": 2,
+          "source": {
+            "channel_id": "sms"
+          },
+          "content": {
+            "body": "Note 2"
+          },
+          "status": "delivered"
+        },
+        {
+          "index": 3,
+          "source": {
+            "channel_id": "sms"
+          },
+          "content": {
+            "body": "Note 3"
+          },
+          "status": "delivered"
+        },
+        {
+          "index": 4,
+          "source": {
+            "channel_id": "sms"
+          },
+          "content": {
+            "body": "Note 4"
+          },
+          "status": "delivered"
+        },
+        {
+          "index": 5,
+          "source": {
+            "channel_id": "sms"
+          },
+          "content": {
+            "body": "Note 5"
+          },
+          "status": "delivered"
+        },
+        {
+          "index": 6,
+          "source": {
+            "channel_id": "sms"
+          },
+          "content": {
+            "body": "Note 6"
+          },
+          "status": "delivered"
+        },
+        {
+          "index": 7,
+          "source": {
+            "channel_id": "sms"
+          },
+          "content": {
+            "body": "Note 7"
+          },
+          "status": "delivered"
+        },
+        {
+          "index": 8,
+          "source": {
+            "channel_id": "sms"
+          },
+          "content": {
+            "body": "Note 8"
+          },
+          "status": "delivered"
+        },
+        {
+          "index": 9,
+          "source": {
+            "channel_id": "sms"
+          },
+          "content": {
+            "body": "Note 9"
+          },
+          "status": "delivered"
+        },
+        {
+          "index": 10,
+          "source": {
+            "channel_id": "sms"
+          },
+          "content": {
+            "body": "Note 10"
+          },
+          "status": "delivered"
+        },
+        {
+          "index": 11,
+          "source": {
+            "channel_id": "sms"
+          },
+          "content": {
+            "body": "Note 11"
+          },
+          "status": "delivered"
+        },
+        {
+          "index": 12,
+          "source": {
+            "channel_id": "sms"
+          },
+          "content": {
+            "body": "Note 12"
+          },
+          "status": "delivered"
+        },
+        {
+          "index": 13,
+          "source": {
+            "channel_id": "sms"
+          },
+          "content": {
+            "body": "Note 13"
+          },
+          "status": "delivered"
+        },
+        {
+          "index": 14,
+          "source": {
+            "channel_id": "sms"
+          },
+          "content": {
+            "body": "Note 14"
+          },
+          "status": "delivered"
+        },
+        {
+          "index": 15,
+          "source": {
+            "channel_id": "sms"
+          },
+          "content": {
+            "body": "Note 15"
+          },
+          "status": "delivered"
+        },
+        {
+          "index": 16,
+          "source": {
+            "channel_id": "sms"
+          },
+          "content": {
+            "body": "Note 16"
+          },
+          "status": "delivered"
+        },
+        {
+          "index": 17,
+          "source": {
+            "channel_id": "sms"
+          },
+          "content": {
+            "body": "Note 17"
+          },
+          "status": "delivered"
+        },
+        {
+          "index": 18,
+          "source": {
+            "channel_id": "sms"
+          },
+          "content": {
+            "body": "Note 18"
+          },
+          "status": "delivered"
+        },
+        {
+          "index": 19,
+          "source": {
+            "channel_id": "sms"
+          },
+          "content": {
+            "body": "Note 19"
+          },
+          "status": "delivered"
+        },
+        {
+          "index": 20,
+          "source": {
+            "channel_id": "sms"
+          },
+          "content": {
+            "body": "Note 20"
+          },
+          "status": "delivered"
+        },
+        {
+          "type": "message",
+          "source": {
+            "channel_id": "agent",
+            "channel_type": "ai",
+            "direction": "outbound"
+          },
+          "content": {
+            "type": "text",
+            "body": "Welcome!"
+          },
+          "metadata": {
+            "auto_greeting": true
+          },
+          "status": "delivered",
+          "index": 21
+        },
+        {
+          "index": 22,
+          "source": {
+            "channel_id": "helper"
+          },
+          "content": {
+            "body": "Hello from the helper"
+          },
+          "status": "delivered"
+        }
+      ]
+    }
+  }
+}
