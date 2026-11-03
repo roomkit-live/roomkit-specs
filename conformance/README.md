@@ -251,7 +251,9 @@ room callbacks of the setup are not compared.
   worker), `share_channels`, `task_timeout_ms`, its `task_timeout` in
   milliseconds, `max_revisions`, `auto_delegate`, `refine_task`,
   `refine_instruction`, `delegation_message` and `wait_for_result`, each the
-  implementation's default when absent.
+  implementation's default when absent. A strategy with a `swarm` is the
+  implementation's **Swarm** (§19.7): `agents`, the channel ids of scripted
+  agents with an `agent` identity, and `entry`, the first agent when absent.
 - `session_auditor`: the run's **session auditor** (§15.8.2), the
   implementation's JSONL session auditor over a file of its own, which
   `expect.session_audit` reads; with `attached: true`, attached to the kit
@@ -536,6 +538,11 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `claim_room_strategy` | `room_id`, `strategy`: claims the room for the strategy, or refuses, installing nothing (§19.7) | null |
 | `room_strategy` | `room_id` | the id of the scripted strategy installed in the room, null for none (§19.7) |
 | `save_conversation_state` | `room_id`, `transitions`: each a phase transition (`to_phase`, `to_agent`, `reason`, `metadata`) made in order from the conversation state of the room the store holds, the default state for a room it lacks; the state the last one leaves is saved as the room's (§19.2) | null |
+| `handoff_handler` | `handler`, the name the later calls give it; `router`, a conversation router as a hook's (§19.4); `agent_aliases`, `phase_map`, `allowed_transitions` (each phase's list of phases) and `known_agents`: the implementation's HandoffHandler, serving no agent yet and installing no hook (§19.6) | null |
+| `install_router` | `handler`, `router`, `agents` (channel ids), `agent_aliases`, `phase_map`, `hook_priority`: the router's `install` on the kit, its handler named `handler` (§19.6) | null |
+| `setup_handoff` | `agent_id`, `handler`, `targets` (each an id and its description or null: the tool `build_handoff_tool` builds; absent: the generic one), `room_id` (absent: every room): serves the handoff tool on the agent (§19.6) | null |
+| `handoff.handle` | `handler`, `room_id`, `calling_agent_id`, `arguments`, the tool call's: the handler's `handle` (§19.6) | the HandoffResult (`accepted`, `new_agent_id`, `new_phase`, `message`, `reason`) |
+| `handoff.set_language` | `handler`, `room_id`, `language`: the handler's `set_language` (§19.6) | null |
 
 ### Calls on the store
 

@@ -1310,7 +1310,12 @@
             "claim_room_strategy",
             "room_strategy",
             "save_conversation_state",
-            "send_greeting"
+            "send_greeting",
+            "handoff_handler",
+            "install_router",
+            "setup_handoff",
+            "handoff.handle",
+            "handoff.set_language"
           ]
         },
         "organization_id": {
@@ -2904,6 +2909,188 @@
                     }
                   }
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "handoff_handler"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "handler",
+              "router"
+            ],
+            "allOf": [
+              {
+                "$ref": "#/$defs/handoff_options"
+              }
+            ],
+            "properties": {
+              "handler": {
+                "description": "The name the later calls give the handler.",
+                "type": "string"
+              },
+              "allowed_transitions": {
+                "description": "Each phase's phases a handoff may lead to, none constrained when absent.",
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "known_agents": {
+                "description": "The targets taken though no binding of the room names them.",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "install_router"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "handler",
+              "router",
+              "agents"
+            ],
+            "allOf": [
+              {
+                "$ref": "#/$defs/handoff_options"
+              }
+            ],
+            "properties": {
+              "handler": {
+                "type": "string"
+              },
+              "agents": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "hook_priority": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "setup_handoff"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "agent_id",
+              "handler"
+            ],
+            "properties": {
+              "agent_id": {
+                "type": "string"
+              },
+              "handler": {
+                "type": "string"
+              },
+              "targets": {
+                "description": "The custom tool's targets, each an id and its description or null; absent: the generic tool.",
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  ],
+                  "minItems": 2,
+                  "maxItems": 2
+                }
+              },
+              "room_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "handoff.handle"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "handler",
+              "room_id",
+              "calling_agent_id",
+              "arguments"
+            ],
+            "properties": {
+              "handler": {
+                "type": "string"
+              },
+              "room_id": {
+                "type": "string"
+              },
+              "calling_agent_id": {
+                "type": "string"
+              },
+              "arguments": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "handoff.set_language"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "handler",
+              "room_id",
+              "language"
+            ],
+            "properties": {
+              "handler": {
+                "type": "string"
+              },
+              "room_id": {
+                "type": "string"
+              },
+              "language": {
+                "type": "string"
               }
             }
           }
@@ -4571,6 +4758,9 @@
         },
         "supervisor": {
           "$ref": "#/$defs/supervisor"
+        },
+        "swarm": {
+          "$ref": "#/$defs/swarm"
         }
       },
       "if": {
@@ -4621,6 +4811,37 @@
               {
                 "required": [
                   "loop"
+                ]
+              }
+            ]
+          }
+        },
+        "swarm": {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "agents"
+                ]
+              },
+              {
+                "required": [
+                  "install"
+                ]
+              },
+              {
+                "required": [
+                  "uninstall"
+                ]
+              },
+              {
+                "required": [
+                  "loop"
+                ]
+              },
+              {
+                "required": [
+                  "supervisor"
                 ]
               }
             ]
@@ -4821,6 +5042,46 @@
               }
             }
           }
+        }
+      }
+    },
+    "handoff_options": {
+      "description": "What a handoff handler (§19.6) is built with: the router it serves, the aliases of its targets and the phase each target leads to.",
+      "type": "object",
+      "properties": {
+        "router": {
+          "$ref": "#/$defs/conversation_router"
+        },
+        "agent_aliases": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "phase_map": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "swarm": {
+      "description": "The implementation's Swarm (§19.7): its agents named by their channel ids, its entry the first when absent.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agents"
+      ],
+      "properties": {
+        "agents": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "entry": {
+          "type": "string"
         }
       }
     }
