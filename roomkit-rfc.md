@@ -2716,15 +2716,16 @@ by a retry, a compacted replay or a fallback, since the room and the turn
 already hold what it handed. It tries again only an error worth another try,
 at most `max_retries` times, waiting before each try
 `base_delay_seconds × exponential_base^n`, at most `max_delay_seconds`, `n`
-counting the tries already made from 0; without a retry policy it makes
-none. An error not worth another try fails the call at once. A context
+the number of retries already made; without a retry policy it makes none.
+An error not worth another try fails the call at once, an overflow's
+compacted replay aside. A context
 compacted for its replay (above) is what the later tries send, and a replay
 refused again as worth another try keeps its tries. Once they are spent, at
 once without a retry policy, a channel with a `fallback_provider` asks it
-once, with the same request, and its answer is the call's. A fallback that
-fails before it handed anything leaves the primary's last error as the
-call's, the fallback's error its cause; one that fails after is the call's
-error.
+once, with the same request, and its answer is the call's; without one,
+the last error is the call's. A fallback that fails before it handed
+anything leaves the primary's last error as the call's, the fallback's error
+its cause; one that fails after is the call's error.
 
 **Text from outside in a model's context (normative).** Text the runtime places
 in a model's context without having written it (a person's words or name, a
