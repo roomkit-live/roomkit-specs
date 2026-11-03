@@ -2990,10 +2990,16 @@ is the exception: interrupted after a round, it fails with `truncated`, and
 
 **A turn's budget.** A channel MAY bound what a turn spends: a token budget over
 every token its provider bills for the turn (input, cache reads and writes,
-output; Section 6.7), a cost budget at the model's catalogue price, each
-generation priced as one response, or both, set for the channel, a room or a
-turn; a room or a turn that leaves a budget `null` keeps the next level's
-(Appendix A.9, per-turn settings). The loop checks them at each round boundary, on the usage the provider
+output, and the input and output image tokens; Sections 6.7 and 25.5), a cost
+budget at the model's catalogue price, each generation priced as one response,
+or both, set for the channel, a room or a turn; a room or a turn that leaves a
+budget `null` keeps the next level's (Appendix A.9, per-turn settings). A
+response's cost is each billed counter times the price's rate per million
+tokens for it, a counter the price gives no rate not charged; past the price's
+long-context threshold, over the response's input counters summed (its input,
+cache and input image tokens), the price's input and output multipliers scale
+that response's input and output cost. The turn's cost is the sum of its
+responses' costs, never the cost of their summed usage. The loop checks them at each round boundary, on the usage the provider
 reported for the generations so far: a turn that has reached a budget ends
 there, `budget_exceeded`, running none of the calls its last generation asked
 for and asking for no further generation, a retry of an empty answer included; a
@@ -19484,7 +19490,8 @@ vendor meters it — per token in some lineups, a flat amount per image in
 others, varying by resolution or quality — and on commercial terms no
 specification can observe. An implementation MAY carry a price list and MAY
 derive a cost from these counters; neither the shape of such a list nor the
-arithmetic over it is specified here. What is specified is that the counters
+arithmetic over it is specified here, beyond what a turn's cost budget counts
+(Section 6.4). What is specified is that the counters
 mean what they say, so that whatever does price them has something unambiguous
 to price.
 
@@ -20055,8 +20062,9 @@ whole float or a whole number's text for an integer, a boolean for a number
 so (a `temperature` of `"hot"`, a `max_tokens` of `1.5`, a `system_prompt` that
 is no text) fails the turn before its model is asked, its error naming every
 setting refused, and so does a `turn_budget_tokens` that is not a positive
-integer: a binding written wrong shows at its first turn, never replaced by
-the next level's value.
+integer or a `turn_budget_usd` that is not a positive number, the budgets read
+strictly (a text or a boolean refused): a binding written wrong shows at its
+first turn, never replaced by the next level's value.
 
 The per-turn configuration may also give the turn a skill registry of its own
 (Section 24.3). It is not a binding setting: it replaces the channel's registry
