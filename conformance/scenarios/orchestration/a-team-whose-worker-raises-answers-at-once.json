@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "orchestration/a-team-whose-worker-raises-answers-at-once",
-  "title": "A parallel team one of whose delegations raises (its worker left the kit) answers delegate_workers with that failure as soon as it is raised, and cuts the other workers, awaited to their end: the slow worker's task is posted cancelled before the call answers",
+  "title": "A parallel team one of whose delegations raises (its worker left the kit) answers delegate_workers with that failure without waiting for the other workers: each of them has started, posted pending, and is cut, its task posted failed 'cancelled'",
   "rules": [
     "§19.7.3",
     "§23.3"

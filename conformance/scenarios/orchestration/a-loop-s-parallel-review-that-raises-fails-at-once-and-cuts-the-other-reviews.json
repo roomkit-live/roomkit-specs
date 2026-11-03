@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "orchestration/a-loop-s-parallel-review-that-raises-fails-at-once-and-cuts-the-other-reviews",
-  "title": "A Loop whose parallel reviewers review an output, one of whose reviews raises (its reviewer left the kit), fails the loop with that error at once and cuts the other reviews, awaited to their end: the slow reviewer's review is posted cancelled before the room's turn ends",
+  "title": "A Loop whose parallel reviewers review an output, one of whose reviews raises (its reviewer left the kit), fails the loop with that error without waiting for the other reviews: each of them has started, posted pending, and is cut, posted failed 'cancelled'",
   "rules": [
     "§19.7.4"
   ],
