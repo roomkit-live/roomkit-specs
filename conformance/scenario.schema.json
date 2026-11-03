@@ -4365,6 +4365,9 @@
         },
         "loop": {
           "$ref": "#/$defs/loop"
+        },
+        "supervisor": {
+          "$ref": "#/$defs/supervisor"
         }
       },
       "if": {
@@ -4391,6 +4394,34 @@
               ]
             }
           ]
+        }
+      },
+      "dependentSchemas": {
+        "supervisor": {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "agents"
+                ]
+              },
+              {
+                "required": [
+                  "install"
+                ]
+              },
+              {
+                "required": [
+                  "uninstall"
+                ]
+              },
+              {
+                "required": [
+                  "loop"
+                ]
+              }
+            ]
+          }
         }
       }
     },
@@ -4428,6 +4459,52 @@
             "sequential",
             "parallel"
           ]
+        }
+      }
+    },
+    "supervisor": {
+      "description": "The implementation's Supervisor (§19.7.3) in place of a scripted strategy, its agents named by the channel ids of scripted agents with an `agent` identity: the supervisor answers the room, its workers registered on the kit and never attached. With no `strategy`, the supervisor is given one `delegate_to_<worker>` tool per worker; with one, a single `delegate_workers` tool that runs the whole team, supervised step by step when sequential. A strategy with a `supervisor` has no `agents`, `install`, `uninstall` or `loop`.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "supervisor",
+        "workers"
+      ],
+      "properties": {
+        "supervisor": {
+          "description": "The supervisor's channel id: the agent the room's messages ask, given the delegation tools in the room it is installed in.",
+          "type": "string"
+        },
+        "workers": {
+          "description": "The workers' channel ids, in the order a sequential team runs them.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "strategy": {
+          "description": "How the team runs (a WorkerStrategy): `sequential` or `parallel`; per-worker tools when absent.",
+          "enum": [
+            "sequential",
+            "parallel"
+          ]
+        },
+        "share_channels": {
+          "description": "The channel ids of the room attached to each child room a delegation opens.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "task_timeout_ms": {
+          "description": "Each worker's delegation budget, in milliseconds: the implementation's task_timeout (default 120 seconds).",
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_revisions": {
+          "description": "How many times a sequential team's step is reviewed at most before it stops the chain (default 3).",
+          "type": "integer",
+          "minimum": 0
         }
       }
     },

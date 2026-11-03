@@ -243,7 +243,13 @@ room callbacks of the setup are not compared.
   `agent`, the producer, and `reviewer` or `reviewers`, each the channel id
   of a scripted agent with an `agent` identity, `max_iterations` (default 3)
   and `strategy`, a WorkerStrategy (`sequential` or `parallel`), the
-  implementation's default when absent.
+  implementation's default when absent. A strategy with a `supervisor` is
+  the implementation's **Supervisor** (§19.7.3), built from its members:
+  `supervisor` and `workers`, the channel ids of scripted agents with an
+  `agent` identity, `strategy` (absent: one `delegate_to_<worker>` tool per
+  worker), `share_channels`, `task_timeout_ms`, its `task_timeout` in
+  milliseconds, and `max_revisions`, each the implementation's default
+  when absent.
 - `session_auditor`: the run's **session auditor** (§15.8.2), the
   implementation's JSONL session auditor over a file of its own, which
   `expect.session_audit` reads; with `attached: true`, attached to the kit
