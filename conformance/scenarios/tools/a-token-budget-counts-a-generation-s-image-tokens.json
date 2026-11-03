@@ -6,7 +6,7 @@
     "§6.4",
     "Appendix A.9"
   ],
-  "notes": "Python: channels/_turn_budget.py TurnBudget.tokens_of sums BILLED_USAGE_COUNTERS (providers/ai/base.py): input, output, cache read, cache creation, input image and output image tokens. 500 output image tokens a generation; the third reaches 1,200.",
+  "notes": "Python: channels/_turn_budget.py TurnBudget.tokens_of sums BILLED_USAGE_COUNTERS (providers/ai/base.py): input, output, cache read, cache creation, input image and output image tokens. 250 input and 250 output image tokens a generation; the third reaches 1,200.",
   "setup": {
     "channels": [
       {
@@ -30,7 +30,8 @@
                 }
               ],
               "usage": {
-                "output_image_tokens": 500
+                "input_image_tokens": 250,
+                "output_image_tokens": 250
               }
             },
             {
@@ -44,7 +45,8 @@
                 }
               ],
               "usage": {
-                "output_image_tokens": 500
+                "input_image_tokens": 250,
+                "output_image_tokens": 250
               }
             },
             {
@@ -58,7 +60,8 @@
                 }
               ],
               "usage": {
-                "output_image_tokens": 500
+                "input_image_tokens": 250,
+                "output_image_tokens": 250
               },
               "text": "Looking again."
             },
@@ -73,7 +76,8 @@
                 }
               ],
               "usage": {
-                "output_image_tokens": 500
+                "input_image_tokens": 250,
+                "output_image_tokens": 250
               }
             },
             {
@@ -87,7 +91,8 @@
                 }
               ],
               "usage": {
-                "output_image_tokens": 500
+                "input_image_tokens": 250,
+                "output_image_tokens": 250
               }
             },
             {
@@ -101,13 +106,15 @@
                 }
               ],
               "usage": {
-                "output_image_tokens": 500
+                "input_image_tokens": 250,
+                "output_image_tokens": 250
               }
             },
             {
               "text": "done",
               "usage": {
-                "output_image_tokens": 500
+                "input_image_tokens": 250,
+                "output_image_tokens": 250
               }
             }
           ]

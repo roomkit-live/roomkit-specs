@@ -331,7 +331,10 @@ scripted.
   then its calls, then fails, never reaching its end.
   `gate` holds the round at that gate, before it writes anything, until a
   step opens it. `model.vision`: whether the model sees images (§6.4, a
-  provider's `supports_vision`), false by default.
+  provider's `supports_vision`), false by default. `model.pricing`: the
+  model's catalogue price (§6.7, a provider's `catalog_entry().pricing`,
+  Python's `ModelPricing` fields), none when absent; a `fallback_model`
+  takes one too.
 - `tools`: what the agent serves, each declared with its `name`,
   `description` and `parameters` (a JSON Schema), and answering every call
   one way: `returns` a text, `returns_json` a JSON value (the model reads
