@@ -232,6 +232,25 @@
             "orchestration": {
               "description": "The id of the scripted strategy the kit is built with as its default: every room it creates takes it unless the creation names another or none (§19.7).",
               "type": "string"
+            },
+            "delivery_gap_timeout_ms": {
+              "description": "How long a delivery lane waits on a cursor hole no lane runs, while no lane holds the room's delivery claim, before it forces the cursor past the hole and emits delivery_skipped (§13.5 Delivery lanes across processes); the implementation's default (30 s) when absent.",
+              "type": "integer",
+              "minimum": 1
+            },
+            "lock_manager": {
+              "description": "The kit's lock manager (§13.5): the in-memory one, whose release fails with `release_error` while a `lock_releases` step has set it failing, as a distributed lock that finds its lease expired.",
+              "type": "object",
+              "required": [
+                "release_error"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "release_error": {
+                  "description": "What a failed release raises: its message.",
+                  "type": "string"
+                }
+              }
             }
           }
         },
@@ -1061,6 +1080,22 @@
               "description": "How many calls wait for it; 1 by default.",
               "type": "integer",
               "minimum": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "lock_releases"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "lock_releases": {
+              "description": "Sets the releases of the kit's lock manager (setup.kit.lock_manager) failing or succeeding, from the next one on.",
+              "enum": [
+                "fail",
+                "succeed"
+              ]
             }
           }
         }
