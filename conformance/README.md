@@ -182,7 +182,8 @@ room callbacks of the setup are not compared.
     handed to the stream's end, recording each item under `streamed`, and
     its `deliver_stream` reactions may stop it (`stop_after`), make it
     raise once it stopped (`fail`) or return an `output`; with `streams_in`, it takes one only in
-    the rooms listed (§6.1 `supports_streaming_delivery_for`);
+    the rooms listed (§6.1 `supports_streaming_delivery_for`), whether it
+    declares `streams` or not: the framework asks it at each stream;
   - `recent_events_window` (default 0): how many of the room's latest
     events it declares it reads (§6.1), which sizes the room's context;
   - with `addresses`, its own address methods answer in place of the

@@ -421,7 +421,7 @@
           }
         },
         "streams_in": {
-          "description": "With `streams`: the rooms the channel takes a streamed response in (§6.1 `supports_streaming_delivery_for`); in any other room it is delivered the answer whole. Every room when absent.",
+          "description": "The rooms the channel takes a streamed response in (§6.1 `supports_streaming_delivery_for`), asked whatever `streams` declares; in any other room it is delivered the answer whole. Absent, it streams wherever `streams` says.",
           "type": "array",
           "items": {
             "type": "string"
