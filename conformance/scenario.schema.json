@@ -520,9 +520,14 @@
           }
         },
         "turn_budget_tokens": {
-          "description": "A scripted agent's budget of billed tokens per turn (§6.4): its input, output, cache read and cache creation tokens, counted as each generation reports them; past it the turn ends budget_exceeded at its next round boundary.",
+          "description": "A scripted agent's budget of billed tokens per turn (§6.4): its input, output, cache read, cache creation and image tokens, counted as each generation reports them; past it the turn ends budget_exceeded at its next round boundary.",
           "type": "integer",
           "minimum": 1
+        },
+        "turn_budget_usd": {
+          "description": "A scripted agent's cost budget per turn (§6.4): each generation's usage priced at its model's catalogue price (`model.pricing`), added up; past it the turn ends budget_exceeded at its next round boundary. A model with no price refuses it.",
+          "type": "number",
+          "exclusiveMinimum": 0
         },
         "reasoning_effort": {
           "description": "A scripted agent's reasoning_effort (§6.7): the effort its turns ask for, under the one its binding's metadata sets; null, as absent, sets none.",
@@ -3189,6 +3194,62 @@
         "vision": {
           "description": "Whether the model sees images (§6.4, a provider's supports_vision): false by default.",
           "type": "boolean"
+        },
+        "pricing": {
+          "description": "The model's catalogue price (§6.7, a provider's catalog_entry().pricing): Python's ModelPricing, per million tokens, which a cost budget prices each generation at (§6.4). No price when absent.",
+          "type": "object",
+          "required": [
+            "input_per_million",
+            "output_per_million",
+            "verified"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "input_per_million": {
+              "type": "number",
+              "minimum": 0
+            },
+            "output_per_million": {
+              "type": "number",
+              "minimum": 0
+            },
+            "cache_read_per_million": {
+              "type": "number",
+              "minimum": 0
+            },
+            "cache_write_per_million": {
+              "type": "number",
+              "minimum": 0
+            },
+            "image_input_per_million": {
+              "type": "number",
+              "minimum": 0
+            },
+            "image_output_per_million": {
+              "type": "number",
+              "minimum": 0
+            },
+            "long_context_threshold_tokens": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "long_context_input_multiplier": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "long_context_output_multiplier": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "currency": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verified": {
+              "description": "The day the price was read, YYYY-MM-DD.",
+              "type": "string"
+            }
+          }
         }
       }
     },

@@ -352,7 +352,13 @@ scripted.
   tool's own bound, `null` leaving the tool unbounded.
 - `turn_budget_tokens`: the turn's budget of billed tokens (§6.4), a
   round's `usage` counting its `input_tokens`, `output_tokens`,
-  `cache_read_input_tokens` and `cache_creation_input_tokens`.
+  `cache_read_input_tokens`, `cache_creation_input_tokens`,
+  `input_image_tokens` and `output_image_tokens`.
+- `turn_budget_usd`: the turn's cost budget (§6.4), each generation's
+  `usage` priced as one response at the model's `pricing` (its catalogue
+  price: `input_per_million`, `output_per_million`, the cache and image
+  rates, `long_context_threshold_tokens` and its multipliers, `currency`,
+  `verified`), the costs added up; a model with no `pricing` refuses it.
 - `reasoning_effort`: the effort the agent's turns ask for (§6.7), under
   the one its binding's metadata sets (`null` there keeps the agent's).
 - `retry_policy`: the agent's retry policy (§6.4): a generation its
