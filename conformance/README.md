@@ -282,7 +282,7 @@ left, the call does what it does by default. A reaction:
 | `refuse` | In a `deliver` or `on_event` reaction: then fails with the provider's explicit refusal (§5.13), its `error`, the `code` and `retryable` it declares, and the `provider_message_id` it names |
 | `respond` | Event templates: the turn's response events (`on_event` only) |
 | `output` | `tasks`, `observations` and `metadata_updates` of the channel's output; in an `on_event` reaction, `response_metadata`, the record its turn writes (§6.4), and `error`: the error the channel met while producing it, with that message, which goes on with its responses and surfaces as a raised one's (ON_ERROR) |
-| `stop_after` | In a `deliver_stream` reaction: the channel stops reading the stream once it was handed the text delta this string equals |
+| `stop_after` | In a `deliver_stream` reaction: the channel stops reading the stream once it was handed the text delta or the piece of reasoning this string equals |
 | `parsed` | In a `parse` reaction: a patch on the event the channel builds, what it reads off its own wire: its members replace the event's, those of its `source` the source's; its strings name what the run made (References) |
 | `result` | A hook's HookResult (§9.4). A modify's `event` is a patch on the payload: its members replace the payload's. Its injected events, tasks and observations are templates |
 
@@ -317,8 +317,9 @@ scripted.
   the last round fails the turn. `deltas` writes the round's text in those
   pieces, in place of `text`: the model waits between two, so a reader is
   handed each apart (deltas yielded without waiting may cross as one,
-  §10.6.4). `fails` makes the model fail with that message once it wrote
-  its text, before its calls and its end: its response stream raises
+  §10.6.4). `thinking`: the round's reasoning, in the pieces the model
+  streams it before its text (§6.7). `fails` makes the model fail with that
+  message once it wrote its text, before its calls and its end: its response stream raises
   (§12.2 step 13s). `done: false` ends its stream after its text and its
   calls without the done event that carries its finish reason and usage.
   `refuses` makes the provider refuse the request once the model wrote its
@@ -680,7 +681,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `room_callbacks` | Per room and scripted channel, its room callbacks (§6.1) in order: `{"call": "on_room_attached", "binding": ...}`, the binding it was handed, or `{"call": "on_room_detached"}` |
 | `deliveries` | Per room and channel, the events a scripted channel's `deliver()` received, as delivered, in order |
 | `contexts` | Per room and scripted channel, the context each of its `deliver()` calls and, for an intelligence channel, each of its turns (`on_event()`) was handed, in order: `call` (`deliver` or `on_event`) and `recent_events`, the ids of its events read as Normalization reads them, lifecycle records left out |
-| `streamed` | Per room and streaming channel, the items its `deliver_stream` read, in order: `{"text": ...}` for a text delta, `{"row": event}` for a row the store holds, `{"failed": true}` where the stream raised |
+| `streamed` | Per room and streaming channel, the items its `deliver_stream` read, in order: `{"text": ...}` for a text delta, `{"thinking": ...}` for a piece of the model's reasoning, `{"row": event}` for a row the store holds, `{"failed": true}` where the stream raised |
 | `turns` | Per room and intelligence channel, the events its `on_event()` received |
 | `observations`, `tasks` | Per room, the stored side effects |
 | `actions` | Per action label, the outcomes of its runs, in the order they ended |

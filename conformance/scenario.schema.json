@@ -356,7 +356,7 @@
           "type": "boolean"
         },
         "deliver_stream": {
-          "description": "Reactions of a streaming channel's `deliver_stream` (§6.1), tried once per stream it is handed: `stop_after` stops its reading after that text delta, `fail` raises once it stopped.",
+          "description": "Reactions of a streaming channel's `deliver_stream` (§6.1), tried once per stream it is handed: `stop_after` stops its reading after that text delta or piece of reasoning, `fail` raises once it stopped.",
           "$ref": "#/$defs/reactions"
         },
         "on_room_attached": {
@@ -902,7 +902,7 @@
           "$ref": "#/$defs/hook_result"
         },
         "stop_after": {
-          "description": "In a `deliver_stream` reaction: the channel stops reading the stream once it was handed the text delta this string equals (§12.2 step 13s).",
+          "description": "In a `deliver_stream` reaction: the channel stops reading the stream once it was handed the text delta or the piece of reasoning this string equals (§12.2 step 13s).",
           "type": "string"
         },
         "parsed": {
@@ -3295,6 +3295,13 @@
       "properties": {
         "text": {
           "type": "string"
+        },
+        "thinking": {
+          "description": "The round's reasoning, in the pieces the model streams it before its text (§6.1 deliver_stream, §6.7): a streaming channel reads each non-empty piece as `{\"thinking\": ...}`, in order, and no other channel reads it. The store holds none of it.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
         "deltas": {
           "description": "The round's text, in the pieces the model writes it, waiting between two, so a reader is handed each apart (§10.6.4): in place of `text`.",
