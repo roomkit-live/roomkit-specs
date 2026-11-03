@@ -283,7 +283,21 @@
             "phase": "handling",
             "active_agent_id": "c",
             "previous_agent_id": "b",
-            "handoff_count": 2
+            "handoff_count": 2,
+            "phase_history": [
+              {
+                "from_phase": "swarm",
+                "to_phase": "handling",
+                "from_agent": "a",
+                "to_agent": "b"
+              },
+              {
+                "from_phase": "handling",
+                "to_phase": "handling",
+                "from_agent": "b",
+                "to_agent": "c"
+              }
+            ]
           }
         }
       }
