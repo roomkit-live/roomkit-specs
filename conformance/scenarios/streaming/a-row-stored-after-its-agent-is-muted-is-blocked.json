@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "streaming/a-row-stored-after-its-agent-is-muted-is-blocked",
-  "title": "A streamed row stored after its agent is muted is stored BLOCKED source_muted, with no BEFORE_BROADCAST hook, and reaches no one",
+  "title": "A streamed row stored after its agent is muted is stored BLOCKED source_muted, with no BEFORE_BROADCAST hook, and is delivered to no one",
   "rules": [
     "§7.2",
     "§7.5 rule 2",
