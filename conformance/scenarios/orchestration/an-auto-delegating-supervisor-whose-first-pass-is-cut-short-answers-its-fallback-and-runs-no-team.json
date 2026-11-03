@@ -170,6 +170,9 @@
           },
           "chain_depth": 1,
           "responds_to": "r1#0",
+          "correlation_id": {
+            "$absent": true
+          },
           "metadata": {
             "loop_end_reason": "max_rounds",
             "ai_usage": {}
