@@ -505,6 +505,37 @@
           "type": "integer",
           "minimum": 1
         },
+        "retry_policy": {
+          "description": "A scripted agent's retry_policy (§6.4, a generation's retries): how many times a generation its provider refused as worth another try, before it handed anything, is tried again, each delay `base_delay_ms` times `exponential_base` to the attempt, at most `max_delay_ms`. No retry when absent.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "max_retries": {
+              "description": "3 by default.",
+              "type": "integer",
+              "minimum": 0
+            },
+            "base_delay_ms": {
+              "description": "1000 by default.",
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "max_delay_ms": {
+              "description": "60000 by default.",
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "exponential_base": {
+              "description": "2 by default.",
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          }
+        },
+        "fallback_model": {
+          "description": "A scripted agent's fallback_provider (§6.4): a second scripted model, asked once a generation's retries are spent on refusals worth another try, before anything was handed; its requests are under `<agent>/fallback` in `expect.models`.",
+          "$ref": "#/$defs/model"
+        },
         "max_author_images": {
           "description": "A scripted agent's max_author_images: how many of the newest author images a turn sends as images, its history and its input counted together (§6.4), the rest read as a mention; null bounds nothing. 4 by default.",
           "type": [
@@ -3183,6 +3214,10 @@
             "provider": {
               "description": "The provider that refuses, by its name (a provider error's `provider`); none when absent.",
               "type": "string"
+            },
+            "retryable": {
+              "description": "Whether the provider says the refusal is worth another try (a provider error's `retryable`, §6.4): false by default.",
+              "type": "boolean"
             }
           }
         },

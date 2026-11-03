@@ -308,11 +308,12 @@ scripted.
   (§12.2 step 13s). `done: false` ends its stream after its text and its
   calls without the done event that carries its finish reason and usage.
   `refuses` makes the provider refuse the request once the model wrote its
-  text, before its calls and its end: an error it does not retry, with that
-  `status` (an HTTP status) and `message` (§6.4), classed as a context too
-  long for the model when `context_overflow` is true, as not one when it is
-  false, unclassed when it is absent, refused by the provider `provider`
-  names, none when it is absent. `failure_after_calls: true` moves the
+  text, before its calls and its end: an error with that `status` (an HTTP
+  status) and `message` (§6.4), worth another try when `retryable` is true
+  (default false), classed as a context too long for the model when
+  `context_overflow` is true, as not one when it is false, unclassed when it
+  is absent, refused by the provider `provider` names, none when it is
+  absent. `failure_after_calls: true` moves the
   round's `fails` or `refuses` after its calls: the model writes its text,
   then its calls, then fails, never reaching its end.
   `gate` holds the round at that gate, before it writes anything, until a
@@ -339,6 +340,14 @@ scripted.
 - `turn_budget_tokens`: the turn's budget of billed tokens (§6.4), a
   round's `usage` counting its `input_tokens`, `output_tokens`,
   `cache_read_input_tokens` and `cache_creation_input_tokens`.
+- `retry_policy`: the agent's retry policy (§6.4): a generation its
+  provider refused as worth another try (`refuses.retryable`) before it
+  handed anything is tried again, at most `max_retries` times (default 3),
+  each attempt after `base_delay_ms` (default 1000) times
+  `exponential_base` (default 2) to the attempt's number, at most
+  `max_delay_ms` (default 60000); no retry when absent. `fallback_model`:
+  its fallback provider, a scripted model asked once those retries are
+  spent, whose requests `models` holds under `<agent>/fallback`.
 - `max_context_events`: the window of the agent's default memory, a sliding
   window of the room's latest events (§20.3, default 50).
 - `max_author_images`: how many of the newest author images a turn sends as
