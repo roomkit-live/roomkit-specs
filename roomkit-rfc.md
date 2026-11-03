@@ -1047,7 +1047,8 @@ MUST NOT be changed through it: they are what attribution, correlation
 no-op — no write, no event. The record's text quotes the new name as
 Python's `repr` writes a string: every character `str.isprintable` refuses (a
 control, format, separator other than the space, private-use or unassigned
-character) is escaped, `\xNN` below U+0100, `\uNNNN` below U+10000,
+character) is escaped, a tab, a newline and a carriage return as `\t`, `\n`
+and `\r`, any other `\xNN` below U+0100, `\uNNNN` below U+10000,
 `\UNNNNNNNN` past it (`'Bob\xa0Smith'`, `'\u202e'`), so a name cannot hide or
 reverse what a reader of the record sees; its data keeps the name as given.
 
