@@ -4512,6 +4512,29 @@
           "description": "How many times a sequential team's step is reviewed at most before it stops the chain (default 3).",
           "type": "integer",
           "minimum": 0
+        },
+        "auto_delegate": {
+          "description": "Whether the framework delegates each message itself (default false), in place of the delegation tools: the supervisor's turns in the room run the team, then the supervisor answers from their results. It needs a `strategy`.",
+          "type": "boolean"
+        },
+        "refine_task": {
+          "description": "With `auto_delegate`, whether the supervisor first turns the message into the team's task (default true), else the team is handed the message's text.",
+          "type": "boolean"
+        },
+        "refine_instruction": {
+          "description": "With `auto_delegate` and `refine_task`, the instruction the supervisor turns the message into a task with, in place of the implementation's own.",
+          "type": "string"
+        },
+        "delegation_message": {
+          "description": "The message the implementation keeps for a delegation in the background (default its own; null for none).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "wait_for_result": {
+          "description": "With no `strategy`, whether a `delegate_to_<worker>` call waits for its worker (default true), else it starts the worker in the background and answers at once.",
+          "type": "boolean"
         }
       }
     },
