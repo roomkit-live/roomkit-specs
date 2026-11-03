@@ -597,7 +597,9 @@ Implementations MUST enforce timer transitions when configured:
   A room nobody writes to transitions when the host checks its timers, or on
   the period of a sweeper the implementation runs; a check of every room
   reaches every ACTIVE and PAUSED room, however many there are, never the
-  first page of a store read only. A transition takes the
+  first page of a store read only; a room whose check fails (deleted since it
+  was listed, a store's failure on it, an id its lock refuses, §13.5) is logged
+  and passed over, and only the kit's close stops the check. A transition takes the
   instant it fell due, however late it is applied: a check long after both
   fell due pauses the room at the first instant and closes it at the second,
   in one write, and both its hooks then receive the room as that write left
@@ -14870,6 +14872,18 @@ awaited or not, takes the lock again while the body runs, and once the body
 has returned it takes it as any later caller does, though the section still
 holds it (§9.5.1).
 
+**Key spaces.** The framework's locks of other kinds than a room's (a room's
+delivery claim, an identity's verification lock, §11.7) never share a key with
+a room's lock, whatever a room id reads. An in-memory lock manager keeps each
+kind in a map of its own, shared by the kits sharing the manager. A manager
+shared across processes holds them among its rooms' keys, each led by a NUL
+character; a room id holds no NUL character: `create_room` refuses one, and so
+does the framework's taking of a room's lock, with the implementation's value
+error, before it asks the manager, wherever the id came from (a room written to
+the store straight, a router's answer), so that nothing is written. A room's
+lock keeps its id: `lock_manager.locked(room_id)` holds the lock the framework
+holds.
+
 For single-process deployments, an in-memory lock manager (per-room async mutex)
 is sufficient. When a persistent store is shared across multiple processes an
 in-memory lock manager is **NOT** sufficient — per-process locks do not
@@ -15614,6 +15628,16 @@ Each span SHOULD include structured attributes: `room_id`, `channel_id`,
 `event_id`, `provider`, and `latency_ms`. The spans a turn executor records
 for a turn are children of the broadcast span, through the trace context the
 turn's request carries (Section 10.6), whichever process runs it.
+
+**What a span holds.** An exporter often stands outside the application's
+production data, so a span MUST NOT carry what can hold personal data unless
+the application asks for it (`TelemetryConfig.record_sensitive_data`, off by
+default, a provider handed alone included): a sender's or a recipient's address
+is left out (`sender_id`, `delivery.recipient`), a provider's error too
+(`delivery.error`), and a span's `error_message` reads the error's class or a
+stable code (`ValueError`, `send_failed`), never its text, which can quote a
+message or an address. A console provider MUST write out a value's line breaks
+and control characters and quote it, so that no value forges a log line.
 
 ### 15.8 Audit System
 
