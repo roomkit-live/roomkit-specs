@@ -452,6 +452,12 @@ scripted.
   TaskStatusTool over the kit, `cancel_task` its CancelTaskTool, each with
   its default window, reading the room and the channel of the call it
   serves; a call its scripted tools do not name goes on to them.
+- `tool_search`, `tool_search_pinned`, `tool_search_threshold`,
+  `tool_search_threshold_pct`, `tool_search_miss_hint` and
+  `tool_search_threshold_tokens`: its Tool Search (§6.4), each the
+  implementation's default when absent; `model.context_window`, the window
+  of the model's catalogue entry (§6.7), which it measures a catalogue
+  against, unknown when absent; a tool's `tags`, which `find_tools` searches.
 - `audit`: the auditor its tool calls are recorded to (§15.8): its tool
   handler, serving every scripted tool, is wrapped in the implementation's
   `audit_tool_handler` under the agent's id, recording to the run's **tool
@@ -766,7 +772,8 @@ An expectation matches the actual value when:
   in a room's `framework_events`, as many consecutive events in any order;
   in `actions`, the outcomes in any order;
 - `{"$absent": true}`: absent or null; `{"$present": true}`: neither;
-- `{"$contains": "text"}`: a string holding the text.
+- `{"$contains": "text"}`: a string holding the text;
+- `{"$lacks": "text"}`: a string not holding the text.
 
 In `framework_events` a bare string names the event: `"room_created"` is
 `{"event": "room_created"}`.

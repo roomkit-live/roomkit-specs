@@ -500,6 +500,45 @@
           },
           "uniqueItems": true
         },
+        "tool_search": {
+          "description": "A scripted agent's tool_search (§6.4): true hides its catalogue behind find_tools and list_tools, false never does; null, the default, decides each turn from the catalogue's size.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "tool_search_pinned": {
+          "description": "A scripted agent's tool_search_pinned: the names Tool Search never hides.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tool_search_threshold": {
+          "description": "A scripted agent's tool_search_threshold: the tool count past which Tool Search hides the catalogue when the model's window is unknown, and the most matches a search returns. 20 by default.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "tool_search_threshold_pct": {
+          "description": "A scripted agent's tool_search_threshold_pct: the share of the model's window, in percent, past which the catalogue's schemas are hidden. 10.0 by default.",
+          "type": "number",
+          "minimum": 0
+        },
+        "tool_search_miss_hint": {
+          "description": "A scripted agent's tool_search_miss_hint: what a search that finds nothing adds to its answer.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tool_search_threshold_tokens": {
+          "description": "A scripted agent's tool_search_threshold_tokens: the schema tokens past which the catalogue is hidden whatever the window; null sets no cap. 8000 by default.",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
         "tool_timeout_ms": {
           "description": "A scripted agent's bound on each call of its tools (§21.6), in milliseconds; null bounds nothing. The implementation's default when absent.",
           "type": [
@@ -3500,6 +3539,11 @@
               "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
             }
           }
+        },
+        "context_window": {
+          "description": "The model's input context window in tokens (§6.7, a provider's catalog_entry().context_window), which Tool Search measures a catalogue against (§6.4). Unknown when absent.",
+          "type": "integer",
+          "minimum": 0
         }
       }
     },
@@ -3711,6 +3755,13 @@
         },
         "parameters": {
           "type": "object"
+        },
+        "tags": {
+          "description": "The tool's tags: English keywords find_tools searches beside its name and description (§6.4).",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
         "returns": {
           "type": "string"
