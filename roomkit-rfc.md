@@ -6708,6 +6708,13 @@ During broadcast, for each target channel:
    room the change left: the target as edited, or the message deleted
    withheld (§7.5 rule 8). A host that reacts to a change does so with
    `ON_EVENT_UPDATED` or `ON_EVENT_DELETED` (above).
+4. A transport that hosts a model (a realtime voice channel, a conference
+   with a realtime model plugged in, Section 12.4) is an agent too (Section
+   8.3): it MUST inject the change into the model's session silently, as an
+   event a hook injected (Section 9.4), and so it does for any event it
+   takes into the session that opens no turn (a notice, a reaction: Section
+   6.4). The session learns the correction, the deletion or the notice, and
+   the model answers nothing until the next message.
 
 ### 10.4 Inbound Room Routing
 
@@ -10945,7 +10952,8 @@ its text quoted as Section 6.4 quotes a text from outside: `Marie · sms: “…
 Nothing the event carries chooses the intent, its metadata included, which a
 remote client can write. An event a hook injects (Section 9.4) asks no
 agent, a hosted model included: it is injected the same way, `silent`, so
-the model takes it as context and is asked no answer. The application
+the model takes it as context and is asked no answer; so is an edit, a
+delete or an event that opens no turn (Section 10.3 rule 4). The application
 directs the model through its own doors: `inject_text` with the `system`
 intent, or a delivery marked as an instruction (Section 22.1). A blank text
 reaches no session.
