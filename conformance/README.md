@@ -150,7 +150,13 @@ room callbacks of the setup are not compared.
   contents (in the serialized form) its metadata lists under `key`; and
   `orchestration`, the id of a scripted strategy (below) the kit is built
   with as its default, which every room it creates takes unless the
-  creation names another or none (§19.7).
+  creation names another or none (§19.7); and for the room lock (§13.5),
+  `lock_manager`, the in-memory lock manager whose release fails with its
+  `release_error` while a `lock_releases` step has set it failing, as a
+  distributed lock that finds its lease expired, and
+  `delivery_gap_timeout_ms`, how long a delivery lane waits on a cursor hole
+  no lane runs before it skips it (the implementation's default when
+  absent).
 - `channels`: each is registered. A channel of type `host` is the
   implementation's host channel (§10.5); any other is a **scripted channel**:
   - `id`, `type` (a ChannelType: `sms`, `websocket`, `whatsapp`, `email`,
@@ -439,6 +445,7 @@ it was answered first.
 | `{"open": gate}` | Opens the gate: every call held there, and every later one, goes on |
 | `{"idle": true}` | Waits until the kit runs nothing in the background |
 | `{"wait_for_lock": room, "waiters": n}` | Waits until `n` calls (1 by default) wait for the room's lock (a runner fails after 5 s): calls started in the background are then known to overlap |
+| `{"lock_releases": "fail"}`, `{"lock_releases": "succeed"}` | Sets the releases of the kit's `lock_manager` failing or succeeding, from the next one on |
 
 A call that has not returned after 10 s fails the scenario.
 
@@ -626,7 +633,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 |---|---|
 | `timeline` | Per room, the whole timeline in index order, `BLOCKED` records included, lifecycle records left out |
 | `rooms`, `bindings` | Per room, the room record; per room and channel, the binding, `null` for none |
-| `framework_events` | Per room (`*` for the events of no room), every framework event of the §26.1 table and `process_timeout`, and of the Level 2 features the suite exercises, `status_posted` (§19.8) and `feedback` (§15.9), identity resolution's `identity_resolved` and `identity_timeout` (§8.2), a human-input request's `user_input_required` (§9.3), and identity verification's `verification_requested`, `verification_completed` and `verification_ended` (§8.2, §11.7), in emission order |
+| `framework_events` | Per room (`*` for the events of no room), every framework event of the §26.1 table and `process_timeout`, and of the Level 2 features the suite exercises, `status_posted` (§19.8) and `feedback` (§15.9), identity resolution's `identity_resolved` and `identity_timeout` (§8.2), a human-input request's `user_input_required` (§9.3), and identity verification's `verification_requested`, `verification_completed` and `verification_ended` (§8.2, §11.7), and a delivery lane's `delivery_skipped` (§8.2, §13.5), in emission order |
 | `hooks` | Per scripted hook, its calls in order: `trigger`, `room_id`, `event` (the payload, when an event), `tool_call` (the payload, when a tool call: `name`, `tool_call_id`, `arguments` as the call runs or was stopped with, and, on `on_tool_call`, `result` as the model reads it, `is_error`, `refused`, `cancelled` and `error_detail`), `delivery_status` (the payload, when a delivery status, §10.4), `status_entry` (the payload, when a status entry: `on_status_posted`), `observation` (the payload, when an observation: `on_feedback`), `request` (the payload, when a human-input request: `pending_id`, `tool_name`, `arguments`, `room_id`, `tool_call_id`, `channel_id`, `channel_type`, `actor_id`), `identity_result` (what an identity hook is handed, §11.2), `generation` (the payload, on `before_ai_generation`: `channel_id`, `provider_name`, `purpose`, `trigger` the event the turn answers, and its context's `system_prompt`, `messages` as `models` reads them and the names of its `tools`), `tool_round` (on `after_tool_round`: `channel_id`, `round_index`, its `calls`, each `{tool_call_id, name, arguments}`, its `results` as `models` reads them, and the names of the turn's `tools`), `response` (on `on_ai_response`: `channel_id`, `response_content`, `segments`, `tool_calls_count`, `round_count`, `loop_end_reason`, `usage`, `streaming`, `thinking`, and `declared_tools`, by name: `position`, `description`, `parameters`, `origin`) |
 | `hook_order` | The order in which the hooks it lists were called, a scripted channel's room callbacks among them (`<id>.on_room_attached`, `<id>.on_room_detached`) |
 | `room_callbacks` | Per room and scripted channel, its room callbacks (§6.1) in order: `{"call": "on_room_attached", "binding": ...}`, the binding it was handed, or `{"call": "on_room_detached"}` |
@@ -670,8 +677,8 @@ the RFC leaves to each implementation:
   them: an index loses one for each lifecycle record at or below it. That
   holds for an event's `index` (an instruction's provisional index too) and a
   room's `latest_index` (null when it reaches below 0) and `delivered_index`
-  (-1 at least); a room's `event_count` loses one for each lifecycle record
-  below it. Every other gap stays: a hard delete leaves its index given out
+  (-1 at least), and a `delivery_skipped`'s `from_index` and `to_index`; a
+  room's `event_count` loses one for each lifecycle record below it. Every other gap stays: a hard delete leaves its index given out
   (§8.1). Appendix B counts the same way.
 - **Rooms** the run created and the scenario does not name are `$r1`, `$r2`...
   in the order of their `room_created`.
