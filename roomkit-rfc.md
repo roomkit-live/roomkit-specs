@@ -20055,9 +20055,13 @@ a more specific level still states the switch. A setting with no value that
 states off (`temperature`, `max_tokens`, `response_schema`, and the turn
 budgets of Section 6.4) cannot be lifted for a room once a less specific level
 sets it, only replaced. The binding's `tools` is a toolset of its own, and a
-`null` there declares none, like an absent key. A binding's value is read as
-its setting's type reads one of another kind: a number written as a text, a
-whole float or a whole number's text for an integer, a boolean for a number
+`null` there declares none, like an absent key. The per-turn configuration's
+`tools`, when it gives them, replace the binding's for that turn. Either
+toolset is declared before the tools the channel was built with, and none of
+its tools under the name of one of those, of a tool the channel provides or of
+one the room's setup serves it (Section 21.1) is declared: that tool stands. A
+binding's value is read as its setting's type reads one of another kind: a
+number written as a text, a whole float or a whole number's text for an integer, a boolean for a number
 (`"0.3"` reads 0.3, `64.0` and `"100"` read 64 and 100). One that does not read
 so (a `temperature` of `"hot"`, a `max_tokens` of `1.5`, a `system_prompt` that
 is no text) fails the turn before its model is asked, its error naming every
@@ -20069,6 +20073,10 @@ first turn, never replaced by the next level's value.
 The per-turn configuration may also give the turn a skill registry of its own
 (Section 24.3). It is not a binding setting: it replaces the channel's registry
 for that turn alone, and a turn that gives none reads the channel's.
+It may give the turn a tool handler of its own the same way: it serves the
+host's tools for that turn in place of the channel's handler, the tools the
+channel was built with that serve themselves included, and a turn that gives
+none, the next one included, reads the channel's.
 
 **Constrained turn.** A turn's `response_schema` resolves like the other
 per-turn settings. When it is set, the channel MUST NOT
