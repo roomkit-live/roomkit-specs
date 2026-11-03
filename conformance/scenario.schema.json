@@ -4292,6 +4292,46 @@
         },
         "uninstall": {
           "$ref": "#/$defs/strategy_uninstall_step"
+        },
+        "loop": {
+          "$ref": "#/$defs/loop"
+        }
+      }
+    },
+    "loop": {
+      "description": "The implementation's Loop (§19.7.4) in place of a scripted strategy, its agents named by the channel ids of scripted agents with an `agent` identity: the producer answers the room, each message's text its task, and its reviewers review each output in child rooms (§23.3) until they approve or the iterations run out. A strategy with a `loop` has no `agents`, `install` or `uninstall`.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agent"
+      ],
+      "properties": {
+        "agent": {
+          "description": "The producer's channel id: the agent the room's messages ask, whose turns in the room the loop takes.",
+          "type": "string"
+        },
+        "reviewer": {
+          "description": "The one reviewer's channel id, as `reviewers` naming it alone.",
+          "type": "string"
+        },
+        "reviewers": {
+          "description": "The reviewers' channel ids, in the order they review.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "max_iterations": {
+          "description": "How many times the producer produces at most (default 3).",
+          "type": "integer",
+          "minimum": 0
+        },
+        "strategy": {
+          "description": "How several reviewers review (a WorkerStrategy): `sequential`, each one handed the feedback before it, or `parallel`, all at once on the same output; sequential when absent.",
+          "enum": [
+            "sequential",
+            "parallel"
+          ]
         }
       }
     },

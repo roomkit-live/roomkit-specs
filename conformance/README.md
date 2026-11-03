@@ -232,7 +232,12 @@ room callbacks of the setup are not compared.
   `gate`, makes the actions of its `do` in order, `$room` naming the room
   it is installed in, then, for an install, refuses the room with
   `refuse`, the strategy's own refusal, an `invalid_argument` (an
-  uninstall step refuses nothing).
+  uninstall step refuses nothing). A strategy with a `loop` is the
+  implementation's **Loop** instead (§19.7.4), built from its members:
+  `agent`, the producer, and `reviewer` or `reviewers`, each the channel id
+  of a scripted agent with an `agent` identity, `max_iterations` (default 3)
+  and `strategy`, a WorkerStrategy (`sequential` or `parallel`), the
+  implementation's default when absent.
 - `session_auditor`: the run's **session auditor** (§15.8.2), the
   implementation's JSONL session auditor over a file of its own, which
   `expect.session_audit` reads; with `attached: true`, attached to the kit
