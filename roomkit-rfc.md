@@ -477,14 +477,13 @@ inbound router happens to look is not conformant: a caller that names the room
 explicitly bypasses the router entirely, and so does the framework when it
 re-injects into a room it already knows.
 
-A streamed response writes many rows, and reading the room's status before
-each one costs a store read per row. A stream MAY instead read the status once,
-before its first row, and read it again only once the framework instance
-running it has changed a room's status since; it checks the status again
-after a row's `BEFORE_BROADCAST` hooks, which run without the room lock. A
-status changed elsewhere (another process, another framework instance sharing
-the store, a direct write to the store) is then seen by the next response, not
-mid-stream.
+A streamed row's commit reads the room under its lock, its status included
+(§10.2). Around a row's `BEFORE_BROADCAST` hooks, which run without the room
+lock, a stream MAY read the status once, before its first row, and again only
+once the framework instance running it has changed a room's status since, or a
+row's commit found it refusing. A status changed elsewhere (another process,
+another framework instance sharing the store, a direct write to the store) is
+then seen at the next row's commit, that row's hooks having run.
 
 A refused event MUST NOT be appended to the timeline, MUST NOT be broadcast,
 and MUST NOT be stored as a `BLOCKED` event: a closed room accepts nothing,
@@ -5586,9 +5585,8 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   run every `BEFORE_BROADCAST` SYNC hook under the lock, the off-lock ones
   included. `needs_lock = false` permits a hook to run off the lock; it never
   lets an event skip it. A streamed row is the exception (§4): it runs every
-  hook, the `needs_lock = true` ones included, and commits without the room
-  lock; the store assigns its index atomically (§8.1), and the room's status
-  is checked again after its hooks. The events a streamed row's hooks inject
+  hook, the `needs_lock = true` ones included, without the room lock, then
+  takes the lock for its commit, which reads the room (§10.2). The events a streamed row's hooks inject
   take the room lock for their own commit, as every injected event does
   (§9.4).
 
@@ -6473,7 +6471,8 @@ than being drained inside the trigger's lock tenure.
 **A delivery's context.** Each target is handed the room's latest events as
 read before the event's commit, then the committed event as its newest, at
 the index the store gave it: a channel declaring a window of 3 is handed 4
-events. An instruction, never committed, joins none.
+events. A streamed row's is read at its own commit, not at its stream's start.
+An instruction, never committed, joins none.
 
 **What a delivery set reports.** Once its targets answered, the set of the
 inbound event reports `broadcast_partial_failure` first when any target
