@@ -84,27 +84,41 @@
   },
   "steps": [
     {
-      "call": "send_event",
+      "call": "process_inbound",
       "room_id": "room-1",
-      "channel_id": "ws",
-      "content": {
-        "type": "text",
-        "body": "q1"
+      "message": {
+        "channel_id": "ws",
+        "sender_id": "alice",
+        "content": {
+          "type": "text",
+          "body": "q1"
+        }
       },
-      "metadata": {}
+      "expect": {
+        "result": {
+          "blocked": false
+        }
+      }
     },
     {
       "idle": true
     },
     {
-      "call": "send_event",
+      "call": "process_inbound",
       "room_id": "room-1",
-      "channel_id": "ws",
-      "content": {
-        "type": "text",
-        "body": "q2"
+      "message": {
+        "channel_id": "ws",
+        "sender_id": "alice",
+        "content": {
+          "type": "text",
+          "body": "q2"
+        }
       },
-      "metadata": {}
+      "expect": {
+        "result": {
+          "blocked": false
+        }
+      }
     },
     {
       "idle": true
