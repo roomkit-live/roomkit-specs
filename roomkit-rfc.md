@@ -4471,6 +4471,19 @@ subscription goes on. The in-memory backend holds a bounded queue per
 subscription, the oldest event dropped past it, one event per id; a
 publication after its close reaches no one.
 
+A channel's reasoning is published as `thinking_start`, `thinking_delta` and
+`thinking_end`. A block opens with its first non-empty piece, which fires
+`ON_AI_THINKING`, and closes with the answer's text, the end of the generation,
+a failure or a stop, `thinking_end` carrying that block alone. Each carries
+`data.thinking_length`, `data.round` and `data.channel_id`. The reasoning
+repeats what the model read, and a subscriber is not a bound channel, so its
+text is opt-in: `data.thinking`, at most 1000 characters, is present only for a
+channel built with `publish_thinking_text` (false by default). Deltas batch by
+`thinking_coalesce_ms` (80) and `thinking_coalesce_chars` (256), a batch past
+1000 characters going in several, 0 ms publishing each piece. What a turn
+publishes never stops the turn: a slow or stuck backend delays only its own
+events.
+
 Implementations SHOULD provide at least an in-memory realtime backend for
 single-process deployments.
 
@@ -20074,6 +20087,7 @@ AIChannel
 │   ├── memory: MemoryProvider | null       # Pluggable context construction (Section 20)
 │   ├── describe_empty_event: callable | null # What an event with no content reads as
 │   ├── max_author_images: int | null (default 4)  # Newest author images a turn sends (Section 6.4)
+│   ├── publish_thinking_text: bool (default false)  # Reasoning text on the realtime channel (Section 8.4)
 │   ├── tool_policy: ToolPolicy | null      # Tool access control (Section 21)
 │   └── skills: SkillRegistry | null        # Available skills (Section 24)
 ├── per_room_overrides (via binding metadata):
