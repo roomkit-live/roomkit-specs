@@ -524,6 +524,13 @@
           "type": "integer",
           "minimum": 1
         },
+        "reasoning_effort": {
+          "description": "A scripted agent's reasoning_effort (§6.7): the effort its turns ask for, under the one its binding's metadata sets; null, as absent, sets none.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "retry_policy": {
           "description": "A scripted agent's retry_policy (§6.4, a generation's retries): how many times a generation its provider refused as worth another try, before it handed anything, is tried again, each delay `base_delay_ms` times `exponential_base` to the attempt, at most `max_delay_ms`. No retry when absent.",
           "type": "object",
@@ -3088,7 +3095,7 @@
           }
         },
         "models": {
-          "description": "Per scripted agent, each generation's request as the model received it, in order: the `messages` it carries, each `{role, text, parts}` (`parts` its text and image parts in order, each `{text}` or `{image, mime_type}`, null for a text content), the `tool_results`, each `{tool_call_id, content, is_error}` (`content` a text, or a result's text and image parts in order, written as `parts`), its `system_prompt`, its `temperature` and `max_tokens` (§6.4), and the names of the `tools` it declares, in order.",
+          "description": "Per scripted agent, each generation's request as the model received it, in order: the `messages` it carries, each `{role, text, parts}` (`parts` its text and image parts in order, each `{text}` or `{image, mime_type}`, null for a text content), the `tool_results`, each `{tool_call_id, content, is_error}` (`content` a text, or a result's text and image parts in order, written as `parts`), its `system_prompt`, its `temperature` and `max_tokens` (§6.4), its `reasoning_effort` (§6.7), and the names of the `tools` it declares, in order.",
           "type": "object",
           "additionalProperties": {
             "type": [
