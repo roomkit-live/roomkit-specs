@@ -19292,9 +19292,11 @@ such skill active there; an implementation MUST refuse the call otherwise (a
 refused call, Section 9.3), and always when the host gave no callback. The
 callback receives the label, the URI, the conversation and the entry's
 fingerprint (the SHA-256 of its files' URIs and digests, sorted), and an
-approval holds for that fingerprint only: an entry read again with another set
-of files is asked again. A host that keeps approvals keeps them by
-fingerprint. A `"dynamic"` skill has no fingerprint an approval could bind,
+approval holds for that conversation, that fingerprint and the registry's
+server that gave it only: an entry read again with another set of files is
+asked again, and the same entry another registry serves (a turn's own,
+Section 24.3) asks that registry's callback. A host that keeps approvals keeps
+them by fingerprint. A `"dynamic"` skill has no fingerprint an approval could bind,
 and the callback is told so.
 
 **Trust.** A digest the server supplies proves the content consistent with an
