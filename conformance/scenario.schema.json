@@ -4296,6 +4296,32 @@
         "loop": {
           "$ref": "#/$defs/loop"
         }
+      },
+      "if": {
+        "required": [
+          "loop"
+        ]
+      },
+      "then": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "agents"
+              ]
+            },
+            {
+              "required": [
+                "install"
+              ]
+            },
+            {
+              "required": [
+                "uninstall"
+              ]
+            }
+          ]
+        }
       }
     },
     "loop": {
