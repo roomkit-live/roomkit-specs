@@ -1371,7 +1371,9 @@
             "install_router",
             "setup_handoff",
             "handoff.handle",
-            "handoff.set_language"
+            "handoff.set_language",
+            "conversation_pipeline",
+            "install_pipeline"
           ]
         },
         "organization_id": {
@@ -3038,6 +3040,66 @@
               "agents": {
                 "type": "array",
                 "items": {
+                  "type": "string"
+                }
+              },
+              "hook_priority": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "conversation_pipeline"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "stages"
+            ],
+            "allOf": [
+              {
+                "$ref": "#/$defs/pipeline_options"
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "install_pipeline"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "handler",
+              "stages",
+              "agents"
+            ],
+            "allOf": [
+              {
+                "$ref": "#/$defs/pipeline_options"
+              }
+            ],
+            "properties": {
+              "handler": {
+                "type": "string"
+              },
+              "agents": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "agent_aliases": {
+                "type": "object",
+                "additionalProperties": {
                   "type": "string"
                 }
               },
@@ -4844,6 +4906,9 @@
         },
         "swarm": {
           "$ref": "#/$defs/swarm"
+        },
+        "pipeline": {
+          "$ref": "#/$defs/pipeline"
         }
       },
       "if": {
@@ -4925,6 +4990,42 @@
               {
                 "required": [
                   "supervisor"
+                ]
+              }
+            ]
+          }
+        },
+        "pipeline": {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "agents"
+                ]
+              },
+              {
+                "required": [
+                  "install"
+                ]
+              },
+              {
+                "required": [
+                  "uninstall"
+                ]
+              },
+              {
+                "required": [
+                  "loop"
+                ]
+              },
+              {
+                "required": [
+                  "supervisor"
+                ]
+              },
+              {
+                "required": [
+                  "swarm"
                 ]
               }
             ]
@@ -5164,6 +5265,78 @@
           }
         },
         "entry": {
+          "type": "string"
+        }
+      }
+    },
+    "pipeline": {
+      "description": "The implementation's Pipeline (§19.7.1): its agents named by their channel ids, each handing off to the next, the first the entry point, and the supervisor every event also asks.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agents"
+      ],
+      "properties": {
+        "agents": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "supervisor_id": {
+          "type": "string"
+        }
+      }
+    },
+    "pipeline_stage": {
+      "description": "A stage of a ConversationPipeline (§19.5).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "phase",
+        "agent_id"
+      ],
+      "properties": {
+        "phase": {
+          "type": "string"
+        },
+        "agent_id": {
+          "type": "string"
+        },
+        "next": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "can_return_to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "pipeline_options": {
+      "description": "What a ConversationPipeline (§19.5) is built with: its stages, the phase naming its default agent (the first stage's when absent), and its supervisor.",
+      "type": "object",
+      "properties": {
+        "stages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/pipeline_stage"
+          }
+        },
+        "default_phase": {
+          "type": "string"
+        },
+        "supervisor_id": {
           "type": "string"
         }
       }
