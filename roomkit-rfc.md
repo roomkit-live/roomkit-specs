@@ -16825,13 +16825,12 @@ User ↔ Supervisor
 
 The supervisor MAY delegate sequentially or in parallel. In parallel, a
 delegation that raises (its worker no longer held by the kit, for example;
-a task that failed does not raise) ends the team's run without waiting for
-the other workers' work: each of them has started and been posted
-`pending`, and their delegations are cut, each posting its terminal entry
-`failed` with `cancelled`, then the error is raised. None is left running
-unread. Results are delivered
-back via the delivery strategy system (Section 22), at the chain depth of the
-turn that delegated (Section 23.3); results presented within the turn leave
+a task that failed does not raise) ends the team's run with its error
+without waiting for the other workers' work: each of them has started and
+been posted `pending`, and their delegations are cut, each posting its
+terminal entry `failed` with `cancelled`. None is left running unread.
+Results are delivered back via the delivery strategy system (Section 22),
+at the chain depth of the turn that delegated (Section 23.3); results presented within the turn leave
 the supervisor's answer one deeper than the event it answers (§8.3). Results
 of workers dispatched in the background are handed back to the supervisor
 as a background delegation's are (§23.3 step 8): an instruction addressed to
@@ -16941,8 +16940,8 @@ reviewers are delegated as a supervisor's workers are (Section 19.7.3),
 without a per-task bound: each is posted `pending`, then one terminal entry
 however its delegation ends. Parallel reviews end as a parallel team does:
 a review that raises fails the loop without waiting for the others, which
-are cut, each posting its terminal entry. An asynchronous loop ends with the framework as
-a supervisor's background run does.
+are cut, each posting its terminal entry. An asynchronous loop ends with
+the framework as a supervisor's background run does.
 
 #### 19.7.5 Discussion
 
