@@ -19008,6 +19008,22 @@ with `add`, and one that narrows a registry for an agent copies it with
 `copy`: a copy finds every skill the source finds, a skill discovered but not
 yet loaded included, and keeps the source's marks unless asked not to.
 
+A channel's registry is the one it was built with. A host whose skills depend
+on the person a turn is for (their own skills beside the agent's) gives each
+turn a registry of its own through the channel's per-turn configuration
+(Appendix A.9, per-turn settings). That turn's manifest, its activation,
+reference and script tools and its skill gating MUST read it in place of the
+channel's; it MUST NOT be installed on the channel nor read by another turn,
+so a channel that serves one agent in several rooms serves each person their
+own skills, concurrent turns included. A turn whose configuration gives none
+reads the channel's. A turn's registry is read only on a channel built with
+one, an empty one included: a channel built without skills declares no skill
+tools, and ignores a turn's registry with a warning. Activation stays the
+conversation's (Section 24.4): a skill active in the room that the turn's
+registry does not hold leaves the room's active skills, as one its registry no
+longer serves does, since its instructions cannot be in front of the model; its
+next activation delivers its body again.
+
 Skills are injected into the AI agent's system prompt via `to_prompt_xml()`.
 The agent can then select and apply skills based on the user's request. A
 skill a host marks unavailable is listed there with its reason, and a registry
@@ -20032,6 +20048,10 @@ is no text) fails the turn before its model is asked, its error naming every
 setting refused, and so does a `turn_budget_tokens` that is not a positive
 integer: a binding written wrong shows at its first turn, never replaced by
 the next level's value.
+
+The per-turn configuration may also give the turn a skill registry of its own
+(Section 24.3). It is not a binding setting: it replaces the channel's registry
+for that turn alone, and a turn that gives none reads the channel's.
 
 **Constrained turn.** A turn's `response_schema` resolves like the other
 per-turn settings. When it is set, the channel MUST NOT
