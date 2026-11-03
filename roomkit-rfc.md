@@ -1797,6 +1797,14 @@ turn that is not streamed: a streamed segment, once delivered, is not taken
 back.
 
 The AI channel MUST skip events originating from itself to prevent infinite loops.
+It takes a turn on a MESSAGE or an INSTRUCTION only. An event of any other
+type (a SYSTEM notice, a REACTION, a PARTICIPANT_JOINED, a tool-call row)
+opens no turn, whatever strategy takes the agent's turns (Section 19.7): it
+is submitted to no speak policy, is not handed to a running turn, and goes to
+the agent's memory as any event the channel is given, a tool-call row aside.
+An application that wants an agent to react to a notice sends it an
+instruction (Section 10.1.1). An edit or a delete opens no turn either
+(Section 10.3).
 
 **Capability-aware generation:** The framework MUST provide the target transport
 channel's capabilities to the AI at generation time, NOT post-process the output.
@@ -2075,10 +2083,10 @@ decide (the bound, when it did not decide in time), whether it was asked
 again once the agent thought, the thought it was decided with and whether the
 decision is late (below), so that what an agent left unanswered, why, and what
 deciding cost can be followed and measured without wrapping the policy. A
-channel without a policy
-answers every event but an edit or a delete, which opens no turn and is
-submitted to no policy (Section 10.3), and decides nothing; a policy that always
-speaks reports each decision, a baseline to measure another against. A turn the
+channel without a policy answers every message and instruction but an edit
+or a delete, which opens no turn and is submitted to no policy (Section
+10.3), and decides nothing; a policy that always speaks reports each
+decision, a baseline to measure another against. A turn the
 channel's strategy takes in a room (Section 19.7) is not submitted to it
 either, save a turn a discussion gives in answer to a message (Section
 19.7.5): that one is the agent's own answer to the room, and is submitted to
@@ -3045,9 +3053,11 @@ history labels the room's speakers, as above: the turn
 reads it at its next stop, and no turn of its own starts. When the turn cannot
 take it (its loop is not reachable yet, or reads its queue no more) or the
 message reads as no text, the message waits a turn of its own, as above. An
-edit or a delete is no message for the running turn: it waits its place as
-such a message does, and no turn answers it (Section 10.3); while it waits,
-a message that comes after it waits a turn of its own too.
+edit or a delete (Section 10.3), and an event of a type that opens no turn
+(a notice, a reaction, a participant's arrival: above), is no message for
+the running turn: it waits its place as such a message does, and no turn
+answers it; while it waits, a message that comes after it waits a turn of
+its own too.
 
 **ACP Agent Channel:**
 
@@ -4259,8 +4269,9 @@ implementation MUST store one record per channel not asked:
   `max_chain_depth` and `source_channel` (the channel not asked);
 - a `chain_depth_exceeded` framework event.
 
-A tool-call row (`TOOL_CALL_START`, `TOOL_CALL_END`) is an activity record
-that no agent answers, and gets no record. Response events a channel other
+An event no agent answers gets no record: a tool-call row
+(`TOOL_CALL_START`, `TOOL_CALL_END`), an activity record, and any event
+of a type that opens no turn, or an edit or a delete (Section 6.4). Response events a channel other
 than an intelligence one returns at the limit are stored BLOCKED with the
 same `blocked_by`.
 
@@ -18476,10 +18487,11 @@ max_result_retries = 3, result_tool = null)` is called:
 2. Attach the specified agent as an INTELLIGENCE channel in the child room.
 3. Share the channels the caller names from the parent, each with its
    parent binding's permissions (§7.5 rule 6).
-4. Inject the task description as a system event in the child room, visible
-   to the child room's intelligence channels only. The task description is
-   the delegating side's instruction to the worker, not a message for the
-   people behind a transport: a shared transport MUST NOT receive it, nor the
+4. Inject the task description in the child room as a message from the
+   runtime (its source the `system` channel), visible to the child room's
+   intelligence channels only, which a worker answers (Section 6.4). The
+   task description is the delegating side's instruction to the worker, not
+   a message for the people behind a transport: a shared transport MUST NOT receive it, nor the
    re-prompt a result tool sends after a turn that ended without its call.
    The description is the `brief` when one is given, else the `task`: the
    `task` is what was asked, as the delegating side wrote it, the label the
