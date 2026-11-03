@@ -592,7 +592,7 @@
           }
         },
         "agent": {
-          "description": "A scripted agent built as an Agent (RFC §19.7) with this identity: its role, description and scope written at the end of its turns' system prompt as an identity block, in its language unless the room's conversation state sets one, unless identity_in_prompt is false.",
+          "description": "A scripted agent built as an Agent (RFC §19.7) with this identity: its role, description and scope written at the end of its turns' system prompt as an identity block, in its language unless the room's conversation state sets one, unless identity_in_prompt is false. With a greeting and auto_greet (true unless set false), it greets each room a session starts in that binds it, once per room (§19.1).",
           "type": "object",
           "additionalProperties": false,
           "properties": {
@@ -615,6 +615,12 @@
               "type": "string"
             },
             "identity_in_prompt": {
+              "type": "boolean"
+            },
+            "greeting": {
+              "type": "string"
+            },
+            "auto_greet": {
               "type": "boolean"
             }
           }
@@ -1268,7 +1274,8 @@
             "uninstall_strategy",
             "claim_room_strategy",
             "room_strategy",
-            "save_conversation_state"
+            "save_conversation_state",
+            "send_greeting"
           ]
         },
         "organization_id": {

@@ -390,7 +390,11 @@ scripted.
   with its identity block (`role`, `description`, `scope`, then `language`,
   each on a line under `--- Agent Identity ---`), in the language the room's
   conversation state sets (`metadata._conversation_state.context.language`)
-  over its own, unless `identity_in_prompt` is false (default true).
+  over its own, unless `identity_in_prompt` is false (default true). With a
+  `greeting` and `auto_greet` (default true), it greets each room a text
+  session starts in that binds it, once per room: its greeting stored as its
+  event, marked `auto_greeting`, and delivered before the message that
+  started the session is processed (§19.1).
 - `memory`: a **scripted memory** in place of the default (§20): the room's
   latest `max_events` events as a sliding window reads them (default the
   agent's `max_context_events`), with the `messages` it built (each `role`
@@ -491,6 +495,7 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `mute_output`, `unmute_output` | `room_id`, `channel_id` | the binding |
 | `set_access`, `set_visibility` | `room_id`, `channel_id`, `access` or `visibility` | the binding |
 | `close_room`, `archive_room` | `room_id` | the room |
+| `send_greeting` | `room_id`, optional `channel_id`, `agent_id`, `greeting` | null: the agent's greeting, or `greeting`, stored as its event and delivered (§19.1) |
 | `check_timers` | `room_id` | the room, once its due transitions are applied |
 | `register_channel` | `channel` (as in the setup) | null |
 | `unregister_channel` | `channel_id` | null |
