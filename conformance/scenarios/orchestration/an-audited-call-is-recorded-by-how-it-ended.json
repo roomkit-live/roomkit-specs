@@ -261,7 +261,7 @@
           "agent_id": "agent",
           "tool_name": "elsewhere",
           "arguments": {},
-          "result": "$any",
+          "result": "elsewhere is not this handler's",
           "status": "failed",
           "duration_ms": {
             "$present": true
@@ -317,7 +317,7 @@
               },
               {
                 "tool_call_id": "c6",
-                "content": "$any",
+                "content": "{\"error\": \"No handler for tool elsewhere\"}",
                 "is_error": true
               },
               {
