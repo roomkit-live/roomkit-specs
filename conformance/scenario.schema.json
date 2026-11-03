@@ -550,6 +550,19 @@
           "description": "A scripted agent's enable_thinking (§6.7, Appendix A.9): whether a turn reasons, under the one its binding's metadata or its config_provider sets, an off turning off a budget a less specific level set. None when absent.",
           "type": "boolean"
         },
+        "thinking_coalesce_ms": {
+          "description": "A scripted agent's thinking_coalesce_ms (§6.7): how long its model's reasoning batches into one THINKING_DELTA, 0 publishing each piece; 80 when absent.",
+          "type": "number"
+        },
+        "thinking_coalesce_chars": {
+          "description": "A scripted agent's thinking_coalesce_chars (§6.7): how many characters batch into one THINKING_DELTA; 256 when absent.",
+          "type": "integer",
+          "minimum": 1
+        },
+        "publish_thinking_text": {
+          "description": "A scripted agent's publish_thinking_text (§6.7): whether its thinking events carry the reasoning's text to the room's subscribers; false when absent, which reads its length alone.",
+          "type": "boolean"
+        },
         "config_provider": {
           "description": "A scripted agent's config_provider (Appendix A.9, per-turn settings): what it returns for each turn, as Python's AIChannelTurnConfig, by the room id of the binding it is called with, which the room of the context it is called with must carry; a room it does not name, or null, returns None (no per-turn configuration).",
           "type": "object",
@@ -3326,6 +3339,13 @@
               "array",
               "object"
             ]
+          }
+        },
+        "thinking_events": {
+          "description": "Per room, the THINKING_START, THINKING_DELTA and THINKING_END ephemeral events its subscribers read (§6.7), in order: each `{type, thinking_length, round, channel_id}`, and `thinking` for an agent that publishes its text.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "array"
           }
         },
         "models": {

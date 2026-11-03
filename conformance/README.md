@@ -374,6 +374,11 @@ scripted.
   per-turn settings). The binding's
   `tools` declare tools the agent's handler serves, before the agent's own
   (definitions: `name`, `description`, `parameters`).
+- `thinking_coalesce_ms` and `thinking_coalesce_chars`: how long and how many
+  characters its model's reasoning batches into one `thinking_delta` (§6.7); 0
+  ms publishes each piece.
+- `publish_thinking_text`: whether those events carry the reasoning's text;
+  false when absent, a subscriber then reading its length alone (§6.7).
 - `config_provider`: what the agent's per-turn configuration returns for a
   turn, by the room id of the binding it is called with (the room of the
   context must be the same): a `turn_config`, Python's
@@ -691,6 +696,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `room_callbacks` | Per room and scripted channel, its room callbacks (§6.1) in order: `{"call": "on_room_attached", "binding": ...}`, the binding it was handed, or `{"call": "on_room_detached"}` |
 | `deliveries` | Per room and channel, the events a scripted channel's `deliver()` received, as delivered, in order |
 | `contexts` | Per room and scripted channel, the context each of its `deliver()` calls and, for an intelligence channel, each of its turns (`on_event()`) was handed, in order: `call` (`deliver` or `on_event`) and `recent_events`, the ids of its events read as Normalization reads them, lifecycle records left out |
+| `thinking_events` | Per room, the `thinking_start`, `thinking_delta` and `thinking_end` ephemeral events its subscribers read, in order: each `{type, thinking_length, round, channel_id}`, and `thinking` for an agent with `publish_thinking_text` |
 | `streamed` | Per room and streaming channel, the items its `deliver_stream` read, in order: `{"text": ...}` for a text delta, `{"thinking": ...}` for a piece of the model's reasoning, `{"row": event}` for a row the store holds, `{"failed": true}` where the stream raised |
 | `turns` | Per room and intelligence channel, the events its `on_event()` received |
 | `observations`, `tasks` | Per room, the stored side effects |
