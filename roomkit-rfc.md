@@ -2708,6 +2708,24 @@ places next to a user message (the turn's notes, a compaction's summary, a
 summary a memory provider returns) joins that message rather than forming a
 second user message in a row.
 
+**A generation tried again.** A provider's error says whether another try may
+succeed (`retryable`). A channel with a retry policy (`retry_policy`, Section
+13.2) tries a generation again only while nothing of its answer has been
+handed on: a stream that handed text, a call or its end is never read again,
+by a retry, a compacted replay or a fallback, since the room and the turn
+already hold what it handed. It tries again only an error worth another try,
+at most `max_retries` times, waiting before each try
+`base_delay_seconds × exponential_base^n`, at most `max_delay_seconds`, `n`
+counting the tries already made from 0; without a retry policy it makes
+none. An error not worth another try fails the call at once. A context
+compacted for its replay (above) is what the later tries send, and a replay
+refused again as worth another try keeps its tries. Once they are spent, at
+once without a retry policy, a channel with a `fallback_provider` asks it
+once, with the same request, and its answer is the call's. A fallback that
+fails before it handed anything leaves the primary's last error as the
+call's, the fallback's error its cause; one that fails after is the call's
+error.
+
 **Text from outside in a model's context (normative).** Text the runtime places
 in a model's context without having written it (a person's words or name, a
 worker's output or progress, a tool's result, a passage a memory retrieved, a
@@ -19946,7 +19964,8 @@ AIChannel
 │   ├── turn_budget_tokens: int | null      # Billed tokens a turn may spend (Section 6.4)
 │   ├── turn_budget_usd: float | null       # What a turn may cost at the catalogue price
 │   ├── tool_loop_timeout_seconds: float | null (default 300)  # Timeout for entire tool loop
-│   ├── fallback_provider: AIProvider | null # Fallback if primary provider fails
+│   ├── retry_policy: RetryPolicy | null    # Tries a generation again (Section 6.4)
+│   ├── fallback_provider: AIProvider | null # Asked once the retries are spent (Section 6.4)
 │   ├── evict_threshold_tokens: int (default 5000)  # Token threshold for context eviction
 │   ├── memory: MemoryProvider | null       # Pluggable context construction (Section 20)
 │   ├── describe_empty_event: callable | null # What an event with no content reads as
