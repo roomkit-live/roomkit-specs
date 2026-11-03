@@ -429,8 +429,9 @@ hands, and records it (below): on `before_ai_generation` the generation
 (`AIGenerationEvent`), as `generation`; on `after_tool_round` the round
 (`ToolRoundEvent`), as `tool_round`; on `on_ai_response` the turn's response
 (`AIResponseEvent`), as `response`. A `modify`'s `event` is a patch: on a
-generation, the replacement event whose context's `system_prompt` and
-`messages` (each `{role, text}`) are the patch's, whose `tools` are
+generation, the replacement event whose context's `system_prompt`,
+`messages` (each `{role, text}`) and `reasoning_effort` are the patch's,
+whose `tools` are
 those of the context the patch names, and then each tool `define` gives
 (`name`, `description`, `parameters`) in place of the tool of its name, or
 after them; on a round, what the hook does to the
