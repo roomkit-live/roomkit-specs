@@ -366,17 +366,19 @@ scripted.
   `verified`), the costs added up; a model with no `pricing` refuses it.
 - `reasoning_effort`: the effort the agent's turns ask for (§6.7), under
   the one its binding's metadata sets (`null` there keeps the agent's).
-- `system_prompt`, `temperature` and `max_tokens`: the agent's own
-  settings (§6.4), each under the one its binding's metadata or its
-  `config_provider` sets (Appendix A.9, per-turn settings). The binding's
+- `system_prompt`, `temperature`, `max_tokens`, `thinking_budget` and
+  `enable_thinking`: the agent's own settings (§6.4, §6.7), each under the
+  one its binding's metadata or its `config_provider` sets (Appendix A.9,
+  per-turn settings). The binding's
   `tools` declare tools the agent's handler serves, before the agent's own
   (definitions: `name`, `description`, `parameters`).
 - `config_provider`: what the agent's per-turn configuration returns for a
   turn, by the room id of the binding it is called with (the room of the
   context must be the same): a `turn_config`, Python's
   `AIChannelTurnConfig`, or `null`, as a room it does not name, for none.
-  Its `system_prompt`, `temperature`, `max_tokens`, `reasoning_effort`,
-  `turn_budget_tokens` and `turn_budget_usd` sit under the binding's
+  Its `system_prompt`, `temperature`, `max_tokens`, `thinking_budget`,
+  `enable_thinking`, `reasoning_effort`, `turn_budget_tokens` and
+  `turn_budget_usd` sit under the binding's
   metadata and over the agent's own, a `null` not set; its `tools`
   replace the toolset the binding's metadata declares, the agent's own
   tools after them; its `tool_handler`, scripted tools as `tools`
@@ -462,7 +464,8 @@ hands, and records it (below): on `before_ai_generation` the generation
 (`ToolRoundEvent`), as `tool_round`; on `on_ai_response` the turn's response
 (`AIResponseEvent`), as `response`. A `modify`'s `event` is a patch: on a
 generation, the replacement event whose context's `system_prompt`,
-`messages` (each `{role, text}`) and `reasoning_effort` are the patch's,
+`messages` (each `{role, text}`), `reasoning_effort`, `thinking_budget` and
+`enable_thinking` are the patch's,
 whose `tools` are
 those of the context the patch names, and then each tool `define` gives
 (`name`, `description`, `parameters`) in place of the tool of its name, or
@@ -686,7 +689,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `observations`, `tasks` | Per room, the stored side effects |
 | `actions` | Per action label, the outcomes of its runs, in the order they ended |
 | `ai_events` | Per room, the framework events of an AI channel's turn (§8.2, Level 1): `before_ai_generation` and `ai_response`, in emission order, matched as `framework_events`, which does not hold them |
-| `models` | Per scripted agent, each generation's request as its model received it, in order: the `messages` it carries, each `{role, text, parts}`, `text` its text parts joined (empty for a message with none, a tool's result among them), `parts` its text and image parts in order, each `{"text": ...}` or `{"image": url, "mime_type": ...}`, null for a message whose content is a text, and the `tool_results`, each `{tool_call_id, content, is_error}`, `content` as the model reads it (a text, or a result's text and image parts in order, written as `parts` are), `is_error` whether it reads the call as failed, its `system_prompt`, its `temperature` and `max_tokens`, its `reasoning_effort`, and the `tools` it declares, by name: each one's position in the declaration, so that a scenario names those it asserts, declared or `$absent` |
+| `models` | Per scripted agent, each generation's request as its model received it, in order: the `messages` it carries, each `{role, text, parts}`, `text` its text parts joined (empty for a message with none, a tool's result among them), `parts` its text and image parts in order, each `{"text": ...}` or `{"image": url, "mime_type": ...}`, null for a message whose content is a text, and the `tool_results`, each `{tool_call_id, content, is_error}`, `content` as the model reads it (a text, or a result's text and image parts in order, written as `parts` are), `is_error` whether it reads the call as failed, its `system_prompt`, its `temperature` and `max_tokens`, its `reasoning_effort`, `thinking_budget` and `enable_thinking`, and the `tools` it declares, by name: each one's position in the declaration, so that a scenario names those it asserts, declared or `$absent` |
 | `lifecycle` | Per room, the lifecycle records (§5.1) in index order, when the implementation writes them: an implementation that writes none passes. It says which changes write one, and which write none (a change that changes nothing, §7.2) |
 | `participants` | Per room, the participants the store holds (§5.5), in the store's order |
 | `resolver` | The scripted resolver's calls, in order |

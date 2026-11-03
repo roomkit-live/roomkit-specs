@@ -542,6 +542,14 @@
           "type": "integer",
           "minimum": 1
         },
+        "thinking_budget": {
+          "description": "A scripted agent's thinking_budget (§6.7, Appendix A.9): the tokens a turn may reason with, 0 stating off, under the one its binding's metadata or its config_provider sets. None when absent.",
+          "type": "integer"
+        },
+        "enable_thinking": {
+          "description": "A scripted agent's enable_thinking (§6.7, Appendix A.9): whether a turn reasons, under the one its binding's metadata or its config_provider sets, an off turning off a budget a less specific level set. None when absent.",
+          "type": "boolean"
+        },
         "config_provider": {
           "description": "A scripted agent's config_provider (Appendix A.9, per-turn settings): what it returns for each turn, as Python's AIChannelTurnConfig, by the room id of the binding it is called with, which the room of the context it is called with must carry; a room it does not name, or null, returns None (no per-turn configuration).",
           "type": "object",
@@ -3134,7 +3142,7 @@
           }
         },
         "models": {
-          "description": "Per scripted agent, each generation's request as the model received it, in order: the `messages` it carries, each `{role, text, parts}` (`parts` its text and image parts in order, each `{text}` or `{image, mime_type}`, null for a text content), the `tool_results`, each `{tool_call_id, content, is_error}` (`content` a text, or a result's text and image parts in order, written as `parts`), its `system_prompt`, its `temperature` and `max_tokens` (§6.4), its `reasoning_effort` (§6.7), and the names of the `tools` it declares, in order.",
+          "description": "Per scripted agent, each generation's request as the model received it, in order: the `messages` it carries, each `{role, text, parts}` (`parts` its text and image parts in order, each `{text}` or `{image, mime_type}`, null for a text content), the `tool_results`, each `{tool_call_id, content, is_error}` (`content` a text, or a result's text and image parts in order, written as `parts`), its `system_prompt`, its `temperature` and `max_tokens` (§6.4), its `reasoning_effort`, `thinking_budget` and `enable_thinking` (§6.7), and the names of the `tools` it declares, in order.",
           "type": "object",
           "additionalProperties": {
             "type": [
@@ -3439,6 +3447,18 @@
         "max_tokens": {
           "type": [
             "integer",
+            "null"
+          ]
+        },
+        "thinking_budget": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "enable_thinking": {
+          "type": [
+            "boolean",
             "null"
           ]
         },
