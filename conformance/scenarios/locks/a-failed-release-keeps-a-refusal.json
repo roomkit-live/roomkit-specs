@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "locks/a-failed-release-keeps-a-refusal",
-  "title": "A room lock whose release fails leaves a refused message refused: stored blocked, delivered nowhere",
+  "title": "A room lock whose release fails leaves a refused message refused, stored blocked and delivered nowhere, and its result carries the failure as its error",
   "rules": [
     "§13.5 A release that fails",
     "§10.1"
@@ -70,7 +70,10 @@
       "expect": {
         "result": {
           "blocked": true,
-          "reason": "spam"
+          "reason": "spam",
+          "error": {
+            "$contains": "lease expired"
+          }
         }
       }
     }
