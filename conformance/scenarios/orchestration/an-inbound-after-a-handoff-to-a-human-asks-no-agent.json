@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "orchestration/an-inbound-after-a-handoff-to-a-human-asks-no-agent",
-  "title": "After a handoff to a human the room is held for them: the next message asks no agent, whichever rule or default would pick one, and reaches the room's transports; an address still asks the agent it names and a supervisor stays informed; an agent's handoff to an agent is refused, the hold staying, and only the host's transition to an agent takes it off",
+  "title": "After a handoff to a human the room is held for them: the next message asks no agent, whichever rule or default would pick one, and no supervisor, and reaches the room's transports; an address still asks the agent it names, the supervisor taking no turn beside it; an agent's handoff to an agent is refused, the hold staying, and only the host's transition to an agent takes it off",
   "rules": [
     "§19.6",
     "§19.4",
@@ -144,7 +144,11 @@
           "role": "Y"
         },
         "model": {
-          "rounds": []
+          "rounds": [
+            {
+              "text": "Y, addressed."
+            }
+          ]
         }
       },
       {
@@ -155,12 +159,6 @@
         },
         "model": {
           "rounds": [
-            {
-              "text": "Noted."
-            },
-            {
-              "text": "Noted."
-            },
             {
               "text": "Noted."
             }
@@ -438,6 +436,20 @@
     },
     {
       "idle": true
+    },
+    {
+      "call": "post",
+      "room_id": "r3",
+      "content": {
+        "type": "text",
+        "body": "Nine."
+      },
+      "addressed_to": [
+        "y"
+      ]
+    },
+    {
+      "idle": true
     }
   ],
   "expect": {
@@ -638,10 +650,10 @@
         {},
         {}
       ],
-      "y": [],
+      "y": [
+        {}
+      ],
       "sup": [
-        {},
-        {},
         {}
       ]
     },
