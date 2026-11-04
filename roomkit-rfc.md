@@ -2052,10 +2052,10 @@ blank, empty or whitespace only (a reasoning model's line break before its
 call), says nothing: no row is stored, no channel is delivered it, a channel
 that buffers the stream reads it as no text, and `ON_AI_RESPONSE`'s segments
 leave it out; the stream's reader still reads its deltas, and the record it
-would have carried goes to the turn's last message. A turn whose policy still
-asks once the bound has run out ends `unfinished`, never `completed`: the loop
-reaches its end (its end marker, `ON_AI_RESPONSE`), and running out of the
-bound never raises out of the loop.
+would have carried goes to the turn's last message, else its last row. A turn
+whose policy still asks once the bound has run out ends `unfinished`, never
+`completed`: the loop reaches its end (its end marker, `ON_AI_RESPONSE`), and
+running out of the bound never raises out of the loop.
 
 **Whether the agent speaks.** An AI channel MAY carry a speak policy, which
 decides on every event the channel would answer whether the agent speaks now,
@@ -3085,14 +3085,18 @@ its last generation used, null when that generation failed),
 counters), `ai_model` and `ai_provider` (what its last generation ran on, a
 fallback provider when it served it) in the message's metadata. That message is the one of
 the turn's final text or, when the turn has none (a cancellation between
-rounds, an interruption), the last message the turn wrote. A response without
-tools records it too; a provider that streams text alone reports no usage, and
-its record carries none. A turn learns its end after its segments are
-written, so the implementation updates the stored message, and ON_EVENT_UPDATED
-fires as for a direct `update_event()` (§10.3); it does not deliver the
-message again. Writing that update is best effort: a failure is logged, and
-the turn's outcome stands. A host reads how any turn ended from its reply.
-What a turn's record says of its generations rides that message alone: its
+rounds, an interruption), the last message the turn wrote. A turn that wrote no
+message at all (a first turn cut while its call runs) records it on its last
+row, the end of its last call, with the same keys in that row's metadata. A
+response without tools records it too; a provider that streams text alone
+reports no usage, and its record carries none. A turn learns its end after its
+segments are written, so the implementation updates the stored row, and
+ON_EVENT_UPDATED fires as for a direct `update_event()` (§10.3), over the row as
+the store holds it then, an update since its commit standing; it does not
+deliver the row again, and the row its caller reads among its response events
+is that one. Writing that update is best effort: a failure is logged, and the
+turn's outcome stands. A host reads how any turn ended from its reply.
+What a turn's record says of its generations rides that row alone: its
 caller reads the end and the usage under `turns`, and no more of it.
 
 **What a generation used.** After each generation that returned, the loop
@@ -3127,8 +3131,13 @@ waits a turn of its own and a turn that read it unanswered could do its task
 too, and a change accepted meanwhile (an edit, a deletion, Section 10.3)
 applies. A waiting turn whose delivery is cancelled (Section 10.1, *Explicit
 delivery cancellation*) never starts, and a running turn cut lets the next one
-start. A turn whose channel was detached from the room while it waited does
-not start. A muted channel takes no place: it reacts to each event as it comes,
+start once it has written what it keeps: a streaming target working on past
+the cut holds its caller, not the room's line (Section 12.2 step 13s). The
+reference implementation stores what the turn keeps once the target's
+`finally` returned, so the line waits for that `finally`, and one that never
+returns is the target's defect there. A turn whose channel was detached from
+the room while it waited does not start. A muted channel takes no place: it
+reacts to each event as it comes,
 its answer not delivered (Section 7.2). A message the running turn sends into
 its own room (a tool's call, Section 10.1) that asks the same channel is
 answered after that turn: the call, awaited or deferred, returns without
@@ -9011,10 +9020,19 @@ enters a room as any other audio.
      TOOL_CALL_END is stored with `status = failed` as well (error
      `kit_closed` for the kit's close, which leaves running the call that
      awaits the close itself, its row stored all the same), and so does a
-     turn that fails while a tool runs. A TOOL_CALL_END written once the stream no
-     longer carries rows goes to every channel, the streaming one included. With
-     `flush_partial_tts = false` the sessions keep reading, so the stream runs
-     to its end and nothing is cancelled.
+     turn that fails while a tool runs. An implementation MAY store all of it at
+     the cut, without waiting for a streaming target that works on past its
+     stream's end, as the Rust one does, whose futures have no `finally`: that
+     target's caller alone waits for it, within what the kit's close and a held
+     task's cut leave it; each TOOL_CALL_END may reach it while
+     it works; and when it then fails, its failure is its caller's error
+     (`ON_ERROR` fires; only logged once the kit's close or a held task's cut
+     left it to end alone) and what the cut stored stands, as a cut's, where the
+     reference implementation, storing past the target's `finally`, reads it as
+     the failure of the streaming channel below. A TOOL_CALL_END written once the
+     stream no longer carries rows goes to every channel, the streaming one
+     included. With `flush_partial_tts = false` the sessions keep reading, so the
+     stream runs to its end and nothing is cancelled.
      Failed: when the response stream raises (its provider fails mid-response),
      the framework MUST store the text already produced as the AI response event
      (a blank text is no row, Section 6.4), not marked cancelled, close every call still open with `status = failed`,
@@ -17171,7 +17189,8 @@ on any turn, logged once at its own level. Nothing of the pass's own stream
 reaches the room's transports. Its tool calls are stored in the room as
 any turn's TOOL_CALL rows, through the room's commit gate (Section 10.1) and
 in the answered event's scope and thread. Its text is not stored: it is the
-workers' task, an answer to no one in the room.
+workers' task, an answer to no one in the room. Its record rides none of those
+rows: the pass hands it on, and its fallback message carries it.
 
 #### 19.7.4 Loop
 
