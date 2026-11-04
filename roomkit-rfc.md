@@ -2032,7 +2032,12 @@ assistant's message, then the instruction as the user's; the text already
 reached the room as the round's segment and is neither repeated nor withdrawn.
 Any round the loop tries again (an empty one, one whose call could not be
 parsed, one the policy continues) ends its segment there, as a call's start
-does, so the next round's text never runs on from it. A turn whose policy still
+does, so the next round's text never runs on from it. A segment whose text is
+blank, empty or whitespace only (a reasoning model's line break before its
+call), says nothing: no row is stored, no channel is delivered it, a channel
+that buffers the stream reads it as no text, and `ON_AI_RESPONSE`'s segments
+leave it out; the stream's reader still reads its deltas, and the record it
+would have carried goes to the turn's last message. A turn whose policy still
 asks once the bound has run out ends `unfinished`, never `completed`: the loop
 reaches its end (its end marker, `ON_AI_RESPONSE`), and running out of the
 bound never raises out of the loop.
@@ -8912,7 +8917,7 @@ enters a room as any other audio.
      framework MUST close the response stream (no further token is generated and
      no tool call starts after that point) and MUST store the text its reader
      was handed (what the turn backend read ahead of it is dropped, Section
-     10.6.4) as the AI response event with `metadata.cancelled = true`. A turn
+     10.6.4; a blank text is no row, Section 6.4) as the AI response event with `metadata.cancelled = true`. A turn
      its reader stopped once it began records it `cancelled`, as its caller and
      a delegation read it (Section 6.4, Section 23.3), unless its record already
      names how it was cut (an ACP agent's `interrupted`, a stop reason): an
@@ -8936,8 +8941,8 @@ enters a room as any other audio.
      `flush_partial_tts = false` the sessions keep reading, so the stream runs
      to its end and nothing is cancelled.
      Failed: when the response stream raises (its provider fails mid-response),
-     the framework MUST store the text already produced as the AI response event,
-     not marked cancelled, close every call still open with `status = failed`,
+     the framework MUST store the text already produced as the AI response event
+     (a blank text is no row, Section 6.4), not marked cancelled, close every call still open with `status = failed`,
      fire `ON_ERROR` and return the failure to the caller, even when the streaming
      channel swallows it. That event reaches the streaming channel through the
      stream, before the failure, as a completed response's last event does: the
