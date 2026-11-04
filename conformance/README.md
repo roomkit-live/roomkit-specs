@@ -338,7 +338,9 @@ scripted.
   is absent, refused by the provider `provider` names, none when it is
   absent. `failure_after_calls: true` moves the
   round's `fails` or `refuses` after its calls: the model writes its text,
-  then its calls, then fails, never reaching its end.
+  then its calls, then fails, never reaching its end. `failure_after_done:
+  true` moves it after the done event: the model writes its text, its calls
+  and its end, then fails.
   `gate` holds the round at that gate, before it writes anything, until a
   step opens it. `model.vision`: whether the model sees images (§6.4, a
   provider's `supports_vision`), false by default. `model.pricing`: the
@@ -363,7 +365,8 @@ scripted.
   through `current_response_metadata()` (§6.7), before a `gate` holds it.
 - `tool_policy`: a ToolPolicy's `allow` and `deny` patterns (§21.1);
   `max_tool_rounds`: the loop's bound on rounds of calls (Appendix A.9,
-  default 50).
+  default 50); `max_empty_retries`: how many times a round with no call to
+  run is tried again (Appendix A.9, default 1).
 - `tool_timeout_ms`: the bound on each call of its tools (§21.6), `null`
   bounding nothing, the implementation's default when absent;
   `tool_timeouts_ms`: a bound per tool name, above that default and above a

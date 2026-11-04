@@ -403,6 +403,11 @@
           "type": "integer",
           "minimum": 1
         },
+        "max_empty_retries": {
+          "description": "A scripted agent's max_empty_retries (Appendix A.9): how many times a round with no call to run is tried again, on a call its provider did not hand over or an empty answer after a round of calls; 1 when absent.",
+          "type": "integer",
+          "minimum": 0
+        },
         "max_context_events": {
           "description": "A scripted agent's max_context_events: the window of its default memory, a sliding window of the room's latest events (§20.3).",
           "type": "integer",
@@ -3799,6 +3804,10 @@
         },
         "failure_after_calls": {
           "description": "Whether the round's `fails` or `refuses` comes after its calls (default false): the model writes its text, then its calls, then fails, never reaching its end.",
+          "type": "boolean"
+        },
+        "failure_after_done": {
+          "description": "Whether the round's `fails` or `refuses` comes after its done event (default false): the model writes its text, then its calls, then its end, then fails.",
           "type": "boolean"
         }
       }
