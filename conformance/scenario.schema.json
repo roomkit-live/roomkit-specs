@@ -3674,6 +3674,14 @@
           "description": "The model's input context window in tokens (§6.7, a provider's catalog_entry().context_window), which Tool Search measures a catalogue against (§6.4). Unknown when absent.",
           "type": "integer",
           "minimum": 0
+        },
+        "name": {
+          "description": "The model's name (§6.7, a provider's model_name), which a turn's record names as ai_model (§6.4): scripted when absent.",
+          "type": "string"
+        },
+        "provider": {
+          "description": "The provider's name (§6.7, a provider's name), which a turn's record names as ai_provider (§6.4): scripted when absent.",
+          "type": "string"
         }
       }
     },

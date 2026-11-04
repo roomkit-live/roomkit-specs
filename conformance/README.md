@@ -342,6 +342,9 @@ scripted.
   model's catalogue price (§6.7, a provider's `catalog_entry().pricing`,
   Python's `ModelPricing` fields), none when absent; a `fallback_model`
   takes one too.
+  `model.name` and `model.provider`: the names a turn's record gives as
+  `ai_model` and `ai_provider` (§6.4), `scripted` when absent; a
+  `fallback_model` takes them too.
 - `tools`: what the agent serves, each declared with its `name`,
   `description` and `parameters` (a JSON Schema), and answering every call
   one way: `returns` a text, `returns_json` a JSON value (the model reads
