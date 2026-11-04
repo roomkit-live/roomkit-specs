@@ -965,6 +965,14 @@
         "result": {
           "$ref": "#/$defs/hook_result"
         },
+        "hold_after": {
+          "description": "In a `deliver_stream` reaction: the channel holds its read at `hold_gate` once it was handed the text delta this string equals, until a step opens the gate (§10.6.4).",
+          "type": "string"
+        },
+        "hold_gate": {
+          "description": "The gate `hold_after` holds the read at.",
+          "type": "string"
+        },
         "stop_after": {
           "description": "In a `deliver_stream` reaction: the channel stops reading the stream once it was handed the text delta or the piece of reasoning this string equals (§12.2 step 13s).",
           "type": "string"

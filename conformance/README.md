@@ -180,7 +180,8 @@ room callbacks of the setup are not compared.
   - with `streams`, it takes a streamed response as it is written (§6.1
     `supports_streaming_delivery`): its `deliver_stream` reads what it is
     handed to the stream's end, recording each item under `streamed`, and
-    its `deliver_stream` reactions may stop it (`stop_after`), make it
+    its `deliver_stream` reactions may stop it (`stop_after`), hold its read
+    at a gate once it was handed a text (`hold_after`, `hold_gate`), make it
     raise once it stopped (`fail`) or return an `output`; with `streams_in`, it takes one only in
     the rooms listed (§6.1 `supports_streaming_delivery_for`), whether it
     declares `streams` or not: the framework asks it at each stream;
