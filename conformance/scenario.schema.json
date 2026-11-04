@@ -1282,6 +1282,7 @@
             "unmute",
             "set_access",
             "set_visibility",
+            "update_binding_metadata",
             "close_room",
             "archive_room",
             "check_timers",
@@ -1554,6 +1555,27 @@
               "channel_id",
               "visibility"
             ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "update_binding_metadata"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "channel_id",
+              "metadata"
+            ],
+            "properties": {
+              "metadata": {
+                "type": "object"
+              }
+            }
           }
         },
         {

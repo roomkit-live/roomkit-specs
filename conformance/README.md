@@ -541,6 +541,7 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `mute`, `unmute` | `room_id`, `channel_id` | the binding |
 | `mute_output`, `unmute_output` | `room_id`, `channel_id` | the binding |
 | `set_access`, `set_visibility` | `room_id`, `channel_id`, `access` or `visibility` | the binding |
+| `update_binding_metadata` | `room_id`, `channel_id`, `metadata` | the binding |
 | `close_room`, `archive_room` | `room_id` | the room |
 | `send_greeting` | `room_id`, optional `channel_id`, `agent_id`, `greeting` | null: the agent's greeting, or `greeting`, stored as its event and delivered (§19.1) |
 | `check_timers` | `room_id` | the room, once its due transitions are applied |
