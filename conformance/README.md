@@ -526,7 +526,7 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 
 | Call | Arguments | Result |
 |---|---|---|
-| `process_inbound` | `message` (an InboundMessage), `room_id` | an InboundResult: `event`, `blocked`, `reason`, `error` (its message), `response_metadata`, `delivery_results`, `cancellation_reason` |
+| `process_inbound` | `message` (an InboundMessage), `room_id` | an InboundResult: `event`, `blocked`, `reason`, `error` (its message), `response_metadata`, `unavailable_targets`, `delivery_results`, `cancellation_reason` |
 | `process_inbound` with `defer_delivery: true` | as above | the InboundResult at the commit (§10.1 step 18); its completion handle is named by the call's `as` label |
 | `delivery.cancel` | `of`, the label of a deferred `process_inbound`; `reason` (default `caller_cancelled`), `timeout_ms` (default 5000) | the handle's InboundResult once the turns it cut are over (§10.1 Explicit delivery cancellation); a handle done returns its result unchanged |
 | `delivery.wait` | `of`, as above | the handle's InboundResult once its delivery is over (§10.1 step 18) |
