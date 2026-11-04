@@ -1211,9 +1211,10 @@ router admits no one else through it (§10.4). On a transport channel whose
 replies go to the address the correspondent writes from (a phone number, an
 email address: SMS, MMS, RCS, WhatsApp, email, Messenger), the binding's
 recipient and its correspondent are one address. When the framework records
-the sender, or finds a binding naming the sender by address with no value
-under the recipient key, it writes the address as the binding's recipient,
-under the channel's recipient key (below); a recipient the binding already has
+the sender, or finds a binding naming the sender (by their address, their
+identity, or a participant they are) with no value under the recipient key, it
+writes the address the message came from as the binding's recipient, under the
+channel's recipient key (below); a recipient the binding already has
 is kept, and so is a value that is not a recipient (below).
 Conversely, a binding the integrator gives a recipient and no correspondent
 names that recipient as its correspondent: the room is that person's
@@ -1265,8 +1266,18 @@ value either: it is a value no one is reached at, and a float has no single
 written form, so it cannot be compared as an address. A store whose JSON form
 cannot tell a whole float from an integer (Postgres `jsonb` reads `1e16` back
 as `10000000000000000`) reads such a value as an integer. Every read of a
-recipient takes this rule. A delivery is refused for no value and for a value
-that is not a recipient alike (§10.2 step 3d). Routing reads no value as no
+recipient takes this rule. Routing reads a binding's recipient as its channel
+answers it (`recipient_address`, which may read elsewhere than the key), and
+where the channel answers none, as the key holds it, in the channel's form: a
+channel that declares a recipient key and keeps the default answer delivers to
+that value all the same, so its binding is no more open to a stranger than one
+whose channel answers. A value under the key that is not a recipient is read
+first, whatever the channel answers. An attach and an update of a binding's
+metadata read the recipient the same way. Step 1 alone, and the store's lookup
+it rests on (§14.1), read the key as stored: a binding whose channel reads its
+recipient elsewhere is found through the correspondent its attach names, or at
+step 3 as the one room bound to the channel. A delivery is refused for no value
+and for a value that is not a recipient alike (§10.2 step 3d). Routing reads no value as no
 correspondent, and a value that is not a recipient as the address of someone
 other than the sender, whoever writes (§10.1 step 2, §10.4): no sender is
 found through it at step 1; on a binding naming no participant and not
@@ -5813,15 +5824,17 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │       │   section is refused at step 6, as for any event
    │       └── Otherwise, where the binding names no participant and is
    │           not `group`, record the sender on it: a binding update
-   │           (§7.5 rule 6) that writes the sender's address as its
-   │           correspondent (`participant_id`, §10.4) and, on a transport,
-   │           as its recipient where it has no value under the key (the
-   │           sender's address, or its chat, §5.7); a value that is not a
-   │           recipient is kept, as a recipient is; every other field
-   │           carried over; a binding naming the sender with no value under
-   │           the key gets the address as its recipient. A routed room that
-   │           does not bind the channel has it attached under the same
-   │           lock, its binding naming the sender,
+   │           (§7.5 rule 6) that writes as its correspondent
+   │           (`participant_id`, §10.4) its recipient as §5.7 reads it, which
+   │           names the sender here (their identity, it may be), else the
+   │           sender's address and, on a transport, the address as its
+   │           recipient where it has no value under the key (the sender's
+   │           address, or its chat, §5.7); a value that is not a recipient is
+   │           kept, as a recipient is; every other field carried over; a
+   │           binding naming the sender (their identity included) with no
+   │           value under the key gets the address as its recipient. A routed
+   │           room that does not bind the channel has it attached under the
+   │           same lock, its binding naming the sender,
    │           unless rule 7 refuses; that attach reports ON_CHANNEL_ATTACHED
    │           and room_channel_attached. The record itself fires no trigger
    │           and emits no framework event, and is made whatever the
@@ -6967,10 +6980,10 @@ its binding of the channel is declared `group` (§5.7), or when all of the
 following hold:
 
 - the binding names no participant, or names the sender;
-- on a channel whose replies go to the sender's address (§5.7), the binding
-  has no value under its recipient key, or its recipient is the sender's
-  address: a room that delivers to someone else is their conversation, and a
-  value that is not a recipient (§5.7) is someone else's address, so a room
+- on a channel with a recipient (§5.7), the binding holds none as §5.7 reads
+  it, or its recipient names the sender (their address, or the identity it
+  resolves to): a room that delivers to someone else is their conversation, and
+  a value that is not a recipient (§5.7) is someone else's address, so a room
   the integrator opened with its recipient written `true` admits no sender;
 - no participant of the room other than the sender was reached through this
   channel (its `connected_via`, whatever its status): a member the
@@ -7046,10 +7059,11 @@ of it.
 **A delivery status follows its message.** A provider's delivery status that
 names no room is routed by the same rule: the newest ACTIVE or PAUSED room
 whose binding of the status's channel names its recipient, as step 1 finds a
-sender's, else the one ACTIVE room bound to the channel unless its binding
-names another correspondent (its participant, else its recipient, a value that
-is not a recipient included, §5.7), else none. A status is no activity, and
-resumes no room (§5.1). It is never dispatched with the context of one room among
+sender's, unless it names no participant and its channel reads it as delivering
+to someone else; else the one ACTIVE room bound to the channel unless its
+binding names another correspondent (its participant, else its recipient, a
+value that is not a recipient included, §5.7); else none. A status is no
+activity, and resumes no room (§5.1). It is never dispatched with the context of one room among
 several.
 
 Every `ON_DELIVERY_STATUS` hook runs in that room, its filter unread, a status
