@@ -612,7 +612,7 @@
           "type": "boolean"
         },
         "config_provider": {
-          "description": "A scripted agent's config_provider (Appendix A.9, per-turn settings): what it returns for each turn, as Python's AIChannelTurnConfig, by the room id of the binding it is called with, which the room of the context it is called with must carry; a room it does not name, or null, returns None (no per-turn configuration).",
+          "description": "A scripted agent's config_provider (Appendix A.9, per-turn settings): what it returns for each turn, as Python's AIChannelTurnConfig, by the room id of the binding it is called with, which the room of the context it is called with must carry; a room it does not name, or null, returns None (no per-turn configuration). A list gives that room's turns in order, one each, its last standing for the turns after.",
           "type": "object",
           "additionalProperties": {
             "oneOf": [
@@ -621,8 +621,29 @@
               },
               {
                 "$ref": "#/$defs/turn_config"
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "$ref": "#/$defs/turn_config"
+                    }
+                  ]
+                }
               }
             ]
+          }
+        },
+        "skills": {
+          "description": "A scripted agent's skills (§24.3): its registry, each skill written to a directory of its own and discovered from there; an empty list is an empty registry, which is not none: a turn's registry is read only on an agent given one. None when absent.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/scripted_skill"
           }
         },
         "reasoning_effort": {
@@ -3874,8 +3895,34 @@
         }
       }
     },
+    "scripted_skill": {
+      "description": "A skill a scripted registry holds (§24.1): a directory named after it holding its SKILL.md, whose frontmatter gives `name` and `description` and whose body is `instructions`, and each of `references` under its references/ directory, by file name.",
+      "type": "object",
+      "required": [
+        "name",
+        "description"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "instructions": {
+          "type": "string"
+        },
+        "references": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
     "turn_config": {
-      "description": "One turn's configuration (Appendix A.9, per-turn settings), Python's AIChannelTurnConfig: each setting under the binding's metadata and over the agent's own, a null or absent one not set. `tools` replaces the toolset the binding's metadata declares, the agent's own tools still added after it; `tool_handler` serves the host's tools for this turn alone, in place of the agent's handler: each a scripted tool answering its calls, a name it does not hold unserved.",
+      "description": "One turn's configuration (Appendix A.9, per-turn settings), Python's AIChannelTurnConfig: each setting under the binding's metadata and over the agent's own, a null or absent one not set. `tools` replaces the toolset the binding's metadata declares, the agent's own tools still added after it; `tool_handler` serves the host's tools for this turn alone, in place of the agent's handler: each a scripted tool answering its calls, a name it does not hold unserved. `skills` gives the turn a skill registry of its own (§24.3), written as a scripted agent's, in place of the agent's for this turn alone, an empty list an empty registry.",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -3955,6 +4002,12 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/scripted_tool"
+          }
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/scripted_skill"
           }
         }
       }

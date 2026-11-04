@@ -396,7 +396,9 @@ scripted.
 - `config_provider`: what the agent's per-turn configuration returns for a
   turn, by the room id of the binding it is called with (the room of the
   context must be the same): a `turn_config`, Python's
-  `AIChannelTurnConfig`, or `null`, as a room it does not name, for none.
+  `AIChannelTurnConfig`, or `null`, as a room it does not name, for none; a
+  list gives that room's turns in order, one each, its last standing for the
+  turns after.
   Its `system_prompt`, `temperature`, `max_tokens`, `thinking_budget`,
   `enable_thinking`, `reasoning_effort`, `turn_budget_tokens` and
   `turn_budget_usd` sit under the binding's
@@ -404,7 +406,14 @@ scripted.
   replace the toolset the binding's metadata declares, the agent's own
   tools after them; its `tool_handler`, scripted tools as `tools`
   describes them, serves the host's tools for that turn alone, in place of
-  the agent's handler, a name it does not hold unserved.
+  the agent's handler, a name it does not hold unserved; its `skills` give
+  the turn a registry of its own in place of the agent's, for that turn alone
+  (§24.3).
+- `skills`: the agent's skill registry (§24.3), each skill's `name`,
+  `description`, `instructions` and `references` (file names and their text)
+  written to a directory of its own, as a host's skills are, and discovered
+  from there; `[]` is an empty registry, which is not none: a turn's registry
+  is read only on an agent given one.
 - `retry_policy`: the agent's retry policy (§6.4): a generation its
   provider refused as worth another try (`refuses.retryable`) before it
   handed anything is tried again, at most `max_retries` times (default 3),
