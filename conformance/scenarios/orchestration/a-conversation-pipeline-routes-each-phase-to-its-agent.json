@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "orchestration/a-conversation-pipeline-routes-each-phase-to-its-agent",
-  "title": "A ConversationPipeline's install hooks every room's broadcast at -100, one rule per stage asking its agent in its phase, a phase it does not hold asking the first stage's agent",
+  "title": "A ConversationPipeline's install hooks every room's broadcast at -100, a hook at -101 reading no stamp and one at -99 the agent, one rule per stage asking its agent in its phase, a phase it does not hold asking the first stage's agent",
   "rules": [
     "§19.5",
     "§19.4"
@@ -113,12 +113,12 @@
       {
         "name": "early",
         "trigger": "before_broadcast",
-        "priority": -150
+        "priority": -101
       },
       {
         "name": "late",
         "trigger": "before_broadcast",
-        "priority": -50
+        "priority": -99
       }
     ]
   },

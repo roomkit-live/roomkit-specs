@@ -1,12 +1,12 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "orchestration/a-pipeline-serves-each-room-its-own-install",
-  "title": "One Pipeline installed in two rooms declares one handoff tool per agent in each; a handoff in one moves that room alone, and the other's agent keeps it",
+  "title": "One Pipeline installed in two rooms serves each its own: a handoff in one moves that room alone, and uninstalling it from one takes back that room's router, tools, state and agents, the other keeping its own",
   "rules": [
     "§19.7.1",
     "§19.7"
   ],
-  "notes": "Python: tests/orchestration/test_strategy_pipeline.py TestPipelineInstall::test_double_install_skips_handoff. orchestration/strategies/pipeline.py install, _wire_handoff.",
+  "notes": "Python: tests/orchestration/test_strategy_pipeline.py TestPipelineInstall::test_double_install_skips_handoff. orchestration/strategies/pipeline.py install, _wire_handoff. A second install's own tool, declared once, is roomkit-rs tests/pipeline.rs; declared_tools here is by name.",
   "setup": {
     "channels": [
       {
@@ -40,6 +40,9 @@
             },
             {
               "text": "Still here."
+            },
+            {
+              "text": "A goes on."
             }
           ]
         }
@@ -57,6 +60,20 @@
             }
           ]
         }
+      },
+      {
+        "id": "z",
+        "type": "ai",
+        "agent": {
+          "role": "Z"
+        },
+        "model": {
+          "rounds": [
+            {
+              "text": "Z alone."
+            }
+          ]
+        }
       }
     ],
     "rooms": [
@@ -65,6 +82,9 @@
         "bindings": [
           {
             "channel_id": "sms"
+          },
+          {
+            "channel_id": "z"
           }
         ]
       },
@@ -169,6 +189,55 @@
     },
     {
       "idle": true
+    },
+    {
+      "call": "uninstall_strategy",
+      "room_id": "r1",
+      "expect": {
+        "result": true
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "r1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "u1",
+        "content": {
+          "type": "text",
+          "body": "Four."
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "r2",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "u1",
+        "content": {
+          "type": "text",
+          "body": "Five."
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "idle": true
     }
   ],
   "expect": {
@@ -176,9 +245,7 @@
       "r1": {
         "metadata": {
           "_conversation_state": {
-            "phase": "b",
-            "active_agent_id": "b",
-            "handoff_count": 1
+            "$absent": true
           }
         }
       },
@@ -191,6 +258,138 @@
           }
         }
       }
+    },
+    "bindings": {
+      "r1": {
+        "a": {
+          "$absent": true
+        },
+        "b": {
+          "$absent": true
+        },
+        "z": {
+          "category": "intelligence"
+        }
+      },
+      "r2": {
+        "a": {
+          "category": "intelligence"
+        },
+        "b": {
+          "category": "intelligence"
+        }
+      }
+    },
+    "timeline": {
+      "r1": [
+        {
+          "content": {
+            "type": "text",
+            "body": "One."
+          },
+          "metadata": {
+            "_routed_to": "a"
+          }
+        },
+        {
+          "type": "tool_call_start"
+        },
+        {
+          "type": "system",
+          "content": {
+            "type": "text",
+            "body": "[Handoff: a -> b] “R.”"
+          }
+        },
+        {
+          "type": "tool_call_end"
+        },
+        {
+          "source": {
+            "channel_id": "a"
+          },
+          "content": {
+            "type": "text",
+            "body": "Moved."
+          }
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "Two."
+          },
+          "metadata": {
+            "_routed_to": "b"
+          }
+        },
+        {
+          "source": {
+            "channel_id": "b"
+          },
+          "content": {
+            "type": "text",
+            "body": "B here."
+          }
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "Four."
+          },
+          "metadata": {
+            "_routed_to": {
+              "$absent": true
+            }
+          }
+        },
+        {
+          "source": {
+            "channel_id": "z"
+          },
+          "content": {
+            "type": "text",
+            "body": "Z alone."
+          }
+        }
+      ],
+      "r2": [
+        {
+          "content": {
+            "type": "text",
+            "body": "Three."
+          },
+          "metadata": {
+            "_routed_to": "a"
+          }
+        },
+        {
+          "source": {
+            "channel_id": "a"
+          },
+          "content": {
+            "type": "text",
+            "body": "Still here."
+          }
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "Five."
+          },
+          "metadata": {
+            "_routed_to": "a"
+          }
+        },
+        {
+          "source": {
+            "channel_id": "a"
+          },
+          "content": {
+            "type": "text",
+            "body": "A goes on."
+          }
+        }
+      ]
     },
     "hooks": {
       "seen": [
@@ -228,6 +427,35 @@
                     }
                   }
                 }
+              }
+            }
+          }
+        },
+        {
+          "response": {
+            "channel_id": "a",
+            "declared_tools": {
+              "handoff_conversation": {
+                "description": "Transfer this conversation to another agent.\nAvailable targets:\n  - b",
+                "parameters": {
+                  "properties": {
+                    "target": {
+                      "enum": [
+                        "b"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "response": {
+            "channel_id": "z",
+            "declared_tools": {
+              "handoff_conversation": {
+                "$absent": true
               }
             }
           }

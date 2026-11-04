@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "orchestration/a-pipeline-s-router-hooks-its-room-at-minus-100",
-  "title": "A Pipeline's router hooks the broadcast of the room it is installed in, at -100: a hook before it reads no stamp, one after it reads the agent, and a room with no install is not routed",
+  "title": "A Pipeline's router hooks the broadcast of the room it is installed in, at -100: a hook at -101 reads no stamp, one at -99 reads the agent, and a room with no install is not routed",
   "rules": [
     "§19.7.1",
     "§19.7"
@@ -78,12 +78,12 @@
       {
         "name": "early",
         "trigger": "before_broadcast",
-        "priority": -150
+        "priority": -101
       },
       {
         "name": "late",
         "trigger": "before_broadcast",
-        "priority": -50
+        "priority": -99
       }
     ],
     "strategies": [

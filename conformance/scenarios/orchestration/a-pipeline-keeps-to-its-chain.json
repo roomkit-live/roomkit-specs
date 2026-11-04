@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "orchestration/a-pipeline-keeps-to-its-chain",
-  "title": "A Pipeline's handoff goes to the next agent only: skipping a stage, going back, or leaving the last stage is refused, its reason naming both phases, the room left where it is",
+  "title": "A Pipeline's handoff to the next agent goes through; one leading to a phase its stage does not reach, skipping a stage, going back or leaving the last stage, is refused, its reason naming both phases, the room left where it is",
   "rules": [
     "§19.7.1",
     "§19.6"
