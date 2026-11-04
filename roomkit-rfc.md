@@ -16624,6 +16624,21 @@ PipelineStage
 The pipeline generates one `RoutingRule` per stage with
 `conditions.phases = {stage.phase}`.
 
+A stage whose `next` or `can_return_to` names a phase no stage holds MUST be
+refused when the pipeline is built; an empty `next` is none. The router's
+default agent is that of the default phase's stage, the last of several, and
+none when no stage holds that phase. A phase's allowed transitions are its
+stage's `next` and `can_return_to`, and an agent's phase is that of the last
+stage it holds.
+
+`ConversationPipeline.install` reads every agent before it installs anything:
+one it refuses leaves no hook and no tool behind. It registers the router's
+hook on every room's `BEFORE_BROADCAST`, at priority -100 unless given another,
+builds a `HandoffHandler` with those phases and transitions, and gives each
+agent a handoff tool naming the agents its last stage reaches, itself excluded,
+in the stages' order, each by its own description, else its stage's. An agent
+that reaches none, or holds no stage, takes the generic tool.
+
 **On a realtime channel.** A pipeline MAY drive a speech-to-speech session
 (Section 12.4) instead of routing events: the active agent is then the
 session's configuration (its prompt, its voice, its tools), and a handoff
@@ -16711,8 +16726,20 @@ HandoffResult
 
 1. Agent calls `handoff_conversation` tool with `HandoffRequest`.
 2. `HandoffHandler` validates:
-   - Target agent exists and is attached to the room.
+   - Target is an intelligence channel attached to the room, `human`, or a
+     target the handler knows. A transport the room binds is not found: an
+     active agent that is a transport leaves the room with no agent to answer.
    - Phase transition is allowed (per pipeline rules, if applicable).
+   - With allowed transitions and a phase map, the target holds the phase: the
+     one the map gives it, or one a rule of the router asks it in. A `human` or
+     known target the map does not name passes; one it names does not, and a
+     target it does not name otherwise holds no phase. A model's `next_phase`
+     decides no more than that: a tool's `enum` is not enforced at run time,
+     and a model reads what a sender wrote. The caller holds the room's phase
+     by the same rule: an agent the room moved past hands nothing on. A caller
+     the map does not name, neither `human` nor known, passes as the room's
+     active agent, or its default agent while none is active. With no phase map,
+     nothing ties an agent to a phase, and the target and the caller are free.
 3. If valid:
    - Update `ConversationState.phase` and `active_agent_id`.
    - Fire `ON_HANDOFF` hook.
@@ -16877,6 +16904,11 @@ Triage → Specialist → Resolution → Closing
 
 The first agent is the entry point. Only forward transitions (and explicitly
 allowed backward transitions) are permitted.
+
+Each agent's phase is its channel id. The install MUST refuse a pipeline with
+no agent; otherwise it sets the room's conversation state at the first agent
+and its phase, and hooks its router on that room's `BEFORE_BROADCAST` at
+priority -100.
 
 On a voice channel the strategy names, the agents' voices are the channel's
 voice map, and a handoff in a room the strategy runs MAY greet with the
