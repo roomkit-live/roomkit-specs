@@ -36,6 +36,11 @@
                 {
                   "thinking": "",
                   "block": 0,
+                  "signature": "S0"
+                },
+                {
+                  "thinking": "",
+                  "block": 2,
                   "redacted": "RRR"
                 },
                 {
@@ -111,6 +116,10 @@
             {
               "role": "assistant",
               "round": [
+                {
+                  "thinking": "",
+                  "signature": "S0"
+                },
                 {
                   "thinking": "",
                   "redacted": "RRR"

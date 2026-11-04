@@ -44,6 +44,10 @@
                   "thinking": "b"
                 },
                 {
+                  "thinking": "",
+                  "signature": "S2"
+                },
+                {
                   "call": {
                     "id": "c1",
                     "name": "get_weather"
@@ -111,7 +115,7 @@
               "round": [
                 {
                   "thinking": "ab",
-                  "signature": "S1"
+                  "signature": "S2"
                 },
                 {
                   "call": "c1"
