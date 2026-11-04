@@ -195,6 +195,19 @@
             {
               "role": "assistant",
               "content": "Let me look.",
+              "reasoning_content": {
+                "$absent": true
+              },
+              "reasoning": {
+                "$absent": true
+              },
+              "reasoning_details": {
+                "$absent": true
+              }
+            },
+            {
+              "role": "assistant",
+              "content": null,
               "reasoning_content": " ",
               "reasoning": {
                 "$absent": true

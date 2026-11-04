@@ -205,6 +205,19 @@
               },
               "reasoning_details": {
                 "$absent": true
+              }
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "reasoning_content": {
+                "$absent": true
+              },
+              "reasoning": {
+                "$absent": true
+              },
+              "reasoning_details": {
+                "$absent": true
               },
               "tool_calls": [
                 {
