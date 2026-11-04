@@ -19203,7 +19203,8 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   `context` is other work, a task that failed or was cancelled runs again, and
   another agent's call runs, what the first's task returned possibly holding what
   that agent passed or may read. A task the host itself wrote into the cache
-  answers any agent. A call asking
+  answers any agent, the latest of that and the agent's own when both are kept. A
+  call asking
   for the conversation always runs, and what it returned answers no later call,
   since it holds for the room as it stood; its task still counts among the agent's
   previous tasks. With `serialize_per_room`, a room's calls delegate one at a
