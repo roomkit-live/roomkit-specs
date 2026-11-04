@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "discussion/a-stored-discussion-the-constructor-refuses-holds-no-room",
-  "title": "A stored discussion the constructor would refuse reads as none, so its room's agent answers; max_depth 1, which a kit may write, still holds the room",
+  "title": "A stored discussion the constructor would refuse, or that does not read as it writes, reads as none, so its room's agent answers and an instruction is no instruction to one over; max_depth 1, which a kit may write, still holds the room",
   "rules": [
     "§19.7.5 rule 16"
   ],
@@ -297,6 +297,88 @@
         ]
       },
       {
+        "id": "text-depth",
+        "store_metadata": {
+          "_discussion": {
+            "agents": [
+              "a1"
+            ],
+            "max_depth": "5"
+          }
+        },
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "a1",
+            "category": "intelligence"
+          }
+        ]
+      },
+      {
+        "id": "true-depth",
+        "store_metadata": {
+          "_discussion": {
+            "agents": [
+              "a1"
+            ],
+            "max_depth": true
+          }
+        },
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "a1",
+            "category": "intelligence"
+          }
+        ]
+      },
+      {
+        "id": "control-token",
+        "store_metadata": {
+          "_discussion": {
+            "agents": [
+              "a1"
+            ],
+            "max_depth": 5,
+            "silent_token": "\u001c"
+          }
+        },
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "a1",
+            "category": "intelligence"
+          }
+        ]
+      },
+      {
+        "id": "refused-over",
+        "store_metadata": {
+          "_discussion": {
+            "agents": [],
+            "max_depth": 5
+          },
+          "_speak_queue": {
+            "over": true
+          }
+        },
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "a1",
+            "category": "intelligence"
+          }
+        ]
+      },
+      {
         "id": "depth-1",
         "store_metadata": {
           "_discussion": {
@@ -537,6 +619,81 @@
     },
     {
       "call": "process_inbound",
+      "room_id": "text-depth",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "hello"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "true-depth",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "hello"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "control-token",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "hello"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "refused-over",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
+        "content": {
+          "type": "text",
+          "body": "Introduce yourself"
+        },
+        "event_type": "instruction",
+        "addressed_to": [
+          "a1"
+        ]
+      },
+      "expect": {
+        "result": {
+          "blocked": false
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
       "room_id": "depth-1",
       "message": {
         "channel_id": "sms",
@@ -729,6 +886,56 @@
           "content": {
             "type": "text",
             "body": "hello"
+          }
+        }
+      ],
+      "text-depth": [
+        {
+          "content": {
+            "type": "text",
+            "body": "hello"
+          }
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "from a1"
+          }
+        }
+      ],
+      "true-depth": [
+        {
+          "content": {
+            "type": "text",
+            "body": "hello"
+          }
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "from a1"
+          }
+        }
+      ],
+      "control-token": [
+        {
+          "content": {
+            "type": "text",
+            "body": "hello"
+          }
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "from a1"
+          }
+        }
+      ],
+      "refused-over": [
+        {
+          "content": {
+            "type": "text",
+            "body": "from a1"
           }
         }
       ]
