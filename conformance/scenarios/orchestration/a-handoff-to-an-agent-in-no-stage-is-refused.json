@@ -201,6 +201,7 @@
         "default_agent_id": "a"
       },
       "phase_map": {
+        "a": "intake",
         "b": "review"
       },
       "allowed_transitions": {
@@ -288,6 +289,7 @@
         "default_agent_id": "a"
       },
       "phase_map": {
+        "a": "intake",
         "z": "close",
         "human": "close"
       },
