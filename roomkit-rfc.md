@@ -16898,6 +16898,16 @@ was wired, or left behind by a hook of another event, names whichever room
 came first, not the one asking. A call made outside a tool call has no room
 to act on, and the tool MUST refuse it rather than guess.
 
+**A handler's greeting (normative).** A handler's `send_greeting(room_id,
+channel_id)` has the room's active agent say the line the handler's greeting
+map gives it, through the kit's `send_greeting` (Section 19.1), whatever the
+agent's own greeting and the room's language. It reads the room first: a room
+missing is not found. With no active agent, no line or an empty one, or no
+channel named by the call or by the handler's event channel, it says nothing
+and does not fail. The channel is read only for a realtime channel, whose
+sessions each take the greeting (Section 12.4); on any other, the greeting
+reaches the whole room.
+
 ### 19.7 Orchestration Strategies
 
 The following strategies are common patterns built on router and pipeline
