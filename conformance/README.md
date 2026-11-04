@@ -261,6 +261,12 @@ room callbacks of the setup are not compared.
   agents with an `agent` identity, and `entry`, the first agent when absent.
   A strategy with a `pipeline` is the implementation's **Pipeline** (§19.7.1):
   `agents`, the same, each handing off to the next, and `supervisor_id`.
+  A strategy with a `discussion` is the implementation's **Discussion**
+  (§19.7.5): `agents`, the channel ids of scripted agents, its `handles`,
+  `people`, `addressed_only`, `everyone`, `max_turns`, `max_depth`,
+  `silent_token` and `rules`, and with `done`, a `done` answering what the last
+  `discussion.done` call named. A runner's idle wait counts a discussion's turn
+  to give, not its driver's rest between two looks at the queue.
 - `session_auditor`: the run's **session auditor** (§15.8.2), the
   implementation's JSONL session auditor over a file of its own, which
   `expect.session_audit` reads; with `attached: true`, attached to the kit
@@ -595,6 +601,8 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `install_router` | `handler`, `router`, `agents` (channel ids), `agent_aliases`, `phase_map`, `hook_priority`: the router's `install` on the kit, its handler named `handler` (§19.6) | null |
 | `conversation_pipeline` | `stages` (each `phase`, `agent_id`, `next`, `can_return_to`, `description`), `default_phase`, `supervisor_id`: the implementation's ConversationPipeline, built and read (§19.5) | `stages` (each with `can_return_to` as a sorted list), `phase_map`, `allowed_transitions` (each phase's sorted list) |
 | `discussion` | `agents`, each a channel id or an agent given live (`id`, its channel id, and `name`, its display name), `handles`, `people`, `addressed_only`, `everyone`, `max_turns`, `max_depth`, `silent_token`, `rules`, each the implementation's default when absent: the implementation's Discussion, built and read, installed nowhere (§19.7.5) | `agents`, the channel ids in order; `handles`, what its `handles()` answers: empty while an agent named by an id that is no handle waits for the install to read its name |
+| `speak_queue` | `room_id`: the kit's `speak_queue` (§19.7.5 rule 17) | `{speaking, queue, listening, asked, waiting, over}`, `listening` sorted; null for a room holding none |
+| `discussion.done` | `strategy`, `holds`: what that discussion's `done` answers from now on | null |
 | `install_pipeline` | `handler`, `stages`, `default_phase`, `supervisor_id`, `agents` (channel ids), `agent_aliases`, `hook_priority`: the ConversationPipeline's `install` on the kit, its handler named `handler` (§19.5) | null |
 | `setup_handoff` | `agent_id`, `handler`, `targets` (each an id and its description or null: the tool `build_handoff_tool` builds; absent: the generic one), `room_id` (absent: every room): serves the handoff tool on the agent (§19.6) | null |
 | `handoff.handle` | `handler`, `room_id`, `calling_agent_id`, `arguments`, the tool call's: the handler's `handle` (§19.6) | the HandoffResult (`accepted`, `new_agent_id`, `new_phase`, `message`, `reason`) |

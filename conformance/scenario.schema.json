@@ -1422,7 +1422,9 @@
             "default_router.route",
             "conversation_pipeline",
             "install_pipeline",
-            "discussion"
+            "discussion",
+            "speak_queue",
+            "discussion.done"
           ]
         },
         "organization_id": {
@@ -3412,6 +3414,48 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "speak_queue"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "discussion.done"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "strategy",
+              "holds"
+            ],
+            "properties": {
+              "strategy": {
+                "type": "string"
+              },
+              "holds": {
+                "type": "boolean"
+              }
+            }
+          }
         }
       ]
     },
@@ -5253,6 +5297,9 @@
         },
         "pipeline": {
           "$ref": "#/$defs/pipeline"
+        },
+        "discussion": {
+          "$ref": "#/$defs/discussion_strategy"
         }
       },
       "if": {
@@ -5370,6 +5417,47 @@
               {
                 "required": [
                   "swarm"
+                ]
+              }
+            ]
+          }
+        },
+        "discussion": {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "agents"
+                ]
+              },
+              {
+                "required": [
+                  "install"
+                ]
+              },
+              {
+                "required": [
+                  "uninstall"
+                ]
+              },
+              {
+                "required": [
+                  "loop"
+                ]
+              },
+              {
+                "required": [
+                  "supervisor"
+                ]
+              },
+              {
+                "required": [
+                  "swarm"
+                ]
+              },
+              {
+                "required": [
+                  "pipeline"
                 ]
               }
             ]
@@ -5698,6 +5786,58 @@
         },
         "supervisor_id": {
           "type": "string"
+        }
+      }
+    },
+    "discussion_strategy": {
+      "description": "The implementation's Discussion (§19.7.5), installed through the kit: its agents named by their channel ids, its keywords; with done, done(room_id) answers what the last discussion.done call named, false until one.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agents"
+      ],
+      "properties": {
+        "agents": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "handles": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "people": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "addressed_only": {
+          "type": "boolean"
+        },
+        "everyone": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "max_turns": {
+          "type": "integer"
+        },
+        "max_depth": {
+          "type": "integer"
+        },
+        "silent_token": {
+          "type": "string"
+        },
+        "rules": {
+          "type": "string"
+        },
+        "done": {
+          "type": "boolean"
         }
       }
     }
