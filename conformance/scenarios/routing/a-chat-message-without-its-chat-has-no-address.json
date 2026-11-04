@@ -36,7 +36,7 @@
       "expect": {
         "result": {
           "event": {
-            "room_id": "$private"
+            "room_id": "$r1"
           }
         }
       }
@@ -55,7 +55,7 @@
       "expect": {
         "result": {
           "event": {
-            "room_id": "$nothing"
+            "room_id": "$r2"
           }
         }
       }
@@ -76,7 +76,7 @@
       "expect": {
         "result": {
           "event": {
-            "room_id": "$true"
+            "room_id": "$r3"
           }
         }
       }
@@ -97,7 +97,7 @@
       "expect": {
         "result": {
           "event": {
-            "room_id": "$blank"
+            "room_id": "$r4"
           }
         }
       }
@@ -105,7 +105,7 @@
   ],
   "expect": {
     "timeline": {
-      "$private": [
+      "$r1": [
         {
           "content": {
             "type": "text",
@@ -116,7 +116,7 @@
           }
         }
       ],
-      "$nothing": [
+      "$r2": [
         {
           "content": {
             "type": "text",
@@ -127,7 +127,7 @@
           }
         }
       ],
-      "$true": [
+      "$r3": [
         {
           "content": {
             "type": "text",
@@ -138,7 +138,7 @@
           }
         }
       ],
-      "$blank": [
+      "$r4": [
         {
           "content": {
             "type": "text",
@@ -151,24 +151,24 @@
       ]
     },
     "bindings": {
-      "$private": {
+      "$r1": {
         "chat": {
           "participant_id": "7"
         }
       },
-      "$nothing": {
+      "$r2": {
         "chat": {
           "participant_id": null,
           "metadata": {}
         }
       },
-      "$true": {
+      "$r3": {
         "chat": {
           "participant_id": null,
           "metadata": {}
         }
       },
-      "$blank": {
+      "$r4": {
         "chat": {
           "participant_id": null,
           "metadata": {}
