@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "orchestration/a-handoff-to-an-agent-in-no-stage-is-refused",
-  "title": "Under allowed transitions and a phase map, a handoff to an agent the room binds and no stage holds is refused, even naming an allowed phase; a target the handler knows passes, and a handler with no phase map ties no agent to a phase",
+  "title": "Under allowed transitions and a phase map, a handoff to an agent the room binds and no stage holds is refused, even naming an allowed phase; a human or a known target the map does not name passes, one it names is led to its own phase alone, and a handler with no phase map ties no agent to a phase",
   "rules": [
     "§19.5",
     "§19.6"
@@ -99,6 +99,23 @@
       },
       {
         "id": "r4",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "a"
+          },
+          {
+            "channel_id": "b"
+          },
+          {
+            "channel_id": "z"
+          }
+        ]
+      },
+      {
+        "id": "r5",
         "bindings": [
           {
             "channel_id": "sms"
@@ -261,6 +278,86 @@
           "accepted": true,
           "new_agent_id": null,
           "new_phase": "review"
+        }
+      }
+    },
+    {
+      "call": "handoff_handler",
+      "handler": "mapped",
+      "router": {
+        "default_agent_id": "a"
+      },
+      "phase_map": {
+        "z": "close",
+        "human": "close"
+      },
+      "allowed_transitions": {
+        "intake": [
+          "review",
+          "close"
+        ]
+      },
+      "known_agents": [
+        "z"
+      ]
+    },
+    {
+      "call": "handoff.handle",
+      "handler": "mapped",
+      "room_id": "r5",
+      "calling_agent_id": "a",
+      "arguments": {
+        "target": "z",
+        "reason": "R.",
+        "summary": "S.",
+        "next_phase": "review"
+      },
+      "expect": {
+        "result": {
+          "accepted": false,
+          "new_agent_id": null,
+          "new_phase": null,
+          "message": "",
+          "reason": "Agent z does not hold phase 'review'"
+        }
+      }
+    },
+    {
+      "call": "handoff.handle",
+      "handler": "mapped",
+      "room_id": "r5",
+      "calling_agent_id": "a",
+      "arguments": {
+        "target": "human",
+        "reason": "R.",
+        "summary": "S.",
+        "next_phase": "review"
+      },
+      "expect": {
+        "result": {
+          "accepted": false,
+          "new_agent_id": null,
+          "new_phase": null,
+          "message": "",
+          "reason": "Agent human does not hold phase 'review'"
+        }
+      }
+    },
+    {
+      "call": "handoff.handle",
+      "handler": "mapped",
+      "room_id": "r5",
+      "calling_agent_id": "a",
+      "arguments": {
+        "target": "z",
+        "reason": "R.",
+        "summary": "S."
+      },
+      "expect": {
+        "result": {
+          "accepted": true,
+          "new_agent_id": "z",
+          "new_phase": "close"
         }
       }
     }
