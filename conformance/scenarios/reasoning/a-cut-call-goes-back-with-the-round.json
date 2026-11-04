@@ -1,11 +1,11 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "reasoning/a-cut-call-goes-back-with-the-round",
-  "title": "A call the response cut goes back in its place, with its arguments as they came",
+  "title": "A call the response cut goes back in its place, with its arguments as they came, and AFTER_TOOL_ROUND reads it as cut",
   "rules": [
     "§6.4"
   ],
-  "notes": "Python: RoundTranscript.parts keeps every call of the round, one that never runs too.",
+  "notes": "Python: RoundTranscript.parts keeps every call of the round, one that never runs too. channels/_ai_streaming.py _after_tool_round hands the calls themselves.",
   "setup": {
     "channels": [
       {
@@ -75,6 +75,12 @@
           }
         ]
       }
+    ],
+    "hooks": [
+      {
+        "name": "round",
+        "trigger": "after_tool_round"
+      }
     ]
   },
   "steps": [
@@ -129,6 +135,22 @@
               "role": "tool"
             }
           ]
+        }
+      ]
+    },
+    "hooks": {
+      "round": [
+        {
+          "trigger": "after_tool_round",
+          "tool_round": {
+            "calls": [
+              {
+                "tool_call_id": "c1",
+                "partial": true,
+                "garbled": false
+              }
+            ]
+          }
         }
       ]
     }
