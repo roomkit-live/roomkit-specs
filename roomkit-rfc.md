@@ -1612,8 +1612,10 @@ Channel (interface)
 ├── deliver_stream(text_stream, event, binding, context) → ChannelOutput
 │       # Deliver streaming text to this channel. The stream yields the
 │       # response's text as it is written, a thinking delta per chunk of
-│       # the model's reasoning (Section 6.4), and each row of the response
-│       # once the store holds it (a text segment, a call's start or end)
+│       # the model's reasoning (Section 6.4), what each generation used
+│       # (Section 6.4), which a channel that shows none skips, and each row
+│       # of the response once the store holds it (a text segment, a call's
+│       # start or end)
 │       # Default: accumulate text, deliver as complete event via deliver()
 │       # A stream that raises: deliver what was accumulated, then propagate
 │       # the failure (Section 12.2 step 13s)
@@ -3038,8 +3040,12 @@ turn. The span of a turn that reached its end `cancelled` (a steering
 `Cancel`) or `error` ends with that status too, never `ok`.
 
 **The turn's record.** A turn that reached its end records it on its last
-MESSAGE: `loop_end_reason` (the reason above) and `ai_usage`
-(what its rounds used) in the message's metadata. That message is the one of
+MESSAGE: `loop_end_reason` (the reason above), `ai_usage`
+(what its rounds used) and, when its channel says so, `ai_last_usage` (what
+its last generation used, null when that generation failed),
+`ai_usage_complete` (whether every generation reported its input and output
+counters), `ai_model` and `ai_provider` (what its last generation ran on, a
+fallback provider when it served it) in the message's metadata. That message is the one of
 the turn's final text or, when the turn has none (a cancellation between
 rounds, an interruption), the last message the turn wrote. A response without
 tools records it too; a provider that streams text alone reports no usage, and
@@ -3048,6 +3054,24 @@ written, so the implementation updates the stored message, and ON_EVENT_UPDATED
 fires as for a direct `update_event()` (§10.3); it does not deliver the
 message again. Writing that update is best effort: a failure is logged, and
 the turn's outcome stands. A host reads how any turn ended from its reply.
+What a turn's record says of its generations rides that message alone: its
+caller reads the end and the usage under `turns`, and no more of it.
+
+**What a generation used.** After each generation that returned, the loop
+yields what it used, its model and its provider (`UsageMarker`), in its order
+among the text and the rows, as it does a piece of reasoning, so a streaming
+channel can show what a long turn uses as it goes (Section 6.1). It is never
+stored. A generation that reported no counters tells an empty usage; one in
+flight has told nothing. A turn its reader stopped, or cut from outside, once
+it began (Section 12.2 step 13s) records what its generations told as a turn
+that reached its end does, its end `cancelled`: `ai_usage` sums what they told,
+absent when no counter was told, `ai_last_usage`, `ai_model` and `ai_provider`
+are what the last of them told, and `ai_usage_complete` is false when one told
+no counters or one is in flight. A generation counts as in flight from the end
+of the calls that followed the last one told, or from a segment break, until it
+tells. A stream cut before anything told what it used records only its end: an
+ACP agent's or a text-only channel's reports no usage at all, and a first
+generation in flight cannot be told from them.
 
 **A room's turns one after the other.** An AI channel MAY take a room's turns
 one at a time (`serialize_room_turns`, declared as `serializes_room_turns`,
@@ -7452,7 +7476,7 @@ OwnerTool
 | `accepted` | The executor's id: it took the turn |
 | `heartbeat` | Nothing: the turn is still running |
 | `output` | `on_event()` returned: the `ChannelOutput` without its stream (`responded`, `response_events`, `response_metadata`, `tasks`, `observations`, `metadata_updates`, its error as an error record), and whether a stream follows |
-| `item` | One item of the stream, within what the `pull` messages granted: a text delta (or the text deltas the channel yielded together, joined, with their number), a reasoning delta, a call's start (its id, name, arguments, and its intent when it has one), a call's end (its id, the sequence number of its start's frame, name, arguments, result, status, outcome, duration, error, structured content, `refused_but_ran`, and its intent when it has one), a segment break, the loop's end (reason, rounds, usage, the limits it ran under), or the stream's end |
+| `item` | One item of the stream, within what the `pull` messages granted: a text delta (or the text deltas the channel yielded together, joined, with their number), a reasoning delta, a call's start (its id, name, arguments, and its intent when it has one), a call's end (its id, the sequence number of its start's frame, name, arguments, result, status, outcome, duration, error, structured content, `refused_but_ran`, and its intent when it has one), a segment break, what a generation used (usage, model, provider), the loop's end (reason, rounds, usage, the limits it ran under, the last generation's usage, whether every generation reported its counters, model, provider), or the stream's end |
 | `tool_args` | The arguments a call runs with once its gate fixed them (a `BEFORE_TOOL_USE` rewrite, §9.3), naming the call's start frame |
 | `tool_ended` | A call's end known before the `item` carrying it was read (§10.6.4): the start's frame and the end |
 | `record` | The turn's response-metadata record as it stands (§6.7), sent before the `item` it was read with whenever it changed (§10.6.4) |
@@ -7579,13 +7603,14 @@ that point (§12.2), and a stream closed unread makes no provider call (a muted
 binding, §7.5). The owner's reads of its stream send
 `pull` messages, each granting a number of items: the executor advances the
 channel's stream by at most the items granted, and MUST NOT advance past an
-item other than a text or reasoning delta (a call's start, a segment break, a
-loop's end) until a later `pull` grants it, so a call or a round starts only
-once the reader asked for what follows it. A later `pull` is one the owner
+item other than a text or reasoning delta or what a generation used (a call's
+start, a segment break, a loop's end) until a later `pull` grants it, so a call
+or a round starts only once the reader asked for what follows it. A later `pull` is one the owner
 sent once its reader read that item: each `pull` says how many items the
 reader read, and the executor takes one that says fewer than it had read
 through that item as granting nothing. Within a grant the executor reads
-deltas ahead of the reader. Text deltas the channel yields without waiting
+deltas, and what a generation used, ahead of the reader, so a round is decided
+as its generation ends, whatever its reader is still showing. Text deltas the channel yields without waiting
 between them MAY cross as one `item` holding their joined text and their
 number, which counts as that many items against the grant: the text is kept,
 not where it was cut, so a reader that decides between deltas decides on the
@@ -8924,8 +8949,9 @@ enters a room as any other audio.
      no tool call starts after that point) and MUST store the text its reader
      was handed (what the turn backend read ahead of it is dropped, Section
      10.6.4; a blank text is no row, Section 6.4) as the AI response event with `metadata.cancelled = true`. A turn
-     its reader stopped once it began records it `cancelled`, as its caller and
-     a delegation read it (Section 6.4, Section 23.3), unless its record already
+     its reader stopped once it began records it `cancelled`, with what its
+     generations told, as its caller and a delegation read it (Section 6.4,
+     Section 23.3), unless its record already
      names how it was cut (an ACP agent's `interrupted`, a stop reason): an
      agent that finished while its reader had stopped (an ACP prompt that
      returned) is cut all the same. A delegated turn so stopped fails, never
