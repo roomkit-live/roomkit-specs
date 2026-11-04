@@ -70,7 +70,14 @@
             "text": "One."
           },
           {
-            "usage": {},
+            "usage": {
+              "input_tokens": {
+                "$absent": true
+              },
+              "output_tokens": {
+                "$absent": true
+              }
+            },
             "model": "opus",
             "provider": "anthropic"
           },

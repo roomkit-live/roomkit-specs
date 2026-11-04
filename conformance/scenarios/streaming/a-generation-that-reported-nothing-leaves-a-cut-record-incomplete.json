@@ -118,7 +118,14 @@
           },
           "metadata": {
             "loop_end_reason": "cancelled",
-            "ai_last_usage": {},
+            "ai_last_usage": {
+              "input_tokens": {
+                "$absent": true
+              },
+              "output_tokens": {
+                "$absent": true
+              }
+            },
             "ai_usage_complete": false,
             "ai_model": "opus",
             "ai_provider": "anthropic"
