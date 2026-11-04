@@ -30,27 +30,38 @@
         ]
       },
       {
-        "id": "paused-a",
-        "bindings": [
-          {
-            "channel_id": "sms-a"
-          }
-        ]
-      },
-      {
         "id": "free-b",
         "bindings": [
           {
             "channel_id": "sms-b"
           }
         ]
-      },
-      {
-        "id": "paused-b"
       }
     ]
   },
   "steps": [
+    {
+      "call": "store.create_room",
+      "room": {
+        "id": "paused-a",
+        "status": "paused"
+      }
+    },
+    {
+      "call": "store.add_binding",
+      "binding": {
+        "room_id": "paused-a",
+        "channel_id": "sms-a",
+        "channel_type": "sms"
+      }
+    },
+    {
+      "call": "store.create_room",
+      "room": {
+        "id": "paused-b",
+        "status": "paused"
+      }
+    },
     {
       "call": "store.add_binding",
       "binding": {
@@ -58,20 +69,6 @@
         "channel_id": "sms-b",
         "channel_type": "sms",
         "group": true
-      }
-    },
-    {
-      "call": "store.update_room",
-      "room": {
-        "id": "paused-a",
-        "status": "paused"
-      }
-    },
-    {
-      "call": "store.update_room",
-      "room": {
-        "id": "paused-b",
-        "status": "paused"
       }
     },
     {
