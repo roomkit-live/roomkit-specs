@@ -3068,8 +3068,9 @@ that reached its end does, its end `cancelled`: `ai_usage` sums what they told,
 absent when no counter was told, `ai_last_usage`, `ai_model` and `ai_provider`
 are what the last of them told, and `ai_usage_complete` is false when one told
 no counters or one is in flight. A generation counts as in flight from the end
-of the calls that followed the last one told, or from a segment break, until it
-tells. A stream cut before anything told what it used records only its end: an
+of the calls that followed the last one told, as the reader read it, or from a
+segment break, until it tells; a call that ends once the reader stopped asks no
+model again. A stream cut before anything told what it used records only its end: an
 ACP agent's or a text-only channel's reports no usage at all, and a first
 generation in flight cannot be told from them.
 
