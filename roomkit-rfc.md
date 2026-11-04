@@ -19357,6 +19357,11 @@ object replaced) MUST fall back to delivering the body: losing the record and
 losing the prompt block are the same event, and the model is never left holding
 an acknowledgement without rules.
 
+A turn that stands alone (Section 10.1.1) carries no active skill in its prompt,
+so an activation in it MUST deliver the body, the skill active or not. What it
+activates counts for the conversation all the same: the next turn that reads the
+room carries the instructions.
+
 Tool gating (Section 21) follows the same scope: tools revealed by activating a
 skill stay revealed while the skill is active.
 
