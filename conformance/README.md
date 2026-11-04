@@ -195,7 +195,8 @@ room callbacks of the setup are not compared.
     key `conversation_address` reads a message's conversation under (its
     sender when absent), and on a channel with a `recipient_key`,
     `reply_metadata`, `recipient_metadata` and `recipient_address` name and
-    read the recipient under that key; without it, an address is written as
+    read the recipient under that key, `recipient_at` the key
+    `recipient_address` reads in its place; without it, an address is written as
     given, a conversation is its sender's, and a routed sender is recorded
     with no recipient;
   - with `sender_is_participant`, it names its own senders: its inbound

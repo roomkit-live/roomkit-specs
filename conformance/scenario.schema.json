@@ -414,7 +414,7 @@
           "minimum": 1
         },
         "addresses": {
-          "description": "What the channel's own address methods answer (§5.7, §10.4), in place of the defaults, which write an address as given, name a message's conversation by its sender and record no recipient: `normalize_address` writes each address `normalizes` lists as its value, any other as given; `conversation_address` reads the message's metadata under `conversation_key`, a string not blank, else its sender; with a `recipient_key`, `reply_metadata` names the conversation under that key, `recipient_metadata` an address, and `recipient_address` reads a binding's value under it, written by `normalize_address`.",
+          "description": "What the channel's own address methods answer (§5.7, §10.4), in place of the defaults, which write an address as given, name a message's conversation by its sender and record no recipient: `normalize_address` writes each address `normalizes` lists as its value, any other as given; `conversation_address` reads the message's metadata under `conversation_key`, a string not blank, else its sender; with a `recipient_key`, `reply_metadata` names the conversation under that key, `recipient_metadata` an address, and `recipient_address` reads a binding's value under it, or under `recipient_at`, written by `normalize_address`.",
           "type": "object",
           "additionalProperties": false,
           "properties": {
@@ -425,6 +425,10 @@
               }
             },
             "conversation_key": {
+              "type": "string"
+            },
+            "recipient_at": {
+              "description": "The binding metadata key `recipient_address` reads in place of `recipient_key`: a channel whose own method differs from what it declares. `recipient_metadata` and `reply_metadata` still write under `recipient_key`.",
               "type": "string"
             }
           }
