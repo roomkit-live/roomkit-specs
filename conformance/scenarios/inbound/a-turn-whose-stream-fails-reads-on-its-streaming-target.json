@@ -73,6 +73,13 @@
           "type": "text",
           "body": "Go."
         }
+      },
+      "expect": {
+        "result": {
+          "error": {
+            "$contains": "the model is down"
+          }
+        }
       }
     },
     {
@@ -87,6 +94,13 @@
         "content": {
           "type": "text",
           "body": "Go."
+        }
+      },
+      "expect": {
+        "result": {
+          "error": {
+            "$contains": "refused"
+          }
         }
       }
     },

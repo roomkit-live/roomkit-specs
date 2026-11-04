@@ -64,6 +64,20 @@
                   }
                 },
                 {
+                  "id": "c7",
+                  "name": "tally",
+                  "arguments": {
+                    "count": -9223372036854775809
+                  }
+                },
+                {
+                  "id": "c8",
+                  "name": "tally",
+                  "arguments": {
+                    "count": "-9223372036854775809"
+                  }
+                },
+                {
                   "id": "c5",
                   "name": "tally",
                   "arguments": {
@@ -147,6 +161,20 @@
             },
             {
               "tool_call_id": "c4",
+              "content": {
+                "$contains": "counted"
+              },
+              "is_error": false
+            },
+            {
+              "tool_call_id": "c7",
+              "content": {
+                "$contains": "counted"
+              },
+              "is_error": false
+            },
+            {
+              "tool_call_id": "c8",
               "content": {
                 "$contains": "counted"
               },

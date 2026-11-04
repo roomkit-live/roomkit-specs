@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "tool-search/a-max-results-past-every-integer-width-is-bounded",
-  "title": "A max_results wider than any integer type, written or quoted, is an integer, bounded as any: to the tool count at the most, one match at the least",
+  "title": "A max_results wider than any integer type, written or quoted, is an integer, bounded as any: to the threshold at the most, one match at the least",
   "rules": [
     "§21.1",
     "§6.4"
