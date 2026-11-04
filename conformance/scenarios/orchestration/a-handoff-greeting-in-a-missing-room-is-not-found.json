@@ -6,7 +6,7 @@
     "§19.1",
     "§19.6"
   ],
-  "notes": "Python: tests/orchestration/test_handoff.py orchestration/handoff.py HandoffHandler.send_greeting: room = await self._kit.get_room(room_id).",
+  "notes": "Python: orchestration/handoff.py HandoffHandler.send_greeting: room = await self._kit.get_room(room_id).",
   "setup": {
     "channels": [
       {

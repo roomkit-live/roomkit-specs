@@ -1,12 +1,12 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "orchestration/a-handoff-greeting-takes-the-handler-s-event-channel",
-  "title": "A handler's send_greeting with no channel takes the handler's event channel; a channel the kit does not hold is no refusal, since the channel is read only for a realtime session",
+  "title": "A handler's send_greeting with no channel takes the handler's event channel; a channel the kit does not hold is no refusal, since the channel is read only for a realtime session, and the greeting reaches the whole room",
   "rules": [
     "§19.1",
     "§19.6"
   ],
-  "notes": "Python: tests/orchestration/test_handoff.py orchestration/handoff.py HandoffHandler.send_greeting: channel_id or self._event_channel_id, then self._kit.channels.get(ch_id).",
+  "notes": "Python: orchestration/handoff.py HandoffHandler.send_greeting: channel_id or self._event_channel_id, then self._kit.channels.get(ch_id).",
   "setup": {
     "channels": [
       {
