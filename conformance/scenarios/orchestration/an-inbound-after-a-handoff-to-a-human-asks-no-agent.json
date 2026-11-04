@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "orchestration/an-inbound-after-a-handoff-to-a-human-asks-no-agent",
-  "title": "After a handoff to a human the room is held for them: the next message asks no agent, whichever rule or default would pick one, and reaches the room's transports; an address still asks the agent it names, a supervisor stays informed, and a transition to an agent takes the hold off",
+  "title": "After a handoff to a human the room is held for them: the next message asks no agent, whichever rule or default would pick one, and reaches the room's transports; an address still asks the agent it names and a supervisor stays informed; an agent's handoff to an agent is refused, the hold staying, and only the host's transition to an agent takes it off",
   "rules": [
     "§19.6",
     "§19.4",
@@ -87,6 +87,22 @@
         },
         "model": {
           "rounds": [
+            {
+              "calls": [
+                {
+                  "id": "c5",
+                  "name": "handoff_conversation",
+                  "arguments": {
+                    "target": "a",
+                    "reason": "R.",
+                    "summary": "S."
+                  }
+                }
+              ]
+            },
+            {
+              "text": "Still held."
+            },
             {
               "text": "C is back."
             }
@@ -182,6 +198,13 @@
             "channel_id": "sup"
           }
         ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "rejected",
+        "trigger": "on_handoff_rejected",
+        "execution": "async"
       }
     ],
     "strategies": [
@@ -320,6 +343,20 @@
           "error": null
         }
       }
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "post",
+      "room_id": "r2",
+      "content": {
+        "type": "text",
+        "body": "Hold on."
+      },
+      "addressed_to": [
+        "c"
+      ]
     },
     {
       "idle": true
@@ -492,6 +529,27 @@
         {
           "content": {
             "type": "text",
+            "body": "Hold on."
+          }
+        },
+        {
+          "type": "tool_call_start"
+        },
+        {
+          "type": "tool_call_end"
+        },
+        {
+          "source": {
+            "channel_id": "c"
+          },
+          "content": {
+            "type": "text",
+            "body": "Still held."
+          }
+        },
+        {
+          "content": {
+            "type": "text",
             "body": "Six."
           },
           "metadata": {
@@ -563,6 +621,17 @@
         {}
       ],
       "c": [
+        {},
+        {
+          "tool_results": [
+            {
+              "tool_call_id": "c5",
+              "content": {
+                "$contains": "Room r2 is held for a human"
+              }
+            }
+          ]
+        },
         {}
       ],
       "x": [
@@ -574,6 +643,20 @@
         {},
         {},
         {}
+      ]
+    },
+    "hooks": {
+      "rejected": [
+        {
+          "room_id": "r2",
+          "event": {
+            "metadata": {
+              "from_agent": "c",
+              "to_agent": "a",
+              "accepted": false
+            }
+          }
+        }
       ]
     },
     "rooms": {
