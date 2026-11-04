@@ -351,6 +351,10 @@
         "deliver": {
           "$ref": "#/$defs/reactions"
         },
+        "reads_usage": {
+          "description": "With `streams`: its `deliver_stream` also records what each generation tells of its usage (§6.1 deliver_stream, §6.4) as `{\"usage\": ..., \"model\": ..., \"provider\": ...}` under `streamed`. Without it, the channel skips it, as a reader that does not show usage does.",
+          "type": "boolean"
+        },
         "streams": {
           "description": "Whether the channel takes a streamed response as it is written (§6.1 `supports_streaming_delivery`): its `deliver_stream` reads what it is handed, each item recorded under `streamed`, to the stream's end unless a reaction stops it.",
           "type": "boolean"
@@ -3418,7 +3422,7 @@
           }
         },
         "streamed": {
-          "description": "Per room and streaming channel, the items its `deliver_stream` read, in order: `{\"text\": ...}` for a text delta, `{\"row\": event}` for a stored row, `{\"failed\": true}` where the stream raised.",
+          "description": "Per room and streaming channel, the items its `deliver_stream` read, in order: `{\"text\": ...}` for a text delta, `{\"usage\": ...}` for what a generation used when the channel `reads_usage`, `{\"row\": event}` for a stored row, `{\"failed\": true}` where the stream raised.",
           "type": "object",
           "additionalProperties": {
             "type": "object",

@@ -184,6 +184,8 @@ room callbacks of the setup are not compared.
     raise once it stopped (`fail`) or return an `output`; with `streams_in`, it takes one only in
     the rooms listed (§6.1 `supports_streaming_delivery_for`), whether it
     declares `streams` or not: the framework asks it at each stream;
+    with `reads_usage`, it also records what each generation tells of its
+    usage (§6.1 `deliver_stream`, §6.4), which it skips otherwise;
   - `recent_events_window` (default 0): how many of the room's latest
     events it declares it reads (§6.1), which sizes the room's context;
   - with `addresses`, its own address methods answer in place of the
@@ -716,7 +718,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `deliveries` | Per room and channel, the events a scripted channel's `deliver()` received, as delivered, in order |
 | `contexts` | Per room and scripted channel, the context each of its `deliver()` calls and, for an intelligence channel, each of its turns (`on_event()`) was handed, in order: `call` (`deliver` or `on_event`) and `recent_events`, the ids of its events read as Normalization reads them, lifecycle records left out |
 | `thinking_events` | Per room, the `thinking_start`, `thinking_delta` and `thinking_end` ephemeral events its subscribers read, in order: each `{type, thinking_length, round, channel_id}`, and `thinking` for an agent with `publish_thinking_text` |
-| `streamed` | Per room and streaming channel, the items its `deliver_stream` read, in order: `{"text": ...}` for a text delta, `{"thinking": ...}` for a piece of the model's reasoning, `{"row": event}` for a row the store holds, `{"failed": true}` where the stream raised |
+| `streamed` | Per room and streaming channel, the items its `deliver_stream` read, in order: `{"text": ...}` for a text delta, `{"thinking": ...}` for a piece of the model's reasoning, `{"usage": ..., "model": ..., "provider": ...}` for what a generation used, when the channel `reads_usage`, `{"row": event}` for a row the store holds, `{"failed": true}` where the stream raised |
 | `turns` | Per room and intelligence channel, the events its `on_event()` received |
 | `observations`, `tasks` | Per room, the stored side effects |
 | `actions` | Per action label, the outcomes of its runs, in the order they ended |
