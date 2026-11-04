@@ -1390,6 +1390,7 @@
             "setup_handoff",
             "handoff.handle",
             "handoff.set_language",
+            "handoff.send_greeting",
             "conversation_pipeline",
             "install_pipeline",
             "discussion"
@@ -3050,6 +3051,17 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "greeting_map": {
+                "description": "Each agent's greeting, none when absent: the handler's greeting_map, set once it is built.",
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "event_channel_id": {
+                "description": "The channel a handoff's record is sent from and a greeting goes through, when the call names none.",
+                "type": "string"
               }
             }
           }
@@ -3310,6 +3322,33 @@
                 "type": "string"
               },
               "language": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "handoff.send_greeting"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "handler",
+              "room_id"
+            ],
+            "properties": {
+              "handler": {
+                "type": "string"
+              },
+              "room_id": {
+                "type": "string"
+              },
+              "channel_id": {
+                "description": "The channel the greeting goes through, the handler's event channel when absent.",
                 "type": "string"
               }
             }

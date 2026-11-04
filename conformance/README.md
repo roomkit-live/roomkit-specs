@@ -566,7 +566,7 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `claim_room_strategy` | `room_id`, `strategy`: claims the room for the strategy, or refuses, installing nothing (§19.7) | null |
 | `room_strategy` | `room_id` | the id of the scripted strategy installed in the room, null for none (§19.7) |
 | `save_conversation_state` | `room_id`, `transitions`: each a phase transition (`to_phase`, `to_agent`, `reason`, `metadata`) made in order from the conversation state of the room the store holds, the default state for a room it lacks; the state the last one leaves is saved as the room's (§19.2) | null |
-| `handoff_handler` | `handler`, the name the later calls give it; `router`, a conversation router as a hook's (§19.4); `agent_aliases`, `phase_map`, `allowed_transitions` (each phase's list of phases) and `known_agents`: the implementation's HandoffHandler, serving no agent yet and installing no hook (§19.6) | null |
+| `handoff_handler` | `handler`, the name the later calls give it; `router`, a conversation router as a hook's (§19.4); `agent_aliases`, `phase_map`, `allowed_transitions` (each phase's list of phases), `known_agents` and `event_channel_id`: the implementation's HandoffHandler, serving no agent yet and installing no hook, its `greeting_map` set from the call's (§19.6) | null |
 | `install_router` | `handler`, `router`, `agents` (channel ids), `agent_aliases`, `phase_map`, `hook_priority`: the router's `install` on the kit, its handler named `handler` (§19.6) | null |
 | `conversation_pipeline` | `stages` (each `phase`, `agent_id`, `next`, `can_return_to`, `description`), `default_phase`, `supervisor_id`: the implementation's ConversationPipeline, built and read (§19.5) | `stages` (each with `can_return_to` as a sorted list), `phase_map`, `allowed_transitions` (each phase's sorted list) |
 | `discussion` | `agents`, each a channel id or an agent given live (`id`, its channel id, and `name`, its display name), `handles`, `people`, `addressed_only`, `everyone`, `max_turns`, `max_depth`, `silent_token`, `rules`, each the implementation's default when absent: the implementation's Discussion, built and read, installed nowhere (§19.7.5) | `agents`, the channel ids in order; `handles`, what its `handles()` answers: empty while an agent named by an id that is no handle waits for the install to read its name |
@@ -574,6 +574,7 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `setup_handoff` | `agent_id`, `handler`, `targets` (each an id and its description or null: the tool `build_handoff_tool` builds; absent: the generic one), `room_id` (absent: every room): serves the handoff tool on the agent (§19.6) | null |
 | `handoff.handle` | `handler`, `room_id`, `calling_agent_id`, `arguments`, the tool call's: the handler's `handle` (§19.6) | the HandoffResult (`accepted`, `new_agent_id`, `new_phase`, `message`, `reason`) |
 | `handoff.set_language` | `handler`, `room_id`, `language`: the handler's `set_language` (§19.6) | null |
+| `handoff.send_greeting` | `handler`, `room_id`, `channel_id`: the handler's `send_greeting` (§19.1, §19.6) | null |
 
 ### Calls on the store
 
