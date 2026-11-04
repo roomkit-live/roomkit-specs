@@ -341,6 +341,13 @@ scripted.
   then its calls, then fails, never reaching its end. `failure_after_done:
   true` moves it after the done event: the model writes its text, its calls
   and its end, then fails.
+  `stream`: the round's events in the order the model streams them, in place
+  of `text`, `deltas`, `thinking` and `calls`: `{thinking, signature, block,
+  redacted}`, `{text}` or `{call}` (§6.4). `whole_response`: the round is a
+  response read whole, its text and calls as the round gives them, its
+  reasoning its `thinking`, `thinking_signature` and `thinking_parts` (each
+  `{thinking, signature, redacted}`), which reach the loop first (§6.4). A
+  call's `metadata`: provider-owned data, replayed with it (§6.4).
   `gate` holds the round at that gate, before it writes anything, until a
   step opens it. `model.vision`: whether the model sees images (§6.4, a
   provider's `supports_vision`), false by default. `model.pricing`: the
@@ -740,7 +747,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `observations`, `tasks` | Per room, the stored side effects |
 | `actions` | Per action label, the outcomes of its runs, in the order they ended |
 | `ai_events` | Per room, the framework events of an AI channel's turn (§8.2, Level 1): `before_ai_generation` and `ai_response`, in emission order, matched as `framework_events`, which does not hold them |
-| `models` | Per scripted agent, each generation's request as its model received it, in order: the `messages` it carries, each `{role, text, parts}`, `text` its text parts joined (empty for a message with none, a tool's result among them), `parts` its text and image parts in order, each `{"text": ...}` or `{"image": url, "mime_type": ...}`, null for a message whose content is a text, and the `tool_results`, each `{tool_call_id, content, is_error}`, `content` as the model reads it (a text, or a result's text and image parts in order, written as `parts` are), `is_error` whether it reads the call as failed, its `system_prompt`, its `temperature` and `max_tokens`, its `reasoning_effort`, `thinking_budget` and `enable_thinking`, and the `tools` it declares, by name: each one's position in the declaration, so that a scenario names those it asserts, declared or `$absent` |
+| `models` | Per scripted agent, each generation's request as its model received it, in order: the `messages` it carries, each `{role, text, parts}`, `text` its text parts joined (empty for a message with none, a tool's result among them), `parts` its text and image parts in order, each `{"text": ...}` or `{"image": url, "mime_type": ...}`, null for a message whose content is a text, `round` its reasoning, text and call parts in order, each `{"thinking": ..., "signature": ..., "redacted": ...}`, `{"text": ...}` or `{"call": id, "metadata": ...}`, null for a message whose content is a text, and the `tool_results`, each `{tool_call_id, content, is_error}`, `content` as the model reads it (a text, or a result's text and image parts in order, written as `parts` are), `is_error` whether it reads the call as failed, its `system_prompt`, its `temperature` and `max_tokens`, its `reasoning_effort`, `thinking_budget` and `enable_thinking`, and the `tools` it declares, by name: each one's position in the declaration, so that a scenario names those it asserts, declared or `$absent` |
 | `lifecycle` | Per room, the lifecycle records (§5.1) in index order, when the implementation writes them: an implementation that writes none passes. It says which changes write one, and which write none (a change that changes nothing, §7.2) |
 | `participants` | Per room, the participants the store holds (§5.5), in the store's order |
 | `resolver` | The scripted resolver's calls, in order |

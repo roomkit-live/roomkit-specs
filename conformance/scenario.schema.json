@@ -3873,6 +3873,94 @@
         "failure_after_done": {
           "description": "Whether the round's `fails` or `refuses` comes after its done event (default false): the model writes its text, then its calls, then its end, then fails.",
           "type": "boolean"
+        },
+        "stream": {
+          "description": "The round's events in the order the model streams them, in place of `text`, `deltas`, `thinking` and `calls` (§6.4): a piece of reasoning, its `thinking` empty for a block's signature or redacted data alone, the `block` a vendor names it with; a piece of text; a call.",
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": [
+                  "thinking"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "thinking": {
+                    "type": "string"
+                  },
+                  "signature": {
+                    "type": "string"
+                  },
+                  "block": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "redacted": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "required": [
+                  "text"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "text": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "required": [
+                  "call"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "call": {
+                    "$ref": "#/$defs/model_call"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "whole_response": {
+          "description": "The round is a whole response, as a provider that does not stream returns it (§6.4): its text and calls as the round gives them, its reasoning read from these members, handed to the loop first.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "thinking": {
+              "type": "string"
+            },
+            "thinking_signature": {
+              "type": "string"
+            },
+            "thinking_parts": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "thinking"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "thinking": {
+                    "type": "string"
+                  },
+                  "signature": {
+                    "type": "string"
+                  },
+                  "redacted": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3896,6 +3984,10 @@
         },
         "cut": {
           "type": "boolean"
+        },
+        "metadata": {
+          "description": "Provider-owned data of the call (a thought signature), which goes back with it when the round is replayed (§6.4).",
+          "type": "object"
         }
       }
     },
