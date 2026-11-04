@@ -1923,15 +1923,29 @@ and nowhere else. DeepSeek, in thinking mode, refuses a round of the turn in
 progress that called tools without its `reasoning_content`, unless it issued
 the round's call ids itself a moment ago; the DeepSeek provider therefore sends
 that field on every round that called tools, empty when the round did not
-reason, and an answer's reasoning in it too. Cerebras reads a `reasoning` field
-on a round or an answer that reasoned, and Ollama's native API a `thinking` one.
-A Chat Completions request to any other server carries no reasoning, in no
-form: a `<think>` block in a message's text is read as words the model said, and
-a server's prompt cache does not survive it. A round that only reasoned and
-called goes back with no text, and an answer that only reasoned with an empty
-one. Only the request loses it: the round keeps its reasoning for what reads a
-round (a `BEFORE_AI_GENERATION` hook, a reader of the stream), and a reasoning
-tag in a model's output is still read out of its text.
+reason, and an answer's reasoning in it too. Kimi's error reference gives a 400
+for a round that called tools without `reasoning_content`, and a gateway's code
+(LiteLLM's) reads an empty one as missing: the Kimi provider sends that field on
+every round that called tools, a single space when the round has no reasoning,
+as every round of an earlier turn has none, and an answer's reasoning in it too.
+MiniMax asks for its reasoning back in a tool loop and documents no refusal: the
+MiniMax provider sends `reasoning_content` on a round or an answer that reasoned,
+and nothing on one that did not. Cerebras
+reads a `reasoning` field on a round or an answer that reasoned, and Ollama's
+native API a `thinking` one. A Chat Completions request to any other server
+carries no reasoning, in no form: a `<think>` block in a message's text is read
+as words the model said, and a server's prompt cache does not survive it. A
+round that only reasoned and called goes back with no text, and an answer that
+only reasoned with an empty one. Only the request loses it: the round keeps its
+reasoning for what reads a round (a `BEFORE_AI_GENERATION` hook, a reader of the
+stream), and a reasoning tag in a model's output is still read out of its text.
+
+The vendor's rendering is the integrator's choice, made by the provider it
+builds, and it holds behind a custom base URL: a vendor's weights served by a
+generic server get their reasoning back through that vendor's provider, given
+that server's URL, and none through a generic provider, which has no setting for
+it. Whatever the provider, the reasoning goes back for as long as its turn lasts,
+and a later turn reads none.
 
 **What a provider hands the loop for a call (normative).** Every provider,
 streamed or not, hands the loop the same thing for the same call. Each call of
