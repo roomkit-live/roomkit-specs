@@ -994,6 +994,10 @@
           "items": {
             "$ref": "#/$defs/action"
           }
+        },
+        "writes_record": {
+          "description": "In a hook's reaction: writes these keys on the turn's record, on `before_ai_generation` through its context's `response_metadata`, on another trigger through current_response_metadata(), when it answers one (§6.7).",
+          "type": "object"
         }
       }
     },
@@ -3844,6 +3848,10 @@
               }
             ]
           }
+        },
+        "writes_record": {
+          "description": "Before it answers, each call writes these keys on the turn's record through current_response_metadata(), when it answers one (§6.7).",
+          "type": "object"
         }
       },
       "oneOf": [
@@ -4775,6 +4783,10 @@
               "minimum": 0
             }
           }
+        },
+        "writes_record": {
+          "description": "Each read writes these keys on the turn's record through current_response_metadata(), when it answers one (§6.7).",
+          "type": "object"
         }
       }
     },
