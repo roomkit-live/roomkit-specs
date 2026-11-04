@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "tools/a-result-of-parts-is-not-noted",
-  "title": "A result of parts carries no note: only a text is compared",
+  "title": "A result of parts a model that sees reads carries no note: only a text is compared",
   "rules": [
     "§6.4",
     "§9.3"
@@ -66,7 +66,8 @@
             {
               "text": "done"
             }
-          ]
+          ],
+          "vision": true
         }
       }
     ],
@@ -117,13 +118,28 @@
         {
           "tool_results": [
             {
-              "tool_call_id": "t1"
+              "tool_call_id": "t1",
+              "content": [
+                {
+                  "text": "nothing"
+                }
+              ]
             },
             {
-              "tool_call_id": "t2"
+              "tool_call_id": "t2",
+              "content": [
+                {
+                  "text": "nothing"
+                }
+              ]
             },
             {
-              "tool_call_id": "t3"
+              "tool_call_id": "t3",
+              "content": [
+                {
+                  "text": "nothing"
+                }
+              ]
             }
           ]
         }
