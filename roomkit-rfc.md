@@ -3544,7 +3544,8 @@ is built, a `BEFORE_AI_GENERATION` hook MAY write it through
 hook MAY write it through `current_response_metadata()` (the hook runs under
 the call's turn, so a host counts the calls a turn started there, before any
 runs). The record a caller reads on `InboundResult.response_metadata` is the
-same one, whether the turn answered or failed. The caller's copy alone also
+same one, whether the turn answered, failed or was cut from outside (a
+delivery's cancellation, the kit's close). The caller's copy alone also
 names how each channel that replied to the caller's own event ended, streamed
 or not, under `turns[channel_id]`: its `loop_end_reason` (an AI channel's;
 an ACP agent's stop reason, `interrupted` when its prompt never returned or
