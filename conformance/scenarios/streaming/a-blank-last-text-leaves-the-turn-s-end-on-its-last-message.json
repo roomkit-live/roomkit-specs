@@ -39,7 +39,10 @@
                   "id": "c1",
                   "name": "lookup"
                 }
-              ]
+              ],
+              "usage": {
+                "output_tokens": 5
+              }
             },
             {
               "deltas": [
@@ -107,7 +110,10 @@
             "body": "Looking."
           },
           "metadata": {
-            "loop_end_reason": "empty_response"
+            "loop_end_reason": "empty_response",
+            "ai_usage": {
+              "output_tokens": 5
+            }
           }
         },
         {
