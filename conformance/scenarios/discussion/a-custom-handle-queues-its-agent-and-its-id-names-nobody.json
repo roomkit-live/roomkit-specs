@@ -163,6 +163,36 @@
           }
         }
       ]
+    },
+    "models": {
+      "a": [
+        {
+          "messages": [
+            {
+              "role": "user",
+              "text": {
+                "$contains": "@ops"
+              }
+            }
+          ]
+        },
+        "$any"
+      ],
+      "b": [
+        {
+          "messages": [
+            "$any",
+            "$any",
+            "$any",
+            {
+              "role": "user",
+              "text": {
+                "$contains": "@ops"
+              }
+            }
+          ]
+        }
+      ]
     }
   }
 }

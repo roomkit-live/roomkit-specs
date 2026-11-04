@@ -98,6 +98,20 @@
         }
       ]
     },
+    "deliveries": {
+      "r1": {
+        "ops": [
+          {
+            "source": {
+              "channel_id": "a"
+            },
+            "content": {
+              "body": "summary: all good"
+            }
+          }
+        ]
+      }
+    },
     "models": {
       "a": [
         {

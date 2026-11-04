@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "discussion/a-room-moves-from-a-swarm-to-a-discussion-and-back",
-  "title": "A room holds one strategy at a time: an uninstalled Swarm leaves it to a Discussion, whose uninstall leaves it to a Swarm again, each answering as its own",
+  "title": "A room holds one strategy at a time: an uninstalled Swarm leaves it to a Discussion, whose uninstall leaves it to a Swarm again",
   "rules": [
     "§19.7",
     "§19.7.5 rule 1"

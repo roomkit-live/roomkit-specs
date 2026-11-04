@@ -104,7 +104,16 @@
             "change": "queued",
             "channel_ids": [
               "a"
-            ]
+            ],
+            "event_id": {
+              "$present": true
+            },
+            "queue": {
+              "speaking": null,
+              "queue": [
+                "a"
+              ]
+            }
           }
         },
         {
@@ -115,7 +124,14 @@
             "change": "turn_given",
             "channel_ids": [
               "a"
-            ]
+            ],
+            "event_id": {
+              "$present": true
+            },
+            "queue": {
+              "speaking": "a",
+              "queue": []
+            }
           }
         },
         {
@@ -126,7 +142,16 @@
             "change": "turn_ended",
             "channel_ids": [
               "a"
-            ]
+            ],
+            "event_id": {
+              "$absent": true
+            },
+            "queue": {
+              "speaking": null,
+              "queue": [
+                "b"
+              ]
+            }
           }
         },
         {
@@ -137,7 +162,16 @@
             "change": "queued",
             "channel_ids": [
               "b"
-            ]
+            ],
+            "event_id": {
+              "$absent": true
+            },
+            "queue": {
+              "speaking": null,
+              "queue": [
+                "b"
+              ]
+            }
           }
         },
         {
@@ -148,7 +182,14 @@
             "change": "turn_given",
             "channel_ids": [
               "b"
-            ]
+            ],
+            "event_id": {
+              "$present": true
+            },
+            "queue": {
+              "speaking": "b",
+              "queue": []
+            }
           }
         },
         {
@@ -159,7 +200,14 @@
             "change": "turn_ended",
             "channel_ids": [
               "b"
-            ]
+            ],
+            "event_id": {
+              "$absent": true
+            },
+            "queue": {
+              "speaking": null,
+              "queue": []
+            }
           }
         }
       ]

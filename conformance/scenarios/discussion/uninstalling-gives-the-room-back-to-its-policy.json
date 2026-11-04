@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "discussion/uninstalling-gives-the-room-back-to-its-policy",
-  "title": "An uninstall forgets the queue and the configuration, and the room answers by its policy again",
+  "title": "An uninstall forgets the configuration and the room answers by its policy again",
   "rules": [
     "§19.7.5 rule 1"
   ],
