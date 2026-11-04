@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "orchestration/an-install-refused-by-a-handoff-already-set-up-leaves-nothing",
-  "title": "A ConversationPipeline's or a router's install, refused for an agent whose handoff is set up already, leaves no router and no tool behind: the next message reads no stamp, the other agent gains no tool and its handoff stays free to set up",
+  "title": "A ConversationPipeline's or a router's install, refused for an agent whose handoff is set up already, in every room or in one, leaves no router and no tool behind: the next message reads no stamp, the other agent gains no tool and its handoff stays free to set up",
   "rules": [
     "§19.5",
     "§19.6"
@@ -27,6 +27,9 @@
             },
             {
               "text": "A again."
+            },
+            {
+              "text": "A once more."
             }
           ]
         }
@@ -36,6 +39,16 @@
         "type": "ai",
         "agent": {
           "role": "B"
+        },
+        "model": {
+          "rounds": []
+        }
+      },
+      {
+        "id": "c",
+        "type": "ai",
+        "agent": {
+          "role": "C"
         },
         "model": {
           "rounds": []
@@ -51,6 +64,17 @@
           },
           {
             "channel_id": "a"
+          }
+        ]
+      },
+      {
+        "id": "r2",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "c"
           }
         ]
       }
@@ -156,6 +180,55 @@
     },
     {
       "call": "setup_handoff",
+      "agent_id": "c",
+      "handler": "h",
+      "room_id": "r2"
+    },
+    {
+      "call": "install_pipeline",
+      "handler": "p",
+      "stages": [
+        {
+          "phase": "intake",
+          "agent_id": "a",
+          "next": "review"
+        },
+        {
+          "phase": "review",
+          "agent_id": "b"
+        }
+      ],
+      "agents": [
+        "a",
+        "c"
+      ],
+      "expect": {
+        "error": "invalid_argument"
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "r1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "u1",
+        "content": {
+          "type": "text",
+          "body": "Three."
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "setup_handoff",
       "agent_id": "a",
       "handler": "h"
     }
@@ -202,11 +275,41 @@
             "type": "text",
             "body": "A again."
           }
+        },
+        {
+          "content": {
+            "type": "text",
+            "body": "Three."
+          },
+          "metadata": {
+            "_routed_to": {
+              "$absent": true
+            }
+          }
+        },
+        {
+          "source": {
+            "channel_id": "a"
+          },
+          "content": {
+            "type": "text",
+            "body": "A once more."
+          }
         }
       ]
     },
     "hooks": {
       "seen": [
+        {
+          "response": {
+            "channel_id": "a",
+            "declared_tools": {
+              "handoff_conversation": {
+                "$absent": true
+              }
+            }
+          }
+        },
         {
           "response": {
             "channel_id": "a",
