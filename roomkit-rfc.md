@@ -2805,7 +2805,9 @@ by the runtime:
   `<worker_output>`, `<knowledge>`, `<conversation_summary>`, `<context>` for
   content a realtime provider adds to its prompt, `<task>` for the goal or
   task an orchestration strategy copies into another model's prompt,
-  `<vision>` for what a vision provider saw, `<transcript>` for the text a
+  `<vision>` for what a vision provider saw, `<conversation>`,
+  `<task_context>` and `<previous_tasks>` for what a worker's description hands
+  it, Section 23, `<transcript>` for the text a
   speech model's prompt asks it to speak, `<skill>` for a skill an MCP
   server serves, Section 24.7, `<server_instructions>` for what an MCP server
   publishes on using its tools, Section 21.2), where any
@@ -18842,9 +18844,10 @@ DelegatedTaskResult
 
 ### 23.3 Delegation Protocol
 
-When `delegate(room_id, agent_id, task, notify, post_status = true, brief = null,
-conversation = 0, hand_back = "relay", require_structured_result = false,
-max_result_retries = 3, result_tool = null)` is called:
+When `delegate(room_id, agent_id, task, notify, context = null, post_status = true,
+brief = null, conversation = 0, hand_back = "relay",
+require_structured_result = false, max_result_retries = 3, result_tool = null)` is
+called:
 
 1. Create a **child room** linked to the parent room, in the parent room's
    organization (Section 17.2). A tool, a hook or a provider acting in the
@@ -18853,6 +18856,11 @@ max_result_retries = 3, result_tool = null)` is called:
    the parent's messages the description carries (step 4), run outside any
    tenant. A read scoped to the parent's organization finds the child room,
    and one scoped to another does not.
+   The child room's metadata keeps the caller's `context` as `task_context`,
+   for the host's hooks and tools. No model reads it, so a host's data (a
+   requester's address) reaches no vendor through it: what the worker should
+   read goes in the `task` or the `brief`. On a `delegate_task` call (Section
+   23.4) a model wrote it: a hook that reads it reads a model's text.
 2. Attach the specified agent as an INTELLIGENCE channel in the child room.
 3. Share the channels the caller names from the parent, each with its
    parent binding's permissions (§7.5 rule 6).
@@ -18868,9 +18876,11 @@ max_result_retries = 3, result_tool = null)` is called:
    the `brief` is what the worker is told, which may say more (how to work,
    what to report) and never reaches the parent room. With `conversation`
    above 0, the description also carries the parent room's last
-   `conversation` messages that the notified channel may read (Section 7.5),
+   `conversation` messages that the notified channel may read (§7.5 rule 1, its
+   access included: a channel that does not read is handed none),
    oldest first, each under the label the transcript gives its author and
-   quoted as Section 6.4 quotes a text from outside, set apart as data: a
+   quoted as Section 6.4 quotes a text from outside, read for the block's tags
+   before it is written as JSON, set apart as data: a
    worker asked to look into what the room is talking about reads what was
    said, which its child room, new and empty, does not hold.
 5. The agent processes the task and generates a response. When no transport
@@ -19125,10 +19135,79 @@ Implementations SHOULD provide helpers for AI-driven delegation:
 - `setup_delegation(agent, handler, tool)` — Wires the delegation tool into
   an AI channel, connecting it to the TaskRunner. It takes no room: the tool
   is declared wherever the agent serves. `tool` (default null) replaces the
-  default definition; setting it up twice on a channel is refused.
+  default definition; setting it up twice on a channel is refused. A tool
+  built from a list of agents holds the model to it: a call naming another is
+  answered with an error and starts nothing, since a list a model can ignore
+  holds nothing. A host's own call on the handler is not held to it.
 
 - `setup_realtime_delegation(channel, handler, tool)` — The same for a
   realtime voice channel, whose sessions declare the tool.
+
+- `delegate_task` — The tool those helpers serve, through a handler
+  (`DelegateHandler(kit, notify = null, default_share_channels = null,
+  delivery_strategy = null, cache = null, serialize_per_room = false,
+  max_conversation = 0)`). Its arguments are
+  `agent` and `task`, then `context` and `share_channels`, and `conversation`
+  when the handler allows it. A call delegates (Section 23.3) with the `task`
+  as its model wrote it, the label the parent room's records name the task by,
+  and notifies the handler's `notify`, or else the agent that called. The
+  worker reads the call's `brief`: the `task`, then each of the following that
+  the call has, in a block of its own as Section 6.4 sets a text from outside
+  apart:
+
+  1. `context`, which a model wrote and which may hold what a tool returned, in
+     `<task_context>`, as JSON on one line (separators `, ` and
+     `: `, its keys in their order), bounded at 4,000 characters. Each of its
+     strings, an object's keys included, has every double quote mark but `"` made
+     a single one and the marks that reorder text dropped, as a quote has (Section
+     6.4), and is read for the block's tags, before it is written as JSON, which
+     would hide a line break or a slash as an escape. A value that is no object, which
+     a model may send, is kept under `context`; null, an empty string, an empty
+     list and an empty object are none, and `0` and `false` are values. The
+     child room's `task_context` holds it.
+  2. The agent's previous tasks of the room, with a cache, in
+     `<previous_tasks>`: what its last three completed tasks asked, newest first,
+     each once, each a JSON string on its line, bounded at 600 characters, read
+     for the block's tags as `context` is, which `task_context` also holds as
+     `previous_tasks`. Another agent's tasks stay out: they may quote what this
+     one may not read. A task the host itself wrote into the cache is any
+     agent's.
+  3. The room's last `conversation` messages, as Section 23.3 step 4 gives them
+     but those both the agent that called and the notified channel may read: a
+     model chooses what it hands over, and hands over nothing it may not read
+     itself (§7.5 rule 1), and the worker's result goes back to the notified
+     channel.
+
+  An intelligence channel shared into the child room, the host's
+  `default_share_channels` included, stops 2 and 3, what the framework rebuilds:
+  it reads the description, and may read less than the agent that called (§7.5
+  rule 8). It does not stop `context`, which the model wrote in this call as it
+  wrote the `task` that channel reads too. A shared transport stops nothing.
+
+  `max_conversation` is the host's, since the model chooses the worker, which
+  may be another vendor's or hold another workspace. With 0, the tool declares
+  no `conversation` argument, whatever definition the host gave it, and nothing
+  is handed over. Above 0, it declares one bounded by it, and the handler holds
+  every call to it whatever the tool declares: a larger value reads as the
+  maximum; a negative one, or one JSON Schema does not read as an integer (`1.0`
+  is one), as none.
+
+  A cache (RoomKit: `CompletedTaskCache(ttl_seconds = 300)`) keeps a completed
+  task for its time to live, once its end is known (RoomKit: a task running past
+  600 s is not kept). It answers a repeat
+  with what its task returned, the task's receipt with its `result`,
+  `status = completed` and `from_cache = true`, and starts nothing. A repeat is
+  a call by the same agent to the same worker in the same room with the same
+  `task` (its case and outer spaces aside) and the same `context` (the order of
+  its keys aside), asking for no conversation, of a task that completed: another
+  `context` is other work, a task that failed or was cancelled runs again, and
+  another agent's call runs, what the first's task returned possibly holding what
+  that agent passed or may read. A task the host itself wrote into the cache
+  answers any agent. A call asking
+  for the conversation always runs, and what it returned answers no later call,
+  since it holds for the room as it stood; its task still counts among the agent's
+  previous tasks. With `serialize_per_room`, a room's calls delegate one at a
+  time.
 
 - `task_status` — A tool an agent can be given on its own, independently of
   the delegation helpers. It answers with the tasks posted on the StatusBus for
