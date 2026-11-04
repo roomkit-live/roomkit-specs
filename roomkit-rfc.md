@@ -2456,6 +2456,28 @@ answer, when an anti-loop guard stops a model that keeps repeating a refused
 call, keeps the round's declaration and tells the model that no further call
 will run: none of that round's calls runs, and the turn ends `force_stopped`.
 
+**The anti-loop guard.** A small model can re-issue one call round after round and
+burn the whole turn without answering. Within one turn, an implementation counts
+each call by its tool's name and its arguments, whatever the order of their keys,
+and refuses the third call with the same arguments before it runs, in words that
+say so, the outcome a refusal (Section 9.3). A tool the channel keeps for itself
+that reads what cannot change within the turn (`find_tools`, `list_tools`) is
+refused at its second, whether or not a search hides anything; under the channel's
+own `tool_search` off, those names are any tool's. A call past its gate is counted
+on the arguments it would run with, once repaired and once `BEFORE_TOOL_USE` left
+them. A call its gate refuses is counted on the arguments the model wrote, and past
+the limit the model reads the guard's words in place of the gate's. A model that
+re-issues a refused call three times past the limit is force-stopped, the forced
+round above.
+
+A model that varies its arguments never reaches that limit, so the guard also tells
+it, and never refuses: from the third time one tool answers a call past its gate
+with the same text in a turn, what the model reads of it, and the call's row with
+it, carries a note saying the answer is settled, with how many times it came. The note
+compares what the call answered, a failure's words too; the tool's observers read
+its answer without the note, what a gate refused is never noted, nor is the guard's
+own refusal, and a result of parts a model that sees reads is not compared.
+
 **Between two rounds.** `AFTER_TOOL_ROUND` fires after each round in which the
 channel ran at least one call, once that round's results are in and before the
 next round is built: not after a round cancelled before its calls ran, nor after
