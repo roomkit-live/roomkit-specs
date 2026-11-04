@@ -50,6 +50,13 @@
           }
         ]
       }
+    ],
+    "hooks": [
+      {
+        "name": "report",
+        "trigger": "on_ai_response",
+        "execution": "async"
+      }
     ]
   },
   "steps": [
@@ -76,6 +83,17 @@
     }
   ],
   "expect": {
+    "hooks": {
+      "report": [
+        {
+          "trigger": "on_ai_response",
+          "room_id": "room-1",
+          "response": {
+            "loop_end_reason": "completed"
+          }
+        }
+      ]
+    },
     "models": {
       "agent": [
         {
