@@ -6906,7 +6906,8 @@ The router is given the organization the caller acts for and the sender's
 identity, which the framework reads once per message before the first route,
 scoped to that organization (`resolve_identity`, §14.1, §17.2), so that the
 router and the check made when the sender is recorded (§10.1 step 2) name
-the sender alike; a message with no address reads none. The default strategy
+the sender alike; a message with no address reads none, and its router is told
+null for its sender. The default strategy
 searches that organization's rooms only, every room when the call names
 none. A router answers a room id, or null; the id is held to step 2's rules
 whoever gave it: another organization's room fails the message, and a room
