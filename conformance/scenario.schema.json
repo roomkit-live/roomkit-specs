@@ -3746,6 +3746,13 @@
             "$ref": "#/$defs/model_round"
           }
         },
+        "chat_dialect": {
+          "description": "The implementation's Chat Completions rendering each of the model's requests is also written through, kept as `chat_messages` under `models` (§6.4, what a provider renders of a replayed round's reasoning): `openai`, a generic server's, or `deepseek`, DeepSeek's. Not rendered when absent. The model still answers from its rounds.",
+          "enum": [
+            "openai",
+            "deepseek"
+          ]
+        },
         "vision": {
           "description": "Whether the model sees images (§6.4, a provider's supports_vision): false by default.",
           "type": "boolean"
