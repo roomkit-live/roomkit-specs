@@ -1279,7 +1279,8 @@ binding when routing reads such a value, with the value's type and never the
 value, which may be a person's address. Routing and the record of a sender
 compare a recipient, and a chat, in its written form: the integer `12345` and
 the string `"12345"` are one address. The framework writes the addresses it
-records as strings, a chat id included. A chat message is its chat's: it is
+records as strings, a chat id included. A chat message is its chat's, whatever
+its sender, an empty or blank one included: it is
 routed by the chat its chat key carries, and a room opened for it binds the channel naming the chat
 as correspondent and recipient (§10.1 step 2). The chat under a chat key
 takes the recipient's rule, no value and a value that is not a recipient
@@ -1288,9 +1289,9 @@ not carry its chat. On a channel
 that carries private chats and groups, a message that carries its group under
 the key is its group's, any other its sender's. On a channel whose replies go
 to a chat only, a message that does not carry its chat has no address: it
-records no one, and a room opened for it names neither correspondent nor
-recipient, so its deliveries are refused `no_recipient` until the integrator
-names one. Its author is the message's sender either way.
+records no one, and a room routing opens for it names no recipient and no
+sender (§10.4), so its deliveries are refused `no_recipient` until the
+integrator names one. Its author is the message's sender either way.
 
 A channel addressed by phone number compares and stores numbers in one form,
 E.164 (`+15550000001`). The inbound sender, a binding's correspondent and
@@ -5749,6 +5750,11 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 
 2. ROUTE TO ROOM
    ├── If room_id provided → use it
+   ├── Otherwise, when the message's sender is the framework's own sender
+   │   `system` (§10.4), or the address it would be routed by is, on a chat
+   │   channel the chat's → refused, nothing read, opened or written and
+   │   the router not asked:
+   │   InboundResult(blocked=true, reason=reserved_sender)
    ├── Otherwise → read the sender's identity once, scoped to the
    │   caller's organization (resolve_identity, §14.1, §17.2), then call
    │   InboundRoomRouter.route(channel_id, channel_type, sender_id,
@@ -5793,10 +5799,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │       │   the lock finds it no longer admits them by step 3's
    │       │   conditions (§10.4), whichever strategy chose it, unless the
    │       │   sender is a participant reached through the channel, which
-   │       │   spares this last condition only. The framework's own sender
-   │       │   (`system`) and a message with no address are no one's
-   │       │   correspondent; on a binding naming no one, a message with no
-   │       │   address is held to step 3's conditions all the same. Nothing is
+   │       │   spares this last condition only. A message with no address
+   │       │   is no one's correspondent; on a binding naming no one, step 3
+   │       │   admits it through a `group` binding only (§10.4). Nothing is
    │       │   written, the lock is released, and
    │       │   the message is routed once more, its identity not read again;
    │       │   a second answer that is not the message's, like no answer,
@@ -5819,8 +5824,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │           and emits no framework event, and is made whatever the
    │           binding's access or mute: routing decides the conversation,
    │           the permissions what becomes of the message (step 11). A
-   │           `group` binding is never written, and the framework's own
-   │           sender and a message with no address record no one
+   │           `group` binding is never written, and a message with no
+   │           address records no one; the binding this step makes for it
+   │           names no sender (§10.4)
    ├── The reentry budget, for a message a room's deliveries or turns
    │   send that step 1 did not charge (§9.5.1, The room's work outside
    │   the lock), once its room is known:
@@ -5846,7 +5852,7 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
        each within its timeout (§9.3), their context the room as created,
        with no binding of the channel; emit `room_created`; then, under the
        room lock, attach the channel, its binding naming the sender
-       (`participant_id = sender_id`, §5.7) and, on a transport, addressing
+       (`participant_id = sender_id`, §5.7; with no address, §10.4) and, on a transport, addressing
        replies where the message came from (the sender's address, or the
        chat it was posted in, §5.7), unless a binding of it exists by then
        (a hook's included, §7.5 rule 7) or a creation hook closed the room
@@ -6903,7 +6909,12 @@ the sender alike; a message with no address reads none. The default strategy
 searches that organization's rooms only, every room when the call names
 none. A router answers a room id, or null; the id is held to step 2's rules
 whoever gave it: another organization's room fails the message, and a room
-missing from the store is created with the id.
+missing from the store is created with the id. A custom router's answer is the
+host's decision, as a provided `room_id` is: a room that binds the channel is
+held to the conditions below under the lock, and one that does not has the
+channel attached, whoever writes (§10.1 step 2), which is how a new channel joins
+a conversation. A router SHOULD NOT route on a field the sender chooses without
+authenticating it.
 
 **Default routing strategy:**
 
@@ -6973,19 +6984,35 @@ When the sender is recorded under the lock (§10.1 step 2), a binding naming
 the identity of a participant reached through the channel who is the sender,
 as an advisor's resolution names it (§5.5), names the sender too. A message the framework writes
 itself, under the sender `system` (a `deliver()` to the room, an
-orchestration cue), names no correspondent: it is never recorded on a
-binding, and a message routed under that sender is never admitted by step 3
-into a room whose binding is not `group`. The framework names the room it
-writes to, and a sender borrowing the name, on a channel whose senders choose
-their id, gets a room of its own. A member added under an id that
+orchestration cue), names the room it writes to and no correspondent: it is
+never recorded on a binding, and it counts as no one heard. A message that
+would be routed by that name is therefore a sender borrowing it, on a channel
+whose senders choose their id, and it is refused before it is routed (§10.1
+step 2): nothing is written and no room opened. Under that sender a message
+naming its room is the caller's, and enters. No sender is known by that name:
+a router asked about it directly finds nothing at step 1, and step 3 admits it
+through a `group` binding only; an identity with that id names no sender, a
+channel's form does not rewrite the name on a binding, and a delivery status
+for it finds no room. A member added under an id that
 is neither the address nor a resolvable identity cannot be told from a
 stranger, so the room is closed to step 3: its correspondent's messages are
 routed by `room_id`, or the address is linked to the identity
 (`link_address`, §14.1), unless the binding's recipient names them (§5.7),
 in which case step 1 finds them through it.
 
-A message with no sender address is held to the same conditions, so it is
-admitted only where no one is named, joined or heard on the channel.
+A message with no sender address, its id empty or blank, is admitted by step 3
+through a `group` binding only, whichever strategy chose the room: what it wrote
+counts as no one heard, so a later sender admitted to that room would read it.
+The binding step 2 makes for it when it is routed, in a room created for it or on
+a channel attached for it, names `system` as its correspondent and no
+recipient: that name is no sender's, so no one else is admitted through it. A
+binding naming no one and holding no recipient that an ON_ROOM_CREATED hook made
+in that room takes the name too. Such a room counts among the channel's rooms, so
+a room the host prepared for the channel's first sender is no longer the one room
+step 3 reads once such a message has come: no one reads the other's words, and
+the next sender gets a room of their own. Two such messages hold a room each. A
+recipient the integrator gives replaces the name, as on a binding naming no one
+(§5.7), and a room the caller named for such a message names no one.
 
 When step 3 admits a sender through a binding that names no participant and is
 not `group`, the framework records the sender on it (§10.1 step 2): step 1
