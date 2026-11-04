@@ -6431,7 +6431,9 @@ response typed `INSTRUCTION` does not re-enter (§8.5).
    own (a summary, a minimum it always keeps). Nor does it read the room's
    working memories, which are its past in another form: skills activated in
    the room, the room's plan, the room's background tasks, and the rounds of
-   tool calls its earlier turns made there, with their results. The channel's own system
+   tool calls its earlier turns made there, with their results: none of it reaches this
+   turn, though the record of the room's active skills is kept whole from its stored rows
+   (Section 24.4). The channel's own system
    prompt, tools and skill catalogue are unchanged. It is for a pass that must start from a
    blank page, such as a summary re-run that would otherwise read, and copy,
    its previous answer.
