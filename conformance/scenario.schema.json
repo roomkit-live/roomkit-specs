@@ -3406,9 +3406,6 @@
               "identity_id": {
                 "description": "The id of the identity the router is given, a known one.",
                 "type": "string"
-              },
-              "organization_id": {
-                "type": "string"
               }
             }
           }
