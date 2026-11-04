@@ -19424,7 +19424,9 @@ A turn that stands alone (Section 10.1.1) carries no active skill in its prompt,
 so an activation in it MUST deliver the body, the skill active or not. What it
 activates counts for the conversation all the same, with what the room's stored
 rows show activated, which the turn reads first, none of it reaching its prompt:
-the next turn that reads the room carries the instructions.
+the next turn that reads the room carries the instructions. A stored row shows
+the skill its call ran with, its `TOOL_CALL_END`'s arguments, a `BEFORE_TOOL_USE`
+rewrite included: those are the rules the model received.
 
 Tool gating (Section 21) follows the same scope: tools revealed by activating a
 skill stay revealed while the skill is active.
