@@ -196,8 +196,21 @@
         }
       ]
     },
-    "framework_events": {
-      "r1": "$any"
+    "observations": {
+      "r1": [
+        {
+          "metadata": {
+            "max_chain_depth": 3,
+            "chain_depth": 3
+          }
+        },
+        {
+          "metadata": {
+            "max_chain_depth": 3,
+            "chain_depth": 3
+          }
+        }
+      ]
     }
   }
 }
