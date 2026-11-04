@@ -351,8 +351,8 @@ scripted.
   with `gate`, each call is held at that gate until a step opens it, then
   answered so; with `declared: false`, the agent does not declare it, and
   its tool handler serves it all the same, for a hook that declares it.
-  `writes_record`: before it answers, each call writes these keys on the
-  turn's record through `current_response_metadata()` (§6.7).
+  `writes_record`: each call first writes these keys on the turn's record
+  through `current_response_metadata()` (§6.7), before a `gate` holds it.
 - `tool_policy`: a ToolPolicy's `allow` and `deny` patterns (§21.1);
   `max_tool_rounds`: the loop's bound on rounds of calls (Appendix A.9,
   default 50).
