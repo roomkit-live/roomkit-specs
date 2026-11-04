@@ -2527,7 +2527,10 @@ The calls replayed are the ones the tool memory keeps: served, failed,
 blocked; never a refusal, a call nothing served or one cancelled, nor a
 discovery or housekeeping call of the channel's own. They are the channel's
 own only, read from its stored rows (`TOOL_CALL_START`'s arguments and
-intent, `TOOL_CALL_END`'s result and outcome), so they outlive the executor. A turn
+intent, `TOOL_CALL_END`'s result and outcome), so they outlive the executor. An
+end row pairs with the start row of its turn and id, first in, first out within
+a round of that turn, so that two calls under one id each read their own result;
+a call an earlier round left without its end stays without one. A turn
 with no store to read, or whose store cannot be read, goes without them rather
 than failing.
 
