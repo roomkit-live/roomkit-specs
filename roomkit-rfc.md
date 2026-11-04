@@ -16431,6 +16431,7 @@ Each room MAY have a `ConversationState` stored in room metadata:
 ConversationState
 ├── phase: string | null                    # Current conversation phase ("triage", "specialist")
 ├── active_agent_id: string | null          # Agent currently handling the conversation
+├── human_hold: bool                        # Held for a human (Section 19.6)
 ├── language: string | null                 # Detected participant language
 └── metadata: map<string, any>              # Custom state (intent, escalation level, etc.)
 ```
@@ -16629,6 +16630,12 @@ RoutingConditions
    deployments that need it most. The policy table in Section 19.3.1 describes
    solicitation, and it is not narrowed by this step.
 
+   One exception: while a room is held for a human (Section 19.6), an event with
+   no address, a post naming nobody or an address naming only a transport gives
+   the supervisor no turn, since no agent acts on it and its reply would reach
+   the person who was promised a human. Beside an addressed agent, which still
+   acts, it stays.
+
 Step 0 exists because sticky affinity would otherwise swallow every explicit
 request. With the active agent consulted first, a rule written to honour an
 address is unreachable for as long as any agent holds the conversation — the
@@ -16680,7 +16687,10 @@ stage's `next` and `can_return_to`, and an agent's phase is that of the last
 stage it holds.
 
 `ConversationPipeline.install` reads every agent before it installs anything:
-one it refuses leaves no hook and no tool behind. It registers the router's
+one it refuses leaves no hook and no tool behind, as does an agent whose handoff
+is set up already, in every room or in one, an agent named twice, or one whose
+tools hold the handoff's name; a router's `install` refuses the same way. It
+registers the router's
 hook on every room's `BEFORE_BROADCAST`, at priority -100 unless given another,
 builds a `HandoffHandler` with those phases and transitions, and gives each
 agent a handoff tool naming the agents its last stage reaches, itself excluded,
@@ -16815,6 +16825,18 @@ null) replaces the default `handoff_conversation` definition; `room_id`
 (default null) declares it in that one room's turns, as a strategy installed
 in the room does (Section 19.7), and null declares it in every room the agent
 serves. Setting it up again where it is already declared is refused.
+
+**A room held for a human (normative).** A handoff to `human` sets
+`human_hold`. While it holds, the router selects no agent and stamps
+`_routed_to: _none_`, whichever rule or default would pick one, and the message
+still reaches the room's transports; an address naming an agent asks it and the
+supervisor beside it (Section 19.4, step 4). A handoff to an agent MUST
+be refused, by its tool and by the handler's own call alike, firing
+`ON_HANDOFF_REJECTED`; a further handoff to `human` is taken. Only the host's
+transition to an agent takes the hold off, with no model's tool on its way. A
+model can start a hold by itself, so `ON_HANDOFF`, naming the human, is the
+signal a host audits it by. A realtime session's call names no agent of its own:
+its caller is the room's active agent, and this paragraph does not yet hold there.
 
 **A realtime handoff needs its agents (normative).** A realtime pipeline
 reconfigures the room's sessions with the next agent's prompt on a handoff
