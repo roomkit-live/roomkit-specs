@@ -3185,9 +3185,12 @@ room, is committed and delivered as any message (Section 10.1), and the room's
 owner steers it into that turn (Section 21.3) as an `InjectMessage` of the text
 its content reads as (Section 6.6), under its speaker's label when the turn's
 history labels the room's speakers, as above: the turn
-reads it at its next stop, and no turn of its own starts. When the turn cannot
-take it (its loop is not reachable yet, or reads its queue no more) or the
-message reads as no text, the message waits a turn of its own, as above. An
+reads it at its next stop, and no turn of its own starts. A turn cut before that
+stop never reads it: the message stays in the room, and the room's next turn
+reads it. Whether the turn can take the message is decided at its delivery, not
+at its commit. When the turn cannot (its loop is not reachable yet, or reads its
+queue no more, cut or ended since the commit) or the message reads as no text,
+the message waits a turn of its own, as above. An
 edit or a delete (Section 10.3), and an event of a type that opens no turn
 (a notice, a reaction, a participant's arrival: above), is no message for
 the running turn: it waits its place as such a message does, and no turn
