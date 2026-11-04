@@ -3270,7 +3270,8 @@
         "identity_not_found",
         "verification_refused",
         "waits_for_itself",
-        "channel_failed"
+        "channel_failed",
+        "already_set_up"
       ]
     },
     "expect": {
