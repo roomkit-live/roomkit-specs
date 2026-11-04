@@ -646,6 +646,10 @@
             "$ref": "#/$defs/scripted_skill"
           }
         },
+        "skills_in_prompt": {
+          "description": "A scripted agent's skills_in_prompt (§24.3): whether its turns' system prompt lists the skills, whichever registry a turn reads; the instructions of the skills active are written either way. True when absent.",
+          "type": "boolean"
+        },
         "reasoning_effort": {
           "description": "A scripted agent's reasoning_effort (§6.7): the effort its turns ask for, under the one its binding's metadata sets; null, as absent, sets none.",
           "type": [

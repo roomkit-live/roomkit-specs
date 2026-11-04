@@ -413,7 +413,9 @@ scripted.
   `description`, `instructions` and `references` (file names and their text)
   written to a directory of its own, as a host's skills are, and discovered
   from there; `[]` is an empty registry, which is not none: a turn's registry
-  is read only on an agent given one.
+  is read only on an agent given one. `skills_in_prompt`: false leaves the
+  listing to the host, whichever registry a turn reads; the instructions of
+  the skills active are written either way (default true).
 - `retry_policy`: the agent's retry policy (§6.4): a generation its
   provider refused as worth another try (`refuses.retryable`) before it
   handed anything is tried again, at most `max_retries` times (default 3),
