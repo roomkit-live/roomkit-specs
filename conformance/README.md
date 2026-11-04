@@ -203,7 +203,9 @@ room callbacks of the setup are not compared.
     about (§11.6);
   - an `ai` channel with a `model` is a **scripted agent** instead (below).
 - `rooms`: each is created (`id`, `organization_id`, `metadata`, `timers`),
-  then each of its `bindings` attached (`channel_id`, `category`, `access`,
+  `store_metadata` then written through the store (`patch_room_metadata`), the
+  way to seed a key only the framework writes (§5.1), which `metadata` has
+  dropped, then each of its `bindings` attached (`channel_id`, `category`, `access`,
   `muted`, `visibility`, `metadata`, `participant_id`), then each of its
   `participants` stored as the room's record of them (a Participant, §5.5,
   completed with its room and `joined_at`); a `status` of `closed` or

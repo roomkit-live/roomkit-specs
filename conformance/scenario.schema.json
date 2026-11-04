@@ -774,6 +774,9 @@
         "metadata": {
           "type": "object"
         },
+        "store_metadata": {
+          "type": "object"
+        },
         "timers": {
           "$ref": "#/$defs/record"
         },
