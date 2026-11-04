@@ -1,0 +1,418 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "delivery/no-recipient-is-refused-before-any-send-and-spares-the-breaker",
+  "title": "A binding holding no recipient, a value that is no string or integer included, is refused before any send, every time, and spares the channel's breaker: another room on the channel still delivers",
+  "rules": [
+    "§5.7",
+    "§10.1"
+  ],
+  "notes": "Python: tests/test_transport_recipient.py::test_no_recipient_is_refused_before_any_send_and_spares_the_breaker.",
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport",
+        "recipient_key": "phone_number"
+      },
+      {
+        "id": "bank",
+        "type": "websocket",
+        "category": "transport"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "nobody-nothing",
+        "bindings": [
+          {
+            "channel_id": "bank"
+          },
+          {
+            "channel_id": "sms",
+            "metadata": {}
+          }
+        ]
+      },
+      {
+        "id": "nobody-true",
+        "bindings": [
+          {
+            "channel_id": "bank"
+          },
+          {
+            "channel_id": "sms",
+            "metadata": {
+              "phone_number": true
+            }
+          }
+        ]
+      },
+      {
+        "id": "nobody-blank",
+        "bindings": [
+          {
+            "channel_id": "bank"
+          },
+          {
+            "channel_id": "sms",
+            "metadata": {
+              "phone_number": "  "
+            }
+          }
+        ]
+      },
+      {
+        "id": "nobody-object",
+        "bindings": [
+          {
+            "channel_id": "bank"
+          },
+          {
+            "channel_id": "sms",
+            "metadata": {
+              "phone_number": {
+                "number": "+15550000001"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "nobody-float",
+        "bindings": [
+          {
+            "channel_id": "bank"
+          },
+          {
+            "channel_id": "sms",
+            "metadata": {
+              "phone_number": 15550000001.0
+            }
+          }
+        ]
+      },
+      {
+        "id": "alice",
+        "bindings": [
+          {
+            "channel_id": "bank"
+          },
+          {
+            "channel_id": "sms",
+            "metadata": {
+              "phone_number": "+15550000001"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "send_event",
+      "room_id": "nobody-nothing",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 0"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-nothing",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 1"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-nothing",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 2"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-nothing",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 3"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-nothing",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 4"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-nothing",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 5"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-true",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 0"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-true",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 1"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-true",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 2"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-true",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 3"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-true",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 4"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-true",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 5"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-blank",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 0"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-blank",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 1"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-blank",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 2"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-blank",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 3"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-blank",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 4"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-blank",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 5"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-object",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 0"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-object",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 1"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-object",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 2"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-object",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 3"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-object",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 4"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-object",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 5"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-float",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 0"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-float",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 1"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-float",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 2"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-float",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 3"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-float",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 4"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "nobody-float",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "notice 5"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "alice",
+      "channel_id": "bank",
+      "content": {
+        "type": "text",
+        "body": "your appointment"
+      }
+    }
+  ],
+  "expect": {
+    "deliveries": {
+      "nobody-nothing": {
+        "sms": []
+      },
+      "nobody-true": {
+        "sms": []
+      },
+      "nobody-blank": {
+        "sms": []
+      },
+      "nobody-object": {
+        "sms": []
+      },
+      "nobody-float": {
+        "sms": []
+      },
+      "alice": {
+        "sms": [
+          {
+            "id": "alice#0"
+          }
+        ]
+      }
+    }
+  }
+}

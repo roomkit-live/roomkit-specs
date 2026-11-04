@@ -1416,6 +1416,7 @@
             "handoff.handle",
             "handoff.set_language",
             "handoff.send_greeting",
+            "default_router.route",
             "conversation_pipeline",
             "install_pipeline",
             "discussion"
@@ -3374,6 +3375,39 @@
               },
               "channel_id": {
                 "description": "What allows the greeting, the handler's event channel when absent, neither saying nothing. The channel itself is read only for a realtime session: the greeting reaches the whole room.",
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "default_router.route"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "channel_type"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "channel_type": {
+                "type": "string"
+              },
+              "participant_id": {
+                "type": "string"
+              },
+              "identity_id": {
+                "description": "The id of the identity the router is given, a known one.",
+                "type": "string"
+              },
+              "organization_id": {
                 "type": "string"
               }
             }
