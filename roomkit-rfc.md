@@ -5749,7 +5749,8 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
        address records the sender with no recipient
 
 2. ROUTE TO ROOM
-   ├── If room_id provided → use it
+   ├── If room_id provided → use it: the caller's choice, which no message
+   │   carries; a host naming the room sets sender_id itself (§10.4)
    ├── Otherwise, when the message's sender is the framework's own sender
    │   `system` (§10.4), or the address it would be routed by is, on a chat
    │   channel the chat's → refused, nothing read, opened or written and
@@ -6989,7 +6990,9 @@ never recorded on a binding, and it counts as no one heard. A message that
 would be routed by that name is therefore a sender borrowing it, on a channel
 whose senders choose their id, and it is refused before it is routed (§10.1
 step 2): nothing is written and no room opened. Under that sender a message
-naming its room is the caller's, and enters. No sender is known by that name:
+naming its room is the caller's, and enters: the room is the host's choice, so
+a host naming the room MUST set the sender itself, never from what a client
+sent. No sender is known by that name:
 a router asked about it directly finds nothing at step 1, and step 3 admits it
 through a `group` binding only; an identity with that id names no sender, a
 channel's form does not rewrite the name on a binding, and a delivery status
