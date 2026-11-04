@@ -176,18 +176,14 @@
           "tool_call": {
             "tool_call_id": "t1",
             "result": "ok",
-            "refused": {
-              "$absent": true
-            }
+            "refused": false
           }
         },
         {
           "tool_call": {
             "tool_call_id": "t2",
             "result": "ok",
-            "refused": {
-              "$absent": true
-            }
+            "refused": false
           }
         },
         {
