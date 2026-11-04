@@ -89,7 +89,9 @@
         {
           "trigger": "on_ai_response",
           "room_id": "room-1",
-          "loop_end_reason": "empty_response"
+          "response": {
+            "loop_end_reason": "empty_response"
+          }
         }
       ]
     },
