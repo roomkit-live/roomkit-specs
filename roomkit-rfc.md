@@ -1217,7 +1217,11 @@ under the channel's recipient key (below); a recipient the binding already has
 is kept, and so is a value that is not a recipient (below).
 Conversely, a binding the integrator gives a recipient and no correspondent
 names that recipient as its correspondent: the room is that person's
-conversation, and the router admits no one else through it (§10.4). On a
+conversation, and the router admits no one else through it (§10.4). An attach
+and an update of a binding's metadata write the addresses the integrator gives
+in the channel's form and name the correspondent so; a `group` binding's
+recipient names no one, and a channel the implementation no longer holds writes
+nothing. On a
 transport that delivers to a chat or a conversation (Telegram, Teams,
 Discord), the chat a message was posted in is its conversation: a private chat
 is its user's, a group chat the group's, shared by all its members. The
@@ -1550,6 +1554,14 @@ declares a retry may succeed (`retryable` true when it says nothing), each
 on its own; a provider's explicit refusal declares them in its result's
 metadata. An agent's error keeps them across the turn backend (§10.6.8),
 its provider's message id and answer left out.
+
+The delivery set of a message or of an event the host sends, with a failure in
+it (§10.1 step 18), is recorded on its event (§14.3), every target's outcome,
+successes included, under the room's lock, after its delivery framework events
+and before its `AFTER_BROADCAST` hooks. A set that all succeeded writes nothing,
+nor does a response's, a greeting's, a hook's injected event's, a rerun's, or a
+set the kit's close cut (§12.10.4). A record that cannot be written is logged,
+and changes nothing the call reports.
 
 ### 5.14 Protocol Trace
 
@@ -5740,7 +5752,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │       │   sender is a participant reached through the channel, which
    │       │   spares this last condition only. The framework's own sender
    │       │   (`system`) and a message with no address are no one's
-   │       │   correspondent. Nothing is written, the lock is released, and
+   │       │   correspondent; on a binding naming no one, a message with no
+   │       │   address is held to step 3's conditions all the same. Nothing is
+   │       │   written, the lock is released, and
    │       │   the message is routed once more, its identity not read again;
    │       │   a second answer that is not the message's, like no answer,
    │       │   gives the message a new room. A routed message is never
