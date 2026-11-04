@@ -1906,12 +1906,20 @@ came, and replay them first, then the text, then the calls: a caller of
 `generate()`, since a response does not say where its blocks came, and a turn
 under a response schema, whose text is held until it is checked.
 
-A provider MUST render a replayed round's reasoning where its vendor reads it.
-DeepSeek, in thinking mode, refuses a round of the turn in progress that
-called tools without its `reasoning_content`, unless it issued the round's
-call ids itself a moment ago; the DeepSeek provider therefore sends that field
-on every round that called tools, empty when the round did not reason, and an
-answer's reasoning in it too.
+A provider MUST render a replayed round's reasoning where its vendor reads it,
+and nowhere else. DeepSeek, in thinking mode, refuses a round of the turn in
+progress that called tools without its `reasoning_content`, unless it issued
+the round's call ids itself a moment ago; the DeepSeek provider therefore sends
+that field on every round that called tools, empty when the round did not
+reason, and an answer's reasoning in it too. Cerebras reads a `reasoning` field
+on a round or an answer that reasoned, and Ollama's native API a `thinking` one.
+A Chat Completions request to any other server carries no reasoning, in no
+form: a `<think>` block in a message's text is read as words the model said, and
+a server's prompt cache does not survive it. A round that only reasoned and
+called goes back with no text, and an answer that only reasoned with an empty
+one. Only the request loses it: the round keeps its reasoning for what reads a
+round (a `BEFORE_AI_GENERATION` hook, a reader of the stream), and a reasoning
+tag in a model's output is still read out of its text.
 
 **What a provider hands the loop for a call (normative).** Every provider,
 streamed or not, hands the loop the same thing for the same call. Each call of
