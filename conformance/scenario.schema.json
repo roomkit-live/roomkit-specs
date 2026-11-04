@@ -607,6 +607,19 @@
           "type": "integer",
           "minimum": 1
         },
+        "text_coalesce_ms": {
+          "description": "A scripted agent's text_coalesce_ms (§6.4): how long its answer's text batches into one TEXT_DELTA, 0 for none; 80 when absent",
+          "type": "number"
+        },
+        "text_coalesce_chars": {
+          "description": "A scripted agent's text_coalesce_chars (§6.4): how many characters batch into one TEXT_DELTA; 256 when absent",
+          "type": "integer",
+          "minimum": 1
+        },
+        "publish_text_deltas": {
+          "description": "A scripted agent's publish_text_deltas (§6.4): whether a turn read as a delegated task's trace publishes its answer's text",
+          "type": "boolean"
+        },
         "publish_thinking_text": {
           "description": "A scripted agent's publish_thinking_text (§6.7): whether its thinking events carry the reasoning's text to the room's subscribers; false when absent, which reads its length alone.",
           "type": "boolean"
@@ -3689,6 +3702,13 @@
               "array",
               "object"
             ]
+          }
+        },
+        "text_events": {
+          "description": "Per room, a minted one's as $r1, the TEXT_DELTA ephemeral events the room's realtime is handed, in order: each {text, round, channel_id}",
+          "type": "object",
+          "additionalProperties": {
+            "type": "array"
           }
         },
         "thinking_events": {
