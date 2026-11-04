@@ -87,7 +87,9 @@
           },
           "metadata": {
             "loop_end_reason": "cancelled",
-            "ai_usage": {},
+            "ai_usage": {
+              "$absent": true
+            },
             "ai_last_usage": null,
             "ai_usage_complete": false,
             "ai_model": {
