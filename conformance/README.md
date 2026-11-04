@@ -363,8 +363,8 @@ scripted.
   model's catalogue price (§6.7, a provider's `catalog_entry().pricing`,
   Python's `ModelPricing` fields), none when absent; a `fallback_model`
   takes one too.
-  `model.chat_dialect`: the implementation's Chat Completions rendering, `openai`
-  or `deepseek`, each request is also written through, whatever the rounds
+  `model.chat_dialect`: the implementation's Chat Completions rendering, `openai`,
+  `deepseek`, `minimax` or `kimi`, each request is also written through, whatever the rounds
   answer (`models`, `chat_messages`); a dialect the implementation does not have
   fails the scenario; a `fallback_model` takes one too.
   `model.name` and `model.provider`: the names a turn's record gives as
