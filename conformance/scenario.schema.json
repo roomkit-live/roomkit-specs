@@ -1400,6 +1400,9 @@
             "start_task",
             "setup_background",
             "setup_task_tools",
+            "delegate_handler",
+            "setup_delegation",
+            "delegate.handle",
             "status.recent_text",
             "store.put_verification",
             "store.get_verification",
@@ -2642,6 +2645,120 @@
                   "string",
                   "null"
                 ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "delegate_handler"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "handler"
+            ],
+            "properties": {
+              "handler": {
+                "description": "The name the later calls give the handler.",
+                "type": "string"
+              },
+              "notify": {
+                "type": "string"
+              },
+              "default_share_channels": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "cache": {
+                "description": "The handler holds a CompletedTaskCache, of the implementation's default time to live.",
+                "type": "boolean"
+              },
+              "serialize_per_room": {
+                "type": "boolean"
+              },
+              "max_conversation": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "setup_delegation"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "agent_id",
+              "handler"
+            ],
+            "properties": {
+              "agent_id": {
+                "type": "string"
+              },
+              "handler": {
+                "type": "string"
+              },
+              "targets": {
+                "description": "Each an id and its description or null: the tool build_delegate_tool builds. Absent: the generic one.",
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  ],
+                  "minItems": 2,
+                  "maxItems": 2
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "delegate.handle"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "handler",
+              "room_id",
+              "calling_agent_id",
+              "arguments"
+            ],
+            "properties": {
+              "handler": {
+                "type": "string"
+              },
+              "room_id": {
+                "type": "string"
+              },
+              "calling_agent_id": {
+                "type": "string"
+              },
+              "arguments": {
+                "type": "object"
               }
             }
           }
