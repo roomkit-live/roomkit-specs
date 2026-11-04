@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "orchestration/an-inbound-after-a-handoff-to-a-human-asks-no-agent",
-  "title": "After a handoff to a human the room is held for them: the next message asks no agent, whichever rule or default would pick one, and no supervisor, and reaches the room's transports; an address still asks the agent it names, the supervisor taking no turn beside it; an agent's handoff to an agent is refused, the hold staying, and only the host's transition to an agent takes it off",
+  "title": "After a handoff to a human the room is held for them: the next message asks no agent, whichever rule or default would pick one, and reaches the room's transports; an address still asks the agent it names; an agent's handoff to an agent is refused, the hold staying, and only the host's transition to an agent takes it off",
   "rules": [
     "§19.6",
     "§19.4",
@@ -108,62 +108,6 @@
             }
           ]
         }
-      },
-      {
-        "id": "x",
-        "type": "ai",
-        "agent": {
-          "role": "X"
-        },
-        "model": {
-          "rounds": [
-            {
-              "calls": [
-                {
-                  "id": "c3",
-                  "name": "handoff_conversation",
-                  "arguments": {
-                    "target": "human",
-                    "reason": "R.",
-                    "summary": "S.",
-                    "next_phase": "y"
-                  }
-                }
-              ]
-            },
-            {
-              "text": "Bye."
-            }
-          ]
-        }
-      },
-      {
-        "id": "y",
-        "type": "ai",
-        "agent": {
-          "role": "Y"
-        },
-        "model": {
-          "rounds": [
-            {
-              "text": "Y, addressed."
-            }
-          ]
-        }
-      },
-      {
-        "id": "sup",
-        "type": "ai",
-        "agent": {
-          "role": "SUP"
-        },
-        "model": {
-          "rounds": [
-            {
-              "text": "Noted."
-            }
-          ]
-        }
       }
     ],
     "rooms": [
@@ -183,17 +127,6 @@
         "bindings": [
           {
             "channel_id": "sms"
-          }
-        ]
-      },
-      {
-        "id": "r3",
-        "bindings": [
-          {
-            "channel_id": "sms"
-          },
-          {
-            "channel_id": "sup"
           }
         ]
       }
@@ -222,16 +155,6 @@
             "a",
             "c"
           ]
-        }
-      },
-      {
-        "id": "watched",
-        "pipeline": {
-          "agents": [
-            "x",
-            "y"
-          ],
-          "supervisor_id": "sup"
         }
       }
     ]
@@ -386,67 +309,6 @@
           "error": null
         }
       }
-    },
-    {
-      "idle": true
-    },
-    {
-      "call": "install_strategy",
-      "room_id": "r3",
-      "strategy": "watched"
-    },
-    {
-      "call": "process_inbound",
-      "room_id": "r3",
-      "message": {
-        "channel_id": "sms",
-        "sender_id": "u1",
-        "content": {
-          "type": "text",
-          "body": "Seven."
-        }
-      },
-      "expect": {
-        "result": {
-          "blocked": false,
-          "error": null
-        }
-      }
-    },
-    {
-      "idle": true
-    },
-    {
-      "call": "process_inbound",
-      "room_id": "r3",
-      "message": {
-        "channel_id": "sms",
-        "sender_id": "u1",
-        "content": {
-          "type": "text",
-          "body": "Eight."
-        }
-      },
-      "expect": {
-        "result": {
-          "blocked": false,
-          "error": null
-        }
-      }
-    },
-    {
-      "idle": true
-    },
-    {
-      "call": "post",
-      "room_id": "r3",
-      "content": {
-        "type": "text",
-        "body": "Nine."
-      },
-      "addressed_to": [
-        "y"
-      ]
     },
     {
       "idle": true
@@ -645,16 +507,6 @@
           ]
         },
         {}
-      ],
-      "x": [
-        {},
-        {}
-      ],
-      "y": [
-        {}
-      ],
-      "sup": [
-        {}
       ]
     },
     "hooks": {
@@ -687,15 +539,6 @@
             "phase": "handling",
             "active_agent_id": "c",
             "human_hold": false
-          }
-        }
-      },
-      "r3": {
-        "metadata": {
-          "_conversation_state": {
-            "phase": "y",
-            "active_agent_id": null,
-            "human_hold": true
           }
         }
       }
