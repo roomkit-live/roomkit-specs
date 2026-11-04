@@ -1559,9 +1559,10 @@ The delivery set of a message or of an event the host sends, with a failure in
 it (§10.1 step 18), is recorded on its event (§14.3), every target's outcome,
 successes included, under the room's lock, after its delivery framework events
 and before its `AFTER_BROADCAST` hooks. A set that all succeeded writes nothing,
-nor does a response's, a greeting's, a hook's injected event's, a rerun's, or a
-set the kit's close cut (§12.10.4). A record that cannot be written is logged,
-and changes nothing the call reports.
+nor does a response's, a greeting's, a hook's injected event's or a rerun's. A
+turn the kit's close cuts leaves no outcome, and what else failed in its set is
+recorded; past the close's grace nothing is recorded (§12.10.4). A record that
+cannot be written is logged, and changes nothing the call reports.
 
 ### 5.14 Protocol Trace
 
