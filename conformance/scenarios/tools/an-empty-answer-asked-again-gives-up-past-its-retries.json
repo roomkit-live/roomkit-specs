@@ -110,21 +110,18 @@
             },
             {
               "role": "assistant",
-              "tool_calls": [
-                {
-                  "id": "c1",
-                  "name": "lookup"
-                }
-              ]
+              "text": ""
             },
             {
               "role": "tool",
-              "tool_results": [
-                {
-                  "tool_call_id": "c1",
-                  "text": "found"
-                }
-              ]
+              "text": ""
+            }
+          ],
+          "tool_results": [
+            {
+              "tool_call_id": "c1",
+              "content": "found",
+              "is_error": false
             }
           ]
         },
@@ -138,25 +135,22 @@
             },
             {
               "role": "assistant",
-              "tool_calls": [
-                {
-                  "id": "c1",
-                  "name": "lookup"
-                }
-              ]
+              "text": ""
             },
             {
               "role": "tool",
-              "tool_results": [
-                {
-                  "tool_call_id": "c1",
-                  "text": "found"
-                }
-              ]
+              "text": ""
             },
             {
               "role": "user",
               "text": "You called tools and already have their results above. Now write your final answer to the user in plain text. Do not call any more tools."
+            }
+          ],
+          "tool_results": [
+            {
+              "tool_call_id": "c1",
+              "content": "found",
+              "is_error": false
             }
           ]
         }

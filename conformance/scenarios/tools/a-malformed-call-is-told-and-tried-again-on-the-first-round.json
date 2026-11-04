@@ -96,20 +96,20 @@
         },
         {
           "index": 1,
+          "type": "tool_call_start"
+        },
+        {
+          "index": 2,
+          "type": "tool_call_end"
+        },
+        {
+          "index": 3,
           "content": {
             "body": "Done"
           },
           "metadata": {
             "loop_end_reason": "completed"
           }
-        },
-        {
-          "index": 2,
-          "type": "tool_call_start"
-        },
-        {
-          "index": 3,
-          "type": "tool_call_end"
         }
       ]
     },
@@ -153,21 +153,18 @@
             },
             {
               "role": "assistant",
-              "tool_calls": [
-                {
-                  "id": "c1",
-                  "name": "lookup"
-                }
-              ]
+              "text": ""
             },
             {
               "role": "tool",
-              "tool_results": [
-                {
-                  "tool_call_id": "c1",
-                  "text": "found"
-                }
-              ]
+              "text": ""
+            }
+          ],
+          "tool_results": [
+            {
+              "tool_call_id": "c1",
+              "content": "found",
+              "is_error": false
             }
           ]
         }
