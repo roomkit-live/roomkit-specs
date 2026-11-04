@@ -1373,7 +1373,8 @@
             "handoff.handle",
             "handoff.set_language",
             "conversation_pipeline",
-            "install_pipeline"
+            "install_pipeline",
+            "discussion"
           ]
         },
         "organization_id": {
@@ -3045,6 +3046,68 @@
               },
               "hook_priority": {
                 "type": "integer"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "discussion"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "agents"
+            ],
+            "properties": {
+              "agents": {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "$ref": "#/$defs/discussion_live_agent"
+                    }
+                  ]
+                }
+              },
+              "handles": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "people": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "addressed_only": {
+                "type": "boolean"
+              },
+              "everyone": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "max_turns": {
+                "type": "integer"
+              },
+              "max_depth": {
+                "type": "integer"
+              },
+              "silent_token": {
+                "type": "string"
+              },
+              "rules": {
+                "type": "string"
               }
             }
           }
@@ -5321,6 +5384,22 @@
             "string",
             "null"
           ]
+        }
+      }
+    },
+    "discussion_live_agent": {
+      "type": "object",
+      "description": "An agent given live to a discussion, not registered on the kit: its channel id and its display name.",
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
         }
       }
     },
