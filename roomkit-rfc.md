@@ -1923,9 +1923,9 @@ and nowhere else. DeepSeek, in thinking mode, refuses a round of the turn in
 progress that called tools without its `reasoning_content`, unless it issued
 the round's call ids itself a moment ago; the DeepSeek provider therefore sends
 that field on every round that called tools, empty when the round did not
-reason, and an answer's reasoning in it too. Kimi's error reference gives a 400
-for a round that called tools without `reasoning_content`, and a gateway's code
-(LiteLLM's) reads an empty one as missing: the Kimi provider sends that field on
+reason, and an answer's reasoning in it too. Kimi requires `reasoning_content`
+on a round that called tools (Kimi Code's error reference names the 400), and a
+gateway's code (LiteLLM's) reads an empty one as missing: the Kimi provider sends that field on
 every round that called tools, a single space when the round has no reasoning,
 as every round of an earlier turn has none, and an answer's reasoning in it too.
 MiniMax asks for its reasoning back in a tool loop and documents no refusal: the
