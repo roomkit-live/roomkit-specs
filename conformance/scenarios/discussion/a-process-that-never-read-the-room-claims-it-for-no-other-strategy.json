@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "discussion/a-process-that-never-read-the-room-claims-it-for-no-other-strategy",
-  "title": "A claim reads the room as an install does: a discussion another process stored is the room's in a process that never read it, and another strategy is refused, the organization named or not",
+  "title": "A claim or an install reads the room first: a discussion another process stored is the room's in a process that never read it, and another strategy is refused, the organization named or not",
   "rules": [
     "§19.7.5 rule 16",
     "§19.7"
@@ -75,6 +75,16 @@
       "room_id": "r1",
       "strategy": "other",
       "kit": "p2",
+      "expect": {
+        "error": "invalid_argument"
+      }
+    },
+    {
+      "call": "install_strategy",
+      "kit": "p2",
+      "room_id": "r1",
+      "strategy": "other",
+      "organization_id": "org-a",
       "expect": {
         "error": "invalid_argument"
       }
