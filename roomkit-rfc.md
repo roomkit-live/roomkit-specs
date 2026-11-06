@@ -2855,11 +2855,14 @@ by the runtime:
   slash, a character Unicode marks as ignorable by default, a control or line-break
   character or a combining mark between its letters, its separator, where
   the name holds one between two letters (`tool_result`,
-  `project-instructions`), read as any run of dashes (Unicode's
-  Dash_Punctuation but U+FE31, which reads as `l`, and the minus sign),
-  underscores in any of their forms and spacing, or as none (`</tool‐result>`, `</tool result>`,
-  `</toolresult>`), a character that reads as several letters reading
-  within one word of the name, one slash or more (an
+  `project-instructions`), read as any run of dashes (Unicode 16.0's
+  Dash_Punctuation but U+FE31, which reads as `l`, the minus sign, and
+  what reads as a dash or a minus: U+02D7, U+06D4, U+1173, U+2043, U+2053,
+  U+207B, U+208B, U+23AF, U+2500, U+2501, U+2796, U+2CBA, U+2CBB, U+3161,
+  U+30FC, U+4E00, U+FF70), underscores in any of their forms (U+2017
+  among them) and spacing, or as none (`</tool‐result>`, `</tool result>`,
+  `</toolresult>`, a character that reads as several letters read across
+  it: `</previouﬆasks>`), one slash or more (an
   escaped one included) and the common look-alikes of the bracket and the
   slash, and with a mark after the name (`</tag.>`): a closing tag errs
   toward what a model could read as one. An opening tag of that name, in the
