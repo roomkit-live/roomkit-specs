@@ -674,6 +674,13 @@
             "null"
           ]
         },
+        "response_schema": {
+          "description": "A scripted agent's response_schema (§6.7, Appendix A.9): the JSON Schema each turn's answer must satisfy, under the one its binding's metadata or its config_provider sets; null, as absent, sets none.",
+          "type": [
+            "object",
+            "null"
+          ]
+        },
         "retry_policy": {
           "description": "A scripted agent's retry_policy (§6.4, a generation's retries): how many times a generation its provider refused as worth another try, before it handed anything, is tried again, each delay `base_delay_ms` times `exponential_base` to the attempt, at most `max_delay_ms`. No retry when absent.",
           "type": "object",
@@ -3904,7 +3911,7 @@
           }
         },
         "models": {
-          "description": "Per scripted agent, each generation's request as the model received it, in order: the `messages` it carries, each `{role, text, parts}` (`parts` its text and image parts in order, each `{text}` or `{image, mime_type}`, null for a text content), the `tool_results`, each `{tool_call_id, name, content, is_error}` (`name` the tool of its call, `content` a text, or a result's text and image parts in order, written as `parts`), its `system_prompt`, its `temperature` and `max_tokens` (§6.4), its `reasoning_effort`, `thinking_budget` and `enable_thinking` (§6.7), and the names of the `tools` it declares, in order.",
+          "description": "Per scripted agent, each generation's request as the model received it, in order: the `messages` it carries, each `{role, text, parts}` (`parts` its text and image parts in order, each `{text}` or `{image, mime_type}`, null for a text content), the `tool_results`, each `{tool_call_id, name, content, is_error}` (`name` the tool of its call, `content` a text, or a result's text and image parts in order, written as `parts`), its `system_prompt`, its `temperature` and `max_tokens` (§6.4), its `reasoning_effort`, `thinking_budget` and `enable_thinking` (§6.7), its `response_schema`, null for none (§6.7), and the names of the `tools` it declares, in order.",
           "type": "object",
           "additionalProperties": {
             "type": [
@@ -4006,6 +4013,14 @@
         },
         "vision": {
           "description": "Whether the model sees images (§6.4, a provider's supports_vision): false by default.",
+          "type": "boolean"
+        },
+        "response_schema": {
+          "description": "Whether the model takes a response schema (§6.7, a provider's supports_response_schema): false by default. The model then keeps the provider's contract, as the implementation's mock provider does: a request under a schema it cannot take is refused before it is made, unsupported, and no request is kept; a round that calls no tool and does not end on a call its provider could not hand over is checked, a finish_reason of refusal refused, one that ran out of room truncated, any other text not the JSON document the schema asks for invalid_json; a streamed round's check comes before its done event, which the error replaces.",
+          "type": "boolean"
+        },
+        "response_schema_with_tools": {
+          "description": "Whether the model takes a response schema beside tools (§6.7, a provider's supports_response_schema_with_tools): false by default.",
           "type": "boolean"
         },
         "pricing": {
@@ -4371,6 +4386,12 @@
         "reasoning_effort": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "response_schema": {
+          "type": [
+            "object",
             "null"
           ]
         },

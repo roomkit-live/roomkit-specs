@@ -359,7 +359,18 @@ scripted.
   call's `metadata`: provider-owned data, replayed with it (§6.4).
   `gate` holds the round at that gate, before it writes anything, until a
   step opens it. `model.vision`: whether the model sees images (§6.4, a
-  provider's `supports_vision`), false by default. `model.pricing`: the
+  provider's `supports_vision`), false by default. `model.response_schema`
+  and `model.response_schema_with_tools`: whether the model takes a response
+  schema, and one beside tools (§6.7, a provider's `supports_response_schema`
+  and `supports_response_schema_with_tools`), false by default; the model then
+  keeps the provider's contract as the implementation's mock provider does: a
+  request it cannot take under a schema is refused before it is made
+  (`unsupported`), and no request is kept; a round that calls no tool, and
+  does not end on a call its provider could not hand over, is checked: a
+  `finish_reason` of `refusal` is refused, one that ran out of room is
+  `truncated`, any other text not the JSON document the schema asks for is
+  `invalid_json`, a streamed round's check coming before its done event,
+  which the error replaces. `model.pricing`: the
   model's catalogue price (§6.7, a provider's `catalog_entry().pricing`,
   Python's `ModelPricing` fields), none when absent; a `fallback_model`
   takes one too.
@@ -402,6 +413,9 @@ scripted.
   `verified`), the costs added up; a model with no `pricing` refuses it.
 - `reasoning_effort`: the effort the agent's turns ask for (§6.7), under
   the one its binding's metadata sets (`null` there keeps the agent's).
+- `response_schema`: the JSON Schema each of the agent's turns answers in
+  (§6.7), under the one its binding's metadata or its `config_provider`
+  sets (Appendix A.9, per-turn settings); none when absent.
 - `system_prompt`, `temperature`, `max_tokens`, `thinking_budget` and
   `enable_thinking`: the agent's own settings (§6.4, §6.7), each under the
   one its binding's metadata or its `config_provider` sets (Appendix A.9,
@@ -774,7 +788,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `observations`, `tasks` | Per room, the stored side effects |
 | `actions` | Per action label, the outcomes of its runs, in the order they ended |
 | `ai_events` | Per room, the framework events of an AI channel's turn (§8.2, Level 1): `before_ai_generation` and `ai_response`, in emission order, matched as `framework_events`, which does not hold them |
-| `models` | Per scripted agent, each generation's request as its model received it, in order: the `messages` it carries, each `{role, text, parts, round}`, `text` its text parts joined (empty for a message with none, a tool's result among them), `parts` its text and image parts in order, each `{"text": ...}` or `{"image": url, "mime_type": ...}`, null for a message whose content is a text, `round` its reasoning, text and call parts in order, each `{"thinking": ..., "signature": ..., "redacted": ...}`, `{"text": ...}` or `{"call": id, "arguments": ..., "metadata": ...}`, null for a message whose content is a text, and the `tool_results`, each `{tool_call_id, name, content, is_error}`, `name` the tool of its call, `content` as the model reads it (a text, or a result's text and image parts in order, written as `parts` are), `is_error` whether it reads the call as failed, its `system_prompt`, its `temperature` and `max_tokens`, its `reasoning_effort`, `thinking_budget` and `enable_thinking`, the `tools` it declares, by name: each one's position in the declaration, so that a scenario names those it asserts, declared or `$absent`, and, for a model with a `chat_dialect`, `chat_messages`: the request as that rendering writes it on the wire, its system prompt first when it has one, each message's `role`, `content`, `tool_calls`, `tool_call_id` and its dialect's reasoning field |
+| `models` | Per scripted agent, each generation's request as its model received it, in order: the `messages` it carries, each `{role, text, parts, round}`, `text` its text parts joined (empty for a message with none, a tool's result among them), `parts` its text and image parts in order, each `{"text": ...}` or `{"image": url, "mime_type": ...}`, null for a message whose content is a text, `round` its reasoning, text and call parts in order, each `{"thinking": ..., "signature": ..., "redacted": ...}`, `{"text": ...}` or `{"call": id, "arguments": ..., "metadata": ...}`, null for a message whose content is a text, and the `tool_results`, each `{tool_call_id, name, content, is_error}`, `name` the tool of its call, `content` as the model reads it (a text, or a result's text and image parts in order, written as `parts` are), `is_error` whether it reads the call as failed, its `system_prompt`, its `temperature` and `max_tokens`, its `reasoning_effort`, `thinking_budget` and `enable_thinking`, its `response_schema` (null for none), the `tools` it declares, by name: each one's position in the declaration, so that a scenario names those it asserts, declared or `$absent`, and, for a model with a `chat_dialect`, `chat_messages`: the request as that rendering writes it on the wire, its system prompt first when it has one, each message's `role`, `content`, `tool_calls`, `tool_call_id` and its dialect's reasoning field |
 | `lifecycle` | Per room, the lifecycle records (§5.1) in index order, when the implementation writes them: an implementation that writes none passes. It says which changes write one, and which write none (a change that changes nothing, §7.2) |
 | `participants` | Per room, the participants the store holds (§5.5), in the store's order |
 | `resolver` | The scripted resolver's calls, in order |
