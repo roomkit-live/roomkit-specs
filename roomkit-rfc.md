@@ -2617,7 +2617,9 @@ provider refused would fail every later turn. The content is refused when the
 turn's first request fails, before anything of it streamed, on a provider
 error that is not retryable and is no authentication, payment, permission,
 missing model or rate limit (HTTP 401, 402, 403, 404 or 429): a later round, or
-a stream already under way, shows the images were taken. Each label names its call as the input names a call (below), each
+a stream already under way, shows the images were taken. A provider's refusal
+of a response schema outside the portable subset, before any request (Section
+6.7), is no refusal of the content. Each label names its call as the input names a call (below), each
 copy of a runtime mark replaced, and the images count in what the turn
 measures before its history (Section 20). A model that does not see reads the
 notes alone. A
@@ -3692,7 +3694,10 @@ string all the same, and turning it into a typed value is the caller's work.
 The schema MUST stay within the portable subset below, the one every provider
 that supports response schemas accepts. An implementation MUST refuse a schema
 outside it when the context is built or the field assigned, before any provider
-is called.
+is called. Where its language runs no check as a field is assigned, it refuses
+one where the channel takes it (its own, a binding's, a turn configuration's),
+before the model is asked, and one written on a context by hand or by a
+`BEFORE_AI_GENERATION` hook in the provider, before any request.
 
 | Keyword | Rule |
 |---|---|
@@ -7809,7 +7814,8 @@ Section 23.4), which a host attaches on the owner, to the channel's
 declaration (§10.6.2), never through the executor's factory. The owner lists
 them in the request's
 `owner_tools`, and the executor's channel declares them to its model with its
-other tools. Their gate (`BEFORE_TOOL_USE`) and their report (`ON_TOOL_CALL`)
+other tools, in the order the request lists them, the order the owner set
+them up, whether a tool's call waits by design or is bounded. Their gate (`BEFORE_TOOL_USE`) and their report (`ON_TOOL_CALL`)
 run on the executor, as for every call of the turn; only the handler runs on
 the owner:
 
