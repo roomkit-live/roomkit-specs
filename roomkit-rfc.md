@@ -19173,7 +19173,8 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   default definition; setting it up twice on a channel is refused. A tool
   built from a list of agents holds the model to it: a call naming another is
   answered with an error and starts nothing, since a list a model can ignore
-  holds nothing. A host's own call on the handler is not held to it.
+  holds nothing; a tool whose list of agents is no list is refused. A host's own
+  call on the handler is not held to it.
 
 - `setup_realtime_delegation(channel, handler, tool)` — The same for a
   realtime voice channel, whose sessions declare the tool.
@@ -19183,12 +19184,15 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   delivery_strategy = null, cache = null, serialize_per_room = false,
   max_conversation = 0)`). Its arguments are
   `agent` and `task`, then `context` and `share_channels`, and `conversation`
-  when the handler allows it. A call delegates (Section 23.3) with the `task`
-  as its model wrote it, the label the parent room's records name the task by,
-  and notifies the handler's `notify`, or else the agent that called. The
-  worker reads the call's `brief`: the `task`, then each of the following that
-  the call has, in a block of its own as Section 6.4 sets a text from outside
-  apart:
+  when the handler allows it. A `task` that is no text, or a `share_channels` that
+  is no list, is refused, nothing made, and an `agent` that is no text names no
+  channel of the kit (a model may send them whatever the tool declares); in the
+  list, only a text names a channel, and none or an empty list is the handler's
+  `default_share_channels`. A call delegates (Section 23.3) with the `task` as its
+  model wrote it, the label the parent room's records name the task by, and
+  notifies the handler's `notify`, or else the agent that called. The worker
+  reads the call's `brief`: the `task`, then each of the following that the call
+  has, in a block of its own as Section 6.4 sets a text from outside apart:
 
   1. `context`, which a model wrote and which may hold what a tool returned, in
      `<task_context>`, as JSON on one line (separators `, ` and
