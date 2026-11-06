@@ -108,7 +108,10 @@
       "r1": {
         "ops": [
           {
-            "text": "hello there"
+            "text": "hello "
+          },
+          {
+            "text": "there"
           },
           {
             "row": {
