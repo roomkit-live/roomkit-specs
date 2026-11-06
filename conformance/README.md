@@ -278,6 +278,13 @@ room callbacks of the setup are not compared.
   implementation's JSONL session auditor over a file of its own, which
   `expect.session_audit` reads; with `attached: true`, attached to the kit
   before the steps, as the implementation's `attach` registers its hooks.
+- `processes`: other **processes** serving the rooms (§19.7.5 rule 16), each
+  `id`, how a call's `kit` names it: a kit of its own over the run's store
+  and lock manager, as processes share a database and its locks, holding
+  the setup's channels as objects of its own, registered in the same order;
+  a scripted agent answers from the one model of its channel id, whichever
+  process runs its turn. The rooms, hooks and strategies of the setup are
+  the run's own kit's.
 
 ### Identity resolution
 
@@ -600,7 +607,7 @@ client's `clientInfo.version` is its implementation's own.
 | `{"concurrent": [calls]}` | Starts the calls together and waits for all |
 | `{"wait_for": gate}` | Waits until a call is held at the gate (a runner fails after 5 s) |
 | `{"open": gate}` | Opens the gate: every call held there, and every later one, goes on |
-| `{"idle": true}` | Waits until the kit runs nothing in the background |
+| `{"idle": true}` | Waits until the kit runs nothing in the background; with `processes`, until none of the kits does, each discussion's driver roused first, so that it reads what another process stored |
 | `{"wait_for_lock": room, "waiters": n}` | Waits until `n` calls (1 by default) wait for the room's lock (a runner fails after 5 s): calls started in the background are then known to overlap |
 | `{"lock_releases": "fail"}`, `{"lock_releases": "succeed"}` | Sets the releases of the kit's `lock_manager` failing or succeeding, from the next one on |
 
@@ -610,6 +617,8 @@ A call that has not returned after 10 s fails the scenario.
 
 Each takes the RFC's name and the RFC's arguments, and may name an
 `organization_id` it acts for (§17.2). Records are in the serialized form.
+A call taking `kit` runs on the process it names (`setup.processes`), on the
+run's own kit when absent.
 
 | Call | Arguments | Result |
 |---|---|---|
@@ -661,6 +670,8 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `discussion.done` | `strategy`, `holds`: what that discussion's `done` answers from now on | null |
 | `listen_only` | `room_id`, `channel_ids`, `organization_id`: the kit's `listen_only` (§19.7.5 rule 12) | null; a room holding no discussion in the scope, `invalid_argument` |
 | `talk_again` | `room_id`, `channel_ids`, `organization_id`: the kit's `talk_again` (§19.7.5 rule 12) | null; a room holding no discussion in the scope, `invalid_argument` |
+| `room_strategy_is_current` | `room_id`, `kind` (`Discussion`, `Pipeline`, `Swarm`, `Loop` or `Supervisor`, the implementation's strategy of that name), `organization_id`, `kit`: the kit's `room_strategy_is_current` (§19.7.5 rule 16) | whether the discussion this process installed is the one the room stores; a kind not stored with the room, `kind_not_stored`; a room outside the scope, `room_not_found` |
+| `close` | `kit`: closes the kit (§12.10.4), a process that stops; no later step calls it | null |
 | `install_pipeline` | `handler`, `stages`, `default_phase`, `supervisor_id`, `agents` (channel ids), `agent_aliases`, `hook_priority`: the ConversationPipeline's `install` on the kit, its handler named `handler` (§19.5) | null |
 | `setup_handoff` | `agent_id`, `handler`, `targets` (each an id and its description or null: the tool `build_handoff_tool` builds; absent: the generic one), `room_id` (absent: every room): serves the handoff tool on the agent (§19.6) | null |
 | `handoff.handle` | `handler`, `room_id`, `calling_agent_id`, `arguments`, the tool call's: the handler's `handle` (§19.6) | the HandoffResult (`accepted`, `new_agent_id`, `new_phase`, `message`, `reason`) |
@@ -927,6 +938,7 @@ refuses its value, a `ChannelId`).
 | `task_not_found` | An update of a task the store does not hold (§14.3) | `TaskNotFoundError` | `StoreError::TaskNotFound` |
 | `verification_refused` | A verification request refused, with its `reason`: `not_found` (none in the caller's organization), `not_open`, `expired`, `mismatch` (a wrong secret, counted) or `failed` (the last attempt) (§11.7.2) | `VerificationRefusedError` | `RoomKitError::VerificationRefused` |
 | `channel_failed` | A channel's own error, which the caller is handed (§6.1): a transport's `on_room_attached` refusing an attach, its `on_room_detached` failing a detach | the scripted channel's failure, raised as it is | `RoomKitError::Channel` |
+| `kind_not_stored` | `room_strategy_is_current` asked of a kind of strategy that is not stored with the room (§19.7.5 rule 16) | `TypeError` | `RoomKitError::Type` |
 | `already_set_up` | A handoff's tool set up again where it is declared, or an install over an agent whose handoff is set up already (§19.6); `delegate_task` set up again on an agent (§23.4) | `RuntimeError`, `setup_handoff() already called`, `setup_delegation() already called` | `RoomKitError::Runtime` |
 
 ## Reentrancy cells

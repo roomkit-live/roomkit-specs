@@ -301,6 +301,22 @@
               "type": "boolean"
             }
           }
+        },
+        "processes": {
+          "description": "Other processes serving the rooms (§19.7.5 rule 16): each a kit of its own over the run's store and lock manager, holding the setup's channels as objects of its own, a scripted agent answering from the one model of its channel id. A call's `kit` names the one it runs on.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/label"
+              }
+            }
+          }
         }
       }
     },
@@ -1458,7 +1474,9 @@
             "talk_again",
             "discussion.done",
             "regenerate_response",
-            "regenerate_target"
+            "regenerate_target",
+            "close",
+            "room_strategy_is_current"
           ]
         },
         "organization_id": {
@@ -1466,6 +1484,10 @@
             "string",
             "null"
           ]
+        },
+        "kit": {
+          "description": "The process of `setup.processes` the call runs on; the run's own kit when absent. Taken by `process_inbound`, `install_strategy`, `uninstall_strategy`, `claim_room_strategy`, `room_strategy`, `room_strategy_is_current`, `speak_queue`, `listen_only`, `talk_again` and `close`.",
+          "$ref": "#/$defs/label"
         }
       },
       "allOf": [
@@ -3708,6 +3730,36 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "room_strategy_is_current"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "kind"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              },
+              "kind": {
+                "description": "The kind of strategy asked about, the implementation's class of that name.",
+                "enum": [
+                  "Discussion",
+                  "Pipeline",
+                  "Swarm",
+                  "Loop",
+                  "Supervisor"
+                ]
+              }
+            }
+          }
         }
       ]
     },
@@ -3767,7 +3819,8 @@
         "verification_refused",
         "waits_for_itself",
         "channel_failed",
-        "already_set_up"
+        "already_set_up",
+        "kind_not_stored"
       ]
     },
     "expect": {
