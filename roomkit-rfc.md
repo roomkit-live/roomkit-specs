@@ -7897,6 +7897,16 @@ An implementation adds the verbs its own tools and hooks need to write (a
 status post, §19.8; a room-metadata update; an observation, §5.11), each
 documented as one `host_call`.
 
+A host's own code may need what only the owner's process holds (a person's live
+connection, a service the owner runs). An implementation SHOULD let the host
+declare verbs of its own on the owner, each served by name as one `host_call`,
+its arguments and its result data. The owner runs a declared verb under what
+the turn gave the call (its room, the actor of its turn, the requester, its
+chain depth, the tool call it is made from), which the accessors a tool handler
+reads answer for it (§21.4), and MUST refuse a name its own verbs or another
+declared verb hold, and a verb no host declared. A declared verb needs its
+turn: it is not sent between turns.
+
 A `TurnHost` acts for its turn's room, in that room's organization: the owner
 MUST refuse a verb that names another room or another organization than the
 room's, and an argument the verb does not take. A status post it makes names
