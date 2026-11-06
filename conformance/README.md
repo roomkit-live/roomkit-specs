@@ -370,7 +370,7 @@ scripted.
   `finish_reason` of `refusal` is refused, one that ran out of room is
   `truncated`, any other text not the JSON document the schema asks for is
   `invalid_json`, a streamed round's check coming before its done event,
-  which the error replaces. `model.pricing`: the
+  which the error replaces; a `fallback_model` takes them too. `model.pricing`: the
   model's catalogue price (§6.7, a provider's `catalog_entry().pricing`,
   Python's `ModelPricing` fields), none when absent; a `fallback_model`
   takes one too.
@@ -542,8 +542,8 @@ hands, and records it (below): on `before_ai_generation` the generation
 (`AIResponseEvent`), as `response`. A `modify`'s `event` is a patch: on a
 generation, the replacement event whose context's `system_prompt`,
 `messages` (each `{role, text}`), `reasoning_effort`, `thinking_budget`,
-`enable_thinking` and `response_metadata` (a record of its own, §6.7) are the
-patch's,
+`enable_thinking`, `response_schema` (null clearing it, §6.7) and
+`response_metadata` (a record of its own, §6.7) are the patch's,
 whose `tools` are
 those of the context the patch names, and then each tool `define` gives
 (`name`, `description`, `parameters`) in place of the tool of its name, or
