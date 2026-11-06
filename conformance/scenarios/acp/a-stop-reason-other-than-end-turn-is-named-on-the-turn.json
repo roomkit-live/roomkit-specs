@@ -1,11 +1,11 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "acp/a-stop-reason-other-than-end-turn-is-named-on-the-turn",
-  "title": "An ACP turn the agent ends on another reason than end_turn names it on its record and as the turn's end, which its answer carries",
+  "title": "An ACP turn the agent ends on another reason than end_turn names it on its record, as the turn's end and to ON_AI_RESPONSE, which its answer carries",
   "rules": [
     "§6.4"
   ],
-  "notes": "Python: tests/test_channels/test_acp.py::TestACPChannel::test_a_refusal_is_named_on_the_turn, test_a_truncated_turn_is_named_too.",
+  "notes": "Python: tests/test_channels/test_acp.py::TestACPChannel::test_a_refusal_is_named_on_the_turn, test_a_truncated_turn_is_named_too; tests/test_inbound_turns_record.py::test_an_acp_turn_names_its_stop_reason.",
   "setup": {
     "channels": [
       {
@@ -55,6 +55,13 @@
             "category": "intelligence"
           }
         ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "response",
+        "trigger": "on_ai_response",
+        "execution": "async"
       }
     ]
   },
@@ -106,6 +113,20 @@
             "acp": {
               "stop_reason": "refusal"
             }
+          }
+        }
+      ]
+    },
+    "hooks": {
+      "response": [
+        {
+          "trigger": "on_ai_response",
+          "room_id": "room-1",
+          "response": {
+            "channel_id": "claude",
+            "response_content": "I will not.",
+            "loop_end_reason": "refusal",
+            "usage": {}
           }
         }
       ]
