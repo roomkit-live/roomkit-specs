@@ -18162,9 +18162,10 @@ that same input, not an addition to it, so a host that measures its own system
 prompt is not counted twice. For the reply it reserves the larger of its
 safety margin and the reply budget: the margin is the reply's headroom when
 the reply budget is unknown or smaller, and the reply budget when it is
-larger; a memory without a margin (SummarizingMemory, whose thresholds leave
-the headroom) reserves the reply budget. What a hook adds to the context after
-the memory read is not measured.
+larger. A memory without a margin (SummarizingMemory) reserves the reply
+budget alone: with none set, its last cut may fill the window, and only its
+thresholds, below that cut, leave the reply room. What a hook adds to the
+context after the memory read is not measured.
 
 ---
 
