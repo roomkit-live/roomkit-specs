@@ -134,6 +134,28 @@
           "status": "delivered"
         }
       ]
+    },
+    "streamed": {
+      "r1": {
+        "ops": [
+          {
+            "text": "(si)"
+          },
+          {
+            "text": " is the chemical symbol"
+          },
+          {
+            "row": {
+              "source": {
+                "channel_id": "b"
+              },
+              "content": {
+                "body": "(si) is the chemical symbol"
+              }
+            }
+          }
+        ]
+      }
     }
   }
 }
