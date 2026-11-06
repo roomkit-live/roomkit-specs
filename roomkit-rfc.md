@@ -5647,6 +5647,11 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   stored and its handle reading them, and the event is refused on time,
   without waiting for it; the event's delivery key then names no delivery,
   and the handle of an event that deferred its delivery waits for nothing.
+  An adopted call its hook or its parse waits for (awaited, deferred until
+  its decision, or nested under the lock), not committed yet when that
+  `process_timeout` passes, is part of the work the deadline ends: it ends
+  with that hook or parse, nothing of it stored, and nothing reports it but
+  the event's own `process_timeout` (§13.6).
 - **The room's work outside the lock.** A call into the room from its work
   outside the lock and outside its admission order (a delivery set's
   deliveries and turns: a transport's `deliver()`, an agent's turn, a tool
