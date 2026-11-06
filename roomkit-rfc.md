@@ -18589,6 +18589,13 @@ channel, a conference's calls), through one rule:
   overrides it; either MAY be absent, meaning no bound. The default SHOULD be
   short where a person waits in silence (speech-to-speech, conference) and MAY
   be longer for text.
+- A turn whose tools come from the channel's per-turn configuration (Appendix
+  A.9) MAY be given bounds per tool name with them, which override the
+  channel's for that turn alone: a tool the turn declares may be one the
+  channel was never built with, and its bound travels with it and its handler.
+  The next turn reads the channel's bounds unless its own configuration gives
+  others. A bound that is not positive fails the turn before its model is
+  asked.
 - A tool that keeps a bound of its own is not subject to the channel's default:
   one that waits on another agent or on a person by design (a delegation, an
   orchestration strategy's tool, a human-input tool), or a command run under
@@ -20578,6 +20585,8 @@ It may give the turn a tool handler of its own the same way: it serves the
 host's tools for that turn in place of the channel's handler, the tools the
 channel was built with that serve themselves included, and a turn that gives
 none, the next one included, reads the channel's.
+It may give the bounds of the turn's tool calls the same way (Section 21.6):
+above the channel's own bounds per tool name, for that turn alone.
 
 **Constrained turn.** A turn's `response_schema` resolves like the other
 per-turn settings. When it is set, the channel MUST NOT
