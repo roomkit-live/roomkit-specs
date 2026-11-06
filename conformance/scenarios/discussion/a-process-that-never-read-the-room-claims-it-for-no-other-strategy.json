@@ -6,7 +6,7 @@
     "§19.7.5 rule 16",
     "§19.7"
   ],
-  "notes": "Python: test_discussion_processes.py test_a_process_that_never_read_the_room_claims_it_for_no_other_strategy (scoped and unscoped).",
+  "notes": "Python: test_discussion_processes.py test_a_process_that_never_read_the_room_claims_it_for_no_other_strategy (scoped and unscoped); p3, which never read the room either, installs no other strategy (strategies.py install_strategy follows the room first).",
   "setup": {
     "channels": [
       {
@@ -50,6 +50,9 @@
     "processes": [
       {
         "id": "p2"
+      },
+      {
+        "id": "p3"
       }
     ]
   },
@@ -61,30 +64,30 @@
       "organization_id": "org-a"
     },
     {
-      "call": "claim_room_strategy",
-      "room_id": "r1",
-      "strategy": "other",
-      "organization_id": "org-a",
-      "kit": "p2",
-      "expect": {
-        "error": "invalid_argument"
-      }
-    },
-    {
-      "call": "claim_room_strategy",
-      "room_id": "r1",
-      "strategy": "other",
-      "kit": "p2",
-      "expect": {
-        "error": "invalid_argument"
-      }
-    },
-    {
       "call": "install_strategy",
-      "kit": "p2",
+      "kit": "p3",
       "room_id": "r1",
       "strategy": "other",
       "organization_id": "org-a",
+      "expect": {
+        "error": "invalid_argument"
+      }
+    },
+    {
+      "call": "claim_room_strategy",
+      "room_id": "r1",
+      "strategy": "other",
+      "organization_id": "org-a",
+      "kit": "p2",
+      "expect": {
+        "error": "invalid_argument"
+      }
+    },
+    {
+      "call": "claim_room_strategy",
+      "room_id": "r1",
+      "strategy": "other",
+      "kit": "p2",
       "expect": {
         "error": "invalid_argument"
       }
