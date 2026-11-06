@@ -380,22 +380,34 @@
     "bindings": {
       "free-nothing": {
         "sms-nothing": {
-          "participant_id": "+15550000001"
+          "participant_id": "+15550000001",
+          "metadata": {
+            "phone_number": "+15550000001"
+          }
         }
       },
       "free-null": {
         "sms-null": {
-          "participant_id": "+15550000001"
+          "participant_id": "+15550000001",
+          "metadata": {
+            "phone_number": "+15550000001"
+          }
         }
       },
       "free-empty": {
         "sms-empty": {
-          "participant_id": "+15550000001"
+          "participant_id": "+15550000001",
+          "metadata": {
+            "phone_number": "+15550000001"
+          }
         }
       },
       "free-blank": {
         "sms-blank": {
-          "participant_id": "+15550000001"
+          "participant_id": "+15550000001",
+          "metadata": {
+            "phone_number": "+15550000001"
+          }
         }
       }
     },

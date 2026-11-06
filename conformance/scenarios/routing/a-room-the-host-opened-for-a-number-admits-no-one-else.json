@@ -66,6 +66,11 @@
       "channel_id": "sms",
       "metadata": {
         "phone_number": "+15550000001"
+      },
+      "expect": {
+        "result": {
+          "participant_id": "+15550000001"
+        }
       }
     },
     {
