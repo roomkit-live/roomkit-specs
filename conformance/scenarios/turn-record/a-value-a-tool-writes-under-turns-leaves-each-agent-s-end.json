@@ -654,5 +654,5 @@
       }
     }
   ],
-  "notes": "Python: tests/test_inbound_turns_record.py::test_a_host_value_under_turns_is_not_carried[3, ['x'], {'host': 'mine'}]: b's tool writes the value on the turn's record through current_response_metadata()."
+  "notes": "Python: tests/test_inbound_turns_record.py::test_a_host_value_under_turns_is_not_carried[3, ['x'], {'host': 'mine'}]: b's tool writes the value on the turn's record through current_response_metadata(). Python asserts the key set {a, b}; a scenario names what it asserts, so the host's keys are asserted absent."
 }

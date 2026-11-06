@@ -88,6 +88,18 @@
                 "input_tokens": 10,
                 "output_tokens": 2
               }
+            },
+            {
+              "calls": [
+                {
+                  "id": "c5",
+                  "name": "lookup"
+                }
+              ],
+              "usage": {
+                "input_tokens": 10,
+                "output_tokens": 2
+              }
             }
           ]
         }
@@ -148,6 +160,13 @@
           }
         ]
       }
+    ],
+    "hooks": [
+      {
+        "name": "errors",
+        "trigger": "on_error",
+        "execution": "async"
+      }
     ]
   },
   "steps": [
@@ -173,7 +192,8 @@
                 }
               }
             }
-          }
+          },
+          "error": null
         }
       }
     },
@@ -199,10 +219,19 @@
                 "loop_end_reason": "completed"
               }
             }
-          }
+          },
+          "error": null
         }
       }
+    },
+    {
+      "idle": true
     }
   ],
-  "notes": "Python: tests/test_inbound_turns_record.py::test_a_turn_that_wrote_no_message_names_its_end_to_the_caller (room-1) and test_two_agents_each_keep_their_own_end (room-2). Each agent's loop allows one round of calls."
+  "notes": "Python: tests/test_inbound_turns_record.py::test_a_turn_that_wrote_no_message_names_its_end_to_the_caller (room-1) and test_two_agents_each_keep_their_own_end (room-2). Each agent's loop allows one round of calls. In room-2, cut also answers done's reply: six generations in all, each round one call.",
+  "expect": {
+    "hooks": {
+      "errors": []
+    }
+  }
 }

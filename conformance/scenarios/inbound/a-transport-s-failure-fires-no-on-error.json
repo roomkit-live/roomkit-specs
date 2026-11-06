@@ -83,7 +83,12 @@
                 "body": "hi"
               }
             }
-          ]
+          ],
+          "delivery_results": {
+            "sms2": {
+              "status": "failed"
+            }
+          }
         }
       }
     },
