@@ -2792,16 +2792,19 @@ again. The turn's later rounds build on the compacted context, and a replay
 that answers refuses none of the author images the request carried. A
 compaction keeps the turn's input, as the hooks before generation left it,
 and its notes whole. When the input falls in the older half of the messages,
-it summarizes the history that precedes the input and shortens the long
-results of the turn's older tool rounds by storing each as a large result
-is (Section 21.5), so the model keeps a preview and can read the rest back; a
-skill's instructions (Section 24.4) and a page already read back stay whole.
+it summarizes the history that precedes the input and shortens each result
+over 2000 characters of the tool rounds between the input and the end of the
+older half by storing it as a large result is (Section 21.5), so the model
+keeps a preview of at most 1000 characters and can read the rest back; a
+skill's instructions (Section 24.4), a page already read back and a result
+already stored stay as they are.
 Otherwise it summarizes the older half. Its summary opens with a mark of the
 runtime's, `[Context compacted — earlier conversation summary]`, then gives
 each summarized message a line, its role then its text quoted. It keeps every
 tool call with its result, never quotes part of a delimited block, and fails
-the call rather than cut the input when nothing before the input can be
-shortened, or when the context holds four messages or fewer. Text the runtime
+the call rather than cut the input when it can neither summarize anything
+before the input nor store a result of those rounds, or when the context
+holds four messages or fewer. Text the runtime
 places next to a user message (the turn's notes, a compaction's summary, a
 summary a memory provider returns) joins that message rather than forming a
 second user message in a row.
