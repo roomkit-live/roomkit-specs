@@ -561,6 +561,35 @@ A hook on `on_user_input_required` is handed the request (`PendingInputEvent`),
 which it records as `request` (below); a `block` rejects the request, unless
 it was answered first.
 
+### Scripted ACP agents
+
+An `ai` channel with an `acp` member is the implementation's ACP agent channel
+(§6.4): RoomKit is the ACP client, and the agent is a **scripted ACP agent**
+the runner serves in its own process over a pipe, through the channel's
+transport seam, with no process. The agent is written at the wire's level,
+JSON-RPC 2.0 one message per line, in neither implementation's ACP code, so
+that both runners check the same messages.
+
+- `acp.cwd`: the channel's `cwd`, an absolute path.
+- `acp.agent.initialize`: its `initialize` answer: `protocol_version` (the
+  client's when absent), `closes_sessions` (whether it announces
+  `session/close`, true by default), `agent_info` (sent as written, none when
+  absent).
+- Its `session/new` answers are `session-1`, `session-2`... in the order it
+  is asked, with no config option; `session/close` is answered `{}`;
+  `session/cancel` is taken.
+- `acp.agent.prompts`: its answer to its n-th `session/prompt` of the run:
+  held at its `gate` first when it names one, then each of its `updates`
+  sent as a `session/update` of the prompt's session, in order, then its
+  answer, `error` (a JSON-RPC error) or else `stopReason` (`stop_reason`,
+  `end_turn` by default) and `usage` when given. A prompt past the last is
+  answered `end_turn` with no update.
+- Any other request is answered `method_not_found`.
+
+`expect.acp_wire`, per ACP channel: what its agent received, in order, each
+`{method, params}`, `params` as the client wrote them, matched as a patch. A
+client's `clientInfo.version` is its implementation's own.
+
 ### Steps
 
 | Step | What it does |
@@ -796,6 +825,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `actions` | Per action label, the outcomes of its runs, in the order they ended |
 | `ai_events` | Per room, the framework events of an AI channel's turn (§8.2, Level 1): `before_ai_generation` and `ai_response`, in emission order, matched as `framework_events`, which does not hold them |
 | `models` | Per scripted agent, each generation's request as its model received it, in order: the `messages` it carries, each `{role, text, parts, round}`, `text` its text parts joined (empty for a message with none, a tool's result among them), `parts` its text and image parts in order, each `{"text": ...}` or `{"image": url, "mime_type": ...}`, null for a message whose content is a text, `round` its reasoning, text and call parts in order, each `{"thinking": ..., "signature": ..., "redacted": ...}`, `{"text": ...}` or `{"call": id, "arguments": ..., "metadata": ...}`, null for a message whose content is a text, and the `tool_results`, each `{tool_call_id, name, content, is_error}`, `name` the tool of its call, `content` as the model reads it (a text, or a result's text and image parts in order, written as `parts` are), `is_error` whether it reads the call as failed, its `system_prompt`, its `temperature` and `max_tokens`, its `reasoning_effort`, `thinking_budget` and `enable_thinking`, its `response_schema` (null for none), the `tools` it declares, by name: each one's position in the declaration, so that a scenario names those it asserts, declared or `$absent`, and, for a model with a `chat_dialect`, `chat_messages`: the request as that rendering writes it on the wire, its system prompt first when it has one, each message's `role`, `content`, `tool_calls`, `tool_call_id` and its dialect's reasoning field |
+| `acp_wire` | Per ACP channel, the requests and notifications its scripted ACP agent received, in order, each `{method, params}` (Scripted ACP agents) |
 | `lifecycle` | Per room, the lifecycle records (§5.1) in index order, when the implementation writes them: an implementation that writes none passes. It says which changes write one, and which write none (a change that changes nothing, §7.2) |
 | `participants` | Per room, the participants the store holds (§5.5), in the store's order |
 | `resolver` | The scripted resolver's calls, in order |

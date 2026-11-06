@@ -776,6 +776,9 @@
             "tool_auditor",
             "session_auditor"
           ]
+        },
+        "acp": {
+          "$ref": "#/$defs/acp_channel"
         }
       }
     },
@@ -3978,6 +3981,16 @@
             "array",
             "object"
           ]
+        },
+        "acp_wire": {
+          "description": "Per ACP channel, the requests and notifications its scripted agent received, in order: each `{method, params}`, `params` as the client wrote them (README, \"Scripted ACP agents\").",
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "array",
+              "object"
+            ]
+          }
         }
       }
     },
@@ -6138,6 +6151,98 @@
         "dispatch_timeout_ms": {
           "type": "integer",
           "minimum": 0
+        }
+      }
+    },
+    "acp_channel": {
+      "description": "The channel is the implementation's ACP agent channel (§6.4), RoomKit the ACP client, over a scripted ACP agent the runner serves in its own process on a pipe, at the wire's level (README, \"Scripted ACP agents\"). The channel's `type` is `ai`.",
+      "type": "object",
+      "required": [
+        "cwd",
+        "agent"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "cwd": {
+          "description": "The channel's `cwd`, an absolute path, declared in each `session/new`.",
+          "type": "string"
+        },
+        "agent": {
+          "$ref": "#/$defs/acp_agent"
+        }
+      }
+    },
+    "acp_agent": {
+      "description": "The scripted ACP agent: what it answers each request of the client, at the wire's level (README, \"Scripted ACP agents\").",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "initialize": {
+          "description": "Its `initialize` answer: `protocol_version` (default: the client's), `closes_sessions`, whether it announces `session/close` in `agentCapabilities.sessionCapabilities` (default true), and `agent_info`, the `agentInfo` it sends as written (default none).",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "protocol_version": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "closes_sessions": {
+              "type": "boolean"
+            },
+            "agent_info": {
+              "$ref": "#/$defs/record"
+            }
+          }
+        },
+        "prompts": {
+          "description": "Its answer to its n-th `session/prompt` of the run, in order; a prompt past the last is answered `end_turn` with no update.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/acp_prompt"
+          }
+        }
+      }
+    },
+    "acp_prompt": {
+      "description": "What the scripted agent does with one prompt: held at its `gate` first when it names one, then each of its `updates` sent as a `session/update` of the prompt's session, then its answer: `error`, a JSON-RPC error, or else `stop_reason` and `usage`.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "gate": {
+          "type": "string"
+        },
+        "updates": {
+          "description": "Each a SessionUpdate as ACP writes it (`{\"sessionUpdate\": \"agent_message_chunk\", \"content\": {\"type\": \"text\", \"text\": ...}}`), sent in order.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/record"
+          }
+        },
+        "stop_reason": {
+          "description": "The answer's `stopReason`, `end_turn` by default.",
+          "type": "string"
+        },
+        "usage": {
+          "description": "The answer's `usage`, as ACP writes it (`inputTokens`, `outputTokens`, `totalTokens`...), none when absent.",
+          "$ref": "#/$defs/record"
+        },
+        "error": {
+          "description": "The prompt is answered with this JSON-RPC error in place of a result.",
+          "type": "object",
+          "required": [
+            "code",
+            "message"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "type": "integer"
+            },
+            "message": {
+              "type": "string"
+            },
+            "data": {}
+          }
         }
       }
     }
