@@ -986,8 +986,6 @@ shows and takes it off both lists.
 |---|---|---|---|
 | `verification/a-release-from-a-hook-that-closes-the-room-is-answered-by-no-agent` | roomkit-rs | §11.7.6: a hook's release is answered once its section is over | RMK-1200 |
 | `rooms/a-channel-sends-into-the-room-it-is-told-of` | roomkit-rs | §9.5.1: a room callback's send into its room, under the room's lock, is adopted | RMK-1245 |
-| `reasoning/minimax-s-dialect-sends-a-round-s-reasoning-in-its-field` | roomkit-rs | §6.4: a vendor's provider renders its reasoning where the vendor reads it; no MiniMax provider yet (HITL 59acce09) | RMK-1409 |
-| `reasoning/kimi-s-dialect-sends-a-round-s-reasoning-in-its-field` | roomkit-rs | §6.4: as above; no Kimi provider yet (HITL 59acce09) | RMK-1409 |
 
 roomkit's earlier three were fixed by RMK-976 and RMK-977, and roomkit-rs's
 earlier three by step 3's milestone 2.
