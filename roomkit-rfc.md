@@ -6303,7 +6303,12 @@ cascade's running generation, tool handlers and stream consumers (including
 their finalizers), and report a terminal cancellation outcome before claiming
 cleanup has completed; neither the event's delivery to its other targets,
 which goes on, nor a plan still waiting in the lane, whose delivery follows in
-lane order, is the turns' work to join. Other cascades, the other turns of the
+lane order, is the turns' work to join. A stream a turn of the cascade
+answered with that no consumer has begun to read is closed, and its `end`
+joined as after any `close` (§10.6.8), with no bound of its own: a turn whose
+`end` never comes leaves the cleanup incomplete. A stream the cascade is handed
+once cancelled, by a delivery set still running at the cut, is closed unread
+and not joined. Other cascades, the other turns of the
 room among them, and shared providers MUST remain usable. The next call MAY
 resume after that cleanup. Cancellation cannot revoke external effects already
 committed by a handler, nor implicitly own tasks detached by application code.
