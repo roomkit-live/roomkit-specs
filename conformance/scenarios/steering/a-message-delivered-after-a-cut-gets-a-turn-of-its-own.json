@@ -1,13 +1,13 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "steering/a-message-delivered-after-a-cut-gets-a-turn-of-its-own",
-  "title": "A message committed while the turn runs but delivered once it is cut reaches no loop: a turn of its own answers it, reading the room as the cut turn left it",
+  "title": "A message committed while the turn runs but delivered once the cut turn has ended reaches no loop: a turn of its own answers it, reading the room as the cut turn left it",
   "rules": [
     "§6.4",
     "§21.3",
     "§10.1 Explicit delivery cancellation"
   ],
-  "notes": "The room's delivery lane holds the message's set behind the row before it, so the cut comes between its commit and its delivery. Python: core/_room_turns.py RoomTurns._steered, the steer reaches nothing and the event takes its place in the line (RMK-1371).",
+  "notes": "The room's delivery lane holds the message's set behind the row before it, so the cut turn ends between the message's commit and its delivery. A turn being cut that has not ended yet would still take the message. Python: core/_room_turns.py RoomTurns._steered, the steer reaches nothing and the event takes its place in the line (RMK-1371).",
   "setup": {
     "channels": [
       {
@@ -125,9 +125,6 @@
       }
     },
     {
-      "open": "lane"
-    },
-    {
       "await": "first",
       "expect": {
         "result": {
@@ -135,6 +132,9 @@
           "cancellation_reason": "caller_cancelled"
         }
       }
+    },
+    {
+      "open": "lane"
     },
     {
       "call": "delivery.wait",
