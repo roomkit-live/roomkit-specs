@@ -3188,9 +3188,10 @@ history labels the room's speakers, as above: the turn
 reads it at its next stop, and no turn of its own starts. A turn cut before that
 stop never reads it: the message stays in the room, and the room's next turn
 reads it. Whether the turn can take the message is decided at its delivery, not
-at its commit. When the turn cannot (its loop is not reachable yet, or reads its
-queue no more, cut or ended since the commit) or the message reads as no text,
-the message waits a turn of its own, as above. An
+at its commit, and a turn being cut takes it until its loop has ended. When the
+turn cannot (its loop is not reachable yet, or reads its queue no more, as once
+a cut turn has ended) or the message reads as no text, the message waits a turn
+of its own, as above. An
 edit or a delete (Section 10.3), and an event of a type that opens no turn
 (a notice, a reaction, a participant's arrival: above), is no message for
 the running turn: it waits its place as such a message does, and no turn
@@ -18354,7 +18355,9 @@ and once the model has answered. An `InjectMessage` that came while the model
 wrote its answer MUST be read: the same turn asks the model again, the answer
 then the message in its conversation, one round more. Once the loop has read
 its directives for the last time it MUST NOT be reached any more, so a
-directive the host is told reached a loop is one that loop reads.
+directive the host is told reached a loop is one that loop reads, unless a
+`Cancel` ends the loop first: what it had not read then stays unread
+(Section 6.4, *A message for the running turn*).
 
 **Which loop a directive reaches.** One AI channel object serves every room it
 is bound to, so its running tool loops can belong to several rooms' turns at
