@@ -1444,6 +1444,8 @@
             "install_pipeline",
             "discussion",
             "speak_queue",
+            "listen_only",
+            "talk_again",
             "discussion.done"
           ]
         },
@@ -3590,6 +3592,58 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "listen_only"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "channel_ids"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              },
+              "channel_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "talk_again"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "channel_ids"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              },
+              "channel_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
         }
       ]
     },
@@ -3767,6 +3821,16 @@
                 "array",
                 "object"
               ]
+            }
+          }
+        },
+        "ingested": {
+          "description": "Per room and scripted agent with a scripted memory, the events its memory was handed (§20 ingest), in order, matched as the timeline's events.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array"
             }
           }
         },

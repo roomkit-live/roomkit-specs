@@ -475,7 +475,8 @@ scripted.
   agent's `max_context_events`), with the `messages` it built (each `role`
   and `text`), the `notes` it retrieved for the turn alone and the
   `speakers` its messages name (§20.2), and `writes_record`, keys each read
-  writes on the turn's record through `current_response_metadata()` (§6.7); `budget_aware` wraps it in the
+  writes on the turn's record through `current_response_metadata()` (§6.7); it keeps each
+  event it is handed (`ingest`), which `expect.ingested` reads; `budget_aware` wraps it in the
   implementation's budget-aware memory, of its `max_context_tokens`,
   `safety_margin_ratio` (default 0.15), `min_events` (default 3) and
   `reserved_tokens` (default 0) (§20.3); `compacting` and `summarizing`
@@ -607,6 +608,8 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `discussion` | `agents`, each a channel id or an agent given live (`id`, its channel id, and `name`, its display name), `handles`, `people`, `addressed_only`, `everyone`, `max_turns`, `max_depth`, `silent_token`, `rules`, each the implementation's default when absent: the implementation's Discussion, built and read, installed nowhere (§19.7.5) | `agents`, the channel ids in order; `handles`, what its `handles()` answers: empty while an agent named by an id that is no handle waits for the install to read its name |
 | `speak_queue` | `room_id`, `organization_id`: the kit's `speak_queue` (§19.7.5 rule 17) | `{speaking, queue, listening, asked, waiting, over}`, `listening` sorted; null for a room holding none |
 | `discussion.done` | `strategy`, `holds`: what that discussion's `done` answers from now on | null |
+| `listen_only` | `room_id`, `channel_ids`, `organization_id`: the kit's `listen_only` (§19.7.5 rule 12) | null; a room holding no discussion in the scope, `invalid_argument` |
+| `talk_again` | `room_id`, `channel_ids`, `organization_id`: the kit's `talk_again` (§19.7.5 rule 12) | null; a room holding no discussion in the scope, `invalid_argument` |
 | `install_pipeline` | `handler`, `stages`, `default_phase`, `supervisor_id`, `agents` (channel ids), `agent_aliases`, `hook_priority`: the ConversationPipeline's `install` on the kit, its handler named `handler` (§19.5) | null |
 | `setup_handoff` | `agent_id`, `handler`, `targets` (each an id and its description or null: the tool `build_handoff_tool` builds; absent: the generic one), `room_id` (absent: every room): serves the handoff tool on the agent (§19.6) | null |
 | `handoff.handle` | `handler`, `room_id`, `calling_agent_id`, `arguments`, the tool call's: the handler's `handle` (§19.6) | the HandoffResult (`accepted`, `new_agent_id`, `new_phase`, `message`, `reason`) |
@@ -767,6 +770,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `thinking_events` | Per room, the `thinking_start`, `thinking_delta` and `thinking_end` ephemeral events its subscribers read, in order: each `{type, thinking_length, round, channel_id}`, and `thinking` for an agent with `publish_thinking_text` |
 | `streamed` | Per room and streaming channel, the items its `deliver_stream` read, in order: `{"text": ...}` for a text delta, `{"thinking": ...}` for a piece of the model's reasoning, `{"usage": ..., "model": ..., "provider": ...}` for what a generation used, when the channel `reads_usage`, `{"row": event}` for a row the store holds, `{"failed": true}` where the stream raised |
 | `turns` | Per room and intelligence channel, the events its `on_event()` received |
+| `ingested` | Per room and scripted agent with a scripted `memory`, the events its memory was handed (§20, `ingest`), in order, matched as the timeline's |
 | `observations`, `tasks` | Per room, the stored side effects |
 | `actions` | Per action label, the outcomes of its runs, in the order they ended |
 | `ai_events` | Per room, the framework events of an AI channel's turn (§8.2, Level 1): `before_ai_generation` and `ai_response`, in emission order, matched as `framework_events`, which does not hold them |
@@ -853,7 +857,7 @@ refuses its value, a `ChannelId`).
 
 | Name | RFC meaning | roomkit (Python) | roomkit-rs |
 |---|---|---|---|
-| `invalid_argument` | An argument refused before anything is read or written: the visibility `internal` (§7.3), a channel id the grammar refuses (§7.3), `standalone` on another type and an instruction's refusals on a direct injection (§10.1.1), a record naming another room (§10.5), a post from a channel that is not a host channel, a message on a host channel (§10.5), a host channel bound as an intelligence channel, a reserved room metadata key (§5.1), a hook registration §9.1 refuses, a tool set up on an agent under a name it serves already (§21.1), a strategy for a room that holds one, or that the strategy refuses (§19.7) | `ValueError` | `InboundError::{NotAHostChannel, InboundOnHostChannel, HostAsIntelligence, StandaloneOutsideInstruction, InternalVisibility}`, `Refused` with an instruction's reason, `LifecycleError::{InternalVisibility, HostAsIntelligence, ReservedMetadataKey}`, `MutationError::OtherRoom`, `KitError::{Config, Registration}`, `RoomKitError::ToolNameCollision`, a `ChannelId` refused |
+| `invalid_argument` | An argument refused before anything is read or written: the visibility `internal` (§7.3), a channel id the grammar refuses (§7.3), `standalone` on another type and an instruction's refusals on a direct injection (§10.1.1), a record naming another room (§10.5), a post from a channel that is not a host channel, a message on a host channel (§10.5), a host channel bound as an intelligence channel, a reserved room metadata key (§5.1), a hook registration §9.1 refuses, a tool set up on an agent under a name it serves already (§21.1), a strategy for a room that holds one, or that the strategy refuses (§19.7), `listen_only` or `talk_again` for a room holding no discussion (§19.7.5) | `ValueError` | `InboundError::{NotAHostChannel, InboundOnHostChannel, HostAsIntelligence, StandaloneOutsideInstruction, InternalVisibility}`, `Refused` with an instruction's reason, `LifecycleError::{InternalVisibility, HostAsIntelligence, ReservedMetadataKey}`, `MutationError::OtherRoom`, `KitError::{Config, Registration}`, `RoomKitError::ToolNameCollision`, a `ChannelId` refused |
 | `channel_not_registered` | The channel named is not registered (§10.1 step 1, §10.5) | `ChannelNotRegisteredError` | `InboundError::UnknownChannel`, `KitError::UnknownChannel` |
 | `room_not_found` | No such room, or another organization's (§17.2) | `RoomNotFoundError` | `InboundError::{RoomNotFound, OtherOrganization}`, `LifecycleError::RoomNotFound`, `MutationError::RoomNotFound` |
 | `channel_not_bound` | The room does not bind the channel: a direct injection or a post from it (§10.5), a detach or a binding change of it (§7.2) | `ChannelNotFoundError`; `detach_channel()` answering `False` | `Refused { reason: "source_unbound" }`, `LifecycleError::ChannelNotBound` |
