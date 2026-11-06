@@ -3693,12 +3693,11 @@ string all the same, and turning it into a typed value is the caller's work.
 
 The schema MUST stay within the portable subset below, the one every provider
 that supports response schemas accepts. An implementation MUST refuse a schema
-outside it before any request is sent. Where its language runs a check as a
-context is built or a field assigned, it refuses one there, before any provider
-is called. Where it runs none, it refuses one where the channel takes it (its
-own as the channel is built, a binding's as the turn reads its settings),
-before the model is asked, and one written on a context by hand or by a
-`BEFORE_AI_GENERATION` hook in the provider, before any request.
+outside it when the context is built or the field assigned, before any provider
+is called; one whose language runs no check there refuses it where the channel
+takes it (its own as the channel is built, a binding's as the turn reads its
+settings), before the model is asked, and one written on a context by hand or
+by a `BEFORE_AI_GENERATION` hook in the provider, before any request.
 
 | Keyword | Rule |
 |---|---|
