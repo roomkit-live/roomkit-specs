@@ -137,7 +137,9 @@
             "channel_ids": [
               "a"
             ],
-            "event_id": "i-gone",
+            "event_id": {
+              "$present": true
+            },
             "queue": {
               "queue": [
                 "b"
