@@ -3638,10 +3638,11 @@ added to the other counters nor priced a second time.
 write a model's reasoning in the answer's text, between `<think>` and
 `</think>`, rather than in a field beside it. A provider that reads that
 convention reads a block as `thinking` only where it opens the generation: the
-text starts with `<think>`, after nothing but spaces, tabs and line breaks,
-which stay the answer's text (a byte order mark is none of them). The block
-ends at its first `</think>`, and everything after it is the answer, a later
-`<think>` included; a text that does not open with the tag is the answer whole.
+text starts with `<think>`, after nothing but spaces (U+0020), tabs (U+0009),
+line feeds (U+000A) and carriage returns (U+000D), which stay the answer's
+text. Any other character before the tag, another space or a byte order mark
+included, makes the text the answer whole. The block ends at its first
+`</think>`, and everything after it is the answer, a later `<think>` included.
 `The parser reads the <think> tag. Everything after is lost.` is an answer,
 stored, delivered and sent back as written, never cut at its tag. A block the
 response stopped before closing (the output cap) is reasoning to its end, never
