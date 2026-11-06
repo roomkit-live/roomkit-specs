@@ -1939,7 +1939,8 @@ as words the model said, and a server's prompt cache does not survive it. A
 round that only reasoned and called goes back with no text, and an answer that
 only reasoned with an empty one. Only the request loses it: the round keeps its
 reasoning for what reads a round (a `BEFORE_AI_GENERATION` hook, a reader of the
-stream), and a reasoning tag in a model's output is still read out of its text.
+stream), and the reasoning block that opens a model's output is still read out
+of its text (Section 6.7).
 
 The vendor's rendering is the integrator's choice, made by the provider it
 builds, and it holds behind a custom base URL: a vendor's weights served by a
@@ -3632,6 +3633,23 @@ vendor bills, a model's thinking included, whether the vendor reports that
 thinking inside its completion count or beside it. `reasoning_tokens`, when a
 provider reports it, is the thinking share of `output_tokens`: a detail, never
 added to the other counters nor priced a second time.
+
+**Reasoning written in the text (normative).** A Chat Completions server MAY
+write a model's reasoning in the answer's text, between `<think>` and
+`</think>`, rather than in a field beside it. A provider that reads that
+convention reads a block as `thinking` only where it opens the generation: the
+text starts with `<think>`, after nothing but spaces, tabs and line breaks,
+which stay the answer's text (a byte order mark is none of them). The block
+ends at its first `</think>`, and everything after it is the answer, a later
+`<think>` included; a text that does not open with the tag is the answer whole.
+`The parser reads the <think> tag. Everything after is lost.` is an answer,
+stored, delivered and sent back as written, never cut at its tag. A block the
+response stopped before closing (the output cap) is reasoning to its end, never
+answer. Every round of a tool loop is a generation of its own, its block read
+as the first round's is. A tag cut across a stream's chunks reads as it does
+whole, and a response reads the same streamed or not. A reasoning field the
+server sends beside the text changes none of this: both are the response's
+reasoning.
 
 **Reasoning settings.** `thinking_budget`, `enable_thinking` and
 `reasoning_effort` are the turn's. Where a provider's configuration carries one
