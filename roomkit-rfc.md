@@ -7416,7 +7416,8 @@ TurnBackend (interface)
 │       # and sends its control messages and its call answers
 ├── control(message: ChannelControl) → ChannelResult | null
 │       # Owner side: a message about a channel's per-room state, naming its
-│       # channel and room (§10.6.3); null for room_attached, room_detached
+│       # channel and room (§10.6.3), or its build; null for room_attached,
+│       # room_detached, channel_released
 ├── serve(executor: TurnExecutor) → void
 │       # Executor side: receive the requests and the channel control of the
 │       # channels the executor declares, until close
@@ -7689,13 +7690,14 @@ a message of a turn that ended or failed.
 | `host_call` | `host_result` | A verb of `TurnHost`, or a reader of owner-process state (§10.6.5) |
 
 **Channel control**, owner → executor, outside any turn, about a channel's
-per-room state:
+per-room state, or its build:
 
 | Message | Carries |
 |---|---|
 | `room_attached` | The channel was attached to the room: the room's binding of it (§5.7) |
 | `room_detached` | The channel was detached from the room: its state for the room is dropped (§6.4) |
 | `committed_event` | An event committed in the room that the channel's memory is handed (a discussion's, §19.7.5 rule 3), answered by nothing |
+| `channel_released` | The channel's build is stale (its host changed what it is built from): an executor holding a build lets it go, answered by nothing |
 | `channel_call` | A per-room verb of the channel, answered by `channel_result` (an ACP session's `set_config_option` or `close_session`, §6.4); an implementation documents each channel's set. It carries its `call_id`, its channel and room, the verb and its arguments, what the room keeps for the channel as the owner stores it (§10.6.2), and `previous_turn`; a later request's `previous_turn` names the call by its `call_id`. Cutting a running turn is never a channel call: it is the turn's `cancel` or `steer` |
 
 `room_attached` and `room_detached` reach every executor that may run the
@@ -7712,6 +7714,13 @@ no previous turn for the channel in the room (`previous_turn` is null), so an
 executor that missed the message still discards the room's state at its next
 turn (§10.6.2), and the owner forgets what the room kept for the channel,
 even when the message could not be sent.
+
+`channel_released` reaches the same executors. One that built the channel
+lets the build go: the next turn or channel control of the channel builds it
+anew, and the build let go is closed once the turns running on it, or still
+getting it, end, which it never cuts for this. One that holds no build builds
+none for the message. For a channel the owner holds live it changes nothing:
+that channel is the owner's registry's, and its host replaces it there.
 
 A `committed_event` reaches one executor: the owner's own for a channel the
 owner holds live (§10.6.7), else the one that holds the room's state for the
