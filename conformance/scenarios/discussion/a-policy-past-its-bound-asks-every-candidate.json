@@ -72,7 +72,7 @@
                 "sre"
               ]
             ],
-            "delay_ms": 1000
+            "delay_ms": 30000
           },
           "dispatch_timeout_ms": 50
         }
