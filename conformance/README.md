@@ -617,6 +617,8 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `process_inbound` with `defer_delivery: true` | as above | the InboundResult at the commit (§10.1 step 18); its completion handle is named by the call's `as` label |
 | `delivery.cancel` | `of`, the label of a deferred `process_inbound`; `reason` (default `caller_cancelled`), `timeout_ms` (default 5000) | the handle's InboundResult once the turns it cut are over (§10.1 Explicit delivery cancellation); a handle done returns its result unchanged |
 | `delivery.wait` | `of`, as above | the handle's InboundResult once its delivery is over (§10.1 step 18) |
+| `regenerate_response` | `room_id`, `trigger_id` (§13.6): the room's agents answer its last message again, chosen under the room lock | an InboundResult, as `process_inbound`'s, its `event` the message answered again; null when the room holds no message to answer again |
+| `regenerate_target` | `room_id`: the message `regenerate_response` would answer again, read outside the lock | the event, or null; its `as` label names it |
 | `send_event` | `room_id`, `channel_id`, `content`, `event_type`, `participant_id`, `visibility`, `response_visibility`, `addressed_to`, `parent_event_id`, `idempotency_key`, `metadata`, `chain_depth`, `standalone` | the event |
 | `post` | `room_id`, `content`, `participant_id`, `addressed_to`, `metadata`, `channel_id`, `idempotency_key`, `chain_depth` | the event |
 | `commit_event` | `room_id`, `event` (a template) | the event |

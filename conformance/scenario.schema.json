@@ -1456,7 +1456,9 @@
             "speak_queue",
             "listen_only",
             "talk_again",
-            "discussion.done"
+            "discussion.done",
+            "regenerate_response",
+            "regenerate_target"
           ]
         },
         "organization_id": {
@@ -3658,6 +3660,51 @@
                 "items": {
                   "type": "string"
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "regenerate_response"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              },
+              "trigger_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "The event the caller prepared for: a selection under the room lock that is another, or none, refuses the call trigger_moved."
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "regenerate_target"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
               }
             }
           }
