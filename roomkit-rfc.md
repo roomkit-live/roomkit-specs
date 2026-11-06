@@ -2853,7 +2853,13 @@ by the runtime:
   included, a form of another case that reads as another letter (`i` for the
   `I` that reads as `l`) left out, with spacing around its brackets and
   slash, a character Unicode marks as ignorable by default, a control or line-break
-  character or a combining mark between its letters, one slash or more (an
+  character or a combining mark between its letters, its separator, where
+  the name holds one between two letters (`tool_result`,
+  `project-instructions`), read as any run of dashes (Unicode's
+  Dash_Punctuation but U+FE31, which reads as `l`, and the minus sign),
+  underscores in any of their forms and spacing, or as none (`</tool‐result>`, `</tool result>`,
+  `</toolresult>`), a character that reads as several letters reading
+  within one word of the name, one slash or more (an
   escaped one included) and the common look-alikes of the bracket and the
   slash, and with a mark after the name (`</tag.>`): a closing tag errs
   toward what a model could read as one. An opening tag of that name, in the
