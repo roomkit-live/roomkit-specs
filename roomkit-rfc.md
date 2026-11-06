@@ -18539,8 +18539,12 @@ least:
 The context also carries the turn's chain depth: the depth of the response
 the turn produces (§8.3), on a realtime tool call the depth of the assistant's
 answer (§12.4). A result delivered later on the turn's behalf reads it there
-(Section 23.3); outside a turn it is 0. The implementation reads it; it need
-not expose an accessor for it.
+(Section 23.3); outside a turn it is 0. It is readable as
+`current_tool_chain_depth()`, the turn over or not: a host that hands the
+turn's work to another context (a task outside the turn, another process)
+reads it there with the actor, and runs that work under both, so what the work
+sends continues the turn's chain (§8.3) as it would have from the turn's own
+context.
 
 Two rules bind the values that name the turn (the room and its id, the actor,
 the toolset); the response-metadata record and the per-call record are the
