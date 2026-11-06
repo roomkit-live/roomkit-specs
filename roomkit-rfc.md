@@ -5656,11 +5656,14 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   committed yet when that code ends, ends with it, nothing of it stored, and
   nothing reports it but what ended that code: the event's
   `process_timeout`, the hook's own timeout (§9.3), or the event's caller
-  gone (§13.6). A call made by a task that work started and does not wait
-  for outlives the work: its own `process_timeout` bounds it, and it ends
-  only with the task that waits for it, the event refused at its own
-  deadline meanwhile without waiting for it, even while it holds the room's
-  lock.
+  gone (§13.6). A call made beside the event's work by a task that work
+  started and does not wait for (an off-lock hook's, a parse's) outlives
+  the work: its own `process_timeout` bounds it, and it ends only with the
+  task that waits for it, the event refused at its own deadline meanwhile
+  without waiting for it, even while it holds the room's lock. A call a
+  locked hook's task makes while the hook's body runs is nested under the
+  hook's section, as any call made under the lock; how its deadline and its
+  report relate to the event's is not settled by this text.
 - **The room's work outside the lock.** A call into the room from its work
   outside the lock and outside its admission order (a delivery set's
   deliveries and turns: a transport's `deliver()`, an agent's turn, a tool
