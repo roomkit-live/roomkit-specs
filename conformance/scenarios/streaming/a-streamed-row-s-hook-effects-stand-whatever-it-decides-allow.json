@@ -164,6 +164,15 @@
         "name": "task_created",
         "trigger": "on_task_created",
         "execution": "async"
+      },
+      {
+        "name": "after",
+        "trigger": "after_broadcast",
+        "execution": "async",
+        "channel_ids": [
+          "ai1",
+          "ai2"
+        ]
       }
     ]
   },
@@ -334,8 +343,68 @@
           "trigger": "on_task_created",
           "room_id": "room-2"
         }
+      ],
+      "side_effects": [
+        {
+          "trigger": "before_broadcast",
+          "room_id": "room-1",
+          "event": {
+            "id": "room-1#0"
+          }
+        },
+        {
+          "trigger": "before_broadcast",
+          "room_id": "room-1",
+          "event": {
+            "id": "room-1#1"
+          }
+        },
+        {
+          "trigger": "before_broadcast",
+          "room_id": "room-1",
+          "event": {
+            "id": "room-1#2"
+          }
+        },
+        {
+          "trigger": "before_broadcast",
+          "room_id": "room-2",
+          "event": {
+            "id": "room-2#0"
+          }
+        },
+        {
+          "trigger": "before_broadcast",
+          "room_id": "room-2",
+          "event": {
+            "id": "room-2#1"
+          }
+        },
+        {
+          "trigger": "before_broadcast",
+          "room_id": "room-2",
+          "event": {
+            "id": "room-2#2"
+          }
+        }
+      ],
+      "after": [
+        {
+          "trigger": "after_broadcast",
+          "room_id": "room-1",
+          "event": {
+            "id": "room-1#1"
+          }
+        },
+        {
+          "trigger": "after_broadcast",
+          "room_id": "room-2",
+          "event": {
+            "id": "room-2#1"
+          }
+        }
       ]
     }
   },
-  "notes": "Python: tests/test_streaming_before_broadcast.py::test_streamed_hook_side_effects_survive_decision[allow, live_transport False (room-1) and True (room-2)]. The hook is asked once per row; its effects stand whatever it decides, a block included, and the reply's row comes before the injected event. Not compared: that an AFTER_BROADCAST hook of the row reads the task stored already."
+  "notes": "Python: tests/test_streaming_before_broadcast.py::test_streamed_hook_side_effects_survive_decision[allow, live_transport False (room-1) and True (room-2)]. The hook is asked once per event, the row's and the injected notice's; its effects stand whatever it decides, a block included, and the reply's row comes before the injected event; the row's AFTER_BROADCAST fires once. Not compared: that the row's AFTER_BROADCAST hook reads the task stored already, red on roomkit-rs (RMK-1454)."
 }

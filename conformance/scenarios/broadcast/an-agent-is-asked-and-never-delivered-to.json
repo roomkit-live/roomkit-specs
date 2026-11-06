@@ -21,7 +21,19 @@
       {
         "id": "ai",
         "type": "ai",
-        "category": "intelligence"
+        "category": "intelligence",
+        "on_event": [
+          {
+            "respond": [
+              {
+                "content": {
+                  "type": "text",
+                  "body": "Hi"
+                }
+              }
+            ]
+          }
+        ]
       }
     ],
     "rooms": [
@@ -83,14 +95,39 @@
     },
     "deliveries": {
       "room-1": {
-        "sms": [],
+        "sms": [
+          {
+            "id": "room-1#1"
+          }
+        ],
         "ws": [
           {
             "id": "room-1#0"
+          },
+          {
+            "id": "room-1#1"
           }
         ],
         "ai": []
       }
+    },
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "body": "Hello"
+          }
+        },
+        {
+          "source": {
+            "channel_id": "ai"
+          },
+          "content": {
+            "body": "Hi"
+          },
+          "status": "delivered"
+        }
+      ]
     }
   },
   "notes": "Python: tests/test_router.py::TestOnEventVsDeliver::test_intelligence_gets_only_on_event and TestDeliveryResultTracking::test_intelligence_no_delivery_output."

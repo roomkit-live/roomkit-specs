@@ -141,63 +141,73 @@
   ],
   "expect": {
     "timeline": {
-      "room-1": [
-        {
-          "content": {
-            "body": "go"
-          }
-        },
-        {
-          "type": "message",
-          "content": {
-            "body": "Looking."
-          },
-          "status": "delivered"
-        },
-        {
-          "type": "tool_call_start",
-          "status": "blocked",
-          "blocked_by": "blocker"
-        },
-        {
-          "source": {
-            "channel_id": "system"
-          },
-          "content": {
-            "body": "tool call withheld"
-          },
-          "status": "delivered"
-        },
-        {
-          "type": "tool_call_end",
-          "status": "blocked",
-          "blocked_by": "blocker"
-        },
-        {
-          "type": "message",
-          "content": {
-            "body": "Found."
-          },
-          "status": "delivered"
-        }
-      ]
-    },
-    "deliveries": {
       "room-1": {
-        "sms1": [
+        "$unordered": [
           {
+            "content": {
+              "body": "go"
+            },
+            "id": "room-1#0"
+          },
+          {
+            "type": "message",
+            "content": {
+              "body": "Looking."
+            },
+            "status": "delivered",
             "id": "room-1#1"
           },
           {
-            "id": "room-1#3",
-            "content": {
-              "body": "tool call withheld"
-            }
+            "type": "tool_call_start",
+            "status": "blocked",
+            "blocked_by": "blocker",
+            "id": "room-1#2"
           },
           {
-            "id": "room-1#5"
+            "source": {
+              "channel_id": "system"
+            },
+            "content": {
+              "body": "tool call withheld"
+            },
+            "status": "delivered"
+          },
+          {
+            "type": "tool_call_end",
+            "status": "blocked",
+            "blocked_by": "blocker"
+          },
+          {
+            "type": "message",
+            "content": {
+              "body": "Found."
+            },
+            "status": "delivered"
           }
         ]
+      }
+    },
+    "deliveries": {
+      "room-1": {
+        "sms1": {
+          "$unordered": [
+            {
+              "content": {
+                "body": "Looking."
+              }
+            },
+            {
+              "content": {
+                "body": "tool call withheld"
+              }
+            },
+            {
+              "content": {
+                "body": "Found."
+              }
+            }
+          ]
+        }
       }
     },
     "tasks": {
@@ -224,13 +234,12 @@
             },
             {
               "event": "event_blocked",
-              "event_id": "room-1#2",
               "channel_id": "ai1",
-              "blocked_by": "blocker"
+              "blocked_by": "blocker",
+              "event_id": "room-1#2"
             },
             {
               "event": "event_blocked",
-              "event_id": "room-1#4",
               "channel_id": "ai1",
               "blocked_by": "blocker"
             }
@@ -239,5 +248,5 @@
       ]
     }
   },
-  "notes": "Python: tests/test_streaming_before_broadcast.py::test_streamed_tool_call_events_dropped_when_before_broadcast_blocks. Refused means out of the timeline the room received and undelivered, but committed BLOCKED as the audit record and announced as event_blocked, like every other refusal."
+  "notes": "Python: tests/test_streaming_before_broadcast.py::test_streamed_tool_call_events_dropped_when_before_broadcast_blocks. Refused means out of the timeline the room received and undelivered, but committed BLOCKED as the audit record and announced as event_blocked, like every other refusal. The injected notice commits after its cause, another event possibly between them (§9.4): its place past the tool call's start is not compared, nor the order of the call's end and the closing text, which the format cannot leave half open."
 }
