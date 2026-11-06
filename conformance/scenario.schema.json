@@ -736,6 +736,11 @@
           ],
           "minimum": 0
         },
+        "evict_threshold_tokens": {
+          "description": "A scripted agent's evict_threshold_tokens: the estimated tokens past which a tool's outcome reaches the model as a preview, its whole text stored for read_stored_result (§21.5). 5000 by default.",
+          "type": "integer",
+          "minimum": 0
+        },
         "describe_empty_event": {
           "description": "A scripted agent's describe_empty_event: the host's describer, asked of an event whose content reads as nothing in the turn's transcript (§6.4), which answers every event it is asked about with `says`; null keeps the event left out.",
           "type": "object",

@@ -482,6 +482,10 @@ scripted.
   asked of an event that reads as nothing in the turn's transcript (§6.4),
   answering every event it is asked about with `says`, `null` leaving the
   event out.
+- `evict_threshold_tokens`: the estimated tokens (a quarter of the
+  characters, plus one) past which an outcome of a call reaches the model as
+  a preview, its whole text stored for `read_stored_result` to read back
+  (§21.5, default 5000).
 - `serialize_room_turns`: its turns in a room run one after the other (§6.4,
   default false); `steer_room_turns`: a message for a room where its turn
   runs is steered into that turn rather than a turn of its own (§6.4,
