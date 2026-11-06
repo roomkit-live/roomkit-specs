@@ -3692,12 +3692,13 @@ is small enough to check without a JSON Schema library. `content` stays a
 string all the same, and turning it into a typed value is the caller's work.
 
 The schema MUST stay within the portable subset below, the one every provider
-that supports response schemas accepts. An implementation MUST refuse a schema
-outside it when the context is built or the field assigned, before any provider
-is called; one whose language runs no check there refuses it where the channel
-takes it (its own as the channel is built, a binding's as the turn reads its
-settings), before the model is asked, and one written on a context by hand or
-by a `BEFORE_AI_GENERATION` hook in the provider, before any request.
+that supports response schemas accepts. An implementation whose language runs a
+check as a context is built or a field assigned MUST refuse a schema outside it
+there, before any provider is called; one whose language runs none MUST refuse
+it where the channel takes it (its own as the channel is built, a binding's as
+the turn reads its settings), before the model is asked, and a schema written on
+a context by hand or by a `BEFORE_AI_GENERATION` hook in the provider, before
+any request.
 
 | Keyword | Rule |
 |---|---|
