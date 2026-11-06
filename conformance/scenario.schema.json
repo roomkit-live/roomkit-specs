@@ -3333,6 +3333,13 @@
               },
               "rules": {
                 "type": "string"
+              },
+              "dispatch": {
+                "$ref": "#/$defs/scripted_dispatch"
+              },
+              "dispatch_timeout_ms": {
+                "type": "integer",
+                "minimum": 0
               }
             }
           }
@@ -3839,6 +3846,13 @@
             "additionalProperties": {
               "type": "array"
             }
+          }
+        },
+        "dispatch_turns": {
+          "description": "Per setup strategy with a scripted `dispatch`, the turns its policy was handed, in order: `room_id`, `event`, `recent` (each matched as the timeline's events), `speakers` (each [event id, label], in the order of `recent` then `event`), `candidates` (each `{channel_id, name, role, description, handle}`) and `asked`.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "array"
           }
         },
         "observations": {
@@ -5999,6 +6013,57 @@
         }
       }
     },
+    "scripted_dispatch": {
+      "description": "A scripted dispatch policy (§19.7.5 rule 18), the implementation's MockDispatchPolicy: each decision asked takes the next of `decisions`, a list of channel ids (reason `scripted`) or a decision whole, the last one repeating, and with none it decides what the message asks with no policy; it holds at `gate` and waits `delay_ms` first, then raises `error` when given. It records each turn it is handed, which `expect.dispatch_turns` reads by the strategy's id.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "decisions": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "agents": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "reason": {
+                    "type": "string"
+                  },
+                  "judgments": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "delay_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "error": {
+          "type": "string"
+        },
+        "gate": {
+          "type": "string"
+        }
+      }
+    },
     "pipeline_options": {
       "description": "What a ConversationPipeline (§19.5) is built with: its stages, the phase naming its default agent (the first stage's when absent), and its supervisor.",
       "type": "object",
@@ -6066,6 +6131,13 @@
         },
         "done": {
           "type": "boolean"
+        },
+        "dispatch": {
+          "$ref": "#/$defs/scripted_dispatch"
+        },
+        "dispatch_timeout_ms": {
+          "type": "integer",
+          "minimum": 0
         }
       }
     }
