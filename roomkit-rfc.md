@@ -7651,7 +7651,7 @@ OwnerTool
 | `record` | The turn's response-metadata record as it stands (§6.7), sent before the `item` it was read with whenever it changed (§10.6.4) |
 | `ephemeral` | An ephemeral event of the turn (thinking, tool-call composition, custom), which the owner publishes on its realtime backend |
 | `framework_event` | A framework event the turn emitted (§8.2), with its payload, which the owner emits on its own bus |
-| `input_request` | A tool asked a human for input: the request's id, tool and prompt (§10.6.5) |
+| `input_request` | A tool asked a human for input: the request's id, tool and prompt, with its room, channel, tool call and the actor of its turn (§10.6.5) |
 | `input_closed` | A request settled on the executor other than by an `input_answer`: its id and its outcome (answered, rejected, timed out), from the host's handler, a hook's block, its bound or a release (§9.3) |
 | `input_taken` | Whether an `input_answer` settled its request: false when the request was settled first (§10.6.5) |
 | `steer_result` | The number of loops a `steer` reached, or none when the channel cannot steer the turn (§10.6.8) |
@@ -7936,7 +7936,12 @@ through `TurnHost`, whose verbs carry the depth.
 **Human input.** A tool waiting for a human's answer runs on the executor, and
 the answer may arrive on the owner, which keeps the open requests of its
 rooms' turns and offers their answer (`answer_input(request_id, value)`) and
-their rejection (`reject_input(request_id, reason)`). The request settles
+their rejection (`reject_input(request_id, reason)`). It also offers each open
+request as `ON_USER_INPUT_REQUIRED` reads it, by its id (`input_request`): its
+room, channel, tool call and the actor of its turn, which `input_request`
+carries, so the host's door can tell who was asked before it answers, and
+nothing for a request that is no longer open or, given an organization, whose
+room is another organization's (§17.2). The request settles
 where its tool waits, once, first come first served: an answer the
 human-input handler the host gave the channel takes, a hook's block, its
 bound, a release, or the owner's outcome, whichever comes first; a later one
