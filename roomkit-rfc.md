@@ -5623,13 +5623,20 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   a wait on it there returns unwaited (§10.1 step 18). Made in an event's
   admission work, its delivery does not wait for that work: it runs at its
   turn in the lane, ahead of the event's, so a wait on it from that work
-  returns with its delivery results, and the event commits and is delivered
-  after it. A wait whose delivery calls into the room and needs the ticket
-  that event holds ends at the event's `process_timeout` (§13.6): the event
-  is refused with nothing of it stored, and the wait ends with the work. The
-  delivery's call, bound by its own `process_timeout`, which started later,
-  commits only if it takes the released ticket before that expires;
-  otherwise it is refused too.
+  returns with its delivery results, its answers and its turns' ends, and
+  the event commits and is delivered after it. A wait whose delivery calls
+  into the room and needs the ticket that event holds ends at the event's
+  `process_timeout` (§13.6): the event is refused with nothing of it
+  stored, and the wait ends with the work. The delivery's call, bound by its
+  own `process_timeout`, which started later, commits only if it takes the
+  released ticket before that expires; otherwise it is refused too. An
+  adopted call that committed is not the event's work: when the event's
+  `process_timeout` passes, in its off-lock check or under the room's lock,
+  while that call's answer is still to come or still being read (a
+  streaming target that reads on), the call runs on to its end, its answers
+  stored and its handle reading them, and the event is refused on time,
+  without waiting for it; the event's delivery key then names no delivery,
+  and the handle of an event that deferred its delivery waits for nothing.
 - **The room's work outside the lock.** A call into the room from its work
   outside the lock and outside its admission order (a delivery set's
   deliveries and turns: a transport's `deliver()`, an agent's turn, a tool
