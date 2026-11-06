@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "regenerate/a-regenerated-answer-meets-its-hooks",
-  "title": "A regenerated answer re-enters as a first answer does: its BEFORE_BROADCAST hooks see it, and it comes back in the call's response events",
+  "title": "A regenerated answer re-enters as a first answer does: its BEFORE_BROADCAST hooks see it, the tasks they return are kept, and it comes back in the call's response events",
   "rules": [
     "§13.6",
     "§10.1 step 14"
@@ -46,7 +46,23 @@
     "hooks": [
       {
         "name": "seen",
-        "trigger": "before_broadcast"
+        "trigger": "before_broadcast",
+        "reactions": [
+          {
+            "when": {
+              "source_channel_id": "agent"
+            },
+            "repeat": true,
+            "result": {
+              "action": "allow",
+              "tasks": [
+                {
+                  "title": "Follow up"
+                }
+              ]
+            }
+          }
+        ]
       }
     ]
   },
@@ -111,6 +127,16 @@
               "body": "A2"
             }
           }
+        }
+      ]
+    },
+    "tasks": {
+      "room-1": [
+        {
+          "title": "Follow up"
+        },
+        {
+          "title": "Follow up"
         }
       ]
     }

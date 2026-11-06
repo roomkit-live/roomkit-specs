@@ -6,7 +6,7 @@
     "§13.6",
     "§17.2"
   ],
-  "notes": "Python: tests/test_room_org_scoping.py::test_the_rooms_own_organization_or_none_runs_each_verb and the scoping rule of regenerate_response's and regenerate_target's docstrings.",
+  "notes": "Python: tests/test_room_org_scoping.py TestScopedTurnsAndDeliveries::test_another_organizations_room_is_not_found_and_nothing_runs (the refusal writes and runs nothing) and test_the_rooms_own_organization_or_none_runs_each_verb.",
   "setup": {
     "channels": [
       {
@@ -109,6 +109,33 @@
       "agent": [
         {},
         {}
+      ]
+    },
+    "timeline": {
+      "room-1": [
+        {
+          "content": {
+            "body": "What is the weather?"
+          }
+        },
+        {
+          "content": {
+            "body": "First answer"
+          }
+        },
+        {
+          "content": {
+            "body": "Second answer"
+          }
+        }
+      ]
+    },
+    "framework_events": {
+      "room-1": [
+        {
+          "event": "event_processed",
+          "event_id": "room-1#0"
+        }
       ]
     }
   }

@@ -114,6 +114,28 @@
           "event_id": "room-1#2"
         }
       ]
+    },
+    "observations": {
+      "room-1": [
+        {
+          "channel_id": "agent",
+          "category": "event_chain_depth_exceeded",
+          "metadata": {
+            "chain_depth": 1,
+            "max_chain_depth": 1,
+            "source_channel": "agent"
+          }
+        },
+        {
+          "channel_id": "agent",
+          "category": "event_chain_depth_exceeded",
+          "metadata": {
+            "chain_depth": 1,
+            "max_chain_depth": 1,
+            "source_channel": "agent"
+          }
+        }
+      ]
     }
   }
 }

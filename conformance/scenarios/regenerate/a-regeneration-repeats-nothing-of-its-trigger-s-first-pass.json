@@ -6,9 +6,14 @@
     "§13.6",
     "§10.1 step 14"
   ],
-  "notes": "Python: tests/test_regenerate_off_lock.py::test_a_regeneration_repeats_nothing_of_its_triggers_first_pass.",
+  "notes": "Python: tests/test_regenerate_off_lock.py::test_a_regeneration_repeats_nothing_of_its_triggers_first_pass. The message comes in on sms, so ws, a transport it is delivered to, would show a second delivery.",
   "setup": {
     "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
       {
         "id": "ws",
         "type": "websocket",
@@ -34,6 +39,9 @@
         "id": "room-1",
         "bindings": [
           {
+            "channel_id": "sms"
+          },
+          {
             "channel_id": "ws"
           },
           {
@@ -56,8 +64,8 @@
       "call": "process_inbound",
       "room_id": "room-1",
       "message": {
-        "channel_id": "ws",
-        "sender_id": "alice",
+        "channel_id": "sms",
+        "sender_id": "+15551234567",
         "content": {
           "type": "text",
           "body": "What is the weather?"
@@ -87,6 +95,11 @@
     "deliveries": {
       "room-1": {
         "ws": [
+          {
+            "content": {
+              "body": "What is the weather?"
+            }
+          },
           {
             "content": {
               "body": "First answer"
@@ -130,6 +143,11 @@
     },
     "framework_events": {
       "room-1": [
+        {
+          "event": "delivery_succeeded",
+          "event_id": "room-1#0",
+          "channel_id": "ws"
+        },
         {
           "event": "event_processed",
           "event_id": "room-1#0"
