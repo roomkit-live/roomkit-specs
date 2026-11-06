@@ -18114,7 +18114,12 @@ place (Section 6.4).
 keeping recent events intact: each older turn is read on one line after its
 author's label, and the summary's message stands for them, a user text joined
 to the turn after it. The summary is cached and refreshed
-periodically or when the event count exceeds a threshold.
+periodically or when the event count exceeds a threshold. Its thresholds are
+shares of what its `max_context_tokens` leaves once the turn's footprint
+(below), its reply budget included, and the current event are paid for: past
+the first it shortens the older events' long texts, past the second it
+summarizes them, and the messages, notes and events it returns are then cut,
+from the oldest event, to what is left, its latest event always kept.
 
 **RetrievalMemory** wraps another provider and queries its knowledge sources
 (vector stores, search engines, document indexes) with the text of the current
@@ -18127,10 +18132,12 @@ event in its sources.
 (below), the current event and the messages and notes of the memory it wraps
 are paid for, dropping the oldest, its `min_events` latest always kept.
 
-**CompactingMemory** keeps the latest events that fit its window less its
-safety margin and the summary's share, its `min_events` latest always kept,
-and has a model summarize the events it trims; the summary's message comes
-after the messages of the memory it wraps, before the events it keeps.
+**CompactingMemory** keeps the latest events that fit what its
+`max_context_tokens` leaves once the same are paid for as by
+BudgetAwareMemory, less the summary's share of the window, its `min_events`
+latest always kept, and has a model summarize the events it trims; the
+summary's message comes after the messages of the memory it wraps, before the
+events it keeps.
 
 **The turn's footprint.** What the history may take is what the window leaves
 once the rest of the turn is in it: the system prompt, the tools declared, the
@@ -18144,13 +18151,20 @@ measure readable to the memory for that turn (`current_turn_footprint()`): the
 input it measured, and the reply budget the turn requests, zero when the
 channel sets none and the provider applies its own.
 
-A budget-aware memory reserves the larger of the reserve it was given and the
-measured input: the given reserve is a floor on that same input, not an
-addition to it, so a host that measures its own system prompt is not counted
-twice. For the reply it reserves the larger of its safety margin and the reply
-budget: the margin is the reply's headroom when the reply budget is unknown or
-smaller, and the reply budget when it is larger. What a hook adds to the
-context after the memory read is not measured.
+A memory that keeps the turn within a window (BudgetAwareMemory,
+CompactingMemory and SummarizingMemory above) sizes the history against what
+the window, the model's, leaves once the turn's footprint and the current
+event are in it, never against the whole window: a 32,000-token window with a
+12,000-token system prompt, 8,000 tokens of tools and a 6,000-token reply
+budget leaves the history under 6,000. It reserves the larger of the
+reserve it was given and the measured input: the given reserve is a floor on
+that same input, not an addition to it, so a host that measures its own system
+prompt is not counted twice. For the reply it reserves the larger of its
+safety margin and the reply budget: the margin is the reply's headroom when
+the reply budget is unknown or smaller, and the reply budget when it is
+larger; a memory without a margin (SummarizingMemory, whose thresholds leave
+the headroom) reserves the reply budget. What a hook adds to the context after
+the memory read is not measured.
 
 ---
 
