@@ -5660,8 +5660,7 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   for outlives the work: its own `process_timeout` bounds it, and it ends
   only with the task that waits for it, the event refused at its own
   deadline meanwhile without waiting for it, even while it holds the room's
-  lock; one such task's call nested under a locked hook's section holds that
-  section, and is bounded by the event's deadline as the section is.
+  lock.
 - **The room's work outside the lock.** A call into the room from its work
   outside the lock and outside its admission order (a delivery set's
   deliveries and turns: a transport's `deliver()`, an agent's turn, a tool
