@@ -6306,7 +6306,9 @@ which goes on, nor a plan still waiting in the lane, whose delivery follows in
 lane order, is the turns' work to join. A stream a turn of the cascade
 answered with that no consumer has begun to read is closed, and its `end`
 joined as after any `close` (§10.6.8), with no bound of its own: a turn whose
-`end` never comes leaves the cleanup incomplete. A stream the cascade is handed
+`end` never comes leaves the cleanup incomplete, and the awaited path returns,
+as a detached-completion handle's wait reports, only once that close is over;
+until then the handle is not done. A stream the cascade is handed
 once cancelled, by a delivery set still running at the cut, is closed unread
 and not joined. Other cascades, the other turns of the
 room among them, and shared providers MUST remain usable. The next call MAY
