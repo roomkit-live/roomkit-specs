@@ -2856,7 +2856,7 @@ by the runtime:
   character or a combining mark between its letters, its separator, where
   the name holds one between two letters (`tool_result`,
   `project-instructions`), read as any run of dashes (Unicode 16.0's
-  Dash_Punctuation but U+FE31, which reads as `l`, the minus sign, and
+  Dash_Punctuation, U+FE31 aside, which reads as `l`; the minus sign;
   what reads as a dash or a minus: U+02D7, U+06D4, U+1173, U+2043, U+2053,
   U+207B, U+208B, U+23AF, U+2500, U+2501, U+2796, U+2CBA, U+2CBB, U+3161,
   U+30FC, U+4E00, U+FF70), underscores in any of their forms (U+2017
