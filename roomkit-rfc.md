@@ -3693,9 +3693,10 @@ string all the same, and turning it into a typed value is the caller's work.
 
 The schema MUST stay within the portable subset below, the one every provider
 that supports response schemas accepts. An implementation MUST refuse a schema
-outside it when the context is built or the field assigned, before any provider
-is called. Where its language runs no check as a field is assigned, it refuses
-one where the channel takes it (its own, a binding's, a turn configuration's),
+outside it before any request is sent. Where its language runs a check as a
+context is built or a field assigned, it refuses one there, before any provider
+is called. Where it runs none, it refuses one where the channel takes it (its
+own as the channel is built, a binding's as the turn reads its settings),
 before the model is asked, and one written on a context by hand or by a
 `BEFORE_AI_GENERATION` hook in the provider, before any request.
 
@@ -7814,10 +7815,11 @@ Section 23.4), which a host attaches on the owner, to the channel's
 declaration (§10.6.2), never through the executor's factory. The owner lists
 them in the request's
 `owner_tools`, and the executor's channel declares them to its model with its
-other tools, in the order the request lists them, the order the owner set
-them up, whether a tool's call waits by design or is bounded. Their gate (`BEFORE_TOOL_USE`) and their report (`ON_TOOL_CALL`)
-run on the executor, as for every call of the turn; only the handler runs on
-the owner:
+other tools, in the order the request lists them, whether or not a tool waits
+by design; the owner lists those it set up for every room the channel serves
+in the order it set them up. Their gate (`BEFORE_TOOL_USE`) and their report
+(`ON_TOOL_CALL`) run on the executor, as for every call of the turn; only the
+handler runs on the owner:
 
 - `tool_call` carries the per-call context the implementation keeps for the
   call (§21.4), at least: its id, its name, the arguments its gate left, the
