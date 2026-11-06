@@ -5838,9 +5838,10 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │       │   written, the lock is released, and
    │       │   the message is routed once more, its identity not read again;
    │       │   a second answer that is not the message's, like no answer,
-   │       │   gives the message a new room. A routed message is never
-   │       │   refused room_closed at this step; a room closed after its
-   │       │   section is refused at step 6, as for any event
+   │       │   gives the message a new room, which is held to these checks
+   │       │   once created (below). A routed message is never refused
+   │       │   room_closed at this step; a room closed after its section is
+   │       │   refused at step 6, as for any event
    │       └── Otherwise, where the binding names no participant and is
    │           not `group`, record the sender on it: a binding update
    │           (§7.5 rule 6) that writes as its correspondent
@@ -5892,18 +5893,33 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
        chat it was posted in, §5.7), unless a binding of it exists by then
        (a hook's included, §7.5 rule 7) or a creation hook closed the room
        (no attach is made to a room whose status refuses events, as for a
-       room that exists); then, for a channel other than VOICE and
-       REALTIME_VOICE, whether or not the attach was made, the session
-       starts: the ON_SESSION_STARTED hooks whose name starts with `_`, an
-       agent's greeting among them (§19.1), run and are waited for, within
-       the call's `process_timeout` (§13.6): past it they are cut and the
-       message is refused, `session_started` not emitted and no other hook
-       fired, the room and its attach standing. Then emit `session_started`
-       (§8.2) and fire the other hooks (§9.2), which no message waits for. A
-       creation hook that closed the room does not stop the message in this
-       branch: it is neither refused nor routed again here, no attach is
-       made, and step 6 refuses it (room_closed), nothing of it stored, the
-       room kept as the hook left it
+       room that exists). A binding that exists by then is kept in a room
+       the caller named. In a room routed or given to the message it is
+       held to the check above of a routed room that exists: one naming
+       someone else (a sender recorded on it meanwhile, a hook's
+       recipient) makes the room no longer the message's, which is routed
+       once more, nothing of it written there and no session started for
+       it there; one naming no one records the sender, or takes the name
+       `system`, which no sender is, for a message with no address; a
+       `group` binding takes either. With a binding naming no one, a
+       PAUSED room is no one's to be admitted into, as for a routed room
+       that exists.
+       The call's deadline bounds the routing that follows, and is read
+       before the last new room is opened. When that room is no longer
+       the message's either, no room opened for it being its own, the
+       message is refused, nothing of it stored:
+       InboundResult(blocked=true, reason=room_taken). Then, for a channel
+       other than VOICE and REALTIME_VOICE, whether or not the attach was
+       made, the session starts: the ON_SESSION_STARTED hooks whose name starts
+       with `_`, an agent's greeting among them (§19.1), run and are waited
+       for, within the call's `process_timeout` (§13.6): past it they are cut
+       and the message is refused, `session_started` not emitted and no other
+       hook fired, the room and its attach standing. Then emit
+       `session_started` (§8.2) and fire the other hooks (§9.2), which no
+       message waits for. A creation hook that closed the room does not stop
+       the message in this branch: it is neither refused nor routed again here,
+       no attach is made, and step 6 refuses it (room_closed), nothing of it
+       stored, the room kept as the hook left it
 
 3. BUILD CONTEXT
    ├── Fetch room state
@@ -7059,8 +7075,11 @@ the framework creates for an inbound message is bound to its sender from the
 start. The sender is recorded when the message is routed, under the room lock,
 before anything of the message is processed: two first messages arriving
 together cannot both be admitted, since the second finds the binding naming
-the first and is routed again. Under that lock the framework checks again the
-admission that chose the room, not only the binding (§10.1 step 2): someone
+the first and is routed again. A room created for a routed message is held to
+the same check once its creation hooks are over, so the first message leaves it
+when another sender was recorded there while the hooks ran. Under that lock the
+framework checks again the admission that chose the room, not only the binding
+(§10.1 step 2): someone
 else may have been heard on the channel, or reached through it, since the
 router read the room, and recording the sender there would send that person's
 answers to them. What the room heard is read from its whole timeline on the
