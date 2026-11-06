@@ -7926,7 +7926,11 @@ the turn gave the call (its room, the actor of its turn, the requester, its
 chain depth, the tool call it is made from), which the accessors a tool handler
 reads answer for it (§21.4), and MUST refuse a name its own verbs or another
 declared verb hold, and a verb no host declared. A declared verb needs its
-turn: it is not sent between turns.
+turn unless the host declared it to be served between turns: work the turn
+began then still sends it after the turn, as a `room_call`, and the owner runs
+it for the turn's room and channel, with no actor nor tool call, as work that
+starts fresh (§8.3). The owner MUST refuse, between turns, a declared verb not
+declared so.
 
 A `TurnHost` acts for its turn's room, in that room's organization: the owner
 MUST refuse a verb that names another room or another organization than the
