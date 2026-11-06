@@ -5647,11 +5647,21 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   stored and its handle reading them, and the event is refused on time,
   without waiting for it; the event's delivery key then names no delivery,
   and the handle of an event that deferred its delivery waits for nothing.
-  An adopted call its hook or its parse waits for (awaited, deferred until
-  its decision, or nested under the lock), not committed yet when that
-  `process_timeout` passes, is part of the work the deadline ends: it ends
-  with that hook or parse, nothing of it stored, and nothing reports it but
-  the event's own `process_timeout` (§13.6).
+  An adopted call has a `process_timeout` of its own, from its start, as any
+  call has (§13.6): not committed when it passes, it is refused
+  `process_timeout` and reports it, naming its channel before the room lock
+  and its event under it. It also follows the code that waits for its
+  answer. A call its hook's body or its parse makes and waits for
+  (awaited, deferred until its decision, or nested under the lock), not
+  committed yet when that code ends, ends with it, nothing of it stored, and
+  nothing reports it but what ended that code: the event's
+  `process_timeout`, the hook's own timeout (§9.3), or the event's caller
+  gone (§13.6). A call made by a task that work started and does not wait
+  for outlives the work: its own `process_timeout` bounds it, and it ends
+  only with the task that waits for it, the event refused at its own
+  deadline meanwhile without waiting for it, even while it holds the room's
+  lock; one such task's call nested under a locked hook's section holds that
+  section, and is bounded by the event's deadline as the section is.
 - **The room's work outside the lock.** A call into the room from its work
   outside the lock and outside its admission order (a delivery set's
   deliveries and turns: a transport's `deliver()`, an agent's turn, a tool
@@ -15272,7 +15282,8 @@ hooks that ran are dropped with it, and what the call holds (its ticket, the
 room lock) is released. Every event already committed is delivered all the
 same, unless the kit's close has started (§12.10.4): the trigger's, when a
 commit in flight wrote it, which decides the call, and the event of a call it
-adopted (§9.5.1). A room step 2 creates is
+adopted (§9.5.1). A call it adopted that its work waits for and that has not
+committed ends with that work, nothing of it stored (§9.5.1). A room step 2 creates is
 completed whatever becomes of its caller, as it is whatever the deadline.
 
 A regeneration re-broadcasts an event already committed, so it has no commit
