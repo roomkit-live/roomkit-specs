@@ -614,7 +614,7 @@ Each takes the RFC's name and the RFC's arguments, and may name an
 | `handoff.send_greeting` | `handler`, `room_id`, `channel_id`: the handler's `send_greeting` (§19.1, §19.6) | null |
 | `delegate_handler` | `handler`, the name the later calls give it; `notify`, `default_share_channels`, `cache` (true: a CompletedTaskCache of the implementation's default time to live), `serialize_per_room`, `max_conversation`, each the implementation's default when absent: the implementation's DelegateHandler, serving no agent yet (§23.4) | null |
 | `setup_delegation` | `agent_id`, `handler`, `targets` (each an id and its description or null: the tool `build_delegate_tool` builds; absent: the generic one): serves `delegate_task` on the agent (§23.4) | null |
-| `delegate.handle` | `handler`, `room_id`, `calling_agent_id`, `arguments`, the tool call's: the handler's `handle` (§23.4) | what the tool answers: `status`, `task_id`, `child_room_id`, `agent_id`; a repeat answered from the cache, `result` and `from_cache` too |
+| `delegate.handle` | `handler`, `room_id`, `calling_agent_id`, `arguments`, the tool call's: the handler's `handle` (§23.4) | what the tool answers: `status`, `task_id`, `child_room_id`, `agent_id`; a repeat answered from the cache, `result` and `from_cache` too; its `as` label names the task's id |
 
 ### Calls on the store
 
