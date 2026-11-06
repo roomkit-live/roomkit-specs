@@ -2618,8 +2618,13 @@ turn's first request fails, before anything of it streamed, on a provider
 error that is not retryable and is no authentication, payment, permission,
 missing model or rate limit (HTTP 401, 402, 403, 404 or 429): a later round, or
 a stream already under way, shows the images were taken. A provider's refusal
-of a response schema outside the portable subset, before any request (Section
-6.7), is no refusal of the content. Each label names its call as the input names a call (below), each
+before any request, for something other than the content the request carries,
+is no refusal of the content, and says so on its error: a response schema the
+model does not take or outside the portable subset (Section 6.7), a model or
+tools its endpoint does not serve, a tool name the vendor refuses or a tool it
+cannot declare. The error raised says it, not one it was raised from. An image
+the provider cannot send is refused before any request too, and is a refusal
+of the content. Each label names its call as the input names a call (below), each
 copy of a runtime mark replaced, and the images count in what the turn
 measures before its history (Section 20). A model that does not see reads the
 notes alone. A
