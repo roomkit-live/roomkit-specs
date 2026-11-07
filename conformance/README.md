@@ -190,7 +190,9 @@ room callbacks of the setup are not compared.
     the rooms listed (§6.1 `supports_streaming_delivery_for`), whether it
     declares `streams` or not: the framework asks it at each stream;
     with `reads_usage`, it also records what each generation tells of its
-    usage (§6.1 `deliver_stream`, §6.4), which it skips otherwise;
+    usage (§6.1 `deliver_stream`, §6.4), which it skips otherwise; with
+    `reads_loop_end`, the turn's end the stream hands last, its reason, its
+    rounds and its usage (§6.4), which it skips otherwise;
   - `recent_events_window` (default 0): how many of the room's latest
     events it declares it reads (§6.1), which sizes the room's context;
   - with `addresses`, its own address methods answer in place of the
@@ -843,7 +845,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `contexts` | Per room and scripted channel, the context each of its `deliver()` calls and, for an intelligence channel, each of its turns (`on_event()`) was handed, in order: `call` (`deliver` or `on_event`) and `recent_events`, the ids of its events read as Normalization reads them, lifecycle records left out |
 | `text_events` | Per room, a minted one's as `$r1`, the `text_delta` ephemeral events the room's realtime is handed, in order: each `{text, round, channel_id}` (§6.4) |
 | `thinking_events` | Per room, the `thinking_start`, `thinking_delta` and `thinking_end` ephemeral events its subscribers read, in order: each `{type, thinking_length, round, channel_id}`, and `thinking` for an agent with `publish_thinking_text` |
-| `streamed` | Per room and streaming channel, the items its `deliver_stream` read, in order: `{"text": ...}` for a text delta, `{"thinking": ...}` for a piece of the model's reasoning, `{"usage": ..., "model": ..., "provider": ...}` for what a generation used, when the channel `reads_usage`, `{"row": event}` for a row the store holds, `{"failed": true}` where the stream raised |
+| `streamed` | Per room and streaming channel, the items its `deliver_stream` read, in order: `{"text": ...}` for a text delta, `{"thinking": ...}` for a piece of the model's reasoning, `{"usage": ..., "model": ..., "provider": ...}` for what a generation used, when the channel `reads_usage`, `{"row": event}` for a row the store holds, `{"loop_end": {"reason", "rounds", "usage"}}` for the turn's end, when the channel `reads_loop_end`, `{"failed": true}` where the stream raised |
 | `turns` | Per room and intelligence channel, the events its `on_event()` received |
 | `ingested` | Per room and scripted agent with a scripted `memory`, the events its memory was handed (§20, `ingest`), in order, matched as the timeline's |
 | `dispatch_turns` | Per setup strategy with a scripted `dispatch`, the turns its policy was handed (§19.7.5 rule 18), in order: `room_id`, `event` and `recent`, matched as the timeline's events, `speakers`, each `[event id, label]` in the order of `recent` then `event`, `candidates`, each `{channel_id, name, role, description, handle}`, and `asked` |
