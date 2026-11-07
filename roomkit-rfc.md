@@ -15842,6 +15842,14 @@ roomkit
 | WARNING | Delivery failed (retryable), hook timeout, chain depth approaching limit, an AI turn that ended before its answer (a delegated worker's, a reasoning backend's: an expected outcome, logged without a traceback) |
 | ERROR | Provider error (non-retryable), circuit breaker opened, store failure |
 
+A failure is logged once, by the component that catches it, at the level
+its cause calls for; a provider's error drops to DEBUG only where the
+caller receives the error itself (on `InboundResult.error`, or raised) and
+owns its line. A failure no caller receives keeps its level: the failed
+turn of an agent a `send_event` asks, the stream of a deferred call read in
+the background, the turns of the agents a held message's release runs
+(§11.7.6), whose result nobody reads.
+
 ### 15.3 Structured Log Context
 
 Each log entry SHOULD include structured context:
