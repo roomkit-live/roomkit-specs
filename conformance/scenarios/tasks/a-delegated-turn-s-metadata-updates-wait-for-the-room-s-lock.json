@@ -1,13 +1,13 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "tasks/a-delegated-turn-s-metadata-updates-wait-for-the-room-s-lock",
-  "title": "The room metadata updates a delegated turn's agent returns are written on its child room under the room's lock: while another call holds it, the turn waits, and a key that call writes there is then written over by the turn's",
+  "title": "The room metadata updates a delegated turn's agent returns are written on its child room under the room's lock, after its tasks: while another call holds the lock, the turn waits, a key that call writes there is then written over by the turn's, and the turn's tasks' ON_TASK_CREATED observers read the room the write left",
   "rules": [
     "§23.3 step 5",
     "§10.1 step 15",
     "§13.5"
   ],
-  "notes": "Python: core/mixins/_child_execution.py _broadcast_and_collect persists the broadcast's side effects as a room's (core/mixins/helpers.py _persist_side_effects): the tasks, then the observations, then _write_metadata_updates, which writes the merged updates with patch_room_metadata inside self._lock_manager.locked(room_id), before the turn's answer is committed. A call into the child room, whose before_broadcast hook holds the lock while the worker answers, writes its key first; the turn's write waits for that call's locked region, and follows it. RMK-1521.",
+  "notes": "Python: core/mixins/_child_execution.py _broadcast_and_collect persists the broadcast's side effects as a room's (core/mixins/helpers.py _persist_side_effects): the tasks, then the observations, then _write_metadata_updates, which writes the merged updates with patch_room_metadata inside self._lock_manager.locked(room_id), then the stored tasks' ON_TASK_CREATED, before the turn's answer is committed. A call into the child room, whose before_broadcast hook holds the lock while the worker answers, writes its key first; the turn's write waits for that call's locked region, and follows it; the task's observer, started after the write, reads it. RMK-1521.",
   "setup": {
     "channels": [
       {
@@ -34,6 +34,11 @@
               }
             ],
             "output": {
+              "tasks": [
+                {
+                  "title": "Call the customer back"
+                }
+              ],
               "metadata_updates": {
                 "stage": "qualified"
               }
@@ -70,6 +75,22 @@
                   "stage": "callback"
                 },
                 "as": "meta"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "created",
+        "trigger": "on_task_created",
+        "execution": "async",
+        "reactions": [
+          {
+            "do": [
+              {
+                "call": "store.get_room",
+                "room_id": "$room",
+                "as": "room"
               }
             ]
           }
@@ -153,6 +174,22 @@
               "stage": "callback"
             }
           }
+        }
+      ],
+      "room": [
+        {
+          "result": {
+            "metadata": {
+              "stage": "qualified"
+            }
+          }
+        }
+      ]
+    },
+    "tasks": {
+      "$r1": [
+        {
+          "title": "Call the customer back"
         }
       ]
     }
