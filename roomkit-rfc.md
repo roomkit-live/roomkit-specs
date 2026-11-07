@@ -15845,7 +15845,9 @@ roomkit
 A failure is logged once, by the component that catches it, at the level
 its cause calls for; a provider's error drops to DEBUG only where the
 caller receives the error itself (on `InboundResult.error`, or raised) and
-owns its line. A failure no caller receives keeps its level: the failed
+owns its line, and a stream a streaming target rendered keeps its line
+even then, but a delegation's, whose task logs every failure of its turn
+(§23.3). A failure no caller receives keeps its level: the failed
 turn of an agent a `send_event` asks, the stream of a deferred call read in
 the background, the turns of the agents a held message's release runs
 (§11.7.6), whose result nobody reads.
