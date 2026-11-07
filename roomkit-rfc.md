@@ -1639,9 +1639,10 @@ Channel (interface)
 │       # Deliver streaming text to this channel. The stream yields the
 │       # response's text as it is written, a thinking delta per chunk of
 │       # the model's reasoning (Section 6.4), what each generation used
-│       # (Section 6.4), which a channel that shows none skips, and each row
+│       # (Section 6.4), which a channel that shows none skips, each row
 │       # of the response once the store holds it (a text segment, a call's
-│       # start or end)
+│       # start or end), and last how the turn's loop ended (Section 6.4),
+│       # before the response's failure when it fails
 │       # Default: accumulate text, deliver as complete event via deliver()
 │       # A stream that raises: deliver what was accumulated, then propagate
 │       # the failure (Section 12.2 step 13s)
@@ -3186,7 +3187,14 @@ ON_EVENT_UPDATED fires as for a direct `update_event()` (§10.3), over the row a
 the store holds it then, an update since its commit standing; it does not
 deliver the row again, and the row its caller reads among its response events
 is that one. Writing that update is best effort: a failure is logged, and the
-turn's outcome stands. A host reads how any turn ended from its reply.
+turn's outcome stands. A host reads how any turn ended from its reply, and the
+channel rendering a streamed turn reads it from its stream: once the loop
+reached its end, the stream hands that channel the loop's `LoopEndMarker` (its
+reason, its rounds, what they used) as its last item, after the row of the
+turn's last text and before the response's failure when it fails, whichever
+row carries the record. A channel the room stopped letting read the stream is
+handed none; one that renders text alone skips it, as it skips a piece of
+reasoning.
 What a turn's record says of its generations rides that row alone: its
 caller reads the end and the usage under `turns`, and no more of it.
 
