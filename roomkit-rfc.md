@@ -5722,8 +5722,22 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   task that waits for it, the event refused at its own deadline meanwhile
   without waiting for it, even while it holds the room's lock. A call a
   locked hook's task makes while the hook's body runs is nested under the
-  hook's section, as any call made under the lock; how its deadline and its
-  report relate to the event's is not settled by this text.
+  hook's section, as any call made under the lock, and holds that section:
+  the hook's result is used once the call is decided, however the body
+  ended, its own timeout included, so that the call commits ahead of the
+  event; a call the task makes once the body has returned is a new
+  arrival, as above. It is bounded by the event's `process_timeout`, as
+  the section is: not committed when that passes, it is refused
+  `process_timeout` with the event, nothing of either stored and nothing
+  reported of it, the hook's own timeout, if it timed out, reported ahead
+  of the event's `process_timeout`. A section with no deadline of its own
+  (an injected event's pass) waits for it up to the call's own
+  `process_timeout`, past which the call is refused and reports it. The
+  event's caller gone, it goes on, the lock held for it up to the event's
+  deadline, where, not committed, it is refused `process_timeout`,
+  nothing of it stored and nothing reported, the event's
+  `process_timeout` included; whether the caller returns at once or at
+  that deadline is left to the implementation.
 - **The room's work outside the lock.** A call into the room from its work
   outside the lock and outside its admission order (a delivery set's
   deliveries and turns: a transport's `deliver()`, an agent's turn, a tool
