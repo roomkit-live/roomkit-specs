@@ -2866,8 +2866,10 @@ by the runtime:
 - **a block**, set apart in a tag of its own (`<tool_result>`,
   `<worker_output>`, `<knowledge>`, `<conversation_summary>`, `<context>` for
   content a realtime provider adds to its prompt, `<task>` for the goal or
-  task an orchestration strategy copies into another model's prompt,
-  `<vision>` for what a vision provider saw, `<conversation>`,
+  task an orchestration strategy copies into another model's prompt, and
+  for the task a worker's brief carries before what follows it, a
+  `delegate_task` call's or a background task's (Section 23.4), `<vision>`
+  for what a vision provider saw, `<conversation>`,
   `<task_context>` and `<previous_tasks>` for what a worker's description hands
   it, Section 23, `<transcript>` for the text a
   speech model's prompt asks it to speak, `<skill>` for a skill an MCP
@@ -19488,7 +19490,12 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   model wrote it, the label the parent room's records name the task by, and
   notifies the handler's `notify`, or else the agent that called. The worker
   reads the call's `brief`: the `task`, then each of the following that the call
-  has, in a block of its own as Section 6.4 sets a text from outside apart:
+  has, in a block of its own as Section 6.4 sets a text from outside apart.
+  Once one of them follows it, the `task`, which the model wrote too, is set
+  apart as well, in `<task>` under the line `Your task, as the delegating agent
+  wrote it:`, so that it cannot read as the block after it; with none of them
+  the call has no brief, and the worker reads the `task` as it is, its whole
+  instruction:
 
   1. `context`, which a model wrote and which may hold what a tool returned, in
      `<task_context>`, as JSON on one line (separators `, ` and
@@ -19573,7 +19580,12 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   the room's last messages (`conversation`, RoomKit: 12), and its result goes
   back to the calling agent (`notify`), as any delegation's (Section 23.3),
   relayed or posted as the setup's `hand_back` says: the host's choice for
-  that agent's tasks, never the model's. The tool answers at once, with the
+  that agent's tasks, never the model's. Its worker's brief sets the task
+  apart in `<task>` under the line `Your task, as it was asked:`, before the
+  runtime's text that says how to work and where the findings go, and before
+  those messages, so that the task cannot read as either (Section 6.4); a
+  task the host's `start_task` or a person gives is set apart the same way.
+  The tool answers at once, with the
   task's id, and tells the agent to say once, in a sentence, that the work is
   under way (before the call or after it, never both) and to end its turn. A
   call from a task's child room is refused: a worker does its work and starts
