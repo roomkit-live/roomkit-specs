@@ -1,13 +1,13 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "delivery/a-set-the-kit-s-close-drops-still-stores-its-hooks-side-effects",
-  "title": "A delivery set the kit's close drops before it ran still stores the task its event's hook gave, and its ON_TASK_CREATED fires",
+  "title": "A delivery set the kit's close drops before it ran still stores the task its event's hook gave by the time its call's handle answers, and its ON_TASK_CREATED fires",
   "rules": [
     "§10.1 step 15",
-    "§10.1 Explicit delivery cancellation",
+    "§10.1 step 18",
     "§12.10.4"
   ],
-  "notes": "Python: src/roomkit/core/lanes.py (RoomDeliveryLane.seal, _drop_entry), src/roomkit/core/mixins/lane_execution.py (_post_plan_effects); RMK-1499, decided in HITL ee915769: a task a hook decided is not lost with a delivery the room's lane drops. The second message's set waits in the lane behind the first's, held at its transport; the close drops it, its call reads kit_closed, and its hook's task is stored as a set that ran stores it.",
+  "notes": "Python: src/roomkit/core/lanes.py (RoomDeliveryLane.seal, _drop_entry, DeliveryCascade.keep_write), src/roomkit/core/mixins/lane_execution.py (_store_dropped_side_effects); RMK-1499, decided in HITL ee915769: a task a hook decided is not lost with a delivery the room's lane drops. The second message's set waits in the lane behind the first's, held at its transport; the close drops it, its deferred call reads kit_closed, and its hook's task is stored, read while the close is still in its grace (a store the close closes is read no more), as after a set that ran.",
   "setup": {
     "channels": [
       {
@@ -124,6 +124,18 @@
       }
     },
     {
+      "call": "store.list_tasks",
+      "room_id": "room-1",
+      "expect": {
+        "result": [
+          {
+            "title": "Call the customer back",
+            "status": "pending"
+          }
+        ]
+      }
+    },
+    {
       "open": "ws-holds"
     },
     {
@@ -144,14 +156,6 @@
           }
         ]
       }
-    },
-    "tasks": {
-      "room-1": [
-        {
-          "title": "Call the customer back",
-          "status": "pending"
-        }
-      ]
     },
     "hooks": {
       "follow_up": [
