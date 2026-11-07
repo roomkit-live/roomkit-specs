@@ -15302,7 +15302,12 @@ store, the room's delivery cursor orders them: `delivered_index` (§5.1), the
 highest index whose delivery set has run, `-1` before any. A lane runs the set
 of the index after the cursor, then advances the cursor by one, a
 compare-and-set in the store (`advance_delivered_index`, §14.1) that succeeds
-only from the index before. The sets of one room run under its delivery claim,
+only from the index before. A cursor write the store fails changes nothing
+the set did: it is logged, the set's aftermath runs (§10.1 steps 15 and 16),
+its call is not cancelled, and the lane takes the cursor as past that index,
+so that its next set runs at once and no index of its own is skipped; it
+writes the cursor again, from the index the store holds, one index at a time,
+when it next moves it. The sets of one room run under its delivery claim,
 a lock of the room's lock manager held apart from the room lock, so that one
 event's set completes before the next one's begins across the deployment; a
 lane never holds the claim and the room lock together. Every committed index
