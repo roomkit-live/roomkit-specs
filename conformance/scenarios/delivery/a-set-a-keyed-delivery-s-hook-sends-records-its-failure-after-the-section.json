@@ -1,8 +1,9 @@
 {
   "$schema": "../../scenario.schema.json",
-  "id": "delivery/a-set-a-keyed-delivery-s-hook-injects-records-its-failure-after-the-section",
+  "id": "delivery/a-set-a-keyed-delivery-s-hook-sends-records-its-failure-after-the-section",
   "title": "The record of the failed delivery set of an event a keyed delivery's locked hook sends into the room is written under the room's lock once the publication's section lets it go: a later hook of that section reads the event unrecorded",
   "rules": [
+    "§5.13",
     "§22.1",
     "§9.5.1",
     "§14.3",
