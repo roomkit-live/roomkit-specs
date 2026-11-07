@@ -1055,20 +1055,12 @@ naming the scenario, the implementation and its commit, the rule broken and
 the probe; the runner expects it to fail and fails once it passes, so a fix
 shows and takes it off both lists.
 
-| Scenario | Implementation | Rule broken | Card |
-|---|---|---|---|
-| `verification/a-release-from-a-hook-that-closes-the-room-is-answered-by-no-agent` | roomkit-rs | §11.7.6: a hook's release is answered once its section is over | RMK-1200 |
-| `rooms/a-channel-sends-into-the-room-it-is-told-of` | roomkit-rs | §9.5.1: a room callback's send into its room, under the room's lock, is adopted | RMK-1245 |
-| `memory/a-compacting-memory-summarizes-what-it-trims` | roomkit-rs | none: its copy's version, which f5949ff replaces (§20.3) | RMK-450 |
-| `memory/a-summary-stands-for-the-older-turns` | roomkit-rs | none: its copy's version, which f5949ff replaces (§20.3) | RMK-450 |
+No scenario is a known failure of either implementation.
 
-roomkit's earlier three were fixed by RMK-976 and RMK-977, and roomkit-rs's
-earlier three by step 3's milestone 2.
-
-roomkit-rs's two memory entries break no rule: its copy, synced from
-247e409, holds these scenarios as they were before f5949ff, which sizes the
-history against what the turn leaves of the window (§20.3). roomkit-rs passes
-them at f5949ff; its next sync takes both entries off (RMK-450).
+roomkit's earlier three were fixed by RMK-976 and RMK-977, roomkit-rs's
+earlier three by step 3's milestone 2, its RMK-1200 and RMK-1245 entries by
+their cards, and its two memory entries, which held the scenarios as they
+were before f5949ff (RMK-450), by its sync past it (RMK-1370).
 
 ## Writing a scenario
 
