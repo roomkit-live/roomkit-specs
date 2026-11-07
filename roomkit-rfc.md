@@ -6305,13 +6305,19 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   the content of the event the task was made for (the event a hook
     │   ran on, or the one a channel's output answered), the task's
     │   `task_id` and `task_title` in its metadata
-    └── Apply the room metadata updates of the cascade's channel outputs
-        (§6.1), from on_event() and deliver() alike: merged key by key in
-        the order the targets answered, and written once per delivery set,
-        under the room lock, as a partial update of the room (update_room,
-        §14.1); a key of the implementation's namespace, or one a key of
-        the room's private state reserves (§5.1, §14.1), is dropped with a
-        warning, the rest applied
+    ├── Apply the room metadata updates of the cascade's channel outputs
+    │   (§6.1), from on_event() and deliver() alike: merged key by key in
+    │   the order the targets answered, and written once per delivery set,
+    │   under the room lock, as a partial update of the room (update_room,
+    │   §14.1); a key of the implementation's namespace, or one a key of
+    │   the room's private state reserves (§5.1, §14.1), is dropped with a
+    │   warning, the rest applied
+    └── Each task and each observation is written on its own: a write the
+        store fails, a task's, an observation's or the metadata updates',
+        is logged at ERROR (§15.2) naming the task, the observation or the
+        keys, and the others are still written; the call goes on, and its
+        `error` stays its turn's (step 18). A task the store did not write
+        fires no `ON_TASK_CREATED`.
 
 16. RUN AFTER_BROADCAST ASYNC HOOKS
     ├── After the event's delivery set completes — "all channels have
