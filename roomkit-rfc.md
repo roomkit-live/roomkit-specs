@@ -19184,7 +19184,11 @@ called:
    asked, its record and its observation stored there and
    `chain_depth_exceeded` emitted (§8.3), and the room metadata updates the
    agents return are written as a room's are, a key only the framework
-   writes dropped (§10.1 step 15).
+   writes dropped (§10.1 step 15). What the agents return beside their
+   answers is stored before the answers are committed, either way: their
+   tasks and observations, then their room metadata updates under the room
+   lock, behind a call that holds it, then the stored tasks'
+   `ON_TASK_CREATED`.
 6. Collect the agent's response as the task result: the answer the child
    room kept. With a shared transport, that is what the hooks decided — a
    rewrite holds for the result as for the delivery, and an answer the gate
