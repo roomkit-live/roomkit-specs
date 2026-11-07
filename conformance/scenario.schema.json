@@ -1280,7 +1280,7 @@
           "additionalProperties": false,
           "properties": {
             "wait_for_lock": {
-              "description": "The room whose lock the calls wait for.",
+              "description": "The room whose lock the calls wait for, or a reference to it ($r1).",
               "type": "string"
             },
             "waiters": {

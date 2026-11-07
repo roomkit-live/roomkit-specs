@@ -613,7 +613,7 @@ client's `clientInfo.version` is its implementation's own.
 | `{"wait_for": gate}` | Waits until a call is held at the gate (a runner fails after 5 s) |
 | `{"open": gate}` | Opens the gate: every call held there, and every later one, goes on |
 | `{"idle": true}` | Waits until the kit runs nothing in the background; with `processes`, until none of the kits does, each discussion's driver roused first, so that it reads what another process stored |
-| `{"wait_for_lock": room, "waiters": n}` | Waits until `n` calls (1 by default) wait for the room's lock (a runner fails after 5 s): calls started in the background are then known to overlap |
+| `{"wait_for_lock": room, "waiters": n}` | Waits until `n` calls (1 by default) wait for the room's lock (a runner fails after 5 s): calls started in the background are then known to overlap. `room` may be a reference, a room the run created (`$r1`) |
 | `{"lock_releases": "fail"}`, `{"lock_releases": "succeed"}` | Sets the releases of the kit's `lock_manager` failing or succeeding, from the next one on |
 
 A call that has not returned after 10 s fails the scenario.
