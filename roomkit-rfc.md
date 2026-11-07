@@ -5733,11 +5733,11 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   of the event's `process_timeout`. A section with no deadline of its own
   (an injected event's pass) waits for it up to the call's own
   `process_timeout`, past which the call is refused and reports it. The
-  event's caller gone, it goes on, the lock held for it up to the event's
-  deadline, where, not committed, it is refused `process_timeout`,
-  nothing of it stored and nothing reported, the event's
-  `process_timeout` included; whether the caller returns at once or at
-  that deadline is left to the implementation.
+  event's caller gone, it goes on, the lock held for it until it is over
+  or the event's deadline passes, where, not committed, it is refused
+  `process_timeout`, nothing of it stored and nothing reported of it, nor
+  the event's `process_timeout`; whether the caller returns at once or
+  once the call is over is left to the implementation.
 - **The room's work outside the lock.** A call into the room from its work
   outside the lock and outside its admission order (a delivery set's
   deliveries and turns: a transport's `deliver()`, an agent's turn, a tool
@@ -15418,11 +15418,14 @@ decision makes the call expire as a passed `process_timeout` does, without
 the `process_timeout` framework event, since no deadline passed: nothing more
 of the trigger is written, the injected events, tasks and observations of the
 hooks that ran are dropped with it, and what the call holds (its ticket, the
-room lock) is released. Every event already committed is delivered all the
+room lock) is released, the lock only once a call its locked hook's task
+nested is over or cut at the call's deadline (§9.5.1). Every event already
+committed is delivered all the
 same, unless the kit's close has started (§12.10.4): the trigger's, when a
 commit in flight wrote it, which decides the call, and the event of a call it
 adopted (§9.5.1). A call it adopted that its work waits for and that has not
-committed ends with that work, nothing of it stored (§9.5.1). A room step 2 creates is
+committed ends with that work, nothing of it stored, but for a call its locked
+hook's task nested, which goes on as above (§9.5.1). A room step 2 creates is
 completed whatever becomes of its caller, as it is whatever the deadline.
 
 A regeneration re-broadcasts an event already committed, so it has no commit
