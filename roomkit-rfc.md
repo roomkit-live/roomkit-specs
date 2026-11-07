@@ -15305,9 +15305,11 @@ compare-and-set in the store (`advance_delivered_index`, §14.1) that succeeds
 only from the index before. A cursor write the store fails changes nothing
 the set did: it is logged, the set's aftermath runs (§10.1 steps 15 and 16),
 its call is not cancelled, and the lane takes the cursor as past that index,
-so that its next set runs at once and no index of its own is skipped; it
-writes the cursor again, from the index the store holds, one index at a time,
-when it next moves it. The sets of one room run under its delivery claim,
+so that its own next set runs at once and skips nothing; it writes the cursor
+again, from the index the store holds, one index at a time, when it next
+moves it. Until then another process's lane waits on that index as on any
+hole, and skips it past `gap_timeout`; a store or claim failure after a set
+ran leaves the set as it ran too. The sets of one room run under its delivery claim,
 a lock of the room's lock manager held apart from the room lock, so that one
 event's set completes before the next one's begins across the deployment; a
 lane never holds the claim and the room lock together. Every committed index
