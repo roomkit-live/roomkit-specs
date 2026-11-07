@@ -408,6 +408,8 @@ scripted.
   its tool handler serves it all the same, for a hook that declares it.
   `writes_record`: each call first writes these keys on the turn's record
   through `current_response_metadata()` (§6.7), before a `gate` holds it.
+  `changes_state: true` declares it on its definition as a tool that
+  changes state (Python's `AITool(changes_state=True)`, §6.4).
 - `tool_policy`: a ToolPolicy's `allow` and `deny` patterns (§21.1);
   `max_tool_rounds`: the loop's bound on rounds of calls (Appendix A.9,
   default 50); `max_empty_retries`: how many times a round with no call to

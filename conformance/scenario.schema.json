@@ -4582,6 +4582,10 @@
             "type": "string"
           }
         },
+        "changes_state": {
+          "description": "Whether the tool's definition declares that a call it answers may change what later calls read (§6.4, the anti-loop guard): false by default.",
+          "type": "boolean"
+        },
         "returns": {
           "type": "string"
         },
