@@ -5670,7 +5670,15 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   belongs to no cascade: its call draws on a budget of its own, and the
   events its hooks inject commit once the host has released the lock, after
   the call returns. An adopted call answers at its commit, with its
-  completion detached (§10.1 step 18) and no delivery results. Made under
+  completion detached (§10.1 step 18) and no delivery results. Made in an
+  event's admission work, it answers only once the events its own hooks
+  injected, and those their hooks injected, are committed too, each in a
+  section of its own (§9.4): committed, not delivered, their passes waiting
+  for no delivery set in the lane. An adopted message's result then carries
+  the first failed release of their sections as its error when it met none
+  before (§13.5), and the event that adopted it does not; an adopted
+  injection (§10.5) returns its event, and that failure is its caller's.
+  Made under
   the lock, its delivery waits in the lane behind the work that made it, and
   a wait on it there returns unwaited (§10.1 step 18). Made in an event's
   admission work, its delivery does not wait for that work: it runs at its
