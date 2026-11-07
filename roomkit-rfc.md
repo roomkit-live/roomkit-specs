@@ -2505,7 +2505,16 @@ on the arguments it would run with, once repaired and once `BEFORE_TOOL_USE` lef
 them. A call its gate refuses is counted on the arguments the model wrote, and past
 the limit the model reads the guard's words in place of the gate's. A model that
 re-issues a refused call three times past the limit is force-stopped, the forced
-round above.
+round above. A tool whose definition declares that its calls change what later
+calls read (`changes_state`, false by default: a file edited, a row written)
+starts the turn's counts again once a call of it is served, the counts of identical
+answers below included, all but that call's own: a test rerun after each edit is
+no repeat, and the same edit made a third time is still refused when no other
+change came between (two changes made in turn start each other's counts again,
+and only the round limit, the loop's time bound or a budget ends them). A call of it that
+failed, was refused or was blocked starts nothing again. The guard's words tell the
+model to stop repeating the call; they do not ask it to answer now, which is the
+forced round's to ask.
 
 A model that varies its arguments never reaches that limit, so the guard also tells
 it, and never refuses: from the third time one tool answers a call past its gate
