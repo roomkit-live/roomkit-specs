@@ -609,7 +609,7 @@ client's `clientInfo.version` is its implementation's own.
 | Step | What it does |
 |---|---|
 | a call | Makes the call and waits for it; `expect` checks its outcome |
-| a call with `"background": true` and `as` | Starts the call and goes on |
+| a call with `"background": true` and `as` | Starts the call and goes on once the call has run to its first wait: what the next step does or wakes comes after that part of the call |
 | `{"await": label}` | Waits for the background call; `expect` checks its outcome |
 | `{"concurrent": [calls]}` | Starts the calls together and waits for all |
 | `{"wait_for": gate}` | Waits until a call is held at the gate (a runner fails after 5 s) |
@@ -882,7 +882,10 @@ the RFC leaves to each implementation:
   room's `event_count` loses one for each lifecycle record below it. Every other gap stays: a hard delete leaves its index given out
   (§8.1). Appendix B counts the same way.
 - **Rooms** the run created and the scenario does not name are `$r1`, `$r2`...
-  in the order of their `room_created`.
+  in the order of their `room_created`. In `rooms`, the key `$created` reads
+  their records as one list in that order, for a `$unordered` match where
+  the RFC leaves the order of their creation open (rooms created side by
+  side).
 - **Events** of a timeline are `<room>#<index>`, its index read as above,
   wherever their id appears, an object's key included.
   Any other event id (an instruction, a refused event, an event a hard delete
@@ -1075,6 +1078,10 @@ were before f5949ff (RMK-450), by its sync past it (RMK-1370).
 - Cite each rule the scenario relies on in `rules`, as precisely as the RFC
   allows; `check.py` must resolve it.
 - Give every member you assert in a template, and a reason to every block.
+- Hold on every runtime: a runner on one thread and one on several
+  (roomkit-rs runs the suite on both) give the same outcomes. Two things
+  that run side by side end, and start, in either order on several threads:
+  assert their order only where the RFC gives one.
 - Keep timing out of it: a gate orders two calls, never a delay. A hook's or a
   call's timeout, when the scenario is about it, is a few tens of milliseconds.
 - Run `check.py --fix`, then both runners, before committing. A scenario that
