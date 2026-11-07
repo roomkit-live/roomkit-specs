@@ -5693,7 +5693,10 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   the event commits and is delivered after it. The event's caller is
   answered once the event's own work is over, blocked or delivered, and
   does not wait for an adopted call that work did not wait for: that
-  call's answers, and the reading of their streams, are its own.
+  call's answers, and the reading of their streams, are its own. A wait
+  on the handle of an event that deferred its delivery (§10.1 step 18)
+  is answered the same way, without waiting for that call, and reads the
+  event's own end even once the kit's close has cut that call.
   A wait whose delivery calls
   into the room and needs the ticket that event holds ends at the event's
   `process_timeout` (§13.6): the event is refused with nothing of it
