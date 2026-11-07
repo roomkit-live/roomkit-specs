@@ -6465,7 +6465,8 @@ committed, as when the room refused the message (§5.1); an instruction,
 which is never committed, is the exception once its pass decided it,
 allowed or blocked, and an instruction the room's status refused has no
 event (§10.1.1). A failure after the decision leaves `event` as it is and
-is reported on `error` (§13.6, post-commit phase). `error` carries a
+is reported on `error` (§13.6, post-commit phase), but a side effect the
+store fails to write, which is logged (§10.1 step 15). `error` carries a
 failed release of the room lock only when no earlier error was met (§13.5).
 
 `response_metadata` MUST merge the response-metadata records produced by the
