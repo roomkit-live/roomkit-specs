@@ -180,7 +180,7 @@ room callbacks of the setup are not compared.
   - with `streams`, it takes a streamed response as it is written (§6.1
     `supports_streaming_delivery`): its `deliver_stream` reads what it is
     handed to the stream's end, recording each item under `streamed`, and
-    its `deliver_stream` reactions may stop it (`stop_after`), hold its read
+    its `deliver_stream` reactions may stop it (`stop_after`, `stop_after_rows`), hold its read
     at a gate once it was handed a text (`hold_after`, `hold_gate`), make it
     raise once it stopped (`fail`) or return an `output`; with `streams_in`, it takes one only in
     the rooms listed (§6.1 `supports_streaming_delivery_for`), whether it
@@ -313,6 +313,7 @@ left, the call does what it does by default. A reaction:
 | `output` | `tasks`, `observations` and `metadata_updates` of the channel's output; in an `on_event` reaction, `response_metadata`, the record its turn writes (§6.4), and `error`: the error the channel met while producing it, with that message, which goes on with its responses and surfaces as a raised one's (ON_ERROR) |
 | `writes_record` | In a hook's reaction: first of all, before its `gate`, writes these keys on the turn's record (§6.7), on `before_ai_generation` through its context's `response_metadata`, on another trigger through `current_response_metadata()` when it answers one |
 | `stop_after` | In a `deliver_stream` reaction: the channel stops reading the stream once it was handed the text delta or the piece of reasoning this string equals |
+| `stop_after_rows` | In a `deliver_stream` reaction: the channel stops reading the stream once it was handed this many of its rows, a call's start or end |
 | `parsed` | In a `parse` reaction: a patch on the event the channel builds, what it reads off its own wire: its members replace the event's, those of its `source` the source's; its strings name what the run made (References) |
 | `result` | A hook's HookResult (§9.4). A modify's `event` is a patch on the payload: its members replace the payload's. Its injected events, tasks and observations are templates |
 

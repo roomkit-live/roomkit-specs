@@ -1058,6 +1058,11 @@
           "description": "In a `deliver_stream` reaction: the channel stops reading the stream once it was handed the text delta or the piece of reasoning this string equals (§12.2 step 13s).",
           "type": "string"
         },
+        "stop_after_rows": {
+          "description": "In a `deliver_stream` reaction: the channel stops reading the stream once it was handed this many of its rows, a call's start or end (§12.2 step 13s).",
+          "type": "integer",
+          "minimum": 1
+        },
         "parsed": {
           "description": "In a `parse` reaction: a patch on the event the channel builds (§10.1 step 4), what a channel reads off its own wire. Its members replace the built event's, those of its `source` the built source's; its strings name what the run made, as an action's arguments do.",
           "$ref": "#/$defs/record"
