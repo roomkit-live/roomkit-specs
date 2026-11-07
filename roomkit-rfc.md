@@ -6332,8 +6332,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     └── A delivery set the room's lane drops before it ran (the kit's close,
         §12.10.4; an index another process declared lost, §13.5) stores
         what its event's hooks gave all the same, and fires their tasks'
-        `ON_TASK_CREATED`, before the call that made the set returns: a
-        task a hook decided is not lost with the delivery.
+        `ON_TASK_CREATED`, stored before the call that made the set
+        returns, or a deferred call's completion handle answers its wait
+        (step 18): a task a hook decided is not lost with the delivery.
 
 16. RUN AFTER_BROADCAST ASYNC HOOKS
     ├── After the event's delivery set completes — "all channels have
