@@ -6318,11 +6318,6 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   channel's outputs, those of on_event(); a transport's deliver()
     │   gives the room its metadata updates alone, and a streaming target's
     │   deliver_stream() nothing but its failure (§12.2 step 13s)
-    ├── Fire `ON_TASK_CREATED` (§9.2) for each task stored, its payload an
-    │   internal `task_created` event of the room carrying the source and
-    │   the content of the event the task was made for (the event a hook
-    │   ran on, or the one a channel's output answered), the task's
-    │   `task_id` and `task_title` in its metadata
     ├── Apply the room metadata updates of the cascade's channel outputs
     │   (§6.1), from on_event() and deliver() alike: merged key by key in
     │   the order the targets answered, and written once per delivery set,
@@ -6330,6 +6325,11 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   §14.1); a key of the implementation's namespace, or one a key of
     │   the room's private state reserves (§5.1, §14.1), is dropped with a
     │   warning, the rest applied
+    ├── Then fire `ON_TASK_CREATED` (§9.2) for each task stored, its
+    │   payload an internal `task_created` event of the room carrying the
+    │   source and the content of the event the task was made for (the
+    │   event a hook ran on, or the one a channel's output answered), the
+    │   task's `task_id` and `task_title` in its metadata
     ├── Each task and each observation is written on its own: a write the
     │   store fails, a task's, an observation's or the metadata updates',
     │   is logged at ERROR (§15.2) naming the task, the observation or the
@@ -19187,8 +19187,8 @@ called:
    writes dropped (§10.1 step 15). What the agents return beside their
    answers is stored before the answers are committed, either way: their
    tasks and observations, then their room metadata updates under the room
-   lock, behind a call that holds it, then the stored tasks'
-   `ON_TASK_CREATED`.
+   lock, behind a call that holds it; then the stored tasks'
+   `ON_TASK_CREATED` is fired.
 6. Collect the agent's response as the task result: the answer the child
    room kept. With a shared transport, that is what the hooks decided — a
    rewrite holds for the result as for the delivery, and an answer the gate
