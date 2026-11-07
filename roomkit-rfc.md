@@ -6321,14 +6321,19 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   §14.1); a key of the implementation's namespace, or one a key of
     │   the room's private state reserves (§5.1, §14.1), is dropped with a
     │   warning, the rest applied
-    └── Each task and each observation is written on its own: a write the
-        store fails, a task's, an observation's or the metadata updates',
-        is logged at ERROR (§15.2) naming the task, the observation or the
-        keys, and the others are still written; the call goes on, and a
-        failed write is never its `error` (InboundResult, below, §13.6). A
-        task the store did not write fires no `ON_TASK_CREATED`. A
-        delegated task's child room writes its turns' side effects so
-        (§23.3).
+    ├── Each task and each observation is written on its own: a write the
+    │   store fails, a task's, an observation's or the metadata updates',
+    │   is logged at ERROR (§15.2) naming the task, the observation or the
+    │   keys, and the others are still written; the call goes on, and a
+    │   failed write is never its `error` (InboundResult, below, §13.6). A
+    │   task the store did not write fires no `ON_TASK_CREATED`. A
+    │   delegated task's child room writes its turns' side effects so
+    │   (§23.3).
+    └── A delivery set the room's lane drops before it ran (the kit's close,
+        §12.10.4; an index another process declared lost, §13.5) stores
+        what its event's hooks gave all the same, and fires their tasks'
+        `ON_TASK_CREATED`, before the call that made the set returns: a
+        task a hook decided is not lost with the delivery.
 
 16. RUN AFTER_BROADCAST ASYNC HOOKS
     ├── After the event's delivery set completes — "all channels have
