@@ -677,6 +677,7 @@ RoomEvent
 | OBSERVATION | Side effect | An observation was recorded |
 | TOOL_CALL_START | Activity | A tool call started (ToolCallContent, status `pending`) |
 | TOOL_CALL_END | Activity | A tool call ended (ToolCallContent, with its status and outcome) |
+| INSTRUCTION_READ | Activity | The instruction an AI channel's turn read, kept by that channel alone, visible to it alone (§10.1.1) |
 
 **EventStatus** enumeration:
 
@@ -2547,23 +2548,25 @@ that runs its own loop (Section 6.4, ACP).
 **The tools of earlier turns (normative).** An AI channel's history MUST carry
 the rounds of tool calls its own earlier turns made, each at its place in the
 conversation (after the turn's input, before its answer), the way the turn
-itself sent it: the assistant's calls, then their results, as the tool
-messages the provider's API carries. A recall of them riding the turn's
-input instead reads to a model as something the participant asked, and
-models answer it. A round replays what the model was given:
+itself sent it: the assistant's message holding the text the model wrote with
+its calls, then the calls, then their results, as the tool messages the
+provider's API carries. A recall of them riding the turn's input instead
+reads to a model as something the participant asked, and models answer it. A
+round replays what the model was given, as it was given:
 
 - the arguments it wrote, never a BEFORE_TOOL_USE rewrite of them, with its
   intent back among them while the agent asks for one (A call's intent,
-  above);
-- the result it read: an ON_TOOL_CALL rewrite, or an oversized result's
-  placeholder while the room still stores what it points to (Section 21.5);
-  once it no longer does, the result's size alone.
+  above), under the id the model gave the call;
+- the result it read, whole: an ON_TOOL_CALL rewrite, or an oversized
+  result's placeholder while the room still stores what it points to
+  (Section 21.5); once it no longer does, the result's size alone.
 
-The calls replayed are the ones the tool memory keeps: served, failed,
-blocked; never a refusal, a call nothing served or one cancelled, nor a
-discovery or housekeeping call of the channel's own. They are the channel's
-own only, read from its stored rows (`TOOL_CALL_START`'s arguments and
-intent, `TOOL_CALL_END`'s result and outcome), so they outlive the executor. An
+Every call its turn ended is replayed, whatever its outcome or tool: a
+refusal, a call nothing served, a discovery or housekeeping call of the
+channel's own included; never a call cancelled before it answered, whose
+result no model read. They are the channel's own only, read from its stored
+rows (`TOOL_CALL_START`'s arguments and intent, `TOOL_CALL_END`'s result and
+outcome), so they outlive the executor. An
 end row pairs with the start row of its turn and id, first in, first out within
 a round of that turn, so that two calls under one id each read their own result;
 a call an earlier round left without its end stays without one. A turn
@@ -2572,12 +2575,20 @@ than failing.
 
 A round older than the history window is not replayed: a history never opens
 on the assistant's calls. A discussion's turn, which reads its event at its
-place (Section 19.7.5), reads after it the rounds of the turns that followed. An implementation bounds the rounds; the reference
-keeps the last 8 calls, the 3 most recent with their result whole up to 6,000
-characters (never more than its eviction threshold lets the turn see), the
-older ones a preview that says the rest is not shown. A standalone turn
-replays none (Section 10.1.1), and the turn's footprint counts them
-(Section 20).
+place (Section 19.7.5), reads after it the rounds of the turns that followed.
+Nothing shortens a round from one turn to the next: a later turn's first
+request opens with what the previous turn's last request sent, then its
+answer, so that a provider that caches a prompt's prefix keeps the history
+(The prompt from turn to turn, below), but for what that request carried and
+the room does not keep: the notes that rode its input, a round's reasoning
+(Section 6.7). The history window, the memory's budget, which charges each
+round to the event it reads with (Section 20), and a compaction, once a
+provider refuses the context as too long (above), are what bound the rounds.
+An id the provider gave two calls, in one turn or two, is replayed as given:
+the provider took it so. The instructions its earlier turns read
+are replayed the same way, at their place (Section 10.1.1, The instruction a
+turn read). A standalone turn replays none (Section 10.1.1), and the turn's
+footprint counts them (Section 20).
 
 **The prompt from turn to turn.** For the same reason, the system prompt SHOULD
 stay the same from one turn to the next: a system prompt that changes
@@ -6521,7 +6532,9 @@ response typed `INSTRUCTION` does not re-enter (§8.5).
    hooks are still processed.
 5. **It is not committed.** At step 12 nothing is stored, no index is
    consumed (the one step 8 assigned is provisional, for the hooks), and no
-   room counter moves (§14.3 holds trivially). It is no activity: neither
+   room counter moves (§14.3 holds trivially); the copy an AI channel keeps
+   of it is a record of its own (The instruction a turn read, below). It is
+   no activity: neither
    `last_activity_at` nor a PAUSED room's status moves, and a committed
    response resumes the room (§5.1).
    Its delivery set joins the room's delivery lane without an index, behind
@@ -6550,12 +6563,12 @@ response typed `INSTRUCTION` does not re-enter (§8.5).
 6. **An intelligence channel takes it as a directive for one turn.** The text
    is the turn's input after the rebuilt history (unless it stands alone, step
    7), marked as the application's instruction and never attributed to a
-   speaker, so the model cannot read it as something a participant said; it
-   is absent from the history rebuilt for any later turn, and a memory
-   provider does not ingest it. (A system-role message after the history is
-   not portable: several model APIs refuse one, others silently turn it into a
-   user turn, and a request that ends on the assistant's last reply reads as a
-   continuation of it.) The response is an ordinary response event:
+   speaker, so the model cannot read it as something a participant said; a
+   memory provider does not ingest it. An AI channel keeps it for its later
+   turns (The instruction a turn read, below). (A system-role message after
+   the history is not portable: several model APIs refuse one, others
+   silently turn it into a user turn, and a request that ends on the
+   assistant's last reply reads as a continuation of it.) The response is an ordinary response event:
    committed, broadcast, subject to reentry and chain depth. The pipeline
    MUST record the instruction that produced it in its metadata as a
    fingerprint, `instruction = {sha256, length}`, as it writes a response's
@@ -6628,6 +6641,35 @@ response typed `INSTRUCTION` does not re-enter (§8.5).
    a realtime model plugged in) is a transport and never sees an
    intelligence-only event; its instruction is `inject_text(role="system")`
    on the model's session (§12.4).
+
+**The instruction a turn read (normative).** An AI channel whose turn an
+instruction opened, unless it stands alone, MUST keep its text as the turn
+read it (its text form, step 6) as a row of its own, `INSTRUCTION_READ`,
+stored before anything else the turn writes, as a record committed outside
+the pipeline (Section 10.5), unless by then the room refuses writes, is gone
+or the kit closes: the
+channel's source, a text content, its visibility the channel alone, the
+turn's correlation id, which its later turns read its turn by, `responds_to`
+the instruction, and the instruction's fingerprint, as the turn's tool rows
+carry it (step 6). It takes the room's next index; no hook reads
+it, no channel is delivered it, no reader of the turn's stream is handed it,
+it is no activity (Section 5.1) and none of the turn's response events, and
+no other agent's history reads it. Its later turns replay it where the turn read it, a user message marked
+as the application's exactly as the turn read it, before what that turn
+wrote: one after the history's first turn, or one whose turn the history
+holds, which may then open the history. A later turn's request thus opens
+with the instructed turn's (Section 6.4, The prompt from turn to turn). It
+opens no turn and is no message: a memory's window does not count it, it
+costs the history with the event it reads with (Section 20), and a summary
+quotes it as the application's, never as a participant's. Its turn's rounds of
+tool calls read after it, the turn whose instruction opened the room
+included. The instruction itself stays
+uncommitted (step 5): the row is the channel's, takes an index and counts
+among the room's events as any record (Section 10.5), and is no copy a
+response carries (step 6), being no response. An instruction a channel never
+kept, one from before the channel kept them, is not replayed. A standalone instruction is not kept:
+its turn reads nothing of the room, and its text, often long (a summary to run
+again), would double the history.
 
 ### 10.2 Broadcast Pipeline
 
@@ -18167,14 +18209,19 @@ events it keeps.
 **The turn's footprint.** What the history may take is what the window leaves
 once the rest of the turn is in it: the system prompt, the tools declared, the
 notes the channel itself adds to the turn's input (the room's plan, the
-speaker attribution), the earlier rounds of tool calls its history replays
-(Section 6.4) and the reply budget. A
+speaker attribution) and the reply budget. The earlier rounds of tool calls
+and the instructions its history replays (Sections 6.4 and 10.1.1) are
+measured apart, each with its timeline index and its turn: a memory charges
+each to the history event it reads with (its turn's first event after it,
+else the last event before it), so that it keeps or cuts a turn whole,
+rather than reserving them all for rounds whose turns it then cuts. A
 host cannot always name that rest, since the prompt is composed per turn
 (skills, Tool Search, the agent's identity, a binding's tools). So an AI channel
 MUST measure it, as it will send it, before it reads its memory, and make the
 measure readable to the memory for that turn (`current_turn_footprint()`): the
-input it measured, and the reply budget the turn requests, zero when the
-channel sets none and the provider applies its own.
+input it measured, the reply budget the turn requests, zero when the
+channel sets none and the provider applies its own, and each piece its history
+replays as `(index, turn, tokens)`.
 
 A memory that keeps the turn within a window (BudgetAwareMemory,
 CompactingMemory and SummarizingMemory above) sizes the history against what
@@ -19181,8 +19228,10 @@ called:
    channel it reaches, so a hook that sees it (`BEFORE_BROADCAST`,
    `BEFORE_DELIVER`) tells a task's result from any other instruction and
    names the task without reading its text.
-   An instruction is not stored, so the result lives in the turn it opens
-   and in the agent's answer, not in the history of later turns. The
+   An instruction is not stored as the room's: the AI channel it directs
+   keeps it as its own record (§10.1.1, The instruction a turn read), so the
+   result reads in that agent's later turns where its turn read it, in no
+   other agent's history, and the room's readers find it there. The
    result is never written into the room's stored configuration (the
    system prompt of a binding), which would replace the notified agent's
    own and hand a worker's output the system role for every turn after. A
