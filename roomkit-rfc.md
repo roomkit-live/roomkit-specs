@@ -7911,8 +7911,10 @@ The consumer reads in frames what the channel changes after yielding it:
 - a call's end names its start's frame, so two calls under one id stay two
   calls (§6.4);
 - a call that ended before the stream was closed or the turn cut is closed
-  with its own outcome: the executor sends its end before the turn's `end`,
-  and the owner closes as cancelled only a call no end was sent for.
+  with its own outcome: the executor sends its end once, before the next
+  item it sends and so before the turn's `end`, and the owner closes as
+  cancelled only a call no end was sent for, a reader that stops between a
+  round's end items included.
 
 The executor compares the record with the last one it sent before each `item`
 that is no delta (the stream's end included), before the `error` a failed
