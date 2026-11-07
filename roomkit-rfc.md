@@ -16066,7 +16066,11 @@ Implementations SHOULD instrument the following operations with spans:
 Each span SHOULD include structured attributes: `room_id`, `channel_id`,
 `event_id`, `provider`, and `latency_ms`. The spans a turn executor records
 for a turn are children of the broadcast span, through the trace context the
-turn's request carries (Section 10.6), whichever process runs it.
+turn's request carries (Section 10.6), whichever process runs it. The spans a
+store records for the reads and writes of a room's delivery cursor (Section
+13.5) made to deliver messages `process_inbound` brought in, a skip past a hole
+included, are children of the span of one of those calls, wherever the delivery
+runs, never trace roots.
 
 **What a span holds.** An exporter often stands outside the application's
 production data, so a span MUST NOT carry what can hold personal data unless
