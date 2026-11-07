@@ -5673,8 +5673,13 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   completion detached (§10.1 step 18) and no delivery results. Made in an
   event's admission work, it answers only once the events its own hooks
   injected, and those their hooks injected, are committed too, each in a
-  section of its own (§9.4): committed, not delivered, their passes waiting
-  for no delivery set in the lane. An adopted message's result then carries
+  section of its own (§9.4), with those the hooks of a call nested in any
+  of these sections, its own included, injected, which join that
+  section's queue: committed, not delivered, their passes waiting for no
+  delivery set in the lane. A message held for its sender (§10.1 step 5)
+  answers once its challenge, a cascade of its own with what the
+  challenge's section queued, is committed and delivered. An adopted
+  message's result then carries
   the first failed release of their sections as its error when it met none
   before (§13.5), and the event that adopted it does not; an adopted
   injection (§10.5) returns its event, and that failure is the error of the
