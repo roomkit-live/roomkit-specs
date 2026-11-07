@@ -2834,7 +2834,12 @@ succeed (`retryable`). A channel with a retry policy (`retry_policy`, Section
 13.2) tries a generation again only while nothing of its answer has been
 handed on: a stream that handed text, a call or its end is never read again,
 by a retry, a compacted replay or a fallback, since the room and the turn
-already hold what it handed. It tries again only an error worth another try,
+already hold what it handed. Reasoning is none of its answer, nor are a call's
+fragments: a stream that showed only those before it failed is read again as one
+that handed nothing. Its reasoning is left out of the round: the channel
+rendering the stream and the thinking subscribers have read it, its window
+closed at the failure, and the round replays and reports only the reasoning of
+the try that answered. It tries again only an error worth another try,
 at most `max_retries` times, waiting before each try
 `base_delay_seconds × exponential_base^n`, at most `max_delay_seconds`, `n`
 the number of retries already made; without a retry policy it makes none.
@@ -2845,8 +2850,9 @@ refused again as worth another try keeps its tries. Once they are spent, at
 once without a retry policy, a channel with a `fallback_provider` asks it
 once, with the same request, and its answer is the call's; without one,
 the last error is the call's. A fallback that fails before it handed
-anything leaves the primary's last error as the call's, the fallback's error
-its cause; one that fails after is the call's error.
+anything, reasoning alone included, leaves the primary's last error as the
+call's, the fallback's error its cause; one that fails after is the call's
+error.
 
 **Text from outside in a model's context (normative).** Text the runtime places
 in a model's context without having written it (a person's words or name, a
