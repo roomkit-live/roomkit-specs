@@ -6315,9 +6315,11 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     └── Each task and each observation is written on its own: a write the
         store fails, a task's, an observation's or the metadata updates',
         is logged at ERROR (§15.2) naming the task, the observation or the
-        keys, and the others are still written; the call goes on, and its
-        `error` stays its turn's (step 18). A task the store did not write
-        fires no `ON_TASK_CREATED`.
+        keys, and the others are still written; the call goes on, and a
+        failed write is never its `error` (InboundResult, below). A task
+        the store did not write fires no `ON_TASK_CREATED`. A room gone
+        before its metadata updates are written is no failure. A delegated
+        task's child room writes its turns' side effects so (§23.3).
 
 16. RUN AFTER_BROADCAST ASYNC HOOKS
     ├── After the event's delivery set completes — "all channels have
