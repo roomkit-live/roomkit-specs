@@ -5677,7 +5677,8 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   for no delivery set in the lane. An adopted message's result then carries
   the first failed release of their sections as its error when it met none
   before (§13.5), and the event that adopted it does not; an adopted
-  injection (§10.5) returns its event, and that failure is its caller's.
+  injection (§10.5) returns its event, and that failure is the error of the
+  event that adopted it.
   Made under
   the lock, its delivery waits in the lane behind the work that made it, and
   a wait on it there returns unwaited (§10.1 step 18). Made in an event's
