@@ -6316,10 +6316,10 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
         store fails, a task's, an observation's or the metadata updates',
         is logged at ERROR (§15.2) naming the task, the observation or the
         keys, and the others are still written; the call goes on, and a
-        failed write is never its `error` (InboundResult, below). A task
-        the store did not write fires no `ON_TASK_CREATED`. A room gone
-        before its metadata updates are written is no failure. A delegated
-        task's child room writes its turns' side effects so (§23.3).
+        failed write is never its `error` (InboundResult, below, §13.6). A
+        task the store did not write fires no `ON_TASK_CREATED`. A
+        delegated task's child room writes its turns' side effects so
+        (§23.3).
 
 16. RUN AFTER_BROADCAST ASYNC HOOKS
     ├── After the event's delivery set completes — "all channels have
@@ -15347,9 +15347,10 @@ transaction that stores the event as DELIVERED and updates the room counters:
   was (a failed release of the room lock, §13.5): the first turn of the
   trigger's own delivery set that failed (each failure also fires ON_ERROR,
   §9.2), a stream the caller reads that raised, and a failure of the
-  cascade's own work (a delivery set's execution, its side effects, a
-  response's commit pass). The result's `event` stays the committed event,
-  or the instruction its pass decided (§10.1.1). The caller of
+  cascade's own work (a delivery set's execution, a response's commit
+  pass); a side effect the store fails to write is logged and never the
+  call's `error` (§10.1 step 15). The result's `event` stays the committed
+  event, or the instruction its pass decided (§10.1.1). The caller of
   `process_inbound()` reads it on its result, waiting or through the
   completion handle of a detached call (§10.1 step 18), and so does the
   caller of a regeneration; a direct injection, whose result is the
