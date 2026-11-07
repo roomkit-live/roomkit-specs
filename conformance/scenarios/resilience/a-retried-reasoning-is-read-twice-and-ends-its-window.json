@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "resilience/a-retried-reasoning-is-read-twice-and-ends-its-window",
-  "title": "A generation tried again after reasoning alone: a streaming reader and the room's thinking subscribers have read the first try's reasoning, its window closed at the refusal, then the second try's in a window of its own",
+  "title": "A generation tried again after reasoning alone: a streaming reader and the room's thinking subscribers have read the first try's reasoning, its window closed at the refusal, then the second try's in a window of its own; the turn reports the second try's alone",
   "rules": [
     "§6.4"
   ],
@@ -57,6 +57,13 @@
             "category": "intelligence"
           }
         ]
+      }
+    ],
+    "hooks": [
+      {
+        "name": "answered",
+        "trigger": "on_ai_response",
+        "execution": "async"
       }
     ]
   },
@@ -150,6 +157,17 @@
           "thinking_length": 6,
           "round": 0,
           "channel_id": "agent"
+        }
+      ]
+    },
+    "hooks": {
+      "answered": [
+        {
+          "trigger": "on_ai_response",
+          "response": {
+            "response_content": "Asked again.",
+            "thinking": "Again."
+          }
         }
       ]
     }
