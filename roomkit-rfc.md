@@ -9220,10 +9220,10 @@ enters a room as any other audio.
      stream's end, as the Rust one does, whose futures have no `finally`: that
      target's caller alone waits for it, within what the kit's close and a held
      task's cut leave it; each TOOL_CALL_END may reach it while
-     it works; and when it then fails, `ON_ERROR` fires, but for a failure
-     that is the kit's own close (§12.10.4), its failure is its caller's
-     error unless the kit's close or a held task's cut ended that wait, and
-     what the cut stored stands, as a cut's, where the
+     it works; and when it then fails, `ON_ERROR` fires and its failure is its
+     caller's error unless the kit's close or a held task's cut ended that
+     wait, a failure that is the kit's own close (§12.10.4) being neither,
+     and what the cut stored stands, as a cut's, where the
      reference implementation, storing past the target's `finally`, reads it as
      the failure of the streaming channel below. A TOOL_CALL_END written once the
      stream no longer carries rows goes to every channel, the streaming one
@@ -9233,7 +9233,9 @@ enters a room as any other audio.
      the framework MUST store the text already produced as the AI response event
      (a blank text is no row, Section 6.4), not marked cancelled, close every call still open with `status = failed`,
      fire `ON_ERROR` and return the failure to the caller, even when the streaming
-     channel swallows it. That event reaches the streaming channel through the
+     channel swallows it; a held task's cut that finds the failure still
+     pending, its streaming channel working on its text, wins: no `ON_ERROR`
+     fires (§23.3). That event reaches the streaming channel through the
      stream, before the failure, as a completed response's last event does: the
      channel was handed every token of it, so it MUST NOT receive that text again
      as an ordinary delivery (no second synthesis, no second message). A channel
