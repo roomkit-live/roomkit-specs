@@ -265,7 +265,8 @@ room callbacks of the setup are not compared.
   `agent` identity, `strategy` (absent: one `delegate_to_<worker>` tool per
   worker), `share_channels`, `task_timeout_ms`, its `task_timeout` in
   milliseconds, `max_revisions`, `auto_delegate`, `refine_task`,
-  `refine_instruction`, `delegation_message` and `wait_for_result`, each the
+  `refine_instruction`, `delegation_message`, `wait_for_result` and
+  `async_delivery`, each the
   implementation's default when absent. A strategy with a `swarm` is the
   implementation's **Swarm** (§19.7): `agents`, the channel ids of scripted
   agents with an `agent` identity, and `entry`, the first agent when absent.

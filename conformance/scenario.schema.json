@@ -6011,6 +6011,10 @@
         "wait_for_result": {
           "description": "With no `strategy`, whether a `delegate_to_<worker>` call waits for its worker (default true), else it starts the worker in the background and answers at once.",
           "type": "boolean"
+        },
+        "async_delivery": {
+          "description": "With a `strategy`, whether a `delegate_workers` call answers at once, dispatched, and runs the team in the background, its results handed back to the supervisor (default false).",
+          "type": "boolean"
         }
       }
     },
