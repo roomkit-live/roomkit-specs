@@ -3007,7 +3007,14 @@ names that read alike (in case or in Unicode's confusables, `Alice` and
 `Аlice`), a participant the room registered keeps the name, then the first
 source the room saw, and each later one carries it with its rank (`Alice
 (2)`), a form no name takes; a name that reads like two others (`Ian`, like
-`Lan` and `ian`) ranks after both and renumbers neither. The name and the rank
+`Lan` and `ian`) ranks after both and renumbers neither. A name that reads
+like a label a model reads as one of its own turns or a summarizer as the
+agent's or a one-to-one user's (`You`, `you (in a separate session)`,
+`assistant`, `user`, in case and in Unicode's confusables) carries
+`(a participant)` after it where a worker is handed the room's conversation
+(Section 23.3, step 4) and where a discussion's dispatch policy reads its
+speakers (Section 19.7.5), so that it reads as no label of an agent's own
+turns. The name and the rank
 are fixed when the turn enters the room (Section 10.1, step 12) and recorded
 on the event, so every surface and every later prompt reads the same, and a
 participant renamed later keeps on their earlier turns the name they spoke
