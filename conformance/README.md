@@ -929,9 +929,11 @@ An expectation matches the actual value when:
 - `{"$as": "name"}`: a value present, named: across the scenario's step
   expectations and its `expect`, every `$as` of one name matches equal
   values, and `$as` of two names never match equal values. It compares what
-  a run gives out with itself (a `correlation_id`). A name is held by the
-  first value it matches, the expectations compared in order; within a
-  `$unordered`, by the order that matches.
+  a run gives out with itself (a `correlation_id`). A name is a string,
+  held by the first value it matches; within a `$unordered`, by the order
+  that matches. The runners compare `expect`'s members in orders of their
+  own, so a name that a `$unordered` group or an `actions` label in any
+  order holds is matched in no other member.
 
 In `framework_events` a bare string names the event: `"room_created"` is
 `{"event": "room_created"}`.
