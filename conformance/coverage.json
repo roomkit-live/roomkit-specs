@@ -1,7 +1,7 @@
 {
   "version": 1,
   "rfc_sha256": "e68bbaace40568f287fa43b657999608f5b28a6f6e3379c67e21c6760258ca9a",
-  "corpus_sha256": "aee8eee4abad92b0a01825907dd4d6c9a51da40a6027ca36167dfb7a65e09e98",
+  "corpus_sha256": "ad0594006b369aed53c858a8afaaa846fe85cfc3f300feb8fb501c7c5ff953ce",
   "python_commit": "33d1f4415e2a5697cbe5b4f6cb8413ee05f33363",
   "scenario_count": 1570,
   "sections": [
@@ -1271,7 +1271,7 @@
       "review": "normative",
       "requirements": 1,
       "mapping": {
-        "unmapped": 1
+        "mapped_partial": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -1285,7 +1285,8 @@
       "review": "normative",
       "requirements": 2,
       "mapping": {
-        "unmapped": 2
+        "mapped_partial": 1,
+        "unmapped": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -1362,7 +1363,7 @@
       "review": "normative",
       "requirements": 1,
       "mapping": {
-        "unmapped": 1
+        "mapped_partial": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -7382,14 +7383,34 @@
     {
       "id": "RK-7.1-001",
       "section": "7.1",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "core-access-matrix",
+          "scope": "All four access values, crossed with mute, for inbound and directly injected source events and for transport/intelligence targets.",
+          "coverage": "partial",
+          "missing": [
+            "Buffered and streamed response permissions, regenerated answers and permission changes during an in-flight turn are not exhaustively mapped by this link."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-7.2-001",
       "section": "7.2",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "core-muted-read-effects",
+          "scope": "A statically muted readable transport or intelligence binding still receives the event and contributes tasks and observations.",
+          "coverage": "partial",
+          "missing": [
+            "Streaming mute transitions, unread stream closure, output_muted and mute/unmute lifecycle semantics remain outside this link."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-7.2-002",
@@ -7430,8 +7451,20 @@
     {
       "id": "RK-7.5-001",
       "section": "7.5",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "core-permission-gates",
+          "scope": "Rules 1-3 and 5 for static bindings: source refusal, readable targets, retained target effects and self-skip. Visibility is all throughout these matrices.",
+          "coverage": "partial",
+          "missing": [
+            "Rules 4 and 6-8 (visibility, derived bindings, revocation and reconstructed context) require separate mappings.",
+            "Rule 2 response paths, hooks changing permissions, streaming transitions and unbound sources are outside the matrices.",
+            "Rule 3 hook-returned effects on refused messages are outside this link."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-8.1-001",

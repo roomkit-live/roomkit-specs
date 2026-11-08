@@ -712,124 +712,108 @@
       }
     },
     "tasks": {
-      "read_write-unmuted": [
-        {
-          "$unordered": [
-            {
-              "title": "reader task"
-            },
-            {
-              "title": "agent task"
-            }
-          ]
-        }
-      ],
-      "read_write-muted": [
-        {
-          "$unordered": [
-            {
-              "title": "reader task"
-            },
-            {
-              "title": "agent task"
-            }
-          ]
-        }
-      ],
-      "read_only-unmuted": [
-        {
-          "$unordered": [
-            {
-              "title": "reader task"
-            },
-            {
-              "title": "agent task"
-            }
-          ]
-        }
-      ],
-      "read_only-muted": [
-        {
-          "$unordered": [
-            {
-              "title": "reader task"
-            },
-            {
-              "title": "agent task"
-            }
-          ]
-        }
-      ],
+      "read_write-unmuted": {
+        "$unordered": [
+          {
+            "title": "reader task"
+          },
+          {
+            "title": "agent task"
+          }
+        ]
+      },
+      "read_write-muted": {
+        "$unordered": [
+          {
+            "title": "reader task"
+          },
+          {
+            "title": "agent task"
+          }
+        ]
+      },
+      "read_only-unmuted": {
+        "$unordered": [
+          {
+            "title": "reader task"
+          },
+          {
+            "title": "agent task"
+          }
+        ]
+      },
+      "read_only-muted": {
+        "$unordered": [
+          {
+            "title": "reader task"
+          },
+          {
+            "title": "agent task"
+          }
+        ]
+      },
       "write_only-unmuted": [],
       "write_only-muted": [],
       "none-unmuted": [],
       "none-muted": []
     },
     "observations": {
-      "read_write-unmuted": [
-        {
-          "$unordered": [
-            {
-              "channel_id": "reader",
-              "category": "permission-read",
-              "content": "reader read"
-            },
-            {
-              "channel_id": "agent",
-              "category": "permission-read",
-              "content": "agent read"
-            }
-          ]
-        }
-      ],
-      "read_write-muted": [
-        {
-          "$unordered": [
-            {
-              "channel_id": "reader",
-              "category": "permission-read",
-              "content": "reader read"
-            },
-            {
-              "channel_id": "agent",
-              "category": "permission-read",
-              "content": "agent read"
-            }
-          ]
-        }
-      ],
-      "read_only-unmuted": [
-        {
-          "$unordered": [
-            {
-              "channel_id": "reader",
-              "category": "permission-read",
-              "content": "reader read"
-            },
-            {
-              "channel_id": "agent",
-              "category": "permission-read",
-              "content": "agent read"
-            }
-          ]
-        }
-      ],
-      "read_only-muted": [
-        {
-          "$unordered": [
-            {
-              "channel_id": "reader",
-              "category": "permission-read",
-              "content": "reader read"
-            },
-            {
-              "channel_id": "agent",
-              "category": "permission-read",
-              "content": "agent read"
-            }
-          ]
-        }
-      ],
+      "read_write-unmuted": {
+        "$unordered": [
+          {
+            "channel_id": "reader",
+            "category": "permission-read",
+            "content": "reader read"
+          },
+          {
+            "channel_id": "agent",
+            "category": "permission-read",
+            "content": "agent read"
+          }
+        ]
+      },
+      "read_write-muted": {
+        "$unordered": [
+          {
+            "channel_id": "reader",
+            "category": "permission-read",
+            "content": "reader read"
+          },
+          {
+            "channel_id": "agent",
+            "category": "permission-read",
+            "content": "agent read"
+          }
+        ]
+      },
+      "read_only-unmuted": {
+        "$unordered": [
+          {
+            "channel_id": "reader",
+            "category": "permission-read",
+            "content": "reader read"
+          },
+          {
+            "channel_id": "agent",
+            "category": "permission-read",
+            "content": "agent read"
+          }
+        ]
+      },
+      "read_only-muted": {
+        "$unordered": [
+          {
+            "channel_id": "reader",
+            "category": "permission-read",
+            "content": "reader read"
+          },
+          {
+            "channel_id": "agent",
+            "category": "permission-read",
+            "content": "agent read"
+          }
+        ]
+      },
       "write_only-unmuted": [],
       "write_only-muted": [],
       "none-unmuted": [],

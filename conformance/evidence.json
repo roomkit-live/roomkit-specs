@@ -256,6 +256,99 @@
       "missing": [
         "Other invalid-result forms and triggers; sixth-level composite exception."
       ]
+    },
+    {
+      "id": "core-access-matrix",
+      "requirement": "RK-7.1-001",
+      "clause_sha256": "4d4b36fe3d71f3d05f7e7e15272ff282f2add52ee7677cc73edc76a5a0c1c433",
+      "scope": "All four access values, crossed with mute, for inbound and directly injected source events and for transport/intelligence targets.",
+      "coverage": "partial",
+      "review": "Read against Python source and specialized tests at fb46cb7bf and the current RFC. The full source unit is broader than these static-binding scenarios; no whole-section conformance is inferred.",
+      "assertions": [
+        {
+          "scenario": "permissions/all-source-access-and-mute-combinations",
+          "pointer": "/expect",
+          "sha256": "901dcb65ac8eeb257b360796a275396029e26e230b48fe6c5190a4a17d164a17",
+          "scenario_sha256": "b686a62123ca2f4e4c856eb9e7ec0873cfa79b71c6e5d2598ba83bd695f249e5",
+          "proves": "For each source access/mute pair, exact retained rows, transport deliveries, agent turns, tasks and observations, including empty lists on refusal and no self-read."
+        },
+        {
+          "scenario": "permissions/all-target-access-and-mute-combinations",
+          "pointer": "/expect",
+          "sha256": "731f2fd86f66dda7457b0a8eecb48626be33c6601e60e0510086551ab2496544",
+          "scenario_sha256": "e6aeb7955ce582b23c5eff18fdaebea60e589cfc569fcaf6da422f4fa7618d59",
+          "proves": "For each target access/mute pair, the exact readers, their side effects, and no delivery, turn or side effect from a target without read access."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Buffered and streamed response permissions, regenerated answers and permission changes during an in-flight turn are not exhaustively mapped by this link."
+      ]
+    },
+    {
+      "id": "core-muted-read-effects",
+      "requirement": "RK-7.2-001",
+      "clause_sha256": "45c9219beb29f0b06606cfe6c8a4bba529e017ffc801a3fd8fc6e0528ccaa2d7",
+      "scope": "A statically muted readable transport or intelligence binding still receives the event and contributes tasks and observations.",
+      "coverage": "partial",
+      "review": "Read against Python source and specialized tests at fb46cb7bf and the current RFC. The full source unit is broader than these static-binding scenarios; no whole-section conformance is inferred.",
+      "assertions": [
+        {
+          "scenario": "permissions/all-target-access-and-mute-combinations",
+          "pointer": "/expect",
+          "sha256": "731f2fd86f66dda7457b0a8eecb48626be33c6601e60e0510086551ab2496544",
+          "scenario_sha256": "e6aeb7955ce582b23c5eff18fdaebea60e589cfc569fcaf6da422f4fa7618d59",
+          "proves": "READ_WRITE and READ_ONLY readers retain exactly their task and observation with mute enabled or disabled; WRITE_ONLY and NONE targets do not react."
+        },
+        {
+          "scenario": "permissions/a-muted-agent-reads-but-its-answer-is-blocked",
+          "pointer": "/expect",
+          "sha256": "59e391333926f188b1ce2c48e53f4ee07462c10c56833bd7a87f8fb265b83bbc",
+          "scenario_sha256": "2a35f69e24849b7872de6a280600b8cfe2156bd609be51ce79a5271d93baf06a",
+          "proves": "A buffered muted agent response is stored BLOCKED source_muted and reaches no transport; the trigger still opened its turn."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Streaming mute transitions, unread stream closure, output_muted and mute/unmute lifecycle semantics remain outside this link."
+      ]
+    },
+    {
+      "id": "core-permission-gates",
+      "requirement": "RK-7.5-001",
+      "clause_sha256": "76feb1d709fb78a714edc6fbcbb4948f509f994ed3010c747357726632a42419",
+      "scope": "Rules 1-3 and 5 for static bindings: source refusal, readable targets, retained target effects and self-skip. Visibility is all throughout these matrices.",
+      "coverage": "partial",
+      "review": "Read against Python source and specialized tests at fb46cb7bf and the current RFC. The full source unit is broader than these static-binding scenarios; no whole-section conformance is inferred.",
+      "assertions": [
+        {
+          "scenario": "permissions/all-source-access-and-mute-combinations",
+          "pointer": "/expect",
+          "sha256": "901dcb65ac8eeb257b360796a275396029e26e230b48fe6c5190a4a17d164a17",
+          "scenario_sha256": "b686a62123ca2f4e4c856eb9e7ec0873cfa79b71c6e5d2598ba83bd695f249e5",
+          "proves": "Inbounds and direct injections from NONE/READ_ONLY never reach any target, including when muted; WRITE_ONLY writes unless muted; self-reading produces no effects."
+        },
+        {
+          "scenario": "permissions/all-target-access-and-mute-combinations",
+          "pointer": "/expect",
+          "sha256": "731f2fd86f66dda7457b0a8eecb48626be33c6601e60e0510086551ab2496544",
+          "scenario_sha256": "e6aeb7955ce582b23c5eff18fdaebea60e589cfc569fcaf6da422f4fa7618d59",
+          "proves": "Only readable targets react; their tasks and observations survive mute and read-only access."
+        },
+        {
+          "scenario": "permissions/read-only-and-muted-reads-as-read-only",
+          "pointer": "/steps/0/expect",
+          "sha256": "bc1d08b9f58a492495c6e80da4c6c06bdf1828a18f6559dd347005173549ff8b",
+          "scenario_sha256": "6d05350433ffee525ee1eee1ac10761a14fdccf24847606774b53d0d9123f4b3",
+          "proves": "The public inbound result reports source_read_only when both access and mute prevent writing."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Rules 4 and 6-8 (visibility, derived bindings, revocation and reconstructed context) require separate mappings.",
+        "Rule 2 response paths, hooks changing permissions, streaming transitions and unbound sources are outside the matrices.",
+        "Rule 3 hook-returned effects on refused messages are outside this link."
+      ]
     }
   ],
   "executions": [
