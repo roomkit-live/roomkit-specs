@@ -4035,6 +4035,16 @@
             }
           }
         },
+        "compacted": {
+          "description": "Per room and scripted agent with a scripted memory, the compactions between two tool rounds its memory was asked (§6.4, §20.1), in order: each `{history, usage}`, `history` the messages it was handed, each as `models` reads a request's, `usage` the round's token counters.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array"
+            }
+          }
+        },
         "dispatch_turns": {
           "description": "Per setup strategy with a scripted `dispatch`, the turns its policy was handed, in order: `room_id`, `event`, `recent` (each matched as the timeline's events), `speakers` (each [event id, label], in the order of `recent` then `event`), `candidates` (each `{channel_id, name, role, description, handle}`) and `asked`.",
           "type": "object",
@@ -5487,7 +5497,7 @@
       }
     },
     "scripted_memory": {
-      "description": "A scripted agent's memory (§20), in place of its default: the room's latest `max_events` events as a sliding window reads them (§20.3, the agent's max_context_events by default), with the `messages` it built, read before them, the `notes` it retrieved for the turn alone and the `speakers` its messages name (§20.2). `budget_aware` wraps it in the implementation's budget-aware memory (§20.3), which trims the oldest events to what the window leaves once the rest of the turn is paid for.",
+      "description": "A scripted agent's memory (§20), in place of its default: the room's latest `max_events` events as a sliding window reads them (§20.3, the agent's max_context_events by default), with the `messages` it built, read before them, the `notes` it retrieved for the turn alone and the `speakers` its messages name (§20.2). `compacts` scripts what it answers each compaction between two tool rounds (§6.4, §20.1). `budget_aware` wraps it in the implementation's budget-aware memory (§20.3), which trims the oldest events to what the window leaves once the rest of the turn is paid for.",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -5528,6 +5538,53 @@
           "type": "array",
           "items": {
             "type": "string"
+          }
+        },
+        "compacts": {
+          "description": "What the memory answers each compaction between two tool rounds (§6.4, §20.1), the n-th its n-th item, nothing past the last: `null` hands back nothing, the turn left as it is; an object hands back its `messages` (each `role` and `text`), then the last `keep` messages of the history it was handed (default 0), or `fails` with that message. Each compaction it is asked is kept, which `expect.compacted` reads.",
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "messages": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "role",
+                        "text"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "role": {
+                          "enum": [
+                            "system",
+                            "user",
+                            "assistant"
+                          ]
+                        },
+                        "text": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "keep": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "fails": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
           }
         },
         "budget_aware": {

@@ -520,7 +520,11 @@ scripted.
   and `text`), the `notes` it retrieved for the turn alone and the
   `speakers` its messages name (§20.2), and `writes_record`, keys each read
   writes on the turn's record through `current_response_metadata()` (§6.7); it keeps each
-  event it is handed (`ingest`), which `expect.ingested` reads; `budget_aware` wraps it in the
+  event it is handed (`ingest`), which `expect.ingested` reads; `compacts` scripts what it
+  answers each compaction between two tool rounds (§6.4, §20.1), the n-th its n-th item and
+  nothing past the last: `null` hands back nothing, an object its `messages` then the last
+  `keep` messages of the history it was handed (default 0), or `fails` with that message, and
+  it keeps each compaction it is asked, which `expect.compacted` reads; `budget_aware` wraps it in the
   implementation's budget-aware memory, of its `max_context_tokens`,
   `safety_margin_ratio` (default 0.15), `min_events` (default 3) and
   `reserved_tokens` (default 0) (§20.3); `compacting` and `summarizing`
@@ -852,6 +856,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `streamed` | Per room and streaming channel, the items its `deliver_stream` read, in order: `{"text": ...}` for a text delta, `{"thinking": ...}` for a piece of the model's reasoning, `{"usage": ..., "model": ..., "provider": ...}` for what a generation used, when the channel `reads_usage`, `{"row": event}` for a row the store holds, `{"loop_end": {"reason", "rounds", "usage"}}` for the turn's end, when the channel `reads_loop_end`, `{"failed": true}` where the stream raised |
 | `turns` | Per room and intelligence channel, the events its `on_event()` received |
 | `ingested` | Per room and scripted agent with a scripted `memory`, the events its memory was handed (§20, `ingest`), in order, matched as the timeline's |
+| `compacted` | Per room and scripted agent with a scripted `memory`, the compactions between two tool rounds its memory was asked (§6.4, §20.1, `compact`), in order: each `{history, usage}`, `history` the messages it was handed, each as `models` reads a request's (`{role, text, parts, round}`), `usage` the round's token counters |
 | `dispatch_turns` | Per setup strategy with a scripted `dispatch`, the turns its policy was handed (§19.7.5 rule 18), in order: `room_id`, `event` and `recent`, matched as the timeline's events, `speakers`, each `[event id, label]` in the order of `recent` then `event`, `candidates`, each `{channel_id, name, role, description, handle}`, and `asked` |
 | `observations`, `tasks` | Per room, the stored side effects |
 | `actions` | Per action label, the outcomes of its runs, in the order they ended |
