@@ -1,7 +1,10 @@
 {
   "version": 1,
   "python_commit": "33d1f4415e2a5697cbe5b4f6cb8413ee05f33363",
-  "retired": [],
+  "retired": [
+    "RK-12.10.4-010",
+    "RK-12.10.4-011"
+  ],
   "links": [
     {
       "id": "pilot-fail-open",

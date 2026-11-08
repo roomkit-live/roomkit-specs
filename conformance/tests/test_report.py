@@ -71,7 +71,11 @@ class ReportTests(unittest.TestCase):
     def test_implicit_rules_and_model_defaults_cannot_disappear_from_review(
         self,
     ) -> None:
-        for body in ["Return a fresh copy.\n", "```\nOptions\n  timeout = 30\n```\n"]:
+        for body in [
+            "Return a fresh copy.\n",
+            "**Return a fresh copy.**\n",
+            "```\nOptions\n  timeout = 30\n```\n",
+        ]:
             registry = extract("### 9.3 Hooks\n" + body)
             review = {
                 "section": "9.3",

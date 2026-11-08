@@ -903,7 +903,7 @@
     },
     {
       "section": "12.10.4",
-      "sha256": "a455bb815fe848496503a12e0c3a02e06d4b29fc872d48f8cc39d8d4d43f2e17",
+      "sha256": "c2584a35ac0cf8ca1dc0991dbd57bd7d471aa21fc600fab16838ee16eb5679ca",
       "classification": "normative",
       "review": "Source inventory: ConferenceChannel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },

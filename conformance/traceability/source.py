@@ -198,7 +198,7 @@ def extract(text: str) -> dict[str, Any]:
             for offset, line in enumerate(uncovered[start:end].splitlines())
             if line.strip()
             and line.strip() not in {"---", "-", "*", "+"}
-            and not re.fullmatch(r"\*\*[^*]+\*\*:?", line.strip())
+            and not re.fullmatch(r"\*\*[^*]+:\*\*|\*\*[^*]+\*\*:", line.strip())
         ]
         inventory.append(
             {

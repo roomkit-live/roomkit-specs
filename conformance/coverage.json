@@ -3871,9 +3871,9 @@
       "section": "12.10.4",
       "title": "ConferenceChannel",
       "review": "normative",
-      "requirements": 17,
+      "requirements": 16,
       "mapping": {
-        "unmapped": 17
+        "unmapped": 16
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -9705,13 +9705,7 @@
       "links": []
     },
     {
-      "id": "RK-12.10.4-010",
-      "section": "12.10.4",
-      "mapping": "unmapped",
-      "links": []
-    },
-    {
-      "id": "RK-12.10.4-011",
+      "id": "RK-12.10.4-018",
       "section": "12.10.4",
       "mapping": "unmapped",
       "links": []

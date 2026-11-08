@@ -15106,11 +15106,9 @@ how much was discarded — an integrator who cannot see the loss will read a
 damaged transcript as a bad recognizer.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.4-010", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-12.10.4-018", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Per-track video lanes:**
-<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-12.10.4-011", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Planned.** No implementation analyses conference video yet: the
 reference channel consumes AUDIO tracks only. When it does, VIDEO and
 SCREEN_SHARE tracks route through the VideoPipeline (Section 12.8.4) —
