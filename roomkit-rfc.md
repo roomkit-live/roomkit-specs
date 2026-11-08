@@ -3049,7 +3049,8 @@ like a label a model reads as one of its own turns or a summarizer as the
 agent's or a one-to-one user's (`You`, `you (in a separate session)`,
 `assistant`, `user`, in case and in Unicode's confusables) carries
 `(a participant)` after it where a worker is handed the room's conversation
-(Section 23.3, step 4) and where a discussion's dispatch policy reads its
+(Section 23.3, step 4), where a memory summarizer reads the turns it
+summarizes (Section 20.3) and where a discussion's dispatch policy reads its
 speakers (Section 19.7.5), so that it reads as no label of an agent's own
 turns. The name and the rank
 are fixed when the turn enters the room (Section 10.1, step 12) and recorded
