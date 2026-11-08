@@ -1,0 +1,3685 @@
+{
+  "version": 1,
+  "rfc_sha256": "e68bbaace40568f287fa43b657999608f5b28a6f6e3379c67e21c6760258ca9a",
+  "sections": [
+    {
+      "section": "1",
+      "title": "Conventions and Terminology",
+      "line": 67,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "1.1",
+      "title": "Key Words",
+      "line": 69,
+      "sha256": "a3dfe72902e447eff38206815563d1a1dc580491662dd9f2386ef53e27718243",
+      "unannotated_keyword_lines": [
+        71,
+        72
+      ]
+    },
+    {
+      "section": "1.2",
+      "title": "Definitions",
+      "line": 75,
+      "sha256": "73f68b8cef081afc9ef2da7c015940688b6301f7056febc92204448632a85716",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "1.3",
+      "title": "Notation",
+      "line": 130,
+      "sha256": "ba2f80566a2ef31498d3d06f758d0ccb4a8bb7522ed6163733f688a86f2bd6aa",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "1.4",
+      "title": "Serialized Form",
+      "line": 145,
+      "sha256": "16ecd9d04c3fdec3cfb8052ad36105821df2572c00ecbdfe9186a65e60eb854c",
+      "unannotated_keyword_lines": [
+        152,
+        155,
+        176,
+        177
+      ]
+    },
+    {
+      "section": "2",
+      "title": "Introduction",
+      "line": 181,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "2.1",
+      "title": "Problem Statement",
+      "line": 183,
+      "sha256": "f19648cc2dec874fb519447bc177587a9ab9b6b3c730e5ba132b2fc4930fcb62",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "2.2",
+      "title": "Scope",
+      "line": 198,
+      "sha256": "9ddca2ea76e0e3da5c088f42f24ddcbbeee53fc365c9b9e2eaf1893b30f50131",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "2.3",
+      "title": "Design Philosophy",
+      "line": 230,
+      "sha256": "1f0dfaf3f447b560bbbf5596670ab6c242b397b8be4da2d03ae48f77c8b8e32c",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "3",
+      "title": "Architecture Overview",
+      "line": 257,
+      "sha256": "290dd2cc470b17af3c71e54b57adc2daad80d0104b4ca1331f9559de5df03a8a",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "3.1",
+      "title": "Layer Responsibilities",
+      "line": 315,
+      "sha256": "d9c8b5c0092fdc7dc8f19db419d0ff46ca0da950a0e4466a48f7749d00b740b0",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "3.2",
+      "title": "Key Separations",
+      "line": 324,
+      "sha256": "dcc267e3f02e0398e0c732aa5d8dd7acff622542d221dfc3e8799cb4c8fd848e",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "4",
+      "title": "Core Concepts",
+      "line": 333,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "4.1",
+      "title": "The Room",
+      "line": 335,
+      "sha256": "f91a4840052e3953322ca4fce6256c3c2d431b5d026b301a1ca4202091087c7e",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "4.2",
+      "title": "The Channel",
+      "line": 351,
+      "sha256": "c0acec1c95be7dc3d58b9cce14fef1e01c1c7f57fadc3d42dd8640acec1bd710",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "4.3",
+      "title": "The Event",
+      "line": 386,
+      "sha256": "b40368a953080f1d27f7372efffecaedb3dec1e0396005f885eb8b7e43ccc0f1",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "4.4",
+      "title": "The Participant",
+      "line": 398,
+      "sha256": "ed881e206d9111a9bae5482f9ff59454732a9686318ea3f5c93aaa1a1d47563e",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "4.5",
+      "title": "The Identity",
+      "line": 404,
+      "sha256": "7b7a40302f8bd3e538f4f01ba266f46eec0d018dfa45839fb122928dd6e5f884",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "4.6",
+      "title": "Two Output Paths",
+      "line": 410,
+      "sha256": "74652b052e3a836f962884fb35b78163cb01d4fcb023d6a2deacf5f93043b793",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "5",
+      "title": "Data Models",
+      "line": 434,
+      "sha256": "8458f2aae2337aa2b95ea17ac9b34feda01b372f23d22cb32648b224f3a60f5c",
+      "unannotated_keyword_lines": [
+        437
+      ]
+    },
+    {
+      "section": "5.1",
+      "title": "Room",
+      "line": 440,
+      "sha256": "08b85bd917d326e60d29b172399e046e0437b61f1ccdb4f65836be599ed947d9",
+      "unannotated_keyword_lines": [
+        468,
+        469,
+        472,
+        482,
+        488,
+        489,
+        491,
+        495,
+        499,
+        506,
+        509,
+        523,
+        527,
+        532,
+        540,
+        545,
+        569,
+        579,
+        586,
+        591,
+        592
+      ]
+    },
+    {
+      "section": "5.2",
+      "title": "RoomEvent",
+      "line": 624,
+      "sha256": "13386ebc7ffbbb269aa561dccf21f7a765d34087fd85c7b622cc4f7c0c5ea2ef",
+      "unannotated_keyword_lines": [
+        733,
+        736,
+        737,
+        740,
+        741,
+        755,
+        757
+      ]
+    },
+    {
+      "section": "5.3",
+      "title": "Event Content",
+      "line": 762,
+      "sha256": "2e71d72207e5d65e3513b0b023d25117e56bb06e2c7a875511e3946e90fe84ea",
+      "unannotated_keyword_lines": [
+        765,
+        838,
+        841
+      ]
+    },
+    {
+      "section": "5.4",
+      "title": "Channel Data (Typed, Per-Channel)",
+      "line": 935,
+      "sha256": "6b4d9a8ac7199003c5994bdaf20f2e5c7d0f38f530ef127135003f4ec2884449",
+      "unannotated_keyword_lines": [
+        937,
+        969,
+        970
+      ]
+    },
+    {
+      "section": "5.5",
+      "title": "Participant",
+      "line": 972,
+      "sha256": "c93f220288289f7e70a3d3c9df0b691b2fea4e1fa40e7f12a8205b506e678b65",
+      "unannotated_keyword_lines": [
+        1054,
+        1060,
+        1115,
+        1126,
+        1128,
+        1129,
+        1130,
+        1134,
+        1135,
+        1143
+      ]
+    },
+    {
+      "section": "5.6",
+      "title": "Identity",
+      "line": 1152,
+      "sha256": "68c9b3a8bab181dcdec2a91c9ff6ba637c760454740e39443dfe364c171798c6",
+      "unannotated_keyword_lines": [
+        1171
+      ]
+    },
+    {
+      "section": "5.7",
+      "title": "ChannelBinding",
+      "line": 1186,
+      "sha256": "6daf53934d18083bdcc8d5539498e481ce7e3c773a5dd3756343f839f6c5b245",
+      "unannotated_keyword_lines": [
+        1257,
+        1302,
+        1342,
+        1349
+      ]
+    },
+    {
+      "section": "5.8",
+      "title": "ChannelCapabilities",
+      "line": 1366,
+      "sha256": "26b75c0dd7037bdedb1b21d37ba7dbcfc07a73f34c7f7c5ff0c0314b3ac349cc",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "5.9",
+      "title": "Three Levels of Channel Metadata",
+      "line": 1441,
+      "sha256": "5127bbc31dce9da57f807218784760723ae2733d72bb0811760b6e286523ecc6",
+      "unannotated_keyword_lines": [
+        1443,
+        1444
+      ]
+    },
+    {
+      "section": "5.10",
+      "title": "Task",
+      "line": 1452,
+      "sha256": "cc429223a6b0d79f88d233357ba69a35ab87045fd979d7bcb19ff5955a066352",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "5.11",
+      "title": "Observation",
+      "line": 1468,
+      "sha256": "c6f0da3d630f09137266b3c4c0506efe9b581bb7d41e7269678955c1018a4572",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "5.12",
+      "title": "Inbound Message",
+      "line": 1482,
+      "sha256": "876a95147f349a1e2954175db11c51efe3debae6dc0eb5325eef9187245e6547",
+      "unannotated_keyword_lines": [
+        1538
+      ]
+    },
+    {
+      "section": "5.13",
+      "title": "Delivery Result",
+      "line": 1554,
+      "sha256": "ca9a1dbf1661b77b1ac020b5f01d4465d1ba757f8e670b2ea1e61dccc768fe98",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "5.14",
+      "title": "Protocol Trace",
+      "line": 1593,
+      "sha256": "f192aee836081a5fdbef14c5a3397e647d9f142a96b3e56d637dfb4b235fc933",
+      "unannotated_keyword_lines": [
+        1597,
+        1612,
+        1614,
+        1618
+      ]
+    },
+    {
+      "section": "6",
+      "title": "Channel System",
+      "line": 1626,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "6.1",
+      "title": "Channel Interface",
+      "line": 1628,
+      "sha256": "f4df13b6fcd18218dce96c5e7bb21c64c1b5d998ef11be9859924263ba2a1238",
+      "unannotated_keyword_lines": [
+        1630
+      ]
+    },
+    {
+      "section": "6.2",
+      "title": "ChannelType",
+      "line": 1736,
+      "sha256": "bd85d5a1fd7f7e5ca429e9c43e7206cb4394e3bd21100167a5ab75afeaa7871c",
+      "unannotated_keyword_lines": [
+        1766,
+        1770,
+        1774,
+        1782
+      ]
+    },
+    {
+      "section": "6.3",
+      "title": "Transport Channels",
+      "line": 1785,
+      "sha256": "708dea38c013973530d69a922476c46e5f7d66b031317729c33ac5c529903300",
+      "unannotated_keyword_lines": [
+        1788
+      ]
+    },
+    {
+      "section": "6.4",
+      "title": "Intelligence Channels",
+      "line": 1810,
+      "sha256": "e87e03e6789fc4615234279f219b37152a0ed96f4efc5d4112be989cd5363e1b",
+      "unannotated_keyword_lines": [
+        1813,
+        1848,
+        1858,
+        1862,
+        1869,
+        1874,
+        1889,
+        1890,
+        1892,
+        1893,
+        1896,
+        1898,
+        1899,
+        1936,
+        1970,
+        1996,
+        2013,
+        2024,
+        2091,
+        2116,
+        2126,
+        2279,
+        2311,
+        2340,
+        2384,
+        2390,
+        2434,
+        2435,
+        2436,
+        2446,
+        2470,
+        2473,
+        2475,
+        2482,
+        2485,
+        2493,
+        2503,
+        2556,
+        2561,
+        2576,
+        2623,
+        2672,
+        2682,
+        2701,
+        2758,
+        2766,
+        2784,
+        2789,
+        2826,
+        2901,
+        2944,
+        3078,
+        3122,
+        3141,
+        3142,
+        3161,
+        3172,
+        3199,
+        3206,
+        3257,
+        3261,
+        3263,
+        3267,
+        3290,
+        3297,
+        3327,
+        3329,
+        3333,
+        3334,
+        3336,
+        3338,
+        3339,
+        3340,
+        3343,
+        3345,
+        3348,
+        3350,
+        3352,
+        3354,
+        3359,
+        3360,
+        3364,
+        3366,
+        3371,
+        3375,
+        3376,
+        3377,
+        3378,
+        3380,
+        3382,
+        3387,
+        3388,
+        3398,
+        3404,
+        3419,
+        3420,
+        3424,
+        3426,
+        3429,
+        3430,
+        3432,
+        3438,
+        3440,
+        3442,
+        3444,
+        3445,
+        3448
+      ]
+    },
+    {
+      "section": "6.5",
+      "title": "Source Providers",
+      "line": 3473,
+      "sha256": "e883a3bddf1c3cc319f8a8aa95cdb6ada5466cf76e82faae36c4a8ae1316a77b",
+      "unannotated_keyword_lines": [
+        3504
+      ]
+    },
+    {
+      "section": "6.6",
+      "title": "Content Transcoding",
+      "line": 3508,
+      "sha256": "0db4f723e7f36c4d264f3442ed246a31a469dbb470762b46de85deae630f7093",
+      "unannotated_keyword_lines": [
+        3511,
+        3566,
+        3567,
+        3580,
+        3583,
+        3591
+      ]
+    },
+    {
+      "section": "6.7",
+      "title": "Provider Abstraction",
+      "line": 3593,
+      "sha256": "ed3ba2d1af65a9337376784b7b2ea1e3deacd4fef81ed2f887708c84d56358c1",
+      "unannotated_keyword_lines": [
+        3698,
+        3700,
+        3702,
+        3722,
+        3742,
+        3756,
+        3761,
+        3766,
+        3773,
+        3774,
+        3776,
+        3794,
+        3803,
+        3805,
+        3811,
+        3813,
+        3814,
+        3822,
+        3823,
+        3824,
+        3825,
+        3826,
+        3835,
+        3850,
+        3851,
+        3852,
+        3861,
+        3872,
+        3911,
+        3952
+      ]
+    },
+    {
+      "section": "6.8",
+      "title": "Classifiers",
+      "line": 3955,
+      "sha256": "649e0e7db2faf49ba2d4388d785909b478e2bb8c51fd7f29aaccd6ec892efa3d",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "7",
+      "title": "Permission Model",
+      "line": 4032,
+      "sha256": "a7013c937c2472a26d5cf1c2eb813d8ac5738e0dbfa85d4a42e326c594220dc7",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "7.1",
+      "title": "Access",
+      "line": 4037,
+      "sha256": "90fbc59f5fbbb7278c4cd15bf78a7b4e28980b5910c3a77bd922f9d6dd50f9d6",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "7.2",
+      "title": "Muting",
+      "line": 4048,
+      "sha256": "7bd3891185005a98ef51c013c744cb089b6de7347adc39b22658a77bd6d9a95a",
+      "unannotated_keyword_lines": [
+        4056
+      ]
+    },
+    {
+      "section": "7.3",
+      "title": "Visibility",
+      "line": 4078,
+      "sha256": "deeb70d2fbb8c626c717c2646b28dcee72935c71227f1c5d9ef79ca0d2a750ac",
+      "unannotated_keyword_lines": [
+        4097,
+        4098,
+        4101,
+        4112,
+        4128,
+        4158
+      ]
+    },
+    {
+      "section": "7.4",
+      "title": "Named Patterns",
+      "line": 4162,
+      "sha256": "42db8f84a4f61e2adea18df119f080533e093f615855ee98b2f3239db8bd0bd9",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "7.5",
+      "title": "Permission Rules",
+      "line": 4175,
+      "sha256": "6ef1705145a9abd7bd151dc295d63148ffd759503f089dde3fedb6d6cf3471a1",
+      "unannotated_keyword_lines": [
+        4177,
+        4185,
+        4186,
+        4191,
+        4192,
+        4210,
+        4227,
+        4231,
+        4235,
+        4239,
+        4241,
+        4243,
+        4244,
+        4252,
+        4260,
+        4275,
+        4277,
+        4280,
+        4305
+      ]
+    },
+    {
+      "section": "8",
+      "title": "Event System",
+      "line": 4311,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "8.1",
+      "title": "Room Events",
+      "line": 4313,
+      "sha256": "ff62a59aecf9f098fa98761de6efa2ef8fa158803eca6e7001d157db29926aed",
+      "unannotated_keyword_lines": [
+        4320,
+        4321,
+        4325,
+        4326,
+        4329,
+        4334,
+        4339
+      ]
+    },
+    {
+      "section": "8.2",
+      "title": "Framework Events",
+      "line": 4350,
+      "sha256": "7c1e2dc2ef84cc1143adb28c630d9dd795fa5462c57ba58941c32c7a81256ae8",
+      "unannotated_keyword_lines": [
+        4415
+      ]
+    },
+    {
+      "section": "8.3",
+      "title": "Event Chain Depth",
+      "line": 4481,
+      "sha256": "202ead2067ad303660d44f5c6b7c998964d2724a8088f7a221d0c14b84219a2d",
+      "unannotated_keyword_lines": [
+        4543,
+        4547,
+        4570,
+        4615,
+        4666,
+        4670,
+        4673,
+        4674
+      ]
+    },
+    {
+      "section": "8.4",
+      "title": "Realtime / Ephemeral Events",
+      "line": 4676,
+      "sha256": "d3aa96bb874ee57a5a6bd8de7de60e7411a1927dc5aee8530068e22dd3de2615",
+      "unannotated_keyword_lines": [
+        4729,
+        4737
+      ]
+    },
+    {
+      "section": "8.5",
+      "title": "Responses: What They Answer, and Whether They Were Consumed",
+      "line": 4757,
+      "sha256": "5ac9e163ec7a85116bc72217f45b1e7ea5273b03b6fa52915adb1fd341f9be25",
+      "unannotated_keyword_lines": [
+        4768,
+        4784,
+        4814,
+        4821,
+        4823
+      ]
+    },
+    {
+      "section": "9",
+      "title": "Hook System",
+      "line": 4891,
+      "sha256": "e090fa734f3e21dc9b91ab67dc4eac64d6dd36c9ef28bc41648f195da2f08a8f",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "9.1",
+      "title": "Hook Registration",
+      "line": 4896,
+      "sha256": "61877ab628ed78db3d2fc425c7150812b00a3eac8420088e2240f1eb5a9274ae",
+      "unannotated_keyword_lines": [
+        4914,
+        4923,
+        4930,
+        4938,
+        4944,
+        4945,
+        4946,
+        4949
+      ]
+    },
+    {
+      "section": "9.2",
+      "title": "Hook Triggers",
+      "line": 4953,
+      "sha256": "839da16ea3051f6114159b9006fc303eb570a643acde79191477eca79563f7dd",
+      "unannotated_keyword_lines": [
+        4961
+      ]
+    },
+    {
+      "section": "9.3",
+      "title": "Hook Execution Modes",
+      "line": 5134,
+      "sha256": "739cef0f09fc9ee9aba00832c7bb5c8d471f67de5025b504c66282f3528a40ec",
+      "unannotated_keyword_lines": [
+        5233,
+        5287,
+        5313,
+        5317,
+        5328,
+        5335,
+        5336,
+        5358,
+        5365,
+        5379,
+        5381,
+        5385,
+        5403,
+        5405,
+        5409,
+        5428,
+        5432,
+        5435,
+        5436,
+        5439,
+        5450,
+        5451,
+        5462,
+        5463,
+        5464,
+        5474,
+        5475
+      ]
+    },
+    {
+      "section": "9.4",
+      "title": "HookResult",
+      "line": 5504,
+      "sha256": "0df41d9e0b470500e46f22d21c89eba03faf774fc1064fd4eaa7a6edeebc7bab",
+      "unannotated_keyword_lines": [
+        5506,
+        5526,
+        5531,
+        5533,
+        5552,
+        5571,
+        5614
+      ]
+    },
+    {
+      "section": "9.5",
+      "title": "Hook Pipeline (BEFORE_BROADCAST)",
+      "line": 5628,
+      "sha256": "4ab8450e65f66c5ed3a42103b3a0fc8af391e62a0e8e4618ce7cecd7f9edc431",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "9.5.1",
+      "title": "Off-lock checks (`needs_lock = false`)",
+      "line": 5661,
+      "sha256": "aa28c4a247563c45d2c6ac398b37e88dbb5a17118827efdc80b836edcf980e0a",
+      "unannotated_keyword_lines": [
+        5692,
+        5715,
+        5734,
+        5737,
+        5826,
+        5836,
+        5872
+      ]
+    },
+    {
+      "section": "9.6",
+      "title": "When to Use What",
+      "line": 5913,
+      "sha256": "418a9da28eed63106abc1b1b4c6484ceb865166ef7b42b29524f5aafe88b511e",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "10",
+      "title": "Processing Pipelines",
+      "line": 5927,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "10.1",
+      "title": "Inbound Pipeline",
+      "line": 5929,
+      "sha256": "0e70d0639418c2b1a3538eaa11a63d3e9922c4b076aafed7ef47755e8244891e",
+      "unannotated_keyword_lines": [
+        6485,
+        6487,
+        6488,
+        6489,
+        6492,
+        6493,
+        6506,
+        6510,
+        6514,
+        6515,
+        6516,
+        6543,
+        6544,
+        6545,
+        6593,
+        6596,
+        6597,
+        6602
+      ]
+    },
+    {
+      "section": "10.1.1",
+      "title": "Instructions",
+      "line": 6615,
+      "sha256": "cfb2c5accf7eaef3e82edef1853efb426c43d24decb9c1dabc8c471ecbf853c6",
+      "unannotated_keyword_lines": [
+        6630,
+        6647,
+        6652,
+        6657,
+        6703,
+        6713,
+        6719,
+        6721,
+        6722,
+        6741,
+        6745,
+        6748,
+        6752,
+        6756,
+        6766,
+        6776
+      ]
+    },
+    {
+      "section": "10.2",
+      "title": "Broadcast Pipeline",
+      "line": 6804,
+      "sha256": "99cd1a2ee741fa6d811c1f85f84d5caca96c972247d406aa8d82edb1a752dadc",
+      "unannotated_keyword_lines": [
+        6814,
+        6816,
+        6935
+      ]
+    },
+    {
+      "section": "10.3",
+      "title": "Edit and Delete Processing",
+      "line": 6945,
+      "sha256": "255c648b3063655fb141dcc087acfe686f041301c539ca496dd3a7cfaf992a72",
+      "unannotated_keyword_lines": [
+        6947,
+        6962,
+        6978,
+        6983,
+        6992,
+        7000,
+        7016,
+        7020,
+        7023,
+        7025,
+        7060,
+        7062,
+        7065,
+        7069,
+        7075,
+        7086,
+        7093,
+        7118,
+        7119,
+        7122,
+        7130,
+        7143,
+        7145,
+        7168,
+        7169,
+        7171,
+        7185
+      ]
+    },
+    {
+      "section": "10.4",
+      "title": "Inbound Room Routing",
+      "line": 7191,
+      "sha256": "6fb725fafbec221c4a126f67063a865c67380984bd488ecfe6f94361f893fe41",
+      "unannotated_keyword_lines": [
+        7194,
+        7217,
+        7294,
+        7397,
+        7399,
+        7413,
+        7416,
+        7417,
+        7422
+      ]
+    },
+    {
+      "section": "10.5",
+      "title": "Direct Event Injection",
+      "line": 7427,
+      "sha256": "2d396a715f9322cefa2879968c9f0573b9c8d633d754b072269a15645babff8c",
+      "unannotated_keyword_lines": [
+        7429,
+        7464,
+        7504,
+        7512,
+        7514,
+        7515,
+        7523,
+        7532,
+        7536,
+        7547,
+        7548,
+        7561,
+        7579,
+        7588,
+        7589,
+        7592,
+        7596
+      ]
+    },
+    {
+      "section": "10.6",
+      "title": "Turn Execution",
+      "line": 7609,
+      "sha256": "63b5590b5afc71b0be05388f4a2ce32ac1d7389f3a5db942fc965d05dd04b6e1",
+      "unannotated_keyword_lines": [
+        7613,
+        7624,
+        7628,
+        7630
+      ]
+    },
+    {
+      "section": "10.6.1",
+      "title": "Scope and the one path",
+      "line": 7652,
+      "sha256": "3d150da93d3de4cf2dc8ac3d38ad6cc62f9f80f087372b5dd3a4fae89eb6e72a",
+      "unannotated_keyword_lines": [
+        7678,
+        7681,
+        7690,
+        7691,
+        7698,
+        7701,
+        7702,
+        7703
+      ]
+    },
+    {
+      "section": "10.6.2",
+      "title": "Channels on each side",
+      "line": 7705,
+      "sha256": "b2df626f7b36a7772138186395195f0abdaabc998f75c7e64b110d25686334b5",
+      "unannotated_keyword_lines": [
+        7753,
+        7754,
+        7757,
+        7782,
+        7808,
+        7810,
+        7823,
+        7824
+      ]
+    },
+    {
+      "section": "10.6.3",
+      "title": "Messages",
+      "line": 7831,
+      "sha256": "63f67be85a8efd677b04ab02cff6f9281e72731d5ce7be103244ddccdcf9b26c",
+      "unannotated_keyword_lines": [
+        7900,
+        7901,
+        7902,
+        7985
+      ]
+    },
+    {
+      "section": "10.6.4",
+      "title": "The stream: pulled, never pushed",
+      "line": 7997,
+      "sha256": "669cfb3c02c15e8f95f6d42a59c5e13ecf7e36d96fcd5b427f28ed65813e1060",
+      "unannotated_keyword_lines": [
+        8009,
+        8018,
+        8050
+      ]
+    },
+    {
+      "section": "10.6.5",
+      "title": "What a turn asks of the owner",
+      "line": 8055,
+      "sha256": "2ed6ba6eaf331ee6c1af2fd21d9ccfa9208baf1f55a7c9cbf564c163db69ebc3",
+      "unannotated_keyword_lines": [
+        8088,
+        8092,
+        8119,
+        8133,
+        8138,
+        8143,
+        8147,
+        8156,
+        8168,
+        8199,
+        8200
+      ]
+    },
+    {
+      "section": "10.6.6",
+      "title": "Hooks",
+      "line": 8216,
+      "sha256": "def6f627c93303c22ac68f4f09e75cdf6d626ce899d8c37fc53f58b643e67487",
+      "unannotated_keyword_lines": [
+        8248,
+        8276
+      ]
+    },
+    {
+      "section": "10.6.7",
+      "title": "Placement",
+      "line": 8284,
+      "sha256": "981bdac265106313641e20f048f677c4cd0f97d54def70ce8cf143b1b5fc4002",
+      "unannotated_keyword_lines": [
+        8287,
+        8299,
+        8307,
+        8312,
+        8314
+      ]
+    },
+    {
+      "section": "10.6.8",
+      "title": "Liveness, cancellation and errors",
+      "line": 8322,
+      "sha256": "8e244250e37cc12c76a97c675ffee9c03f1005f5254b0c215fdef4cb20eef15a",
+      "unannotated_keyword_lines": [
+        8324,
+        8328,
+        8333,
+        8342,
+        8344,
+        8450
+      ]
+    },
+    {
+      "section": "10.6.9",
+      "title": "Telemetry and prerequisites",
+      "line": 8455,
+      "sha256": "6df3e695bc5f235a70ea727d3aab92fdbae372edbd1470ddfc7b2b1325e493bd",
+      "unannotated_keyword_lines": [
+        8463
+      ]
+    },
+    {
+      "section": "11",
+      "title": "Identity Resolution",
+      "line": 8487,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "11.1",
+      "title": "Identity Resolver Interface",
+      "line": 8489,
+      "sha256": "b9889ab2216a9b3fb4216b445e7baa36b9a1a6eedc63214d899c6dc4990e16fd",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "11.2",
+      "title": "Resolution Pipeline",
+      "line": 8506,
+      "sha256": "1c948adced22c73c13583363f9ed86eb1f34bae139112895e5bc4bb72885c58d",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "11.3",
+      "title": "Identity Hook Result",
+      "line": 8568,
+      "sha256": "22300ce321bb707e8cf6a1f0da88e4056ba33eb944ee4faec70e53e606756a07",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "11.4",
+      "title": "Channel Type Filtering",
+      "line": 8591,
+      "sha256": "3e060f925467da581a16e19f8087cee7d39be86160e114f686191f9848abf0d9",
+      "unannotated_keyword_lines": [
+        8593
+      ]
+    },
+    {
+      "section": "11.5",
+      "title": "Timeout Handling",
+      "line": 8597,
+      "sha256": "f6cdad0c951aa2198d254ee386ada5e8975f39347f0191c51b96b348e21afac0",
+      "unannotated_keyword_lines": [
+        8599
+      ]
+    },
+    {
+      "section": "11.6",
+      "title": "Senders With Nothing To Resolve",
+      "line": 8605,
+      "sha256": "6a9d7dbedb48e0a710a99e0fbf55c92bcbaf0c6173ce47a837b5d79dc2b61de8",
+      "unannotated_keyword_lines": [
+        8608,
+        8611,
+        8645
+      ]
+    },
+    {
+      "section": "11.7",
+      "title": "Identity Verification",
+      "line": 8652,
+      "sha256": "91dc2f4833786002b8cfb6d483f2e19750312452bba90d210fd1fa33b64cf3f5",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "11.7.1",
+      "title": "State",
+      "line": 8664,
+      "sha256": "802894141b1db9ef49aaa6afb19dc3ecef7a361f09882fe39714b69130cca9d5",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "11.7.2",
+      "title": "Requests",
+      "line": 8686,
+      "sha256": "6638d843e64a55b5ef64486dff7cb99e4ca1d895dbc4185103ac99f723e8f810",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "11.7.3",
+      "title": "Labels and holding",
+      "line": 8725,
+      "sha256": "fcc7619f5fe46efda15feddf961eb7b052350e7dc18406a79c8153fac7c0de3f",
+      "unannotated_keyword_lines": [
+        8763
+      ]
+    },
+    {
+      "section": "11.7.4",
+      "title": "Codes in the conversation",
+      "line": 8788,
+      "sha256": "340ff0a272cf69543642c1533b3757a9d7f7e2ff069a7a82ff09882d3a441aea",
+      "unannotated_keyword_lines": [
+        8799
+      ]
+    },
+    {
+      "section": "11.7.5",
+      "title": "The end of a verification",
+      "line": 8801,
+      "sha256": "ed8a7391942bba645f32261e892c808c05c0589d380373f039f32c7ef9e65fa1",
+      "unannotated_keyword_lines": [
+        8813
+      ]
+    },
+    {
+      "section": "11.7.6",
+      "title": "Releasing held messages",
+      "line": 8816,
+      "sha256": "4b4aa9d689180c6bdd75e002165384e2310c46848670cc5e197d3de353fe8ad1",
+      "unannotated_keyword_lines": [
+        8864
+      ]
+    },
+    {
+      "section": "11.7.7",
+      "title": "Security floor",
+      "line": 8871,
+      "sha256": "2d00a554793f36c6b05391fc57043d26a9ad238046711fddc7bff3adbda8c7dc",
+      "unannotated_keyword_lines": [
+        8882
+      ]
+    },
+    {
+      "section": "12",
+      "title": "Voice and Realtime Media",
+      "line": 8898,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.1",
+      "title": "Architecture Overview",
+      "line": 8900,
+      "sha256": "24ee7a60812edfe55f846161135622c8e98a09dc91ecbe2f5720e7ee018152c3",
+      "unannotated_keyword_lines": [
+        8941
+      ]
+    },
+    {
+      "section": "12.2",
+      "title": "Voice Channel (STT/TTS Pipeline)",
+      "line": 8981,
+      "sha256": "ffcee7e3e399b31aa036dbd3bbaba0844c65159a8109e7301b8c291bd0013c5c",
+      "unannotated_keyword_lines": [
+        9058,
+        9064,
+        9099,
+        9100,
+        9132,
+        9133,
+        9135,
+        9138,
+        9148,
+        9151,
+        9165,
+        9171,
+        9174,
+        9177,
+        9231,
+        9254,
+        9277,
+        9285,
+        9288
+      ]
+    },
+    {
+      "section": "12.2.1",
+      "title": "Packet Loss Handling (Lossy Transports)",
+      "line": 9485,
+      "sha256": "3086ca1aa87d6282d1c4b22c2f276cf4b58784753cc2e223d7284a066c7f5c7a",
+      "unannotated_keyword_lines": [
+        9494,
+        9498,
+        9500,
+        9502,
+        9505,
+        9508,
+        9513,
+        9517,
+        9519,
+        9521,
+        9522,
+        9527,
+        9532,
+        9533
+      ]
+    },
+    {
+      "section": "12.2.2",
+      "title": "Conversation Context for TTS",
+      "line": 9536,
+      "sha256": "46176ed11dd81edc80af19bf910437c5cc06a796159ef0ec510ebf58bca5e498",
+      "unannotated_keyword_lines": [
+        9578,
+        9579,
+        9583,
+        9597,
+        9611,
+        9615,
+        9621,
+        9622,
+        9623,
+        9627
+      ]
+    },
+    {
+      "section": "12.2.3",
+      "title": "Speaker Attribution from STT",
+      "line": 9631,
+      "sha256": "e84dc61b94791246cf0aa9cfc25930a4c127517c418735f8b06410c344f9aa3d",
+      "unannotated_keyword_lines": [
+        9641,
+        9646,
+        9647,
+        9649,
+        9652,
+        9657,
+        9658,
+        9663,
+        9669,
+        9671,
+        9677,
+        9686,
+        9687,
+        9691,
+        9692,
+        9720,
+        9734,
+        9735,
+        9745,
+        9753
+      ]
+    },
+    {
+      "section": "12.2.4",
+      "title": "Custom Voices",
+      "line": 9759,
+      "sha256": "c6447ba2736ef068c07a23d275238586abb0c5fdc6b0fdbc266681621ffff16a",
+      "unannotated_keyword_lines": [
+        9787,
+        9795,
+        9804,
+        9805,
+        9806,
+        9807,
+        9808,
+        9809,
+        9813
+      ]
+    },
+    {
+      "section": "12.3",
+      "title": "Audio Processing Pipeline",
+      "line": 9817,
+      "sha256": "02f5639cb3447f29a6764276fb060bb23e75125ac46de0eedc520871bff7350d",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.3.1",
+      "title": "Pipeline Configuration",
+      "line": 9886,
+      "sha256": "cf25d2defbbfe7ff3f519b7d16a15751d9d8df893d8ee650f39e2d9feed43e7d",
+      "unannotated_keyword_lines": [
+        9907,
+        9914,
+        9925,
+        9926,
+        9929,
+        9930,
+        9934,
+        9951,
+        9953,
+        9964,
+        9974,
+        9980,
+        9983,
+        9995,
+        10004,
+        10009,
+        10014
+      ]
+    },
+    {
+      "section": "12.3.2",
+      "title": "Denoiser Provider",
+      "line": 10022,
+      "sha256": "4bf18c05439bf659191364d44468e8299ba4efebe6406763ffda36c87767076a",
+      "unannotated_keyword_lines": [
+        10038
+      ]
+    },
+    {
+      "section": "12.3.3",
+      "title": "Resampler",
+      "line": 10040,
+      "sha256": "a35ef92d2522e19a6492840d74b04e20df1fdbad6c99cef0ca48f6e0fc5a8651",
+      "unannotated_keyword_lines": [
+        10061,
+        10062,
+        10065,
+        10068,
+        10069
+      ]
+    },
+    {
+      "section": "12.3.4",
+      "title": "Echo Canceller (AEC)",
+      "line": 10072,
+      "sha256": "8d9e745c8970a184e4d8c310b7a885f04500118760c6c6383a9a4b96dde295d8",
+      "unannotated_keyword_lines": [
+        10103,
+        10110,
+        10115,
+        10117,
+        10134,
+        10143,
+        10150,
+        10162,
+        10163,
+        10165,
+        10173,
+        10175,
+        10177,
+        10180,
+        10183
+      ]
+    },
+    {
+      "section": "12.3.5",
+      "title": "Automatic Gain Control (AGC)",
+      "line": 10186,
+      "sha256": "15359cf172e0397998ad8a142a8abf648228e031dca3a0ca03299b386f1501cc",
+      "unannotated_keyword_lines": [
+        10212,
+        10214,
+        10216,
+        10219,
+        10222
+      ]
+    },
+    {
+      "section": "12.3.6",
+      "title": "DTMF Detector",
+      "line": 10224,
+      "sha256": "3eb47f16ceb8b70ca63576e5232d083d5c73e581d58f86bd07f843b9abbbfa39",
+      "unannotated_keyword_lines": [
+        10251,
+        10261,
+        10262,
+        10270
+      ]
+    },
+    {
+      "section": "12.3.7",
+      "title": "Audio Recorder",
+      "line": 10274,
+      "sha256": "aeee46282a1b8b91446360c753ce0a2c26a05abb5f438081db69c1d83ff54bd3",
+      "unannotated_keyword_lines": [
+        10310,
+        10332,
+        10337,
+        10346,
+        10347,
+        10385,
+        10393,
+        10394
+      ]
+    },
+    {
+      "section": "12.3.8",
+      "title": "VAD Provider",
+      "line": 10397,
+      "sha256": "410c89fd29b08c3b9d6ebad5a940735b1571f113b29cc8e69a66caa5a285a408",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.3.9",
+      "title": "Diarization Provider",
+      "line": 10450,
+      "sha256": "92ddbca6cc99aa7960aaf3bc864f2c1f563c2ff8fd0f2c113f4351584f40039a",
+      "unannotated_keyword_lines": [
+        10474
+      ]
+    },
+    {
+      "section": "12.3.10",
+      "title": "Audio Post-Processor",
+      "line": 10492,
+      "sha256": "883460b89755bdb1d252be38168b6a1b2980d703346b846e2ee5e77db33957d9",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.3.11",
+      "title": "Audio Frame",
+      "line": 10512,
+      "sha256": "6a733e4a84af1b5a810d76485e5da3a9c3c58c0bd2baee71d69c00ac9983fd85",
+      "unannotated_keyword_lines": [
+        10552
+      ]
+    },
+    {
+      "section": "12.3.12",
+      "title": "Turn Detector",
+      "line": 10560,
+      "sha256": "985fddf66f62f9e6acdaf6d90672595f78e8f84b601952961b6102d54f0ac15a",
+      "unannotated_keyword_lines": [
+        10631,
+        10639,
+        10641,
+        10644,
+        10649,
+        10659,
+        10666,
+        10678,
+        10685,
+        10686
+      ]
+    },
+    {
+      "section": "12.3.13",
+      "title": "Interruption Strategy",
+      "line": 10689,
+      "sha256": "d34e15f4d77b59f7f6a2d3abd4a5c28308d89c4dff39615b5b91001f60aab235",
+      "unannotated_keyword_lines": [
+        10753,
+        10756,
+        10769,
+        10774,
+        10781,
+        10846
+      ]
+    },
+    {
+      "section": "12.3.14",
+      "title": "Pipeline Execution Flow",
+      "line": 10909,
+      "sha256": "5c8d791911815a8676b53bfb808c38aa288922ae3cad994bad8564e4e53bee16",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.3.15",
+      "title": "Pipeline Debug Taps",
+      "line": 11009,
+      "sha256": "db0d0561549eb695fa2517e5983506de3ae3a99d51f9937c5379479910c1b1f7",
+      "unannotated_keyword_lines": [
+        11078,
+        11095,
+        11097,
+        11099,
+        11105,
+        11129,
+        11136
+      ]
+    },
+    {
+      "section": "12.4",
+      "title": "Realtime Voice Channel (Speech-to-Speech)",
+      "line": 11141,
+      "sha256": "aa6e21112da9d3d213d05d74deda3f683efd0f7362904990c0ca29eb77f36289",
+      "unannotated_keyword_lines": [
+        11222,
+        11223,
+        11226,
+        11232,
+        11239,
+        11262,
+        11271,
+        11276,
+        11285,
+        11293,
+        11302,
+        11308,
+        11309,
+        11402,
+        11408,
+        11410,
+        11412,
+        11419,
+        11483,
+        11487,
+        11510,
+        11532,
+        11534,
+        11536,
+        11539,
+        11548,
+        11608,
+        11638,
+        11639
+      ]
+    },
+    {
+      "section": "12.4.1",
+      "title": "Full-Duplex Providers and Reasoning Delegation",
+      "line": 11648,
+      "sha256": "701d4761d3aea14bd966c3ed93b0d40cfd59cb95752376be1b81cbe8335ce4e8",
+      "unannotated_keyword_lines": [
+        11666,
+        11672,
+        11675,
+        11678,
+        11680,
+        11683,
+        11697,
+        11698,
+        11699,
+        11700,
+        11704,
+        11712,
+        11713,
+        11718,
+        11719,
+        11726,
+        11731,
+        11734,
+        11736,
+        11741,
+        11744,
+        11746,
+        11758,
+        11760,
+        11762,
+        11771,
+        11811,
+        11813,
+        11816,
+        11819,
+        11828,
+        11834,
+        11837,
+        11840,
+        11876,
+        11896,
+        11897
+      ]
+    },
+    {
+      "section": "12.4.2",
+      "title": "Usage Reporting",
+      "line": 11900,
+      "sha256": "5ecf41f34ecdef520ad4a7e3536be92fc54e84c98c6185a309647d0fbb0f87e2",
+      "unannotated_keyword_lines": [
+        11909,
+        11911,
+        11914,
+        11917,
+        11918
+      ]
+    },
+    {
+      "section": "12.5",
+      "title": "Voice Hooks",
+      "line": 11925,
+      "sha256": "beb14cd9cd66e5c917ae70a3a91661754ad57861a41d56e023668092ee38a6a0",
+      "unannotated_keyword_lines": [
+        11964
+      ]
+    },
+    {
+      "section": "12.6",
+      "title": "Barge-In and Interruption Handling",
+      "line": 11972,
+      "sha256": "eec401dbc81a73060f838658ed8e1d726ccbb93df34c0939fbe50c2ada42e3b1",
+      "unannotated_keyword_lines": [
+        11999,
+        12023,
+        12028
+      ]
+    },
+    {
+      "section": "12.7",
+      "title": "Audio Bridging",
+      "line": 12033,
+      "sha256": "dfcf47bb53aa120bf295e744981c9f45ef631ace6a9b202e17f882bdfbbd7de7",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.7.1",
+      "title": "Design Principles",
+      "line": 12041,
+      "sha256": "4410610e483c9511dd94139e2a9a0f410d6da369db3be39ec22d37c9c1bd826f",
+      "unannotated_keyword_lines": [
+        12045
+      ]
+    },
+    {
+      "section": "12.7.2",
+      "title": "AudioBridge",
+      "line": 12064,
+      "sha256": "b55c5fc940e76da7f8f7ef8c377e051ce720a6ff47ff806324b05ae67338e0b5",
+      "unannotated_keyword_lines": [
+        12101,
+        12106
+      ]
+    },
+    {
+      "section": "12.7.3",
+      "title": "VoiceChannel Integration",
+      "line": 12108,
+      "sha256": "654ed552cb13e1e5033a4136de516c6b53d1c273850f1c45123e889eb9b4e473",
+      "unannotated_keyword_lines": [
+        12132,
+        12143,
+        12150,
+        12151,
+        12172,
+        12185,
+        12194
+      ]
+    },
+    {
+      "section": "12.7.4",
+      "title": "Sample Rate Handling",
+      "line": 12203,
+      "sha256": "1aec429f9ba8f859022647385596b9e8eeec8da9c34a9bf22342f3b2213dc478",
+      "unannotated_keyword_lines": [
+        12205,
+        12207,
+        12208
+      ]
+    },
+    {
+      "section": "12.7.5",
+      "title": "N-Party Mixing",
+      "line": 12211,
+      "sha256": "c709d4d1814a5259db678de77f8ab226c2ce8f3f0a75a8d6a15dc85a708514f7",
+      "unannotated_keyword_lines": [
+        12213,
+        12227
+      ]
+    },
+    {
+      "section": "12.7.6",
+      "title": "Hooks",
+      "line": 12230,
+      "sha256": "fa44a3ab28e86e7d182a542b2ad67948405353f2f3d5beacb25a4c071312ac12",
+      "unannotated_keyword_lines": [
+        12251,
+        12252
+      ]
+    },
+    {
+      "section": "12.7.7",
+      "title": "Capability Flag",
+      "line": 12255,
+      "sha256": "f6f62c477b9a3430386fb9dc344f59f788158e9670c97b8a0ed8fb613b1241e6",
+      "unannotated_keyword_lines": [
+        12263,
+        12267,
+        12268
+      ]
+    },
+    {
+      "section": "12.7.8",
+      "title": "Conformance",
+      "line": 12271,
+      "sha256": "df27e6635f0d7620b2c0ba946e8303e3a1bde2fc758f018fa4e70f0e650b23b4",
+      "unannotated_keyword_lines": [
+        12276,
+        12283
+      ]
+    },
+    {
+      "section": "12.8",
+      "title": "Video Pipeline",
+      "line": 12288,
+      "sha256": "1371ed8f5d42fc6109a1349debe77671211f909ee8da1bd301369df541b32010",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.8.1",
+      "title": "Architecture Overview",
+      "line": 12294,
+      "sha256": "b674a708572aed2f6f386cd0cb07452b1116c331d212a7f8fabb8052cb9116d7",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.8.2",
+      "title": "Video Data Models",
+      "line": 12320,
+      "sha256": "150f8f4a1473ef873aa8ed8f01b52abe27f58aece06ebf0e34457a371dcd548a",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.8.3",
+      "title": "VideoBackend Interface",
+      "line": 12376,
+      "sha256": "57f9255af5f691c5f9339f9b4df608d12ce16575e3caf97f9d14fa89e28bc666",
+      "unannotated_keyword_lines": [
+        12413,
+        12419
+      ]
+    },
+    {
+      "section": "12.8.4",
+      "title": "Video Processing Pipeline",
+      "line": 12447,
+      "sha256": "c317320628f65f4e57dbe640d1aafcb28bae9dcfeb771a612e1f0ded47afe810",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.8.5",
+      "title": "Pipeline Stage Providers",
+      "line": 12517,
+      "sha256": "50bd62973c3210e00a2a95b4b5e34a1e16ecc0e4cc762ebfe8b83d2154a89eca",
+      "unannotated_keyword_lines": [
+        12578
+      ]
+    },
+    {
+      "section": "12.8.6",
+      "title": "Overlay System",
+      "line": 12602,
+      "sha256": "4cfeb7b373d8160534761c0d483f1323c3d6814b93523f0efaaee6b2c8e95a53",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.8.7",
+      "title": "VisionProvider",
+      "line": 12638,
+      "sha256": "b4d61cf756c212e48e099a5c6c3966014b2581a39d26b21fd778b2584144fff8",
+      "unannotated_keyword_lines": [
+        12657
+      ]
+    },
+    {
+      "section": "12.8.8",
+      "title": "AvatarProvider (Lip-Sync Video Generation)",
+      "line": 12712,
+      "sha256": "35a06bb652aec6578227d4aa00180d05ec9e24ede729ecab5a698f8b0221318a",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.8.9",
+      "title": "VideoBridge",
+      "line": 12747,
+      "sha256": "f20fbe8c368262ab1fb63717a4925df40dd2622f12f75e4df14ec508bd22d0ca",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.8.10",
+      "title": "Video Recording",
+      "line": 12780,
+      "sha256": "b2095a7e60ea2e609ddf4271cd2923858323d3679ad5197c880855b99d03d296",
+      "unannotated_keyword_lines": [
+        12800
+      ]
+    },
+    {
+      "section": "12.8.11",
+      "title": "Video Hooks",
+      "line": 12836,
+      "sha256": "5cd8380b6c2108c0283fb3c8bcc72e37880cfa5f4928d2430fdf220a17c10d84",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.9",
+      "title": "(Removed)",
+      "line": 12850,
+      "sha256": "8a3de9e0693c314b02fd7489699387329081b8c3ca5703943a967d276b74c27d",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.10",
+      "title": "Conference (SFU Orchestration)",
+      "line": 12859,
+      "sha256": "920a3bf55a0d8a9707097a854d5ad610b783a5eb5e8bd968429dbcf83759d701",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.10.1",
+      "title": "Design Principles",
+      "line": 12877,
+      "sha256": "5694906d6cdc62791018c343eab1ebe3d2b37e7ec67c9b82128c79c7cf535b97",
+      "unannotated_keyword_lines": [
+        12882
+      ]
+    },
+    {
+      "section": "12.10.2",
+      "title": "Data Models",
+      "line": 12915,
+      "sha256": "e7e5a7b78e795debc828883add7541001fdc98b0d160a0c3a284060a23c9fc8c",
+      "unannotated_keyword_lines": [
+        12940,
+        12954,
+        12974,
+        12977,
+        12979,
+        13011,
+        13031,
+        13039,
+        13041,
+        13044,
+        13047,
+        13049,
+        13050,
+        13051,
+        13054,
+        13056,
+        13063,
+        13070,
+        13072,
+        13081,
+        13082,
+        13085,
+        13087,
+        13096,
+        13097,
+        13109,
+        13110,
+        13111,
+        13114,
+        13122,
+        13135,
+        13138,
+        13141,
+        13143,
+        13159,
+        13160,
+        13163,
+        13204,
+        13205
+      ]
+    },
+    {
+      "section": "12.10.3",
+      "title": "ConferenceBackend Interface",
+      "line": 13215,
+      "sha256": "54e42303a929f39c7e15089744cbae968d670bef9ce0ab441c652e4add84788b",
+      "unannotated_keyword_lines": [
+        13265,
+        13266,
+        13274,
+        13286,
+        13288,
+        13289,
+        13301,
+        13305,
+        13320,
+        13323,
+        13331,
+        13333,
+        13336,
+        13343,
+        13349,
+        13367,
+        13370,
+        13374,
+        13376,
+        13390,
+        13391,
+        13401,
+        13403,
+        13410,
+        13416,
+        13426,
+        13428,
+        13432,
+        13441,
+        13442,
+        13444,
+        13445,
+        13446,
+        13447,
+        13453,
+        13460,
+        13461,
+        13466,
+        13472,
+        13476,
+        13480,
+        13484,
+        13489,
+        13490,
+        13491,
+        13497,
+        13506
+      ]
+    },
+    {
+      "section": "12.10.4",
+      "title": "ConferenceChannel",
+      "line": 13509,
+      "sha256": "b2b06fc5faf86fd68928919f4a6fc70711c94f077ad643bd71a66144ad6b9eb9",
+      "unannotated_keyword_lines": [
+        13539,
+        13540,
+        13543,
+        13545,
+        13553,
+        13554,
+        13565,
+        13570,
+        13572,
+        13573,
+        13581,
+        13600,
+        13601,
+        13620,
+        13629,
+        13632,
+        13637,
+        13639,
+        13641,
+        13668,
+        13680,
+        13689,
+        13691,
+        13702,
+        13716,
+        13721,
+        13722,
+        13729,
+        13738,
+        13749,
+        13754,
+        13758,
+        13759,
+        13766,
+        13775,
+        13786,
+        13798,
+        13800,
+        13806,
+        13808,
+        13816,
+        13821,
+        13832,
+        13843,
+        13854,
+        13863,
+        13878,
+        13884,
+        13897,
+        13904,
+        13908,
+        13921,
+        13957,
+        13958,
+        13959,
+        13962,
+        13966,
+        13967,
+        13971,
+        13980,
+        13981,
+        13982,
+        13984,
+        14003,
+        14021,
+        14025,
+        14029,
+        14031,
+        14032,
+        14033,
+        14044,
+        14055,
+        14063,
+        14076,
+        14077,
+        14080,
+        14083,
+        14087,
+        14088,
+        14094,
+        14103,
+        14118,
+        14125,
+        14130,
+        14135,
+        14141,
+        14157,
+        14164,
+        14169,
+        14176,
+        14187,
+        14208,
+        14214,
+        14217,
+        14226,
+        14232,
+        14240,
+        14248,
+        14253,
+        14264,
+        14268,
+        14269,
+        14273,
+        14277,
+        14287,
+        14293,
+        14309
+      ]
+    },
+    {
+      "section": "12.10.5",
+      "title": "Multi-Party Interruption Policy",
+      "line": 14312,
+      "sha256": "992d6e794b796c8a3b75bf0608b2dec3d8f65499f23de55899abe51b75409a64",
+      "unannotated_keyword_lines": [
+        14330
+      ]
+    },
+    {
+      "section": "12.10.6",
+      "title": "AI Participation Patterns",
+      "line": 14348,
+      "sha256": "5ac012188e393a1dd78ab9e0fc3a5c3a3a5f8365ebe96ee40d355f43556920a4",
+      "unannotated_keyword_lines": [
+        14362
+      ]
+    },
+    {
+      "section": "12.10.7",
+      "title": "Conference State Events",
+      "line": 14373,
+      "sha256": "91564c3482ee9e943fa0b40a80e88ce3380465ae16e7dcce92673d1cd2c615ba",
+      "unannotated_keyword_lines": [
+        14388,
+        14389,
+        14407,
+        14408,
+        14410
+      ]
+    },
+    {
+      "section": "12.10.8",
+      "title": "Recording",
+      "line": 14418,
+      "sha256": "dd7d7f89b65c91ff5bcfb0155c577812163fc6531e07dc44a57b4db456406010",
+      "unannotated_keyword_lines": [
+        14439,
+        14455,
+        14467,
+        14496,
+        14501,
+        14509,
+        14511,
+        14512,
+        14513,
+        14517,
+        14526,
+        14550
+      ]
+    },
+    {
+      "section": "12.10.9",
+      "title": "Cross-Channel Integration",
+      "line": 14559,
+      "sha256": "c38b5d97c87fa443fa3bf6643d7607c92046174b085044998f75b0dfc0396f7a",
+      "unannotated_keyword_lines": [
+        14573,
+        14574,
+        14579,
+        14584
+      ]
+    },
+    {
+      "section": "12.10.10",
+      "title": "Relationship to Audio Bridging (Section 12.7)",
+      "line": 14587,
+      "sha256": "1e0b96e700b1c11df47bed493b08df6d8c802ebb0c1d93623f8a69505820a4fb",
+      "unannotated_keyword_lines": [
+        14598
+      ]
+    },
+    {
+      "section": "12.10.11",
+      "title": "Conformance",
+      "line": 14602,
+      "sha256": "1d4213bfc6daa944aac0dbc6fe2bcfecfc56cc449d6e0a84a96a2c64edd3537a",
+      "unannotated_keyword_lines": [
+        14607,
+        14659,
+        14671,
+        14678
+      ]
+    },
+    {
+      "section": "12.10.12",
+      "title": "Speech-to-Speech Composition",
+      "line": 14696,
+      "sha256": "1f894e269d5d927ee17e9bade4935adaa2b7785fd87a0a720bc2df91be08fcd3",
+      "unannotated_keyword_lines": [
+        14698,
+        14733,
+        14739,
+        14753,
+        14757,
+        14758,
+        14761,
+        14762,
+        14763,
+        14774,
+        14775,
+        14781,
+        14798,
+        14816,
+        14821,
+        14823,
+        14827,
+        14840,
+        14842,
+        14857,
+        14859,
+        14871,
+        14884
+      ]
+    },
+    {
+      "section": "12.11",
+      "title": "Room Media Recording",
+      "line": 14896,
+      "sha256": "ce6b4ed74a07000f800e686729635c32222a0d04ae865748c019c21dc86e1f8b",
+      "unannotated_keyword_lines": [
+        14951,
+        14957,
+        14960,
+        14961,
+        14998,
+        15021,
+        15027,
+        15028,
+        15032,
+        15035,
+        15036,
+        15037,
+        15040,
+        15042,
+        15048,
+        15052,
+        15066,
+        15068,
+        15076,
+        15078,
+        15085,
+        15089,
+        15090
+      ]
+    },
+    {
+      "section": "12.12",
+      "title": "Capture Sources",
+      "line": 15095,
+      "sha256": "f961fd955feea66e78612171df85965d3402e05911c8495b80d6f96e94c69535",
+      "unannotated_keyword_lines": [
+        15131,
+        15137,
+        15138,
+        15148,
+        15155,
+        15157,
+        15163,
+        15167,
+        15175,
+        15180,
+        15183,
+        15207
+      ]
+    },
+    {
+      "section": "13",
+      "title": "Resilience and Error Handling",
+      "line": 15212,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "13.1",
+      "title": "Circuit Breaker",
+      "line": 15214,
+      "sha256": "e6cbc11d334e253204578f0760cc66221a2eb8103ffdd42ff617e91346a37e63",
+      "unannotated_keyword_lines": [
+        15216,
+        15237
+      ]
+    },
+    {
+      "section": "13.2",
+      "title": "Retry Policy",
+      "line": 15240,
+      "sha256": "53b028e87e4d09efde8333c716ed93dc0d4593314ec250b4c54e4a92298cb579",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "13.3",
+      "title": "Rate Limiting",
+      "line": 15260,
+      "sha256": "aa0d4ce5a4501973a5234f993e0d31d3cfdc2a58256135f230e4cedeab1b3baa",
+      "unannotated_keyword_lines": [
+        15271,
+        15273
+      ]
+    },
+    {
+      "section": "13.4",
+      "title": "Idempotency",
+      "line": 15276,
+      "sha256": "2570dc1c1e271bc156167a24288bc6f981ce49f24c0c9838ccbccc76eb626d5d",
+      "unannotated_keyword_lines": [
+        15297,
+        15323,
+        15325,
+        15326
+      ]
+    },
+    {
+      "section": "13.5",
+      "title": "Room-Level Locking",
+      "line": 15329,
+      "sha256": "5411252ee8fa4cfcbbf8757edfc2acd6c77bfb96366e66e262417d80d4c7c199",
+      "unannotated_keyword_lines": [
+        15331,
+        15335,
+        15341,
+        15343,
+        15359,
+        15368,
+        15395,
+        15397,
+        15398
+      ]
+    },
+    {
+      "section": "13.6",
+      "title": "Processing Timeout",
+      "line": 15434,
+      "sha256": "7d11027176dc4a75c1ae2ba7818afeddf8a35dcc9471ef80d907cb8ba07eaabc",
+      "unannotated_keyword_lines": [
+        15436,
+        15446,
+        15448,
+        15453,
+        15465,
+        15466,
+        15471,
+        15479,
+        15523,
+        15531
+      ]
+    },
+    {
+      "section": "14",
+      "title": "Storage Interface",
+      "line": 15538,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "14.1",
+      "title": "Conversation Store",
+      "line": 15540,
+      "sha256": "971cff542c9f67b3f187466a903c8357bae994b0f399fadbef418dfc1d336cbc",
+      "unannotated_keyword_lines": [
+        15542,
+        15783,
+        15794,
+        15796,
+        15799,
+        15811
+      ]
+    },
+    {
+      "section": "14.2",
+      "title": "Required Implementations",
+      "line": 15817,
+      "sha256": "476b4c8e1713abb0d212cb1d52c3c5acd52b82cc37946053db57df38d7e6b42d",
+      "unannotated_keyword_lines": [
+        15821,
+        15822
+      ]
+    },
+    {
+      "section": "14.3",
+      "title": "Consistency Requirements",
+      "line": 15824,
+      "sha256": "5e86395250cd748d14d33c177f33215c437abedefe15bdf3389bbeb5032a4ca3",
+      "unannotated_keyword_lines": [
+        15826,
+        15827,
+        15830,
+        15833,
+        15839,
+        15869,
+        15885,
+        15887,
+        15891,
+        15898,
+        15909
+      ]
+    },
+    {
+      "section": "14.4",
+      "title": "Returned-Object Ownership",
+      "line": 15922,
+      "sha256": "3ac54cd330da0df2480efd748db9d15b31ae643bf0da6d49552d4994874e29ff",
+      "unannotated_keyword_lines": [
+        15929,
+        15930,
+        15932,
+        15937,
+        15941,
+        15944
+      ]
+    },
+    {
+      "section": "15",
+      "title": "Observability",
+      "line": 15952,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "15.1",
+      "title": "Logging",
+      "line": 15954,
+      "sha256": "4037a83a81bf8b9357f227d9c598a991acb468ad5453a7d9af1dbd622f84f0d9",
+      "unannotated_keyword_lines": [
+        15956,
+        15957
+      ]
+    },
+    {
+      "section": "15.2",
+      "title": "Log Levels",
+      "line": 15980,
+      "sha256": "084c65b5146db840abf86fb403ac2c5b40275a010e87fd5edcf9fd0837dc9e5b",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "15.3",
+      "title": "Structured Log Context",
+      "line": 15999,
+      "sha256": "255aa4288b8c2f2e3f257f38d47b79825e322ead69964d45439ac8a9a5b4ecd3",
+      "unannotated_keyword_lines": [
+        16001
+      ]
+    },
+    {
+      "section": "15.4",
+      "title": "Voice Pipeline Observability",
+      "line": 16015,
+      "sha256": "d15ee098f1eb831af162a29ac04c94ea05d7cd9afa7094bb9cdf16a527d44339",
+      "unannotated_keyword_lines": [
+        16017,
+        16018,
+        16040
+      ]
+    },
+    {
+      "section": "15.5",
+      "title": "Framework Events for Monitoring",
+      "line": 16044,
+      "sha256": "5e477f6e03a5c30ed7531fed21192f46039b9a7b2c4f981966561632e8a47526",
+      "unannotated_keyword_lines": [
+        16047
+      ]
+    },
+    {
+      "section": "15.6",
+      "title": "Protocol Trace Infrastructure",
+      "line": 16051,
+      "sha256": "cea841a017c0d22afc296eb3bef6bcb23aad966b6387cfc2620e5c8534290eb5",
+      "unannotated_keyword_lines": [
+        16054,
+        16080,
+        16081,
+        16116,
+        16133
+      ]
+    },
+    {
+      "section": "15.7",
+      "title": "Telemetry Provider",
+      "line": 16142,
+      "sha256": "614158e1989e7cd863587fa6a8f758f4f7cb8045c7d54e90c13ae3aeec353d92",
+      "unannotated_keyword_lines": [
+        16144,
+        16170,
+        16174,
+        16184,
+        16190
+      ]
+    },
+    {
+      "section": "15.8",
+      "title": "Audit System",
+      "line": 16193,
+      "sha256": "8b33ad7c2837284a4814c4273ba922b1a6fddd6fb946261c1f347760b11a19c2",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "15.8.1",
+      "title": "Tool Auditing",
+      "line": 16199,
+      "sha256": "5b817a721f6521fd2324ee620907e4e41304dd22824107fe4d46187558a1f9d4",
+      "unannotated_keyword_lines": [
+        16221,
+        16230,
+        16238,
+        16273
+      ]
+    },
+    {
+      "section": "15.8.2",
+      "title": "Session Auditing",
+      "line": 16276,
+      "sha256": "fe130723e05c560e297ebd6468229bdf664f85197eff6145db8ce3ec27f663e8",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "15.8.3",
+      "title": "Audit Data Format",
+      "line": 16333,
+      "sha256": "cfc43c93b0483d6b92ca9aefaabfa59757d40306c8a2aaa5095c16e26ec4bce4",
+      "unannotated_keyword_lines": [
+        16343,
+        16344
+      ]
+    },
+    {
+      "section": "15.9",
+      "title": "Feedback",
+      "line": 16347,
+      "sha256": "be285b43d9f9ffc044c70b91558cf4ff56e202b0cfff72f4aa723d42baadafd5",
+      "unannotated_keyword_lines": [
+        16349
+      ]
+    },
+    {
+      "section": "16",
+      "title": "Integration Surfaces",
+      "line": 16369,
+      "sha256": "afba76d5702a8b615c33c6140d0b9e4dfc57158c6a1d899ae65bb23f17571684",
+      "unannotated_keyword_lines": [
+        16371
+      ]
+    },
+    {
+      "section": "16.1",
+      "title": "REST API (OPTIONAL)",
+      "line": 16374,
+      "sha256": "9e86fc1c4f7c525ad5260f91e153fe5f4ffe3c4da2fca5d39013305ae82d5f45",
+      "unannotated_keyword_lines": [
+        16377
+      ]
+    },
+    {
+      "section": "16.2",
+      "title": "MCP Server (OPTIONAL)",
+      "line": 16446,
+      "sha256": "358dad539ba6d870dacbc638b90f190049a5c3b29877635b521a538b9a5c892e",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "16.3",
+      "title": "Surface Independence",
+      "line": 16477,
+      "sha256": "854e926d1560cc2f124366c3ca0fcba381ce1662d2b48b2082d5447266869a61",
+      "unannotated_keyword_lines": [
+        16479
+      ]
+    },
+    {
+      "section": "17",
+      "title": "Security Considerations",
+      "line": 16484,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "17.1",
+      "title": "Input Validation",
+      "line": 16486,
+      "sha256": "75f4550ce2d0b2e54946bcf0ee2b31c70c5f0eb52a43cc4894859c409228c207",
+      "unannotated_keyword_lines": [
+        16488,
+        16489,
+        16490
+      ]
+    },
+    {
+      "section": "17.2",
+      "title": "Multi-Tenant Isolation",
+      "line": 16492,
+      "sha256": "089bc7d2a49a4d795883af0166e7f4d116f719d10f49f2f2802b122caeab2c0f",
+      "unannotated_keyword_lines": [
+        16495,
+        16496,
+        16498,
+        16501
+      ]
+    },
+    {
+      "section": "17.3",
+      "title": "Sensitive Data",
+      "line": 16585,
+      "sha256": "eff16848584c2fdeaf6366eac8045dae17e3b302de1212914e6da365e87ca54b",
+      "unannotated_keyword_lines": [
+        16587,
+        16589,
+        16591
+      ]
+    },
+    {
+      "section": "17.4",
+      "title": "Rate Limiting",
+      "line": 16594,
+      "sha256": "9739da751caeb1c2bb699621c8e74f7454e583ef9776cf99ffebd22d80bdedf4",
+      "unannotated_keyword_lines": [
+        16597
+      ]
+    },
+    {
+      "section": "17.5",
+      "title": "Chain Depth",
+      "line": 16599,
+      "sha256": "e709a31e102cbcfb6ef56d2e014f3d461811a59be6740faf83091a3c791ef964",
+      "unannotated_keyword_lines": [
+        16602
+      ]
+    },
+    {
+      "section": "17.6",
+      "title": "Voice and Audio Security",
+      "line": 16605,
+      "sha256": "5a083d7abeac77625ac9eeb8e5e7e71d5e1f123a81b31cd5529625f2f9b6d844",
+      "unannotated_keyword_lines": [
+        16609,
+        16612,
+        16614,
+        16620,
+        16628,
+        16630,
+        16631,
+        16633,
+        16640,
+        16642,
+        16645,
+        16648,
+        16649,
+        16653,
+        16659,
+        16663,
+        16668,
+        16673,
+        16674,
+        16678,
+        16682,
+        16683,
+        16686,
+        16691,
+        16693
+      ]
+    },
+    {
+      "section": "17.7",
+      "title": "Conference Access Security",
+      "line": 16699,
+      "sha256": "852e04f3460e0a9e582bb82f88d32622e6a927371eb11f3e579fcda6b5b018a5",
+      "unannotated_keyword_lines": [
+        16703,
+        16707,
+        16709,
+        16711,
+        16722,
+        16728,
+        16730,
+        16737,
+        16739
+      ]
+    },
+    {
+      "section": "17.8",
+      "title": "Skill-Bundled Files",
+      "line": 16744,
+      "sha256": "718501739bf0c3f3b77c4e1f8d83ca754dd5f75bf881f10329e76fb2b75e7e63",
+      "unannotated_keyword_lines": [
+        16748,
+        16751
+      ]
+    },
+    {
+      "section": "18",
+      "title": "Design Principles",
+      "line": 16764,
+      "sha256": "96be1db79319ff22754c6b1f52b72a96253469a8649391050819f295626153d2",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "19",
+      "title": "Multi-Agent Orchestration",
+      "line": 16858,
+      "sha256": "472dac62f4d5710dc21491f716fd79fdd186125981a57aa9b61174a1b535d39e",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "19.1",
+      "title": "Overview",
+      "line": 16864,
+      "sha256": "d053a7db83f944a3e00ffb648cd112fe6b03084c96fe657b6e57ad3de0ac0d16",
+      "unannotated_keyword_lines": [
+        16890,
+        16892,
+        16932
+      ]
+    },
+    {
+      "section": "19.2",
+      "title": "ConversationState",
+      "line": 16939,
+      "sha256": "9ff784f91f61bf48c82c882b4d30829b6eac0b11145973363e88e4470e924808",
+      "unannotated_keyword_lines": [
+        16941,
+        16952,
+        16955,
+        16957
+      ]
+    },
+    {
+      "section": "19.3",
+      "title": "Addressing",
+      "line": 16960,
+      "sha256": "7acc04f654e06e856ec2d7c05c1e9ca96a3528c92dc525268e9dfd15bd4ffd10",
+      "unannotated_keyword_lines": [
+        16968,
+        16978,
+        16984,
+        17009,
+        17017
+      ]
+    },
+    {
+      "section": "19.3.1",
+      "title": "Agent-sourced events",
+      "line": 17022,
+      "sha256": "4001667621e027ddb453b0917ca94c901754607b636ea71f101e365aa647cafd",
+      "unannotated_keyword_lines": [
+        17030,
+        17038,
+        17040,
+        17048
+      ]
+    },
+    {
+      "section": "19.3.2",
+      "title": "Delivered versus solicited",
+      "line": 17059,
+      "sha256": "aa00e1e4d8cc27dbb1d6a6c9a528de49e75259331f8a585273d6c83d51bff132",
+      "unannotated_keyword_lines": [
+        17061,
+        17062,
+        17075,
+        17079,
+        17083,
+        17084
+      ]
+    },
+    {
+      "section": "19.4",
+      "title": "ConversationRouter",
+      "line": 17097,
+      "sha256": "95218761f2c8c12c67e05add24ba9b400de97554c020d7cd0dad4c21714ed6a1",
+      "unannotated_keyword_lines": [
+        17131
+      ]
+    },
+    {
+      "section": "19.5",
+      "title": "ConversationPipeline",
+      "line": 17172,
+      "sha256": "bb03559f14f1e355ae8cdf9245512938ed81cf9933e0f3cfd898d7cd69b0470f",
+      "unannotated_keyword_lines": [
+        17198,
+        17216,
+        17228,
+        17248,
+        17267,
+        17270
+      ]
+    },
+    {
+      "section": "19.6",
+      "title": "HandoffHandler",
+      "line": 17272,
+      "sha256": "628ab53acfcf04b3e6e6969be503409f181707dbcb69812fb1f63624425d01d7",
+      "unannotated_keyword_lines": [
+        17349,
+        17362,
+        17364,
+        17373
+      ]
+    },
+    {
+      "section": "19.7",
+      "title": "Orchestration Strategies",
+      "line": 17385,
+      "sha256": "23effecb29c05d768ec8ac3a1e3d51c60b43222c0884833d244f6b135b218627",
+      "unannotated_keyword_lines": [
+        17388,
+        17394,
+        17435,
+        17446,
+        17467,
+        17474,
+        17481
+      ]
+    },
+    {
+      "section": "19.7.1",
+      "title": "Pipeline",
+      "line": 17492,
+      "sha256": "ae1c7f6aee81fdb41d34f0c7688827d47acc0bc74c4a5c515b290671aecd3238",
+      "unannotated_keyword_lines": [
+        17504,
+        17510
+      ]
+    },
+    {
+      "section": "19.7.2",
+      "title": "Swarm",
+      "line": 17517,
+      "sha256": "eadbdeb76ad75f078bc589ede464876703afdacc19d7a314b12228cbf4c68311",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "19.7.3",
+      "title": "Supervisor",
+      "line": 17529,
+      "sha256": "28a34f94194e4ac5fb47436633c75d67cc052517d2fcab1680fd516c86b2d5b6",
+      "unannotated_keyword_lines": [
+        17544
+      ]
+    },
+    {
+      "section": "19.7.4",
+      "title": "Loop",
+      "line": 17635,
+      "sha256": "5c14e84e98d5770b0ff57102a79caf2f5e1c96ac0455f9c63bebedcd4208ffa3",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "19.7.5",
+      "title": "Discussion",
+      "line": 17676,
+      "sha256": "fc5f97a3c640dafbc28f4c0457b68795ad1b0cb5652424754b8c2f4645c5af27",
+      "unannotated_keyword_lines": [
+        17825,
+        17939,
+        18075,
+        18126
+      ]
+    },
+    {
+      "section": "19.8",
+      "title": "StatusBus",
+      "line": 18246,
+      "sha256": "a4784294ed5fa03a6bdbdc86e6e898ba99cbc5a8af3ef5edf6b76fa808baba67",
+      "unannotated_keyword_lines": [
+        18291
+      ]
+    },
+    {
+      "section": "20",
+      "title": "Memory System",
+      "line": 18299,
+      "sha256": "0c7cbcc1e7d30847b6683dfe9b208fa4d2e6e9d895456da418f0434242988e34",
+      "unannotated_keyword_lines": [
+        18302
+      ]
+    },
+    {
+      "section": "20.1",
+      "title": "MemoryProvider Interface",
+      "line": 18305,
+      "sha256": "4f5cf67416d9704ddf7ad7d856e46bbb2457ed5a066186d525db0617b40740c7",
+      "unannotated_keyword_lines": [
+        18322,
+        18329
+      ]
+    },
+    {
+      "section": "20.2",
+      "title": "MemoryResult",
+      "line": 18344,
+      "sha256": "3290720225348bd2f50478f20753eb12d0b1de2fad5dc08d27d95d4bcc180915",
+      "unannotated_keyword_lines": [
+        18356,
+        18372,
+        18373
+      ]
+    },
+    {
+      "section": "20.3",
+      "title": "Built-in Implementations",
+      "line": 18376,
+      "sha256": "bbe5e550d8021835d8dda6e854fa1822956fec6b723c7a0be2adbda73650e27a",
+      "unannotated_keyword_lines": [
+        18445
+      ]
+    },
+    {
+      "section": "21",
+      "title": "Tool Access Control",
+      "line": 18469,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "21.1",
+      "title": "ToolPolicy",
+      "line": 18471,
+      "sha256": "ae7530920ba41b0f1e07bc98f1495424dfab1778618992cdb67ec459284c731d",
+      "unannotated_keyword_lines": [
+        18489,
+        18492,
+        18500,
+        18527,
+        18577,
+        18586,
+        18591,
+        18602,
+        18603
+      ]
+    },
+    {
+      "section": "21.2",
+      "title": "MCP Tool Provider",
+      "line": 18629,
+      "sha256": "601c23a9b12fa0bf396b08155b3a68df946bf3f31c5e10a64014f467830334cd",
+      "unannotated_keyword_lines": [
+        18631,
+        18651,
+        18652,
+        18653,
+        18663,
+        18674,
+        18681,
+        18688,
+        18690,
+        18701,
+        18708,
+        18712,
+        18741,
+        18745,
+        18755
+      ]
+    },
+    {
+      "section": "21.3",
+      "title": "AI Steering Directives",
+      "line": 18763,
+      "sha256": "36bf6f1075e6211a4ca8f69ddd0b6e581a88bead5c88cfc4eec5d11c72b5a262",
+      "unannotated_keyword_lines": [
+        18776,
+        18782,
+        18784,
+        18792,
+        18793,
+        18794
+      ]
+    },
+    {
+      "section": "21.4",
+      "title": "Tool Call Context",
+      "line": 18811,
+      "sha256": "389bb467a3d127ca1de99561d337489d845813965095f7c2507e64c30e81a1f5",
+      "unannotated_keyword_lines": [
+        18814,
+        18819,
+        18822,
+        18824,
+        18839,
+        18842,
+        18845,
+        18882,
+        18889,
+        18891
+      ]
+    },
+    {
+      "section": "21.5",
+      "title": "Large Tool Results",
+      "line": 18895,
+      "sha256": "7d502957512520107a77cc431faabc66e4f6b4168f9dae97837c005da5e544df",
+      "unannotated_keyword_lines": [
+        18898,
+        18905,
+        18909,
+        18920,
+        18928,
+        18930,
+        18932,
+        18935,
+        18939
+      ]
+    },
+    {
+      "section": "21.6",
+      "title": "Tool Call Timeout",
+      "line": 18946,
+      "sha256": "d9690132e57399081d00cc7920e6960d434499faf67bc04797b82d66873266db",
+      "unannotated_keyword_lines": [
+        18949,
+        18955,
+        18956,
+        18959,
+        18971
+      ]
+    },
+    {
+      "section": "22",
+      "title": "Delivery Strategies",
+      "line": 18981,
+      "sha256": "8d42dff7ebdd327015da48fa052649d9f1a0c084c58071f6433d875e738b4fc1",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "22.1",
+      "title": "DeliveryStrategy Interface",
+      "line": 18986,
+      "sha256": "42a449fe076b5805bb36244ec3b3c9308d8dde9fe633a6407fc7422be0a04951",
+      "unannotated_keyword_lines": [
+        19008,
+        19009,
+        19012,
+        19013,
+        19014,
+        19016,
+        19018,
+        19019,
+        19023,
+        19026,
+        19027,
+        19028,
+        19030,
+        19031,
+        19069,
+        19072,
+        19074,
+        19077,
+        19078,
+        19079,
+        19121,
+        19128,
+        19131,
+        19134,
+        19137,
+        19138,
+        19139,
+        19141,
+        19142,
+        19146,
+        19147,
+        19149,
+        19151,
+        19154,
+        19156,
+        19160,
+        19162,
+        19164,
+        19165
+      ]
+    },
+    {
+      "section": "22.2",
+      "title": "Built-in Strategies",
+      "line": 19175,
+      "sha256": "927332ba7558663cbbb52834cacb5aa7bd6ff8a50675477908ebd027290912fe",
+      "unannotated_keyword_lines": [
+        19183,
+        19187,
+        19189,
+        19191,
+        19193,
+        19200,
+        19203,
+        19204
+      ]
+    },
+    {
+      "section": "22.3",
+      "title": "Delivery Hooks",
+      "line": 19217,
+      "sha256": "7319e44504be927beb5cf426c1c996e3acd5d07917238d755612a6ee5d9589a6",
+      "unannotated_keyword_lines": [
+        19224,
+        19225,
+        19227
+      ]
+    },
+    {
+      "section": "23",
+      "title": "Task Delegation",
+      "line": 19250,
+      "sha256": "332f131bdba9be9330a38df2eb8fb399d278019c419d63964503c8a6d0377719",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "23.1",
+      "title": "TaskRunner Interface",
+      "line": 19256,
+      "sha256": "3c3b05f4c16d43283b020935eaf87f59e4d0b6bf0c07446046ce3b9fe8b82fa6",
+      "unannotated_keyword_lines": [
+        19270,
+        19275
+      ]
+    },
+    {
+      "section": "23.2",
+      "title": "DelegatedTask",
+      "line": 19279,
+      "sha256": "bb20f993b68f9c526db91186e8a1d762ff28501d443d62cf72b5a382fbf4f558",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "23.3",
+      "title": "Delegation Protocol",
+      "line": 19304,
+      "sha256": "25247ef56353e3517ee77a1f7da87f7a55b8854f5bd9462e600ccebfbc3167b0",
+      "unannotated_keyword_lines": [
+        19330,
+        19581
+      ]
+    },
+    {
+      "section": "23.4",
+      "title": "Delegation Tools",
+      "line": 19592,
+      "sha256": "b4fb54ad3a5c386f11d3f2d94f08127b71c215bb1844cc87918081e3bc30acbb",
+      "unannotated_keyword_lines": [
+        19594,
+        19794
+      ]
+    },
+    {
+      "section": "23.5",
+      "title": "Delegation Hooks",
+      "line": 19797,
+      "sha256": "9d620eec584b44c9ae236dfc9802db74382b599de5b24c037793500f530cdc03",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "24",
+      "title": "Skills Framework",
+      "line": 19806,
+      "sha256": "471ad035b7bd89d7faff2089e1351233908e683d4e6ea9668d4eac77e87652e0",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "24.1",
+      "title": "Skill Definition",
+      "line": 19811,
+      "sha256": "c3061f2f90c54914429ec830f54a7d4c313e52779e3a720697c3122a0a7f9967",
+      "unannotated_keyword_lines": [
+        19845,
+        19846,
+        19849
+      ]
+    },
+    {
+      "section": "24.2",
+      "title": "SkillMetadata",
+      "line": 19856,
+      "sha256": "ad72258b2f0418234d9340ee26eb15a7941f2b9addc98d65be021b69f7e4f786",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "24.3",
+      "title": "SkillRegistry",
+      "line": 19877,
+      "sha256": "7d48777e63af7e0e8d59ad0016492576e92a3bcde937c3cbb6267380602d8566",
+      "unannotated_keyword_lines": [
+        19910,
+        19911
+      ]
+    },
+    {
+      "section": "24.4",
+      "title": "Activation Lifecycle",
+      "line": 19945,
+      "sha256": "80196f81e400dfdbe1e32ccb69fc8d2a2cae61d41c9ab374e9f9d9afcc87c400",
+      "unannotated_keyword_lines": [
+        19952,
+        19953,
+        19956,
+        19957,
+        19961,
+        19962,
+        19965,
+        19973,
+        19974,
+        19978,
+        19983
+      ]
+    },
+    {
+      "section": "24.5",
+      "title": "Loading Failures",
+      "line": 20009,
+      "sha256": "13c3ae95d7f78408fe321fec1e362071cf51437f2d052ca165c4dea86860c026",
+      "unannotated_keyword_lines": [
+        20018,
+        20026,
+        20027,
+        20028,
+        20032,
+        20034,
+        20035,
+        20036,
+        20038,
+        20039,
+        20044
+      ]
+    },
+    {
+      "section": "24.6",
+      "title": "Access to Bundled Files",
+      "line": 20050,
+      "sha256": "dde77067c0f53bc4f9fe721279a11d7c0e54ca56e730697485593181440bbda1",
+      "unannotated_keyword_lines": [
+        20053,
+        20055,
+        20058,
+        20059,
+        20063,
+        20065,
+        20071,
+        20073
+      ]
+    },
+    {
+      "section": "24.7",
+      "title": "Skills Served over MCP",
+      "line": 20076,
+      "sha256": "d7407721772094f6d8a8dffca563c511b777e73b38531127a38717d99b2cb628",
+      "unannotated_keyword_lines": [
+        20078,
+        20096,
+        20097,
+        20123,
+        20131,
+        20142,
+        20194,
+        20207
+      ]
+    },
+    {
+      "section": "25",
+      "title": "Image Generation",
+      "line": 20214,
+      "sha256": "2dba69448a9e2d922af7c5f771925ad190c4d5749bfbebbc6bd91995e3b88869",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "25.1",
+      "title": "A Surface of Its Own",
+      "line": 20222,
+      "sha256": "215b899dd4e4130dc2b947433173ffdf7154a7123c09f0182a920effd07a32e2",
+      "unannotated_keyword_lines": [
+        20224,
+        20225,
+        20227,
+        20237
+      ]
+    },
+    {
+      "section": "25.2",
+      "title": "ImageProvider",
+      "line": 20242,
+      "sha256": "d69ed65ceb5048dbdda740548f73db5c77b02dd20755874ee0efcdb7f0ae290b",
+      "unannotated_keyword_lines": [
+        20254,
+        20260,
+        20262,
+        20265,
+        20271,
+        20274,
+        20277,
+        20279,
+        20281,
+        20289,
+        20290
+      ]
+    },
+    {
+      "section": "25.3",
+      "title": "ImageResult",
+      "line": 20293,
+      "sha256": "c64a1059e6df9b58c9b427dbf7ca4cf69f119c9c61eee31543d747e1416c0757",
+      "unannotated_keyword_lines": [
+        20303,
+        20311,
+        20315,
+        20320,
+        20322,
+        20323,
+        20324,
+        20326,
+        20327,
+        20328
+      ]
+    },
+    {
+      "section": "25.4",
+      "title": "Editing",
+      "line": 20331,
+      "sha256": "672b6ecc9c26a9f2fb6a98e9363eb432856ea10acc57c59d97c77d786271dc04",
+      "unannotated_keyword_lines": [
+        20338,
+        20339,
+        20344,
+        20346,
+        20347,
+        20348,
+        20349,
+        20350
+      ]
+    },
+    {
+      "section": "25.5",
+      "title": "Usage Accounting",
+      "line": 20353,
+      "sha256": "68661d8c7e31351dbb91a94d4f29f18f0b742c2a3007724e8f76546c9827d79b",
+      "unannotated_keyword_lines": [
+        20367,
+        20369,
+        20381
+      ]
+    },
+    {
+      "section": "25.6",
+      "title": "Model Catalogue",
+      "line": 20388,
+      "sha256": "ad523336815fa1ca4aa120c1750a997d95ad969fd7d1db8ac0797a4b233404e6",
+      "unannotated_keyword_lines": [
+        20394,
+        20398,
+        20402,
+        20404
+      ]
+    },
+    {
+      "section": "25.7",
+      "title": "Non-Goals",
+      "line": 20407,
+      "sha256": "6e7ad0a8d3eb1b750963b4087106157f8be7b1d115843db3a49a30f26e3a5c32",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "26",
+      "title": "Conformance Levels",
+      "line": 20421,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "26.1",
+      "title": "Level 0: Core (REQUIRED)",
+      "line": 20423,
+      "sha256": "e66f5e88193d36d932f4a2d44b4526cb0be22c13f4f210bf558269ffc74ca374",
+      "unannotated_keyword_lines": [
+        20425,
+        20457
+      ]
+    },
+    {
+      "section": "26.2",
+      "title": "Level 1: Transport (RECOMMENDED)",
+      "line": 20493,
+      "sha256": "48dd8f6d4e03f235eda321b1ffe10e12e37f2e002a83e1f0810a7fff48c14d52",
+      "unannotated_keyword_lines": [
+        20495
+      ]
+    },
+    {
+      "section": "26.3",
+      "title": "Level 2: Rich (OPTIONAL)",
+      "line": 20513,
+      "sha256": "6cca816df9eeb69880b7d98dcc3939efe6dbd32f4059d439beeaa4bbd71ad63c",
+      "unannotated_keyword_lines": [
+        20515,
+        20535
+      ]
+    },
+    {
+      "section": "26.4",
+      "title": "Level 3: Real-Time Media (OPTIONAL)",
+      "line": 20551,
+      "sha256": "fd801e814fd05f9d3db61f727e5c921d849d26eda1b1b8c5072ce9191050ef5e",
+      "unannotated_keyword_lines": [
+        20553,
+        20560,
+        20561,
+        20563,
+        20564,
+        20565,
+        20569,
+        20574,
+        20575,
+        20615
+      ]
+    },
+    {
+      "section": "A",
+      "title": "Channel Reference",
+      "line": 20639,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.1",
+      "title": "SMS Channel",
+      "line": 20641,
+      "sha256": "7e1d87cc9814ad2322c97ebe5a2e714abdd061f5f43339ba16d6e215e608f551",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.2",
+      "title": "Email Channel",
+      "line": 20664,
+      "sha256": "5db78b40ff892c63fbd5d26aadedfcffcdad457be811450b7f4d2878ef462cc6",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.3",
+      "title": "WhatsApp Channel",
+      "line": 20687,
+      "sha256": "df06714fd8572d91667cfbbe923b415db57aad318a90d31cf2a48a47e28dcf4e",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.4",
+      "title": "WhatsApp Personal Channel",
+      "line": 20713,
+      "sha256": "f989f089447bc48e863fa1aecb7c0ebdbec9ba2df59c667165b921f093e392c0",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.5",
+      "title": "Messenger Channel",
+      "line": 20747,
+      "sha256": "7ee04880524291443b23cf60b1c177c9ecf08af57da74cda691c8be46af4b6dd",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.6",
+      "title": "Teams Channel",
+      "line": 20770,
+      "sha256": "5bcc08faa38a20d0341859092a736335167f38478c5beb28750f458b8723db27",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.7",
+      "title": "RCS Channel",
+      "line": 20796,
+      "sha256": "ac02543f3bf22df7b4ccfc307816f95c319c622e7a629870e81f2be74c78622b",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.8",
+      "title": "WebSocket Channel",
+      "line": 20824,
+      "sha256": "84bd72ba0a73fef54b122d819933a4b40d6b09086897f7217e132c58908b4e24",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.9",
+      "title": "AI Channel",
+      "line": 20868,
+      "sha256": "7c6d971d4b5d3878b1cff4a033e00ac582387636cb8f240755c9a89e126297d5",
+      "unannotated_keyword_lines": [
+        20975
+      ]
+    },
+    {
+      "section": "A.9.1",
+      "title": "ACP Agent Channel",
+      "line": 20985,
+      "sha256": "7cb5e56f4a960fa927374878ac81b7e4fad6d81326311740256a282be97186d6",
+      "unannotated_keyword_lines": [
+        21032,
+        21035,
+        21036,
+        21037,
+        21039,
+        21041,
+        21042,
+        21043,
+        21044,
+        21045,
+        21050
+      ]
+    },
+    {
+      "section": "A.10",
+      "title": "Voice Channel",
+      "line": 21054,
+      "sha256": "f53d2406fc2fe01888b12c49c3591cc2cf7502d9988d53904322acce5a1776e1",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.11",
+      "title": "Realtime Voice Channel",
+      "line": 21095,
+      "sha256": "7136b44613984b1ba202f0099d179f11c129de4a66a545bea87861a695ca43dd",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.12",
+      "title": "Video Channel",
+      "line": 21128,
+      "sha256": "d3cc47ddb81f678d4b046f24b2641e59bfe34bb8b885c4ddd28e03cc31bce7da",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.13",
+      "title": "Telegram Channel",
+      "line": 21164,
+      "sha256": "5787960c71d1d0f6eb223c7939c165d3f7253e000327e60bb94de4f11380925b",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.14",
+      "title": "CLI Channel",
+      "line": 21192,
+      "sha256": "4752552a09c1721301cc57e7d7109db84bcd906f9891de7fc8b9e2d5ed8af3b6",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.14.1",
+      "title": "Host Channel",
+      "line": 21208,
+      "sha256": "a24ed4cf8d37afe952dee810746c8e1bbbf4d52aa4484255fae66cf48366e0c2",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.15",
+      "title": "Conference Channel",
+      "line": 21224,
+      "sha256": "c042b60b2ee34e04473466de268709408208d0af35f2d4dad92fba07a50f475b",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "B",
+      "title": "Complete Event Flow Examples",
+      "line": 21271,
+      "sha256": "960b4e386cbdc5a3b262f44af32a4aa737bf50fb310b85ec193865b5d092893d",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "B.1",
+      "title": "Customer (SMS) + AI — Basic Conversation",
+      "line": 21277,
+      "sha256": "02ecdfd46777ce12b34f1960cb1ce3a918c028ca09ddf82b2faa2a5d6663c409",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "B.2",
+      "title": "Sensitivity Scanning — Block and Inject",
+      "line": 21327,
+      "sha256": "a2bc38a8165812aaed634fd9835fd45f5f058c416e1c71a12fa5f7eef234870b",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "B.3",
+      "title": "Ambiguous Identity — Shared Family Phone",
+      "line": 21372,
+      "sha256": "0d59e7eb1f548fe986df21c6c9ddc1a9f39b4f732c770bcce8f7a967b05a23b5",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "B.4",
+      "title": "AI ↔ AI Multi-Agent with Chain Depth",
+      "line": 21415,
+      "sha256": "3551b6c238cd6e3ff199387d186e07ca38081929ee8bf69e96573a0e35fd0779",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "B.5",
+      "title": "Dynamic Channel Management — Advisor Joins",
+      "line": 21462,
+      "sha256": "3b58db7e25ebb1a9686e376d182c1b216afc1de4e34e47ec373313f20534a2eb",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "B.6",
+      "title": "Message Edit — Cross-Channel with Fallback",
+      "line": 21501,
+      "sha256": "c285aa712a940319cfc73f788b0246ba8e1c3c4810204d8b4585f1d7399be864",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "B.7",
+      "title": "Message Delete — Cross-Channel with Fallback",
+      "line": 21555,
+      "sha256": "0bf21f50cc9bcb67459dfc304dbcf9c61f768420d7a3e9216f54537a1f5fbc88",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "B.8",
+      "title": "SIP Call → Unified process_inbound with Protocol Traces",
+      "line": 21609,
+      "sha256": "0062d2b2955038a52fb827fe4ed92fb1f30128890d0b10c76f055e65f031d0d9",
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "B.9",
+      "title": "Multi-Agent Pipeline — Triage → Specialist → Resolution",
+      "line": 21695,
+      "sha256": "c701ba4a3f44cad2dc4cb3cde35f84865d7d9a25f5bc8d92bb07a3f8b35389d8",
+      "unannotated_keyword_lines": []
+    }
+  ],
+  "requirements": [
+    {
+      "id": "RK-9.3-001",
+      "kind": "behavior",
+      "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply.",
+      "section": "9.3",
+      "line": 5138,
+      "text": "Run sequentially, ordered by priority (lower number = first). At equal\n  priority the kit's hooks run before the room's, and hooks of one scope run\n  in the order they were registered (§9.1); on BEFORE_BROADCAST an off-lock\n  hook still runs before a hook of equal priority that needs the lock\n  (§9.5.1).",
+      "sha256": "64d45b04a19832967ae0c81079ecca75442de5f9d0444db56c5bfb84c97a6df5"
+    },
+    {
+      "id": "RK-9.3-002",
+      "kind": "behavior",
+      "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply.",
+      "section": "9.3",
+      "line": 5143,
+      "text": "Each hook receives the event and room context.",
+      "sha256": "df893f81ca5f146526cff32bf988be6d45496fbe549290068b50b54cc4292f8b"
+    },
+    {
+      "id": "RK-9.3-003",
+      "kind": "behavior",
+      "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply.",
+      "section": "9.3",
+      "line": 5144,
+      "text": "Each hook MUST return a HookResult, except the identity hooks that decide\n  ON_IDENTITY_AMBIGUOUS and ON_IDENTITY_UNKNOWN, which are registered apart and\n  return an IdentityHookResult or null (Section 11.2).",
+      "sha256": "ae2e93f5fa8c8d17a9616d609b71abd6ee3146510f68ed063d9bb716725c2635"
+    },
+    {
+      "id": "RK-9.3-004",
+      "kind": "behavior",
+      "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply.",
+      "section": "9.3",
+      "line": 5147,
+      "text": "A BLOCK result stops the pipeline — no further hooks run.",
+      "sha256": "da243e967c9edbc192b8b33e84b7fba8e7ba8f044cd4a10b637e37be09e5414a"
+    },
+    {
+      "id": "RK-9.3-005",
+      "kind": "behavior",
+      "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply.",
+      "section": "9.3",
+      "line": 5148,
+      "text": "A hook that does not produce a usable result MUST be treated as ALLOW with an\n  error logged, so that a broken hook cannot take a room down. This covers a\n  hook that raises, one that exceeds its timeout, one that returns something\n  other than a HookResult, a MODIFY that carries no payload, and a MODIFY\n  whose payload is not of the type the trigger passed in.",
+      "sha256": "d395df66200beb66397af87fa94f35129de91a584bb7a8be4c246c900652da7e"
+    },
+    {
+      "id": "RK-9.3-006",
+      "kind": "behavior",
+      "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply.",
+      "section": "9.3",
+      "line": 5153,
+      "text": "**Except on three triggers, which fail closed: BEFORE_TTS, ON_TRANSCRIPTION\n  and BEFORE_TOOL_USE**, where every one of those outcomes MUST block instead.\n  Every other trigger, BEFORE_BROADCAST and ON_TOOL_CALL included, is fail-open\n  unless a hook declares itself fail-closed (below). BEFORE_TTS and\n  ON_TRANSCRIPTION carry content a hook may exist to withhold: a\n  redaction hook that fails, times out, or returns something unusable must not\n  let the original through, and allowing would publish exactly what the hook\n  was there to suppress. On a streamed TTS response BEFORE_TTS runs on each\n  sentence (Section 12.2, step 12s.b), so this applies to every sentence: a\n  streamed response is never a way around the hook. BEFORE_TOOL_USE carries\n  an action a hook may exist to prevent: it is the gate of a tool call, where\n  an approval hook sits, and an approval hook that cannot answer must not let\n  the call run. A partial rule\n  is no rule — an\n  implementation that blocks on exceptions but allows on timeouts leaks through\n  the timeout.",
+      "sha256": "76c4a5079008bd190e6a2a818744a874630ef39321f9b29c033ef841aed9277b"
+    },
+    {
+      "id": "RK-9.3-007",
+      "kind": "behavior",
+      "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply.",
+      "section": "9.3",
+      "line": 5169,
+      "text": "**A BEFORE_TOOL_USE that failed closed refuses the call before execution**,\n  as its BLOCK does, on every channel. A BLOCK's reason is the hook's own words\n  for the model, and the model reads them (`{\"error\": \"<reason>\"}`) on every\n  channel and every entry of one, as it reads the reason of an ON_TOOL_CALL\n  block. A BLOCK with no reason, and a hook that failed closed, give the fixed\n  refusal (`{\"error\": \"Tool 'x' denied by pre-execution hook.\"}`), never the\n  hook's error, whose message can hold anything the hook held. The hook's name\n  and error go to the log and to ON_TOOL_CALL's observers, on the refused\n  call's `error_detail`. An external tool handler decides and reports its calls\n  itself: the refusal reaches it as a denied decision that carries the\n  hook's error for it alone, and what the agent reads, and what it reports,\n  are the handler's; a handler that hands that error on with its decision has\n  it reported on the refusal's `error_detail`, as on the channel's own doors.",
+      "sha256": "6cb9b6f41ded3ecd8938c04708397a098d863e6e7109af6bc3e24940576afeb5"
+    },
+    {
+      "id": "RK-9.3-008",
+      "kind": "behavior",
+      "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply.",
+      "section": "9.3",
+      "line": 5182,
+      "text": "**A hook MAY declare itself fail-closed** (`fail_closed = true`), on any\n  trigger whose SYNC hooks run as a chain (Section 9.2): a content check on\n  `BEFORE_BROADCAST` (PII, moderation) is exactly such a hook, while the\n  trigger as a whole stays fail-open so that a broken\n  logging hook cannot take every room down. Every unusable outcome of a\n  fail-closed hook MUST block, and the block MUST name the hook and the\n  outcome so the sender can be told why: `blocked_by` is the hook name and\n  the reason is `hook_timeout:<name>`, `hook_error:<name>` or\n  `hook_invalid_result:<name>`.",
+      "sha256": "ef7289866c7288c1dc5919bd9c0c35437f2221557c24e32c7c89f75d3bf00353"
+    },
+    {
+      "id": "RK-9.3-009",
+      "kind": "behavior",
+      "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply.",
+      "section": "9.3",
+      "line": 5191,
+      "text": "A MODIFY result replaces the payload with the one it carries, including a\n  falsy one. Redacting a string to empty is a modification; treating it as\n  absent would pass the original to the next hook. A MODIFY that carries no\n  payload replaces nothing: it is an unusable result, which the trigger's or\n  the hook's fail-open or fail-closed rule decides, as it decides a payload\n  of the wrong type.",
+      "sha256": "f9e37ad2e4a38931b163f696de14c223e3e1478d217b8cde32d637ac1ea91c5b"
+    },
+    {
+      "id": "RK-9.3-010",
+      "kind": "behavior",
+      "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply.",
+      "section": "9.3",
+      "line": 5197,
+      "text": "**The arguments a BEFORE_TOOL_USE chain leaves are the call's.** The call\n  runs with those the chain ended with: a MODIFY's payload, or the payload a\n  hook edited in place, each read by the next hook. A hook may instead\n  return arguments under `metadata[\"arguments\"]`, which no later hook reads\n  and which has the last word over the chain's, the last such rewrite\n  winning. Either way the arguments are validated again before the call\n  runs (§21.1); arguments that are not an object refuse it.",
+      "sha256": "486c17f146c16d59de58292cb9e33501da7d3ebd07b640dd1c31400857aeeaec"
+    },
+    {
+      "id": "RK-9.3-011",
+      "kind": "behavior",
+      "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply.",
+      "section": "9.3",
+      "line": 5204,
+      "text": "An unusable result's tasks and observations are collected, as side\n  effects always are (§7.5 rule 3), save a result holding a sixth composite\n  level (§5.3), of which nothing is collected; the events it would inject are\n  not.",
+      "sha256": "d3f145dfeb6ebd159a89b479a705a41f3b41eae04a96ea8c6fff5a1f5da9dcfa"
+    }
+  ]
+}

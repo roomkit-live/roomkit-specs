@@ -5135,22 +5135,22 @@ hook (§10.1 step 2).
 
 **SYNC hooks:**
 
-- Run sequentially, ordered by priority (lower number = first). At equal
+- <!-- rfc: {"id": "RK-9.3-001", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply."} -->Run sequentially, ordered by priority (lower number = first). At equal
   priority the kit's hooks run before the room's, and hooks of one scope run
   in the order they were registered (§9.1); on BEFORE_BROADCAST an off-lock
   hook still runs before a hook of equal priority that needs the lock
-  (§9.5.1).
-- Each hook receives the event and room context.
-- Each hook MUST return a HookResult, except the identity hooks that decide
+  (§9.5.1).<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-002", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply."} -->Each hook receives the event and room context.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-003", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply."} -->Each hook MUST return a HookResult, except the identity hooks that decide
   ON_IDENTITY_AMBIGUOUS and ON_IDENTITY_UNKNOWN, which are registered apart and
-  return an IdentityHookResult or null (Section 11.2).
-- A BLOCK result stops the pipeline — no further hooks run.
-- A hook that does not produce a usable result MUST be treated as ALLOW with an
+  return an IdentityHookResult or null (Section 11.2).<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-004", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply."} -->A BLOCK result stops the pipeline — no further hooks run.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-005", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply."} -->A hook that does not produce a usable result MUST be treated as ALLOW with an
   error logged, so that a broken hook cannot take a room down. This covers a
   hook that raises, one that exceeds its timeout, one that returns something
   other than a HookResult, a MODIFY that carries no payload, and a MODIFY
-  whose payload is not of the type the trigger passed in.
-- **Except on three triggers, which fail closed: BEFORE_TTS, ON_TRANSCRIPTION
+  whose payload is not of the type the trigger passed in.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-006", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply."} -->**Except on three triggers, which fail closed: BEFORE_TTS, ON_TRANSCRIPTION
   and BEFORE_TOOL_USE**, where every one of those outcomes MUST block instead.
   Every other trigger, BEFORE_BROADCAST and ON_TOOL_CALL included, is fail-open
   unless a hook declares itself fail-closed (below). BEFORE_TTS and
@@ -5165,8 +5165,8 @@ hook (§10.1 step 2).
   the call run. A partial rule
   is no rule — an
   implementation that blocks on exceptions but allows on timeouts leaks through
-  the timeout.
-- **A BEFORE_TOOL_USE that failed closed refuses the call before execution**,
+  the timeout.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-007", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply."} -->**A BEFORE_TOOL_USE that failed closed refuses the call before execution**,
   as its BLOCK does, on every channel. A BLOCK's reason is the hook's own words
   for the model, and the model reads them (`{"error": "<reason>"}`) on every
   channel and every entry of one, as it reads the reason of an ON_TOOL_CALL
@@ -5178,8 +5178,8 @@ hook (§10.1 step 2).
   itself: the refusal reaches it as a denied decision that carries the
   hook's error for it alone, and what the agent reads, and what it reports,
   are the handler's; a handler that hands that error on with its decision has
-  it reported on the refusal's `error_detail`, as on the channel's own doors.
-- **A hook MAY declare itself fail-closed** (`fail_closed = true`), on any
+  it reported on the refusal's `error_detail`, as on the channel's own doors.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-008", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply."} -->**A hook MAY declare itself fail-closed** (`fail_closed = true`), on any
   trigger whose SYNC hooks run as a chain (Section 9.2): a content check on
   `BEFORE_BROADCAST` (PII, moderation) is exactly such a hook, while the
   trigger as a whole stays fail-open so that a broken
@@ -5187,24 +5187,24 @@ hook (§10.1 step 2).
   fail-closed hook MUST block, and the block MUST name the hook and the
   outcome so the sender can be told why: `blocked_by` is the hook name and
   the reason is `hook_timeout:<name>`, `hook_error:<name>` or
-  `hook_invalid_result:<name>`.
-- A MODIFY result replaces the payload with the one it carries, including a
+  `hook_invalid_result:<name>`.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-009", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply."} -->A MODIFY result replaces the payload with the one it carries, including a
   falsy one. Redacting a string to empty is a modification; treating it as
   absent would pass the original to the next hook. A MODIFY that carries no
   payload replaces nothing: it is an unusable result, which the trigger's or
   the hook's fail-open or fail-closed rule decides, as it decides a payload
-  of the wrong type.
-- **The arguments a BEFORE_TOOL_USE chain leaves are the call's.** The call
+  of the wrong type.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-010", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply."} -->**The arguments a BEFORE_TOOL_USE chain leaves are the call's.** The call
   runs with those the chain ended with: a MODIFY's payload, or the payload a
   hook edited in place, each read by the next hook. A hook may instead
   return arguments under `metadata["arguments"]`, which no later hook reads
   and which has the last word over the chain's, the last such rewrite
   winning. Either way the arguments are validated again before the call
-  runs (§21.1); arguments that are not an object refuse it.
-- An unusable result's tasks and observations are collected, as side
+  runs (§21.1); arguments that are not an object refuse it.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-011", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply."} -->An unusable result's tasks and observations are collected, as side
   effects always are (§7.5 rule 3), save a result holding a sixth composite
   level (§5.3), of which nothing is collected; the events it would inject are
-  not.
+  not.<!-- /rfc -->
 
 **ASYNC hooks:**
 

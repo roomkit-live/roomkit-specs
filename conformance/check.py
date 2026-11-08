@@ -71,6 +71,9 @@ def rfc_text(path: str | None) -> tuple[str, str]:
 
 def sections(text: str) -> dict[str, list[str]]:
     """Each numbered section's own lines, up to the next heading of any level."""
+    from traceability.source import strip_annotations
+
+    text = strip_annotations(text)
     found: dict[str, list[str]] = {}
     current: list[str] | None = None
     for line in text.splitlines():
@@ -98,7 +101,11 @@ def resolve(reference: str, parts: dict[str, list[str]]) -> str | None:
         return _step(lines, step[1], step[2])
     if rule := re.fullmatch(r"(?:(.+) )?rule (\d+)", rest):
         return _rule(lines, rule[1], rule[2])
-    return None if _label(lines, rest) is not None else f"no paragraph {rest!r} in {number}"
+    return (
+        None
+        if _label(lines, rest) is not None
+        else f"no paragraph {rest!r} in {number}"
+    )
 
 
 def _step(lines: list[str], number: str, letter: str) -> str | None:
@@ -124,7 +131,11 @@ def _rule(lines: list[str], label: str | None, number: str) -> str | None:
         if position is None:
             return f"no paragraph {label!r}"
         start = position
-    items = [line for line in _prose(lines[start:]) if (m := _NUMBERED.match(line)) and m[1] == number]
+    items = [
+        line
+        for line in _prose(lines[start:])
+        if (m := _NUMBERED.match(line)) and m[1] == number
+    ]
     if not items:
         return f"no rule {number}"
     if label is None and len(items) > 1:
@@ -153,10 +164,14 @@ def _label(lines: list[str], label: str) -> int | None:
     return None
 
 
-_ROW_REF = re.compile(r"§(\d+(?:\.\d+)*)(?: steps? (\d+[a-z]?(?:(?:, | and )\d+[a-z]?)*))?")
+_ROW_REF = re.compile(
+    r"§(\d+(?:\.\d+)*)(?: steps? (\d+[a-z]?(?:(?:, | and )\d+[a-z]?)*))?"
+)
 
 
-def coverage_rows(parts: dict[str, list[str]]) -> list[tuple[str, list[Ref], list[str], list[str]]]:
+def coverage_rows(
+    parts: dict[str, list[str]],
+) -> list[tuple[str, list[Ref], list[str], list[str]]]:
     """The §26.1 table's rows: each step or operation, the RFC places it
     names, its triggers and its framework events."""
     events = set()
@@ -167,7 +182,11 @@ def coverage_rows(parts: dict[str, list[str]]) -> list[tuple[str, list[Ref], lis
     rows = []
     for line in parts.get("26.1", []):
         cells = [cell.strip() for cell in line.split("|")[1:-1]]
-        if len(cells) != 3 or cells[0] in ("Step or operation", "---") or set(cells[0]) <= {"-"}:
+        if (
+            len(cells) != 3
+            or cells[0] in ("Step or operation", "---")
+            or set(cells[0]) <= {"-"}
+        ):
             continue
         refs: list[Ref] = []
         for section, steps in _ROW_REF.findall(cells[0]):
@@ -206,20 +225,27 @@ def row_gaps(
     gaps = []
     missing = [name for name in names if name not in credited]
     if missing:
-        gaps.append(f"§26.1 row {operation!r}: nothing citing it asserts {', '.join(missing)}")
+        gaps.append(
+            f"§26.1 row {operation!r}: nothing citing it asserts {', '.join(missing)}"
+        )
     for ref in refs:
         if not any(
             cites(s, ref) and set(names) & set().union(*asserted(s)) for s in scenarios
         ):
             place = f"§{ref[0]}" + (f" step {ref[1]}" if ref[1] else "")
-            gaps.append(f"§26.1 row {operation!r}: no scenario citing {place} asserts it")
+            gaps.append(
+                f"§26.1 row {operation!r}: no scenario citing {place} asserts it"
+            )
     return gaps
 
 
 def asserted(scenario: dict[str, Any]) -> tuple[set[str], set[str]]:
     """The triggers whose firing a scenario asserts, and the framework events."""
     expect = scenario.get("expect", {})
-    hooks = {hook["name"]: hook["trigger"] for hook in scenario.get("setup", {}).get("hooks", [])}
+    hooks = {
+        hook["name"]: hook["trigger"]
+        for hook in scenario.get("setup", {}).get("hooks", [])
+    }
     triggers = set()
     for name, calls in expect.get("hooks", {}).items():
         listed = calls.get("$unordered", []) if isinstance(calls, dict) else calls
@@ -236,10 +262,41 @@ def asserted(scenario: dict[str, Any]) -> tuple[set[str], set[str]]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    parser.add_argument("--fix", action="store_true", help="rewrite each file in the suite's layout")
-    parser.add_argument("--rfc", help="check against this file instead of the pinned commit")
-    parser.add_argument("--strict", action="store_true", help="coverage gaps are errors")
+    parser.add_argument(
+        "--fix", action="store_true", help="rewrite each file in the suite's layout"
+    )
+    parser.add_argument(
+        "--rfc", help="check against this file instead of the pinned commit"
+    )
+    parser.add_argument(
+        "--strict", action="store_true", help="coverage gaps are errors"
+    )
+    parser.add_argument(
+        "--traceability",
+        action="store_true",
+        help="check the current RFC's requirement registry and evidence",
+    )
+    parser.add_argument(
+        "--update-traceability",
+        action="store_true",
+        help="regenerate traceability artifacts after validation",
+    )
+    parser.add_argument(
+        "--python-repo",
+        type=Path,
+        help="Python git repository used to resolve pinned test references",
+    )
+    parser.add_argument(
+        "--rust-repo",
+        type=Path,
+        help="Rust git repository used to resolve execution provenance",
+    )
+    parser.add_argument(
+        "--base-ref", help="full specs commit used to check requirement ID retirement"
+    )
     args = parser.parse_args()
+    if args.update_traceability and not args.traceability:
+        parser.error("--update-traceability requires --traceability")
     try:
         from jsonschema import Draft202012Validator
     except ImportError:
@@ -248,7 +305,8 @@ def main() -> int:
     schema = json.loads((HERE / "scenario.schema.json").read_text(encoding="utf-8"))
     Draft202012Validator.check_schema(schema)
     validator = Draft202012Validator(schema)
-    text, source = rfc_text(args.rfc)
+    rfc = args.rfc or (str(ROOT / "roomkit-rfc.md") if args.traceability else None)
+    text, source = rfc_text(rfc)
     parts = sections(text)
     errors: list[str] = []
     scenarios: list[dict[str, Any]] = []
@@ -276,7 +334,21 @@ def main() -> int:
     gaps = []
     for operation, refs, row_triggers, row_events in coverage_rows(parts):
         gaps += row_gaps(operation, refs, row_triggers + row_events, scenarios)
-    gaps += [f"reentrancy cell {cell}: no scenario" for cell in CELLS if cell not in cells]
+    gaps += [
+        f"reentrancy cell {cell}: no scenario" for cell in CELLS if cell not in cells
+    ]
+    if args.traceability and not errors:
+        from traceability import check
+
+        errors += check(
+            ROOT,
+            text,
+            scenarios,
+            python_repo=args.python_repo,
+            rust_repo=args.rust_repo,
+            update=args.update_traceability,
+            base_ref=args.base_ref,
+        )
     print(f"{len(scenarios)} scenarios, rules resolved against {source}")
     for line in errors:
         print(f"error: {line}")

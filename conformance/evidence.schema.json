@@ -1,0 +1,265 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://roomkit.dev/conformance/evidence.schema.json",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "python_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "retired": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^RK-(?:[0-9]+|[A-Z])(?:\\.[0-9]+)*-[0-9]{3,}$"
+      }
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "requirement": {
+            "type": "string",
+            "pattern": "^RK-(?:[0-9]+|[A-Z])(?:\\.[0-9]+)*-[0-9]{3,}$"
+          },
+          "clause_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "scope": {
+            "type": "string",
+            "minLength": 1
+          },
+          "coverage": {
+            "enum": [
+              "partial",
+              "complete"
+            ]
+          },
+          "review": {
+            "type": "string",
+            "minLength": 1
+          },
+          "assertions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "scenario": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "pointer": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "proves": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "scenario_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "scenario",
+                "pointer",
+                "sha256",
+                "proves",
+                "scenario_sha256"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "tests": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "nodeid": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "proves": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "nodeid",
+                "sha256",
+                "proves"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "missing": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "id",
+          "requirement",
+          "clause_sha256",
+          "scope",
+          "coverage",
+          "review",
+          "assertions",
+          "tests",
+          "missing"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "executions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "implementation": {
+            "enum": [
+              "python",
+              "rust"
+            ]
+          },
+          "implementation_commit": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{40}$"
+          },
+          "corpus_commit": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{40}$"
+          },
+          "rfc_commit": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{40}$"
+          },
+          "rfc_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "backend": {
+            "type": "string",
+            "minLength": 1
+          },
+          "runtime": {
+            "type": "string",
+            "minLength": 1
+          },
+          "command": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "artifact": {
+            "type": "object",
+            "properties": {
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "format": {
+                "enum": [
+                  "pytest_junit",
+                  "cargo"
+                ]
+              }
+            },
+            "required": [
+              "path",
+              "format",
+              "sha256"
+            ],
+            "additionalProperties": false
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "scenario": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "outcome": {
+                  "enum": [
+                    "passed",
+                    "failed",
+                    "skipped",
+                    "not_run"
+                  ]
+                }
+              },
+              "required": [
+                "scenario",
+                "sha256",
+                "outcome"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "scenario_filter": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "implementation",
+          "implementation_commit",
+          "corpus_commit",
+          "rfc_commit",
+          "rfc_sha256",
+          "backend",
+          "runtime",
+          "command",
+          "artifact",
+          "results"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "version",
+    "python_commit",
+    "retired",
+    "links",
+    "executions"
+  ],
+  "additionalProperties": false
+}

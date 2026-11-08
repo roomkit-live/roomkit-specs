@@ -1,0 +1,259 @@
+{
+  "version": 1,
+  "python_commit": "33d1f4415e2a5697cbe5b4f6cb8413ee05f33363",
+  "retired": [],
+  "links": [
+    {
+      "id": "pilot-fail-open",
+      "requirement": "RK-9.3-005",
+      "clause_sha256": "d395df66200beb66397af87fa94f35129de91a584bb7a8be4c246c900652da7e",
+      "scope": "BEFORE_BROADCAST through process_inbound, including fail-open/fail-closed behavior where configured.",
+      "coverage": "partial",
+      "review": "The scenario expectations were read against this clause; this mapping does not cover every trigger or invalid payload.",
+      "assertions": [
+        {
+          "scenario": "hooks/a-failing-hook-lets-the-event-through",
+          "pointer": "/steps/0/expect",
+          "sha256": "bf3da56d9213d91f62d521ae8905180cc4b0ba837aa66f5daec31cd796afb4d4",
+          "scenario_sha256": "17f057968efc709e1865d048fc6f70e882687176e33b8560a72154fb6ccd6041",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        },
+        {
+          "scenario": "hooks/a-failing-hook-lets-the-event-through",
+          "pointer": "/expect",
+          "sha256": "c2574dd8c925bd4b676b7b469919968111a1363ca509248709188c2ea6176732",
+          "scenario_sha256": "17f057968efc709e1865d048fc6f70e882687176e33b8560a72154fb6ccd6041",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        },
+        {
+          "scenario": "hooks/a-hook-past-its-timeout",
+          "pointer": "/steps/0/expect",
+          "sha256": "bf3da56d9213d91f62d521ae8905180cc4b0ba837aa66f5daec31cd796afb4d4",
+          "scenario_sha256": "71a2e8eb515358fb35d2ef030cc98ef50cc75cbad310184f2c8b80c65358053f",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        },
+        {
+          "scenario": "hooks/a-hook-past-its-timeout",
+          "pointer": "/expect",
+          "sha256": "d40a6511a5e0adae3c69722ffb364bed5407d7840344364f0b472788bf06ceaa",
+          "scenario_sha256": "71a2e8eb515358fb35d2ef030cc98ef50cc75cbad310184f2c8b80c65358053f",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        },
+        {
+          "scenario": "hooks/a-hook-returning-no-result-fails-open",
+          "pointer": "/steps/0/expect",
+          "sha256": "03f3864a7db9914a3b75358ff24980ec63d5858cc0c98ee51c13cb874b064e52",
+          "scenario_sha256": "36feec9f1b382c0405c19dc3fec0d50fe567ccc12655c28599c1c8d73ffd95d4",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        },
+        {
+          "scenario": "hooks/a-hook-returning-no-result-fails-open",
+          "pointer": "/expect",
+          "sha256": "c7b5465e9e4885dc8a399471636d990e0e32b41c6415a4cb168cb2bbb5423971",
+          "scenario_sha256": "36feec9f1b382c0405c19dc3fec0d50fe567ccc12655c28599c1c8d73ffd95d4",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        },
+        {
+          "scenario": "hooks/a-hook-modifying-without-a-payload-fails-open",
+          "pointer": "/steps/0/expect",
+          "sha256": "03f3864a7db9914a3b75358ff24980ec63d5858cc0c98ee51c13cb874b064e52",
+          "scenario_sha256": "30a0a39ce6a9fa672ac95bf16308359dd320f3af46b94657236cd4cdaf270020",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        },
+        {
+          "scenario": "hooks/a-hook-modifying-without-a-payload-fails-open",
+          "pointer": "/expect",
+          "sha256": "edb4cad3ef14ecc00dd0de6314730d41d5c1fa15983e707b669c524be9cd50d6",
+          "scenario_sha256": "30a0a39ce6a9fa672ac95bf16308359dd320f3af46b94657236cd4cdaf270020",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Other SYNC triggers and wrong payload types; exception-specific logging is not exhaustively asserted."
+      ]
+    },
+    {
+      "id": "pilot-fail-closed",
+      "requirement": "RK-9.3-008",
+      "clause_sha256": "ef7289866c7288c1dc5919bd9c0c35437f2221557c24e32c7c89f75d3bf00353",
+      "scope": "BEFORE_BROADCAST through process_inbound, including fail-open/fail-closed behavior where configured.",
+      "coverage": "partial",
+      "review": "The scenario expectations were read against this clause; this mapping does not cover every trigger or invalid payload.",
+      "assertions": [
+        {
+          "scenario": "hooks/a-failing-fail-closed-hook-blocks",
+          "pointer": "/steps/0/expect",
+          "sha256": "f73f99eff523ec5f53f4d328129cf0d32db45ee84df156a1badb3ab12d0285b1",
+          "scenario_sha256": "dd27397c92048b6963534d5135d7c3f98e012edfc7c364ae162de5b9a3b8c35e",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        },
+        {
+          "scenario": "hooks/a-failing-fail-closed-hook-blocks",
+          "pointer": "/expect",
+          "sha256": "9e9eb1a53d25b2752536d0496c2af17f45bb47252b24de34d740408eec4a782b",
+          "scenario_sha256": "dd27397c92048b6963534d5135d7c3f98e012edfc7c364ae162de5b9a3b8c35e",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        },
+        {
+          "scenario": "hooks/a-hook-timing-out-fails-closed",
+          "pointer": "/steps/0/expect",
+          "sha256": "8f6b8f50dbb894180f46cac8dcea2a7e02e7f3e72ad3c699d80a735810f50378",
+          "scenario_sha256": "709027200ce40f9fdcbcb124421368498aca5499f779f3d745e53bdf800f463d",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        },
+        {
+          "scenario": "hooks/a-hook-timing-out-fails-closed",
+          "pointer": "/expect",
+          "sha256": "d2624de8143570f6c95d6317e8b2d0277689c85eff26dac01aaacdd432a68b2d",
+          "scenario_sha256": "709027200ce40f9fdcbcb124421368498aca5499f779f3d745e53bdf800f463d",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        },
+        {
+          "scenario": "hooks/a-hook-returning-no-result-fails-closed",
+          "pointer": "/steps/0/expect",
+          "sha256": "9bb870a5b33cf80acc733f11bc858969bb27b6136e149d91f186573b6b6e2ea3",
+          "scenario_sha256": "cbf1b1ccc2fc023351ec4d6a3dd44eb3a24985a48be83143f75e79f44344c2d1",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        },
+        {
+          "scenario": "hooks/a-hook-returning-no-result-fails-closed",
+          "pointer": "/expect",
+          "sha256": "7607f805b846659dea27f22581a21b43f1b64988aea483b4468f7263794937f5",
+          "scenario_sha256": "cbf1b1ccc2fc023351ec4d6a3dd44eb3a24985a48be83143f75e79f44344c2d1",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        },
+        {
+          "scenario": "hooks/a-hook-modifying-without-a-payload-fails-closed",
+          "pointer": "/steps/0/expect",
+          "sha256": "9bb870a5b33cf80acc733f11bc858969bb27b6136e149d91f186573b6b6e2ea3",
+          "scenario_sha256": "93f154de63933eb98fa575e1c5be4a978a4ee0ee9a10f046ac1d34fe260f08c6",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        },
+        {
+          "scenario": "hooks/a-hook-modifying-without-a-payload-fails-closed",
+          "pointer": "/expect",
+          "sha256": "3f71113c781462b9faa98c2e0636f431a4dc097c2094c0c2242f5b6eda569847",
+          "scenario_sha256": "93f154de63933eb98fa575e1c5be4a978a4ee0ee9a10f046ac1d34fe260f08c6",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        },
+        {
+          "scenario": "hooks/a-fail-closed-room-hook-blocks",
+          "pointer": "/steps/1/expect",
+          "sha256": "569e30c4fc834f612d31a9e2b9def5e693e29a0dca98fd886aec72b8234c640d",
+          "scenario_sha256": "886a7201ebb3dff870c32e466faab73d6aa545ed32d55ed35556a71b85b1e408",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        },
+        {
+          "scenario": "hooks/a-fail-closed-room-hook-blocks",
+          "pointer": "/steps/2/expect",
+          "sha256": "bf3da56d9213d91f62d521ae8905180cc4b0ba837aa66f5daec31cd796afb4d4",
+          "scenario_sha256": "886a7201ebb3dff870c32e466faab73d6aa545ed32d55ed35556a71b85b1e408",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        },
+        {
+          "scenario": "hooks/a-fail-closed-room-hook-blocks",
+          "pointer": "/expect",
+          "sha256": "a31942ad5e939d2d2897fb7add6f931168febdf14ea22d43ca2f5c86fac23f41",
+          "scenario_sha256": "886a7201ebb3dff870c32e466faab73d6aa545ed32d55ed35556a71b85b1e408",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Other SYNC chain triggers and wrong payload types."
+      ]
+    },
+    {
+      "id": "pilot-missing-payload",
+      "requirement": "RK-9.3-009",
+      "clause_sha256": "f9e37ad2e4a38931b163f696de14c223e3e1478d217b8cde32d637ac1ea91c5b",
+      "scope": "BEFORE_BROADCAST through process_inbound, including fail-open/fail-closed behavior where configured.",
+      "coverage": "partial",
+      "review": "The scenario expectations were read against this clause; this mapping does not cover every trigger or invalid payload.",
+      "assertions": [
+        {
+          "scenario": "hooks/a-hook-modifying-without-a-payload-fails-open",
+          "pointer": "/steps/0/expect",
+          "sha256": "03f3864a7db9914a3b75358ff24980ec63d5858cc0c98ee51c13cb874b064e52",
+          "scenario_sha256": "30a0a39ce6a9fa672ac95bf16308359dd320f3af46b94657236cd4cdaf270020",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        },
+        {
+          "scenario": "hooks/a-hook-modifying-without-a-payload-fails-open",
+          "pointer": "/expect",
+          "sha256": "edb4cad3ef14ecc00dd0de6314730d41d5c1fa15983e707b669c524be9cd50d6",
+          "scenario_sha256": "30a0a39ce6a9fa672ac95bf16308359dd320f3af46b94657236cd4cdaf270020",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        },
+        {
+          "scenario": "hooks/a-hook-modifying-without-a-payload-fails-closed",
+          "pointer": "/steps/0/expect",
+          "sha256": "9bb870a5b33cf80acc733f11bc858969bb27b6136e149d91f186573b6b6e2ea3",
+          "scenario_sha256": "93f154de63933eb98fa575e1c5be4a978a4ee0ee9a10f046ac1d34fe260f08c6",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        },
+        {
+          "scenario": "hooks/a-hook-modifying-without-a-payload-fails-closed",
+          "pointer": "/expect",
+          "sha256": "3f71113c781462b9faa98c2e0636f431a4dc097c2094c0c2242f5b6eda569847",
+          "scenario_sha256": "93f154de63933eb98fa575e1c5be4a978a4ee0ee9a10f046ac1d34fe260f08c6",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Falsy modifications and their propagation on string/dict payloads; wrong types."
+      ]
+    },
+    {
+      "id": "pilot-invalid-effects",
+      "requirement": "RK-9.3-011",
+      "clause_sha256": "d3f145dfeb6ebd159a89b479a705a41f3b41eae04a96ea8c6fff5a1f5da9dcfa",
+      "scope": "BEFORE_BROADCAST through process_inbound, including fail-open/fail-closed behavior where configured.",
+      "coverage": "partial",
+      "review": "The scenario expectations were read against this clause; this mapping does not cover every trigger or invalid payload.",
+      "assertions": [
+        {
+          "scenario": "hooks/a-hook-modifying-without-a-payload-fails-open",
+          "pointer": "/steps/0/expect",
+          "sha256": "03f3864a7db9914a3b75358ff24980ec63d5858cc0c98ee51c13cb874b064e52",
+          "scenario_sha256": "30a0a39ce6a9fa672ac95bf16308359dd320f3af46b94657236cd4cdaf270020",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        },
+        {
+          "scenario": "hooks/a-hook-modifying-without-a-payload-fails-open",
+          "pointer": "/expect",
+          "sha256": "edb4cad3ef14ecc00dd0de6314730d41d5c1fa15983e707b669c524be9cd50d6",
+          "scenario_sha256": "30a0a39ce6a9fa672ac95bf16308359dd320f3af46b94657236cd4cdaf270020",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        },
+        {
+          "scenario": "hooks/a-hook-modifying-without-a-payload-fails-closed",
+          "pointer": "/steps/0/expect",
+          "sha256": "9bb870a5b33cf80acc733f11bc858969bb27b6136e149d91f186573b6b6e2ea3",
+          "scenario_sha256": "93f154de63933eb98fa575e1c5be4a978a4ee0ee9a10f046ac1d34fe260f08c6",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        },
+        {
+          "scenario": "hooks/a-hook-modifying-without-a-payload-fails-closed",
+          "pointer": "/expect",
+          "sha256": "3f71113c781462b9faa98c2e0636f431a4dc097c2094c0c2242f5b6eda569847",
+          "scenario_sha256": "93f154de63933eb98fa575e1c5be4a978a4ee0ee9a10f046ac1d34fe260f08c6",
+          "proves": "Inbound result and the exact retained timeline, deliveries, hooks and side effects for the configured BEFORE_BROADCAST outcome."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/test_hook_fail_closed.py::TestInbound::test_a_wrong_payload_keeps_effects_but_never_reaches_the_room",
+          "sha256": "43ebab9c6b4a3b43119f970ef9700d152b3312c67d0c9ba95049d9ba9d94ac90",
+          "proves": "Wrong payloads keep tasks and observations but inject no event, for both fail-closed settings; source reference only."
+        }
+      ],
+      "missing": [
+        "Other invalid-result forms and triggers; sixth-level composite exception."
+      ]
+    }
+  ],
+  "executions": []
+}

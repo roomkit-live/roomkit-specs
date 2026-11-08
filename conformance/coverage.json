@@ -1,0 +1,3983 @@
+{
+  "version": 1,
+  "rfc_sha256": "e68bbaace40568f287fa43b657999608f5b28a6f6e3379c67e21c6760258ca9a",
+  "corpus_sha256": "cbe3c1b0df9c6d98cb3c69f31cc8243d52fed3743d454c13f111792983556e05",
+  "python_commit": "33d1f4415e2a5697cbe5b4f6cb8413ee05f33363",
+  "scenario_count": 1567,
+  "sections": [
+    {
+      "section": "1",
+      "title": "Conventions and Terminology",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "1.1",
+      "title": "Key Words",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        71,
+        72
+      ]
+    },
+    {
+      "section": "1.2",
+      "title": "Definitions",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "1.3",
+      "title": "Notation",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "1.4",
+      "title": "Serialized Form",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        152,
+        155,
+        176,
+        177
+      ]
+    },
+    {
+      "section": "2",
+      "title": "Introduction",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "2.1",
+      "title": "Problem Statement",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "2.2",
+      "title": "Scope",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "2.3",
+      "title": "Design Philosophy",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "3",
+      "title": "Architecture Overview",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "3.1",
+      "title": "Layer Responsibilities",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "3.2",
+      "title": "Key Separations",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "4",
+      "title": "Core Concepts",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "4.1",
+      "title": "The Room",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "4.2",
+      "title": "The Channel",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "4.3",
+      "title": "The Event",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "4.4",
+      "title": "The Participant",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "4.5",
+      "title": "The Identity",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "4.6",
+      "title": "Two Output Paths",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "5",
+      "title": "Data Models",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        437
+      ]
+    },
+    {
+      "section": "5.1",
+      "title": "Room",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        468,
+        469,
+        472,
+        482,
+        488,
+        489,
+        491,
+        495,
+        499,
+        506,
+        509,
+        523,
+        527,
+        532,
+        540,
+        545,
+        569,
+        579,
+        586,
+        591,
+        592
+      ]
+    },
+    {
+      "section": "5.2",
+      "title": "RoomEvent",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        733,
+        736,
+        737,
+        740,
+        741,
+        755,
+        757
+      ]
+    },
+    {
+      "section": "5.3",
+      "title": "Event Content",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        765,
+        838,
+        841
+      ]
+    },
+    {
+      "section": "5.4",
+      "title": "Channel Data (Typed, Per-Channel)",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        937,
+        969,
+        970
+      ]
+    },
+    {
+      "section": "5.5",
+      "title": "Participant",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        1054,
+        1060,
+        1115,
+        1126,
+        1128,
+        1129,
+        1130,
+        1134,
+        1135,
+        1143
+      ]
+    },
+    {
+      "section": "5.6",
+      "title": "Identity",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        1171
+      ]
+    },
+    {
+      "section": "5.7",
+      "title": "ChannelBinding",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        1257,
+        1302,
+        1342,
+        1349
+      ]
+    },
+    {
+      "section": "5.8",
+      "title": "ChannelCapabilities",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "5.9",
+      "title": "Three Levels of Channel Metadata",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        1443,
+        1444
+      ]
+    },
+    {
+      "section": "5.10",
+      "title": "Task",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "5.11",
+      "title": "Observation",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "5.12",
+      "title": "Inbound Message",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        1538
+      ]
+    },
+    {
+      "section": "5.13",
+      "title": "Delivery Result",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "5.14",
+      "title": "Protocol Trace",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        1597,
+        1612,
+        1614,
+        1618
+      ]
+    },
+    {
+      "section": "6",
+      "title": "Channel System",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "6.1",
+      "title": "Channel Interface",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        1630
+      ]
+    },
+    {
+      "section": "6.2",
+      "title": "ChannelType",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        1766,
+        1770,
+        1774,
+        1782
+      ]
+    },
+    {
+      "section": "6.3",
+      "title": "Transport Channels",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        1788
+      ]
+    },
+    {
+      "section": "6.4",
+      "title": "Intelligence Channels",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        1813,
+        1848,
+        1858,
+        1862,
+        1869,
+        1874,
+        1889,
+        1890,
+        1892,
+        1893,
+        1896,
+        1898,
+        1899,
+        1936,
+        1970,
+        1996,
+        2013,
+        2024,
+        2091,
+        2116,
+        2126,
+        2279,
+        2311,
+        2340,
+        2384,
+        2390,
+        2434,
+        2435,
+        2436,
+        2446,
+        2470,
+        2473,
+        2475,
+        2482,
+        2485,
+        2493,
+        2503,
+        2556,
+        2561,
+        2576,
+        2623,
+        2672,
+        2682,
+        2701,
+        2758,
+        2766,
+        2784,
+        2789,
+        2826,
+        2901,
+        2944,
+        3078,
+        3122,
+        3141,
+        3142,
+        3161,
+        3172,
+        3199,
+        3206,
+        3257,
+        3261,
+        3263,
+        3267,
+        3290,
+        3297,
+        3327,
+        3329,
+        3333,
+        3334,
+        3336,
+        3338,
+        3339,
+        3340,
+        3343,
+        3345,
+        3348,
+        3350,
+        3352,
+        3354,
+        3359,
+        3360,
+        3364,
+        3366,
+        3371,
+        3375,
+        3376,
+        3377,
+        3378,
+        3380,
+        3382,
+        3387,
+        3388,
+        3398,
+        3404,
+        3419,
+        3420,
+        3424,
+        3426,
+        3429,
+        3430,
+        3432,
+        3438,
+        3440,
+        3442,
+        3444,
+        3445,
+        3448
+      ]
+    },
+    {
+      "section": "6.5",
+      "title": "Source Providers",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        3504
+      ]
+    },
+    {
+      "section": "6.6",
+      "title": "Content Transcoding",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        3511,
+        3566,
+        3567,
+        3580,
+        3583,
+        3591
+      ]
+    },
+    {
+      "section": "6.7",
+      "title": "Provider Abstraction",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        3698,
+        3700,
+        3702,
+        3722,
+        3742,
+        3756,
+        3761,
+        3766,
+        3773,
+        3774,
+        3776,
+        3794,
+        3803,
+        3805,
+        3811,
+        3813,
+        3814,
+        3822,
+        3823,
+        3824,
+        3825,
+        3826,
+        3835,
+        3850,
+        3851,
+        3852,
+        3861,
+        3872,
+        3911,
+        3952
+      ]
+    },
+    {
+      "section": "6.8",
+      "title": "Classifiers",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "7",
+      "title": "Permission Model",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "7.1",
+      "title": "Access",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "7.2",
+      "title": "Muting",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        4056
+      ]
+    },
+    {
+      "section": "7.3",
+      "title": "Visibility",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        4097,
+        4098,
+        4101,
+        4112,
+        4128,
+        4158
+      ]
+    },
+    {
+      "section": "7.4",
+      "title": "Named Patterns",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "7.5",
+      "title": "Permission Rules",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        4177,
+        4185,
+        4186,
+        4191,
+        4192,
+        4210,
+        4227,
+        4231,
+        4235,
+        4239,
+        4241,
+        4243,
+        4244,
+        4252,
+        4260,
+        4275,
+        4277,
+        4280,
+        4305
+      ]
+    },
+    {
+      "section": "8",
+      "title": "Event System",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "8.1",
+      "title": "Room Events",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        4320,
+        4321,
+        4325,
+        4326,
+        4329,
+        4334,
+        4339
+      ]
+    },
+    {
+      "section": "8.2",
+      "title": "Framework Events",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        4415
+      ]
+    },
+    {
+      "section": "8.3",
+      "title": "Event Chain Depth",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        4543,
+        4547,
+        4570,
+        4615,
+        4666,
+        4670,
+        4673,
+        4674
+      ]
+    },
+    {
+      "section": "8.4",
+      "title": "Realtime / Ephemeral Events",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        4729,
+        4737
+      ]
+    },
+    {
+      "section": "8.5",
+      "title": "Responses: What They Answer, and Whether They Were Consumed",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        4768,
+        4784,
+        4814,
+        4821,
+        4823
+      ]
+    },
+    {
+      "section": "9",
+      "title": "Hook System",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "9.1",
+      "title": "Hook Registration",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        4914,
+        4923,
+        4930,
+        4938,
+        4944,
+        4945,
+        4946,
+        4949
+      ]
+    },
+    {
+      "section": "9.2",
+      "title": "Hook Triggers",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        4961
+      ]
+    },
+    {
+      "section": "9.3",
+      "title": "Hook Execution Modes",
+      "review": "not_reviewed",
+      "requirements": 11,
+      "mapping": {
+        "mapped_partial": 4,
+        "unmapped": 7
+      },
+      "unannotated_keyword_lines": [
+        5233,
+        5287,
+        5313,
+        5317,
+        5328,
+        5335,
+        5336,
+        5358,
+        5365,
+        5379,
+        5381,
+        5385,
+        5403,
+        5405,
+        5409,
+        5428,
+        5432,
+        5435,
+        5436,
+        5439,
+        5450,
+        5451,
+        5462,
+        5463,
+        5464,
+        5474,
+        5475
+      ]
+    },
+    {
+      "section": "9.4",
+      "title": "HookResult",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        5506,
+        5526,
+        5531,
+        5533,
+        5552,
+        5571,
+        5614
+      ]
+    },
+    {
+      "section": "9.5",
+      "title": "Hook Pipeline (BEFORE_BROADCAST)",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "9.5.1",
+      "title": "Off-lock checks (`needs_lock = false`)",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        5692,
+        5715,
+        5734,
+        5737,
+        5826,
+        5836,
+        5872
+      ]
+    },
+    {
+      "section": "9.6",
+      "title": "When to Use What",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "10",
+      "title": "Processing Pipelines",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "10.1",
+      "title": "Inbound Pipeline",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        6485,
+        6487,
+        6488,
+        6489,
+        6492,
+        6493,
+        6506,
+        6510,
+        6514,
+        6515,
+        6516,
+        6543,
+        6544,
+        6545,
+        6593,
+        6596,
+        6597,
+        6602
+      ]
+    },
+    {
+      "section": "10.1.1",
+      "title": "Instructions",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        6630,
+        6647,
+        6652,
+        6657,
+        6703,
+        6713,
+        6719,
+        6721,
+        6722,
+        6741,
+        6745,
+        6748,
+        6752,
+        6756,
+        6766,
+        6776
+      ]
+    },
+    {
+      "section": "10.2",
+      "title": "Broadcast Pipeline",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        6814,
+        6816,
+        6935
+      ]
+    },
+    {
+      "section": "10.3",
+      "title": "Edit and Delete Processing",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        6947,
+        6962,
+        6978,
+        6983,
+        6992,
+        7000,
+        7016,
+        7020,
+        7023,
+        7025,
+        7060,
+        7062,
+        7065,
+        7069,
+        7075,
+        7086,
+        7093,
+        7118,
+        7119,
+        7122,
+        7130,
+        7143,
+        7145,
+        7168,
+        7169,
+        7171,
+        7185
+      ]
+    },
+    {
+      "section": "10.4",
+      "title": "Inbound Room Routing",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        7194,
+        7217,
+        7294,
+        7397,
+        7399,
+        7413,
+        7416,
+        7417,
+        7422
+      ]
+    },
+    {
+      "section": "10.5",
+      "title": "Direct Event Injection",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        7429,
+        7464,
+        7504,
+        7512,
+        7514,
+        7515,
+        7523,
+        7532,
+        7536,
+        7547,
+        7548,
+        7561,
+        7579,
+        7588,
+        7589,
+        7592,
+        7596
+      ]
+    },
+    {
+      "section": "10.6",
+      "title": "Turn Execution",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        7613,
+        7624,
+        7628,
+        7630
+      ]
+    },
+    {
+      "section": "10.6.1",
+      "title": "Scope and the one path",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        7678,
+        7681,
+        7690,
+        7691,
+        7698,
+        7701,
+        7702,
+        7703
+      ]
+    },
+    {
+      "section": "10.6.2",
+      "title": "Channels on each side",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        7753,
+        7754,
+        7757,
+        7782,
+        7808,
+        7810,
+        7823,
+        7824
+      ]
+    },
+    {
+      "section": "10.6.3",
+      "title": "Messages",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        7900,
+        7901,
+        7902,
+        7985
+      ]
+    },
+    {
+      "section": "10.6.4",
+      "title": "The stream: pulled, never pushed",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        8009,
+        8018,
+        8050
+      ]
+    },
+    {
+      "section": "10.6.5",
+      "title": "What a turn asks of the owner",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        8088,
+        8092,
+        8119,
+        8133,
+        8138,
+        8143,
+        8147,
+        8156,
+        8168,
+        8199,
+        8200
+      ]
+    },
+    {
+      "section": "10.6.6",
+      "title": "Hooks",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        8248,
+        8276
+      ]
+    },
+    {
+      "section": "10.6.7",
+      "title": "Placement",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        8287,
+        8299,
+        8307,
+        8312,
+        8314
+      ]
+    },
+    {
+      "section": "10.6.8",
+      "title": "Liveness, cancellation and errors",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        8324,
+        8328,
+        8333,
+        8342,
+        8344,
+        8450
+      ]
+    },
+    {
+      "section": "10.6.9",
+      "title": "Telemetry and prerequisites",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        8463
+      ]
+    },
+    {
+      "section": "11",
+      "title": "Identity Resolution",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "11.1",
+      "title": "Identity Resolver Interface",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "11.2",
+      "title": "Resolution Pipeline",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "11.3",
+      "title": "Identity Hook Result",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "11.4",
+      "title": "Channel Type Filtering",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        8593
+      ]
+    },
+    {
+      "section": "11.5",
+      "title": "Timeout Handling",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        8599
+      ]
+    },
+    {
+      "section": "11.6",
+      "title": "Senders With Nothing To Resolve",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        8608,
+        8611,
+        8645
+      ]
+    },
+    {
+      "section": "11.7",
+      "title": "Identity Verification",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "11.7.1",
+      "title": "State",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "11.7.2",
+      "title": "Requests",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "11.7.3",
+      "title": "Labels and holding",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        8763
+      ]
+    },
+    {
+      "section": "11.7.4",
+      "title": "Codes in the conversation",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        8799
+      ]
+    },
+    {
+      "section": "11.7.5",
+      "title": "The end of a verification",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        8813
+      ]
+    },
+    {
+      "section": "11.7.6",
+      "title": "Releasing held messages",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        8864
+      ]
+    },
+    {
+      "section": "11.7.7",
+      "title": "Security floor",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        8882
+      ]
+    },
+    {
+      "section": "12",
+      "title": "Voice and Realtime Media",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.1",
+      "title": "Architecture Overview",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        8941
+      ]
+    },
+    {
+      "section": "12.2",
+      "title": "Voice Channel (STT/TTS Pipeline)",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        9058,
+        9064,
+        9099,
+        9100,
+        9132,
+        9133,
+        9135,
+        9138,
+        9148,
+        9151,
+        9165,
+        9171,
+        9174,
+        9177,
+        9231,
+        9254,
+        9277,
+        9285,
+        9288
+      ]
+    },
+    {
+      "section": "12.2.1",
+      "title": "Packet Loss Handling (Lossy Transports)",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        9494,
+        9498,
+        9500,
+        9502,
+        9505,
+        9508,
+        9513,
+        9517,
+        9519,
+        9521,
+        9522,
+        9527,
+        9532,
+        9533
+      ]
+    },
+    {
+      "section": "12.2.2",
+      "title": "Conversation Context for TTS",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        9578,
+        9579,
+        9583,
+        9597,
+        9611,
+        9615,
+        9621,
+        9622,
+        9623,
+        9627
+      ]
+    },
+    {
+      "section": "12.2.3",
+      "title": "Speaker Attribution from STT",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        9641,
+        9646,
+        9647,
+        9649,
+        9652,
+        9657,
+        9658,
+        9663,
+        9669,
+        9671,
+        9677,
+        9686,
+        9687,
+        9691,
+        9692,
+        9720,
+        9734,
+        9735,
+        9745,
+        9753
+      ]
+    },
+    {
+      "section": "12.2.4",
+      "title": "Custom Voices",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        9787,
+        9795,
+        9804,
+        9805,
+        9806,
+        9807,
+        9808,
+        9809,
+        9813
+      ]
+    },
+    {
+      "section": "12.3",
+      "title": "Audio Processing Pipeline",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.3.1",
+      "title": "Pipeline Configuration",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        9907,
+        9914,
+        9925,
+        9926,
+        9929,
+        9930,
+        9934,
+        9951,
+        9953,
+        9964,
+        9974,
+        9980,
+        9983,
+        9995,
+        10004,
+        10009,
+        10014
+      ]
+    },
+    {
+      "section": "12.3.2",
+      "title": "Denoiser Provider",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        10038
+      ]
+    },
+    {
+      "section": "12.3.3",
+      "title": "Resampler",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        10061,
+        10062,
+        10065,
+        10068,
+        10069
+      ]
+    },
+    {
+      "section": "12.3.4",
+      "title": "Echo Canceller (AEC)",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        10103,
+        10110,
+        10115,
+        10117,
+        10134,
+        10143,
+        10150,
+        10162,
+        10163,
+        10165,
+        10173,
+        10175,
+        10177,
+        10180,
+        10183
+      ]
+    },
+    {
+      "section": "12.3.5",
+      "title": "Automatic Gain Control (AGC)",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        10212,
+        10214,
+        10216,
+        10219,
+        10222
+      ]
+    },
+    {
+      "section": "12.3.6",
+      "title": "DTMF Detector",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        10251,
+        10261,
+        10262,
+        10270
+      ]
+    },
+    {
+      "section": "12.3.7",
+      "title": "Audio Recorder",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        10310,
+        10332,
+        10337,
+        10346,
+        10347,
+        10385,
+        10393,
+        10394
+      ]
+    },
+    {
+      "section": "12.3.8",
+      "title": "VAD Provider",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.3.9",
+      "title": "Diarization Provider",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        10474
+      ]
+    },
+    {
+      "section": "12.3.10",
+      "title": "Audio Post-Processor",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.3.11",
+      "title": "Audio Frame",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        10552
+      ]
+    },
+    {
+      "section": "12.3.12",
+      "title": "Turn Detector",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        10631,
+        10639,
+        10641,
+        10644,
+        10649,
+        10659,
+        10666,
+        10678,
+        10685,
+        10686
+      ]
+    },
+    {
+      "section": "12.3.13",
+      "title": "Interruption Strategy",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        10753,
+        10756,
+        10769,
+        10774,
+        10781,
+        10846
+      ]
+    },
+    {
+      "section": "12.3.14",
+      "title": "Pipeline Execution Flow",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.3.15",
+      "title": "Pipeline Debug Taps",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        11078,
+        11095,
+        11097,
+        11099,
+        11105,
+        11129,
+        11136
+      ]
+    },
+    {
+      "section": "12.4",
+      "title": "Realtime Voice Channel (Speech-to-Speech)",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        11222,
+        11223,
+        11226,
+        11232,
+        11239,
+        11262,
+        11271,
+        11276,
+        11285,
+        11293,
+        11302,
+        11308,
+        11309,
+        11402,
+        11408,
+        11410,
+        11412,
+        11419,
+        11483,
+        11487,
+        11510,
+        11532,
+        11534,
+        11536,
+        11539,
+        11548,
+        11608,
+        11638,
+        11639
+      ]
+    },
+    {
+      "section": "12.4.1",
+      "title": "Full-Duplex Providers and Reasoning Delegation",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        11666,
+        11672,
+        11675,
+        11678,
+        11680,
+        11683,
+        11697,
+        11698,
+        11699,
+        11700,
+        11704,
+        11712,
+        11713,
+        11718,
+        11719,
+        11726,
+        11731,
+        11734,
+        11736,
+        11741,
+        11744,
+        11746,
+        11758,
+        11760,
+        11762,
+        11771,
+        11811,
+        11813,
+        11816,
+        11819,
+        11828,
+        11834,
+        11837,
+        11840,
+        11876,
+        11896,
+        11897
+      ]
+    },
+    {
+      "section": "12.4.2",
+      "title": "Usage Reporting",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        11909,
+        11911,
+        11914,
+        11917,
+        11918
+      ]
+    },
+    {
+      "section": "12.5",
+      "title": "Voice Hooks",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        11964
+      ]
+    },
+    {
+      "section": "12.6",
+      "title": "Barge-In and Interruption Handling",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        11999,
+        12023,
+        12028
+      ]
+    },
+    {
+      "section": "12.7",
+      "title": "Audio Bridging",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.7.1",
+      "title": "Design Principles",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        12045
+      ]
+    },
+    {
+      "section": "12.7.2",
+      "title": "AudioBridge",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        12101,
+        12106
+      ]
+    },
+    {
+      "section": "12.7.3",
+      "title": "VoiceChannel Integration",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        12132,
+        12143,
+        12150,
+        12151,
+        12172,
+        12185,
+        12194
+      ]
+    },
+    {
+      "section": "12.7.4",
+      "title": "Sample Rate Handling",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        12205,
+        12207,
+        12208
+      ]
+    },
+    {
+      "section": "12.7.5",
+      "title": "N-Party Mixing",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        12213,
+        12227
+      ]
+    },
+    {
+      "section": "12.7.6",
+      "title": "Hooks",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        12251,
+        12252
+      ]
+    },
+    {
+      "section": "12.7.7",
+      "title": "Capability Flag",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        12263,
+        12267,
+        12268
+      ]
+    },
+    {
+      "section": "12.7.8",
+      "title": "Conformance",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        12276,
+        12283
+      ]
+    },
+    {
+      "section": "12.8",
+      "title": "Video Pipeline",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.8.1",
+      "title": "Architecture Overview",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.8.2",
+      "title": "Video Data Models",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.8.3",
+      "title": "VideoBackend Interface",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        12413,
+        12419
+      ]
+    },
+    {
+      "section": "12.8.4",
+      "title": "Video Processing Pipeline",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.8.5",
+      "title": "Pipeline Stage Providers",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        12578
+      ]
+    },
+    {
+      "section": "12.8.6",
+      "title": "Overlay System",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.8.7",
+      "title": "VisionProvider",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        12657
+      ]
+    },
+    {
+      "section": "12.8.8",
+      "title": "AvatarProvider (Lip-Sync Video Generation)",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.8.9",
+      "title": "VideoBridge",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.8.10",
+      "title": "Video Recording",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        12800
+      ]
+    },
+    {
+      "section": "12.8.11",
+      "title": "Video Hooks",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.9",
+      "title": "(Removed)",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.10",
+      "title": "Conference (SFU Orchestration)",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "12.10.1",
+      "title": "Design Principles",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        12882
+      ]
+    },
+    {
+      "section": "12.10.2",
+      "title": "Data Models",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        12940,
+        12954,
+        12974,
+        12977,
+        12979,
+        13011,
+        13031,
+        13039,
+        13041,
+        13044,
+        13047,
+        13049,
+        13050,
+        13051,
+        13054,
+        13056,
+        13063,
+        13070,
+        13072,
+        13081,
+        13082,
+        13085,
+        13087,
+        13096,
+        13097,
+        13109,
+        13110,
+        13111,
+        13114,
+        13122,
+        13135,
+        13138,
+        13141,
+        13143,
+        13159,
+        13160,
+        13163,
+        13204,
+        13205
+      ]
+    },
+    {
+      "section": "12.10.3",
+      "title": "ConferenceBackend Interface",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        13265,
+        13266,
+        13274,
+        13286,
+        13288,
+        13289,
+        13301,
+        13305,
+        13320,
+        13323,
+        13331,
+        13333,
+        13336,
+        13343,
+        13349,
+        13367,
+        13370,
+        13374,
+        13376,
+        13390,
+        13391,
+        13401,
+        13403,
+        13410,
+        13416,
+        13426,
+        13428,
+        13432,
+        13441,
+        13442,
+        13444,
+        13445,
+        13446,
+        13447,
+        13453,
+        13460,
+        13461,
+        13466,
+        13472,
+        13476,
+        13480,
+        13484,
+        13489,
+        13490,
+        13491,
+        13497,
+        13506
+      ]
+    },
+    {
+      "section": "12.10.4",
+      "title": "ConferenceChannel",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        13539,
+        13540,
+        13543,
+        13545,
+        13553,
+        13554,
+        13565,
+        13570,
+        13572,
+        13573,
+        13581,
+        13600,
+        13601,
+        13620,
+        13629,
+        13632,
+        13637,
+        13639,
+        13641,
+        13668,
+        13680,
+        13689,
+        13691,
+        13702,
+        13716,
+        13721,
+        13722,
+        13729,
+        13738,
+        13749,
+        13754,
+        13758,
+        13759,
+        13766,
+        13775,
+        13786,
+        13798,
+        13800,
+        13806,
+        13808,
+        13816,
+        13821,
+        13832,
+        13843,
+        13854,
+        13863,
+        13878,
+        13884,
+        13897,
+        13904,
+        13908,
+        13921,
+        13957,
+        13958,
+        13959,
+        13962,
+        13966,
+        13967,
+        13971,
+        13980,
+        13981,
+        13982,
+        13984,
+        14003,
+        14021,
+        14025,
+        14029,
+        14031,
+        14032,
+        14033,
+        14044,
+        14055,
+        14063,
+        14076,
+        14077,
+        14080,
+        14083,
+        14087,
+        14088,
+        14094,
+        14103,
+        14118,
+        14125,
+        14130,
+        14135,
+        14141,
+        14157,
+        14164,
+        14169,
+        14176,
+        14187,
+        14208,
+        14214,
+        14217,
+        14226,
+        14232,
+        14240,
+        14248,
+        14253,
+        14264,
+        14268,
+        14269,
+        14273,
+        14277,
+        14287,
+        14293,
+        14309
+      ]
+    },
+    {
+      "section": "12.10.5",
+      "title": "Multi-Party Interruption Policy",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        14330
+      ]
+    },
+    {
+      "section": "12.10.6",
+      "title": "AI Participation Patterns",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        14362
+      ]
+    },
+    {
+      "section": "12.10.7",
+      "title": "Conference State Events",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        14388,
+        14389,
+        14407,
+        14408,
+        14410
+      ]
+    },
+    {
+      "section": "12.10.8",
+      "title": "Recording",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        14439,
+        14455,
+        14467,
+        14496,
+        14501,
+        14509,
+        14511,
+        14512,
+        14513,
+        14517,
+        14526,
+        14550
+      ]
+    },
+    {
+      "section": "12.10.9",
+      "title": "Cross-Channel Integration",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        14573,
+        14574,
+        14579,
+        14584
+      ]
+    },
+    {
+      "section": "12.10.10",
+      "title": "Relationship to Audio Bridging (Section 12.7)",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        14598
+      ]
+    },
+    {
+      "section": "12.10.11",
+      "title": "Conformance",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        14607,
+        14659,
+        14671,
+        14678
+      ]
+    },
+    {
+      "section": "12.10.12",
+      "title": "Speech-to-Speech Composition",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        14698,
+        14733,
+        14739,
+        14753,
+        14757,
+        14758,
+        14761,
+        14762,
+        14763,
+        14774,
+        14775,
+        14781,
+        14798,
+        14816,
+        14821,
+        14823,
+        14827,
+        14840,
+        14842,
+        14857,
+        14859,
+        14871,
+        14884
+      ]
+    },
+    {
+      "section": "12.11",
+      "title": "Room Media Recording",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        14951,
+        14957,
+        14960,
+        14961,
+        14998,
+        15021,
+        15027,
+        15028,
+        15032,
+        15035,
+        15036,
+        15037,
+        15040,
+        15042,
+        15048,
+        15052,
+        15066,
+        15068,
+        15076,
+        15078,
+        15085,
+        15089,
+        15090
+      ]
+    },
+    {
+      "section": "12.12",
+      "title": "Capture Sources",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        15131,
+        15137,
+        15138,
+        15148,
+        15155,
+        15157,
+        15163,
+        15167,
+        15175,
+        15180,
+        15183,
+        15207
+      ]
+    },
+    {
+      "section": "13",
+      "title": "Resilience and Error Handling",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "13.1",
+      "title": "Circuit Breaker",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        15216,
+        15237
+      ]
+    },
+    {
+      "section": "13.2",
+      "title": "Retry Policy",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "13.3",
+      "title": "Rate Limiting",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        15271,
+        15273
+      ]
+    },
+    {
+      "section": "13.4",
+      "title": "Idempotency",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        15297,
+        15323,
+        15325,
+        15326
+      ]
+    },
+    {
+      "section": "13.5",
+      "title": "Room-Level Locking",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        15331,
+        15335,
+        15341,
+        15343,
+        15359,
+        15368,
+        15395,
+        15397,
+        15398
+      ]
+    },
+    {
+      "section": "13.6",
+      "title": "Processing Timeout",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        15436,
+        15446,
+        15448,
+        15453,
+        15465,
+        15466,
+        15471,
+        15479,
+        15523,
+        15531
+      ]
+    },
+    {
+      "section": "14",
+      "title": "Storage Interface",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "14.1",
+      "title": "Conversation Store",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        15542,
+        15783,
+        15794,
+        15796,
+        15799,
+        15811
+      ]
+    },
+    {
+      "section": "14.2",
+      "title": "Required Implementations",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        15821,
+        15822
+      ]
+    },
+    {
+      "section": "14.3",
+      "title": "Consistency Requirements",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        15826,
+        15827,
+        15830,
+        15833,
+        15839,
+        15869,
+        15885,
+        15887,
+        15891,
+        15898,
+        15909
+      ]
+    },
+    {
+      "section": "14.4",
+      "title": "Returned-Object Ownership",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        15929,
+        15930,
+        15932,
+        15937,
+        15941,
+        15944
+      ]
+    },
+    {
+      "section": "15",
+      "title": "Observability",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "15.1",
+      "title": "Logging",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        15956,
+        15957
+      ]
+    },
+    {
+      "section": "15.2",
+      "title": "Log Levels",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "15.3",
+      "title": "Structured Log Context",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        16001
+      ]
+    },
+    {
+      "section": "15.4",
+      "title": "Voice Pipeline Observability",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        16017,
+        16018,
+        16040
+      ]
+    },
+    {
+      "section": "15.5",
+      "title": "Framework Events for Monitoring",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        16047
+      ]
+    },
+    {
+      "section": "15.6",
+      "title": "Protocol Trace Infrastructure",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        16054,
+        16080,
+        16081,
+        16116,
+        16133
+      ]
+    },
+    {
+      "section": "15.7",
+      "title": "Telemetry Provider",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        16144,
+        16170,
+        16174,
+        16184,
+        16190
+      ]
+    },
+    {
+      "section": "15.8",
+      "title": "Audit System",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "15.8.1",
+      "title": "Tool Auditing",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        16221,
+        16230,
+        16238,
+        16273
+      ]
+    },
+    {
+      "section": "15.8.2",
+      "title": "Session Auditing",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "15.8.3",
+      "title": "Audit Data Format",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        16343,
+        16344
+      ]
+    },
+    {
+      "section": "15.9",
+      "title": "Feedback",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        16349
+      ]
+    },
+    {
+      "section": "16",
+      "title": "Integration Surfaces",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        16371
+      ]
+    },
+    {
+      "section": "16.1",
+      "title": "REST API (OPTIONAL)",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        16377
+      ]
+    },
+    {
+      "section": "16.2",
+      "title": "MCP Server (OPTIONAL)",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "16.3",
+      "title": "Surface Independence",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        16479
+      ]
+    },
+    {
+      "section": "17",
+      "title": "Security Considerations",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "17.1",
+      "title": "Input Validation",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        16488,
+        16489,
+        16490
+      ]
+    },
+    {
+      "section": "17.2",
+      "title": "Multi-Tenant Isolation",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        16495,
+        16496,
+        16498,
+        16501
+      ]
+    },
+    {
+      "section": "17.3",
+      "title": "Sensitive Data",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        16587,
+        16589,
+        16591
+      ]
+    },
+    {
+      "section": "17.4",
+      "title": "Rate Limiting",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        16597
+      ]
+    },
+    {
+      "section": "17.5",
+      "title": "Chain Depth",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        16602
+      ]
+    },
+    {
+      "section": "17.6",
+      "title": "Voice and Audio Security",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        16609,
+        16612,
+        16614,
+        16620,
+        16628,
+        16630,
+        16631,
+        16633,
+        16640,
+        16642,
+        16645,
+        16648,
+        16649,
+        16653,
+        16659,
+        16663,
+        16668,
+        16673,
+        16674,
+        16678,
+        16682,
+        16683,
+        16686,
+        16691,
+        16693
+      ]
+    },
+    {
+      "section": "17.7",
+      "title": "Conference Access Security",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        16703,
+        16707,
+        16709,
+        16711,
+        16722,
+        16728,
+        16730,
+        16737,
+        16739
+      ]
+    },
+    {
+      "section": "17.8",
+      "title": "Skill-Bundled Files",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        16748,
+        16751
+      ]
+    },
+    {
+      "section": "18",
+      "title": "Design Principles",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "19",
+      "title": "Multi-Agent Orchestration",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "19.1",
+      "title": "Overview",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        16890,
+        16892,
+        16932
+      ]
+    },
+    {
+      "section": "19.2",
+      "title": "ConversationState",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        16941,
+        16952,
+        16955,
+        16957
+      ]
+    },
+    {
+      "section": "19.3",
+      "title": "Addressing",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        16968,
+        16978,
+        16984,
+        17009,
+        17017
+      ]
+    },
+    {
+      "section": "19.3.1",
+      "title": "Agent-sourced events",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        17030,
+        17038,
+        17040,
+        17048
+      ]
+    },
+    {
+      "section": "19.3.2",
+      "title": "Delivered versus solicited",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        17061,
+        17062,
+        17075,
+        17079,
+        17083,
+        17084
+      ]
+    },
+    {
+      "section": "19.4",
+      "title": "ConversationRouter",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        17131
+      ]
+    },
+    {
+      "section": "19.5",
+      "title": "ConversationPipeline",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        17198,
+        17216,
+        17228,
+        17248,
+        17267,
+        17270
+      ]
+    },
+    {
+      "section": "19.6",
+      "title": "HandoffHandler",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        17349,
+        17362,
+        17364,
+        17373
+      ]
+    },
+    {
+      "section": "19.7",
+      "title": "Orchestration Strategies",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        17388,
+        17394,
+        17435,
+        17446,
+        17467,
+        17474,
+        17481
+      ]
+    },
+    {
+      "section": "19.7.1",
+      "title": "Pipeline",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        17504,
+        17510
+      ]
+    },
+    {
+      "section": "19.7.2",
+      "title": "Swarm",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "19.7.3",
+      "title": "Supervisor",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        17544
+      ]
+    },
+    {
+      "section": "19.7.4",
+      "title": "Loop",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "19.7.5",
+      "title": "Discussion",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        17825,
+        17939,
+        18075,
+        18126
+      ]
+    },
+    {
+      "section": "19.8",
+      "title": "StatusBus",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        18291
+      ]
+    },
+    {
+      "section": "20",
+      "title": "Memory System",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        18302
+      ]
+    },
+    {
+      "section": "20.1",
+      "title": "MemoryProvider Interface",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        18322,
+        18329
+      ]
+    },
+    {
+      "section": "20.2",
+      "title": "MemoryResult",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        18356,
+        18372,
+        18373
+      ]
+    },
+    {
+      "section": "20.3",
+      "title": "Built-in Implementations",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        18445
+      ]
+    },
+    {
+      "section": "21",
+      "title": "Tool Access Control",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "21.1",
+      "title": "ToolPolicy",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        18489,
+        18492,
+        18500,
+        18527,
+        18577,
+        18586,
+        18591,
+        18602,
+        18603
+      ]
+    },
+    {
+      "section": "21.2",
+      "title": "MCP Tool Provider",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        18631,
+        18651,
+        18652,
+        18653,
+        18663,
+        18674,
+        18681,
+        18688,
+        18690,
+        18701,
+        18708,
+        18712,
+        18741,
+        18745,
+        18755
+      ]
+    },
+    {
+      "section": "21.3",
+      "title": "AI Steering Directives",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        18776,
+        18782,
+        18784,
+        18792,
+        18793,
+        18794
+      ]
+    },
+    {
+      "section": "21.4",
+      "title": "Tool Call Context",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        18814,
+        18819,
+        18822,
+        18824,
+        18839,
+        18842,
+        18845,
+        18882,
+        18889,
+        18891
+      ]
+    },
+    {
+      "section": "21.5",
+      "title": "Large Tool Results",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        18898,
+        18905,
+        18909,
+        18920,
+        18928,
+        18930,
+        18932,
+        18935,
+        18939
+      ]
+    },
+    {
+      "section": "21.6",
+      "title": "Tool Call Timeout",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        18949,
+        18955,
+        18956,
+        18959,
+        18971
+      ]
+    },
+    {
+      "section": "22",
+      "title": "Delivery Strategies",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "22.1",
+      "title": "DeliveryStrategy Interface",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        19008,
+        19009,
+        19012,
+        19013,
+        19014,
+        19016,
+        19018,
+        19019,
+        19023,
+        19026,
+        19027,
+        19028,
+        19030,
+        19031,
+        19069,
+        19072,
+        19074,
+        19077,
+        19078,
+        19079,
+        19121,
+        19128,
+        19131,
+        19134,
+        19137,
+        19138,
+        19139,
+        19141,
+        19142,
+        19146,
+        19147,
+        19149,
+        19151,
+        19154,
+        19156,
+        19160,
+        19162,
+        19164,
+        19165
+      ]
+    },
+    {
+      "section": "22.2",
+      "title": "Built-in Strategies",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        19183,
+        19187,
+        19189,
+        19191,
+        19193,
+        19200,
+        19203,
+        19204
+      ]
+    },
+    {
+      "section": "22.3",
+      "title": "Delivery Hooks",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        19224,
+        19225,
+        19227
+      ]
+    },
+    {
+      "section": "23",
+      "title": "Task Delegation",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "23.1",
+      "title": "TaskRunner Interface",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        19270,
+        19275
+      ]
+    },
+    {
+      "section": "23.2",
+      "title": "DelegatedTask",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "23.3",
+      "title": "Delegation Protocol",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        19330,
+        19581
+      ]
+    },
+    {
+      "section": "23.4",
+      "title": "Delegation Tools",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        19594,
+        19794
+      ]
+    },
+    {
+      "section": "23.5",
+      "title": "Delegation Hooks",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "24",
+      "title": "Skills Framework",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "24.1",
+      "title": "Skill Definition",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        19845,
+        19846,
+        19849
+      ]
+    },
+    {
+      "section": "24.2",
+      "title": "SkillMetadata",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "24.3",
+      "title": "SkillRegistry",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        19910,
+        19911
+      ]
+    },
+    {
+      "section": "24.4",
+      "title": "Activation Lifecycle",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        19952,
+        19953,
+        19956,
+        19957,
+        19961,
+        19962,
+        19965,
+        19973,
+        19974,
+        19978,
+        19983
+      ]
+    },
+    {
+      "section": "24.5",
+      "title": "Loading Failures",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        20018,
+        20026,
+        20027,
+        20028,
+        20032,
+        20034,
+        20035,
+        20036,
+        20038,
+        20039,
+        20044
+      ]
+    },
+    {
+      "section": "24.6",
+      "title": "Access to Bundled Files",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        20053,
+        20055,
+        20058,
+        20059,
+        20063,
+        20065,
+        20071,
+        20073
+      ]
+    },
+    {
+      "section": "24.7",
+      "title": "Skills Served over MCP",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        20078,
+        20096,
+        20097,
+        20123,
+        20131,
+        20142,
+        20194,
+        20207
+      ]
+    },
+    {
+      "section": "25",
+      "title": "Image Generation",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "25.1",
+      "title": "A Surface of Its Own",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        20224,
+        20225,
+        20227,
+        20237
+      ]
+    },
+    {
+      "section": "25.2",
+      "title": "ImageProvider",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        20254,
+        20260,
+        20262,
+        20265,
+        20271,
+        20274,
+        20277,
+        20279,
+        20281,
+        20289,
+        20290
+      ]
+    },
+    {
+      "section": "25.3",
+      "title": "ImageResult",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        20303,
+        20311,
+        20315,
+        20320,
+        20322,
+        20323,
+        20324,
+        20326,
+        20327,
+        20328
+      ]
+    },
+    {
+      "section": "25.4",
+      "title": "Editing",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        20338,
+        20339,
+        20344,
+        20346,
+        20347,
+        20348,
+        20349,
+        20350
+      ]
+    },
+    {
+      "section": "25.5",
+      "title": "Usage Accounting",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        20367,
+        20369,
+        20381
+      ]
+    },
+    {
+      "section": "25.6",
+      "title": "Model Catalogue",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        20394,
+        20398,
+        20402,
+        20404
+      ]
+    },
+    {
+      "section": "25.7",
+      "title": "Non-Goals",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "26",
+      "title": "Conformance Levels",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "26.1",
+      "title": "Level 0: Core (REQUIRED)",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        20425,
+        20457
+      ]
+    },
+    {
+      "section": "26.2",
+      "title": "Level 1: Transport (RECOMMENDED)",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        20495
+      ]
+    },
+    {
+      "section": "26.3",
+      "title": "Level 2: Rich (OPTIONAL)",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        20515,
+        20535
+      ]
+    },
+    {
+      "section": "26.4",
+      "title": "Level 3: Real-Time Media (OPTIONAL)",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        20553,
+        20560,
+        20561,
+        20563,
+        20564,
+        20565,
+        20569,
+        20574,
+        20575,
+        20615
+      ]
+    },
+    {
+      "section": "A",
+      "title": "Channel Reference",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.1",
+      "title": "SMS Channel",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.2",
+      "title": "Email Channel",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.3",
+      "title": "WhatsApp Channel",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.4",
+      "title": "WhatsApp Personal Channel",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.5",
+      "title": "Messenger Channel",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.6",
+      "title": "Teams Channel",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.7",
+      "title": "RCS Channel",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.8",
+      "title": "WebSocket Channel",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.9",
+      "title": "AI Channel",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        20975
+      ]
+    },
+    {
+      "section": "A.9.1",
+      "title": "ACP Agent Channel",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": [
+        21032,
+        21035,
+        21036,
+        21037,
+        21039,
+        21041,
+        21042,
+        21043,
+        21044,
+        21045,
+        21050
+      ]
+    },
+    {
+      "section": "A.10",
+      "title": "Voice Channel",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.11",
+      "title": "Realtime Voice Channel",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.12",
+      "title": "Video Channel",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.13",
+      "title": "Telegram Channel",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.14",
+      "title": "CLI Channel",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.14.1",
+      "title": "Host Channel",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "A.15",
+      "title": "Conference Channel",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "B",
+      "title": "Complete Event Flow Examples",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "B.1",
+      "title": "Customer (SMS) + AI — Basic Conversation",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "B.2",
+      "title": "Sensitivity Scanning — Block and Inject",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "B.3",
+      "title": "Ambiguous Identity — Shared Family Phone",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "B.4",
+      "title": "AI ↔ AI Multi-Agent with Chain Depth",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "B.5",
+      "title": "Dynamic Channel Management — Advisor Joins",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "B.6",
+      "title": "Message Edit — Cross-Channel with Fallback",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "B.7",
+      "title": "Message Delete — Cross-Channel with Fallback",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "B.8",
+      "title": "SIP Call → Unified process_inbound with Protocol Traces",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    },
+    {
+      "section": "B.9",
+      "title": "Multi-Agent Pipeline — Triage → Specialist → Resolution",
+      "review": "not_reviewed",
+      "requirements": 0,
+      "mapping": {},
+      "unannotated_keyword_lines": []
+    }
+  ],
+  "requirements": [
+    {
+      "id": "RK-9.3-001",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-002",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-003",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-004",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-005",
+      "section": "9.3",
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "pilot-fail-open",
+          "scope": "BEFORE_BROADCAST through process_inbound, including fail-open/fail-closed behavior where configured.",
+          "coverage": "partial",
+          "missing": [
+            "Other SYNC triggers and wrong payload types; exception-specific logging is not exhaustively asserted."
+          ],
+          "executions": []
+        }
+      ]
+    },
+    {
+      "id": "RK-9.3-006",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-007",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-008",
+      "section": "9.3",
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "pilot-fail-closed",
+          "scope": "BEFORE_BROADCAST through process_inbound, including fail-open/fail-closed behavior where configured.",
+          "coverage": "partial",
+          "missing": [
+            "Other SYNC chain triggers and wrong payload types."
+          ],
+          "executions": []
+        }
+      ]
+    },
+    {
+      "id": "RK-9.3-009",
+      "section": "9.3",
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "pilot-missing-payload",
+          "scope": "BEFORE_BROADCAST through process_inbound, including fail-open/fail-closed behavior where configured.",
+          "coverage": "partial",
+          "missing": [
+            "Falsy modifications and their propagation on string/dict payloads; wrong types."
+          ],
+          "executions": []
+        }
+      ]
+    },
+    {
+      "id": "RK-9.3-010",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-011",
+      "section": "9.3",
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "pilot-invalid-effects",
+          "scope": "BEFORE_BROADCAST through process_inbound, including fail-open/fail-closed behavior where configured.",
+          "coverage": "partial",
+          "missing": [
+            "Other invalid-result forms and triggers; sixth-level composite exception."
+          ],
+          "executions": []
+        }
+      ]
+    }
+  ]
+}
