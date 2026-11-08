@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "e68bbaace40568f287fa43b657999608f5b28a6f6e3379c67e21c6760258ca9a",
-  "corpus_sha256": "4c49b6d6f5662f2256e19d88e0e45173372dc1b64329006be34a255cf59bc580",
+  "corpus_sha256": "aee8eee4abad92b0a01825907dd4d6c9a51da40a6027ca36167dfb7a65e09e98",
   "python_commit": "33d1f4415e2a5697cbe5b4f6cb8413ee05f33363",
-  "scenario_count": 1568,
+  "scenario_count": 1570,
   "sections": [
     {
       "section": "0",
@@ -1274,7 +1274,10 @@
         "unmapped": 1
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "permissions/all-source-access-and-mute-combinations",
+        "permissions/all-target-access-and-mute-combinations"
+      ]
     },
     {
       "section": "7.2",
@@ -1289,6 +1292,8 @@
         "appendix-b/b5-advisor-joins",
         "delivery/a-muted-agent-still-acts",
         "permissions/a-muted-agent-reads-but-its-answer-is-blocked",
+        "permissions/all-source-access-and-mute-combinations",
+        "permissions/all-target-access-and-mute-combinations",
         "permissions/an-output-mute-fires-nothing",
         "permissions/binding-changes-and-their-triggers",
         "permissions/muted-source-is-stored-blocked",
@@ -1386,6 +1391,8 @@
         "permissions/a-muted-agent-s-stream-is-closed-unread",
         "permissions/a-muted-supervisor-s-second-pass-is-closed-unread",
         "permissions/a-refused-message-is-stored-within-its-source-binding",
+        "permissions/all-source-access-and-mute-combinations",
+        "permissions/all-target-access-and-mute-combinations",
         "permissions/an-event-is-stored-with-the-intersection",
         "permissions/an-injection-from-an-unbound-channel-raises",
         "permissions/muted-source-is-stored-blocked",
