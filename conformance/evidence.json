@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "ecf9bc5f7e92a440413b2518e799afce31bd5042",
+  "python_commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -2278,6 +2278,483 @@
         {
           "scenario": "permissions/the-agent-whispers-to-the-advisor",
           "sha256": "326de662e788a178f7bc8a19aeefcc662f6578cfd421cbccac6c3e14942b68f9",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "regenerate/a-regenerated-answer-meets-its-hooks",
+          "sha256": "7cf0da58ef3b0b0a5eeba302aacba8339bfc644339c0174f2b57d0ae23fd9172",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/a-detach-tells-the-channel-before-its-hooks",
+          "sha256": "0d6d48e1dd57e975bd48fef30a233dc451e038aa8c2b931c423d6a8d7c609778",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/an-attach-tells-the-channel-before-its-hooks",
+          "sha256": "55748a0867f3c78198e0c6bb8016f0c29fc5d4ec82f7595ca134a54d9a438d04",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/creation-awaits-its-hooks",
+          "sha256": "c61a81bd925129de5689c3886615b10e0142238272620400c560c8e08b26e60a",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "routing/a-message-past-its-deadline-in-its-room-s-hooks-is-not-routed-again",
+          "sha256": "fa7278c151c051eabf4d3cf3e5cecaf9e7a2d279073af61032ba9e0bd0019c0a",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "status/a-status-reaches-the-hooks-of-the-room-it-names",
+          "sha256": "ad2884b22901c908801437aca0c02a270c4242abf2eea54f98f082763bf3491d",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tasks/a-posted-result-crosses-the-room-s-before-broadcast-hooks",
+          "sha256": "3cc39345aee328a549676aab473607eaa61acde51de3f9a09604796f49457e7c",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tasks/a-shared-transport-is-told-the-answer-the-room-s-hooks-left",
+          "sha256": "ef471a75d2707dbfebfa594e3c747e9957de1367265c3556f7be1ba0ff4a136b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tenancy/another-organization-s-room-hooks-stand",
+          "sha256": "3eca5ac2dd798e522042e93b50058be07f77d72557d3ca19bb82473a1d75e2e2",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tools/a-block-after-a-round-stops-the-hooks-after-it",
+          "sha256": "43b0aff8587b5ae1a184d0447906a1ba6ef5d3f41dfa388d6f2421460a8abef5",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tools/the-generation-reads-the-context-the-hooks-left",
+          "sha256": "8dc3aa155be297484d416afa6cdec7b94e3ab83462b071e7a79573131b38a820",
+          "outcome": "passed"
+        }
+      ]
+    },
+    {
+      "id": "python-visibility-8fb44e9",
+      "implementation": "python",
+      "implementation_commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
+      "rfc_commit": "a27e1eee5d85a6aed74b89aa162dee4aa7b2f011",
+      "corpus_commit": "a27e1eee5d85a6aed74b89aa162dee4aa7b2f011",
+      "rfc_sha256": "e68bbaace40568f287fa43b657999608f5b28a6f6e3379c67e21c6760258ca9a",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "env",
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "PYTHONPATH=src",
+        "uv",
+        "run",
+        "--active",
+        "--no-sync",
+        "pytest",
+        "tests/conformance",
+        "-k",
+        "permissions or hooks",
+        "--junitxml=python-visibility.xml",
+        "-q"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-visibility-8fb44e9.xml",
+        "format": "pytest_junit",
+        "sha256": "8e08dc2ee8d9bb536927446709b55aaf850dd35a9f2f7234b28fd4a3e48cd45b"
+      },
+      "results": [
+        {
+          "scenario": "delivery/a-set-the-kit-s-close-drops-still-stores-its-hooks-side-effects",
+          "sha256": "d0b3331a760d85a53e0a59b44f6a8d584e97e55498176e264d3b9cb3eaa09f81",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "delivery/a-status-is-handled-while-its-hooks-run",
+          "sha256": "d88b23e0feb78553d6b010fd9f99777dc61f4ee863115ad8ba60091b779b63ce",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "greeting/a-session-started-waits-for-the-hooks-it-awaits",
+          "sha256": "ff02b7a82ee7442ee561d2cb6699c14f5133a884f246d5b7faa0fdb4a18dd18f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-block-stops-the-chain",
+          "sha256": "a7d8b3024b11598cb6d66f9e6b2113e48d5251607ec4b0db0b30df7213468216",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-blocked-event-s-task-is-created",
+          "sha256": "f4ee5584ccdb30ba492f07f34e669d810aa2ba267f319a5e6078f648f91f5717",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-channel-types-filter-does-not-silence-on-ai-thinking",
+          "sha256": "f94575febaa2ef0da77fdd3a8a6109952d4f0b725c16323c63e9b69abfb004c7",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-detach-a-locked-hook-makes-unrecorded-leaves-the-channel-out-of-the-delivery",
+          "sha256": "4056957ace15015ec9b38763e3011553b505809997cea4993d7d5ce9f738f72b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-fail-closed-room-hook-blocks",
+          "sha256": "886a7201ebb3dff870c32e466faab73d6aa545ed32d55ed35556a71b85b1e408",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-failing-fail-closed-hook-blocks",
+          "sha256": "dd27397c92048b6963534d5135d7c3f98e012edfc7c364ae162de5b9a3b8c35e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-failing-hook-lets-the-event-through",
+          "sha256": "17f057968efc709e1865d048fc6f70e882687176e33b8560a72154fb6ccd6041",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-failing-off-lock-hook-is-reported-before-the-lock",
+          "sha256": "126c1f8886e2ea22d282ac2c813a69c40b767532d7f10d0f152bb6eb10a01348",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-hook-modifying-without-a-payload-fails-closed",
+          "sha256": "93f154de63933eb98fa575e1c5be4a978a4ee0ee9a10f046ac1d34fe260f08c6",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-hook-modifying-without-a-payload-fails-open",
+          "sha256": "30a0a39ce6a9fa672ac95bf16308359dd320f3af46b94657236cd4cdaf270020",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-hook-past-its-timeout",
+          "sha256": "71a2e8eb515358fb35d2ef030cc98ef50cc75cbad310184f2c8b80c65358053f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-hook-returning-no-result-fails-closed",
+          "sha256": "cbf1b1ccc2fc023351ec4d6a3dd44eb3a24985a48be83143f75e79f44344c2d1",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-hook-returning-no-result-fails-open",
+          "sha256": "36feec9f1b382c0405c19dc3fec0d50fe567ccc12655c28599c1c8d73ffd95d4",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-hook-s-task-is-created",
+          "sha256": "4d82fc79081212bf321fb7436fc7c66150f426c67ff770cde81ce307b28533a2",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-hook-timing-out-fails-closed",
+          "sha256": "709027200ce40f9fdcbcb124421368498aca5499f779f3d745e53bdf800f463d",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-refused-source-s-task-is-created",
+          "sha256": "2f4796f68d068c5203096768e55e0f9c862bde487a65cabca949a9d6605f1eff",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-removed-room-hook-runs-no-more",
+          "sha256": "cbbc2c3c8cfe8be15ac74827c03e2de21690328751cd53cc2522872c305222d4",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-room-hook-added-before-its-room-fires-for-it",
+          "sha256": "b73bbb3469e16598e050d259775b754b678746496837753d1b08345f8675c2c9",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-room-hook-runs-in-its-room-alone",
+          "sha256": "d713973b41ad1954d79e57dcd9188b7aa723c04544de57b0ec20c7d5525d4369",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-after-broadcast-hook-reads-its-event-s-hook-task-stored",
+          "sha256": "c05e8c7b1e2a6d5f831858e9b2c292355c86f203fd97fade4d232fe13911ad69",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-after-broadcast-hook-reads-its-set-s-chain-depth-observation-stored",
+          "sha256": "72e980d27ba4ae7b79ae997aea2c75014fb90ab7aebfd0009f383dcb211c7e63",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-after-broadcast-hook-reads-what-its-event-s-targets-gave-stored",
+          "sha256": "17bb17ff122a7e9eeeeb40f975a7a34695802522d3960c7202ea68ff8b5aba58",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-async-hook-on-a-sync-trigger-observes",
+          "sha256": "517eb485859aa7ea189ca4ff203bda9f7bcc7c5c1cc05c933784341dbdb59147",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-async-hook-past-its-timeout",
+          "sha256": "9f5180767ace987644cadf00ada560b3d7f38c645440d95a94ed23f8a497744f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injected-event-asks-no-agent",
+          "sha256": "a55e9ebdaa0a68e294a2903b722b8c12aedd6c8899e3d32d9f55f2b435abf347",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injected-event-runs-the-hooks",
+          "sha256": "c4e393ae026e6e10cffb3a2c2c5eb3932e567ea0ac6df48af9481c5e9aa627fc",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injected-event-stored-only-reads-none",
+          "sha256": "8dc663bd118ce932a5ca94fec4fb748c3a093d3e067969b2d032a5c343610cf0",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-observer-s-call-into-its-room-waits-for-its-delivery",
+          "sha256": "78e07da77d183a8701f3e87d149ed7e091e3e9f84732710c0cb7533523d1fb45",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-off-lock-hook-blocks-before-the-lock",
+          "sha256": "536ec68f431b48eae2487abbf7705db7608e3dfe4e7ffb218960bde372cff4a3",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/each-observer-runs-apart",
+          "sha256": "822a542d5b739f9d9a0f46265250b4ff533f35aaf5b54c767d4cdc8667a049a5",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/modify-keeps-what-it-may-not-change",
+          "sha256": "b13faf6d3cc1e24b0959f7b2d708da627210fd779455ba9c778a05fdc3c9b5b4",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/off-lock-tickets-keep-arrival-order",
+          "sha256": "d7101bc177b55b381c576b20c12cc84dd65276c6f15386685e0dfcf2455d5305",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/registration-refusals",
+          "sha256": "8d127bd6accf2d37941c3085bf37f6be06a01c085310469c6ca24582db43d707",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/room-hook-registration-refusals",
+          "sha256": "5289093578107d8588ad90a472a327f357b99e12807acb2cff4d77c83a290bef",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/room-hooks-join-the-kit-s-in-priority-order",
+          "sha256": "65dab119d5ee4f6791d5308755b8982e814865702158721c0a960eb714e8b05e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/sync-hooks-run-in-priority-order",
+          "sha256": "d4ea38a164266299a8409e988d235674e66fa5d10213814a47c94edde7a64cf7",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "identity/identity-hooks-run-in-order-on-the-events-they-filter",
+          "sha256": "0f63369f322821c7e43f38b13a902b0e556a02a8620f66df2f093d72e2f7ab09",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "identity/the-identity-hooks-read-the-resolver-s-answer-completed",
+          "sha256": "043c9c61d3192b4a9462163dac953677a69d678bf4f0ad3745c2a933d4701b9c",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "observations/feedback-is-an-observation-the-hooks-observe",
+          "sha256": "7df393c9c56dfae834f5cb6197282dc6a5e4ad88eec736a6222259b71a12a5ff",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "orchestration/a-pipeline-s-router-hooks-its-room-at-minus-100",
+          "sha256": "4f994565fc7762b9b7c42960f1c21dfc08c05e9a45fd8b2db57bfdfdcb3f7911",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "orchestration/a-router-s-install-hooks-at-its-priority",
+          "sha256": "05bd94ff7f3078feffe234536e2c06b399bc9fe9d148241bd889966e82be9496",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/a-blocked-injected-event-keeps-its-own-visibility",
+          "sha256": "38d4cdcbca5fd88f96e79735034aa95c7ce93bd971564e5b1d3bc1a319854a6a",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/a-detached-channel-is-not-attached-again",
+          "sha256": "9c1ca1789e20061c290a5f51aa656369787e91994c08144583d5037e586260c7",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/a-detached-source-s-history-still-reaches-an-agent",
+          "sha256": "7e28241212a1e30424890431f5d3edea0527264f0abbd3a9e5709cd8eb3d0f0c",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/a-muted-agent-reads-but-its-answer-is-blocked",
+          "sha256": "2a35f69e24849b7872de6a280600b8cfe2156bd609be51ce79a5271d93baf06a",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/a-muted-agent-s-stream-is-closed-unread",
+          "sha256": "bff91eb7ba088ce5faadd13df3ac9f2841c365d1c519ee0626544ef36344153d",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/a-muted-supervisor-s-second-pass-is-closed-unread",
+          "sha256": "6158f1eefc9e690974767c506a7f0426de797f2180c7278bf289c5f7970dc8c2",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/a-refused-message-is-stored-within-its-source-binding",
+          "sha256": "3eb80841c83cda38e7bda857b4e187edd9fe4eeeae8f97b5423ff309e3cd3ec2",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/a-response-s-hook-cannot-widen-it-past-its-answer-scope",
+          "sha256": "3742375fa08fb0a9c11531f3c072b575ce54ce68cf5385ea8388d7d3bce1f830",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/a-source-bound-for-no-one-reaches-no-target",
+          "sha256": "1ea54167963552049bcb30d121399d0e0a79f40657bfa548b1e136a26280a32d",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/all-source-access-and-mute-combinations",
+          "sha256": "b686a62123ca2f4e4c856eb9e7ec0873cfa79b71c6e5d2598ba83bd695f249e5",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/all-target-access-and-mute-combinations",
+          "sha256": "e6aeb7955ce582b23c5eff18fdaebea60e589cfc569fcaf6da422f4fa7618d59",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/an-agent-recalls-accepted-whispers-but-not-refused-answers",
+          "sha256": "6bd6c6261792b68ec9b320cc5b1255886c694ec6aee09f2682362048099c2f73",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/an-answer-past-the-reentry-budget-is-stored-within-its-agent-s-binding",
+          "sha256": "f7402a30ccd942df387696d47fd1c226595bc92df02211ee08acd314e976581e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/an-answer-scope-internal-a-channel-gives-reads-as-none",
+          "sha256": "98cf3421076bd1ed0c5c01ce5c73cf76d123b18fe1c79d67f38ba1d5d96f0e15",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/an-empty-answer-scope-a-hook-writes-sends-the-answers-nowhere",
+          "sha256": "f3c75e1650afd96dafacdfdf8d34332f78a7f1a7ed1d4c170585b234dd6d3ab3",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/an-event-is-stored-with-the-intersection",
+          "sha256": "8c9ba4511efe067ca9715a46b22cf3cf15797dc36f6a451a6385820f9e18665c",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/an-injection-from-an-unbound-channel-raises",
+          "sha256": "bd720ccc8875cecf3be53142d078162432029d7659c6561e46732fa37d99a260",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/an-outbound-only-agent-is-still-asked",
+          "sha256": "39212009d16cea9e33c30bf657c632aba24b9dd6518ac6aa19e04bde327a05a1",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/an-output-mute-fires-nothing",
+          "sha256": "5de1bed82480c2f7c1adc5d6428b3bd810a4f4234af9501482ef30fbb56fa90c",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/binding-changes-and-their-triggers",
+          "sha256": "db3b1cb6008dccc3dd9d7b630c37127312a0b194c6c628c47156905648090583",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/binding-changes-do-not-rewrite-history-visibility",
+          "sha256": "96f85de638ef36b624ed6fd94280cd089503cf5ad19997047190072f71044f76",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/each-agent-recalls-only-its-visible-history",
+          "sha256": "fbde5dc83adcb20f0178ff7d9fe6d05b17a484c6e1e3981290cf7e1561f30385",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/empty-event-visibility-never-opens-history",
+          "sha256": "0e90b35957e6f63183ba7279fbcf604e3e030aa99073924a6c1b121bd11059d3",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/hidden-messages-stay-out-of-later-model-contexts",
+          "sha256": "f0197fd4209f50cd83e2440f7877660b74f3c47fa35b3f4a9dc01888528d964e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/internal-is-the-framework-s-own",
+          "sha256": "06c747e3c448fe1ec769aa78995b3c7e4e0b603f1eb7fabd2a64088811805975",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/muted-source-is-stored-blocked",
+          "sha256": "bb0f48cfc9c59794ae330d8e413e63554fd402a39a2d314b0c3022cadfc5c347",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/read-only-and-muted-reads-as-read-only",
+          "sha256": "6d05350433ffee525ee1eee1ac10761a14fdccf24847606774b53d0d9123f4b3",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/read-only-source-is-stored-blocked",
+          "sha256": "fb845a0e4d6a875bb75b739d8192c0a39719eb4398a742ef11dac5b9555a4a97",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/reserved-channel-ids-are-refused",
+          "sha256": "a800622cc4874ba7d047080b72d4560adffd4648fc3ca5dcfecbf71ec4ad9ca4",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/targets-by-access-and-self",
+          "sha256": "cab5404c8baf480efe0c7ec59a6bf77488963d8c06325d3a7edad6d5d2640640",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/the-agent-whispers-to-the-advisor",
+          "sha256": "326de662e788a178f7bc8a19aeefcc662f6578cfd421cbccac6c3e14942b68f9",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/visibility-intersections-on-inbound-and-injection",
+          "sha256": "9b05c78e410ddc49fd0f590d39d90f2c6c39553998de8a3760ba5507477c5e7f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
           "outcome": "passed"
         },
         {

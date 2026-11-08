@@ -42,3 +42,26 @@ both new access/mute matrices and the existing permissions and hooks cases;
 it refreshes the pilot's scenario results without executing its specialized
 wrong-payload test. Host, timestamp and duration metadata is removed, preserving
 every testcase's class, name and outcome. The same scope limits above apply.
+
+## Visibility grammar and private history
+
+`python-visibility-8fb44e9.xml` retains all 89 selected scenario outcomes from:
+
+```sh
+ROOMKIT_TEST_TURN_BACKEND=memory PYTHONPATH=src uv run --active --no-sync pytest tests/conformance -k 'permissions or hooks' --junitxml=python-visibility.xml -q
+```
+
+The run used clean Python commit `8fb44e947b1c2e6d6b74de18bc28cd921cd47726`,
+Linux, Python 3.13.3, pytest 9.1.1 and pytest-asyncio 1.4.0, an existing activated
+virtual environment, the memory store and in-process turns. Both the copied
+corpus and reviewed RFC are from `a27e1eee5d85a6aed74b89aa162dee4aa7b2f011`.
+The command records a portable output filename; its machine-local destination
+and virtual-environment path are omitted. The artifact retains every testcase's
+class, name and outcome, and removes host, timestamp, duration and local-path
+attributes before publication. All 89 cases passed without skips or errors.
+
+This selection refreshes the permission and hook scenario evidence, including
+the eight visibility/history scenarios. It does not execute specialized Python
+tests, other stores or Rust. A complete static clause mapping and a passed
+execution receipt are separate checks; neither establishes whole-framework
+conformance. The broader visibility units remain partially mapped.
