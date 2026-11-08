@@ -270,6 +270,7 @@
       "runtime": "asyncio",
       "command": [
         "env",
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
         "PYTHONPATH=src",
         "python",
         "-m",

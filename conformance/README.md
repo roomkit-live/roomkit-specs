@@ -1033,13 +1033,12 @@ the final state. Timing races remain in the implementation tests.
 
 ## Known failures
 
-A scenario an implementation fails because the implementation breaks the RFC.
-Its runner lists it (roomkit `KNOWN_FAILURES` in
-`tests/conformance/test_conformance.py`, roomkit-rs `KNOWN_FAILURES` in
-`crates/roomkit/tests/conformance/main.rs`) with its probe, in a table here
-naming the scenario, the implementation and its commit, the rule broken and
-the probe; the runner expects it to fail and fails once it passes, so a fix
-shows and takes it off both lists.
+A known failure is a scenario whose observable result breaks the RFC. Its
+runner names the scenario and broken rule at an implementation revision
+(roomkit's `KNOWN_FAILURES` in `tests/conformance/test_conformance.py`,
+roomkit-rs's lists in `crates/roomkit/tests/conformance/main.rs`). Strict
+expected failures fail the suite when they start passing; timing exceptions
+can pass on a particular run. Neither exception policy establishes conformity.
 
 Read each runner's exception lists at the implementation commit being assessed,
 including runtime-specific lists such as Rust's several-worker exceptions. A

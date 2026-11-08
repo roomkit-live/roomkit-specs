@@ -3,12 +3,12 @@
 `python-hooks-33d1f4.xml` retains all 55 selected scenario outcomes from:
 
 ```sh
-PYTHONPATH=src python -m pytest tests/conformance -k hooks -n 0 --junitxml=python-hooks.xml
+ROOMKIT_TEST_TURN_BACKEND=memory PYTHONPATH=src python -m pytest tests/conformance -k hooks -n 0 --junitxml=python-hooks.xml
 ```
 
 The run used a clean checkout at `33d1f4415e2a5697cbe5b4f6cb8413ee05f33363`,
 Linux, Python 3.13.3, pytest 9.1.1 and pytest-asyncio 1.4.0, with the memory store
-and default in-process turns. Its copied corpus is
+and explicitly selected in-process turns (`ROOMKIT_TEST_TURN_BACKEND=memory`). Its copied corpus is
 `38d677a02ac811d4aaad2dbaf3ac97ee5bfc9fd5`; the clauses were reviewed against
 RFC commit `5f60000e713e9d8bfee526d08009bb4322667ff8`. The `-k hooks` expression
 also selects cases outside the hooks directory whose names contain "hooks".

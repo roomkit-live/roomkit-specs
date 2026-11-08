@@ -177,12 +177,17 @@ def execution_markdown(report: dict[str, Any]) -> list[str]:
         "|---|---|---|---|",
     ]
     for requirement in report["requirements"]:
-        for link in requirement["links"]:
-            for run in link["executions"]:
-                lines.append(
-                    f"| {requirement['id']} | {link['id']} | {run['execution']} | {run['state']} |"
-                )
+        lines.extend(requirement_execution_rows(requirement))
     return lines
+
+
+def requirement_execution_rows(requirement: dict[str, Any]) -> list[str]:
+    """Render a requirement's receipts without merging their scopes or states."""
+    return [
+        f"| {requirement['id']} | {link['id']} | {run['execution']} | {run['state']} |"
+        for link in requirement["links"]
+        for run in link["executions"]
+    ]
 
 
 def artifact(path: Path, expected: str, update: bool) -> list[str]:
