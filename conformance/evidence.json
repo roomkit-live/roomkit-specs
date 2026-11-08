@@ -363,120 +363,120 @@
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/expect",
           "sha256": "fb21b8c50fb2b55694bea5246c397cb58490e5509f74571e758fbcfbcdd3ba82",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
           "proves": "Canonical bindings, stored visibility and response_visibility, exact recipients and absent matches at all six public doors, including All, Unicode ordering, duplicates, missing and registered-but-unbound ids."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/0/expect",
           "sha256": "8355d15d447f79aae8772990960629e1eca15557c840019da9b9adcd5c187ae3",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/1/expect",
+          "pointer": "/steps/2/expect",
           "sha256": "8355d15d447f79aae8772990960629e1eca15557c840019da9b9adcd5c187ae3",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
-        },
-        {
-          "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/4/expect",
-          "sha256": "98c6d9f6cb91b7360a0dc1480211980129b378a2ee7a2a2e65e381f8aa2b2b0b",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/5/expect",
           "sha256": "98c6d9f6cb91b7360a0dc1480211980129b378a2ee7a2a2e65e381f8aa2b2b0b",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/8/expect",
-          "sha256": "f2ef0fac180029d09feb8712d069cdf6eb6540eb006d09d00394ff4145153c4d",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "pointer": "/steps/7/expect",
+          "sha256": "98c6d9f6cb91b7360a0dc1480211980129b378a2ee7a2a2e65e381f8aa2b2b0b",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/9/expect",
+          "pointer": "/steps/10/expect",
           "sha256": "f2ef0fac180029d09feb8712d069cdf6eb6540eb006d09d00394ff4145153c4d",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/12/expect",
-          "sha256": "a82374d478ea20a2da5fdf713f144e8e53a00e6c988893e419313235b4a3bb99",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "sha256": "f2ef0fac180029d09feb8712d069cdf6eb6540eb006d09d00394ff4145153c4d",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/13/expect",
+          "pointer": "/steps/15/expect",
           "sha256": "a82374d478ea20a2da5fdf713f144e8e53a00e6c988893e419313235b4a3bb99",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
-        },
-        {
-          "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/16/expect",
-          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/17/expect",
-          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "sha256": "a82374d478ea20a2da5fdf713f144e8e53a00e6c988893e419313235b4a3bb99",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/20/expect",
-          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/21/expect",
-          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
-        },
-        {
-          "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/24/expect",
-          "sha256": "90651ace825531818ef24ee24cf95b0bccb14b0bb0f5849674c5d9c3410cb91d",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "pointer": "/steps/22/expect",
+          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/25/expect",
+          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/27/expect",
+          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/30/expect",
           "sha256": "90651ace825531818ef24ee24cf95b0bccb14b0bb0f5849674c5d9c3410cb91d",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/28/expect",
-          "sha256": "87d7d84b919e37720fa983ac5823473bd48a9f8a4545472332b2cb63941943de",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "pointer": "/steps/32/expect",
+          "sha256": "90651ace825531818ef24ee24cf95b0bccb14b0bb0f5849674c5d9c3410cb91d",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/29/expect",
+          "pointer": "/steps/35/expect",
           "sha256": "87d7d84b919e37720fa983ac5823473bd48a9f8a4545472332b2cb63941943de",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/37/expect",
+          "sha256": "87d7d84b919e37720fa983ac5823473bd48a9f8a4545472332b2cb63941943de",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         }
       ],
       "tests": [],
@@ -585,120 +585,120 @@
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/expect",
           "sha256": "fb21b8c50fb2b55694bea5246c397cb58490e5509f74571e758fbcfbcdd3ba82",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
           "proves": "Canonical bindings, stored visibility and response_visibility, exact recipients and absent matches at all six public doors, including All, Unicode ordering, duplicates, missing and registered-but-unbound ids."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/0/expect",
           "sha256": "8355d15d447f79aae8772990960629e1eca15557c840019da9b9adcd5c187ae3",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/1/expect",
+          "pointer": "/steps/2/expect",
           "sha256": "8355d15d447f79aae8772990960629e1eca15557c840019da9b9adcd5c187ae3",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
-        },
-        {
-          "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/4/expect",
-          "sha256": "98c6d9f6cb91b7360a0dc1480211980129b378a2ee7a2a2e65e381f8aa2b2b0b",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/5/expect",
           "sha256": "98c6d9f6cb91b7360a0dc1480211980129b378a2ee7a2a2e65e381f8aa2b2b0b",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/8/expect",
-          "sha256": "f2ef0fac180029d09feb8712d069cdf6eb6540eb006d09d00394ff4145153c4d",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "pointer": "/steps/7/expect",
+          "sha256": "98c6d9f6cb91b7360a0dc1480211980129b378a2ee7a2a2e65e381f8aa2b2b0b",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/9/expect",
+          "pointer": "/steps/10/expect",
           "sha256": "f2ef0fac180029d09feb8712d069cdf6eb6540eb006d09d00394ff4145153c4d",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/12/expect",
-          "sha256": "a82374d478ea20a2da5fdf713f144e8e53a00e6c988893e419313235b4a3bb99",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "sha256": "f2ef0fac180029d09feb8712d069cdf6eb6540eb006d09d00394ff4145153c4d",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/13/expect",
+          "pointer": "/steps/15/expect",
           "sha256": "a82374d478ea20a2da5fdf713f144e8e53a00e6c988893e419313235b4a3bb99",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
-        },
-        {
-          "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/16/expect",
-          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/17/expect",
-          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "sha256": "a82374d478ea20a2da5fdf713f144e8e53a00e6c988893e419313235b4a3bb99",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/20/expect",
-          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/21/expect",
-          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
-        },
-        {
-          "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/24/expect",
-          "sha256": "90651ace825531818ef24ee24cf95b0bccb14b0bb0f5849674c5d9c3410cb91d",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "pointer": "/steps/22/expect",
+          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/25/expect",
+          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/27/expect",
+          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/30/expect",
           "sha256": "90651ace825531818ef24ee24cf95b0bccb14b0bb0f5849674c5d9c3410cb91d",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/28/expect",
-          "sha256": "87d7d84b919e37720fa983ac5823473bd48a9f8a4545472332b2cb63941943de",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "pointer": "/steps/32/expect",
+          "sha256": "90651ace825531818ef24ee24cf95b0bccb14b0bb0f5849674c5d9c3410cb91d",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/29/expect",
+          "pointer": "/steps/35/expect",
           "sha256": "87d7d84b919e37720fa983ac5823473bd48a9f8a4545472332b2cb63941943de",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/37/expect",
+          "sha256": "87d7d84b919e37720fa983ac5823473bd48a9f8a4545472332b2cb63941943de",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         }
       ],
       "tests": [],
@@ -1154,8 +1154,8 @@
         {
           "scenario": "permissions/empty-event-visibility-never-opens-history",
           "pointer": "/expect",
-          "sha256": "3c4678beb348d16f389ce70fe5f84b356949a4612baaa6334144818500fb49b2",
-          "scenario_sha256": "12c806f2b2dbebaf51abb3370eb58b1b151e6b2423ab10bc435448fc5ccb2d9b",
+          "sha256": "80cc9b4babc5a02b9244b0ca3b4dfec3bbb497abfd790eb9df9bb0e945d845df",
+          "scenario_sha256": "0e90b35957e6f63183ba7279fbcf604e3e030aa99073924a6c1b121bd11059d3",
           "proves": "Empty event visibility from a hook or outside-pipeline stored record reaches no delivery or later model context; the host timeline retains both records."
         },
         {
@@ -1181,120 +1181,120 @@
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/expect",
           "sha256": "fb21b8c50fb2b55694bea5246c397cb58490e5509f74571e758fbcfbcdd3ba82",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
           "proves": "Canonical bindings, stored visibility and response_visibility, exact recipients and absent matches at all six public doors, including All, Unicode ordering, duplicates, missing and registered-but-unbound ids."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/0/expect",
           "sha256": "8355d15d447f79aae8772990960629e1eca15557c840019da9b9adcd5c187ae3",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/1/expect",
+          "pointer": "/steps/2/expect",
           "sha256": "8355d15d447f79aae8772990960629e1eca15557c840019da9b9adcd5c187ae3",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
-        },
-        {
-          "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/4/expect",
-          "sha256": "98c6d9f6cb91b7360a0dc1480211980129b378a2ee7a2a2e65e381f8aa2b2b0b",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/5/expect",
           "sha256": "98c6d9f6cb91b7360a0dc1480211980129b378a2ee7a2a2e65e381f8aa2b2b0b",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/8/expect",
-          "sha256": "f2ef0fac180029d09feb8712d069cdf6eb6540eb006d09d00394ff4145153c4d",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "pointer": "/steps/7/expect",
+          "sha256": "98c6d9f6cb91b7360a0dc1480211980129b378a2ee7a2a2e65e381f8aa2b2b0b",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/9/expect",
+          "pointer": "/steps/10/expect",
           "sha256": "f2ef0fac180029d09feb8712d069cdf6eb6540eb006d09d00394ff4145153c4d",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/12/expect",
-          "sha256": "a82374d478ea20a2da5fdf713f144e8e53a00e6c988893e419313235b4a3bb99",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "sha256": "f2ef0fac180029d09feb8712d069cdf6eb6540eb006d09d00394ff4145153c4d",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/13/expect",
+          "pointer": "/steps/15/expect",
           "sha256": "a82374d478ea20a2da5fdf713f144e8e53a00e6c988893e419313235b4a3bb99",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
-        },
-        {
-          "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/16/expect",
-          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/17/expect",
-          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "sha256": "a82374d478ea20a2da5fdf713f144e8e53a00e6c988893e419313235b4a3bb99",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/20/expect",
-          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/21/expect",
-          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
-        },
-        {
-          "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/24/expect",
-          "sha256": "90651ace825531818ef24ee24cf95b0bccb14b0bb0f5849674c5d9c3410cb91d",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "pointer": "/steps/22/expect",
+          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/25/expect",
+          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/27/expect",
+          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/30/expect",
           "sha256": "90651ace825531818ef24ee24cf95b0bccb14b0bb0f5849674c5d9c3410cb91d",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/28/expect",
-          "sha256": "87d7d84b919e37720fa983ac5823473bd48a9f8a4545472332b2cb63941943de",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "pointer": "/steps/32/expect",
+          "sha256": "90651ace825531818ef24ee24cf95b0bccb14b0bb0f5849674c5d9c3410cb91d",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/29/expect",
+          "pointer": "/steps/35/expect",
           "sha256": "87d7d84b919e37720fa983ac5823473bd48a9f8a4545472332b2cb63941943de",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/37/expect",
+          "sha256": "87d7d84b919e37720fa983ac5823473bd48a9f8a4545472332b2cb63941943de",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         }
       ],
       "tests": [],
@@ -1312,7 +1312,7 @@
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/expect",
           "sha256": "fb21b8c50fb2b55694bea5246c397cb58490e5509f74571e758fbcfbcdd3ba82",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
           "proves": "Canonical bindings, stored visibility and response_visibility, exact recipients and absent matches at all six public doors, including All, Unicode ordering, duplicates, missing and registered-but-unbound ids."
         },
         {
@@ -1326,113 +1326,113 @@
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/0/expect",
           "sha256": "8355d15d447f79aae8772990960629e1eca15557c840019da9b9adcd5c187ae3",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/1/expect",
+          "pointer": "/steps/2/expect",
           "sha256": "8355d15d447f79aae8772990960629e1eca15557c840019da9b9adcd5c187ae3",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
-        },
-        {
-          "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/4/expect",
-          "sha256": "98c6d9f6cb91b7360a0dc1480211980129b378a2ee7a2a2e65e381f8aa2b2b0b",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/5/expect",
           "sha256": "98c6d9f6cb91b7360a0dc1480211980129b378a2ee7a2a2e65e381f8aa2b2b0b",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/8/expect",
-          "sha256": "f2ef0fac180029d09feb8712d069cdf6eb6540eb006d09d00394ff4145153c4d",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "pointer": "/steps/7/expect",
+          "sha256": "98c6d9f6cb91b7360a0dc1480211980129b378a2ee7a2a2e65e381f8aa2b2b0b",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/9/expect",
+          "pointer": "/steps/10/expect",
           "sha256": "f2ef0fac180029d09feb8712d069cdf6eb6540eb006d09d00394ff4145153c4d",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/12/expect",
-          "sha256": "a82374d478ea20a2da5fdf713f144e8e53a00e6c988893e419313235b4a3bb99",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "sha256": "f2ef0fac180029d09feb8712d069cdf6eb6540eb006d09d00394ff4145153c4d",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/13/expect",
+          "pointer": "/steps/15/expect",
           "sha256": "a82374d478ea20a2da5fdf713f144e8e53a00e6c988893e419313235b4a3bb99",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
-        },
-        {
-          "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/16/expect",
-          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/17/expect",
-          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "sha256": "a82374d478ea20a2da5fdf713f144e8e53a00e6c988893e419313235b4a3bb99",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/20/expect",
-          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/21/expect",
-          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
-        },
-        {
-          "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/24/expect",
-          "sha256": "90651ace825531818ef24ee24cf95b0bccb14b0bb0f5849674c5d9c3410cb91d",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "pointer": "/steps/22/expect",
+          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
           "pointer": "/steps/25/expect",
+          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/27/expect",
+          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/30/expect",
           "sha256": "90651ace825531818ef24ee24cf95b0bccb14b0bb0f5849674c5d9c3410cb91d",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/28/expect",
-          "sha256": "87d7d84b919e37720fa983ac5823473bd48a9f8a4545472332b2cb63941943de",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "pointer": "/steps/32/expect",
+          "sha256": "90651ace825531818ef24ee24cf95b0bccb14b0bb0f5849674c5d9c3410cb91d",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         },
         {
           "scenario": "permissions/visibility-is-canonical-at-every-door",
-          "pointer": "/steps/29/expect",
+          "pointer": "/steps/35/expect",
           "sha256": "87d7d84b919e37720fa983ac5823473bd48a9f8a4545472332b2cb63941943de",
-          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
-          "proves": "Attach and update each return the canonical visibility before any event is processed."
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/37/expect",
+          "sha256": "87d7d84b919e37720fa983ac5823473bd48a9f8a4545472332b2cb63941943de",
+          "scenario_sha256": "67bc01479f368428850c856a503fd7c7fa66e7817e4f25ec6d45c3fe7d6704dd",
+          "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         }
       ],
       "tests": [],
@@ -1448,52 +1448,94 @@
       "assertions": [
         {
           "scenario": "permissions/internal-is-the-framework-s-own",
+          "pointer": "/expect",
+          "sha256": "d91490cc5d2c1ca6a3d86f11a9d3fe1a2ad663a2f143286789bad95f419f9264",
+          "scenario_sha256": "06c747e3c448fe1ec769aa78995b3c7e4e0b603f1eb7fabd2a64088811805975",
+          "proves": "Refusing internal leaves the binding unchanged and no timeline, delivery, hook or framework event."
+        },
+        {
+          "scenario": "permissions/internal-is-the-framework-s-own",
           "pointer": "/steps/0/expect",
           "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
-          "scenario_sha256": "1e2d3a0afdb11538fa38d83b43beb53d33f86d8ea96606805d17c58d164713b1",
-          "proves": "Internal is refused at this public door."
+          "scenario_sha256": "06c747e3c448fe1ec769aa78995b3c7e4e0b603f1eb7fabd2a64088811805975",
+          "proves": "Internal, with or without surrounding whitespace, is refused at this public door."
         },
         {
           "scenario": "permissions/internal-is-the-framework-s-own",
           "pointer": "/steps/1/expect",
           "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
-          "scenario_sha256": "1e2d3a0afdb11538fa38d83b43beb53d33f86d8ea96606805d17c58d164713b1",
-          "proves": "Internal is refused at this public door."
+          "scenario_sha256": "06c747e3c448fe1ec769aa78995b3c7e4e0b603f1eb7fabd2a64088811805975",
+          "proves": "Internal, with or without surrounding whitespace, is refused at this public door."
         },
         {
           "scenario": "permissions/internal-is-the-framework-s-own",
           "pointer": "/steps/2/expect",
           "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
-          "scenario_sha256": "1e2d3a0afdb11538fa38d83b43beb53d33f86d8ea96606805d17c58d164713b1",
-          "proves": "Internal is refused at this public door."
+          "scenario_sha256": "06c747e3c448fe1ec769aa78995b3c7e4e0b603f1eb7fabd2a64088811805975",
+          "proves": "Internal, with or without surrounding whitespace, is refused at this public door."
         },
         {
           "scenario": "permissions/internal-is-the-framework-s-own",
           "pointer": "/steps/3/expect",
           "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
-          "scenario_sha256": "1e2d3a0afdb11538fa38d83b43beb53d33f86d8ea96606805d17c58d164713b1",
-          "proves": "Internal is refused at this public door."
+          "scenario_sha256": "06c747e3c448fe1ec769aa78995b3c7e4e0b603f1eb7fabd2a64088811805975",
+          "proves": "Internal, with or without surrounding whitespace, is refused at this public door."
         },
         {
           "scenario": "permissions/internal-is-the-framework-s-own",
           "pointer": "/steps/4/expect",
           "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
-          "scenario_sha256": "1e2d3a0afdb11538fa38d83b43beb53d33f86d8ea96606805d17c58d164713b1",
-          "proves": "Internal is refused at this public door."
+          "scenario_sha256": "06c747e3c448fe1ec769aa78995b3c7e4e0b603f1eb7fabd2a64088811805975",
+          "proves": "Internal, with or without surrounding whitespace, is refused at this public door."
         },
         {
           "scenario": "permissions/internal-is-the-framework-s-own",
           "pointer": "/steps/5/expect",
           "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
-          "scenario_sha256": "1e2d3a0afdb11538fa38d83b43beb53d33f86d8ea96606805d17c58d164713b1",
-          "proves": "Internal is refused at this public door."
+          "scenario_sha256": "06c747e3c448fe1ec769aa78995b3c7e4e0b603f1eb7fabd2a64088811805975",
+          "proves": "Internal, with or without surrounding whitespace, is refused at this public door."
         },
         {
           "scenario": "permissions/internal-is-the-framework-s-own",
-          "pointer": "/expect",
-          "sha256": "d91490cc5d2c1ca6a3d86f11a9d3fe1a2ad663a2f143286789bad95f419f9264",
-          "scenario_sha256": "1e2d3a0afdb11538fa38d83b43beb53d33f86d8ea96606805d17c58d164713b1",
-          "proves": "Refusing internal leaves the binding unchanged and no timeline, delivery, hook or framework event."
+          "pointer": "/steps/6/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "06c747e3c448fe1ec769aa78995b3c7e4e0b603f1eb7fabd2a64088811805975",
+          "proves": "Internal, with or without surrounding whitespace, is refused at this public door."
+        },
+        {
+          "scenario": "permissions/internal-is-the-framework-s-own",
+          "pointer": "/steps/7/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "06c747e3c448fe1ec769aa78995b3c7e4e0b603f1eb7fabd2a64088811805975",
+          "proves": "Internal, with or without surrounding whitespace, is refused at this public door."
+        },
+        {
+          "scenario": "permissions/internal-is-the-framework-s-own",
+          "pointer": "/steps/8/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "06c747e3c448fe1ec769aa78995b3c7e4e0b603f1eb7fabd2a64088811805975",
+          "proves": "Internal, with or without surrounding whitespace, is refused at this public door."
+        },
+        {
+          "scenario": "permissions/internal-is-the-framework-s-own",
+          "pointer": "/steps/9/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "06c747e3c448fe1ec769aa78995b3c7e4e0b603f1eb7fabd2a64088811805975",
+          "proves": "Internal, with or without surrounding whitespace, is refused at this public door."
+        },
+        {
+          "scenario": "permissions/internal-is-the-framework-s-own",
+          "pointer": "/steps/10/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "06c747e3c448fe1ec769aa78995b3c7e4e0b603f1eb7fabd2a64088811805975",
+          "proves": "Internal, with or without surrounding whitespace, is refused at this public door."
+        },
+        {
+          "scenario": "permissions/internal-is-the-framework-s-own",
+          "pointer": "/steps/11/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "06c747e3c448fe1ec769aa78995b3c7e4e0b603f1eb7fabd2a64088811805975",
+          "proves": "Internal, with or without surrounding whitespace, is refused at this public door."
         }
       ],
       "tests": [],

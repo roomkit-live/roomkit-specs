@@ -129,8 +129,7 @@
           "content": {
             "type": "text",
             "body": "STORED-EMPTY"
-          },
-          "visibility": ""
+          }
         },
         {
           "content": {
@@ -181,5 +180,6 @@
         ]
       }
     }
-  }
+  },
+  "notes": "The stored-event reader may canonicalize an empty value to none when it builds its model. The proof checks retained host-visible content and no delivery or later model access, without requiring an invalid lexical representation to survive deserialization."
 }

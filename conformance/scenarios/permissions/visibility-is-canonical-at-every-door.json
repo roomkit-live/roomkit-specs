@@ -260,6 +260,12 @@
       "call": "set_visibility",
       "room_id": "case-0",
       "channel_id": "source",
+      "visibility": "none"
+    },
+    {
+      "call": "set_visibility",
+      "room_id": "case-0",
+      "channel_id": "source",
       "visibility": " all ",
       "expect": {
         "result": {
@@ -302,6 +308,12 @@
           "visibility": "none"
         }
       }
+    },
+    {
+      "call": "set_visibility",
+      "room_id": "case-1",
+      "channel_id": "source",
+      "visibility": "all"
     },
     {
       "call": "set_visibility",
@@ -354,6 +366,12 @@
       "call": "set_visibility",
       "room_id": "case-2",
       "channel_id": "source",
+      "visibility": "none"
+    },
+    {
+      "call": "set_visibility",
+      "room_id": "case-2",
+      "channel_id": "source",
       "visibility": " transport ",
       "expect": {
         "result": {
@@ -396,6 +414,12 @@
           "visibility": "intelligence"
         }
       }
+    },
+    {
+      "call": "set_visibility",
+      "room_id": "case-3",
+      "channel_id": "source",
+      "visibility": "none"
     },
     {
       "call": "set_visibility",
@@ -448,6 +472,12 @@
       "call": "set_visibility",
       "room_id": "case-4",
       "channel_id": "source",
+      "visibility": "none"
+    },
+    {
+      "call": "set_visibility",
+      "room_id": "case-4",
+      "channel_id": "source",
       "visibility": " 中 , é, Z, a,a, missing ",
       "expect": {
         "result": {
@@ -490,6 +520,12 @@
           "visibility": "All"
         }
       }
+    },
+    {
+      "call": "set_visibility",
+      "room_id": "case-5",
+      "channel_id": "source",
+      "visibility": "none"
     },
     {
       "call": "set_visibility",
@@ -542,6 +578,12 @@
       "call": "set_visibility",
       "room_id": "case-6",
       "channel_id": "source",
+      "visibility": "none"
+    },
+    {
+      "call": "set_visibility",
+      "room_id": "case-6",
+      "channel_id": "source",
       "visibility": " missing ",
       "expect": {
         "result": {
@@ -584,6 +626,12 @@
           "visibility": "unbound"
         }
       }
+    },
+    {
+      "call": "set_visibility",
+      "room_id": "case-7",
+      "channel_id": "source",
+      "visibility": "none"
     },
     {
       "call": "set_visibility",
