@@ -925,7 +925,13 @@ An expectation matches the actual value when:
   in `actions`, the outcomes in any order;
 - `{"$absent": true}`: absent or null; `{"$present": true}`: neither;
 - `{"$contains": "text"}`: a string holding the text;
-- `{"$lacks": "text"}`: a string not holding the text.
+- `{"$lacks": "text"}`: a string not holding the text;
+- `{"$as": "name"}`: a value present, named: across the scenario's step
+  expectations and its `expect`, every `$as` of one name matches equal
+  values, and `$as` of two names never match equal values. It compares what
+  a run gives out with itself (a `correlation_id`). A name is held by the
+  first value it matches, the expectations compared in order; within a
+  `$unordered`, by the order that matches.
 
 In `framework_events` a bare string names the event: `"room_created"` is
 `{"event": "room_created"}`.
