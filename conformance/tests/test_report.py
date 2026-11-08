@@ -21,6 +21,7 @@ class ReportTests(unittest.TestCase):
         self.assertEqual(errors, [])
         self.assertEqual(report["requirements"][0]["mapping"], "unmapped")
         self.assertEqual(report["sections"][0]["review"], "not_reviewed")
+        self.assertEqual(report["sections"][0]["candidate_scenarios"], ["some-case"])
         self.assertIn(
             "1 annotated source units; 0 have reviewed mappings", markdown(report)
         )
@@ -66,6 +67,27 @@ class ReportTests(unittest.TestCase):
             self.assertEqual(artifact(path, "expected", False), [])
             self.assertTrue(artifact(path, "different", False))
             self.assertEqual(path.read_text(), "expected")
+
+    def test_implicit_rules_and_model_defaults_cannot_disappear_from_review(
+        self,
+    ) -> None:
+        for body in ["Return a fresh copy.\n", "```\nOptions\n  timeout = 30\n```\n"]:
+            registry = extract("### 9.3 Hooks\n" + body)
+            review = {
+                "section": "9.3",
+                "sha256": registry["sections"][0]["sha256"],
+                "classification": "normative",
+                "review": "Reviewed.",
+            }
+            _, errors = build(
+                registry,
+                {"python_commit": "p", "links": [], "executions": []},
+                {},
+                {"sections": [review]},
+            )
+            self.assertTrue(
+                any("unannotated content" in error for error in errors), errors
+            )
 
 
 if __name__ == "__main__":

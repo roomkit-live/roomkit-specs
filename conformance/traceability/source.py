@@ -77,6 +77,18 @@ def section_spans(text: str) -> list[dict[str, Any]]:
                 }
             )
         offset += len(line)
+    if found and text[: found[0]["start"]].strip():
+        found.insert(
+            0,
+            {
+                "section": "0",
+                "title": "Preface (Abstract and contents)",
+                "line": 1,
+                "start": 0,
+                "body_start": 0,
+                "end": found[0]["start"],
+            },
+        )
     return found
 
 
@@ -163,8 +175,14 @@ def extract(text: str) -> dict[str, Any]:
     for start, end in ranges:
         remaining[start:end] = " " * (end - start)
     unmarked = "".join(remaining)
-    if re.search(r"<!--\s*/?rfc\b", unmarked):
+    if re.search(r"<!--\s*/?rfc\b", MARKER.sub("", masked)):
         raise ValueError("malformed rfc marker")
+    uncovered = list(text)
+    for start, end in ranges:
+        uncovered[start:end] = [
+            "\n" if char == "\n" else " " for char in text[start:end]
+        ]
+    uncovered = "".join(uncovered)
     inventory = []
     for section in sections:
         start, end = section["body_start"], section["end"]
@@ -175,6 +193,13 @@ def extract(text: str) -> dict[str, Any]:
                 for match in KEYWORD.finditer(unmarked[start:end])
             }
         )
+        content_lines = [
+            text.count("\n", 0, start) + offset + 1
+            for offset, line in enumerate(uncovered[start:end].splitlines())
+            if line.strip()
+            and line.strip() not in {"---", "-", "*", "+"}
+            and not re.fullmatch(r"\*\*[^*]+\*\*:?", line.strip())
+        ]
         inventory.append(
             {
                 "section": section["section"],
@@ -182,6 +207,7 @@ def extract(text: str) -> dict[str, Any]:
                 "line": section["line"],
                 "sha256": text_digest(body),
                 "unannotated_keyword_lines": candidates,
+                "unannotated_content_lines": content_lines,
             }
         )
     return {

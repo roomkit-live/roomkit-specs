@@ -74,6 +74,13 @@ class SourceTests(unittest.TestCase):
         )
         self.assertEqual(result["sections"][0]["unannotated_keyword_lines"], [2])
 
+    def test_the_abstract_is_not_silently_lost(self) -> None:
+        result = extract(
+            "# RFC\n## Abstract\nAn implementation MAY choose its language.\n## 1. Terms\n"
+        )
+        self.assertEqual(result["sections"][0]["section"], "0")
+        self.assertEqual(result["sections"][0]["unannotated_keyword_lines"], [3])
+
     def test_bad_boundaries_and_duplicate_ids_are_refused(self) -> None:
         cases = [
             marked("x") + marked("y"),

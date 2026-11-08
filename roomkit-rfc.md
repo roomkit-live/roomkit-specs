@@ -1,3 +1,4 @@
+<!-- rfc: {"id": "RK-0-001", "kind": "non_testable", "applies": "Bibliographic preface, abstract and table of contents; includes the language-agnostic scope permission, not a runtime behavior."} -->
 # RFC: RoomKit — Multi-Channel Conversation Framework
 
 | | |
@@ -63,17 +64,21 @@ programming language. All examples use pseudocode or structured notation.
 28. [Appendix B: Complete Event Flow Examples](#appendix-b-complete-event-flow-examples)
 
 ---
+<!-- /rfc -->
 
 ## 1. Conventions and Terminology
 
 ### 1.1 Key Words
 
+<!-- rfc: {"id": "RK-1.1-001", "kind": "non_testable", "applies": "§1.1 Key Words; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
 interpreted as described in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
+<!-- /rfc -->
 
 ### 1.2 Definitions
 
+<!-- rfc: {"id": "RK-1.2-001", "kind": "structural", "applies": "§1.2 Definitions; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 | Term | Definition |
 |---|---|
 | **Room** | A conversation space where channels connect and events flow. The unit of state. |
@@ -126,9 +131,11 @@ interpreted as described in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
 | **Track** | A single media stream (audio, video, or screen share) published by a conference participant. The unit of media identity in a conference. |
 | **Bot Participant** | The framework's own server-side connection to a conference, used to subscribe to tracks (STT, vision, recording) and publish media (TTS, avatar). |
 | **Egress** | Server-side media export performed by the SFU (e.g., conference recording), as opposed to framework-side recording. |
+<!-- /rfc -->
 
 ### 1.3 Notation
 
+<!-- rfc: {"id": "RK-1.3-001", "kind": "structural", "applies": "§1.3 Notation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Data models are described using structured notation:
 
 ```
@@ -141,9 +148,11 @@ ModelName
 
 Enumeration values are written in UPPER_SNAKE_CASE in this document; their
 serialized form is lowercase (Section 1.4). Field names use snake_case.
+<!-- /rfc -->
 
 ### 1.4 Serialized Form
 
+<!-- rfc: {"id": "RK-1.4-001", "kind": "behavior", "applies": "§1.4 Serialized Form; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The records this document defines have one serialized form, JSON
 ([RFC 8259](https://www.rfc-editor.org/rfc/rfc8259)). What implementations
 exchange is written in this form (the turn messages of Section 10.6.3, logs,
@@ -176,6 +185,7 @@ define. Implementations MUST serialize a record as follows:
   `"2026-10-22T14:03:07.250Z"`. A value without an offset MUST NOT be
   written; a reader MAY read one as UTC.
 
+<!-- /rfc -->
 ---
 
 ## 2. Introduction
@@ -197,13 +207,16 @@ interleaves with everyone else's.
 
 ### 2.2 Scope
 
+<!-- rfc: {"id": "RK-2.2-001", "kind": "non_testable", "applies": "§2.2 Scope; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 RoomKit provides **primitives for multi-channel conversations**, not business logic.
 
 Where an AI agent is one of the participants, RoomKit is the **harness around that
 agent**: it defines where the agent sits in a conversation, what it may see, what
 it may call, what rules bind it, and how its output reaches the humans on every
 other channel. It does not reason, and it does not decide what the agent is for.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-2.2-002", "kind": "non_testable", "applies": "§2.2 Scope; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **RoomKit IS:**
 
 - A room-based conversation manager
@@ -216,7 +229,9 @@ other channel. It does not reason, and it does not decide what the agent is for.
   conferencing, recording)
 - A harness for AI participation (orchestration, memory, tool access control,
   task delegation, skills) — the surfaces an agent runs on, not its reasoning
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-2.2-003", "kind": "non_testable", "applies": "§2.2 Scope; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **RoomKit is NOT:**
 
 - A CPaaS provider (Twilio, Sinch, etc. own the transport)
@@ -226,9 +241,11 @@ other channel. It does not reason, and it does not decide what the agent is for.
   replacement for it and not the product)
 - A chat application (RoomKit provides primitives; integrators build apps)
 - Opinionated about when or why to use its primitives
+<!-- /rfc -->
 
 ### 2.3 Design Philosophy
 
+<!-- rfc: {"id": "RK-2.3-001", "kind": "non_testable", "applies": "§2.3 Design Philosophy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The framework provides primitives. The integrator provides business logic.
 
 ```
@@ -252,10 +269,12 @@ Skill activation lifecycle         What a skill's instructions actually say
 Memory interface                   What is worth remembering
 ```
 
+<!-- /rfc -->
 ---
 
 ## 3. Architecture Overview
 
+<!-- rfc: {"id": "RK-3-001", "kind": "structural", "applies": "§3 Architecture Overview; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A conforming RoomKit implementation consists of the following layers:
 
 ```
@@ -311,31 +330,39 @@ A conforming RoomKit implementation consists of the following layers:
                                │vLLM     ││ Qwen     │
                                └─────────┘└──────────┘
 ```
+<!-- /rfc -->
 
 ### 3.1 Layer Responsibilities
 
+<!-- rfc: {"id": "RK-3.1-001", "kind": "structural", "applies": "§3.1 Layer Responsibilities; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 | Layer | Responsibility |
 |---|---|
 | **Integration Surfaces** | REST API for humans/systems, MCP for AI agents; real-time clients connect through the WebSocket channel (Section 6.3, Appendix A.8) on a socket the host serves |
 | **RoomKit Core** | Room lifecycle, event routing, hooks, permissions, identity, store |
 | **Channel Interface** | Unified abstraction — every channel implements the same interface |
 | **Provider Layer** | Interchangeable implementations behind channels |
+<!-- /rfc -->
 
 ### 3.2 Key Separations
 
+<!-- rfc: {"id": "RK-3.2-001", "kind": "structural", "applies": "§3.2 Key Separations; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 1. **Channel type and Provider are separate.** SMS is a channel type. Twilio is a provider. Swap providers without changing room logic.
 2. **Core and Integration Surfaces are separate.** Core has no web framework dependency. REST/MCP are thin wrappers; real-time clients reach the core through the WebSocket channel.
 3. **Framework and Business Logic are separate.** Framework provides primitives. Integrator registers hooks and configures channels.
 4. **Transport and Audio Processing are separate.** The transport delivers raw audio frames. The audio pipeline (resampler, AEC, AGC, denoiser, VAD, diarization, DTMF, recording) is a distinct layer with pluggable providers, independent of the transport choice.
 
+<!-- /rfc -->
 ---
 
 ## 4. Core Concepts
 
 ### 4.1 The Room
 
+<!-- rfc: {"id": "RK-4.1-001", "kind": "behavior", "applies": "§4.1 The Room; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A Room is a conversation space where channels connect and events flow through.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-4.1-002", "kind": "behavior", "applies": "§4.1 The Room; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Properties:**
 
 - **Channel-agnostic** — A Room does not know whether it carries SMS or AI traffic.
@@ -347,21 +374,27 @@ A Room is a conversation space where channels connect and events flow through.
 
 A Room holds no message content directly. Content lives in Events stored in the
 Room's timeline.
+<!-- /rfc -->
 
 ### 4.2 The Channel
 
+<!-- rfc: {"id": "RK-4.2-001", "kind": "behavior", "applies": "§4.2 The Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Everything** that interacts with a Room is a Channel. SMS, Email, WebSocket, AI,
 Voice, Observer — all implement the same interface.
 
 Channels are classified along two dimensions:
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-4.2-002", "kind": "behavior", "applies": "§4.2 The Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Category** — what the channel does:
 
 | Category | Purpose | Examples |
 |---|---|---|
 | TRANSPORT | Carries messages to/from external systems or humans | SMS, Email, WhatsApp, WebSocket, Voice |
 | INTELLIGENCE | Processes events and produces responses or insights | AI agent, sentiment analyzer |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-4.2-003", "kind": "behavior", "applies": "§4.2 The Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Direction** — what the channel can do physically:
 
 | Direction | Meaning |
@@ -369,7 +402,9 @@ Channels are classified along two dimensions:
 | INBOUND | Can receive from outside only |
 | OUTBOUND | Can send to outside only |
 | BIDIRECTIONAL | Both receive and send |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-4.2-004", "kind": "behavior", "applies": "§4.2 The Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Three methods, three concerns:**
 
 | Method | When Called | Direction |
@@ -382,9 +417,11 @@ Direction declares capability. Permissions restrict per room. A transport
 whose direction sends (OUTBOUND or BIDIRECTIONAL) is called with `deliver()`;
 an INBOUND-only one never is, and still receives `on_event()` when it may
 read the event (§10.2). Direction does not filter intelligence channels.
+<!-- /rfc -->
 
 ### 4.3 The Event
 
+<!-- rfc: {"id": "RK-4.3-001", "kind": "behavior", "applies": "§4.3 The Event; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Everything in a Room is a RoomEvent — messages, system notifications, typing
 indicators, channel state changes, participant joins/leaves. Once stored, an
 event keeps its index and status. Its content and source change only through
@@ -394,21 +431,27 @@ of it (the end of a streamed turn, a response cancelled as `superseded`); its
 `delivery_results` is written only by the record of its deliveries (§14.3),
 which every other write keeps; a direct `delete_event()` removes it (§10.3).
 Events are sequentially indexed within their room.
+<!-- /rfc -->
 
 ### 4.4 The Participant
 
+<!-- rfc: {"id": "RK-4.4-001", "kind": "behavior", "applies": "§4.4 The Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A Participant is a human (or system identity) in the Room. AI channels and
 integration channels are NOT participants — they are infrastructure. Participants
 have roles, identity status, and are connected via one or more channels.
+<!-- /rfc -->
 
 ### 4.5 The Identity
 
+<!-- rfc: {"id": "RK-4.5-001", "kind": "behavior", "applies": "§4.5 The Identity; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 An Identity is a cross-channel representation of a person. One person may be
 reachable via SMS (+15551234), Email (john@example.com), and WhatsApp simultaneously.
 Identity resolution maps channel addresses to a unified identity.
+<!-- /rfc -->
 
 ### 4.6 Two Output Paths
 
+<!-- rfc: {"id": "RK-4.6-001", "kind": "behavior", "applies": "§4.6 Two Output Paths; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 When a channel or hook processes an event, it produces output along two distinct
 paths:
 
@@ -424,21 +467,27 @@ Channel/Hook Output
     ├── Observations (passive insights)
     └── Metadata updates (enrich room data)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-4.6-002", "kind": "behavior", "applies": "§4.6 Two Output Paths; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Muting silences the voice, not the brain.** A muted AI channel cannot produce
 room events but CAN produce tasks ("customer at risk of churning") and observations
 ("sentiment: negative").
 
+<!-- /rfc -->
 ---
 
 ## 5. Data Models
 
+<!-- rfc: {"id": "RK-5-001", "kind": "behavior", "applies": "§5 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 An id the models below hold, a room's, a channel's, an event's, a
 participant's or an identity's, is a non-empty string: an empty one MUST be
 refused, since it names nothing a later read could find again.
+<!-- /rfc -->
 
 ### 5.1 Room
 
+<!-- rfc: {"id": "RK-5.1-001", "kind": "structural", "applies": "§5.1 Room; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 Room
 ├── id: string                              # Unique identifier
@@ -458,7 +507,9 @@ Room
 └── delivered_index: int = -1               # Highest index whose delivery set has run
                                             # (delivery lanes across processes, §13.5)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.1-002", "kind": "behavior", "applies": "§5.1 Room; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **RoomStatus** enumeration:
 
 | Value | Meaning | Accepts new events |
@@ -505,7 +556,9 @@ implementation chooses to write to mark it — is produced by the transition
 itself rather than through the pipeline, and is not subject to this refusal.
 Closing a room MUST remain observable: a room that simply goes quiet, with no
 signal of why, is indistinguishable from one whose integration has broken.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.1-003", "kind": "behavior", "applies": "§5.1 Room; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Lifecycle records.** An implementation MAY write a record in the timeline
 when a lifecycle change happens: a channel's attach, detach, mute, unmute or
 binding update, a participant's change, a timer's transition. When it does,
@@ -522,7 +575,9 @@ writes none.
 CLOSED and ARCHIVED refuse identically; they differ in intent. CLOSED is a
 conversation that has ended and that the integrator MAY reopen by returning
 the room to ACTIVE. ARCHIVED is a terminal storage state.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.1-004", "kind": "behavior", "applies": "§5.1 Room; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A transition from a status it does not leave from.** An integrator's pause,
 resume, close or archive of a room already in the status it leads to MUST do
 nothing: no write, no hook, no framework event. A pause of a PAUSED room, a
@@ -544,7 +599,9 @@ Closing a room does not, by itself, sever what is attached to it. Whether
 `close_room()` detaches channels, ends voice sessions or leaves them in place
 is an implementation's choice; what it MUST NOT do is leave a path by which a
 still-attached channel can append to the closed room.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.1-005", "kind": "behavior", "applies": "§5.1 Room; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The implementation's metadata keys.** The keys of a room's `metadata` that
 start with `roomkit:` are the implementation's own namespace: what the
 framework keeps for the room, such as a detach's revocation (§7.5 rule 7) or
@@ -556,7 +613,9 @@ rest written, so a write that copies the room's metadata back still works.
 A key the implementation keeps as a room's
 private state (§14.1) reserves the same key of the metadata, whatever its
 prefix, and falls under the same rule: only the framework writes it there.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.1-006", "kind": "behavior", "applies": "§5.1 Room; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **RoomTimers:**
 
 ```
@@ -620,9 +679,11 @@ Implementations MUST enforce timer transitions when configured:
   `room_closed` before its `room_refused_event`; its trigger
   (`ON_ROOM_PAUSED`, `ON_ROOM_CLOSED`) fires as an ASYNC trigger does, once
   the room lock is released (§10.1).
+<!-- /rfc -->
 
 ### 5.2 RoomEvent
 
+<!-- rfc: {"id": "RK-5.2-001", "kind": "structural", "applies": "§5.2 RoomEvent; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 RoomEvent
 ├── id: string                              # Unique event identifier (§8.1)
@@ -657,7 +718,9 @@ RoomEvent
                                             # stored, written by the record of its
                                             # deliveries alone (§14.3)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.2-002", "kind": "behavior", "applies": "§5.2 RoomEvent; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **EventType** enumeration:
 
 | Value | Category | Description |
@@ -691,7 +754,9 @@ RoomEvent
 | TOOL_CALL_START | Activity | A tool call started (ToolCallContent, status `pending`) |
 | TOOL_CALL_END | Activity | A tool call ended (ToolCallContent, with its status and outcome) |
 | INSTRUCTION_READ | Activity | The instruction an AI channel's turn read, kept by that channel alone, visible to it alone (§10.1.1) |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.2-003", "kind": "behavior", "applies": "§5.2 RoomEvent; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **EventStatus** enumeration:
 
 | Value | Meaning |
@@ -701,7 +766,9 @@ RoomEvent
 | READ | Event read by recipient (from read receipt) |
 | FAILED | Delivery failed after all retries |
 | BLOCKED | Event refused: by a sync hook, a source that cannot write or has no binding in the room (§7.5 rule 2), the chain-depth limit or the reentry budget (§8.3) |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.2-004", "kind": "behavior", "applies": "§5.2 RoomEvent; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **EventSource:**
 
 ```
@@ -718,7 +785,9 @@ EventSource
 ├── raw_payload: map<string, any>           # Original provider payload — never lost
 └── provider_message_id: string | null      # Provider's message identifier
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.2-005", "kind": "behavior", "applies": "§5.2 RoomEvent; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **EventDirection** enumeration, the way an event travelled:
 
 | Value | Meaning |
@@ -732,7 +801,9 @@ BIDIRECTIONAL value, and a source with any other direction is not a valid
 
 Implementations MUST preserve `raw_payload` unmodified. This is the audit trail
 and the source of truth for provider-specific data.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.2-006", "kind": "behavior", "applies": "§5.2 RoomEvent; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **EventSource.provider population:** Every channel MUST populate the `provider`
 field when constructing an EventSource. The value SHOULD be the name of the
 underlying provider or backend — for example, `"SIP"` for a SIP voice backend,
@@ -740,13 +811,17 @@ underlying provider or backend — for example, `"SIP"` for a SIP voice backend,
 provider. The channel SHOULD expose a `provider_name` property that returns the
 appropriate name. System-generated events (`channel_id="system"`) MAY leave
 `provider` as null.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.2-007", "kind": "behavior", "applies": "§5.2 RoomEvent; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A key the pipeline reserves.** `metadata.instruction` is the pipeline's
 alone: it writes it on a response to an instruction (§10.1.1 step 6) and
 removes it from every other event it commits, whoever wrote it (a parser,
 the caller's metadata, a channel, a hook), so that no event claims an
 instruction that did not produce it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.2-008", "kind": "behavior", "applies": "§5.2 RoomEvent; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A key namespace the pipeline reserves.** Of the idempotency keys, only the
 prefix `roomkit:publication:` is reserved: an `idempotency_key` that starts
 with it is the pipeline's alone. A proactive delivery stores its publication
@@ -758,15 +833,19 @@ processed as one that carries none (§10.1 step 4). `send_event()` and
 A response and a hook's injected event carry no key at all (§8.5, §9.4), and
 a hook's modify keeps the original's (§9.4). So only an event a proactive
 delivery published counts as an earlier copy of it (§22.1).
+<!-- /rfc -->
 
 ### 5.3 Event Content
 
+<!-- rfc: {"id": "RK-5.3-001", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Event content is a **discriminated union** — each event carries exactly one content
 type. Implementations MUST support all content types defined here. Each content
 type carries a `type` field that names it and discriminates the union: `text`,
 `rich`, `media`, `location`, `audio`, `video`, `composite`, `system`,
 `template`, `edit`, `delete` or `tool_call`.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.3-002", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **TextContent** — Plain text message:
 
 ```
@@ -774,7 +853,9 @@ TextContent
 ├── body: string                            # Message text
 └── language: string | null                 # ISO 639-1 language code
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.3-003", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **RichContent** — Formatted text with interactive elements:
 
 ```
@@ -786,7 +867,9 @@ RichContent
 ├── cards: list<map<string, any>>           # Structured card elements
 └── quick_replies: list<string>             # Suggested quick responses
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.3-004", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **MediaContent** — File, image, or document:
 
 ```
@@ -797,7 +880,9 @@ MediaContent
 ├── caption: string | null                  # Text caption
 └── size_bytes: int | null                  # File size
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.3-005", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **LocationContent** — Geographic coordinates:
 
 ```
@@ -807,7 +892,9 @@ LocationContent
 ├── label: string | null                    # Location name
 └── address: string | null                  # Street address
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.3-006", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **AudioContent** — Audio message or voice note:
 
 ```
@@ -817,7 +904,9 @@ AudioContent
 ├── mime_type: string = "audio/ogg"         # Audio MIME type
 └── transcript: string | null               # STT transcript (if available)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.3-007", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **VideoContent** — Video message:
 
 ```
@@ -827,7 +916,9 @@ VideoContent
 ├── mime_type: string                       # Video MIME type
 └── thumbnail_url: string | null            # Preview image URL
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.3-008", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **CompositeContent** — Multi-part message (e.g., text + image + audio):
 
 ```
@@ -859,7 +950,9 @@ event that holds one, written outside the implementation, fails the read that
 meets it, a timeline read whole, no row skipped. An edit's new content counts
 its levels in the edit's place (above), which is its target's place once the
 commit writes it there (§10.3).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.3-009", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **SystemContent** — Framework-generated message:
 
 ```
@@ -868,7 +961,9 @@ SystemContent
 ├── code: string | null                     # Machine-readable code
 └── data: map<string, any>                  # Structured payload
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.3-010", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **TemplateContent** — Pre-approved template (WhatsApp, RCS):
 
 ```
@@ -878,7 +973,9 @@ TemplateContent
 ├── parameters: map<string, string>         # Variable substitutions
 └── body: string | null                     # Text for channels without template support
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.3-011", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **EditContent** — Edit of a previously sent message:
 
 ```
@@ -887,7 +984,9 @@ EditContent
 ├── new_content: EventContent              # The replacement content
 └── edit_source: string | null             # "sender" or "system" (e.g., auto-moderation)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.3-012", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **DeleteContent** — Deletion of a previously sent message:
 
 ```
@@ -896,7 +995,9 @@ DeleteContent
 ├── delete_type: DeleteType = SENDER       # SENDER, SYSTEM, or ADMIN
 └── reason: string | null                  # Optional reason
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.3-013", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **DeleteType** enumeration: SENDER | SYSTEM | ADMIN
 
 | Value | Description |
@@ -904,7 +1005,9 @@ DeleteContent
 | SENDER | The original message author deleted their own message |
 | SYSTEM | Automated deletion (e.g., auto-moderation, policy enforcement) |
 | ADMIN | Administrative deletion by a room administrator or operator |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.3-014", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **ToolCallContent** — A tool call, carried by TOOL_CALL_START and TOOL_CALL_END
 events:
 
@@ -931,9 +1034,11 @@ ToolCallContent
         # person (Section 6.4); written only when set, null on a row
         # written without it
 ```
+<!-- /rfc -->
 
 ### 5.4 Channel Data (Typed, Per-Channel)
 
+<!-- rfc: {"id": "RK-5.4-001", "kind": "behavior", "applies": "§5.4 Channel Data (Typed, Per-Channel); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Each channel type MAY define a typed ChannelData structure to carry
 channel-specific metadata on events. Common examples:
 
@@ -968,9 +1073,11 @@ AIChannelData
 
 Implementations SHOULD define typed ChannelData for each supported channel type.
 Unknown channel data MUST be preserved in a generic map structure.
+<!-- /rfc -->
 
 ### 5.5 Participant
 
+<!-- rfc: {"id": "RK-5.5-001", "kind": "structural", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 Participant
 ├── id: string                              # Unique identifier
@@ -989,7 +1096,9 @@ Participant
 ├── joined_at: datetime                     # When participant entered the room
 └── metadata: map<string, any>              # Integrator-defined data
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.5-002", "kind": "behavior", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **ParticipantRole** enumeration:
 
 | Value | Description |
@@ -1004,7 +1113,9 @@ An AGENT is a person: the people who take part (Section 6.4) include them.
 An AI agent takes part through an intelligence channel (Section 6.4), not as
 a participant; an automated participant the host records in the room, an AI
 one included, is a BOT.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.5-003", "kind": "behavior", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **ParticipantStatus** enumeration:
 
 | Value | Description |
@@ -1013,7 +1124,9 @@ one included, is a BOT.
 | INACTIVE | No recent activity |
 | LEFT | Explicitly left the room |
 | BANNED | Removed and blocked |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.5-004", "kind": "behavior", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **IdentificationStatus** enumeration:
 
 | Value | Description |
@@ -1024,7 +1137,9 @@ one included, is a BOT.
 | UNKNOWN | No matching identity — may create new |
 | CHALLENGE_SENT | Identification challenge sent to the sender (§11.2); not a verification (§11.7) |
 | REJECTED | Identity challenge failed or was rejected |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.5-005", "kind": "behavior", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **VerificationStatus** enumeration (Section 11.7): whether an identified
 sender has proven who they are.
 
@@ -1035,7 +1150,9 @@ sender has proven who they are.
 | VERIFIED | Proven by the integrator's method; in force until it expires |
 | EXPIRED | Was verified; its time ran out |
 | REVOKED | Ended by the integrator before its time |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.5-006", "kind": "behavior", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Joining and leaving:** a deliberate join is the operation `add_member`. It
 creates the participant ACTIVE, or reactivates an existing record that is not
 ACTIVE (a re-join keeps `joined_at`), then fires `ON_PARTICIPANT_JOINED` with
@@ -1049,7 +1166,9 @@ its payload; an unknown participant is an error. Both hooks are ASYNC; their
 payload is a system event whose data carries `participant_id` and, on a join,
 `identity_id`, on a leave, the new `status`. An implementation that writes
 lifecycle records (§5.1) stores that event; one that does not stores nothing.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.5-007", "kind": "behavior", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Renaming (normative):** a member's presentation can change while they are
 present — their display name above all. Implementations SHOULD provide an
 update operation (`rename_member`) that changes `display_name` in place and
@@ -1066,7 +1185,9 @@ character) is escaped, a tab, a newline and a carriage return as `\t`, `\n`
 and `\r`, any other `\xNN` below U+0100, `\uNNNN` below U+10000,
 `\UNNNNNNNN` past it (`'Bob\xa0Smith'`, `'\u202e'`), so a name cannot hide or
 reverse what a reader of the record sees; its data keeps the name as given.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.5-008", "kind": "behavior", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Resolving:** an advisor's identification of a participant
 (`resolve_participant`, Appendix B.3) sets it IDENTIFIED as an identity the
 store holds: its `identity_id`, `resolved_by` (`manual` when the caller names
@@ -1082,7 +1203,9 @@ one of another organization than the caller acts for (§17.2), is an error,
 and nothing is written. A host's get-or-create (`ensure_participant`) that
 creates a record writes no `PARTICIPANT_JOINED` record and fires no hook:
 it is bookkeeping, as recording a channel is.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.5-009", "kind": "behavior", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **One record, several channels (normative):** a Participant is one record
 per (`room_id`, `id`). Section 4.4 says a participant is connected via one
 or more channels, and this is the record all of them share — the same
@@ -1091,7 +1214,9 @@ person reached by SMS and then by email is one participant, not two.
 the room has reached them through, the primary included. A store refuses to
 add a participant under an id the room has (participant exists, §14.3) and
 keeps the record it holds; a record is rewritten by `update_participant`.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.5-010", "kind": "behavior", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Who a sender is (normative):** an event's `participant_id` names a
 Participant only on a channel that participant was reached through
 (`connected_via`): an id one transport gives says nothing of another's. A
@@ -1148,9 +1273,11 @@ transports' ids that happen to be equal.
   departure whether or not the status moved.
 - Recording a channel is bookkeeping, not presentation: it writes no
   `PARTICIPANT_UPDATED` record and does not fire `ON_PARTICIPANT_UPDATED`.
+<!-- /rfc -->
 
 ### 5.6 Identity
 
+<!-- rfc: {"id": "RK-5.6-001", "kind": "behavior", "applies": "§5.6 Identity; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 Identity
 ├── id: string                              # Unique identifier
@@ -1182,9 +1309,11 @@ resolves to, never a stored conversation: the rooms, bindings and participants
 that named the address stay as they are. Addresses compare as stored: the
 framework resolves a sender's address in its channel's form (§5.7), so a host
 links addresses in that form (E.164 on a channel addressed by phone number).
+<!-- /rfc -->
 
 ### 5.7 ChannelBinding
 
+<!-- rfc: {"id": "RK-5.7-001", "kind": "behavior", "applies": "§5.7 ChannelBinding; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 When a channel is attached to a Room, a ChannelBinding is created:
 
 ```
@@ -1250,7 +1379,9 @@ answer one in the other. A channel that carries both private chats and groups
 (WhatsApp Personal) takes a group message's group as its conversation and a
 private message's sender. On a transport that delivers to a URL (an HTTP
 webhook), nothing of the message is written as the recipient.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.7-002", "kind": "behavior", "applies": "§5.7 ChannelBinding; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Addresses by channel type.** A channel's type decides how its addresses
 are written and compared. Its declaration names the binding metadata key its
 recipient is written under and, on a channel that answers chats, the
@@ -1362,9 +1493,11 @@ to its room: every sender writing on it belongs to the room, and none is
 recorded on it, as correspondent or as recipient. The declaration is the integrator's to make, because nothing
 the store holds tells a group channel from a number shared by many
 correspondents.
+<!-- /rfc -->
 
 ### 5.8 ChannelCapabilities
 
+<!-- rfc: {"id": "RK-5.8-001", "kind": "behavior", "applies": "§5.8 ChannelCapabilities; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Each channel declares what it supports:
 
 ```
@@ -1405,7 +1538,9 @@ ChannelCapabilities
 │   # Extensible:
 └── custom: map<string, any>
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.8-002", "kind": "behavior", "applies": "§5.8 ChannelCapabilities; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **ChannelMediaType** enumeration:
 
 | Value | Description |
@@ -1437,9 +1572,11 @@ a channel that does not name MEDIA. An empty `supported_media_types` takes
 every type, and a null `max_media_size_bytes`, or a file of unknown size,
 any size. A provider's refusal of a file it cannot carry would lose the
 whole message; its text form keeps it.
+<!-- /rfc -->
 
 ### 5.9 Three Levels of Channel Metadata
 
+<!-- rfc: {"id": "RK-5.9-001", "kind": "behavior", "applies": "§5.9 Three Levels of Channel Metadata; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Channel-specific information lives at three levels. Implementations MUST maintain
 all three and MUST NOT conflate them:
 
@@ -1448,9 +1585,11 @@ all three and MUST NOT conflate them:
 | **Channel Instance** | Channel.info | Global, static | `{provider: "twilio", from_number: "+15551234"}` |
 | **Channel Binding** | ChannelBinding.metadata | Per-room | `{persona: "formal", language: "fr"}` |
 | **Event Source** | RoomEvent.channel_data | Per-event | `SMSChannelData{from_number: "+15559876", segments: 1}` |
+<!-- /rfc -->
 
 ### 5.10 Task
 
+<!-- rfc: {"id": "RK-5.10-001", "kind": "structural", "applies": "§5.10 Task; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 Task
 ├── id: string                              # Unique identifier
@@ -1462,11 +1601,15 @@ Task
 ├── created_at: datetime                    # When created (default: now)
 └── metadata: map<string, any>              # Integrator-defined data
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.10-002", "kind": "behavior", "applies": "§5.10 Task; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **TaskStatus** enumeration: PENDING, IN_PROGRESS, COMPLETED, FAILED, CANCELLED
+<!-- /rfc -->
 
 ### 5.11 Observation
 
+<!-- rfc: {"id": "RK-5.11-001", "kind": "structural", "applies": "§5.11 Observation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 Observation
 ├── id: string                              # Unique identifier
@@ -1478,9 +1621,11 @@ Observation
 ├── created_at: datetime                    # When created (default: now)
 └── metadata: map<string, any>              # Integrator-defined data
 ```
+<!-- /rfc -->
 
 ### 5.12 Inbound Message
 
+<!-- rfc: {"id": "RK-5.12-001", "kind": "behavior", "applies": "§5.12 Inbound Message; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The normalized representation of a message arriving from outside the framework:
 
 ```
@@ -1522,14 +1667,18 @@ InboundMessage
 The room, when the caller knows it, is passed to `process_inbound()` (Section
 10.1), not carried by the message; the channel type is the registered
 channel's.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.12-002", "kind": "behavior", "applies": "§5.12 Inbound Message; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The response scope.** A message's `response_visibility` scopes its cascade
 (Section 8.5), and that cascade only. Work that leaves the cascade is a new
 cascade, which the scope does not follow: a background delegation's hand-back
 (Section 23.3), a tool's own direct injection (Section 10.5), a child room's
 answer to the channels it shares with the room (Section 23.3). An integrator
 that wants such work scoped passes a `response_visibility` itself.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.12-003", "kind": "behavior", "applies": "§5.12 Inbound Message; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Unified voice inbound:** When the `session` field is set, `process_inbound()`
 connects the voice session to the channel after successful hook processing. This
 allows voice calls and text messages to flow through the same entry point, same
@@ -1550,9 +1699,11 @@ parse_voice_session(session: VoiceSession, channel_id: string) → InboundMessag
     #   session = session
     #   metadata = session.metadata, merged with the caller's metadata
 ```
+<!-- /rfc -->
 
 ### 5.13 Delivery Result
 
+<!-- rfc: {"id": "RK-5.13-001", "kind": "behavior", "applies": "§5.13 Delivery Result; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 DeliveryResult
 ├── channel_id: string                      # Target channel
@@ -1589,9 +1740,11 @@ nor does a response's, a greeting's, a hook's injected event's or a rerun's. A
 turn the kit's close cuts leaves no outcome, and what else failed in its set is
 recorded; past the close's grace nothing is recorded (§12.10.4). A record that
 cannot be written is logged, and changes nothing the call reports.
+<!-- /rfc -->
 
 ### 5.14 Protocol Trace
 
+<!-- rfc: {"id": "RK-5.14-001", "kind": "behavior", "applies": "§5.14 Protocol Trace; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 An immutable record of a transport-level protocol exchange, used for
 observability and debugging. Channels that interact with signaling protocols
 (SIP, RTP, SMTP, etc.) SHOULD emit traces for significant protocol events.
@@ -1608,25 +1761,33 @@ ProtocolTrace (frozen)
 ├── room_id: string | null                  # Room identifier (if known at emission time)
 └── timestamp: datetime                     # When the trace was emitted (UTC, auto-populated)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.14-002", "kind": "behavior", "applies": "§5.14 Protocol Trace; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Immutability:** ProtocolTrace MUST be frozen (immutable) after construction.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.14-003", "kind": "behavior", "applies": "§5.14 Protocol Trace; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Raw payloads:** When available, the `raw` field SHOULD contain the complete
 serialized protocol message. For SIP, this is the full SIP request/response as
 returned by the SIP library's `serialize()` method. For protocols where the raw
 payload is not available (e.g., outbound requests where the library does not
 expose the serialized form), `raw` MAY be null.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-5.14-004", "kind": "behavior", "applies": "§5.14 Protocol Trace; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Trace emission and routing:** See Section 15.6 for the trace emission
 infrastructure, including channel-level APIs, framework hook wiring, and
 pre-room buffering.
 
+<!-- /rfc -->
 ---
 
 ## 6. Channel System
 
 ### 6.1 Channel Interface
 
+<!-- rfc: {"id": "RK-6.1-001", "kind": "behavior", "applies": "§6.1 Channel Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 All channels MUST implement the following interface:
 
 ```
@@ -1710,7 +1871,9 @@ Channel (interface)
 └── close() → void
         # Release resources
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.1-002", "kind": "behavior", "applies": "§6.1 Channel Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **ChannelOutput:**
 
 ```
@@ -1732,9 +1895,11 @@ ChannelOutput
         # output is still used, and the error surfaces as for a channel that
         # raised: ON_ERROR fires and InboundResult.error carries it
 ```
+<!-- /rfc -->
 
 ### 6.2 ChannelType
 
+<!-- rfc: {"id": "RK-6.2-001", "kind": "behavior", "applies": "§6.2 ChannelType; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 | Value | Category | Description |
 |---|---|---|
 | SMS | TRANSPORT | Short Message Service |
@@ -1781,9 +1946,11 @@ else the type is a label: identity keys, hook filters, traces. `HOST` and
 `SYSTEM` are reserved: only a host channel claims `HOST` (§10.5), and `SYSTEM`
 names the framework's own records, so registering a channel of that type MUST
 be refused.
+<!-- /rfc -->
 
 ### 6.3 Transport Channels
 
+<!-- rfc: {"id": "RK-6.3-001", "kind": "behavior", "applies": "§6.3 Transport Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Transport channels carry messages between the framework and external systems or
 humans. They MUST implement `deliver()`. Common transport channels and their
 reference capabilities:
@@ -1806,16 +1973,20 @@ reference capabilities:
 | Video | VIDEO | — | Video-only, vision provider integration |
 | Conference | AUDIO | — | Multi-party SFU, per-track STT, AI bot participant |
 | Webhook | TEXT, RICH | unlimited | Generic HTTP POST |
+<!-- /rfc -->
 
 ### 6.4 Intelligence Channels
 
+<!-- rfc: {"id": "RK-6.4-001", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Intelligence channels process events and produce responses or insights. They
 MUST implement `on_event()`. They do NOT deliver to external systems — the
 framework routes their output through the normal event pipeline. Each call of
 an intelligence channel's `on_event()` is a turn, run through the turn backend
 by a turn executor (Section 10.6), which may live in another process than the
 room's owner.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-002", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **AI Channel:**
 
 An AI channel wraps an AI Provider (see Section 6.7). When `on_event()` is called:
@@ -1826,7 +1997,9 @@ An AI channel wraps an AI Provider (see Section 6.7). When `on_event()` is calle
 4. Run the turn's tool loop over the provider's structured stream (**One loop,
    streamed or not**, below).
 5. Return ChannelOutput with a response stream (Appendix A.9).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-003", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Anatomy of an AI turn.** Each step of a turn has its own contract; no stage
 abstraction sits on top of them:
 
@@ -1854,11 +2027,15 @@ the agent's memory as any event the channel is given, a tool-call row aside.
 An application that wants an agent to react to a notice sends it an
 instruction (Section 10.1.1). An edit or a delete opens no turn either
 (Section 10.3).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-004", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Capability-aware generation:** The framework MUST provide the target transport
 channel's capabilities to the AI at generation time, NOT post-process the output.
 This allows the AI to tailor its response (e.g., short text for SMS, rich for Email).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-005", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Answer text events:** `AIChannel` MAY project the text of its answer onto
 the realtime bus as `TEXT_DELTA` while it is written, and does so only when
 the host turns it on: it is off by default. It serves the code that delegated
@@ -1884,7 +2061,9 @@ reader (§10.6.4). Like every ephemeral of a turn, it also reaches no one the
 answer would not reach (§8.4), and it is never persisted: the trace's stored
 messages remain the answer. Turned off, the channel publishes no `TEXT_DELTA`,
 and its window has no effect.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-006", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Tool-call composition events:** A provider whose structured stream exposes
 tool-call argument fragments MAY yield `StreamToolCallDelta` before the complete
 `StreamToolCall`. `AIChannel` SHOULD project those fragments onto the realtime bus
@@ -1909,7 +2088,9 @@ tool memory keeps (served, failed, blocked; never a refusal, a call nothing
 served or one cancelled). A row stored without it is read by its `status`.
 Both ephemeral events carry a call's `intent` beside its id when it has one
 (A call's intent, below).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-007", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **What a provider hands the loop of its reasoning (normative).** A provider
 whose reasoning comes in blocks, each with its own signature (Anthropic), hands
 the loop every block as it received it, each `StreamThinkingDelta` naming its
@@ -1963,7 +2144,9 @@ generic server get their reasoning back through that vendor's provider, given
 that server's URL, and none through a generic provider, which has no setting for
 it. Whatever the provider, the reasoning goes back for as long as its turn lasts,
 and a later turn reads none.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-008", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **What a provider hands the loop for a call (normative).** Every provider,
 streamed or not, hands the loop the same thing for the same call. Each call of
 a response carries an id no other call of that response carries: a provider
@@ -2020,7 +2203,9 @@ out of room before any answer after a tool round ends the turn `truncated`
 and is not tried again, since the same room runs out again: the output cap
 and the context window alike, read by the same rule as a response schema's
 `truncated` (Section 6.7).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-009", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A call's intent (normative).** An AI channel MAY ask its model to write,
 with each call, one short sentence for the person saying what the call does,
 so that a surface can show the agent's work ("Je recherche les fichiers texte
@@ -2087,7 +2272,9 @@ schemas, arguments, events and rows are the same as without it. On:
   delegates to takes the property out of its calls' arguments in its own
   loop, but its calls are reported through the session's door, whose
   reports carry no intent (Section 12.4.1).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-010", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **An answer that did not act.** An AI channel MAY carry a continuation policy:
 given the text a round ended on, the instruction that makes the model go on, or
 nothing when the answer stands (a host's recognizer of an announced action, "I
@@ -2112,7 +2299,9 @@ would have carried goes to the turn's last message, else its last row. A turn
 whose policy still asks once the bound has run out ends `unfinished`, never
 `completed`: the loop reaches its end (its end marker, `ON_AI_RESPONSE`), and
 running out of the bound never raises out of the loop.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-011", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Whether the agent speaks.** An AI channel MAY carry a speak policy, which
 decides on every event the channel would answer whether the agent speaks now,
 offers to, or stays silent: an agent in a conversation with several people, or
@@ -2225,7 +2414,9 @@ their recent turns, so that one misheard word does not switch it, and its
 decision's notes say which language to answer in. A classifier that fails
 falls back as any policy does: the agent speaks, unless the room listens
 (below).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-012", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Staying quiet when asked.** A request to stay quiet or only listen from now
 on is a state of the room, not a judgment remade on every turn: re-judged from
 the recent turns, it faded as they passed, and was lost once it left them. The
@@ -2275,7 +2466,9 @@ person a group one. An event so left silent is stored, and thought about, as
 any other: the agent hears it. A speaker is matched by the name the room gives
 them, kept to a name's characters as the room keeps it and ignoring case: this
 chooses whom the agent answers, it is not an access control.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-013", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **What the agent thinks.** An AI channel that has a speak policy MAY also
 carry a thinker: what the agent thinks while it listens, its answer, when it is
 silent, to "what are you thinking about?". The thought is neither memory (the
@@ -2365,7 +2558,9 @@ agent offers rather than speaks, and not addressed, it stays silent. A
 question put to everyone waits for no one.
 RoomKit provides a thinker on any AI provider that answers under a JSON schema
 (Section 6.7), whose instructions the application can replace, and a mock.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-014", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A cut answer.** When the agent's answer is cut off by a barge-in (Section
 12.3.13), the room holds a record of it that names the answer. The AI channel
 uses it twice:
@@ -2415,7 +2610,9 @@ record taken at its word would put a sender's text in the agent's mouth as
 its own. A record whose `answer_responds_to` is neither a string nor absent is
 skipped, and a `played_ms` that is not a non-negative number reads as 0: a
 malformed record never fails the turns of the room it stays in.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-015", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **What the generation hooks see:** `BEFORE_AI_GENERATION` fires once per turn
 (purpose `answer`), and once per thinker call (purpose `thought`, above, with
 the context the thinker would read, its tools never called), so a hook tells
@@ -2495,7 +2692,9 @@ same field, so a host has one reading whatever the turn's mode. The field
 reports the declaration RoomKit made, not the provider's wire form of it. An
 intelligence channel whose toolset is not RoomKit's to declare (an external ACP
 agent, below) leaves it empty.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-016", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The declaration from round to round.** A provider that caches requests
 reads each one as a prefix, in the order tools, system prompt, messages, and a
 declaration that gains, loses or reorders a tool invalidates everything cached
@@ -2511,7 +2710,9 @@ implementation forces to
 answer, when an anti-loop guard stops a model that keeps repeating a refused
 call, keeps the round's declaration and tells the model that no further call
 will run: none of that round's calls runs, and the turn ends `force_stopped`.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-017", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The anti-loop guard.** A small model can re-issue one call round after round and
 burn the whole turn without answering. Within one turn, an implementation counts
 each call by its tool's name and its arguments, whatever the order of their keys,
@@ -2542,7 +2743,9 @@ it, carries a note saying the answer is settled, with how many times it came. Th
 compares what the call answered, a failure's words too; the tool's observers read
 its answer without the note, what a gate refused is never noted, nor is the guard's
 own refusal, and a result of parts a model that sees reads is not compared.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-018", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Between two rounds.** `AFTER_TOOL_ROUND` fires after each round in which the
 channel ran at least one call, once that round's results are in and before the
 next round is built: not after a round cancelled before its calls ran, nor after
@@ -2572,7 +2775,9 @@ fail-closed, stops the hooks after it. The hook belongs to a registered AI
 channel's tool loop: a realtime session does not fire it, nor does a
 reasoning backend's agent (not a registered channel), nor an external agent
 that runs its own loop (Section 6.4, ACP).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-019", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The tools of earlier turns (normative).** An AI channel's history MUST carry
 the rounds of tool calls its own earlier turns made, each at its place in the
 conversation (after the turn's input, before its answer), the way the turn
@@ -2619,7 +2824,9 @@ the provider took it so. The instructions its earlier turns read
 are replayed the same way, at their place (Section 10.1.1, The instruction a
 turn read). A standalone turn replays none (Section 10.1.1), and the turn's
 footprint counts them (Section 20).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-020", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The prompt from turn to turn.** For the same reason, the system prompt SHOULD
 stay the same from one turn to the next: a system prompt that changes
 invalidates everything cached after it, the whole history included. What changes
@@ -2742,7 +2949,9 @@ when a skill is activated, and they are instructions, not notes. Those of a
 skill an MCP server serves ride there as data, in a block of their own
 (Section 24.7). A standalone
 turn carries none of the room's memories (Section 10.1.1).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-021", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Images an author sent.** A `MediaContent` an event brings (alone, or a part
 of a `CompositeContent`) reaches a model that sees as an image after its
 caption, at its place among the event's parts, with the words of the event,
@@ -2821,7 +3030,9 @@ no place among the newest images a turn sends: one the provider refused would
 fail every later turn while it stays in the window. The images
 an author sent count in what the turn measures (Section 20); a media that is
 not an image counts as its mention.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-022", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A turn compacted.** When a provider refuses a turn's context as too long, the
 channel MAY compact the context once and replay the call. A refusal reads as
 one when the provider classed it so, whatever its words, or, when it classed
@@ -2849,7 +3060,9 @@ holds four messages or fewer. Text the runtime
 places next to a user message (the turn's notes, a compaction's summary, a
 summary a memory provider returns) joins that message rather than forming a
 second user message in a row.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-023", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The history compacted between two rounds.** After each round in which the
 channel ran at least one call, once `AFTER_TOOL_ROUND` has fired and before the
 next round is built, the channel hands its memory (Section 20.1, `compact`)
@@ -2867,7 +3080,9 @@ the runtime built it, and a user text the messages the memory wrote ahead of
 the history's own end on joins the user message after them. A memory that
 fails is logged, and the turn goes on as it was. This compaction answers no
 refusal: a call it precedes keeps its compacted replay.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-024", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A generation tried again.** A provider's error says whether another try may
 succeed (`retryable`). A channel with a retry policy (`retry_policy`, Section
 13.2) tries a generation again only while nothing of its answer has been
@@ -2892,7 +3107,9 @@ the last error is the call's. A fallback that fails before it handed
 anything, reasoning alone included, leaves the primary's last error as the
 call's, the fallback's error its cause; one that fails after is the call's
 error.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-025", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Text from outside in a model's context (normative).** Text the runtime places
 in a model's context without having written it (a person's words or name, a
 worker's output or progress, a tool's result, a passage a memory retrieved, a
@@ -3072,7 +3289,9 @@ turn's notes, a hand-back, a speaker's name, the room context handed to an ACP
 agent and the summary a memory provider builds, and for any text a realtime
 session, an orchestration strategy or a vision provider places in a model's
 context.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-026", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A tool that has to appear.** A provider that can hold a tool declared but
 unseen (Anthropic's deferred loading keeps such a definition out of the cached
 prefix) SHOULD receive in that form, from the first round of the turn, what
@@ -3114,7 +3333,9 @@ room's declaration, and reopens nothing. A tool the turn no longer shows (the
 policy denies it, its skill closed) leaves the declaration, and a room whose
 declaration is not known (a new room, a restarted process) takes the one its
 turn would show and keeps it from then on.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-027", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **One loop, streamed or not.** An AI channel runs every turn through one tool
 loop, whatever its provider streams and whether the turn carries tools: a
 turn without tools is a loop whose first round asks for none. A provider
@@ -3125,7 +3346,9 @@ signature, each call with its metadata (a thought signature among them), and
 the usage and metadata of the done event. A provider that streams text alone
 streams a turn without tools through `generate_stream`. Every rule this
 section gives a turn therefore holds once, for every provider.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-028", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A round's results.** The next generation reads a round of calls as two
 messages: the assistant's message making the calls, then one `tool` message
 holding every call's result in call order, those the provider served first;
@@ -3134,7 +3357,9 @@ takes a message per result writes one per result. A round counts toward the
 turn's rounds (`ON_AI_RESPONSE`'s `round_count`, the end marker's `rounds`)
 once its calls ran: a `Cancel` that came while they were announced runs none
 of them, and the turn ends `cancelled` without counting it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-029", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A turn cut short.** A tool loop that ends before its answer (the provider
 failed after at least one round, or the turn was cancelled between rounds)
 keeps what the room already has. The text each round said before its calls was
@@ -3146,7 +3371,9 @@ caller learns the provider's error), and its rounds are kept, the calls that
 ran included. No message is added to say so: the turn's record (below) says
 how it ended, and the provider's error never reaches the room. A cancellation
 adds nothing a round already said.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-030", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A round that repeats the one before.** A model may open a round's text by
 repeating the text of the last round of calls that said something (`Let me
 look.` again after the call). The repeated opening is not delivered again: the
@@ -3168,7 +3395,9 @@ a strategy that reads an agent's answer reads none from an output that
 carries an error, its rounds' text included. A turn constrained to a schema
 is the exception: interrupted after a round, it fails with `truncated`, and
 `ON_AI_RESPONSE` does not fire (Appendix A.9).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-031", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A turn's budget.** A channel MAY bound what a turn spends: a token budget over
 every token its provider bills for the turn (input, cache reads and writes,
 output, and the input and output image tokens; Sections 6.7 and 25.5), a cost
@@ -3189,7 +3418,9 @@ budget that is not a positive number, or a cost budget for a model with no known
 price, is a configuration error, reported when the channel is built for a
 channel budget and by the turn that reads it otherwise. A generation a fallback
 provider serves is priced at the primary provider's rate.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-032", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A turn that did not complete.** `ON_AI_RESPONSE` reports a turn whose loop
 reached its end, with the reason it ended for: `cancelled` for a cancellation
 between rounds, `error` for a turn the provider interrupted after a round (a
@@ -3207,7 +3438,9 @@ reported as `completed`; what its rounds delivered stays in the room. Its
 stay open, and it carries what the rounds used, since no hook reports the
 turn. The span of a turn that reached its end `cancelled` (a steering
 `Cancel`) or `error` ends with that status too, never `ok`.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-033", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The turn's record.** A turn that reached its end records it on its last
 MESSAGE: `loop_end_reason` (the reason above), `ai_usage`
 (what its rounds used) and, when its channel says so, `ai_last_usage` (what
@@ -3236,7 +3469,9 @@ handed none; one that renders text alone skips it, as it skips a piece of
 reasoning.
 What a turn's record says of its generations rides that row alone: its
 caller reads the end and the usage under `turns`, and no more of it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-034", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **What a generation used.** After each generation that returned, the loop
 yields what it used, its model and its provider (`UsageMarker`), in its order
 among the text and the rows, as it does a piece of reasoning, so a streaming
@@ -3253,7 +3488,9 @@ segment break, until it tells; a call that ends once the reader stopped asks no
 model again. A stream cut before anything told what it used records only its end: an
 ACP agent's or a text-only channel's reports no usage at all, and a first
 generation in flight cannot be told from them.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-035", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A room's turns one after the other.** An AI channel MAY take a room's turns
 one at a time (`serialize_room_turns`, declared as `serializes_room_turns`,
 Section 10.6.2). Its turns in a room then run in the order they were asked,
@@ -3286,7 +3523,9 @@ two processes each handed a delivery of the room run their turns side by side,
 as an ACP agent channel's prompts are serialized by its process. Without it,
 the channel's turns in a room run side by side, each on the room as it stood
 when it was asked.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-036", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A message for the running turn.** An AI channel MAY hand a running turn the
 room's next message rather than give that message a turn of its own
 (`steer_room_turns`, declared as `steers_room_turns`, Section 10.6.2); it then
@@ -3313,7 +3552,9 @@ edit or a delete (Section 10.3), and an event of a type that opens no turn
 the running turn: it waits its place as such a message does, and no turn
 answers it; while it waits, a message that comes after it waits a turn of
 its own too.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-037", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **ACP Agent Channel:**
 
 An ACP agent channel connects a Room to an external
@@ -3387,7 +3628,9 @@ hosts the channel, to which the room's turns are placed while it holds the
 session (§10.6.7). An implementation MAY add persistent
 session resumption, but MUST scope resumed session identifiers to the associated
 Room and agent endpoint.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-038", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Session setup.** What a session is opened with is the integrator's, per
 Room. The channel's `mcp_servers` (default none) are the MCP servers given to
 each session in `session/new`: a list, the same for every Room, or a function
@@ -3419,7 +3662,9 @@ another value than the one set up is not degraded but ungated. So when the
 agent refuses a value, the channel MUST NOT prompt that session, MUST release
 it, and MUST fail the turn, or the call that was opening the session, with an
 error naming the option.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-039", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Detaching.** Detaching the channel from a Room drops the Room's state
 (§10.6.3): the channel MUST close the Room's session and forget the values
 the host set on it, so a later attachment opens a new session, caught up on
@@ -3444,7 +3689,9 @@ filesystem or terminal operations. An ACP agent channel:
 - MUST select only a permission option offered by the ACP agent; and
 - SHOULD expose tool and plan progress through the realtime backend without
   persisting transient progress updates.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-040", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Identity and instructions.** An ACP agent channel MAY carry an identity as
 an Agent does (Section 19.1): a `name`, a `role` and a `description`, which a
 discussion's notes, a dispatch policy and a host's view present it by
@@ -3455,7 +3702,9 @@ the first prompt of each session it opens for a Room, a session opened again
 after its transport died included, as the runtime's block ahead of the
 catch-up and the request, never as a participant's words, and not again
 while the session keeps them.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-041", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **In a discussion.** An ACP agent channel takes a discussion's turns as an AI
 channel does (Section 19.7.5). The turn's notes (rule 14) ride its prompt as
 the runtime's own block, under the notes' header, and every copy of that
@@ -3469,9 +3718,11 @@ turn (rule 12) is a steering `Cancel` (§10.6.8), which cancels it (item 7),
 its session's opening included, wherever the turn runs. Its
 answer streams like any agent's, so a silent one is held back and blocked as
 rule 13 says.
+<!-- /rfc -->
 
 ### 6.5 Source Providers
 
+<!-- rfc: {"id": "RK-6.5-001", "kind": "behavior", "applies": "§6.5 Source Providers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Source providers maintain **persistent connections** that push inbound events to
 the framework. This is distinct from webhook-based channels where the framework
 receives HTTP callbacks.
@@ -3490,7 +3741,9 @@ SourceProvider (interface)
 └── healthcheck() → SourceHealth
         # Report connection health
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.5-002", "kind": "behavior", "applies": "§6.5 Source Providers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **SourceStatus** enumeration: STOPPED, CONNECTING, CONNECTED, RECONNECTING, ERROR
 
 Examples of source providers:
@@ -3504,9 +3757,11 @@ Examples of source providers:
 Sources are attached to the framework and MUST call the `emit` callback for
 each inbound message. The framework routes emitted messages through the standard
 inbound pipeline (Section 10.1).
+<!-- /rfc -->
 
 ### 6.6 Content Transcoding
 
+<!-- rfc: {"id": "RK-6.6-001", "kind": "behavior", "applies": "§6.6 Content Transcoding; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 When an event is broadcast to channels with different capabilities, the framework
 MUST transcode content to match each target channel's supported media types.
 The target's `media_types` (Section 5.8) decides: a content of a category it
@@ -3516,7 +3771,9 @@ type or size the target does not take (Section 5.8). Text is the fallback
 every channel takes, whatever its `media_types` declares: a voice channel
 that declares AUDIO alone receives a text unchanged and a rich text as its
 text form.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.6-002", "kind": "behavior", "applies": "§6.6 Content Transcoding; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Default transcoding rules:**
 
 | Source Content | Target | Transcoded To |
@@ -3540,7 +3797,9 @@ part ends up as a `TextContent`, the composite becomes one `TextContent`, its
 text form (below): the parts' texts joined in order by a newline, an empty
 one skipped, so that a channel that declares TEXT alone receives one message.
 Otherwise the composite keeps its transcoded parts, in order.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.6-003", "kind": "behavior", "applies": "§6.6 Content Transcoding; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Text form.** Every content has a text form, the one text it reads as: for a
 row above that transcodes to a TextContent, the text of that TextContent; for
 the rows delivered unchanged, a TextContent's body, a SystemContent's body,
@@ -3575,7 +3834,9 @@ parts in order. One that reads names in it (a discussion's addressing) or a
 search query in it (a memory's retrieval) reads the author's words alone, a
 media's caption included, never a file name or a type: an agent named in a
 file name is not addressed.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.6-004", "kind": "behavior", "applies": "§6.6 Content Transcoding; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Max length enforcement:** After transcoding, if the target channel declares a
 `max_length`, the framework MUST truncate TextContent to that limit: a text,
 a composite that became one text, or each text part of a composite that
@@ -3589,12 +3850,16 @@ points cuts without the marker: with a limit of 3, the same text becomes
 alphabet, that character would turn an SMS into UCS-2.
 
 Implementations SHOULD allow integrators to provide a custom transcoding strategy.
+<!-- /rfc -->
 
 ### 6.7 Provider Abstraction
 
+<!-- rfc: {"id": "RK-6.7-001", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Channel type and Provider are separate concepts. This applies to ALL channels,
 including AI.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.7-002", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **AI Provider interface:**
 
 ```
@@ -3692,7 +3957,9 @@ AIResponse
 ├── observations: list<Observation>         # Observations to record
 └── metadata: map<string, any>              # Provider-specific data (model, latency)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.7-003", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Model listings.** A live listing backfills from the curated catalogue what
 the vendor's endpoint leaves blank (display name, context window, vision,
 price), but not its `capabilities`: a catalogue's tags MAY be internal routing
@@ -3703,12 +3970,16 @@ provider's listing that surfaces speech models SHOULD tag them, as the image
 catalogue is tagged (Section 25.6): `transcription` for a speech-to-text model,
 `speech` for a text-to-speech one, from what the vendor reports or, failing
 that, from the model's name. A model that converses in audio is neither.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.7-004", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The model that answered.** `metadata.model` names the model that answered,
 as the response names it (a dated snapshot, a router's pick), and the model
 asked for only when the response names none; a stream's done event names the
 same, so both modes report it alike.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.7-005", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Usage counters.** `input_tokens`, `output_tokens` and the cache counters are
 disjoint, as in Section 25.5. A cache counter the vendor reports at zero is
 omitted, as one it does not report: on a text turn the two bill the same, and
@@ -3718,7 +3989,9 @@ vendor bills, a model's thinking included, whether the vendor reports that
 thinking inside its completion count or beside it. `reasoning_tokens`, when a
 provider reports it, is the thinking share of `output_tokens`: a detail, never
 added to the other counters nor priced a second time.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.7-006", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Reasoning written in the text (normative).** A Chat Completions server MAY
 write a model's reasoning in the answer's text, between `<think>` and
 `</think>`, rather than in a field beside it. A provider that reads that
@@ -3736,7 +4009,9 @@ as the first round's is. A tag cut across a stream's chunks reads as it does
 whole, and a response reads the same streamed or not. A reasoning field the
 server sends beside the text changes none of this: both are the response's
 reasoning.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.7-007", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Reasoning settings.** `thinking_budget`, `enable_thinking` and
 `reasoning_effort` are the turn's. Where a provider's configuration carries one
 of them under the same name, the provider MUST prefer the turn's value, `false`
@@ -3767,7 +4042,9 @@ that it does, and MUST NOT leave it out otherwise. Such a statement covers only
 what the catalogue does not declare: a model the catalogue declares is sent the
 value the catalogue says it accepts, and a provider that knows its vendor's rule
 refuses the statement in its configuration rather than ignore it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.7-008", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Response metadata is one record per turn.** `AIContext.response_metadata` is a
 dict-like mapping created with the turn and shared by identity by every
 extension point of that turn: a memory provider MAY write it while the context
@@ -3797,7 +4074,9 @@ stands when that event is created — a streamed segment persisted before a tool
 round carries what was known then, the final answer carries everything the
 turn learned. It is how a host attributes to the reply what the turn read
 (cited sources, say) without a post-hoc rewrite of persisted events.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.7-009", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Response schema.** A caller that needs the answer in a known shape sets
 `AIContext.response_schema` to a JSON Schema. A provider whose
 `supports_response_schema` is true MUST translate it into its native
@@ -3843,7 +4122,9 @@ these reasons:
 | `refusal` | The model declined to answer: a refusal field, a refusal or safety stop reason, or the prompt itself blocked before any answer. |
 | `truncated` | The answer was cut: a length or max-tokens stop reason, or the context window filling up mid-answer. |
 | `invalid_json` | The text is not a JSON document satisfying the schema: a server that accepted the constraint and did not apply it. |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.7-010", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Streaming a constrained answer.** `generate_stream()` and
 `generate_structured_stream()` carry the schema like `generate()`. The text
 deltas are the document as it is written: partial JSON, provisional until the
@@ -3852,7 +4133,9 @@ does, before it yields the final done event, and MUST raise the error above
 instead of that event when the check fails. A consumer MUST NOT act on the
 streamed text before the done event, which is what marks it as a document
 satisfying the schema.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.7-011", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Tools in the same turn.** A context may carry `tools` and a schema together
 where `supports_response_schema_with_tools` is true. The model then either calls
 tools or answers in the schema: a response that carries tool calls is a step of
@@ -3872,7 +4155,9 @@ server, so `supports_response_schema` is a provider default that an
 implementation SHOULD let the host override in the provider's configuration. A
 consumer that must run on any provider reads the property, and where it is false
 asks for JSON in the prompt and parses the answer itself.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.7-012", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Declaring tools (normative).** A provider declares each tool of the context
 in its vendor's format. A tool without parameters (an absent or empty schema)
 is declared as an object schema with no properties, which every vendor
@@ -3895,19 +4180,25 @@ names are checked in two places:
   think provider), the rule is that model's vendor's. A provider that cannot
   know its server's rule (any server behind a custom base URL, a
   vendor-compatible gateway included) checks none: the server decides.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.7-013", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A tool result on the wire.** A provider renders each tool result as its
 vendor's format carries one. Where that format has an error flag on a result
 (Anthropic's `is_error`, Gemini's `error` key), a result whose call was
 refused, failed, blocked, served by nothing or cancelled carries it; the text
 the model reads is the same either way.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.7-014", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A request the model cannot serve.** Where a provider knows, from its model
 catalogue, that the model refuses function tools on the endpoint it calls, or
 that the endpoint does not serve the model at all, the request fails before it
 is sent, with a non-retryable error naming the model. Behind a base URL the
 server decides.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.7-015", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **What a failed generation reads as (normative).** A provider MUST raise a
 failure as a `ProviderError` whose `retryable` flag does not depend on the
 provider or on the form the server gave the failure. Its status is the one the
@@ -3931,7 +4222,9 @@ and a log line read it, leads with the provider's name and the status it
 answered, `cerebras (402): Payment required`, `anthropic: connection reset`,
 unless its message already names the provider as a word, in any case, or it
 names no provider; its message keeps the provider's own text.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.7-016", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **SMS Provider interface:**
 
 ```
@@ -3940,7 +4233,9 @@ SMSProvider (interface)
 ├── parse_webhook(payload: map) → InboundMessage
 └── verify_signature(payload, signature, timestamp) → bool
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.7-017", "kind": "behavior", "applies": "§6.7 Provider Abstraction; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Email Provider interface:**
 
 ```
@@ -3951,9 +4246,11 @@ EmailProvider (interface)
 
 Implementations SHOULD define similar provider interfaces for WhatsApp, Messenger,
 Teams, RCS, HTTP, Voice (STT, TTS), and any custom channel types.
+<!-- /rfc -->
 
 ### 6.8 Classifiers
 
+<!-- rfc: {"id": "RK-6.8-001", "kind": "behavior", "applies": "§6.8 Classifiers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A classifier answers narrow, typed questions about a state (a text, or
 structured data such as a turn with the conversation around it) with
 probabilities, not generated text. It is how a component asks for judgment where
@@ -4027,15 +4324,19 @@ level), so these classifiers compute the score from the levels' probabilities
 when the server sends them, as every server probed does, and a score means the
 same whichever server answered.
 
+<!-- /rfc -->
 ---
 
 ## 7. Permission Model
 
+<!-- rfc: {"id": "RK-7-001", "kind": "behavior", "applies": "§7 Permission Model; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The permission model consists of three orthogonal primitives. The framework
 provides the primitives; the integrator decides when and how to use them.
+<!-- /rfc -->
 
 ### 7.1 Access
 
+<!-- rfc: {"id": "RK-7.1-001", "kind": "behavior", "applies": "§7.1 Access; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Controls whether a channel can read events, write events, or both within a room.
 
 | Value | Can Read | Can Write | Description |
@@ -4044,9 +4345,11 @@ Controls whether a channel can read events, write events, or both within a room.
 | READ_ONLY | Yes | No | Observe only (events via `on_event()`) |
 | WRITE_ONLY | No | Yes | Blind sender (unusual, but valid) |
 | NONE | No | No | Fully disconnected (binding exists but inactive) |
+<!-- /rfc -->
 
 ### 7.2 Muting
 
+<!-- rfc: {"id": "RK-7.2-001", "kind": "behavior", "applies": "§7.2 Muting; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A boolean flag on the binding. When `muted = true`:
 
 - The channel STILL receives events via `on_event()` (reading is preserved).
@@ -4064,7 +4367,9 @@ Muting is temporary. The integrator calls `mute()` and `unmute()` as needed.
 A binding's `output_muted` (§5.7) is no mute: the integrator sets it with
 `mute_output()` and `unmute_output()`, which fire no trigger and write no
 lifecycle record, and the channel still receives every event.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-7.2-002", "kind": "behavior", "applies": "§7.2 Muting; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A binding change that changes nothing.** Detaching or updating a channel
 the room does not bind fails, with nothing written. An update applies to the
 binding as stored, carrying over every field it does not name (§7.5 rule 6),
@@ -4074,9 +4379,11 @@ call duplicates no hook and no record. `ON_CHANNEL_MUTED` and
 muted channel fires nothing. A change of access, visibility or metadata
 fires no trigger and emits no framework event. A binding changes whatever
 the room's status, which governs what the timeline accepts (§5.1).
+<!-- /rfc -->
 
 ### 7.3 Visibility
 
+<!-- rfc: {"id": "RK-7.3-001", "kind": "behavior", "applies": "§7.3 Visibility; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Controls which channels see events produced by the source channel. Set on the
 binding as a string value, and carried by each event (§5.2):
 
@@ -4089,7 +4396,9 @@ binding as a string value, and carried by each event (§5.2):
 | `"intelligence"` | Only intelligence channels see the event |
 | `"channel_a,channel_b"` | Comma-separated list of specific channel IDs |
 | `"channel_a"` | Single channel ID |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-7.3-002", "kind": "behavior", "applies": "§7.3 Visibility; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Grammar.** A visibility is one of the five keywords `all`, `none`,
 `internal`, `transport` and `intelligence`, or a list of one or more channel
 ids separated by commas. A keyword is written exactly as above, in lowercase
@@ -4105,7 +4414,9 @@ direct injection, §10.5). An empty value that reaches an event any other way
 than opens. An id listed twice counts once, and a list is written back with
 each id once, sorted by code point. An id that names no channel bound to the
 room is allowed and matches nothing.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-7.3-003", "kind": "behavior", "applies": "§7.3 Visibility; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Who writes `internal`.** Only the framework writes `internal`, on the
 records it writes itself (an interruption record, §6.4): a value that marks
 the framework's record is not the integrator's to give. An implementation
@@ -4121,7 +4432,9 @@ one a channel gives its response as a response visibility reads as `none`
 (§8.5). A record committed outside the pipeline (§10.5) is stored as its
 caller gives it, and reaches no channel. An event the integrator wants stored
 and shown to no channel takes `none`.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-7.3-004", "kind": "behavior", "applies": "§7.3 Visibility; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **An event's visibility.** An event carries a visibility of its own (an
 inbound message's `visibility`, §5.12, `"all"` unless the caller sets one),
 and its source binding has one. A channel sees an event whose source is
@@ -4158,9 +4471,11 @@ An intersection that leaves no id is `none`.
 means it: an event a channel was not allowed to see at delivery MUST NOT reach
 that channel later through history the framework rebuilds for it either. Rule 8
 in §7.5 states that half.
+<!-- /rfc -->
 
 ### 7.4 Named Patterns
 
+<!-- rfc: {"id": "RK-7.4-001", "kind": "behavior", "applies": "§7.4 Named Patterns; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 These are vocabulary for common configurations, NOT framework concepts. The
 framework only knows access, muted, and visibility.
 
@@ -4171,9 +4486,11 @@ framework only knows access, muted, and visibility.
 | **Observer** | `access=READ_ONLY` | Sentiment analyzer watches, produces side effects only |
 | **Muted** | `muted=true` | AI temporarily silenced but still tracking |
 | **Internal** | `access=READ_WRITE, visibility="none"` | Writes stored in timeline but never broadcast; not the `internal` keyword, which marks a framework record (§7.3) |
+<!-- /rfc -->
 
 ### 7.5 Permission Rules
 
+<!-- rfc: {"id": "RK-7.5-001", "kind": "behavior", "applies": "§7.5 Permission Rules; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Implementations MUST enforce these rules:
 
 1. **Reading:** A channel receives events via `on_event()` if and only if its
@@ -4306,15 +4623,19 @@ Implementations MUST enforce these rules:
      as a reason to hide ordinary history, which would empty a room's context
      the moment a transport detaches.
 
+<!-- /rfc -->
 ---
 
 ## 8. Event System
 
 ### 8.1 Room Events
 
+<!-- rfc: {"id": "RK-8.1-001", "kind": "behavior", "applies": "§8.1 Room Events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Room events are stored in the room's timeline. They have a sequential `index`
 that is monotonically increasing within each room.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-8.1-002", "kind": "behavior", "applies": "§8.1 Room Events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Sequential indexing requirements:**
 
 - The `index` MUST start at 0 for the first event in a room.
@@ -4335,7 +4656,9 @@ that is monotonically increasing within each room.
   violation surfaced to the caller), never silently persisted.
 - The `index` enables pagination, read horizon tracking, and gap detection;
   a hard delete's gaps are expected (§14.3).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-8.1-003", "kind": "behavior", "applies": "§8.1 Room Events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Event ids.** The pipeline MUST give every event it commits its `id`, whatever id
 a channel or a hook built the event with. An inbound event takes its id at
 §10.1 step 4, when the receiving channel builds it, so identity resolution and
@@ -4346,9 +4669,11 @@ one from its provider) therefore never makes two events share one, and
 `responds_to` and every read or write by id name one event. A provider's own
 identifier belongs in `source.provider_message_id`. A record committed outside
 the pipeline (§10.5) keeps the id its caller gives it.
+<!-- /rfc -->
 
 ### 8.2 Framework Events
 
+<!-- rfc: {"id": "RK-8.2-001", "kind": "behavior", "applies": "§8.2 Framework Events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Framework events are global lifecycle notifications published to subscribers.
 They are NOT stored in any room timeline.
 
@@ -4477,13 +4802,17 @@ subscriber reads it without knowing which one did:
 `event_id` is the refused event's id — an id that names nothing in the store,
 since a refused event is never appended — or, for a regenerate, the message it
 would have replayed, null when nothing qualified.
+<!-- /rfc -->
 
 ### 8.3 Event Chain Depth
 
+<!-- rfc: {"id": "RK-8.3-001", "kind": "behavior", "applies": "§8.3 Event Chain Depth; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 When a channel produces a response event (e.g., AI responds to a message),
 that response may trigger further responses from other channels. This creates
 an event chain.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-8.3-002", "kind": "behavior", "applies": "§8.3 Event Chain Depth; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Chain depth tracking:**
 
 - Events from external inbound (human messages, webhooks) have `chain_depth = 0`.
@@ -4538,7 +4867,9 @@ an event chain.
   hooks of the same trigger, still run or not: a hook that relaunches an agent
   on a new chain (a quality gate) does so from such a task. A hook a turn
   executor fires carries its floor with the verb it makes (§10.6.5).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-8.3-003", "kind": "behavior", "applies": "§8.3 Event Chain Depth; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **At the limit.** When an event's `chain_depth + 1 >= max_chain_depth`, an
 intelligence channel it solicits (Section 19.3) MUST NOT be asked to act:
 its `on_event()` is not called, so no model is called and no tool runs,
@@ -4579,14 +4910,18 @@ observer posting into the room, the model answering the post and calling
 again then ends at the limit, as one between two agents does. The depth of
 a realtime or conference tool call is that of the model's answer when the
 call arrives.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-8.3-004", "kind": "behavior", "applies": "§8.3 Event Chain Depth; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Below the limit, a response that was started is read.** A buffered
 response's events re-enter (§10.1 step 14), and a streamed response is
 consumed to its end, whichever pass started it: the trigger's delivery set,
 a reentry pass, or the delivery of a streamed segment. A response generated
 and then discarded costs its model call and runs its tools, with nothing of
 it in the room.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-8.3-005", "kind": "behavior", "applies": "§8.3 Event Chain Depth; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Reentry cap.** The responses one cascade re-enters (the answers to one
 inbound or directly injected event, one regeneration or one delegated run) and
 the events its hooks inject (§9.4) share a reentry budget of `10 ×
@@ -4611,7 +4946,9 @@ one naming a room the store does not hold at step 2, before creating it;
 a routed one at step 2, before creating a new room, or, landing in the room
 the work delivers in, after the locked check, what routing wrote kept
 (§9.5.1, Past the cap).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-8.3-006", "kind": "behavior", "applies": "§8.3 Event Chain Depth; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The hook calls of a cascade.** Apart from its passes, each cascade MUST
 count the calls of the ASYNC hooks it fires once an event's delivery set has
 run (§10.1 step 16's `AFTER_BROADCAST` hooks, a change's `ON_EVENT_UPDATED`
@@ -4660,7 +4997,9 @@ The floor covers those hooks, not the playback: work started while the
 audio plays keeps its own depth. A hook that tells an agent or a model
 something from its body at each of its answers, by a post or an injection,
 then ends at the limit.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-8.3-007", "kind": "behavior", "applies": "§8.3 Event Chain Depth; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Requirements:**
 
 - Implementations MUST support a configurable `max_chain_depth` (default: 5).
@@ -4672,9 +5011,11 @@ then ends at the limit.
 - A channel that was not asked has no side effects to collect. Side effects
   of a channel whose response events were blocked MUST still be collected.
 - A framework event `chain_depth_exceeded` MUST be emitted for each record.
+<!-- /rfc -->
 
 ### 8.4 Realtime / Ephemeral Events
 
+<!-- rfc: {"id": "RK-8.4-001", "kind": "behavior", "applies": "§8.4 Realtime / Ephemeral Events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Some events (typing indicators, presence changes) are ephemeral — they are
 published in real-time but not stored in the timeline.
 
@@ -4728,7 +5069,9 @@ events.
 
 Implementations SHOULD provide at least an in-memory realtime backend for
 single-process deployments.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-8.4-002", "kind": "behavior", "applies": "§8.4 Realtime / Ephemeral Events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A turn's ephemerals reach no one its answer would not reach.** What a turn
 publishes live (its reasoning, its tool calls' arguments and results, any
 other ephemeral its channel or hooks publish while it runs, and what work it
@@ -4745,7 +5088,9 @@ of them: an agent whose answers are scoped to a
 supervisor, an internal agent, or one the room keeps from writing shows no
 live activity to the room's subscribers. Framework events (§8.2) are not
 ephemerals and are unaffected.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-8.4-003", "kind": "behavior", "applies": "§8.4 Realtime / Ephemeral Events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **No hook judges a turn's ephemerals.** `BEFORE_BROADCAST` (§9.5) runs on the
 event the room stores; what a turn publishes live is neither blocked nor
 modified by it. A turn's reasoning and its tool calls' arguments and results
@@ -4753,9 +5098,11 @@ are published as they are produced, whatever a hook later decides about the
 answer, and an ephemeral that carries the answer's own text (`TEXT_DELTA`,
 §6.4) is published only when the host turns it on, and only for a turn read as
 a delegated task's trace, whose rows no hook judges either.
+<!-- /rfc -->
 
 ### 8.5 Responses: What They Answer, and Whether They Were Consumed
 
+<!-- rfc: {"id": "RK-8.5-001", "kind": "behavior", "applies": "§8.5 Responses: What They Answer, and Whether They Were Consumed; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 An intelligence channel answers events: a participant's message, an
 instruction (Section 10.1.1), a delegated task's hand-back (Section 23.3).
 Several answers can be under way in one room at once: the room lock does not
@@ -4763,7 +5110,9 @@ cover generation (Section 13.5). An answer therefore says which event it
 answers, so a host can tell each turn what it answers and where the room's
 other requests stand: answered or being answered. Whether each answer reached
 the person it was delivered to is its consumption (Planned, below).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-8.5-002", "kind": "behavior", "applies": "§8.5 Responses: What They Answer, and Whether They Were Consumed; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **What a response answers.** Every event an intelligence channel produces for a
 turn (each message, streamed segment and tool row of it) MUST carry
 `responds_to`: the id of the event that triggered the turn. An instruction is
@@ -4778,7 +5127,9 @@ it. A
 speech-to-speech channel (Section 12.4) is not bound by this yet: its answer to
 the user's speech starts before that speech's transcript is committed, so there
 is no event to name, and its answers carry `responds_to = null` (Planned).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-8.5-003", "kind": "behavior", "applies": "§8.5 Responses: What They Answer, and Whether They Were Consumed; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Who a response comes from.** The responder is the source of every response
 event it returns, buffered or as the rows of its stream. On each one the
 pipeline MUST write its `source` (the responder's channel id and channel type,
@@ -4803,7 +5154,9 @@ a stream, that carries the visibility `internal`, which only the framework
 writes (§7.3), is committed with `none`, and the implementation logs a
 warning: it is stored and reaches no channel, as its channel asked, without
 the mark of the framework's own records.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-8.5-004", "kind": "behavior", "applies": "§8.5 Responses: What They Answer, and Whether They Were Consumed; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Where a response may go.** The `response_visibility` of a message (§5.12),
 or of a direct injection (§10.5), scopes its whole cascade: each response to
 its event, or to the instruction it is (§10.1.1), and each answer to such a
@@ -4825,14 +5178,18 @@ visibility they left with the scope again. The
 commit then narrows the response to its source binding's (§7.3). Only a null
 `response_visibility` restricts nothing: an empty one is refused at the
 doors, and one that reaches an event any other way reads as `none` (§7.3).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-8.5-005", "kind": "behavior", "applies": "§8.5 Responses: What They Answer, and Whether They Were Consumed; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **What the turn is told.** `BEFORE_AI_GENERATION` receives, with the turn's
 context, the event the turn answers (`trigger`), so a hook can tell the model
 what this turn answers, and that another answer in the room is under way. A
 stand-in an orchestration strategy hands a turn in place of the event it
 answers (a supervisor's workers' results, Section 19.7) names that event in its
 own `responds_to`, which is what the turn's answer names.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-8.5-006", "kind": "behavior", "applies": "§8.5 Responses: What They Answer, and Whether They Were Consumed; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Consumption (Planned).** No implementation records consumption yet: a
 RoomEvent carries no `consumption`, and `ON_CONSUMPTION` does not fire. This
 paragraph is what it will be. A response is delivered to channels (Section
@@ -4886,15 +5243,19 @@ the new state. Consumption says
 nothing of delivery: an event that failed to deliver has its `delivery_results`,
 and no consumption.
 
+<!-- /rfc -->
 ---
 
 ## 9. Hook System
 
+<!-- rfc: {"id": "RK-9-001", "kind": "behavior", "applies": "§9 Hook System; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Hooks are the primary extensibility mechanism. They allow integrators to
 intercept, block, modify, and react to events in the pipeline.
+<!-- /rfc -->
 
 ### 9.1 Hook Registration
 
+<!-- rfc: {"id": "RK-9.1-001", "kind": "behavior", "applies": "§9.1 Hook Registration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 HookRegistration
 ├── trigger: HookTrigger                    # When this hook fires
@@ -4949,9 +5310,11 @@ does not. Off-lock hooks run first (§9.5.1), so a locked hook ordered before
 an off-lock one could not run in its declared place; implementations MUST
 reject the registration that would break the rule, naming both hooks, rather
 than silently reorder.
+<!-- /rfc -->
 
 ### 9.2 Hook Triggers
 
+<!-- rfc: {"id": "RK-9.2-001", "kind": "behavior", "applies": "§9.2 Hook Triggers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **HookTrigger** enumeration. The **Status** column distinguishes triggers the
 reference implementation emits today (**Implemented** — 83 as of this revision)
 from those specified for a forthcoming capability but not yet emitted
@@ -5082,7 +5445,9 @@ on the room's owner.
 | **Other:** | | | |
 | ON_PLAN_UPDATED | ASYNC | Implemented | An AI channel's `plan_tasks` tool stored a new task plan for the room; the payload carries the room, the channel, the plan's tasks (`title`, `status`) and a timestamp |
 | ON_FEEDBACK | ASYNC | Implemented | `submit_feedback` recorded a rating (0.0–1.0, clamped) as an Observation of the room (Section 15.9); the payload is that Observation, carrying the rating, its dimension (default `overall`), the comment and the rated event |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.2-002", "kind": "behavior", "applies": "§9.2 Hook Triggers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **ON_ERROR payload.** ON_ERROR receives a RoomEvent that is never stored. Its
 source is the channel that failed (on a realtime channel, with the session's
 participant), its content is a text whose body is the error message, and its
@@ -5103,7 +5468,9 @@ direction (`inbound`); it answers the triggering event (`responds_to`) in that
 event's thread (its `parent_event_id`). A failed stream's carries the stream's
 `correlation_id`, the one its rows carry, whether it wrote any; a turn that
 raised carries none. A transport's delivery failure does not fire ON_ERROR.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.2-003", "kind": "behavior", "applies": "§9.2 Hook Triggers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The payload and context of a mutation hook.** ON_EVENT_UPDATED and
 ON_EVENT_DELETED carry the event whose stored state changed, and their
 hooks' filters read that event: its source, and its type where an
@@ -5116,7 +5483,9 @@ a direct `update_event()` or `delete_event()`, the payload is the event
 updated, or each event removed, and their context the room's, read once the
 call has released the room lock, or the context the call held under the lock
 when that read fails (§10.3, Direct mutation).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.2-004", "kind": "behavior", "applies": "§9.2 Hook Triggers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The context of a lifecycle hook.** A hook on a lifecycle trigger
 (ON_ROOM_CREATED, ON_ROOM_PAUSED, ON_ROOM_CLOSED, ON_CHANNEL_ATTACHED,
 ON_CHANNEL_DETACHED, ON_CHANNEL_MUTED, ON_CHANNEL_UNMUTED) receives the room
@@ -5130,6 +5499,7 @@ a room's closing can read its conversation. A room just created has the
 bindings its creation made, such as the agents an orchestration attached
 (Section 19.7); the channel whose message created it is attached after the
 hook (§10.1 step 2).
+<!-- /rfc -->
 
 ### 9.3 Hook Execution Modes
 
@@ -5206,6 +5576,7 @@ hook (§10.1 step 2).
   level (§5.3), of which nothing is collected; the events it would inject are
   not.<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.3-012", "kind": "behavior", "applies": "§9.3 Hook Execution Modes; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **ASYNC hooks:**
 
 - Run concurrently after the triggering operation completes, which does not
@@ -5232,7 +5603,9 @@ hook (§10.1 step 2).
 - Cannot block or modify events.
 - Exceptions MUST be caught and logged, never propagated.
 - Used for observability, logging, side effects.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.3-013", "kind": "behavior", "applies": "§9.3 Hook Execution Modes; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Who serves a call.** An AI channel decides it call by call, not turn by
 turn. A call the provider already ran is reported: the provider says so on the
 call, with its result and whether it failed, never in its arguments, which are
@@ -5271,7 +5644,9 @@ its session ended runs no gate and is reported once, cancelled. A call cut
 after its report keeps its stored end row `cancelled` when the turn ended
 before the model read its result: the row says what the turn delivered, the
 report what ran.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.3-014", "kind": "behavior", "applies": "§9.3 Hook Execution Modes; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **ON_TOOL_CALL, where the call was served:**
 
 These hold where the channel's own tool loop serves the call. An external
@@ -5311,7 +5686,9 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   does the failure of a fail-closed hook that withheld the result: they fire
   with the failure marker and the reason the model reads, since every call
   MUST fire ON_TOOL_CALL with its outcome (below).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.3-015", "kind": "behavior", "applies": "§9.3 Hook Execution Modes; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **ON_TOOL_CALL, where the call was refused or failed:**
 
 - Every tool call MUST fire ON_TOOL_CALL with its outcome, whether it was
@@ -5422,7 +5799,9 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   nothing served. So for a refused, failed or cancelled call whose observers'
   context fails, and for a call an external handler ran: its `tool_call`
   framework event still reports it once.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.3-016", "kind": "behavior", "applies": "§9.3 Hook Execution Modes; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **ON_TOOL_CALL, where the model abandoned the call:**
 
 - A speech-to-speech model interrupted while a call is outstanding MAY discard
@@ -5456,7 +5835,9 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   it started while the call was outstanding; a reconfiguration handed to work
   that does not descend from the handler is not, and abandons the call. Every
   other call the same reconnect orphaned is abandoned as above.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.3-017", "kind": "behavior", "applies": "§9.3 Hook Execution Modes; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **ON_USER_INPUT_REQUIRED, where the other party is a human:**
 
 - A human-input request MUST be answerable from the moment it is created. The
@@ -5500,9 +5881,11 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   handler, bound by none of these rules. A realtime pipeline's agent never
   carries human-input tools of its own: the session serves the channel's
   (Section 19.5).
+<!-- /rfc -->
 
 ### 9.4 HookResult
 
+<!-- rfc: {"id": "RK-9.4-001", "kind": "behavior", "applies": "§9.4 HookResult; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Sync hooks MUST return a HookResult, the identity hooks of Section 11.2 aside:
 
 ```
@@ -5525,7 +5908,9 @@ tool and generation triggers receive their own event types. Typing this field as
 a RoomEvent would make "modify" unusable for every trigger but one, so consumers
 MUST check the type they expect before substituting it. A "modify" result MUST
 carry its payload: one whose `event` is null is an unusable result (§9.3).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.4-002", "kind": "behavior", "applies": "§9.4 HookResult; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A `BEFORE_BROADCAST` replacement.** A MODIFY on BEFORE_BROADCAST replaces
 what the event says and whom it asks, never which event it is. The replacement
 MAY change the event's `content`, its address (`addressed_to`), its
@@ -5557,7 +5942,9 @@ from a channel on its response (§8.5). A response's visibility a hook changed
 is narrowed to its cascade's scope again once its hooks are over (§8.5). A
 router hook that addresses an event (Section 19.4), by its address or its
 routing metadata, is unaffected.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.4-003", "kind": "behavior", "applies": "§9.4 HookResult; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **InjectedEvent:**
 
 ```
@@ -5565,7 +5952,9 @@ InjectedEvent
 ├── event: RoomEvent                        # The event to inject
 └── target_channel_ids: list<string> | null # Deliver to specific channels (null = store only)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.4-004", "kind": "behavior", "applies": "§9.4 HookResult; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Injected events.** The events every result of an event's `BEFORE_BROADCAST`
 chain carries are collected, whatever its action (allow, modify or block),
 off the lock and under it (§9.5.1), and MUST be committed whichever way the
@@ -5610,23 +5999,29 @@ realtime voice channel, a conference with a realtime model plugged in,
 §12.4) is an agent too: it takes the event into the model's context
 silently, and asks no answer. An integrator who wants an agent to answer
 injects the event directly (§10.5).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.4-005", "kind": "behavior", "applies": "§9.4 HookResult; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **No injected instruction.** A hook MUST NOT inject an INSTRUCTION
 (§10.1.1). One among a result's injected events is dropped with a warning
 before any pass: no hook runs on it, and nothing of it is stored or
 delivered. The rest of the result stands, its other injected events, tasks
 and observations included. A hook that wants an agent directed injects the
 instruction directly (§10.5), which takes it through §10.1.1.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.4-006", "kind": "behavior", "applies": "§9.4 HookResult; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Which triggers commit injected events.** The injected events of
 `BEFORE_BROADCAST` results are committed as above, and so is the event an
 identity challenge injects (`inject`, §11.3), which takes the same pass in a
 cascade of its own. On every other SYNC trigger (`BEFORE_DELIVER`,
 `ON_VERIFICATION_REQUIRED` and the rest) a result's injected events are not
 committed: they are dropped with a warning logged, never silently.
+<!-- /rfc -->
 
 ### 9.5 Hook Pipeline (BEFORE_BROADCAST)
 
+<!-- rfc: {"id": "RK-9.5-001", "kind": "behavior", "applies": "§9.5 Hook Pipeline (BEFORE_BROADCAST); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 Inbound Event
       │
@@ -5657,9 +6052,11 @@ Inbound Event
 │ [·] Webhook Notifier                 │
 └──────────────────────────────────────┘
 ```
+<!-- /rfc -->
 
 #### 9.5.1 Off-lock checks (`needs_lock = false`)
 
+<!-- rfc: {"id": "RK-9.5.1-001", "kind": "behavior", "applies": "§9.5.1 Off-lock checks (`needs_lock = false`); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A check that only reads the event — a PII scan, a moderation call — does not
 need the room lock, and running its I/O under the lock makes every other event
 of the room wait behind it (§13.5). A SYNC `BEFORE_BROADCAST` hook registered
@@ -5909,9 +6306,11 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   takes the lock for its commit, which reads the room (§10.2). The events a streamed row's hooks inject
   take the room lock for their own commit, as every injected event does
   (§9.4).
+<!-- /rfc -->
 
 ### 9.6 When to Use What
 
+<!-- rfc: {"id": "RK-9.6-001", "kind": "behavior", "applies": "§9.6 When to Use What; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 | | Sync Hook | Async Hook | Read-Only Channel |
 |---|---|---|---|
 | Can **block** events | Yes | No | No |
@@ -5922,18 +6321,22 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
 | Runs | Before broadcast | After broadcast | During broadcast |
 | Typical use | Rule-based filtering | Logging, analytics | AI-powered analysis |
 
+<!-- /rfc -->
 ---
 
 ## 10. Processing Pipelines
 
 ### 10.1 Inbound Pipeline
 
+<!-- rfc: {"id": "RK-10.1-001", "kind": "behavior", "applies": "§10.1 Inbound Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The inbound pipeline processes messages arriving from external sources.
 
 ```
 process_inbound(message: InboundMessage, room_id: string | null) → InboundResult
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.1-002", "kind": "behavior", "applies": "§10.1 Inbound Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Step-by-step:**
 
 ```
@@ -6481,7 +6884,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
         lane cannot progress past (§10.2) MUST NOT deadlock: it returns
         unwaited, the same short-circuit the waiting path applies.
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.1-003", "kind": "behavior", "applies": "§10.1 Inbound Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Explicit delivery cancellation:** An implementation MAY expose cancellation
 of a call's delivery cascade. Cancelling it stops the cascade's turns, not its
 delivery: a turn the cascade has not started MUST NOT start, a turn being
@@ -6554,7 +6959,9 @@ turns of every cascade under way with the reason `kit_closed` and drops every
 delivery queued behind another, never executed (one placed in its idle lane
 runs from its placement), and once its grace is over it cuts the deliveries
 still running too (§12.10.4).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.1-004", "kind": "behavior", "applies": "§10.1 Inbound Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **InboundResult:**
 
 ```
@@ -6601,7 +7008,9 @@ room lock, the lane's own work), which returns with what it has (step 18). A
 call that ran no response turn returns an empty record. When several channels
 contribute metadata they SHOULD namespace their top-level keys; the merge
 order for colliding keys is unspecified.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.1-005", "kind": "behavior", "applies": "§10.1 Inbound Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Keys a sender never supplies (normative).** The inbound pipeline removes
 from a message's event, whatever a sender, its caller or a channel's parse
 wrote, the metadata keys only the runtime writes: `runtime_record` (Section
@@ -6611,9 +7020,11 @@ response to an instruction records (Section 10.1.1) and
 hooks run, the routing stamps `_routed_to` and `_always_process` (Section 19.4).
 A dropped `_orchestration_internal` or routing stamp is logged as a warning.
 Code the host runs (`send_event`) is no sender: what it passes is kept.
+<!-- /rfc -->
 
 #### 10.1.1 Instructions
 
+<!-- rfc: {"id": "RK-10.1.1-001", "kind": "behavior", "applies": "§10.1.1 Instructions; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 An application sometimes needs an agent to speak because of something nobody in
 the room said: a handoff asking the new agent to introduce itself, a scheduled
 nudge. Committed as an inbound MESSAGE, that direction is stored as a
@@ -6771,7 +7182,9 @@ response typed `INSTRUCTION` does not re-enter (§8.5).
    a realtime model plugged in) is a transport and never sees an
    intelligence-only event; its instruction is `inject_text(role="system")`
    on the model's session (§12.4).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.1.1-002", "kind": "behavior", "applies": "§10.1.1 Instructions; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The instruction a turn read (normative).** An AI channel whose turn an
 instruction opened, unless it stands alone, MUST keep its text as the turn
 read it (its text form, step 6) as a row of its own, `INSTRUCTION_READ`,
@@ -6800,15 +7213,19 @@ response carries (step 6), being no response. An instruction a channel never
 kept, one from before the channel kept them, is not replayed. A standalone instruction is not kept:
 its turn reads nothing of the room, and its text, often long (a summary to run
 again), would double the history.
+<!-- /rfc -->
 
 ### 10.2 Broadcast Pipeline
 
+<!-- rfc: {"id": "RK-10.2-001", "kind": "behavior", "applies": "§10.2 Broadcast Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The broadcast pipeline routes an event to all eligible channels in a room.
 
 ```
 broadcast(event, source_binding | null, context) → BroadcastResult
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.2-002", "kind": "behavior", "applies": "§10.2 Broadcast Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Planning vs execution — delivery lanes.** Broadcast splits at the room
 lock boundary (§10.1 steps 12–14). *Planning* — resolving the delivery set
 (steps 1–2 below) — MUST run under the room lock, against binding state
@@ -6822,7 +7239,9 @@ long AI generation does not extend the room's critical section (§13.5),
 which is what serializes multi-process deployments. Response events
 re-enter the pipeline as their own commit passes (§10.1 step 14) rather
 than being drained inside the trigger's lock tenure.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.2-003", "kind": "behavior", "applies": "§10.2 Broadcast Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Step-by-step:**
 
 ```
@@ -6892,20 +7311,26 @@ than being drained inside the trigger's lock tenure.
 
 5. RETURN BroadcastResult
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.2-004", "kind": "behavior", "applies": "§10.2 Broadcast Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A delivery's context.** Each target is handed the room's latest events as
 read before the event's commit, then the committed event as its newest, at
 the index the store gave it: a channel declaring a window of 3 is handed 4
 events. A streamed row's is read at its own commit, not at its stream's start.
 An instruction, never committed, joins none.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.2-005", "kind": "behavior", "applies": "§10.2 Broadcast Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **What a delivery set reports.** Once its targets answered, the set of the
 inbound event reports `broadcast_partial_failure` first when any target
 failed, then `delivery_succeeded` for each delivery that succeeded, then
 `delivery_failed` for each that failed (§8.2), its `total` the deliveries
 that succeeded or failed; `event_processed` follows its `AFTER_BROADCAST`
 hooks.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.2-006", "kind": "behavior", "applies": "§10.2 Broadcast Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **An unregistered channel.** Unregistering a channel leaves its bindings in
 their rooms. A message on it is refused as one on an unknown channel (§10.1
 step 1), and a delivery set does not call it (step 3): a transport is
@@ -6913,7 +7338,9 @@ skipped, since in a deployment of several processes its connections may be
 held by another, and an intelligence channel the event solicits is reported
 `delivery_failed` with the error `channel_not_registered`, not retryable. A
 channel registered again under the id serves the bindings.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.2-007", "kind": "behavior", "applies": "§10.2 Broadcast Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **BroadcastResult:**
 
 ```
@@ -6928,7 +7355,9 @@ BroadcastResult
 ├── blocked_events: list<RoomEvent>             # Chain-depth-blocked events
 └── errors: map<string, string>                 # Per-channel error messages
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.2-008", "kind": "behavior", "applies": "§10.2 Broadcast Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Solicitation.** Step 3c asks a channel to act. For transport channels that
 is unconditional; for intelligence channels the set is narrowed by the
 event's address and by the room's agent-response policy (§19.3). Narrowing
@@ -6941,15 +7370,19 @@ timeline when it is next solicited (§19.3.2). In a room a discussion holds
 event's names from the text it commits with, once its `BEFORE_BROADCAST`
 hooks have run, queues the agents the event asks for, and gives each its
 turn later, a rerun planned for that agent alone.
+<!-- /rfc -->
 
 ### 10.3 Edit and Delete Processing
 
+<!-- rfc: {"id": "RK-10.3-001", "kind": "behavior", "applies": "§10.3 Edit and Delete Processing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 When an event has type EDIT or DELETE, the framework MUST perform additional
 validation and state updates before broadcasting. The validation is §10.1
 step 8a, and it runs on every pass that commits an event: an inbound
 message's, a response's (§10.1 step 14), that of an event a hook injects
 (§9.4) and a direct injection's (§10.5).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.3-002", "kind": "behavior", "applies": "§10.3 Edit and Delete Processing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Validation:**
 
 1. An event is an edit when its type is EDIT and its content an
@@ -7011,7 +7444,9 @@ content of another kind is taken as the edit's new content, so a hook that
 redacts an event as text redacts an edit too; one that is or holds a change,
 in a composite included, leaves the original's. A replacement of a delete by
 content of another kind leaves the original's.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.3-003", "kind": "behavior", "applies": "§10.3 Edit and Delete Processing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **State updates** (applied only after BEFORE_BROADCAST hooks allow the event —
 a hook that blocks the EDIT/DELETE MUST leave the target event unmutated):
 
@@ -7037,7 +7472,9 @@ A change the kit's persistence policy keeps out (§14.3) is the exception to
 the change's own row and to the one transaction of items 1 to 3: no row of
 it is stored, and its target is written alone, as items 1 and 2 say
 (`write_change_target`, §14.1), the room's counters unmoved.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.3-004", "kind": "behavior", "applies": "§10.3 Edit and Delete Processing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **What a channel is handed of a deleted event.** A soft-deleted event's
 content is withheld from every history a channel is handed (§7.5 rule 8):
 the context a channel parses a message with, and the one each target of a
@@ -7056,7 +7493,9 @@ model as the sender's line (§6.4), while the mark already says what
 happened. The stored record keeps its content, and so do the contexts hooks
 receive: the store and the hooks are the host's, which owns the record, and
 a hard delete (below) is how a host removes it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.3-005", "kind": "behavior", "applies": "§10.3 Edit and Delete Processing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Mutation triggers:** After a successful EDIT the framework MUST fire
 `ON_EVENT_UPDATED` with the mutated target event; after a successful DELETE it
 MUST fire `ON_EVENT_DELETED`, each with the target as the commit left it.
@@ -7082,7 +7521,9 @@ injection) and whether or not any channel receives it:
 
 These triggers let observers (e.g. maintainers of denormalized projections
 over the timeline) see every stored-state change regardless of origin.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.3-006", "kind": "behavior", "applies": "§10.3 Edit and Delete Processing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Direct mutation (host-owned):** The framework SHOULD also expose direct APIs
 — `update_event(room_id, event_id, content|source|metadata)` and
 `delete_event(room_id, event_id, cascade_replies)`, each naming the caller's
@@ -7134,7 +7575,9 @@ the call names, or of none when it names one, with nothing written in it,
 its due timers included (§17.2); a call that names no organization reads the
 room unscoped. An update that changes nothing writes nothing and fires
 nothing, and returns the event as stored.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.3-007", "kind": "behavior", "applies": "§10.3 Edit and Delete Processing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A direct change from the room's work.** A direct `update_event()` that
 changes something, a direct `delete_event()` of an event the room holds, and
 a regeneration of the last answer (Section 13.6) are no pass, and have no
@@ -7158,7 +7601,9 @@ the cap, and one that deletes and regenerates after every answer at the depth
 limit. A change the implementation itself makes for the room's work, such as
 restoring held messages (§11.7.6), runs its triggers on that work's budget
 alike.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.3-008", "kind": "behavior", "applies": "§10.3 Edit and Delete Processing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Broadcast behavior:**
 
 During broadcast, for each target channel:
@@ -7187,9 +7632,11 @@ During broadcast, for each target channel:
    takes into the session that opens no turn (a notice, a reaction: Section
    6.4). The session learns the correction, the deletion or the notice, and
    the model answers nothing until the next message.
+<!-- /rfc -->
 
 ### 10.4 Inbound Room Routing
 
+<!-- rfc: {"id": "RK-10.4-001", "kind": "behavior", "applies": "§10.4 Inbound Room Routing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 When an inbound message arrives without a pre-determined room_id, the framework
 MUST route it to an appropriate room.
 
@@ -7216,7 +7663,9 @@ held to the conditions below under the lock, and one that does not has the
 channel attached, whoever writes (§10.1 step 2), which is how a new channel joins
 a conversation. A router SHOULD NOT route on a field the sender chooses without
 authenticating it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.4-002", "kind": "behavior", "applies": "§10.4 Inbound Room Routing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Default routing strategy:**
 
 1. Find the newest ACTIVE or PAUSED room whose binding of this channel names
@@ -7253,7 +7702,9 @@ authenticating it.
    delivered message resumes it (§5.1). Any other PAUSED room is no one's to be
    admitted into, and does not count among the rooms the channel is bound to.
 4. If not found → return null (framework creates a new room).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.4-003", "kind": "behavior", "applies": "§10.4 Inbound Room Routing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Step 3 admits one conversation.** Step 3 is what routes a channel dedicated
 to a single conversation. It is deliberately narrower than "the channel is
 bound to some room": on a number shared by many correspondents, the one ACTIVE
@@ -7342,7 +7793,9 @@ giving it a new room. The wait for that lock is bounded by `process_timeout`
 unrecorded. A message a hook later refuses has been routed all the same:
 routing decides which conversation a message belongs to, a hook what becomes
 of it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.4-004", "kind": "behavior", "applies": "§10.4 Inbound Room Routing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A delivery status follows its message.** A provider's delivery status that
 names no room is routed by the same rule: the newest ACTIVE or PAUSED room
 whose binding of the status's channel names its recipient, as step 1 finds a
@@ -7364,7 +7817,9 @@ processed as an inbound message keyed by the provider's message id; else a
 delivery status on its channel when its direction is `outbound` and its event
 type `message.sent`, `message.delivered`, `message.failed` or
 `message.finalized`; and it is acknowledged and ignored otherwise.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.4-005", "kind": "behavior", "applies": "§10.4 Inbound Room Routing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A binding speaks for its own channel.** The sender a binding names is found
 through it on that channel only. A correspondent recorded on one number's
 binding, writing to another number of the same type, is not taken to the first
@@ -7393,7 +7848,9 @@ A conversation of several senders on one channel, such as a group chat bound
 to its room, is declared `group` on its binding. Without the declaration, the
 default router routes its second speaker to a room of their own, which is the
 safe answer: nothing in the store tells a group channel from a shared number.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.4-006", "kind": "behavior", "applies": "§10.4 Inbound Room Routing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A router MUST NOT guess.** When the inputs it was given match more than one
 room and nothing in them tells which conversation the message belongs to — for
 the default strategy, a channel bound to several rooms step 3 reads — it MUST
@@ -7412,7 +7869,9 @@ course, and a channel re-attached after its room closed accumulates the same
 shape over time. An integrator whose deployment genuinely needs a shared
 channel routed by something else MUST name the room explicitly (§10.1 step 2)
 or supply a custom strategy.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.4-007", "kind": "behavior", "applies": "§10.4 Inbound Room Routing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Routing MUST be deterministic.** The same inputs against the same stored
 state MUST select the same room, whatever the storage backend. An
 implementation whose answer depends on insertion order in one store and on the
@@ -7423,9 +7882,11 @@ Implementations MUST allow integrators to provide a custom routing strategy.
 The framework records the sender on the binding of the room any strategy
 returns (§10.1 step 2): a custom strategy that sends several senders to one
 room declares that room's binding `group`.
+<!-- /rfc -->
 
 ### 10.5 Direct Event Injection
 
+<!-- rfc: {"id": "RK-10.5-001", "kind": "behavior", "applies": "§10.5 Direct Event Injection; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Integrators MAY inject events into a room directly, without an inbound channel
 message (e.g., from a REST API or MCP tool call):
 
@@ -7492,7 +7953,9 @@ or past the reentry budget (§8.3), is the committed event and is returned; a
 replay returns the event its key committed (§13.4); an instruction, never
 committed, returns uncommitted, as its pass decided it (§10.1.1 step 5), and
 so does an event the persistence policy keeps out (§14.3).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.5-002", "kind": "behavior", "applies": "§10.5 Direct Event Injection; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The host's own voice.** The host, the application that embeds RoomKit,
 writes to the people of a room in its own name: a notice, a workflow's
 question, a reminder. It speaks through a host channel, a transport of type
@@ -7575,7 +8038,9 @@ so that its round trips with the agent end at `max_chain_depth`.
 the room makes the post a replay, which sends nothing again and returns the
 event the key committed, read before the reentry budget when the room's own
 work posts; a blank key is no key.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.5-003", "kind": "behavior", "applies": "§10.5 Direct Event Injection; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A record outside the pipeline.** An integrator MAY commit an event that no
 member is meant to receive (a trace, a display snapshot, a copy a branched
 conversation starts from) without the pipeline:
@@ -7605,9 +8070,11 @@ for its thread parent, rooted as every committed event's is (§10.1 step 8),
 and its author record, which the room fixes, any `metadata.author` given
 dropped (§10.1 step 12); rule 2 of §7.5 does not apply to it. An event the
 members must receive is injected with `send_event` instead.
+<!-- /rfc -->
 
 ### 10.6 Turn Execution
 
+<!-- rfc: {"id": "RK-10.6-001", "kind": "behavior", "applies": "§10.6 Turn Execution; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 An **intelligence turn** (a *turn* in this section) is one call of
 `on_event()` on a binding of category `INTELLIGENCE`, from that call to the
 end of the response stream it returns, when it returns one. Every turn MUST
@@ -7648,9 +8115,11 @@ TurnBackend (interface)
         # the executor side, cut the turns it runs and write their end
         # within cancel_timeout first
 ```
+<!-- /rfc -->
 
 #### 10.6.1 Scope and the one path
 
+<!-- rfc: {"id": "RK-10.6.1-001", "kind": "behavior", "applies": "§10.6.1 Scope and the one path; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Scope.** Every turn runs through the backend, whichever call starts it, the
 solicited target of §10.2 step 3c among them. An event a hook injects starts
 no turn: it asks no agent (§9.4). Every intelligence channel is in scope: an
@@ -7674,7 +8143,9 @@ turns.
 Out of scope: a speech-to-speech channel (§12.4), whose model holds the
 conversation in the owner's process, and the fan-out of an event to live
 connections held by another process.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.1-002", "kind": "behavior", "applies": "§10.6.1 Scope and the one path; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **One path (normative).** Every backend MUST carry the same serialized
 messages (§10.6.3), written in the serialized form of Section 1.4. The
 in-memory backend
@@ -7701,9 +8172,11 @@ messages on another transport, never a second path. The behaviour
 this document gives intelligence channels MUST hold through the in-memory
 backend: an implementation's conformance suite for intelligence channels MUST
 be runnable against it, and SHOULD run against it by default.
+<!-- /rfc -->
 
 #### 10.6.2 Channels on each side
 
+<!-- rfc: {"id": "RK-10.6.2-001", "kind": "behavior", "applies": "§10.6.2 Channels on each side; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **On the owner, a declaration.** The owner knows each intelligence channel by
 its declaration, registered as a channel is. It needs no live object of the
 channel to plan, broadcast, run a strategy or read a turn, except a strategy
@@ -7758,7 +8231,9 @@ registered live MUST read alike on the owner, its greeting included.
 What Section 19.7 and Section 23.4 set up for a channel (its turn runner,
 its tools, a delegation's result tool) is kept by the owner, per channel and
 room, beside the declaration.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.2-002", "kind": "behavior", "applies": "§10.6.2 Channels on each side; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **On the executor, a factory.** The executor builds the channel through a
 factory the host gives it: an agent holds live objects (its provider, its MCP
 clients, its memory). The kit's own executor reads the live channels the host
@@ -7778,7 +8253,9 @@ the kit gives a channel it registers, each on the executor's side:
   gives the executor as it gives the kit;
 - its readers of the store, which read the store: a distributed backend
   requires it shared (§10.6.9).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.2-003", "kind": "behavior", "applies": "§10.6.2 Channels on each side; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Per-room state.** A channel MAY keep state per room between two turns on its
 executor. An AI channel keeps a room's thought and its speak policy's
 listening state (§6.4), its plan, the results it evicted and reads back, the
@@ -7815,7 +8292,9 @@ treats it as not left by the previous turn: when it stops keeping its record
 of which turn left a room's state (a bounded record), it discards that state,
 and a discard that failed is attempted again at the room's next turn.
 Placement (§10.6.7) keeps a room's turns where its state is.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.2-004", "kind": "behavior", "applies": "§10.6.2 Channels on each side; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **State the host sets for the room.** Some per-room state is set by the host
 through a channel call and is needed again on another executor (an ACP
 session's configuration values, §6.4). That state is the room's, not the
@@ -7827,11 +8306,15 @@ warning, from any other write (a room's creation or metadata update, a
 hands it to the executor with each request, in the room its `RoomContext`
 carries, and with each channel call, before the turn or the verb runs. The
 channel takes it back when it holds none for the room. A detach forgets it.
+<!-- /rfc -->
 
 #### 10.6.3 Messages
 
+<!-- rfc: {"id": "RK-10.6.3-001", "kind": "behavior", "applies": "§10.6.3 Messages; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Five families, each message a record in the serialized form of Section 1.4.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.3-002", "kind": "behavior", "applies": "§10.6.3 Messages; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The request**, owner → executor:
 
 ```
@@ -7864,7 +8347,9 @@ OwnerTool
 └── waits_by_design: bool               # bounded by its own bound, not the
                                         # channel's default (§21.6)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.3-003", "kind": "behavior", "applies": "§10.6.3 Messages; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Frames**, executor → owner, each carrying the turn id:
 
 | Frame | Carries |
@@ -7884,7 +8369,9 @@ OwnerTool
 | `steer_result` | The number of loops a `steer` reached, or none when the channel cannot steer the turn (§10.6.8) |
 | `error` | `on_event()` or the stream raised: an error record (§10.6.8) |
 | `end` | The turn ended; nothing follows |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.3-004", "kind": "behavior", "applies": "§10.6.3 Messages; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Control**, owner → executor, on a turn's link:
 
 | Message | Carries |
@@ -7895,13 +8382,17 @@ OwnerTool
 | `steer` | A steering directive (§21.3), answered by `steer_result` with the number of loops it reached |
 | `input_answer` | The outcome recorded for an `input_request`: answered with its value, or rejected with its reason |
 | `heartbeat` | Nothing: the owner still reads the turn (§10.6.8) |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.3-005", "kind": "behavior", "applies": "§10.6.3 Messages; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Delivery.** Every message of a turn's link, in both directions (frames,
 control, calls and their results), carries a sequence number and MUST reach
 the other side exactly once and in order. A side MUST drop a duplicate and
 fail the turn with `frame_lost` on a gap in the sequence; the owner MUST drop
 a message of a turn that ended or failed.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.3-006", "kind": "behavior", "applies": "§10.6.3 Messages; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Calls**, executor → owner, each answered once by its result:
 
 | Call | Result | Serves |
@@ -7909,7 +8400,9 @@ a message of a turn that ended or failed.
 | `tool_call` | `tool_result` | A call to a tool the owner serves (§10.6.5) |
 | `call_cancel` | none | The executor withdraws a `tool_call` or a `host_call` whose turn it cut or whose bound expired (§21.6): the owner cancels its handler |
 | `host_call` | `host_result` | A verb of `TurnHost`, or a reader of owner-process state (§10.6.5) |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.3-007", "kind": "behavior", "applies": "§10.6.3 Messages; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Channel control**, owner → executor, outside any turn, about a channel's
 per-room state, or its build:
 
@@ -7970,7 +8463,9 @@ A `committed_event` or a `channel_call` that reaches an executor that closed,
 or a process that is closing, is refused unapplied, as a request is
 (§10.6.7): the owner places it again, never on the executor that refused it,
 and one no other executor takes is dropped and logged, or fails, as above.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.3-008", "kind": "behavior", "applies": "§10.6.3 Messages; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Outside a turn**, executor → owner, through the port to the owner the
 backend gives each executor it serves:
 
@@ -7993,9 +8488,11 @@ allows for the turn it names: that turn's trigger, as it was sent, and the
 binding as the room holds it then. A turn the owner no longer knows, or a
 channel call, which has no answer, publishes none; a publication never
 takes a later turn's scope.
+<!-- /rfc -->
 
 #### 10.6.4 The stream: pulled, never pushed
 
+<!-- rfc: {"id": "RK-10.6.4-001", "kind": "behavior", "applies": "§10.6.4 The stream: pulled, never pushed; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The owner hands its reader a `ChannelOutput` built from the `output` frame.
 When a stream follows, its response stream yields the items the `item` frames
 carry, so the consumer that stores segments and the streaming targets that
@@ -8051,9 +8548,11 @@ Before a text or reasoning delta it MAY look only for a write to one of the
 record's keys, so that a delta costs nothing for the record's size: a change
 made inside a value the record already holds then reaches the owner before
 the next `item` that is no delta, the one ending the segment stored with it.
+<!-- /rfc -->
 
 #### 10.6.5 What a turn asks of the owner
 
+<!-- rfc: {"id": "RK-10.6.5-001", "kind": "behavior", "applies": "§10.6.5 What a turn asks of the owner; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Owner-served tools.** A tool runs where the live objects it needs live. The
 tools that read or change the owner's state are served by the owner: the tools
 orchestration sets up for a room (handoff, Section 19.6; the strategies' tools,
@@ -8097,7 +8596,9 @@ The tools the implementation installs that hold the channel's state (a plan,
 §6.4; the human-input tools, §9.3) run on the executor. The host's tools need
 the host's live objects (its MCP clients, its sandbox, its database): they run
 on the executor.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.5-002", "kind": "behavior", "applies": "§10.6.5 What a turn asks of the owner; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **TurnHost.** A host tool or hook on the executor reaches a room only through
 `TurnHost`, which it reads with `current_turn_host()` (§21.4). It is bound to
 the turn's room inside a tool call of a turn and inside a hook the executor
@@ -8166,7 +8667,9 @@ as it does locally, rather than wait on the delivery set that runs the turn.
 An implementation cannot keep a host's code from committing through another
 kit it holds: a host that runs a kit beside an executor of another process
 MUST NOT let that executor's turns reach a room through it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.5-003", "kind": "behavior", "applies": "§10.6.5 What a turn asks of the owner; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The in-memory backend's execution context.** The in-memory backend runs in
 the owner's process, where a host's tool holds the kit itself and may call it
 from a turn. It therefore runs a turn's work in a copy of the execution
@@ -8183,7 +8686,9 @@ it, nor waiting for it (§12.10.4), and what it sends into a room while they
 run is at least as deep as the deepest of their responses (§8.3).
 An executor of another process has no such context: its turns reach a room
 through `TurnHost`, whose verbs carry the depth.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.5-004", "kind": "behavior", "applies": "§10.6.5 What a turn asks of the owner; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Human input.** A tool waiting for a human's answer runs on the executor, and
 the answer may arrive on the owner, which keeps the open requests of its
 rooms' turns and offers their answer (`answer_input(request_id, value)`) and
@@ -8212,9 +8717,11 @@ one (a request no tool waits on, which its creator alone releases): the
 owner's record goes with the turn while the request stays open on the
 executor, answerable there. One a task opens after its
 turn ended is the host's handler's alone.
+<!-- /rfc -->
 
 #### 10.6.6 Hooks
 
+<!-- rfc: {"id": "RK-10.6.6-001", "kind": "behavior", "applies": "§10.6.6 Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A trigger fires where the work it observes runs. These triggers fire on the
 executor that hosts the channel, during a turn or between turns (a thinker's
 thought, a human-input request's notification):
@@ -8239,7 +8746,9 @@ On the owner fire, among others, `ON_ERROR` (from the turn's `error` frame,
 stored segment (§9.5), `AFTER_BROADCAST`, and the triggers that owner-served
 tools and discussions fire (`ON_HANDOFF`, `ON_TASK_DELEGATED`,
 `ON_STATUS_POSTED`, `ON_SPEAK_QUEUE`, `ON_DISPATCH_DECISION`).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.6-002", "kind": "behavior", "applies": "§10.6.6 Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Registration.** A hook on an executor trigger registers on the executor
 that runs the turns it observes. Registered on the kit, it is a registration
 on the kit's own executor: it fires for the turns of the channels the kit
@@ -8261,7 +8770,9 @@ A trigger of the table that fires in the owner's process outside any turn (a
 speech-to-speech session's tool calls and its reasoning delegations, §12.4 and
 §12.4.1; a conference's tool calls, §12.10) fires the hooks registered on the
 kit's own executor: one registration covers both.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.6-003", "kind": "behavior", "applies": "§10.6.6 Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Room hooks.** A room hook on an executor trigger the kit registers for a
 room (above) is its own executor's hook for that room, and no request names
 it. One for a channel other executors run (§9.1) is registered on the
@@ -8275,14 +8786,18 @@ again under a name and a trigger it already carries replaces the first. A
 name the room enables joins the room's scope (§9.1): enabling a name a hook
 of the room already holds, the room's own or another enabled one, MUST be
 refused, so that a room never holds two hooks of one name.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.6-004", "kind": "behavior", "applies": "§10.6.6 Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Context.** A hook on the executor receives a `RoomContext` built from the
 shared store when it fires, as a hook on the owner does, and changes a room
 only through `TurnHost` (§10.6.5); between turns, where `TurnHost` is empty,
 it changes none.
+<!-- /rfc -->
 
 #### 10.6.7 Placement
 
+<!-- rfc: {"id": "RK-10.6.7-001", "kind": "behavior", "applies": "§10.6.7 Placement; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 An executor declares the channels it can host and the names of the room hooks
 it registered. The backend MUST deliver a request only to an executor that
 declares the request's channel and registered every name of its `room_hooks`;
@@ -8318,9 +8833,11 @@ executor for the session's life" is the case where one executor holds the
 room. The executor that holds a room's state for a channel is the one that
 took its last turn or channel call, while it serves and declares the
 channel. A channel control message is placed as §10.6.3 says.
+<!-- /rfc -->
 
 #### 10.6.8 Liveness, cancellation and errors
 
+<!-- rfc: {"id": "RK-10.6.8-001", "kind": "behavior", "applies": "§10.6.8 Liveness, cancellation and errors; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Liveness, both ways.** While a turn runs, each side MUST send a message on
 its link at least every `heartbeat_interval` (default 2 seconds), a
 `heartbeat` when it has nothing else to send, the in-memory backend included.
@@ -8359,7 +8876,9 @@ already read ends as a stream that raised (§12.2 step 13s), its stored
 segments kept. The owner cancels the turn's owner-served calls and sends
 `cancel` to the executor it lost, best effort. The turn commits nothing by
 itself, so its failure leaves no index unaccounted for, and the lane moves on.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.8-002", "kind": "behavior", "applies": "§10.6.8 Liveness, cancellation and errors; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Cancellation.** The owner's ways of ending a turn early keep their local
 meaning, each its own message:
 
@@ -8399,7 +8918,9 @@ cut one whose owner was lost, at once when the release reaches it, else after
 of every `close()` the kit's shutdown answers (§10.6.5, §12.10.4); a cascade
 that read it counts its cleanup done. A turn already over
 keeps what its end reported: one whose `end` is owed stays incomplete.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.8-003", "kind": "behavior", "applies": "§10.6.8 Liveness, cancellation and errors; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Steering.** The owner offers the host an asynchronous `steer(directive,
 channel_id, room_id | turn_id | null)` that answers the number of loops it
 reached; across the backend a turn's id names its loop. It resolves the target
@@ -8418,7 +8939,9 @@ answers none, and the owner cuts the turn. A discussion that holds the room cuts
 (§19.7.5). The turns a host can steer are those the process it
 steers from submitted: with several owner processes, it steers from the one
 running the room's delivery (§10.2), and another reaches none of them.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.8-004", "kind": "behavior", "applies": "§10.6.8 Liveness, cancellation and errors; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Errors.** An error record carries the error's kind (the implementation's
 name of its class), its message, its arguments and the attributes JSON
 carries (what classifies it: a provider's status code and whether it is
@@ -8451,21 +8974,27 @@ A side MUST NOT import a module, nor run a module's code (an attribute hook,
 a lazy loader), to resolve a kind or a class a record names: it looks the name up among the
 classes already loaded, and one it does not find there is a class it does not
 rebuild. The message is for logs and hooks, never for a model (§9.3).
+<!-- /rfc -->
 
 #### 10.6.9 Telemetry and prerequisites
 
+<!-- rfc: {"id": "RK-10.6.9-001", "kind": "behavior", "applies": "§10.6.9 Telemetry and prerequisites; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Telemetry.** The request carries the trace context of the broadcast span;
 the spans the executor records for the turn (its generations, its tool calls,
 its hooks) are its children, so a tracing backend shows one trace across the
 processes.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.9-002", "kind": "behavior", "applies": "§10.6.9 Telemetry and prerequisites; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Prerequisites.** A backend whose executors run in other processes requires
 a store they share (Section 14): the executor reads it. It SHOULD warn when an
 executor that takes turns from other processes has none. The distributed lock
 manager of §13.5 is what several owner processes need among themselves; an
 executor takes no room lock. Every process of a backend keeps the same
 timeouts (§10.6.8).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.9-003", "kind": "behavior", "applies": "§10.6.9 Telemetry and prerequisites; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Addressing and trust.** Work a turn began that reaches the owner after the
 turn (§10.6.3) goes to the owner process that submitted the turn, which the
 backend records as it carries the request, and is waited for while that
@@ -8476,23 +9005,29 @@ boundary: the executor ids and owner addresses its messages carry are not
 authenticated beyond it, so whoever can write to the transport can act as an
 executor or an owner, as whoever can read it reads the rooms' turns. It is
 restricted as the rooms are (credentials, encryption in transit).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.9-004", "kind": "behavior", "applies": "§10.6.9 Telemetry and prerequisites; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **On the owner.** Ordering (per room, in index order), the reentry of response
 events as commit passes, chain depth (§8.3), the persistence of streamed
 segments and their hooks, the delivery to streaming targets, the turn record
 (§6.4) and the caller's `turns` are the owner's, read off the frames.
 
+<!-- /rfc -->
 ---
 
 ## 11. Identity Resolution
 
 ### 11.1 Identity Resolver Interface
 
+<!-- rfc: {"id": "RK-11.1-001", "kind": "structural", "applies": "§11.1 Identity Resolver Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 IdentityResolver (interface)
 └── resolve(message: InboundMessage, context: RoomContext) → IdentityResult
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-11.1-002", "kind": "behavior", "applies": "§11.1 Identity Resolver Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **IdentityResult:**
 
 ```
@@ -8502,9 +9037,11 @@ IdentityResult
 ├── candidates: list<Identity>              # Candidate identities (if AMBIGUOUS)
 └── metadata: map<string, any>              # Resolution metadata
 ```
+<!-- /rfc -->
 
 ### 11.2 Resolution Pipeline
 
+<!-- rfc: {"id": "RK-11.2-001", "kind": "behavior", "applies": "§11.2 Resolution Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 Inbound arrives (channel_type, sender_address)
       │
@@ -8564,9 +9101,11 @@ its impostor's next message would pass for an identified sender (§11.6). The
 sender's address names that record on its channel (§5.5): an advisor's
 resolution of it spares the sender resolution (§11.6), and routing finds
 their room by it (§10.4 step 1).
+<!-- /rfc -->
 
 ### 11.3 Identity Hook Result
 
+<!-- rfc: {"id": "RK-11.3-001", "kind": "behavior", "applies": "§11.3 Identity Hook Result; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 IdentityHookResult
 ├── status: IdentificationStatus            # The outcome (below)
@@ -8587,23 +9126,29 @@ PENDING, CHALLENGE_SENT and REJECTED; `reject` defaults its reason to
 (§9.4), in a cascade of its own; a REJECTED result with no reason blocks it
 with `identity_rejected` on ON_IDENTITY_AMBIGUOUS and `unknown_sender` on
 ON_IDENTITY_UNKNOWN.
+<!-- /rfc -->
 
 ### 11.4 Channel Type Filtering
 
+<!-- rfc: {"id": "RK-11.4-001", "kind": "behavior", "applies": "§11.4 Channel Type Filtering; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Implementations SHOULD support configuring which channel types trigger identity
 resolution. Not all channels carry meaningful identity information (e.g., an
 internal WebSocket may not need identity resolution).
+<!-- /rfc -->
 
 ### 11.5 Timeout Handling
 
+<!-- rfc: {"id": "RK-11.5-001", "kind": "behavior", "applies": "§11.5 Timeout Handling; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 If identity resolution exceeds the configured timeout, the implementation MUST:
 
 1. Treat the result as UNKNOWN.
 2. Emit an `identity_timeout` framework event.
 3. Continue processing the inbound message (do not block).
+<!-- /rfc -->
 
 ### 11.6 Senders With Nothing To Resolve
 
+<!-- rfc: {"id": "RK-11.6-001", "kind": "behavior", "applies": "§11.6 Senders With Nothing To Resolve; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A resolver maps an **address** — a number, an email, a handle — to an Identity.
 Two senders carry no such question, and an implementation MUST NOT run
 resolution for them:
@@ -8648,9 +9193,11 @@ channel set it, but in case 2 for an event the sender's own record (Section
 it was pending; and no
 participant record is created or modified: the sender is either already a
 participant or deliberately unattributed.
+<!-- /rfc -->
 
 ### 11.7 Identity Verification
 
+<!-- rfc: {"id": "RK-11.7-001", "kind": "behavior", "applies": "§11.7 Identity Verification; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Identification says whose an address is; **verification** says the person
 writing has proven it. A number that resolves to Alice says the phone is
 Alice's, not that Alice is typing. A service that answers account questions
@@ -8660,9 +9207,11 @@ the integrator keeps the **method** (how a person proves who they are: a
 page behind a link, a code, a login) and the **policy** (what a message from
 an unverified sender may reach). Verification applies to an IDENTIFIED
 sender only; an identification challenge (§11.2) is another matter.
+<!-- /rfc -->
 
 #### 11.7.1 State
 
+<!-- rfc: {"id": "RK-11.7.1-001", "kind": "behavior", "applies": "§11.7.1 State; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 Verification
 ├── identity_id: string
@@ -8682,9 +9231,11 @@ A verification belongs to the **identity**: once verified, the person is
 verified on every channel and in every room their addresses reach, and
 `verified_via` tells where they proved it, for an integrator that requires a
 channel of its own. An identity with no record is UNVERIFIED.
+<!-- /rfc -->
 
 #### 11.7.2 Requests
 
+<!-- rfc: {"id": "RK-11.7.2-001", "kind": "behavior", "applies": "§11.7.2 Requests; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 VerificationRequest
 ├── id: string                             # Public reference
@@ -8721,9 +9272,11 @@ is not let on as the person (fail closed). A request that expires unanswered
 changes nothing. A completion makes the identity
 VERIFIED until `now + ttl`, emits `verification_completed` and fires
 ON_VERIFICATION_COMPLETED (ASYNC).
+<!-- /rfc -->
 
 #### 11.7.3 Labels and holding
 
+<!-- rfc: {"id": "RK-11.7.3-001", "kind": "behavior", "applies": "§11.7.3 Labels and holding; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The inbound pipeline stamps `source.verification` on every event of an
 identified sender (§10.1 step 5b), so a hook, a router, a user interface and
 a context builder read one fact. An identified sender is the identity the
@@ -8784,9 +9337,11 @@ or gives it the instructions and tools that reach an account, only once
 `verification_of` reads VERIFIED for the identity in the room's
 organization, and on ON_VERIFICATION_ENDED it ends or reconfigures the
 session. The implementation does not claim to hold anything there.
+<!-- /rfc -->
 
 #### 11.7.4 Codes in the conversation
 
+<!-- rfc: {"id": "RK-11.7.4-001", "kind": "behavior", "applies": "§11.7.4 Codes in the conversation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 With the method `code`, the secret is a short code the person replies with in
 the conversation. A message from the request's identity, in its room, whose
 whole text has the code's form (the policy's code length of characters
@@ -8797,9 +9352,11 @@ events alone. A wrong code counts as an attempt and is consumed all the
 same. Any other message is an ordinary one: digits with no code request
 open, or a code sent in another room. A code is short, so its request's time
 and attempts MUST be bounded tightly.
+<!-- /rfc -->
 
 #### 11.7.5 The end of a verification
 
+<!-- rfc: {"id": "RK-11.7.5-001", "kind": "behavior", "applies": "§11.7.5 The end of a verification; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A verification ends when its time runs out (EXPIRED) or when the integrator
 revokes it (`revoke_verification(identity_id, reason)`, REVOKED); a request
 ends when it fails, expires or is cancelled. Each end emits
@@ -8812,9 +9369,11 @@ arms a timer at `expires_at`, and when it starts it ends the verifications
 whose time passed while nothing ran and re-arms the timers of the others,
 from the store (`check_verifications()`). A policy MAY open a new request at
 once; otherwise the sender's next message meets ON_VERIFICATION_REQUIRED.
+<!-- /rfc -->
 
 #### 11.7.6 Releasing held messages
 
+<!-- rfc: {"id": "RK-11.7.6-001", "kind": "behavior", "applies": "§11.7.6 Releasing held messages; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 When a request completes, the messages its sender wrote while it was open
 are released to the room's intelligence channels, unless the policy says
 otherwise: the held events of that room whose sender is the identity,
@@ -8867,9 +9426,11 @@ message an unverified sender wrote, quoted or not, gains none by its author
 proving who they are. Nothing outside the window is released: what was
 written before the request — before a verification was revoked, during a
 request that failed — may not be the verified person's.
+<!-- /rfc -->
 
 #### 11.7.7 Security floor
 
+<!-- rfc: {"id": "RK-11.7.7-001", "kind": "behavior", "applies": "§11.7.7 Security floor; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 - A secret carried in a link has at least 128 bits of entropy; a code is
   short, so its request is short-lived and allows few attempts.
 - A secret is stored only as its hash, compared in constant time, used once,
@@ -8893,12 +9454,14 @@ one proven to an organization never verifies the person in another
 organization's conversation, whatever the organization the resolver's
 identity names.
 
+<!-- /rfc -->
 ---
 
 ## 12. Voice and Realtime Media
 
 ### 12.1 Architecture Overview
 
+<!-- rfc: {"id": "RK-12.1-001", "kind": "behavior", "applies": "§12.1 Architecture Overview; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 RoomKit supports four real-time media architectures:
 
 ```
@@ -8924,7 +9487,9 @@ Architecture 2: Speech-to-Speech (RealtimeVoiceChannel)
                                                │ (events)│
                                                └─────────┘
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.1-002", "kind": "behavior", "applies": "§12.1 Architecture Overview; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Choosing between architectures:**
 
 | Criterion | VoiceChannel (STT/TTS) | RealtimeVoiceChannel (Speech-to-Speech) | VoiceChannel (Bridge) | ConferenceChannel (SFU) |
@@ -8977,12 +9542,16 @@ Architecture 4: SFU Conference (ConferenceChannel — Section 12.10)
                        │ (control plane) │
                        └─────────────────┘
 ```
+<!-- /rfc -->
 
 ### 12.2 Voice Channel (STT/TTS Pipeline)
 
+<!-- rfc: {"id": "RK-12.2-001", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The Voice Channel processes audio through a pipeline of STT and TTS providers,
 converting speech to text events and text responses back to speech.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-002", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Required components:**
 
 | Component | Interface | Purpose |
@@ -8990,7 +9559,9 @@ converting speech to text events and text responses back to speech.
 | VoiceBackend | See below | Real-time audio transport (WebRTC, WebSocket) |
 | STTProvider | See below | Speech-to-text conversion |
 | TTSProvider | See below | Text-to-speech synthesis |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-003", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **VoiceBackend interface:**
 
 ```
@@ -9036,13 +9607,17 @@ VoiceBackend (interface)
 ├── capabilities() → VoiceCapability        # What the backend supports
 └── close() → void
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-004", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Note:** `on_speech_start`, `on_speech_end`, `on_vad_silence`, and
 `on_vad_audio_level` are removed from VoiceBackend. These events are now emitted
 by the audio pipeline's VAD provider (Section 12.3). `on_partial_transcription`
 is emitted by the STT provider. `on_barge_in` remains on VoiceBackend as it is a
 transport-level concern (detecting client audio during active playback).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-005", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **VoiceCapability** flags:
 
 | Flag | Description |
@@ -9063,7 +9638,9 @@ When a VoiceBackend declares `DTMF_SIGNALING`, DTMF events arrive via the
 signaling layer (not the audio stream). The pipeline's DTMFDetector handles
 in-band detection only. Implementations MUST merge both sources into the same
 ON_DTMF hook.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-006", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **VoiceSession:**
 
 ```
@@ -9077,7 +9654,9 @@ VoiceSession
 ├── metadata: map<string, any>              # Session-specific data
 └── last_usage: map<string, any>            # Read-only: what the provider recorded last (Section 12.4.2)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-007", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **VoiceSessionState** enumeration:
 
 | Value | Meaning |
@@ -9086,7 +9665,9 @@ VoiceSession
 | ACTIVE | Audio is flowing bidirectionally |
 | PAUSED | Session temporarily suspended (e.g., hold, mute) |
 | ENDED | Session terminated — no further audio |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-008", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Transitions:**
 
 - CONNECTING → ACTIVE: Transport connected and provider ready.
@@ -9098,7 +9679,9 @@ VoiceSession
 
 Implementations MUST NOT allow transitions from ENDED to any other state. A new
 session MUST be created if the participant reconnects.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-009", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **STTProvider interface:**
 
 ```
@@ -9140,7 +9723,9 @@ The choice applies from the next stream opened for that session: a stream is
 opened per utterance (VAD mode) or per turn (continuous mode, but for a kept
 stream, below), and every streaming STT API RoomKit targets fixes the language
 for the life of a stream.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-010", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Kept streams.** In continuous mode a Voice Channel opens a stream per turn,
 except for a provider that diarizes (its labels hold within one stream,
 Section 12.2.3) or that reports `keeps_stream_across_turns`: its model cuts
@@ -9164,7 +9749,9 @@ The typical flow starts a session in a detecting mode (Deepgram `multi`), reads
 the reported language, and pins the following streams to it. An implementation
 MAY ship that flow as a policy; it MUST leave the primitive reachable from
 hooks.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-011", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Audio between streams.** In continuous mode, audio that arrives while no
 stream is open (between two turns, during a reconnect after an error) is
 carried into the next stream, so a reconnect loses no speech. What is carried
@@ -9178,7 +9765,9 @@ MUST pace what it sends rather than send a backlog at once. Meta's realtime
 service refuses a stream sent 7 s or more ahead at once ("Audio processing
 backlog too large", measured 2026-10-07); RoomKit's Meta provider sends at
 most 3 s at once, then at most twice real time until it has caught up.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-012", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **TTSProvider interface:**
 
 ```
@@ -9247,7 +9836,9 @@ supports both inline data URLs and remote storage URLs. For streaming,
 iterator of text chunks (typically sentences) and yields audio as each chunk is
 synthesized. This enables the streaming AI → TTS pipeline where LLM tokens are
 buffered into sentences and fed to TTS incrementally.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-013", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Encoding.** A streamed `AudioChunk` names its encoding in `format` (Section
 12.3.11), and a vendor offering several output encodings may stream any of
 them (MP3, Opus, G.711). A Voice Channel plays decoded 16-bit PCM only: it
@@ -9260,7 +9851,9 @@ that speaks on a Voice Channel is configured for PCM output.
 `context` carries the conversation so far to a TTS that can use it (Section
 12.2.2). A provider whose `context_level` is `NONE` never receives one, so an
 existing provider needs no change.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-014", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Voices.** A voice is named by the `id` of a `VoiceInfo`: the string a
 provider returns in its catalog is the string `synthesize()` accepts, with no
 translation between the two. `available_voices()` is the curated catalog a
@@ -9278,7 +9871,9 @@ does not report are null or absent, and MUST NOT be inferred from another
 voice; `attributes` carries what a vendor reports beyond the common fields,
 under the vendor's own names. The `RealtimeVoiceProvider` catalog (Section
 12.4) uses the same `VoiceInfo`.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-015", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Dialogue.** `synthesize_dialogue()` voices a scripted exchange in one clip,
 each turn in the voice its speaker is mapped to, the way a podcast or a
 training role-play is produced. A provider whose `max_dialogue_speakers` is 0
@@ -9290,7 +9885,9 @@ direct a single turn MUST raise rather than drop it. The returned
 line, as its `transcript`. A Voice Channel speaks with one voice and never
 calls `synthesize_dialogue()`: dialogue is produced by the integrator, and
 enters a room as any other audio.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2-016", "kind": "behavior", "applies": "§12.2 Voice Channel (STT/TTS Pipeline); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Audio processing flow:**
 
 ```
@@ -9481,9 +10078,11 @@ transport channels, accumulates the full text, stores the complete event, and
 re-broadcasts to non-streaming channels. This preserves multi-channel delivery,
 hooks, tool calling (falls back to non-streaming), and keeps VoiceChannel as
 pure transport with no AIProvider reference.
+<!-- /rfc -->
 
 #### 12.2.1 Packet Loss Handling (Lossy Transports)
 
+<!-- rfc: {"id": "RK-12.2.1-001", "kind": "behavior", "applies": "§12.2.1 Packet Loss Handling (Lossy Transports); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Backends carrying audio over lossy transports (RTP/SIP, datagram-based) are the
 only layer that can observe packet loss: sequence numbers exist at the
 transport, and the pipeline above sees only PCM frames. A backend that silently
@@ -9492,7 +10091,9 @@ reference alignment drifts — and no downstream stage can detect or repair it.
 
 Packet loss concealment (PLC) is OPTIONAL for Level 3 conformance and
 RECOMMENDED for RTP-based backends.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.1-002", "kind": "behavior", "applies": "§12.2.1 Packet Loss Handling (Lossy Transports); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Detection.** A backend implementing PLC:
 
 - MUST distinguish packets that have not yet arrived (reordering) from packets
@@ -9507,7 +10108,9 @@ RECOMMENDED for RTP-based backends.
   same RTP stream: a receiver that filters them upstream of its jitter buffer
   MUST mark those sequence numbers as received, so the filtered slots are
   neither confirmed as loss nor concealed.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.1-003", "kind": "behavior", "applies": "§12.2.1 Packet Loss Handling (Lossy Transports); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Concealment.** On confirmed loss, the backend:
 
 - MUST deliver a temporally continuous stream: the lost duration is replaced
@@ -9523,7 +10126,9 @@ RECOMMENDED for RTP-based backends.
   remaining lost duration with silence. Codec-native concealment with built-in
   energy decay (e.g., libopus PLC) satisfies this requirement as-is. Either
   way, alignment is preserved without generating artifacts on long bursts.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.1-004", "kind": "behavior", "applies": "§12.2.1 Packet Loss Handling (Lossy Transports); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Observability.** A backend implementing PLC MUST expose, per session:
 
 - `packets_lost` — count of packets confirmed lost.
@@ -9532,9 +10137,11 @@ RECOMMENDED for RTP-based backends.
 Emitted concealed frames SHOULD be annotated (`metadata.concealed = true` on
 the AudioFrame) so that pipeline stages MAY treat them differently — e.g., the
 recorder journaling concealed ranges, or STT adjusting confidence.
+<!-- /rfc -->
 
 #### 12.2.2 Conversation Context for TTS
 
+<!-- rfc: {"id": "RK-12.2.2-001", "kind": "behavior", "applies": "§12.2.2 Conversation Context for TTS; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A TTS that synthesizes each sentence in isolation cannot carry prosody across
 a conversation. Some can, when they are told what came before: the voice's own
 previous generations, the text of the dialogue, or the dialogue's audio —
@@ -9542,7 +10149,9 @@ including how the user spoke. The Voice Channel already holds all of it: the
 captured utterance at speech end, its final transcript after
 `ON_TRANSCRIPTION`, and what it synthesized and played. This section defines
 how it hands that to the TTS.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.2-002", "kind": "behavior", "applies": "§12.2.2 Conversation Context for TTS; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **TTSContextLevel** enumeration — what a provider consumes. Each level
 includes the ones above it:
 
@@ -9574,7 +10183,9 @@ TTSContextConfig
 ├── max_turns: int = 20                     # Oldest turns are dropped past this
 └── max_audio_seconds: float = 120.0        # Oldest audio is dropped past this; its text stays
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.2-003", "kind": "behavior", "applies": "§12.2.2 Conversation Context for TTS; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Passing rules.** A Voice Channel MUST NOT pass a context to a provider
 whose `context_level` is `NONE`, and MUST NOT put audio in a context unless
 the provider's level is `AUDIO` and `include_audio` is true. When
@@ -9582,14 +10193,18 @@ the provider's level is `AUDIO` and `include_audio` is true. When
 level: every `audio` is null. The context passed to a call is a snapshot:
 the provider MUST NOT expect it to change during the call, and MUST NOT
 write to it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.2-004", "kind": "behavior", "applies": "§12.2.2 Conversation Context for TTS; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **One context per session.** A context belongs to one `VoiceSession` and
 holds the dialogue heard on that session only — never other channels of the
 room, and never other sessions. The room timeline is not its source: the
 timeline mixes channels and holds no audio. A response delivered to several
 sessions is therefore synthesized once per session, each call with its own
 context.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.2-005", "kind": "behavior", "applies": "§12.2.2 Conversation Context for TTS; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Recording the user turn.** After `ON_TRANSCRIPTION` (step 6a of the audio
 processing flow), the channel appends a `user` turn with the transcript as
 the hook left it and, when audio is kept, the utterance captured at speech
@@ -9597,7 +10212,9 @@ end. If the hook changed the transcript — a redaction, typically — the
 channel MUST NOT keep the audio of that turn: the audio would still hold what
 the hook removed. A speech segment classified as a backchannel (Section
 12.3.13) is not recorded.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.2-006", "kind": "behavior", "applies": "§12.2.2 Conversation Context for TTS; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Recording the assistant turn.** When playback ends or is cancelled, the
 channel appends an `assistant` turn with the text actually sent to the TTS —
 after `BEFORE_TTS` and any text filter — under the `next_turn_id` the call
@@ -9610,7 +10227,9 @@ and the text is cut to the part the provider or the channel can attribute to
 the played audio, or kept whole with `played_ms` as the only bound when no
 such attribution exists. A provider consuming the context MUST treat
 `played_ms` as the end of what the user heard.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.2-007", "kind": "behavior", "applies": "§12.2.2 Conversation Context for TTS; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Stateful providers.** A provider that keeps its own state per context (a
 model that holds the dialogue in a KV cache, say) MAY rely on the turns it
 already saw and read only the new ones on each call, keyed by `context_id`
@@ -9622,25 +10241,33 @@ turn (see above): the provider MUST NOT assume every `next_turn_id` it saw
 is recorded. The channel MUST call `release_context(context_id)` when the session is
 unbound or ends, and the provider MUST drop everything it holds for that
 context. `release_context` on an unknown context is a no-op.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.2-008", "kind": "behavior", "applies": "§12.2.2 Conversation Context for TTS; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Scope.** This version defines the context for the Voice Channel's 1:1
 sessions. A Conference Channel (Section 12.10) MUST NOT pass a context to its
 TTS. A Realtime Voice Channel (Section 12.4) is out of scope: a
 speech-to-speech provider keeps its own conversation.
+<!-- /rfc -->
 
 #### 12.2.3 Speaker Attribution from STT
 
+<!-- rfc: {"id": "RK-12.2.3-001", "kind": "behavior", "applies": "§12.2.3 Speaker Attribution from STT; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Streaming recognisers now label speakers themselves, so who spoke can come from
 the STT as well as from the pipeline's diarization stage (Section 12.3.9). The
 STT's label is aligned to the words it transcribed; this section defines what
 a provider reports and how a channel carries it to the room.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.3-002", "kind": "behavior", "applies": "§12.2.3 Speaker Attribution from STT; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Status.** Implemented: the provider contract, the refusals, a Voice
 Channel carrying labels in continuous mode, and the opt-in naming from the
 pipeline stage. A Voice Channel that does not
 implement *Stream lifetime*, *Into the room* and *Speaker change* MUST refuse a
 diarizing STT at construction, in every mode, with an error that says so.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.3-003", "kind": "behavior", "applies": "§12.2.3 Speaker Attribution from STT; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Labels.** A speaker label is assigned by the provider, is opaque, and is
 stable within one STT stream and only there: two streams may give one voice
 different labels, and one label to different voices. A provider MUST report
@@ -9648,7 +10275,9 @@ labels as strings (a vendor's integer `0` becomes `"0"`) and MUST report a
 speaker it could not attribute as null, whatever the vendor spells it
 (`UU`, `PENDING`, `unknown` in any case, or empty). A provider MUST NOT invent a label the
 vendor did not send, nor carry one over from another turn.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.3-004", "kind": "behavior", "applies": "§12.2.3 Speaker Attribution from STT; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Segments.** A provider reporting `supports_diarization = true` MUST give every
 final result the segments its text is made of, in order, each attributed to
 one speaker: a vendor that labels turns yields one segment per turn, a vendor
@@ -9657,14 +10286,18 @@ label, and text the vendor attributed to nobody is a segment with a null
 speaker. Partial results MAY carry segments. A provider reporting `false` MUST
 return no segments. A label MAY be revised by the vendor after the fact; a
 Voice Channel does not apply a revision to a result it has already routed.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.3-005", "kind": "behavior", "applies": "§12.2.3 Speaker Attribution from STT; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Channels that cannot carry labels.** Labels compare only within one stream,
 so a channel that opens one stream per utterance (Voice Channel in VAD mode)
 or per flush (batch mode) MUST refuse a diarizing STT at construction. So MUST
 a Conference Channel (Section 12.10): it attributes speech by participant
 track and transcribes each utterance on its own. Several people sharing one
 track (a room microphone) is out of scope in this revision.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.3-006", "kind": "behavior", "applies": "§12.2.3 Speaker Attribution from STT; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Stream lifetime.** In continuous mode, a Voice Channel with a diarizing STT
 MUST keep one stream open across turns, and open a new one only when the
 provider ends it, on an error, or on a language change (Section 12.2). The
@@ -9676,7 +10309,9 @@ discards as echo of its own playback does not end the stream either. Each
 stream a session opens starts a new *label epoch*, numbered from 0 for the
 session. The epoch travels with every label (below), and a consumer MUST NOT
 equate two labels from different epochs.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.3-007", "kind": "behavior", "applies": "§12.2.3 Speaker Attribution from STT; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Into the room.** For a final result with segments, the Voice Channel fires
 `ON_SPEECH_END` once, then:
 
@@ -9714,7 +10349,9 @@ equate two labels from different epochs.
    one speaker, so the model reads `"Speaker A: …"` rather than one anonymous
    stream, and from the first turn when the integrator wrote the people the
    stream carries on the room's roster (step 2).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.3-008", "kind": "behavior", "applies": "§12.2.3 Speaker Attribution from STT; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Speaker change.** Evaluated per routed segment, in order. A
 segment with a null speaker neither fires nor resets the last label. The
 framework MUST fire `ON_SPEAKER_CHANGE` with `source = "stt"` when a segment's
@@ -9724,12 +10361,16 @@ labelled segment of each epoch. The event's `speaker_id` is the label,
 routed before in that epoch, and `confidence` is null unless the provider
 reports one. Events from
 the pipeline stage carry `source = "pipeline"`.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.3-009", "kind": "behavior", "applies": "§12.2.3 Speaker Attribution from STT; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **With the pipeline stage.** When a session has both a diarizing STT and a
 `DiarizationProvider`, the STT's label is the one attached to the transcript,
 being aligned to its words; the stage keeps firing `ON_SPEAKER_CHANGE` with its
 own source.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.3-010", "kind": "behavior", "applies": "§12.2.3 Speaker Attribution from STT; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **From the pipeline stage.** When the STT is not diarizing, a Voice Channel
 MAY name a transcript's speaker from its `DiarizationProvider` (Section
 12.3.9), on the integrator's opt-in. A channel MUST refuse the option at
@@ -9755,9 +10396,11 @@ construction without a diarization stage, and in batch mode. With it:
    `speaker_epoch` and `sender_name`. The
    channel fires no `ON_SPEAKER_CHANGE` with `source = "stt"` for it: the
    stage fires its own.
+<!-- /rfc -->
 
 #### 12.2.4 Custom Voices
 
+<!-- rfc: {"id": "RK-12.2.4-001", "kind": "behavior", "applies": "§12.2.4 Custom Voices; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A voice can be made rather than picked: designed from a description, or
 replicated from a recording of a person. Making one manages the vendor's voice
 store; it is not synthesis, so it has an interface of its own, and the voice it
@@ -9783,10 +10426,14 @@ CustomVoice
 ├── expires_at: datetime | null             # When the vendor stops honouring the id
 └── sample: AudioContent | null             # The vendor's preview of the voice
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.4-002", "kind": "behavior", "applies": "§12.2.4 Custom Voices; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Kinds.** A library MUST raise for a kind of creation its
 `supports_design` or `supports_replication` does not announce.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.4-003", "kind": "behavior", "applies": "§12.2.4 Custom Voices; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Storage.** `store = true` asks the vendor to keep the voice for the caller's
 account until it is deleted or expires; such a voice appears in the vendor
 TTS's `list_voices()` and is read back with `get_voice()`. `store = false`
@@ -9798,7 +10445,9 @@ deleting such an id is not an error.
 
 `name` is the display name a stored voice is listed under; a vendor that
 names nothing ignores it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.2.4-004", "kind": "behavior", "applies": "§12.2.4 Custom Voices; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Consent.** `replicate_voice()` takes the consent recording as a required
 argument: a recording, by the person whose voice `sample` holds, agreeing to
 its replication. A vendor MAY prescribe the words, read verbatim, and refuse
@@ -9813,9 +10462,11 @@ through configuration, that consent is established outside the call. A TTS
 provider MAY also take reference audio in its configuration, a local model
 cloning a voice per call; the same obligation then lies with the integrator.
 Section 17.6 governs how reference and consent audio are handled.
+<!-- /rfc -->
 
 ### 12.3 Audio Processing Pipeline
 
+<!-- rfc: {"id": "RK-12.3-001", "kind": "behavior", "applies": "§12.3 Audio Processing Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The audio processing pipeline is a configurable layer between the transport and
 the conversation engine. The transport delivers raw audio frames; the pipeline
 processes them before they reach STT or speech-to-speech providers. All stages
@@ -9826,7 +10477,9 @@ This design ensures that audio processing capabilities (VAD, denoising,
 diarization) are available regardless of the transport choice (FastRTC, WebSocket,
 SIP, or any custom transport) and regardless of the voice architecture
 (STT/TTS or speech-to-speech).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3-002", "kind": "behavior", "applies": "§12.3 Audio Processing Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Inbound (preprocessing):**
 
 ```
@@ -9838,7 +10491,9 @@ Transport → [Resampler] → [Recorder ◉] → [AEC] → [AGC] → [Denoiser] 
 
 ◉ Recorder taps the stream (non-blocking copy), does not modify frames.
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3-003", "kind": "behavior", "applies": "§12.3 Audio Processing Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Note on ordering rationale:**
 
 | Position | Stage | Why here |
@@ -9851,7 +10506,9 @@ Transport → [Resampler] → [Recorder ◉] → [AEC] → [AGC] → [Denoiser] 
 | 5 | VAD | Detect speech in clean audio. |
 | 6 | Diarization | Identify speaker from clean speech segments. |
 | — | DTMF | Runs in parallel on the resampled stream — DTMF tones would be destroyed by denoiser/AGC. |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3-004", "kind": "behavior", "applies": "§12.3 Audio Processing Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Outbound (postprocessing):**
 
 ```
@@ -9865,7 +10522,9 @@ TTS / Speech-to-Speech Provider → [PostProcessors] → [Recorder ◉] → [AEC
   callback for precise time alignment (see Section 12.3.4). The pipeline skips this step when
   the transport handles AEC reference feeding directly.
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3-005", "kind": "behavior", "applies": "§12.3 Audio Processing Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Pipeline symmetry with text hooks:**
 
 | Text Pipeline | Audio Pipeline |
@@ -9876,15 +10535,19 @@ TTS / Speech-to-Speech Provider → [PostProcessors] → [Recorder ◉] → [AEC
 | BEFORE_TTS hook | Pre-synthesis hook (exists in Section 12.5) |
 | — | Turn detection (post-STT, pre-room event) |
 | — | Interruption handling (barge-in → backchannel detection) |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3-006", "kind": "behavior", "applies": "§12.3 Audio Processing Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Note on subsection ordering:** The subsections below (12.3.1–12.3.15) are
 organized by concern (configuration, then inbound stages, then outbound stages,
 then frame format, then post-STT stages, then execution flow, then debug taps) — NOT by pipeline
 execution order. For execution order, see the inbound/outbound diagrams above
 and the Pipeline Execution Flow (Section 12.3.14).
+<!-- /rfc -->
 
 #### 12.3.1 Pipeline Configuration
 
+<!-- rfc: {"id": "RK-12.3.1-001", "kind": "behavior", "applies": "§12.3.1 Pipeline Configuration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 AudioPipelineConfig
 ├── resampler: ResamplerConfig | null        # OPTIONAL format normalization (RECOMMENDED)
@@ -9932,7 +10595,9 @@ ignoring it silently.
 
 The audio pipeline is configured per Voice Channel or per Realtime Voice Channel.
 Different channels in the same room MAY have different pipeline configurations.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.1-002", "kind": "behavior", "applies": "§12.3.1 Pipeline Configuration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Pipeline format contract:**
 
 ```
@@ -9953,7 +10618,9 @@ stages are compatible with the internal format. If a stage requires a different
 format (e.g., a specific VAD requires 16kHz), the implementation MUST either:
 - Configure the resampler to match, or
 - Raise a configuration error at startup (fail fast).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.1-003", "kind": "behavior", "applies": "§12.3.1 Pipeline Configuration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Stream identity contract:**
 
 One `AudioPipeline` serves many audio streams. A Voice Channel bridging
@@ -9998,7 +10665,9 @@ State that is **not** per stream stays on the instance: immutable
 configuration, process-level resources, and shared registries such as a
 diarization provider's enrolled-speaker set — enrolment belongs to the room, not
 to a speaker's current stream.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.1-004", "kind": "behavior", "applies": "§12.3.1 Pipeline Configuration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Session lifecycle contract:**
 
 Implementations MUST call `reset(stream)` on every configured stage when that
@@ -10018,9 +10687,11 @@ denoiser, VAD, DTMF, diarization and postprocessors. The recorder is addressed
 by its handle (Section 12.3.7). The turn detector (Section 12.3.12) and the
 backchannel detector (Section 12.3.13) take no audio frame and no stream key;
 their `reset()` takes none either, and the session lifecycle does not call it.
+<!-- /rfc -->
 
 #### 12.3.2 Denoiser Provider
 
+<!-- rfc: {"id": "RK-12.3.2-001", "kind": "behavior", "applies": "§12.3.2 Denoiser Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The denoiser removes background noise from inbound audio before VAD and STT
 process it. Running the denoiser first improves accuracy of all downstream stages.
 
@@ -10036,9 +10707,11 @@ DenoiserProvider (interface)
 ```
 
 Implementations SHOULD provide at least one built-in denoiser (e.g., sherpa-onnx).
+<!-- /rfc -->
 
 #### 12.3.3 Resampler
 
+<!-- rfc: {"id": "RK-12.3.3-001", "kind": "behavior", "applies": "§12.3.3 Resampler; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The resampler normalizes audio format at pipeline entry (inbound) and exit
 (outbound). All pipeline stages operate on a consistent internal format,
 eliminating format mismatches between transport, STT, TTS, and VAD.
@@ -10050,7 +10723,9 @@ ResamplerConfig
 ├── internal_sample_width: int = 2          # Pipeline-internal bytes per sample (16-bit)
 └── codec: string | null                    # Codec hint for transport negotiation (e.g., "opus", "pcm")
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.3-002", "kind": "behavior", "applies": "§12.3.3 Resampler; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Behavior:**
 
 - **Inbound:** After receiving a raw AudioFrame from transport, the resampler
@@ -10068,9 +10743,11 @@ sox-quality) to avoid introducing artifacts that degrade VAD and STT accuracy.
 When no resampler is configured, all pipeline stages MUST accept the transport's
 native format. Implementations SHOULD log a warning if the transport format
 differs from the expected format of downstream stages.
+<!-- /rfc -->
 
 #### 12.3.4 Echo Canceller (AEC)
 
+<!-- rfc: {"id": "RK-12.3.4-001", "kind": "behavior", "applies": "§12.3.4 Echo Canceller (AEC); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The echo canceller removes acoustic echo — the bot's own TTS audio picked up
 by the user's microphone. Without AEC, the VAD triggers on the bot's speech,
 causing false speech detections and feedback loops.
@@ -10087,7 +10764,9 @@ AECProvider (interface)
 └── close() → void
         # Release resources
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.4-002", "kind": "behavior", "applies": "§12.3.4 Echo Canceller (AEC); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Integration with outbound path:**
 
 The AEC requires a reference signal — the audio being played back to the user.
@@ -10104,7 +10783,9 @@ Both calls MUST carry the same stream key. Each stream owns its echo canceller,
 so an unkeyed reference could not reach the right one; in a conference every
 lane hears a different mix, and feeding one lane's output into another lane's
 canceller models an echo that never occurred.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.4-003", "kind": "behavior", "applies": "§12.3.4 Echo Canceller (AEC); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Reference feeding strategies:**
 
 Implementations MUST call `AECProvider.feed_reference()` with the outbound audio
@@ -10133,7 +10814,9 @@ quality. Two strategies are defined:
 
 Implementations MUST NOT feed reference from both levels simultaneously for the
 same AEC instance — this would double-feed and corrupt the adaptive filter.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.4-004", "kind": "behavior", "applies": "§12.3.4 Echo Canceller (AEC); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Important considerations:**
 
 - AEC effectiveness depends on accurate time alignment between the reference
@@ -10182,9 +10865,11 @@ same AEC instance — this would double-feed and corrupt the adaptive filter.
 
 AEC SHOULD add `metadata.echo_cancelled = true` to processed frames for
 observability.
+<!-- /rfc -->
 
 #### 12.3.5 Automatic Gain Control (AGC)
 
+<!-- rfc: {"id": "RK-12.3.5-001", "kind": "behavior", "applies": "§12.3.5 Automatic Gain Control (AGC); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The AGC normalizes input audio volume to a consistent level. Users on different
 devices, at different distances from their microphone, or in different
 environments produce widely varying audio levels. AGC ensures that the VAD
@@ -10220,9 +10905,11 @@ When the VoiceBackend declares `NATIVE_AGC` capability, the pipeline MUST skip
 the AGC stage automatically, even if an AGCProvider is configured.
 
 AGC SHOULD add `metadata.gain_applied_db` to processed frames for observability.
+<!-- /rfc -->
 
 #### 12.3.6 DTMF Detector
 
+<!-- rfc: {"id": "RK-12.3.6-001", "kind": "behavior", "applies": "§12.3.6 DTMF Detector; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The DTMF detector identifies telephone keypad tones (0-9, *, #, A-D) in the
 audio stream. This is essential for IVR (Interactive Voice Response) scenarios,
 call transfers, and PSTN/SIP integrations where users interact via keypad.
@@ -10244,7 +10931,9 @@ DTMFEvent
 ├── duration_ms: float                       # Tone duration
 └── confidence: float | null                 # Detection confidence [0.0, 1.0]
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.6-002", "kind": "behavior", "applies": "§12.3.6 DTMF Detector; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Critical: DTMF runs in parallel, not in series.**
 
 DTMF tones are sinusoidal signals that would be destroyed or distorted by the
@@ -10261,7 +10950,9 @@ Transport → [Resampler] → ┬─→ [AEC] → [AGC] → [Denoiser] → [VAD]
 When a DTMF tone is detected, the framework MUST fire the ON_DTMF hook
 (Section 9.2). Implementations MAY optionally suppress the DTMF audio from the
 main pipeline to prevent the tone from being transcribed as speech.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.6-003", "kind": "behavior", "applies": "§12.3.6 DTMF Detector; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Outbound DTMF.** VoiceBackend exposes `send_dtmf(session, digit, duration_ms)`
 for sending DTMF digits to the remote party via RFC 4733 telephone-events. This
 is essential for AI agents navigating IVR menus, entering PINs, or interacting
@@ -10270,13 +10961,17 @@ and `'A'-'D'`. The default duration is 160 ms. Only backends with the
 `DTMF_SIGNALING` capability support this method; others MUST raise
 `NotImplementedError`. VoiceChannel provides the public entry point with input
 validation (digit set, duration range 1–10000 ms, session state).
+<!-- /rfc -->
 
 #### 12.3.7 Audio Recorder
 
+<!-- rfc: {"id": "RK-12.3.7-001", "kind": "behavior", "applies": "§12.3.7 Audio Recorder; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The audio recorder captures bidirectional audio for compliance, audit, quality
 assurance, and training purposes. In regulated industries (financial services,
 healthcare), call recording is often mandatory.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.7-002", "kind": "behavior", "applies": "§12.3.7 Audio Recorder; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Scope.** This interface records a VoiceSession, and everything about it says
 so: the handle names a session, and both the mode and the channel mode are
 expressed in terms of two directions. That is the shape of a call, not of a
@@ -10347,7 +11042,9 @@ providers. Implementations MUST document which storage backends they support
 (e.g., "local", "s3", "gcs") and MUST raise a configuration error if an
 unknown identifier is provided. A storage path containing `..` is a
 configuration error, never replaced by another location.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.7-003", "kind": "behavior", "applies": "§12.3.7 Audio Recorder; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **RecordingMode** enumeration:
 
 | Value | Description |
@@ -10355,7 +11052,9 @@ configuration error, never replaced by another location.
 | INBOUND_ONLY | Record user audio only |
 | OUTBOUND_ONLY | Record bot/TTS audio only |
 | BOTH | Record both directions |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.7-004", "kind": "behavior", "applies": "§12.3.7 Audio Recorder; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **RecordingChannelMode** enumeration:
 
 | Value | Description |
@@ -10373,7 +11072,9 @@ RecordingResult
 ├── mode: RecordingChannelMode               # Channel mode used
 └── metadata: map<string, any>               # Recording metadata
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.7-005", "kind": "behavior", "applies": "§12.3.7 Audio Recorder; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Recording position in the pipeline:**
 
 The recorder captures audio at two points:
@@ -10393,14 +11094,18 @@ Outbound: [PostProcessors] → recorder.record_outbound() → [Resampler] → Tr
 When recording starts, the framework SHOULD fire ON_RECORDING_STARTED hook.
 When recording stops, the framework SHOULD fire ON_RECORDING_STOPPED hook with
 the RecordingResult.
+<!-- /rfc -->
 
 #### 12.3.8 VAD Provider
 
+<!-- rfc: {"id": "RK-12.3.8-001", "kind": "behavior", "applies": "§12.3.8 VAD Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The VAD provider detects speech activity in audio frames and emits events that
 drive the voice pipeline. VAD events are the source for the ON_SPEECH_START,
 ON_SPEECH_END, ON_VAD_SILENCE, and ON_VAD_AUDIO_LEVEL hooks defined in
 Section 9.2.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.8-002", "kind": "behavior", "applies": "§12.3.8 VAD Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Note:** VAD is OPTIONAL in the `AudioPipelineConfig` schema to support
 speech-to-speech architectures where the AI provider handles turn detection.
 However, for Voice Channels (STT/TTS pipeline), VAD is effectively required —
@@ -10427,7 +11132,9 @@ VADEvent
 ├── duration_ms: float | null                # Duration of speech or silence
 └── level_db: float | null                   # Audio level in dB (on AUDIO_LEVEL)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.8-003", "kind": "behavior", "applies": "§12.3.8 VAD Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **VADEventType** enumeration:
 
 | Value | Description |
@@ -10436,7 +11143,9 @@ VADEvent
 | SPEECH_END | Speech activity ended — `audio_bytes` contains captured segment |
 | SILENCE | Silence duration exceeded `silence_threshold_ms` |
 | AUDIO_LEVEL | Periodic audio level report |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.8-004", "kind": "behavior", "applies": "§12.3.8 VAD Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Relationship with speech-to-speech providers:**
 
 When using a speech-to-speech provider (Section 12.4), the audio pipeline acts
@@ -10446,9 +11155,11 @@ its own turn detection. A configured VAD takes one of the two roles of Section
 12.4: on a provider that takes turns it drives turn-taking (endpointing); on a
 full-duplex provider it observes (activity logging, audio level monitoring for
 UI) and turn-taking stays with the provider.
+<!-- /rfc -->
 
 #### 12.3.9 Diarization Provider
 
+<!-- rfc: {"id": "RK-12.3.9-001", "kind": "behavior", "applies": "§12.3.9 Diarization Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The diarization provider identifies which speaker produced each audio segment.
 This is particularly relevant in multi-participant voice rooms or when multiple
 speakers share a single audio stream (e.g., speakerphone).
@@ -10479,7 +11190,9 @@ neither fires the hook nor resets the last speaker, so a stretch the stage
 could not match between two stretches of one voice is no change. The result
 still reaches the frame, where a channel naming speakers from the stage counts
 it (Section 12.2.3, *From the pipeline stage*).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.9-002", "kind": "behavior", "applies": "§12.3.9 Diarization Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Speaker-to-Participant mapping:** `DiarizationResult.speaker_id` is a
 provider-assigned label (e.g., "speaker_0", "speaker_1"), not a RoomKit
 `Participant.id`. Mapping diarization labels to participants is an
@@ -10488,9 +11201,11 @@ where the integrator can match speaker labels to known participants using
 voice enrollment, channel metadata, or heuristics (e.g., the participant
 who owns the voice channel is always "speaker_0"). A label from a diarizing
 STT follows the same rule, and Section 12.2.3 defines how it reaches the room.
+<!-- /rfc -->
 
 #### 12.3.10 Audio Post-Processor
 
+<!-- rfc: {"id": "RK-12.3.10-001", "kind": "behavior", "applies": "§12.3.10 Audio Post-Processor; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Audio post-processors form an ordered chain on the outbound path. Each processor
 receives an audio frame and returns a (possibly modified) frame. Common use cases
 include volume normalization, audio watermarking (for compliance), and recording.
@@ -10508,9 +11223,11 @@ AudioPostProcessor (interface)
 
 Multiple post-processors are executed in the order they appear in the
 `postprocessors` list. Each processor receives the output of the previous one.
+<!-- /rfc -->
 
 #### 12.3.11 Audio Frame
 
+<!-- rfc: {"id": "RK-12.3.11-001", "kind": "behavior", "applies": "§12.3.11 Audio Frame; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The common data structure passed through the pipeline:
 
 ```
@@ -10522,7 +11239,9 @@ AudioFrame
 ├── timestamp_ms: float | null               # Frame timestamp relative to session start
 └── metadata: map<string, any>               # Pipeline metadata (accumulated by stages)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.11-002", "kind": "behavior", "applies": "§12.3.11 Audio Frame; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **AudioChunk** is a distinct type, not an alias:
 
 ```
@@ -10556,14 +11275,18 @@ losing stream termination on the TTS path.
 Conversion is one-directional and lossy by design: an AudioFrame becomes an
 AudioChunk by dropping its pipeline metadata; the reverse requires validating
 alignment and starting a fresh annotation record.
+<!-- /rfc -->
 
 #### 12.3.12 Turn Detector
 
+<!-- rfc: {"id": "RK-12.3.12-001", "kind": "behavior", "applies": "§12.3.12 Turn Detector; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The turn detector determines whether the user has finished their conversational
 turn. This is distinct from VAD, which detects acoustic silence. A user may
 pause mid-sentence (VAD triggers silence) but not be done speaking. Conversely,
 a user may finish a question without a long pause.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.12-002", "kind": "behavior", "applies": "§12.3.12 Turn Detector; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Note:** Unlike the frame-level stages above (denoiser, AEC, AGC, VAD), the
 turn detector operates on **transcripts** (text from STT), not audio frames.
 It does not implement `process(AudioFrame)`. It sits between STT output and the
@@ -10603,7 +11326,9 @@ TurnDecision
 ├── reason: string | null                    # Why (e.g., "question_mark", "long_pause", "semantic_complete")
 └── suggested_wait_ms: float | null          # If not complete, how long to wait before re-evaluating
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.12-003", "kind": "behavior", "applies": "§12.3.12 Turn Detector; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Turn detection modes:**
 
 | Mode | Description | Latency | Accuracy |
@@ -10612,7 +11337,9 @@ TurnDecision
 | Heuristic | Punctuation, sentence structure, silence combo | Low | Medium |
 | LLM-based | Send transcript to fast LLM for completion check | Medium | High |
 | Hybrid | VAD for fast path, LLM for ambiguous cases | Adaptive | High |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.12-004", "kind": "behavior", "applies": "§12.3.12 Turn Detector; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Integration point:**
 
 The turn detector sits between STT and the room event pipeline. It replaces the
@@ -10626,7 +11353,9 @@ VAD SPEECH_END → STT transcribes → TurnDetector.evaluate(context)
                                     └── NO  → Wait (suggested_wait_ms), accumulate
                                               next speech, re-evaluate
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.12-005", "kind": "behavior", "applies": "§12.3.12 Turn Detector; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Waiting on an incomplete turn:** when `is_complete` is false, the channel
 MUST NOT hold the turn indefinitely. It waits for `suggested_wait_ms` of
 silence, or a configured default when the decision gives none. The wait counts
@@ -10644,7 +11373,9 @@ Once the wait ends in silence, the
 accumulated turn MUST be routed as complete, and its completion event carries
 `confidence = 0.0`. A user who pauses on a sentence the detector judged
 unfinished is answered, never ignored.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.12-006", "kind": "behavior", "applies": "§12.3.12 Turn Detector; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Speech that resumes before the turn is routed:** a turn the detector judges
 complete MUST NOT be routed while speech that started after the evaluated
 segment is in progress. The channel holds it as it would an incomplete turn:
@@ -10685,9 +11416,11 @@ When no TurnDetector is configured, the pipeline falls back to VAD-only behavior
 The turn detector MUST NOT add more than 200ms latency in the fast path. For
 LLM-based detection, implementations SHOULD use a small, fast model or cache
 common patterns.
+<!-- /rfc -->
 
 #### 12.3.13 Interruption Strategy
 
+<!-- rfc: {"id": "RK-12.3.13-001", "kind": "behavior", "applies": "§12.3.13 Interruption Strategy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 When the user speaks while the bot is responding (barge-in), the framework needs
 a configurable strategy to handle the interruption. Not all speech during bot
 playback is a genuine interruption — backchannels ("mmhmm", "ok", "yes") are
@@ -10704,7 +11437,9 @@ InterruptionConfig
 ├── flush_partial_tts: bool = true           # Whether to discard unplayed TTS audio on interrupt
 └── keep_partial_transcript: bool = true     # Whether to store bot's partial response in timeline
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.13-002", "kind": "behavior", "applies": "§12.3.13 Interruption Strategy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **InterruptionStrategy** enumeration:
 
 | Value | Description |
@@ -10713,7 +11448,9 @@ InterruptionConfig
 | CONFIRMED | Wait for `min_speech_ms` of sustained speech before cancelling. Tolerates brief sounds. Default. |
 | SEMANTIC | Use backchannel detector to decide — only interrupt on non-backchannel speech. Most natural. |
 | DISABLED | Never interrupt — user speech is queued until bot finishes. For non-interactive playback. |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.13-003", "kind": "behavior", "applies": "§12.3.13 Interruption Strategy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **BackchannelDetector interface:**
 
 ```
@@ -10744,7 +11481,9 @@ BackchannelDecision
 ├── label: string | null                     # Classification label (e.g., "agreement", "filler", "question")
 └── pending: bool (default false)            # No verdict yet: the words may still become a backchannel
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.13-004", "kind": "behavior", "applies": "§12.3.13 Interruption Strategy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Timing constraint:** In the SEMANTIC strategy, the `BackchannelContext.transcript`
 field may be null or incomplete if STT has not yet produced a result for the
 speech segment. In practice, the classifier will often operate on `audio_bytes`
@@ -10783,7 +11522,9 @@ transcript classified, rather than the speech discarded unheard. A
 backchannel, or no words at all, is discarded (a backchannel fires
 ON_BACKCHANNEL once) and TTS continues; anything else cancels TTS if it is
 still playing, and the speech is processed as the user's turn.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.13-005", "kind": "behavior", "applies": "§12.3.13 Interruption Strategy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Echo guard.** An echo canceller learns the room from the responses it hears:
 at a session's start it has heard none, and a response's opening words come
 back through the microphone, where an STT transcribes them as if someone had
@@ -10836,7 +11577,9 @@ whichever signal triggered it (a partial transcript, or an energy or transport
 barge-in), classifies the latest words of that stretch. A stretch classified
 as a backchannel fires ON_BACKCHANNEL once and is not cut on duration alone
 afterwards; later words that are not a backchannel still interrupt.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.13-006", "kind": "behavior", "applies": "§12.3.13 Interruption Strategy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Words still being said.** A streaming STT writes its partial transcripts
 word by word, or in pieces of words: Voxtral Realtime 3 wrote "Ou" before
 "Ouais", "Je" before "Je vois", "D" before "D'accord". Judged alone, the first
@@ -10856,7 +11599,9 @@ final "No." cuts). The cost is accepted: a genuine interruption whose first
 words may open an acknowledgement ("Je voudrais…", "I want…") cuts one partial
 later, 0.06 to 0.35 s measured on Voxtral; one whose first word opens none
 ("non", "stop", "attends", "wait") cuts at once.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.13-007", "kind": "behavior", "applies": "§12.3.13 Interruption Strategy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Interruption flow:**
 
 ```
@@ -10883,7 +11628,9 @@ Check InterruptionStrategy:
       │
       └── DISABLED → Ignore speech, queue for after TTS completes
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.13-008", "kind": "behavior", "applies": "§12.3.13 Interruption Strategy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **When TTS is cancelled:**
 
 1. If `flush_partial_tts = true`: discard all unplayed audio in the TTS buffer.
@@ -10905,9 +11652,11 @@ Check InterruptionStrategy:
    `interrupted = true` and the same `played_ms` (Section 12.2.2), so the
    provider knows where the user stopped hearing it.
 4. Process the user's speech normally through the inbound pipeline.
+<!-- /rfc -->
 
 #### 12.3.14 Pipeline Execution Flow
 
+<!-- rfc: {"id": "RK-12.3.14-001", "kind": "behavior", "applies": "§12.3.14 Pipeline Execution Flow; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Session start (once per VoiceSession):**
 
 ```
@@ -10921,7 +11670,9 @@ Check InterruptionStrategy:
    ├── handle = recorder.start(session, recording_config)
    └── Fire ON_RECORDING_STARTED hook
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.14-002", "kind": "behavior", "applies": "§12.3.14 Pipeline Execution Flow; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Session end (once per VoiceSession):**
 
 ```
@@ -10934,7 +11685,9 @@ Check InterruptionStrategy:
 4. Call close() on pipeline stages only if the channel is being destroyed
    (not on session end — stages are reused across sessions)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.14-003", "kind": "behavior", "applies": "§12.3.14 Pipeline Execution Flow; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Inbound flow (per audio frame):**
 
 ```
@@ -10983,7 +11736,9 @@ Check InterruptionStrategy:
        (Releases that speaker's state. Skipping it leaks one stream's buffers —
         and native memory for SDK-backed stages — per speaker the room ever had.)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.14-004", "kind": "behavior", "applies": "§12.3.14 Pipeline Execution Flow; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Outbound flow (per audio frame / chunk):**
 
 ```
@@ -11005,9 +11760,11 @@ Check InterruptionStrategy:
     aec.feed_reference() here with that stream's key, time-aligned with actual
     playback.)
 ```
+<!-- /rfc -->
 
 #### 12.3.15 Pipeline Debug Taps
 
+<!-- rfc: {"id": "RK-12.3.15-001", "kind": "behavior", "applies": "§12.3.15 Pipeline Debug Taps; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Pipeline Debug Taps provide lightweight diagnostic audio capture at every
 stage boundary in the processing pipeline. Unlike the production AudioRecorder
 (Section 12.3.7) — which captures raw audio for compliance and audit — debug
@@ -11017,7 +11774,9 @@ the signal before and after each transformation.
 This is invaluable for debugging audio quality issues: "Is the denoiser
 removing too much signal?", "What does the VAD actually hear?", "Is AEC
 effective?". Without debug taps, these questions require custom instrumentation.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.15-002", "kind": "behavior", "applies": "§12.3.15 Pipeline Debug Taps; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Configuration:**
 
 ```
@@ -11045,7 +11804,9 @@ list is provided, only the named stages are captured. Valid stage names:
 | `outbound_raw` | Before postprocessors | TTS output before processing |
 | `outbound_final` | After postprocessors, before resampler | Final audio sent to transport |
 | `aec_reference` | In a transport that cancels echo itself, beside `transport_raw` | The reference its AEC received while that frame was captured |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.15-003", "kind": "behavior", "applies": "§12.3.15 Pipeline Debug Taps; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Output files:**
 
 Files are named with a numeric prefix reflecting pipeline order, making it
@@ -11081,7 +11842,9 @@ and capture.
 Files are opened lazily on first write and closed on session end. Each file
 uses the pipeline's internal AudioFormat (from the AudioPipelineContract),
 unless `sample_rate` is overridden.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.15-004", "kind": "behavior", "applies": "§12.3.15 Pipeline Debug Taps; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Integration with pipeline config:**
 
 ```
@@ -11089,7 +11852,9 @@ AudioPipelineConfig
 ├── ... (existing fields)
 └── debug_taps: PipelineDebugTaps | null    # OPTIONAL diagnostic capture (default: null)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.15-005", "kind": "behavior", "applies": "§12.3.15 Pipeline Debug Taps; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Behavior:**
 
 - Debug taps MUST NOT modify audio frames — they are read-only observers.
@@ -11104,7 +11869,9 @@ AudioPipelineConfig
   `{session_id}_05_post_vad_speech_001.wav`, etc.).
 - Implementations SHOULD log a warning at startup when debug taps are enabled,
   as the disk I/O and storage cost is not intended for production.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.15-006", "kind": "behavior", "applies": "§12.3.15 Pipeline Debug Taps; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Session lifecycle:**
 
 ```
@@ -11123,7 +11890,9 @@ AudioPipelineConfig
    ├── Flush and close all WAV writers
    └── Finalize WAV headers with correct data sizes
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.3.15-007", "kind": "behavior", "applies": "§12.3.15 Pipeline Debug Taps; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Relationship to AudioRecorder:**
 
 Pipeline Debug Taps and AudioRecorder serve different purposes and MAY be
@@ -11137,12 +11906,16 @@ used simultaneously:
 | Modifies frames | No | No |
 | Output | Single/stereo recording file | Multiple per-stage WAV files |
 | Configuration | `recorder` + `recording_config` | `debug_taps` |
+<!-- /rfc -->
 
 ### 12.4 Realtime Voice Channel (Speech-to-Speech)
 
+<!-- rfc: {"id": "RK-12.4-001", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The Realtime Voice Channel wraps speech-to-speech APIs (e.g., OpenAI Realtime,
 Gemini Live) that handle audio processing natively, bypassing STT/TTS.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-002", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **RealtimeVoiceProvider interface:**
 
 ```
@@ -11208,7 +11981,9 @@ RealtimeVoiceProvider (interface)
 ├── on_usage(callback) → void              # (session, usage): what the provider just recorded (Section 12.4.2)
 └── on_error(callback) → void
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-003", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **What a provider owes its tool calls (normative).** A call whose arguments
 read as an object reaches `on_tool_call` as that mapping; a call whose
 arguments do not (invalid JSON, an array, a fragment) reaches it as the text
@@ -11239,7 +12014,9 @@ ends a turn on a function call it could not parse (Gemini Live's
 `MALFORMED_FUNCTION_CALL`) MUST tell the model that the call did not run,
 since nothing else will, once until the user speaks again, so a model that
 keeps failing does not loop on the reminder.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-004", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **RealtimeVoiceProvider callback → hook mapping:**
 
 | Provider Callback | Hook Fired | Notes |
@@ -11255,14 +12032,18 @@ keeps failing does not loop on the reminder.
 | `on_response_end` | — | Internal lifecycle; no hook (use AFTER_BROADCAST for response tracking) |
 | `on_usage` | — | The provider's own usage report, relayed unaltered; no hook (an integrator that bills a call reads it here, Section 12.4.2) |
 | `on_error` | ON_ERROR | Mapped to the global ON_ERROR hook (Section 9.2) |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-005", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Note:** `on_response_start` and `on_response_end` are internal provider
 lifecycle callbacks used for audio routing and session bookkeeping. They do not
 map to hooks because they don't represent events the integrator needs to act on.
 Integrators who need response-level tracking SHOULD use AFTER_BROADCAST on the
 transcription events emitted by the provider. A full-duplex provider has no
 response boundaries on its wire and synthesizes them (Section 12.4.1).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-006", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Session configuration.** A session starts with the configuration it was
 opened with (its own prompt, voice or tools), else the one set for its room
 (the active agent of a pipeline installed there, Section 19.5), else the
@@ -11272,7 +12053,9 @@ for future sessions, and the sessions of other rooms, MUST NOT change with it,
 since one channel serves every room it is attached to (Section 19.7). The
 channel's configuration changes through the channel's own configuration call,
 never as a side effect of a session's.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-007", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Tool policy:** A realtime channel MAY carry a ToolPolicy (Section 21.1),
 with the same meaning as an AI channel's and the same exempt names. It filters
 the tools declared to the session, at connection and at every reconfiguration
@@ -11287,7 +12070,9 @@ next call on, even while the declared tools still reflect the former one. A
 participant the store does not hold has no role, and the base rules apply to
 it. A policy that held on the provider's calls and not on a backend's would be
 a door around it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-008", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Tool call pre-execution gate:**
 
 Before a realtime tool call is routed to whatever serves it, the channel MUST
@@ -11316,7 +12101,9 @@ declare is refused as any undeclared tool is (Section 6.4). Those that only read
 Tool Search: the exact names of Section 21.1) remain exempt from skill gating,
 which they exist to operate; `run_skill_script` acts, and is gated like any
 other tool.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-009", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **One call, one outcome (normative).** Every realtime tool call, whatever
 door it came through (the provider's function call, a call recovered from
 speech, a reasoning backend's call, a conference's call), is served by the
@@ -11414,7 +12201,9 @@ as a tool result, because the model issued no call and has no pending response
 to close. The result it returns is set apart as a tool's result
 (`<tool_result>`, Section 6.4): it is data the tool returned, never the
 runtime's own words.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-010", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A response's calls are answered together (normative).** A provider that
 must be asked to continue once tool results are in MUST ask once per model
 response, after that response has ended and every call it emitted has its
@@ -11450,7 +12239,9 @@ sends after the caller's turn was committed covers it, a continuation
 included, so the turn is never answered twice. A request the service rejects
 is no longer in progress: the error that answers it releases the state, or
 the session would never ask again.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-011", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Text injection** refers to programmatically inserting text into a realtime
 session's conversation context (e.g., instructions, tool results, or context
 updates) rather than sending audio. The ON_REALTIME_TEXT_INJECTED hook fires
@@ -11463,7 +12254,9 @@ carries a broadcast event names it in `injected_from` (its `channel_id` and
 `event_id`). A session the host no longer holds, or one its provider ended
 before the host let it go, is not injected into: the injection is `not_sent`
 with reason `realtime_session_gone`, and the hook does not fire.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-012", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The role is an intent, not a wire field (normative).** The providers do not
 share a vocabulary: one takes system and user messages, one takes only user and
 model turns, one takes no turns at all. `inject_text` therefore names what the
@@ -11490,7 +12283,9 @@ Outside a realtime session the same intent is an `INSTRUCTION` event
 (§10.1.1): it reaches a room's intelligence channels through the inbound
 pipeline, as the input of one turn marked as the application's, and is never
 stored.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-013", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Text from another channel (normative).** A text event another channel
 broadcast into the room reaches a realtime session (a realtime voice channel's,
 a conference's with a realtime model plugged in) as what it is: content
@@ -11542,7 +12337,9 @@ instruction a resumption left unapplied (below) is set apart in a block of its
 own before the injected text, and content a provider adds to the prompt it
 rewrites for a silent injection (Deepgram) is set apart in a `<context>` block
 after the instructions.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-014", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A reconfiguration's instruction takes effect.** A provider that applies a
 reconfiguration by resuming the session, where the service resumes it under
 the instruction it started with (observed on `gemini-3.8-live`), MUST still
@@ -11552,7 +12349,9 @@ and a session that holds one keeps its context and receives the new
 instruction with its next non-silent injection, which the model acts on. An
 integrator that reconfigures such a session directly follows it with an
 injection when the model must act on the change at once.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-015", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **RealtimeAudioTransport interface:**
 
 ```
@@ -11572,7 +12371,9 @@ Audio reception uses a push-based model via `on_audio_received(callback)` rather
 than a pull-based async iterator. This aligns with the transport pattern used by
 `VoiceBackend` and avoids the complexity of managing iterator lifecycles across
 session boundaries.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-016", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Session lifecycle:**
 
 ```
@@ -11602,7 +12403,9 @@ session boundaries.
    └── ON_TOOL_CALL hook (fallback)
 6. end_session() → disconnect provider and transport
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-017", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Audio pipeline in speech-to-speech mode:**
 
 When using a speech-to-speech provider, the audio pipeline (Section 12.3) MAY be
@@ -11626,11 +12429,15 @@ Typical use cases:
 VAD is OPTIONAL in this mode, and a configured VAD serves one of two roles,
 set by the provider: endpointing on a provider that takes turns, observation on
 a full-duplex provider.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-018", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Observation.** The VAD feeds diarization, level metering and
 metrics; it does NOT control when the speech-to-speech provider responds.
 Turn-taking is fully managed by the provider's own endpointing.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4-019", "kind": "behavior", "applies": "§12.4 Realtime Voice Channel (Speech-to-Speech); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Endpointing.** The pipeline VAD drives turn-taking and the provider's server
 VAD is disabled. This exists because a provider's endpointing is not always the
 right one: an integrator may have a VAD tuned to their acoustics, or need the
@@ -11644,9 +12451,11 @@ full-duplex provider admits only the observation role (Section 12.4.1).
 The `RealtimeVoiceChannel` accepts an `AudioPipelineConfig` in the same way as
 `VoiceChannel`. When a pipeline is configured, inbound audio frames are processed
 through the pipeline before being forwarded to the provider.
+<!-- /rfc -->
 
 #### 12.4.1 Full-Duplex Providers and Reasoning Delegation
 
+<!-- rfc: {"id": "RK-12.4.1-001", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Some speech-to-speech providers do not take turns. A **full-duplex provider**
 (e.g., OpenAI GPT-Live) listens and speaks at the same time: it decides on its
 own when to answer, when to fall silent because the user spoke over it, and
@@ -11665,7 +12474,9 @@ conversation; a reasoning delegation is the provider's own model deferring the
 next thing it will say, inside the session, to a model that can think longer
 and call tools. The two compose: the backend of a reasoning delegation MAY
 itself delegate a task.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4.1-002", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Boundaries are synthesized (normative).** The channel contracts of this
 section — idle tracking, end-of-response flushing, AEC activation, one
 utterance at a time on the bot track (Section 12.10.12) — hold on `on_response_start` and `on_response_end`, and a
@@ -11681,7 +12492,9 @@ ON_SPEECH_START and ON_SPEECH_END keep firing; the channel MUST treat them as
 observation, never as the entry to the interruption path below. Synthesized
 boundaries lag the audio they describe by the gap, and a latency metric read
 from them MUST account for it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4.1-003", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **An answer awaited starts with the model's output (normative).** A host that
 sent the model a tool result or a delegation's spoken output is not idle until
 the model's answer to it starts. The answer starts with a response start, and,
@@ -11691,7 +12504,9 @@ transcript of the assistant's words. The host waits from before the output is
 sent, so an answer that starts before the send returns is not missed. An output
 that could not be sent is not waited for. Every host of a realtime model (a
 realtime voice channel, a conference) reads the answer's start the same way.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4.1-004", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Interruption belongs to the model (normative).** When the user speaks over a
 full-duplex provider, the model hears it and decides — it stops, or finishes
 its clause, or says "mhm" and carries on. The framework MUST NOT decide for
@@ -11713,14 +12528,18 @@ signal the provider does not take. An implementation MUST NOT drive
 endpointing or interruption from a pipeline VAD on such a session, and SHOULD
 say so where the VAD is configured — a notice at session start suffices —
 rather than demote it silently.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4.1-005", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The output is a stream, not a burst (normative).** A full-duplex provider
 MAY emit output audio continuously at real-time pace, silence included, since
 it does not know in advance when it will speak. The outbound path MUST NOT
 rely on audio arriving faster than real time — a pacer that waits to prebuffer
 a response would wait for a burst that never comes — and a recorder (Section
 12.3.7) records the silence as such.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4.1-006", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The session is fixed at start (normative).** Such a provider typically fixes
 model, instructions, voice, audio format, delegation mode and seeded history
 when the session starts, and takes only appends afterwards. The provider MUST
@@ -11735,7 +12554,9 @@ below, are the one field that MAY change after start and MUST be forwarded to
 the backend without replacing the session. A provider that takes one audio
 format for both directions MUST resample so that the channel's declared input
 and output rates hold at the channel boundary.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4.1-007", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Text injection is paraphrased.** On these providers a spoken injection is
 context the model relays in its own words, not a script it reads; there is no
 verbatim primitive, and `inject_text` MUST document that. Nor is there a user
@@ -11751,7 +12572,9 @@ again at the start of the next, and a quote left open is closed there and
 opened again after what precedes it on its line (its author's name, the
 instruction that quotes it), so that no piece of the text reaches the model
 outside its frame, an instructions append least of all.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4.1-008", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Reasoning delegation, hosted backend (normative).** In the hosted mode the
 provider's service runs the backend model, and the `tools` passed to
 `connect()` are that backend's tools. The channel sees nothing new: every
@@ -11762,7 +12585,9 @@ resume the backend while any call of the same delegation is unanswered — the
 hosted service rejects a partial continuation — and MUST resume it once the
 last result is in: the rule of Section 12.4, counted per delegation. A result
 submitted after the session ended is dropped, as for any provider.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4.1-009", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Reasoning delegation, integrator backend (normative).** In the integrator
 mode the model signals only that it is handing work over: the provider fires
 `on_delegation(session, delegation_id, target)` with `target = "integrator"`,
@@ -11889,27 +12714,35 @@ unanswered is answered as a room turn answers one before the next
 generation, and a session's delegations run one at a time, each reading
 what the one before it worked out. The backend's turn is traced under the
 voice session's span.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4.1-010", "kind": "behavior", "applies": "§12.4.1 Full-Duplex Providers and Reasoning Delegation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Observability.** ON_REALTIME_DELEGATION (Section 9.2) fires when the model
 hands work over, in either mode, with the delegation id and its target (hosted
 or integrator); the time from it to the first spoken output is the latency the
 user hears. A provider billed by session duration MUST report duration as its
 usage and MUST NOT restate it as tokens; backend token usage, where the
 provider surfaces it, is the backend model's and is attributed to it.
+<!-- /rfc -->
 
 #### 12.4.2 Usage Reporting
 
+<!-- rfc: {"id": "RK-12.4.2-001", "kind": "behavior", "applies": "§12.4.2 Usage Reporting; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 What a spoken turn consumed is known to the service that billed it, not to the
 framework, so a realtime provider reports its usage rather than having it
 inferred. Two surfaces carry that report, and both are public.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4.2-002", "kind": "behavior", "applies": "§12.4.2 Usage Reporting; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The snapshot.** `VoiceSession.last_usage` is what the provider recorded last
 for that session: a read-only map, empty until the first report. The framework
 fixes two of its keys — `input_tokens` and `output_tokens`, the totals a
 token-billed provider reports — and a provider MAY add its own breakdown beside
 them, per modality, cached share, reasoning or tool use, under the names its API
 uses. A reader MUST treat an absent key as unreported rather than as zero.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.4.2-003", "kind": "behavior", "applies": "§12.4.2 Usage Reporting; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The callback.** `on_usage(callback)` fires on every report, with the session
 and the map just recorded. An integrator that bills a call MUST use it rather
 than the snapshot: the next report replaces the snapshot and the channel clears
@@ -11921,9 +12754,11 @@ A provider billed by session duration reports duration (Section 12.4.1) through
 these same two surfaces, under its own key and never restated as tokens; a
 hosted backend's token usage is likewise the backend model's and is reported
 apart, attributed to it.
+<!-- /rfc -->
 
 ### 12.5 Voice Hooks
 
+<!-- rfc: {"id": "RK-12.5-001", "kind": "behavior", "applies": "§12.5 Voice Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Voice-specific hooks allow integrators to customize the voice pipeline:
 
 | Hook | Type | Use Case | Source |
@@ -11954,7 +12789,9 @@ Voice-specific hooks allow integrators to customize the voice pipeline:
 | ON_REALTIME_DELEGATION | ASYNC | Measure delegation latency, log hand-offs to the backend | Realtime Provider (Section 12.4.1) |
 | ON_PROTOCOL_TRACE | ASYNC | Log/inspect transport protocol traces (SIP, RTP) | Channel (via emit_trace) |
 | BEFORE_BRIDGE_AUDIO | SYNC | Filter/modify audio before bridging (mute, gain) | AudioBridge (Section 12.7) |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.5-002", "kind": "behavior", "applies": "§12.5 Voice Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Audio level hooks (ON_INPUT_AUDIO_LEVEL, ON_OUTPUT_AUDIO_LEVEL):**
 
 These hooks provide real-time audio level (RMS in dB) for building VU meters and
@@ -11968,13 +12805,17 @@ events/sec per direction, each requiring a context build and store query.
 
 The event payload is an `AudioLevelEvent` containing `session`, `level_db`
 (typically -60 to 0 dBFS), and `timestamp`.
+<!-- /rfc -->
 
 ### 12.6 Barge-In and Interruption Handling
 
+<!-- rfc: {"id": "RK-12.6-001", "kind": "behavior", "applies": "§12.6 Barge-In and Interruption Handling; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Barge-in occurs when a user speaks while TTS is playing. The framework supports
 configurable interruption strategies (Section 12.3.13 — InterruptionConfig)
 ranging from immediate cancellation to semantic backchannel detection.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.6-002", "kind": "behavior", "applies": "§12.6 Barge-In and Interruption Handling; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Default behavior (CONFIRMED strategy):**
 
 1. The VoiceBackend fires `on_barge_in` callback.
@@ -11999,7 +12840,9 @@ ranging from immediate cancellation to semantic backchannel detection.
 Implementations SHOULD support a configurable minimum playback duration before
 barge-in is allowed (`InterruptionConfig.allow_during_first_ms`, Section
 12.3.13). This prevents interruption at the very start of a response.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.6-003", "kind": "behavior", "applies": "§12.6 Barge-In and Interruption Handling; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Relationship between VoiceBackend barge-in and VAD:**
 
 `VoiceBackend.on_barge_in` and VAD are two separate detection systems:
@@ -12029,17 +12872,21 @@ When the backend does NOT support `BARGE_IN`, the pipeline MAY use VAD's
 `SPEECH_START` event during TTS playback as a fallback barge-in trigger. In this
 mode, the VAD effectively replaces the transport-level detection, but with higher
 latency (audio must traverse the full inbound pipeline before VAD fires).
+<!-- /rfc -->
 
 ### 12.7 Audio Bridging
 
+<!-- rfc: {"id": "RK-12.7-001", "kind": "behavior", "applies": "§12.7 Audio Bridging; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Audio bridging enables human-to-human voice communication within a room by
 forwarding audio frames directly between voice sessions, bypassing the
 STT → text → TTS roundtrip. This is essential for use cases like SIP/RTP
 phone calls between participants, call center agent bridging, and
 multi-party conferencing.
+<!-- /rfc -->
 
 #### 12.7.1 Design Principles
 
+<!-- rfc: {"id": "RK-12.7.1-001", "kind": "behavior", "applies": "§12.7.1 Design Principles; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 1. **Audio bridging is a parallel path, not a replacement.** Bridge mode adds
    a direct audio forwarding path alongside the existing STT/TTS path.
    STT MAY still run concurrently for transcription, recording, or AI
@@ -12060,9 +12907,11 @@ multi-party conferencing.
    providers, there are no genuinely different "bridge implementations" to
    swap. Variations (direct forwarding vs N-party mixing) are configuration
    options on a single `AudioBridge` class.
+<!-- /rfc -->
 
 #### 12.7.2 AudioBridge
 
+<!-- rfc: {"id": "RK-12.7.2-001", "kind": "structural", "applies": "§12.7.2 AudioBridge; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 AudioBridge
 ├── config: AudioBridgeConfig
@@ -12088,12 +12937,16 @@ AudioBridgeConfig
         #   other session (N>2: one send per source per target)
         # "mix": N-party additive mixing with clipping protection
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.7.2-002", "kind": "behavior", "applies": "§12.7.2 AudioBridge; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Session management:** Sessions are added and removed as participants join and
 leave the room. The bridge tracks sessions grouped by `room_id`. When a session
 is added and the room already has other bridged sessions, audio forwarding
 begins immediately.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.7.2-003", "kind": "behavior", "applies": "§12.7.2 AudioBridge; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Audio forwarding:** When `forward()` is called with an audio frame from
 session A, the bridge sends that frame to all other sessions in the same room
 via `VoiceBackend.send_audio_sync()`. For the `"forward"` strategy, this is a
@@ -12101,12 +12954,16 @@ direct send of the frame to each other session. For the `"mix"` strategy
 (N-party), the bridge MUST mix audio from all other active sessions and send
 each participant a mix of everyone else's audio (excluding their own, to
 prevent echo).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.7.2-004", "kind": "behavior", "applies": "§12.7.2 AudioBridge; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Thread safety:** `forward()` is called from audio callback threads (same
 context as `on_audio_received`). All bridge operations MUST be thread-safe.
+<!-- /rfc -->
 
 #### 12.7.3 VoiceChannel Integration
 
+<!-- rfc: {"id": "RK-12.7.3-001", "kind": "behavior", "applies": "§12.7.3 VoiceChannel Integration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 VoiceChannel gains an optional `bridge` parameter:
 
 ```python
@@ -12119,7 +12976,9 @@ VoiceChannel(
     stt=deepgram,             # Optional: transcription alongside bridge
 )
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.7.3-002", "kind": "behavior", "applies": "§12.7.3 VoiceChannel Integration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Inbound audio flow with bridge enabled:**
 
 ```
@@ -12132,7 +12991,9 @@ When bridge mode is enabled and audio exits the inbound pipeline, the
 VoiceChannel MUST feed the processed frame to `AudioBridge.forward()` in
 addition to the normal VAD/STT path. The bridge path and the STT path
 operate in parallel — neither blocks the other.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.7.3-003", "kind": "behavior", "applies": "§12.7.3 VoiceChannel Integration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Outbound bridged audio flow:**
 
 ```
@@ -12143,7 +13004,9 @@ AudioBridge.forward() → Pipeline outbound chain → Backend.send_audio_sync()
 Bridged audio sent to a session MUST pass through the outbound pipeline
 before reaching the transport. This ensures recording captures both sides
 and AEC reference is fed correctly.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.7.3-004", "kind": "behavior", "applies": "§12.7.3 VoiceChannel Integration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Session lifecycle:**
 
 - When `bind_session()` is called with bridge enabled, the VoiceChannel
@@ -12152,7 +13015,9 @@ and AEC reference is fed correctly.
   session via `remove_session()`.
 - The bridge does NOT manage session state transitions — that remains the
   responsibility of VoiceBackend and VoiceChannel.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.7.3-005", "kind": "behavior", "applies": "§12.7.3 VoiceChannel Integration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Interaction with STT/TTS:**
 
 | Configuration | Behavior |
@@ -12167,7 +13032,9 @@ audio from other participants are both sent to the session. The bridge does NOT
 suppress TTS — both audio streams coexist. If audio mixing is needed (e.g.,
 AI speaking while another participant is speaking), the backend handles
 concurrent `send_audio()` (TTS) and `send_audio_sync()` (bridge) calls.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.7.3-006", "kind": "behavior", "applies": "§12.7.3 VoiceChannel Integration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Several transports on one channel.** A bridged room often mixes transports:
 phone callers on SIP and browser participants on WebRTC. One VoiceChannel MAY
 serve sessions from more than one VoiceBackend:
@@ -12199,20 +13066,26 @@ VoiceChannel.add_backend(backend) → void
   transport (`NATIVE_AEC`) — is read on that session's own backend.
 - Adding a backend already served is a no-op. Closing the channel closes the
   added backends with the primary one.
+<!-- /rfc -->
 
 #### 12.7.4 Sample Rate Handling
 
+<!-- rfc: {"id": "RK-12.7.4-001", "kind": "behavior", "applies": "§12.7.4 Sample Rate Handling; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Voice sessions MAY have different sample rates (e.g., SIP at 8kHz, WebRTC at
 48kHz). When forwarding audio between sessions with different rates, the
 outbound pipeline's resampler MUST convert the audio to the target session's
 native rate. Implementations SHOULD track each session's sample rate at
 registration time and apply resampling per-target in the outbound path.
+<!-- /rfc -->
 
 #### 12.7.5 N-Party Mixing
 
+<!-- rfc: {"id": "RK-12.7.5-001", "kind": "behavior", "applies": "§12.7.5 N-Party Mixing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 With the `"mix"` strategy, the bridge MUST mix audio so each participant hears
 all others but not themselves.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.7.5-002", "kind": "behavior", "applies": "§12.7.5 N-Party Mixing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Mixing algorithm (additive with clipping protection):**
 
 1. For each target session T, collect audio frames from all other sessions.
@@ -12222,19 +13095,25 @@ all others but not themselves.
    - Simple: clamp to [-32768, 32767]
    - Recommended: apply headroom scaling (e.g., divide by sqrt(N-1))
 4. Convert back to 16-bit PCM and forward to session T.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.7.5-003", "kind": "behavior", "applies": "§12.7.5 N-Party Mixing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Silence handling:** If a session has no audio frame available in the current
 mixing window, it contributes silence (zero samples). The bridge SHOULD NOT
 forward silence-only mixes to save bandwidth.
+<!-- /rfc -->
 
 #### 12.7.6 Hooks
 
+<!-- rfc: {"id": "RK-12.7.6-001", "kind": "behavior", "applies": "§12.7.6 Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Audio bridging introduces one new hook and reuses existing hooks:
 
 | Hook | Type | Use Case | Source |
 |---|---|---|---|
 | BEFORE_BRIDGE_AUDIO | SYNC | Filter or modify audio before forwarding (e.g., gain, muting) | AudioBridge |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.7.6-002", "kind": "behavior", "applies": "§12.7.6 Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **BEFORE_BRIDGE_AUDIO** fires for each frame before it is forwarded to other
 sessions. The hook receives the audio frame and context (source session,
 target room). Returning `HookResult.block()` drops the frame (effectively
@@ -12246,14 +13125,18 @@ Existing hooks that fire normally during bridge mode:
 - `ON_TRANSCRIPTION` — if STT is configured
 - `ON_RECORDING_STARTED`, `ON_RECORDING_STOPPED` — recorder captures bridge audio
 - `ON_SESSION_STARTED` — session lifecycle unchanged
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.7.6-003", "kind": "behavior", "applies": "§12.7.6 Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Note:** BEFORE_BRIDGE_AUDIO is a SYNC hook that runs in the audio callback
 path. Implementations MUST ensure hook handlers complete quickly (< 1ms) to
 avoid audio glitches. Long-running operations MUST NOT be performed in this
 hook.
+<!-- /rfc -->
 
 #### 12.7.7 Capability Flag
 
+<!-- rfc: {"id": "RK-12.7.7-001", "kind": "behavior", "applies": "§12.7.7 Capability Flag; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 VoiceCapability.NATIVE_BRIDGE
 ```
@@ -12267,9 +13150,11 @@ latency and reduced CPU usage but bypasses pipeline stages.
 Implementations that use native bridging MUST still fire session lifecycle
 hooks and MUST support fallback to AudioBridge when pipeline processing
 (recording, AEC, transcription) is required.
+<!-- /rfc -->
 
 #### 12.7.8 Conformance
 
+<!-- rfc: {"id": "RK-12.7.8-001", "kind": "behavior", "applies": "§12.7.8 Conformance; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Audio bridging is part of **Conformance Level 3 (Real-Time Media)** and is
 OPTIONAL.
 
@@ -12284,15 +13169,19 @@ Implementations SHOULD:
 - Support N-party mixing for rooms with more than 2 voice sessions.
 - Handle cross-rate bridging via the outbound resampler.
 - Support concurrent bridge + STT operation.
+<!-- /rfc -->
 
 ### 12.8 Video Pipeline
 
+<!-- rfc: {"id": "RK-12.8-001", "kind": "behavior", "applies": "§12.8 Video Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The video subsystem mirrors the audio pipeline in structure. Video processing
 uses the same pluggable stage architecture, session model, and hook pattern
 as audio.
+<!-- /rfc -->
 
 #### 12.8.1 Architecture Overview
 
+<!-- rfc: {"id": "RK-12.8.1-001", "kind": "behavior", "applies": "§12.8.1 Architecture Overview; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 ┌────────┐     ┌──────────────────────────────────────┐     ┌────────────┐
 │ Video  │────→│          Video Pipeline               │────→│   Vision   │
@@ -12308,7 +13197,9 @@ as audio.
                          │(forward) │
                          └──────────┘
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.1-002", "kind": "behavior", "applies": "§12.8.1 Architecture Overview; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Three video channel variants:**
 
 | Channel | Base Class | Purpose |
@@ -12316,9 +13207,11 @@ as audio.
 | VideoChannel | (standalone) | Video-only with vision analysis |
 | AudioVideoChannel | VoiceChannel | Combined STT/TTS + video pipeline + avatar |
 | RealtimeAudioVideoChannel | RealtimeVoiceChannel | Speech-to-speech + video |
+<!-- /rfc -->
 
 #### 12.8.2 Video Data Models
 
+<!-- rfc: {"id": "RK-12.8.2-001", "kind": "behavior", "applies": "§12.8.2 Video Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **VideoFrame** — inbound video frame:
 
 ```
@@ -12335,7 +13228,9 @@ VideoFrame
 ├── is_encoded: bool (derived)              # True when codec in {h264, vp8, vp9, av1}
 └── is_raw: bool (derived)                  # True when codec in {raw_rgb24, raw_bgr24, ...}
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.2-002", "kind": "behavior", "applies": "§12.8.2 Video Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **VideoChunk** — outbound encoded video:
 
 ```
@@ -12348,7 +13243,9 @@ VideoChunk
 ├── keyframe: bool
 └── is_final: bool                          # Signals end of stream
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.2-003", "kind": "behavior", "applies": "§12.8.2 Video Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **VideoSession** — active video connection:
 
 ```
@@ -12362,7 +13259,9 @@ VideoSession
 ├── created_at: datetime
 └── metadata: map<string, any>
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.2-004", "kind": "behavior", "applies": "§12.8.2 Video Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **VideoCapability** flags:
 
 | Flag | Description |
@@ -12372,9 +13271,11 @@ VideoSession
 | SCREEN_SHARE | Separate screen-share track |
 | RECORDING | Server-side recording support |
 | BANDWIDTH_ESTIMATION | Adaptive bitrate |
+<!-- /rfc -->
 
 #### 12.8.3 VideoBackend Interface
 
+<!-- rfc: {"id": "RK-12.8.3-001", "kind": "structural", "applies": "§12.8.3 VideoBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 VideoBackend (interface)
 ├── name: string (property)                 # Backend identifier
@@ -12400,19 +13301,25 @@ VideoBackend (interface)
 ├── capabilities: VideoCapability           # What the backend supports
 └── close() → void
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.3-002", "kind": "behavior", "applies": "§12.8.3 VideoBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Required implementations:**
 
 | Backend | Transport | Use Case |
 |---|---|---|
 | LocalVideoBackend | OpenCV webcam | Development, testing |
 | ScreenCaptureBackend | mss screen capture | Screen sharing, monitoring |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.3-003", "kind": "behavior", "applies": "§12.8.3 VideoBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Optional backends:**
 
 Implementations MAY provide additional backends for WebRTC (FastRTC),
 RTP, SIP video, or WebSocket transport.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.3-004", "kind": "behavior", "applies": "§12.8.3 VideoBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Combined audio/video backends.** A transport that carries a call's audio
 and video together (a SIP INVITE with an `m=video` line, RTP with a parallel
 video stream, a WebRTC connection with both tracks) is a voice backend
@@ -12443,9 +13350,11 @@ for the call, and `ON_VIDEO_SESSION_STARTED` and `ON_VIDEO_SESSION_ENDED`
 for its video, each once: the video ones only for a call with video,
 `ON_VIDEO_SESSION_STARTED` once the session is both bound and its video
 path live, whichever comes last, and `ON_VIDEO_SESSION_ENDED` only after it.
+<!-- /rfc -->
 
 #### 12.8.4 Video Processing Pipeline
 
+<!-- rfc: {"id": "RK-12.8.4-001", "kind": "behavior", "applies": "§12.8.4 Video Processing Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The video pipeline processes inbound frames through ordered stages:
 
 ```
@@ -12458,7 +13367,9 @@ VideoPipelineConfig
 ├── recorder: VideoRecorder | null           # Save to file
 └── recording_config: VideoRecordingConfig   # Recording parameters
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.4-002", "kind": "behavior", "applies": "§12.8.4 Video Processing Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **VideoPipeline** orchestrator:
 
 ```
@@ -12483,7 +13394,9 @@ VideoPipeline
 ├── reset(session_id) → void
 └── close() → void
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.4-003", "kind": "behavior", "applies": "§12.8.4 Video Processing Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Inbound processing flow:**
 
 ```
@@ -12513,9 +13426,11 @@ Backend emits VideoFrame
   │
   └─ Recorder tap (if recording active)
 ```
+<!-- /rfc -->
 
 #### 12.8.5 Pipeline Stage Providers
 
+<!-- rfc: {"id": "RK-12.8.5-001", "kind": "behavior", "applies": "§12.8.5 Pipeline Stage Providers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **VideoDecoderProvider:**
 
 ```
@@ -12527,7 +13442,9 @@ VideoDecoderProvider (interface)
 ```
 
 Implementations: PyAV (FFmpeg-based, H.264/VP8/VP9/AV1), Mock.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.5-002", "kind": "behavior", "applies": "§12.8.5 Pipeline Stage Providers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **VideoResizerProvider:**
 
 ```
@@ -12538,7 +13455,9 @@ VideoResizerProvider (interface)
 ```
 
 Implementations: PyAV (FFmpeg scaling), Mock.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.5-003", "kind": "behavior", "applies": "§12.8.5 Pipeline Stage Providers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **VideoEncoderProvider:**
 
 ```
@@ -12551,7 +13470,9 @@ VideoEncoderProvider (interface)
 ```
 
 Implementations: PyAV (H.264 Constrained Baseline, default encoder libx264).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.5-004", "kind": "behavior", "applies": "§12.8.5 Pipeline Stage Providers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **VideoTransformProvider:**
 
 ```
@@ -12564,7 +13485,9 @@ VideoTransformProvider (interface)
 
 Transforms modify pixels without changing frame dimensions. Multiple
 transforms are chained in order. Example: grayscale, blur, color effects.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.5-005", "kind": "behavior", "applies": "§12.8.5 Pipeline Stage Providers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **VideoFilterProvider:**
 
 ```
@@ -12577,7 +13500,9 @@ VideoFilterProvider (interface)
 
 Filters inspect frames (using vision context) and MAY replace them.
 They receive a `FilterContext` with the latest vision analysis results.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.5-006", "kind": "behavior", "applies": "§12.8.5 Pipeline Stage Providers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **FilterContext:**
 
 ```
@@ -12589,7 +13514,9 @@ FilterContext
 ├── metadata: map<string, any>               # Arbitrary state
 └── events: list<FilterEvent>                # Detection events for hook dispatch
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.5-007", "kind": "behavior", "applies": "§12.8.5 Pipeline Stage Providers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Built-in filter implementations:**
 
 | Filter | Purpose |
@@ -12598,9 +13525,11 @@ FilterContext
 | YOLODetectorFilter | YOLO object detection, updates labels, optional bounding boxes |
 | WatermarkFilter | Adds watermark overlay to frames |
 | FaceDetectionFilter | Face detection with bounding boxes |
+<!-- /rfc -->
 
 #### 12.8.6 Overlay System
 
+<!-- rfc: {"id": "RK-12.8.6-001", "kind": "behavior", "applies": "§12.8.6 Overlay System; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Overlays render text, images, and rich content on top of video frames:
 
 ```
@@ -12616,11 +13545,15 @@ Overlay
 ├── style: map<string, any>                # Renderer-specific styling
 └── version: int (default 0)               # Cache invalidation
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.6-002", "kind": "behavior", "applies": "§12.8.6 Overlay System; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **OverlayPosition** enumeration: TOP_LEFT, TOP_CENTER, TOP_RIGHT,
 CENTER_LEFT, CENTER, CENTER_RIGHT, BOTTOM_LEFT, BOTTOM_CENTER,
 BOTTOM_RIGHT, CUSTOM.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.6-003", "kind": "behavior", "applies": "§12.8.6 Overlay System; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **OverlayRenderer** (interface):
 
 ```
@@ -12634,9 +13567,11 @@ OverlayRenderer (interface)
 Implementations: TextOverlayRenderer, ImageOverlayRenderer,
 RichOverlayRenderer, SubtitleOverlayRenderer. The `OverlayFilterProvider`
 applies overlays to frames as a pipeline filter stage.
+<!-- /rfc -->
 
 #### 12.8.7 VisionProvider
 
+<!-- rfc: {"id": "RK-12.8.7-001", "kind": "behavior", "applies": "§12.8.7 VisionProvider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Vision providers analyze video frames and produce structured results:
 
 ```
@@ -12653,7 +13588,9 @@ VisionProvider (interface)
 ├── warmup() → void                         # Pre-load models
 └── close() → void
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.7-002", "kind": "behavior", "applies": "§12.8.7 VisionProvider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Response schema.** `analyze_frame` MAY take a `response_schema`, under the
 rules of Section 6.7: the same portable subset, and the same
 `ResponseSchemaError` reasons. When the provider's `supports_response_schema`
@@ -12662,7 +13599,9 @@ schema, checked before it is returned; when it is false, a call carrying a
 schema is refused before any request. A consumer that locates or extracts
 something in a frame passes a schema where the provider supports one, instead
 of repairing free text.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.7-003", "kind": "behavior", "applies": "§12.8.7 VisionProvider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **VisionResult:**
 
 ```
@@ -12674,7 +13613,9 @@ VisionResult
 ├── text: string | null                     # OCR text
 └── metadata: map<string, any>              # Provider-specific data
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.7-004", "kind": "behavior", "applies": "§12.8.7 VisionProvider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **FaceDetection:**
 
 ```
@@ -12686,7 +13627,9 @@ FaceDetection
 ├── confidence: float
 └── label: string | null                    # Optional identity label
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.7-005", "kind": "behavior", "applies": "§12.8.7 VisionProvider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Implementations:**
 
 | Provider | Backend | Description |
@@ -12694,7 +13637,9 @@ FaceDetection
 | OpenAIVisionProvider | GPT-4o, Ollama, vLLM | OpenAI-compatible vision API |
 | GeminiVisionProvider | Google Gemini | Google Gemini vision |
 | MockVisionProvider | — | Testing |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.7-006", "kind": "behavior", "applies": "§12.8.7 VisionProvider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **AI integration:** what a vision provider saw reaches a room's AI channels
 with no wiring. It changes from one result to the next, so it rides the turn's
 notes, not the system prompt, and is not written into the room's binding: it
@@ -12708,9 +13653,11 @@ produced it: once that session ends, no turn reads it. A realtime session that
 is given what the camera sees takes the same block as a silent injection.
 `setup_video_vision`, which wrote the result into one AI channel's system
 prompt, is deprecated and writes nothing.
+<!-- /rfc -->
 
 #### 12.8.8 AvatarProvider (Lip-Sync Video Generation)
 
+<!-- rfc: {"id": "RK-12.8.8-001", "kind": "behavior", "applies": "§12.8.8 AvatarProvider (Lip-Sync Video Generation); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Avatar providers generate lip-synced video from TTS audio:
 
 ```
@@ -12734,7 +13681,9 @@ AvatarProvider (interface)
 ├── stop() → void
 └── close() → void
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.8-002", "kind": "behavior", "applies": "§12.8.8 AvatarProvider (Lip-Sync Video Generation); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Two delivery modes:**
 - **Synchronous** (local models): `feed_audio()` returns frames immediately.
 - **Asynchronous** (cloud APIs): `feed_audio()` returns empty list; frames
@@ -12743,9 +13692,11 @@ AvatarProvider (interface)
 In AudioVideoChannel, the avatar is wired as an outbound audio tap.
 TTS audio chunks are fed to the avatar, and the resulting video frames are
 encoded and sent via the video backend.
+<!-- /rfc -->
 
 #### 12.8.9 VideoBridge
 
+<!-- rfc: {"id": "RK-12.8.9-001", "kind": "behavior", "applies": "§12.8.9 VideoBridge; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The VideoBridge forwards video frames between sessions in the same room,
 mirroring the AudioBridge pattern:
 
@@ -12768,7 +13719,9 @@ VideoBridge
 ├── get_bridged_sessions(room_id) → list<(VideoSession, VideoBackend)>
 └── close() → void
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.9-002", "kind": "behavior", "applies": "§12.8.9 VideoBridge; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Key behaviors:**
 - Keyframe buffering for late joiners.
 - Periodic PLI (Picture Loss Indication) requests to ensure keyframe delivery.
@@ -12776,9 +13729,11 @@ VideoBridge
   to a new session.
 - Thread-safe session registration and removal.
 - `BEFORE_BRIDGE_VIDEO` sync hook fires before forwarding (can block/modify).
+<!-- /rfc -->
 
 #### 12.8.10 Video Recording
 
+<!-- rfc: {"id": "RK-12.8.10-001", "kind": "behavior", "applies": "§12.8.10 Video Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 VideoRecordingConfig
 ├── storage: string                         # Output directory
@@ -12812,7 +13767,9 @@ VideoRecorder (interface)
 ├── reset() → void                          # Reset internal state
 └── close() → void                          # Release resources
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.10-002", "kind": "behavior", "applies": "§12.8.10 Video Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **VideoRecordingResult:**
 
 ```
@@ -12825,16 +13782,22 @@ VideoRecordingResult
 ├── size_bytes: int
 └── metadata: map<string, any>
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.10-003", "kind": "behavior", "applies": "§12.8.10 Video Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Implementations:** PyAVVideoRecorder (H.264/H.265, NVIDIA GPU),
 OpenCVVideoRecorder (MJPEG/XVID), MockVideoRecorder.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.8.10-004", "kind": "behavior", "applies": "§12.8.10 Video Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Scope.** Like the audio recorder, this one records a session's video and is
 handed one — a conference publishes N attributed video tracks and no session,
 and records them through Section 12.11 instead (Section 12.10.8).
+<!-- /rfc -->
 
 #### 12.8.11 Video Hooks
 
+<!-- rfc: {"id": "RK-12.8.11-001", "kind": "behavior", "applies": "§12.8.11 Video Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 | Hook | Execution | When |
 |---|---|---|
 | ON_VIDEO_SESSION_STARTED | ASYNC | Video session became active |
@@ -12846,6 +13809,7 @@ and records them through Section 12.11 instead (Section 12.10.8).
 | ON_SCREEN_SHARE_STARTED | ASYNC | Screen sharing started; fired by the conference channel only, not by a video channel (Section 12.10.4) |
 | ON_SCREEN_SHARE_STOPPED | ASYNC | Screen sharing stopped; fired by the conference channel only, not by a video channel (Section 12.10.4) |
 | BEFORE_BRIDGE_VIDEO | SYNC | Before frame forwarded via bridge — can block |
+<!-- /rfc -->
 
 ### 12.9 (Removed)
 
@@ -12858,6 +13822,7 @@ Sections 12.10–12.12 stay valid.
 
 ### 12.10 Conference (SFU Orchestration)
 
+<!-- rfc: {"id": "RK-12.10-001", "kind": "behavior", "applies": "§12.10 Conference (SFU Orchestration); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Status: STABLE.** The interfaces in this section were validated on paper
 against the published server APIs of multiple SFU implementations, then
 revised against the first conforming production backend (LiveKit) as its
@@ -12873,9 +13838,11 @@ plane**. An external SFU (Selective Forwarding Unit) routes media between
 human participants; RoomKit orchestrates the conference and joins it as a
 participant to provide intelligence: transcription, vision, AI voice,
 recording, and cross-channel integration.
+<!-- /rfc -->
 
 #### 12.10.1 Design Principles
 
+<!-- rfc: {"id": "RK-12.10.1-001", "kind": "behavior", "applies": "§12.10.1 Design Principles; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 1. **RoomKit orchestrates; the SFU transports.** Per-packet media routing
    between human participants — codec negotiation, simulcast layer
    selection, bandwidth estimation, NACK/PLI retransmission — is the SFU's
@@ -12911,9 +13878,11 @@ recording, and cross-channel integration.
    frames, and mints credentials the framework never inspects. SDP, ICE,
    codecs, simulcast layers, and bitrates do not appear in any framework
    interface.
+<!-- /rfc -->
 
 #### 12.10.2 Data Models
 
+<!-- rfc: {"id": "RK-12.10.2-001", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **TrackKind** enumeration:
 
 | Value | Description |
@@ -12921,7 +13890,9 @@ recording, and cross-channel integration.
 | AUDIO | Microphone audio, or the sound of a screen share |
 | VIDEO | Camera video |
 | SCREEN_SHARE | Screen share video |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.2-002", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **ConferenceTrack** — a single published media stream:
 
 ```
@@ -12938,7 +13909,9 @@ ConferenceTrack
 ConferenceBackend instance serves many rooms, and `on_track_audio` /
 `on_track_video` carry only a ConferenceTrack. Every ConferenceTrack a
 backend emits MUST carry the room it belongs to.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.2-003", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **ConferenceParticipant** — a participant's media presence:
 
 ```
@@ -12958,7 +13931,9 @@ dial-in carries its caller number there, and that number is precisely what
 identity resolution consumes (Section 5.6, `channel_addresses`). Dropping
 them leaves the framework with an opaque identifier and no way to connect
 the caller to a known Identity.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.2-004", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Where those attributes came from (normative).** `metadata` says what the
 provider surfaced; it does not say who put it there. On most SFUs one
 attribute map carries two very different things: facts the server
@@ -12988,7 +13963,9 @@ The specification names the fact rather than the policy. What an
 implementation may do with each of the two sets is stated where it consumes
 them — for identity resolution, under *Resolving the participant the
 framework did not name* below.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.2-005", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **ConferenceGrants** — least-privilege permissions encoded into access:
 
 ```
@@ -13015,7 +13992,9 @@ only `publish_screen_share`, and granting one never implies the other.
 Once published, the sound is a track of kind AUDIO: a separate right, not
 a separate kind, so the framework transcribes and records it like any
 other audio track, attributed to the participant sharing.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.2-006", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **ConferenceAccess** — credentials for a human client to join:
 
 ```
@@ -13030,7 +14009,9 @@ The framework treats ConferenceAccess as **opaque**: the backend mints it,
 the integrator returns it to the client application (e.g., via the REST
 surface), and the provider's client SDK consumes it. Framework code MUST
 NOT depend on its internal structure beyond the fields above.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.2-007", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Participant identity correlation (normative).** Every attribution
 guarantee in this section — transcription RoomEvents, Participant records,
 interruption allowlists — depends on `participant_id` meaning the same
@@ -13055,7 +14036,9 @@ thing on both sides of the backend boundary. Therefore:
    the same Identity it would have reached over the SMS or Voice channel.
 4. Identities MUST NOT be reused across participants within a room's
    lifetime.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.2-008", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Resolving the participant the framework did not name.** Rule 3 says the
 address must reach identity resolution; when it does so, and what becomes of
 the answer, decide whether the rest of the section still holds.
@@ -13086,7 +14069,9 @@ destination number (`sip.trunkPhoneNumber` and equivalents) MUST NOT be
 taken for the caller's address. Where no resolvable address is found, the
 channel MUST leave the participant `UNKNOWN` rather than resolving on the
 opaque identity, which is the case rule 3 rules out.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.2-009", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **An address is only as good as its provenance.** Which key carries the
 address is the second question; the first is who put the value there. An
 attribute a participant's own client supplied is a claim about itself: a
@@ -13113,7 +14098,9 @@ the safe reading is the one that holds unconfigured. Where an implementation
 carries the provider's attributes into resolution as context, the ones it
 did not vouch for MUST remain distinguishable from the ones it did, so that
 a resolver reading them does so knowingly.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.2-010", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **What the Participant record keeps of them.** Provider attributes are worth
 persisting — they are how an integrator finds out that a participant dialled
 in, on what trunk, under which SIP call id. But a Participant's `metadata`
@@ -13129,7 +14116,9 @@ on a Participant MUST therefore:
 - bound what is persisted — the number of attributes and the size of each —
   since on a conference open to dial-in, their content is chosen by whoever
   connects.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.2-011", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **An arrival is not an inbound message**, and the parts of Section 11 that
 act on one do not apply to it: there is nothing to hold, nothing to reject and
 nowhere to inject a challenge, so an arrival MUST NOT fire the
@@ -13141,7 +14130,9 @@ CHALLENGE_SENT leave the participant `UNKNOWN`. Section 11.5 applies to the
 call: on timeout the implementation MUST treat the result as UNKNOWN, emit
 `identity_timeout`, and let the participant join regardless. A resolver that
 raises MUST NOT keep a participant out of the conference.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.2-012", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **BotSession** — the framework's own connection to a conference:
 
 ```
@@ -13163,7 +14154,9 @@ conference its end announcement rather than the duration alone.
 Implementations SHOULD settle the timezone when the session is recorded, so
 that a backend's omission is reported at the boundary it came from rather
 than raised from the teardown.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.2-013", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **ConferenceCapability** flags:
 
 | Flag | Description |
@@ -13191,7 +14184,9 @@ way to change a live bot's grants is to replace the session, and Section
 12.10.4 (**Hot-plugging intelligence**) specifies exactly that fallback.
 What the capability buys is continuity — a re-permission with the
 session, its subscriptions and the event bridge intact.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.2-014", "kind": "behavior", "applies": "§12.10.2 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **E2EE and framework media access (normative).** E2EE is the one
 capability that constrains rather than extends what the framework can do:
 when it is active, the bot receives ciphertext it cannot decode, so STT
@@ -13211,9 +14206,11 @@ configuration error. An implementation offering E2EE MUST then do one of:
   channel with `e2ee` set.
 
 Silently delivering undecodable frames to a lane is NOT conforming.
+<!-- /rfc -->
 
 #### 12.10.3 ConferenceBackend Interface
 
+<!-- rfc: {"id": "RK-12.10.3-001", "kind": "structural", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 ConferenceBackend (interface)
 ├── name: string (property)             # Backend identifier
@@ -13254,7 +14251,9 @@ ConferenceBackend (interface)
 ├── on_bot_session_ended(callback)      # (BotSession, reason)
 └── close() → void
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.3-002", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Presence is observable only through a connection (normative):** the
 participant, track, audio and speaker callbacks describe a conference that
 a bot session of this backend is connected to. Before the first
@@ -13280,7 +14279,9 @@ observed the room without a connection may have nothing left to say; one
 that could not observe it reports everything it finds. What ended before
 the join — an arrival that left again, a track unpublished — is not
 recoverable, exactly as across a reported discontinuity.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.3-003", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The bot's own connection (normative):** an SFU can end the bot's session
 without a `leave()` — the connection drops, a moderator evicts the bot, the
 room is deleted under it. A backend that observes such an end MUST report
@@ -13325,7 +14326,9 @@ reported end while the room remains attached and collecting — the ended
 session was what received the frames and events, so no backend event can
 produce the lazy join's "next need"; a later mint or delivery could, but
 mid-meeting there may never be another of either.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.3-004", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Frame delivery requirements:**
 
 - `on_track_audio` MUST deliver decoded PCM as AudioFrames with a declared
@@ -13335,7 +14338,9 @@ mid-meeting there may never be another of either.
   applies, reusing the existing `is_encoded` mechanic.
 - Frames MUST be attributable: the ConferenceTrack passed with each frame
   carries the publishing `participant_id` and `room_id`.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.3-005", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Frame publishing requirements:**
 
 - `publish_audio` takes an AudioChunk (Section 12.3.11) — the outbound stream
@@ -13358,7 +14363,9 @@ is deliberate: an encoded inbound frame is self-describing and the
 VideoPipeline decoder stage handles whatever arrives, whereas an encoded
 outbound frame requires choosing a codec the SFU will accept before any
 frame exists.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.3-006", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Stopping playback (normative):** `stop_playback()` is the barge-in
 gesture — the one call that says the room asked for silence *now*, rather
 than at the end of whatever the transport has buffered. A participant who
@@ -13385,7 +14392,9 @@ cut the bot off is not asking for the queue to finish playing.
   can discard at least what it still holds, and one that holds nothing —
   publishing synchronously into the SFU — simply returns. What varies
   between backends is the residue, not the meaning of the call.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.3-007", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Mute transitions (normative):** `ConferenceTrack.muted` is the
 publisher's own state, and a backend able to observe it change MUST keep
 the record true to it and SHOULD report each transition through
@@ -13395,7 +14404,9 @@ clients express "camera off" as a muted VIDEO track rather than an
 unpublish, so a mute is often the only signal a camera toggle produces —
 and they are subject to the same rule as every other callback here:
 observable only through a connection.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.3-008", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Track subscription:** the framework's subscription set is authoritative.
 `subscribe_track()` / `unsubscribe_track()` are the only mechanism by which
 the bot begins or stops receiving a track's frames, and a backend MUST NOT
@@ -13403,7 +14414,9 @@ deliver `on_track_audio` / `on_track_video` for a track the bot has not
 subscribed to. Backends whose SDK auto-subscribes by default MUST disable
 that behaviour for the bot session. The channel's subscription policy is
 specified in Section 12.10.4.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.3-009", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Bot grants:** `join_as_bot()` takes ConferenceGrants like `mint_access()`
 does, because the bot's own permissions vary by AI participation pattern
 (Section 12.10.6): a speaking bot needs `publish_audio`, an Observer bot is
@@ -13437,7 +14450,9 @@ backend is expected to retract a participant its SFU already announced:
 there is no interface for un-telling a client, so the channel never
 asks — a visible-to-hidden transition replaces the session instead
 (Section 12.10.4).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.3-010", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Display names:** `mint_access()` MAY be given the participant's
 `display_name`, and a channel with a roster SHOULD pass the one on record.
 It is presentation, never identity: attribution rides `participant_id`
@@ -13449,7 +14464,9 @@ name to fill a roster record that has none — never to overwrite one the
 integrator set — which is what returns names to a roster rebuilt from the
 join's catch-up after a restart (Section 12.10.4 step 1): the credential
 outlives the process that minted it, and the name rides the credential.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.3-011", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Participant attributes:** `mint_access()` MAY be given `attributes`, a
 map of string keys to string values the caller wants carried on the
 participant it is admitting. It exists because the identity is otherwise
@@ -13483,7 +14500,9 @@ emitting what the same implementation would refuse to store is a
 credential whose contents cannot survive the round trip. Refusing is
 RECOMMENDED over truncating here — the caller is the integrator, which
 is the one party in this exchange that can be told.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.3-012", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Moderation:** `mute_track()` is always available. `unmute_track()` requires
 the REMOTE_UNMUTE capability; calling it on a backend without that
 capability MUST raise a configuration error rather than failing silently or
@@ -13491,12 +14510,16 @@ appearing to succeed. Implementations MUST NOT assume the two operations
 are symmetric, and SHOULD surface the asymmetry to the integrator — a
 moderation UI that offers unmute against a backend that refuses it is a
 worse outcome than one that never offers it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.3-013", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Abstraction boundary (normative):** the interface deliberately omits SDP
 negotiation, ICE, codec selection, simulcast/SVC layer control, and bitrate
 management. A backend MUST NOT require the integrator or the framework to
 handle any of these; they are internal to the SFU and its client SDKs.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.3-014", "kind": "behavior", "applies": "§12.10.3 ConferenceBackend Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Required implementations:**
 
 | Backend | Purpose |
@@ -13505,9 +14528,11 @@ handle any of these; they are internal to the SFU and its client SDKs.
 
 Implementations MAY provide backends for any SFU whose server API can
 satisfy this interface (e.g., LiveKit, Janus, Daily — informative).
+<!-- /rfc -->
 
 #### 12.10.4 ConferenceChannel
 
+<!-- rfc: {"id": "RK-12.10.4-001", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The ConferenceChannel orchestrates a conference for a room. It owns the
 ConferenceBackend, demultiplexes tracks into the existing audio and video
 pipelines, and represents the AI's voice in the conference.
@@ -13533,7 +14558,9 @@ ConferenceChannel
 ├── close_room_on_detach: bool = false  # Whether detach calls close_room()
 └── speak_text_events: bool = false     # Speak inbound text from other channels
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-002", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Lifecycle:**
 
 1. When the channel is attached to a room, the channel MUST call
@@ -13662,7 +14689,9 @@ clients say "camera off". None of these is collection — no media is read
 to relay them — so none is gated by the binding's collection state, and
 the bot's own tracks are excluded exactly as they are from every other
 track event.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-003", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **One conference per room (normative):** principle 2's mapping is 1:1 in
 both directions, and the attachment is where that is enforceable:
 implementations MUST refuse to attach a conference channel to a room that
@@ -13683,7 +14712,9 @@ books, a teardown still running — not merely while its binding exists.
 And it is a refusal, not a wait: the attach may be issued from inside the
 very announcement the teardown is deferred behind, where waiting is a
 deadlock. The caller retries once the teardown has ended.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-004", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Bot self-exclusion (normative):** the bot is itself a conference
 participant, and some backends report it back through
 `on_participant_joined` or echo its published track. The channel MUST
@@ -13693,7 +14724,9 @@ NOT subscribe to a track it published. Without this rule the bot's own TTS
 returns through a lane, the STT transcribes the AI's own speech, and the
 AIChannel answers itself — a feedback loop the chain depth limit (Section
 8.3) would only bound, not prevent.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-005", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Closing and shared state (normative):** a conference channel's bookkeeping
 lives in resources it does not own — the conversation store and the room lock
 manager belong to the framework, which releases them after the channels
@@ -13947,7 +14980,9 @@ observer is not the work that fired it, which does not wait for it: a
 `close()` it calls waits for that work and cuts it as any other.
 A `close()` called from the shutdown's own work (a hook it fires as it
 closes) returns at once.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-006", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Admitting participants:** the channel exposes `mint_access()` for a
 participant of the room, applying `default_grants` unless the caller
 overrides them. The integrator delivers the resulting ConferenceAccess to
@@ -13985,7 +15020,9 @@ revocation, and implementations SHOULD say so — the backend may have
 recorded a credential nobody received, and only the operator can decide
 whether it needs revoking there. `close()` carries the same obligation
 before it closes the backend.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-007", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Per-track audio lanes:**
 
 ```
@@ -14040,7 +15077,9 @@ Within a lane:
   one identity), and the transcription arrives only after the recognizer's
   round trip. An unsubscribed track has no lane and therefore no speech
   events — this is collection, and the binding's gate applies.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-008", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Lane isolation:** processing one track MUST NOT delay frame delivery for
 any other. A backend hands frames to its subscribers in sequence, so a lane
 that does its work — speech recognition above all — inside the delivery
@@ -14051,7 +15090,9 @@ and returns, doing its work on its own schedule.
 This is what separates a lane from a callback, and unlike the stage list it
 is observable from outside: an implementation can be checked by delaying
 recognition on one track and measuring frame delivery on another.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-009", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Overload:** a lane accepting frames faster than it processes them MUST
 bound what it holds. An unbounded backlog turns a slow recognizer into
 unbounded memory and a lag behind the live conversation that only grows.
@@ -14063,16 +15104,22 @@ resynchronising loses more audio but never emits a transcript stitched
 across a hole. Implementations MUST document which they do, and MUST expose
 how much was discarded — an integrator who cannot see the loss will read a
 damaged transcript as a bad recognizer.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-010", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Per-track video lanes:**
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-011", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Planned.** No implementation analyses conference video yet: the
 reference channel consumes AUDIO tracks only. When it does, VIDEO and
 SCREEN_SHARE tracks route through the VideoPipeline (Section 12.8.4) —
 decoder (if needed), transforms, filters, vision analysis — and
 VisionResults are attributed to the publishing participant and reach the AI
 turns as the `<vision>` block of Section 12.8.7.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-012", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Selective subscription:** the channel MUST call `subscribe_track()` only
 for tracks it consumes, and MUST NOT rely on backend auto-subscription
 (Section 12.10.3). AUDIO tracks are subscribed when STT, recording, or
@@ -14087,7 +15134,9 @@ Subscription is re-evaluated when configuration changes at runtime: adding
 a VisionProvider to a live conference MUST subscribe the already-published
 video tracks, and removing the last consumer of a track MUST
 `unsubscribe_track()` it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-013", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Collection gate (normative):** the room binding permits collection while
 the channel is attached to the room and the binding can write under Section
 7.5 — `access` ∈ {READ_WRITE, WRITE_ONLY} and `muted = false`. While it does
@@ -14097,7 +15146,9 @@ When the gate closes, frames stop being routed at once; the channel then
 unsubscribes every track, closes its lanes and finalizes its recordings. When
 it reopens with a bot in the conference, the published tracks the channel
 consumes are subscribed again.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-014", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Hot-plugging intelligence (normative):** the configuration first need is
 read from — stt, tts, recording, and vision where an implementation
 carries it — is not fixed at construction. Implementations MUST let each
@@ -14180,7 +15231,9 @@ Explicit `bot_grants` are never rewritten by a plug or an unplug — the
 caller who set them took coverage on themselves (the coverage rule
 binds derived grants only, below), and that holds at runtime exactly as
 at construction.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-015", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Runtime ownership of explicit grants (normative):** that the plugs
 never rewrite an explicit `bot_grants` does not make the grant set
 immutable — it makes it *owned*. The owner is the caller who set it, and
@@ -14241,7 +15294,9 @@ half of the answer moves too, and an implementation's surface MUST
 report the configuration in force, not the construction — a meeting that
 gained a transcriber mid-way reads as transcribed from that moment, and
 one that lost it reads as clean.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-016", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Outbound (deliver):**
 
 When a broadcast event reaches the conference binding and TTS is
@@ -14249,7 +15304,9 @@ configured, the channel MUST synthesize once (BEFORE_TTS / AFTER_TTS hooks
 apply) and publish the audio on the bot track via `publish_audio()`. The
 SFU distributes it to all participants. Targeted per-participant audio is
 NOT supported in this revision: one bot track, heard by all.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.4-017", "kind": "behavior", "applies": "§12.10.4 ConferenceChannel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **One utterance at a time (normative):** the channel MUST NOT interleave the
 chunks of two utterances on the bot track. There is one track and the SFU
 mixes nothing for it, so two utterances published together do not arrive as
@@ -14308,9 +15365,11 @@ meeting where unrelated channel traffic read aloud is disruptive to
 everyone at once. The restrictive default is therefore normative, not a
 convention: implementations MUST NOT speak non-AI text events unless
 `speak_text_events` is set.
+<!-- /rfc -->
 
 #### 12.10.5 Multi-Party Interruption Policy
 
+<!-- rfc: {"id": "RK-12.10.5-001", "kind": "behavior", "applies": "§12.10.5 Multi-Party Interruption Policy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 In a 1:1 voice session, any user speech may interrupt TTS playback
 (Section 12.6). In a conference, *who* can interrupt the AI is policy:
 
@@ -14344,15 +15403,19 @@ transport already holds is discarded instead of playing on over the
 participant (Sections 12.10.3 and 12.10.4). The utterances still waiting for
 their turn in that room are dropped unpublished. `ON_BARGE_IN` fires with the
 interrupting participant identified.
+<!-- /rfc -->
 
 #### 12.10.6 AI Participation Patterns
 
+<!-- rfc: {"id": "RK-12.10.6-001", "kind": "behavior", "applies": "§12.10.6 AI Participation Patterns; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **STT/TTS (default).** Per-track STT lanes produce attributed
 transcription RoomEvents; an AIChannel in the room responds through the
 normal broadcast pipeline; the response is spoken via the bot track. The
 AI requires no conference-specific mechanics and sees a fully attributed
 multi-speaker transcript.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.6-002", "kind": "behavior", "applies": "§12.10.6 AI Participation Patterns; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Speech-to-speech (OPTIONAL).** A RealtimeVoiceProvider (Section 12.4)
 may be composed with a conference: subscribe to all AUDIO tracks, mix
 N→1, feed the provider, and publish its audio output on the bot track.
@@ -14361,7 +15424,9 @@ attribution ends, how the provider's voice meets the utterance contract,
 and how it crosses the interruption policy. Per-speaker attribution is
 lost at the provider boundary; implementations SHOULD run per-track STT
 lanes in parallel when transcripts are required.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.6-003", "kind": "behavior", "applies": "§12.10.6 AI Participation Patterns; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Observer.** A bot joined with `bot_grants` set to subscribe-only and
 `hidden`, with STT lanes but no TTS — transcription, compliance
 monitoring, or meeting summarization without a voice presence. Whether a
@@ -14369,9 +15434,11 @@ silent transcribing bot may stay invisible to participants is a legal
 question, not a framework one; this specification does not restrict
 `hidden`, and Section 17.7 sets out what the framework exposes so the
 integrator can meet the disclosure rules that apply to it.
+<!-- /rfc -->
 
 #### 12.10.7 Conference State Events
 
+<!-- rfc: {"id": "RK-12.10.7-001", "kind": "behavior", "applies": "§12.10.7 Conference State Events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Hooks** (Section 9.2): `ON_CONFERENCE_PARTICIPANT_JOINED`,
 `ON_CONFERENCE_PARTICIPANT_LEFT`, `ON_CONFERENCE_TRACK_PUBLISHED`,
 `ON_CONFERENCE_TRACK_UNPUBLISHED`, `ON_CONFERENCE_TRACK_MUTED`,
@@ -14384,7 +15451,9 @@ The track triggers carry the `CONFERENCE_` prefix to keep them distinct
 from `ON_VIDEO_TRACK_ADDED` / `ON_VIDEO_TRACK_REMOVED` (Section 12.8),
 which describe tracks within a single VideoChannel session rather than
 publications by other participants in a conference.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.7-002", "kind": "behavior", "applies": "§12.10.7 Conference State Events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Ephemeral events** (Section 8.4): high-frequency media state MUST NOT be
 stored as RoomEvents; implementations SHOULD publish it via the
 RealtimeBackend instead:
@@ -14392,7 +15461,9 @@ RealtimeBackend instead:
 - `conference_track_muted` / `conference_track_unmuted`
 - `conference_active_speaker`
 - `conference_connection_quality`
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.7-003", "kind": "behavior", "applies": "§12.10.7 Conference State Events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Framework events** (Section 8.2), with their emission points:
 
 | Event | Emitted when |
@@ -14414,9 +15485,11 @@ the end is not always the last conference event a room emits; without the
 session identifier an observer cannot tell which conference it is the end
 of. The same identifier appears on `conference_started`, and pairing them is
 the only ordering guarantee available in that case.
+<!-- /rfc -->
 
 #### 12.10.8 Recording
 
+<!-- rfc: {"id": "RK-12.10.8-001", "kind": "behavior", "applies": "§12.10.8 Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 ConferenceRecordingConfig
 ├── mode: "framework" | "egress" = "framework"
@@ -14453,7 +15526,9 @@ or polling the SFU's job API. An integrator that opts into egress collects
 its output through the provider's own mechanism. Switching between the two
 modes is therefore not a transparent configuration change, and
 implementations SHOULD document it as such.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.8-002", "kind": "behavior", "applies": "§12.10.8 Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Recorder mapping.** AudioRecorder (Section 12.3.7) and VideoRecorder
 (Section 12.8.10) are specified around a session, with a handle carrying a
 `session_id`: AudioRecorder records its two directions (`record_inbound` /
@@ -14489,7 +15564,9 @@ An implementation recording a conference in framework mode MUST:
   or the conference left — without ending the others.
 - Stop recording when the room binding stops permitting collection, on the
   same gate as transcription (Section 12.10.4). Recording is collection.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.8-003", "kind": "behavior", "applies": "§12.10.8 Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A recording is opened on a format.** That declaration is made once, on the
 frame that opens the track's recording, and a container fixes its streams at
 the first write — so a later frame in another format has no honest place in
@@ -14497,7 +15574,9 @@ it. An implementation MUST NOT write one anyway: it is discarded, reported
 through the same loss the overload bound owes below, and said in the log. A
 recording missing the seconds where a publisher renegotiated has a defect
 anyone can see; one that wrote them is a file that opens and lies.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.8-004", "kind": "behavior", "applies": "§12.10.8 Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Writing is not the callback's work.** Recording a track MUST NOT delay
 frame delivery for any other. This is the lane isolation rule of Section
 12.10.4, and it applies to the recorder for the same reason it applies to
@@ -14521,7 +15600,9 @@ misleading one — it ends early and says nothing about it — and a budget is
 what keeps a recorder that has stopped draining from holding the teardown, and
 with it the bot, in the conference. What the budget could not write is loss,
 and is reported as such.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.8-005", "kind": "behavior", "applies": "§12.10.8 Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Reporting the result.** A framework-mode recording ends with a
 `MediaRecordingResult` naming where it was written, and the framework SHOULD
 report it: `ON_RECORDING_STARTED` when a track's recording opens,
@@ -14555,9 +15636,11 @@ Video tracks take the same shape where an implementation records them
 (`RecordingTrack.kind` distinguishes them), which is per-track and therefore
 never a composed recording. A grid or active-speaker layout stays egress
 territory, for the reason given above.
+<!-- /rfc -->
 
 #### 12.10.9 Cross-Channel Integration
 
+<!-- rfc: {"id": "RK-12.10.9-001", "kind": "behavior", "applies": "§12.10.9 Cross-Channel Integration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Because the conference is a room, integration with other channels requires
 no new mechanism:
 
@@ -14583,9 +15666,11 @@ no new mechanism:
   fact the SFU established, and a backend admitting phone participants
   SHOULD say so through `asserted_metadata` — otherwise the one address the
   framework can act on is indistinguishable from one a client typed.
+<!-- /rfc -->
 
 #### 12.10.10 Relationship to Audio Bridging (Section 12.7)
 
+<!-- rfc: {"id": "RK-12.10.10-001", "kind": "behavior", "applies": "§12.10.10 Relationship to Audio Bridging (Section 12.7); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 | Criterion | AudioBridge (12.7) | Conference (12.10) |
 |---|---|---|
 | Media plane | In-process (framework forwards/mixes) | External SFU |
@@ -14598,9 +15683,11 @@ no new mechanism:
 Both MAY coexist in one implementation. They do not share interfaces:
 AudioBridge operates on VoiceSessions; conferences operate on
 ConferenceTracks.
+<!-- /rfc -->
 
 #### 12.10.11 Conformance
 
+<!-- rfc: {"id": "RK-12.10.11-001", "kind": "behavior", "applies": "§12.10.11 Conformance; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Conference support is part of **Conformance Level 3 (Real-Time Media)**
 and is OPTIONAL. It is STABLE (see the status note above).
 
@@ -14692,9 +15779,11 @@ Implementations that compose speech-to-speech providers (Section
 - Keep the per-lane VAD as the interruption sensor and enforce
   ConferenceInterruptionConfig scope on it.
 - Run per-track VAD whenever a speech-to-speech provider is composed.
+<!-- /rfc -->
 
 #### 12.10.12 Speech-to-Speech Composition
 
+<!-- rfc: {"id": "RK-12.10.12-001", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A conference MAY compose a RealtimeVoiceProvider (Section 12.4) as its
 intelligence: the participants' voices reach one realtime session, and
 the provider's voice is the bot's. This is the sub-second, natively
@@ -14729,7 +15818,9 @@ a conference. The backend keeps the interface of Section 12.10.3 —
 tracks in, one bot track out. The channel between them keeps every
 contract of Sections 12.10.4 and 12.10.5. What this section specifies
 is the crossing itself.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.12-002", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **N→1: the provider hears a mix (normative).** Implementations MUST
 feed the provider one stream mixed from every subscribed AUDIO track,
 using the additive algorithm of Section 12.7.5: samples promoted and
@@ -14751,7 +15842,9 @@ backend can produce. The mixer itself stays private: the *algorithm* of
 Section 12.7.5 is reusable, the AudioBridge interface is not (Section
 12.10.10), and this specification defines no mixer provider interface —
 an implementation MAY factor one out privately.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.12-003", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Attribution ends at the provider boundary (normative).** A mix
 carries no speaker identity, so nothing downstream of it can. The
 provider's user-role transcriptions MUST NOT be stored as RoomEvents
@@ -14775,7 +15868,9 @@ hold. Final assistant transcriptions MUST be emitted as RoomEvents
 attributed to the channel — no participant is their author — and MUST
 NOT be delivered back into the conference's own voice path: the words
 were already heard once, on the bot track.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.12-004", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Proactive delivery (normative).** The provider's room session is the
 conference's realtime destination (Section 22): a delivery naming the
 conference, with no intelligence address, MUST be injected into that
@@ -14786,7 +15881,9 @@ track, the provider hears nobody speak, no tool call of the session is in
 flight, and no result (or delegation fallback) sent to the model is still
 waiting for its answer (Section 12.4.1), as on a realtime voice channel. The
 injection fires ON_REALTIME_TEXT_INJECTED.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.12-005", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A delegation is always answered (normative).** A full-duplex provider's
 delegation fires ON_REALTIME_DELEGATION; a conference serves no reasoning
 backend, so an integrator-side delegation is answered with the spoken
@@ -14794,7 +15891,9 @@ fallback a realtime voice channel without a backend gives (Section 12.4.1),
 never left waiting. A delegation the provider issues while the room's session
 is still connecting is answered once the session is the room's, as a tool call
 issued then is served.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.12-006", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **One voice per bot (normative).** A channel MUST refuse a
 configuration holding both a synthesizer (tts) and a speech-to-speech
 provider, at construction and at the plugs alike. There is one bot
@@ -14803,7 +15902,9 @@ the room would answer over each other, and no turn-taking rule turns
 two intelligences into one voice. A deployment that wants to trade the
 STT/TTS pattern for the realtime one does it through the plugs —
 unplug one, plug the other — and never holds both.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.12-007", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The provider's voice is an utterance (normative).** Provider audio
 reaches the conference through the outbound contract of Section
 12.10.4 unchanged: a response takes its turn and opens an utterance,
@@ -14815,7 +15916,9 @@ AFTER_TTS do not fire — they are text-synthesis hooks and no text
 precedes this synthesis. ON_BARGE_IN fires as always, though its
 `interrupted_text` MAY be empty when the interruption lands before the
 first assistant transcript delta has arrived.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.12-008", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Interruption has one sensor and two effects (normative).** Section
 12.10.5 stays the policy authority, and the per-lane VAD stays its
 sensor: ON_BARGE_IN MUST identify the interrupting participant, and
@@ -14843,7 +15946,9 @@ behaviour with the configured scope where the provider exposes it
 provider's detection for the policy: scope enforcement,
 `stop_playback()` and ON_BARGE_IN remain the framework's, whatever the
 provider does with its generation.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.12-009", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The session follows the bot (normative).** One provider session
 serves one conference, scoped within the lifetime of the bot session
 whose track it speaks on. Speech-to-speech is a first need under
@@ -14863,7 +15968,9 @@ error's type name), so the integrator learns the model is unreachable.
 When the bot session ends — detach, unplug,
 backend-side loss, close — the provider session is disconnected with
 it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.12-010", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The lanes stay on.** Composing a provider suspends none of the
 per-track machinery: VAD, speech edges, recording, and STT lanes where
 configured all run as before. The pipeline requirement of Section
@@ -14871,7 +15978,9 @@ configured all run as before. The pipeline requirement of Section
 MUST run per-track VAD even when no STT is configured — without it the
 interruption policy of Section 12.10.5 has no sensor, and the bot
 cannot be interrupted at all.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.10.12-011", "kind": "behavior", "applies": "§12.10.12 Speech-to-Speech Composition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A tool call is a realtime tool call (normative).** A call the
 provider issues passes the pre-execution gate of Section 12.4 before it
 reaches the configured handler, in that section's order: the
@@ -14892,9 +16001,11 @@ declared to the provider; the mix names no participant, so its base
 rules apply, never a role override. The conference is a door to the same
 tools as any other channel, and a gate that holds on one door and not
 another holds on neither.
+<!-- /rfc -->
 
 ### 12.11 Room Media Recording
 
+<!-- rfc: {"id": "RK-12.11-001", "kind": "behavior", "applies": "§12.11 Room Media Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Sections 12.3.7 and 12.8.10 each record a *session*: one participant, one
 medium — audio in the two directions a session has (12.3.7), the video the
 session receives (12.8.10). A room is not a session. It holds
@@ -14962,7 +16073,9 @@ and the recordings of a room already holding that id MUST NOT be touched.
 `ON_RECORDING_STARTED` fires for each recording once the room exists, which
 still precedes any media: a room recording captures nothing until a track is
 added.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.11-002", "kind": "behavior", "applies": "§12.11 Room Media Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Recorders started on an existing room** obey the same rules: a room that is
 missing, another organization's (§17.2), or whose status refuses new events
 (§5.1) is refused before any recorder starts; the recorders start all or
@@ -14981,7 +16094,9 @@ its consent point is announced again. A caller feeding a room recording from a
 source the framework does not wire itself declares each track to the room's
 recordings and hands them its media through the framework, never through a
 recorder it holds.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.11-003", "kind": "behavior", "applies": "§12.11 Room Media Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A room recording's end is announced.** When a room's recordings stop, on an
 explicit stop, when the room closes or is archived, or when the framework
 shuts down, `ON_RECORDING_STOPPED` fires for each recording that stopped, with
@@ -15020,7 +16135,9 @@ call rather than assuming one.
 it is the recorder's only source for it: the interface carries no session and
 no direction. An implementation MUST populate it wherever the framework knows
 the publisher.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.11-004", "kind": "behavior", "applies": "§12.11 Room Media Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A track describes its own media.** `codec`, `sample_rate` and `channels`
 are how a recorder learns to interpret the bytes it is then handed: `on_data`
 carries none of it, and PCM in particular is indistinguishable from any other
@@ -15042,7 +16159,9 @@ container that fixes its streams at the first write cannot honour a late one
 — and MUST say so rather than silently dropping the media. A caller that
 cannot predict its tracks opens one recording per track instead, which is why
 a conference does.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.11-005", "kind": "behavior", "applies": "§12.11 Room Media Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Which thread calls it.** Every call in this interface is synchronous, and
 what they do — encode a frame, write a container, close a file — blocks for
 as long as the storage takes. An implementation MAY therefore call a recorder
@@ -15068,7 +16187,9 @@ finalize a recording whose write has passed that budget and is still running,
 and MUST report it when it does. Recorders are not asked to make that case
 safe; they are told it exists, because the alternative reading is that it
 cannot happen.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.11-006", "kind": "behavior", "applies": "§12.11 Room Media Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Every wait is bounded, the close included.** The budget of Section 12.10.8
 covers what a recording holds *before* it is finalized; `on_track_removed()`
 and `on_recording_stop()` are calls into the same recorder and block the same
@@ -15078,7 +16199,9 @@ recording it stopped waiting for — the result is unknown, so where the media
 was written goes unreported rather than guessed. Recorders MUST NOT read the
 absence of a further call as permission to discard: what they were told to
 close is still theirs to close.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.11-007", "kind": "behavior", "applies": "§12.11 Room Media Recording; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A recorder is not released while a call is running in it.** `close()` frees
 whatever the recorder holds, and freeing the context a call is executing inside
 is not an error a recorder can return — for one wrapping a native muxer it is a
@@ -15090,10 +16213,12 @@ implementation that still cannot settle them MUST leave the recorder unreleased
 and MUST say so. Leaking a recorder is a bounded cost; calling into a freed one
 is not.
 
+<!-- /rfc -->
 ---
 
 ### 12.12 Capture Sources
 
+<!-- rfc: {"id": "RK-12.12-001", "kind": "behavior", "applies": "§12.12 Capture Sources; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Every voice transport (VoiceBackend, Section 12.2) acquires its capture device when a session
 starts and releases it when that session ends. That is the right lifetime for a
 call, and the wrong one for anything that must be listening *before* there is a
@@ -15132,7 +16257,9 @@ A capture source is **not** a `VoiceBackend` and MUST NOT implement that
 interface. A backend is keyed by `VoiceSession` throughout; a source has no
 notion of a session, and conflating the two reintroduces the lifetime this
 section exists to break.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.12-002", "kind": "behavior", "applies": "§12.12 Capture Sources; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Lifetime is explicit and independent of subscribers.** `start()` and `stop()`
 are the only things that acquire and release the device. A source MUST NOT stop
 capturing because its subscriber count reached zero, and MUST NOT start
@@ -15140,7 +16267,9 @@ because it became non-zero. A consumer may therefore unsubscribe at any moment
 without endangering another subscriber's audio — which is what makes it safe
 for a wake-word detector to detach for the duration of a session and reattach
 after.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.12-003", "kind": "behavior", "applies": "§12.12 Capture Sources; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Frames are raw.** A source emits what the device gave it. Echo cancellation
 is per-session — it needs the reference signal of what *that* session is
 playing — so it belongs downstream, applied by the backend after fan-out, not
@@ -15148,7 +16277,9 @@ in the source. A subscriber that stays attached while a session is playing
 audio therefore hears the far end unattenuated, and MUST NOT assume otherwise.
 Sample-rate conversion is likewise the subscriber's concern: a source has one
 format, and a consumer that needs another resamples it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.12-004", "kind": "behavior", "applies": "§12.12 Capture Sources; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Fan-out is synchronous on the capture thread.** This is what keeps the
 existing AEC invariant intact — capture and reference must stay in step, which
 they cannot do across a queue hop. The consequence is a contract every
@@ -15166,7 +16297,9 @@ each callback and logging a rate-limited warning past a fraction of the block
 duration turns "the audio crackles" into "this subscriber is slow". A
 subscriber that raises MUST be caught and logged; an exception MUST NOT
 propagate into the capture stream.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.12-005", "kind": "behavior", "applies": "§12.12 Capture Sources; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The backlog.** A source retains recent frames in a bounded ring — bounded by
 duration and by bytes, evicting oldest-first. `mark()` names a position in it;
 `subscribe(since=mark)` replays from there before delivering anything live.
@@ -15183,12 +16316,16 @@ discard the very utterance the backlog exists to preserve, and a partial phrase
 is worth more than none. It MUST report the degradation — `truncated` on the
 subscription, and a log line — so that silence is never mistaken for
 completeness. `replayed_bytes` is reported in every case.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.12-006", "kind": "behavior", "applies": "§12.12 Capture Sources; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Addressing by mark, not by duration.** A "replay the last N seconds" request
 forces the caller to guess: too short truncates the utterance, too long
 replays the tail of the previous conversation into the provider. A mark placed
 where the speech actually began has neither failure.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-12.12-007", "kind": "behavior", "applies": "§12.12 Capture Sources; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Composition with the realtime path.** The session-start sequence of Section
 12.4 already retains inbound audio across the provider handshake and flushes
 it in order once the handshake completes. Replayed frames enter through the
@@ -15207,15 +16344,19 @@ require word-level timestamps the detector does not have. Providers handle the
 address form well. Implementations SHOULD treat the wake word's presence as
 intended rather than filter it.
 
+<!-- /rfc -->
 ---
 
 ## 13. Resilience and Error Handling
 
 ### 13.1 Circuit Breaker
 
+<!-- rfc: {"id": "RK-13.1-001", "kind": "behavior", "applies": "§13.1 Circuit Breaker; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Each channel SHOULD have an associated circuit breaker to prevent cascading
 failures.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-13.1-002", "kind": "behavior", "applies": "§13.1 Circuit Breaker; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **States:**
 
 | State | Behavior |
@@ -15223,7 +16364,9 @@ failures.
 | CLOSED | Normal operation — deliveries proceed |
 | OPEN | Fail-fast — deliveries immediately return error |
 | HALF_OPEN | Probe — allow one delivery to test recovery |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-13.1-003", "kind": "behavior", "applies": "§13.1 Circuit Breaker; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Transitions:**
 
 - CLOSED → OPEN: After N consecutive delivery failures (configurable). A
@@ -15236,9 +16379,11 @@ failures.
 
 When a circuit breaker opens, implementations MUST emit a `circuit_breaker_opened`
 framework event.
+<!-- /rfc -->
 
 ### 13.2 Retry Policy
 
+<!-- rfc: {"id": "RK-13.2-001", "kind": "behavior", "applies": "§13.2 Retry Policy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 RetryPolicy
 ├── max_retries: int                        # Maximum retry attempts
@@ -15256,9 +16401,11 @@ believed, whatever the policy names: a permanent refusal is not replayed with
 the full backoff. Another error is retried when `retryable_errors` is null, or
 when the list names its type or a type it derives from; any other error fails
 on its first attempt.
+<!-- /rfc -->
 
 ### 13.3 Rate Limiting
 
+<!-- rfc: {"id": "RK-13.3-001", "kind": "behavior", "applies": "§13.3 Rate Limiting; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 RateLimit
 ├── max_per_second: float | null            # Maximum events per second, > 0
@@ -15272,9 +16419,11 @@ Implementations SHOULD use a token bucket algorithm; the reference one holds
 one second of the rate, and at least one delivery. When rate-limited by a
 binding's limit, deliveries MUST be queued (not dropped); the kit's inbound
 rate limit refuses a message instead (§10.1 step 1).
+<!-- /rfc -->
 
 ### 13.4 Idempotency
 
+<!-- rfc: {"id": "RK-13.4-001", "kind": "behavior", "applies": "§13.4 Idempotency; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 An idempotency key is unique per room and per source channel. Keys usually
 come from providers (an SMS message id, an email Message-ID), and two
 channels of one room may carry the same key for two different messages. An
@@ -15325,13 +16474,17 @@ stored so it can be read back, not merely tested for presence. A store that
 can only answer "seen" MAY return a blocked result carrying the reason
 instead — a degraded but conforming answer, since the MUST that matters,
 *without reprocessing*, holds either way.
+<!-- /rfc -->
 
 ### 13.5 Room-Level Locking
 
+<!-- rfc: {"id": "RK-13.5-001", "kind": "behavior", "applies": "§13.5 Room-Level Locking; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 All event processing within a room MUST be serialized. Implementations MUST
 provide a locking mechanism that prevents concurrent processing of events in
 the same room.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-13.5-002", "kind": "behavior", "applies": "§13.5 Room-Level Locking; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Serialization scope.** The room lock MUST cover the locked pre-commit
 section, the commit point, and broadcast planning (§10.1 steps 6–12):
 everything that reads room state to decide, assigns the index, writes the
@@ -15353,7 +16506,9 @@ RoomLockManager (interface)
 ├── acquire(room_id) → lock
 └── release(lock) → void
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-13.5-003", "kind": "behavior", "applies": "§13.5 Room-Level Locking; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A release that fails.** `release` can fail: a distributed lock manager can
 lose its connection, or find its lease already expired. A failed release
 MUST NOT change anything the locked section decided or wrote: an event it committed
@@ -15375,7 +16530,9 @@ the lock its section holds only while the body runs: a task the body spawned,
 awaited or not, takes the lock again while the body runs, and once the body
 has returned it takes it as any later caller does, though the section still
 holds it (§9.5.1).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-13.5-004", "kind": "behavior", "applies": "§13.5 Room-Level Locking; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Key spaces.** The framework's locks of other kinds than a room's (a room's
 delivery claim, an identity's verification lock, §11.7) never share a key with
 a room's lock, whatever a room id reads. An in-memory lock manager keeps each
@@ -15398,7 +16555,9 @@ that require it (index assignment, §8.1). Implementations SHOULD ship at least
 one distributed lock manager, and SHOULD detect the unsafe combination of a
 shared persistent store with an in-memory lock manager and warn (or refuse) at
 initialization.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-13.5-005", "kind": "behavior", "applies": "§13.5 Room-Level Locking; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Delivery lanes across processes.** A process holds a delivery lane per room
 it delivers in, and a lane runs only the delivery sets its own process
 planned, since a plan holds live channels. When several processes share a
@@ -15430,9 +16589,11 @@ to what was in flight and observable, and the room never wedges; a lane that
 finds its own set skipped drops it, since running it then would break the
 room's order. A durable outbox that turns that loss into recovery is a
 separate capability (§13.6).
+<!-- /rfc -->
 
 ### 13.6 Processing Timeout
 
+<!-- rfc: {"id": "RK-13.6-001", "kind": "behavior", "applies": "§13.6 Processing Timeout; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Implementations SHOULD support a configurable `process_timeout`. Its semantics
 are defined **relative to the commit point** (§10.1 step 12) — the atomic
 transaction that stores the event as DELIVERED and updates the room counters:
@@ -15493,7 +16654,9 @@ transaction that stores the event as DELIVERED and updates the room counters:
   completion handle of a detached call (§10.1 step 18), and so does the
   caller of a regeneration; a direct injection, whose result is the
   committed event (§10.5), reports none of it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-13.6-002", "kind": "behavior", "applies": "§13.6 Processing Timeout; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A caller that stops waiting.** A caller may stop waiting for its call (a
 cancelled task, a client gone, an outer timeout of its own). Once the call is
 decided (its event committed, a `BLOCKED` record included, or its instruction
@@ -15533,12 +16696,14 @@ Implementations MAY additionally model outbound delivery with an explicit
 left PENDING, so that a crash between commit and delivery is recoverable. Such
 a state applies to **delivery**, not to the committed timeline event.
 
+<!-- /rfc -->
 ---
 
 ## 14. Storage Interface
 
 ### 14.1 Conversation Store
 
+<!-- rfc: {"id": "RK-14.1-001", "kind": "behavior", "applies": "§14.1 Conversation Store; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Implementations MUST provide a pluggable storage backend via the following
 interface:
 
@@ -15770,7 +16935,9 @@ ConversationStore (interface)
     ├── add_observation(observation) → Observation
     └── list_observations(room_id) → list<Observation>
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-14.1-002", "kind": "behavior", "applies": "§14.1 Conversation Store; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Reading a timeline (`list_events`).** Two pagination modes exist:
 offset-based (`offset` + `limit`) and cursor-based (`after_index` or
 `before_index`, mutually exclusive; `offset` is then ignored). `limit` is 50
@@ -15789,7 +16956,9 @@ event of a page reads its last element, never its first; an implementation
 that fetches descending to find the window reverses the page before returning
 it. The conversation and timeline reads built on `list_events` inherit both
 halves of this rule.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-14.1-003", "kind": "behavior", "applies": "§14.1 Conversation Store; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A timeline read serves what the room received.** By default `list_events`
 MUST NOT return an event stored `BLOCKED` (§10.1 step 10, §7.5 rule 2, §8.3):
 the room refused that turn, and a reader listing what was said in the room is
@@ -15802,7 +16971,9 @@ full whatever was refused around them. The conversation read that fills
 (§7.5 rule 8), and the per-reader filter of that rule drops the refused rows
 for channels. A refused row still consumes an index (§10.1 step 8), so the room's
 counters keep counting it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-14.1-004", "kind": "behavior", "applies": "§14.1 Conversation Store; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A count follows the rule of the page it stands for.** `get_event_count`
 without a filter counts every committed row, the refused ones included: a
 refused row consumed an index (§8.3), and that count is the timeline's size,
@@ -15813,16 +16984,20 @@ that filter, with no page: the same criteria, and the same received-rows
 default lifted by `include_blocked`, so a host that needs the exact number of
 a subset (an agent's turns before an instant) never measures a page to get it
 and never inherits the page's cap.
+<!-- /rfc -->
 
 ### 14.2 Required Implementations
 
+<!-- rfc: {"id": "RK-14.2-001", "kind": "behavior", "applies": "§14.2 Required Implementations; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 | Implementation | Purpose | Conformance |
 |---|---|---|
 | In-Memory Store | Testing, prototyping, single-process | MUST provide |
 | Persistent Store | Production (SQL, document DB) | SHOULD provide |
+<!-- /rfc -->
 
 ### 14.3 Consistency Requirements
 
+<!-- rfc: {"id": "RK-14.3-001", "kind": "behavior", "applies": "§14.3 Consistency Requirements; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 - Event index assignment MUST be atomic within a room. For a persistent store
   that may be accessed by more than one process, this atomicity MUST be enforced
   at the storage layer — a single transaction plus a `UNIQUE(room_id, index)`
@@ -15918,9 +17093,11 @@ and never inherits the page's cap.
   with this error, or a caller of the store itself. A key a hard delete
   released (§13.4) is free again. An event under an id the
   store already holds is outside this rule.
+<!-- /rfc -->
 
 ### 14.4 Returned-Object Ownership
 
+<!-- rfc: {"id": "RK-14.4-001", "kind": "behavior", "applies": "§14.4 Returned-Object Ownership; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 - A committed event changes only through the write interface (§4.3). An
   event, room, binding or participant object returned by a read
   (`get_event`, `list_events`, conversation reads, `get_room`,
@@ -15947,12 +17124,14 @@ and never inherits the page's cap.
 A message reads its room's records many times, so a store that shares its
 reads saves a copy each time; one that copies per read stays conformant.
 
+<!-- /rfc -->
 ---
 
 ## 15. Observability
 
 ### 15.1 Logging
 
+<!-- rfc: {"id": "RK-15.1-001", "kind": "behavior", "applies": "§15.1 Logging; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Implementations MUST use structured logging with named loggers. The following
 logger hierarchy is RECOMMENDED:
 
@@ -15976,9 +17155,11 @@ roomkit
 ├── roomkit.identity
 └── roomkit.store
 ```
+<!-- /rfc -->
 
 ### 15.2 Log Levels
 
+<!-- rfc: {"id": "RK-15.2-001", "kind": "behavior", "applies": "§15.2 Log Levels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 | Level | What to Log |
 |---|---|
 | DEBUG | Full pipeline trace, raw payloads, hook decisions |
@@ -15995,9 +17176,11 @@ turn (§23.3). A failure no caller receives keeps its level: the failed
 turn of an agent a `send_event` asks, the stream of a deferred call read in
 the background, the turns of the agents a held message's release runs
 (§11.7.6), whose result nobody reads.
+<!-- /rfc -->
 
 ### 15.3 Structured Log Context
 
+<!-- rfc: {"id": "RK-15.3-001", "kind": "behavior", "applies": "§15.3 Structured Log Context; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Each log entry SHOULD include structured context:
 
 ```
@@ -16011,9 +17194,11 @@ Each log entry SHOULD include structured context:
     "latency_ms": 245
 }
 ```
+<!-- /rfc -->
 
 ### 15.4 Voice Pipeline Observability
 
+<!-- rfc: {"id": "RK-15.4-001", "kind": "behavior", "applies": "§15.4 Voice Pipeline Observability; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Voice pipeline stages SHOULD emit structured metrics for monitoring and
 debugging. The following metrics are RECOMMENDED:
 
@@ -16040,21 +17225,27 @@ debugging. The following metrics are RECOMMENDED:
 Voice pipeline logs SHOULD use the `roomkit.channels.voice.pipeline` logger
 with the following structured context fields: `session_id`, `room_id`,
 `stage_name`, `latency_ms`, and `frame_timestamp_ms`.
+<!-- /rfc -->
 
 ### 15.5 Framework Events for Monitoring
 
+<!-- rfc: {"id": "RK-15.5-001", "kind": "behavior", "applies": "§15.5 Framework Events for Monitoring; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 See Section 8.2 for the complete list of framework events; an implementation
 owes the events of the features it provides. These MUST be emittable and
 subscribable by integrators for monitoring dashboards, alerting, and
 integration purposes.
+<!-- /rfc -->
 
 ### 15.6 Protocol Trace Infrastructure
 
+<!-- rfc: {"id": "RK-15.6-001", "kind": "behavior", "applies": "§15.6 Protocol Trace Infrastructure; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Channels that interact with transport-level protocols (SIP, RTP, SMTP, etc.)
 SHOULD emit `ProtocolTrace` records (Section 5.14) for significant protocol
 events. The framework provides a layered trace infrastructure that routes these
 traces to integrator-registered hooks at the room level.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.6-002", "kind": "behavior", "applies": "§15.6 Protocol Trace Infrastructure; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Channel-level trace API:**
 
 ```
@@ -16079,7 +17270,9 @@ Channel (trace extensions)
 via `on_trace()`), and the framework handler (set during `register_channel()`).
 Handlers MAY be sync or async — async handlers MUST be scheduled as tasks and
 MUST NOT block the caller.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.6-003", "kind": "behavior", "applies": "§15.6 Protocol Trace Infrastructure; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Trace bridging for voice channels:**
 
 Voice channels (VoiceChannel, RealtimeVoiceChannel) bridge traces from their
@@ -16097,7 +17290,9 @@ RealtimeVoiceChannel:
 
 The bridge is activated lazily — only when `trace_enabled` becomes true (via
 `on_trace()` registration or framework handler assignment).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.6-004", "kind": "behavior", "applies": "§15.6 Protocol Trace Infrastructure; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Framework-level trace routing:**
 
 When a channel is registered via `register_channel()`, the framework sets a
@@ -16108,7 +17303,9 @@ framework trace handler on the channel. This handler:
    - Falls back to `channel.resolve_trace_room(trace.session_id)` to look up
      the room via session bindings.
 2. Fires the `ON_PROTOCOL_TRACE` hook for the resolved room.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.6-005", "kind": "behavior", "applies": "§15.6 Protocol Trace Infrastructure; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Pre-room trace buffering:**
 
 Transport-level traces (e.g., SIP INVITE) often fire before `process_inbound()`
@@ -16127,7 +17324,9 @@ when the room is created and the channel is attached:
 
 This ensures that no protocol traces are lost, even for the initial signaling
 messages that precede room creation.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.6-006", "kind": "behavior", "applies": "§15.6 Protocol Trace Infrastructure; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **SIP trace examples:**
 
 A SIP voice backend SHOULD emit the following traces:
@@ -16138,9 +17337,11 @@ A SIP voice backend SHOULD emit the following traces:
 | Call accepted | outbound | sip | `200 OK (codec=16000Hz, ...)` | SDP answer body |
 | Remote hangup | inbound | sip | `BYE from +1555...` | Serialized SIP BYE request |
 | Local hangup | outbound | sip | `BYE (local hangup)` | null (library may not expose serialized form) |
+<!-- /rfc -->
 
 ### 15.7 Telemetry Provider
 
+<!-- rfc: {"id": "RK-15.7-001", "kind": "behavior", "applies": "§15.7 Telemetry Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Implementations SHOULD provide a pluggable telemetry provider abstraction for
 distributed tracing and metrics collection:
 
@@ -16158,7 +17359,9 @@ TelemetryProvider (interface)
 └── close() → void
         # Flush pending data and release resources
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.7-002", "kind": "behavior", "applies": "§15.7 Telemetry Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Required implementations:**
 
 | Provider | Description |
@@ -16179,7 +17382,9 @@ store records for the reads and writes of a room's delivery cursor (Section
 13.5) made to deliver messages `process_inbound` brought in, a skip past a hole
 included, are children of the span of one of those calls, wherever the delivery
 runs, never trace roots.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.7-003", "kind": "behavior", "applies": "§15.7 Telemetry Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **What a span holds.** An exporter often stands outside the application's
 production data, so a span MUST NOT carry what can hold personal data unless
 the application asks for it (`TelemetryConfig.record_sensitive_data`, off by
@@ -16189,17 +17394,23 @@ is left out (`sender_id`, `delivery.recipient`), a provider's error too
 stable code (`ValueError`, `send_failed`), never its text, which can quote a
 message or an address. A console provider MUST write out a value's line breaks
 and control characters and quote it, so that no value forges a log line.
+<!-- /rfc -->
 
 ### 15.8 Audit System
 
+<!-- rfc: {"id": "RK-15.8-001", "kind": "behavior", "applies": "§15.8 Audit System; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 RoomKit provides a two-tier auditing architecture for compliance, debugging,
 and monitoring: **tool auditing** captures individual tool calls, and
 **session auditing** captures the full conversation timeline.
+<!-- /rfc -->
 
 #### 15.8.1 Tool Auditing
 
+<!-- rfc: {"id": "RK-15.8.1-001", "kind": "behavior", "applies": "§15.8.1 Tool Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Tool auditing records every tool call with input, output, timing, and status.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.8.1-002", "kind": "behavior", "applies": "§15.8.1 Tool Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **ToolAuditEntry:**
 
 ```
@@ -16213,7 +17424,9 @@ ToolAuditEntry
 ├── duration_ms: float                      # Execution time in milliseconds
 └── metadata: map<string, any>              # Optional extra data
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.8.1-003", "kind": "behavior", "applies": "§15.8.1 Tool Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Status detection:**
 - `"error"` — set when the tool handler raises an exception.
 - `"cancelled"` — set when the call was cancelled before its handler answered
@@ -16236,7 +17449,9 @@ ToolAuditEntry
 - `"ok"` — the default, and a degradation rather than a contract: it is what a
   body outside every envelope reads as. A producer that can state its outcome
   structurally SHOULD do so (Section 9.3) instead of relying on this reading.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.8.1-004", "kind": "behavior", "applies": "§15.8.1 Tool Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **ToolAuditor** (interface):
 
 ```
@@ -16246,14 +17461,18 @@ ToolAuditor (interface)
 ├── summary() → string                     # Human-readable summary
 └── print_summary() → void                 # Log summary via logger
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.8.1-005", "kind": "behavior", "applies": "§15.8.1 Tool Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Built-in implementations:**
 
 | Implementation | Persistence | Description |
 |---|---|---|
 | JSONLToolAuditor | JSONL file | Appends one JSON line per call; maintains in-memory list |
 | ConsoleToolAuditor | Logger | Real-time logging via Python logging module |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.8.1-006", "kind": "behavior", "applies": "§15.8.1 Tool Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Handler wrapper:**
 
 The `audit_tool_handler(handler, auditor, agent_id)` function wraps any tool
@@ -16272,12 +17491,16 @@ handler to automatically record audit entries. It:
 
 Integrators MAY implement custom `ToolAuditor` backends (e.g., Datadog,
 Elasticsearch) by implementing the interface.
+<!-- /rfc -->
 
 #### 15.8.2 Session Auditing
 
+<!-- rfc: {"id": "RK-15.8.2-001", "kind": "behavior", "applies": "§15.8.2 Session Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Session auditing captures the full conversation timeline: speech turns, tool
 calls, vision events, interruptions, and session lifecycle.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.8.2-002", "kind": "behavior", "applies": "§15.8.2 Session Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **SessionAuditEntry:**
 
 ```
@@ -16289,7 +17512,9 @@ SessionAuditEntry
 ├── duration_ms: float | null               # For timed events (tool calls)
 └── metadata: map<string, any>              # Extra data (tool_name, args, status, etc.)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.8.2-003", "kind": "behavior", "applies": "§15.8.2 Session Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Session audit event types:**
 
 | Type | Role | Trigger | Content |
@@ -16300,7 +17525,9 @@ SessionAuditEntry
 | barge_in | user | ON_BARGE_IN hook | "User interrupted" |
 | session | system | ON_SESSION_STARTED hook | "Session started" |
 | error | system | Application-specific | Error message |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.8.2-004", "kind": "behavior", "applies": "§15.8.2 Session Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **SessionAuditor** (interface):
 
 ```
@@ -16317,21 +17544,29 @@ SessionAuditor (interface)
 │   # Hook auto-registration:
 └── attach(kit: RoomKit) → void                # Register hooks for automatic capture
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.8.2-005", "kind": "behavior", "applies": "§15.8.2 Session Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Hook auto-registration:** When `attach(kit)` is called, the session auditor
 registers hooks for `ON_TRANSCRIPTION`, `ON_BARGE_IN`, `ON_SESSION_STARTED`,
 and `ON_VISION_RESULT` to capture conversation events automatically.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.8.2-006", "kind": "behavior", "applies": "§15.8.2 Session Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **ToolAuditor bridge:** The `tool_auditor` property returns a bridge adapter
 that converts `ToolAuditEntry` records into `SessionAuditEntry` records. This
 allows a single `SessionAuditor` to capture both tool calls and conversation
 events in a unified timeline.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-15.8.2-007", "kind": "behavior", "applies": "§15.8.2 Session Auditing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Built-in implementation:** `JSONLSessionAuditor` — writes entries to a JSONL
 file and maintains an in-memory chronological list.
+<!-- /rfc -->
 
 #### 15.8.3 Audit Data Format
 
+<!-- rfc: {"id": "RK-15.8.3-001", "kind": "behavior", "applies": "§15.8.3 Audit Data Format; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Both auditors use JSONL (JSON Lines) for persistence — one JSON object per
 line, independently parseable:
 
@@ -16343,9 +17578,11 @@ line, independently parseable:
 JSONL files are append-only. Implementations MUST create parent directories
 automatically. Write errors MUST be logged but MUST NOT propagate exceptions
 to the caller.
+<!-- /rfc -->
 
 ### 15.9 Feedback
 
+<!-- rfc: {"id": "RK-15.9-001", "kind": "behavior", "applies": "§15.9 Feedback; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 An implementation MAY let a host record how a room, or one of its
 responses, was rated:
 
@@ -16364,18 +17601,24 @@ observation is stored, `ON_FEEDBACK` (ASYNC, §9.2) fires with it as its
 payload, and `feedback` is emitted (§8.2) with the room, the channel, the
 event, the dimension and the rating.
 
+<!-- /rfc -->
 ---
 
 ## 16. Integration Surfaces
 
+<!-- rfc: {"id": "RK-16-001", "kind": "behavior", "applies": "§16 Integration Surfaces; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The RoomKit core MUST NOT depend on any specific web framework. Integration
 surfaces are thin wrappers that expose core functionality.
+<!-- /rfc -->
 
 ### 16.1 REST API (OPTIONAL)
 
+<!-- rfc: {"id": "RK-16.1-001", "kind": "behavior", "applies": "§16.1 REST API (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The framework is a library, and the host owns its HTTP surface. An
 implementation that offers a REST API SHOULD provide the following endpoints:
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-16.1-002", "kind": "behavior", "applies": "§16.1 REST API (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Rooms:**
 
 ```
@@ -16385,7 +17628,9 @@ PATCH  /rooms/{id}                              # Update room
 DELETE /rooms/{id}                              # Delete room
 GET    /rooms?organization_id=X&status=active   # List rooms
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-16.1-003", "kind": "behavior", "applies": "§16.1 REST API (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Channels:**
 
 ```
@@ -16397,14 +17642,18 @@ POST   /rooms/{id}/channels/{cid}/unmute        # Unmute channel
 GET    /rooms/{id}/channels                     # List bindings
 GET    /channels                                # List registered channels
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-16.1-004", "kind": "behavior", "applies": "§16.1 REST API (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Events & Timeline:**
 
 ```
 POST   /rooms/{id}/events                       # Inject event
 GET    /rooms/{id}/timeline                     # Get timeline (supports pagination, visibility filter)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-16.1-005", "kind": "behavior", "applies": "§16.1 REST API (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Participants:**
 
 ```
@@ -16413,7 +17662,9 @@ DELETE /rooms/{id}/participants/{pid}            # Remove participant
 GET    /rooms/{id}/participants                 # List participants
 POST   /rooms/{id}/participants/{pid}/resolve   # Resolve pending identity
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-16.1-006", "kind": "behavior", "applies": "§16.1 REST API (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Tasks & Observations:**
 
 ```
@@ -16421,7 +17672,9 @@ GET    /rooms/{id}/tasks                        # List tasks for room
 PATCH  /tasks/{id}                              # Update task status
 GET    /rooms/{id}/observations                 # List observations for room
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-16.1-007", "kind": "behavior", "applies": "§16.1 REST API (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Identity:**
 
 ```
@@ -16429,24 +17682,32 @@ POST   /identities                              # Create identity
 GET    /identities/resolve?channel=sms&address=+1... # Resolve identity
 POST   /identities/{id}/addresses               # Link a channel address to an identity
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-16.1-008", "kind": "behavior", "applies": "§16.1 REST API (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Webhooks:**
 
 ```
 POST   /webhooks/{channel_type}/{provider}          # Inbound webhook
 POST   /webhooks/{channel_type}/{provider}/status   # Delivery status webhook
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-16.1-009", "kind": "behavior", "applies": "§16.1 REST API (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **WebSocket:**
 
 ```
 WS     /ws/{room_id}                            # Real-time room connection (WebSocket channel, Appendix A.8)
 ```
+<!-- /rfc -->
 
 ### 16.2 MCP Server (OPTIONAL)
 
+<!-- rfc: {"id": "RK-16.2-001", "kind": "behavior", "applies": "§16.2 MCP Server (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 For AI agents to interact with rooms natively via the Model Context Protocol:
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-16.2-002", "kind": "behavior", "applies": "§16.2 MCP Server (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **MCP Tools (actions):**
 
 | Tool | Description |
@@ -16462,7 +17723,9 @@ For AI agents to interact with rooms natively via the Model Context Protocol:
 | update_room_metadata | Update room metadata |
 | resolve_identity | Resolve an identity |
 | escalate_to_human | Escalate to a human agent |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-16.2-003", "kind": "behavior", "applies": "§16.2 MCP Server (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **MCP Resources (data):**
 
 | Resource | Description |
@@ -16473,24 +17736,30 @@ For AI agents to interact with rooms natively via the Model Context Protocol:
 | room://{room_id}/channels | Room channel bindings |
 | room://{room_id}/tasks | Room tasks |
 | identity://{identity_id} | Identity details |
+<!-- /rfc -->
 
 ### 16.3 Surface Independence
 
+<!-- rfc: {"id": "RK-16.3-001", "kind": "behavior", "applies": "§16.3 Surface Independence; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Both REST and MCP surfaces MUST call the same core methods. No business logic
 should live in the integration surface layer.
 
+<!-- /rfc -->
 ---
 
 ## 17. Security Considerations
 
 ### 17.1 Input Validation
 
+<!-- rfc: {"id": "RK-17.1-001", "kind": "behavior", "applies": "§17.1 Input Validation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 - All inbound payloads MUST be validated before processing.
 - Webhook signatures SHOULD be verified when the provider supports them.
 - Event content SHOULD be sanitized to prevent injection attacks.
+<!-- /rfc -->
 
 ### 17.2 Multi-Tenant Isolation
 
+<!-- rfc: {"id": "RK-17.2-001", "kind": "behavior", "applies": "§17.2 Multi-Tenant Isolation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 - Rooms are scoped by `organization_id`.
 - Implementations MUST ensure that room operations are isolated per organization.
 - Identity resolution MUST be scoped to the organization.
@@ -16581,29 +17850,37 @@ should live in the integration surface layer.
     caller's organization first;
   - the deprecated `connect_voice()`, `connect_video()` and
     `bind_voice_session()`, which `join()` replaces with its organization.
+<!-- /rfc -->
 
 ### 17.3 Sensitive Data
 
+<!-- rfc: {"id": "RK-17.3-001", "kind": "behavior", "applies": "§17.3 Sensitive Data; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 - `raw_payload` MAY contain sensitive data. Implementations SHOULD support
   configurable redaction or encryption at rest.
 - Hook-based PII scanning (e.g., SIN/SSN detection) SHOULD be used to prevent
   sensitive data from traversing channels.
 - Blocked events are stored for audit but their content SHOULD be handled
   according to the organization's data retention policy.
+<!-- /rfc -->
 
 ### 17.4 Rate Limiting
 
+<!-- rfc: {"id": "RK-17.4-001", "kind": "behavior", "applies": "§17.4 Rate Limiting; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 - Per-channel rate limits prevent abuse of external provider APIs.
 - Implementations SHOULD support per-organization rate limits.
+<!-- /rfc -->
 
 ### 17.5 Chain Depth
 
+<!-- rfc: {"id": "RK-17.5-001", "kind": "behavior", "applies": "§17.5 Chain Depth; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 - The chain depth limit prevents resource exhaustion from unbounded AI ↔ AI loops.
 - Implementations MUST enforce the limit and MUST NOT allow it to be disabled,
   a discussion's own `max_depth` included (Section 19.7.5).
+<!-- /rfc -->
 
 ### 17.6 Voice and Audio Security
 
+<!-- rfc: {"id": "RK-17.6-001", "kind": "behavior", "applies": "§17.6 Voice and Audio Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Recording consent and compliance:**
 
 - Implementations that support audio recording MUST provide a mechanism for
@@ -16614,7 +17891,9 @@ should live in the integration surface layer.
 - Implementations SHOULD support configurable consent modes: `SINGLE_PARTY`
   (one party consents), `ALL_PARTY` (all parties must consent), or `NONE`
   (integrator manages consent externally).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-17.6-002", "kind": "behavior", "applies": "§17.6 Voice and Audio Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Audio data handling:**
 
 - Audio recordings MUST be encrypted at rest. Implementations MUST support
@@ -16632,7 +17911,9 @@ should live in the integration surface layer.
   requirements.
 - Voice session metadata (transcripts, recordings, DTMF digits) MUST follow
   the same data retention and redaction policies as other room events.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-17.6-003", "kind": "behavior", "applies": "§17.6 Voice and Audio Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **TTS conversation context (Section 12.2.2):**
 
 - Context audio is a copy of the session's dialogue audio (what the user said and
@@ -16651,7 +17932,9 @@ should live in the integration surface layer.
 - A provider at level `AUDIO` that runs as an external service receives the
   user's voice on every call, not only the current sentence. Implementations
   SHOULD say so where they document which providers receive audio data.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-17.6-004", "kind": "behavior", "applies": "§17.6 Voice and Audio Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Custom voices (Section 12.2.4):**
 
 - A recording of a person's voice made to replicate it, and the recording of
@@ -16667,7 +17950,9 @@ should live in the integration surface layer.
 - A stored custom voice is held by the vendor under the integrator's account.
   Implementations SHOULD document where it lives and for how long, as they do
   for the providers that receive audio.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-17.6-005", "kind": "behavior", "applies": "§17.6 Voice and Audio Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Provenance of synthesized audio:**
 
 - A vendor MAY mark the audio it synthesizes: a manifest in the file (C2PA)
@@ -16676,7 +17961,9 @@ should live in the integration surface layer.
   its samples. A stage that must decode the audio (resampling, mixing,
   encoding for a transport) loses a file-level manifest by construction;
   implementations SHOULD document where that happens.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-17.6-006", "kind": "behavior", "applies": "§17.6 Voice and Audio Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **DTMF sensitivity:**
 
 - DTMF digits MAY contain sensitive data (credit card numbers, PINs, account
@@ -16685,7 +17972,9 @@ should live in the integration surface layer.
   "4111111111111111" with "4111********1111").
 - When DTMF redaction is enabled, raw digits MUST NOT appear in `raw_payload`,
   transcripts, or log output.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-17.6-007", "kind": "behavior", "applies": "§17.6 Voice and Audio Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Voice model privacy:**
 
 - Audio recordings and transcripts MUST NOT be used for model training without
@@ -16694,10 +17983,12 @@ should live in the integration surface layer.
   sharing with STT/TTS/speech-to-speech providers beyond what is required for
   the API call.
 
+<!-- /rfc -->
 ---
 
 ### 17.7 Conference Access Security
 
+<!-- rfc: {"id": "RK-17.7-001", "kind": "behavior", "applies": "§17.7 Conference Access Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ConferenceAccess tokens are credentials:
 
 - Tokens SHOULD be minted per participant with least-privilege grants
@@ -16710,7 +18001,9 @@ ConferenceAccess tokens are credentials:
 - Moderation operations (`remove_participant`, `mute_track`,
   `unmute_track`) MUST only be reachable through integrator-controlled code
   paths, never exposed unauthenticated.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-17.7-002", "kind": "behavior", "applies": "§17.7 Conference Access Security; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Bot disclosure.** Whether a recording or transcribing bot must be
 announced to human participants — and how — is set by the jurisdiction the
 deployment operates in, and those rules differ by country and by sector.
@@ -16740,9 +18033,11 @@ Implementations SHOULD document this responsibility rather than assume a
 default. Deployments in regulated sectors typically do need visible bot
 identification; the specification's role is to make that implementable, not
 to decide it.
+<!-- /rfc -->
 
 ### 17.8 Skill-Bundled Files
 
+<!-- rfc: {"id": "RK-17.8-001", "kind": "behavior", "applies": "§17.8 Skill-Bundled Files; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 - A skill's references and scripts are addressed by a name the model chooses,
   which makes every such read or execution an untrusted-input boundary.
 - Resolution MUST be confined to the skill's own directory by resolving the
@@ -16759,10 +18054,12 @@ to decide it.
   active a tool that runs code is served only with the host's approval of
   that skill (Section 24.7).
 
+<!-- /rfc -->
 ---
 
 ## 18. Design Principles
 
+<!-- rfc: {"id": "RK-18-001", "kind": "non_testable", "applies": "§18 Design Principles; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 These principles define the conceptual architecture of RoomKit:
 
 1. **The Room is the truth.** All state lives in the Room. The timeline records
@@ -16853,16 +18150,20 @@ These principles define the conceptual architecture of RoomKit:
     Same boundary as storage: the framework defines the interface, the
     deployment provides the infrastructure.
 
+<!-- /rfc -->
 ---
 
 ## 19. Multi-Agent Orchestration
 
+<!-- rfc: {"id": "RK-19-001", "kind": "behavior", "applies": "§19 Multi-Agent Orchestration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Multi-agent orchestration enables multiple AI agents to collaborate within a
 single room. Agents are intelligence channels with identity metadata. Routing,
 handoff, and state management use existing Room/Channel/Event primitives.
+<!-- /rfc -->
 
 ### 19.1 Overview
 
+<!-- rfc: {"id": "RK-19.1-001", "kind": "behavior", "applies": "§19.1 Overview; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 An **Agent** is an AIChannel subclass with structured identity:
 
 ```
@@ -16892,7 +18193,9 @@ metadata). A null provider MUST be accepted — no generation calls are made.
 Multiple Agents MAY be attached to a single room. The orchestration system
 determines which Agent handles each event, unless the event names its
 recipients itself (§19.3).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.1-002", "kind": "behavior", "applies": "§19.1 Overview; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The greeting.** `send_greeting(room_id, channel_id?, agent_id?, greeting?,
 organization_id?)` says an agent's greeting in a room. The agent is the one
 `agent_id`, then `channel_id`, names when it is an intelligence channel with an
@@ -16935,9 +18238,11 @@ session: another agent that reads the greeting and answers it delays the message
 only within the message's `process_timeout`. A voice session's greeting is said
 behind a gate the agents' deliveries wait for, and a realtime session's is
 injected as the model's own turn (§12.4).
+<!-- /rfc -->
 
 ### 19.2 ConversationState
 
+<!-- rfc: {"id": "RK-19.2-001", "kind": "behavior", "applies": "§19.2 ConversationState; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Each room MAY have a `ConversationState` stored in room metadata:
 
 ```
@@ -16956,9 +18261,11 @@ The framework fires `ON_PHASE_TRANSITION` hooks on state changes.
 console that switches which agent it is talking to is a legitimate writer of
 this field. Implementations SHOULD expose a supported way to set it —
 reaching into room metadata from application code is not one.
+<!-- /rfc -->
 
 ### 19.3 Addressing
 
+<!-- rfc: {"id": "RK-19.3-001", "kind": "behavior", "applies": "§19.3 Addressing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Routing rules answer *which agent handles this kind of event*. Addressing
 answers a different question, asked per message by whoever sends it:
 **which agents are being asked to act, right now**. A room where a human
@@ -16971,7 +18278,9 @@ An event MAY carry an address:
 RoomEvent
 └── addressed_to: list<channel_id> | null    # null = unaddressed
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.3-002", "kind": "behavior", "applies": "§19.3 Addressing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Addressing is not visibility.** Visibility (§7.3) is configured on a
 binding, narrowed by an event's own, and answers who may *see* what a source
 produces. Addressing is set on an event by its sender and answers who is
@@ -16998,7 +18307,9 @@ Normative rules:
 6. An event a hook injects (Section 9.4) solicits no intelligence channel,
    whatever its address: it is delivered to its transport targets only, and
    an agent its visibility names reads it in its history at its next turn.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.3-003", "kind": "behavior", "applies": "§19.3 Addressing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Unaddressed events** (`addressed_to = null`) keep the behaviour of earlier
 versions: the router decides (§19.4), and with no router installed every
 eligible intelligence channel is solicited. A discussion decides instead
@@ -17012,15 +18323,19 @@ address does not name.
 Proactive `RoomKit.deliver()` calls carry the same intelligence address through
 the text publication pipeline (§22.1). A realtime session target is a separate
 transport selection, not an intelligence address.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.3-004", "kind": "behavior", "applies": "§19.3 Addressing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Conformance.** Addressing itself is Level 0 — the field exists on every
 event and MUST be honoured when set, which an implementation without
 intelligence channels satisfies trivially. The router precedence (§19.4,
 step 0) and the named policies below belong to Level 2 with the rest of this
 section.
+<!-- /rfc -->
 
 #### 19.3.1 Agent-sourced events
 
+<!-- rfc: {"id": "RK-19.3.1-001", "kind": "behavior", "applies": "§19.3.1 Agent-sourced events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 An agent's own output is an event like any other, and by default it solicits
 the other agents in the room — the chaining Appendix B.4 describes, bounded
 by `max_chain_depth`. That is a feature for a pipeline (analyst → writer)
@@ -17055,9 +18370,11 @@ decided when it was routed and reopening it would ask an agent to act on a
 turn that has already closed. A discussion's deferred turn (Section 19.7.5)
 reopens nothing: it carries out, later, a solicitation decided when the event
 was routed.
+<!-- /rfc -->
 
 #### 19.3.2 Delivered versus solicited
 
+<!-- rfc: {"id": "RK-19.3.2-001", "kind": "behavior", "applies": "§19.3.2 Delivered versus solicited; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A channel that is not solicited MUST NOT be asked to produce a response, and
 MUST NOT be delivered the event either — the implementation skips it. At
 §10.2 step 3c the two are one decision, not two.
@@ -17091,11 +18408,15 @@ Nothing here obliges a channel to read the timeline. An implementation whose
 channels all rebuild their context from storage each turn satisfies this
 section by construction — which is why the requirement is that the timeline
 be *available*, not that it be consumed.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.3.2-002", "kind": "behavior", "applies": "§19.3.2 Delivered versus solicited; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Conformance.** Level 2, with the rest of §19.3.
+<!-- /rfc -->
 
 ### 19.4 ConversationRouter
 
+<!-- rfc: {"id": "RK-19.4-001", "kind": "behavior", "applies": "§19.4 ConversationRouter; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The `ConversationRouter` selects which Agent processes each event. It is
 installed as a `BEFORE_BROADCAST` sync hook.
 
@@ -17105,7 +18426,9 @@ ConversationRouter
 ├── default_agent_id: string | null         # Fallback when no rule matches
 └── supervisor_id: string | null            # Always receives events (if set)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.4-002", "kind": "behavior", "applies": "§19.4 ConversationRouter; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **RoutingRule:**
 
 ```
@@ -17114,7 +18437,9 @@ RoutingRule
 ├── conditions: RoutingConditions           # When this rule applies
 └── priority: int (default 0)               # Lower = evaluated first
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.4-003", "kind": "behavior", "applies": "§19.4 ConversationRouter; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **RoutingConditions:**
 
 ```
@@ -17125,7 +18450,9 @@ RoutingConditions
 ├── source_channel_ids: set<string> | null  # Match on specific source channels
 └── custom: function | null                 # Arbitrary predicate (event, context, state) → bool
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.4-004", "kind": "behavior", "applies": "§19.4 ConversationRouter; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Evaluation order:**
 
 0. If the event is addressed (§19.3), the address decides. The router MUST
@@ -17168,9 +18495,11 @@ only a hook writes them, the router among hooks, and a sender's are dropped
 caller's data, not a framework key: whoever wrote it is read, and a host that
 does not trust what its channel copies from the wire sets it itself, in a
 `BEFORE_BROADCAST` hook that runs before the router.
+<!-- /rfc -->
 
 ### 19.5 ConversationPipeline
 
+<!-- rfc: {"id": "RK-19.5-001", "kind": "behavior", "applies": "§19.5 ConversationPipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A `ConversationPipeline` generates `RoutingRule` entries from a linear stage
 definition:
 
@@ -17180,7 +18509,9 @@ ConversationPipeline
 ├── default_phase: string | null            # Initial phase (first stage if null)
 └── supervisor_id: string | null            # Supervisor for all stages
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.5-002", "kind": "behavior", "applies": "§19.5 ConversationPipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **PipelineStage:**
 
 ```
@@ -17212,7 +18543,9 @@ builds a `HandoffHandler` with those phases and transitions, and gives each
 agent a handoff tool naming the agents its last stage reaches, itself excluded,
 in the stages' order, each by its own description, else its stage's. An agent
 that reaches none, or holds no stage, takes the generic tool.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.5-003", "kind": "behavior", "applies": "§19.5 ConversationPipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **On a realtime channel.** A pipeline MAY drive a speech-to-speech session
 (Section 12.4) instead of routing events: the active agent is then the
 session's configuration (its prompt, its voice, its tools), and a handoff
@@ -17263,16 +18596,22 @@ agent the kit holds by its declaration alone, or an intelligence channel that
 is not an agent, is refused at the install as well: a session runs the
 agent's own prompt, which only the agent itself carries
 (Section 10.6.2).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.5-004", "kind": "behavior", "applies": "§19.5 ConversationPipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Allowed transitions:** An agent in phase P MAY hand off to:
 - `stage.next` (forward progression)
 - Any phase in `stage.can_return_to` (backward/lateral)
 - Transitions to other phases MUST be rejected.
+<!-- /rfc -->
 
 ### 19.6 HandoffHandler
 
+<!-- rfc: {"id": "RK-19.6-001", "kind": "behavior", "applies": "§19.6 HandoffHandler; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Agents request handoffs by calling the `handoff_conversation` tool:
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.6-002", "kind": "behavior", "applies": "§19.6 HandoffHandler; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **HandoffRequest:**
 
 ```
@@ -17284,7 +18623,9 @@ HandoffRequest
 ├── channel_escalation: string | null       # "same", "voice", "email", "sms" (channel switch)
 └── urgent: bool (default false)            # Priority flag
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.6-003", "kind": "behavior", "applies": "§19.6 HandoffHandler; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **HandoffResult:**
 
 ```
@@ -17295,7 +18636,9 @@ HandoffResult
 ├── message: string                         # Human-readable result
 └── reason: string                          # Rejection reason (if not accepted)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.6-004", "kind": "behavior", "applies": "§19.6 HandoffHandler; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Handoff protocol:**
 
 1. Agent calls `handoff_conversation` tool with `HandoffRequest`.
@@ -17341,7 +18684,9 @@ null) replaces the default `handoff_conversation` definition; `room_id`
 (default null) declares it in that one room's turns, as a strategy installed
 in the room does (Section 19.7), and null declares it in every room the agent
 serves. Setting it up again where it is already declared is refused.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.6-005", "kind": "behavior", "applies": "§19.6 HandoffHandler; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A room held for a human (normative).** A handoff to `human` sets
 `human_hold`. While it holds, the router selects no agent and stamps
 `_routed_to: _none_`, whichever rule or default would pick one, and the message
@@ -17353,7 +18698,9 @@ transition to an agent takes the hold off, with no model's tool on its way. A
 model can start a hold by itself, so `ON_HANDOFF`, naming the human, is the
 signal a host audits it by. A realtime session's call names no agent of its own:
 its caller is the room's active agent, and this paragraph does not yet hold there.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.6-006", "kind": "behavior", "applies": "§19.6 HandoffHandler; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A realtime handoff needs its agents (normative).** A realtime pipeline
 reconfigures the room's sessions with the next agent's prompt on a handoff
 (Section 19.5), and a handler's language change reconfigures them with the
@@ -17364,14 +18711,18 @@ channel that is not an agent, when it is given its agents; and a language
 change on a realtime channel whose active agent is one MUST be refused before
 the room's language is written, whoever put the agent among the handler's
 agents. A handler with no realtime channel takes declared agents.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.6-007", "kind": "behavior", "applies": "§19.6 HandoffHandler; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The room is the call's (normative).** A handoff acts on the room of the
 call that requested it, read from the tool call context (Section 21.4). One
 agent serves every room it is attached to, so a room captured when the tool
 was wired, or left behind by a hook of another event, names whichever room
 came first, not the one asking. A call made outside a tool call has no room
 to act on, and the tool MUST refuse it rather than guess.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.6-008", "kind": "behavior", "applies": "§19.6 HandoffHandler; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A handler's greeting (normative).** A handler's `send_greeting(room_id,
 channel_id)` has the room's active agent say the line the handler's greeting
 map gives it, through the kit's `send_greeting` (Section 19.1), whatever the
@@ -17381,12 +18732,16 @@ channel named by the call or by the handler's event channel, it says nothing
 and does not fail. The channel is read only for a realtime channel, whose
 sessions each take the greeting (Section 12.4); on any other, the greeting
 reaches the whole room.
+<!-- /rfc -->
 
 ### 19.7 Orchestration Strategies
 
+<!-- rfc: {"id": "RK-19.7-001", "kind": "behavior", "applies": "§19.7 Orchestration Strategies; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The following strategies are common patterns built on router and pipeline
 primitives. Implementations SHOULD provide helpers for each.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.7-002", "kind": "behavior", "applies": "§19.7 Orchestration Strategies; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A strategy in several rooms (normative).** A strategy is installed per room,
 but its agents are shared: one agent object serves every room it is attached
 to, and so does a realtime channel. What a strategy adds for a room is set up
@@ -17408,7 +18763,9 @@ realtime channel itself, and MUST reach that room only:
   itself;
 - on a realtime channel, the active agent's configuration (Section 19.5) is the
   room's.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.7-003", "kind": "behavior", "applies": "§19.7 Orchestration Strategies; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **What a strategy hands a model (normative).** A strategy that composes a
 model's input from other models' outputs (the workers' results a supervisor
 reviews or presents, the team's work a next worker builds on, the content a
@@ -17441,7 +18798,9 @@ is declared wherever the agent serves, and still acts on the room of the call.
 What a strategy sets up for a room is kept by the room's owner, per channel and
 room, and its turn runner runs there, each generation it asks of an agent a
 turn of its own through the turn backend (§10.6.1).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.7-004", "kind": "behavior", "applies": "§19.7 Orchestration Strategies; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **One strategy per room, installed while the room lives (normative).** A room
 holds at most one strategy. An implementation MUST provide
 `install_strategy(room_id, strategy)` and `uninstall_strategy(room_id)` on
@@ -17488,9 +18847,11 @@ path:
   install still names this process's own. Asked about a kind that is not
   stored with the room, it is refused rather than answered false, so the
   question keeps its meaning when another kind comes to be stored.
+<!-- /rfc -->
 
 #### 19.7.1 Pipeline
 
+<!-- rfc: {"id": "RK-19.7.1-001", "kind": "behavior", "applies": "§19.7.1 Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Agents are chained linearly. Each agent handles one phase and hands off to
 the next:
 
@@ -17513,9 +18874,11 @@ only. A realtime voice channel is refused: its sessions' configuration and
 the handoff it serves are the channel's, for every room, as
 `ConversationPipeline.install` wires them (Section 19.5), which a strategy
 installed room by room cannot hold.
+<!-- /rfc -->
 
 #### 19.7.2 Swarm
 
+<!-- rfc: {"id": "RK-19.7.2-001", "kind": "behavior", "applies": "§19.7.2 Swarm; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Every agent can hand off to every other agent. No linear ordering. Useful
 for collaborative agent pools where any agent may be most appropriate:
 
@@ -17525,9 +18888,11 @@ Agent A ⇄ Agent B ⇄ Agent C
 
 Sticky affinity keeps the conversation with the current agent until an
 explicit handoff occurs.
+<!-- /rfc -->
 
 #### 19.7.3 Supervisor
 
+<!-- rfc: {"id": "RK-19.7.3-001", "kind": "behavior", "applies": "§19.7.3 Supervisor; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A supervisor agent talks to the user and delegates work to specialist agents.
 Specialists run in isolated **child rooms** — their output is collected and
 returned to the supervisor. When the workers run on the user's message
@@ -17631,9 +18996,11 @@ any turn's TOOL_CALL rows, through the room's commit gate (Section 10.1) and
 in the answered event's scope and thread. Its text is not stored: it is the
 workers' task, an answer to no one in the room. Its record rides none of those
 rows: the pass hands it on, and its fallback message carries it.
+<!-- /rfc -->
 
 #### 19.7.4 Loop
 
+<!-- rfc: {"id": "RK-19.7.4-001", "kind": "behavior", "applies": "§19.7.4 Loop; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A single agent handles the conversation indefinitely, looping back for
 refinement. Useful for iterative workflows (editing, code review, tutoring).
 A message its tasks cannot carry (a media, a composite, an empty text) is
@@ -17672,9 +19039,11 @@ however its delegation ends. Parallel reviews end as a parallel team does:
 a review that raises fails the loop without waiting for the others, which
 are cut, each posting its terminal entry. An asynchronous loop ends with
 the framework as a supervisor's background run does.
+<!-- /rfc -->
 
 #### 19.7.5 Discussion
 
+<!-- rfc: {"id": "RK-19.7.5-001", "kind": "behavior", "applies": "§19.7.5 Discussion; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Several agents and one or more people hold one conversation in a room. Any
 agent may address any other, a person may address any agent, and no flow is
 fixed in advance: who speaks next follows from who was addressed. One agent
@@ -17724,7 +19093,9 @@ SpeakQueue (one per room, readable by the host)
 ├── waiting: bool                             # Whether the discussion waits for a person
 └── over: bool                                # Whether the discussion is over (rule 15)
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.7.5-002", "kind": "behavior", "applies": "§19.7.5 Discussion; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Normative rules:**
 
 1. **The room is the discussion's.** The intelligence channels the room binds
@@ -18219,7 +19590,9 @@ SpeakQueue (one per room, readable by the host)
 The rules of Section 19.7 for a strategy in several rooms hold: the speak
 queue and who only listens are the room's, and the same agents may hold a
 discussion in another room with a speak queue of its own.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.7.5-003", "kind": "behavior", "applies": "§19.7.5 Discussion; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Left out of this version.** Voice: a turn would end when its playback
 ends, which no event reports yet; a person speaking names no one with `@`;
 an agent's written names would be spoken. Realtime channels, whose turns run
@@ -18240,11 +19613,15 @@ the room and gives every turn the whole room; a later version makes each
 thread a conversation of its own (its own queue and chains, a turn reading
 its thread with the room before it as background, an agent taking one turn
 at a time across the room).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-19.7.5-004", "kind": "behavior", "applies": "§19.7.5 Discussion; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Conformance.** Level 2, with the rest of Section 19.
+<!-- /rfc -->
 
 ### 19.8 StatusBus
 
+<!-- rfc: {"id": "RK-19.8-001", "kind": "behavior", "applies": "§19.8 StatusBus; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The `StatusBus` enables inter-agent coordination through status messages:
 
 ```
@@ -18294,16 +19671,20 @@ The framework posts each delegated task on the bus (Section 23.3), and an agent
 reads its room's tasks through the `task_status` tool (Section 23.4); an agent is
 never pointed at a tool it was not given.
 
+<!-- /rfc -->
 ---
 
 ## 20. Memory System
 
+<!-- rfc: {"id": "RK-20-001", "kind": "behavior", "applies": "§20 Memory System; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The Memory System provides pluggable AI context construction. Instead of
 always using a fixed sliding window of recent events, implementations MAY
 choose different strategies for building conversation history.
+<!-- /rfc -->
 
 ### 20.1 MemoryProvider Interface
 
+<!-- rfc: {"id": "RK-20.1-001", "kind": "behavior", "applies": "§20.1 MemoryProvider Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 MemoryProvider (interface)
 ├── retrieve(room_id, current_event, context, channel_id) → MemoryResult
@@ -18340,9 +19721,11 @@ token counters of the round's generation, disjoint, as its provider reported
 them (empty when it reported none). A provider that does not define it answers
 nothing, and the turn is left as it is. A provider that wraps another and
 does not compact itself hands the call to the one it wraps.
+<!-- /rfc -->
 
 ### 20.2 MemoryResult
 
+<!-- rfc: {"id": "RK-20.2-001", "kind": "behavior", "applies": "§20.2 MemoryResult; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 MemoryResult
 ├── messages: list<AIMessage>               # Pre-built AI messages (summaries, instructions)
@@ -18372,9 +19755,11 @@ that caches a prefix would otherwise bill again at every turn. A provider that
 wraps another and rebuilds its result MUST carry the inner provider's `notes`,
 and one that keeps the turn within a token budget MUST count them: nothing
 trims the turn's notes, so the history is what makes room for them.
+<!-- /rfc -->
 
 ### 20.3 Built-in Implementations
 
+<!-- rfc: {"id": "RK-20.3-001", "kind": "behavior", "applies": "§20.3 Built-in Implementations; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 | Implementation | Strategy | Use Case |
 |---|---|---|
 | SlidingWindowMemory | Last N events | Default, simple conversations |
@@ -18382,14 +19767,18 @@ trims the turn's notes, so the history is what makes room for them.
 | SummarizingMemory | AI-powered summarization of history | Complex multi-topic conversations |
 | RetrievalMemory | Knowledge sources queried with the turn's text | Knowledge-backed answers (RAG) |
 | BudgetAwareMemory | Token-based truncation with priorities | Strict token budget enforcement |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-20.3-002", "kind": "behavior", "applies": "§20.3 Built-in Implementations; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **SlidingWindowMemory** is the default when no MemoryProvider is configured.
 It returns the most recent `max_context_events` events of the room as the
 channel reads it, the turn's event the newest among them, which the channel
 places as the input: the turn reads at most one fewer before it. The agent's
 tool rows are not counted: its earlier rounds are replayed apart, at their
 place (Section 6.4).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-20.3-003", "kind": "behavior", "applies": "§20.3 Built-in Implementations; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **SummarizingMemory** calls an AI provider to summarize older history,
 keeping recent events intact: each older turn is read on one line after its
 author's label, and the summary's message stands for them, a user text joined
@@ -18412,25 +19801,33 @@ is carried into the new one; a summary the channel placed in the turn, joined
 to a user message or standing as a user message of its own, its text alone,
 is read as one of the messages. Its first threshold does not apply between
 rounds, and the memory it wraps is not asked.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-20.3-004", "kind": "behavior", "applies": "§20.3 Built-in Implementations; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **RetrievalMemory** wraps another provider and queries its knowledge sources
 (vector stores, search engines, document indexes) with the text of the current
 turn; the passages it retrieves are the turn's `notes`, each set apart as
 data, while the inner provider supplies the history. It indexes each ingested
 event in its sources.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-20.3-005", "kind": "behavior", "applies": "§20.3 Built-in Implementations; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **BudgetAwareMemory** keeps the room's latest events that fit what its
 `max_context_tokens` leaves once its safety margin, the turn's footprint
 (below), the current event and the messages and notes of the memory it wraps
 are paid for, dropping the oldest, its `min_events` latest always kept.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-20.3-006", "kind": "behavior", "applies": "§20.3 Built-in Implementations; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **CompactingMemory** keeps the latest events that fit what its
 `max_context_tokens` leaves once the same are paid for as by
 BudgetAwareMemory, less the summary's share of the window, its `min_events`
 latest always kept, and has a model summarize the events it trims; the
 summary's message comes after the messages of the memory it wraps, before the
 events it keeps.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-20.3-007", "kind": "behavior", "applies": "§20.3 Built-in Implementations; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The turn's footprint.** What the history may take is what the window leaves
 once the rest of the turn is in it: the system prompt, the tools declared, the
 notes the channel itself adds to the turn's input (the room's plan, the
@@ -18464,12 +19861,14 @@ budget alone: with none set, its last cut may fill the window, and only its
 thresholds, below that cut, leave the reply room. What a hook adds to the
 context after the memory read is not measured.
 
+<!-- /rfc -->
 ---
 
 ## 21. Tool Access Control
 
 ### 21.1 ToolPolicy
 
+<!-- rfc: {"id": "RK-21.1-001", "kind": "behavior", "applies": "§21.1 ToolPolicy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A `ToolPolicy` controls which tools an AI agent can invoke:
 
 ```
@@ -18478,7 +19877,9 @@ ToolPolicy
 ├── deny: list<string>                      # Glob patterns for denied tools
 └── role_overrides: map<string, RoleOverride>  # Per-role policy adjustments
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-21.1-002", "kind": "behavior", "applies": "§21.1 ToolPolicy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Resolution rules:**
 
 1. If `deny` matches the tool name, the tool is DENIED (deny always wins).
@@ -18488,7 +19889,9 @@ ToolPolicy
 
 Glob patterns support `*` (any characters) and `?` (single character). Every other character stands for itself, and a pattern holding `[` or `]` MUST be refused where it is configured: a rule written as a character class (`rm_[a-z]*`) read as written would cover none of the names it was written for, and a deny rule or a skill's gate would open. The same holds for a skill's `allowed_tools` and `requires` (Section 24.2).
 Example: `allow: ["search_*", "get_*"]` permits all search and get tools.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-21.1-003", "kind": "behavior", "applies": "§21.1 ToolPolicy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Tools the channel provides.** A channel MUST apply its policy to every tool
 it declares to the model or executes, the tools it injects itself included,
 with one exception: the tools that only read or unlock and never act —
@@ -18526,7 +19929,9 @@ declared under their aliases alone: a call under a bare name names no server,
 so a policy cannot hold it to one. The
 declaration filter and the execution guard MUST apply one rule, so a tool the
 model is offered is a tool it may call.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-21.1-004", "kind": "behavior", "applies": "§21.1 ToolPolicy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **One refusal per cause.** A call is refused in the same order and with the
 same text for the same cause on every door: an AI channel's turn, a reasoning
 backend's (Section 12.4.1), a realtime session, a conference. The order is: a
@@ -18569,7 +19974,9 @@ fallback. A role changed during the session holds for the catalogue of the
 delegations handed over after it; one a backend queues behind another keeps
 what was read when it was handed over, its calls judged at the gate as the
 role stands.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-21.1-005", "kind": "behavior", "applies": "§21.1 ToolPolicy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **One tool per name.** A name is served by one tool in a room, and declared
 with that tool's definition: a tool declared under a name with one schema and
 served by another would have the model call the one's schema on the other's
@@ -18595,7 +20002,9 @@ turn or the session can call, declared or hidden, its discovery tools aside,
 the re-read of a stored result included once a round declares it, on every
 path. `find_tools` names what Tool Search hides only, and its related
 names (a match's family) exclude what it never returns.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-21.1-006", "kind": "behavior", "applies": "§21.1 ToolPolicy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Tools orchestration injects stay declared.** When Tool Search hides a large
 catalogue behind its discovery tools, a tool that orchestration injects on an
 agent or a channel (the handoff tool, a delegation tool, a delegation's result
@@ -18606,7 +20015,9 @@ Search does not: `find_tools` does not name it, being declared already, and
 the declaration reports it as `always` (Section 6.4, `declared_tools`). The
 agent is told to call these tools, often that it must: a tool it would first
 have to find is a tool it does not call.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-21.1-007", "kind": "behavior", "applies": "§21.1 ToolPolicy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **RoleOverride:**
 
 ```
@@ -18625,9 +20036,11 @@ patterns are added to the base's, and its allow patterns constrain alongside
 the base's, so a tool must match both allow lists (each when non-empty). A
 restricting override can take access away, never grant it. When `"replace"`,
 the override completely replaces the base.
+<!-- /rfc -->
 
 ### 21.2 MCP Tool Provider
 
+<!-- rfc: {"id": "RK-21.2-001", "kind": "behavior", "applies": "§21.2 MCP Tool Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Implementations SHOULD support loading tools from MCP (Model Context Protocol)
 servers via an `MCPToolProvider`:
 
@@ -18697,7 +20110,9 @@ costs the whole catalogue every time, and a gateway that serves tools per
 caller never names them to the connection that calls them.
 
 MCP tools are subject to the same `ToolPolicy` as local tools.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-21.2-002", "kind": "behavior", "applies": "§21.2 MCP Tool Provider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Server instructions.** A server MAY publish, when it connects, how a model
 should use its tools (the `instructions` of its handshake result). A provider
 keeps them (`instructions`, null when the server published none) with what the
@@ -18759,9 +20174,11 @@ with a note saying how long it was when the note fits, and the texts after
 it left out, and shows the model at most four of its images within 5 MiB of
 data URL in all; each image past either reaches the model as its note,
 which counts as a text.
+<!-- /rfc -->
 
 ### 21.3 AI Steering Directives
 
+<!-- rfc: {"id": "RK-21.3-001", "kind": "behavior", "applies": "§21.3 AI Steering Directives; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Steering directives allow dynamic mid-conversation control of AI behavior.
 They are injected into the AI generation context:
 
@@ -18776,7 +20193,9 @@ tools are one such point: a Cancel that arrives after the model's last event
 of a round, while its calls are announced but before they run, MUST stop them.
 None of them runs, and each announced call ends with `status = failed`, so no
 start row stays pending. The loop honours the same points for every provider.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-21.3-002", "kind": "behavior", "applies": "§21.3 AI Steering Directives; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The answer is a stop too.** A loop reads its directives before each round
 and once the model has answered. An `InjectMessage` that came while the model
 wrote its answer MUST be read: the same turn asks the model again, the answer
@@ -18785,7 +20204,9 @@ its directives for the last time it MUST NOT be reached any more, so a
 directive the host is told reached a loop is one that loop reads, unless a
 `Cancel` ends the loop first: what it had not read then stays unread
 (Section 6.4, *A message for the running turn*).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-21.3-003", "kind": "behavior", "applies": "§21.3 AI Steering Directives; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Which loop a directive reaches.** One AI channel object serves every room it
 is bound to, so its running tool loops can belong to several rooms' turns at
 once. A host names the loop a directive is for, or its room, never both: a
@@ -18807,9 +20228,11 @@ the host the sum of what they reached (§10.6.8).
 Steering directives are typically issued by orchestration logic (e.g.,
 supervisor injecting context for a worker agent) or by hooks reacting to
 events.
+<!-- /rfc -->
 
 ### 21.4 Tool Call Context
 
+<!-- rfc: {"id": "RK-21.4-001", "kind": "behavior", "applies": "§21.4 Tool Call Context; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **What a handler returns (normative).** A tool handler answers with text or
 with a list of content parts (text and images, Section 21.5), which it MAY give
 as mappings naming their type. A mapping counts as a part only when it has
@@ -18891,9 +20314,11 @@ empty value on that path, because no MESSAGE event will carry the record. A
 tool loop the implementation starts under a turn MUST
 inherit the turn's context, so a handler called on any round of the loop reads
 the same room and actor as on the first.
+<!-- /rfc -->
 
 ### 21.5 Large Tool Results
 
+<!-- rfc: {"id": "RK-21.5-001", "kind": "behavior", "applies": "§21.5 Large Tool Results; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 An implementation that bounds large tool results (stores the full text and
 gives the model a bounded preview with a way to read the rest back) MUST
 apply the bound to every outcome the model reads: a handler's result, a
@@ -18942,9 +20367,11 @@ parts, or JSON such as an ACP agent's output) and in its structured copy as
 much as in the result: an implementation keeps them up to a size and states
 each one it leaves out. The bound is on the event only; the model's
 copy keeps every image.
+<!-- /rfc -->
 
 ### 21.6 Tool Call Timeout
 
+<!-- rfc: {"id": "RK-21.6-001", "kind": "behavior", "applies": "§21.6 Tool Call Timeout; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A handler that never answers holds its turn for good: the model waits on the
 call, and nothing else in the room's turn can proceed. An implementation MUST
 therefore bound every wait on a tool handler's answer, on every path a call
@@ -18976,20 +20403,26 @@ channel, a conference's calls), through one rule:
 The bound is per call, not per turn: a turn's own deadline still applies
 between rounds.
 
+<!-- /rfc -->
 ---
 
 ## 22. Delivery Strategies
 
+<!-- rfc: {"id": "RK-22-001", "kind": "behavior", "applies": "§22 Delivery Strategies; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Delivery strategies control how proactive content (background task results,
 delegated agent output, scheduled messages) is delivered into a conversation.
+<!-- /rfc -->
 
 ### 22.1 DeliveryStrategy Interface
 
+<!-- rfc: {"id": "RK-22.1-001", "kind": "structural", "applies": "§22.1 DeliveryStrategy Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 DeliveryStrategy (interface)
 └── deliver(context: DeliveryContext) → DeliveryOutcome | void
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-22.1-002", "kind": "behavior", "applies": "§22.1 DeliveryStrategy Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **DeliveryContext:**
 
 ```
@@ -19032,7 +20465,9 @@ remain an alias for selecting the room's transport, but MUST NOT silently
 replace explicit `addressed_to`. Applications select intelligence channels
 with `addressed_to`, and realtime provider sessions with `channel_id` and
 `session_id`; the latter are not intelligence channel ids (§19.3).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-22.1-003", "kind": "behavior", "applies": "§22.1 DeliveryStrategy Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The publication.** A text delivery enters its room as a message the
 framework's own sender, `system`, writes on the transport that carries it,
 through the inbound pipeline (§10.1), its delivery deferred: the room's agents
@@ -19057,7 +20492,9 @@ a hook (`source_unbound`, a hook's reason); a replay that is
 `sent` carries `duplicate_publication`. The doors that store a caller's event
 as given, `send_event()`, `post()` and `commit_event()`, refuse a key in the
 publication namespace as an invalid argument.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-22.1-004", "kind": "behavior", "applies": "§22.1 DeliveryStrategy Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Instruction delivery.** `instruction = true` delivers the content as the
 application's direction to an agent rather than as something a participant
 said. Through the text pipeline it is an `INSTRUCTION` event (§10.1.1), with
@@ -19079,7 +20516,9 @@ instead. Missing or replaced sessions and injection errors MUST NOT report
 success. Unaddressed calls without explicit destinations MAY retain room-wide
 realtime injection. A non-null intelligence address uses the text pipeline,
 not a direct realtime injection; combining it with `session_id` is invalid.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-22.1-005", "kind": "behavior", "applies": "§22.1 DeliveryStrategy Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Idempotency boundary.** A blank key, empty or whitespace only, names no
 publication: `deliver()` refuses it with `blocked`, reason
 `empty_idempotency_key`, before anything is written. A keyed text delivery's
@@ -19124,7 +20563,9 @@ address changes. Retention follows the store: memory does not survive
 restart; durable stores retain committed keys until the corresponding
 event/key is removed. Distributed use requires a shared store and a lock
 manager appropriate to that store.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-22.1-006", "kind": "behavior", "applies": "§22.1 DeliveryStrategy Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Realtime injection identity.** A keyed proactive voice injection MUST reserve
 its attempt atomically in the ConversationStore before calling the provider.
 Its identity is the tuple `(room_id, channel_id, session_id, idempotency_key)`;
@@ -19171,15 +20612,19 @@ Unkeyed calls retain no deduplication guarantee. Queue delivery remains
 at-least-once, and neither a committed text event nor a queue acknowledgement
 proves exactly-once agent execution or resumes a turn interrupted after commit.
 A durable delivery-lane outbox and crash recovery of turns are separate capabilities.
+<!-- /rfc -->
 
 ### 22.2 Built-in Strategies
 
+<!-- rfc: {"id": "RK-22.2-001", "kind": "behavior", "applies": "§22.2 Built-in Strategies; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 | Strategy | Behavior |
 |---|---|
 | Immediate | Deliver synchronously. May interrupt active voice playback. |
 | WaitForIdle(buffer = 1.0, playback_timeout = 15.0) | On a voice channel, wait until the room's TTS playback has finished; on a channel hosting a realtime model, wait until the model's sessions are idle (no answer in flight, nobody heard speaking, no tool call in flight, its audio forwarded); then wait `buffer` seconds and deliver. On any other channel, deliver at once, with no buffer. A wait longer than `playback_timeout` seconds delivers anyway. |
 | Queued(buffer = 1.0, playback_timeout = 15.0, separator) | Batch multiple delivery items, then deliver together after `buffer` seconds of inactivity, their contents joined with `separator` (default a blank line). It waits for idle as WaitForIdle does, and a wait longer than `playback_timeout` seconds delivers the batch anyway. |
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-22.2-002", "kind": "behavior", "applies": "§22.2 Built-in Strategies; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **WaitForIdle** is RECOMMENDED for voice channels where interruptions are
 disruptive. On a channel hosting a realtime model it watches both the model's
 answer and the user's speech; on a voice channel, the TTS playback.
@@ -19213,9 +20658,11 @@ retries are spent, or at once when its error is not retryable. An item made
 within a turn, a tool call or a hook's body carries at least that work's depth
 (§8.3), which the worker publishes it at. The worker starts when the kit is
 entered (started) and stops at its close, the items it held queued again.
+<!-- /rfc -->
 
 ### 22.3 Delivery Hooks
 
+<!-- rfc: {"id": "RK-22.3-001", "kind": "behavior", "applies": "§22.3 Delivery Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 | Hook | Execution | When |
 |---|---|---|
 | BEFORE_DELIVER | SYNC | Before strategy executes — can block or modify content |
@@ -19245,16 +20692,20 @@ refuses (`empty_idempotency_key`, `invalid_session_target`) is reported to
 Both hooks see an instruction delivery as an event of type `INSTRUCTION`,
 so a hook that gates proactive content gates it too.
 
+<!-- /rfc -->
 ---
 
 ## 23. Task Delegation
 
+<!-- rfc: {"id": "RK-23-001", "kind": "behavior", "applies": "§23 Task Delegation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Task delegation enables agents to offload background work to specialized
 agents running in isolated child rooms. Results are collected and delivered
 back to the parent conversation.
+<!-- /rfc -->
 
 ### 23.1 TaskRunner Interface
 
+<!-- rfc: {"id": "RK-23.1-001", "kind": "behavior", "applies": "§23.1 TaskRunner Interface; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 TaskRunner (interface)
 ├── run(task: DelegatedTask) → void
@@ -19275,9 +20726,11 @@ before it ran). A `run` that raises has not taken the task: the delegation
 ends it failed (Section 23.3), and the runner MUST NOT end it too. That completion MUST run to its end
 even if the caller of `cancel` is cancelled meanwhile, and a task whose work
 already ran when `cancel` arrives ends as it stands.
+<!-- /rfc -->
 
 ### 23.2 DelegatedTask
 
+<!-- rfc: {"id": "RK-23.2-001", "kind": "structural", "applies": "§23.2 DelegatedTask; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 DelegatedTask
 ├── id: string                              # Unique task identifier
@@ -19300,9 +20753,11 @@ DelegatedTaskResult
 ├── duration_ms: float = 0
 └── metadata: map<string, any>              # loop_end_reason when a cut or a failed turn ended the worker; turns: the worker's turn record (§6.4)
 ```
+<!-- /rfc -->
 
 ### 23.3 Delegation Protocol
 
+<!-- rfc: {"id": "RK-23.3-001", "kind": "behavior", "applies": "§23.3 Delegation Protocol; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 When `delegate(room_id, agent_id, task, notify, context = null, post_status = true,
 brief = null, conversation = 0, hand_back = "relay",
 require_structured_result = false, max_result_retries = 3, result_tool = null)` is
@@ -19498,7 +20953,9 @@ called:
    delivery does, the chain depth that delivery would carry and, unlike a
    response, whose key the pipeline clears (§13.4), an idempotency key the
    framework sets: the id the result was taken under.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-23.3-002", "kind": "behavior", "applies": "§23.3 Delegation Protocol; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A structured result.** With `require_structured_result`, which only an
 inline delegation (`wait`) honours, a background one running without it and
 a `TurnHost`'s refusing it (Section 10.6.5), the agent hands its work back by calling a result tool, `result_tool` or
@@ -19577,7 +21034,9 @@ terminal one adds `task_status` and `duration_ms`. A caller that follows its
 tasks on the bus itself (an orchestration strategy's worker run, Section
 19.7.3) delegates with `post_status = false`, and the delegation posts
 nothing, so a task never shows twice.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-23.3-003", "kind": "behavior", "applies": "§23.3 Delegation Protocol; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Progress.** A task MAY say how far it got while it runs ("12/30 s", "3
 sources of 5"). The child room's metadata names its task (`task_id`, beside
 `parent_room_id` and `task_agent_id`), so a tool the worker calls in that room
@@ -19588,9 +21047,11 @@ metadata as the task's other entries. It returns whether it posted: a call
 outside a task's child room posts nothing. A progress entry does not end the
 task: a reader of the bus keeps the latest progress of a task apart from its
 status, and a task that ended stays ended whatever progress follows.
+<!-- /rfc -->
 
 ### 23.4 Delegation Tools
 
+<!-- rfc: {"id": "RK-23.4-001", "kind": "behavior", "applies": "§23.4 Delegation Tools; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Implementations SHOULD provide helpers for AI-driven delegation:
 
 - `build_delegate_tool(agents)` — Creates an AI tool definition that lets
@@ -19765,7 +21226,9 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   no task of the room: the bound is the same for every room, and what a room
   is answered depends on how many tasks ended elsewhere, never on what they
   were.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-23.4-002", "kind": "behavior", "applies": "§23.4 Delegation Tools; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The room's tasks in the turn's notes.** An AI channel's turn reads the
 room's tasks without a tool call: when the StatusBus lists tasks for the room
 of the turn, the channel's notes (Section 6.4) carry the latest of them
@@ -19793,23 +21256,29 @@ room's parent is the room that issued the call, never the room the tool was
 wired in. A worker delegating in turn runs in its own child room, so its
 delegation hangs off that room. A call made outside a tool call MUST be
 refused.
+<!-- /rfc -->
 
 ### 23.5 Delegation Hooks
 
+<!-- rfc: {"id": "RK-23.5-001", "kind": "behavior", "applies": "§23.5 Delegation Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 | Hook | Execution | When |
 |---|---|---|
 | ON_TASK_DELEGATED | ASYNC | Task created and child room initialized |
 | ON_TASK_COMPLETED | ASYNC | Task ended: completed with its result, failed with its error, or cancelled |
 
+<!-- /rfc -->
 ---
 
 ## 24. Skills Framework
 
+<!-- rfc: {"id": "RK-24-001", "kind": "behavior", "applies": "§24 Skills Framework; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 The Skills Framework enables agent capabilities to be defined as discoverable,
 self-contained packages.
+<!-- /rfc -->
 
 ### 24.1 Skill Definition
 
+<!-- rfc: {"id": "RK-24.1-001", "kind": "behavior", "applies": "§24.1 Skill Definition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A Skill is defined by a `SKILL.md` file with YAML frontmatter:
 
 ```
@@ -19852,9 +21321,11 @@ texts, or that a line-by-line reading cannot read whole (a list spread over
 several lines, a block scalar, a line under the key that is not a `- item`),
 means the skill cannot be parsed: a skill read without what it gates hands
 the model, before any activation, the tools it was meant to keep closed.
+<!-- /rfc -->
 
 ### 24.2 SkillMetadata
 
+<!-- rfc: {"id": "RK-24.2-001", "kind": "structural", "applies": "§24.2 SkillMetadata; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 SkillMetadata
 ├── name: string                            # Unique skill identifier
@@ -19873,9 +21344,11 @@ SkillMetadata
         # `requires`, ...), its value as a string, a list's items joined
         # by commas
 ```
+<!-- /rfc -->
 
 ### 24.3 SkillRegistry
 
+<!-- rfc: {"id": "RK-24.3-001", "kind": "behavior", "applies": "§24.3 SkillRegistry; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 SkillRegistry
 ├── discover(*directories) → int            # Scan directories for SKILL.md files, return count
@@ -19941,9 +21414,11 @@ missing, and a call to it reads that a skill not available here gates it.
 A pattern an activated skill gates is that skill's to open: an unavailable
 skill gating the same pattern does not hold it closed (`closed_tool_names`).
 `gated_tool_names` is the one reading of skill gating both doors use.
+<!-- /rfc -->
 
 ### 24.4 Activation Lifecycle
 
+<!-- rfc: {"id": "RK-24.4-001", "kind": "behavior", "applies": "§24.4 Activation Lifecycle; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Loading a skill's body is an **activation**, and an activation is scoped to the
 **conversation**, not to the turn that made it. A model working across several
 turns on the same task is following the same rules throughout; a skill that
@@ -20005,9 +21480,11 @@ every door, text or realtime; where the tools are reached through `call_tool`,
 the answer says so. Only the turn's own catalogue is matched, never the tools
 the channel serves itself. A skill that exists but is unavailable answers with
 its reason and no such hint.
+<!-- /rfc -->
 
 ### 24.5 Loading Failures
 
+<!-- rfc: {"id": "RK-24.5-001", "kind": "behavior", "applies": "§24.5 Loading Failures; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A skill that cannot be parsed, or whose metadata does not validate, is a
 deployment error rather than a runtime condition. The two have opposite
 remedies. A skill that exists but cannot be used in the present context is a
@@ -20046,9 +21523,11 @@ pass 65,536 characters. A discovery or a registration that would make it pass
 them fails, says so, and leaves the registry as it was: a manifest without a
 bound grows each prompt, and every turn's cost, with each skill a deployment
 adds.
+<!-- /rfc -->
 
 ### 24.6 Access to Bundled Files
 
+<!-- rfc: {"id": "RK-24.6-001", "kind": "behavior", "applies": "§24.6 Access to Bundled Files; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A skill's references and scripts are addressed by name, and the name is chosen
 by the model. Resolution MUST be confined to the skill's own directory.
 
@@ -20072,9 +21551,11 @@ execution MUST resolve the script name under these same rules and MUST reject a
 name that fails them before any integrator-supplied executor is invoked, and
 SHOULD make the resolved path available to that executor. A check every
 integrator is expected to rediscover is a check some integrator will omit.
+<!-- /rfc -->
 
 ### 24.7 Skills Served over MCP
 
+<!-- rfc: {"id": "RK-24.7-001", "kind": "behavior", "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 An MCP server MAY serve skills beside its tools under the MCP Skills
 extension (`io.modelcontextprotocol/skills`, SEP-2640): it lists them with
 `skills/list`, answers `skills/get` for one by the URI of its `SKILL.md`, and
@@ -20088,7 +21569,9 @@ SkillRegistry
 └── add_mcp_server(provider, label, allow_dynamic = false,
                    approve_execution = null, execution_tools = []) → int
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-24.7-002", "kind": "behavior", "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Registration.** `add_mcp_server` lists the skills of the server `provider`
 is connected to (Section 21.2) and registers them under `label`, returning
 how many it registered. The label is the host's name for that server: an
@@ -20110,7 +21593,9 @@ one of them retires, when it registers the server again or when a file fails
 its check, is retired in each of them, an active one included, and a copy made
 without the names its source marks unavailable never asks a server for them
 either.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-24.7-003", "kind": "behavior", "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Entries.** Each entry is read on its own. An entry whose `resources` is
 missing or neither a list nor `"dynamic"`, whose URI's last segment before
 `SKILL.md` is not its frontmatter `name`, whose list omits its own `SKILL.md`,
@@ -20122,7 +21607,9 @@ is never dropped in silence). The server's other skills stay usable. A
 `"dynamic"` skill offers nothing to verify: a host that allows one takes its
 content unverified, and an implementation MUST stop reading such a skill once
 what it read reaches 16 MiB.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-24.7-004", "kind": "behavior", "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Names.** A skill an MCP server serves is registered under `<label>:<path>`,
 which is its name in the registry (Section 24.2): its path is its URI without
 the trailing `/SKILL.md`, and without the scheme when the scheme is
@@ -20137,7 +21624,9 @@ the activation record, the entry held, what was verified. The manifest
 (`to_prompt_xml()`) names the label as the skill's origin and gives its
 description as Section 6.4 quotes a text from outside. `requires` is read from
 the frontmatter as for any skill (Section 24.3).
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-24.7-005", "kind": "behavior", "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Activation.** Activating such a skill reads its `SKILL.md` from its own
 server then, and not before. The content MUST match the entry before anything
 of it reaches the model: its length the entry's `size`, its SHA-256 digest
@@ -20164,7 +21653,9 @@ label it holds, asks that server for the entry with `skills/get`: an entry it
 returns is registered as a listed one would be, kept out of the manifest
 (`mark_unlisted`), and activated; an error answers that the server serves no
 such skill. A skill the server's own instructions point to is reached so.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-24.7-006", "kind": "behavior", "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Files.** While such a skill is active, the registry holds the entry it was
 loaded from. `read_skill_reference` resolves the name it is given against the
 skill's directory (`templates/invoice.md`), reads the file from the same
@@ -20176,14 +21667,18 @@ skill (Section 24.4): the registry reads the entry again, and the model is
 told to activate the skill again, which delivers its current body. A read
 never reaches another server: the content of one server's skill causes no
 read on another.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-24.7-007", "kind": "behavior", "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Lost record.** An activation of such a skill is not restored from the
 stored history: its body is no longer held, so its next activation delivers it
 again (Section 24.4). A delivery that hands every skill's body over when a
 session starts (a realtime session in `inline_full` mode) would fetch them all
 ahead of need: there, a skill an MCP server serves is unavailable, with that
 reason.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-24.7-008", "kind": "behavior", "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Permissions.** What such a skill's frontmatter would grant is not granted:
 its `allowed_tools` gates nothing and opens nothing (Section 24.2), and a
 `SKILL.md` within its directory is one of its files, never a skill activated
@@ -20201,7 +21696,9 @@ asked again, and the same entry another registry serves (a turn's own,
 Section 24.3) asks that registry's callback. A host that keeps approvals keeps
 them by fingerprint. A `"dynamic"` skill has no fingerprint an approval could bind,
 and the callback is told so.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-24.7-009", "kind": "behavior", "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Trust.** A digest the server supplies proves the content consistent with an
 entry from the same server, never trustworthy: the content stays text from
 outside (Section 6.4). Content kept on disk between reads MUST meet the
@@ -20209,18 +21706,22 @@ extension's cache requirements (out of reach of what the model runs, verified
 again on each read, outside every directory a registry discovers skills in);
 content kept in memory for the entry held needs none of them.
 
+<!-- /rfc -->
 ---
 
 ## 25. Image Generation
 
+<!-- rfc: {"id": "RK-25-001", "kind": "behavior", "applies": "§25 Image Generation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 An agent that can describe a picture cannot draw one. Image synthesis is a
 capability a small number of models hold, and the model holding a conversation
 is rarely one of them — so it is specified here as its own provider surface,
 the way speech-to-text and text-to-speech already are, and not as an extension
 of the conversational response.
+<!-- /rfc -->
 
 ### 25.1 A Surface of Its Own
 
+<!-- rfc: {"id": "RK-25.1-001", "kind": "behavior", "applies": "§25.1 A Surface of Its Own; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 An implementation MUST expose image generation through a provider interface
 distinct from the AI provider interface, and MUST NOT require that the two be
 served by the same vendor, credential, or object. An agent conversing through
@@ -20238,9 +21739,11 @@ An implementation MUST NOT widen the conversational response type to carry
 generated images. `AIResponse.content` is read by every consumer of the
 framework; turning it into a union imposes a migration on all of them for a
 capability that two providers offer.
+<!-- /rfc -->
 
 ### 25.2 ImageProvider
 
+<!-- rfc: {"id": "RK-25.2-001", "kind": "behavior", "applies": "§25.2 ImageProvider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 ImageProvider
 ├── name → string                             # Provider identifier
@@ -20289,9 +21792,11 @@ and final. An image the vendor delivered in a form the provider cannot return
 was generated and billed: that failure is final too. Independent concurrent calls SHOULD settle so their outcomes can
 be collected. Cancellation MUST remain cancellation, with already received
 outcomes accessible through an optional asynchronous progress callback.
+<!-- /rfc -->
 
 ### 25.3 ImageResult
 
+<!-- rfc: {"id": "RK-25.3-001", "kind": "behavior", "applies": "§25.3 ImageResult; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 ImageResult
 ├── data: string                              # data:<mime_type>;base64,<payload>
@@ -20327,9 +21832,11 @@ A progress callback MAY receive individual call outcomes or preview images.
 Previews MUST be distinguished from final results. Callback delivery does not
 imply vendor cancellation or a refund, and failure to deliver an outcome MUST
 NOT trigger another generation.
+<!-- /rfc -->
 
 ### 25.4 Editing
 
+<!-- rfc: {"id": "RK-25.4-001", "kind": "behavior", "applies": "§25.4 Editing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Editing — an image and a prompt in, an image out — is expressed through
 `reference_images` on `generate`, not through a second method.
 
@@ -20349,9 +21856,11 @@ provider default; applications MUST NOT assume that omitted means stateless.
 Grounding with external search MAY be requested only on compatible models;
 available citations and search-suggestion metadata MUST be retained for the
 caller to display according to the provider's requirements.
+<!-- /rfc -->
 
 ### 25.5 Usage Accounting
 
+<!-- rfc: {"id": "RK-25.5-001", "kind": "behavior", "applies": "§25.5 Usage Accounting; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A generation reports what it consumed. An image and the text around it are
 metered separately by the vendors that meter them at all, so the counters stay
 apart rather than collapsing into one number:
@@ -20384,9 +21893,11 @@ arithmetic over it is specified here, beyond what a turn's cost budget counts
 (Section 6.4). What is specified is that the counters
 mean what they say, so that whatever does price them has something unambiguous
 to price.
+<!-- /rfc -->
 
 ### 25.6 Model Catalogue
 
+<!-- rfc: {"id": "RK-25.6-001", "kind": "behavior", "applies": "§25.6 Model Catalogue; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 An image catalogue is a set disjoint from the conversational one: a model that
 draws is not a model that converses, and neither list contains an id belonging
 to the other.
@@ -20403,9 +21914,11 @@ Catalogue entries MAY carry structured image capabilities, including accepted
 controls and values, geometry constraints, reference limits, continuity,
 masking, search, and retirement dates. Unknown capabilities MUST remain unknown
 rather than being inferred from another model in the same vendor's lineup.
+<!-- /rfc -->
 
 ### 25.7 Non-Goals
 
+<!-- rfc: {"id": "RK-25.7-001", "kind": "behavior", "applies": "§25.7 Non-Goals; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 Image generation is not a pipeline stage and defines no hook triggers. It is
 invoked by a caller — a tool handler, an application — and its result enters a
 room as ordinary message content, which the inbound and broadcast pipelines
@@ -20416,12 +21929,14 @@ Section 10 state once.
 Video generation, image *understanding* (already covered by multimodal message
 parts) and avatar synthesis (Section 12) are outside this section.
 
+<!-- /rfc -->
 ---
 
 ## 26. Conformance Levels
 
 ### 26.1 Level 0: Core (REQUIRED)
 
+<!-- rfc: {"id": "RK-26.1-001", "kind": "behavior", "applies": "§26.1 Level 0: Core (REQUIRED); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A conforming implementation MUST support:
 
 - Room model with lifecycle (ACTIVE, PAUSED, CLOSED, ARCHIVED), including
@@ -20453,7 +21968,9 @@ A conforming implementation MUST support:
 - Event addressing: `RoomEvent.addressed_to`, honoured when set (Section 19.3)
 - Turn backend with its in-memory implementation and the kit's own executor:
   every turn through its serialized messages (Section 10.6)
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-26.1-002", "kind": "behavior", "applies": "§26.1 Level 0: Core (REQUIRED); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Triggers and framework events.** A Level 0 implementation MUST fire each
 hook trigger, and emit each framework event, that the table below names for a
 step or an operation, whenever that step or operation runs. The table is
@@ -20489,9 +22006,11 @@ framework event.
 | §10.1 step 17 | — | event_processed |
 | §10.3: an EDIT or a DELETE committed; a direct `update_event()` or `delete_event()` | ON_EVENT_UPDATED, ON_EVENT_DELETED | — |
 | A hook that exceeds its timeout (§9.1) | — | hook_timeout |
+<!-- /rfc -->
 
 ### 26.2 Level 1: Transport (RECOMMENDED)
 
+<!-- rfc: {"id": "RK-26.2-001", "kind": "behavior", "applies": "§26.2 Level 1: Transport (RECOMMENDED); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A Level 1 implementation SHOULD additionally support:
 
 - At least one SMS provider
@@ -20509,9 +22028,11 @@ A Level 1 implementation SHOULD additionally support:
 - Retry policy
 - Rate limiting
 - Telemetry provider abstraction (Section 15.7)
+<!-- /rfc -->
 
 ### 26.3 Level 2: Rich (OPTIONAL)
 
+<!-- rfc: {"id": "RK-26.3-001", "kind": "behavior", "applies": "§26.3 Level 2: Rich (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A Level 2 implementation MAY additionally support:
 
 - WhatsApp channel (Business and/or Personal)
@@ -20547,9 +22068,11 @@ A Level 2 implementation MAY additionally support:
 - AI steering directives (Section 21.3)
 - Advanced memory providers: Summarizing, Retrieval (Section 20)
 - A turn backend whose executors run in other processes (Section 10.6)
+<!-- /rfc -->
 
 ### 26.4 Level 3: Real-Time Media (OPTIONAL)
 
+<!-- rfc: {"id": "RK-26.4-001", "kind": "behavior", "applies": "§26.4 Level 3: Real-Time Media (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 A Level 3 implementation MAY additionally support audio and/or video real-time media:
 
 #### Audio (Voice)
@@ -20634,12 +22157,14 @@ A Level 3 implementation MAY additionally support audio and/or video real-time m
 - Optional: vision on tracks (Planned), egress recording delegation, SIP gateway
   interop, bot video publication (avatar), speech-to-speech composition
 
+<!-- /rfc -->
 ---
 
 ## Appendix A: Channel Reference
 
 ### A.1 SMS Channel
 
+<!-- rfc: {"id": "RK-A.1-001", "kind": "structural", "applies": "§A.1 SMS Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 SMSChannel
 ├── type: SMS
@@ -20660,9 +22185,11 @@ SMSChannel
 └── binding_metadata:
     └── phone_number: string (recipient)
 ```
+<!-- /rfc -->
 
 ### A.2 Email Channel
 
+<!-- rfc: {"id": "RK-A.2-001", "kind": "structural", "applies": "§A.2 Email Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 EmailChannel
 ├── type: EMAIL
@@ -20683,9 +22210,11 @@ EmailChannel
     ├── email_address: string (recipient)
     └── subject: string | null
 ```
+<!-- /rfc -->
 
 ### A.3 WhatsApp Channel
 
+<!-- rfc: {"id": "RK-A.3-001", "kind": "structural", "applies": "§A.3 WhatsApp Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 WhatsAppChannel
 ├── type: WHATSAPP
@@ -20709,9 +22238,11 @@ WhatsAppChannel
 └── binding_metadata:
     └── phone_number: string (recipient)
 ```
+<!-- /rfc -->
 
 ### A.4 WhatsApp Personal Channel
 
+<!-- rfc: {"id": "RK-A.4-001", "kind": "structural", "applies": "§A.4 WhatsApp Personal Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 WhatsAppPersonalChannel
 ├── type: WHATSAPP_PERSONAL
@@ -20743,9 +22274,11 @@ WhatsAppPersonalChannel
 └── chat_key: group_jid (a group message's group; a private message is its
     sender's, §5.7)
 ```
+<!-- /rfc -->
 
 ### A.5 Messenger Channel
 
+<!-- rfc: {"id": "RK-A.5-001", "kind": "structural", "applies": "§A.5 Messenger Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 MessengerChannel
 ├── type: MESSENGER
@@ -20766,9 +22299,11 @@ MessengerChannel
 └── binding_metadata:
     └── facebook_user_id: string (recipient)
 ```
+<!-- /rfc -->
 
 ### A.6 Teams Channel
 
+<!-- rfc: {"id": "RK-A.6-001", "kind": "structural", "applies": "§A.6 Teams Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 TeamsChannel
 ├── type: TEAMS
@@ -20792,9 +22327,11 @@ TeamsChannel
 │   └── teams_conversation_id: string (recipient: the chat, §5.7)
 └── chat_key: conversation_id
 ```
+<!-- /rfc -->
 
 ### A.7 RCS Channel
 
+<!-- rfc: {"id": "RK-A.7-001", "kind": "structural", "applies": "§A.7 RCS Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 RCSChannel
 ├── type: RCS
@@ -20820,9 +22357,11 @@ RCSChannel
 └── configuration:
     └── fallback: bool (auto-fallback to SMS when RCS unavailable)
 ```
+<!-- /rfc -->
 
 ### A.8 WebSocket Channel
 
+<!-- rfc: {"id": "RK-A.8-001", "kind": "structural", "applies": "§A.8 WebSocket Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 WebSocketChannel
 ├── type: WEBSOCKET
@@ -20864,9 +22403,11 @@ WebSocketChannel
     a stream sends only to the registrations present when it started,
     checked as each send starts
 ```
+<!-- /rfc -->
 
 ### A.9 AI Channel
 
+<!-- rfc: {"id": "RK-A.9-001", "kind": "structural", "applies": "§A.9 AI Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 AIChannel
 ├── type: AI
@@ -20929,7 +22470,9 @@ AIChannel
     └── Returns ChannelOutput with a response stream, which the framework
         delivers with deliver_stream() and stores segment by segment
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-A.9-002", "kind": "behavior", "applies": "§A.9 AI Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Per-turn settings.** Each per-turn setting (`system_prompt`, `temperature`,
 `max_tokens`, `thinking_budget`, `enable_thinking`, `reasoning_effort`,
 `response_schema`, `turn_budget_tokens`, `turn_budget_usd`) resolves from the
@@ -20970,7 +22513,9 @@ channel was built with that serve themselves included, and a turn that gives
 none, the next one included, reads the channel's.
 It may give the bounds of the turn's tool calls the same way (Section 21.6):
 above the channel's own bounds per tool name, for that turn alone.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-A.9-003", "kind": "behavior", "applies": "§A.9 AI Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Constrained turn.** A turn's `response_schema` resolves like the other
 per-turn settings. When it is set, the channel MUST NOT
 deliver or store any of the answer's text before the provider's check has
@@ -20981,9 +22526,11 @@ its deadline or its spending budget, because it was stopped, or because the prov
 after a round, has no document to deliver and fails with `truncated`. The turn's tools include those the channel adds itself
 (skills, sandbox, planning, orchestration), so a schema on a channel that adds
 any needs a provider whose `supports_response_schema_with_tools` is true.
+<!-- /rfc -->
 
 ### A.9.1 ACP Agent Channel
 
+<!-- rfc: {"id": "RK-A.9.1-001", "kind": "behavior", "applies": "§A.9.1 ACP Agent Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 ACPChannel
 ├── type: AI
@@ -21050,9 +22597,11 @@ report a non-success stop reason; an exception or abandoned stream is not a
 response. Intermediate usage observations MAY remain observable as ephemeral
 events in those cases, but do not establish successful completion or durable
 accounting. No tariff, credit policy or inferred cost delta is specified here.
+<!-- /rfc -->
 
 ### A.10 Voice Channel
 
+<!-- rfc: {"id": "RK-A.10-001", "kind": "structural", "applies": "§A.10 Voice Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 VoiceChannel
 ├── type: VOICE
@@ -21091,9 +22640,11 @@ VoiceChannel
     │       → sentence_splitter → synthesize_stream_input() → outbound pipeline → transport
     └── † AEC ref fed at transport level (local hw) or pipeline level (network) — see 12.3.4
 ```
+<!-- /rfc -->
 
 ### A.11 Realtime Voice Channel
 
+<!-- rfc: {"id": "RK-A.11-001", "kind": "structural", "applies": "§A.11 Realtime Voice Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 RealtimeVoiceChannel
 ├── type: REALTIME_VOICE
@@ -21124,9 +22675,11 @@ RealtimeVoiceChannel
     ├── hosted backend → its function calls go through tool_handling
     └── integrator backend → reasoning_backend, outputs returned via submit_delegation_output
 ```
+<!-- /rfc -->
 
 ### A.12 Video Channel
 
+<!-- rfc: {"id": "RK-A.12-001", "kind": "structural", "applies": "§A.12 Video Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 VideoChannel
 ├── channel_type: VIDEO
@@ -21160,9 +22713,11 @@ VideoChannel
     ├── MockVideoBackend — Unit testing with call tracking
     └── optional (MAY): WebRTC (FastRTC), RTP, SIP video, WebSocket backends
 ```
+<!-- /rfc -->
 
 ### A.13 Telegram Channel
 
+<!-- rfc: {"id": "RK-A.13-001", "kind": "structural", "applies": "§A.13 Telegram Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 TelegramChannel
 ├── type: TELEGRAM
@@ -21188,9 +22743,11 @@ TelegramChannel
 ├── chat_key: chat_id
 └── delivery: sends via Telegram Bot API (sendMessage, sendPhoto, etc.)
 ```
+<!-- /rfc -->
 
 ### A.14 CLI Channel
 
+<!-- rfc: {"id": "RK-A.14-001", "kind": "structural", "applies": "§A.14 CLI Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 CLIChannel
 ├── type: CLI
@@ -21203,10 +22760,12 @@ CLIChannel
 └── purpose: Development and testing via terminal stdin/stdout
 ```
 
+<!-- /rfc -->
 ---
 
 ### A.14.1 Host Channel
 
+<!-- rfc: {"id": "RK-A.14.1-001", "kind": "structural", "applies": "§A.14.1 Host Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 HostChannel
 ├── type: HOST
@@ -21219,10 +22778,12 @@ HostChannel
              name, through post() (§10.5)
 ```
 
+<!-- /rfc -->
 ---
 
 ### A.15 Conference Channel
 
+<!-- rfc: {"id": "RK-A.15-001", "kind": "structural", "applies": "§A.15 Conference Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 ```
 ConferenceChannel
 ├── channel_type: CONFERENCE
@@ -21267,6 +22828,7 @@ ConferenceChannel
     ├── MockConferenceBackend — unit testing with scripted event sequences
     └── SFU providers (e.g., LiveKit)
 ```
+<!-- /rfc -->
 
 ## Appendix B: Complete Event Flow Examples
 

@@ -1,4 +1,1721 @@
 {
   "version": 1,
-  "sections": []
+  "sections": [
+    {
+      "section": "0",
+      "sha256": "a52d1831f410c8dfaaebc413a242b8148c7f640a746e10be9ab868d64dafc471",
+      "classification": "normative",
+      "review": "The preface is retained as one non-testable context unit, including the Abstract language permission, bibliographic data and contents; no runtime coverage is inferred."
+    },
+    {
+      "section": "1",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "classification": "informative",
+      "review": "Source inventory: Conventions and Terminology. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "1.1",
+      "sha256": "423bb68d8a6d861d70179e7992e18abd9fdd7c72d41f95b36fe8471cdddd9e54",
+      "classification": "normative",
+      "review": "Source inventory: Key Words. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "1.2",
+      "sha256": "e3324c2f9b127418045e15e1c79a289149eb79e452059340f42dab8f2be83e60",
+      "classification": "normative",
+      "review": "Source inventory: Definitions. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "1.3",
+      "sha256": "5418cf334af49155215d3c9258b343deffbf2184482e777aad148287c6a8820f",
+      "classification": "normative",
+      "review": "Source inventory: Notation. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "1.4",
+      "sha256": "0d4fad1972d077b901fe2c307f7dc014a13b4fb840d8ccb022b0535ab7d65a4e",
+      "classification": "normative",
+      "review": "Source inventory: Serialized Form. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "2",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "classification": "informative",
+      "review": "Source inventory: Introduction. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "2.1",
+      "sha256": "f19648cc2dec874fb519447bc177587a9ab9b6b3c730e5ba132b2fc4930fcb62",
+      "classification": "informative",
+      "review": "Source inventory: Problem Statement. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "2.2",
+      "sha256": "c1303cd1367acaa9fea9adccb1972995d8b330c5f258876ce23057d1d6e9bea6",
+      "classification": "normative",
+      "review": "Source inventory: Scope. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "2.3",
+      "sha256": "bcabc1b3330775aabd4586c375603655e425cbf150aab5d15ef26fbfd1c19f73",
+      "classification": "normative",
+      "review": "Source inventory: Design Philosophy. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "3",
+      "sha256": "cefe076a16018733828c2e5eb3a68a17f64cab2232a7aff57ab48ddc6c02bad8",
+      "classification": "normative",
+      "review": "Source inventory: Architecture Overview. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "3.1",
+      "sha256": "18d0e7412ad3d7ff2c448fdcf47130217cf79ed2a46424940a4361efaf76e67b",
+      "classification": "normative",
+      "review": "Source inventory: Layer Responsibilities. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "3.2",
+      "sha256": "b73ee0cda2032c81f88dac2bd784fbf4fe8f7a4a1afbe48e8b03d2b8ac395b8b",
+      "classification": "normative",
+      "review": "Source inventory: Key Separations. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "4",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "classification": "informative",
+      "review": "Source inventory: Core Concepts. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "4.1",
+      "sha256": "a968fd68c7d8a97812717c8505da019630146dff5af2b8cd10da25318bdb8e4d",
+      "classification": "normative",
+      "review": "Source inventory: The Room. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "4.2",
+      "sha256": "d9fce2cbeaeee4ab6a380bdb5639cc3d4e1f4b2e729cf7a58f6948cfd7690b03",
+      "classification": "normative",
+      "review": "Source inventory: The Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "4.3",
+      "sha256": "f6bbbd7669a26ddd5678c3add07330ae972689ab4497562595092a0885ac9bec",
+      "classification": "normative",
+      "review": "Source inventory: The Event. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "4.4",
+      "sha256": "0130682d08cd7325f3af7865a55b76f4ee6d8eedf033fcc7a36cf39deec5d4ab",
+      "classification": "normative",
+      "review": "Source inventory: The Participant. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "4.5",
+      "sha256": "9cdc312ea70693e9f83e303128a263c0ee10ca8cd675b3e1abb94486793dc94d",
+      "classification": "normative",
+      "review": "Source inventory: The Identity. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "4.6",
+      "sha256": "367b8f9c82d568abd73056735fc33404946b267b1c44b27f879c233e496abd6f",
+      "classification": "normative",
+      "review": "Source inventory: Two Output Paths. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "5",
+      "sha256": "8e6bf1612f198294ed24171906fc16efc99277b2bce2a5a80701e8fb77315a8d",
+      "classification": "normative",
+      "review": "Source inventory: Data Models. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "5.1",
+      "sha256": "0ed488f9ca0c9a0adc5213612813a06821170d95d46b8a28596d0baff0435aac",
+      "classification": "normative",
+      "review": "Source inventory: Room. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "5.2",
+      "sha256": "269cfdf2e409e4cf07ccd54254e2d2a3c79a978565a150b85e9939e33b4ac347",
+      "classification": "normative",
+      "review": "Source inventory: RoomEvent. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "5.3",
+      "sha256": "67fba4846895064b3fa3c863e6f5a09aea812680dfc8505644b83cc567a0c5c4",
+      "classification": "normative",
+      "review": "Source inventory: Event Content. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "5.4",
+      "sha256": "60b6d89e9ca788701759c54b431b5f169f34580a92a33b10ce0a245ad7669e5a",
+      "classification": "normative",
+      "review": "Source inventory: Channel Data (Typed, Per-Channel). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "5.5",
+      "sha256": "9074b8a30b90250d2b68aa363f4b25850fe4fcb1a1cb89914633a160474413da",
+      "classification": "normative",
+      "review": "Source inventory: Participant. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "5.6",
+      "sha256": "c9b31e1814bc2235a87b4b85135fc4b4b8fa96e050304c3ad2504713c15bdfd5",
+      "classification": "normative",
+      "review": "Source inventory: Identity. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "5.7",
+      "sha256": "00f40c8260b9f1ca642e23c112a3c238b38e8d814b1eb4b84149053ccefeba1b",
+      "classification": "normative",
+      "review": "Source inventory: ChannelBinding. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "5.8",
+      "sha256": "fb0d1730ca8925433e2479b642c8f6c8d5ffbfa9023d45857fa8db24c8f60887",
+      "classification": "normative",
+      "review": "Source inventory: ChannelCapabilities. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "5.9",
+      "sha256": "db98d2ce6198c2862bdaa58e410d40a5acfb2cfe3f65c4aa5eb8c2ab43ab9c4d",
+      "classification": "normative",
+      "review": "Source inventory: Three Levels of Channel Metadata. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "5.10",
+      "sha256": "1444be1efe36958ea9670a3f45653ffeb13ffae090b05dd57bd0605c2cd54bef",
+      "classification": "normative",
+      "review": "Source inventory: Task. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "5.11",
+      "sha256": "08d4781bb075fc10dda6de5f57a961e106fa89e5be5faab024a251de401ea287",
+      "classification": "normative",
+      "review": "Source inventory: Observation. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "5.12",
+      "sha256": "448f035e8d03feac36e226186ce0fac244d413cc8872c4ddd6a2a31c59a6c24b",
+      "classification": "normative",
+      "review": "Source inventory: Inbound Message. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "5.13",
+      "sha256": "728cb633a7cb937e9ac7cefc30aed042a79341ebe0e067135b766620f010b8a7",
+      "classification": "normative",
+      "review": "Source inventory: Delivery Result. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "5.14",
+      "sha256": "3adaa5e6875832dd2151b79c83ce8fccddccbe3dec0b2aed86b48baa554dc405",
+      "classification": "normative",
+      "review": "Source inventory: Protocol Trace. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "6",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "classification": "informative",
+      "review": "Source inventory: Channel System. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "6.1",
+      "sha256": "faa6db1275938b8245e47660890e7eced7d30969adaadb6bf661193afc0f8137",
+      "classification": "normative",
+      "review": "Source inventory: Channel Interface. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "6.2",
+      "sha256": "a074612276e80f722ff6a6a429de93a7f7a561ab22e37a148b3bf038e3b5b8fc",
+      "classification": "normative",
+      "review": "Source inventory: ChannelType. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "6.3",
+      "sha256": "dbc25a44286842b218ef97763b8bc5d901364ea4cd7977a0e17c8f8d47f4a0d4",
+      "classification": "normative",
+      "review": "Source inventory: Transport Channels. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "6.4",
+      "sha256": "31cf59064dc827c76468c0cce025e6505e5d9a7d2454829ba0de0dfff742a1f1",
+      "classification": "normative",
+      "review": "Source inventory: Intelligence Channels. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "6.5",
+      "sha256": "4998e3ba45392890d9c7b6ae5c16de83c4104d286840e3b7755fbbada1c7c2bf",
+      "classification": "normative",
+      "review": "Source inventory: Source Providers. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "6.6",
+      "sha256": "cf05897ed9b4762bd5f1a725cab8050cd8c3c6379e272d192167c91506105678",
+      "classification": "normative",
+      "review": "Source inventory: Content Transcoding. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "6.7",
+      "sha256": "9ebba862d01475fbbfe5fa39fc59eca796aa51674f1fb9c83eda0b9bd44e4f35",
+      "classification": "normative",
+      "review": "Source inventory: Provider Abstraction. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "6.8",
+      "sha256": "ddb34b5b0c5f962f24979d3a33d433c87942174963910057e146845bf0a04487",
+      "classification": "normative",
+      "review": "Source inventory: Classifiers. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "7",
+      "sha256": "a93c19a4df402a7413cf3d04e9e8b9ec3a79e495cb1ad5fa3cfe45e870befb32",
+      "classification": "normative",
+      "review": "Source inventory: Permission Model. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "7.1",
+      "sha256": "cb755a8b704567372a7ab655ac31e9055459e98aafc9976fab6d1c3fa91686ff",
+      "classification": "normative",
+      "review": "Source inventory: Access. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "7.2",
+      "sha256": "b53ff30be562d22a786cab1544398097b9f9a3f8e5047184a9587f7647056f1b",
+      "classification": "normative",
+      "review": "Source inventory: Muting. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "7.3",
+      "sha256": "a5cd737d9b859ef079c990df52cb3b8c0261bc1a84fe2515bce8bfeaddbf180a",
+      "classification": "normative",
+      "review": "Source inventory: Visibility. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "7.4",
+      "sha256": "010b44646ebe36ea7de8d3e9b760d5f37704264cf679f36bd45f95a47a7455e4",
+      "classification": "normative",
+      "review": "Source inventory: Named Patterns. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "7.5",
+      "sha256": "a5691e3feb81d86d2b4c0b80ff168c054ef4fca3f929203b47fea9942e90fcfc",
+      "classification": "normative",
+      "review": "Source inventory: Permission Rules. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "8",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "classification": "informative",
+      "review": "Source inventory: Event System. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "8.1",
+      "sha256": "c15cae9e3f996acb89d9aac9ec1afc7f8a3540f65fa6ff270d08cde5932aa832",
+      "classification": "normative",
+      "review": "Source inventory: Room Events. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "8.2",
+      "sha256": "441636f1fd5ef7a28430cd9c8ac687c511e57c1f2b6a34042e87c2973dfb4055",
+      "classification": "normative",
+      "review": "Source inventory: Framework Events. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "8.3",
+      "sha256": "99621861637f219e050b5fa4a7ea827fccaee3e8035fb5e06c4a4c8d5e1daad9",
+      "classification": "normative",
+      "review": "Source inventory: Event Chain Depth. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "8.4",
+      "sha256": "9ccc499c4d2ea590f8b2c1378d4cc2e36e8c8d8ff133f420ffaa6ed4e1e5a3ae",
+      "classification": "normative",
+      "review": "Source inventory: Realtime / Ephemeral Events. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "8.5",
+      "sha256": "5f8479b1122a177113a9948e9cb21cc36a37d2ed6d0da0d50a35763a7d58a03e",
+      "classification": "normative",
+      "review": "Source inventory: Responses: What They Answer, and Whether They Were Consumed. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "9",
+      "sha256": "e0e6ed8b12b287b083afe2f02b829816a8da1c4cddca36d938609db205b6d24d",
+      "classification": "normative",
+      "review": "Source inventory: Hook System. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "9.1",
+      "sha256": "cd30b54fe22da6c3da40517276f7f892154565c6ffeae1da86488f06d1face73",
+      "classification": "normative",
+      "review": "Source inventory: Hook Registration. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "9.2",
+      "sha256": "07931366c5f6ee417e052fbf5d6cd30962bf74820035f20e9f0a0258055c95ad",
+      "classification": "normative",
+      "review": "Source inventory: Hook Triggers. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "9.3",
+      "sha256": "0ac153ecc272a72e108b48718568ed76fc71e59fd533fc4dd474f0fff895deae",
+      "classification": "normative",
+      "review": "Source inventory: Hook Execution Modes. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "9.4",
+      "sha256": "ffcd925dc343ff947ccea5ff211a3385b89b086d53c70205bc541e662172f6c7",
+      "classification": "normative",
+      "review": "Source inventory: HookResult. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "9.5",
+      "sha256": "3aed4ce07cad163675e71228455d125ce6ca87c6c5277ddd5ce65b4fbb9b1d14",
+      "classification": "normative",
+      "review": "Source inventory: Hook Pipeline (BEFORE_BROADCAST). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "9.5.1",
+      "sha256": "a401ff76afef8f4a80056329cc0a107f4a13a5ca60287c538c3cd077034ca23b",
+      "classification": "normative",
+      "review": "Source inventory: Off-lock checks (`needs_lock = false`). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "9.6",
+      "sha256": "571232cfc1c20d2340a3ac8069642cd27302de4027207b871dbfcaf115286ba4",
+      "classification": "normative",
+      "review": "Source inventory: When to Use What. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "10",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "classification": "informative",
+      "review": "Source inventory: Processing Pipelines. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "10.1",
+      "sha256": "a5cb4e8601539ce009533c0f42b947c142b58b2415efdce60a032decf92589e2",
+      "classification": "normative",
+      "review": "Source inventory: Inbound Pipeline. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "10.1.1",
+      "sha256": "c9fa26a27260801de5cf03714e8f0933db2a8af1ad96e1e6256dd3d57ac53906",
+      "classification": "normative",
+      "review": "Source inventory: Instructions. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "10.2",
+      "sha256": "4b5aeaa597e0321a8d8d13ff22547c1a23b55e7c4fc9a69cd1ac759c117718b4",
+      "classification": "normative",
+      "review": "Source inventory: Broadcast Pipeline. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "10.3",
+      "sha256": "24791d7989af77ba3cf9aeebdfe4b492fe85a09ce29dfaf16bcdc348b50c4cb3",
+      "classification": "normative",
+      "review": "Source inventory: Edit and Delete Processing. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "10.4",
+      "sha256": "81d2b41b9fc589fb3e996d582f7e54f500fda57bcf6b4de9943eda66f972cb80",
+      "classification": "normative",
+      "review": "Source inventory: Inbound Room Routing. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "10.5",
+      "sha256": "77948843986d36a5110b68c62d72eb667215282b0659b621a125cb606e3ea3dc",
+      "classification": "normative",
+      "review": "Source inventory: Direct Event Injection. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "10.6",
+      "sha256": "bf8d07efb47d746acf52e27702755f6861f7082d5fd5b1d91e4f5ddaeb28d4ee",
+      "classification": "normative",
+      "review": "Source inventory: Turn Execution. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "10.6.1",
+      "sha256": "124f203679a7dbbf5dcc495480a2dd60f793b6a21a7564674f6a989ae5c9649a",
+      "classification": "normative",
+      "review": "Source inventory: Scope and the one path. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "10.6.2",
+      "sha256": "0fe75cb0079e7016bb86a1049151fa6e4ee0692b34ab52d02d4cdaaaba65b815",
+      "classification": "normative",
+      "review": "Source inventory: Channels on each side. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "10.6.3",
+      "sha256": "64925d1a32f5841a8fbc6ffaa6eec16574fee709e8d363448a43332348308f87",
+      "classification": "normative",
+      "review": "Source inventory: Messages. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "10.6.4",
+      "sha256": "b032dec58245cd0008db74b40af039482e8040908b251fef92a428be8b9a6a8f",
+      "classification": "normative",
+      "review": "Source inventory: The stream: pulled, never pushed. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "10.6.5",
+      "sha256": "3b9bc2d1de6aeaa5de134554aeb4d9bdeaa7c17238dd35a1bffcf31a59e4c3c0",
+      "classification": "normative",
+      "review": "Source inventory: What a turn asks of the owner. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "10.6.6",
+      "sha256": "411eaa01e486692095edac608aa127040948d6b4f809d799c0a8d5d016306365",
+      "classification": "normative",
+      "review": "Source inventory: Hooks. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "10.6.7",
+      "sha256": "c4b7fc8d790becc739ea5637fc120088bf66a760f6c41b8672cf1228e15d0629",
+      "classification": "normative",
+      "review": "Source inventory: Placement. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "10.6.8",
+      "sha256": "bd903cb48e10a9fd6cfa7f881ebfcc73b9584642c0b1d5cc6e9a06d5b696b0a3",
+      "classification": "normative",
+      "review": "Source inventory: Liveness, cancellation and errors. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "10.6.9",
+      "sha256": "49d528b2c872dc71f14340ae9086e6ce7dc217a4456990d79da93362093c2a13",
+      "classification": "normative",
+      "review": "Source inventory: Telemetry and prerequisites. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "11",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "classification": "informative",
+      "review": "Source inventory: Identity Resolution. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "11.1",
+      "sha256": "8ab5bd7e6bc1cd1ffbe27e5526ed3da1b1beea0fa88f45261293fc6a776ac2fe",
+      "classification": "normative",
+      "review": "Source inventory: Identity Resolver Interface. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "11.2",
+      "sha256": "e042cfd7fa549f65ef62778e544138f1d4b47988c4fb7f616ce4f74158af480f",
+      "classification": "normative",
+      "review": "Source inventory: Resolution Pipeline. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "11.3",
+      "sha256": "92d347d4fed471d01ec235f4b947eb971b039119f6e052dd65f286725412c19d",
+      "classification": "normative",
+      "review": "Source inventory: Identity Hook Result. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "11.4",
+      "sha256": "adada774a68a20bbf13692da732e588f145699ec0015fb549832515669d9565f",
+      "classification": "normative",
+      "review": "Source inventory: Channel Type Filtering. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "11.5",
+      "sha256": "e5dd3ad7aa5195ce839c636a36478ad9706533594d9f86756de85071772bce3e",
+      "classification": "normative",
+      "review": "Source inventory: Timeout Handling. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "11.6",
+      "sha256": "2ab45150f6a59d7b591a70f8f8492ccae1cef9e724f0927d8d14653a1535f15c",
+      "classification": "normative",
+      "review": "Source inventory: Senders With Nothing To Resolve. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "11.7",
+      "sha256": "6aafe51a76af69061e12b4cbead742155122ed3e1b091e236bce510972282c8e",
+      "classification": "normative",
+      "review": "Source inventory: Identity Verification. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "11.7.1",
+      "sha256": "6b54ba0e3adb9c786124c7b61e725195caf38d93266b8620a3c5ecb162cc6a51",
+      "classification": "normative",
+      "review": "Source inventory: State. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "11.7.2",
+      "sha256": "cbac2139caaaa985f644312d73e234e72b2092fa216f5362c9128e35003da2ea",
+      "classification": "normative",
+      "review": "Source inventory: Requests. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "11.7.3",
+      "sha256": "44872cb1316036d6083c880ef35fc9233a230810e0591b7b287756be298f8e64",
+      "classification": "normative",
+      "review": "Source inventory: Labels and holding. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "11.7.4",
+      "sha256": "b2223e57c2f0bfcc330359a4e1c65a7b87213c7cd54da7b3d1e8dc44845193b1",
+      "classification": "normative",
+      "review": "Source inventory: Codes in the conversation. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "11.7.5",
+      "sha256": "374d1911fc1b714c05b3204f92460436aefd4ebdabf8e12eb388ae6e36c23363",
+      "classification": "normative",
+      "review": "Source inventory: The end of a verification. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "11.7.6",
+      "sha256": "f541d9c7caec30ddc9fd970d313c103cea8697f881b4265354c161d14de1e664",
+      "classification": "normative",
+      "review": "Source inventory: Releasing held messages. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "11.7.7",
+      "sha256": "c917c7821580c0c209e77ce47c2ce4a8aa6d4fcf7b5c95767d4979a8b1a27b4c",
+      "classification": "normative",
+      "review": "Source inventory: Security floor. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "classification": "informative",
+      "review": "Source inventory: Voice and Realtime Media. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "12.1",
+      "sha256": "f271fc9811aee8a5d0f0b5e6ee440a87d166780cec14049506b981b435bf81aa",
+      "classification": "normative",
+      "review": "Source inventory: Architecture Overview. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.2",
+      "sha256": "8049e446f8798daa219ced845f1a03348d2296038e7f2c7fb11e304915c39225",
+      "classification": "normative",
+      "review": "Source inventory: Voice Channel (STT/TTS Pipeline). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.2.1",
+      "sha256": "5d6d3f2f105b18f563959197077d53a3ac147cb4862ed56a8e1d101b6a8addd0",
+      "classification": "normative",
+      "review": "Source inventory: Packet Loss Handling (Lossy Transports). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.2.2",
+      "sha256": "cb45cbb8c3237ea3087473b9aa8bdc7e0cd968b424d61ebfd84183985e6ed995",
+      "classification": "normative",
+      "review": "Source inventory: Conversation Context for TTS. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.2.3",
+      "sha256": "6c2034faaa5b89b76d6a89f8256270860ea75cca667434d8cf8e4452de9da35f",
+      "classification": "normative",
+      "review": "Source inventory: Speaker Attribution from STT. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.2.4",
+      "sha256": "f8dac070e0df0fcc78c1543b8e62975fef88b76097c3f36c2d2ad8fed36a9183",
+      "classification": "normative",
+      "review": "Source inventory: Custom Voices. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.3",
+      "sha256": "032d99ed36ad2fa2cadd8398e2eb88b7e91a078e1983d209050716705989c2ca",
+      "classification": "normative",
+      "review": "Source inventory: Audio Processing Pipeline. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.3.1",
+      "sha256": "ff4254bbd0642862aa1fee196e9ca0703b5718e782fd7bb03e0bc64f9315ce7e",
+      "classification": "normative",
+      "review": "Source inventory: Pipeline Configuration. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.3.2",
+      "sha256": "51df5ab1a32bcc20817072fb785378fb4bd3986aa95320922f0e1b270967b475",
+      "classification": "normative",
+      "review": "Source inventory: Denoiser Provider. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.3.3",
+      "sha256": "f50588eaaab60c95c71f1e7566cc7b5cdaf801b1bd61f3ac2d5d7e943d345083",
+      "classification": "normative",
+      "review": "Source inventory: Resampler. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.3.4",
+      "sha256": "40438f9be31489f9fc69ece008849390b789263e467e958abdcc29ce5f216a55",
+      "classification": "normative",
+      "review": "Source inventory: Echo Canceller (AEC). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.3.5",
+      "sha256": "2bdd43c4f5992a96b74e5fa882ecca29deee7bc1584bca437c62e795ef3019bd",
+      "classification": "normative",
+      "review": "Source inventory: Automatic Gain Control (AGC). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.3.6",
+      "sha256": "a7a99f2d79ab1fbfc84a84dd0b5c682b77c215bc049f6f1d0907051f38c53ae1",
+      "classification": "normative",
+      "review": "Source inventory: DTMF Detector. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.3.7",
+      "sha256": "8f787d6dd94fd37beabefecee0fd007ee75e7b51b0d973ea2d7ae193a2adfea0",
+      "classification": "normative",
+      "review": "Source inventory: Audio Recorder. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.3.8",
+      "sha256": "056f9151e0a4e36bf47676214d8f4b94a9728c97a5041c60c8049a37f68aef11",
+      "classification": "normative",
+      "review": "Source inventory: VAD Provider. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.3.9",
+      "sha256": "a2f45cc7f209b887be83990a411ce7f29c4ee44f54ea814c3c7f2394e9e17d73",
+      "classification": "normative",
+      "review": "Source inventory: Diarization Provider. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.3.10",
+      "sha256": "06869709ca7ab8509888b6bc46daf15c1fbb6c49c5e67b6b6a5a85066f2eebaf",
+      "classification": "normative",
+      "review": "Source inventory: Audio Post-Processor. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.3.11",
+      "sha256": "9e9696f47c7a619a819b1fe2ccc562c408d808f407f5c092327e2d90b5a099b8",
+      "classification": "normative",
+      "review": "Source inventory: Audio Frame. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.3.12",
+      "sha256": "25c555e70393e3478b530d827e85d3fbaa7105b7e6ad2c04ebfb881eb3dfcf17",
+      "classification": "normative",
+      "review": "Source inventory: Turn Detector. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.3.13",
+      "sha256": "ee0281659424acce104fd41d444a4f368edf97f539eda4730b80dc2f446a3411",
+      "classification": "normative",
+      "review": "Source inventory: Interruption Strategy. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.3.14",
+      "sha256": "ccfbd798c12bd565870ee661ef4fb573ad59d4ef92e80767274afe3affb50fb8",
+      "classification": "normative",
+      "review": "Source inventory: Pipeline Execution Flow. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.3.15",
+      "sha256": "137f1e1023ffc7b839650672de07611e9e9c593393bb6623b8207d7cf3459003",
+      "classification": "normative",
+      "review": "Source inventory: Pipeline Debug Taps. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.4",
+      "sha256": "33ce0989d0e07e72c517ad46970acd8fdcac2359c9894c6727d92dfedf977f85",
+      "classification": "normative",
+      "review": "Source inventory: Realtime Voice Channel (Speech-to-Speech). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.4.1",
+      "sha256": "c15cab6f4b5d65ac976c657b36848ee8bffb647ab5d241dbf49d26ee246b2893",
+      "classification": "normative",
+      "review": "Source inventory: Full-Duplex Providers and Reasoning Delegation. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.4.2",
+      "sha256": "87d49a8267ce71d472b658dc480af272a26644f892d7864bf9053cba825b00b2",
+      "classification": "normative",
+      "review": "Source inventory: Usage Reporting. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.5",
+      "sha256": "3f04d17cf862dc974fe64a5035c16dab02dc82b59d0a75bf9856cf11db9d91cb",
+      "classification": "normative",
+      "review": "Source inventory: Voice Hooks. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.6",
+      "sha256": "eb73c5a9980711b6a3265b18dc092f0704ddb769aa8f6b2e6bedda4af1d7729d",
+      "classification": "normative",
+      "review": "Source inventory: Barge-In and Interruption Handling. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.7",
+      "sha256": "5a6a0bc09e82e48464d978a8033282b1bce8292202fede7c589f065d7a634863",
+      "classification": "normative",
+      "review": "Source inventory: Audio Bridging. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.7.1",
+      "sha256": "502536084759dd832ad473b8e4109a5df44c6b82fff3e1f3021cea2252605b5e",
+      "classification": "normative",
+      "review": "Source inventory: Design Principles. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.7.2",
+      "sha256": "541a6cbedcc45657cfe102853cec18511cbe98dd40b93c9655b27cda54f01873",
+      "classification": "normative",
+      "review": "Source inventory: AudioBridge. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.7.3",
+      "sha256": "ef76c294c03daf152c72df22b733e01fed064e143cc1ce4b03a6d926cefb1786",
+      "classification": "normative",
+      "review": "Source inventory: VoiceChannel Integration. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.7.4",
+      "sha256": "3778bfbfaa046ad550abd4622478d898c9395de7b88585790fc98dd2eb5ceb76",
+      "classification": "normative",
+      "review": "Source inventory: Sample Rate Handling. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.7.5",
+      "sha256": "991c5ffd4d952fae11a54e777abb3d2126afe22979a4f10c0cd6911fe5fb23d4",
+      "classification": "normative",
+      "review": "Source inventory: N-Party Mixing. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.7.6",
+      "sha256": "778809c586d584839aeb06eb291bf3fbb4d69cb533169fe88800cad0518c7fe8",
+      "classification": "normative",
+      "review": "Source inventory: Hooks. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.7.7",
+      "sha256": "5cf61bfb25030c9476b62d6293bac94df30167b0109bf0a72fa09b05b48a7c40",
+      "classification": "normative",
+      "review": "Source inventory: Capability Flag. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.7.8",
+      "sha256": "68d16c3f11a64c33881d17f8e5e7728f11b08900952931b5ed71f43c51d8482e",
+      "classification": "normative",
+      "review": "Source inventory: Conformance. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.8",
+      "sha256": "0fb2cfd5aa153339b247a169c2df58521362d6a8bfe85fde5a21b1b4a5e7ed12",
+      "classification": "normative",
+      "review": "Source inventory: Video Pipeline. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.8.1",
+      "sha256": "5de4ecae6e32e09063b17d09665512d94c1c47803afbc8958230c19898b32da6",
+      "classification": "normative",
+      "review": "Source inventory: Architecture Overview. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.8.2",
+      "sha256": "7643b04b316fc98ba5d5b981968d312297ad1dd51ebebd267932ad4dcbf916ea",
+      "classification": "normative",
+      "review": "Source inventory: Video Data Models. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.8.3",
+      "sha256": "721eb408acdacda0d5e9b558514ccd3ff3418620ccf4c4ac1158329a9b3b4d8f",
+      "classification": "normative",
+      "review": "Source inventory: VideoBackend Interface. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.8.4",
+      "sha256": "b216a884cfd5ec5751553aa8d20ba1e1a166b391ad2041a9980352c07b07b260",
+      "classification": "normative",
+      "review": "Source inventory: Video Processing Pipeline. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.8.5",
+      "sha256": "4921ca3ef7d1308b3776d3106caaaf1b350a457a1613dec58cb063b62933642f",
+      "classification": "normative",
+      "review": "Source inventory: Pipeline Stage Providers. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.8.6",
+      "sha256": "434d229f2417798d2e25cd320f2e14d8047d2801fab58f8da0a83deb0b090735",
+      "classification": "normative",
+      "review": "Source inventory: Overlay System. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.8.7",
+      "sha256": "fac845957eacc922b5681b34c094de30e3662c7352114085553b9787863e2f36",
+      "classification": "normative",
+      "review": "Source inventory: VisionProvider. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.8.8",
+      "sha256": "45b3c87bf206d806f3134f9cef9153a5100a1af1e2cd6a141cfc729bcda35101",
+      "classification": "normative",
+      "review": "Source inventory: AvatarProvider (Lip-Sync Video Generation). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.8.9",
+      "sha256": "d62a2113124423e1482554c285611e6ed44877c8d93c61940fda6b03e5fc58de",
+      "classification": "normative",
+      "review": "Source inventory: VideoBridge. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.8.10",
+      "sha256": "33393f8bbe0158d20d6369afe12603b77c340d7ce6ff01bad0b4a224f59feca3",
+      "classification": "normative",
+      "review": "Source inventory: Video Recording. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.8.11",
+      "sha256": "44cc5c166b46cdc09627686d506c047a940be239c5baf19f203d0932e375a391",
+      "classification": "normative",
+      "review": "Source inventory: Video Hooks. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.9",
+      "sha256": "8a3de9e0693c314b02fd7489699387329081b8c3ca5703943a967d276b74c27d",
+      "classification": "informative",
+      "review": "Source inventory: (Removed). Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "12.10",
+      "sha256": "fb41c1110921fcf72ef53c11e0447492fec174c464d9a81c7d677562f1f08a5e",
+      "classification": "normative",
+      "review": "Source inventory: Conference (SFU Orchestration). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.10.1",
+      "sha256": "4d89d3f5b8126cdc1dd6734a1489b9303997a36e5d529ce184a0c298d21f173d",
+      "classification": "normative",
+      "review": "Source inventory: Design Principles. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.10.2",
+      "sha256": "e6d1becbd5687a41ea43e6e0db68f5936654cb43d05ca66e647e5faf63b6810d",
+      "classification": "normative",
+      "review": "Source inventory: Data Models. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.10.3",
+      "sha256": "530c4a605731e41f53145e75138345cc22509ab6f7c4642abe937add3fbe6e99",
+      "classification": "normative",
+      "review": "Source inventory: ConferenceBackend Interface. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.10.4",
+      "sha256": "a455bb815fe848496503a12e0c3a02e06d4b29fc872d48f8cc39d8d4d43f2e17",
+      "classification": "normative",
+      "review": "Source inventory: ConferenceChannel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.10.5",
+      "sha256": "eddce9179ad143b6310340f4b0967ff2ed4cd2d89a91a03c271b15dcb91fc290",
+      "classification": "normative",
+      "review": "Source inventory: Multi-Party Interruption Policy. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.10.6",
+      "sha256": "6961377e6dfca8291d44eb40d133751ee6c013fa05249cbd9f3588d7064a7e28",
+      "classification": "normative",
+      "review": "Source inventory: AI Participation Patterns. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.10.7",
+      "sha256": "129a0d8f915963486d8cbe8c55c430ebfc7f83b59e781eab4bddde4c8ce51076",
+      "classification": "normative",
+      "review": "Source inventory: Conference State Events. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.10.8",
+      "sha256": "39a8b03b82ca2d36cf577c4ce6df90b08086c7bd64ebb5e484ff7e663a967aa4",
+      "classification": "normative",
+      "review": "Source inventory: Recording. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.10.9",
+      "sha256": "21b802171b37b9d2a764ff46bad5e061ff1a44ac36c1cce14d73e46c3ab6a29e",
+      "classification": "normative",
+      "review": "Source inventory: Cross-Channel Integration. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.10.10",
+      "sha256": "87aef6b09df5e5846ddd931923e00c72693f1985699c863a4d56759c3ed401c9",
+      "classification": "normative",
+      "review": "Source inventory: Relationship to Audio Bridging (Section 12.7). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.10.11",
+      "sha256": "a09e6bd5c3174a23ace4ab51d3d7eda0074dca88afce57567589325214ff1c18",
+      "classification": "normative",
+      "review": "Source inventory: Conformance. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.10.12",
+      "sha256": "a08b10e9844562a0535f8b38aaf6bcbe347e90b935b8029629fa4177e9f4cf02",
+      "classification": "normative",
+      "review": "Source inventory: Speech-to-Speech Composition. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.11",
+      "sha256": "1c96e741eedbd0011270d11fb193a3cef2d6e9bfa3d8f3c3eaa30f5fd994ad27",
+      "classification": "normative",
+      "review": "Source inventory: Room Media Recording. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "12.12",
+      "sha256": "c6abe482b8b9d7144b461657993396823be572ce41b2981b7fa9eead07dcf117",
+      "classification": "normative",
+      "review": "Source inventory: Capture Sources. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "13",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "classification": "informative",
+      "review": "Source inventory: Resilience and Error Handling. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "13.1",
+      "sha256": "1663384a301cd9bdf3e58d42ad4b46d67236cfcdd359ddf826bea9bd05260e00",
+      "classification": "normative",
+      "review": "Source inventory: Circuit Breaker. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "13.2",
+      "sha256": "0b77b6e8c5ccb7fa4fe1f67ad9d74884e569df725233d70a7a2120a25c343e60",
+      "classification": "normative",
+      "review": "Source inventory: Retry Policy. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "13.3",
+      "sha256": "a7d02f96b0a999c6c737016ff053f4be4fa0088c10ea59219584278dd38d9131",
+      "classification": "normative",
+      "review": "Source inventory: Rate Limiting. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "13.4",
+      "sha256": "59cc19fba2913ebc697394f0cc277871fe06c02154cfc72ba2759b177b57b6ab",
+      "classification": "normative",
+      "review": "Source inventory: Idempotency. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "13.5",
+      "sha256": "990d1e28686974c78cbd884668618656bef2b388d3f85e2127d94f6831443bdd",
+      "classification": "normative",
+      "review": "Source inventory: Room-Level Locking. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "13.6",
+      "sha256": "882b48018972adf13eae42190f8ec326d80035d731f85d23d33dbcb5537f2ac5",
+      "classification": "normative",
+      "review": "Source inventory: Processing Timeout. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "14",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "classification": "informative",
+      "review": "Source inventory: Storage Interface. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "14.1",
+      "sha256": "8ebef5100957fa9e74df441609589520c78cd62638c49fa16dca5b2ee4f6bbc9",
+      "classification": "normative",
+      "review": "Source inventory: Conversation Store. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "14.2",
+      "sha256": "20c07ab86d92761a21b6a66bdeeea1e76449ef2dd9e5b67f7b4e7509abf9d0d8",
+      "classification": "normative",
+      "review": "Source inventory: Required Implementations. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "14.3",
+      "sha256": "5f847ae60780930e2de15cbbc854ee5801ea8bd38d398d422de390b1670b6e0a",
+      "classification": "normative",
+      "review": "Source inventory: Consistency Requirements. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "14.4",
+      "sha256": "d30b9e512c3065cbc957045711656a75c5b2adc364ca05192cbbb87bad1ef146",
+      "classification": "normative",
+      "review": "Source inventory: Returned-Object Ownership. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "15",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "classification": "informative",
+      "review": "Source inventory: Observability. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "15.1",
+      "sha256": "9d0ae2ae040aefd571a0bbce4dab89bcef6ae1d0bd576a6aecc2d48eac21f9ee",
+      "classification": "normative",
+      "review": "Source inventory: Logging. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "15.2",
+      "sha256": "2db180e34493eef8c74e91d9489712d92d8dc00cb019167ff99724e8279fb6c7",
+      "classification": "normative",
+      "review": "Source inventory: Log Levels. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "15.3",
+      "sha256": "4025dda67944ef96fc85241f5f57d8d08f43061767de3e2131746cc593c14ebd",
+      "classification": "normative",
+      "review": "Source inventory: Structured Log Context. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "15.4",
+      "sha256": "29895c9b7ca0e6c98e8b70c1b4ea7ee447968d0c6022ca4c6ab17434e353bff0",
+      "classification": "normative",
+      "review": "Source inventory: Voice Pipeline Observability. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "15.5",
+      "sha256": "86db95b59e8475fa3b769038dba505ec12ed82754d76dabd068245bb5990a82c",
+      "classification": "normative",
+      "review": "Source inventory: Framework Events for Monitoring. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "15.6",
+      "sha256": "45756d871ed12e62b8a8922990ca1cf6d4f41c8364b097fb85897392842091bf",
+      "classification": "normative",
+      "review": "Source inventory: Protocol Trace Infrastructure. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "15.7",
+      "sha256": "ce880217ff356ad960596768e1060395d9620676fbf60d66f02afd0f5676327a",
+      "classification": "normative",
+      "review": "Source inventory: Telemetry Provider. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "15.8",
+      "sha256": "7e130a962138b1ec378ae86ecc07ea21a3c5f9688449c4a59f39e470ad123abc",
+      "classification": "normative",
+      "review": "Source inventory: Audit System. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "15.8.1",
+      "sha256": "1389b757025ef07cd7075fc42e962d07eaff70c670924e822aad32aa00a79827",
+      "classification": "normative",
+      "review": "Source inventory: Tool Auditing. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "15.8.2",
+      "sha256": "810061a90ee020183215f3ebf772b4a81c8f004279abb590845453c377c26f8f",
+      "classification": "normative",
+      "review": "Source inventory: Session Auditing. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "15.8.3",
+      "sha256": "8ffc14e3310f822f2f24711eed5c5b14fb908c37789ad4b72c6d2759d4c62978",
+      "classification": "normative",
+      "review": "Source inventory: Audit Data Format. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "15.9",
+      "sha256": "2fe81867d3f5649aea3951e0d387426e8ec4aa4cdc5ccd0904c4aaba781da416",
+      "classification": "normative",
+      "review": "Source inventory: Feedback. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "16",
+      "sha256": "76b875655343bced8bc7595de347072ce3cc98ef8fce3ca74ca1836a376a1cd0",
+      "classification": "normative",
+      "review": "Source inventory: Integration Surfaces. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "16.1",
+      "sha256": "07341555f2e92243f57976e0335b2756a38367785e88d7864bc008598914aa1e",
+      "classification": "normative",
+      "review": "Source inventory: REST API (OPTIONAL). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "16.2",
+      "sha256": "d3438e8ce76ea6dac336bc5392dfae2417b6d19289ff7e692cbb3e51708a8695",
+      "classification": "normative",
+      "review": "Source inventory: MCP Server (OPTIONAL). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "16.3",
+      "sha256": "3b85e99402d662b3ae841155143be1ad0fc00c4af2e8c2121c3e2651787dcaba",
+      "classification": "normative",
+      "review": "Source inventory: Surface Independence. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "17",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "classification": "informative",
+      "review": "Source inventory: Security Considerations. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "17.1",
+      "sha256": "547870c7721fd7ffd8e0006440c65540bdf4377b51ff806c7df1b54e38114fdc",
+      "classification": "normative",
+      "review": "Source inventory: Input Validation. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "17.2",
+      "sha256": "3bd5191ee3b6ba87008eb423d449930069e740dd303d12b34185f51d7629bf40",
+      "classification": "normative",
+      "review": "Source inventory: Multi-Tenant Isolation. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "17.3",
+      "sha256": "4c255bd5bacf35b9f6eaa3fc520cab487ef21309f07b3bc5b57681175f2f52eb",
+      "classification": "normative",
+      "review": "Source inventory: Sensitive Data. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "17.4",
+      "sha256": "bc5be1ba2a0fe7af947e2c7de82d7992e2f5669329e930a4ab2ed8c3c7c4ea1c",
+      "classification": "normative",
+      "review": "Source inventory: Rate Limiting. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "17.5",
+      "sha256": "4016a737dd040ab0d4794ec2bda2d9b98896502dad88a6f4002d6b56b3ae7b16",
+      "classification": "normative",
+      "review": "Source inventory: Chain Depth. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "17.6",
+      "sha256": "7e1905eb6bae3f4691aacd175a5ce172d1011a50778fd6a5d46b36673da14ec8",
+      "classification": "normative",
+      "review": "Source inventory: Voice and Audio Security. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "17.7",
+      "sha256": "bd152465c238e159193c20866b1207dd10761428fbb7ee5f4785d73c054e1742",
+      "classification": "normative",
+      "review": "Source inventory: Conference Access Security. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "17.8",
+      "sha256": "331228145952c84fac1c0311fab747b41e9301179c8c67e576a894b42db8ea3f",
+      "classification": "normative",
+      "review": "Source inventory: Skill-Bundled Files. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "18",
+      "sha256": "5d01b466100cf0a18b89b9c34b8377357238e2c9888eebcef97db71ad2470dd5",
+      "classification": "normative",
+      "review": "Source inventory: Design Principles. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "19",
+      "sha256": "2365cfcdc32623fe65536518dc979718bef1b31ccb45477a5d4d65332ef358ac",
+      "classification": "normative",
+      "review": "Source inventory: Multi-Agent Orchestration. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "19.1",
+      "sha256": "1a121105f128b231fedbbbec0772e36d2cf5dc335e5bfbcabdbfa2fd516e897c",
+      "classification": "normative",
+      "review": "Source inventory: Overview. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "19.2",
+      "sha256": "6741624b558324107aeb26becf1eec99578420fbc80600cdab528e60b585f742",
+      "classification": "normative",
+      "review": "Source inventory: ConversationState. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "19.3",
+      "sha256": "c26b7e7020790685482e842ae01ad8f85ee96da837213bd1b170539f06ccb6d6",
+      "classification": "normative",
+      "review": "Source inventory: Addressing. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "19.3.1",
+      "sha256": "f28c7f58ac58eeabd89635791c86d2b3bb9ce830a97daf356173529da15e33bd",
+      "classification": "normative",
+      "review": "Source inventory: Agent-sourced events. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "19.3.2",
+      "sha256": "aa1ee82b64f16653aa2431ef9201c5e469bdd32045c06e144092f79d2d2ad8ff",
+      "classification": "normative",
+      "review": "Source inventory: Delivered versus solicited. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "19.4",
+      "sha256": "5580c7b60400f591f88e94a42add81c39ccb4524a4a13bb20dfb63c77b0eb650",
+      "classification": "normative",
+      "review": "Source inventory: ConversationRouter. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "19.5",
+      "sha256": "f8659aefdfabcfa359f9cd5fa6bd317cffde3894cf47697d92aaf6612842be2f",
+      "classification": "normative",
+      "review": "Source inventory: ConversationPipeline. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "19.6",
+      "sha256": "b75c2e8c415203a50fee5656b2c30d1973b89be37d7630aa232b0b71c6ff5524",
+      "classification": "normative",
+      "review": "Source inventory: HandoffHandler. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "19.7",
+      "sha256": "fb5d43af0c9de159ae2f3836e620b35ff8af82ee398443b71053bcb23b3b69af",
+      "classification": "normative",
+      "review": "Source inventory: Orchestration Strategies. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "19.7.1",
+      "sha256": "6f9575a704bb5d92adc829a5aecabfc696b67a3917c8bdf07fcce21241df300f",
+      "classification": "normative",
+      "review": "Source inventory: Pipeline. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "19.7.2",
+      "sha256": "435e7042ecaf3802a83c270dc261714640067b907e0b243f89190d938e9c8db3",
+      "classification": "normative",
+      "review": "Source inventory: Swarm. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "19.7.3",
+      "sha256": "8af2b1d996817997c6004500ff7891946930165ad6b5434622839fd8f3959c1e",
+      "classification": "normative",
+      "review": "Source inventory: Supervisor. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "19.7.4",
+      "sha256": "ce80505794a94c22ead52960f1339947f3be52c87cec8e03bda8d0f732e2a66a",
+      "classification": "normative",
+      "review": "Source inventory: Loop. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "19.7.5",
+      "sha256": "b6fc29750919bf9ef66220058f03c985a538e2e1df7b572f9545079dee09dd0f",
+      "classification": "normative",
+      "review": "Source inventory: Discussion. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "19.8",
+      "sha256": "c5e97a02f0e60de7460bf5c8db5b40afec8ab4cf5801f7c3511b2aca6b19bed0",
+      "classification": "normative",
+      "review": "Source inventory: StatusBus. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "20",
+      "sha256": "130a4a3ae62ca6405eb940914367bebc770c83921675982c3c9e975746e3e396",
+      "classification": "normative",
+      "review": "Source inventory: Memory System. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "20.1",
+      "sha256": "b542be7ec8b3517b4c56bd3d8d76d46249a6ebd97515672fdb2336e8bf9d97ff",
+      "classification": "normative",
+      "review": "Source inventory: MemoryProvider Interface. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "20.2",
+      "sha256": "738f2f93f02d1425a3a175ab05b22d5de0c30b0c717bf550f542632e7d15a047",
+      "classification": "normative",
+      "review": "Source inventory: MemoryResult. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "20.3",
+      "sha256": "d65e4918f95e9d5788dd02a3b35cc74625645a4229a3b3278cd2b1d89d7f63b4",
+      "classification": "normative",
+      "review": "Source inventory: Built-in Implementations. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "21",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "classification": "informative",
+      "review": "Source inventory: Tool Access Control. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "21.1",
+      "sha256": "0eccdc0c7163a596ac3c928d2a900009ccde77c08859a625ee3325093b55054b",
+      "classification": "normative",
+      "review": "Source inventory: ToolPolicy. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "21.2",
+      "sha256": "d7914fb7e6127334d4d50513c877b371b8e1def6ef82b71fbaa170414a31f3de",
+      "classification": "normative",
+      "review": "Source inventory: MCP Tool Provider. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "21.3",
+      "sha256": "8eb27760b3ec46418d5bb2deeddb2d85a89a750696fc75eb066ad639b363e646",
+      "classification": "normative",
+      "review": "Source inventory: AI Steering Directives. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "21.4",
+      "sha256": "73fa44ffd5ae2c33ca7cca5b10b81b0e77329c1411e51f60c4b310b0fe5d6293",
+      "classification": "normative",
+      "review": "Source inventory: Tool Call Context. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "21.5",
+      "sha256": "0f87a5da3a8130c941f39544c252e381d2ae28d91218fbe2058df8486dfaf84e",
+      "classification": "normative",
+      "review": "Source inventory: Large Tool Results. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "21.6",
+      "sha256": "d8a930cb23a075cd066ffe8fbfddf4c91c59cdce79d981ad3d5ba1ca1207268d",
+      "classification": "normative",
+      "review": "Source inventory: Tool Call Timeout. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "22",
+      "sha256": "77df80f6cf4a3bb07028fb8cbfa2fa400bb98966a8764196dbac57c365dd0a8c",
+      "classification": "normative",
+      "review": "Source inventory: Delivery Strategies. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "22.1",
+      "sha256": "5907f45fa2c3b858202d8fadda2da70347841213f82327fce0f53674302d55d2",
+      "classification": "normative",
+      "review": "Source inventory: DeliveryStrategy Interface. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "22.2",
+      "sha256": "1fbb2ba6c84d2a0e77d4dea40ce7cce23b102daaa3b805f3672cd8f5974f6101",
+      "classification": "normative",
+      "review": "Source inventory: Built-in Strategies. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "22.3",
+      "sha256": "7a89a920affb40d5c325718b76c6f0970518f423682e4d8072ac33d406062c27",
+      "classification": "normative",
+      "review": "Source inventory: Delivery Hooks. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "23",
+      "sha256": "5771e97cd43c1401d4bd7df672a53f0ff03c6bb4fc457e203d7d7fe7c1763a49",
+      "classification": "normative",
+      "review": "Source inventory: Task Delegation. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "23.1",
+      "sha256": "61d597ead491a6f44db49ca3880bb6c034d0987f7f6cac17ce4c89c95000d390",
+      "classification": "normative",
+      "review": "Source inventory: TaskRunner Interface. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "23.2",
+      "sha256": "48ce3c63d8c7b46e06230e91fa10e13f5d3c5329cbab3510225122b2bb5fc7a0",
+      "classification": "normative",
+      "review": "Source inventory: DelegatedTask. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "23.3",
+      "sha256": "179902da33c3f4630803e5a61f69b97259d5ebb4725e4a2bbd5e586db25ecdc4",
+      "classification": "normative",
+      "review": "Source inventory: Delegation Protocol. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "23.4",
+      "sha256": "dd9bb8fb853287a35adce7dc9a977cfbda67ba2485b319d98ce0248ee9e1a7f7",
+      "classification": "normative",
+      "review": "Source inventory: Delegation Tools. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "23.5",
+      "sha256": "22c7d59abde4f9f3570afa6ae5ee7816085226b4f32c7fac0c3f8678d26f6c74",
+      "classification": "normative",
+      "review": "Source inventory: Delegation Hooks. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "24",
+      "sha256": "adb773866e49a1bff655e26c48a2e128caf3464112a761b436ef395ae0834d7d",
+      "classification": "normative",
+      "review": "Source inventory: Skills Framework. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "24.1",
+      "sha256": "08adcb8d7d40830951f6387b049b14f019711e048739bf6c2608e314815e89dd",
+      "classification": "normative",
+      "review": "Source inventory: Skill Definition. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "24.2",
+      "sha256": "b4bc872714961b68959f9057a7cc53748a2d563ba829a829568c6de0ae3b2c39",
+      "classification": "normative",
+      "review": "Source inventory: SkillMetadata. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "24.3",
+      "sha256": "1650facdc786686c17b726bfbd2b49f8721292e0c092c3ad8f5a19ab76ae44dc",
+      "classification": "normative",
+      "review": "Source inventory: SkillRegistry. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "24.4",
+      "sha256": "687400ac29e2e1523c96d6c76aba5d9223735bad5848c841c6cced5a9d578972",
+      "classification": "normative",
+      "review": "Source inventory: Activation Lifecycle. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "24.5",
+      "sha256": "df5da41db9b1eb149f99bfbdcd032dc980f29220601c90ef37f68e0bdd0e5b89",
+      "classification": "normative",
+      "review": "Source inventory: Loading Failures. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "24.6",
+      "sha256": "fe57ac2c8cbee09b4e6a35cf1a07eb4192c33fdfc78887e929ac31189e1b1cbe",
+      "classification": "normative",
+      "review": "Source inventory: Access to Bundled Files. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "24.7",
+      "sha256": "937acb13f420ab6848de12494526b9607f606827e48970f60e7449ef8f309159",
+      "classification": "normative",
+      "review": "Source inventory: Skills Served over MCP. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "25",
+      "sha256": "1e4d73872f06c46dc965b873bfbf45797396add1fdca913eef94fdb32d237804",
+      "classification": "normative",
+      "review": "Source inventory: Image Generation. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "25.1",
+      "sha256": "059cf8528b58ce948214babe836b97c801ec9c708f7b8c214f467793d220ff42",
+      "classification": "normative",
+      "review": "Source inventory: A Surface of Its Own. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "25.2",
+      "sha256": "622c47d992e4c00ee6fab38fa43735cedb7655fc43720e543523df0ed05db19e",
+      "classification": "normative",
+      "review": "Source inventory: ImageProvider. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "25.3",
+      "sha256": "02aee398e0608064fe5c19758def4d47d75a3fc3c4470f54a100e6c8f4ef34d6",
+      "classification": "normative",
+      "review": "Source inventory: ImageResult. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "25.4",
+      "sha256": "f07107e57a6167de051408300b60bf473f0b5cd6947e5d312ca1c50263d23e3c",
+      "classification": "normative",
+      "review": "Source inventory: Editing. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "25.5",
+      "sha256": "03dfb8c3717cf14379abcc9c4a596f84ce9e819a3d4627ad75f9a16f512dbc09",
+      "classification": "normative",
+      "review": "Source inventory: Usage Accounting. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "25.6",
+      "sha256": "48bedc8f68d85bb1effaa70d6d92fd4a2bf64708f21a730d119992b2a6fc7cb3",
+      "classification": "normative",
+      "review": "Source inventory: Model Catalogue. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "25.7",
+      "sha256": "549e76e67b81172a9303bdfcde6f76e67ca29eca01820f422f0f2e761f25ef88",
+      "classification": "normative",
+      "review": "Source inventory: Non-Goals. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "26",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "classification": "informative",
+      "review": "Source inventory: Conformance Levels. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "26.1",
+      "sha256": "745b52e3c9e784a33d40e98f1beab9fa0f9577c3e20f00818dff5641d8c09bd1",
+      "classification": "normative",
+      "review": "Source inventory: Level 0: Core (REQUIRED). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "26.2",
+      "sha256": "93199b6294873a9fae8ac00798b9ad15a504c07cb2697b4fee0eb4ec04c0b2e2",
+      "classification": "normative",
+      "review": "Source inventory: Level 1: Transport (RECOMMENDED). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "26.3",
+      "sha256": "abb6e1cf63e159e0981e2f4f19577051e239c9712eeb71cddc91d1d9bf46eace",
+      "classification": "normative",
+      "review": "Source inventory: Level 2: Rich (OPTIONAL). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "26.4",
+      "sha256": "2f047029b0c076537536046fb6dbf8eafa441f1721c5e0d7d7f1205181b5b346",
+      "classification": "normative",
+      "review": "Source inventory: Level 3: Real-Time Media (OPTIONAL). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "A",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "classification": "informative",
+      "review": "Source inventory: Channel Reference. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "A.1",
+      "sha256": "76902df3239f6b9d7253fcd2fc11748f5c05e6331d2e8b468280ebef66d486ef",
+      "classification": "normative",
+      "review": "Source inventory: SMS Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "A.2",
+      "sha256": "8a316a3a3cb97b22a3abda8d9f7d1050dbd720838c54653acad1106cf3da8d40",
+      "classification": "normative",
+      "review": "Source inventory: Email Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "A.3",
+      "sha256": "b9f6d906e7d1bbab3571861ec33bb97446dbc06ceaa9154e778982506dcffa54",
+      "classification": "normative",
+      "review": "Source inventory: WhatsApp Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "A.4",
+      "sha256": "e7abe23ccf812806ae3b18a244ad30746ecf13ce42fa4a7f9488aa235512355e",
+      "classification": "normative",
+      "review": "Source inventory: WhatsApp Personal Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "A.5",
+      "sha256": "0402ee0be54d867357cad2caf39eae47b4bc085125ff896b908a0aaa1dcfe04e",
+      "classification": "normative",
+      "review": "Source inventory: Messenger Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "A.6",
+      "sha256": "73bdbcb889173ed8f452388f0c939a932ddd08bbe454c2f549dd0a64bcdf5469",
+      "classification": "normative",
+      "review": "Source inventory: Teams Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "A.7",
+      "sha256": "7f68e7b60bee3770f0e9e9958fe3755034bf251bf3541de900104f3a0edbf1d2",
+      "classification": "normative",
+      "review": "Source inventory: RCS Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "A.8",
+      "sha256": "d66548e9fd036395587203cd751548b85edce7d71f7391b3bb51ff9edc2dad9a",
+      "classification": "normative",
+      "review": "Source inventory: WebSocket Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "A.9",
+      "sha256": "bce5a640de6668b726ac53ba559b5fb985fdfc5e73ce167efb74869f884fd635",
+      "classification": "normative",
+      "review": "Source inventory: AI Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "A.9.1",
+      "sha256": "116b36f3a851df69c7a0ee61529cd5c7d8f592ed133f2c13060356eeca768f48",
+      "classification": "normative",
+      "review": "Source inventory: ACP Agent Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "A.10",
+      "sha256": "f522e7d32102b7bc775fd534cfca2063974197e184628e0be33fac7d4763850e",
+      "classification": "normative",
+      "review": "Source inventory: Voice Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "A.11",
+      "sha256": "98b2d5636c5031f06a40a273a220478f81d1dc51ad8314ed3085c401e758d67c",
+      "classification": "normative",
+      "review": "Source inventory: Realtime Voice Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "A.12",
+      "sha256": "187b7bf73e250ae7055c8bb2c40ace502ea532da4741b21a338b5dbf918f36fc",
+      "classification": "normative",
+      "review": "Source inventory: Video Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "A.13",
+      "sha256": "ae0a705e7f2bad947bb4f514f8da55da0bb472a05d22d6c70d21d9ed7c283da2",
+      "classification": "normative",
+      "review": "Source inventory: Telegram Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "A.14",
+      "sha256": "c72f431a09fb1c8679ac3dc199d74a9a40c9d01567d6402b1ea0fcbdeefd874a",
+      "classification": "normative",
+      "review": "Source inventory: CLI Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "A.14.1",
+      "sha256": "cd360d20c864ff1686a5329eeb8243a7bd1f40c2481422aa1eeed95435222a34",
+      "classification": "normative",
+      "review": "Source inventory: Host Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "A.15",
+      "sha256": "e9efbf41060d29fbae9230308390f0a3b28307169267a9952540c8df43bd81de",
+      "classification": "normative",
+      "review": "Source inventory: Conference Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+    },
+    {
+      "section": "B",
+      "sha256": "960b4e386cbdc5a3b262f44af32a4aa737bf50fb310b85ec193865b5d092893d",
+      "classification": "informative",
+      "review": "Source inventory: Complete Event Flow Examples. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "B.1",
+      "sha256": "02ecdfd46777ce12b34f1960cb1ce3a918c028ca09ddf82b2faa2a5d6663c409",
+      "classification": "informative",
+      "review": "Source inventory: Customer (SMS) + AI — Basic Conversation. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "B.2",
+      "sha256": "a2bc38a8165812aaed634fd9835fd45f5f058c416e1c71a12fa5f7eef234870b",
+      "classification": "informative",
+      "review": "Source inventory: Sensitivity Scanning — Block and Inject. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "B.3",
+      "sha256": "0d59e7eb1f548fe986df21c6c9ddc1a9f39b4f732c770bcce8f7a967b05a23b5",
+      "classification": "informative",
+      "review": "Source inventory: Ambiguous Identity — Shared Family Phone. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "B.4",
+      "sha256": "3551b6c238cd6e3ff199387d186e07ca38081929ee8bf69e96573a0e35fd0779",
+      "classification": "informative",
+      "review": "Source inventory: AI ↔ AI Multi-Agent with Chain Depth. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "B.5",
+      "sha256": "3b58db7e25ebb1a9686e376d182c1b216afc1de4e34e47ec373313f20534a2eb",
+      "classification": "informative",
+      "review": "Source inventory: Dynamic Channel Management — Advisor Joins. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "B.6",
+      "sha256": "c285aa712a940319cfc73f788b0246ba8e1c3c4810204d8b4585f1d7399be864",
+      "classification": "informative",
+      "review": "Source inventory: Message Edit — Cross-Channel with Fallback. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "B.7",
+      "sha256": "0bf21f50cc9bcb67459dfc304dbcf9c61f768420d7a3e9216f54537a1f5fbc88",
+      "classification": "informative",
+      "review": "Source inventory: Message Delete — Cross-Channel with Fallback. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "B.8",
+      "sha256": "0062d2b2955038a52fb827fe4ed92fb1f30128890d0b10c76f055e65f031d0d9",
+      "classification": "informative",
+      "review": "Source inventory: SIP Call → Unified process_inbound with Protocol Traces. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    },
+    {
+      "section": "B.9",
+      "sha256": "c701ba4a3f44cad2dc4cb3cde35f84865d7d9a25f5bc8d92bb07a3f8b35389d8",
+      "classification": "informative",
+      "review": "Source inventory: Multi-Agent Pipeline — Triage → Specialist → Resolution. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+    }
+  ]
 }

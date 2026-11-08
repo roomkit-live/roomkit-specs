@@ -50,6 +50,22 @@ the hash includes the text and annotations. A change invalidates that review.
 Keyword detection is only a reading aid: tables, defaults, code contracts and
 implicit rules require review too. Regeneration cannot approve a section.
 
+The general inventory groups the complete text at numbered sections and named
+paragraphs, keeping their conditions and examples together. A normative section
+means it contains contract material, not that every explanatory sentence is a
+separate obligation. Structural units identify interfaces and fields; mixed
+blocks still need behavioral evidence. The preface is recorded as virtual
+section `0` (no heading or section number is added to the RFC). Introduction
+rationale, the withdrawn draft and the flow examples are explicitly informative.
+Before marking a broad unit complete, split it into independently reviewable
+contracts, retire its ID, and preserve every condition in the replacement units.
+
+The checker rejects unannotated content in a reviewed normative section, even
+without normative keywords and inside a model's code block. Candidate scenarios
+in the report come from existing `rules` citations only; they guide review and
+carry no coverage credit. Unmapped units can already have tests, whose assertion
+links have not been reviewed yet.
+
 ## Reviewed links
 
 Each link pins the clause, a JSON pointer into an actual expectation, and the

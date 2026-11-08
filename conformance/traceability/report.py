@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from collections import Counter
 from pathlib import Path
 from typing import Any
@@ -46,6 +47,14 @@ def build(
             errors.append(
                 f"§{number}: reviewed normative section has unannotated keywords"
             )
+        if (
+            review
+            and review["classification"] == "normative"
+            and section.get("unannotated_content_lines")
+        ):
+            errors.append(
+                f"§{number}: reviewed normative section has unannotated content"
+            )
         counted = Counter(
             item["mapping"] for item in requirements if item["section"] == number
         )
@@ -57,6 +66,7 @@ def build(
                 "requirements": sum(counted.values()),
                 "mapping": dict(sorted(counted.items())),
                 "unannotated_keyword_lines": section["unannotated_keyword_lines"],
+                "candidate_scenarios": candidates(number, scenarios),
             }
         )
     corpus = digest(
@@ -71,6 +81,19 @@ def build(
         "sections": sections,
         "requirements": requirements,
     }, errors
+
+
+def candidates(number: str, scenarios: dict[str, Any]) -> list[str]:
+    """Existing citations guide the next review but never earn coverage credit."""
+    return sorted(
+        name
+        for name, scenario in scenarios.items()
+        if any(
+            (match := re.match(r"^(?:§|Appendix )([A-Z0-9]+(?:\.[0-9]+)*)", rule))
+            and match[1] == number
+            for rule in scenario.get("rules", [])
+        )
+    )
 
 
 def markdown(report: dict[str, Any]) -> str:
@@ -89,10 +112,11 @@ def markdown(report: dict[str, Any]) -> str:
         f"- Python test references at `{report['python_commit']}`.",
         "",
         f"{len(rows)} annotated source units; {mapped} have reviewed mappings, {complete} mapped as complete.",
-        f"Inventory reviewed for {reviewed}/{len(report['sections'])} numbered sections.",
+        f"Inventory reviewed for {reviewed}/{len(report['sections'])} sections (including the preface).",
         "",
         "A mapping is not a passing test. A section citation is not a mapping.",
         "A source unit may contain several obligations; its scope and remaining cases matter.",
+        "Unmapped means no reviewed evidence link, not that no test exists. Candidate scenarios are citations only.",
         "Execution receipts name their own RFC, corpus and implementation commits, backend and runtime.",
         "`recorded_pass` describes that receipt only; it certifies no conformance level.",
         "Unannotated keyword lines are a reading aid, not a complete list of implicit requirements.",
@@ -101,8 +125,8 @@ def markdown(report: dict[str, Any]) -> str:
         "[coverage.json](coverage.json) for each mapping and execution, and",
         "[evidence.json](evidence.json) for assertions, tests, review scope and remaining cases.",
         "",
-        "| Section | Inventory review | Units | Unmapped | Partial mappings | Complete mappings | Keyword lines to review |",
-        "|---|---|---:|---:|---:|---:|---:|",
+        "| Section | Inventory review | Units | Unmapped | Partial mappings | Complete mappings | Candidate scenarios | Keyword lines to review |",
+        "|---|---|---:|---:|---:|---:|---:|---:|",
     ]
     for item in report["sections"]:
         counts = item["mapping"]
@@ -110,7 +134,7 @@ def markdown(report: dict[str, Any]) -> str:
             f"| §{item['section']} {item['title'].replace('|', '/')} | {item['review']} | "
             f"{item['requirements']} | {counts.get('unmapped', 0)} | "
             f"{counts.get('mapped_partial', 0)} | {counts.get('mapped_complete', 0)} | "
-            f"{len(item['unannotated_keyword_lines'])} |"
+            f"{len(item['candidate_scenarios'])} | {len(item['unannotated_keyword_lines'])} |"
         )
     return "\n".join(lines) + "\n"
 
