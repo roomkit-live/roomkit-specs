@@ -1138,8 +1138,29 @@
         "writes_record": {
           "description": "In a hook's reaction: writes these keys on the turn's record, on `before_ai_generation` through its context's `response_metadata`, on another trigger through current_response_metadata(), when it answers one (§6.7).",
           "type": "object"
+        },
+        "invalid_result": {
+          "$ref": "#/$defs/invalid_hook_result"
         }
-      }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "invalid_result",
+              "result"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "invalid_result",
+              "fail"
+            ]
+          }
+        }
+      ]
     },
     "condition": {
       "type": "object",
@@ -6520,6 +6541,45 @@
           }
         }
       }
+    },
+    "invalid_hook_result": {
+      "description": "A deliberately unusable return from a SYNC BEFORE_BROADCAST hook. This is a valid fixture, distinct from malformed scenario data. no_result returns null; missing_payload returns an unchecked MODIFY with no event. Side effects use the usual templates and are only meaningful on missing_payload.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "no_result",
+            "missing_payload"
+          ]
+        },
+        "tasks": {
+          "$ref": "#/$defs/hook_result/properties/tasks"
+        },
+        "observations": {
+          "$ref": "#/$defs/hook_result/properties/observations"
+        },
+        "injected_events": {
+          "$ref": "#/$defs/hook_result/properties/injected_events"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "no_result"
+              }
+            }
+          },
+          "then": {
+            "maxProperties": 1
+          }
+        }
+      ]
     }
   }
 }

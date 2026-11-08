@@ -327,6 +327,17 @@ left, the call does what it does by default. A reaction:
 | `parsed` | In a `parse` reaction: a patch on the event the channel builds, what it reads off its own wire: its members replace the event's, those of its `source` the source's; its strings name what the run made (References) |
 | `result` | A hook's HookResult (§9.4). A modify's `event` is a patch on the payload: its members replace the payload's. Its injected events, tasks and observations are templates |
 
+
+| `invalid_result` | A deliberate unusable return on a SYNC `before_broadcast` hook: `{ "kind": "no_result" }` returns null; `{ "kind": "missing_payload", ... }` returns an unchecked MODIFY with no event, optionally carrying `tasks`, `observations`, and `injected_events` templates. Mutually exclusive with `result` and `fail`. A runner validates the fixture before invoking the hook; a malformed fixture is a runner failure, never a simulated hook exception |
+
+An invalid return exercises the hook chain, not the model constructor. A
+`missing_payload` is constructed unchecked (Python `model_copy`, Rust struct
+fields); it must not be replaced by a constructor error. A wrong payload type
+is tested on implementations that can return one: Rust's typed hook callback
+cannot return a `HookResult<String>` where `HookResult<RoomEvent>` is required.
+Such a language-specific proof is reported separately, never simulated by a
+hook exception in the shared runner.
+
 **Templates.** A runner completes a template, written in the serialized form,
 with what the record requires: a fresh `id`, the room of the call as `room_id`,
 `type` `message`, `created_at` now. An agent's response gets the agent's source
