@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "e68bbaace40568f287fa43b657999608f5b28a6f6e3379c67e21c6760258ca9a",
-  "corpus_sha256": "ad0594006b369aed53c858a8afaaa846fe85cfc3f300feb8fb501c7c5ff953ce",
+  "corpus_sha256": "31c93a5b064fd2d0ad630a9aeefa43b6f1c7684e97b807ece7307367f4c9a88b",
   "python_commit": "ecf9bc5f7e92a440413b2518e799afce31bd5042",
-  "scenario_count": 1570,
+  "scenario_count": 1578,
   "sections": [
     {
       "section": "0",
@@ -1315,9 +1315,11 @@
       "section": "7.3",
       "title": "Visibility",
       "review": "normative",
-      "requirements": 4,
+      "requirements": 10,
       "mapping": {
-        "unmapped": 4
+        "mapped_complete": 6,
+        "mapped_partial": 3,
+        "unmapped": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -1329,13 +1331,21 @@
         "permissions/a-refused-message-is-stored-within-its-source-binding",
         "permissions/a-response-s-hook-cannot-widen-it-past-its-answer-scope",
         "permissions/a-source-bound-for-no-one-reaches-no-target",
+        "permissions/an-agent-recalls-accepted-whispers-but-not-refused-answers",
         "permissions/an-answer-past-the-reentry-budget-is-stored-within-its-agent-s-binding",
         "permissions/an-answer-scope-internal-a-channel-gives-reads-as-none",
         "permissions/an-empty-answer-scope-a-hook-writes-sends-the-answers-nowhere",
         "permissions/an-event-is-stored-with-the-intersection",
+        "permissions/binding-changes-do-not-rewrite-history-visibility",
+        "permissions/each-agent-recalls-only-its-visible-history",
+        "permissions/empty-event-visibility-never-opens-history",
+        "permissions/hidden-messages-stay-out-of-later-model-contexts",
         "permissions/internal-is-the-framework-s-own",
+        "permissions/invalid-visibility-is-refused-at-every-door",
         "permissions/reserved-channel-ids-are-refused",
         "permissions/the-agent-whispers-to-the-advisor",
+        "permissions/visibility-intersections-on-inbound-and-injection",
+        "permissions/visibility-is-canonical-at-every-door",
         "streaming/a-stream-reaches-no-transport-its-agent-s-binding-excludes",
         "streaming/a-stream-row-under-an-internal-answer-scope-is-stored-for-no-channel",
         "streaming/an-answer-scope-streams-only-to-a-target-it-names",
@@ -1394,13 +1404,21 @@
         "permissions/a-refused-message-is-stored-within-its-source-binding",
         "permissions/all-source-access-and-mute-combinations",
         "permissions/all-target-access-and-mute-combinations",
+        "permissions/an-agent-recalls-accepted-whispers-but-not-refused-answers",
         "permissions/an-event-is-stored-with-the-intersection",
         "permissions/an-injection-from-an-unbound-channel-raises",
+        "permissions/binding-changes-do-not-rewrite-history-visibility",
+        "permissions/each-agent-recalls-only-its-visible-history",
+        "permissions/empty-event-visibility-never-opens-history",
+        "permissions/hidden-messages-stay-out-of-later-model-contexts",
+        "permissions/invalid-visibility-is-refused-at-every-door",
         "permissions/muted-source-is-stored-blocked",
         "permissions/read-only-and-muted-reads-as-read-only",
         "permissions/read-only-source-is-stored-blocked",
         "permissions/targets-by-access-and-self",
         "permissions/the-agent-whispers-to-the-advisor",
+        "permissions/visibility-intersections-on-inbound-and-injection",
+        "permissions/visibility-is-canonical-at-every-door",
         "reentrancy/a-delivery-mutes-a-channel",
         "reentrancy/a-locked-hook-mutes-its-source",
         "reentrancy/an-off-lock-hook-mutes-its-source",
@@ -7443,22 +7461,164 @@
       "links": []
     },
     {
-      "id": "RK-7.3-002",
+      "id": "RK-7.3-005",
       "section": "7.3",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "visibility-grammar-values",
+          "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
+          "coverage": "partial",
+          "missing": [
+            "Framework-created internal records and all non-public event producers are not covered by this public-door matrix."
+          ],
+          "executions": []
+        }
+      ]
+    },
+    {
+      "id": "RK-7.3-006",
+      "section": "7.3",
+      "mapping": "mapped_complete",
+      "links": [
+        {
+          "id": "visibility-reserved-channel-ids",
+          "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
+          "coverage": "complete",
+          "missing": [],
+          "executions": [
+            {
+              "execution": "python-permissions-ecf9bc5",
+              "implementation": "python",
+              "commit": "ecf9bc5f7e92a440413b2518e799afce31bd5042",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "RK-7.3-007",
+      "section": "7.3",
+      "mapping": "mapped_complete",
+      "links": [
+        {
+          "id": "visibility-whitespace",
+          "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
+          "coverage": "complete",
+          "missing": [],
+          "executions": []
+        }
+      ]
+    },
+    {
+      "id": "RK-7.3-008",
+      "section": "7.3",
+      "mapping": "mapped_complete",
+      "links": [
+        {
+          "id": "visibility-empty-values-and-items",
+          "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
+          "coverage": "complete",
+          "missing": [],
+          "executions": []
+        }
+      ]
+    },
+    {
+      "id": "RK-7.3-009",
+      "section": "7.3",
+      "mapping": "mapped_complete",
+      "links": [
+        {
+          "id": "visibility-empty-values-fail-closed",
+          "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
+          "coverage": "complete",
+          "missing": [],
+          "executions": [
+            {
+              "execution": "python-permissions-ecf9bc5",
+              "implementation": "python",
+              "commit": "ecf9bc5f7e92a440413b2518e799afce31bd5042",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "RK-7.3-010",
+      "section": "7.3",
+      "mapping": "mapped_complete",
+      "links": [
+        {
+          "id": "visibility-canonical-id-lists",
+          "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
+          "coverage": "complete",
+          "missing": [],
+          "executions": []
+        }
+      ]
+    },
+    {
+      "id": "RK-7.3-011",
+      "section": "7.3",
+      "mapping": "mapped_complete",
+      "links": [
+        {
+          "id": "visibility-unknown-and-unbound-ids",
+          "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
+          "coverage": "complete",
+          "missing": [],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-7.3-003",
       "section": "7.3",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "visibility-internal-public-doors",
+          "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
+          "coverage": "partial",
+          "missing": [
+            "Hook restoration, channel responses, framework-created records and outside-pipeline commits remain outside this door-only proof."
+          ],
+          "executions": [
+            {
+              "execution": "python-permissions-ecf9bc5",
+              "implementation": "python",
+              "commit": "ecf9bc5f7e92a440413b2518e799afce31bd5042",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "RK-7.3-004",
       "section": "7.3",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "visibility-committed-intersection-and-history",
+          "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
+          "coverage": "partial",
+          "missing": [
+            "EDIT/DELETE target narrowing, non-text content, internal intersections, all refusal/reentry paths and hook-injected events are not exhaustively linked here.",
+            "Streaming permission changes and memory summarizer inputs need separate proofs."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-7.4-001",

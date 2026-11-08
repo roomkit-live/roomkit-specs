@@ -3,7 +3,8 @@
   "python_commit": "ecf9bc5f7e92a440413b2518e799afce31bd5042",
   "retired": [
     "RK-12.10.4-010",
-    "RK-12.10.4-011"
+    "RK-12.10.4-011",
+    "RK-7.3-002"
   ],
   "links": [
     {
@@ -348,6 +349,1206 @@
         "Rules 4 and 6-8 (visibility, derived bindings, revocation and reconstructed context) require separate mappings.",
         "Rule 2 response paths, hooks changing permissions, streaming transitions and unbound sources are outside the matrices.",
         "Rule 3 hook-returned effects on refused messages are outside this link."
+      ]
+    },
+    {
+      "id": "visibility-grammar-values",
+      "requirement": "RK-7.3-005",
+      "clause_sha256": "708f0dbfdc5f1f1f8d52f6e8e806779f9538cebd4d4e34f3426d816df57371ac",
+      "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
+      "coverage": "partial",
+      "review": "Each listed assertion was checked against the clause including its public-door conditions. Exact arrays reject extra deliveries and model messages; the shared scenario is the executable proof, not its title or rules list.",
+      "assertions": [
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/expect",
+          "sha256": "fb21b8c50fb2b55694bea5246c397cb58490e5509f74571e758fbcfbcdd3ba82",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Canonical bindings, stored visibility and response_visibility, exact recipients and absent matches at all six public doors, including All, Unicode ordering, duplicates, missing and registered-but-unbound ids."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/0/expect",
+          "sha256": "8355d15d447f79aae8772990960629e1eca15557c840019da9b9adcd5c187ae3",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/1/expect",
+          "sha256": "8355d15d447f79aae8772990960629e1eca15557c840019da9b9adcd5c187ae3",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/4/expect",
+          "sha256": "98c6d9f6cb91b7360a0dc1480211980129b378a2ee7a2a2e65e381f8aa2b2b0b",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/5/expect",
+          "sha256": "98c6d9f6cb91b7360a0dc1480211980129b378a2ee7a2a2e65e381f8aa2b2b0b",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/8/expect",
+          "sha256": "f2ef0fac180029d09feb8712d069cdf6eb6540eb006d09d00394ff4145153c4d",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/9/expect",
+          "sha256": "f2ef0fac180029d09feb8712d069cdf6eb6540eb006d09d00394ff4145153c4d",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/12/expect",
+          "sha256": "a82374d478ea20a2da5fdf713f144e8e53a00e6c988893e419313235b4a3bb99",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/13/expect",
+          "sha256": "a82374d478ea20a2da5fdf713f144e8e53a00e6c988893e419313235b4a3bb99",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/16/expect",
+          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/17/expect",
+          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/20/expect",
+          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/21/expect",
+          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/24/expect",
+          "sha256": "90651ace825531818ef24ee24cf95b0bccb14b0bb0f5849674c5d9c3410cb91d",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/25/expect",
+          "sha256": "90651ace825531818ef24ee24cf95b0bccb14b0bb0f5849674c5d9c3410cb91d",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/28/expect",
+          "sha256": "87d7d84b919e37720fa983ac5823473bd48a9f8a4545472332b2cb63941943de",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/29/expect",
+          "sha256": "87d7d84b919e37720fa983ac5823473bd48a9f8a4545472332b2cb63941943de",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Framework-created internal records and all non-public event producers are not covered by this public-door matrix."
+      ]
+    },
+    {
+      "id": "visibility-reserved-channel-ids",
+      "requirement": "RK-7.3-006",
+      "clause_sha256": "d9313cccbd72ec5a0b1e06433d4f36ff4454a786ed61907c722b3c93de5bab1d",
+      "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
+      "coverage": "complete",
+      "review": "Each listed assertion was checked against the clause including its public-door conditions. Exact arrays reject extra deliveries and model messages; the shared scenario is the executable proof, not its title or rules list.",
+      "assertions": [
+        {
+          "scenario": "permissions/reserved-channel-ids-are-refused",
+          "pointer": "/steps/0/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "a800622cc4874ba7d047080b72d4560adffd4648fc3ca5dcfecbf71ec4ad9ca4",
+          "proves": "Registration rejects each reserved keyword, a comma, leading/trailing whitespace or an empty id."
+        },
+        {
+          "scenario": "permissions/reserved-channel-ids-are-refused",
+          "pointer": "/steps/1/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "a800622cc4874ba7d047080b72d4560adffd4648fc3ca5dcfecbf71ec4ad9ca4",
+          "proves": "Registration rejects each reserved keyword, a comma, leading/trailing whitespace or an empty id."
+        },
+        {
+          "scenario": "permissions/reserved-channel-ids-are-refused",
+          "pointer": "/steps/2/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "a800622cc4874ba7d047080b72d4560adffd4648fc3ca5dcfecbf71ec4ad9ca4",
+          "proves": "Registration rejects each reserved keyword, a comma, leading/trailing whitespace or an empty id."
+        },
+        {
+          "scenario": "permissions/reserved-channel-ids-are-refused",
+          "pointer": "/steps/3/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "a800622cc4874ba7d047080b72d4560adffd4648fc3ca5dcfecbf71ec4ad9ca4",
+          "proves": "Registration rejects each reserved keyword, a comma, leading/trailing whitespace or an empty id."
+        },
+        {
+          "scenario": "permissions/reserved-channel-ids-are-refused",
+          "pointer": "/steps/4/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "a800622cc4874ba7d047080b72d4560adffd4648fc3ca5dcfecbf71ec4ad9ca4",
+          "proves": "Registration rejects each reserved keyword, a comma, leading/trailing whitespace or an empty id."
+        },
+        {
+          "scenario": "permissions/reserved-channel-ids-are-refused",
+          "pointer": "/steps/5/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "a800622cc4874ba7d047080b72d4560adffd4648fc3ca5dcfecbf71ec4ad9ca4",
+          "proves": "Registration rejects each reserved keyword, a comma, leading/trailing whitespace or an empty id."
+        },
+        {
+          "scenario": "permissions/reserved-channel-ids-are-refused",
+          "pointer": "/steps/6/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "a800622cc4874ba7d047080b72d4560adffd4648fc3ca5dcfecbf71ec4ad9ca4",
+          "proves": "Registration rejects each reserved keyword, a comma, leading/trailing whitespace or an empty id."
+        },
+        {
+          "scenario": "permissions/reserved-channel-ids-are-refused",
+          "pointer": "/steps/7/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "a800622cc4874ba7d047080b72d4560adffd4648fc3ca5dcfecbf71ec4ad9ca4",
+          "proves": "Registration rejects each reserved keyword, a comma, leading/trailing whitespace or an empty id."
+        },
+        {
+          "scenario": "permissions/reserved-channel-ids-are-refused",
+          "pointer": "/steps/8/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "a800622cc4874ba7d047080b72d4560adffd4648fc3ca5dcfecbf71ec4ad9ca4",
+          "proves": "Registration rejects each reserved keyword, a comma, leading/trailing whitespace or an empty id."
+        },
+        {
+          "scenario": "permissions/reserved-channel-ids-are-refused",
+          "pointer": "/steps/9/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "a800622cc4874ba7d047080b72d4560adffd4648fc3ca5dcfecbf71ec4ad9ca4",
+          "proves": "Registration rejects each reserved keyword, a comma, leading/trailing whitespace or an empty id."
+        },
+        {
+          "scenario": "permissions/reserved-channel-ids-are-refused",
+          "pointer": "/steps/10/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "a800622cc4874ba7d047080b72d4560adffd4648fc3ca5dcfecbf71ec4ad9ca4",
+          "proves": "Registration rejects each reserved keyword, a comma, leading/trailing whitespace or an empty id."
+        }
+      ],
+      "tests": [],
+      "missing": []
+    },
+    {
+      "id": "visibility-whitespace",
+      "requirement": "RK-7.3-007",
+      "clause_sha256": "6011790db3f1d37fd01e53f1487107aabb695f99df26b6fba4070066c7162ea4",
+      "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
+      "coverage": "complete",
+      "review": "Each listed assertion was checked against the clause including its public-door conditions. Exact arrays reject extra deliveries and model messages; the shared scenario is the executable proof, not its title or rules list.",
+      "assertions": [
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/expect",
+          "sha256": "fb21b8c50fb2b55694bea5246c397cb58490e5509f74571e758fbcfbcdd3ba82",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Canonical bindings, stored visibility and response_visibility, exact recipients and absent matches at all six public doors, including All, Unicode ordering, duplicates, missing and registered-but-unbound ids."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/0/expect",
+          "sha256": "8355d15d447f79aae8772990960629e1eca15557c840019da9b9adcd5c187ae3",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/1/expect",
+          "sha256": "8355d15d447f79aae8772990960629e1eca15557c840019da9b9adcd5c187ae3",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/4/expect",
+          "sha256": "98c6d9f6cb91b7360a0dc1480211980129b378a2ee7a2a2e65e381f8aa2b2b0b",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/5/expect",
+          "sha256": "98c6d9f6cb91b7360a0dc1480211980129b378a2ee7a2a2e65e381f8aa2b2b0b",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/8/expect",
+          "sha256": "f2ef0fac180029d09feb8712d069cdf6eb6540eb006d09d00394ff4145153c4d",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/9/expect",
+          "sha256": "f2ef0fac180029d09feb8712d069cdf6eb6540eb006d09d00394ff4145153c4d",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/12/expect",
+          "sha256": "a82374d478ea20a2da5fdf713f144e8e53a00e6c988893e419313235b4a3bb99",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/13/expect",
+          "sha256": "a82374d478ea20a2da5fdf713f144e8e53a00e6c988893e419313235b4a3bb99",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/16/expect",
+          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/17/expect",
+          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/20/expect",
+          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/21/expect",
+          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/24/expect",
+          "sha256": "90651ace825531818ef24ee24cf95b0bccb14b0bb0f5849674c5d9c3410cb91d",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/25/expect",
+          "sha256": "90651ace825531818ef24ee24cf95b0bccb14b0bb0f5849674c5d9c3410cb91d",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/28/expect",
+          "sha256": "87d7d84b919e37720fa983ac5823473bd48a9f8a4545472332b2cb63941943de",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/29/expect",
+          "sha256": "87d7d84b919e37720fa983ac5823473bd48a9f8a4545472332b2cb63941943de",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        }
+      ],
+      "tests": [],
+      "missing": []
+    },
+    {
+      "id": "visibility-empty-values-and-items",
+      "requirement": "RK-7.3-008",
+      "clause_sha256": "49f08330a23f90fac216bde102c825ffa93badda6b57602ca6fd9cb952704eba",
+      "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
+      "coverage": "complete",
+      "review": "Each listed assertion was checked against the clause including its public-door conditions. Exact arrays reject extra deliveries and model messages; the shared scenario is the executable proof, not its title or rules list.",
+      "assertions": [
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/0/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/1/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/2/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/3/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/4/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/5/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/6/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/7/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/8/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/9/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/10/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/11/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/12/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/13/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/14/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/15/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/16/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/17/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/18/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/19/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/20/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/21/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/22/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/23/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/24/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/25/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/26/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/27/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/28/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/29/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/30/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/31/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/32/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/33/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/34/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/35/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/36/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/37/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/38/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/39/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/40/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/41/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/42/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/43/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/44/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/45/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/46/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/47/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/48/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/49/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/50/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/51/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/52/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/53/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/54/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/55/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/56/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/57/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/58/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/steps/59/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "The public entry raises invalid_argument for this malformed value."
+        },
+        {
+          "scenario": "permissions/invalid-visibility-is-refused-at-every-door",
+          "pointer": "/expect",
+          "sha256": "b86e3e556e8e411c9c874f4c6059a473f15b0be6e409191237558f3b7d69a2b5",
+          "scenario_sha256": "dd8ade8f0b6b3ec0a3629117a13a910d512ef50475acc37af04438e95900dabb",
+          "proves": "All refused inputs leave no event, delivery, agent turn, hook invocation, framework event or binding change."
+        }
+      ],
+      "tests": [],
+      "missing": []
+    },
+    {
+      "id": "visibility-empty-values-fail-closed",
+      "requirement": "RK-7.3-009",
+      "clause_sha256": "85dc5a6c5ee11484a3d0299f1a4343fcdda7f0057774a7744d29fb3c89d693fc",
+      "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
+      "coverage": "complete",
+      "review": "Each listed assertion was checked against the clause including its public-door conditions. Exact arrays reject extra deliveries and model messages; the shared scenario is the executable proof, not its title or rules list.",
+      "assertions": [
+        {
+          "scenario": "permissions/empty-event-visibility-never-opens-history",
+          "pointer": "/expect",
+          "sha256": "3c4678beb348d16f389ce70fe5f84b356949a4612baaa6334144818500fb49b2",
+          "scenario_sha256": "12c806f2b2dbebaf51abb3370eb58b1b151e6b2423ab10bc435448fc5ccb2d9b",
+          "proves": "Empty event visibility from a hook or outside-pipeline stored record reaches no delivery or later model context; the host timeline retains both records."
+        },
+        {
+          "scenario": "permissions/an-empty-answer-scope-a-hook-writes-sends-the-answers-nowhere",
+          "pointer": "/expect",
+          "sha256": "9295578ad919f9c01bbb1b008522e1330234d098dd0add4104edae96e64d9a4b",
+          "scenario_sha256": "f3c75e1650afd96dafacdfdf8d34332f78a7f1a7ed1d4c170585b234dd6d3ab3",
+          "proves": "An empty answer scope written by a hook stores responses for none and reaches no transport, buffered or streamed."
+        }
+      ],
+      "tests": [],
+      "missing": []
+    },
+    {
+      "id": "visibility-canonical-id-lists",
+      "requirement": "RK-7.3-010",
+      "clause_sha256": "5ac4922c724f9ba36978dec3cf958518046e6630357bc7b049ef2307d26c37e2",
+      "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
+      "coverage": "complete",
+      "review": "Each listed assertion was checked against the clause including its public-door conditions. Exact arrays reject extra deliveries and model messages; the shared scenario is the executable proof, not its title or rules list.",
+      "assertions": [
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/expect",
+          "sha256": "fb21b8c50fb2b55694bea5246c397cb58490e5509f74571e758fbcfbcdd3ba82",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Canonical bindings, stored visibility and response_visibility, exact recipients and absent matches at all six public doors, including All, Unicode ordering, duplicates, missing and registered-but-unbound ids."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/0/expect",
+          "sha256": "8355d15d447f79aae8772990960629e1eca15557c840019da9b9adcd5c187ae3",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/1/expect",
+          "sha256": "8355d15d447f79aae8772990960629e1eca15557c840019da9b9adcd5c187ae3",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/4/expect",
+          "sha256": "98c6d9f6cb91b7360a0dc1480211980129b378a2ee7a2a2e65e381f8aa2b2b0b",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/5/expect",
+          "sha256": "98c6d9f6cb91b7360a0dc1480211980129b378a2ee7a2a2e65e381f8aa2b2b0b",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/8/expect",
+          "sha256": "f2ef0fac180029d09feb8712d069cdf6eb6540eb006d09d00394ff4145153c4d",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/9/expect",
+          "sha256": "f2ef0fac180029d09feb8712d069cdf6eb6540eb006d09d00394ff4145153c4d",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/12/expect",
+          "sha256": "a82374d478ea20a2da5fdf713f144e8e53a00e6c988893e419313235b4a3bb99",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/13/expect",
+          "sha256": "a82374d478ea20a2da5fdf713f144e8e53a00e6c988893e419313235b4a3bb99",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/16/expect",
+          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/17/expect",
+          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/20/expect",
+          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/21/expect",
+          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/24/expect",
+          "sha256": "90651ace825531818ef24ee24cf95b0bccb14b0bb0f5849674c5d9c3410cb91d",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/25/expect",
+          "sha256": "90651ace825531818ef24ee24cf95b0bccb14b0bb0f5849674c5d9c3410cb91d",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/28/expect",
+          "sha256": "87d7d84b919e37720fa983ac5823473bd48a9f8a4545472332b2cb63941943de",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/29/expect",
+          "sha256": "87d7d84b919e37720fa983ac5823473bd48a9f8a4545472332b2cb63941943de",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        }
+      ],
+      "tests": [],
+      "missing": []
+    },
+    {
+      "id": "visibility-unknown-and-unbound-ids",
+      "requirement": "RK-7.3-011",
+      "clause_sha256": "e49015e2698588a4cf5d210744aca8884abe1e0e29182ed2822ce348726c41af",
+      "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
+      "coverage": "complete",
+      "review": "Each listed assertion was checked against the clause including its public-door conditions. Exact arrays reject extra deliveries and model messages; the shared scenario is the executable proof, not its title or rules list.",
+      "assertions": [
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/expect",
+          "sha256": "fb21b8c50fb2b55694bea5246c397cb58490e5509f74571e758fbcfbcdd3ba82",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Canonical bindings, stored visibility and response_visibility, exact recipients and absent matches at all six public doors, including All, Unicode ordering, duplicates, missing and registered-but-unbound ids."
+        },
+        {
+          "scenario": "permissions/visibility-intersections-on-inbound-and-injection",
+          "pointer": "/expect",
+          "sha256": "eebbf2b9f7e845e579311ff58843673534a768f3488940595ab77177d2634e94",
+          "scenario_sha256": "9b05c78e410ddc49fd0f590d39d90f2c6c39553998de8a3760ba5507477c5e7f",
+          "proves": "Unknown ids remain valid in lists, match no recipient and are dropped by category intersections."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/0/expect",
+          "sha256": "8355d15d447f79aae8772990960629e1eca15557c840019da9b9adcd5c187ae3",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/1/expect",
+          "sha256": "8355d15d447f79aae8772990960629e1eca15557c840019da9b9adcd5c187ae3",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/4/expect",
+          "sha256": "98c6d9f6cb91b7360a0dc1480211980129b378a2ee7a2a2e65e381f8aa2b2b0b",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/5/expect",
+          "sha256": "98c6d9f6cb91b7360a0dc1480211980129b378a2ee7a2a2e65e381f8aa2b2b0b",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/8/expect",
+          "sha256": "f2ef0fac180029d09feb8712d069cdf6eb6540eb006d09d00394ff4145153c4d",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/9/expect",
+          "sha256": "f2ef0fac180029d09feb8712d069cdf6eb6540eb006d09d00394ff4145153c4d",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/12/expect",
+          "sha256": "a82374d478ea20a2da5fdf713f144e8e53a00e6c988893e419313235b4a3bb99",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/13/expect",
+          "sha256": "a82374d478ea20a2da5fdf713f144e8e53a00e6c988893e419313235b4a3bb99",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/16/expect",
+          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/17/expect",
+          "sha256": "2e0889827e6f0a18254701a266f3cdaf486903c326ecbc9be3c79c0a9c6e1d7b",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/20/expect",
+          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/21/expect",
+          "sha256": "86bec07ef94f8660a42e4ac8e658a3d6849df6d4531cf6ce450f0ae4eaf958ff",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/24/expect",
+          "sha256": "90651ace825531818ef24ee24cf95b0bccb14b0bb0f5849674c5d9c3410cb91d",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/25/expect",
+          "sha256": "90651ace825531818ef24ee24cf95b0bccb14b0bb0f5849674c5d9c3410cb91d",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/28/expect",
+          "sha256": "87d7d84b919e37720fa983ac5823473bd48a9f8a4545472332b2cb63941943de",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        },
+        {
+          "scenario": "permissions/visibility-is-canonical-at-every-door",
+          "pointer": "/steps/29/expect",
+          "sha256": "87d7d84b919e37720fa983ac5823473bd48a9f8a4545472332b2cb63941943de",
+          "scenario_sha256": "625a2e9291b1becd065d305a3d9b0e270e1174eb384a6cc9a1663f36cdbfb1e5",
+          "proves": "Attach and update each return the canonical visibility before any event is processed."
+        }
+      ],
+      "tests": [],
+      "missing": []
+    },
+    {
+      "id": "visibility-internal-public-doors",
+      "requirement": "RK-7.3-003",
+      "clause_sha256": "1f0a8a458b59d2dc9191abb555609611015638370e48824131a5a7f9918580f2",
+      "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
+      "coverage": "partial",
+      "review": "Each listed assertion was checked against the clause including its public-door conditions. Exact arrays reject extra deliveries and model messages; the shared scenario is the executable proof, not its title or rules list.",
+      "assertions": [
+        {
+          "scenario": "permissions/internal-is-the-framework-s-own",
+          "pointer": "/steps/0/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "1e2d3a0afdb11538fa38d83b43beb53d33f86d8ea96606805d17c58d164713b1",
+          "proves": "Internal is refused at this public door."
+        },
+        {
+          "scenario": "permissions/internal-is-the-framework-s-own",
+          "pointer": "/steps/1/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "1e2d3a0afdb11538fa38d83b43beb53d33f86d8ea96606805d17c58d164713b1",
+          "proves": "Internal is refused at this public door."
+        },
+        {
+          "scenario": "permissions/internal-is-the-framework-s-own",
+          "pointer": "/steps/2/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "1e2d3a0afdb11538fa38d83b43beb53d33f86d8ea96606805d17c58d164713b1",
+          "proves": "Internal is refused at this public door."
+        },
+        {
+          "scenario": "permissions/internal-is-the-framework-s-own",
+          "pointer": "/steps/3/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "1e2d3a0afdb11538fa38d83b43beb53d33f86d8ea96606805d17c58d164713b1",
+          "proves": "Internal is refused at this public door."
+        },
+        {
+          "scenario": "permissions/internal-is-the-framework-s-own",
+          "pointer": "/steps/4/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "1e2d3a0afdb11538fa38d83b43beb53d33f86d8ea96606805d17c58d164713b1",
+          "proves": "Internal is refused at this public door."
+        },
+        {
+          "scenario": "permissions/internal-is-the-framework-s-own",
+          "pointer": "/steps/5/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "1e2d3a0afdb11538fa38d83b43beb53d33f86d8ea96606805d17c58d164713b1",
+          "proves": "Internal is refused at this public door."
+        },
+        {
+          "scenario": "permissions/internal-is-the-framework-s-own",
+          "pointer": "/expect",
+          "sha256": "d91490cc5d2c1ca6a3d86f11a9d3fe1a2ad663a2f143286789bad95f419f9264",
+          "scenario_sha256": "1e2d3a0afdb11538fa38d83b43beb53d33f86d8ea96606805d17c58d164713b1",
+          "proves": "Refusing internal leaves the binding unchanged and no timeline, delivery, hook or framework event."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Hook restoration, channel responses, framework-created records and outside-pipeline commits remain outside this door-only proof."
+      ]
+    },
+    {
+      "id": "visibility-committed-intersection-and-history",
+      "requirement": "RK-7.3-004",
+      "clause_sha256": "28a775f564fd35db15431f7f870c8bab9de0fbf970cff069a0b0c9d6526b3287",
+      "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
+      "coverage": "partial",
+      "review": "Each listed assertion was checked against the clause including its public-door conditions. Exact arrays reject extra deliveries and model messages; the shared scenario is the executable proof, not its title or rules list.",
+      "assertions": [
+        {
+          "scenario": "permissions/visibility-intersections-on-inbound-and-injection",
+          "pointer": "/expect",
+          "sha256": "eebbf2b9f7e845e579311ff58843673534a768f3488940595ab77177d2634e94",
+          "scenario_sha256": "9b05c78e410ddc49fd0f590d39d90f2c6c39553998de8a3760ba5507477c5e7f",
+          "proves": "The committed intersection and exact transport/intelligence recipients agree across 20 pairs and both inbound and direct injection."
+        },
+        {
+          "scenario": "permissions/binding-changes-do-not-rewrite-history-visibility",
+          "pointer": "/expect",
+          "sha256": "679cf3b4b08c78029d8392685e26b6353230e837fc4095c94ba469064472e036",
+          "scenario_sha256": "96f85de638ef36b624ed6fd94280cd089503cf5ad19997047190072f71044f76",
+          "proves": "Narrowing and widening a source never reinterpret its previously committed public or hidden messages."
+        },
+        {
+          "scenario": "permissions/hidden-messages-stay-out-of-later-model-contexts",
+          "pointer": "/expect",
+          "sha256": "0dc51c0b2ff59d2e4755a7e34a465d08f3a7ed713d4d9699b8d8df1dc3bac559",
+          "scenario_sha256": "f0197fd4209f50cd83e2440f7877660b74f3c47fa35b3f4a9dc01888528d964e",
+          "proves": "Transport, none and an explicit list on either the message or source binding exclude the hidden message from the next model context."
+        },
+        {
+          "scenario": "permissions/each-agent-recalls-only-its-visible-history",
+          "pointer": "/expect",
+          "sha256": "fffc4bd6322fbb0276d42205bb51feadba865e1d950e037e7ead83c74d1a6a14",
+          "scenario_sha256": "fbde5dc83adcb20f0178ff7d9fe6d05b17a484c6e1e3981290cf7e1561f30385",
+          "proves": "Private contexts are independent for two agents, including their own accepted whispers."
+        },
+        {
+          "scenario": "permissions/an-agent-recalls-accepted-whispers-but-not-refused-answers",
+          "pointer": "/expect",
+          "sha256": "4f2765079d8b46636bb7a00cac5d9c770af72814fb3400cc8edea12f16149ba4",
+          "scenario_sha256": "6bd6c6261792b68ec9b320cc5b1255886c694ec6aee09f2682362048099c2f73",
+          "proves": "Own accepted whispers are retained while a blocked answer is absent from the next model context."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "EDIT/DELETE target narrowing, non-text content, internal intersections, all refusal/reentry paths and hook-injected events are not exhaustively linked here.",
+        "Streaming permission changes and memory summarizer inputs need separate proofs."
       ]
     }
   ],

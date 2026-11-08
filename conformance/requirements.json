@@ -394,7 +394,7 @@
       "section": "7.3",
       "title": "Visibility",
       "line": 4384,
-      "sha256": "a5cd737d9b859ef079c990df52cb3b8c0261bc1a84fe2515bce8bfeaddbf180a",
+      "sha256": "291a2096a37da5c880c7163623993b4bc97f15c0bb8a7c00d49429676819f4f9",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -4175,13 +4175,67 @@
       "sha256": "8bbce89a0c998754e14908885f7f07375b6ddd045f08bc4acaeb0886f98d212f"
     },
     {
-      "id": "RK-7.3-002",
+      "id": "RK-7.3-005",
       "kind": "behavior",
-      "applies": "§7.3 Visibility; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "§7.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under §7.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and §26 levels still apply.",
       "section": "7.3",
       "line": 4401,
-      "text": "**Grammar.** A visibility is one of the five keywords `all`, `none`,\n`internal`, `transport` and `intelligence`, or a list of one or more channel\nids separated by commas. A keyword is written exactly as above, in lowercase\n(`\"All\"` is a channel id, not the keyword). The keywords are reserved: a\nchannel whose id is one of them MUST be refused when it is registered, and so\nMUST a channel whose id contains a comma or starts or ends with whitespace, so\nthat every channel id can be written in a list. Whitespace around the whole\nvalue and around each id is ignored (`\" sms , ws \"` is `\"sms,ws\"`). An empty\nvalue and an empty item (`\"\"`, `\"sms,,ws\"`, `\"sms,\"`) MUST be refused, a\n`response_visibility` at the doors included (an inbound message, §5.12, a\ndirect injection, §10.5). An empty value that reaches an event any other way\n(a hook's modify, a custom store) reads as `none`, so that it restricts rather\nthan opens. An id listed twice counts once, and a list is written back with\neach id once, sorted by code point. An id that names no channel bound to the\nroom is allowed and matches nothing.",
-      "sha256": "fdfc1c18e27555247e562f5ec7220407f0814fa7920839706c14031c33d69c68"
+      "text": "**Grammar.** A visibility is one of the five keywords `all`, `none`,\n`internal`, `transport` and `intelligence`, or a list of one or more channel\nids separated by commas. A keyword is written exactly as above, in lowercase\n(`\"All\"` is a channel id, not the keyword).",
+      "sha256": "708f0dbfdc5f1f1f8d52f6e8e806779f9538cebd4d4e34f3426d816df57371ac"
+    },
+    {
+      "id": "RK-7.3-006",
+      "kind": "behavior",
+      "applies": "§7.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under §7.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and §26 levels still apply.",
+      "section": "7.3",
+      "line": 4405,
+      "text": "The keywords are reserved: a\nchannel whose id is one of them MUST be refused when it is registered, and so\nMUST a channel whose id contains a comma or starts or ends with whitespace, so\nthat every channel id can be written in a list.",
+      "sha256": "d9313cccbd72ec5a0b1e06433d4f36ff4454a786ed61907c722b3c93de5bab1d"
+    },
+    {
+      "id": "RK-7.3-007",
+      "kind": "behavior",
+      "applies": "§7.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under §7.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and §26 levels still apply.",
+      "section": "7.3",
+      "line": 4408,
+      "text": "Whitespace around the whole\nvalue and around each id is ignored (`\" sms , ws \"` is `\"sms,ws\"`).",
+      "sha256": "6011790db3f1d37fd01e53f1487107aabb695f99df26b6fba4070066c7162ea4"
+    },
+    {
+      "id": "RK-7.3-008",
+      "kind": "behavior",
+      "applies": "§7.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under §7.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and §26 levels still apply.",
+      "section": "7.3",
+      "line": 4409,
+      "text": "An empty\nvalue and an empty item (`\"\"`, `\"sms,,ws\"`, `\"sms,\"`) MUST be refused, a\n`response_visibility` at the doors included (an inbound message, §5.12, a\ndirect injection, §10.5).",
+      "sha256": "49f08330a23f90fac216bde102c825ffa93badda6b57602ca6fd9cb952704eba"
+    },
+    {
+      "id": "RK-7.3-009",
+      "kind": "behavior",
+      "applies": "§7.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under §7.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and §26 levels still apply.",
+      "section": "7.3",
+      "line": 4412,
+      "text": "An empty value that reaches an event any other way\n(a hook's modify, a custom store) reads as `none`, so that it restricts rather\nthan opens.",
+      "sha256": "85dc5a6c5ee11484a3d0299f1a4343fcdda7f0057774a7744d29fb3c89d693fc"
+    },
+    {
+      "id": "RK-7.3-010",
+      "kind": "behavior",
+      "applies": "§7.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under §7.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and §26 levels still apply.",
+      "section": "7.3",
+      "line": 4414,
+      "text": "An id listed twice counts once, and a list is written back with\neach id once, sorted by code point.",
+      "sha256": "5ac4922c724f9ba36978dec3cf958518046e6630357bc7b049ef2307d26c37e2"
+    },
+    {
+      "id": "RK-7.3-011",
+      "kind": "behavior",
+      "applies": "§7.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under §7.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and §26 levels still apply.",
+      "section": "7.3",
+      "line": 4415,
+      "text": "An id that names no channel bound to the\nroom is allowed and matches nothing.",
+      "sha256": "e49015e2698588a4cf5d210744aca8884abe1e0e29182ed2822ce348726c41af"
     },
     {
       "id": "RK-7.3-003",

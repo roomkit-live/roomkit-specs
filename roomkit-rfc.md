@@ -4398,21 +4398,21 @@ binding as a string value, and carried by each event (§5.2):
 | `"channel_a"` | Single channel ID |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-7.3-002", "kind": "behavior", "applies": "§7.3 Visibility; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-7.3-005", "kind": "behavior", "applies": "\u00a77.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under \u00a77.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and \u00a726 levels still apply."} -->
 **Grammar.** A visibility is one of the five keywords `all`, `none`,
 `internal`, `transport` and `intelligence`, or a list of one or more channel
 ids separated by commas. A keyword is written exactly as above, in lowercase
-(`"All"` is a channel id, not the keyword). The keywords are reserved: a
+(`"All"` is a channel id, not the keyword). <!-- /rfc --><!-- rfc: {"id": "RK-7.3-006", "kind": "behavior", "applies": "\u00a77.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under \u00a77.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and \u00a726 levels still apply."} -->The keywords are reserved: a
 channel whose id is one of them MUST be refused when it is registered, and so
 MUST a channel whose id contains a comma or starts or ends with whitespace, so
-that every channel id can be written in a list. Whitespace around the whole
-value and around each id is ignored (`" sms , ws "` is `"sms,ws"`). An empty
+that every channel id can be written in a list. <!-- /rfc --><!-- rfc: {"id": "RK-7.3-007", "kind": "behavior", "applies": "\u00a77.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under \u00a77.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and \u00a726 levels still apply."} -->Whitespace around the whole
+value and around each id is ignored (`" sms , ws "` is `"sms,ws"`). <!-- /rfc --><!-- rfc: {"id": "RK-7.3-008", "kind": "behavior", "applies": "\u00a77.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under \u00a77.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and \u00a726 levels still apply."} -->An empty
 value and an empty item (`""`, `"sms,,ws"`, `"sms,"`) MUST be refused, a
 `response_visibility` at the doors included (an inbound message, §5.12, a
-direct injection, §10.5). An empty value that reaches an event any other way
+direct injection, §10.5). <!-- /rfc --><!-- rfc: {"id": "RK-7.3-009", "kind": "behavior", "applies": "\u00a77.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under \u00a77.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and \u00a726 levels still apply."} -->An empty value that reaches an event any other way
 (a hook's modify, a custom store) reads as `none`, so that it restricts rather
-than opens. An id listed twice counts once, and a list is written back with
-each id once, sorted by code point. An id that names no channel bound to the
+than opens. <!-- /rfc --><!-- rfc: {"id": "RK-7.3-010", "kind": "behavior", "applies": "\u00a77.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under \u00a77.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and \u00a726 levels still apply."} -->An id listed twice counts once, and a list is written back with
+each id once, sorted by code point. <!-- /rfc --><!-- rfc: {"id": "RK-7.3-011", "kind": "behavior", "applies": "\u00a77.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under \u00a77.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and \u00a726 levels still apply."} -->An id that names no channel bound to the
 room is allowed and matches nothing.
 <!-- /rfc -->
 
