@@ -251,6 +251,25 @@
                   "type": "string"
                 }
               }
+            },
+            "inbound_rate_limit": {
+              "description": "The kit's inbound rate limit (§10.1): a token bucket per channel, full at first and holding at least one token, refilled at the most precise bound's rate; a message past it is refused, blocked with reason rate_limited, before anything is read or written. Absent, none.",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "max_per_second": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "max_per_minute": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "max_per_hour": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                }
+              }
             }
           }
         },
@@ -1372,6 +1391,8 @@
             "close_room",
             "archive_room",
             "check_timers",
+            "set_room_timers",
+            "set_agent_response_policy",
             "register_channel",
             "unregister_channel",
             "register_hook",
@@ -3769,6 +3790,36 @@
                 ]
               }
             }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "set_room_timers"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "timers"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "set_agent_response_policy"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "policy"
+            ]
           }
         }
       ]

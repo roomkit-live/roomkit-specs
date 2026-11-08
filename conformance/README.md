@@ -156,7 +156,11 @@ room callbacks of the setup are not compared.
   distributed lock that finds its lease expired, and
   `delivery_gap_timeout_ms`, how long a delivery lane waits on a cursor hole
   no lane runs before it skips it (the implementation's default when
-  absent).
+  absent); and `inbound_rate_limit`, the kit's inbound rate limit
+  (`max_per_second`, `max_per_minute`, `max_per_hour`): a bucket of tokens
+  per channel, full at first and holding at least one, refilled at the most
+  precise bound's rate, a message past it refused before anything is read
+  or written.
 - `channels`: each is registered. A channel of type `host` is the
   implementation's host channel (§10.5); any other is a **scripted channel**:
   - `id`, `type` (a ChannelType: `sms`, `websocket`, `whatsapp`, `email`,
@@ -650,6 +654,8 @@ run's own kit when absent.
 | `close_room`, `archive_room` | `room_id` | the room |
 | `send_greeting` | `room_id`, optional `channel_id`, `agent_id`, `greeting` | null: the agent's greeting, or `greeting`, stored as its event and delivered (§19.1) |
 | `check_timers` | `room_id` | the room, once its due transitions are applied |
+| `set_room_timers` | `room_id`, `timers` (`inactive_after_seconds`, `closed_after_seconds`, `last_activity_at`) | the room, its timers replaced under its lock, its last activity kept when `timers` names none (§5.1) |
+| `set_agent_response_policy` | `room_id`, `policy` (`agent_chain`, `addressed_only`) | the room, its agent response policy set under its lock, unchanged when it holds it (§19.3.1) |
 | `register_channel` | `channel` (as in the setup) | null |
 | `unregister_channel` | `channel_id` | null |
 | `register_hook` | `hook` (as in the setup) | null |
