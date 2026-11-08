@@ -72,6 +72,11 @@ def git_text(repo: Path, commit: str, path: str) -> str:
 
 def python_symbol(text: str, name: str) -> str:
     """Find a qualified function and its decorators without importing the test."""
+    parts = name.split("::")
+    if not parts[-1].startswith("test_") or any(
+        not part.startswith("Test") for part in parts[:-1]
+    ):
+        raise ValueError(f"{name} does not name a pytest test")
     body = ast.parse(text).body
     node = None
     for part in name.split("::"):
@@ -99,6 +104,13 @@ def check_test(reference: dict[str, str], repo: Path, commit: str) -> list[str]:
     """Validate the exact qualified test, not a file or a name guessed from it."""
     try:
         path, name = reference["nodeid"].split("::", 1)
+        relative = PurePosixPath(path)
+        if (
+            not relative.parts
+            or relative.parts[0] != "tests"
+            or not (relative.name.startswith("test_") and relative.suffix == ".py")
+        ):
+            raise ValueError("a test reference must name tests/**/test_*.py")
         text = git_text(repo, commit, path)
         symbol = python_symbol(text, name)
         if text_digest(symbol) != reference["sha256"]:

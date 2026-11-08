@@ -59,7 +59,9 @@ was checked. A partial link must name its gaps; a complete link cannot list gaps
 A section citation in `rules` is useful navigation, never coverage credit.
 
 Specialized Python tests use `file.py::Class::test_name` at the pinned commit,
-with the source hash including decorators. Such a link is source evidence only:
+with the source hash including decorators. References must use pytest test-file,
+class and function naming conventions. Static resolution does not prove collection
+or execution (configuration, fixtures and skips still matter). Such a link is source evidence only:
 a passing scenario cannot stand in for that specialized test's execution.
 Changing a fingerprint means rereading the proof, not just regenerating JSON.
 
@@ -73,12 +75,12 @@ that the working tree was clean; the author must run the exact clean commits.
 
 The checker validates the saved output, actual commit contents and the corpus
 copied into the implementation. Supported profiles are Python JUnit on memory
-or SQLite with `asyncio`, and Rust's memory runner on `current_thread` or
-`multi_thread:4`. Rust receipts must include the entire selection matched by
-`scenario_filter` (the recorded `ROOMKIT_CONFORMANCE_FILTER`, empty for all).
-Only a complete zero-failure Rust summary is accepted; a green cargo test with
-known failing scenarios is not proof of their success. Other backends and
-specialized test executions remain unrecorded until their adapters are added.
+or SQLite with `asyncio`. Rust's aggregate cargo summary is deliberately
+refused: memory and SQLite emit the same summary, and equal scenario counts do
+not identify the executed IDs. Retain such runs separately; they cannot create a
+`recorded_pass` here until a runner format identifies backend and cases. Other
+backends and specialized test executions also remain unrecorded.
+
 
 `recorded_pass` applies only to the named scope, revision, backend and runtime.
 Missing cases, skips, failures, stale inputs and source-only specialized tests

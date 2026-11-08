@@ -49,6 +49,10 @@ class ReferenceTests(unittest.TestCase):
             with self.subTest(name=name), self.assertRaises(ValueError):
                 python_symbol(text, name)
 
+    def test_a_helper_is_not_a_test_reference(self) -> None:
+        with self.assertRaisesRegex(ValueError, "test"):
+            python_symbol("def helper():\n    return 1\n", "helper")
+
 
 class EvidenceTests(unittest.TestCase):
     def setUp(self) -> None:
@@ -163,9 +167,18 @@ class EvidenceTests(unittest.TestCase):
             cargo(self.run, "one thread: 1 scenarios, 0 failing: []\ntest result: ok.")
         )
         good = "four workers: 1 scenarios, 0 failing: []\ntest result: ok."
-        self.assertEqual(cargo(self.run, good), [])
+        self.assertTrue(cargo(self.run, good))
         self.assertTrue(cargo(self.run, good.replace("1 scenarios", "2 scenarios")))
         self.assertTrue(cargo(self.run, good + "\ntest result: FAILED"))
+
+    def test_aggregate_cargo_output_cannot_prove_backend_or_selection(self) -> None:
+        self.run.update(
+            implementation="rust",
+            runtime="current_thread",
+            command=["cargo", "test", "-p", "roomkit-sqlite"],
+        )
+        output = "one thread: 1 scenarios, 0 failing: []\ntest result: ok."
+        self.assertTrue(cargo(self.run, output))
 
 
 if __name__ == "__main__":

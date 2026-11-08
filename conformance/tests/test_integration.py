@@ -13,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from test_source import marked
 from traceability import check, layout
 from traceability.provenance import copied_scenarios
-from traceability.source import digest
+from traceability.source import digest, extract
 
 
 class IntegrationTests(unittest.TestCase):
@@ -79,6 +79,56 @@ class IntegrationTests(unittest.TestCase):
         self.write("evidence.json", self.document)
         errors = check(self.root, self.text, [], update=True, base_ref=base)
         self.assertTrue(any("retirement removed" in error for error in errors), errors)
+
+    def test_invalid_scenario_links_return_errors_without_building_a_report(
+        self,
+    ) -> None:
+        requirement = extract(self.text)["requirements"][0]
+        self.document["links"] = [
+            {
+                "id": "missing-link",
+                "requirement": requirement["id"],
+                "clause_sha256": requirement["sha256"],
+                "scope": "one case",
+                "coverage": "partial",
+                "review": "fixture",
+                "missing": ["other cases"],
+                "tests": [],
+                "assertions": [
+                    {
+                        "scenario": "missing",
+                        "pointer": "/expect",
+                        "sha256": "a" * 64,
+                        "scenario_sha256": "b" * 64,
+                        "proves": "fixture",
+                    }
+                ],
+            }
+        ]
+        self.document["executions"] = [
+            {
+                "id": "missing-run",
+                "implementation": "python",
+                "implementation_commit": "a" * 40,
+                "rfc_commit": "a" * 40,
+                "corpus_commit": "a" * 40,
+                "rfc_sha256": extract(self.text)["rfc_sha256"],
+                "backend": "memory",
+                "runtime": "asyncio",
+                "command": ["pytest"],
+                "artifact": {
+                    "path": "conformance/executions/missing.xml",
+                    "sha256": "b" * 64,
+                    "format": "pytest_junit",
+                },
+                "results": [
+                    {"scenario": "missing", "sha256": "c" * 64, "outcome": "passed"}
+                ],
+            }
+        ]
+        self.write("evidence.json", self.document)
+        errors = check(self.root, self.text, [])
+        self.assertTrue(any("unknown scenario" in error for error in errors), errors)
 
     def test_receipt_must_match_the_implementation_copy_and_rust_selection(
         self,

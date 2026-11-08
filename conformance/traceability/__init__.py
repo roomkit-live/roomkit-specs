@@ -88,6 +88,8 @@ def check(
                 if previous["requirements"]:
                     raise
         errors += source.check_history(registry, previous, document["retired"], retired)
+        if errors:
+            return errors
         coverage, review_errors = report.build(registry, document, by_id, reviews)
         errors += review_errors
         if errors:

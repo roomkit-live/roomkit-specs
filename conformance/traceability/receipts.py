@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import hashlib
-import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Any
@@ -60,23 +59,10 @@ def junit(run: dict[str, Any], raw: bytes) -> list[str]:
 
 
 def cargo(run: dict[str, Any], text: str) -> list[str]:
-    """Read a complete, zero-failure scenario pass of one Rust runtime."""
-    if run["implementation"] != "rust" or run["backend"] != "memory":
-        return [
-            f"{run['id']}: cargo receipts currently support only Rust's memory backend"
-        ]
-    labels = {"current_thread": "one thread", "multi_thread:4": "four workers"}
-    label = labels.get(run["runtime"])
-    if label is None:
-        return [f"{run['id']}: unsupported cargo runtime"]
-    pattern = re.escape(label) + r": (\d+) scenarios, 0 failing: \[\]"
-    summaries = re.findall(r"^" + pattern + r"$", text, re.MULTILINE)
-    if len(summaries) != 1 or int(summaries[0]) != len(run["results"]):
-        return [
-            f"{run['id']}: cargo scenario summary does not match the receipt's complete selection"
-        ]
-    if "test result: FAILED" in text or "test result: ok." not in text:
-        return [f"{run['id']}: cargo test did not finish successfully"]
-    if any(result["outcome"] != "passed" for result in run["results"]):
-        return [f"{run['id']}: zero-failure cargo summary requires passing results"]
-    return []
+    """Aggregate Rust summaries cannot identify the executed backend and IDs."""
+    return [
+        (
+            f"{run['id']}: cargo receipts are unsupported: aggregate output does not "
+            "prove the backend and scenario selection; retain the run outside the coverage registry"
+        )
+    ]
