@@ -308,3 +308,16 @@ See [requirements.json](requirements.json) for exact clauses and applicability,
 | §B.7 Message Delete — Cross-Channel with Fallback | informative | 0 | 0 | 0 | 0 | 1 | 0 |
 | §B.8 SIP Call → Unified process_inbound with Protocol Traces | informative | 0 | 0 | 0 | 0 | 0 | 0 |
 | §B.9 Multi-Agent Pipeline — Triage → Specialist → Resolution | informative | 0 | 0 | 0 | 0 | 0 | 0 |
+
+## Recorded executions
+
+- `python-hooks-33d1f4`: python `33d1f4415e2a5697cbe5b4f6cb8413ee05f33363`, memory / asyncio; RFC `5f60000e713e9d8bfee526d08009bb4322667ff8`, corpus `38d677a02ac811d4aaad2dbaf3ac97ee5bfc9fd5`.
+
+States below apply only to the link's declared scope. Partial mappings remain partial.
+
+| Source unit | Reviewed link | Execution | State |
+|---|---|---|---|
+| RK-9.3-005 | pilot-fail-open | python-hooks-33d1f4 | recorded_pass |
+| RK-9.3-008 | pilot-fail-closed | python-hooks-33d1f4 | recorded_pass |
+| RK-9.3-009 | pilot-missing-payload | python-hooks-33d1f4 | recorded_pass |
+| RK-9.3-011 | pilot-invalid-effects | python-hooks-33d1f4 | incomplete |

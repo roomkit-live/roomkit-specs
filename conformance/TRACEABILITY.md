@@ -102,5 +102,6 @@ backends and specialized test executions also remain unrecorded.
 Missing cases, skips, failures, stale inputs and source-only specialized tests
 never become passes. Separate partial runs are never combined into one complete
 execution. An absent receipt means **not recorded**, not failed or verified.
-The initial pilot deliberately has partial mappings and no execution receipts;
-historical runs are not silently relabeled as current results.
+The pilot has partial mappings and one Python memory receipt. Its specialized
+wrong-payload test remains source-only; Rust execution is not recorded here.
+Historical runs are not silently relabeled as current results.

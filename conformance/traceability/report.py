@@ -80,6 +80,21 @@ def build(
         "scenario_count": len(scenarios),
         "sections": sections,
         "requirements": requirements,
+        "executions": [
+            {
+                key: run[key]
+                for key in (
+                    "id",
+                    "implementation",
+                    "implementation_commit",
+                    "rfc_commit",
+                    "corpus_commit",
+                    "backend",
+                    "runtime",
+                )
+            }
+            for run in evidence["executions"]
+        ],
     }, errors
 
 
@@ -136,7 +151,38 @@ def markdown(report: dict[str, Any]) -> str:
             f"{counts.get('mapped_partial', 0)} | {counts.get('mapped_complete', 0)} | "
             f"{len(item['candidate_scenarios'])} | {len(item['unannotated_keyword_lines'])} |"
         )
+    lines += execution_markdown(report)
     return "\n".join(lines) + "\n"
+
+
+def execution_markdown(report: dict[str, Any]) -> list[str]:
+    """Make the exact receipt scope visible without opening machine-readable JSON."""
+    lines = ["", "## Recorded executions", ""]
+    if not report["executions"]:
+        return lines + [
+            "No execution receipt recorded. Mappings alone establish no passing result."
+        ]
+    for run in report["executions"]:
+        lines += [
+            (
+                f"- `{run['id']}`: {run['implementation']} `{run['implementation_commit']}`, "
+                f"{run['backend']} / {run['runtime']}; RFC `{run['rfc_commit']}`, corpus `{run['corpus_commit']}`."
+            )
+        ]
+    lines += [
+        "",
+        "States below apply only to the link's declared scope. Partial mappings remain partial.",
+        "",
+        "| Source unit | Reviewed link | Execution | State |",
+        "|---|---|---|---|",
+    ]
+    for requirement in report["requirements"]:
+        for link in requirement["links"]:
+            for run in link["executions"]:
+                lines.append(
+                    f"| {requirement['id']} | {link['id']} | {run['execution']} | {run['state']} |"
+                )
+    return lines
 
 
 def artifact(path: Path, expected: str, update: bool) -> list[str]:

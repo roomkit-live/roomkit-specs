@@ -7618,7 +7618,16 @@
           "missing": [
             "Other SYNC triggers and wrong payload types; exception-specific logging is not exhaustively asserted."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-hooks-33d1f4",
+              "implementation": "python",
+              "commit": "33d1f4415e2a5697cbe5b4f6cb8413ee05f33363",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -7646,7 +7655,16 @@
           "missing": [
             "Other SYNC chain triggers and wrong payload types."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-hooks-33d1f4",
+              "implementation": "python",
+              "commit": "33d1f4415e2a5697cbe5b4f6cb8413ee05f33363",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -7662,7 +7680,16 @@
           "missing": [
             "Falsy modifications and their propagation on string/dict payloads; wrong types."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-hooks-33d1f4",
+              "implementation": "python",
+              "commit": "33d1f4415e2a5697cbe5b4f6cb8413ee05f33363",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -7684,7 +7711,16 @@
           "missing": [
             "Other invalid-result forms and triggers; sixth-level composite exception."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-hooks-33d1f4",
+              "implementation": "python",
+              "commit": "33d1f4415e2a5697cbe5b4f6cb8413ee05f33363",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -11257,6 +11293,17 @@
       "section": "A.15",
       "mapping": "unmapped",
       "links": []
+    }
+  ],
+  "executions": [
+    {
+      "id": "python-hooks-33d1f4",
+      "implementation": "python",
+      "implementation_commit": "33d1f4415e2a5697cbe5b4f6cb8413ee05f33363",
+      "rfc_commit": "5f60000e713e9d8bfee526d08009bb4322667ff8",
+      "corpus_commit": "38d677a02ac811d4aaad2dbaf3ac97ee5bfc9fd5",
+      "backend": "memory",
+      "runtime": "asyncio"
     }
   ]
 }

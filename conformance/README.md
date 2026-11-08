@@ -7,9 +7,9 @@ calls, and what the RFC says they come to. Each implementation has a runner
 that reads the scenarios and runs them on its own core; the suite says nothing
 of either implementation's API.
 
-This is the first cut (roomkit-rs step 3, milestone 1), with streamed
-responses since roomkit-rs step 4, milestone 6. It covers Level 0 without the
-turn backend; "Coverage" says what it holds and what it does not yet.
+Coverage is tracked in the [generated report](coverage.md). It distinguishes
+source inventory, reviewed assertion links and versioned execution receipts;
+a passing scenario suite alone certifies no conformance level.
 
 ## Layout
 
@@ -18,6 +18,9 @@ turn backend; "Coverage" says what it holds and what it does not yet.
 | `scenarios/<area>/<name>.json` | One scenario; its `id` is `<area>/<name>` |
 | `scenario.schema.json` | The JSON Schema every scenario validates against |
 | `check.py` | The checker (below) |
+| `requirements.json`, `coverage.json`, `coverage.md` | Generated inventory and evidence report |
+| `evidence.json`, `inventory.json` | Reviewed links, execution receipts and source inventory reviews |
+| `TRACEABILITY.md` | Update and review procedure |
 | `RFC_COMMIT` | The roomkit-specs commit whose `roomkit-rfc.md` the scenarios' `rules` are checked against |
 
 An implementation keeps a copy of `scenarios/`, taken from one commit of this
@@ -1005,87 +1008,28 @@ at one instant) stay in each implementation's own tests.
 
 ## Coverage
 
-121 scenarios. Counted by the sections their `rules` cite (a scenario counts once
-under each section it cites):
+The [generated traceability report](coverage.md) contains the current scenario
+count and RFC inventory, and exposes unreviewed candidate scenarios, reviewed
+partial mappings and missing evidence. Its JSON counterpart records the exact
+scope and execution states. A section citation is navigation, not a proof.
 
-| Section | Scenarios | Section | Scenarios |
-|---|---|---|---|
-| §1.4 | 1 | §10.1 | 48 |
-| §4.2 | 1 | §10.1.1 | 4 |
-| §5.1 | 16 | §10.2 | 13 |
-| §5.2 | 1 | §10.3 | 12 |
-| §5.5 | 1 | §10.4 | 4 |
-| §5.8 | 1 | §10.5 | 19 |
-| §6.1 | 4 | §10.6.4 | 1 |
-| §6.4 | 6 | §10.6.8 | 1 |
-| §6.6 | 7 | §12.2 | 3 |
-| §7.2 | 4 | §13.4 | 3 |
-| §7.3 | 5 | §13.5 | 8 |
-| §7.4 | 2 | §13.6 | 3 |
-| §7.5 | 17 | §14.3 | 1 |
-| §8.1 | 3 | §17.2 | 2 |
-| §8.2 | 19 | §19.3 | 4 |
-| §8.3 | 9 | §19.3.1 | 1 |
-| §9.1 | 5 | §21.1 | 2 |
-| §9.2 | 14 | §21.6 | 1 |
-| §9.3 | 14 | §26.1 | 41 |
-| §9.4 | 6 | Appendix A.9 | 2 |
-| §9.5 | 1 | Appendix B.1, B.2, B.4, B.5, B.6, B.7 | 1 each |
-| §9.5.1 | 16 |  |  |
+Follow [TRACEABILITY.md](TRACEABILITY.md) to annotate a clause, review an
+assertion link, retain a run or regenerate artifacts. The CI checks the scenario
+schema, reference resolution, stable ID history, source and evidence fingerprints,
+implementation provenance, and generated-file drift. It runs the checker's
+regression tests; it does not rerun the framework suites or certify Rust parity.
 
-Every row of the §26.1 trigger and framework-event table is asserted, by
-scenarios citing each place it names, and each of the 16 reentrancy cells is
-named by one.
-
-**Not covered yet** (M1's second pass):
-
-- §12.2 step 13s: a reader that stops while a call runs or before it starts,
-  a streaming channel that fails, a stream with no streaming target; a
-  connection that does not stream receiving the rows only, never an event the
-  store lacks (`no-event-the-store-lacks`, after RMK-994's fix in roomkit);
-- §7.5 rule 8 and §10.1.1 rule 7: what a channel is handed of the room's history
-  (a scripted turn does not record its context yet), a deleted event's content
-  withheld from it (§10.3);
-- §7.5 rule 6 (a binding never widened), which needs delegation;
-- §5.1: the integrator's pause, resume and reopen (roomkit has no `pause_room`
-  or `resume_room` call), the activity a `BLOCKED` record does not count, a
-  lifecycle record's content and source when one is written;
-- §8.5: response visibility and its narrowing; §9.4: the response visibility a
-  modify narrows;
-- §9.3: unusable results other than a raise or a timeout (a modify with no
-  payload, a payload of the wrong type), `hook_invalid_result`; a failing
-  off-lock hook's `hook_timeout`; ON_ERROR's categories but `generation`;
-- §9.5.1: the ticket's release on every path, a hook body's budget once it
-  returned (a spawned task), "Past the cap" for messages and posts;
-- §10.1: step 2's re-routing when the locked check finds the room no longer the
-  sender's, `group` bindings, recipient keys and replies to a chat (§5.7), a
-  room created concurrently by two calls; step 18's detached completion;
-  a completion handle's cancel whose cleanup outlasts its `timeout`;
-- §10.3: ADMIN and SYSTEM deletes, a hook's injected change, an edit's
-  visibility narrowed to its target's, `cascade_replies = false`;
-- §10.4: identity-based routing (`resolve_identity`), a PAUSED room, a
-  delivery status's routing;
-- §10.5: a post's idempotency key, its `chain_depth`, a detached host channel,
-  a post from the room's own work past the budget;
-- §13.4: a key a hard delete removed; §13.5: a failed lock release;
-  §13.6: a caller that stops waiting (a timing race, left to each
-  implementation);
-- §17.2: the remaining calls acting for another organization (an attach, a
-  post, a room's creation), a routed message's identity read in its
-  organization;
-- §19.3.1: `ADDRESSED_ONLY`; the turn backend (§10.6) and streaming, out of
-  scope for step 3;
-- tools (`tools/`, roomkit-rs step 4): an `ON_TOOL_CALL` SYNC hook that
-  replaces or withholds a served result, a rewrite by `BEFORE_TOOL_USE`, a
-  call past its bound (§21.6), a tool nothing serves, and the observers'
-  depth and budget (§8.3, The hook calls of a cascade).
+The table/cell checks described above remain useful targeted checks. They are
+not an exhaustive assertion-level assessment of the RFC. Unmapped units may
+already have tests whose exact assertions have not been reviewed. Broad source
+units must be decomposed before claiming their complete coverage.
 
 ## Waiting for the kit to go idle
 
-roomkit's runner waits for the kit to go idle by reading its internals (its
-lanes, its observers, its held tasks): the Python core offers no public wait for
-its background work. Milestone 5's driver of the Rust core needs an entry point
-that waits until the kit is idle, which the runner will call on both cores.
+Each runner waits for the framework work its scenario started before comparing
+final state. Pending deliveries, observers and held tasks must remain visible
+to that wait; a run that reports success before they finish is not evidence of
+the final state. Timing races remain in the implementation tests.
 
 ## Known failures
 
@@ -1097,12 +1041,11 @@ naming the scenario, the implementation and its commit, the rule broken and
 the probe; the runner expects it to fail and fails once it passes, so a fix
 shows and takes it off both lists.
 
-No scenario is a known failure of either implementation.
-
-roomkit's earlier three were fixed by RMK-976 and RMK-977, roomkit-rs's
-earlier three by step 3's milestone 2, its RMK-1200 and RMK-1245 entries by
-their cards, and its two memory entries, which held the scenarios as they
-were before f5949ff (RMK-450), by its sync past it (RMK-1370).
+Read each runner's exception lists at the implementation commit being assessed,
+including runtime-specific lists such as Rust's several-worker exceptions. A
+suite can exit successfully while expected failures remain. The traceability
+report records only explicit receipts and never promotes an expected failure
+or a skip to a passing result.
 
 ## Writing a scenario
 
