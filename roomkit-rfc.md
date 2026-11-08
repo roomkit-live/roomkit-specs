@@ -589,6 +589,17 @@ Implementations MUST enforce timer transitions when configured:
   and a reopen fire no hook and emit no framework event.
 - **Close.** When `closed_after_seconds` elapses from `paused_at` without a
   resume, the room MUST transition to CLOSED.
+- **Setting.** The integrator MAY replace a room's timers
+  (`set_room_timers(room_id, timers)`): under the room lock, the room read
+  for the caller's organization (§17.2), a missing room, or another
+  organization's, not found, its `timers` written whole and the room
+  returned. `last_activity_at` is the one the call gives, else the room's
+  own, so a room with no activity keeps none and its inactivity still
+  counts from `created_at`. Unlike the sections of **When.** below, the
+  call applies no transition that fell due before it writes: a room
+  already past a bound it sets transitions at the next section that reads
+  its status, or the next check, and one past a bound it removes never
+  takes that transition.
 - **When.** Every locked section that reads the room's status (the gate of
   §10.1 step 6, an integrator's transition, an attach or a binding change, a
   direct mutation, a record's commit) first applies the transitions due at its
@@ -629,7 +640,9 @@ RoomEvent
 │                                           # depth (§8.5); null = unrestricted
 ├── index: int >= 0                         # Sequential position in room timeline;
 │                                           # an instruction's is provisional
-│                                           # (§10.1.1 step 5)
+│                                           # (§10.1.1 step 5), and so is that
+│                                           # of an event the persistence
+│                                           # policy keeps out (§14.3)
 ├── chain_depth: int >= 0                   # Response chain depth (loop prevention)
 ├── parent_event_id: string | null          # In-app thread: the root of its thread,
 │                                           # as every path that commits the event
@@ -5910,6 +5923,15 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   message of its deliveries and turns, and one of theirs naming a room
    │   the store does not hold, are charged at step 2, once their room is
    │   known
+   ├── With the kit's inbound rate limit (a RateLimit, §13.3): a message
+   │   past the bucket of its channel_id → refused before the channel is
+   │   read, nothing created, stored or traced:
+   │   InboundResult(blocked=true, reason=rate_limited). A bucket of
+   │   tokens per channel, full at first, holding one second of the rate
+   │   and at least one token, refilled at the limit's rate. Unlike a
+   │   binding's outbound limit (§13.3), the message is not queued. A
+   │   proactive delivery's publication (§22.1) is a message of the
+   │   transport that carries it, refused so too
    ├── Look up registered channel by message.channel_id
    ├── Fail if channel not registered
    ├── Fail if the channel is a host channel, which receives no external
@@ -6985,6 +7007,11 @@ a hook that blocks the EDIT/DELETE MUST leave the target event unmutated):
    change reaches those of its targets that could see the target.
 5. The change's delivery set reads the target as the commit left it.
 
+A change the kit's persistence policy keeps out (§14.3) is the exception to
+the change's own row and to the one transaction of items 1 to 3: no row of
+it is stored, and its target is written alone, as items 1 and 2 say
+(`write_change_target`, §14.1), the room's counters unmoved.
+
 **What a channel is handed of a deleted event.** A soft-deleted event's
 content is withheld from every history a channel is handed (§7.5 rule 8):
 the context a channel parses a message with, and the one each target of a
@@ -7437,7 +7464,8 @@ emitted the `process_timeout` framework event. Nothing of the event is
 written. A record stored `BLOCKED`, by a hook, by a source that cannot write
 or past the reentry budget (§8.3), is the committed event and is returned; a
 replay returns the event its key committed (§13.4); an instruction, never
-committed, returns uncommitted, as its pass decided it (§10.1.1 step 5).
+committed, returns uncommitted, as its pass decided it (§10.1.1 step 5), and
+so does an event the persistence policy keeps out (§14.3).
 
 **The host's own voice.** The host, the application that embeds RoomKit,
 writes to the people of a room in its own name: a notice, a workflow's
@@ -15215,8 +15243,9 @@ RateLimit
 The rate is the first of `max_per_second`, `max_per_minute` / 60 and
 `max_per_hour` / 3600 that is set; with none set, deliveries are not limited.
 Implementations SHOULD use a token bucket algorithm; the reference one holds
-one second of the rate, and at least one delivery. When rate-limited,
-deliveries MUST be queued (not dropped).
+one second of the rate, and at least one delivery. When rate-limited by a
+binding's limit, deliveries MUST be queued (not dropped); the kit's inbound
+rate limit refuses a message instead (§10.1 step 1).
 
 ### 13.4 Idempotency
 
@@ -15781,6 +15810,27 @@ and never inherits the page's cap.
   its target's update (§10.3) are part of that commit: the store writes the
   change, the counters and the target in one transaction, and fails the
   whole commit when the target is gone.
+- A kit MAY be configured with a persistence policy: the event types its
+  commits store (`persist_types`, every type when absent), less those it
+  never stores (`exclude_types`, which wins). An event of a type it keeps
+  out is delivered as any event, its hooks and its delivery set running,
+  and nothing of it is stored: it takes no index, moves none of the room's
+  counters, is no activity (§5.1) and is none of the call's
+  `response_events`; it keeps the provisional index its hooks were shown,
+  and its delivery set's context holds it as its newest event. It still
+  takes its author record, which extends the room's register of authors
+  (§10.1 step 12), so that a later source never holds the rank a reader
+  saw it hold. A streamed row kept out is handed to no reader of the
+  stream (§7.5 rule 2), and the turn's record lands as §6.4 says, among
+  the rows stored; a discussion is not told of a message kept out, which asks no
+  agent (§19.7.5 rule 8). An EDIT or a DELETE kept out still writes its
+  target alone (`write_change_target`, §14.1), a delete marking the
+  target's edits deleted, and its mutation trigger fires (§10.3). A
+  lifecycle record kept out is not written: its change, a timer's
+  transition included, is announced all the same. A hook's injected event
+  (§9.4), a record stored `BLOCKED`, a record committed outside the
+  pipeline (§10.5) and a delegation's trace in its child room (§23.3) are
+  stored whatever the policy.
 - A write naming what the store does not hold is refused, nothing written:
   `update_room` of a room it does not hold and `add_participant` into one
   (room not found), `update_event` of an event it does not hold (event not
@@ -16970,7 +17020,10 @@ rarely knows when it is created how many agents it will end up holding: one
 that opens with a single assistant and gains a second when a human asks for
 it becomes a room of independent agents at that moment, and the policy it
 needs changes with it. Implementations MUST therefore allow the policy to be
-set on an existing room. A change applies to events processed after it; an
+set on an existing room (`set_agent_response_policy(room_id, policy)`:
+written under the room lock and the room returned, a missing room, or
+another organization's, not found, a room holding the policy already left
+as it is). A change applies to events processed after it; an
 event already broadcast is not reconsidered, because solicitation was
 decided when it was routed and reopening it would ask an agent to act on a
 turn that has already closed. A discussion's deferred turn (Section 19.7.5)
@@ -18935,8 +18988,9 @@ channel named that is not registered or the room does not bind, among
 addressed target unreachable, the error not retryable),
 `session_requires_realtime` (a session named on a channel hosting no realtime
 model), `invalid_session_target` (a session with no channel, or with an
-address), `empty_idempotency_key`, `instruction_unaddressed`, and the refusal
-of the room or a hook (`source_unbound`, a hook's reason); a replay that is
+address), `empty_idempotency_key`, `instruction_unaddressed`, `rate_limited`
+(the kit's inbound rate limit, §10.1 step 1), and the refusal of the room or
+a hook (`source_unbound`, a hook's reason); a replay that is
 `sent` carries `duplicate_publication`. The doors that store a caller's event
 as given, `send_event()`, `post()` and `commit_event()`, refuse a key in the
 publication namespace as an invalid argument.
