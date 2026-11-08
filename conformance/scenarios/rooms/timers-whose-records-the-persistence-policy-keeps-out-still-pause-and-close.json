@@ -92,6 +92,9 @@
           "reason": "timer"
         }
       ]
+    },
+    "lifecycle": {
+      "room-1": []
     }
   }
 }
