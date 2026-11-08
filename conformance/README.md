@@ -160,7 +160,10 @@ room callbacks of the setup are not compared.
   (`max_per_second`, `max_per_minute`, `max_per_hour`): a bucket of tokens
   per channel, full at first and holding at least one, refilled at the most
   precise bound's rate, a message past it refused before anything is read
-  or written.
+  or written; and `persistence_policy`, the kit's persistence policy
+  (`persist_types`, `exclude_types`, each a list of event types): what the
+  kit's commits store, every type when absent, `exclude_types` winning over
+  `persist_types`.
 - `channels`: each is registered. A channel of type `host` is the
   implementation's host channel (§10.5); any other is a **scripted channel**:
   - `id`, `type` (a ChannelType: `sms`, `websocket`, `whatsapp`, `email`,

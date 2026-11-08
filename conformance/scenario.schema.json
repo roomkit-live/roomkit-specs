@@ -270,6 +270,25 @@
                   "exclusiveMinimum": 0
                 }
               }
+            },
+            "persistence_policy": {
+              "description": "The kit's persistence policy (§14.3): the event types the kit's commits store. `persist_types`, when given, the only types stored; `exclude_types` never stored, whatever `persist_types` names. An event of a type it keeps out is delivered all the same, and consumes no index. Absent, every type is stored.",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "persist_types": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "exclude_types": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
             }
           }
         },
