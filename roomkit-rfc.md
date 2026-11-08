@@ -17580,7 +17580,15 @@ afterwards leaks into the turns of other rooms running meanwhile.
 The task-formulation pass is read as any streamed turn is (Section 6.4), and
 fails as one does: its failure fires ON_ERROR once, as a streamed turn's
 (`streaming`, with the correlation of the tool rows it wrote), is logged once,
-and reaches the room turn's caller without a second report. The
+and reaches the room turn's caller without a second report. It is a turn of
+its own (Section 10.6.1): its rows carry a `correlation_id` of their own, and
+the supervisor's presentation of the results, its rows, its answer and the
+ON_ERROR of its failure carry another. A worker that raises once the pass
+handed on its task (its channel no longer registered) fails the supervisor's
+turn as a turn that raised: ON_ERROR once, `generation`, with no
+`correlation_id`; the supervisor's delivery of the event failed, reported and
+recorded with the event's other delivery results (Section 5.13); the caller
+reads the error, and no presentation runs. The
 task it hands the workers is its final answer, never the narration of its
 tool rounds joined to it, and a pass its round cap, deadline or budget cut
 short has none, so no worker runs. A pass that stopped short of its answer
