@@ -5508,10 +5508,22 @@
         "messages": {
           "type": "array",
           "items": {
+            "description": "A message the memory built: its `role` and its `text`, or its `parts`, texts the message holds back to back as text parts, in order (§6.4).",
             "type": "object",
             "required": [
-              "role",
-              "text"
+              "role"
+            ],
+            "oneOf": [
+              {
+                "required": [
+                  "text"
+                ]
+              },
+              {
+                "required": [
+                  "parts"
+                ]
+              }
             ],
             "additionalProperties": false,
             "properties": {
@@ -5524,6 +5536,13 @@
               },
               "text": {
                 "type": "string"
+              },
+              "parts": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
               }
             }
           }
