@@ -4121,6 +4121,13 @@
             "type": "array"
           }
         },
+        "tool_events": {
+          "description": "Per room, the TOOL_CALL_START, TOOL_CALL_END and TOOL_CALL_DELTA ephemeral events its subscribers read (§6.4, §8.4), in order: each `{type, tool_calls, round, channel_id}`, and `duration_ms` for an end that ran its calls.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "array"
+          }
+        },
         "models": {
           "description": "Per scripted agent, each generation's request as the model received it, in order: the `messages` it carries, each `{role, text, parts}` (`parts` its text and image parts in order, each `{text}` or `{image, mime_type}`, null for a text content), the `tool_results`, each `{tool_call_id, name, content, is_error}` (`name` the tool of its call, `content` a text, or a result's text and image parts in order, written as `parts`), its `system_prompt`, its `temperature` and `max_tokens` (§6.4), its `reasoning_effort`, `thinking_budget` and `enable_thinking` (§6.7), its `response_schema`, null for none (§6.7), and the names of the `tools` it declares, in order.",
           "type": "object",
