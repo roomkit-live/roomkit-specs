@@ -2843,6 +2843,24 @@ places next to a user message (the turn's notes, a compaction's summary, a
 summary a memory provider returns) joins that message rather than forming a
 second user message in a row.
 
+**The history compacted between two rounds.** After each round in which the
+channel ran at least one call, once `AFTER_TOOL_ROUND` has fired and before the
+next round is built, the channel hands its memory (Section 20.1, `compact`)
+the history the turn sends before its input, as the model reads it (before
+the message a discussion's turn answers, Section 19.7.5), and the token
+counters the round's generation reported, as its provider reported them. A
+memory that answers nothing, the default, leaves the turn as it is. A history
+it returns stands for the old one in the turn's later requests: the turn's
+input and its notes stay whole, and each result over 2000 characters of the
+turn's rounds before the last is stored as a compaction stores it (above),
+the last round's results, which the model has not read yet, left whole. A
+message of the returned history that is not one of the history's is text from
+outside (below), a copy of a runtime mark in it replaced unless a memory of
+the runtime built it, and a user text the messages the memory wrote ahead of
+the history's own end on joins the user message after them. A memory that
+fails is logged, and the turn goes on as it was. This compaction answers no
+refusal: a call it precedes keeps its compacted replay.
+
 **A generation tried again.** A provider's error says whether another try may
 succeed (`retryable`). A channel with a retry policy (`retry_policy`, Section
 13.2) tries a generation again only while nothing of its answer has been
@@ -18284,6 +18302,10 @@ MemoryProvider (interface)
 │       # Build conversation context for AI generation
 │       # Called by AIChannel before each generation
 │
+├── compact(room_id, history, usage, channel_id) → list<AIMessage> | null
+│       # The history to send in place of `history` between two tool rounds
+│       # Called by AIChannel after each tool round it ran; null by default
+│
 └── close() → void
         # Release resources
 ```
@@ -18303,6 +18325,14 @@ provider returns it there, or leaves it out as it does a turn's input and the
 channel places it there; either way a window cannot drop it, which would
 leave the model answering an event it cannot read.
 
+`compact` is how a memory keeps a long tool turn within its window, which a
+read at the turn's start cannot (Section 6.4, "The history compacted between
+two rounds"): `history` is what the turn sends before its input, `usage` the
+token counters of the round's generation, disjoint, as its provider reported
+them (empty when it reported none). A provider that does not define it answers
+nothing, and the turn is left as it is. A provider that wraps another and
+does not compact itself hands the call to the one it wraps.
+
 ### 20.2 MemoryResult
 
 ```
@@ -18318,7 +18348,9 @@ history. When `events` is provided, the AIChannel converts them to AI messages
 using its standard conversion logic. Both MAY be combined — `messages` are
 prepended before converted `events`. A user text the `messages` end on joins
 the user message that follows it, a blank line between, rather than standing
-as a second user message in a row; a system message stays a message of its own.
+as a second user message in a row, or, before no user message, stands as a
+user message of its own, its text alone; a system message stays a message of
+its own.
 
 `speakers` names the participants the `messages` speak of by the labels they
 use (a summary's lines, `Alice`, `@sms`): each counts as a speaker toward
@@ -18360,6 +18392,18 @@ shares of what its `max_context_tokens` leaves once the turn's footprint
 the first it shortens the older events' long texts, past the second it
 summarizes them, and the messages, notes and events it returns are then cut,
 from the oldest event, to what is left, its latest event always kept.
+Between two tool rounds it compacts once the round's counters, summed, pass its
+second threshold taken as a share of `max_context_tokens`: a model summarizes
+the history's older messages, each text read on one line after its role, a
+call after the tool it names and its arguments, a result after its tool, and
+the latest messages are kept whole, those that fit what the history must give
+back to come under the threshold once the summary's tokens are paid for, its
+`min_events` latest at least, a call's results never kept without their call.
+A summary the history still holds as a memory's message, its provenance kept,
+is carried into the new one; a summary the channel placed in the turn, joined
+to a user message or standing as a user message of its own, its text alone,
+is read as one of the messages. Its first threshold does not apply between
+rounds, and the memory it wraps is not asked.
 
 **RetrievalMemory** wraps another provider and queries its knowledge sources
 (vector stores, search engines, document indexes) with the text of the current
