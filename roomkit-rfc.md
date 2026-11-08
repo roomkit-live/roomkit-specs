@@ -17536,7 +17536,9 @@ results would follow;
 it is told they will not, as the dispatching caller of a pipeline run within
 the turn reads its error. A strategy's background tool serves one run per room
 at a time, whichever voice channel's session called it, and the outcome goes
-to the session that made the call (Section 23.3 step 8). The run posts one
+to the session that made the call (Section 23.3 step 8). The room is freed,
+and any answer the tool serves a repeated call forgotten, before the outcome
+is handed back: a dispatch answering the outcome starts a new run. The run posts one
 terminal status entry once its outcome was handed back: `completed`, or
 `failed` when the work failed, none of its workers' tasks completed, or its
 outcome reached no one. A per-worker tool dispatched in the background is
@@ -17546,7 +17548,8 @@ cancels it), the run waits for it within the per-task timeout, past which it
 is cancelled, the worker is free again before its outcome is handed back, and
 the run alone hands it back. A background run ends with the framework:
 closing the framework cancels it, which frees its room and posts its terminal
-entry `failed`, with nothing handed back.
+entry `failed`, with nothing handed back, once each worker delegation it
+cut has posted its own.
 
 Each worker's delegation, within the turn or in the background, is bounded
 by the strategy's per-task timeout: a worker past it is cut, its task ended
