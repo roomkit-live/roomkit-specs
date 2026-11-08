@@ -2039,7 +2039,12 @@ schemas, arguments, events and rows are the same as without it. On:
   listed in the shown schema's `required` too, for a model that leaves
   optional properties out; a schema whose `required` is no list is shown as
   it is. The requirement asks the model and refuses no call: a call that
-  comes without the property runs, with no intent.
+  comes without the property runs, with no intent. The agent's
+  `tool_call_intents_only`, a list of tool names (absent by default, which
+  asks every tool), limits the property to the tools it names: the others'
+  schemas are shown as their tools declared them, and a host renders those
+  calls from their arguments. The list limits what is shown, not what is read:
+  a call to any tool is treated as below.
 - **Where it is taken.** At the one point a complete call enters the loop,
   before its start row, its `TOOL_CALL_START` and its gate, the property is
   removed from the arguments of a call the loop serves, whatever its value,
