@@ -23,3 +23,22 @@ This is evidence of that selected run at those versions. It does not establish
 complete coverage of a source unit, other stores, Redis turns, Python's later
 commits, specialized tests, or Rust. See the separate mapping and execution
 states in [the report](../coverage.md).
+
+
+## Static permission matrices and hooks
+
+`python-permissions-ecf9bc5.xml` retains all 81 selected scenario outcomes from:
+
+```sh
+ROOMKIT_TEST_TURN_BACKEND=memory PYTHONPATH=src python -m pytest tests/conformance -k 'permissions or hooks' -n 0 --junitxml=python-permissions.xml
+```
+
+The run used the clean Python commit
+`ecf9bc5f7e92a440413b2518e799afce31bd5042`, Linux, Python 3.13.3, pytest 9.1.1
+and pytest-asyncio 1.4.0, the memory store and in-process turns. Both the copied
+corpus and reviewed RFC are from `7a684109f1e416f793f6425adaff5617f5b86af4`.
+All 81 cases passed, with no skips, failures or errors. The selection includes
+both new access/mute matrices and the existing permissions and hooks cases;
+it refreshes the pilot's scenario results without executing its specialized
+wrong-payload test. Host, timestamp and duration metadata is removed, preserving
+every testcase's class, name and outcome. The same scope limits above apply.
