@@ -142,5 +142,5 @@
       "room-1": []
     }
   },
-  "notes": "Python: tests/test_hook_fail_closed.py::TestEngine::test_fail_closed_hook_blocks_with_named_reason, tests/test_hook_fail_closed.py::TestEngine::test_default_hook_stays_fail_open; tests/test_hook_rules.py::TestAnUnusableResult. The unchecked missing payload also proves tasks and observations survive while injections do not."
+  "notes": "Python: tests/test_hook_fail_closed.py::TestEngine. Checks the policy, named reason, chain continuation, AFTER_BROADCAST and deliveries; no side effects are returned by this hook."
 }

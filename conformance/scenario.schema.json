@@ -988,7 +988,10 @@
           "type": "boolean"
         },
         "reactions": {
-          "$ref": "#/$defs/reactions"
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reaction"
+          }
         },
         "router": {
           "$ref": "#/$defs/conversation_router"
@@ -1016,6 +1019,49 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "anyOf": [
+              {
+                "properties": {
+                  "trigger": {
+                    "not": {
+                      "const": "before_broadcast"
+                    }
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "execution": {
+                    "const": "async"
+                  }
+                },
+                "required": [
+                  "execution"
+                ]
+              },
+              {
+                "required": [
+                  "router"
+                ]
+              }
+            ]
+          },
+          "then": {
+            "properties": {
+              "reactions": {
+                "items": {
+                  "not": {
+                    "required": [
+                      "invalid_result"
+                    ]
+                  }
+                }
+              }
+            }
+          }
         }
       ]
     },
@@ -1023,7 +1069,18 @@
       "description": "Tried in order on each call: the first whose `when` matches is used, and used once unless it repeats. No reaction left: the default.",
       "type": "array",
       "items": {
-        "$ref": "#/$defs/reaction"
+        "allOf": [
+          {
+            "$ref": "#/$defs/reaction"
+          },
+          {
+            "not": {
+              "required": [
+                "invalid_result"
+              ]
+            }
+          }
+        ]
       }
     },
     "reaction": {
@@ -4860,7 +4917,10 @@
           "type": "boolean"
         },
         "reactions": {
-          "$ref": "#/$defs/reactions"
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reaction"
+          }
         },
         "router": {
           "$ref": "#/$defs/conversation_router"
@@ -4885,6 +4945,49 @@
             "properties": {
               "trigger": {
                 "const": "before_broadcast"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "anyOf": [
+              {
+                "properties": {
+                  "trigger": {
+                    "not": {
+                      "const": "before_broadcast"
+                    }
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "execution": {
+                    "const": "async"
+                  }
+                },
+                "required": [
+                  "execution"
+                ]
+              },
+              {
+                "required": [
+                  "router"
+                ]
+              }
+            ]
+          },
+          "then": {
+            "properties": {
+              "reactions": {
+                "items": {
+                  "not": {
+                    "required": [
+                      "invalid_result"
+                    ]
+                  }
+                }
               }
             }
           }
