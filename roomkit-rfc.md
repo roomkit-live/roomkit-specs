@@ -2592,7 +2592,9 @@ round replays what the model was given, as it was given:
 Every call its turn ended is replayed, whatever its outcome or tool: a
 refusal, a call nothing served, a discovery or housekeeping call of the
 channel's own included; never a call cancelled before it answered, whose
-result no model read. They are the channel's own only, read from its stored
+result no model read, nor a refused call under a name outside
+`[A-Za-z0-9_-]{1,128}`, which only a model's invented call carries and which
+a vendor would refuse in every later request. They are the channel's own only, read from its stored
 rows (`TOOL_CALL_START`'s arguments and intent, `TOOL_CALL_END`'s result and
 outcome), so they outlive the executor. An
 end row pairs with the start row of its turn and id, first in, first out within
