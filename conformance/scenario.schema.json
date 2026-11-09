@@ -2570,6 +2570,10 @@
               "hand_back": {
                 "type": "string"
               },
+              "max_result_chars": {
+                "type": "integer",
+                "minimum": 1
+              },
               "require_structured_result": {
                 "description": "Inline runs only (§23.3): the agent hands its work back by calling the result tool, submit_result, served in the child room alone; a turn ending without the call is re-prompted with the tool's reminder, up to max_result_retries times, then the task's output is the tool's missing payload.",
                 "type": "boolean"
@@ -2967,6 +2971,10 @@
               "max_conversation": {
                 "type": "integer",
                 "minimum": 0
+              },
+              "max_result_chars": {
+                "type": "integer",
+                "minimum": 1
               }
             }
           }
