@@ -65,3 +65,25 @@ the eight visibility/history scenarios. It does not execute specialized Python
 tests, other stores or Rust. A complete static clause mapping and a passed
 execution receipt are separate checks; neither establishes whole-framework
 conformance. The broader visibility units remain partially mapped.
+
+## Response scopes and refused/deleted history
+
+`python-response-history-3e4e215.xml` retains all 102 selected scenario outcomes from:
+
+```sh
+ROOMKIT_TEST_TURN_BACKEND=memory PYTHONPATH=src uv run --active --no-sync pytest tests/conformance -k 'permissions or hooks or a-sent-event-keeps-its-answer-scope or a-greeting-stays-within' --junitxml=python-response-history.xml -q
+```
+
+The run used clean Python commit `3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e`,
+Linux, Python 3.13.3, pytest 9.1.1 and pytest-asyncio 1.4.0, the activated
+virtual environment, memory store and in-process turns. The copied corpus and
+reviewed RFC are from `836945ce526c19b04fee39d8b2dca01c828bb2b9`.
+Every selected case passed; none was skipped, failed or errored. Only portable
+case identity and outcome attributes are retained; hostnames, timestamps,
+durations and local paths were removed before publication.
+
+The selection includes the eleven response/history scenarios, the extended
+injection scope case and the existing greeting proof, as well as the prior
+permissions/hooks selection. Specialized Python and Rust tests, voice record
+creation, other stores and distributed turns are outside this receipt. Their
+source mappings do not become passed executions through this artifact.

@@ -314,6 +314,7 @@ See [requirements.json](requirements.json) for exact clauses and applicability,
 - `python-hooks-33d1f4`: python `33d1f4415e2a5697cbe5b4f6cb8413ee05f33363`, memory / asyncio; RFC `5f60000e713e9d8bfee526d08009bb4322667ff8`, corpus `38d677a02ac811d4aaad2dbaf3ac97ee5bfc9fd5`.
 - `python-permissions-ecf9bc5`: python `ecf9bc5f7e92a440413b2518e799afce31bd5042`, memory / asyncio; RFC `7a684109f1e416f793f6425adaff5617f5b86af4`, corpus `7a684109f1e416f793f6425adaff5617f5b86af4`.
 - `python-visibility-8fb44e9`: python `8fb44e947b1c2e6d6b74de18bc28cd921cd47726`, memory / asyncio; RFC `a27e1eee5d85a6aed74b89aa162dee4aa7b2f011`, corpus `a27e1eee5d85a6aed74b89aa162dee4aa7b2f011`.
+- `python-response-history-3e4e215`: python `3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e`, memory / asyncio; RFC `836945ce526c19b04fee39d8b2dca01c828bb2b9`, corpus `836945ce526c19b04fee39d8b2dca01c828bb2b9`.
 
 States below apply only to the link's declared scope. Partial mappings remain partial.
 
@@ -321,33 +322,54 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 |---|---|---|---|
 | RK-7.1-001 | core-access-matrix | python-permissions-ecf9bc5 | stale |
 | RK-7.1-001 | core-access-matrix | python-visibility-8fb44e9 | stale |
+| RK-7.1-001 | core-access-matrix | python-response-history-3e4e215 | recorded_pass |
 | RK-7.2-001 | core-muted-read-effects | python-permissions-ecf9bc5 | stale |
 | RK-7.2-001 | core-muted-read-effects | python-visibility-8fb44e9 | stale |
+| RK-7.2-001 | core-muted-read-effects | python-response-history-3e4e215 | recorded_pass |
 | RK-7.3-005 | visibility-grammar-values | python-visibility-8fb44e9 | stale |
+| RK-7.3-005 | visibility-grammar-values | python-response-history-3e4e215 | recorded_pass |
 | RK-7.3-006 | visibility-reserved-channel-ids | python-permissions-ecf9bc5 | stale |
 | RK-7.3-006 | visibility-reserved-channel-ids | python-visibility-8fb44e9 | stale |
+| RK-7.3-006 | visibility-reserved-channel-ids | python-response-history-3e4e215 | recorded_pass |
 | RK-7.3-007 | visibility-whitespace | python-visibility-8fb44e9 | stale |
+| RK-7.3-007 | visibility-whitespace | python-response-history-3e4e215 | incomplete |
 | RK-7.3-008 | visibility-empty-values-and-items | python-visibility-8fb44e9 | stale |
+| RK-7.3-008 | visibility-empty-values-and-items | python-response-history-3e4e215 | recorded_pass |
 | RK-7.3-009 | visibility-empty-values-fail-closed | python-permissions-ecf9bc5 | stale |
 | RK-7.3-009 | visibility-empty-values-fail-closed | python-visibility-8fb44e9 | stale |
+| RK-7.3-009 | visibility-empty-values-fail-closed | python-response-history-3e4e215 | recorded_pass |
 | RK-7.3-010 | visibility-canonical-id-lists | python-visibility-8fb44e9 | stale |
+| RK-7.3-010 | visibility-canonical-id-lists | python-response-history-3e4e215 | recorded_pass |
 | RK-7.3-011 | visibility-unknown-and-unbound-ids | python-visibility-8fb44e9 | stale |
+| RK-7.3-011 | visibility-unknown-and-unbound-ids | python-response-history-3e4e215 | recorded_pass |
 | RK-7.3-003 | visibility-internal-public-doors | python-permissions-ecf9bc5 | stale |
 | RK-7.3-003 | visibility-internal-public-doors | python-visibility-8fb44e9 | stale |
+| RK-7.3-003 | visibility-internal-public-doors | python-response-history-3e4e215 | incomplete |
 | RK-7.3-004 | visibility-committed-intersection-and-history | python-visibility-8fb44e9 | stale |
+| RK-7.3-004 | visibility-committed-intersection-and-history | python-response-history-3e4e215 | incomplete |
 | RK-7.5-001 | core-permission-gates | python-permissions-ecf9bc5 | stale |
 | RK-7.5-001 | core-permission-gates | python-visibility-8fb44e9 | stale |
+| RK-7.5-001 | core-permission-gates | python-response-history-3e4e215 | recorded_pass |
+| RK-7.5-001 | response-refusals-and-reader-history | python-response-history-3e4e215 | incomplete |
 | RK-8.5-004 | response-scopes-and-cascades | python-permissions-ecf9bc5 | stale |
 | RK-8.5-004 | response-scopes-and-cascades | python-visibility-8fb44e9 | stale |
+| RK-8.5-004 | response-scopes-and-cascades | python-response-history-3e4e215 | incomplete |
 | RK-9.3-005 | pilot-fail-open | python-hooks-33d1f4 | stale |
 | RK-9.3-005 | pilot-fail-open | python-permissions-ecf9bc5 | stale |
 | RK-9.3-005 | pilot-fail-open | python-visibility-8fb44e9 | stale |
+| RK-9.3-005 | pilot-fail-open | python-response-history-3e4e215 | recorded_pass |
 | RK-9.3-008 | pilot-fail-closed | python-hooks-33d1f4 | stale |
 | RK-9.3-008 | pilot-fail-closed | python-permissions-ecf9bc5 | stale |
 | RK-9.3-008 | pilot-fail-closed | python-visibility-8fb44e9 | stale |
+| RK-9.3-008 | pilot-fail-closed | python-response-history-3e4e215 | recorded_pass |
 | RK-9.3-009 | pilot-missing-payload | python-hooks-33d1f4 | stale |
 | RK-9.3-009 | pilot-missing-payload | python-permissions-ecf9bc5 | stale |
 | RK-9.3-009 | pilot-missing-payload | python-visibility-8fb44e9 | stale |
+| RK-9.3-009 | pilot-missing-payload | python-response-history-3e4e215 | recorded_pass |
 | RK-9.3-011 | pilot-invalid-effects | python-hooks-33d1f4 | stale |
 | RK-9.3-011 | pilot-invalid-effects | python-permissions-ecf9bc5 | stale |
 | RK-9.3-011 | pilot-invalid-effects | python-visibility-8fb44e9 | stale |
+| RK-9.3-011 | pilot-invalid-effects | python-response-history-3e4e215 | incomplete |
+| RK-9.4-002 | response-hook-scope-restoration | python-response-history-3e4e215 | incomplete |
+| RK-10.2-003 | transport-direction-observation-and-delivery | python-response-history-3e4e215 | incomplete |
+| RK-10.3-004 | deleted-history-content-and-audit | python-response-history-3e4e215 | incomplete |

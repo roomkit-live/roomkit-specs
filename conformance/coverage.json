@@ -7454,6 +7454,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -7487,6 +7495,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -7524,6 +7540,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -7555,6 +7579,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -7578,6 +7610,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -7601,6 +7641,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -7632,6 +7680,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -7655,6 +7711,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -7678,6 +7742,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -7711,6 +7783,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -7737,6 +7817,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -7778,6 +7866,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -7788,7 +7884,16 @@
           "missing": [
             "This does not cover every permission rule, live permission transitions during a stream, arbitrary memory providers or distributed stores. Hook contexts and pure structural views use specialized tests, not shared scenario observations."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -7922,6 +8027,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -8035,6 +8148,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -8088,6 +8209,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -8129,6 +8258,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -8176,6 +8313,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -8235,7 +8380,16 @@
           "missing": [
             "Replacement identity, authority fields, instruction marks and every hook trigger remain outside this scope. Framework voice record creation is Level 3; its visibility protection is specialized source evidence."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -8347,7 +8501,16 @@
           "missing": [
             "Other broadcast steps, capabilities, retries, rates, concurrent delivery and intelligence execution are covered separately or remain unmapped."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -8411,7 +8574,16 @@
           "missing": [
             "All native provider references and channel_data, every parse/delivery history boundary, arbitrary media content, window eviction and distributed stores are not exhaustively covered by these assertions."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -11807,6 +11979,15 @@
       "implementation_commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
       "rfc_commit": "a27e1eee5d85a6aed74b89aa162dee4aa7b2f011",
       "corpus_commit": "a27e1eee5d85a6aed74b89aa162dee4aa7b2f011",
+      "backend": "memory",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-response-history-3e4e215",
+      "implementation": "python",
+      "implementation_commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+      "rfc_commit": "836945ce526c19b04fee39d8b2dca01c828bb2b9",
+      "corpus_commit": "836945ce526c19b04fee39d8b2dca01c828bb2b9",
       "backend": "memory",
       "runtime": "asyncio"
     }
