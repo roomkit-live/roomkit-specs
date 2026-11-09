@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "d8cc647ca46e0dc75664bc6966567f5914da3b10",
+  "python_commit": "41e5933e750a02aa6dd8a525da3d52225042798c",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -2410,6 +2410,1023 @@
         }
       ],
       "missing": []
+    },
+    {
+      "id": "core-room-public-transitions",
+      "requirement": "RK-5.1-004",
+      "clause_sha256": "af1cab4c651d18aaf8137e2a9aefeb23428dd8543d44de10b151cb173d937423",
+      "scope": "Five public transitions from all four room statuses, no-op/refusal state and notice stability, and organization checks before overdue timers.",
+      "coverage": "partial",
+      "review": "Reviewed the Python source tests, public transition APIs, scenario setup, call results and exact observations. Shared room snapshots compare state but cannot prove zero writes; specialized store spies and Rust effect tests address that boundary. Optional lifecycle records remain normalized out. The whole composite RFC unit is not certified.",
+      "assertions": [
+        {
+          "scenario": "rooms/pause-from-every-room-status",
+          "pointer": "/steps/0/expect",
+          "sha256": "45379d98995b7e79f1518473565f9a3fd1f12e0d8db8e819e727df623440756a",
+          "scenario_sha256": "38825d5ccbda1ca6fcc09b657e1438121f6cadf6e3c1c254333d94c8c3acef56",
+          "proves": "pause_room on active: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/pause-from-every-room-status",
+          "pointer": "/steps/1/expect",
+          "sha256": "dcbcb5c1ac0ca9ca5f36ea4c88f9edc9d62098edfada94407974f85a2a1ef3cd",
+          "scenario_sha256": "38825d5ccbda1ca6fcc09b657e1438121f6cadf6e3c1c254333d94c8c3acef56",
+          "proves": "store.get_room on paused: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/pause-from-every-room-status",
+          "pointer": "/steps/2/expect",
+          "sha256": "dcbcb5c1ac0ca9ca5f36ea4c88f9edc9d62098edfada94407974f85a2a1ef3cd",
+          "scenario_sha256": "38825d5ccbda1ca6fcc09b657e1438121f6cadf6e3c1c254333d94c8c3acef56",
+          "proves": "pause_room on paused: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/pause-from-every-room-status",
+          "pointer": "/steps/3/expect",
+          "sha256": "dcbcb5c1ac0ca9ca5f36ea4c88f9edc9d62098edfada94407974f85a2a1ef3cd",
+          "scenario_sha256": "38825d5ccbda1ca6fcc09b657e1438121f6cadf6e3c1c254333d94c8c3acef56",
+          "proves": "store.get_room on paused: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/pause-from-every-room-status",
+          "pointer": "/steps/4/expect",
+          "sha256": "9717e0308ad476ce5af51a8f27e05653e29a4d32389a7e7cc684a7fe9bbaf0fe",
+          "scenario_sha256": "38825d5ccbda1ca6fcc09b657e1438121f6cadf6e3c1c254333d94c8c3acef56",
+          "proves": "store.get_room on closed: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/pause-from-every-room-status",
+          "pointer": "/steps/5/expect",
+          "sha256": "d43ea038e408e479ee1dcd2868b3fff3c229ea8996c0d88b7406ff5fdb7f2676",
+          "scenario_sha256": "38825d5ccbda1ca6fcc09b657e1438121f6cadf6e3c1c254333d94c8c3acef56",
+          "proves": "pause_room on closed: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/pause-from-every-room-status",
+          "pointer": "/steps/6/expect",
+          "sha256": "9717e0308ad476ce5af51a8f27e05653e29a4d32389a7e7cc684a7fe9bbaf0fe",
+          "scenario_sha256": "38825d5ccbda1ca6fcc09b657e1438121f6cadf6e3c1c254333d94c8c3acef56",
+          "proves": "store.get_room on closed: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/pause-from-every-room-status",
+          "pointer": "/steps/7/expect",
+          "sha256": "70010c49acec4bee2d5a034f5fb77a99b1e9094093623ae193992610fbc5d44e",
+          "scenario_sha256": "38825d5ccbda1ca6fcc09b657e1438121f6cadf6e3c1c254333d94c8c3acef56",
+          "proves": "store.get_room on archived: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/pause-from-every-room-status",
+          "pointer": "/steps/8/expect",
+          "sha256": "d43ea038e408e479ee1dcd2868b3fff3c229ea8996c0d88b7406ff5fdb7f2676",
+          "scenario_sha256": "38825d5ccbda1ca6fcc09b657e1438121f6cadf6e3c1c254333d94c8c3acef56",
+          "proves": "pause_room on archived: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/pause-from-every-room-status",
+          "pointer": "/steps/9/expect",
+          "sha256": "70010c49acec4bee2d5a034f5fb77a99b1e9094093623ae193992610fbc5d44e",
+          "scenario_sha256": "38825d5ccbda1ca6fcc09b657e1438121f6cadf6e3c1c254333d94c8c3acef56",
+          "proves": "store.get_room on archived: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/pause-from-every-room-status",
+          "pointer": "/expect",
+          "sha256": "a9d321cc2a56749ea77df3c58bf27651c028e0f8b8ec57c439bce9b8786a1a18",
+          "scenario_sha256": "38825d5ccbda1ca6fcc09b657e1438121f6cadf6e3c1c254333d94c8c3acef56",
+          "proves": "Final statuses, empty message timelines, and exact transition hook/framework-event lists for every starting status."
+        },
+        {
+          "scenario": "rooms/resume-from-every-room-status",
+          "pointer": "/steps/0/expect",
+          "sha256": "1dcf223229cd748d33f5bf8d82034f9c6e646e5cb9f955a5870f1912cb11d850",
+          "scenario_sha256": "b26135a8467cc4d323905f9c0cf805aafeef8805019cb398040a9a5aba70434f",
+          "proves": "store.get_room on active: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/resume-from-every-room-status",
+          "pointer": "/steps/1/expect",
+          "sha256": "1dcf223229cd748d33f5bf8d82034f9c6e646e5cb9f955a5870f1912cb11d850",
+          "scenario_sha256": "b26135a8467cc4d323905f9c0cf805aafeef8805019cb398040a9a5aba70434f",
+          "proves": "resume_room on active: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/resume-from-every-room-status",
+          "pointer": "/steps/2/expect",
+          "sha256": "1dcf223229cd748d33f5bf8d82034f9c6e646e5cb9f955a5870f1912cb11d850",
+          "scenario_sha256": "b26135a8467cc4d323905f9c0cf805aafeef8805019cb398040a9a5aba70434f",
+          "proves": "store.get_room on active: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/resume-from-every-room-status",
+          "pointer": "/steps/3/expect",
+          "sha256": "1128ba06c54b310ed98f4c5eca3f0dff8965ab80abee9647adb7746f350ee036",
+          "scenario_sha256": "b26135a8467cc4d323905f9c0cf805aafeef8805019cb398040a9a5aba70434f",
+          "proves": "resume_room on paused: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/resume-from-every-room-status",
+          "pointer": "/steps/4/expect",
+          "sha256": "9717e0308ad476ce5af51a8f27e05653e29a4d32389a7e7cc684a7fe9bbaf0fe",
+          "scenario_sha256": "b26135a8467cc4d323905f9c0cf805aafeef8805019cb398040a9a5aba70434f",
+          "proves": "store.get_room on closed: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/resume-from-every-room-status",
+          "pointer": "/steps/5/expect",
+          "sha256": "d43ea038e408e479ee1dcd2868b3fff3c229ea8996c0d88b7406ff5fdb7f2676",
+          "scenario_sha256": "b26135a8467cc4d323905f9c0cf805aafeef8805019cb398040a9a5aba70434f",
+          "proves": "resume_room on closed: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/resume-from-every-room-status",
+          "pointer": "/steps/6/expect",
+          "sha256": "9717e0308ad476ce5af51a8f27e05653e29a4d32389a7e7cc684a7fe9bbaf0fe",
+          "scenario_sha256": "b26135a8467cc4d323905f9c0cf805aafeef8805019cb398040a9a5aba70434f",
+          "proves": "store.get_room on closed: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/resume-from-every-room-status",
+          "pointer": "/steps/7/expect",
+          "sha256": "70010c49acec4bee2d5a034f5fb77a99b1e9094093623ae193992610fbc5d44e",
+          "scenario_sha256": "b26135a8467cc4d323905f9c0cf805aafeef8805019cb398040a9a5aba70434f",
+          "proves": "store.get_room on archived: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/resume-from-every-room-status",
+          "pointer": "/steps/8/expect",
+          "sha256": "d43ea038e408e479ee1dcd2868b3fff3c229ea8996c0d88b7406ff5fdb7f2676",
+          "scenario_sha256": "b26135a8467cc4d323905f9c0cf805aafeef8805019cb398040a9a5aba70434f",
+          "proves": "resume_room on archived: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/resume-from-every-room-status",
+          "pointer": "/steps/9/expect",
+          "sha256": "70010c49acec4bee2d5a034f5fb77a99b1e9094093623ae193992610fbc5d44e",
+          "scenario_sha256": "b26135a8467cc4d323905f9c0cf805aafeef8805019cb398040a9a5aba70434f",
+          "proves": "store.get_room on archived: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/resume-from-every-room-status",
+          "pointer": "/expect",
+          "sha256": "fbe6516491ad1d81f6c52e5d449c7b26159ac699bc641fa8b2d4349e40b33172",
+          "scenario_sha256": "b26135a8467cc4d323905f9c0cf805aafeef8805019cb398040a9a5aba70434f",
+          "proves": "Final statuses, empty message timelines, and exact transition hook/framework-event lists for every starting status."
+        },
+        {
+          "scenario": "rooms/reopen-from-every-room-status",
+          "pointer": "/steps/0/expect",
+          "sha256": "1dcf223229cd748d33f5bf8d82034f9c6e646e5cb9f955a5870f1912cb11d850",
+          "scenario_sha256": "fd55a9b0ffd78462777379a982692b6e54c4556f18487768f34ed21f8b05996b",
+          "proves": "store.get_room on active: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/reopen-from-every-room-status",
+          "pointer": "/steps/1/expect",
+          "sha256": "d43ea038e408e479ee1dcd2868b3fff3c229ea8996c0d88b7406ff5fdb7f2676",
+          "scenario_sha256": "fd55a9b0ffd78462777379a982692b6e54c4556f18487768f34ed21f8b05996b",
+          "proves": "reopen_room on active: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/reopen-from-every-room-status",
+          "pointer": "/steps/2/expect",
+          "sha256": "1dcf223229cd748d33f5bf8d82034f9c6e646e5cb9f955a5870f1912cb11d850",
+          "scenario_sha256": "fd55a9b0ffd78462777379a982692b6e54c4556f18487768f34ed21f8b05996b",
+          "proves": "store.get_room on active: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/reopen-from-every-room-status",
+          "pointer": "/steps/3/expect",
+          "sha256": "dcbcb5c1ac0ca9ca5f36ea4c88f9edc9d62098edfada94407974f85a2a1ef3cd",
+          "scenario_sha256": "fd55a9b0ffd78462777379a982692b6e54c4556f18487768f34ed21f8b05996b",
+          "proves": "store.get_room on paused: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/reopen-from-every-room-status",
+          "pointer": "/steps/4/expect",
+          "sha256": "d43ea038e408e479ee1dcd2868b3fff3c229ea8996c0d88b7406ff5fdb7f2676",
+          "scenario_sha256": "fd55a9b0ffd78462777379a982692b6e54c4556f18487768f34ed21f8b05996b",
+          "proves": "reopen_room on paused: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/reopen-from-every-room-status",
+          "pointer": "/steps/5/expect",
+          "sha256": "dcbcb5c1ac0ca9ca5f36ea4c88f9edc9d62098edfada94407974f85a2a1ef3cd",
+          "scenario_sha256": "fd55a9b0ffd78462777379a982692b6e54c4556f18487768f34ed21f8b05996b",
+          "proves": "store.get_room on paused: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/reopen-from-every-room-status",
+          "pointer": "/steps/6/expect",
+          "sha256": "1128ba06c54b310ed98f4c5eca3f0dff8965ab80abee9647adb7746f350ee036",
+          "scenario_sha256": "fd55a9b0ffd78462777379a982692b6e54c4556f18487768f34ed21f8b05996b",
+          "proves": "reopen_room on closed: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/reopen-from-every-room-status",
+          "pointer": "/steps/7/expect",
+          "sha256": "70010c49acec4bee2d5a034f5fb77a99b1e9094093623ae193992610fbc5d44e",
+          "scenario_sha256": "fd55a9b0ffd78462777379a982692b6e54c4556f18487768f34ed21f8b05996b",
+          "proves": "store.get_room on archived: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/reopen-from-every-room-status",
+          "pointer": "/steps/8/expect",
+          "sha256": "d43ea038e408e479ee1dcd2868b3fff3c229ea8996c0d88b7406ff5fdb7f2676",
+          "scenario_sha256": "fd55a9b0ffd78462777379a982692b6e54c4556f18487768f34ed21f8b05996b",
+          "proves": "reopen_room on archived: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/reopen-from-every-room-status",
+          "pointer": "/steps/9/expect",
+          "sha256": "70010c49acec4bee2d5a034f5fb77a99b1e9094093623ae193992610fbc5d44e",
+          "scenario_sha256": "fd55a9b0ffd78462777379a982692b6e54c4556f18487768f34ed21f8b05996b",
+          "proves": "store.get_room on archived: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/reopen-from-every-room-status",
+          "pointer": "/expect",
+          "sha256": "1c5659979bcfca1cd2e0523b142fc90556ae64b872dbae2614dad7ef742b3e5a",
+          "scenario_sha256": "fd55a9b0ffd78462777379a982692b6e54c4556f18487768f34ed21f8b05996b",
+          "proves": "Final statuses, empty message timelines, and exact transition hook/framework-event lists for every starting status."
+        },
+        {
+          "scenario": "rooms/close-from-every-room-status",
+          "pointer": "/steps/0/expect",
+          "sha256": "a2e3e3555992cff407d2caa32e3edf945b02bfe0aaabbc2c7ccbe7ddee58ac21",
+          "scenario_sha256": "540a483e89ad51cd94cc00884d19faf97e91147d0a7b6273fb8ac89d7891911f",
+          "proves": "close_room on active: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/close-from-every-room-status",
+          "pointer": "/steps/1/expect",
+          "sha256": "a2e3e3555992cff407d2caa32e3edf945b02bfe0aaabbc2c7ccbe7ddee58ac21",
+          "scenario_sha256": "540a483e89ad51cd94cc00884d19faf97e91147d0a7b6273fb8ac89d7891911f",
+          "proves": "close_room on paused: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/close-from-every-room-status",
+          "pointer": "/steps/2/expect",
+          "sha256": "9717e0308ad476ce5af51a8f27e05653e29a4d32389a7e7cc684a7fe9bbaf0fe",
+          "scenario_sha256": "540a483e89ad51cd94cc00884d19faf97e91147d0a7b6273fb8ac89d7891911f",
+          "proves": "store.get_room on closed: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/close-from-every-room-status",
+          "pointer": "/steps/3/expect",
+          "sha256": "9717e0308ad476ce5af51a8f27e05653e29a4d32389a7e7cc684a7fe9bbaf0fe",
+          "scenario_sha256": "540a483e89ad51cd94cc00884d19faf97e91147d0a7b6273fb8ac89d7891911f",
+          "proves": "close_room on closed: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/close-from-every-room-status",
+          "pointer": "/steps/4/expect",
+          "sha256": "9717e0308ad476ce5af51a8f27e05653e29a4d32389a7e7cc684a7fe9bbaf0fe",
+          "scenario_sha256": "540a483e89ad51cd94cc00884d19faf97e91147d0a7b6273fb8ac89d7891911f",
+          "proves": "store.get_room on closed: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/close-from-every-room-status",
+          "pointer": "/steps/5/expect",
+          "sha256": "70010c49acec4bee2d5a034f5fb77a99b1e9094093623ae193992610fbc5d44e",
+          "scenario_sha256": "540a483e89ad51cd94cc00884d19faf97e91147d0a7b6273fb8ac89d7891911f",
+          "proves": "store.get_room on archived: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/close-from-every-room-status",
+          "pointer": "/steps/6/expect",
+          "sha256": "d43ea038e408e479ee1dcd2868b3fff3c229ea8996c0d88b7406ff5fdb7f2676",
+          "scenario_sha256": "540a483e89ad51cd94cc00884d19faf97e91147d0a7b6273fb8ac89d7891911f",
+          "proves": "close_room on archived: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/close-from-every-room-status",
+          "pointer": "/steps/7/expect",
+          "sha256": "70010c49acec4bee2d5a034f5fb77a99b1e9094093623ae193992610fbc5d44e",
+          "scenario_sha256": "540a483e89ad51cd94cc00884d19faf97e91147d0a7b6273fb8ac89d7891911f",
+          "proves": "store.get_room on archived: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/close-from-every-room-status",
+          "pointer": "/expect",
+          "sha256": "14fb14fc1482f3d808c76c00c1160598664c6ef02260bc12115f34ac5d817b8d",
+          "scenario_sha256": "540a483e89ad51cd94cc00884d19faf97e91147d0a7b6273fb8ac89d7891911f",
+          "proves": "Final statuses, empty message timelines, and exact transition hook/framework-event lists for every starting status."
+        },
+        {
+          "scenario": "rooms/archive-from-every-room-status",
+          "pointer": "/steps/0/expect",
+          "sha256": "f50ae7bc6657c9c3a8036d95856ff2b5c8638d90fbd429fe1e463d1bae7b09d8",
+          "scenario_sha256": "e3a8245b0bcd238b71b93523b90f84d46f96d0a5f0db2961bc74a4608f2b2181",
+          "proves": "archive_room on active: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/archive-from-every-room-status",
+          "pointer": "/steps/1/expect",
+          "sha256": "f50ae7bc6657c9c3a8036d95856ff2b5c8638d90fbd429fe1e463d1bae7b09d8",
+          "scenario_sha256": "e3a8245b0bcd238b71b93523b90f84d46f96d0a5f0db2961bc74a4608f2b2181",
+          "proves": "archive_room on paused: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/archive-from-every-room-status",
+          "pointer": "/steps/2/expect",
+          "sha256": "063bba994cae7f3caa4826eb302965a8a6d47cde9cdeace842577ae2a8eab82b",
+          "scenario_sha256": "e3a8245b0bcd238b71b93523b90f84d46f96d0a5f0db2961bc74a4608f2b2181",
+          "proves": "store.get_room on closed: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/archive-from-every-room-status",
+          "pointer": "/steps/3/expect",
+          "sha256": "f7335043e09c9a2a9223b6566157d53fc021f9cf484d1868eb9523481b87daa2",
+          "scenario_sha256": "e3a8245b0bcd238b71b93523b90f84d46f96d0a5f0db2961bc74a4608f2b2181",
+          "proves": "archive_room on closed: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/archive-from-every-room-status",
+          "pointer": "/steps/4/expect",
+          "sha256": "70010c49acec4bee2d5a034f5fb77a99b1e9094093623ae193992610fbc5d44e",
+          "scenario_sha256": "e3a8245b0bcd238b71b93523b90f84d46f96d0a5f0db2961bc74a4608f2b2181",
+          "proves": "store.get_room on archived: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/archive-from-every-room-status",
+          "pointer": "/steps/5/expect",
+          "sha256": "70010c49acec4bee2d5a034f5fb77a99b1e9094093623ae193992610fbc5d44e",
+          "scenario_sha256": "e3a8245b0bcd238b71b93523b90f84d46f96d0a5f0db2961bc74a4608f2b2181",
+          "proves": "archive_room on archived: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/archive-from-every-room-status",
+          "pointer": "/steps/6/expect",
+          "sha256": "70010c49acec4bee2d5a034f5fb77a99b1e9094093623ae193992610fbc5d44e",
+          "scenario_sha256": "e3a8245b0bcd238b71b93523b90f84d46f96d0a5f0db2961bc74a4608f2b2181",
+          "proves": "store.get_room on archived: the declared result/error and equal snapshots for no-op or refusal."
+        },
+        {
+          "scenario": "rooms/archive-from-every-room-status",
+          "pointer": "/expect",
+          "sha256": "5741c2264a439815dec0322fecc9a2f9fda7be4ae82bfab204edde6651f6da9d",
+          "scenario_sha256": "e3a8245b0bcd238b71b93523b90f84d46f96d0a5f0db2961bc74a4608f2b2181",
+          "proves": "Final statuses, empty message timelines, and exact transition hook/framework-event lists for every starting status."
+        },
+        {
+          "scenario": "rooms/transitions-scope-before-due-timers",
+          "pointer": "/steps/0/expect",
+          "sha256": "b5d57f3cd465e94a1a921dc337ffb96f3cb6b86fff945f64bdbbdef25482d2d3",
+          "scenario_sha256": "e5d608431c45cdcf10c87528e9a94e06607af5876778ebe3c417d0ab9d291dbb",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-scope-before-due-timers",
+          "pointer": "/steps/1/expect",
+          "sha256": "e92c5a8a691fbac2975f68f545b9a0605bd8b065a1fd63f6d2faa757908a0802",
+          "scenario_sha256": "e5d608431c45cdcf10c87528e9a94e06607af5876778ebe3c417d0ab9d291dbb",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-scope-before-due-timers",
+          "pointer": "/steps/2/expect",
+          "sha256": "302a92d966245c60616dc29e9e0f52665e28f3bab7e9af75f7072c1aa353191c",
+          "scenario_sha256": "e5d608431c45cdcf10c87528e9a94e06607af5876778ebe3c417d0ab9d291dbb",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-scope-before-due-timers",
+          "pointer": "/steps/3/expect",
+          "sha256": "302a92d966245c60616dc29e9e0f52665e28f3bab7e9af75f7072c1aa353191c",
+          "scenario_sha256": "e5d608431c45cdcf10c87528e9a94e06607af5876778ebe3c417d0ab9d291dbb",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-scope-before-due-timers",
+          "pointer": "/steps/4/expect",
+          "sha256": "302a92d966245c60616dc29e9e0f52665e28f3bab7e9af75f7072c1aa353191c",
+          "scenario_sha256": "e5d608431c45cdcf10c87528e9a94e06607af5876778ebe3c417d0ab9d291dbb",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-scope-before-due-timers",
+          "pointer": "/steps/5/expect",
+          "sha256": "302a92d966245c60616dc29e9e0f52665e28f3bab7e9af75f7072c1aa353191c",
+          "scenario_sha256": "e5d608431c45cdcf10c87528e9a94e06607af5876778ebe3c417d0ab9d291dbb",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-scope-before-due-timers",
+          "pointer": "/steps/6/expect",
+          "sha256": "302a92d966245c60616dc29e9e0f52665e28f3bab7e9af75f7072c1aa353191c",
+          "scenario_sha256": "e5d608431c45cdcf10c87528e9a94e06607af5876778ebe3c417d0ab9d291dbb",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-scope-before-due-timers",
+          "pointer": "/steps/7/expect",
+          "sha256": "302a92d966245c60616dc29e9e0f52665e28f3bab7e9af75f7072c1aa353191c",
+          "scenario_sha256": "e5d608431c45cdcf10c87528e9a94e06607af5876778ebe3c417d0ab9d291dbb",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-scope-before-due-timers",
+          "pointer": "/steps/8/expect",
+          "sha256": "302a92d966245c60616dc29e9e0f52665e28f3bab7e9af75f7072c1aa353191c",
+          "scenario_sha256": "e5d608431c45cdcf10c87528e9a94e06607af5876778ebe3c417d0ab9d291dbb",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-scope-before-due-timers",
+          "pointer": "/steps/9/expect",
+          "sha256": "302a92d966245c60616dc29e9e0f52665e28f3bab7e9af75f7072c1aa353191c",
+          "scenario_sha256": "e5d608431c45cdcf10c87528e9a94e06607af5876778ebe3c417d0ab9d291dbb",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-scope-before-due-timers",
+          "pointer": "/steps/10/expect",
+          "sha256": "302a92d966245c60616dc29e9e0f52665e28f3bab7e9af75f7072c1aa353191c",
+          "scenario_sha256": "e5d608431c45cdcf10c87528e9a94e06607af5876778ebe3c417d0ab9d291dbb",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-scope-before-due-timers",
+          "pointer": "/steps/11/expect",
+          "sha256": "302a92d966245c60616dc29e9e0f52665e28f3bab7e9af75f7072c1aa353191c",
+          "scenario_sha256": "e5d608431c45cdcf10c87528e9a94e06607af5876778ebe3c417d0ab9d291dbb",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-scope-before-due-timers",
+          "pointer": "/steps/12/expect",
+          "sha256": "302a92d966245c60616dc29e9e0f52665e28f3bab7e9af75f7072c1aa353191c",
+          "scenario_sha256": "e5d608431c45cdcf10c87528e9a94e06607af5876778ebe3c417d0ab9d291dbb",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-scope-before-due-timers",
+          "pointer": "/steps/13/expect",
+          "sha256": "302a92d966245c60616dc29e9e0f52665e28f3bab7e9af75f7072c1aa353191c",
+          "scenario_sha256": "e5d608431c45cdcf10c87528e9a94e06607af5876778ebe3c417d0ab9d291dbb",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-scope-before-due-timers",
+          "pointer": "/steps/14/expect",
+          "sha256": "302a92d966245c60616dc29e9e0f52665e28f3bab7e9af75f7072c1aa353191c",
+          "scenario_sha256": "e5d608431c45cdcf10c87528e9a94e06607af5876778ebe3c417d0ab9d291dbb",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-scope-before-due-timers",
+          "pointer": "/steps/15/expect",
+          "sha256": "302a92d966245c60616dc29e9e0f52665e28f3bab7e9af75f7072c1aa353191c",
+          "scenario_sha256": "e5d608431c45cdcf10c87528e9a94e06607af5876778ebe3c417d0ab9d291dbb",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-scope-before-due-timers",
+          "pointer": "/steps/16/expect",
+          "sha256": "302a92d966245c60616dc29e9e0f52665e28f3bab7e9af75f7072c1aa353191c",
+          "scenario_sha256": "e5d608431c45cdcf10c87528e9a94e06607af5876778ebe3c417d0ab9d291dbb",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-scope-before-due-timers",
+          "pointer": "/steps/17/expect",
+          "sha256": "b5d57f3cd465e94a1a921dc337ffb96f3cb6b86fff945f64bdbbdef25482d2d3",
+          "scenario_sha256": "e5d608431c45cdcf10c87528e9a94e06607af5876778ebe3c417d0ab9d291dbb",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-scope-before-due-timers",
+          "pointer": "/steps/18/expect",
+          "sha256": "e92c5a8a691fbac2975f68f545b9a0605bd8b065a1fd63f6d2faa757908a0802",
+          "scenario_sha256": "e5d608431c45cdcf10c87528e9a94e06607af5876778ebe3c417d0ab9d291dbb",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-scope-before-due-timers",
+          "pointer": "/expect",
+          "sha256": "909217232a048ff3cc85b933fc9c0ca8e957dc6c59b19346008f07eb77c99fa9",
+          "scenario_sha256": "e5d608431c45cdcf10c87528e9a94e06607af5876778ebe3c417d0ab9d291dbb",
+          "proves": "Exact final room statuses and transition notices, including no timer notices after refused scope."
+        },
+        {
+          "scenario": "rooms/transitions-with-the-owning-organization",
+          "pointer": "/steps/0/expect",
+          "sha256": "960dab183d32fa291106254786a3358ac2fdd2e71d517ce3ae9306dedbbe6c17",
+          "scenario_sha256": "66ca28ac6e2964a9c7111ded9d8326251b86d713dafb10d8bb6530b0762d0584",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-with-the-owning-organization",
+          "pointer": "/steps/1/expect",
+          "sha256": "339cd5f9d869f27330fac5c5624a1a1ba532d0c5e1ecf12e377f1d225db3f83f",
+          "scenario_sha256": "66ca28ac6e2964a9c7111ded9d8326251b86d713dafb10d8bb6530b0762d0584",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-with-the-owning-organization",
+          "pointer": "/steps/2/expect",
+          "sha256": "339cd5f9d869f27330fac5c5624a1a1ba532d0c5e1ecf12e377f1d225db3f83f",
+          "scenario_sha256": "66ca28ac6e2964a9c7111ded9d8326251b86d713dafb10d8bb6530b0762d0584",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-with-the-owning-organization",
+          "pointer": "/steps/3/expect",
+          "sha256": "c9e8ab25aef888cfc378c9555314be217b9f221c5f321cdbb6affef0e7adb58f",
+          "scenario_sha256": "66ca28ac6e2964a9c7111ded9d8326251b86d713dafb10d8bb6530b0762d0584",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-with-the-owning-organization",
+          "pointer": "/steps/4/expect",
+          "sha256": "fcb11813fe41f071db6547615b1b3d0e873650af5562cb0333c5b545bbe5a57c",
+          "scenario_sha256": "66ca28ac6e2964a9c7111ded9d8326251b86d713dafb10d8bb6530b0762d0584",
+          "proves": "Scoped transition result or room snapshot: foreign, unscoped and missing rooms are refused; the owning organization succeeds."
+        },
+        {
+          "scenario": "rooms/transitions-with-the-owning-organization",
+          "pointer": "/expect",
+          "sha256": "3796511417bce116a0148c9fff210844b9b02ef70a71986820b7839392e9c4a2",
+          "scenario_sha256": "66ca28ac6e2964a9c7111ded9d8326251b86d713dafb10d8bb6530b0762d0584",
+          "proves": "Exact final room statuses and transition notices, including no timer notices after refused scope."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/test_room_transitions.py::test_a_transition_already_done_does_nothing",
+          "sha256": "6b5d1b2359eb5546c40d99a912fa3b716ac9c612db2ba3aa6ec55fee95bf6aa0",
+          "proves": "All four idempotent transitions perform neither update_room nor update_room_if and report no hook/event. Specialized source evidence; scenario receipts do not record this test execution."
+        },
+        {
+          "nodeid": "tests/test_room_transitions.py::test_a_transition_from_a_status_it_does_not_leave_fails",
+          "sha256": "9beab1e0557a4472b53716ca719c955649db5d4c05771f4229b0bc73ae01d4d9",
+          "proves": "All eight forbidden transitions leave the room unchanged, perform neither room-write API and report nothing. Specialized source evidence; scenario receipts do not record this test execution."
+        },
+        {
+          "nodeid": "tests/test_room_status_enforcement.py::TestOpenRoomsAreUnaffected::test_history_stays_readable_after_closing",
+          "sha256": "49b28689bb521d5b725c227e1d4e2f20bf9865564e57aacd1a88b941d386a90f",
+          "proves": "Stored message history remains readable after close. Specialized source evidence; scenario receipts do not record this test execution."
+        }
+      ],
+      "missing": [
+        "Public history, participant and binding read APIs at every status need an explicit matrix; a store snapshot is not that proof.",
+        "Remaining retained-channel entry paths, including streaming and voice, are not exhaustively linked by this transition matrix.",
+        "Snapshot equality alone cannot prove absence of identical writes on every persistent backend."
+      ]
+    },
+    {
+      "id": "core-room-refused-events",
+      "requirement": "RK-5.1-002",
+      "clause_sha256": "a77fd15224044fa688601d74e8136e3be47df1348f409c248cc822b0a8081dfd",
+      "scope": "Closed-room inbound, direct record, direct send and response refusals; a hook closing its current pass; archived-room inbound refusal.",
+      "coverage": "partial",
+      "review": "Reviewed the Python source tests, public transition APIs, scenario setup, call results and exact observations. Shared room snapshots compare state but cannot prove zero writes; specialized store spies and Rust effect tests address that boundary. Optional lifecycle records remain normalized out. The whole composite RFC unit is not certified.",
+      "assertions": [
+        {
+          "scenario": "rooms/closed-room-refuses-a-message",
+          "pointer": "/steps/0/expect",
+          "sha256": "c44a1376cd39d57da19be0fb0f74f0bfe3d3b8c5062e7eb0186aeffafbea1862",
+          "scenario_sha256": "9c98511c08370e51dda2c0f7a45600754631bd439e6b0e6d982f1406b059a2b0",
+          "proves": "The named closed/archived-room call returns the declared refusal; an already accepted cause remains accepted when its response is refused."
+        },
+        {
+          "scenario": "rooms/closed-room-refuses-a-message",
+          "pointer": "/steps/1/expect",
+          "sha256": "ee8fbc2eef4196421bcf6e5966cd7fa66deb661d26a0a01b08cf1b599794cd53",
+          "scenario_sha256": "9c98511c08370e51dda2c0f7a45600754631bd439e6b0e6d982f1406b059a2b0",
+          "proves": "The named closed/archived-room call returns the declared refusal; an already accepted cause remains accepted when its response is refused."
+        },
+        {
+          "scenario": "rooms/closed-room-refuses-a-message",
+          "pointer": "/expect",
+          "sha256": "6286c9a931584ff9564c9e40ee56a772077d5d19694933f342aba76ede99b737",
+          "scenario_sha256": "9c98511c08370e51dda2c0f7a45600754631bd439e6b0e6d982f1406b059a2b0",
+          "proves": "The exact timeline and any declared deliveries exclude the refused event; declared framework events distinguish closure and observable refusal."
+        },
+        {
+          "scenario": "rooms/closed-room-refuses-a-record",
+          "pointer": "/steps/0/expect",
+          "sha256": "0bd442111d1958b905476258606f03f61930a1aefc13df45459290dd50b838bf",
+          "scenario_sha256": "a68ea962a3bb68951735795a50da0f80bccaaf2d80483543fc395db979918c7c",
+          "proves": "The named closed/archived-room call returns the declared refusal; an already accepted cause remains accepted when its response is refused."
+        },
+        {
+          "scenario": "rooms/closed-room-refuses-a-record",
+          "pointer": "/expect",
+          "sha256": "e6fb33b0ac64482c6a461d885fcfe99d56dd0f7bbfb28126f0815301667dd4b8",
+          "scenario_sha256": "a68ea962a3bb68951735795a50da0f80bccaaf2d80483543fc395db979918c7c",
+          "proves": "The exact timeline and any declared deliveries exclude the refused event; declared framework events distinguish closure and observable refusal."
+        },
+        {
+          "scenario": "rooms/closed-room-refuses-an-injection",
+          "pointer": "/steps/0/expect",
+          "sha256": "0bd442111d1958b905476258606f03f61930a1aefc13df45459290dd50b838bf",
+          "scenario_sha256": "c4fb3a20852d8b522a5774577d990464f08954d9a2c69abae4e859f005c4ad01",
+          "proves": "The named closed/archived-room call returns the declared refusal; an already accepted cause remains accepted when its response is refused."
+        },
+        {
+          "scenario": "rooms/closed-room-refuses-an-injection",
+          "pointer": "/expect",
+          "sha256": "d59387be56ef8cee67402afd71c2ef033b322b934e95492c80e58f457cc69214",
+          "scenario_sha256": "c4fb3a20852d8b522a5774577d990464f08954d9a2c69abae4e859f005c4ad01",
+          "proves": "The exact timeline and any declared deliveries exclude the refused event; declared framework events distinguish closure and observable refusal."
+        },
+        {
+          "scenario": "rooms/a-hook-that-closes-the-room-refuses-its-event",
+          "pointer": "/steps/0/expect",
+          "sha256": "ee8fbc2eef4196421bcf6e5966cd7fa66deb661d26a0a01b08cf1b599794cd53",
+          "scenario_sha256": "1bf3d9acbc616c240764491823f2edd75a0cf95991b85456a1470d0d280d0d26",
+          "proves": "The named closed/archived-room call returns the declared refusal; an already accepted cause remains accepted when its response is refused."
+        },
+        {
+          "scenario": "rooms/a-hook-that-closes-the-room-refuses-its-event",
+          "pointer": "/expect",
+          "sha256": "0e5751b4813563ed37d1f177c973893204b6084164d949d32780be16c8750001",
+          "scenario_sha256": "1bf3d9acbc616c240764491823f2edd75a0cf95991b85456a1470d0d280d0d26",
+          "proves": "The exact timeline and any declared deliveries exclude the refused event; declared framework events distinguish closure and observable refusal."
+        },
+        {
+          "scenario": "rooms/a-response-the-room-refuses",
+          "pointer": "/steps/0/expect",
+          "sha256": "e51148b907dc41a3a274ddad9e5f46455ac9067c9c0ec2c6f7f0e6c5e2be7040",
+          "scenario_sha256": "e21c99a110008e4d07406744912e17470a8ac52fd6526c9bab30fd54f2638b0b",
+          "proves": "The named closed/archived-room call returns the declared refusal; an already accepted cause remains accepted when its response is refused."
+        },
+        {
+          "scenario": "rooms/a-response-the-room-refuses",
+          "pointer": "/expect",
+          "sha256": "c833f3d92333c477c626c65c62c8ac0b969dc44a1c739a2338efe33165db9d9c",
+          "scenario_sha256": "e21c99a110008e4d07406744912e17470a8ac52fd6526c9bab30fd54f2638b0b",
+          "proves": "The exact timeline and any declared deliveries exclude the refused event; declared framework events distinguish closure and observable refusal."
+        },
+        {
+          "scenario": "rooms/archive-is-terminal",
+          "pointer": "/steps/0/expect",
+          "sha256": "c44a1376cd39d57da19be0fb0f74f0bfe3d3b8c5062e7eb0186aeffafbea1862",
+          "scenario_sha256": "38b458fa1f952d2805d7697a330fc135437d80358bcd14c6c23e2e85098e29ae",
+          "proves": "The named closed/archived-room call returns the declared refusal; an already accepted cause remains accepted when its response is refused."
+        },
+        {
+          "scenario": "rooms/archive-is-terminal",
+          "pointer": "/steps/1/expect",
+          "sha256": "de707384431cb3cb10fa8f51e57113b9a274e4808fa0effeb838876dd890f149",
+          "scenario_sha256": "38b458fa1f952d2805d7697a330fc135437d80358bcd14c6c23e2e85098e29ae",
+          "proves": "The named closed/archived-room call returns the declared refusal; an already accepted cause remains accepted when its response is refused."
+        },
+        {
+          "scenario": "rooms/archive-is-terminal",
+          "pointer": "/steps/2/expect",
+          "sha256": "a940205dff3716d434c531e521c2bb6bbf1cc056ba92e3cc62edeeb5826ce70e",
+          "scenario_sha256": "38b458fa1f952d2805d7697a330fc135437d80358bcd14c6c23e2e85098e29ae",
+          "proves": "The named closed/archived-room call returns the declared refusal; an already accepted cause remains accepted when its response is refused."
+        },
+        {
+          "scenario": "rooms/archive-is-terminal",
+          "pointer": "/steps/3/expect",
+          "sha256": "a940205dff3716d434c531e521c2bb6bbf1cc056ba92e3cc62edeeb5826ce70e",
+          "scenario_sha256": "38b458fa1f952d2805d7697a330fc135437d80358bcd14c6c23e2e85098e29ae",
+          "proves": "The named closed/archived-room call returns the declared refusal; an already accepted cause remains accepted when its response is refused."
+        },
+        {
+          "scenario": "rooms/archive-is-terminal",
+          "pointer": "/steps/4/expect",
+          "sha256": "d43ea038e408e479ee1dcd2868b3fff3c229ea8996c0d88b7406ff5fdb7f2676",
+          "scenario_sha256": "38b458fa1f952d2805d7697a330fc135437d80358bcd14c6c23e2e85098e29ae",
+          "proves": "The named closed/archived-room call returns the declared refusal; an already accepted cause remains accepted when its response is refused."
+        },
+        {
+          "scenario": "rooms/archive-is-terminal",
+          "pointer": "/steps/5/expect",
+          "sha256": "ee8fbc2eef4196421bcf6e5966cd7fa66deb661d26a0a01b08cf1b599794cd53",
+          "scenario_sha256": "38b458fa1f952d2805d7697a330fc135437d80358bcd14c6c23e2e85098e29ae",
+          "proves": "The named closed/archived-room call returns the declared refusal; an already accepted cause remains accepted when its response is refused."
+        },
+        {
+          "scenario": "rooms/archive-is-terminal",
+          "pointer": "/expect",
+          "sha256": "f49c76874f89cf36e36484e2d310aa39847b3e2d43ecdba65b087bebe4f6dc84",
+          "scenario_sha256": "38b458fa1f952d2805d7697a330fc135437d80358bcd14c6c23e2e85098e29ae",
+          "proves": "The exact timeline and any declared deliveries exclude the refused event; declared framework events distinguish closure and observable refusal."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/test_room_status_enforcement.py::TestClosedRoomRefuses::test_a_room_the_event_s_hook_closed_refuses_it",
+          "sha256": "80cc3c66612c97b769448f9a828c8ae16b02a908129615e33d381be3cc1d6522",
+          "proves": "The message/instruction/send variants reject the event after its hook closes the room. Specialized source evidence; scenario receipts do not record this test execution."
+        },
+        {
+          "nodeid": "tests/test_room_status_enforcement.py::TestClosedRoomRefuses::test_a_room_a_pass_s_hook_closed_refuses_that_pass",
+          "sha256": "125d1ef5634a8e3363cb88a78fa406adea7e495960937f8ba11bddc740f99cc6",
+          "proves": "Response and injected reentry variants keep their accepted cause and exclude the refused reentry. Specialized source evidence; scenario receipts do not record this test execution."
+        }
+      ],
+      "missing": [
+        "Streamed row status gates, externally changed status, regeneration, replacement records and identity-challenge exceptions need separate reviewed links.",
+        "These scenarios do not exhaust every retained transport or voice entry into a closed/archived room."
+      ]
+    },
+    {
+      "id": "core-room-due-timers",
+      "requirement": "RK-5.1-006",
+      "clause_sha256": "e4f3d6844a313493e0b42729be3d8acb586c6ee4a6259f005eb9defcec5c48e5",
+      "scope": "Named timer-check scope, overdue timers before public transitions, explicit/message resumption, timer-setting activity preservation, and timer closure before inbound.",
+      "coverage": "partial",
+      "review": "Reviewed the Python source tests, public transition APIs, scenario setup, call results and exact observations. Shared room snapshots compare state but cannot prove zero writes; specialized store spies and Rust effect tests address that boundary. Optional lifecycle records remain normalized out. The whole composite RFC unit is not certified.",
+      "assertions": [
+        {
+          "scenario": "rooms/a-timer-check-does-not-change-another-due-room",
+          "pointer": "/steps/0/expect",
+          "sha256": "06cc6fb18d71ef99d407490cef4d3c1ad5515e97ee6ed98a3ed15865e0931c10",
+          "scenario_sha256": "47674c68a2fed32ec7fa470bb11cb6ad2b0ce81ef27c7b1dfcc2f64cabf3ccf1",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/a-timer-check-does-not-change-another-due-room",
+          "pointer": "/steps/1/expect",
+          "sha256": "c44a1376cd39d57da19be0fb0f74f0bfe3d3b8c5062e7eb0186aeffafbea1862",
+          "scenario_sha256": "47674c68a2fed32ec7fa470bb11cb6ad2b0ce81ef27c7b1dfcc2f64cabf3ccf1",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/a-timer-check-does-not-change-another-due-room",
+          "pointer": "/steps/2/expect",
+          "sha256": "06cc6fb18d71ef99d407490cef4d3c1ad5515e97ee6ed98a3ed15865e0931c10",
+          "scenario_sha256": "47674c68a2fed32ec7fa470bb11cb6ad2b0ce81ef27c7b1dfcc2f64cabf3ccf1",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/a-timer-check-does-not-change-another-due-room",
+          "pointer": "/expect",
+          "sha256": "14a414286d1adfda47cdca61395f6a3e3489a5e052fccc9290b0ebb2f54066b7",
+          "scenario_sha256": "47674c68a2fed32ec7fa470bb11cb6ad2b0ce81ef27c7b1dfcc2f64cabf3ccf1",
+          "proves": "Final status and exact declared notices establish timer ordering, isolation of an unchecked/refused room, or silent resumption."
+        },
+        {
+          "scenario": "rooms/a-timer-check-scopes-before-applying-due-transitions",
+          "pointer": "/steps/0/expect",
+          "sha256": "b5d57f3cd465e94a1a921dc337ffb96f3cb6b86fff945f64bdbbdef25482d2d3",
+          "scenario_sha256": "bcc80baebd24874a6fe8d5de4f188187cab4d4db3b1b25a943ede31dd6e091e2",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/a-timer-check-scopes-before-applying-due-transitions",
+          "pointer": "/steps/1/expect",
+          "sha256": "e92c5a8a691fbac2975f68f545b9a0605bd8b065a1fd63f6d2faa757908a0802",
+          "scenario_sha256": "bcc80baebd24874a6fe8d5de4f188187cab4d4db3b1b25a943ede31dd6e091e2",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/a-timer-check-scopes-before-applying-due-transitions",
+          "pointer": "/steps/2/expect",
+          "sha256": "302a92d966245c60616dc29e9e0f52665e28f3bab7e9af75f7072c1aa353191c",
+          "scenario_sha256": "bcc80baebd24874a6fe8d5de4f188187cab4d4db3b1b25a943ede31dd6e091e2",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/a-timer-check-scopes-before-applying-due-transitions",
+          "pointer": "/steps/3/expect",
+          "sha256": "302a92d966245c60616dc29e9e0f52665e28f3bab7e9af75f7072c1aa353191c",
+          "scenario_sha256": "bcc80baebd24874a6fe8d5de4f188187cab4d4db3b1b25a943ede31dd6e091e2",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/a-timer-check-scopes-before-applying-due-transitions",
+          "pointer": "/steps/4/expect",
+          "sha256": "302a92d966245c60616dc29e9e0f52665e28f3bab7e9af75f7072c1aa353191c",
+          "scenario_sha256": "bcc80baebd24874a6fe8d5de4f188187cab4d4db3b1b25a943ede31dd6e091e2",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/a-timer-check-scopes-before-applying-due-transitions",
+          "pointer": "/steps/5/expect",
+          "sha256": "b5d57f3cd465e94a1a921dc337ffb96f3cb6b86fff945f64bdbbdef25482d2d3",
+          "scenario_sha256": "bcc80baebd24874a6fe8d5de4f188187cab4d4db3b1b25a943ede31dd6e091e2",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/a-timer-check-scopes-before-applying-due-transitions",
+          "pointer": "/steps/6/expect",
+          "sha256": "e92c5a8a691fbac2975f68f545b9a0605bd8b065a1fd63f6d2faa757908a0802",
+          "scenario_sha256": "bcc80baebd24874a6fe8d5de4f188187cab4d4db3b1b25a943ede31dd6e091e2",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/a-timer-check-scopes-before-applying-due-transitions",
+          "pointer": "/expect",
+          "sha256": "909217232a048ff3cc85b933fc9c0ca8e957dc6c59b19346008f07eb77c99fa9",
+          "scenario_sha256": "bcc80baebd24874a6fe8d5de4f188187cab4d4db3b1b25a943ede31dd6e091e2",
+          "proves": "Final status and exact declared notices establish timer ordering, isolation of an unchecked/refused room, or silent resumption."
+        },
+        {
+          "scenario": "rooms/due-timers-run-before-explicit-transitions",
+          "pointer": "/steps/0/expect",
+          "sha256": "d43ea038e408e479ee1dcd2868b3fff3c229ea8996c0d88b7406ff5fdb7f2676",
+          "scenario_sha256": "fc97e7d5c6cf16a8b09822687c8bac8e331bc22cf1dd368c33c1e270835fdd3f",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/due-timers-run-before-explicit-transitions",
+          "pointer": "/steps/1/expect",
+          "sha256": "d43ea038e408e479ee1dcd2868b3fff3c229ea8996c0d88b7406ff5fdb7f2676",
+          "scenario_sha256": "fc97e7d5c6cf16a8b09822687c8bac8e331bc22cf1dd368c33c1e270835fdd3f",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/due-timers-run-before-explicit-transitions",
+          "pointer": "/steps/2/expect",
+          "sha256": "5a48544dc2aff4d542d24b367df87c781714dd80e99d9dfb7ad5016ace4cac89",
+          "scenario_sha256": "fc97e7d5c6cf16a8b09822687c8bac8e331bc22cf1dd368c33c1e270835fdd3f",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/due-timers-run-before-explicit-transitions",
+          "pointer": "/steps/3/expect",
+          "sha256": "c44a1376cd39d57da19be0fb0f74f0bfe3d3b8c5062e7eb0186aeffafbea1862",
+          "scenario_sha256": "fc97e7d5c6cf16a8b09822687c8bac8e331bc22cf1dd368c33c1e270835fdd3f",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/due-timers-run-before-explicit-transitions",
+          "pointer": "/steps/4/expect",
+          "sha256": "de707384431cb3cb10fa8f51e57113b9a274e4808fa0effeb838876dd890f149",
+          "scenario_sha256": "fc97e7d5c6cf16a8b09822687c8bac8e331bc22cf1dd368c33c1e270835fdd3f",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/due-timers-run-before-explicit-transitions",
+          "pointer": "/expect",
+          "sha256": "ed71a87e0a8e9e2410bc68ee2fd2019d62fb4cdc777648acfad7e8f360f31f3a",
+          "scenario_sha256": "fc97e7d5c6cf16a8b09822687c8bac8e331bc22cf1dd368c33c1e270835fdd3f",
+          "proves": "Final status and exact declared notices establish timer ordering, isolation of an unchecked/refused room, or silent resumption."
+        },
+        {
+          "scenario": "rooms/resume-and-reopen-restart-inactivity",
+          "pointer": "/steps/0/expect",
+          "sha256": "1128ba06c54b310ed98f4c5eca3f0dff8965ab80abee9647adb7746f350ee036",
+          "scenario_sha256": "6715f35649963f8b2d508c1d7a9a32d4678241c56b43652d91de4b9daee08fa9",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/resume-and-reopen-restart-inactivity",
+          "pointer": "/steps/1/expect",
+          "sha256": "1128ba06c54b310ed98f4c5eca3f0dff8965ab80abee9647adb7746f350ee036",
+          "scenario_sha256": "6715f35649963f8b2d508c1d7a9a32d4678241c56b43652d91de4b9daee08fa9",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/resume-and-reopen-restart-inactivity",
+          "pointer": "/steps/2/expect",
+          "sha256": "1128ba06c54b310ed98f4c5eca3f0dff8965ab80abee9647adb7746f350ee036",
+          "scenario_sha256": "6715f35649963f8b2d508c1d7a9a32d4678241c56b43652d91de4b9daee08fa9",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/resume-and-reopen-restart-inactivity",
+          "pointer": "/steps/3/expect",
+          "sha256": "1128ba06c54b310ed98f4c5eca3f0dff8965ab80abee9647adb7746f350ee036",
+          "scenario_sha256": "6715f35649963f8b2d508c1d7a9a32d4678241c56b43652d91de4b9daee08fa9",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/resume-and-reopen-restart-inactivity",
+          "pointer": "/expect",
+          "sha256": "474421b3d6a96fef54c737ba04504d256d46ae06ebac7a11abaaf8f846d944d4",
+          "scenario_sha256": "6715f35649963f8b2d508c1d7a9a32d4678241c56b43652d91de4b9daee08fa9",
+          "proves": "Final status and exact declared notices establish timer ordering, isolation of an unchecked/refused room, or silent resumption."
+        },
+        {
+          "scenario": "rooms/timers-pause-then-close-in-one-check",
+          "pointer": "/steps/1/expect",
+          "sha256": "c44a1376cd39d57da19be0fb0f74f0bfe3d3b8c5062e7eb0186aeffafbea1862",
+          "scenario_sha256": "b65c935c96aa29b07dcab4ba780f7b46f3c200ad6ba79b5db61822687b98f2fd",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/timers-pause-then-close-in-one-check",
+          "pointer": "/expect",
+          "sha256": "d1a4cadc7200bed3781692eb517e36563ee0f55c6b6be05782718a659276e260",
+          "scenario_sha256": "b65c935c96aa29b07dcab4ba780f7b46f3c200ad6ba79b5db61822687b98f2fd",
+          "proves": "Final status and exact declared notices establish timer ordering, isolation of an unchecked/refused room, or silent resumption."
+        },
+        {
+          "scenario": "rooms/a-delivered-message-resumes-a-paused-room",
+          "pointer": "/steps/1/expect",
+          "sha256": "b4c7fc1305b590c8149f793a9cd895a9ec95465b172455cf00b1d7ec947046c9",
+          "scenario_sha256": "88a422fb260b59ef417bc09a63f90138fe1966162fd72fe94290af8c596c44d6",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/a-delivered-message-resumes-a-paused-room",
+          "pointer": "/steps/3/expect",
+          "sha256": "e51148b907dc41a3a274ddad9e5f46455ac9067c9c0ec2c6f7f0e6c5e2be7040",
+          "scenario_sha256": "88a422fb260b59ef417bc09a63f90138fe1966162fd72fe94290af8c596c44d6",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/a-delivered-message-resumes-a-paused-room",
+          "pointer": "/expect",
+          "sha256": "8c528edd39b5f8285a06000b16f9e002dec9e713afe2670f51ed20600cfd6118",
+          "scenario_sha256": "88a422fb260b59ef417bc09a63f90138fe1966162fd72fe94290af8c596c44d6",
+          "proves": "Final status and exact declared notices establish timer ordering, isolation of an unchecked/refused room, or silent resumption."
+        },
+        {
+          "scenario": "rooms/a-due-close-refuses-the-next-message",
+          "pointer": "/steps/1/expect",
+          "sha256": "ee8fbc2eef4196421bcf6e5966cd7fa66deb661d26a0a01b08cf1b599794cd53",
+          "scenario_sha256": "4612f6cb6bf2862dd05420694ee4cc5ebeeb9395b8763f8b09eaf58cdce75261",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/a-due-close-refuses-the-next-message",
+          "pointer": "/expect",
+          "sha256": "e746c100cfddda4774898003e086c290443244e489a2d08447fadaed62db7e31",
+          "scenario_sha256": "4612f6cb6bf2862dd05420694ee4cc5ebeeb9395b8763f8b09eaf58cdce75261",
+          "proves": "Final status and exact declared notices establish timer ordering, isolation of an unchecked/refused room, or silent resumption."
+        },
+        {
+          "scenario": "rooms/set-room-timers-replaces-a-room-s-timers-and-keeps-its-activity",
+          "pointer": "/steps/0/expect",
+          "sha256": "2d797f6f7e0adde199f21d575694ed1011f3e1a314edf8bb5397a3169b7fa74f",
+          "scenario_sha256": "be378dfee71e9d7bba4284b4767634f944de496ae1ca98c13c19913df61f5eb5",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/set-room-timers-replaces-a-room-s-timers-and-keeps-its-activity",
+          "pointer": "/steps/1/expect",
+          "sha256": "dce756b6e9e0c4d8b424a70d1cacdec00f45c2b38d25784790804955d39b6ff1",
+          "scenario_sha256": "be378dfee71e9d7bba4284b4767634f944de496ae1ca98c13c19913df61f5eb5",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/set-room-timers-replaces-a-room-s-timers-and-keeps-its-activity",
+          "pointer": "/steps/2/expect",
+          "sha256": "a3f2cf1c69e9d649f32201a5320eee3a1b97c900230e2c317280a7f3be1f5c6f",
+          "scenario_sha256": "be378dfee71e9d7bba4284b4767634f944de496ae1ca98c13c19913df61f5eb5",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/set-room-timers-replaces-a-room-s-timers-and-keeps-its-activity",
+          "pointer": "/steps/3/expect",
+          "sha256": "3019d099abda77fda86848d20d7731b28dc00b74363a4082ad3aeae1922e779f",
+          "scenario_sha256": "be378dfee71e9d7bba4284b4767634f944de496ae1ca98c13c19913df61f5eb5",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/set-room-timers-replaces-a-room-s-timers-and-keeps-its-activity",
+          "pointer": "/steps/4/expect",
+          "sha256": "302a92d966245c60616dc29e9e0f52665e28f3bab7e9af75f7072c1aa353191c",
+          "scenario_sha256": "be378dfee71e9d7bba4284b4767634f944de496ae1ca98c13c19913df61f5eb5",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/set-room-timers-replaces-a-room-s-timers-and-keeps-its-activity",
+          "pointer": "/steps/5/expect",
+          "sha256": "302a92d966245c60616dc29e9e0f52665e28f3bab7e9af75f7072c1aa353191c",
+          "scenario_sha256": "be378dfee71e9d7bba4284b4767634f944de496ae1ca98c13c19913df61f5eb5",
+          "proves": "The named call observes its due status, scoped refusal or restarted activity as declared; timer replacement preserves/sets the declared activity."
+        },
+        {
+          "scenario": "rooms/set-room-timers-replaces-a-room-s-timers-and-keeps-its-activity",
+          "pointer": "/expect",
+          "sha256": "0e5e9a63865dfff47e872aa46c2855cb77868063940fc95c573b162bf71a6580",
+          "scenario_sha256": "be378dfee71e9d7bba4284b4767634f944de496ae1ca98c13c19913df61f5eb5",
+          "proves": "Final status and exact declared notices establish timer ordering, isolation of an unchecked/refused room, or silent resumption."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/test_room_timers.py::test_a_late_check_pauses_then_closes_each_at_its_instant",
+          "sha256": "41143ca3037d16680ec846e3ae42c962a38ec16a6fe285e59c296aaa8862e04b",
+          "proves": "A late check writes once, computes the exact due close instant, clears paused_at and reports both transitions. Specialized source evidence; scenario receipts do not record this test execution."
+        },
+        {
+          "nodeid": "tests/test_room_timers.py::test_inactivity_counts_from_creation_before_any_activity",
+          "sha256": "2ac5682a2fff013dde3a8fcac64927315b79b0c74d35d96d0c37edb0e44df551",
+          "proves": "A room without delivered activity counts inactivity from created_at. Specialized source evidence; scenario receipts do not record this test execution."
+        },
+        {
+          "nodeid": "tests/test_room_timers.py::test_what_is_no_activity_resumes_nothing",
+          "sha256": "a2966f0016df36c05da51fb777e15bdcabb982b45ca5ab4a3391ac4e85ca3c37",
+          "proves": "A blocked event, direct record and mute do not resume a paused room. Specialized source evidence; scenario receipts do not record this test execution."
+        },
+        {
+          "nodeid": "tests/test_room_activity.py::test_a_lifecycle_record_is_no_activity",
+          "sha256": "e43dc250cf4f6c1482eae112276c997a561a63824903aa28fdeea80244ee1e17",
+          "proves": "A mute lifecycle record takes an index and counts, but leaves the prior activity instant. Specialized source evidence; scenario receipts do not record this test execution."
+        },
+        {
+          "nodeid": "tests/test_room_activity.py::test_a_record_stored_blocked_is_no_activity",
+          "sha256": "b19e6f5d323cf8561703d30906266672a3b3bc35c83a9f29c389235dcdb2d458",
+          "proves": "A BLOCKED record leaves the room activity instant unchanged. Specialized source evidence; scenario receipts do not record this test execution."
+        }
+      ],
+      "missing": [
+        "Every locked entry, response pass and direct mutation needs its own reviewed timer link; public transitions alone are not all entries.",
+        "Sweeper pagination and per-room failure isolation, caller cancellation and concurrent store writes remain outside these shared scenarios.",
+        "Atomic activity/counters on each persistent store, instruction non-activity and paused sender/group routing need separate links."
+      ]
     }
   ],
   "executions": [
