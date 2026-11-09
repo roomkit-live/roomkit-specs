@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
+  "python_commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -701,7 +701,13 @@
           "proves": "Attach and a genuine binding update each return the canonical visibility before any event is processed."
         }
       ],
-      "tests": [],
+      "tests": [
+        {
+          "nodeid": "tests/test_visibility_rules.py::TestTheGrammar::test_a_keyword_is_kept_as_written",
+          "sha256": "d7a3ee91372b39a3af2208f3b668837ce07a0a1e2805f4b16d0b303ed57c5270",
+          "proves": "a keyword is kept as written. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        }
+      ],
       "missing": []
     },
     {
@@ -1442,9 +1448,9 @@
       "id": "visibility-internal-public-doors",
       "requirement": "RK-7.3-003",
       "clause_sha256": "1f0a8a458b59d2dc9191abb555609611015638370e48824131a5a7f9918580f2",
-      "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
+      "scope": "All six public doors plus hook restoration, channel response visibility and depth-limit records; framework internal-record protection is specialized source evidence.",
       "coverage": "partial",
-      "review": "Each listed assertion was checked against the clause including its public-door conditions. Exact arrays reject extra deliveries and model messages; the shared scenario is the executable proof, not its title or rules list.",
+      "review": "Read the door, response and depth-record assertions and the exact Python hook/internal tests. The voice-specific test establishes protection in Python; it does not establish Rust voice support.",
       "assertions": [
         {
           "scenario": "permissions/internal-is-the-framework-s-own",
@@ -1536,11 +1542,51 @@
           "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
           "scenario_sha256": "06c747e3c448fe1ec769aa78995b3c7e4e0b603f1eb7fabd2a64088811805975",
           "proves": "Internal, with or without surrounding whitespace, is refused at this public door."
+        },
+        {
+          "scenario": "permissions/a-depth-limit-record-keeps-the-agent-s-permitted-scope",
+          "pointer": "/expect",
+          "sha256": "1a0888609a5a8186400f1cd8f3dc721d6c9cfe200110e1d36b8cbff8aab6617b",
+          "scenario_sha256": "6ad3dc1c9289dabd0bd66003c1f7fcb5a6e0da76d7c35e58c2112020129c5a95",
+          "proves": "A hook cannot forge internal visibility; an agent answer and a depth-limit substitute under internal scope reach no channel."
+        },
+        {
+          "scenario": "permissions/only-the-framework-may-mark-an-answer-internal",
+          "pointer": "/expect",
+          "sha256": "2aeba1665a781f41ea4f1c9e1441b1b46b0115841c7401e89acb1a9abc83877e",
+          "scenario_sha256": "93ca126ed9a9258e85722c7b536fef35c2c834071fde66564d42191158a4a7ad",
+          "proves": "A hook cannot forge internal visibility; an agent answer and a depth-limit substitute under internal scope reach no channel."
         }
       ],
-      "tests": [],
+      "tests": [
+        {
+          "nodeid": "tests/test_visibility_rules.py::TestOnlyTheFrameworkWritesInternal::test_a_hook_writing_it_has_the_visibility_put_back",
+          "sha256": "0dcf9fd070892e82a7b231bea97ff0fec50b0fe38940b0330b4ac7e4358fdb11",
+          "proves": "a hook writing it has the visibility put back. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_visibility_rules.py::TestOnlyTheFrameworkWritesInternal::test_a_hook_cannot_widen_the_framework_s_own_record",
+          "sha256": "36a3fcf7d3215367f1c4bf084336b4e161d6dfafd1e56a68ec2828d3a5f9f6e1",
+          "proves": "a hook cannot widen the framework s own record. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_visibility_rules.py::TestOnlyTheFrameworkWritesInternal::test_an_answer_carrying_it_is_stored_for_no_channel",
+          "sha256": "cad470ebc145ca204d63a528caa93ea9dd7fc06fa88a27b0d0b4a62925e71b38",
+          "proves": "an answer carrying it is stored for no channel. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_visibility_rules.py::TestOnlyTheFrameworkWritesInternal::test_the_record_in_place_of_an_answer_carrying_it_is_stored_for_no_channel",
+          "sha256": "ec83489e7e2d9ae3904d0956e87e562c73a5558a7e2cf22d699047bc78d2353e",
+          "proves": "the record in place of an answer carrying it is stored for no channel. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_inbound_visibility.py::TestVisibilityAllows::test_internal_reaches_nothing",
+          "sha256": "0e659f95eb6c1083f52edb18f2b07e69266c65a7068825ea07f2888565a948b5",
+          "proves": "internal reaches nothing. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        }
+      ],
       "missing": [
-        "Hook restoration, channel responses, framework-created records and outside-pipeline commits remain outside this door-only proof."
+        "Framework-created record paths across voice/media and outside-pipeline commits are not exhaustively linked; warning logs are checked only by specialized Python tests."
       ]
     },
     {
@@ -1585,12 +1631,422 @@
           "sha256": "4f2765079d8b46636bb7a00cac5d9c770af72814fb3400cc8edea12f16149ba4",
           "scenario_sha256": "6bd6c6261792b68ec9b320cc5b1255886c694ec6aee09f2682362048099c2f73",
           "proves": "Own accepted whispers are retained while a blocked answer is absent from the next model context."
+        },
+        {
+          "scenario": "greeting/a-greeting-stays-within-its-agent-s-visibility",
+          "pointer": "/expect",
+          "sha256": "f453759a88b765cd31d8d0195e8b2b132958fe717961af22169777f33e173826",
+          "scenario_sha256": "24096dbb122a50b5e492cf0fd2092912a092e8655ce09a04bceb443fe717d958",
+          "proves": "The stored greeting, injected event and depth-limit record keep their permitted scope; pure tests cover internal and unbound-source intersections."
+        },
+        {
+          "scenario": "permissions/a-depth-limit-record-keeps-the-agent-s-permitted-scope",
+          "pointer": "/expect",
+          "sha256": "1a0888609a5a8186400f1cd8f3dc721d6c9cfe200110e1d36b8cbff8aab6617b",
+          "scenario_sha256": "6ad3dc1c9289dabd0bd66003c1f7fcb5a6e0da76d7c35e58c2112020129c5a95",
+          "proves": "The stored greeting, injected event and depth-limit record keep their permitted scope; pure tests cover internal and unbound-source intersections."
+        },
+        {
+          "scenario": "permissions/an-allowed-hook-injection-keeps-its-target-scope",
+          "pointer": "/expect",
+          "sha256": "25023f8b5a3f772d897b8bd7d512429065132ea44a0f54dde4def3cfd914f6f7",
+          "scenario_sha256": "6299b45e6f6ac00436bae306f754e119baa4262e1ab6fd10e95cdb8adc375d78",
+          "proves": "The stored greeting, injected event and depth-limit record keep their permitted scope; pure tests cover internal and unbound-source intersections."
         }
       ],
-      "tests": [],
+      "tests": [
+        {
+          "nodeid": "tests/test_visibility_rules.py::TestARefusedRecordSeesNoMoreThanItsEvent::test_the_record_of_an_agent_not_asked_at_the_depth_limit",
+          "sha256": "1c37361f78ffb18a8c7f8febdbc618c828f2a10181374934bbd6323e4ecd1d9e",
+          "proves": "the record of an agent not asked at the depth limit. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_visibility_rules.py::TestEveryCommitPathStampsTheVisibility::test_a_greeting_takes_its_agent_binding_s_scope",
+          "sha256": "055132ae79fe9b18f5d44cb91a65962ab1edcfa11669a4bf9873a74075f3f485",
+          "proves": "a greeting takes its agent binding s scope. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_visibility_rules.py::TestEveryCommitPathStampsTheVisibility::test_an_injected_event_takes_its_source_binding_s_scope",
+          "sha256": "826a287791e06d23ea7b0c836648e422f5a5d4433ce43ffa66fb79dd0c1da362",
+          "proves": "an injected event takes its source binding s scope. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_context_visibility.py::TestCommittedVisibility::test_internal_absorbs_and_keeps_its_mark",
+          "sha256": "87afebf8ad60172e54d2e458695c75d61881a73220150aa625bb6ff48f6e21c3",
+          "proves": "internal absorbs and keeps its mark. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_context_visibility.py::TestCommittedVisibility::test_a_detached_source_leaves_the_event_speaking_for_itself",
+          "sha256": "955c19aca826d9336699da2c237b61a14ed81c3c03aaa5af1cc0ad441643c096",
+          "proves": "a detached source leaves the event speaking for itself. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        }
+      ],
       "missing": [
-        "EDIT/DELETE target narrowing, non-text content, internal intersections, all refusal/reentry paths and hook-injected events are not exhaustively linked here.",
-        "Streaming permission changes and memory summarizer inputs need separate proofs."
+        "EDIT/DELETE target visibility narrowing, non-text content and every refusal/reentry path remain outside this mapping.",
+        "Streaming permission changes and all memory summarizer inputs need separate proofs."
+      ]
+    },
+    {
+      "id": "response-scopes-and-cascades",
+      "requirement": "RK-8.5-004",
+      "clause_sha256": "19c0fc7615ed067d5bca4ac0274b90b3604d1ebc8cd2df7482aa72ab7e902666",
+      "scope": "Response visibility intersections, propagation through a two-agent cascade, buffered real-model streams, hook narrowing and depth-limit records.",
+      "coverage": "partial",
+      "review": "Read each scenario assertion and each named Python test against this exact clause. Lists assert cardinality and order; object fields assert only the named contract. Shared execution and specialized source evidence remain distinct.",
+      "assertions": [
+        {
+          "scenario": "injection/a-sent-event-keeps-its-answer-scope",
+          "pointer": "/expect",
+          "sha256": "215c22cac81923cddab534f47f8942c76cff3fb0f25092799ebdb50db5ea5b87",
+          "scenario_sha256": "372b18c72da69aa845c1b7a197fa081ca37f5b508b77616683cc9f48003965f8",
+          "proves": "Exact stored answer visibility, cascade response scopes and deliveries, plus actual buffered model calls where configured."
+        },
+        {
+          "scenario": "permissions/a-cascade-keeps-the-answer-scope-its-parent-narrowed",
+          "pointer": "/expect",
+          "sha256": "3a46adc80ab4be95300a3b1d76e3ea6f8c0b02e2241eabf6bd5fd8601053cb62",
+          "scenario_sha256": "98da58ef03ad88a481d8f0fa0ededc5f70d8e5a1efe707e7f8b6e0a8e70166fb",
+          "proves": "Exact stored answer visibility, cascade response scopes and deliveries, plus actual buffered model calls where configured."
+        },
+        {
+          "scenario": "permissions/a-depth-limit-record-keeps-the-agent-s-permitted-scope",
+          "pointer": "/expect",
+          "sha256": "1a0888609a5a8186400f1cd8f3dc721d6c9cfe200110e1d36b8cbff8aab6617b",
+          "scenario_sha256": "6ad3dc1c9289dabd0bd66003c1f7fcb5a6e0da76d7c35e58c2112020129c5a95",
+          "proves": "Exact stored answer visibility, cascade response scopes and deliveries, plus actual buffered model calls where configured."
+        },
+        {
+          "scenario": "permissions/a-hook-only-narrows-the-answer-scope",
+          "pointer": "/expect",
+          "sha256": "9b6a34218501630a4d9807d72bc58515cff5d226892c19d9a68144f516c920ce",
+          "scenario_sha256": "4a92c812e1fe955cb75bffe70ca991f198c3c9133d3e5a35ee7bce01ce54c0f2",
+          "proves": "Exact stored answer visibility, cascade response scopes and deliveries, plus actual buffered model calls where configured."
+        },
+        {
+          "scenario": "permissions/an-answer-intersects-its-own-visibility-with-the-trigger-s-scope",
+          "pointer": "/expect",
+          "sha256": "6266f4b79b848252a5a121e26a17ba5c2fa6ab9b24d88528411a8db395ce430c",
+          "scenario_sha256": "ea5911654f851e2aebeff8c18b515e61434397ffcf91bdc80e39342ce9dc1434",
+          "proves": "Exact stored answer visibility, cascade response scopes and deliveries, plus actual buffered model calls where configured."
+        },
+        {
+          "scenario": "permissions/buffered-streams-obey-the-answer-scope",
+          "pointer": "/expect",
+          "sha256": "c107388abe345314afe737a23c2c67fa1fb21e67517c899b22682eee7fbbb949",
+          "scenario_sha256": "f8fba372a83ee59a5cc7f75b18a80dadb27c1efee28d2b35c1c6ba3c738b3b4d",
+          "proves": "Exact stored answer visibility, cascade response scopes and deliveries, plus actual buffered model calls where configured."
+        },
+        {
+          "scenario": "permissions/an-answer-scope-internal-a-channel-gives-reads-as-none",
+          "pointer": "/expect",
+          "sha256": "d58093f4d639ca3a6b3ca63cef8772072a044a0a2ba2544df9f4f6be9953ba5a",
+          "scenario_sha256": "98cf3421076bd1ed0c5c01ce5c73cf76d123b18fe1c79d67f38ba1d5d96f0e15",
+          "proves": "A channel-provided internal response scope is stored as none."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/test_visibility_rules.py::TestTheCommittedVisibility::test_an_answer_keeps_its_channel_s_scope_within_the_message_s",
+          "sha256": "f4713fa7fbcf8c9ba03fb4c0e8013ce26c86dfda70c6eafbf0c7a79ea9af42bc",
+          "proves": "an answer keeps its channel s scope within the message s. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_visibility_rules.py::TestTheCommittedVisibility::test_an_answer_s_own_scope_holds_within_the_message_s",
+          "sha256": "7346968660c651b7969f01d45404012711aba5bb8ab75e9c5e660f12cf5364bc",
+          "proves": "an answer s own scope holds within the message s. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_visibility_rules.py::TestARefusedRecordSeesNoMoreThanItsEvent::test_the_record_of_an_agent_not_asked_at_the_depth_limit",
+          "sha256": "1c37361f78ffb18a8c7f8febdbc618c828f2a10181374934bbd6323e4ecd1d9e",
+          "proves": "the record of an agent not asked at the depth limit. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_visibility_rules.py::TestAHookOnAnAnswerScope::test_a_hook_may_only_narrow_where_the_answers_go",
+          "sha256": "82d7c9c6427a22b8adee53375ce8dc988970df6b12ac9e8a4398dadfbbd90f76",
+          "proves": "a hook may only narrow where the answers go. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_visibility_rules.py::TestOnlyTheFrameworkWritesInternal::test_the_record_in_place_of_an_answer_carrying_it_is_stored_for_no_channel",
+          "sha256": "ec83489e7e2d9ae3904d0956e87e562c73a5558a7e2cf22d699047bc78d2353e",
+          "proves": "the record in place of an answer carrying it is stored for no channel. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_response_visibility.py::TestResponseVisibilityDefault::test_default_delivers_to_simple_targets",
+          "sha256": "53586591bb677195a4eedf0c076a9999a69391f4e2ca20562748df9757312b27",
+          "proves": "default delivers to simple targets. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_response_visibility.py::TestResponseVisibilitySingleChannel::test_reentry_only_to_targeted_simple_channel",
+          "sha256": "6c47c90384efde15f1ea75129173c2abbbf62731dc8210a6e3368173ae0fcf03",
+          "proves": "reentry only to targeted simple channel. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_response_visibility.py::TestResponseVisibilityNone::test_none_skips_simple_reentry",
+          "sha256": "9eda31939e6c0ba1cfa8a646b6e57ac498b4109a935420410c33267a966f4465",
+          "proves": "none skips simple reentry. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_response_visibility.py::TestResponseVisibilityCommaSeparated::test_comma_separated_simple_targets",
+          "sha256": "bfd1c06adb32917bfbee43be0bf9676fcd4cf803361d4ba5638cbf52ddba7232",
+          "proves": "comma separated simple targets. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_response_visibility.py::TestResponseVisibilityNonStreamingReentry::test_reentry_visibility_stamped_from_hook",
+          "sha256": "5c4aa23b482665c3a301b5d72cd6cc3dec785d4cb92609fc989ecac440931971",
+          "proves": "reentry visibility stamped from hook. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_response_visibility.py::TestResponseVisibilityOnSendEvent::test_send_event_default_response_visibility",
+          "sha256": "b6de5391a17219979f22f43426037652704528f8a8bf9fbbba0d4c948052b002",
+          "proves": "send event default response visibility. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        }
+      ],
+      "missing": [
+        "Transport-produced answers, instruction and delegation cascade boundaries, concurrent binding changes and every streamed tool-row path remain outside this link."
+      ]
+    },
+    {
+      "id": "response-hook-scope-restoration",
+      "requirement": "RK-9.4-002",
+      "clause_sha256": "61c5d22a05f6f05e6e28732fe9edb08078bdb1e4aae1d936165ccaa94973ed3c",
+      "scope": "BEFORE_BROADCAST cannot widen or clear an answer scope, write internal visibility or widen a framework internal record.",
+      "coverage": "partial",
+      "review": "Read each scenario assertion and each named Python test against this exact clause. Lists assert cardinality and order; object fields assert only the named contract. Shared execution and specialized source evidence remain distinct.",
+      "assertions": [
+        {
+          "scenario": "permissions/a-hook-only-narrows-the-answer-scope",
+          "pointer": "/expect",
+          "sha256": "9b6a34218501630a4d9807d72bc58515cff5d226892c19d9a68144f516c920ce",
+          "scenario_sha256": "4a92c812e1fe955cb75bffe70ca991f198c3c9133d3e5a35ee7bce01ce54c0f2",
+          "proves": "Hook-written scopes all, null, narrower list and internal retain the intersection; writing internal visibility restores the original."
+        },
+        {
+          "scenario": "permissions/only-the-framework-may-mark-an-answer-internal",
+          "pointer": "/expect",
+          "sha256": "2aeba1665a781f41ea4f1c9e1441b1b46b0115841c7401e89acb1a9abc83877e",
+          "scenario_sha256": "93ca126ed9a9258e85722c7b536fef35c2c834071fde66564d42191158a4a7ad",
+          "proves": "Hook-written scopes all, null, narrower list and internal retain the intersection; writing internal visibility restores the original."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/test_visibility_rules.py::TestAHookOnAnAnswerScope::test_a_hook_may_only_narrow_where_the_answers_go",
+          "sha256": "82d7c9c6427a22b8adee53375ce8dc988970df6b12ac9e8a4398dadfbbd90f76",
+          "proves": "a hook may only narrow where the answers go. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_visibility_rules.py::TestOnlyTheFrameworkWritesInternal::test_a_hook_writing_it_has_the_visibility_put_back",
+          "sha256": "0dcf9fd070892e82a7b231bea97ff0fec50b0fe38940b0330b4ac7e4358fdb11",
+          "proves": "a hook writing it has the visibility put back. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_visibility_rules.py::TestOnlyTheFrameworkWritesInternal::test_a_hook_cannot_widen_the_framework_s_own_record",
+          "sha256": "36a3fcf7d3215367f1c4bf084336b4e161d6dfafd1e56a68ec2828d3a5f9f6e1",
+          "proves": "a hook cannot widen the framework s own record. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        }
+      ],
+      "missing": [
+        "Replacement identity, authority fields, instruction marks and every hook trigger remain outside this scope. Framework voice record creation is Level 3; its visibility protection is specialized source evidence."
+      ]
+    },
+    {
+      "id": "response-refusals-and-reader-history",
+      "requirement": "RK-7.5-001",
+      "clause_sha256": "76feb1d709fb78a714edc6fbcbb4948f509f994ed3010c747357726632a42419",
+      "scope": "Rule 2 read-only/mute stream precedence and rule 8 refused/deleted reader history, live edits and unfiltered host histories.",
+      "coverage": "partial",
+      "review": "Read each scenario assertion and each named Python test against this exact clause. Lists assert cardinality and order; object fields assert only the named contract. Shared execution and specialized source evidence remain distinct.",
+      "assertions": [
+        {
+          "scenario": "permissions/model-history-withholds-deleted-text-and-keeps-live-edits",
+          "pointer": "/expect",
+          "sha256": "ee9b23308dc49b5c03ce3edfd8af4f1a40233c4cb5159e9c1f6605550d33886b",
+          "scenario_sha256": "3dbcd6e0c7cfb1d0353138b50ecfbee79e5b556deedb85bfe55a869bf62c79cd",
+          "proves": "Exact model messages exclude refused and deleted content, preserve live edits and content beside an unchecked DELETE; audit timelines retain stored content."
+        },
+        {
+          "scenario": "permissions/refused-messages-never-return-in-model-history",
+          "pointer": "/expect",
+          "sha256": "7136b5cf00df47748890464184ce653cab863e7c4ce7ba1159a59265ac9f4df4",
+          "scenario_sha256": "c91fe90b7de3bfed9d02fe111a6c2df18550caca0edcfefa4b998439de2790f4",
+          "proves": "Exact model messages exclude refused and deleted content, preserve live edits and content beside an unchecked DELETE; audit timelines retain stored content."
+        },
+        {
+          "scenario": "permissions/a-read-only-muted-stream-is-consumed-as-read-only",
+          "pointer": "/expect",
+          "sha256": "2fc12498c78f2081e33ddbef3e14313725239f7b34f6e0783ad05923db224032",
+          "scenario_sha256": "36087f0b99bff604941a54399b9f26db1ce0062226eaab7f539504f5295cdc6f",
+          "proves": "Both read-only cases consume their model stream and store a blocked source_read_only response with no response delivery."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/test_context_visibility.py::TestHiddenEventsStayHidden::test_hooks_still_see_the_whole_timeline",
+          "sha256": "378a5835aa45f105b22dc6fa3cbb7d2435b98d427fb13e855a3f813efd19b918",
+          "proves": "hooks still see the whole timeline. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_context_visibility.py::TestRefusedEventsStayRefused::test_a_message_a_hook_blocked_never_reaches_the_model",
+          "sha256": "07d30f56f12a0987737115a0e5e4521444a56dab7a27c8788b4157d63e76fa93",
+          "proves": "a message a hook blocked never reaches the model. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_context_visibility.py::TestRefusedEventsStayRefused::test_a_read_only_source_message_never_reaches_the_model",
+          "sha256": "2c2f6593a157018a89e754686dcce4c99f55c9845b992dc33df84f0ab306c82b",
+          "proves": "a read only source message never reaches the model. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_context_visibility.py::TestRefusedEventsStayRefused::test_hooks_still_see_the_blocked_record",
+          "sha256": "efcafbd6e48dd294886803340f38c6ede0d16809e59020997f30f20f76fa0bb9",
+          "proves": "hooks still see the blocked record. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_context_visibility.py::TestVisibleEvents::test_an_unbound_reader_is_handed_no_event",
+          "sha256": "debd9da3c3e1cb028068f6a2c7f8f2ce82b70af358e2b94002f4c3096d20a73f",
+          "proves": "an unbound reader is handed no event. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_context_visibility.py::TestVisibleEvents::test_a_blocked_event_reaches_no_reader",
+          "sha256": "e4d25de52882ecc5709215d56eb908faa4e396288be9022e22a662ebcc9fdd15",
+          "proves": "a blocked event reaches no reader. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_context_visibility.py::TestDeletedContentStaysDeleted::test_an_agent_s_turn_after_a_delete_does_not_read_the_deleted_text",
+          "sha256": "2b29fe48e62a54d288f8a825b6a85c38f207d6f78d53c7a7d460a15040b5282f",
+          "proves": "an agent s turn after a delete does not read the deleted text. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_context_visibility.py::TestDeletedContentStaysDeleted::test_the_deleted_event_keeps_its_place_in_the_history",
+          "sha256": "a71b4c5514c62c7294e2d0034e3a6baa28037494a233106c4006445eb0d09a84",
+          "proves": "the deleted event keeps its place in the history. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_context_visibility.py::TestDeletedContentStaysDeleted::test_hooks_still_read_what_was_deleted",
+          "sha256": "51941824aa76f7e3cf5d465802028ee3a788faeb782e45bd9c3cca4c3d8a6e0d",
+          "proves": "hooks still read what was deleted. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_context_visibility.py::TestDeletedContentStaysDeleted::test_an_edit_s_new_content_is_still_read",
+          "sha256": "89572da33f8f553259273f296ea96b0835f41abe69e987eb6e20527c171d0378",
+          "proves": "an edit s new content is still read. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_context_visibility.py::TestDeletedContentStaysDeleted::test_an_edit_of_a_deleted_event_has_its_new_content_withheld",
+          "sha256": "4fd8fde2314b65d3943b5fd5ab491ac3c2bfdf4f052030550f0263aed55c188f",
+          "proves": "an edit of a deleted event has its new content withheld. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_context_visibility.py::TestWithheldContent::test_a_deleted_target_is_withheld_with_its_edits",
+          "sha256": "b03f14d59e40d2f39471762be7bb32cc5e5d88764d8980c436b81d4ade286a26",
+          "proves": "a deleted target is withheld with its edits. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_context_visibility.py::TestWithheldContent::test_a_delete_row_alone_withholds_nothing",
+          "sha256": "75360bceeeb2fb2ac921d69ed8b40b6fa199c3f7318ec75ed91c5fb42a4776f5",
+          "proves": "a delete row alone withholds nothing. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_context_visibility.py::TestWithheldContent::test_a_delete_row_committed_outside_the_pipeline_hides_nothing",
+          "sha256": "2556615cb0e1ddf023141bf7577777f4dc66ad5f53934f9915178fdd2228d37e",
+          "proves": "a delete row committed outside the pipeline hides nothing. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        }
+      ],
+      "missing": [
+        "This does not cover every permission rule, live permission transitions during a stream, arbitrary memory providers or distributed stores. Hook contexts and pure structural views use specialized tests, not shared scenario observations."
+      ]
+    },
+    {
+      "id": "deleted-history-content-and-audit",
+      "requirement": "RK-10.3-004",
+      "clause_sha256": "1af024a2e37ae5df90d46287c58a38702003b3fa52f4dd043364cf29b90be11a",
+      "scope": "Deleted text and edited text are withheld from later model calls; specialized tests retain event identity and remove raw payloads and media edit content while hooks keep audit content.",
+      "coverage": "partial",
+      "review": "Read each scenario assertion and each named Python test against this exact clause. Lists assert cardinality and order; object fields assert only the named contract. Shared execution and specialized source evidence remain distinct.",
+      "assertions": [
+        {
+          "scenario": "permissions/model-history-withholds-deleted-text-and-keeps-live-edits",
+          "pointer": "/expect",
+          "sha256": "ee9b23308dc49b5c03ce3edfd8af4f1a40233c4cb5159e9c1f6605550d33886b",
+          "scenario_sha256": "3dbcd6e0c7cfb1d0353138b50ecfbee79e5b556deedb85bfe55a869bf62c79cd",
+          "proves": "Actual model requests retain a live edit and exclude text after deletion; audit records retain content and an unchecked DELETE does not suppress the target."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/test_context_visibility.py::TestDeletedContentStaysDeleted::test_an_agent_s_turn_after_a_delete_does_not_read_the_deleted_text",
+          "sha256": "2b29fe48e62a54d288f8a825b6a85c38f207d6f78d53c7a7d460a15040b5282f",
+          "proves": "an agent s turn after a delete does not read the deleted text. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_context_visibility.py::TestDeletedContentStaysDeleted::test_the_deleted_event_keeps_its_place_in_the_history",
+          "sha256": "a71b4c5514c62c7294e2d0034e3a6baa28037494a233106c4006445eb0d09a84",
+          "proves": "the deleted event keeps its place in the history. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_context_visibility.py::TestDeletedContentStaysDeleted::test_hooks_still_read_what_was_deleted",
+          "sha256": "51941824aa76f7e3cf5d465802028ee3a788faeb782e45bd9c3cca4c3d8a6e0d",
+          "proves": "hooks still read what was deleted. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_context_visibility.py::TestDeletedContentStaysDeleted::test_an_edit_s_new_content_is_still_read",
+          "sha256": "89572da33f8f553259273f296ea96b0835f41abe69e987eb6e20527c171d0378",
+          "proves": "an edit s new content is still read. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_context_visibility.py::TestDeletedContentStaysDeleted::test_an_edit_of_a_deleted_event_has_its_new_content_withheld",
+          "sha256": "4fd8fde2314b65d3943b5fd5ab491ac3c2bfdf4f052030550f0263aed55c188f",
+          "proves": "an edit of a deleted event has its new content withheld. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_context_visibility.py::TestWithheldContent::test_a_deleted_target_is_withheld_with_its_edits",
+          "sha256": "b03f14d59e40d2f39471762be7bb32cc5e5d88764d8980c436b81d4ade286a26",
+          "proves": "a deleted target is withheld with its edits. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_context_visibility.py::TestWithheldContent::test_a_delete_row_alone_withholds_nothing",
+          "sha256": "75360bceeeb2fb2ac921d69ed8b40b6fa199c3f7318ec75ed91c5fb42a4776f5",
+          "proves": "a delete row alone withholds nothing. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_context_visibility.py::TestWithheldContent::test_a_delete_row_committed_outside_the_pipeline_hides_nothing",
+          "sha256": "2556615cb0e1ddf023141bf7577777f4dc66ad5f53934f9915178fdd2228d37e",
+          "proves": "a delete row committed outside the pipeline hides nothing. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        }
+      ],
+      "missing": [
+        "All native provider references and channel_data, every parse/delivery history boundary, arbitrary media content, window eviction and distributed stores are not exhaustively covered by these assertions."
+      ]
+    },
+    {
+      "id": "transport-direction-observation-and-delivery",
+      "requirement": "RK-10.2-003",
+      "clause_sha256": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e",
+      "scope": "The transport direction gate: both directions execute on_event, only an outbound-capable transport is delivered to.",
+      "coverage": "partial",
+      "review": "Read each scenario assertion and each named Python test against this exact clause. Lists assert cardinality and order; object fields assert only the named contract. Shared execution and specialized source evidence remain distinct.",
+      "assertions": [
+        {
+          "scenario": "permissions/transport-direction-gates-delivery-but-not-on-event",
+          "pointer": "/expect",
+          "sha256": "13690348ee1f76cc0ed5fd405a87ca9dcf3fefed7e4f430d2bf06e6dc937675f",
+          "scenario_sha256": "1283ba5359047f4f39642146f6d38e1d0e316acd07561bd18072a6a67a345f3a",
+          "proves": "Both on_event observations are collected and exact delivery lists distinguish inbound-only from outbound-only transports."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/test_visibility_rules.py::TestDirection::test_an_inbound_only_transport_is_told_but_not_delivered_to",
+          "sha256": "f5306239115e1a8c2c8b7dc2de809a65131b24f8721c63be77d651a920a3ad00",
+          "proves": "an inbound only transport is told but not delivered to. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_visibility_rules.py::TestDirection::test_an_outbound_only_transport_is_delivered_to",
+          "sha256": "0db907ba446a2006bce63266ad3ba59ce7a40b54eb6807a7f8349851e802a556",
+          "proves": "an outbound only transport is delivered to. The specialized test is source evidence; its execution is not implied by a scenario receipt."
+        }
+      ],
+      "missing": [
+        "Other broadcast steps, capabilities, retries, rates, concurrent delivery and intelligence execution are covered separately or remain unmapped."
       ]
     }
   ],

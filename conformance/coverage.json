@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "e68bbaace40568f287fa43b657999608f5b28a6f6e3379c67e21c6760258ca9a",
-  "corpus_sha256": "2791dbcbe12ad8b7f5b3ec3e5d6b41529c79945690ded9d288b4f0f4fc0ec7d1",
-  "python_commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
-  "scenario_count": 1578,
+  "corpus_sha256": "e0b044ee62b30e132f946940f53b39fb34403c3a958d2a7b309d85885163cf41",
+  "python_commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+  "scenario_count": 1589,
   "sections": [
     {
       "section": "0",
@@ -176,6 +176,7 @@
       "candidate_scenarios": [
         "broadcast/an-inbound-only-transport-is-not-delivered-to",
         "permissions/an-outbound-only-agent-is-still-asked",
+        "permissions/transport-direction-gates-delivery-but-not-on-event",
         "streaming/a-stream-reaches-an-outbound-only-transport-and-no-inbound-only-one"
       ]
     },
@@ -536,8 +537,12 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "injection/a-sent-event-keeps-its-answer-scope",
+        "permissions/a-cascade-keeps-the-answer-scope-its-parent-narrowed",
+        "permissions/a-hook-only-narrows-the-answer-scope",
         "permissions/a-response-s-hook-cannot-widen-it-past-its-answer-scope",
+        "permissions/an-answer-intersects-its-own-visibility-with-the-trigger-s-scope",
         "permissions/an-empty-answer-scope-a-hook-writes-sends-the-answers-nowhere",
+        "permissions/buffered-streams-obey-the-answer-scope",
         "streaming/an-answer-scope-of-none-streams-to-no-target",
         "streaming/an-answer-scope-streams-only-to-a-target-it-names"
       ]
@@ -1327,21 +1332,28 @@
         "discussion/a-name-a-binding-hides-the-message-from-queues-nobody",
         "greeting/a-greeting-stays-within-its-agent-s-visibility",
         "permissions/a-blocked-injected-event-keeps-its-own-visibility",
+        "permissions/a-cascade-keeps-the-answer-scope-its-parent-narrowed",
+        "permissions/a-depth-limit-record-keeps-the-agent-s-permitted-scope",
         "permissions/a-detached-source-s-history-still-reaches-an-agent",
+        "permissions/a-hook-only-narrows-the-answer-scope",
         "permissions/a-refused-message-is-stored-within-its-source-binding",
         "permissions/a-response-s-hook-cannot-widen-it-past-its-answer-scope",
         "permissions/a-source-bound-for-no-one-reaches-no-target",
         "permissions/an-agent-recalls-accepted-whispers-but-not-refused-answers",
+        "permissions/an-allowed-hook-injection-keeps-its-target-scope",
+        "permissions/an-answer-intersects-its-own-visibility-with-the-trigger-s-scope",
         "permissions/an-answer-past-the-reentry-budget-is-stored-within-its-agent-s-binding",
         "permissions/an-answer-scope-internal-a-channel-gives-reads-as-none",
         "permissions/an-empty-answer-scope-a-hook-writes-sends-the-answers-nowhere",
         "permissions/an-event-is-stored-with-the-intersection",
         "permissions/binding-changes-do-not-rewrite-history-visibility",
+        "permissions/buffered-streams-obey-the-answer-scope",
         "permissions/each-agent-recalls-only-its-visible-history",
         "permissions/empty-event-visibility-never-opens-history",
         "permissions/hidden-messages-stay-out-of-later-model-contexts",
         "permissions/internal-is-the-framework-s-own",
         "permissions/invalid-visibility-is-refused-at-every-door",
+        "permissions/only-the-framework-may-mark-an-answer-internal",
         "permissions/reserved-channel-ids-are-refused",
         "permissions/the-agent-whispers-to-the-advisor",
         "permissions/visibility-intersections-on-inbound-and-injection",
@@ -1401,6 +1413,7 @@
         "permissions/a-muted-agent-reads-but-its-answer-is-blocked",
         "permissions/a-muted-agent-s-stream-is-closed-unread",
         "permissions/a-muted-supervisor-s-second-pass-is-closed-unread",
+        "permissions/a-read-only-muted-stream-is-consumed-as-read-only",
         "permissions/a-refused-message-is-stored-within-its-source-binding",
         "permissions/all-source-access-and-mute-combinations",
         "permissions/all-target-access-and-mute-combinations",
@@ -1408,15 +1421,20 @@
         "permissions/an-event-is-stored-with-the-intersection",
         "permissions/an-injection-from-an-unbound-channel-raises",
         "permissions/binding-changes-do-not-rewrite-history-visibility",
+        "permissions/buffered-streams-obey-the-answer-scope",
         "permissions/each-agent-recalls-only-its-visible-history",
         "permissions/empty-event-visibility-never-opens-history",
         "permissions/hidden-messages-stay-out-of-later-model-contexts",
         "permissions/invalid-visibility-is-refused-at-every-door",
+        "permissions/model-history-withholds-deleted-text-and-keeps-live-edits",
         "permissions/muted-source-is-stored-blocked",
+        "permissions/only-the-framework-may-mark-an-answer-internal",
         "permissions/read-only-and-muted-reads-as-read-only",
         "permissions/read-only-source-is-stored-blocked",
+        "permissions/refused-messages-never-return-in-model-history",
         "permissions/targets-by-access-and-self",
         "permissions/the-agent-whispers-to-the-advisor",
+        "permissions/transport-direction-gates-delivery-but-not-on-event",
         "permissions/visibility-intersections-on-inbound-and-injection",
         "permissions/visibility-is-canonical-at-every-door",
         "reentrancy/a-delivery-mutes-a-channel",
@@ -1567,6 +1585,7 @@
         "greeting/a-stream-answering-a-greeting-is-chained",
         "hooks/an-after-broadcast-hook-reads-its-set-s-chain-depth-observation-stored",
         "orchestration/a-loop-out-of-iterations-answers-its-last-output-not-approved",
+        "permissions/a-depth-limit-record-keeps-the-agent-s-permitted-scope",
         "permissions/an-answer-past-the-reentry-budget-is-stored-within-its-agent-s-binding",
         "reentrancy/a-turn-s-injection-is-a-new-arrival",
         "reentrancy/hook-bodies-that-update-stop-at-the-hook-calls",
@@ -1612,7 +1631,8 @@
       "review": "normative",
       "requirements": 6,
       "mapping": {
-        "unmapped": 6
+        "mapped_partial": 1,
+        "unmapped": 5
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -1900,7 +1920,8 @@
       "review": "normative",
       "requirements": 6,
       "mapping": {
-        "unmapped": 6
+        "mapped_partial": 1,
+        "unmapped": 5
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -1925,8 +1946,11 @@
         "locks/an-adopted-direct-injection-leaves-its-injected-event-s-failed-release-to-its-caller",
         "locks/an-adopted-message-held-for-its-sender-carries-the-failed-release-of-what-a-call-nested-in-its-challenge-s-section-injected",
         "permissions/a-blocked-injected-event-keeps-its-own-visibility",
+        "permissions/a-hook-only-narrows-the-answer-scope",
         "permissions/a-response-s-hook-cannot-widen-it-past-its-answer-scope",
+        "permissions/an-allowed-hook-injection-keeps-its-target-scope",
         "permissions/an-empty-answer-scope-a-hook-writes-sends-the-answers-nowhere",
+        "permissions/refused-messages-never-return-in-model-history",
         "rooms/a-hook-that-closes-the-room-refuses-its-event",
         "streaming/a-stream-row-under-an-internal-answer-scope-is-stored-for-no-channel",
         "streaming/a-streamed-answer-a-before-broadcast-hook-blocks-is-stored-blocked",
@@ -2258,6 +2282,7 @@
         "permissions/muted-source-is-stored-blocked",
         "permissions/read-only-and-muted-reads-as-read-only",
         "permissions/read-only-source-is-stored-blocked",
+        "permissions/refused-messages-never-return-in-model-history",
         "reentrancy/a-locked-hook-commits-a-record",
         "reentrancy/a-locked-hook-mutes-its-source",
         "reentrancy/a-locked-hook-s-injection-commits-ahead",
@@ -2473,7 +2498,8 @@
       "review": "normative",
       "requirements": 8,
       "mapping": {
-        "unmapped": 8
+        "mapped_partial": 1,
+        "unmapped": 7
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -2517,7 +2543,8 @@
       "review": "normative",
       "requirements": 8,
       "mapping": {
-        "unmapped": 8
+        "mapped_partial": 1,
+        "unmapped": 7
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -2538,6 +2565,7 @@
         "inbound/a-channel-s-echo-of-its-own-output-speaks-as-no-participant",
         "inbound/a-deletion-opens-no-agent-turn",
         "inbound/an-edit-opens-no-agent-turn",
+        "permissions/model-history-withholds-deleted-text-and-keeps-live-edits",
         "reentrancy/a-locked-hook-updates-an-earlier-event",
         "reentrancy/an-off-lock-hook-updates-an-earlier-event",
         "reentrancy/hook-bodies-that-update-stop-at-the-hook-calls",
@@ -7425,7 +7453,7 @@
               "commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -7458,7 +7486,7 @@
               "commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -7495,7 +7523,7 @@
               "commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -7526,7 +7554,7 @@
               "commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -7549,7 +7577,7 @@
               "commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -7572,7 +7600,7 @@
               "commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -7603,7 +7631,7 @@
               "commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -7626,7 +7654,7 @@
               "commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -7649,7 +7677,7 @@
               "commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -7662,10 +7690,10 @@
       "links": [
         {
           "id": "visibility-internal-public-doors",
-          "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
+          "scope": "All six public doors plus hook restoration, channel response visibility and depth-limit records; framework internal-record protection is specialized source evidence.",
           "coverage": "partial",
           "missing": [
-            "Hook restoration, channel responses, framework-created records and outside-pipeline commits remain outside this door-only proof."
+            "Framework-created record paths across voice/media and outside-pipeline commits are not exhaustively linked; warning logs are checked only by specialized Python tests."
           ],
           "executions": [
             {
@@ -7682,7 +7710,7 @@
               "commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -7698,8 +7726,8 @@
           "scope": "Public visibility inputs, committed text events and per-agent model context on the in-memory backend.",
           "coverage": "partial",
           "missing": [
-            "EDIT/DELETE target narrowing, non-text content, internal intersections, all refusal/reentry paths and hook-injected events are not exhaustively linked here.",
-            "Streaming permission changes and memory summarizer inputs need separate proofs."
+            "EDIT/DELETE target visibility narrowing, non-text content and every refusal/reentry path remain outside this mapping.",
+            "Streaming permission changes and all memory summarizer inputs need separate proofs."
           ],
           "executions": [
             {
@@ -7708,7 +7736,7 @@
               "commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -7749,9 +7777,18 @@
               "commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
+        },
+        {
+          "id": "response-refusals-and-reader-history",
+          "scope": "Rule 2 read-only/mute stream precedence and rule 8 refused/deleted reader history, live edits and unfiltered host histories.",
+          "coverage": "partial",
+          "missing": [
+            "This does not cover every permission rule, live permission transitions during a stream, arbitrary memory providers or distributed stores. Hook contexts and pure structural views use specialized tests, not shared scenario observations."
+          ],
+          "executions": []
         }
       ]
     },
@@ -7860,8 +7897,35 @@
     {
       "id": "RK-8.5-004",
       "section": "8.5",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "response-scopes-and-cascades",
+          "scope": "Response visibility intersections, propagation through a two-agent cascade, buffered real-model streams, hook narrowing and depth-limit records.",
+          "coverage": "partial",
+          "missing": [
+            "Transport-produced answers, instruction and delegation cascade boundaries, concurrent binding changes and every streamed tool-row path remain outside this link."
+          ],
+          "executions": [
+            {
+              "execution": "python-permissions-ecf9bc5",
+              "implementation": "python",
+              "commit": "ecf9bc5f7e92a440413b2518e799afce31bd5042",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-visibility-8fb44e9",
+              "implementation": "python",
+              "commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "RK-8.5-005",
@@ -7970,7 +8034,7 @@
               "commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8023,7 +8087,7 @@
               "commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8064,7 +8128,7 @@
               "commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8111,7 +8175,7 @@
               "commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -8162,8 +8226,18 @@
     {
       "id": "RK-9.4-002",
       "section": "9.4",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "response-hook-scope-restoration",
+          "scope": "BEFORE_BROADCAST cannot widen or clear an answer scope, write internal visibility or widen a framework internal record.",
+          "coverage": "partial",
+          "missing": [
+            "Replacement identity, authority fields, instruction marks and every hook trigger remain outside this scope. Framework voice record creation is Level 3; its visibility protection is specialized source evidence."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-9.4-003",
@@ -8264,8 +8338,18 @@
     {
       "id": "RK-10.2-003",
       "section": "10.2",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "transport-direction-observation-and-delivery",
+          "scope": "The transport direction gate: both directions execute on_event, only an outbound-capable transport is delivered to.",
+          "coverage": "partial",
+          "missing": [
+            "Other broadcast steps, capabilities, retries, rates, concurrent delivery and intelligence execution are covered separately or remain unmapped."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-10.2-004",
@@ -8318,8 +8402,18 @@
     {
       "id": "RK-10.3-004",
       "section": "10.3",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "deleted-history-content-and-audit",
+          "scope": "Deleted text and edited text are withheld from later model calls; specialized tests retain event identity and remove raw payloads and media edit content while hooks keep audit content.",
+          "coverage": "partial",
+          "missing": [
+            "All native provider references and channel_data, every parse/delivery history boundary, arbitrary media content, window eviction and distributed stores are not exhaustively covered by these assertions."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-10.3-005",
