@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "4a27b5f6663ab28d1c9b5f618da77a7679785b69c5bf0bca86345833c7e76c0a",
-  "corpus_sha256": "c16a548566bcaf8e7bb1266a1aa1fae80be78e1b4f54860133532a740dc4c234",
+  "rfc_sha256": "0a196b1344b84ef4564578816845da8569fe1b1da53d789e4fd6ad738c6e00a5",
+  "corpus_sha256": "88e867470930126f95b174b5ea9b2183c85c432bedf586ae3913f162e994af00",
   "python_commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
-  "scenario_count": 1734,
+  "scenario_count": 1736,
   "sections": [
     {
       "section": "0",
@@ -777,6 +777,8 @@
         "eviction/a-stored-result-of-parts-read-as-text-is-never-noted-as-a-repeat",
         "eviction/an-evicted-answer-given-a-third-time-is-noted",
         "executors/a-turn-apart-publishes-its-thinking-and-tool-calls-to-the-room",
+        "executors/a-turn-cut-on-its-executor-names-it-in-its-record",
+        "executors/a-turn-s-record-names-the-executor-that-ran-it-apart",
         "inbound/a-binding-s-cost-budget-on-an-unpriced-model-fails-the-turn",
         "inbound/a-binding-s-cost-budget-that-is-no-positive-number-fails-the-turn",
         "inbound/a-binding-s-ill-typed-setting-fails-the-turn",
@@ -7139,7 +7141,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -7147,7 +7149,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -7285,7 +7287,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -7293,7 +7295,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -7429,7 +7431,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -7437,7 +7439,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -7551,7 +7553,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -7559,7 +7561,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -7694,7 +7696,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -7702,7 +7704,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -7824,7 +7826,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -7832,7 +7834,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -8175,7 +8177,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -8183,7 +8185,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -8716,7 +8718,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8805,7 +8807,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8898,7 +8900,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8985,7 +8987,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -9064,7 +9066,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -9143,7 +9145,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -9230,7 +9232,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -9309,7 +9311,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -9396,7 +9398,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -9485,7 +9487,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -9575,7 +9577,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -9672,7 +9674,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -9738,7 +9740,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -9865,7 +9867,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -9873,7 +9875,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -9934,7 +9936,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -9959,7 +9961,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -10098,7 +10100,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -10269,7 +10271,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -10277,7 +10279,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -10398,7 +10400,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -10507,7 +10509,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -10604,7 +10606,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -10707,7 +10709,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -10822,7 +10824,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -11006,7 +11008,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -11014,7 +11016,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -11085,7 +11087,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -11166,7 +11168,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -11351,7 +11353,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -11359,7 +11361,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -11432,7 +11434,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -11440,7 +11442,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -11511,7 +11513,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -11519,7 +11521,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -11592,7 +11594,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -11738,7 +11740,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -11746,7 +11748,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -11819,7 +11821,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -11827,7 +11829,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -11942,7 +11944,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -12047,7 +12049,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -12055,7 +12057,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -12136,7 +12138,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -12144,7 +12146,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -12257,7 +12259,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -12265,7 +12267,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -12370,7 +12372,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -12378,7 +12380,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -12459,7 +12461,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -12467,7 +12469,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -12548,7 +12550,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -12556,7 +12558,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -12637,7 +12639,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -12645,7 +12647,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -14792,7 +14794,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -14800,7 +14802,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -14855,7 +14857,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -14988,7 +14990,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -14996,7 +14998,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -15159,7 +15161,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -15167,7 +15169,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -15265,7 +15267,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-reentrancy-final-corpus-9b44d51-sqlite",
@@ -15273,7 +15275,7 @@
               "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }

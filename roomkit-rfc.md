@@ -3458,7 +3458,10 @@ MESSAGE: `loop_end_reason` (the reason above), `ai_usage`
 its last generation used, null when that generation failed),
 `ai_usage_complete` (whether every generation reported its input and output
 counters), `ai_model` and `ai_provider` (what its last generation ran on, a
-fallback provider when it served it) in the message's metadata. That message is the one of
+fallback provider when it served it) in the message's metadata. A turn that ran
+on an executor other than the room owner's own (§10.6), whatever its end, also
+records `executor_id` there, the id that executor took the turn under; a turn on
+the owner's own executor records none. That message is the one of
 the turn's final text or, when the turn has none (a cancellation between
 rounds, an interruption), the last message the turn wrote. A turn that wrote no
 message at all (a first turn cut while its call runs) records it on its last
@@ -3496,7 +3499,8 @@ are what the last of them told, and `ai_usage_complete` is false when one told
 no counters or one is in flight. A generation counts as in flight from the end
 of the calls that followed the last one told, as the reader read it, or from a
 segment break, until it tells; a call that ends once the reader stopped asks no
-model again. A stream cut before anything told what it used records only its end: an
+model again. A stream cut before anything told what it used records only its end,
+with `executor_id` when it ran apart: an
 ACP agent's or a text-only channel's reports no usage at all, and a first
 generation in flight cannot be told from them.
 <!-- /rfc -->
