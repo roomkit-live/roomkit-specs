@@ -214,6 +214,12 @@ room callbacks of the setup are not compared.
   - with `sender_is_participant`, it names its own senders: its inbound
     `sender_id` is a room's `Participant.id`, which no resolver is asked
     about (§11.6);
+  - with `verbs`, its per-room verbs (§10.6.3), by name: `keeps` merges the
+    call's arguments into what this build keeps for the room and answers
+    that, `reads` answers it, `result` is answered as written; what it keeps
+    is the room's state of §10.6.2, dropped by `on_room_detached`;
+  - with `declared`, the kit holds it by its declaration alone, and the
+    executors of `executors` that host it build it (below);
   - an `ai` channel with a `model` is a **scripted agent** instead (below).
 - `rooms`: each is created (`id`, `organization_id`, `metadata`, `timers`),
   `store_metadata` then written through the store (`patch_room_metadata`), the
@@ -298,6 +304,20 @@ room callbacks of the setup are not compared.
   a scripted agent answers from the one model of its channel id, whichever
   process runs its turn. The rooms, hooks and strategies of the setup are
   the run's own kit's.
+- `executors`: **turn executors** beside the kit (§10.6.2, §10.6.7), served
+  on the kit's turn backend, each `id`, the channel ids it `hosts`, the
+  `hooks` it registers and the `room_hooks` it defines on triggers a turn
+  fires (§10.6.6), `started` (default true; false: served only by an
+  `executor.start` step) and `answers` (default true; false: it takes each
+  turn it is given and never answers it, `gate` naming a gate it reaches as it
+  takes one, for a `wait_for` step). The channels it runs are the ones
+  the setup marks `declared`: each executor builds its own copy, and a
+  scripted agent answers from the one model of its channel id, whichever
+  executor runs its turn. `kit.turn_timeouts` gives the bounds of a turn
+  (§10.6.8): `accept_ms`, `heartbeat_interval_ms`, `heartbeat_timeout_ms` and
+  `cancel_ms`, the implementation's default for each absent. Which of several
+  executors declaring a channel takes a room's first turn is the backend's
+  to choose (§10.6.7): a scenario that needs one starts the other afterwards.
 
 ### Identity resolution
 
@@ -715,6 +735,15 @@ run's own kit when absent.
 | `talk_again` | `room_id`, `channel_ids`, `organization_id`: the kit's `talk_again` (§19.7.5 rule 12) | null; a room holding no discussion in the scope, `invalid_argument` |
 | `room_strategy_is_current` | `room_id`, `kind` (`Discussion`, `Pipeline`, `Swarm`, `Loop` or `Supervisor`, the implementation's strategy of that name), `organization_id`, `kit`: the kit's `room_strategy_is_current` (§19.7.5 rule 16) | whether the discussion this process installed is the one the room stores; a kind not stored with the room, `kind_not_stored`; a room outside the scope, `room_not_found` |
 | `close` | `kit`: closes the kit (§12.10.4), a process that stops; no later step calls it | null |
+| `executor.start` | `executor`, an id of `setup.executors`: serves it on the kit's turn backend (§10.6.7) | null |
+| `executor.close` | `executor`: it takes no more turns and ends those it runs (§10.6, §10.6.8) | null |
+| `executor.kill` | `executor`: to the room it stops as a killed process stops, sending nothing more and hearing nothing more, its turns left to the owner's liveness checks (§10.6.8) | null |
+| `executor.pause`, `executor.resume` | `executor`: it stops declaring its channels, or declares them again, keeping what it holds (§10.6.7) | null |
+| `executor.calls` | `executor`: what it did so far, as `expect.executors` reads it; a turn's reaction may make it, to read that at a point of the turn | the list |
+| `channel.publish` | `executor`, `channel_id`, `room_id`, `kind` (an ephemeral event's type), `data`, `gate`: in a reaction's `after_turn`, work the turn began publishes on the channel's realtime, once held at `gate` when it names one; the call returns once the room owner took it, or refused it (§10.6.3) | null |
+| `channel_call` | `channel_id`, `room_id`, `verb`, `arguments`: the channel's per-room verb, on the executor holding the room's state (§10.6.3) | the verb's result |
+| `release_channel` | `channel_id`: every executor holding a build of it lets it go, closed once the turns running on it end, and builds it anew for the next one (§10.6.3) | null |
+| `enable_room_hook` | `room_id`, `name`: the room's turns run the room hook the executors define under `name`, and only an executor that defines it takes them (§10.6.6, §10.6.7) | null |
 | `install_pipeline` | `handler`, `stages`, `default_phase`, `supervisor_id`, `agents` (channel ids), `agent_aliases`, `hook_priority`: the ConversationPipeline's `install` on the kit, its handler named `handler` (§19.5) | null |
 | `setup_handoff` | `agent_id`, `handler`, `targets` (each an id and its description or null: the tool `build_handoff_tool` builds; absent: the generic one), `room_id` (absent: every room): serves the handoff tool on the agent (§19.6) | null |
 | `handoff.handle` | `handler`, `room_id`, `calling_agent_id`, `arguments`, the tool call's: the handler's `handle` (§19.6) | the HandoffResult (`accepted`, `new_agent_id`, `new_phase`, `message`, `reason`) |
@@ -884,6 +913,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `ai_events` | Per room, the framework events of an AI channel's turn (§8.2, Level 1): `before_ai_generation` and `ai_response`, in emission order, matched as `framework_events`, which does not hold them |
 | `models` | Per scripted agent, each generation's request as its model received it, in order: the `messages` it carries, each `{role, text, parts, round}`, `text` its text parts joined (empty for a message with none, a tool's result among them), `parts` its text and image parts in order, each `{"text": ...}` or `{"image": url, "mime_type": ...}`, null for a message whose content is a text, `round` its reasoning, text and call parts in order, each `{"thinking": ..., "signature": ..., "redacted": ...}`, `{"text": ...}` or `{"call": id, "arguments": ..., "metadata": ...}`, null for a message whose content is a text, and the `tool_results`, each `{tool_call_id, name, content, is_error}`, `name` the tool of its call, `content` as the model reads it (a text, or a result's text and image parts in order, written as `parts` are), `is_error` whether it reads the call as failed, its `system_prompt`, its `temperature` and `max_tokens`, its `reasoning_effort`, `thinking_budget` and `enable_thinking`, its `response_schema` (null for none), the `tools` it declares, by name: each one's position in the declaration, so that a scenario names those it asserts, declared or `$absent`, and, for a model with a `chat_dialect`, `chat_messages`: the request as that rendering writes it on the wire, its system prompt first when it has one, each message's `role`, `content`, `tool_calls`, `tool_call_id` and its dialect's reasoning field |
 | `acp_wire` | Per ACP channel, the requests and notifications its scripted ACP agent received, in order, each `{method, params}` (Scripted ACP agents) |
+| `executors` | Per executor of the setup, what it did, in order: `{call, channel_id, build}`, and `room_id` for a call about a room: `built` (a copy of the channel made, `build` counting them per executor and channel), `on_event`, `on_room_attached`, `on_room_detached`, `channel_call` (with its `verb`) and `close`. A detach from a room this build never saw let go of nothing and is not listed |
 | `lifecycle` | Per room, the lifecycle records (§5.1) in index order, when the implementation writes them: an implementation that writes none passes. It says which changes write one, and which write none (a change that changes nothing, §7.2) |
 | `participants` | Per room, the participants the store holds (§5.5), in the store's order |
 | `resolver` | The scripted resolver's calls, in order |
@@ -995,6 +1025,7 @@ refuses its value, a `ChannelId`).
 | `verification_refused` | A verification request refused, with its `reason`: `not_found` (none in the caller's organization), `not_open`, `expired`, `mismatch` (a wrong secret, counted) or `failed` (the last attempt) (§11.7.2) | `VerificationRefusedError` | `RoomKitError::VerificationRefused` |
 | `channel_failed` | A channel's own error, which the caller is handed (§6.1): a transport's `on_room_attached` refusing an attach, its `on_room_detached` failing a detach | the scripted channel's failure, raised as it is | `RoomKitError::Channel` |
 | `kind_not_stored` | `room_strategy_is_current` asked of a kind of strategy that is not stored with the room (§19.7.5 rule 16) | `TypeError` | `RoomKitError::Type` |
+| `turn_link` | A turn, channel call or event no executor could carry, with its `reason`: `no_executor` (§10.6.7), `executor_lost`, `backend_closed` (§10.6.8) | `TurnLinkError` | `RoomKitError::TurnLink` |
 | `already_set_up` | A handoff's tool set up again where it is declared, or an install over an agent whose handoff is set up already (§19.6); `delegate_task` set up again on an agent (§23.4) | `RuntimeError`, `setup_handoff() already called`, `setup_delegation() already called` | `RoomKitError::Runtime` |
 
 ## Reentrancy cells
@@ -1038,12 +1069,25 @@ final state. Pending deliveries, observers and held tasks must remain visible
 to that wait; a run that reports success before they finish is not evidence of
 the final state. Timing races remain in the implementation tests.
 
+## On a distributed turn backend
+
+A runner may run the suite with every turn crossing a distributed backend's
+transport, the kit's own executor reached as one elsewhere. roomkit's is
+`ROOMKIT_TEST_TURN_BACKEND=redis REDIS_URL=... uv run pytest tests/conformance`,
+which its CI runs. It skips what a transport cannot give the runner, each
+with its reason in `tests/conformance/test_conformance.py`: a scripted turn
+that calls the kit it holds (across a backend a turn reaches its room through
+its host, `host.*`), an ASYNC hook whose timeout falls after its turn, and a
+tool answering right after its turn's cut.
+
 ## Known failures
 
 A known failure is a scenario whose observable result breaks the RFC. Its
 runner names the scenario and broken rule at an implementation revision
 (roomkit's `KNOWN_FAILURES` in `tests/conformance/test_conformance.py`,
-roomkit-rs's lists in `crates/roomkit/tests/conformance/main.rs`). Strict
+roomkit-rs's lists in `crates/roomkit/tests/conformance/main.rs`; its shared
+loop, `scenarios.rs`, reports the `executors/` area without running it, having
+no executor beside the kit). Strict
 expected failures fail the suite when they start passing; timing exceptions
 can pass on a particular run. Neither exception policy establishes conformity.
 

@@ -289,6 +289,29 @@
                   }
                 }
               }
+            },
+            "turn_timeouts": {
+              "description": "The bounds of a turn (§10.6.8), each the implementation's default when absent.",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "accept_ms": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "heartbeat_interval_ms": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "heartbeat_timeout_ms": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "cancel_ms": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
             }
           }
         },
@@ -354,6 +377,13 @@
                 "$ref": "#/$defs/label"
               }
             }
+          }
+        },
+        "executors": {
+          "description": "Turn executors beside the kit (§10.6.2, §10.6.7), which build and run the channels the setup marks `declared`.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/executor"
           }
         }
       }
@@ -842,6 +872,27 @@
         },
         "acp": {
           "$ref": "#/$defs/acp_channel"
+        },
+        "declared": {
+          "description": "The kit holds the channel by its declaration alone, and the executors of `setup.executors` that host it build it (§10.6.2).",
+          "type": "boolean"
+        },
+        "verbs": {
+          "description": "A scripted channel's per-room verbs (§10.6.3), by name: `keeps` merges the call's arguments into what this build keeps for the room and answers it, `reads` answers it, `result` is answered as written.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "keeps": {
+                "type": "boolean"
+              },
+              "reads": {
+                "type": "boolean"
+              },
+              "result": {}
+            }
+          }
         }
       }
     },
@@ -1618,7 +1669,17 @@
             "list_bindings",
             "list_members",
             "get_timeline",
-            "check_all_timers"
+            "check_all_timers",
+            "executor.start",
+            "executor.close",
+            "executor.kill",
+            "executor.pause",
+            "executor.resume",
+            "executor.calls",
+            "channel.publish",
+            "channel_call",
+            "release_channel",
+            "enable_room_hook"
           ]
         },
         "organization_id": {
@@ -4023,6 +4084,145 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "enum": [
+                  "executor.start",
+                  "executor.close",
+                  "executor.kill",
+                  "executor.pause",
+                  "executor.resume",
+                  "executor.calls"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "executor"
+            ],
+            "properties": {
+              "executor": {
+                "description": "An id of `setup.executors`.",
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "channel.publish"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "executor",
+              "channel_id",
+              "room_id",
+              "kind"
+            ],
+            "properties": {
+              "executor": {
+                "description": "An id of `setup.executors`.",
+                "type": "string"
+              },
+              "channel_id": {
+                "type": "string"
+              },
+              "room_id": {
+                "type": "string"
+              },
+              "kind": {
+                "description": "An ephemeral event's type (§8.4).",
+                "type": "string"
+              },
+              "data": {
+                "type": "object"
+              },
+              "gate": {
+                "description": "Held there before it publishes.",
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "channel_call"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "room_id",
+              "verb"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "room_id": {
+                "type": "string"
+              },
+              "verb": {
+                "type": "string"
+              },
+              "arguments": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "release_channel"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "enable_room_hook"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "name"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          }
         }
       ]
     },
@@ -4083,7 +4283,8 @@
         "waits_for_itself",
         "channel_failed",
         "already_set_up",
-        "kind_not_stored"
+        "kind_not_stored",
+        "turn_link"
       ]
     },
     "expect": {
@@ -4364,6 +4565,16 @@
         },
         "acp_wire": {
           "description": "Per ACP channel, the requests and notifications its scripted agent received, in order: each `{method, params}`, `params` as the client wrote them (README, \"Scripted ACP agents\").",
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "array",
+              "object"
+            ]
+          }
+        },
+        "executors": {
+          "description": "Per executor of the setup, what it did, in order (README, Expectations).",
           "type": "object",
           "additionalProperties": {
             "type": [
@@ -6785,6 +6996,52 @@
           }
         }
       ]
+    },
+    "executor": {
+      "type": "object",
+      "required": [
+        "id",
+        "hosts"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/label"
+        },
+        "hosts": {
+          "description": "The channel ids it declares (§10.6.7).",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "hooks": {
+          "description": "The hooks it registers on triggers a turn fires (§10.6.6), as in the setup's `hooks`.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/hook"
+          }
+        },
+        "room_hooks": {
+          "description": "The room hooks it defines on triggers a turn fires (§10.6.6).",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/room_hook"
+          }
+        },
+        "started": {
+          "description": "Served before the steps; false until an `executor.start` step. Default true.",
+          "type": "boolean"
+        },
+        "answers": {
+          "description": "False: it takes each turn it is given and never answers it. Default true.",
+          "type": "boolean"
+        },
+        "gate": {
+          "description": "With `answers` false: the gate reached as it takes a turn, for a `wait_for` step.",
+          "type": "string"
+        }
+      }
     }
   }
 }
