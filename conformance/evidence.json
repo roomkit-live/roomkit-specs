@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
+  "python_commit": "127c55db8b6d098e43ea9bcb57b83ce02db3dbfa",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -12491,7 +12491,7 @@
       "id": "reentrancy-parser-deadline",
       "requirement": "RK-13.6-001",
       "clause_sha256": "ad4d81012b89fbd00eb8e41d65eac28e28e96aec82d97d314cef03f0523c418d",
-      "scope": "The pre-commit timeout covers handle_inbound, refuses the call and leaves no timeline event or target delivery.",
+      "scope": "The pre-commit timeout covers handle_inbound, refuses the call and leaves no timeline event or target delivery. Specialized source tests also cover context and nested scope reads and the direct-injection lock/hook/read matrix.",
       "coverage": "partial",
       "review": "Read Python source and its assertions before writing the shared cases; all seven changed cases pass on Python memory, SQLite and PostgreSQL. Six cases are new and one now queues the neighbor before cancellation. Public API and RFC semantics are unchanged. Native Rust waiter tests separately establish first-poll/drop and active multiwaiter behavior; the JSON runner does not express future destruction. The initial 231-method inventory is not a claim that every method or variant was reviewed in this slice.",
       "assertions": [
@@ -12515,10 +12515,119 @@
           "nodeid": "tests/test_precommit_timeout.py::TestTheWindowCoversWhatItClaims::test_a_channel_that_hangs_in_handle_inbound",
           "sha256": "2bdb88653f68f63193dfbe2c9f1ba5a1424e7f3357483723503c5eecb3634e60",
           "proves": "a channel that hangs in handle inbound. Specialized source proof, including the test decorators; scenario execution does not execute this native test."
+        },
+        {
+          "nodeid": "tests/test_precommit_timeout.py::TestTheWindowCoversWhatItClaims::test_a_store_that_hangs_during_the_context_build",
+          "sha256": "b8fcf066aa71c4a0080c248c49ffc81c8b9aebbb708e40c52d468b644268f236",
+          "proves": "A stalled context read is bounded before commit."
+        },
+        {
+          "nodeid": "tests/test_precommit_timeout.py::TestOneDeadlineFromTheCallsStart::test_the_scope_read_before_a_room_s_own_message_draws_is_bounded",
+          "sha256": "1f84c2bb4492e0c6352570ec472b922cb938daedb18a44bc1278f93e781bc2a1",
+          "proves": "A nested scoped inbound read is bounded before it draws the room reentry budget."
+        },
+        {
+          "nodeid": "tests/test_precommit_timeout.py::TestDirectInjectionRaisesWhatItCannotReturn::test_it_raises_and_writes_nothing",
+          "sha256": "d58245fa67344185d83b0e1a73684a81a60a575c34c5fa15f5f0e1b72ff86279",
+          "proves": "Direct injection expiry at a lock, hook or room read raises and leaves no write, with one timeout report."
         }
       ],
       "missing": [
-        "Routing, context-store reads, room-lock acquisition, adoption, direct injection and post-commit cancellation have separate proofs; this case does not establish the deadline across every region."
+        "The shared scenario alone covers the parser. Native source proofs cover the listed additional regions, while subscription lifetime, every adoption schedule and post-commit cancellation are separate obligations."
+      ]
+    },
+    {
+      "id": "core-shutdown-admission",
+      "requirement": "RK-12.10.4-005",
+      "clause_sha256": "e0ebe6886b41f4597c93caa760fca8804d7c1a7a362302e3a8052badc7542032",
+      "scope": "Public operation admission and delivery-key cancellation during and after the kit close; an already-entered nested scope read under a locked hook keeps its parent grace.",
+      "coverage": "partial",
+      "review": "Python source assertions and shared scenario were read independently with the Rust changes. The shared scenario passed on Python memory and SQLite. Native tests additionally cover scope reads, commit boundaries, timer hooks, injected passes and completed answers; these are not additional JSON scenario executions. This link does not close the entire shutdown contract.",
+      "assertions": [
+        {
+          "scenario": "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
+          "pointer": "/steps/4/expect",
+          "sha256": "8d9d5f9beed2458c4479c94ea29dd55a6e630e71dc1c7aabd58cbfd700efe2e2",
+          "scenario_sha256": "0a5ab28ca0939eb93474f32c1729f099f9154fc38766e7aef9240106020b0a43",
+          "proves": "New deliveries and failed verification attempts are refused during and after shutdown; cancellation returns zero and both retained handles report kit_closed."
+        },
+        {
+          "scenario": "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
+          "pointer": "/steps/5/expect",
+          "sha256": "bde64c77e3c26c07bc8de23f8c14854d96445fdc3a273f35a7c4ecffc6cee795",
+          "scenario_sha256": "0a5ab28ca0939eb93474f32c1729f099f9154fc38766e7aef9240106020b0a43",
+          "proves": "New deliveries and failed verification attempts are refused during and after shutdown; cancellation returns zero and both retained handles report kit_closed."
+        },
+        {
+          "scenario": "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
+          "pointer": "/steps/6/expect",
+          "sha256": "bde64c77e3c26c07bc8de23f8c14854d96445fdc3a273f35a7c4ecffc6cee795",
+          "scenario_sha256": "0a5ab28ca0939eb93474f32c1729f099f9154fc38766e7aef9240106020b0a43",
+          "proves": "New deliveries and failed verification attempts are refused during and after shutdown; cancellation returns zero and both retained handles report kit_closed."
+        },
+        {
+          "scenario": "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
+          "pointer": "/steps/7/expect",
+          "sha256": "df95d494b154bc7ea6d978af82b1f1f252652e0093b195ce79c3467de942602c",
+          "scenario_sha256": "0a5ab28ca0939eb93474f32c1729f099f9154fc38766e7aef9240106020b0a43",
+          "proves": "New deliveries and failed verification attempts are refused during and after shutdown; cancellation returns zero and both retained handles report kit_closed."
+        },
+        {
+          "scenario": "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
+          "pointer": "/steps/10/expect",
+          "sha256": "bde64c77e3c26c07bc8de23f8c14854d96445fdc3a273f35a7c4ecffc6cee795",
+          "scenario_sha256": "0a5ab28ca0939eb93474f32c1729f099f9154fc38766e7aef9240106020b0a43",
+          "proves": "New deliveries and failed verification attempts are refused during and after shutdown; cancellation returns zero and both retained handles report kit_closed."
+        },
+        {
+          "scenario": "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
+          "pointer": "/steps/11/expect",
+          "sha256": "bde64c77e3c26c07bc8de23f8c14854d96445fdc3a273f35a7c4ecffc6cee795",
+          "scenario_sha256": "0a5ab28ca0939eb93474f32c1729f099f9154fc38766e7aef9240106020b0a43",
+          "proves": "New deliveries and failed verification attempts are refused during and after shutdown; cancellation returns zero and both retained handles report kit_closed."
+        },
+        {
+          "scenario": "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
+          "pointer": "/steps/12/expect",
+          "sha256": "df95d494b154bc7ea6d978af82b1f1f252652e0093b195ce79c3467de942602c",
+          "scenario_sha256": "0a5ab28ca0939eb93474f32c1729f099f9154fc38766e7aef9240106020b0a43",
+          "proves": "New deliveries and failed verification attempts are refused during and after shutdown; cancellation returns zero and both retained handles report kit_closed."
+        },
+        {
+          "scenario": "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
+          "pointer": "/steps/13/expect",
+          "sha256": "8d9d5f9beed2458c4479c94ea29dd55a6e630e71dc1c7aabd58cbfd700efe2e2",
+          "scenario_sha256": "0a5ab28ca0939eb93474f32c1729f099f9154fc38766e7aef9240106020b0a43",
+          "proves": "New deliveries and failed verification attempts are refused during and after shutdown; cancellation returns zero and both retained handles report kit_closed."
+        },
+        {
+          "scenario": "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
+          "pointer": "/expect",
+          "sha256": "2fd99a4165f879b92333f6e8f335a099fb99ae9f058a7514897142cdbedcde8f",
+          "scenario_sha256": "0a5ab28ca0939eb93474f32c1729f099f9154fc38766e7aef9240106020b0a43",
+          "proves": "Both committed inputs remain stored, only the already-running transport sends its input, and no refused input is added."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/test_kit_close.py::test_every_other_call_is_refused_once_the_close_started",
+          "sha256": "9e4c4ec95d94662bcc0f40f1a8e384edd9f163ff1aa66fd1646a6c89bb217011",
+          "proves": "The public operation matrix refuses new work while closing and after close."
+        },
+        {
+          "nodeid": "tests/test_kit_close.py::test_a_teardown_call_returns_doing_nothing_once_the_close_started",
+          "sha256": "59b1d5128cd9b41b3890d7b02b15d56ab21e59c8dec3ff6ced550801cd44fffc",
+          "proves": "Teardown calls become harmless once shutdown starts."
+        },
+        {
+          "nodeid": "tests/test_precommit_timeout.py::test_a_scope_read_under_a_locked_hook_keeps_close_grace",
+          "sha256": "c26988ce0500f0da84b0b728acae1db95914fbc2abda76049691bc3b597e2895",
+          "proves": "An already-entered nested message can complete its scope read and commit during its locked parent shutdown grace."
+        }
+      ],
+      "missing": [
+        "The rest of the shutdown matrix still needs assertion-by-assertion audit: retained delivery and cursor holes, stubborn cleanup, delegation and callbacks, streaming partial responses and adapter-specific resources.",
+        "Previously deferred status-bus and failed delivery-record boundaries remain deferred by their maintainer decisions; this scenario proves none of them."
       ]
     }
   ],
