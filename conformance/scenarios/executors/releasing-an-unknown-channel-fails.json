@@ -5,7 +5,7 @@
   "rules": [
     "§10.6.3"
   ],
-  "notes": "Python: tests/test_turns_channel_release.py. §10.6.3 names the message channel_released; the kit's door and its error are Python's, read as the reference.",
+  "notes": "Python: tests/test_turns_channel_release.py.",
   "setup": {
     "channels": [
       {

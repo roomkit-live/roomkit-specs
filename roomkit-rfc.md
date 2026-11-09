@@ -8452,7 +8452,9 @@ lets the build go: the next turn or channel control of the channel builds it
 anew, and the build let go is closed once the turns running on it, or still
 getting it, end, which it never cuts for this. One that holds no build builds
 none for the message. For a channel the owner holds live it changes nothing:
-that channel is the owner's registry's, and its host replaces it there.
+that channel is the owner's registry's, and its host replaces it there. A host
+sends it through the kit's `release_channel(channel_id)`, which fails when the
+kit holds no channel of that id.
 
 A `committed_event` reaches one executor: the owner's own for a channel the
 owner holds live (§10.6.7), else the one that holds the room's state for the
@@ -8474,7 +8476,9 @@ the executor's id. A backend answers a call on the call's own exchange, so
 the result names no call. A `channel_call` no executor takes fails with
 `no_executor`, at once from a backend that knows every executor (§10.6.7),
 else within `accept_timeout`; the owner then names the previous turn it
-named before the call. An executor closes the channels it built when it
+named before the call. A host makes one through the kit's `channel_call`,
+naming the channel, the room, the verb and the verb's arguments; a verb the
+channel does not have fails with the channel's own error. An executor closes the channels it built when it
 closes; the kit's close closes its own executor's.
 
 A `committed_event` or a `channel_call` that reaches an executor that closed,
@@ -8842,11 +8846,10 @@ most: a process that refuses it
 (its executor closed) has it placed again; one that does not answer it within
 `accept_timeout` loses the turn (`executor_lost`), which is never handed to
 another. A
-backend SHOULD place a room's turns of a channel on the executor that ran its
-previous one while that executor lives, so its caches stay warm and its
-session state stays; it MUST do so for a channel that holds session state the
-room needs (an ACP session, a speak policy's listening state, §10.6.2), by a
-declaration scoped to the room: "the same
+backend MUST place a room's turns of a channel on the executor that ran its
+previous one while that executor lives and takes the turn, so its caches stay
+warm and its session state stays, the session state the room needs among it
+(an ACP session, a speak policy's listening state, §10.6.2): "the same
 executor for the session's life" is the case where one executor holds the
 room. The executor that holds a room's state for a channel is the one that
 took its last turn or channel call, while it serves and declares the

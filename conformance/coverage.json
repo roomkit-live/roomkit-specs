@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "7935908591b87196f4e0c6e757309f05caac625a493ecf121f7a55b8db01adca",
-  "corpus_sha256": "9a32394cf3f546b2fc2970d18b48d838638c894d72392a3dad82ab6231e183b2",
+  "rfc_sha256": "4a27b5f6663ab28d1c9b5f618da77a7679785b69c5bf0bca86345833c7e76c0a",
+  "corpus_sha256": "3c799b7b9501229c848c47c18c12ffa4469aa2ac154f64eb930d098abcf5dc76",
   "python_commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
-  "scenario_count": 1663,
+  "scenario_count": 1691,
   "sections": [
     {
       "section": "0",
@@ -771,6 +771,7 @@
         "eviction/a-result-of-parts-keeps-its-images",
         "eviction/a-stored-result-of-parts-read-as-text-is-never-noted-as-a-repeat",
         "eviction/an-evicted-answer-given-a-third-time-is-noted",
+        "executors/a-turn-apart-publishes-its-thinking-and-tool-calls-to-the-room",
         "inbound/a-binding-s-cost-budget-on-an-unpriced-model-fails-the-turn",
         "inbound/a-binding-s-cost-budget-that-is-no-positive-number-fails-the-turn",
         "inbound/a-binding-s-ill-typed-setting-fails-the-turn",
@@ -1559,6 +1560,7 @@
       "candidate_scenarios": [
         "appendix-b/b2-block-and-inject",
         "broadcast/a-partial-failure-is-reported-before-its-deliveries",
+        "executors/a-turn-apart-emits-its-framework-events",
         "hooks/a-failing-fail-closed-hook-blocks",
         "hooks/a-failing-hook-lets-the-event-through",
         "hooks/a-hook-modifying-without-a-payload-fails-closed",
@@ -1867,6 +1869,7 @@
         "delivery/before-deliver-blocks-rewrites-and-fails-open",
         "delivery/observers-start-in-firing-order-while-earlier-bodies-wait",
         "eviction/a-hook-s-refusal-and-its-override-past-the-threshold-are-stored",
+        "executors/a-turn-apart-asks-a-person-through-the-room-owner",
         "greeting/a-session-started-hook-holds-no-message",
         "greeting/a-session-started-waits-for-the-hooks-it-awaits",
         "hooks/a-block-stops-the-chain",
@@ -2890,7 +2893,9 @@
         "unmapped": 1
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "executors/an-executor-closed-during-a-turn-ends-it"
+      ]
     },
     {
       "section": "10.6.1",
@@ -2902,6 +2907,7 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "executors/a-delegation-to-a-declared-worker-runs-on-its-executor",
         "orchestration/an-auto-delegating-supervisor-s-two-passes-carry-a-correlation-id-each"
       ]
     },
@@ -2914,7 +2920,15 @@
         "unmapped": 4
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "executors/a-declared-agent-s-turn-runs-on-the-executor-hosting-it",
+        "executors/a-detach-forgets-what-the-room-kept-for-a-channel",
+        "executors/a-room-s-turns-stay-on-the-executor-holding-its-state",
+        "executors/a-turn-apart-emits-its-framework-events",
+        "executors/a-turn-apart-publishes-its-thinking-and-tool-calls-to-the-room",
+        "executors/an-executor-drops-the-state-a-turn-elsewhere-made-stale",
+        "executors/what-the-room-keeps-for-a-channel-reaches-the-next-executor"
+      ]
     },
     {
       "section": "10.6.3",
@@ -2928,6 +2942,19 @@
       "candidate_scenarios": [
         "author-images/a-room-the-agent-joins-again-sends-a-refused-image-again",
         "author-images/an-agent-attached-over-its-attachment-sends-a-refused-image-again",
+        "executors/a-channel-call-no-executor-takes-fails-no-executor",
+        "executors/a-channel-call-runs-on-the-executor-holding-the-room",
+        "executors/a-publication-from-an-executor-no-longer-holding-the-room-is-dropped",
+        "executors/a-released-channel-is-built-anew-for-the-next-turn",
+        "executors/a-turn-apart-calls-the-host-verbs-during-and-after-it",
+        "executors/a-turn-apart-emits-its-framework-events",
+        "executors/a-turn-apart-publishes-its-thinking-and-tool-calls-to-the-room",
+        "executors/a-turn-running-on-a-released-channel-ends-on-it",
+        "executors/a-verb-the-channel-lacks-fails",
+        "executors/attach-and-detach-reach-every-executor-declaring-the-channel",
+        "executors/releasing-an-unknown-channel-fails",
+        "executors/what-the-room-keeps-for-a-channel-reaches-the-next-executor",
+        "executors/work-a-turn-apart-began-publishes-to-its-room-after-it",
         "rooms/an-agent-that-refuses-its-attach-stays-attached",
         "skills/a-standalone-turn-reads-the-room-s-stored-rows-first",
         "skills/a-stored-activation-past-the-bound-reads-as-activated",
@@ -2970,6 +2997,10 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "executors/a-turn-apart-asks-a-person-through-the-room-owner",
+        "executors/a-turn-apart-calls-a-tool-the-room-owner-serves",
+        "executors/a-turn-apart-calls-the-host-verbs-during-and-after-it",
+        "executors/work-a-turn-apart-began-publishes-to-its-room-after-it",
         "host/a-task-cut-short-hands-its-failure-to-wait-task",
         "host/a-turn-s-host-acts-for-its-room-alone",
         "host/a-turn-s-host-delegates-and-waits-for-its-task",
@@ -3004,7 +3035,9 @@
         "unmapped": 4
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "executors/an-executor-lacking-a-room-s-hook-does-not-take-its-turn"
+      ]
     },
     {
       "section": "10.6.7",
@@ -3015,7 +3048,19 @@
         "unmapped": 1
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "executors/a-channel-call-no-executor-takes-fails-no-executor",
+        "executors/a-channel-call-runs-on-the-executor-holding-the-room",
+        "executors/a-declared-agent-s-turn-runs-on-the-executor-hosting-it",
+        "executors/a-live-agent-s-turn-stays-on-the-kit-s-executor",
+        "executors/a-room-s-turns-stay-on-the-executor-holding-its-state",
+        "executors/a-room-whose-executor-closed-moves-to-another",
+        "executors/a-turn-no-executor-declares-fails-and-the-room-goes-on",
+        "executors/after-a-lost-executor-the-room-s-next-turn-runs-elsewhere",
+        "executors/an-executor-drops-the-state-a-turn-elsewhere-made-stale",
+        "executors/an-executor-lacking-a-room-s-hook-does-not-take-its-turn",
+        "executors/an-executor-that-never-answers-loses-the-turn-and-no-other-gets-it"
+      ]
     },
     {
       "section": "10.6.8",
@@ -3029,6 +3074,11 @@
       "candidate_scenarios": [
         "delivery/a-key-cuts-an-agent-s-running-generation",
         "delivery/a-key-cuts-the-running-turn-of-its-delivery",
+        "executors/a-turn-no-executor-declares-fails-and-the-room-goes-on",
+        "executors/after-a-lost-executor-the-room-s-next-turn-runs-elsewhere",
+        "executors/an-executor-closed-during-a-turn-ends-it",
+        "executors/an-executor-killed-mid-answer-loses-its-turn-and-what-was-shown-stays",
+        "executors/an-executor-that-never-answers-loses-the-turn-and-no-other-gets-it",
         "host/a-task-cut-short-hands-its-failure-to-wait-task",
         "inbound/a-failed-turn-fires-on-error",
         "inbound/an-agent-s-provider-refusal-keeps-its-retryability",
@@ -5788,6 +5838,7 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "delivery/a-task-delegated-from-a-delivery-is-not-its-turn-work",
+        "executors/a-delegation-to-a-declared-worker-runs-on-its-executor",
         "host/a-task-cut-short-hands-its-failure-to-wait-task",
         "host/a-turn-s-host-delegates-and-waits-for-its-task",
         "host/a-turn-s-host-waits-for-its-task-at-most-its-timeout",
@@ -5926,6 +5977,7 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "executors/a-turn-apart-calls-a-tool-the-room-owner-serves",
         "host/a-turn-s-host-delegates-and-waits-for-its-task",
         "orchestration/a-supervisor-given-task-status-is-pointed-at-it-by-its-dispatched-team",
         "tasks/a-background-task-cannot-close-its-frame",
@@ -6906,7 +6958,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-lifecycle-final-corpus-ecac963-sqlite",
@@ -6914,7 +6966,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -6988,7 +7040,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-lifecycle-final-corpus-ecac963-sqlite",
@@ -6996,7 +7048,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -7068,7 +7120,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-lifecycle-final-corpus-ecac963-sqlite",
@@ -7076,7 +7128,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -7126,7 +7178,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-lifecycle-final-corpus-ecac963-sqlite",
@@ -7134,7 +7186,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -7205,7 +7257,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-lifecycle-final-corpus-ecac963-sqlite",
@@ -7213,7 +7265,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -7271,7 +7323,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-lifecycle-final-corpus-ecac963-sqlite",
@@ -7279,7 +7331,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -8056,7 +8108,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8113,7 +8165,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8174,7 +8226,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8229,7 +8281,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8276,7 +8328,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -8323,7 +8375,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8378,7 +8430,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8425,7 +8477,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8480,7 +8532,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8537,7 +8589,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -8595,7 +8647,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -8660,7 +8712,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -8694,7 +8746,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -8861,7 +8913,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -8968,7 +9020,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-lifecycle-final-corpus-ecac963-sqlite",
@@ -8976,7 +9028,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -9065,7 +9117,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -9142,7 +9194,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -9207,7 +9259,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -9278,7 +9330,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -9361,7 +9413,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -9481,7 +9533,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-lifecycle-final-corpus-ecac963-sqlite",
@@ -9489,7 +9541,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -9528,7 +9580,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -9577,7 +9629,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -9690,7 +9742,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -9779,7 +9831,7 @@
               "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
