@@ -128,13 +128,13 @@ remain partially mapped; a successful receipt does not expand that scope.
 
 ## Core shutdown and pre-commit deadlines
 
-`python-core-close-final-corpus-f39105a.xml` retains the clean run on Python
-`f39105adc25738102e619bbb4b8c7edab5926a75`, copied corpus and reviewed RFC
-`47a0b656604e226ed9289418f01c98e24006fd2a`. The command in the receipts runs
+`python-core-close-final-corpus-e89dc28.xml` retains the clean run on Python
+`e89dc28e3b09d708ad1448125585d3e8bf99b657`, copied corpus and reviewed RFC
+`f7ce8cf4e8b8bcda1381a739093c3a53a09701cc`. The command in the receipts runs
 `tests/conformance` and `tests/test_precommit_timeout.py`, with in-process turns
-and one pytest worker. All 2,166 tests pass without skips or errors.
+and one pytest worker. All 2,168 tests pass without skips or errors.
 
-The receipts identify 1,737 memory scenarios and 380 SQLite scenarios. Auxiliary
+The receipts identify 1,739 memory scenarios and 380 SQLite scenarios. Auxiliary
 runner and native deadline tests in the retained artifact are not scenario
 receipts. PostgreSQL and Rust checks are recorded separately. The mapping of
 shutdown and processing deadlines remains partial: no execution fills a missing

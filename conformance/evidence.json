@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "f39105adc25738102e619bbb4b8c7edab5926a75",
+  "python_commit": "e89dc28e3b09d708ad1448125585d3e8bf99b657",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -73789,12 +73789,12 @@
       ]
     },
     {
-      "id": "python-core-close-final-corpus-f39105a-memory",
+      "id": "python-core-close-final-corpus-e89dc28-memory",
       "implementation": "python",
-      "implementation_commit": "f39105adc25738102e619bbb4b8c7edab5926a75",
-      "rfc_commit": "47a0b656604e226ed9289418f01c98e24006fd2a",
-      "corpus_commit": "47a0b656604e226ed9289418f01c98e24006fd2a",
-      "rfc_sha256": "0a196b1344b84ef4564578816845da8569fe1b1da53d789e4fd6ad738c6e00a5",
+      "implementation_commit": "e89dc28e3b09d708ad1448125585d3e8bf99b657",
+      "rfc_commit": "f7ce8cf4e8b8bcda1381a739093c3a53a09701cc",
+      "corpus_commit": "f7ce8cf4e8b8bcda1381a739093c3a53a09701cc",
+      "rfc_sha256": "a5de3927f2bc2ce0ae1e5dfea2fb00186b8b66cf5c19b8d1908ecbdd8b5ac239",
       "backend": "memory",
       "runtime": "asyncio",
       "command": [
@@ -73814,9 +73814,9 @@
         "--junitxml=python-core-close-final-corpus.xml"
       ],
       "artifact": {
-        "path": "conformance/executions/python-core-close-final-corpus-f39105a.xml",
+        "path": "conformance/executions/python-core-close-final-corpus-e89dc28.xml",
         "format": "pytest_junit",
-        "sha256": "fe0543d921ef5335b1867f994f4ab7e79d5c2405ff97c8b572ae2d16d6f504b2"
+        "sha256": "33f821bf79bb83fcee0cfca5d993b231daa4a2e0af5a235c32ad77d17136e972"
       },
       "results": [
         {
@@ -80475,6 +80475,11 @@
           "outcome": "passed"
         },
         {
+          "scenario": "tasks/a-delegation-sets-how-much-of-its-result-is-handed-back",
+          "sha256": "9a079a3c09a8a4e887a3f7abbf39829fa94093fd32aa1b7eb3d4290d53d8299a",
+          "outcome": "passed"
+        },
+        {
           "scenario": "tasks/a-delegation-whose-worker-fails-ends-failed",
           "sha256": "a2f197bcc5fa25f7e18357e8a7a45eaba838aa09b7e80c345c81583581bbc876",
           "outcome": "passed"
@@ -80712,6 +80717,11 @@
         {
           "scenario": "tasks/delegate-task-frames-and-bounds-what-the-model-passed",
           "sha256": "faca1e5b27ddf518f94cc027c852fb015086a94dfbd5af9b65f2bd83979afca9",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tasks/delegate-task-hands-back-as-much-as-its-handler-allows",
+          "sha256": "5f00119c1b8c00579a3142d679233f5b413524c771108edfdb5cb332d2d659bb",
           "outcome": "passed"
         },
         {
@@ -82507,12 +82517,12 @@
       ]
     },
     {
-      "id": "python-core-close-final-corpus-f39105a-sqlite",
+      "id": "python-core-close-final-corpus-e89dc28-sqlite",
       "implementation": "python",
-      "implementation_commit": "f39105adc25738102e619bbb4b8c7edab5926a75",
-      "rfc_commit": "47a0b656604e226ed9289418f01c98e24006fd2a",
-      "corpus_commit": "47a0b656604e226ed9289418f01c98e24006fd2a",
-      "rfc_sha256": "0a196b1344b84ef4564578816845da8569fe1b1da53d789e4fd6ad738c6e00a5",
+      "implementation_commit": "e89dc28e3b09d708ad1448125585d3e8bf99b657",
+      "rfc_commit": "f7ce8cf4e8b8bcda1381a739093c3a53a09701cc",
+      "corpus_commit": "f7ce8cf4e8b8bcda1381a739093c3a53a09701cc",
+      "rfc_sha256": "a5de3927f2bc2ce0ae1e5dfea2fb00186b8b66cf5c19b8d1908ecbdd8b5ac239",
       "backend": "sqlite",
       "runtime": "asyncio",
       "command": [
@@ -82532,9 +82542,9 @@
         "--junitxml=python-core-close-final-corpus.xml"
       ],
       "artifact": {
-        "path": "conformance/executions/python-core-close-final-corpus-f39105a.xml",
+        "path": "conformance/executions/python-core-close-final-corpus-e89dc28.xml",
         "format": "pytest_junit",
-        "sha256": "fe0543d921ef5335b1867f994f4ab7e79d5c2405ff97c8b572ae2d16d6f504b2"
+        "sha256": "33f821bf79bb83fcee0cfca5d993b231daa4a2e0af5a235c32ad77d17136e972"
       },
       "results": [
         {
