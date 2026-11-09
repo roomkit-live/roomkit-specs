@@ -221,8 +221,8 @@ room callbacks of the setup are not compared.
   dropped, then each of its `bindings` attached (`channel_id`, `category`, `access`,
   `muted`, `visibility`, `metadata`, `participant_id`), then each of its
   `participants` stored as the room's record of them (a Participant, §5.5,
-  completed with its room and `joined_at`); a `status` of `closed` or
-  `archived` is reached through the kit's own transitions.
+  completed with its room and `joined_at`); a `status` of `paused`, `closed`
+  or `archived` is reached through the kit's own transitions.
 - `hooks`: each is registered on the kit: `name`, `trigger` (a HookTrigger:
   `before_broadcast`, `after_broadcast`, `on_room_created`...), `execution`
   (default `sync`), `priority`, `timeout_ms`, `channel_types`, `channel_ids`,
@@ -676,8 +676,9 @@ run's own kit when absent.
 | `set_access`, `set_visibility` | `room_id`, `channel_id`, `access` or `visibility` | the binding |
 | `update_binding_metadata` | `room_id`, `channel_id`, `metadata` | the binding |
 | `close_room`, `archive_room` | `room_id` | the room |
+| `pause_room`, `resume_room`, `reopen_room` | `room_id` | the room after the integrator's transition; a status it cannot leave, `transition_refused` (§5.1) |
 | `send_greeting` | `room_id`, optional `channel_id`, `agent_id`, `greeting` | null: the agent's greeting, or `greeting`, stored as its event and delivered (§19.1) |
-| `check_timers` | `room_id` | the room, once its due transitions are applied |
+| `check_timers` | `room_id` | the named room only, once its due transitions are applied through `check_room_timers`; the caller's `organization_id` is checked before applying any transition (§5.1, §17.2) |
 | `set_room_timers` | `room_id`, `timers` (`inactive_after_seconds`, `closed_after_seconds`, `last_activity_at`) | the room, its timers replaced under its lock, its last activity kept when `timers` names none (§5.1) |
 | `set_agent_response_policy` | `room_id`, `policy` (`agent_chain`, `addressed_only`) | the room, its agent response policy set under its lock, unchanged when it holds it (§19.3.1) |
 | `register_channel` | `channel` (as in the setup) | null |

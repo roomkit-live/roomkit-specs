@@ -880,7 +880,8 @@
           "enum": [
             "active",
             "closed",
-            "archived"
+            "archived",
+            "paused"
           ]
         },
         "participants": {
@@ -1608,7 +1609,10 @@
             "regenerate_response",
             "regenerate_target",
             "close",
-            "room_strategy_is_current"
+            "room_strategy_is_current",
+            "pause_room",
+            "resume_room",
+            "reopen_room"
           ]
         },
         "organization_id": {
@@ -1810,7 +1814,10 @@
                 "enum": [
                   "close_room",
                   "archive_room",
-                  "check_timers"
+                  "check_timers",
+                  "pause_room",
+                  "resume_room",
+                  "reopen_room"
                 ]
               }
             }
