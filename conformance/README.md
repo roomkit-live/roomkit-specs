@@ -131,7 +131,8 @@ room callbacks of the setup are not compared.
   implementation's default when absent), and `router`, a scripted router in
   place of the default one, answering every routed message with its
   `room_id`, an answer the kit holds to §10.1 step 2's rules, held first at
-  its `gate` when it names one; for identity
+  its `gate` when it names one; calls are recorded before that gate under
+  `router_calls`; for identity
   resolution (§11), `identity_resolver`, a **scripted resolver** (below),
   `identity_channel_types`, the channel types it runs for (§11.4, every type
   when absent), and `identity_timeout_ms` (§11.5, the implementation's
@@ -723,7 +724,7 @@ run's own kit when absent.
 | `uninstall_strategy` | `room_id` (§19.7) | whether the room held a strategy |
 | `claim_room_strategy` | `room_id`, `strategy`: claims the room for the strategy, or refuses, installing nothing (§19.7) | null |
 | `room_strategy` | `room_id` | the id of the scripted strategy installed in the room, null for none (§19.7) |
-| `default_router.route` | `channel_id`, `channel_type`, `participant_id`, `identity_id`: the implementation's DefaultInboundRoomRouter over the kit's store, whatever router the kit holds (§10.4), reading no channel | the id of the room, null for none |
+| `default_router.route` | `channel_id`, `channel_type`, `participant_id`, `identity_id`, `organization_id`: the implementation's DefaultInboundRoomRouter over the kit's store, whatever router the kit holds (§10.4), reading no channel | the id of the room, null for none |
 | `save_conversation_state` | `room_id`, `transitions`: each a phase transition (`to_phase`, `to_agent`, `reason`, `metadata`) made in order from the conversation state of the room the store holds, the default state for a room it lacks; the state the last one leaves is saved as the room's (§19.2) | null |
 | `handoff_handler` | `handler`, the name the later calls give it; `router`, a conversation router as a hook's (§19.4); `agent_aliases`, `phase_map`, `allowed_transitions` (each phase's list of phases), `known_agents` and `event_channel_id`: the implementation's HandoffHandler, serving no agent yet and installing no hook, its `greeting_map` set from the call's (§19.6) | null |
 | `install_router` | `handler`, `router`, `agents` (channel ids), `agent_aliases`, `phase_map`, `hook_priority`: the router's `install` on the kit, its handler named `handler` (§19.6) | null |
@@ -918,6 +919,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `executors` | Per executor of the setup, what it did, in order: `{call, channel_id, build}`, and `room_id` for a call about a room: `built` (a copy of the channel made, `build` counting them per executor and channel), `on_event`, `on_room_attached`, `on_room_detached`, `channel_call` (with its `verb`) and `close`. A detach from a room this build never saw let go of nothing and is not listed |
 | `lifecycle` | Per room, the lifecycle records (§5.1) in index order, when the implementation writes them: an implementation that writes none passes. It says which changes write one, and which write none (a change that changes nothing, §7.2) |
 | `participants` | Per room, the participants the store holds (§5.5), in the store's order |
+| `router_calls` | The custom inbound router calls in order: `{channel_id, channel_type, participant_id, channel_data, organization_id, identity_id}`; absent identity, organization and sender are null |
 | `resolver` | The scripted resolver's calls, in order |
 | `media_resolver` | The kit's media resolver's calls, in order: `{url, room_id}` |
 | `tool_audit`, `session_audit` | The run's tool auditor's and session auditor's entries, in the order each recorded them, each entry's members (§15.8.3: a tool entry's `ts`, `agent_id`, `tool_name`, `arguments`, `result`, `status`, `duration_ms`, `metadata`; a session entry's `ts`, `type`, `role`, `content`, `duration_ms`, `metadata`); the runner also checks that the auditor's JSONL file holds one line per entry, those members |

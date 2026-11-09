@@ -105,7 +105,7 @@
               "minimum": 1
             },
             "router": {
-              "description": "A scripted router (§10.4), the kit's in place of the default: it answers every routed message with `room_id`, whoever sent it, an answer the kit holds to §10.1 step 2's rules; with a `gate`, it holds each routing there first.",
+              "description": "A scripted router (§10.4), the kit's in place of the default: it answers every routed message with `room_id`, whoever sent it, an answer the kit holds to §10.1 step 2's rules; with a `gate`, it holds each routing there first. A null answer requests a new room. Calls are recorded before the gate under router_calls.",
               "type": "object",
               "additionalProperties": false,
               "required": [
@@ -113,7 +113,10 @@
               ],
               "properties": {
                 "room_id": {
-                  "type": "string"
+                  "type": [
+                    "string",
+                    "null"
+                  ]
                 },
                 "gate": {
                   "type": "string"
@@ -3796,6 +3799,12 @@
               "identity_id": {
                 "description": "The id of the identity the router is given, a known one.",
                 "type": "string"
+              },
+              "organization_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
               }
             }
           }
@@ -4585,6 +4594,13 @@
               "object"
             ]
           }
+        },
+        "router_calls": {
+          "description": "The scripted inbound router calls in order, before its gate: channel_id, channel_type, participant_id, channel_data, organization_id and identity_id (null when absent).",
+          "type": [
+            "array",
+            "object"
+          ]
         }
       }
     },
