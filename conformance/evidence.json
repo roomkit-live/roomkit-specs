@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "41e5933e750a02aa6dd8a525da3d52225042798c",
+  "python_commit": "a29102cbfef54372bceceeaef3623616ddecbf1b",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -5711,6 +5711,143 @@
         {
           "scenario": "rooms/a-hook-that-closes-the-room-refuses-its-event",
           "sha256": "1bf3d9acbc616c240764491823f2edd75a0cf95991b85456a1470d0d280d0d26",
+          "outcome": "passed"
+        }
+      ]
+    },
+    {
+      "id": "python-room-lifecycle-a29102c",
+      "implementation": "python",
+      "implementation_commit": "a29102cbfef54372bceceeaef3623616ddecbf1b",
+      "rfc_commit": "c12f12eac4a0748ada484144fd4146e36ee26e5b",
+      "corpus_commit": "c12f12eac4a0748ada484144fd4146e36ee26e5b",
+      "rfc_sha256": "52c91f46451cee0ea1bdecf52a3f033690d3e6e3845fb9d3429de69798d92bf9",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "env",
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "PYTHONPATH=src",
+        "uv",
+        "run",
+        "--active",
+        "--no-sync",
+        "pytest",
+        "tests/conformance/test_conformance.py",
+        "-k",
+        "rooms/a-delivered-message-resumes-a-paused-room or rooms/a-due-close-refuses-the-next-message or rooms/a-hook-that-closes-the-room-refuses-its-event or rooms/a-response-the-room-refuses or rooms/a-timer-check-does-not-change-another-due-room or rooms/a-timer-check-scopes-before-applying-due-transitions or rooms/archive-from-every-room-status or rooms/archive-is-terminal or rooms/close-from-every-room-status or rooms/closed-room-refuses-a-message or rooms/closed-room-refuses-a-record or rooms/closed-room-refuses-an-injection or rooms/due-timers-run-before-explicit-transitions or rooms/pause-from-every-room-status or rooms/reopen-from-every-room-status or rooms/resume-and-reopen-restart-inactivity or rooms/resume-from-every-room-status or rooms/set-room-timers-replaces-a-room-s-timers-and-keeps-its-activity or rooms/timers-pause-then-close-in-one-check or rooms/transitions-scope-before-due-timers or rooms/transitions-with-the-owning-organization",
+        "-q",
+        "--junitxml=python-room-lifecycle.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-room-lifecycle-a29102c.xml",
+        "format": "pytest_junit",
+        "sha256": "8f37da2341a99ca51eeede8dbdc8d036773f886338bd04341bb5fad33410f498"
+      },
+      "results": [
+        {
+          "scenario": "rooms/a-delivered-message-resumes-a-paused-room",
+          "sha256": "88a422fb260b59ef417bc09a63f90138fe1966162fd72fe94290af8c596c44d6",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/a-due-close-refuses-the-next-message",
+          "sha256": "4612f6cb6bf2862dd05420694ee4cc5ebeeb9395b8763f8b09eaf58cdce75261",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/a-hook-that-closes-the-room-refuses-its-event",
+          "sha256": "1bf3d9acbc616c240764491823f2edd75a0cf95991b85456a1470d0d280d0d26",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/a-response-the-room-refuses",
+          "sha256": "e21c99a110008e4d07406744912e17470a8ac52fd6526c9bab30fd54f2638b0b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/a-timer-check-does-not-change-another-due-room",
+          "sha256": "47674c68a2fed32ec7fa470bb11cb6ad2b0ce81ef27c7b1dfcc2f64cabf3ccf1",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/a-timer-check-scopes-before-applying-due-transitions",
+          "sha256": "bcc80baebd24874a6fe8d5de4f188187cab4d4db3b1b25a943ede31dd6e091e2",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/archive-from-every-room-status",
+          "sha256": "e3a8245b0bcd238b71b93523b90f84d46f96d0a5f0db2961bc74a4608f2b2181",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/archive-is-terminal",
+          "sha256": "38b458fa1f952d2805d7697a330fc135437d80358bcd14c6c23e2e85098e29ae",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/close-from-every-room-status",
+          "sha256": "540a483e89ad51cd94cc00884d19faf97e91147d0a7b6273fb8ac89d7891911f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/closed-room-refuses-a-message",
+          "sha256": "9c98511c08370e51dda2c0f7a45600754631bd439e6b0e6d982f1406b059a2b0",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/closed-room-refuses-a-record",
+          "sha256": "a68ea962a3bb68951735795a50da0f80bccaaf2d80483543fc395db979918c7c",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/closed-room-refuses-an-injection",
+          "sha256": "c4fb3a20852d8b522a5774577d990464f08954d9a2c69abae4e859f005c4ad01",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/due-timers-run-before-explicit-transitions",
+          "sha256": "fc97e7d5c6cf16a8b09822687c8bac8e331bc22cf1dd368c33c1e270835fdd3f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/pause-from-every-room-status",
+          "sha256": "38825d5ccbda1ca6fcc09b657e1438121f6cadf6e3c1c254333d94c8c3acef56",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/reopen-from-every-room-status",
+          "sha256": "fd55a9b0ffd78462777379a982692b6e54c4556f18487768f34ed21f8b05996b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/resume-and-reopen-restart-inactivity",
+          "sha256": "6715f35649963f8b2d508c1d7a9a32d4678241c56b43652d91de4b9daee08fa9",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/resume-from-every-room-status",
+          "sha256": "b26135a8467cc4d323905f9c0cf805aafeef8805019cb398040a9a5aba70434f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/set-room-timers-replaces-a-room-s-timers-and-keeps-its-activity",
+          "sha256": "be378dfee71e9d7bba4284b4767634f944de496ae1ca98c13c19913df61f5eb5",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/timers-pause-then-close-in-one-check",
+          "sha256": "b65c935c96aa29b07dcab4ba780f7b46f3c200ad6ba79b5db61822687b98f2fd",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/transitions-scope-before-due-timers",
+          "sha256": "e5d608431c45cdcf10c87528e9a94e06607af5876778ebe3c417d0ab9d291dbb",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/transitions-with-the-owning-organization",
+          "sha256": "66ca28ac6e2964a9c7111ded9d8326251b86d713dafb10d8bb6530b0762d0584",
           "outcome": "passed"
         }
       ]

@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "52c91f46451cee0ea1bdecf52a3f033690d3e6e3845fb9d3429de69798d92bf9",
   "corpus_sha256": "6bbb4f7a40c8d385ec3a43c51ff85543982371a9dbe4fe32273d7b2fbb79dc18",
-  "python_commit": "41e5933e750a02aa6dd8a525da3d52225042798c",
+  "python_commit": "a29102cbfef54372bceceeaef3623616ddecbf1b",
   "scenario_count": 1634,
   "sections": [
     {
@@ -6793,6 +6793,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-room-lifecycle-a29102c",
+              "implementation": "python",
+              "commit": "a29102cbfef54372bceceeaef3623616ddecbf1b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -6818,7 +6826,16 @@
             "Remaining retained-channel entry paths, including streaming and voice, are not exhaustively linked by this transition matrix.",
             "Snapshot equality alone cannot prove absence of identical writes on every persistent backend."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-room-lifecycle-a29102c",
+              "implementation": "python",
+              "commit": "a29102cbfef54372bceceeaef3623616ddecbf1b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -6842,7 +6859,16 @@
             "Sweeper pagination and per-room failure isolation, caller cancellation and concurrent store writes remain outside these shared scenarios.",
             "Atomic activity/counters on each persistent store, instruction non-activity and paused sender/group routing need separate links."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-room-lifecycle-a29102c",
+              "implementation": "python",
+              "commit": "a29102cbfef54372bceceeaef3623616ddecbf1b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -8624,6 +8650,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-room-lifecycle-a29102c",
+              "implementation": "python",
+              "commit": "a29102cbfef54372bceceeaef3623616ddecbf1b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -12274,6 +12308,15 @@
       "implementation_commit": "d8cc647ca46e0dc75664bc6966567f5914da3b10",
       "rfc_commit": "df7bcc9d8d9659e56d41d91f55ea692a7aa7ee54",
       "corpus_commit": "df7bcc9d8d9659e56d41d91f55ea692a7aa7ee54",
+      "backend": "memory",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-room-lifecycle-a29102c",
+      "implementation": "python",
+      "implementation_commit": "a29102cbfef54372bceceeaef3623616ddecbf1b",
+      "rfc_commit": "c12f12eac4a0748ada484144fd4146e36ee26e5b",
+      "corpus_commit": "c12f12eac4a0748ada484144fd4146e36ee26e5b",
       "backend": "memory",
       "runtime": "asyncio"
     }
