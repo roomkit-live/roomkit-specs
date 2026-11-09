@@ -1612,7 +1612,13 @@
             "room_strategy_is_current",
             "pause_room",
             "resume_room",
-            "reopen_room"
+            "reopen_room",
+            "get_room",
+            "get_binding",
+            "list_bindings",
+            "list_members",
+            "get_timeline",
+            "check_all_timers"
           ]
         },
         "organization_id": {
@@ -3928,6 +3934,94 @@
               "room_id",
               "policy"
             ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "enum": [
+                  "get_room",
+                  "get_binding",
+                  "list_bindings",
+                  "list_members",
+                  "get_timeline"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "get_binding"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "list_members"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "include_left": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "get_timeline"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "limit": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "after_index": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "before_index": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "newest_first": {
+                "type": "boolean"
+              },
+              "include_blocked": {
+                "type": "boolean"
+              },
+              "visibility_filter": {
+                "type": "string"
+              }
+            }
           }
         }
       ]
