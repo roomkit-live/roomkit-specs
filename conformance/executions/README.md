@@ -124,3 +124,19 @@ eligibility at broadcast, delivery, verification and identity challenge calls.
 It does not execute the specialized trigger-policy matrices or silent voice
 contexts, other stores, distributed turns or Rust. RK-9.4-004 and RK-9.4-006
 remain partially mapped; a successful receipt does not expand that scope.
+
+
+## Core shutdown and pre-commit deadlines
+
+`python-core-close-final-corpus-f39105a.xml` retains the clean run on Python
+`f39105adc25738102e619bbb4b8c7edab5926a75`, copied corpus and reviewed RFC
+`47a0b656604e226ed9289418f01c98e24006fd2a`. The command in the receipts runs
+`tests/conformance` and `tests/test_precommit_timeout.py`, with in-process turns
+and one pytest worker. All 2,166 tests pass without skips or errors.
+
+The receipts identify 1,737 memory scenarios and 380 SQLite scenarios. Auxiliary
+runner and native deadline tests in the retained artifact are not scenario
+receipts. PostgreSQL and Rust checks are recorded separately. The mapping of
+shutdown and processing deadlines remains partial: no execution fills a missing
+assertion or proves an untested lifecycle entry point. Volatile host, timestamp,
+duration and local-path metadata is removed from the artifact.
