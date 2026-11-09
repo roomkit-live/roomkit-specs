@@ -48,7 +48,10 @@
       "expect": {
         "result": {
           "status": "closed",
-          "paused_at": null
+          "paused_at": null,
+          "closed_at": {
+            "$present": true
+          }
         }
       }
     },
@@ -58,7 +61,10 @@
       "expect": {
         "result": {
           "status": "closed",
-          "paused_at": null
+          "paused_at": null,
+          "closed_at": {
+            "$present": true
+          }
         }
       }
     },

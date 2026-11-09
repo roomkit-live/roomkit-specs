@@ -121,19 +121,28 @@
   "expect": {
     "rooms": {
       "pause": {
-        "status": "closed"
+        "status": "closed",
+        "paused_at": null,
+        "closed_at": "@3"
       },
       "resume": {
-        "status": "closed"
+        "status": "closed",
+        "paused_at": null,
+        "closed_at": "@3"
       },
       "reopen": {
-        "status": "active"
+        "status": "active",
+        "paused_at": null
       },
       "close": {
-        "status": "closed"
+        "status": "closed",
+        "paused_at": null,
+        "closed_at": "@3"
       },
       "archive": {
-        "status": "archived"
+        "status": "archived",
+        "paused_at": null,
+        "closed_at": "@3"
       }
     },
     "hooks": {

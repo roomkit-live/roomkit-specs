@@ -48,7 +48,10 @@
       "expect": {
         "result": {
           "status": "archived",
-          "paused_at": null
+          "paused_at": null,
+          "closed_at": {
+            "$present": true
+          }
         }
       }
     },
@@ -58,7 +61,21 @@
       "expect": {
         "result": {
           "status": "archived",
-          "paused_at": null
+          "paused_at": null,
+          "closed_at": {
+            "$present": true
+          }
+        }
+      }
+    },
+    {
+      "call": "store.get_room",
+      "room_id": "closed",
+      "expect": {
+        "result": {
+          "closed_at": {
+            "$as": "closed-at"
+          }
         }
       }
     },
@@ -68,7 +85,10 @@
       "expect": {
         "result": {
           "status": "archived",
-          "paused_at": null
+          "paused_at": null,
+          "closed_at": {
+            "$as": "closed-at"
+          }
         }
       }
     },
