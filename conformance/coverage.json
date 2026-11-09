@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "52c91f46451cee0ea1bdecf52a3f033690d3e6e3845fb9d3429de69798d92bf9",
-  "corpus_sha256": "6bbb4f7a40c8d385ec3a43c51ff85543982371a9dbe4fe32273d7b2fbb79dc18",
-  "python_commit": "a29102cbfef54372bceceeaef3623616ddecbf1b",
-  "scenario_count": 1634,
+  "rfc_sha256": "7935908591b87196f4e0c6e757309f05caac625a493ecf121f7a55b8db01adca",
+  "corpus_sha256": "c1eaafc51850482f86bf1eaba3bbdebfa151dbf112523645b324f8cc1b51599d",
+  "python_commit": "ba234de38c3ac11c10909d1fde71a76637c801bc",
+  "scenario_count": 1663,
   "sections": [
     {
       "section": "0",
@@ -267,11 +267,33 @@
         "regenerate/a-closed-room-refuses-a-regeneration-before-the-agent-runs",
         "regenerate/a-closed-room-with-nothing-to-regenerate-refuses-it-too",
         "regenerate/an-archived-room-refuses-a-regeneration",
+        "rooms/a-blocked-record-does-not-resume-or-refresh-a-paused-room",
+        "rooms/a-closed-room-refuses-chain-depth-replacement-records",
+        "rooms/a-closed-room-refuses-response-cap-replacement-records",
         "rooms/a-delivered-message-resumes-a-paused-room",
+        "rooms/a-direct-record-does-not-resume-or-refresh-a-paused-room",
         "rooms/a-due-close-refuses-the-next-message",
+        "rooms/a-due-pause-is-applied-by-attach",
+        "rooms/a-due-pause-is-applied-by-blocked",
+        "rooms/a-due-pause-is-applied-by-close",
+        "rooms/a-due-pause-is-applied-by-delete",
+        "rooms/a-due-pause-is-applied-by-mute",
+        "rooms/a-due-pause-is-applied-by-record",
+        "rooms/a-due-pause-is-applied-by-send",
+        "rooms/a-due-pause-is-applied-by-update",
         "rooms/a-hook-that-closes-the-room-refuses-its-event",
+        "rooms/a-injected-closed-by-its-own-hook-is-refused",
+        "rooms/a-lifecycle-record-does-not-resume-or-refresh-a-paused-room",
         "rooms/a-metadata-update-merges-the-caller-s-keys",
+        "rooms/a-response-after-room-deletion-reports-a-null-status",
+        "rooms/a-response-closed-by-its-own-hook-is-refused",
+        "rooms/a-response-pass-applies-its-own-due-pause",
         "rooms/a-response-the-room-refuses",
+        "rooms/a-room-archived-mid-stream-refuses-later-rows",
+        "rooms/a-room-closed-outside-the-kit-before-the-first-streamed-row-refuses-it",
+        "rooms/a-room-timer-closed-mid-stream-refuses-later-rows",
+        "rooms/a-store-closure-found-at-commit-spares-the-next-streamed-row-hooks",
+        "rooms/a-streamed-row-whose-hook-closes-the-room-is-refused",
         "rooms/a-timer-check-does-not-change-another-due-room",
         "rooms/a-timer-check-scopes-before-applying-due-transitions",
         "rooms/archive-from-every-room-status",
@@ -281,13 +303,20 @@
         "rooms/closed-room-refuses-a-message",
         "rooms/closed-room-refuses-a-record",
         "rooms/closed-room-refuses-an-injection",
+        "rooms/closing-another-room-does-not-stop-a-stream",
         "rooms/due-timers-run-before-explicit-transitions",
+        "rooms/member-changes-on-a-closed-room-write-no-lifecycle-record",
         "rooms/pause-from-every-room-status",
+        "rooms/public-reads-remain-available-in-every-status",
+        "rooms/public-timeline-keeps-its-pagination-and-audit-options",
         "rooms/reopen-from-every-room-status",
+        "rooms/replacement-records-after-room-deletion-report-a-null-status",
         "rooms/resume-and-reopen-restart-inactivity",
         "rooms/resume-from-every-room-status",
         "rooms/set-room-timers-replaces-a-room-s-timers-and-keeps-its-activity",
         "rooms/the-delivery-cursor-follows-the-lane",
+        "rooms/timer-checks-leave-inert-not-due-and-terminal-rooms-unchanged",
+        "rooms/timer-sweeps-reach-every-page-in-the-requested-organization",
         "rooms/timers-pause-then-close-in-one-check",
         "rooms/timers-whose-records-the-persistence-policy-keeps-out-still-pause-and-close",
         "rooms/transitions-scope-before-due-timers",
@@ -374,7 +403,8 @@
         "members/remove-member-leaves-or-bans-and-a-join-reactivates",
         "members/rename-member-changes-the-display-name-only",
         "members/resolve-participant-identifies-a-pending-record",
-        "members/resolve-participant-refuses-what-it-cannot-find"
+        "members/resolve-participant-refuses-what-it-cannot-find",
+        "rooms/member-changes-on-a-closed-room-write-no-lifecycle-record"
       ]
     },
     {
@@ -1459,7 +1489,13 @@
         "regenerate/a-source-that-can-no-longer-write-has-nothing-to-regenerate",
         "rooms/a-detach-tells-the-channel-before-its-hooks",
         "rooms/a-detach-the-channel-fails-still-detaches",
+        "rooms/a-room-archived-mid-stream-refuses-later-rows",
+        "rooms/a-room-closed-outside-the-kit-before-the-first-streamed-row-refuses-it",
+        "rooms/a-room-timer-closed-mid-stream-refuses-later-rows",
+        "rooms/a-store-closure-found-at-commit-spares-the-next-streamed-row-hooks",
+        "rooms/a-streamed-row-whose-hook-closes-the-room-is-refused",
         "rooms/an-unregistered-channel-is-not-told-of-its-detach",
+        "rooms/closing-another-room-does-not-stop-a-stream",
         "routing/a-hook-closing-a-room-another-was-routed-into-refuses-the-first-message",
         "routing/a-room-the-host-opened-for-its-member-keeps-out-a-stranger-writing-after-her",
         "routing/two-customers-on-one-number-keep-a-conversation-each",
@@ -1548,7 +1584,13 @@
         "regenerate/a-muted-agent-s-regenerated-answer-is-stored-blocked",
         "regenerate/an-archived-room-refuses-a-regeneration",
         "resilience/process-timeout-stores-nothing",
+        "rooms/a-closed-room-refuses-chain-depth-replacement-records",
+        "rooms/a-closed-room-refuses-response-cap-replacement-records",
         "rooms/a-due-close-refuses-the-next-message",
+        "rooms/a-injected-closed-by-its-own-hook-is-refused",
+        "rooms/a-response-after-room-deletion-reports-a-null-status",
+        "rooms/a-response-closed-by-its-own-hook-is-refused",
+        "rooms/a-response-pass-applies-its-own-due-pause",
         "rooms/a-response-the-room-refuses",
         "rooms/a-timer-check-does-not-change-another-due-room",
         "rooms/a-timer-check-scopes-before-applying-due-transitions",
@@ -1562,6 +1604,7 @@
         "rooms/due-timers-run-before-explicit-transitions",
         "rooms/pause-from-every-room-status",
         "rooms/reopen-from-every-room-status",
+        "rooms/replacement-records-after-room-deletion-report-a-null-status",
         "rooms/resume-and-reopen-restart-inactivity",
         "rooms/resume-from-every-room-status",
         "rooms/timers-pause-then-close-in-one-check",
@@ -1721,7 +1764,8 @@
       "review": "normative",
       "requirements": 4,
       "mapping": {
-        "unmapped": 4
+        "mapped_partial": 1,
+        "unmapped": 3
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -2358,12 +2402,19 @@
         "regenerate/a-regenerated-answer-streams-to-a-transport-that-streams",
         "regenerate/a-regeneration-answers-the-last-message-again",
         "regenerate/a-regeneration-repeats-nothing-of-its-trigger-s-first-pass",
+        "rooms/a-closed-room-refuses-chain-depth-replacement-records",
+        "rooms/a-closed-room-refuses-response-cap-replacement-records",
         "rooms/a-delivered-message-resumes-a-paused-room",
         "rooms/a-due-close-refuses-the-next-message",
         "rooms/a-hook-that-closes-the-room-refuses-its-event",
+        "rooms/a-injected-closed-by-its-own-hook-is-refused",
         "rooms/a-refused-automatic-attach-fails-the-message",
+        "rooms/a-response-after-room-deletion-reports-a-null-status",
+        "rooms/a-response-closed-by-its-own-hook-is-refused",
+        "rooms/a-response-pass-applies-its-own-due-pause",
         "rooms/a-response-the-room-refuses",
         "rooms/closed-room-refuses-a-message",
+        "rooms/replacement-records-after-room-deletion-report-a-null-status",
         "routing/a-binding-a-hook-made-in-a-room-opened-with-no-address-takes-in-no-one-else",
         "routing/a-binding-naming-an-identity-is-answered-at-the-number-its-correspondent-writes-from",
         "routing/a-binding-naming-the-sender-s-identity-gets-their-address",
@@ -3340,6 +3391,12 @@
         "delivery/an-adopted-call-s-handle-cuts-its-turn-while-a-target-reads",
         "delivery/an-adopted-call-s-key-cuts-its-turn-while-a-target-reads",
         "inbound/a-headless-turn-s-provider-error-reaches-the-caller-and-on-error",
+        "rooms/a-room-archived-mid-stream-refuses-later-rows",
+        "rooms/a-room-closed-outside-the-kit-before-the-first-streamed-row-refuses-it",
+        "rooms/a-room-timer-closed-mid-stream-refuses-later-rows",
+        "rooms/a-store-closure-found-at-commit-spares-the-next-streamed-row-hooks",
+        "rooms/a-streamed-row-whose-hook-closes-the-room-is-refused",
+        "rooms/closing-another-room-does-not-stop-a-stream",
         "streaming/a-blank-answer-writes-no-message",
         "streaming/a-blank-last-text-leaves-the-turn-s-end-on-its-last-message",
         "streaming/a-blank-stretch-is-not-among-the-turn-s-segments",
@@ -4343,6 +4400,7 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "inbound/a-kit-s-inbound-rate-limit-refuses-a-channel-s-excess-messages",
+        "rooms/public-timeline-keeps-its-pagination-and-audit-options",
         "store/a-binding-exists-as-get-binding-finds-it",
         "store/a-change-s-target-written-alone-marks-its-edits-once-deleted",
         "store/a-delivery-record-alone-writes-an-event-s-results",
@@ -4677,10 +4735,12 @@
         "rooms/close-from-every-room-status",
         "rooms/due-timers-run-before-explicit-transitions",
         "rooms/pause-from-every-room-status",
+        "rooms/public-reads-remain-available-in-every-status",
         "rooms/reopen-from-every-room-status",
         "rooms/resume-and-reopen-restart-inactivity",
         "rooms/resume-from-every-room-status",
         "rooms/set-room-timers-replaces-a-room-s-timers-and-keeps-its-activity",
+        "rooms/timer-sweeps-reach-every-page-in-the-requested-organization",
         "rooms/transitions-scope-before-due-timers",
         "rooms/transitions-with-the-owning-organization",
         "store/the-kit-marks-and-reads-a-room-s-markers-for-its-organization",
@@ -6175,10 +6235,16 @@
         "permissions/muted-source-is-stored-blocked",
         "permissions/read-only-source-is-stored-blocked",
         "reentrancy/a-locked-hook-mutes-its-source",
+        "rooms/a-closed-room-refuses-chain-depth-replacement-records",
+        "rooms/a-closed-room-refuses-response-cap-replacement-records",
         "rooms/a-delivered-message-resumes-a-paused-room",
         "rooms/a-detach-the-channel-fails-still-detaches",
         "rooms/a-due-close-refuses-the-next-message",
         "rooms/a-hook-that-closes-the-room-refuses-its-event",
+        "rooms/a-injected-closed-by-its-own-hook-is-refused",
+        "rooms/a-response-after-room-deletion-reports-a-null-status",
+        "rooms/a-response-closed-by-its-own-hook-is-refused",
+        "rooms/a-response-pass-applies-its-own-due-pause",
         "rooms/a-response-the-room-refuses",
         "rooms/a-timer-check-does-not-change-another-due-room",
         "rooms/a-timer-check-scopes-before-applying-due-transitions",
@@ -6193,6 +6259,7 @@
         "rooms/due-timers-run-before-explicit-transitions",
         "rooms/pause-from-every-room-status",
         "rooms/reopen-from-every-room-status",
+        "rooms/replacement-records-after-room-deletion-report-a-null-status",
         "rooms/resume-and-reopen-restart-inactivity",
         "rooms/resume-from-every-room-status",
         "rooms/timers-pause-then-close-in-one-check",
@@ -6774,8 +6841,7 @@
           "scope": "Closed-room inbound, direct record, direct send and response refusals; a hook closing its current pass; archived-room inbound refusal.",
           "coverage": "partial",
           "missing": [
-            "Streamed row status gates, externally changed status, regeneration, replacement records and identity-challenge exceptions need separate reviewed links.",
-            "These scenarios do not exhaust every retained transport or voice entry into a closed/archived room."
+            "Streaming, externally changed status, regeneration and replacement records are supplied by the complementary lifecycle link. Optional voice entry paths need their own capability evidence."
           ],
           "executions": [
             {
@@ -6800,7 +6866,73 @@
               "commit": "a29102cbfef54372bceceeaef3623616ddecbf1b",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
+            },
+            {
+              "execution": "python-room-lifecycle-completion-3bb0274-memory",
+              "implementation": "python",
+              "commit": "3bb0274eb27ae9abcc67d33fc093c33bac4cffa0",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-room-lifecycle-completion-3bb0274-sqlite",
+              "implementation": "python",
+              "commit": "3bb0274eb27ae9abcc67d33fc093c33bac4cffa0",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            }
+          ]
+        },
+        {
+          "id": "core-room-remaining-write-gates",
+          "scope": "Response and injected passes, deleted rooms, bound replacement records, streaming boundaries, member records and regeneration while the room closes.",
+          "coverage": "partial",
+          "missing": [
+            "Optional voice/conference entry paths require capability-specific evidence. Internal read-count optimizations are permitted, not required, by §5.1."
+          ],
+          "executions": [
+            {
+              "execution": "python-hook-injections-a6daaf1",
+              "implementation": "python",
+              "commit": "a6daaf1391214c917936b1b37f50b5e2f7c88e20",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-injection-obligations-d8cc647",
+              "implementation": "python",
+              "commit": "d8cc647ca46e0dc75664bc6966567f5914da3b10",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-room-lifecycle-a29102c",
+              "implementation": "python",
+              "commit": "a29102cbfef54372bceceeaef3623616ddecbf1b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-room-lifecycle-completion-3bb0274-memory",
+              "implementation": "python",
+              "commit": "3bb0274eb27ae9abcc67d33fc093c33bac4cffa0",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-room-lifecycle-completion-3bb0274-sqlite",
+              "implementation": "python",
+              "commit": "3bb0274eb27ae9abcc67d33fc093c33bac4cffa0",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
             }
           ]
         }
@@ -6822,9 +6954,8 @@
           "scope": "Five public transitions from all four room statuses, no-op/refusal state and notice stability, and organization checks before overdue timers.",
           "coverage": "partial",
           "missing": [
-            "Public history, participant and binding read APIs at every status need an explicit matrix; a store snapshot is not that proof.",
-            "Remaining retained-channel entry paths, including streaming and voice, are not exhaustively linked by this transition matrix.",
-            "Snapshot equality alone cannot prove absence of identical writes on every persistent backend."
+            "The public read matrix and retained-channel gates are supplied by the complementary lifecycle links. Optional voice paths need their own capability evidence.",
+            "Snapshot equality alone cannot prove absence of identical writes on every persistent backend; specialized effect tests retain that responsibility."
           ],
           "executions": [
             {
@@ -6833,7 +6964,49 @@
               "commit": "a29102cbfef54372bceceeaef3623616ddecbf1b",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
+            },
+            {
+              "execution": "python-room-lifecycle-completion-3bb0274-memory",
+              "implementation": "python",
+              "commit": "3bb0274eb27ae9abcc67d33fc093c33bac4cffa0",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-room-lifecycle-completion-3bb0274-sqlite",
+              "implementation": "python",
+              "commit": "3bb0274eb27ae9abcc67d33fc093c33bac4cffa0",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            }
+          ]
+        },
+        {
+          "id": "core-room-public-read-matrix",
+          "scope": "Public history, bindings and member reads at all four room statuses, organization isolation, missing resources and timeline cursors.",
+          "coverage": "partial",
+          "missing": [
+            "This read link does not by itself prove every retained-channel write gate; those are covered by the complementary refusal links. Optional voice session teardown is outside the Level 0 scope."
+          ],
+          "executions": [
+            {
+              "execution": "python-room-lifecycle-completion-3bb0274-memory",
+              "implementation": "python",
+              "commit": "3bb0274eb27ae9abcc67d33fc093c33bac4cffa0",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-room-lifecycle-completion-3bb0274-sqlite",
+              "implementation": "python",
+              "commit": "3bb0274eb27ae9abcc67d33fc093c33bac4cffa0",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
             }
           ]
         }
@@ -6855,9 +7028,7 @@
           "scope": "Named timer-check scope, overdue timers before public transitions, explicit/message resumption, timer-setting activity preservation, and timer closure before inbound.",
           "coverage": "partial",
           "missing": [
-            "Every locked entry, response pass and direct mutation needs its own reviewed timer link; public transitions alone are not all entries.",
-            "Sweeper pagination and per-room failure isolation, caller cancellation and concurrent store writes remain outside these shared scenarios.",
-            "Atomic activity/counters on each persistent store, instruction non-activity and paused sender/group routing need separate links."
+            "The complementary timer link supplies direct gates, sweeps, cancellation and concurrent-write source evidence. Atomic persistent-store transactions and paused sender/group routing retain their separate store/routing evidence."
           ],
           "executions": [
             {
@@ -6866,7 +7037,57 @@
               "commit": "a29102cbfef54372bceceeaef3623616ddecbf1b",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
+            },
+            {
+              "execution": "python-room-lifecycle-completion-3bb0274-memory",
+              "implementation": "python",
+              "commit": "3bb0274eb27ae9abcc67d33fc093c33bac4cffa0",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-room-lifecycle-completion-3bb0274-sqlite",
+              "implementation": "python",
+              "commit": "3bb0274eb27ae9abcc67d33fc093c33bac4cffa0",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            }
+          ]
+        },
+        {
+          "id": "core-room-timer-completion",
+          "scope": "Due timers at direct mutations and response passes; activity exclusions; inert checks; all-page scoped sweeps; cancellation and concurrent commits before and after the status write.",
+          "coverage": "partial",
+          "missing": [
+            "The shared runner cannot force a store-write interleaving or caller cancellation; the specialized source tests and corresponding Rust runtime tests are required alongside these receipts. Atomic persistent-store commits and paused automatic routing are covered in the store/routing areas rather than certified by this timer link."
+          ],
+          "executions": [
+            {
+              "execution": "python-room-lifecycle-a29102c",
+              "implementation": "python",
+              "commit": "a29102cbfef54372bceceeaef3623616ddecbf1b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-room-lifecycle-completion-3bb0274-memory",
+              "implementation": "python",
+              "commit": "3bb0274eb27ae9abcc67d33fc093c33bac4cffa0",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-room-lifecycle-completion-3bb0274-sqlite",
+              "implementation": "python",
+              "commit": "3bb0274eb27ae9abcc67d33fc093c33bac4cffa0",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
             }
           ]
         }
@@ -8275,8 +8496,43 @@
     {
       "id": "RK-9.2-004",
       "section": "9.2",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "core-room-timer-hook-context",
+          "scope": "Timer hooks receive one final stored context, including activity committed after the status write.",
+          "coverage": "partial",
+          "missing": [
+            "Other lifecycle triggers retain their separate evidence; this link covers timer contexts only. The concurrent interleaving is proven by specialized source/runtime tests, not by a shared scenario receipt."
+          ],
+          "executions": [
+            {
+              "execution": "python-room-lifecycle-a29102c",
+              "implementation": "python",
+              "commit": "a29102cbfef54372bceceeaef3623616ddecbf1b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-room-lifecycle-completion-3bb0274-memory",
+              "implementation": "python",
+              "commit": "3bb0274eb27ae9abcc67d33fc093c33bac4cffa0",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-room-lifecycle-completion-3bb0274-sqlite",
+              "implementation": "python",
+              "commit": "3bb0274eb27ae9abcc67d33fc093c33bac4cffa0",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "RK-9.3-001",
@@ -8657,7 +8913,23 @@
               "commit": "a29102cbfef54372bceceeaef3623616ddecbf1b",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
+            },
+            {
+              "execution": "python-room-lifecycle-completion-3bb0274-memory",
+              "implementation": "python",
+              "commit": "3bb0274eb27ae9abcc67d33fc093c33bac4cffa0",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-room-lifecycle-completion-3bb0274-sqlite",
+              "implementation": "python",
+              "commit": "3bb0274eb27ae9abcc67d33fc093c33bac4cffa0",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
             }
           ]
         }
@@ -12318,6 +12590,24 @@
       "rfc_commit": "c12f12eac4a0748ada484144fd4146e36ee26e5b",
       "corpus_commit": "c12f12eac4a0748ada484144fd4146e36ee26e5b",
       "backend": "memory",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-room-lifecycle-completion-3bb0274-memory",
+      "implementation": "python",
+      "implementation_commit": "3bb0274eb27ae9abcc67d33fc093c33bac4cffa0",
+      "rfc_commit": "1ebc6448a91948a6512e2c5e486d171fe3bb8649",
+      "corpus_commit": "1ebc6448a91948a6512e2c5e486d171fe3bb8649",
+      "backend": "memory",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-room-lifecycle-completion-3bb0274-sqlite",
+      "implementation": "python",
+      "implementation_commit": "3bb0274eb27ae9abcc67d33fc093c33bac4cffa0",
+      "rfc_commit": "1ebc6448a91948a6512e2c5e486d171fe3bb8649",
+      "corpus_commit": "1ebc6448a91948a6512e2c5e486d171fe3bb8649",
+      "backend": "sqlite",
       "runtime": "asyncio"
     }
   ]

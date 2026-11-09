@@ -672,8 +672,12 @@ Implementations MUST enforce timer transitions when configured:
   and passed over, and only the kit's close stops the check. A transition takes the
   instant it fell due, however late it is applied: a check long after both
   fell due pauses the room at the first instant and closes it at the second,
-  in one write, and both its hooks then receive the room as that write left
-  it, CLOSED (§9.2). Each emits its framework event once stored
+  in one write, and both its hooks receive one context read after the
+  transition records have been handled (§9.2). The room is then CLOSED unless
+  an intervening external write changed it. That context includes activity
+  committed outside the room lock in the meantime: after a pause alone, a
+  delivered commit may already have resumed the room to ACTIVE. Each
+  transition emits its framework event once stored
   (`room_paused`, `room_closed`, with `reason = timer`), before anything the
   section decides next, so a message a close that fell due refuses reports
   `room_closed` before its `room_refused_event`; its trigger
@@ -5506,6 +5510,13 @@ a room's closing can read its conversation. A room just created has the
 bindings its creation made, such as the agents an orchestration attached
 (Section 19.7); the channel whose message created it is attached after the
 hook (§10.1 step 2).
+
+For timer transitions, the shared context is read after their records have
+been handled (§5.1). A commit made outside the room lock between the status
+write and that read is included. In particular, a delivered commit that
+resumed a PAUSED room makes the timer's ON_ROOM_PAUSED hook receive an ACTIVE
+room; the hook still reports the pause that occurred. Its context describes
+the stored room at the final read, not an intermediate transition snapshot.
 <!-- /rfc -->
 
 ### 9.3 Hook Execution Modes

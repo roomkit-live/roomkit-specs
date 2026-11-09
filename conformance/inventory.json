@@ -129,9 +129,9 @@
     },
     {
       "section": "5.1",
-      "sha256": "0ed488f9ca0c9a0adc5213612813a06821170d95d46b8a28596d0baff0435aac",
+      "sha256": "5c05cef20baa2f0d73404025f86487b5ef3b66d4e76561393863c26184875dbb",
       "classification": "normative",
-      "review": "Source inventory: Room. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Room. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the timer-context clarification against Python and Rust concurrent-greeting tests: the final stored context may already be ACTIVE. Existing blocks retain their conditions and exceptions; no unannotated normative content was introduced."
     },
     {
       "section": "5.2",
@@ -351,9 +351,9 @@
     },
     {
       "section": "9.2",
-      "sha256": "07931366c5f6ee417e052fbf5d6cd30962bf74820035f20e9f0a0258055c95ad",
+      "sha256": "c60924e6ce5c5e4ccff05629d59e590a4bfdfd096c3bf8906058cf41a36f0421",
       "classification": "normative",
-      "review": "Source inventory: Hook Triggers. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Hook Triggers. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the timer-context clarification against Python and Rust concurrent-greeting tests: the final stored context may already be ACTIVE. Existing blocks retain their conditions and exceptions; no unannotated normative content was introduced."
     },
     {
       "section": "9.3",
