@@ -3,7 +3,7 @@
   "id": "hooks/an-injection-collects-its-target-side-effects",
   "title": "A transport that receives an injected event can create a task",
   "rules": [
-    "\u00a79.4 Injected events"
+    "§9.4 Injected events"
   ],
   "setup": {
     "channels": [
@@ -135,7 +135,7 @@
     "tasks": {
       "room-1": [
         {
-          "id": "read-notice",
+          "id": "$e1",
           "title": "Read it"
         }
       ]

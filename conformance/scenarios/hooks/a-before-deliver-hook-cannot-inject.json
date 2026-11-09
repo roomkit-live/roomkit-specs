@@ -3,7 +3,7 @@
   "id": "hooks/a-before-deliver-hook-cannot-inject",
   "title": "An injection returned by BEFORE_DELIVER is dropped and creates no timeline event or delivery",
   "rules": [
-    "\u00a79.4 Injected events"
+    "§9.4 Injected events"
   ],
   "setup": {
     "channels": [
