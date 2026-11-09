@@ -62,23 +62,28 @@
     {
       "call": "deliver",
       "room_id": "room-1",
-      "content": "hello"
+      "content": "hello",
+      "channel_id": "sms"
     }
   ],
   "expect": {
     "timeline": {
-      "room-1": []
+      "room-1": [
+        {
+          "index": 0,
+          "content": {
+            "type": "text",
+            "body": "hello"
+          },
+          "source": {
+            "channel_id": "sms"
+          }
+        }
+      ]
     },
     "deliveries": {
       "room-1": {
-        "sms": [
-          {
-            "content": {
-              "type": "text",
-              "body": "hello"
-            }
-          }
-        ],
+        "sms": [],
         "ws": [
           {
             "content": {
