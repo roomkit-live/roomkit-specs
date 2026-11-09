@@ -4312,6 +4312,7 @@
           "description": "The implementation's Chat Completions rendering each of the model's requests is also written through, kept as `chat_messages` under `models` (§6.4, what a provider renders of a replayed round's reasoning): `openai`, a generic server's, or `deepseek`, `minimax` or `kimi`, that vendor's. Not rendered when absent. The model still answers from its rounds.",
           "enum": [
             "openai",
+            "openai_thinking_field",
             "deepseek",
             "minimax",
             "kimi"

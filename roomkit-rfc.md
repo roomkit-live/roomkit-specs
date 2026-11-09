@@ -2129,7 +2129,14 @@ MiniMax asks for its reasoning back in a tool loop and documents no refusal: the
 MiniMax provider sends `reasoning_content` on a round or an answer that reasoned,
 and nothing on one that did not. Cerebras
 reads a `reasoning` field on a round or an answer that reasoned, and Ollama's
-native API a `thinking` one. A Chat Completions request to any other server
+native API a `thinking` one. The OpenAI provider's configuration MAY name the
+field a server reads (`thinking_field`), for a server whose documentation asks
+for its reasoning back (Z.ai's GLM models, in `reasoning_content`): a round or
+an answer that reasoned then carries it there, and one that did not carries
+nothing. A provider cannot tell whether a server takes the field, and strict
+servers refuse one they do not know, so nothing is sent unless it is named; a
+provider that already sends reasoning where its vendor reads it takes no such
+option. A Chat Completions request to any other server
 carries no reasoning, in no form: a `<think>` block in a message's text is read
 as words the model said, and a server's prompt cache does not survive it. A
 round that only reasoned and called goes back with no text, and an answer that

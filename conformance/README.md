@@ -411,7 +411,8 @@ scripted.
   Python's `ModelPricing` fields), none when absent; a `fallback_model`
   takes one too.
   `model.chat_dialect`: the implementation's Chat Completions rendering, `openai`,
-  `deepseek`, `minimax` or `kimi`, each request is also written through, whatever the rounds
+  `openai_thinking_field` (OpenAI's, told by its configuration that the server reads
+  `reasoning_content`), `deepseek`, `minimax` or `kimi`, each request is also written through, whatever the rounds
   answer (`models`, `chat_messages`); a dialect the implementation does not have
   fails the scenario; a `fallback_model` takes one too.
   `model.name` and `model.provider`: the names a turn's record gives as
