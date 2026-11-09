@@ -2072,6 +2072,199 @@
       "missing": [
         "Other broadcast steps, capabilities, retries, rates, concurrent delivery and intelligence execution are covered separately or remain unmapped."
       ]
+    },
+    {
+      "id": "core-hook-injection-passes",
+      "requirement": "RK-9.4-004",
+      "clause_sha256": "ea7ab507e9b3a01ffcd4438139b66ac896a28e378fc7f94f0ca354eec6d33472",
+      "scope": "Hook injection passes and delivery exercised by tests/test_injected_events.py, using deterministic gates for lock ordering.",
+      "coverage": "partial",
+      "review": "Compared exact timelines, recipients, depths, keys, hook calls and side effects with the Python tests and RFC §9.4. The whole composite clause is not claimed covered.",
+      "assertions": [
+        {
+          "scenario": "hooks/an-injected-event-asks-no-agent",
+          "pointer": "/expect",
+          "sha256": "d2e1509f2d24250fabffb85e13cef7c9876ca0a50dbdd2a346c2cae4509f2858",
+          "scenario_sha256": "438a8ce3c9e606a945db5bba22f6e5fe86e2e0fdf66ecb9c33977bc427a6f130",
+          "proves": "The injection remains visible to its bound intelligence target without invoking it; only the named transport receives it."
+        },
+        {
+          "scenario": "hooks/an-injected-event-stored-only-reads-none",
+          "pointer": "/expect",
+          "sha256": "b24cde4b3781bc82260e8f100e02effd716c09b1bede91f4af4903a7e4d3dc5c",
+          "scenario_sha256": "bbb3d6351ededcbb808f9e898b6fa0cffe216eb65b58095f55756f51a77d3422",
+          "proves": "An injected event with no targets is stored with the visibility none and delivered to no one."
+        },
+        {
+          "scenario": "hooks/an-injection-cannot-widen-its-target-visibility",
+          "pointer": "/expect",
+          "sha256": "e34130198af5e5903e89a88e8705d742d907e0aab19c39bbd98164423f68bec5",
+          "scenario_sha256": "5fc99c206cd5ee791ea56de9fead69cb14ccf717e05c35140302537c61d1716e",
+          "proves": "An injected event remains restricted to its targets when its own hook modifies visibility to all."
+        },
+        {
+          "scenario": "hooks/an-injection-clears-its-supplied-idempotency-key",
+          "pointer": "/expect",
+          "sha256": "9ae9cf9a5a16871f75e29a88dea895a58aca7cb0096a9e871b259d17075fc4bb",
+          "scenario_sha256": "90ebe8b159140d7a6fd306221ffb47fc5e635e487c4a1c2edb6b7f019741b2ac",
+          "proves": "An injection carries no idempotency key even when its hook supplied one."
+        },
+        {
+          "scenario": "hooks/an-injection-collects-its-target-side-effects",
+          "pointer": "/expect",
+          "sha256": "7a360d0dd9cb8a25d092d15b67d74f281b45094e89a7b983fee49dcaca92b7b8",
+          "scenario_sha256": "86dea83a4f080dd500ce8aa6050dd9a42f0cb719ed0a6f31b997782090493bc6",
+          "proves": "A transport that receives an injected event can create a task."
+        },
+        {
+          "scenario": "hooks/an-injection-commits-its-own-hook-injection-after-it",
+          "pointer": "/expect",
+          "sha256": "99fac7ef77627adaaa6ea21fde2fdf1df0c1a9a8819e8abdb353bdd0b79c2743",
+          "scenario_sha256": "e418c9d2b7820b2d72205bcda29d27d9b02c47628b315e1dc7027fbe02dbd69f",
+          "proves": "An injected event can inject another event, committed after it in the same cascade."
+        },
+        {
+          "scenario": "hooks/an-injection-does-not-check-its-source-write-access",
+          "pointer": "/expect",
+          "sha256": "b0a380212994893c7d4804504757ada7e69e4db058f2c57c7421c944c9da35f2",
+          "scenario_sha256": "6a1cbae3a33bf3080a7772c4bab768fc7ac2f8c5f7a2e103aa3f06f86f354b6b",
+          "proves": "A hook injection whose source is read-only still commits and reaches its target."
+        },
+        {
+          "scenario": "hooks/an-injection-from-a-direct-injection-waits-for-the-outer-pass",
+          "pointer": "/expect",
+          "sha256": "a6a2d40de49d8fcdc71416be149e3000280a9ee32d908331f5e25fa379952546",
+          "scenario_sha256": "faa491618282da6d6dce240cb14a1b1ffeabe16f307b70019ddce2bab921c16e",
+          "proves": "A direct injection commits inside the held section; its hook injection waits until the outer cause commits."
+        },
+        {
+          "scenario": "hooks/an-injection-inherits-depth-instead-of-its-supplied-depth",
+          "pointer": "/expect",
+          "sha256": "c5fe3096665da8c4cb714c01824cca716fef348d30edc612732b500efd985bf7",
+          "scenario_sha256": "9bb3020e637be380990a155cf31eafc815f7ef0841ddccc1cdb04fae9faaa8c2",
+          "proves": "An injection inherits its cause depth even when it supplies a different depth."
+        },
+        {
+          "scenario": "hooks/an-injection-inherits-the-depth-of-an-agent-answer",
+          "pointer": "/expect",
+          "sha256": "9661b8d5d9d85061fffa297a80831511379676d706bcfe43121055209dce52dd",
+          "scenario_sha256": "f6c9931a659d98efd42d8780c1728c750d4fac7098c1d61a3adb8b381b17f4f7",
+          "proves": "An injection caused by an agent answer inherits that answer depth."
+        },
+        {
+          "scenario": "hooks/an-injection-is-transcoded-for-its-target",
+          "pointer": "/expect",
+          "sha256": "e9e09ec6a7011da4b809d2df34803731e5d6d9e04f7bd9f328036a72f75d0680",
+          "scenario_sha256": "2bdad51fde6737c06931ef951610b5b60dfbb1e6cb42a00d84525ebab3eb534b",
+          "proves": "An injected rich event is retained as rich content and delivered as plain text to a text-only transport."
+        },
+        {
+          "scenario": "hooks/an-injection-never-delivers-to-its-own-source",
+          "pointer": "/expect",
+          "sha256": "90a59fd714b95a3766287bbe0f0d9be433468afcfb2ba3f842ed6e51ee75be81",
+          "scenario_sha256": "2c5c1cbd9d355f09f59eaa3e60680efba80cde05095bd4e55dae33dc446ea8f0",
+          "proves": "An injection excludes its own source even when the source is among its targets."
+        },
+        {
+          "scenario": "hooks/an-injection-survives-a-muted-cause",
+          "pointer": "/expect",
+          "sha256": "2970422c7b719dff780aa84959cb2ff7d77c50d0b34c5f3e2e9120a2edcb4378",
+          "scenario_sha256": "2278f8feeabc165a1db6458b140829874b2b163acd33bdaafa4aba368074fb64",
+          "proves": "A muted source cannot publish the cause, but its hook injection is still committed and delivered."
+        },
+        {
+          "scenario": "hooks/an-injection-takes-its-own-lock-after-its-blocked-cause",
+          "pointer": "/expect",
+          "sha256": "bf27887d0f83c8ad0b6d1191915279f8f93dd468664fca953bf0e58cf2ea7d4b",
+          "scenario_sha256": "2037dea1a862f0b2f62addd1f47aca4eb36535ce064c814258c9af67e4a35214",
+          "proves": "A queued message commits between the cause and its hook injection, after the cause releases the room lock."
+        },
+        {
+          "scenario": "hooks/an-injection-takes-its-own-lock-after-its-delivered-cause",
+          "pointer": "/expect",
+          "sha256": "18c9120c31dc592d79b3cafd2b20cba9482add790a9b5b7ff67f3ba5981834cd",
+          "scenario_sha256": "0b506ab9e036b55724d7474115ce9b535b715abe678fc9518dc1d4fdb9c8d096",
+          "proves": "A queued message commits between the cause and its hook injection, after the cause releases the room lock."
+        },
+        {
+          "scenario": "hooks/injections-use-the-reentry-budget-without-increasing-chain-depth",
+          "pointer": "/expect",
+          "sha256": "fb3a4ae5f2102d92679faa2f058bee20f248a84eb6c2b600b7903a544e7fce73",
+          "scenario_sha256": "e424a925e3fb1f6417871416c173faa9a8299941166ba39f5941858b5f6118e8",
+          "proves": "Recursive hook injections retain chain depth but stop at the reentry loop cap."
+        },
+        {
+          "scenario": "hooks/an-injected-event-runs-the-hooks",
+          "pointer": "/expect",
+          "sha256": "de33e938f65954aa3a2a25d54f405161466e0f2f0b7031cfc1e23cdde3221875",
+          "scenario_sha256": "c4e393ae026e6e10cffb3a2c2c5eb3932e567ea0ac6df48af9481c5e9aa627fc",
+          "proves": "An injected event takes a pass of its own: its BEFORE_BROADCAST hooks run, and one may block it."
+        },
+        {
+          "scenario": "appendix-b/b2-block-and-inject",
+          "pointer": "/expect",
+          "sha256": "802f8422e3aa965db50a9be23232da5552abf02253154b2c8410bef438b910f1",
+          "scenario_sha256": "da8ff9d305a1093d9c7181c26dfe2cd45176738630973cba70087bdf2be73274",
+          "proves": "A sensitivity hook blocks a message and injects a notice to each side, with an observation."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/test_injected_events.py::TestItsPass::test_is_committed_when_its_caller_is_cancelled_waiting_for_the_lock",
+          "sha256": "9634c4c8ff9b7490de61bde32f50d3ea8ee27e2c4a89a3653d5022a6868af428",
+          "proves": "An injection still commits after its waiting caller task is cancelled; specialized Python source evidence only."
+        },
+        {
+          "nodeid": "tests/test_injected_events.py::TestItsPass::test_is_committed_when_a_later_step_of_its_caller_fails",
+          "sha256": "34d0abcb50c1f4a39b8126acb5889f515c878a49a0335379b4a1ec9cb8ccbd54",
+          "proves": "A private Python naming failure after the cause is committed does not lose its queued injection; source evidence only, no asserted Rust analogue."
+        }
+      ],
+      "missing": [
+        "Off-lock collection and refusal before storage after room closure, a gate or timeout; EDIT/DELETE behavior; full system authority and realtime model-context-only delivery remain outside this mapping.",
+        "The private Python naming-failure seam has no verified Rust fault-injection equivalent."
+      ]
+    },
+    {
+      "id": "core-hook-injection-triggers",
+      "requirement": "RK-9.4-006",
+      "clause_sha256": "d81c6da5cc14e2eeb56f7e4a6f7db9c890ee264e3f52178895d020f0a04d585a",
+      "scope": "Hook injection passes and delivery exercised by tests/test_injected_events.py, using deterministic gates for lock ordering.",
+      "coverage": "partial",
+      "review": "Compared exact timelines, recipients, depths, keys, hook calls and side effects with the Python tests and RFC §9.4. The whole composite clause is not claimed covered.",
+      "assertions": [
+        {
+          "scenario": "hooks/a-before-deliver-hook-cannot-inject",
+          "pointer": "/expect",
+          "sha256": "9b2934c882266de1ec4a1fa85c8a1374face93748a4ef4deea4fb928c36164f7",
+          "scenario_sha256": "b1ef0b275febd0ba44be9ddb3e49bc7a70334c06cea1d67d6eadcf943e0f85ee",
+          "proves": "An injection returned by BEFORE_DELIVER is dropped and creates no timeline event or delivery."
+        },
+        {
+          "scenario": "identity/a-challenge-is-delivered-and-the-message-held",
+          "pointer": "/expect",
+          "sha256": "e7862046c3a545d3e9eaa5292709d7d75472110efa795c25c26ae2541833166c",
+          "scenario_sha256": "097ac40e6c8923a3a793991a53f6068fffbdb3691dc3295839632bd8bded1a70",
+          "proves": "An identity hook's challenge is committed and delivered as an injected event of its own, each time, and the message is blocked identity_challenge_sent, never stored."
+        },
+        {
+          "scenario": "identity/a-challenge-runs-the-before-broadcast-hooks",
+          "pointer": "/expect",
+          "sha256": "557e529fb502e63efcfc0f6f56ee0d20d8bd7a7b8fe8523822185df4cbf18877",
+          "scenario_sha256": "22930bb4ab61c4dab078dffb0ed8be7679d9678200db6e8fba4a409642e059d0",
+          "proves": "An identity challenge is filtered by BEFORE_BROADCAST and a blocked challenge reaches no channel."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/test_injected_events.py::TestAnotherTrigger::test_drops_them_with_a_warning",
+          "sha256": "10b720bf5ea9897e3dc5710325dd923d7f4cd4cad5259bf18c3a14ff8b1f33bd",
+          "proves": "BEFORE_DELIVER drops injected events and logs the hook name and trigger at WARNING; specialized Python source evidence only."
+        }
+      ],
+      "missing": [
+        "SYNC triggers other than BEFORE_DELIVER and identity challenges; shared scenarios do not inspect warning logs."
+      ]
     }
   ],
   "executions": [

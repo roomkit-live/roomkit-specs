@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "e68bbaace40568f287fa43b657999608f5b28a6f6e3379c67e21c6760258ca9a",
-  "corpus_sha256": "d2d86f8e8017310d1aaabb52e36510676f86f185f1e3f86f8f5f832a74e774a3",
+  "corpus_sha256": "b7093b993c31fe938432d1b568e072bbdd1c9833e4a952da22902dd7a4371fe2",
   "python_commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
-  "scenario_count": 1591,
+  "scenario_count": 1607,
   "sections": [
     {
       "section": "0",
@@ -1490,6 +1490,7 @@
       "candidate_scenarios": [
         "edits/a-hard-delete-leaves-the-index-it-took",
         "identity/a-challenge-is-delivered-and-the-message-held",
+        "identity/a-challenge-runs-the-before-broadcast-hooks",
         "resilience/concurrent-messages-take-their-own-index",
         "rooms/the-delivery-cursor-follows-the-lane",
         "store/an-added-event-keeps-its-index-and-the-room-s-next-is-past-it",
@@ -1924,8 +1925,8 @@
       "review": "normative",
       "requirements": 6,
       "mapping": {
-        "mapped_partial": 1,
-        "unmapped": 5
+        "mapped_partial": 3,
+        "unmapped": 3
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -1933,11 +1934,27 @@
         "delivery/a-call-adopted-after-the-decision-ends-at-its-own-deadline",
         "delivery/an-event-injected-by-a-cancelled-delivery-starts-no-turn",
         "delivery/before-deliver-blocks-rewrites-and-fails-open",
+        "hooks/a-before-deliver-hook-cannot-inject",
         "hooks/an-injected-event-asks-no-agent",
         "hooks/an-injected-event-runs-the-hooks",
         "hooks/an-injected-event-stored-only-reads-none",
+        "hooks/an-injection-cannot-widen-its-target-visibility",
+        "hooks/an-injection-clears-its-supplied-idempotency-key",
+        "hooks/an-injection-collects-its-target-side-effects",
+        "hooks/an-injection-commits-its-own-hook-injection-after-it",
+        "hooks/an-injection-does-not-check-its-source-write-access",
+        "hooks/an-injection-from-a-direct-injection-waits-for-the-outer-pass",
+        "hooks/an-injection-inherits-depth-instead-of-its-supplied-depth",
+        "hooks/an-injection-inherits-the-depth-of-an-agent-answer",
+        "hooks/an-injection-is-transcoded-for-its-target",
+        "hooks/an-injection-never-delivers-to-its-own-source",
+        "hooks/an-injection-survives-a-muted-cause",
+        "hooks/an-injection-takes-its-own-lock-after-its-blocked-cause",
+        "hooks/an-injection-takes-its-own-lock-after-its-delivered-cause",
+        "hooks/injections-use-the-reentry-budget-without-increasing-chain-depth",
         "hooks/modify-keeps-what-it-may-not-change",
         "identity/a-challenge-is-delivered-and-the-message-held",
+        "identity/a-challenge-runs-the-before-broadcast-hooks",
         "inbound/a-call-s-response-events-carry-a-hook-s-modify",
         "inbound/a-call-s-response-events-leave-out-an-answer-a-hook-blocks",
         "inbound/a-hook-s-injected-event-s-failed-set-is-not-recorded",
@@ -2204,6 +2221,7 @@
         "hooks/modify-keeps-what-it-may-not-change",
         "hooks/off-lock-tickets-keep-arrival-order",
         "identity/a-challenge-is-delivered-and-the-message-held",
+        "identity/a-challenge-runs-the-before-broadcast-hooks",
         "identity/a-channel-that-names-its-senders-is-not-asked-about",
         "identity/a-member-the-host-left-pending-keeps-their-record",
         "identity/a-pending-sender-cannot-take-an-identity-s-record",
@@ -2974,6 +2992,7 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "identity/a-challenge-is-delivered-and-the-message-held",
+        "identity/a-challenge-runs-the-before-broadcast-hooks",
         "identity/a-member-the-host-left-pending-keeps-their-record",
         "identity/a-pending-sender-cannot-take-an-identity-s-record",
         "identity/a-rejection-blocks-the-message",
@@ -3000,6 +3019,7 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "identity/a-challenge-is-delivered-and-the-message-held",
+        "identity/a-challenge-runs-the-before-broadcast-hooks",
         "identity/a-rejection-blocks-the-message",
         "identity/a-resolver-s-rejection-holds-the-message-no-hook-answers",
         "identity/an-ambiguous-sender-s-hook-names-it",
@@ -8408,8 +8428,52 @@
     {
       "id": "RK-9.4-004",
       "section": "9.4",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "core-hook-injection-passes",
+          "scope": "Hook injection passes and delivery exercised by tests/test_injected_events.py, using deterministic gates for lock ordering.",
+          "coverage": "partial",
+          "missing": [
+            "Off-lock collection and refusal before storage after room closure, a gate or timeout; EDIT/DELETE behavior; full system authority and realtime model-context-only delivery remain outside this mapping.",
+            "The private Python naming-failure seam has no verified Rust fault-injection equivalent."
+          ],
+          "executions": [
+            {
+              "execution": "python-hooks-33d1f4",
+              "implementation": "python",
+              "commit": "33d1f4415e2a5697cbe5b4f6cb8413ee05f33363",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-permissions-ecf9bc5",
+              "implementation": "python",
+              "commit": "ecf9bc5f7e92a440413b2518e799afce31bd5042",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-visibility-8fb44e9",
+              "implementation": "python",
+              "commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "RK-9.4-005",
@@ -8420,8 +8484,18 @@
     {
       "id": "RK-9.4-006",
       "section": "9.4",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "core-hook-injection-triggers",
+          "scope": "Hook injection passes and delivery exercised by tests/test_injected_events.py, using deterministic gates for lock ordering.",
+          "coverage": "partial",
+          "missing": [
+            "SYNC triggers other than BEFORE_DELIVER and identity challenges; shared scenarios do not inspect warning logs."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-9.5-001",
