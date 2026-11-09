@@ -763,7 +763,7 @@ the record requires (Templates): a room's `created_at` and `updated_at`, a
 binding's `attached_at`, a participant's `joined_at` and an event's `id`,
 `type` and `created_at` are now when it leaves them out, and an event's room
 is the call's `room_id`, its source the framework's. A runner runs the
-scenarios of `store/` on each store it ships that needs no server.
+scenarios of `store/` and `idempotency/` on each store it ships that needs no server.
 
 | Call | Arguments | Result |
 |---|---|---|
@@ -781,6 +781,8 @@ scenarios of `store/` on each store it ships that needs no server.
 | `store.get_thread_summaries` | `room_id`, `root_event_ids` | each summary by its root's id |
 | `store.add_event` | `event`, its room the template's | the event |
 | `store.add_event_auto_index` | `room_id`, `event` | the event |
+| `store.check_idempotency` | `room_id`, `key`, `channel_id` (null for any channel) | whether the room holds the key in that scope |
+| `store.get_event_by_idempotency_key` | `room_id`, `key`, `channel_id` (null for any channel) | the event holding the key; with no channel, the one of lowest index; null for none |
 | `store.get_event` | `event_id` | the event, or null |
 | `store.update_event` | `event` | the event |
 | `store.delete_event` | `room_id`, `event_id`, `cascade_replies` (default true) | the events removed |
@@ -1020,6 +1022,7 @@ refuses its value, a `ChannelId`).
 | `reentrant` | A message routed back into the room whose lock or admission order its caller holds (§9.5.1 A message routed back) | `ReentrantCallError` | `KitError::Reentrant` |
 | `waits_for_itself` | A completion handle's cancel from the room's lane or under its lock, where its cleanup would wait for its caller (§10.1 step 18) | `RuntimeError` from `DeliveryHandle.cancel` | `RoomKitError::Runtime` from `DeliveryHandle::cancel` |
 | `reentry_loop_cap` | A direct change past its cascade's hook calls (§8.3, §10.3) | `ReentryLoopCapError` | `MutationError::ReentryLoopCap` |
+| `idempotency_key_taken` | A direct record or store write tries another event under a key its source channel holds in the room (§13.4, §14.3) | `IdempotencyKeyTakenError` | `RoomKitError::IdempotencyKeyTaken`, `StoreError::IdempotencyKeyTaken` |
 | `event_not_found` | A write naming an event its room does not hold: a change's target, `update_event` (§14.3) | `EventNotFoundError` | `StoreError::EventNotFound` |
 | `task_not_found` | An update of a task the store does not hold (§14.3) | `TaskNotFoundError` | `StoreError::TaskNotFound` |
 | `verification_refused` | A verification request refused, with its `reason`: `not_found` (none in the caller's organization), `not_open`, `expired`, `mismatch` (a wrong secret, counted) or `failed` (the last attempt) (§11.7.2) | `VerificationRefusedError` | `RoomKitError::VerificationRefused` |
