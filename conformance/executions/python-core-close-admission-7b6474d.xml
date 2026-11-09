@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="2" time="0"><testcase classname="tests.conformance.test_conformance" name="test_scenario[delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation]" time="0" /><testcase classname="tests.conformance.test_conformance" name="test_scenario[delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation[sqlite]]" time="0" /></testsuite></testsuites>

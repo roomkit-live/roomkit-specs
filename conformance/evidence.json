@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "127c55db8b6d098e43ea9bcb57b83ce02db3dbfa",
+  "python_commit": "7b6474deebbd76ffd139ee2e937c70fb842b2073",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -12542,63 +12542,63 @@
       "clause_sha256": "e0ebe6886b41f4597c93caa760fca8804d7c1a7a362302e3a8052badc7542032",
       "scope": "Public operation admission and delivery-key cancellation during and after the kit close; an already-entered nested scope read under a locked hook keeps its parent grace.",
       "coverage": "partial",
-      "review": "Python source assertions and shared scenario were read independently with the Rust changes. The shared scenario passed on Python memory and SQLite. Native tests additionally cover scope reads, commit boundaries, timer hooks, injected passes and completed answers; these are not additional JSON scenario executions. This link does not close the entire shutdown contract.",
+      "review": "Python source assertions and shared scenario were read independently with the Rust changes. The shared scenario passed on Python memory, SQLite and isolated PostgreSQL. Native tests additionally cover scope reads, commit boundaries, timer hooks, injected passes and completed answers; these are not additional JSON scenario executions. This link does not close the entire shutdown contract.",
       "assertions": [
         {
           "scenario": "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
           "pointer": "/steps/4/expect",
           "sha256": "8d9d5f9beed2458c4479c94ea29dd55a6e630e71dc1c7aabd58cbfd700efe2e2",
           "scenario_sha256": "0a5ab28ca0939eb93474f32c1729f099f9154fc38766e7aef9240106020b0a43",
-          "proves": "New deliveries and failed verification attempts are refused during and after shutdown; cancellation returns zero and both retained handles report kit_closed."
+          "proves": "The queued committed delivery reports kit_closed, proving that shutdown started while the first transport is still held."
         },
         {
           "scenario": "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
           "pointer": "/steps/5/expect",
           "sha256": "bde64c77e3c26c07bc8de23f8c14854d96445fdc3a273f35a7c4ecffc6cee795",
           "scenario_sha256": "0a5ab28ca0939eb93474f32c1729f099f9154fc38766e7aef9240106020b0a43",
-          "proves": "New deliveries and failed verification attempts are refused during and after shutdown; cancellation returns zero and both retained handles report kit_closed."
+          "proves": "deliver refuses new work with kit_closed during shutdown."
         },
         {
           "scenario": "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
           "pointer": "/steps/6/expect",
           "sha256": "bde64c77e3c26c07bc8de23f8c14854d96445fdc3a273f35a7c4ecffc6cee795",
           "scenario_sha256": "0a5ab28ca0939eb93474f32c1729f099f9154fc38766e7aef9240106020b0a43",
-          "proves": "New deliveries and failed verification attempts are refused during and after shutdown; cancellation returns zero and both retained handles report kit_closed."
+          "proves": "record_failed_attempt refuses new work with kit_closed during shutdown, even for an unknown request."
         },
         {
           "scenario": "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
           "pointer": "/steps/7/expect",
           "sha256": "df95d494b154bc7ea6d978af82b1f1f252652e0093b195ce79c3467de942602c",
           "scenario_sha256": "0a5ab28ca0939eb93474f32c1729f099f9154fc38766e7aef9240106020b0a43",
-          "proves": "New deliveries and failed verification attempts are refused during and after shutdown; cancellation returns zero and both retained handles report kit_closed."
+          "proves": "cancel_delivery returns zero during shutdown while the key still names the running delivery."
         },
         {
           "scenario": "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
           "pointer": "/steps/10/expect",
           "sha256": "bde64c77e3c26c07bc8de23f8c14854d96445fdc3a273f35a7c4ecffc6cee795",
           "scenario_sha256": "0a5ab28ca0939eb93474f32c1729f099f9154fc38766e7aef9240106020b0a43",
-          "proves": "New deliveries and failed verification attempts are refused during and after shutdown; cancellation returns zero and both retained handles report kit_closed."
+          "proves": "deliver refuses new work with kit_closed after shutdown."
         },
         {
           "scenario": "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
           "pointer": "/steps/11/expect",
           "sha256": "bde64c77e3c26c07bc8de23f8c14854d96445fdc3a273f35a7c4ecffc6cee795",
           "scenario_sha256": "0a5ab28ca0939eb93474f32c1729f099f9154fc38766e7aef9240106020b0a43",
-          "proves": "New deliveries and failed verification attempts are refused during and after shutdown; cancellation returns zero and both retained handles report kit_closed."
+          "proves": "record_failed_attempt refuses new work with kit_closed after shutdown, even for an unknown request."
         },
         {
           "scenario": "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
           "pointer": "/steps/12/expect",
           "sha256": "df95d494b154bc7ea6d978af82b1f1f252652e0093b195ce79c3467de942602c",
           "scenario_sha256": "0a5ab28ca0939eb93474f32c1729f099f9154fc38766e7aef9240106020b0a43",
-          "proves": "New deliveries and failed verification attempts are refused during and after shutdown; cancellation returns zero and both retained handles report kit_closed."
+          "proves": "cancel_delivery returns zero after shutdown."
         },
         {
           "scenario": "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
           "pointer": "/steps/13/expect",
           "sha256": "8d9d5f9beed2458c4479c94ea29dd55a6e630e71dc1c7aabd58cbfd700efe2e2",
           "scenario_sha256": "0a5ab28ca0939eb93474f32c1729f099f9154fc38766e7aef9240106020b0a43",
-          "proves": "New deliveries and failed verification attempts are refused during and after shutdown; cancellation returns zero and both retained handles report kit_closed."
+          "proves": "The running delivery handle retains kit_closed after the attempted cancellation."
         },
         {
           "scenario": "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
@@ -73784,6 +73784,80 @@
         {
           "scenario": "tenancy/routing-stays-within-the-organization",
           "sha256": "bc67b29d4997c98a6257fe1cf78eecf15dbfa7bbcb14d5c6d3ef26f4945955b4",
+          "outcome": "passed"
+        }
+      ]
+    },
+    {
+      "id": "python-core-close-admission-7b6474d-memory",
+      "implementation": "python",
+      "implementation_commit": "7b6474deebbd76ffd139ee2e937c70fb842b2073",
+      "rfc_commit": "758e73b5e631f2f441dec478750c02dc22267809",
+      "corpus_commit": "758e73b5e631f2f441dec478750c02dc22267809",
+      "rfc_sha256": "4a27b5f6663ab28d1c9b5f618da77a7679785b69c5bf0bca86345833c7e76c0a",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "env",
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "PYTHONPATH=src",
+        "uv",
+        "run",
+        "--active",
+        "--no-sync",
+        "pytest",
+        "tests/conformance/test_conformance.py",
+        "-k",
+        "a-closing-kit-refuses-new-operations-and-ignores-cancellation",
+        "-q",
+        "--junitxml=python-core-close-admission.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-core-close-admission-7b6474d.xml",
+        "format": "pytest_junit",
+        "sha256": "e889e234610021dfca5c989eb2618292ecc834473356af2e2789c8529e65a848"
+      },
+      "results": [
+        {
+          "scenario": "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
+          "sha256": "0a5ab28ca0939eb93474f32c1729f099f9154fc38766e7aef9240106020b0a43",
+          "outcome": "passed"
+        }
+      ]
+    },
+    {
+      "id": "python-core-close-admission-7b6474d-sqlite",
+      "implementation": "python",
+      "implementation_commit": "7b6474deebbd76ffd139ee2e937c70fb842b2073",
+      "rfc_commit": "758e73b5e631f2f441dec478750c02dc22267809",
+      "corpus_commit": "758e73b5e631f2f441dec478750c02dc22267809",
+      "rfc_sha256": "4a27b5f6663ab28d1c9b5f618da77a7679785b69c5bf0bca86345833c7e76c0a",
+      "backend": "sqlite",
+      "runtime": "asyncio",
+      "command": [
+        "env",
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "PYTHONPATH=src",
+        "uv",
+        "run",
+        "--active",
+        "--no-sync",
+        "pytest",
+        "tests/conformance/test_conformance.py",
+        "-k",
+        "a-closing-kit-refuses-new-operations-and-ignores-cancellation",
+        "-q",
+        "--junitxml=python-core-close-admission.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-core-close-admission-7b6474d.xml",
+        "format": "pytest_junit",
+        "sha256": "e889e234610021dfca5c989eb2618292ecc834473356af2e2789c8529e65a848"
+      },
+      "results": [
+        {
+          "scenario": "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
+          "sha256": "0a5ab28ca0939eb93474f32c1729f099f9154fc38766e7aef9240106020b0a43",
           "outcome": "passed"
         }
       ]
