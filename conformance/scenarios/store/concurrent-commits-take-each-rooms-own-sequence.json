@@ -13,12 +13,24 @@
       "call": "store.create_room",
       "room": {
         "id": "room-1"
+      },
+      "expect": {
+        "result": {
+          "event_count": 0,
+          "latest_index": null
+        }
       }
     },
     {
       "call": "store.create_room",
       "room": {
         "id": "room-2"
+      },
+      "expect": {
+        "result": {
+          "event_count": 0,
+          "latest_index": null
+        }
       }
     },
     {
