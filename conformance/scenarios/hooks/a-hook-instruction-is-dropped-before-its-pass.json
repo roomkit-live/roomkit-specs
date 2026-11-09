@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "hooks/a-hook-instruction-is-dropped-before-its-pass",
-  "title": "A hook instruction runs no pass while its ordinary notice and task stand",
+  "title": "A hook instruction runs no pass while its ordinary notice, task and observation stand",
   "rules": [
     "§9.4 Injected events"
   ],
@@ -72,6 +72,13 @@
                   "id": "review",
                   "room_id": "room-1",
                   "title": "Review"
+                }
+              ],
+              "observations": [
+                {
+                  "room_id": "room-1",
+                  "channel_id": "system",
+                  "content": "Audit the request"
                 }
               ]
             }
@@ -153,6 +160,14 @@
       "room-1": [
         {
           "title": "Review"
+        }
+      ]
+    },
+    "observations": {
+      "room-1": [
+        {
+          "channel_id": "system",
+          "content": "Audit the request"
         }
       ]
     }

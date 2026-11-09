@@ -328,7 +328,7 @@ left, the call does what it does by default. A reaction:
 | `stop_after` | In a `deliver_stream` reaction: the channel stops reading the stream once it was handed the text delta or the piece of reasoning this string equals |
 | `stop_after_rows` | In a `deliver_stream` reaction: the channel stops reading the stream once it was handed this many of its rows, a call's start or end |
 | `parsed` | In a `parse` reaction: a patch on the event the channel builds, what it reads off its own wire: its members replace the event's, those of its `source` the source's; its strings name what the run made (References) |
-| `result` | A hook's HookResult (§9.4). A modify's `event` is a patch on the payload: its members replace the payload's. Its injected events, tasks and observations are templates |
+| `result` | A hook's HookResult (§9.4). A modify's `event` is a patch on the payload: its members replace the payload's. Its injected events, tasks and observations are templates; event aliases in a room-event hook result resolve after its actions, before the result is returned |
 | `invalid_result` | A deliberate unusable return on a SYNC `before_broadcast` hook: `{ "kind": "no_result" }` returns null; `{ "kind": "missing_payload", ... }` returns an unchecked MODIFY with no event, optionally carrying `tasks`, `observations`, and `injected_events` templates. Mutually exclusive with `result` and `fail`. A runner validates the fixture before invoking the hook; a malformed fixture is a runner failure, never a simulated hook exception |
 
 An invalid return exercises the hook chain, not the model constructor. A

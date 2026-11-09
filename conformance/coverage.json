@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "52c91f46451cee0ea1bdecf52a3f033690d3e6e3845fb9d3429de69798d92bf9",
-  "corpus_sha256": "516cf8ce2cccc584292ed6ff39bfe87a05085ee9b4867dbe25257674718f10c9",
-  "python_commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
-  "scenario_count": 1608,
+  "corpus_sha256": "779aefedb019ee2aab247f7715a488ec04ce40b7e7cf8ddce4d68f4adb799895",
+  "python_commit": "31c4c4ad08a36e4ea9c26bc169c28e1f9580ebfd",
+  "scenario_count": 1623,
   "sections": [
     {
       "section": "0",
@@ -1926,8 +1926,9 @@
       "review": "normative",
       "requirements": 6,
       "mapping": {
+        "mapped_complete": 1,
         "mapped_partial": 3,
-        "unmapped": 3
+        "unmapped": 2
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -1936,6 +1937,17 @@
         "delivery/an-event-injected-by-a-cancelled-delivery-starts-no-turn",
         "delivery/before-deliver-blocks-rewrites-and-fails-open",
         "hooks/a-before-deliver-hook-cannot-inject",
+        "hooks/a-duplicate-drops-off-lock-injections",
+        "hooks/a-hook-delete-requires-system-authority-admin",
+        "hooks/a-hook-delete-requires-system-authority-sender",
+        "hooks/a-hook-delete-requires-system-authority-system",
+        "hooks/a-hook-edit-requires-system-authority-absent",
+        "hooks/a-hook-edit-requires-system-authority-sender",
+        "hooks/a-hook-edit-requires-system-authority-system",
+        "hooks/a-hook-instruction-is-dropped-before-its-pass",
+        "hooks/a-timeout-drops-already-collected-injections",
+        "hooks/a-verification-hook-cannot-inject",
+        "hooks/an-injected-change-keeps-the-target-s-readers",
         "hooks/an-injected-event-asks-no-agent",
         "hooks/an-injected-event-runs-the-hooks",
         "hooks/an-injected-event-stored-only-reads-none",
@@ -1947,11 +1959,15 @@
         "hooks/an-injection-from-a-direct-injection-waits-for-the-outer-pass",
         "hooks/an-injection-inherits-depth-instead-of-its-supplied-depth",
         "hooks/an-injection-inherits-the-depth-of-an-agent-answer",
+        "hooks/an-injection-is-in-its-agent-target-s-next-context",
         "hooks/an-injection-is-transcoded-for-its-target",
         "hooks/an-injection-never-delivers-to-its-own-source",
         "hooks/an-injection-survives-a-muted-cause",
         "hooks/an-injection-takes-its-own-lock-after-its-blocked-cause",
         "hooks/an-injection-takes-its-own-lock-after-its-delivered-cause",
+        "hooks/an-off-lock-allow-keeps-its-injection",
+        "hooks/an-off-lock-block-keeps-its-injection",
+        "hooks/an-off-lock-modify-keeps-its-injection",
         "hooks/injections-use-the-reentry-budget-without-increasing-chain-depth",
         "hooks/modify-keeps-what-it-may-not-change",
         "identity/a-challenge-is-delivered-and-the-message-held",
@@ -8457,11 +8473,11 @@
       "links": [
         {
           "id": "core-hook-injection-passes",
-          "scope": "Hook injection passes and delivery exercised by tests/test_injected_events.py, using deterministic gates for lock ordering.",
+          "scope": "Injection pass ordering, off-lock collection, refusal before storage, authority and mutation recipients, next-turn history, plus specialized cancellation, late-failure and Python model-transport evidence.",
           "coverage": "partial",
           "missing": [
-            "Off-lock collection and refusal before storage after room closure, a gate or timeout; EDIT/DELETE behavior; full system authority and realtime model-context-only delivery remain outside this mapping.",
-            "The private Python naming-failure seam has no verified Rust fault-injection equivalent."
+            "Rust realtime/model-transport ingestion is not implemented or exercised by this core lot. Python silent-ingestion source evidence is linked, but does not certify Rust voice conformance (RMK-333).",
+            "Gate refusal is sampled at duplicate detection and room closure, with timeout after collection; this does not exhaust every pre-storage gate or every mutation revalidation race."
           ],
           "executions": [
             {
@@ -8511,8 +8527,16 @@
     {
       "id": "RK-9.4-005",
       "section": "9.4",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_complete",
+      "links": [
+        {
+          "id": "core-hook-injected-instruction",
+          "scope": "An INSTRUCTION returned by BEFORE_BROADCAST is dropped before its own pass; ordinary injections, tasks and observations remain.",
+          "coverage": "complete",
+          "missing": [],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-9.4-006",
@@ -8521,10 +8545,10 @@
       "links": [
         {
           "id": "core-hook-injection-triggers",
-          "scope": "Hook injection passes and delivery exercised by tests/test_injected_events.py, using deterministic gates for lock ordering.",
+          "scope": "All SYNC trigger eligibility in the generic engine, BEFORE_DELIVER and ON_VERIFICATION_REQUIRED end-to-end, and identity challenge exceptions.",
           "coverage": "partial",
           "missing": [
-            "SYNC triggers other than BEFORE_DELIVER and identity challenges; shared scenarios do not inspect warning logs."
+            "End-to-end warning assertions for each typed turn and voice caller remain outside this mapping; generic engine coverage is not a claim of complete caller integration."
           ],
           "executions": [
             {

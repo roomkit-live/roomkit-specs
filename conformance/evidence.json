@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+  "python_commit": "31c4c4ad08a36e4ea9c26bc169c28e1f9580ebfd",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -2077,9 +2077,9 @@
       "id": "core-hook-injection-passes",
       "requirement": "RK-9.4-004",
       "clause_sha256": "ea7ab507e9b3a01ffcd4438139b66ac896a28e378fc7f94f0ca354eec6d33472",
-      "scope": "Hook injection passes and delivery exercised by tests/test_injected_events.py, using deterministic gates for lock ordering.",
+      "scope": "Injection pass ordering, off-lock collection, refusal before storage, authority and mutation recipients, next-turn history, plus specialized cancellation, late-failure and Python model-transport evidence.",
       "coverage": "partial",
-      "review": "Compared exact timelines, recipients, depths, keys, hook calls and side effects with the Python tests and RFC §9.4. The whole composite clause is not claimed covered.",
+      "review": "Read the exact assertions against §9.4 and their Python reference tests. Event aliases in mutation injections are resolved before return, so a missing target cannot masquerade as an authorization refusal. The forced Python _name_held failure after a blocked decision has no fallible counterpart in Rust: delivery_keys::Named::decided returns immediately for result.blocked; driver::inbound::Record::decide then records the decision without a user callback. Existing failed-lock-release scenarios are not asserted to exercise that private fault point.",
       "assertions": [
         {
           "scenario": "hooks/an-injected-event-asks-no-agent",
@@ -2206,6 +2206,104 @@
           "sha256": "802f8422e3aa965db50a9be23232da5552abf02253154b2c8410bef438b910f1",
           "scenario_sha256": "da8ff9d305a1093d9c7181c26dfe2cd45176738630973cba70087bdf2be73274",
           "proves": "A sensitivity hook blocks a message and injects a notice to each side, with an observation."
+        },
+        {
+          "scenario": "hooks/an-off-lock-allow-keeps-its-injection",
+          "pointer": "/expect",
+          "sha256": "c00bcbf43776364bf0882f1e53e5ac13746505cd933b7d4c644aa235395190d8",
+          "scenario_sha256": "f45c23d1d225f1ca579e925915e0e4fbcb32b80a52275ac5916061a95f5b09a2",
+          "proves": "The off-lock decision collects its injection; exact hook calls, cause status, timeline order and deliveries are asserted."
+        },
+        {
+          "scenario": "hooks/an-off-lock-modify-keeps-its-injection",
+          "pointer": "/expect",
+          "sha256": "ff11eff74adf59b6659dcc14631c84e93916effbe3ef32fb90b350d151bc1d79",
+          "scenario_sha256": "6fb9c36a30daf41d33e393da96075c6f343d48f112150195f7b282064265dabd",
+          "proves": "The off-lock decision collects its injection; exact hook calls, cause status, timeline order and deliveries are asserted."
+        },
+        {
+          "scenario": "hooks/an-off-lock-block-keeps-its-injection",
+          "pointer": "/expect",
+          "sha256": "7c1e68c6bc5bee2b72522bab0aa3e14ea5eaf3baa5b03e5b22f0ecc86b2a4dfe",
+          "scenario_sha256": "de257a856ed82f68140787e3b17604908aaf1c266e4a30739ae9ed5f9710a077",
+          "proves": "The off-lock decision collects its injection; exact hook calls, cause status, timeline order and deliveries are asserted."
+        },
+        {
+          "scenario": "hooks/a-duplicate-drops-off-lock-injections",
+          "pointer": "/expect",
+          "sha256": "df21b66d7185fe5d28665e9ddf2a849ee6e81929df1b3101de7a89bbafb3bbb6",
+          "scenario_sha256": "f7cae7de3bb31731c5c3e8b7751012577899c2e51a43780543729fadc9dd3097",
+          "proves": "An off-lock hook runs on the duplicate, but its injection is not stored or delivered; only the original timeline row and delivery remain."
+        },
+        {
+          "scenario": "hooks/a-timeout-drops-already-collected-injections",
+          "pointer": "/expect",
+          "sha256": "f091822ac0a42ff87544fb7e466152288336fa2a8b487ed2ccc03a04df8562ad",
+          "scenario_sha256": "6c1efebf020e85678d12a5f81124a6b5d4e6d0956f04520a527ffab76bc1d451",
+          "proves": "The first hook has returned its injection before the second waits past process_timeout; neither event is stored or delivered."
+        },
+        {
+          "scenario": "hooks/an-injection-is-in-its-agent-target-s-next-context",
+          "pointer": "/expect",
+          "sha256": "958222b13430bc3eb0e365aa5555fc5bb99f9f074c3071b58f97f7d68d40431c",
+          "scenario_sha256": "65ed387caa7e653f9f655a7717d347cb0589ae5b7b5ffdeecf2dc0280c5c8da1",
+          "proves": "The targeted agent is called only for the next message and its actual recorded context includes the stored injection."
+        },
+        {
+          "scenario": "hooks/an-injected-change-keeps-the-target-s-readers",
+          "pointer": "/expect",
+          "sha256": "c62ce6f98eec643f65fbdcc3cf6792ced4b4bac93553717f929d833dff77ba01",
+          "scenario_sha256": "c19b439f0deb11b0f9fb0b7d86a982226c5b36cb7c53035a48c16238ace0942d",
+          "proves": "A named injection target that could not read the original receives no mutation; visibility remains restricted to the original readers."
+        },
+        {
+          "scenario": "hooks/a-hook-delete-requires-system-authority-sender",
+          "pointer": "/expect",
+          "sha256": "4b3bce93db02009af9c91a5c62b6792e3aae498b85b2542e37ca0057f07d5ee3",
+          "scenario_sha256": "410d5b99186890f4aa89f6d7bb7542e455045faa5025bf543bce41f88010514c",
+          "proves": "Injected delete with sender authority: resolved existing target, exact stored rows, mutation observer and native deliveries. The original sender source lends no authority to the hook."
+        },
+        {
+          "scenario": "hooks/a-hook-delete-requires-system-authority-admin",
+          "pointer": "/expect",
+          "sha256": "4b3bce93db02009af9c91a5c62b6792e3aae498b85b2542e37ca0057f07d5ee3",
+          "scenario_sha256": "ebcc0e4a2c21d4c18a1aa432bc5bbf448db1ac71e457a4561f983308e044b41b",
+          "proves": "Injected delete with admin authority: resolved existing target, exact stored rows, mutation observer and native deliveries. The original sender source lends no authority to the hook."
+        },
+        {
+          "scenario": "hooks/a-hook-edit-requires-system-authority-absent",
+          "pointer": "/expect",
+          "sha256": "4b3bce93db02009af9c91a5c62b6792e3aae498b85b2542e37ca0057f07d5ee3",
+          "scenario_sha256": "f5ae7007a2ed5a62439d7016e2db3af3769073bcf085cb5a1b82c1e23845be7a",
+          "proves": "Injected edit with absent authority: resolved existing target, exact stored rows, mutation observer and native deliveries. The original sender source lends no authority to the hook."
+        },
+        {
+          "scenario": "hooks/a-hook-edit-requires-system-authority-sender",
+          "pointer": "/expect",
+          "sha256": "4b3bce93db02009af9c91a5c62b6792e3aae498b85b2542e37ca0057f07d5ee3",
+          "scenario_sha256": "5135eaa7f95a04fc8581268734593bc8eb854439a39d4e8631c5a45935eb48aa",
+          "proves": "Injected edit with sender authority: resolved existing target, exact stored rows, mutation observer and native deliveries. The original sender source lends no authority to the hook."
+        },
+        {
+          "scenario": "hooks/a-hook-delete-requires-system-authority-system",
+          "pointer": "/expect",
+          "sha256": "3275724d0d437449d944222c2573ce9eccd03278d5fd68a8fbb2f9bb906d9c76",
+          "scenario_sha256": "5827d1a36ec3dffe1604696c1ff036e4e6f775704205cb4522209c616e35c3ba",
+          "proves": "Injected delete with system authority: resolved existing target, exact stored rows, mutation observer and native deliveries. The original sender source lends no authority to the hook."
+        },
+        {
+          "scenario": "hooks/a-hook-edit-requires-system-authority-system",
+          "pointer": "/expect",
+          "sha256": "51ebef83dcd11f711b463622d4468a62e709f91f58b1442b22d0776c8a59261b",
+          "scenario_sha256": "b879d9bc2ef26a33f35190740b1937b6f0c5d1315c8d47a5f4b5c01053f640ae",
+          "proves": "Injected edit with system authority: resolved existing target, exact stored rows, mutation observer and native deliveries. The original sender source lends no authority to the hook."
+        },
+        {
+          "scenario": "rooms/a-hook-that-closes-the-room-refuses-its-event",
+          "pointer": "/expect",
+          "sha256": "0e5751b4813563ed37d1f177c973893204b6084164d949d32780be16c8750001",
+          "scenario_sha256": "1bf3d9acbc616c240764491823f2edd75a0cf95991b85456a1470d0d280d0d26",
+          "proves": "A hook closes the room and returns an injection; neither cause nor injection is stored or delivered."
         }
       ],
       "tests": [
@@ -2218,20 +2316,25 @@
           "nodeid": "tests/test_injected_events.py::TestItsPass::test_is_committed_when_a_later_step_of_its_caller_fails",
           "sha256": "34d0abcb50c1f4a39b8126acb5889f515c878a49a0335379b4a1ec9cb8ccbd54",
           "proves": "A private Python naming failure after the cause is committed does not lose its queued injection; source evidence only, no asserted Rust analogue."
+        },
+        {
+          "nodeid": "tests/test_realtime_host_parity.py::test_a_hook_s_injected_event_is_taken_silently",
+          "sha256": "d7504663130a5bc45483914c688c35a38607c9528557fc2a13b629eedb58082a",
+          "proves": "Both Python realtime hosts ingest the hook injection with silent=True. No Rust voice implementation is claimed. Specialized Python source evidence; execution is not implied by a scenario receipt."
         }
       ],
       "missing": [
-        "Off-lock collection and refusal before storage after room closure, a gate or timeout; EDIT/DELETE behavior; full system authority and realtime model-context-only delivery remain outside this mapping.",
-        "The private Python naming-failure seam has no verified Rust fault-injection equivalent."
+        "Rust realtime/model-transport ingestion is not implemented or exercised by this core lot. Python silent-ingestion source evidence is linked, but does not certify Rust voice conformance (RMK-333).",
+        "Gate refusal is sampled at duplicate detection and room closure, with timeout after collection; this does not exhaust every pre-storage gate or every mutation revalidation race."
       ]
     },
     {
       "id": "core-hook-injection-triggers",
       "requirement": "RK-9.4-006",
       "clause_sha256": "d81c6da5cc14e2eeb56f7e4a6f7db9c890ee264e3f52178895d020f0a04d585a",
-      "scope": "Hook injection passes and delivery exercised by tests/test_injected_events.py, using deterministic gates for lock ordering.",
+      "scope": "All SYNC trigger eligibility in the generic engine, BEFORE_DELIVER and ON_VERIFICATION_REQUIRED end-to-end, and identity challenge exceptions.",
       "coverage": "partial",
-      "review": "Compared exact timelines, recipients, depths, keys, hook calls and side effects with the Python tests and RFC §9.4. The whole composite clause is not claimed covered.",
+      "review": "Read both generic engine tests and the actual caller tests; the matrix proves the shared policy across all trigger names and decisions. It does not pretend to invoke voice or every typed turn callback with its own payload.",
       "assertions": [
         {
           "scenario": "hooks/a-before-deliver-hook-cannot-inject",
@@ -2253,6 +2356,13 @@
           "sha256": "557e529fb502e63efcfc0f6f56ee0d20d8bd7a7b8fe8523822185df4cbf18877",
           "scenario_sha256": "22930bb4ab61c4dab078dffb0ed8be7679d9678200db6e8fba4a409642e059d0",
           "proves": "An identity challenge is filtered by BEFORE_BROADCAST and a blocked challenge reaches no channel."
+        },
+        {
+          "scenario": "hooks/a-verification-hook-cannot-inject",
+          "pointer": "/expect",
+          "sha256": "3cee2c813dc9a08b6bc93249c07ecdd7ad2cfec80f04fa7c58eb0a3969598b23",
+          "scenario_sha256": "0d06932e44f6931dd395e2685cfeb18a5e93dd04eb8e2d9cf24cc2ed7ba4f0a3",
+          "proves": "The actual verification gate keeps its pass decision but stores and delivers no injected event."
         }
       ],
       "tests": [
@@ -2260,11 +2370,46 @@
           "nodeid": "tests/test_injected_events.py::TestAnotherTrigger::test_drops_them_with_a_warning",
           "sha256": "10b720bf5ea9897e3dc5710325dd923d7f4cd4cad5259bf18c3a14ff8b1f33bd",
           "proves": "BEFORE_DELIVER drops injected events and logs the hook name and trigger at WARNING; specialized Python source evidence only."
+        },
+        {
+          "nodeid": "tests/test_hook_injection_contract.py::test_only_broadcast_keeps_injections_in_a_sync_chain",
+          "sha256": "fbbf777b3a9b60eeeae1ea9dc8cab78246390daca754aea6a5d43b3223d0345e",
+          "proves": "All ten SYNC trigger names across allow/modify/block: only BEFORE_BROADCAST keeps injections; other triggers warn with hook and trigger, while tasks, metadata and decisions stand. Generic engine payload, not an integration exercise of each typed caller. Specialized Python source evidence; execution is not implied by a scenario receipt."
+        },
+        {
+          "nodeid": "tests/test_hook_injection_contract.py::test_verification_drops_injections_with_a_warning",
+          "sha256": "58c58941a0c8415d562b097dc478c881b725216a04f77ff4f11521ee8cd722ce",
+          "proves": "The real verification gate drops its injection with a named warning and still permits the message and its agent response. Specialized Python source evidence; execution is not implied by a scenario receipt."
         }
       ],
       "missing": [
-        "SYNC triggers other than BEFORE_DELIVER and identity challenges; shared scenarios do not inspect warning logs."
+        "End-to-end warning assertions for each typed turn and voice caller remain outside this mapping; generic engine coverage is not a claim of complete caller integration."
       ]
+    },
+    {
+      "id": "core-hook-injected-instruction",
+      "requirement": "RK-9.4-005",
+      "clause_sha256": "7efde505e7065cd2a01ba0fbcb19d38ef3b9f4188fa1646b44e88463bda16561",
+      "scope": "An INSTRUCTION returned by BEFORE_BROADCAST is dropped before its own pass; ordinary injections, tasks and observations remain.",
+      "coverage": "complete",
+      "review": "The exact hook list excludes the instruction, timelines and deliveries exclude it, and the notice, task and observation survive. The specialized Python test asserts the warning; Rust has the matching targeted warning test. No aggregate Rust execution receipt is fabricated.",
+      "assertions": [
+        {
+          "scenario": "hooks/a-hook-instruction-is-dropped-before-its-pass",
+          "pointer": "/expect",
+          "sha256": "137f630a691ad478176ed06dacf7eefede191c8e808f6cd3d2e53ac2e26cae12",
+          "scenario_sha256": "afc3038f383ce1cb4ac35e848bd1f1baaf3030bb4ba8f468d45593fd311dae87",
+          "proves": "Exact hook calls, stored events and deliveries exclude the instruction while the ordinary injection, task and observation remain."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/test_instruction_source.py::test_a_hook_s_injected_instruction_is_dropped_and_the_rest_stands",
+          "sha256": "6110ec1c64c0328e2dda259663967708c996c4ff4dba7a812de6cd1bdd15cd49",
+          "proves": "The rejected instruction emits a WARNING before any pass, with no agent call, storage or delivery; ordinary notice and task remain. Specialized Python source evidence; execution is not implied by a scenario receipt."
+        }
+      ],
+      "missing": []
     }
   ],
   "executions": [
