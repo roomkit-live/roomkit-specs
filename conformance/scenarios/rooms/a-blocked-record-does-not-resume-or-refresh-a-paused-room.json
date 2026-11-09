@@ -77,7 +77,13 @@
       }
     },
     "framework_events": {
-      "room-1": []
+      "room-1": [
+        {
+          "event": "event_blocked",
+          "reason": "refused",
+          "blocked_by": "refuse"
+        }
+      ]
     }
   },
   "id": "rooms/a-blocked-record-does-not-resume-or-refresh-a-paused-room",

@@ -38,6 +38,20 @@
             ]
           }
         ]
+      },
+      {
+        "id": "ws",
+        "type": "websocket",
+        "on_event": [
+          {
+            "do": [
+              {
+                "call": "close_room",
+                "room_id": "$room"
+              }
+            ]
+          }
+        ]
       }
     ],
     "rooms": [
@@ -46,6 +60,9 @@
         "bindings": [
           {
             "channel_id": "sms"
+          },
+          {
+            "channel_id": "ws"
           },
           {
             "channel_id": "ai"
@@ -109,6 +126,10 @@
             {
               "event": "event_processed",
               "event_id": "room-1#0"
+            },
+            {
+              "event": "delivery_succeeded",
+              "channel_id": "ws"
             }
           ]
         }
