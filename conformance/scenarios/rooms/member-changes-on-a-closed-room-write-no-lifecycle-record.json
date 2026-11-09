@@ -48,7 +48,11 @@
       "visibility_filter": "internal",
       "include_blocked": true,
       "expect": {
-        "result": []
+        "result": [
+          {
+            "type": "channel_attached"
+          }
+        ]
       }
     }
   ],

@@ -106,20 +106,16 @@
     },
     "framework_events": {
       "room-1": [
+        {
+          "event": "event_processed",
+          "event_id": "room-1#0"
+        },
         "room_closed",
         {
-          "$unordered": [
-            {
-              "event": "room_refused_event",
-              "status": "closed",
-              "operation": "reentry",
-              "event_type": "message"
-            },
-            {
-              "event": "event_processed",
-              "event_id": "room-1#0"
-            }
-          ]
+          "event": "room_refused_event",
+          "status": "closed",
+          "operation": "reentry",
+          "event_type": "message"
         }
       ]
     }

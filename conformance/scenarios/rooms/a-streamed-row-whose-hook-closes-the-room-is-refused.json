@@ -173,13 +173,6 @@
                 "body": "Let me check."
               }
             }
-          },
-          {
-            "row": {
-              "id": "room-1#2",
-              "index": 2,
-              "type": "tool_call_start"
-            }
           }
         ]
       }
