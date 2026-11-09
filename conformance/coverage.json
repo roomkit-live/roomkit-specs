@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "0a196b1344b84ef4564578816845da8569fe1b1da53d789e4fd6ad738c6e00a5",
-  "corpus_sha256": "88e867470930126f95b174b5ea9b2183c85c432bedf586ae3913f162e994af00",
+  "rfc_sha256": "a5de3927f2bc2ce0ae1e5dfea2fb00186b8b66cf5c19b8d1908ecbdd8b5ac239",
+  "corpus_sha256": "540d897156d89d353c527a4a5149c74d38afbba16f37d4b7002df4c6d44f4243",
   "python_commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
-  "scenario_count": 1736,
+  "scenario_count": 1738,
   "sections": [
     {
       "section": "0",
@@ -6035,6 +6035,7 @@
         "tasks/a-delegation-keeps-its-agent-s-answer-when-another-agent-answers-first",
         "tasks/a-delegation-not-posted-leaves-the-status-bus-alone",
         "tasks/a-delegation-outside-a-turn-opens-a-chain-at-depth-0",
+        "tasks/a-delegation-sets-how-much-of-its-result-is-handed-back",
         "tasks/a-delegation-whose-worker-fails-ends-failed",
         "tasks/a-failed-task-keeps-the-error-its-worker-s-turn-raised",
         "tasks/a-failed-task-s-exception-keeps-its-attributes",
@@ -6075,6 +6076,7 @@
         "tasks/an-inline-delegation-runs-its-agent-in-a-child-room",
         "tasks/an-inline-task-its-worker-s-round-cap-cut-fails-with-its-narration",
         "tasks/delegate-task-answers-its-model-with-the-task-or-why-not",
+        "tasks/delegate-task-hands-back-as-much-as-its-handler-allows",
         "tasks/delegate-task-hands-its-worker-what-the-model-passed-as-data",
         "tasks/delegate-task-hands-over-what-its-calling-agent-may-read",
         "tasks/delegate-task-offers-the-conversation-on-the-host-s-option-alone",

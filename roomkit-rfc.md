@@ -18940,8 +18940,8 @@ at the chain depth of the turn that delegated (Section 23.3); results presented 
 the supervisor's answer one deeper than the event it answers (§8.3). Results
 of workers dispatched in the background are handed back to the supervisor
 as a background delegation's are (§23.3 step 8): an instruction addressed to
-it, each worker's output bounded, never published as a participant's
-message. A background pipeline that fails before its results (a delegation
+it, each worker's output bounded at 4,000 characters, the default of
+`max_result_chars`, never published as a participant's message. A background pipeline that fails before its results (a delegation
 that raised) hands its failure back the same way: an instruction that the
 work could not be completed, carrying the reasoning backend's fallback text
 (Section 12.4.1) and never the error's message, which goes to the logs
@@ -19045,8 +19045,9 @@ failure as that provider's error), reported to ON_ERROR once, where the
 producer's turn failed (its task's room), and logged once. An asynchronous loop
 (a voice channel's `delegate_loop`) hands its outcome back to the voice
 channel that started it as a background delegation's result is (§23.3 step
-8): an instruction to that channel, its output bounded and set apart as a
-worker's, never published as a participant's message. The text says how the
+8): an instruction to that channel, its output bounded at 4,000 characters,
+the default of `max_result_chars`, and set apart as a worker's, never published
+as a participant's message. The text says how the
 loop ended; for a producer's task that failed, that it failed and the cut
 that ended its turn, never with the task's error. A loop that raised hands
 back that the work could not be completed, carrying the reasoning backend's
@@ -20782,7 +20783,7 @@ DelegatedTaskResult
 
 <!-- rfc: {"id": "RK-23.3-001", "kind": "behavior", "applies": "§23.3 Delegation Protocol; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 When `delegate(room_id, agent_id, task, notify, context = null, post_status = true,
-brief = null, conversation = 0, hand_back = "relay",
+brief = null, conversation = 0, hand_back = "relay", max_result_chars = 4000,
 require_structured_result = false, max_result_retries = 3, result_tool = null)` is
 called:
 
@@ -20913,7 +20914,9 @@ called:
    Another transport has no model to direct and receives it as an ordinary
    delivery through it (`channel_id = notify`, `instruction = false`). The
    delivered content carries the result, bounded and delimited, presented as the worker's output rather than as an
-   instruction; a task that did not complete says it failed or was
+   instruction. The bound is `max_result_chars` characters of the output, past which it is cut and its cut marked;
+   a host whose agents need more of a worker's answer raises it, and a value below 1 is invalid. A task that
+   did not complete says it failed or was
    cancelled, without its error (§9.3), whatever output or error text it
    left. It names the task as the delegating agent wrote it (`task`, quoted
    as Section 6.4 quotes a text from outside), and the worker by its id kept
@@ -21096,7 +21099,7 @@ Implementations SHOULD provide helpers for AI-driven delegation:
 - `delegate_task` — The tool those helpers serve, through a handler
   (`DelegateHandler(kit, notify = null, default_share_channels = null,
   delivery_strategy = null, cache = null, serialize_per_room = false,
-  max_conversation = 0)`). Its arguments are
+  max_conversation = 0, max_result_chars = 4000)`). Its arguments are
   `agent` and `task`, then `context` and `share_channels`, and `conversation`
   when the handler allows it. A `task` that is no text, or a `share_channels` that
   is no list, is refused, nothing made, and an `agent` that is no text names no
@@ -21141,6 +21144,9 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   it reads the description, and may read less than the agent that called (§7.5
   rule 8). It does not stop `context`, which the model wrote in this call as it
   wrote the `task` that channel reads too. A shared transport stops nothing.
+
+  `max_result_chars` is the bound of each result its delegations relay (§23.3
+  step 8): the host's too, and the same whichever agent the call names.
 
   `max_conversation` is the host's, since the model chooses the worker, which
   may be another vendor's or hold another workspace. With 0, the tool declares

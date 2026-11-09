@@ -1275,13 +1275,13 @@
     },
     {
       "section": "19.7.3",
-      "sha256": "8af2b1d996817997c6004500ff7891946930165ad6b5434622839fd8f3959c1e",
+      "sha256": "98bf85ed7fb69127b536e98c2f53e5a3173135a6c7d757a5236b357acfbe788e",
       "classification": "normative",
       "review": "Source inventory: Supervisor. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
     {
       "section": "19.7.4",
-      "sha256": "ce80505794a94c22ead52960f1339947f3be52c87cec8e03bda8d0f732e2a66a",
+      "sha256": "90ce50d4ea990682097f21c0571460d101448e241c0efda75395694fabe58b23",
       "classification": "normative",
       "review": "Source inventory: Loop. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
@@ -1407,13 +1407,13 @@
     },
     {
       "section": "23.3",
-      "sha256": "179902da33c3f4630803e5a61f69b97259d5ebb4725e4a2bbd5e586db25ecdc4",
+      "sha256": "7e5397d0c150cd3c4aad98e0c78dc43357ae312f13d888bc6ce346a8356bc39c",
       "classification": "normative",
       "review": "Source inventory: Delegation Protocol. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
     {
       "section": "23.4",
-      "sha256": "dd9bb8fb853287a35adce7dc9a977cfbda67ba2485b319d98ce0248ee9e1a7f7",
+      "sha256": "6c2222c7ace8404872d98d762633e848069f0f8fb1c3c858e7a640c5b6d4715e",
       "classification": "normative",
       "review": "Source inventory: Delegation Tools. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
