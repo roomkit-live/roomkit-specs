@@ -76,7 +76,8 @@
           "channel_type": "sms"
         },
         "idempotency_key": null,
-        "id": "$target"
+        "id": "$target",
+        "index": 1
       },
       "expect": {
         "error": "idempotency_key_taken"
