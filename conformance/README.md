@@ -719,6 +719,7 @@ run's own kit when absent.
 | `add_room_hook` | `room_id`, `hook`: a hook as in the setup, for that room alone, with no filter and the default timeout (`name`, `trigger`, `execution`, `priority`, `fail_closed`, `needs_lock`, `reactions`) | unspecified |
 | `remove_room_hook` | `room_id`, `name` | whether the room held a hook of that name |
 | `cancel_delivery` | `key`, the `delivery_key` of the messages whose delivery it cancels, and `reason` (§10.1 Explicit delivery cancellation) | how many deliveries it cancelled |
+| `close` | none | null once the kit's shutdown ended (§12.10.4) |
 | `steer` | `channel_id`, `directive` (a SteeringDirective in the serialized form: `{"type": "cancel", "reason"}`, ...), `room_id` (§21.3) | how many of the channel's running loops it reached |
 | `install_strategy` | `room_id`, `strategy` (a scripted strategy's id) (§19.7) | null |
 | `uninstall_strategy` | `room_id` (§19.7) | whether the room held a strategy |
@@ -1011,6 +1012,7 @@ refuses its value, a `ChannelId`).
 
 | Name | RFC meaning | roomkit (Python) | roomkit-rs |
 |---|---|---|---|
+| `kit_closed` | A new operation refused once the kit's shutdown started (§12.10.4) | `KitClosedError` | `RoomKitError::KitClosed` |
 | `invalid_argument` | An argument refused before anything is read or written: the visibility `internal` (§7.3), a channel id the grammar refuses (§7.3), `standalone` on another type and an instruction's refusals on a direct injection (§10.1.1), a record naming another room (§10.5), a post from a channel that is not a host channel, a message on a host channel (§10.5), a host channel bound as an intelligence channel, a reserved room metadata key (§5.1), a hook registration §9.1 refuses, a tool set up on an agent under a name it serves already (§21.1), a strategy for a room that holds one, or that the strategy refuses (§19.7), `listen_only` or `talk_again` for a room holding no discussion (§19.7.5) | `ValueError` | `InboundError::{NotAHostChannel, InboundOnHostChannel, HostAsIntelligence, StandaloneOutsideInstruction, InternalVisibility}`, `Refused` with an instruction's reason, `LifecycleError::{InternalVisibility, HostAsIntelligence, ReservedMetadataKey}`, `MutationError::OtherRoom`, `KitError::{Config, Registration}`, `RoomKitError::ToolNameCollision`, a `ChannelId` refused |
 | `channel_not_registered` | The channel named is not registered (§10.1 step 1, §10.5) | `ChannelNotRegisteredError` | `InboundError::UnknownChannel`, `KitError::UnknownChannel` |
 | `room_not_found` | No such room, or another organization's (§17.2) | `RoomNotFoundError` | `InboundError::{RoomNotFound, OtherOrganization}`, `LifecycleError::RoomNotFound`, `MutationError::RoomNotFound` |

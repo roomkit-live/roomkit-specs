@@ -4320,6 +4320,7 @@
         "room_not_found",
         "channel_not_bound",
         "room_closed",
+        "kit_closed",
         "transition_refused",
         "change_refused",
         "process_timeout",
