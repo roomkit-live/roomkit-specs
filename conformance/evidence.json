@@ -2254,7 +2254,7 @@
           "pointer": "/expect",
           "sha256": "c62ce6f98eec643f65fbdcc3cf6792ced4b4bac93553717f929d833dff77ba01",
           "scenario_sha256": "2ab910c6275a2841c558cc2e94c5d2a8bf0593ad54620f195a3951c628f0644e",
-          "proves": "A named injection target that could not read the original receives no mutation; visibility remains restricted to the original readers. The named sender is an OWNER, so missing administrator authority cannot explain the refusal."
+          "proves": "A named injection target that could not read the original receives no mutation; visibility remains restricted to the original readers. The named sender is an OWNER; this positive case verifies SYSTEM authority and the mutation recipients."
         },
         {
           "scenario": "hooks/a-hook-delete-requires-system-authority-sender",
@@ -2289,14 +2289,14 @@
           "pointer": "/expect",
           "sha256": "3275724d0d437449d944222c2573ce9eccd03278d5fd68a8fbb2f9bb906d9c76",
           "scenario_sha256": "3eb5014cba64c3f2d9e12ac9988d81001e690c57e220664eb94833e1e66a7565",
-          "proves": "Injected delete with system authority: resolved existing target, exact stored rows, mutation observer and native deliveries. The original sender source lends no authority to the hook. The named sender is an OWNER, so missing administrator authority cannot explain the refusal."
+          "proves": "Injected delete with system authority: resolved existing target, exact stored rows, mutation observer and native deliveries. The original sender source lends no authority to the hook. The named sender is an OWNER; this positive case verifies SYSTEM authority and the mutation recipients."
         },
         {
           "scenario": "hooks/a-hook-edit-requires-system-authority-system",
           "pointer": "/expect",
           "sha256": "51ebef83dcd11f711b463622d4468a62e709f91f58b1442b22d0776c8a59261b",
           "scenario_sha256": "b1a1481149c6dc5f08284571dfdd1895bdba6ffd35fb6f16083eef118f887cee",
-          "proves": "Injected edit with system authority: resolved existing target, exact stored rows, mutation observer and native deliveries. The original sender source lends no authority to the hook. The named sender is an OWNER, so missing administrator authority cannot explain the refusal."
+          "proves": "Injected edit with system authority: resolved existing target, exact stored rows, mutation observer and native deliveries. The original sender source lends no authority to the hook. The named sender is an OWNER; this positive case verifies SYSTEM authority and the mutation recipients."
         },
         {
           "scenario": "rooms/a-hook-that-closes-the-room-refuses-its-event",
