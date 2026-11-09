@@ -1194,6 +1194,37 @@
             "error": {
               "description": "In an `on_event` reaction: the error the channel met while producing its output, with this message (§6.1, a ChannelOutput's error): the output goes on, its response events kept, and the error surfaces as a raised one's (§9.3 ON_ERROR).",
               "type": "string"
+            },
+            "provider_result": {
+              "description": "The provider receipt returned in ChannelOutput, preserved in the delivery result (§5.13). A refusal is scripted with refuse instead.",
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": false,
+              "required": [
+                "success"
+              ],
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "provider_message_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "error": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "metadata": {
+                  "type": "object"
+                }
+              }
             }
           }
         },
