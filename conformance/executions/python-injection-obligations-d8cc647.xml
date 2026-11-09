@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites name="pytest tests">
+  <testsuite name="pytest" errors="0" failures="0" skipped="0" tests="37">
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[appendix-b/b2-block-and-inject]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/a-before-deliver-hook-cannot-inject]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/a-duplicate-drops-off-lock-injections]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/a-hook-delete-requires-system-authority-admin]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/a-hook-delete-requires-system-authority-sender]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/a-hook-delete-requires-system-authority-system]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/a-hook-edit-requires-system-authority-absent]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/a-hook-edit-requires-system-authority-sender]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/a-hook-edit-requires-system-authority-system]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/a-hook-instruction-is-dropped-before-its-pass]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/a-timeout-drops-already-collected-injections]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/a-verification-hook-cannot-inject]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injected-change-keeps-the-target-s-readers]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injected-event-asks-no-agent]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injected-event-runs-the-hooks]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injected-event-stored-only-reads-none]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-cannot-widen-its-target-visibility]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-clears-its-supplied-idempotency-key]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-collects-its-target-side-effects]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-commits-its-own-hook-injection-after-it]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-does-not-check-its-source-write-access]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-from-a-direct-injection-waits-for-the-outer-pass]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-inherits-depth-instead-of-its-supplied-depth]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-inherits-the-depth-of-an-agent-answer]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-is-in-its-agent-target-s-next-context]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-is-transcoded-for-its-target]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-never-delivers-to-its-own-source]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-survives-a-muted-cause]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-takes-its-own-lock-after-its-blocked-cause]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-takes-its-own-lock-after-its-delivered-cause]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-off-lock-allow-keeps-its-injection]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-off-lock-block-keeps-its-injection]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-off-lock-modify-keeps-its-injection]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/injections-use-the-reentry-budget-without-increasing-chain-depth]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[identity/a-challenge-is-delivered-and-the-message-held]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[identity/a-challenge-runs-the-before-broadcast-hooks]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[rooms/a-hook-that-closes-the-room-refuses-its-event]" />
+  </testsuite>
+</testsuites>

@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "52c91f46451cee0ea1bdecf52a3f033690d3e6e3845fb9d3429de69798d92bf9",
   "corpus_sha256": "f971660c7b8e4ca689738ce884f9e61b65ed4369655658d6a4fcb0bd7168ebc1",
-  "python_commit": "73983f4e12e471559c35a614f6c1e6573f5796b2",
+  "python_commit": "d8cc647ca46e0dc75664bc6966567f5914da3b10",
   "scenario_count": 1623,
   "sections": [
     {
@@ -8519,6 +8519,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-injection-obligations-d8cc647",
+              "implementation": "python",
+              "commit": "d8cc647ca46e0dc75664bc6966567f5914da3b10",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -8534,7 +8542,16 @@
           "scope": "An INSTRUCTION returned by BEFORE_BROADCAST is dropped before its own pass; ordinary injections, tasks and observations remain.",
           "coverage": "complete",
           "missing": [],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-injection-obligations-d8cc647",
+              "implementation": "python",
+              "commit": "d8cc647ca46e0dc75664bc6966567f5914da3b10",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -8558,6 +8575,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-injection-obligations-d8cc647",
+              "implementation": "python",
+              "commit": "d8cc647ca46e0dc75664bc6966567f5914da3b10",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -12143,6 +12168,15 @@
       "implementation_commit": "a6daaf1391214c917936b1b37f50b5e2f7c88e20",
       "rfc_commit": "175c13890427434e6d2e9ed7611ef2c8b109f3a5",
       "corpus_commit": "175c13890427434e6d2e9ed7611ef2c8b109f3a5",
+      "backend": "memory",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-injection-obligations-d8cc647",
+      "implementation": "python",
+      "implementation_commit": "d8cc647ca46e0dc75664bc6966567f5914da3b10",
+      "rfc_commit": "df7bcc9d8d9659e56d41d91f55ea692a7aa7ee54",
+      "corpus_commit": "df7bcc9d8d9659e56d41d91f55ea692a7aa7ee54",
       "backend": "memory",
       "runtime": "asyncio"
     }

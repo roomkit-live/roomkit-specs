@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "73983f4e12e471559c35a614f6c1e6573f5796b2",
+  "python_commit": "d8cc647ca46e0dc75664bc6966567f5914da3b10",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -4477,6 +4477,223 @@
         {
           "scenario": "tool-search/an-injected-tool-stays-declared-while-the-catalogue-is-hidden",
           "sha256": "37a334ab30233338f2b16b891da190f2e1a075b00b985a772ffa468345ad6f3c",
+          "outcome": "passed"
+        }
+      ]
+    },
+    {
+      "id": "python-injection-obligations-d8cc647",
+      "implementation": "python",
+      "implementation_commit": "d8cc647ca46e0dc75664bc6966567f5914da3b10",
+      "rfc_commit": "df7bcc9d8d9659e56d41d91f55ea692a7aa7ee54",
+      "corpus_commit": "df7bcc9d8d9659e56d41d91f55ea692a7aa7ee54",
+      "rfc_sha256": "52c91f46451cee0ea1bdecf52a3f033690d3e6e3845fb9d3429de69798d92bf9",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "env",
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "PYTHONPATH=src",
+        "uv",
+        "run",
+        "--active",
+        "--no-sync",
+        "pytest",
+        "tests/conformance/test_conformance.py",
+        "-k",
+        "appendix-b/b2-block-and-inject or hooks/a-before-deliver-hook-cannot-inject or hooks/a-duplicate-drops-off-lock-injections or hooks/a-hook-delete-requires-system-authority-admin or hooks/a-hook-delete-requires-system-authority-sender or hooks/a-hook-delete-requires-system-authority-system or hooks/a-hook-edit-requires-system-authority-absent or hooks/a-hook-edit-requires-system-authority-sender or hooks/a-hook-edit-requires-system-authority-system or hooks/a-hook-instruction-is-dropped-before-its-pass or hooks/a-timeout-drops-already-collected-injections or hooks/a-verification-hook-cannot-inject or hooks/an-injected-change-keeps-the-target-s-readers or hooks/an-injected-event-asks-no-agent or hooks/an-injected-event-runs-the-hooks or hooks/an-injected-event-stored-only-reads-none or hooks/an-injection-cannot-widen-its-target-visibility or hooks/an-injection-clears-its-supplied-idempotency-key or hooks/an-injection-collects-its-target-side-effects or hooks/an-injection-commits-its-own-hook-injection-after-it or hooks/an-injection-does-not-check-its-source-write-access or hooks/an-injection-from-a-direct-injection-waits-for-the-outer-pass or hooks/an-injection-inherits-depth-instead-of-its-supplied-depth or hooks/an-injection-inherits-the-depth-of-an-agent-answer or hooks/an-injection-is-in-its-agent-target-s-next-context or hooks/an-injection-is-transcoded-for-its-target or hooks/an-injection-never-delivers-to-its-own-source or hooks/an-injection-survives-a-muted-cause or hooks/an-injection-takes-its-own-lock-after-its-blocked-cause or hooks/an-injection-takes-its-own-lock-after-its-delivered-cause or hooks/an-off-lock-allow-keeps-its-injection or hooks/an-off-lock-block-keeps-its-injection or hooks/an-off-lock-modify-keeps-its-injection or hooks/injections-use-the-reentry-budget-without-increasing-chain-depth or identity/a-challenge-is-delivered-and-the-message-held or identity/a-challenge-runs-the-before-broadcast-hooks or rooms/a-hook-that-closes-the-room-refuses-its-event",
+        "-q",
+        "--junitxml=python-injection-obligations.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-injection-obligations-d8cc647.xml",
+        "format": "pytest_junit",
+        "sha256": "bb44b78e5270dfc1ccea8f022a9faa70f3c6c8299ccd0c6a97ce9901f3dc975a"
+      },
+      "results": [
+        {
+          "scenario": "appendix-b/b2-block-and-inject",
+          "sha256": "da8ff9d305a1093d9c7181c26dfe2cd45176738630973cba70087bdf2be73274",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-before-deliver-hook-cannot-inject",
+          "sha256": "b1ef0b275febd0ba44be9ddb3e49bc7a70334c06cea1d67d6eadcf943e0f85ee",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-duplicate-drops-off-lock-injections",
+          "sha256": "f7cae7de3bb31731c5c3e8b7751012577899c2e51a43780543729fadc9dd3097",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-hook-delete-requires-system-authority-admin",
+          "sha256": "e2b86d0fb1a3c265c2c0046caf42957604fdbc3de566b3960936724094705b95",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-hook-delete-requires-system-authority-sender",
+          "sha256": "f8ba67407da7914990b1837431ea0895a7b6f4fb66aeb2eb320b016242fb80ae",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-hook-delete-requires-system-authority-system",
+          "sha256": "3eb5014cba64c3f2d9e12ac9988d81001e690c57e220664eb94833e1e66a7565",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-hook-edit-requires-system-authority-absent",
+          "sha256": "8a6b73160cd2bda4518a05228f829532ea9150827c2e64c3859c55f43ce3c57f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-hook-edit-requires-system-authority-sender",
+          "sha256": "d9cbb3255b2666cdf189f0ad1e361e6d9f85b9af8aeb7eddd0729816d9ac280a",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-hook-edit-requires-system-authority-system",
+          "sha256": "b1a1481149c6dc5f08284571dfdd1895bdba6ffd35fb6f16083eef118f887cee",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-hook-instruction-is-dropped-before-its-pass",
+          "sha256": "afc3038f383ce1cb4ac35e848bd1f1baaf3030bb4ba8f468d45593fd311dae87",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-timeout-drops-already-collected-injections",
+          "sha256": "6c1efebf020e85678d12a5f81124a6b5d4e6d0956f04520a527ffab76bc1d451",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-verification-hook-cannot-inject",
+          "sha256": "0d06932e44f6931dd395e2685cfeb18a5e93dd04eb8e2d9cf24cc2ed7ba4f0a3",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injected-change-keeps-the-target-s-readers",
+          "sha256": "2ab910c6275a2841c558cc2e94c5d2a8bf0593ad54620f195a3951c628f0644e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injected-event-asks-no-agent",
+          "sha256": "438a8ce3c9e606a945db5bba22f6e5fe86e2e0fdf66ecb9c33977bc427a6f130",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injected-event-runs-the-hooks",
+          "sha256": "c4e393ae026e6e10cffb3a2c2c5eb3932e567ea0ac6df48af9481c5e9aa627fc",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injected-event-stored-only-reads-none",
+          "sha256": "bbb3d6351ededcbb808f9e898b6fa0cffe216eb65b58095f55756f51a77d3422",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-cannot-widen-its-target-visibility",
+          "sha256": "5fc99c206cd5ee791ea56de9fead69cb14ccf717e05c35140302537c61d1716e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-clears-its-supplied-idempotency-key",
+          "sha256": "90ebe8b159140d7a6fd306221ffb47fc5e635e487c4a1c2edb6b7f019741b2ac",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-collects-its-target-side-effects",
+          "sha256": "86dea83a4f080dd500ce8aa6050dd9a42f0cb719ed0a6f31b997782090493bc6",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-commits-its-own-hook-injection-after-it",
+          "sha256": "e418c9d2b7820b2d72205bcda29d27d9b02c47628b315e1dc7027fbe02dbd69f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-does-not-check-its-source-write-access",
+          "sha256": "6a1cbae3a33bf3080a7772c4bab768fc7ac2f8c5f7a2e103aa3f06f86f354b6b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-from-a-direct-injection-waits-for-the-outer-pass",
+          "sha256": "faa491618282da6d6dce240cb14a1b1ffeabe16f307b70019ddce2bab921c16e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-inherits-depth-instead-of-its-supplied-depth",
+          "sha256": "9bb3020e637be380990a155cf31eafc815f7ef0841ddccc1cdb04fae9faaa8c2",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-inherits-the-depth-of-an-agent-answer",
+          "sha256": "f6c9931a659d98efd42d8780c1728c750d4fac7098c1d61a3adb8b381b17f4f7",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-is-in-its-agent-target-s-next-context",
+          "sha256": "65ed387caa7e653f9f655a7717d347cb0589ae5b7b5ffdeecf2dc0280c5c8da1",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-is-transcoded-for-its-target",
+          "sha256": "2bdad51fde6737c06931ef951610b5b60dfbb1e6cb42a00d84525ebab3eb534b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-never-delivers-to-its-own-source",
+          "sha256": "2c5c1cbd9d355f09f59eaa3e60680efba80cde05095bd4e55dae33dc446ea8f0",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-survives-a-muted-cause",
+          "sha256": "2278f8feeabc165a1db6458b140829874b2b163acd33bdaafa4aba368074fb64",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-takes-its-own-lock-after-its-blocked-cause",
+          "sha256": "2037dea1a862f0b2f62addd1f47aca4eb36535ce064c814258c9af67e4a35214",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-takes-its-own-lock-after-its-delivered-cause",
+          "sha256": "0b506ab9e036b55724d7474115ce9b535b715abe678fc9518dc1d4fdb9c8d096",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-off-lock-allow-keeps-its-injection",
+          "sha256": "f45c23d1d225f1ca579e925915e0e4fbcb32b80a52275ac5916061a95f5b09a2",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-off-lock-block-keeps-its-injection",
+          "sha256": "de257a856ed82f68140787e3b17604908aaf1c266e4a30739ae9ed5f9710a077",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-off-lock-modify-keeps-its-injection",
+          "sha256": "6fb9c36a30daf41d33e393da96075c6f343d48f112150195f7b282064265dabd",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/injections-use-the-reentry-budget-without-increasing-chain-depth",
+          "sha256": "e424a925e3fb1f6417871416c173faa9a8299941166ba39f5941858b5f6118e8",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "identity/a-challenge-is-delivered-and-the-message-held",
+          "sha256": "097ac40e6c8923a3a793991a53f6068fffbdb3691dc3295839632bd8bded1a70",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "identity/a-challenge-runs-the-before-broadcast-hooks",
+          "sha256": "22930bb4ab61c4dab078dffb0ed8be7679d9678200db6e8fba4a409642e059d0",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/a-hook-that-closes-the-room-refuses-its-event",
+          "sha256": "1bf3d9acbc616c240764491823f2edd75a0cf95991b85456a1470d0d280d0d26",
           "outcome": "passed"
         }
       ]

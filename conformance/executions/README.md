@@ -106,3 +106,21 @@ output filename instead of its local artifact destination.
 The selection covers the new injection scenarios and related existing cases. It
 does not prove specialized Python fault injection or warning assertions, Rust
 execution, other stores, or the remaining obligations of the partial RFC clauses.
+
+
+## Remaining injection obligations
+
+`python-injection-obligations-d8cc647.xml` retains the 37 exact scenario IDs named by the receipt's
+`command` in `evidence.json`, run on clean Python commit
+`d8cc647ca46e0dc75664bc6966567f5914da3b10`. The copied corpus and reviewed RFC are
+`df7bcc9d8d9659e56d41d91f55ea692a7aa7ee54`. All 37 passed, with no skips, failures or
+errors, on the memory store, in-process turns and asyncio. The run used Linux,
+Python 3.13.3, pytest 9.1.1 and pytest-asyncio 1.4.0 with the existing virtual
+environment. The artifact removes host, timestamp, duration and local-path
+attributes, preserving every testcase's class, name and outcome.
+
+This selection covers injection passes, forbidden instruction injections and
+eligibility at broadcast, delivery, verification and identity challenge calls.
+It does not execute the specialized trigger-policy matrices or silent voice
+contexts, other stores, distributed turns or Rust. RK-9.4-004 and RK-9.4-006
+remain partially mapped; a successful receipt does not expand that scope.
