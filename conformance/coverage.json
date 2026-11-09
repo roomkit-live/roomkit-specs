@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "e68bbaace40568f287fa43b657999608f5b28a6f6e3379c67e21c6760258ca9a",
-  "corpus_sha256": "b7093b993c31fe938432d1b568e072bbdd1c9833e4a952da22902dd7a4371fe2",
+  "rfc_sha256": "52c91f46451cee0ea1bdecf52a3f033690d3e6e3845fb9d3429de69798d92bf9",
+  "corpus_sha256": "516cf8ce2cccc584292ed6ff39bfe87a05085ee9b4867dbe25257674718f10c9",
   "python_commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
-  "scenario_count": 1607,
+  "scenario_count": 1608,
   "sections": [
     {
       "section": "0",
@@ -787,6 +787,7 @@
         "reasoning/a-fallback-s-chat-request-reads-no-signed-block",
         "reasoning/a-generation-hook-reads-a-message-s-parts",
         "reasoning/a-later-turn-reads-no-reasoning",
+        "reasoning/a-named-thinking-field-carries-a-round-s-reasoning",
         "reasoning/a-plain-round-s-call-keeps-its-metadata",
         "reasoning/a-response-read-whole-keeps-its-signature-and-its-call-s-metadata",
         "reasoning/a-response-read-whole-replays-its-blocks-first",
@@ -7487,7 +7488,7 @@
               "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -7528,7 +7529,7 @@
               "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -7573,7 +7574,7 @@
               "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -7612,7 +7613,7 @@
               "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -7643,7 +7644,7 @@
               "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -7674,7 +7675,7 @@
               "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -7713,7 +7714,7 @@
               "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -7744,7 +7745,7 @@
               "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -7775,7 +7776,7 @@
               "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-hook-injections-a6daaf1",
@@ -7824,7 +7825,7 @@
               "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -7858,7 +7859,7 @@
               "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-hook-injections-a6daaf1",
@@ -7915,7 +7916,7 @@
               "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -7933,7 +7934,7 @@
               "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -8076,7 +8077,7 @@
               "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-hook-injections-a6daaf1",
@@ -8205,7 +8206,7 @@
               "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8266,7 +8267,7 @@
               "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8315,7 +8316,7 @@
               "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8370,7 +8371,7 @@
               "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -8437,7 +8438,7 @@
               "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -8629,7 +8630,7 @@
               "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -8702,7 +8703,7 @@
               "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }

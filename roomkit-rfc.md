@@ -2148,8 +2148,8 @@ of its text (Section 6.7).
 The vendor's rendering is the integrator's choice, made by the provider it
 builds, and it holds behind a custom base URL: a vendor's weights served by a
 generic server get their reasoning back through that vendor's provider, given
-that server's URL, and none through a generic provider, which has no setting for
-it. Whatever the provider, the reasoning goes back for as long as its turn lasts,
+that server's URL, or through a generic provider whose configuration names the
+field, and none through a generic provider that does not. Whatever the provider, the reasoning goes back for as long as its turn lasts,
 and a later turn reads none.
 <!-- /rfc -->
 
