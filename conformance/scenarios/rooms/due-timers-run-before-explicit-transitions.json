@@ -8,7 +8,7 @@
     "§17.2",
     "§26.1"
   ],
-  "notes": "Python: test_every_locked_section_applies_the_due_transitions_first and test_close_room_on_a_room_its_timer_closes_returns_it_as_stored. A pause/resume now refuses CLOSED, reopen succeeds from CLOSED, close is already done, archive follows CLOSED. Timer announcements must precede the explicit archive, with no duplicate close.",
+  "notes": "Python: test_every_locked_section_applies_the_due_transitions_first and test_close_room_on_a_room_its_timer_closes_returns_it_as_stored. A pause/resume now refuses CLOSED, reopen succeeds from CLOSED, close is already done, archive follows CLOSED. Timer announcements must precede the explicit archive, with no duplicate close. All rooms share the same due close instant; its normalized rank may differ with optional lifecycle payloads, so equality names the value. The exact deadline arithmetic remains covered by the specialized timer tests.",
   "setup": {
     "rooms": [
       {
@@ -123,12 +123,16 @@
       "pause": {
         "status": "closed",
         "paused_at": null,
-        "closed_at": "@3"
+        "closed_at": {
+          "$as": "due-close"
+        }
       },
       "resume": {
         "status": "closed",
         "paused_at": null,
-        "closed_at": "@3"
+        "closed_at": {
+          "$as": "due-close"
+        }
       },
       "reopen": {
         "status": "active",
@@ -137,12 +141,16 @@
       "close": {
         "status": "closed",
         "paused_at": null,
-        "closed_at": "@3"
+        "closed_at": {
+          "$as": "due-close"
+        }
       },
       "archive": {
         "status": "archived",
         "paused_at": null,
-        "closed_at": "@3"
+        "closed_at": {
+          "$as": "due-close"
+        }
       }
     },
     "hooks": {
