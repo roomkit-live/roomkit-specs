@@ -1,9 +1,9 @@
 {
   "$schema": "../../scenario.schema.json",
-  "id": "hooks/a-verification-refusal-drops-off-lock-injections",
-  "title": "A verification gate that stores no cause drops the injections already collected off lock",
+  "id": "hooks/a-duplicate-drops-off-lock-injections",
+  "title": "A duplicate detected after an off-lock hook stores no new cause or injection",
   "rules": [
-    "§9.4 Injected events"
+    "\u00a79.4 Injected events"
   ],
   "setup": {
     "channels": [
@@ -59,36 +59,8 @@
           }
         ],
         "needs_lock": false
-      },
-      {
-        "name": "verify",
-        "trigger": "on_verification_required",
-        "reactions": [
-          {
-            "result": {
-              "action": "block",
-              "reason": "not verified"
-            }
-          }
-        ]
       }
-    ],
-    "kit": {
-      "identity_resolver": {
-        "answers": [
-          {
-            "repeat": true,
-            "result": {
-              "status": "identified",
-              "identity": {
-                "id": "alice-id"
-              }
-            }
-          }
-        ]
-      },
-      "verification_policy": {}
-    }
+    ]
   },
   "steps": [
     {
@@ -99,24 +71,55 @@
         "sender_id": "alice",
         "content": {
           "type": "text",
+          "body": "original"
+        },
+        "idempotency_key": "same"
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "alice",
+        "content": {
+          "type": "text",
           "body": "hello"
-        }
+        },
+        "idempotency_key": "same"
       },
       "expect": {
         "result": {
-          "blocked": true,
-          "event": null
+          "duplicate": true,
+          "event": {
+            "content": {
+              "body": "original"
+            }
+          }
         }
       }
     }
   ],
   "expect": {
     "timeline": {
-      "room-1": []
+      "room-1": [
+        {
+          "content": {
+            "body": "original"
+          },
+          "index": 0
+        }
+      ]
     },
     "deliveries": {
       "room-1": {
-        "ws": []
+        "ws": [
+          {
+            "content": {
+              "body": "original"
+            }
+          }
+        ]
       }
     },
     "hooks": {
@@ -124,17 +127,13 @@
         {
           "event": {
             "content": {
-              "type": "text",
-              "body": "hello"
+              "body": "original"
             }
           }
-        }
-      ],
-      "verify": [
+        },
         {
           "event": {
             "content": {
-              "type": "text",
               "body": "hello"
             }
           }

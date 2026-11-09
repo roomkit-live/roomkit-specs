@@ -152,7 +152,6 @@
     "tasks": {
       "room-1": [
         {
-          "id": "review",
           "title": "Review"
         }
       ]
