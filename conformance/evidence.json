@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "31c4c4ad08a36e4ea9c26bc169c28e1f9580ebfd",
+  "python_commit": "1fe0af28c9888c9b3ef551bf32b96c6bdde0aee1",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -2253,50 +2253,50 @@
           "scenario": "hooks/an-injected-change-keeps-the-target-s-readers",
           "pointer": "/expect",
           "sha256": "c62ce6f98eec643f65fbdcc3cf6792ced4b4bac93553717f929d833dff77ba01",
-          "scenario_sha256": "c19b439f0deb11b0f9fb0b7d86a982226c5b36cb7c53035a48c16238ace0942d",
-          "proves": "A named injection target that could not read the original receives no mutation; visibility remains restricted to the original readers."
+          "scenario_sha256": "2ab910c6275a2841c558cc2e94c5d2a8bf0593ad54620f195a3951c628f0644e",
+          "proves": "A named injection target that could not read the original receives no mutation; visibility remains restricted to the original readers. The named sender is an OWNER, so missing administrator authority cannot explain the refusal."
         },
         {
           "scenario": "hooks/a-hook-delete-requires-system-authority-sender",
           "pointer": "/expect",
           "sha256": "4b3bce93db02009af9c91a5c62b6792e3aae498b85b2542e37ca0057f07d5ee3",
-          "scenario_sha256": "410d5b99186890f4aa89f6d7bb7542e455045faa5025bf543bce41f88010514c",
-          "proves": "Injected delete with sender authority: resolved existing target, exact stored rows, mutation observer and native deliveries. The original sender source lends no authority to the hook."
+          "scenario_sha256": "f8ba67407da7914990b1837431ea0895a7b6f4fb66aeb2eb320b016242fb80ae",
+          "proves": "Injected delete with sender authority: resolved existing target, exact stored rows, mutation observer and native deliveries. The original sender source lends no authority to the hook. The named sender is an OWNER, so missing administrator authority cannot explain the refusal."
         },
         {
           "scenario": "hooks/a-hook-delete-requires-system-authority-admin",
           "pointer": "/expect",
           "sha256": "4b3bce93db02009af9c91a5c62b6792e3aae498b85b2542e37ca0057f07d5ee3",
-          "scenario_sha256": "ebcc0e4a2c21d4c18a1aa432bc5bbf448db1ac71e457a4561f983308e044b41b",
-          "proves": "Injected delete with admin authority: resolved existing target, exact stored rows, mutation observer and native deliveries. The original sender source lends no authority to the hook."
+          "scenario_sha256": "e2b86d0fb1a3c265c2c0046caf42957604fdbc3de566b3960936724094705b95",
+          "proves": "Injected delete with admin authority: resolved existing target, exact stored rows, mutation observer and native deliveries. The original sender source lends no authority to the hook. The named sender is an OWNER, so missing administrator authority cannot explain the refusal."
         },
         {
           "scenario": "hooks/a-hook-edit-requires-system-authority-absent",
           "pointer": "/expect",
           "sha256": "4b3bce93db02009af9c91a5c62b6792e3aae498b85b2542e37ca0057f07d5ee3",
-          "scenario_sha256": "f5ae7007a2ed5a62439d7016e2db3af3769073bcf085cb5a1b82c1e23845be7a",
-          "proves": "Injected edit with absent authority: resolved existing target, exact stored rows, mutation observer and native deliveries. The original sender source lends no authority to the hook."
+          "scenario_sha256": "8a6b73160cd2bda4518a05228f829532ea9150827c2e64c3859c55f43ce3c57f",
+          "proves": "Injected edit with absent authority: resolved existing target, exact stored rows, mutation observer and native deliveries. The original sender source lends no authority to the hook. The named sender is an OWNER, so missing administrator authority cannot explain the refusal."
         },
         {
           "scenario": "hooks/a-hook-edit-requires-system-authority-sender",
           "pointer": "/expect",
           "sha256": "4b3bce93db02009af9c91a5c62b6792e3aae498b85b2542e37ca0057f07d5ee3",
-          "scenario_sha256": "5135eaa7f95a04fc8581268734593bc8eb854439a39d4e8631c5a45935eb48aa",
-          "proves": "Injected edit with sender authority: resolved existing target, exact stored rows, mutation observer and native deliveries. The original sender source lends no authority to the hook."
+          "scenario_sha256": "d9cbb3255b2666cdf189f0ad1e361e6d9f85b9af8aeb7eddd0729816d9ac280a",
+          "proves": "Injected edit with sender authority: resolved existing target, exact stored rows, mutation observer and native deliveries. The original sender source lends no authority to the hook. The named sender is an OWNER, so missing administrator authority cannot explain the refusal."
         },
         {
           "scenario": "hooks/a-hook-delete-requires-system-authority-system",
           "pointer": "/expect",
           "sha256": "3275724d0d437449d944222c2573ce9eccd03278d5fd68a8fbb2f9bb906d9c76",
-          "scenario_sha256": "5827d1a36ec3dffe1604696c1ff036e4e6f775704205cb4522209c616e35c3ba",
-          "proves": "Injected delete with system authority: resolved existing target, exact stored rows, mutation observer and native deliveries. The original sender source lends no authority to the hook."
+          "scenario_sha256": "3eb5014cba64c3f2d9e12ac9988d81001e690c57e220664eb94833e1e66a7565",
+          "proves": "Injected delete with system authority: resolved existing target, exact stored rows, mutation observer and native deliveries. The original sender source lends no authority to the hook. The named sender is an OWNER, so missing administrator authority cannot explain the refusal."
         },
         {
           "scenario": "hooks/a-hook-edit-requires-system-authority-system",
           "pointer": "/expect",
           "sha256": "51ebef83dcd11f711b463622d4468a62e709f91f58b1442b22d0776c8a59261b",
-          "scenario_sha256": "b879d9bc2ef26a33f35190740b1937b6f0c5d1315c8d47a5f4b5c01053f640ae",
-          "proves": "Injected edit with system authority: resolved existing target, exact stored rows, mutation observer and native deliveries. The original sender source lends no authority to the hook."
+          "scenario_sha256": "b1a1481149c6dc5f08284571dfdd1895bdba6ffd35fb6f16083eef118f887cee",
+          "proves": "Injected edit with system authority: resolved existing target, exact stored rows, mutation observer and native deliveries. The original sender source lends no authority to the hook. The named sender is an OWNER, so missing administrator authority cannot explain the refusal."
         },
         {
           "scenario": "rooms/a-hook-that-closes-the-room-refuses-its-event",
@@ -2332,9 +2332,9 @@
       "id": "core-hook-injection-triggers",
       "requirement": "RK-9.4-006",
       "clause_sha256": "d81c6da5cc14e2eeb56f7e4a6f7db9c890ee264e3f52178895d020f0a04d585a",
-      "scope": "All SYNC trigger eligibility in the generic engine, BEFORE_DELIVER and ON_VERIFICATION_REQUIRED end-to-end, and identity challenge exceptions.",
+      "scope": "All fourteen Python SYNC trigger names in the generic engine, BEFORE_DELIVER and ON_VERIFICATION_REQUIRED end-to-end, and identity challenge exceptions. Rust implements ten of these trigger names.",
       "coverage": "partial",
-      "review": "Read both generic engine tests and the actual caller tests; the matrix proves the shared policy across all trigger names and decisions. It does not pretend to invoke voice or every typed turn callback with its own payload.",
+      "review": "Read both generic engine tests and the actual caller tests; the Python matrix checks fourteen trigger names and decisions. Rust tests the ten it implements. Neither matrix invokes every typed caller with its own payload.",
       "assertions": [
         {
           "scenario": "hooks/a-before-deliver-hook-cannot-inject",
@@ -2373,8 +2373,8 @@
         },
         {
           "nodeid": "tests/test_hook_injection_contract.py::test_only_broadcast_keeps_injections_in_a_sync_chain",
-          "sha256": "fbbf777b3a9b60eeeae1ea9dc8cab78246390daca754aea6a5d43b3223d0345e",
-          "proves": "All ten SYNC trigger names across allow/modify/block: only BEFORE_BROADCAST keeps injections; other triggers warn with hook and trigger, while tasks, metadata and decisions stand. Generic engine payload, not an integration exercise of each typed caller. Specialized Python source evidence; execution is not implied by a scenario receipt."
+          "sha256": "2d8e508e829d83e0fa17f370a8cc8a01ef82e83a3eb6538a85d45f25c8a2a3c2",
+          "proves": "All fourteen Python SYNC trigger names across allow/modify/block: only BEFORE_BROADCAST keeps injections; other triggers warn with hook and trigger, while tasks, metadata and decisions stand. Generic engine payload, not an integration exercise of each typed caller. Specialized Python source evidence; execution is not implied by a scenario receipt."
         },
         {
           "nodeid": "tests/test_hook_injection_contract.py::test_verification_drops_injections_with_a_warning",
@@ -2383,7 +2383,7 @@
         }
       ],
       "missing": [
-        "End-to-end warning assertions for each typed turn and voice caller remain outside this mapping; generic engine coverage is not a claim of complete caller integration."
+        "End-to-end warning assertions for each typed turn and voice caller remain outside this mapping. Rust has no BEFORE_BRIDGE_AUDIO, BEFORE_BRIDGE_VIDEO, ON_SPEAK_DECISION or ON_VISION_RESULT; the Python engine tests do not certify those Rust features."
       ]
     },
     {

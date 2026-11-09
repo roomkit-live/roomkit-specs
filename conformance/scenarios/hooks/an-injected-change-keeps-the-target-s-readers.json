@@ -44,6 +44,13 @@
           {
             "channel_id": "customer"
           }
+        ],
+        "participants": [
+          {
+            "id": "alice",
+            "channel_id": "sms",
+            "role": "owner"
+          }
         ]
       }
     ],
