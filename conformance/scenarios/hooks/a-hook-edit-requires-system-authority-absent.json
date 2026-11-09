@@ -15,7 +15,11 @@
       {
         "id": "ws",
         "type": "websocket",
-        "category": "transport"
+        "category": "transport",
+        "capabilities": {
+          "supports_edit": true,
+          "supports_delete": true
+        }
       }
     ],
     "rooms": [
@@ -57,7 +61,7 @@
                     "source": {
                       "channel_id": "sms",
                       "channel_type": "sms",
-                      "external_id": "alice"
+                      "participant_id": "alice"
                     }
                   },
                   "target_channel_ids": [

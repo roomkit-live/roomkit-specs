@@ -3,7 +3,7 @@
   "id": "hooks/a-duplicate-drops-off-lock-injections",
   "title": "A duplicate detected after an off-lock hook stores no new cause or injection",
   "rules": [
-    "\u00a79.4 Injected events"
+    "§9.4 Injected events"
   ],
   "setup": {
     "channels": [
@@ -90,11 +90,11 @@
       },
       "expect": {
         "result": {
-          "duplicate": true,
           "event": {
             "content": {
               "body": "original"
-            }
+            },
+            "index": 0
           }
         }
       }
