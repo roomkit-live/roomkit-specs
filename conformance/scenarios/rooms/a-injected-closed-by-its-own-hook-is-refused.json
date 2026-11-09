@@ -119,9 +119,9 @@
     },
     "framework_events": {
       "room-1": [
-        "room_closed",
         {
           "$unordered": [
+            "room_closed",
             {
               "event": "room_refused_event",
               "status": "closed",
@@ -137,7 +137,7 @@
       ]
     }
   },
-  "notes": "Python: tests/test_room_status_enforcement.py::TestClosedRoomRefuses::test_a_room_a_pass_s_hook_closed_refuses_that_pass.",
+  "notes": "Python: tests/test_room_status_enforcement.py::TestClosedRoomRefuses::test_a_room_a_pass_s_hook_closed_refuses_that_pass. The source checks the refusal contract, not event_processed timing relative to the injected pass; these notifications are compared without imposing a total order.",
   "reentrancy": [
     "commit@locked"
   ]
