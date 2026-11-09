@@ -107,9 +107,7 @@
           "event_count": {
             "$as": "close-count"
           },
-          "latest_index": {
-            "$as": "close-index"
-          }
+          "latest_index": null
         }
       }
     },
@@ -153,9 +151,7 @@
         "event_count": {
           "$as": "close-count"
         },
-        "latest_index": {
-          "$as": "close-index"
-        }
+        "latest_index": null
       },
       "archive": {
         "status": "archived",

@@ -94,6 +94,13 @@
           {
             "do": [
               {
+                "call": "set_room_timers",
+                "room_id": "$room",
+                "timers": {
+                  "last_activity_at": "2026-01-01T12:00:00Z"
+                }
+              },
+              {
                 "call": "store.update_room_if",
                 "room": {
                   "id": "$room",
