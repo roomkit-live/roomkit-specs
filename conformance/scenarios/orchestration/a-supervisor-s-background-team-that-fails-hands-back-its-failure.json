@@ -123,6 +123,12 @@
           "error": null,
           "response_events": [
             {
+              "type": "tool_call_start"
+            },
+            {
+              "type": "tool_call_end"
+            },
+            {
               "content": {
                 "type": "text",
                 "body": "On it."
