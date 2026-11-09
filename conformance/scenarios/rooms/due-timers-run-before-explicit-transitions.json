@@ -103,7 +103,13 @@
       "organization_id": "acme",
       "expect": {
         "result": {
-          "status": "closed"
+          "status": "closed",
+          "event_count": {
+            "$as": "close-count"
+          },
+          "latest_index": {
+            "$as": "close-index"
+          }
         }
       }
     },
@@ -143,6 +149,12 @@
         "paused_at": null,
         "closed_at": {
           "$as": "due-close"
+        },
+        "event_count": {
+          "$as": "close-count"
+        },
+        "latest_index": {
+          "$as": "close-index"
         }
       },
       "archive": {
