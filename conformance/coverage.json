@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "4a27b5f6663ab28d1c9b5f618da77a7679785b69c5bf0bca86345833c7e76c0a",
-  "corpus_sha256": "85360bb4a488ef21f4e6ce390fceccb78cb0d7941f94ceafffd08af15147fae4",
-  "python_commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
-  "scenario_count": 1707,
+  "corpus_sha256": "f45e63c99e95e63aa8bb23ad6cbadda393376803f7346b6b7c91087ec304bc5e",
+  "python_commit": "5f45b960c5ee3f821845c7487ba849a4f2604bbf",
+  "scenario_count": 1719,
   "sections": [
     {
       "section": "0",
@@ -2233,7 +2233,8 @@
       "review": "normative",
       "requirements": 5,
       "mapping": {
-        "unmapped": 5
+        "mapped_partial": 1,
+        "unmapped": 4
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -2436,18 +2437,25 @@
         "rooms/closed-room-refuses-a-message",
         "rooms/replacement-records-after-room-deletion-report-a-null-status",
         "routing/a-binding-a-hook-made-in-a-room-opened-with-no-address-takes-in-no-one-else",
+        "routing/a-binding-match-precedes-a-newer-participant-room",
         "routing/a-binding-naming-an-identity-is-answered-at-the-number-its-correspondent-writes-from",
         "routing/a-binding-naming-the-sender-s-identity-gets-their-address",
         "routing/a-channel-attached-with-no-address-takes-in-no-one-else",
         "routing/a-channel-reading-no-recipient-keeps-a-stranger-out",
         "routing/a-chat-under-the-framework-s-name-is-refused",
+        "routing/a-custom-router-receives-null-for-an-empty-or-blank-address",
+        "routing/a-custom-router-receives-the-chat-address",
+        "routing/a-custom-router-receives-the-scoped-identity-and-metadata",
         "routing/a-first-message-leaves-a-room-a-message-with-no-address-took",
         "routing/a-first-message-leaves-a-room-the-second-was-recorded-on",
+        "routing/a-foreign-custom-room-is-refused-before-attach",
+        "routing/a-foreign-explicit-room-is-refused-before-attach",
         "routing/a-group-room-refuses-a-message-routed-under-the-framework-s-name",
         "routing/a-group-room-takes-a-message-with-no-address",
         "routing/a-hook-binding-every-new-room-to-another-refuses-the-message",
         "routing/a-hook-binding-the-first-room-to-another-gives-the-message-a-new-one",
         "routing/a-hook-closing-a-room-another-was-routed-into-refuses-the-first-message",
+        "routing/a-hook-refusal-keeps-the-routed-correspondent",
         "routing/a-hook-s-binding-naming-no-one-records-the-sender-of-the-room-it-is-in",
         "routing/a-hook-s-binding-naming-the-sender-keeps-the-message-in-the-room",
         "routing/a-hook-s-binding-the-channel-s-own-method-reads-keeps-its-recipient",
@@ -2471,6 +2479,8 @@
         "routing/a-message-with-no-address-leaves-a-room-the-second-was-recorded-on",
         "routing/a-message-with-no-address-routed-away-opens-a-closed-room",
         "routing/a-message-with-no-address-takes-no-paused-new-room",
+        "routing/a-missing-custom-room-is-created-under-the-caller",
+        "routing/a-missing-explicit-room-is-created-under-the-caller",
         "routing/a-missing-room-a-router-names-for-a-message-with-no-address-takes-in-no-one-else",
         "routing/a-recipient-given-to-a-room-opened-with-no-address-replaces-the-name-on-a-channel-reading-no-recipient",
         "routing/a-recipient-naming-the-sender-s-identity-is-recorded-as-the-channel-reads-it",
@@ -2502,6 +2512,7 @@
         "routing/a-value-under-the-key-naming-the-sender-s-identity-is-recorded-as-written",
         "routing/a-value-under-the-key-that-is-not-a-recipient-admits-no-one",
         "routing/an-attach-keeps-a-value-that-is-not-a-recipient-whatever-the-channel-answers",
+        "routing/an-explicit-room-bypasses-the-custom-router",
         "routing/an-identity-of-the-framework-s-name-enters-no-room-a-router-answers",
         "routing/an-integer-under-the-key-in-another-form-is-read-in-the-channel-s-form",
         "routing/an-organization-s-message-leaves-a-room-another-took-for-one-of-its-own",
@@ -2514,6 +2525,8 @@
         "routing/the-lock-reads-a-binding-s-recipient-by-the-channel-s-own-method",
         "routing/the-lock-reads-a-value-that-is-not-a-recipient-whatever-the-channel-answers",
         "routing/the-lock-reads-the-key-of-a-channel-reading-no-recipient",
+        "routing/the-newest-binding-room-is-selected-deterministically",
+        "routing/the-newest-participant-room-is-selected-deterministically",
         "routing/the-record-names-the-sender-on-an-attach-whatever-the-channel-wrote",
         "routing/two-customers-on-one-number-keep-a-conversation-each",
         "routing/two-messages-with-no-address-on-one-missing-room-hold-a-room-each",
@@ -2719,7 +2732,8 @@
       "review": "normative",
       "requirements": 7,
       "mapping": {
-        "unmapped": 7
+        "mapped_partial": 6,
+        "unmapped": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -2756,19 +2770,26 @@
         "rooms/a-metadata-update-of-a-group-binding-names-no-one",
         "rooms/an-attach-names-its-correspondent-in-the-channel-s-form",
         "routing/a-binding-a-hook-made-in-a-room-opened-with-no-address-takes-in-no-one-else",
+        "routing/a-binding-match-precedes-a-newer-participant-room",
         "routing/a-binding-with-a-recipient-alone-names-its-recipient",
         "routing/a-blank-sender-has-no-address",
         "routing/a-channel-attached-with-no-address-takes-in-no-one-else",
         "routing/a-channel-reading-no-recipient-keeps-a-stranger-out",
         "routing/a-chat-message-is-its-chat-s-whatever-its-sender",
         "routing/a-chat-under-the-framework-s-name-is-refused",
+        "routing/a-custom-router-receives-null-for-an-empty-or-blank-address",
+        "routing/a-custom-router-receives-the-chat-address",
+        "routing/a-custom-router-receives-the-scoped-identity-and-metadata",
         "routing/a-first-message-leaves-a-room-a-message-with-no-address-took",
         "routing/a-first-message-leaves-a-room-the-second-was-recorded-on",
+        "routing/a-foreign-custom-room-is-refused-before-attach",
+        "routing/a-foreign-explicit-room-is-refused-before-attach",
         "routing/a-group-binding-s-value-under-the-key-names-no-one",
         "routing/a-group-room-refuses-a-message-routed-under-the-framework-s-name",
         "routing/a-group-room-takes-a-message-with-no-address",
         "routing/a-hook-binding-every-new-room-to-another-refuses-the-message",
         "routing/a-hook-binding-the-first-room-to-another-gives-the-message-a-new-one",
+        "routing/a-hook-refusal-keeps-the-routed-correspondent",
         "routing/a-hook-s-binding-naming-no-one-records-the-sender-of-the-room-it-is-in",
         "routing/a-hook-s-binding-naming-the-sender-keeps-the-message-in-the-room",
         "routing/a-hook-s-binding-the-channel-s-own-method-reads-keeps-its-recipient",
@@ -2792,6 +2813,8 @@
         "routing/a-message-with-no-address-leaves-a-room-the-second-was-recorded-on",
         "routing/a-message-with-no-address-routed-away-opens-a-closed-room",
         "routing/a-message-with-no-address-takes-no-paused-new-room",
+        "routing/a-missing-custom-room-is-created-under-the-caller",
+        "routing/a-missing-explicit-room-is-created-under-the-caller",
         "routing/a-missing-room-a-router-names-for-a-message-with-no-address-takes-in-no-one-else",
         "routing/a-paused-room-counts-among-the-channel-s-rooms-only-as-a-group",
         "routing/a-post-with-no-author-is-answered-in-its-chat",
@@ -2831,6 +2854,7 @@
         "routing/a-value-under-the-key-that-is-not-a-recipient-admits-no-one",
         "routing/a-webhook-s-recipient-names-no-correspondent",
         "routing/an-attach-keeps-a-value-that-is-not-a-recipient-whatever-the-channel-answers",
+        "routing/an-explicit-room-bypasses-the-custom-router",
         "routing/an-identity-of-the-framework-s-name-enters-no-room-a-router-answers",
         "routing/an-identity-under-the-framework-s-name-is-no-one-s",
         "routing/an-integer-under-the-key-in-another-form-is-read-in-the-channel-s-form",
@@ -2856,6 +2880,8 @@
         "routing/the-lock-reads-a-value-that-is-not-a-recipient-whatever-the-channel-answers",
         "routing/the-lock-reads-the-key-of-a-channel-reading-no-recipient",
         "routing/the-name-on-a-binding-is-never-rewritten",
+        "routing/the-newest-binding-room-is-selected-deterministically",
+        "routing/the-newest-participant-room-is-selected-deterministically",
         "routing/the-router-does-not-guess",
         "routing/two-customers-on-one-number-keep-a-conversation-each",
         "routing/two-messages-with-no-address-on-one-missing-room-hold-a-room-each",
@@ -4841,6 +4867,18 @@
         "rooms/timer-sweeps-reach-every-page-in-the-requested-organization",
         "rooms/transitions-scope-before-due-timers",
         "rooms/transitions-with-the-owning-organization",
+        "routing/a-binding-match-precedes-a-newer-participant-room",
+        "routing/a-custom-router-receives-null-for-an-empty-or-blank-address",
+        "routing/a-custom-router-receives-the-chat-address",
+        "routing/a-custom-router-receives-the-scoped-identity-and-metadata",
+        "routing/a-foreign-custom-room-is-refused-before-attach",
+        "routing/a-foreign-explicit-room-is-refused-before-attach",
+        "routing/a-hook-refusal-keeps-the-routed-correspondent",
+        "routing/a-missing-custom-room-is-created-under-the-caller",
+        "routing/a-missing-explicit-room-is-created-under-the-caller",
+        "routing/an-explicit-room-bypasses-the-custom-router",
+        "routing/the-newest-binding-room-is-selected-deterministically",
+        "routing/the-newest-participant-room-is-selected-deterministically",
         "store/the-kit-marks-and-reads-a-room-s-markers-for-its-organization",
         "tasks/a-child-room-belongs-to-its-parent-room-s-organization",
         "tasks/a-delegation-is-refused-before-anything-is-made",
@@ -7022,7 +7060,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-indexing-final-corpus-428f285-sqlite",
@@ -7030,7 +7068,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -7120,7 +7158,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-indexing-final-corpus-428f285-sqlite",
@@ -7128,7 +7166,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -7216,7 +7254,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-indexing-final-corpus-428f285-sqlite",
@@ -7224,7 +7262,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -7290,7 +7328,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-indexing-final-corpus-428f285-sqlite",
@@ -7298,7 +7336,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -7385,7 +7423,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-indexing-final-corpus-428f285-sqlite",
@@ -7393,7 +7431,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -7467,7 +7505,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-indexing-final-corpus-428f285-sqlite",
@@ -7475,7 +7513,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -8260,7 +8298,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8325,7 +8363,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8394,7 +8432,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8457,7 +8495,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8512,7 +8550,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -8567,7 +8605,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8630,7 +8668,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8685,7 +8723,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8748,7 +8786,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -8813,7 +8851,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -8879,7 +8917,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -8952,7 +8990,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -8994,7 +9032,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -9073,7 +9111,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-indexing-final-corpus-428f285-sqlite",
@@ -9081,7 +9119,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -9244,7 +9282,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -9367,7 +9405,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-indexing-final-corpus-428f285-sqlite",
@@ -9375,7 +9413,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -9472,7 +9510,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -9557,7 +9595,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -9630,7 +9668,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -9709,7 +9747,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -9800,7 +9838,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -9936,7 +9974,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-indexing-final-corpus-428f285-sqlite",
@@ -9944,7 +9982,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -9991,7 +10029,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -10048,7 +10086,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -10081,8 +10119,123 @@
     {
       "id": "RK-10.1-002",
       "section": "10.1",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "core-routing-entry",
+          "scope": "Step 2 only: explicit/custom routing, room creation, scoped refusal, auto-attach defaults, correspondent record before hooks and re-routing.",
+          "coverage": "partial",
+          "missing": [
+            "The rest of the inbound pipeline has separate links and is not completed here. Ordering at parse/identity/commit boundaries, lifecycle completion, locks and cancellation retain specialized tests and previous lots. No complete credit is claimed for this composite unit."
+          ],
+          "executions": [
+            {
+              "execution": "python-hooks-33d1f4",
+              "implementation": "python",
+              "commit": "33d1f4415e2a5697cbe5b4f6cb8413ee05f33363",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-permissions-ecf9bc5",
+              "implementation": "python",
+              "commit": "ecf9bc5f7e92a440413b2518e799afce31bd5042",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-visibility-8fb44e9",
+              "implementation": "python",
+              "commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-room-lifecycle-a29102c",
+              "implementation": "python",
+              "commit": "a29102cbfef54372bceceeaef3623616ddecbf1b",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-room-lifecycle-completion-3bb0274-memory",
+              "implementation": "python",
+              "commit": "3bb0274eb27ae9abcc67d33fc093c33bac4cffa0",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-room-lifecycle-completion-3bb0274-sqlite",
+              "implementation": "python",
+              "commit": "3bb0274eb27ae9abcc67d33fc093c33bac4cffa0",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-lifecycle-final-corpus-746d6bd-memory",
+              "implementation": "python",
+              "commit": "746d6bdc0a3b9fe358e983c06046bfd232195d26",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-lifecycle-final-corpus-746d6bd-sqlite",
+              "implementation": "python",
+              "commit": "746d6bdc0a3b9fe358e983c06046bfd232195d26",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-lifecycle-final-corpus-ecac963-memory",
+              "implementation": "python",
+              "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-lifecycle-final-corpus-ecac963-sqlite",
+              "implementation": "python",
+              "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-indexing-final-corpus-428f285-memory",
+              "implementation": "python",
+              "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-indexing-final-corpus-428f285-sqlite",
+              "implementation": "python",
+              "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "RK-10.1-003",
@@ -10169,7 +10322,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -10266,7 +10419,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -10299,20 +10452,157 @@
     {
       "id": "RK-10.4-001",
       "section": "10.4",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "core-routing-inputs",
+          "scope": "Explicit and custom room ids; scoped identity and metadata; null answers and anonymous senders; organization refusal before attachment and commit.",
+          "coverage": "partial",
+          "missing": [
+            "Custom-router authentication depends on integrator policy and needs operational review. Identity lookup counts and stale reads require specialized tests. Provider normalization corners remain on RMK-1392; callback binding replacement ordering remains on RMK-1422."
+          ],
+          "executions": [
+            {
+              "execution": "python-lifecycle-final-corpus-746d6bd-memory",
+              "implementation": "python",
+              "commit": "746d6bdc0a3b9fe358e983c06046bfd232195d26",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-lifecycle-final-corpus-ecac963-memory",
+              "implementation": "python",
+              "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-indexing-final-corpus-428f285-memory",
+              "implementation": "python",
+              "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "RK-10.4-002",
       "section": "10.4",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "core-routing-selection",
+          "scope": "Newest binding then participant selection, creation-time ties, paused conversations and organization/channel scoping.",
+          "coverage": "partial",
+          "missing": [
+            "Shared cases do not cover every participant status and connected_via variant. Specialized source and Rust store tests retain those assertions. Stored-recipient normalization differences remain on RMK-1374."
+          ],
+          "executions": [
+            {
+              "execution": "python-lifecycle-final-corpus-746d6bd-memory",
+              "implementation": "python",
+              "commit": "746d6bdc0a3b9fe358e983c06046bfd232195d26",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-lifecycle-final-corpus-ecac963-memory",
+              "implementation": "python",
+              "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-indexing-final-corpus-428f285-memory",
+              "implementation": "python",
+              "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "RK-10.4-003",
       "section": "10.4",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "core-routing-admission",
+          "scope": "Single-conversation admission, correspondent retention and anonymous/group behavior; rechecks under the room lock and during room creation.",
+          "coverage": "partial",
+          "missing": [
+            "Paging, real lock deadlines, exact default-router and identity-store call counts, creation conflicts, and attach-then-wait ordering require specialized tests. The unreadable-recipient scenario covers a boolean; the specialized Python matrix covers objects, lists and floats, both routing strategies and log privacy. RMK-1422 retains the callback ordering edge."
+          ],
+          "executions": [
+            {
+              "execution": "python-hooks-33d1f4",
+              "implementation": "python",
+              "commit": "33d1f4415e2a5697cbe5b4f6cb8413ee05f33363",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-permissions-ecf9bc5",
+              "implementation": "python",
+              "commit": "ecf9bc5f7e92a440413b2518e799afce31bd5042",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-visibility-8fb44e9",
+              "implementation": "python",
+              "commit": "8fb44e947b1c2e6d6b74de18bc28cd921cd47726",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-response-history-3e4e215",
+              "implementation": "python",
+              "commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-lifecycle-final-corpus-746d6bd-memory",
+              "implementation": "python",
+              "commit": "746d6bdc0a3b9fe358e983c06046bfd232195d26",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-lifecycle-final-corpus-ecac963-memory",
+              "implementation": "python",
+              "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-indexing-final-corpus-428f285-memory",
+              "implementation": "python",
+              "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "RK-10.4-004",
@@ -10323,20 +10613,125 @@
     {
       "id": "RK-10.4-005",
       "section": "10.4",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "core-routing-channel-isolation",
+          "scope": "A binding speaks only for its channel; another correspondent receives neither stored history nor deliveries from the selected conversation.",
+          "coverage": "partial",
+          "missing": [
+            "Cross-number store queries and some identity connected_via variants are specialized evidence, not per-scenario executions. Provider-specific forms retain their separate contract tests."
+          ],
+          "executions": [
+            {
+              "execution": "python-lifecycle-final-corpus-746d6bd-memory",
+              "implementation": "python",
+              "commit": "746d6bdc0a3b9fe358e983c06046bfd232195d26",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-lifecycle-final-corpus-ecac963-memory",
+              "implementation": "python",
+              "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-indexing-final-corpus-428f285-memory",
+              "implementation": "python",
+              "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "RK-10.4-006",
       "section": "10.4",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "core-routing-ambiguity",
+          "scope": "An ambiguous channel returns null directly and creates a separate room end to end, leaving old timelines, bindings and deliveries unchanged.",
+          "coverage": "partial",
+          "missing": [
+            "The operational obligation for integrators to authenticate a custom strategy or supply a trusted explicit room needs review outside the library."
+          ],
+          "executions": [
+            {
+              "execution": "python-lifecycle-final-corpus-746d6bd-memory",
+              "implementation": "python",
+              "commit": "746d6bdc0a3b9fe358e983c06046bfd232195d26",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-lifecycle-final-corpus-ecac963-memory",
+              "implementation": "python",
+              "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-indexing-final-corpus-428f285-memory",
+              "implementation": "python",
+              "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "RK-10.4-007",
       "section": "10.4",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "core-routing-determinism",
+          "scope": "Repeated default queries at unchanged state, explicit creation timestamps with reverse insertion, and custom strategy inputs.",
+          "coverage": "partial",
+          "missing": [
+            "Specialized backend query tests remain necessary; shared in-memory and SQLite executions are not a proof for every backend. Custom strategy determinism itself is the integrator responsibility."
+          ],
+          "executions": [
+            {
+              "execution": "python-lifecycle-final-corpus-746d6bd-memory",
+              "implementation": "python",
+              "commit": "746d6bdc0a3b9fe358e983c06046bfd232195d26",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-lifecycle-final-corpus-ecac963-memory",
+              "implementation": "python",
+              "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-indexing-final-corpus-428f285-memory",
+              "implementation": "python",
+              "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "RK-10.5-001",
@@ -12431,7 +12826,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-indexing-final-corpus-428f285-sqlite",
@@ -12439,7 +12834,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -12608,7 +13003,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-indexing-final-corpus-428f285-sqlite",
@@ -12616,7 +13011,7 @@
               "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
