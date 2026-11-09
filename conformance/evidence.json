@@ -4028,6 +4028,313 @@
           "outcome": "passed"
         }
       ]
+    },
+    {
+      "id": "python-hook-injections-a6daaf1",
+      "implementation": "python",
+      "implementation_commit": "a6daaf1391214c917936b1b37f50b5e2f7c88e20",
+      "rfc_commit": "175c13890427434e6d2e9ed7611ef2c8b109f3a5",
+      "corpus_commit": "175c13890427434e6d2e9ed7611ef2c8b109f3a5",
+      "rfc_sha256": "e68bbaace40568f287fa43b657999608f5b28a6f6e3379c67e21c6760258ca9a",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "env",
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "PYTHONPATH=src",
+        "uv",
+        "run",
+        "--active",
+        "--no-sync",
+        "pytest",
+        "tests/conformance/test_conformance.py",
+        "-k",
+        "inject or a-challenge",
+        "-q",
+        "--junitxml=python-hook-injections.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-hook-injections-a6daaf1.xml",
+        "format": "pytest_junit",
+        "sha256": "585dcfb5ec2f1dea4a7d504ef1686b289286c37a90dd27668f46c1d118e7b4e0"
+      },
+      "results": [
+        {
+          "scenario": "appendix-b/b2-block-and-inject",
+          "sha256": "da8ff9d305a1093d9c7181c26dfe2cd45176738630973cba70087bdf2be73274",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "delivery/an-event-injected-by-a-cancelled-delivery-starts-no-turn",
+          "sha256": "293cf3f7e177c15319bd181aa0835814f4fab1cc2cdb63921c2613eaf141e4dc",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "edits/an-injected-change-s-refusal-raises",
+          "sha256": "6438d09f3b2d77f7b44599d8da68cec8a19403dc41326102a8b2d66622c98368",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/a-before-deliver-hook-cannot-inject",
+          "sha256": "b1ef0b275febd0ba44be9ddb3e49bc7a70334c06cea1d67d6eadcf943e0f85ee",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injected-event-asks-no-agent",
+          "sha256": "438a8ce3c9e606a945db5bba22f6e5fe86e2e0fdf66ecb9c33977bc427a6f130",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injected-event-runs-the-hooks",
+          "sha256": "c4e393ae026e6e10cffb3a2c2c5eb3932e567ea0ac6df48af9481c5e9aa627fc",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injected-event-stored-only-reads-none",
+          "sha256": "bbb3d6351ededcbb808f9e898b6fa0cffe216eb65b58095f55756f51a77d3422",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-cannot-widen-its-target-visibility",
+          "sha256": "5fc99c206cd5ee791ea56de9fead69cb14ccf717e05c35140302537c61d1716e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-clears-its-supplied-idempotency-key",
+          "sha256": "90ebe8b159140d7a6fd306221ffb47fc5e635e487c4a1c2edb6b7f019741b2ac",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-collects-its-target-side-effects",
+          "sha256": "86dea83a4f080dd500ce8aa6050dd9a42f0cb719ed0a6f31b997782090493bc6",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-commits-its-own-hook-injection-after-it",
+          "sha256": "e418c9d2b7820b2d72205bcda29d27d9b02c47628b315e1dc7027fbe02dbd69f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-does-not-check-its-source-write-access",
+          "sha256": "6a1cbae3a33bf3080a7772c4bab768fc7ac2f8c5f7a2e103aa3f06f86f354b6b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-from-a-direct-injection-waits-for-the-outer-pass",
+          "sha256": "faa491618282da6d6dce240cb14a1b1ffeabe16f307b70019ddce2bab921c16e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-inherits-depth-instead-of-its-supplied-depth",
+          "sha256": "9bb3020e637be380990a155cf31eafc815f7ef0841ddccc1cdb04fae9faaa8c2",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-inherits-the-depth-of-an-agent-answer",
+          "sha256": "f6c9931a659d98efd42d8780c1728c750d4fac7098c1d61a3adb8b381b17f4f7",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-is-transcoded-for-its-target",
+          "sha256": "2bdad51fde6737c06931ef951610b5b60dfbb1e6cb42a00d84525ebab3eb534b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-never-delivers-to-its-own-source",
+          "sha256": "2c5c1cbd9d355f09f59eaa3e60680efba80cde05095bd4e55dae33dc446ea8f0",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-survives-a-muted-cause",
+          "sha256": "2278f8feeabc165a1db6458b140829874b2b163acd33bdaafa4aba368074fb64",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-takes-its-own-lock-after-its-blocked-cause",
+          "sha256": "2037dea1a862f0b2f62addd1f47aca4eb36535ce064c814258c9af67e4a35214",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/an-injection-takes-its-own-lock-after-its-delivered-cause",
+          "sha256": "0b506ab9e036b55724d7474115ce9b535b715abe678fc9518dc1d4fdb9c8d096",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "hooks/injections-use-the-reentry-budget-without-increasing-chain-depth",
+          "sha256": "e424a925e3fb1f6417871416c173faa9a8299941166ba39f5941858b5f6118e8",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "identity/a-challenge-is-delivered-and-the-message-held",
+          "sha256": "097ac40e6c8923a3a793991a53f6068fffbdb3691dc3295839632bd8bded1a70",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "identity/a-challenge-runs-the-before-broadcast-hooks",
+          "sha256": "22930bb4ab61c4dab078dffb0ed8be7679d9678200db6e8fba4a409642e059d0",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "inbound/a-hook-s-injected-event-s-failed-set-is-not-recorded",
+          "sha256": "b0e1168d6ca5f6c0733ca9466f118767637b6d997ffc24df2af2ded5974d3a78",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "injection/a-post-s-refusals",
+          "sha256": "cd040b1aba83f0b43ef46b2099457ee40bf84058544dc867e0fe7aceaebe4f02",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "injection/a-post-speaks-through-the-host-channel",
+          "sha256": "a90aea60a6b9058050a9bdea5d40477aaf4528140b46ba57eb191dc9c3c7c34c",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "injection/a-record-outside-the-pipeline",
+          "sha256": "51a9f3b619fb0b1c6aa4757a7cdb90469df440b087b651ca75ce0eb2d21d8a2e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "injection/a-sent-event-keeps-its-answer-scope",
+          "sha256": "372b18c72da69aa845c1b7a197fa081ca37f5b508b77616683cc9f48003965f8",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "injection/an-agent-s-injection-goes-out",
+          "sha256": "c3b92c553b3bf593c0c45b00aa8296b5145283011d50a3b13f1dc0dff0658907",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "injection/an-injection-from-a-bound-unregistered-channel-raises",
+          "sha256": "cee522b7df638faf807bc630002e3e0e0b944f0ccd6f1614e7bd0a7c8e24775e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "injection/an-injection-from-an-unregistered-channel-raises",
+          "sha256": "b2aa8b93f494ce232c31f269c495fc2e77dc4e7068c516730bae8fefec45671d",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "injection/an-injection-into-no-room-raises",
+          "sha256": "23ac9d5efdf51d9c741aab169403c3cc56a75cd61f4929331c98941c9e3ac9cc",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "injection/an-injection-is-delivered",
+          "sha256": "569fb49eb289e7d2ecca35686f54f4ab358fb71b1c1bcb2f66acb8eb802a12c9",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "injection/an-injection-replay-by-key",
+          "sha256": "f0a1d080f6167bb0394358ce26c8c93a9d8ff5948970fea7342fc1b48939da91",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "instructions/an-injected-instruction-s-refusals-raise",
+          "sha256": "63643af759f6c5101582f79c3a9bc0cab556780f382fe137b7a0b63d0f61f465",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "locks/a-challenged-message-carries-its-attach-s-failed-release",
+          "sha256": "05b245200191eed501ab64a70986c1fac3e07adc1daba6490dd48273960e41da",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "locks/a-deferred-adopted-call-carries-the-failed-release-of-the-event-its-hook-injected",
+          "sha256": "438d7dfd5d5898ba4a9d3053edeffbe2555bede4bbe424e2843cb2010d78c6ba",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "locks/an-adopted-call-answers-once-its-injected-event-committed-its-delivery-held",
+          "sha256": "f957123a3c6fec35b63a0ca7be4c113b0c8b3ae41bcb4efd6a86df1dd6911fdf",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "locks/an-adopted-call-carries-the-failed-release-of-the-event-its-hook-injected",
+          "sha256": "55f22f2c23693e17dc53fc9a8d9524268ccae123f20c2693ce708c589ef088c3",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "locks/an-adopted-call-carries-the-failed-release-of-what-a-call-nested-in-its-injected-event-s-section-injected",
+          "sha256": "ee3dc9a63f46a6588677a12b5921f285ffa49589f8bfd52e06ad50d0cdddbea6",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "locks/an-adopted-call-carries-the-failed-release-of-what-a-call-nested-in-its-section-injected",
+          "sha256": "328aec5900bf5e0c564e0a717c93fdff5dbb77aa03deb7460a2a79f97b836270",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "locks/an-adopted-call-carries-the-failed-release-of-what-its-injected-event-injected",
+          "sha256": "b98c0b93c981a81fe156627b869be320c03f2062c04cfb411d84d6ecef108ca2",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "locks/an-adopted-direct-injection-leaves-its-injected-event-s-failed-release-to-its-caller",
+          "sha256": "eb6a0ec7ad9aeb8cc297bf6013deeabb848e64d1ce4d711d1ca3c682513862c2",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "locks/an-adopted-message-held-for-its-sender-carries-the-failed-release-of-what-a-call-nested-in-its-challenge-s-section-injected",
+          "sha256": "ca71db9ea3fc1536f88ef0feca04473894f552dd1b00e54dd3d8d6b9b055b2fe",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/a-blocked-injected-event-keeps-its-own-visibility",
+          "sha256": "38d4cdcbca5fd88f96e79735034aa95c7ce93bd971564e5b1d3bc1a319854a6a",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/an-allowed-hook-injection-keeps-its-target-scope",
+          "sha256": "6299b45e6f6ac00436bae306f754e119baa4262e1ab6fd10e95cdb8adc375d78",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/an-injection-from-an-unbound-channel-raises",
+          "sha256": "bd720ccc8875cecf3be53142d078162432029d7659c6561e46732fa37d99a260",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "permissions/visibility-intersections-on-inbound-and-injection",
+          "sha256": "9b05c78e410ddc49fd0f590d39d90f2c6c39553998de8a3760ba5507477c5e7f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "reentrancy/a-locked-hook-s-injection-commits-ahead",
+          "sha256": "5cc5a267002cbd1f818c00d79fbe1ff3650dd763d6c9222256a1c520d977eced",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "reentrancy/a-turn-s-injection-is-a-new-arrival",
+          "sha256": "d17544c27f245ad34aab2f3e8f7ddb59eddd19cee568d7eeecf2c42393e62f58",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "reentrancy/an-off-lock-hook-s-injection-commits-ahead",
+          "sha256": "3f46d60d1f4a643507bc0b9bf63019ec569f3adcf058f50f0d066d26fcf0d95c",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "rooms/closed-room-refuses-an-injection",
+          "sha256": "c4fb3a20852d8b522a5774577d990464f08954d9a2c69abae4e859f005c4ad01",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-search/an-injected-tool-does-not-count-toward-the-catalogue",
+          "sha256": "8c463bc58a215f301ff68ccf58c02490d8df2cbfbc437944bf8e82baa3436654",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-search/an-injected-tool-is-reported-always-even-once-used",
+          "sha256": "8de399ab87e982d6520000370453daa7a9e72a949d02971464bf3a574ef26355",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-search/an-injected-tool-stays-declared-while-the-catalogue-is-hidden",
+          "sha256": "37a334ab30233338f2b16b891da190f2e1a075b00b985a772ffa468345ad6f3c",
+          "outcome": "passed"
+        }
+      ]
     }
   ]
 }

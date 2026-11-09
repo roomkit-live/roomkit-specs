@@ -87,3 +87,22 @@ injection scope case and the existing greeting proof, as well as the prior
 permissions/hooks selection. Specialized Python and Rust tests, voice record
 creation, other stores and distributed turns are outside this receipt. Their
 source mappings do not become passed executions through this artifact.
+
+## Hook injection passes
+
+`python-hook-injections-a6daaf1.xml` retains all 55 selected scenario outcomes from:
+
+```sh
+ROOMKIT_TEST_TURN_BACKEND=memory PYTHONPATH=src uv run --active --no-sync pytest tests/conformance/test_conformance.py -k 'inject or a-challenge' -q --junitxml=python-hook-injections.xml
+```
+
+The run used clean Python commit `a6daaf1391214c917936b1b37f50b5e2f7c88e20`,
+with the memory store and in-process turns. The copied corpus and reviewed RFC
+are from `175c13890427434e6d2e9ed7611ef2c8b109f3a5`. Every selected case passed,
+with no skips or errors. Host, timestamps, durations and local paths are removed;
+testcase names, classes and outcomes are retained. The command records a portable
+output filename instead of its local artifact destination.
+
+The selection covers the new injection scenarios and related existing cases. It
+does not prove specialized Python fault injection or warning assertions, Rust
+execution, other stores, or the remaining obligations of the partial RFC clauses.

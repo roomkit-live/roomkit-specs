@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites name="pytest tests">
+  <testsuite name="pytest" errors="0" failures="0" skipped="0" tests="55">
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[appendix-b/b2-block-and-inject]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[delivery/an-event-injected-by-a-cancelled-delivery-starts-no-turn]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[edits/an-injected-change-s-refusal-raises]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/a-before-deliver-hook-cannot-inject]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injected-event-asks-no-agent]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injected-event-runs-the-hooks]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injected-event-stored-only-reads-none]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-cannot-widen-its-target-visibility]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-clears-its-supplied-idempotency-key]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-collects-its-target-side-effects]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-commits-its-own-hook-injection-after-it]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-does-not-check-its-source-write-access]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-from-a-direct-injection-waits-for-the-outer-pass]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-inherits-depth-instead-of-its-supplied-depth]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-inherits-the-depth-of-an-agent-answer]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-is-transcoded-for-its-target]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-never-delivers-to-its-own-source]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-survives-a-muted-cause]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-takes-its-own-lock-after-its-blocked-cause]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/an-injection-takes-its-own-lock-after-its-delivered-cause]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[hooks/injections-use-the-reentry-budget-without-increasing-chain-depth]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[identity/a-challenge-is-delivered-and-the-message-held]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[identity/a-challenge-runs-the-before-broadcast-hooks]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[inbound/a-hook-s-injected-event-s-failed-set-is-not-recorded]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[injection/a-post-s-refusals]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[injection/a-post-speaks-through-the-host-channel]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[injection/a-record-outside-the-pipeline]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[injection/a-sent-event-keeps-its-answer-scope]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[injection/an-agent-s-injection-goes-out]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[injection/an-injection-from-a-bound-unregistered-channel-raises]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[injection/an-injection-from-an-unregistered-channel-raises]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[injection/an-injection-into-no-room-raises]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[injection/an-injection-is-delivered]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[injection/an-injection-replay-by-key]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[instructions/an-injected-instruction-s-refusals-raise]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[locks/a-challenged-message-carries-its-attach-s-failed-release]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[locks/a-deferred-adopted-call-carries-the-failed-release-of-the-event-its-hook-injected]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[locks/an-adopted-call-answers-once-its-injected-event-committed-its-delivery-held]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[locks/an-adopted-call-carries-the-failed-release-of-the-event-its-hook-injected]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[locks/an-adopted-call-carries-the-failed-release-of-what-a-call-nested-in-its-injected-event-s-section-injected]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[locks/an-adopted-call-carries-the-failed-release-of-what-a-call-nested-in-its-section-injected]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[locks/an-adopted-call-carries-the-failed-release-of-what-its-injected-event-injected]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[locks/an-adopted-direct-injection-leaves-its-injected-event-s-failed-release-to-its-caller]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[locks/an-adopted-message-held-for-its-sender-carries-the-failed-release-of-what-a-call-nested-in-its-challenge-s-section-injected]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[permissions/a-blocked-injected-event-keeps-its-own-visibility]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[permissions/an-allowed-hook-injection-keeps-its-target-scope]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[permissions/an-injection-from-an-unbound-channel-raises]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[permissions/visibility-intersections-on-inbound-and-injection]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[reentrancy/a-locked-hook-s-injection-commits-ahead]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[reentrancy/a-turn-s-injection-is-a-new-arrival]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[reentrancy/an-off-lock-hook-s-injection-commits-ahead]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[rooms/closed-room-refuses-an-injection]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[tool-search/an-injected-tool-does-not-count-toward-the-catalogue]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[tool-search/an-injected-tool-is-reported-always-even-once-used]" />
+    <testcase classname="tests.conformance.test_conformance" name="test_scenario[tool-search/an-injected-tool-stays-declared-while-the-catalogue-is-hidden]" />
+  </testsuite>
+</testsuites>

@@ -7776,6 +7776,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
+            },
+            {
+              "execution": "python-hook-injections-a6daaf1",
+              "implementation": "python",
+              "commit": "a6daaf1391214c917936b1b37f50b5e2f7c88e20",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
             }
           ]
         }
@@ -7851,6 +7859,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
+            },
+            {
+              "execution": "python-hook-injections-a6daaf1",
+              "implementation": "python",
+              "commit": "a6daaf1391214c917936b1b37f50b5e2f7c88e20",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
             }
           ]
         }
@@ -8061,6 +8077,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
+            },
+            {
+              "execution": "python-hook-injections-a6daaf1",
+              "implementation": "python",
+              "commit": "a6daaf1391214c917936b1b37f50b5e2f7c88e20",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
             }
           ]
         }
@@ -8470,6 +8494,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-hook-injections-a6daaf1",
+              "implementation": "python",
+              "commit": "a6daaf1391214c917936b1b37f50b5e2f7c88e20",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
             }
           ]
         }
@@ -8493,7 +8525,16 @@
           "missing": [
             "SYNC triggers other than BEFORE_DELIVER and identity challenges; shared scenarios do not inspect warning logs."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-hook-injections-a6daaf1",
+              "implementation": "python",
+              "commit": "a6daaf1391214c917936b1b37f50b5e2f7c88e20",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            }
+          ]
         }
       ]
     },
@@ -12068,6 +12109,15 @@
       "implementation_commit": "3e4e215c3ca0b9efcce4c7e5f84be3dfb7d7fd9e",
       "rfc_commit": "836945ce526c19b04fee39d8b2dca01c828bb2b9",
       "corpus_commit": "836945ce526c19b04fee39d8b2dca01c828bb2b9",
+      "backend": "memory",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-hook-injections-a6daaf1",
+      "implementation": "python",
+      "implementation_commit": "a6daaf1391214c917936b1b37f50b5e2f7c88e20",
+      "rfc_commit": "175c13890427434e6d2e9ed7611ef2c8b109f3a5",
+      "corpus_commit": "175c13890427434e6d2e9ed7611ef2c8b109f3a5",
       "backend": "memory",
       "runtime": "asyncio"
     }
