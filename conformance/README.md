@@ -993,6 +993,7 @@ An expectation matches the actual value when:
   in `actions`, the outcomes in any order;
 - `{"$absent": true}`: absent or null; `{"$present": true}`: neither;
 - `{"$contains": "text"}`: a string holding the text;
+- `{"$starts_with": "text"}`: a string beginning with the text;
 - `{"$lacks": "text"}`: a string not holding the text;
 - `{"$as": "name"}`: a value present, named: across the scenario's step
   expectations and its `expect`, every `$as` of one name matches equal
