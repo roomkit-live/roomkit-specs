@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "8c53024d64053390547679a03b7b2f91ba51841b419bf8875b6308182759def2",
-  "corpus_sha256": "7e6a8621a97234b73f7f9fb74d1e06dfc12635368b357eb4915cc81bbe31b2d0",
+  "rfc_sha256": "41d69f2f2f5b5e972e9c6ebdb46d7b787849c68083f336cc8d07aaeab7c2f434",
+  "corpus_sha256": "74872c2a2d4ba097aa494b7bb2a4a3c4ed66cf8acaa574849f83c6d4b38bf833",
   "python_commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
-  "scenario_count": 1840,
+  "scenario_count": 1842,
   "sections": [
     {
       "section": "0",
@@ -793,6 +793,7 @@
         "discussion/a-stored-handle-for-no-agent-labels-no-sender",
         "eviction/a-generation-hook-sees-the-re-read-once-its-room-stores-a-result",
         "eviction/a-result-of-parts-keeps-its-images",
+        "eviction/a-room-the-agent-joins-again-keeps-no-stored-result",
         "eviction/a-stored-result-of-parts-read-as-text-is-never-noted-as-a-repeat",
         "eviction/an-evicted-answer-given-a-third-time-is-noted",
         "executors/a-turn-apart-publishes-its-thinking-and-tool-calls-to-the-room",
@@ -3078,6 +3079,7 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "eviction/a-room-the-agent-joins-again-keeps-no-stored-result",
         "executors/a-declared-agent-s-turn-runs-on-the-executor-hosting-it",
         "executors/a-detach-forgets-what-the-room-kept-for-a-channel",
         "executors/a-room-s-turns-stay-on-the-executor-holding-its-state",
@@ -3086,6 +3088,7 @@
         "executors/an-agent-its-executor-builds-nothing-for-fails-no-executor",
         "executors/an-executor-drops-the-state-a-turn-elsewhere-made-stale",
         "executors/an-executor-past-its-bound-closes-the-agent-it-used-least-recently",
+        "executors/one-build-serving-two-rooms-reads-each-turn-s-room-alone",
         "executors/what-the-room-keeps-for-a-channel-reaches-the-next-executor"
       ]
     },
@@ -3163,6 +3166,7 @@
         "executors/a-turn-apart-asks-a-person-through-the-room-owner",
         "executors/a-turn-apart-calls-a-tool-the-room-owner-serves",
         "executors/a-turn-apart-calls-the-host-verbs-during-and-after-it",
+        "executors/one-build-serving-two-rooms-reads-each-turn-s-room-alone",
         "executors/work-a-turn-apart-began-publishes-to-its-room-after-it",
         "host/a-task-cut-short-hands-its-failure-to-wait-task",
         "host/a-turn-s-host-acts-for-its-room-alone",
@@ -5737,6 +5741,7 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "executors/one-build-serving-two-rooms-reads-each-turn-s-room-alone",
         "turn-record/a-memory-s-write-rides-the-reply"
       ]
     },
@@ -5937,6 +5942,7 @@
         "eviction/a-refusal-and-a-failure-past-the-threshold-are-stored-too",
         "eviction/a-result-of-parts-keeps-its-images",
         "eviction/a-result-past-the-threshold-reaches-the-model-as-a-preview",
+        "eviction/a-room-the-agent-joins-again-keeps-no-stored-result",
         "eviction/a-skill-s-instructions-are-never-stored",
         "eviction/a-stored-result-is-read-back-only-in-its-room",
         "eviction/a-stored-result-of-parts-read-as-text-is-never-noted-as-a-repeat",

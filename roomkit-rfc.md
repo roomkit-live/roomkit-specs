@@ -1846,7 +1846,10 @@ Channel (interface)
 │       # state and plan, the author images its provider refused, the tool
 │       # images it replays, its records of tools used and skills
 │       # activated, which its next turn reads again from the store
-│       # (Section 6.4). Awaited by the detach, under the room's lock, once
+│       # (Section 6.4), the tool results it stored for re-reading (Section
+│       # 21.5) and the approvals to run a served skill's code given there
+│       # (Section 24.7), a realtime channel's too. Awaited by the detach,
+│       # under the room's lock, once
 │       # the binding is removed and the detach recorded, before
 │       # ON_CHANNEL_DETACHED and room_channel_detached. A channel no longer
 │       # registered is not told, nor is a channel the room does not bind.
@@ -8339,7 +8342,8 @@ on the executor's side:
 **Per-room state.** A channel MAY keep state per room between two turns on its
 executor. An AI channel keeps a room's thought and its speak policy's
 listening state (§6.4), its plan, the results it evicted and reads back, the
-skills it activated, and the tools Tool Search revealed or it used;
+skills it activated, the approvals to run a served skill's code given there
+(§24.7), and the tools Tool Search revealed or it used;
 an ACP agent channel keeps the room's session. That state is the executor's,
 not the room's, and is one of two kinds, which an implementation documents per
 state:
@@ -8350,6 +8354,16 @@ state:
   plan, a thought). Some of it the room needs: an ACP session, whose agent
   holds the conversation, and a speak policy's listening state, a request to
   stay quiet that is a state of the room (§6.4).
+
+One build of a channel serves every room the channel is attached to, two
+turns at once included. What a turn reads comes with its request, its own
+room's (§10.6.5), and what the channel keeps it keeps per room: nothing the
+build keeps for one room reaches another room's turn. A host verb naming
+another room or organization is refused (§10.6.5). What the host adds to a
+build (a memory provider, a tool handler, a skill's executor) keys what it
+keeps by the turn's room in the same way, and what the host sets on the
+channel itself (its system prompt, its tool handler) is the channel's in all
+its rooms.
 
 Each request names the room's previous turn of the channel (`previous_turn`,
 §10.6.3): the one the owner sent last, ended or not. The owner records it as
@@ -8891,7 +8905,9 @@ as a hook on the owner does; once its turn is over, or when a cut leaves the
 owner no longer answering it, the context the turn started with. Outside any
 turn (an external agent's own activity between two prompts) it receives the
 context of the last turn the executor ran in that room, and none when it ran
-no turn there. A context the owner fails to build is one the hook does not
+no turn there or once every channel whose turns it ran there was detached
+from the room (a room created again under its id reads nothing of the
+earlier one). A context the owner fails to build is one the hook does not
 get, as on the owner. A hook
 changes a room only through `TurnHost` (§10.6.5); between turns, where
 `TurnHost` is empty, it changes none.
