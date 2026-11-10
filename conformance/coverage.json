@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "d6d65112b56b283f4605f330c5b3485c418e1a22f0089f67f64ad2cfc0ac31c7",
-  "corpus_sha256": "a429b94d125de2682335abae0100a5366cc7a761c6261f7c1eb971d64e0cb829",
+  "corpus_sha256": "18a1e3e54c9d12566087a581f4c24575e2b081b84cfce485d9afaf48508f9148",
   "python_commit": "8e288af6a819019db63ae12104d0298e58132131",
-  "scenario_count": 1809,
+  "scenario_count": 1812,
   "sections": [
     {
       "section": "0",
@@ -975,6 +975,7 @@
         "tasks/delegate-task-hands-its-worker-what-the-model-passed-as-data",
         "tasks/one-agent-s-failure-in-a-delegated-room-never-carries-another-s-end",
         "tasks/the-repeat-guard-holds-on-delegate-task",
+        "tasks/the-repeat-guard-holds-on-delegate-task-without-streaming",
         "tool-search/a-binding-tool-s-tags-are-searched",
         "tool-search/a-binding-tool-under-a-discovery-name-yields-to-the-channel-s",
         "tool-search/a-blocked-search-reveals-nothing-this-turn-or-the-next",
@@ -1976,6 +1977,7 @@
         "tasks/a-task-whose-end-is-being-told-reads-ended-at-once",
         "tasks/delegate-task-answers-its-model-with-the-task-or-why-not",
         "tasks/the-repeat-guard-holds-on-delegate-task",
+        "tasks/the-repeat-guard-holds-on-delegate-task-without-streaming",
         "tool-search/a-blocked-search-reveals-nothing-this-turn-or-the-next",
         "tool-search/a-person-s-tool-does-not-count-toward-the-catalogue",
         "tool-search/a-person-s-tool-stays-declared-while-the-catalogue-is-hidden",
@@ -5391,8 +5393,10 @@
         "orchestration/an-uninstalled-swarm-takes-its-router-and-its-tools-back",
         "orchestration/create-room-installs-through-the-same-path",
         "orchestration/each-room-s-background-team-runs-its-own-workers",
+        "orchestration/each-room-s-background-team-runs-its-own-workers-without-streaming",
         "orchestration/each-room-s-loop-runs-with-its-own-reviewer",
         "orchestration/each-room-s-per-worker-tools-run-with-its-own-install",
+        "orchestration/each-room-s-per-worker-tools-run-with-its-own-install-without-streaming",
         "orchestration/the-kit-s-default-strategy-unless-the-room-names-another-or-none",
         "orchestration/the-room-strategy-is-read-within-a-tenant",
         "tasks/a-result-tool-is-declared-in-the-child-room-only",
@@ -5493,7 +5497,9 @@
         "orchestration/an-uninstalled-auto-delegating-supervisor-answers-as-itself",
         "orchestration/an-uninstalled-supervisor-takes-its-router-and-its-tools-back",
         "orchestration/each-room-s-background-team-runs-its-own-workers",
+        "orchestration/each-room-s-background-team-runs-its-own-workers-without-streaming",
         "orchestration/each-room-s-per-worker-tools-run-with-its-own-install",
+        "orchestration/each-room-s-per-worker-tools-run-with-its-own-install-without-streaming",
         "orchestration/each-room-s-supervisor-install-runs-its-own-team"
       ]
     },
@@ -6124,7 +6130,9 @@
         "orchestration/an-auto-delegating-supervisor-that-does-not-refine-hands-its-team-the-message",
         "orchestration/an-auto-delegating-supervisor-turns-the-request-into-its-team-s-task-then-answers-from-their-results",
         "orchestration/each-room-s-background-team-runs-its-own-workers",
+        "orchestration/each-room-s-background-team-runs-its-own-workers-without-streaming",
         "orchestration/each-room-s-per-worker-tools-run-with-its-own-install",
+        "orchestration/each-room-s-per-worker-tools-run-with-its-own-install-without-streaming",
         "orchestration/each-room-s-supervisor-install-runs-its-own-team",
         "streaming/a-call-closes-the-text-window",
         "streaming/a-delegated-answer-publishes-each-round-s-text-under-its-round",
@@ -6268,6 +6276,7 @@
         "tasks/delegate-task-s-cache-answers-a-repeat-of-the-same-work",
         "tasks/start-task-runs-an-agent-s-work-in-the-background",
         "tasks/the-repeat-guard-holds-on-delegate-task",
+        "tasks/the-repeat-guard-holds-on-delegate-task-without-streaming",
         "tasks/work-in-background-starts-its-agent-s-own-task-only",
         "tools/an-agent-s-owner-tools-are-declared-in-the-order-they-were-set-up"
       ]
@@ -26897,7 +26906,6 @@
           "coverage": "partial",
           "missing": [
             "Realtime sessions, voice strategies and active-agent session configuration remain outside these text scenarios.",
-            "The non-streaming Rust combinations for per-worker delegation, background team delegation and repeated delegate_task calls still need explicit tests.",
             "Not every strategy, handoff configuration, cancellation or cross-process interleaving is exercised by these links."
           ],
           "executions": [
@@ -27075,7 +27083,7 @@
               "commit": "8e288af6a819019db63ae12104d0298e58132131",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "incomplete"
             }
           ]
         }

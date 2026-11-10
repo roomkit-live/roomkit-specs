@@ -13491,7 +13491,7 @@
       "clause_sha256": "897083fac7a3d372f78dae86aa83938cd5efcd4d92139d9d95b596c39fa72404",
       "scope": "Text strategy tools, workers, shared transports, review limits and turns scoped to the installed room.",
       "coverage": "partial",
-      "review": "Compared all 26 source methods in test_strategy_rooms and test_room_installs with the shared expectations. Independent review required and verified post-capture generation in the same child, five repeated calls, and both reinstalled Pipeline/Swarm agents. Shared scenarios use streaming scripted providers; the three source non-streaming variants are not claimed as Rust coverage.",
+      "review": "Compared all 26 source methods in test_strategy_rooms and test_room_installs with the shared expectations. Independent review required and verified post-capture generation in the same child, five repeated calls, and both reinstalled Pipeline/Swarm agents. The per-worker and background-team scenarios also run without streaming: each request asserts generate() and preserves the original room, child, tool and delivery expectations. The repeat-guard variant likewise checks five calls, two children and three refusals through generate().",
       "assertions": [
         {
           "scenario": "orchestration/each-room-s-per-worker-tools-run-with-its-own-install",
@@ -13541,12 +13541,25 @@
           "sha256": "77e19df01107b81f87e6b0e07013f88965150a1033f5b1e565a1c4dbb267269b",
           "scenario_sha256": "bce2a9ff1cc2fdc99dd532dbc811c08b15da8a9b7ebb01ee8de0caa5548dfd79",
           "proves": "Child dispatch and review turns exclude the strategy delegation tool; the installed parents retain it after child captures."
+        },
+        {
+          "scenario": "orchestration/each-room-s-per-worker-tools-run-with-its-own-install-without-streaming",
+          "pointer": "/expect",
+          "sha256": "0b6c558607a41ae191c49cd4e184917963aefe2ac07386fae59644bfb9638d8a",
+          "scenario_sha256": "afbbea2e54ac00c16fa63c5593e2829ce993e59523010ca0f18f838278cec2b3",
+          "proves": "Each room calls its own worker with its own task and shared transport, and the uninstalled room declares no delegation tool. Every provider request runs through generate(), with no streaming provider path."
+        },
+        {
+          "scenario": "orchestration/each-room-s-background-team-runs-its-own-workers-without-streaming",
+          "pointer": "/expect",
+          "sha256": "c47157927415e552870140a2312a0edcd992d839474fe615a1f1338d27981951",
+          "scenario_sha256": "df839e74359898044d794cbcf66c148049610e29d4184286f52f88ca92457af4",
+          "proves": "Background team dispatch, descriptions, workers and hand-backs belong to the room of the call; the uninstalled room answers ordinarily. Every provider request runs through generate(), with no streaming provider path."
         }
       ],
       "tests": [],
       "missing": [
         "Realtime sessions, voice strategies and active-agent session configuration remain outside these text scenarios.",
-        "The non-streaming Rust combinations for per-worker delegation, background team delegation and repeated delegate_task calls still need explicit tests.",
         "Not every strategy, handoff configuration, cancellation or cross-process interleaving is exercised by these links."
       ]
     },

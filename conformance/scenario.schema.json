@@ -4861,6 +4861,18 @@
                         "required": [
                           "failure_after_done"
                         ]
+                      },
+                      {
+                        "required": [
+                          "whole_response",
+                          "fails"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "whole_response",
+                          "refuses"
+                        ]
                       }
                     ]
                   }

@@ -389,6 +389,8 @@ scripted.
   stream-only fields `deltas`, `thinking`, `stream`, `done`,
   `failure_after_calls` and `failure_after_done` are refused; use `text`,
   `calls`, `whole_response`, `usage`, `finish_reason`, `fails` or `refuses`.
+  A `whole_response` cannot be combined with `fails` or `refuses` in this
+  mode; script a failing round without `whole_response` instead.
   A `fallback_model` takes the same option.
 - `model.rounds`: the model's answer to the agent's n-th generation of the
   run is its n-th round: `text` (default empty), `calls`, `finish_reason`
