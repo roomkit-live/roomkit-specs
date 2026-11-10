@@ -72,7 +72,8 @@
                 },
                 "expect": {
                   "error": "kit_closed"
-                }
+                },
+                "as": "refused_commit"
               }
             ]
           }
@@ -174,6 +175,13 @@
     },
     "hooks": {
       "paused": []
+    },
+    "actions": {
+      "refused_commit": [
+        {
+          "error": "kit_closed"
+        }
+      ]
     }
   }
 }
