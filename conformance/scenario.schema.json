@@ -7212,6 +7212,11 @@
             "type": "string"
           }
         },
+        "max_channels": {
+          "description": "How many channels it keeps built at most; no bound when absent. Past it, the one it used least recently that nothing runs on (a turn, a channel call, a committed event, an attach or detach) is let go, as a release lets it go (\u00a710.6.2).",
+          "type": "integer",
+          "minimum": 1
+        },
         "hooks": {
           "description": "The hooks it registers on triggers a turn fires (\u00a710.6.6), as in the setup's `hooks`.",
           "type": "array",

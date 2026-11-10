@@ -309,7 +309,8 @@ room callbacks of the setup are not compared.
   on the kit's turn backend, each `id`, the channel ids it `hosts` (each a
   name, or a prefix ending in `*`: `acme-*`, and `*` for every channel), the
   ones its factory `builds` (every declared one when absent; for another it
-  builds nothing), the
+  builds nothing), `max_channels`, how many it keeps built at most (no bound
+  when absent), the
   `hooks` it registers and the `room_hooks` it defines on triggers a turn
   fires (§10.6.6), `started` (default true; false: served only by an
   `executor.start` step) and `answers` (default true; false: it takes each
