@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "17cff7d45de8c20d4a9d02eb9f55f7d6535e91af",
+  "python_commit": "aab89a9911953da78380313b8dff9415e5dc6118",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -95119,11 +95119,11 @@
       ]
     },
     {
-      "id": "python-core-cancellation-final-corpus-17cff7d-memory",
+      "id": "python-core-cancellation-final-corpus-aab89a9-memory",
       "implementation": "python",
-      "implementation_commit": "17cff7d45de8c20d4a9d02eb9f55f7d6535e91af",
-      "rfc_commit": "f686026c6129ba33368398485e7cff26b52f3852",
-      "corpus_commit": "f686026c6129ba33368398485e7cff26b52f3852",
+      "implementation_commit": "aab89a9911953da78380313b8dff9415e5dc6118",
+      "rfc_commit": "8087c4f875395f4e93151164e6570feb8fa68218",
+      "corpus_commit": "8087c4f875395f4e93151164e6570feb8fa68218",
       "rfc_sha256": "a5de3927f2bc2ce0ae1e5dfea2fb00186b8b66cf5c19b8d1908ecbdd8b5ac239",
       "backend": "memory",
       "runtime": "asyncio",
@@ -95143,7 +95143,7 @@
         "--junitxml=python-core-cancellation-final-corpus.xml"
       ],
       "artifact": {
-        "path": "conformance/executions/python-core-cancellation-final-corpus-17cff7d.xml",
+        "path": "conformance/executions/python-core-cancellation-final-corpus-aab89a9.xml",
         "format": "pytest_junit",
         "sha256": "bee11f0592d382b429ec9b773379a3cf135ceafd9ef2d3f3f7898db5619924ce"
       },
@@ -96005,7 +96005,7 @@
         },
         {
           "scenario": "delivery/an-awaited-call-cancelled-during-identity-waits-for-no-turn",
-          "sha256": "6f0ea3a2b73c84dd2d597355d72f4763ce3e5a339670422bc942cbad0fee32e0",
+          "sha256": "d087fc8ba0b7b199d18b08e1816354f434b64434810d8f1bd09d0adb1cff88df",
           "outcome": "passed"
         },
         {
@@ -103896,11 +103896,11 @@
       ]
     },
     {
-      "id": "python-core-cancellation-final-corpus-17cff7d-sqlite",
+      "id": "python-core-cancellation-final-corpus-aab89a9-sqlite",
       "implementation": "python",
-      "implementation_commit": "17cff7d45de8c20d4a9d02eb9f55f7d6535e91af",
-      "rfc_commit": "f686026c6129ba33368398485e7cff26b52f3852",
-      "corpus_commit": "f686026c6129ba33368398485e7cff26b52f3852",
+      "implementation_commit": "aab89a9911953da78380313b8dff9415e5dc6118",
+      "rfc_commit": "8087c4f875395f4e93151164e6570feb8fa68218",
+      "corpus_commit": "8087c4f875395f4e93151164e6570feb8fa68218",
       "rfc_sha256": "a5de3927f2bc2ce0ae1e5dfea2fb00186b8b66cf5c19b8d1908ecbdd8b5ac239",
       "backend": "sqlite",
       "runtime": "asyncio",
@@ -103920,7 +103920,7 @@
         "--junitxml=python-core-cancellation-final-corpus.xml"
       ],
       "artifact": {
-        "path": "conformance/executions/python-core-cancellation-final-corpus-17cff7d.xml",
+        "path": "conformance/executions/python-core-cancellation-final-corpus-aab89a9.xml",
         "format": "pytest_junit",
         "sha256": "bee11f0592d382b429ec9b773379a3cf135ceafd9ef2d3f3f7898db5619924ce"
       },
@@ -104507,7 +104507,7 @@
         },
         {
           "scenario": "delivery/an-awaited-call-cancelled-during-identity-waits-for-no-turn",
-          "sha256": "6f0ea3a2b73c84dd2d597355d72f4763ce3e5a339670422bc942cbad0fee32e0",
+          "sha256": "d087fc8ba0b7b199d18b08e1816354f434b64434810d8f1bd09d0adb1cff88df",
           "outcome": "passed"
         },
         {
