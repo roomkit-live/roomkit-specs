@@ -13484,6 +13484,114 @@
         "Full discussion replacement and lifecycle across processes, every built-in strategy configuration and voice/media execution remain outside these reviewed assertions.",
         "Store-failure and cancellation seams need native tests; shared scenario receipts do not execute them."
       ]
+    },
+    {
+      "id": "strategy-room-isolation",
+      "requirement": "RK-19.7-002",
+      "clause_sha256": "897083fac7a3d372f78dae86aa83938cd5efcd4d92139d9d95b596c39fa72404",
+      "scope": "Text strategy tools, workers, shared transports, review limits and turns scoped to the installed room.",
+      "coverage": "partial",
+      "review": "Compared all 26 source methods in test_strategy_rooms and test_room_installs with the shared expectations. Independent review required and verified post-capture generation in the same child, five repeated calls, and both reinstalled Pipeline/Swarm agents. Shared scenarios use streaming scripted providers; the three source non-streaming variants are not claimed as Rust coverage.",
+      "assertions": [
+        {
+          "scenario": "orchestration/each-room-s-per-worker-tools-run-with-its-own-install",
+          "pointer": "/expect",
+          "sha256": "0d76d2f886fb80b216040c432fa0e21011dabab01388853586b7ded0351c011a",
+          "scenario_sha256": "5eb1b04a9ea3276b8bcbdd7c2eff2d867b416f0cdce1b2473b1bdf446c8fcaf4",
+          "proves": "Each room calls its own worker with its own task and shared transport, and the uninstalled room declares no delegation tool."
+        },
+        {
+          "scenario": "orchestration/each-room-s-background-team-runs-its-own-workers",
+          "pointer": "/expect",
+          "sha256": "6bd42df57c3182a13fbb25911972e242cf62d2a6bc2bdcbc0f3a8f5b5d832443",
+          "scenario_sha256": "926ecb17022056f9bce0aade322948c279cc7e91c8543f0864edc82fd8cb17f7",
+          "proves": "Background team dispatch, descriptions, workers and hand-backs belong to the room of the call; the uninstalled room answers ordinarily."
+        },
+        {
+          "scenario": "orchestration/each-room-s-supervisor-install-runs-its-own-team",
+          "pointer": "/expect",
+          "sha256": "f9c73cfbcd050d805288ac1501ed411bf4bbe2f55a49b27defe32265ebc1b9b1",
+          "scenario_sha256": "bd9b3d3fe6c4bde4def5e9753061419dcf936a3003bdefae7680acba940b96e8",
+          "proves": "A synchronous team in the second room completes while the first room remains held; each uses its own workers and description."
+        },
+        {
+          "scenario": "orchestration/each-room-s-loop-runs-with-its-own-reviewer",
+          "pointer": "/expect",
+          "sha256": "d2c5dafcc4f9563ebd781dd482a873f209512c6e274a4136dd8a83cc85f651ed",
+          "scenario_sha256": "665ea9f4f3fdf1c2ef6df364b19c6a756a071f1ca6dc84dcf1b5ae19f2f6352b",
+          "proves": "Each room uses its own reviewer and iteration limit; the uninstalled room answers without a review pass."
+        },
+        {
+          "scenario": "orchestration/an-auto-delegating-supervisor-in-two-rooms-runs-its-team-once-per-message-in-each",
+          "pointer": "/expect",
+          "sha256": "b9e47db2f0df7a0253cb6ed4e70ff68bf085c581e2c6ed5683d6a3d412a3315c",
+          "scenario_sha256": "89eca2c830128b7b03ba40071ee80fa8613fe4aa7d77726d212bcef818b6701b",
+          "proves": "Each installed room runs its team once per message; the uninstalled room produces one ordinary response and no extra worker generation."
+        },
+        {
+          "scenario": "tasks/a-result-tool-is-declared-in-the-child-room-only",
+          "pointer": "/expect",
+          "sha256": "a7c78175189c02c0e4497b744beae3afa2b7eabf7dced3720eb8fa09a09b87ba",
+          "scenario_sha256": "26a37d63c0dac1ee70ab1d6149a7ae42e75bbcda8c8d76518de85eba20e97d1a",
+          "proves": "During a held child capture, the other room lacks submit_result and refuses an undeclared call; after capture, a new turn in that same child also lacks the tool."
+        },
+        {
+          "scenario": "orchestration/a-supervised-team-has-each-step-framed-and-checked",
+          "pointer": "/expect",
+          "sha256": "77e19df01107b81f87e6b0e07013f88965150a1033f5b1e565a1c4dbb267269b",
+          "scenario_sha256": "bce2a9ff1cc2fdc99dd532dbc811c08b15da8a9b7ebb01ee8de0caa5548dfd79",
+          "proves": "Child dispatch and review turns exclude the strategy delegation tool; the installed parents retain it after child captures."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Realtime sessions, voice strategies and active-agent session configuration remain outside these text scenarios.",
+        "The non-streaming Rust combinations for per-worker delegation, background team delegation and repeated delegate_task calls still need explicit tests.",
+        "Not every strategy, handoff configuration, cancellation or cross-process interleaving is exercised by these links."
+      ]
+    },
+    {
+      "id": "strategy-tool-install-integrity",
+      "requirement": "RK-21.1-005",
+      "clause_sha256": "126e4f99ab86e4293282b385038b929a4a2f2647a6188337a222711612b7d6a1",
+      "scope": "Atomic strategy tool installation, preservation of host tools, and same-strategy reinstallation.",
+      "coverage": "partial",
+      "review": "Read the host-tool collision and structured-result collision paths and their source tests. The specialized Python reinstallation test covers eight variants; the corresponding native Rust tests cover six text variants. Scenario execution receipts do not certify execution of those specialized tests.",
+      "assertions": [
+        {
+          "scenario": "orchestration/a-supervisor-install-refused-halfway-sets-nothing-up",
+          "pointer": "/expect",
+          "sha256": "286652f0bef5858167d2b65062fcbb6bf07de6ebd8da4c41f59af1d6f5b9d9c5",
+          "scenario_sha256": "97a36c31d66bcfa222769ff584d0df3bdcc6250d006dccd10980b1b8ed6208cb",
+          "proves": "A collision on the second worker tool leaves no first tool, router or worker work; the original host tool remains callable."
+        },
+        {
+          "scenario": "tasks/a-structured-delegation-refuses-the-workers-own-result-tool",
+          "pointer": "/expect/models/worker",
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "scenario_sha256": "a003ba1d230e057ba8bd2ad1da13af451468e7985d605975648efe46ea8fa67d",
+          "proves": "The refused structured delegation makes no worker generation."
+        },
+        {
+          "scenario": "tasks/a-structured-delegation-refuses-the-workers-own-result-tool",
+          "pointer": "/steps/0/expect",
+          "sha256": "30c83f49abfaf8f47251bf311fea559cb35b8ad2ae4d796b2b36259065ee26d1",
+          "scenario_sha256": "a003ba1d230e057ba8bd2ad1da13af451468e7985d605975648efe46ea8fa67d",
+          "proves": "The task and its result fail with an error naming the worker-owned submit_result collision."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/orchestration/test_room_installs.py::test_installing_a_strategy_again_in_its_room_replaces_its_own",
+          "sha256": "f8b76ab2fba4c73660421b393296cf7cdd124fab7b33ccfac404b59c2e29d3f2",
+          "proves": "Reinstalling the same strategy preserves its per-room tools. Python source evidence for all eight variants; native Rust tests exercise Pipeline and Swarm on both agents, Supervisor per-worker/team/auto and Loop."
+        }
+      ],
+      "missing": [
+        "Native Rust voice-supervisor and voice-loop reinstallation variants remain for the voice phase.",
+        "This link does not cover all host/built-in/tool-server collisions, turn-supplied tools, Tool Search filtering or discovery inventories.",
+        "Execution receipts for shared scenarios do not establish execution of the specialized reinstallation test."
+      ]
     }
   ],
   "executions": [
