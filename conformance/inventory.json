@@ -351,7 +351,7 @@
     },
     {
       "section": "9.2",
-      "sha256": "c60924e6ce5c5e4ccff05629d59e590a4bfdfd096c3bf8906058cf41a36f0421",
+      "sha256": "e688f1cac8e0556f002e96c52ac31fd52fb6930b59889c5a924694e54335772f",
       "classification": "normative",
       "review": "Source inventory: Hook Triggers. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the timer-context clarification against Python and Rust concurrent-greeting tests: the final stored context may already be ACTIVE. Existing blocks retain their conditions and exceptions; no unannotated normative content was introduced."
     },
@@ -1287,7 +1287,7 @@
     },
     {
       "section": "19.7.5",
-      "sha256": "b6fc29750919bf9ef66220058f03c985a538e2e1df7b572f9545079dee09dd0f",
+      "sha256": "8256e8ab6837d441113ea156a52ccabc0ac825e9a69711b2fd653ecbd8bb52b7",
       "classification": "normative",
       "review": "Source inventory: Discussion. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },

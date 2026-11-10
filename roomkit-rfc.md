@@ -5420,7 +5420,7 @@ on the room's owner.
 | BEFORE_AI_CONTEXT_BUILD | SYNC | Planned | Before an AI channel builds a turn's context (before memory retrieval and tool resolution) — can block the turn cheaply (Section 6.4, Anatomy of an AI turn); required by nothing today |
 | ON_SPEAK_DECISION | SYNC | Implemented | An AI channel's speak policy decided whether the agent speaks, offers or stays silent on an event — can change the decision (MODIFY) or leave the agent silent (BLOCK) (Section 6.4) |
 | ON_THOUGHT | ASYNC | Implemented | An AI channel's thinker came back with what the agent has in mind in a room (Section 6.4) |
-| ON_SPEAK_QUEUE | ASYNC | Implemented | A discussion's speak queue changed: an agent queued, a turn given or ended, an agent listening only or talking again, the discussion waiting for a person or over (Section 19.7.5) |
+| ON_SPEAK_QUEUE | ASYNC | Implemented | A discussion's speak queue changed: an agent queued, a turn given, ended or skipped (its agent offline), an agent listening only or talking again, the discussion waiting for a person or over (Section 19.7.5) |
 | ON_DISPATCH_DECISION | ASYNC | Implemented | A discussion's dispatch policy decided which agents take a person's message that names none (Section 19.7.5 rule 18) |
 | BEFORE_AI_GENERATION | SYNC | Implemented | Before AI provider generate() — can modify context; a turn's (`answer`) or a thinker's (`thought`, Section 6.4) |
 | ON_AI_THINKING | ASYNC | Implemented | AI model began extended thinking/reasoning |
@@ -19258,7 +19258,9 @@ SpeakQueue (one per room, readable by the host)
    holds the agent's state for the room (`committed_event`, §10.6.3): a provider that learns as messages arrive (an
    index, a summary) learns the whole conversation, not only the messages
    that asked for the agent. The turn that answers a message does not hand it
-   again.
+   again. Every agent's memory is handed it at once, so the commit waits for
+   the slowest memory, not for the sum of them; an agent offline (rule 7) is
+   handed nothing, as no executor would take it.
 4. **Names.** An agent's answer and a person's message address agents by
    naming them: `@` followed by an agent's handle; `@all` names every
    agent. A name starts the text or follows a character that is neither a
@@ -19332,6 +19334,16 @@ SpeakQueue (one per room, readable by the host)
    even while the discussion waits for a person (rule 10), to an agent that
    only listens, and to the agent whose turn just ended. Requests that put
    agents at the front are served in the order they came.
+   An agent offline when its turn comes, one held by its declaration that no
+   executor online covers in the room (§10.6.7), is not given it, rather than
+   given a turn that fails with `no_executor` at each message: its entry
+   leaves the queue and the skip is announced (rule 17), then an instruction
+   it was to take is dropped. Whether it is offline is read as the turn
+   comes, not from a list read earlier, which may miss an executor started
+   since. Once an executor covers it, it takes its turns again. A
+   turn backend that does not list its executors tells nothing, and the turn
+   is given; a task's result to post (rule 19) is posted whatever the agent's
+   presence.
 8. **The queue.** An agent an agent names is queued at the back, or keeps its
    place when already queued: the request merges into its pending turn, one
    turn for every event that asked for it. A person's message puts the agents
@@ -19540,7 +19552,8 @@ SpeakQueue (one per room, readable by the host)
 17. **Following the queue.** The host reads a room's `SpeakQueue` at any time,
     and each change of it fires `ON_SPEAK_QUEUE` (Section 9) with the room,
     the queue as it now is and what changed: an agent queued, a turn given or
-    ended, a queued instruction dropped, an agent listening only or talking
+    ended, a turn skipped as its agent is offline (rule 7), a queued
+    instruction dropped, an agent listening only or talking
     again, the discussion waiting for a person or no longer waiting, the
     discussion over. The host's calls take the organization a room belongs to
     (Section 17.2): a room of another organization holds no discussion for it. A console
