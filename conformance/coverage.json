@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "d6d65112b56b283f4605f330c5b3485c418e1a22f0089f67f64ad2cfc0ac31c7",
-  "corpus_sha256": "aa1a178c585688d50e4a0197d213011dd07455e667688ab0e0f2b6e0842c33a4",
+  "corpus_sha256": "8b5731bd984367df00096163fa7a305083a4ca047bfd71bd54f7506da3ca61f2",
   "python_commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
-  "scenario_count": 1818,
+  "scenario_count": 1819,
   "sections": [
     {
       "section": "0",
@@ -3253,6 +3253,7 @@
         "host/a-task-cut-short-hands-its-failure-to-wait-task",
         "inbound/a-failed-turn-fires-on-error",
         "inbound/an-agent-s-provider-refusal-keeps-its-retryability",
+        "steering/a-steer-reaches-the-room-it-names-alone",
         "tasks/a-failed-task-s-exception-keeps-its-attributes"
       ]
     },
@@ -5029,6 +5030,7 @@
         "routing/an-explicit-room-bypasses-the-custom-router",
         "routing/the-newest-binding-room-is-selected-deterministically",
         "routing/the-newest-participant-room-is-selected-deterministically",
+        "steering/a-steer-reaches-the-room-it-names-alone",
         "store/the-kit-marks-and-reads-a-room-s-markers-for-its-organization",
         "tasks/a-child-room-belongs-to-its-parent-room-s-organization",
         "tasks/a-delegation-is-refused-before-anything-is-made",
@@ -5865,6 +5867,7 @@
         "steering/a-message-during-a-tool-round-is-read-by-the-running-turn",
         "steering/a-message-during-the-answer-is-answered-by-the-same-turn",
         "steering/a-message-handed-to-a-turn-then-cut-waits-for-the-next-turn",
+        "steering/a-steer-reaches-the-room-it-names-alone",
         "tools/a-cancel-outranks-the-force-stop",
         "tools/a-cancel-while-the-calls-are-announced-counts-no-round",
         "tools/a-round-a-cancel-keeps-from-running-publishes-no-tool-call-event",

@@ -735,7 +735,7 @@ run's own kit when absent.
 | `remove_room_hook` | `room_id`, `name` | whether the room held a hook of that name |
 | `cancel_delivery` | `key`, the `delivery_key` of the messages whose delivery it cancels, and `reason` (§10.1 Explicit delivery cancellation) | how many deliveries it cancelled |
 | `close` | none | null once the kit's shutdown ended (§12.10.4) |
-| `steer` | `channel_id`, `directive` (a SteeringDirective in the serialized form: `{"type": "cancel", "reason"}`, ...), `room_id` (§21.3) | how many of the channel's running loops it reached |
+| `steer` | `room_id`, the room whose turns it reaches, `channel_id`, the agent, and `directive` (a SteeringDirective in the serialized form: `{"type": "cancel", "reason"}`, ...) (§21.3) | how many of the agent's running loops in the room it reached |
 | `install_strategy` | `room_id`, `strategy` (a scripted strategy's id) (§19.7) | null |
 | `uninstall_strategy` | `room_id` (§19.7) | whether the room held a strategy |
 | `claim_room_strategy` | `room_id`, `strategy`: claims the room for the strategy, or refuses, installing nothing (§19.7) | null |
