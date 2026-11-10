@@ -178,7 +178,7 @@
                 },
                 {
                   "type": "tool_use",
-                  "id": "c1",
+                  "id": "$e1",
                   "name": "get_weather",
                   "input": {}
                 },
@@ -193,7 +193,7 @@
                 },
                 {
                   "type": "tool_use",
-                  "id": "c2",
+                  "id": "$e2",
                   "name": "get_time",
                   "input": {}
                 }
@@ -204,12 +204,12 @@
               "content": [
                 {
                   "type": "tool_result",
-                  "tool_use_id": "c1",
+                  "tool_use_id": "$e1",
                   "content": "sunny"
                 },
                 {
                   "type": "tool_result",
-                  "tool_use_id": "c2",
+                  "tool_use_id": "$e2",
                   "content": "noon"
                 }
               ]
