@@ -5991,6 +5991,9 @@
               "patch"
             ],
             "properties": {
+              "room_id": {
+                "type": "string"
+              },
               "patch": {
                 "type": "object"
               },
