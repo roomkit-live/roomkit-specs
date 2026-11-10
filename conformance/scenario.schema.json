@@ -4684,13 +4684,14 @@
           }
         },
         "chat_dialect": {
-          "description": "The implementation's Chat Completions rendering each of the model's requests is also written through, kept as `chat_messages` under `models` (§6.4, what a provider renders of a replayed round's reasoning): `openai`, a generic server's, `openai_thinking_field`, a generic server's told by its configuration that it reads `reasoning_content`, or `deepseek`, `minimax` or `kimi`, that vendor's. Not rendered when absent. The model still answers from its rounds.",
+          "description": "The implementation's Chat Completions rendering each of the model's requests is also written through, kept as `chat_messages` under `models` (§6.4, what a provider renders of a replayed round's reasoning): `openai`, a generic server's, `openai_thinking_field`, a generic server's told by its configuration that it reads `reasoning_content`, or `deepseek`, `minimax` or `kimi`, that vendor's. Not rendered when absent. The model still answers from its rounds. `anthropic` renders native Messages content blocks, without cache markers.",
           "enum": [
             "openai",
             "openai_thinking_field",
             "deepseek",
             "minimax",
-            "kimi"
+            "kimi",
+            "anthropic"
           ]
         },
         "vision": {
