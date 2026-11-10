@@ -12878,6 +12878,62 @@
         "Commit-before-observer ordering, held writes, work added during close, post-cut cleanup and streamed hand-back composition remain in the shutdown annex.",
         "Media, service-backed and remote-executor variants are not credited by local native witnesses; existing maintainer deferrals remain explicit."
       ]
+    },
+    {
+      "id": "phase4-task-discussion-names",
+      "requirement": "RK-23.4-001",
+      "clause_sha256": "8da20f25e89731e56d4189a9e3a36a45459124d3e3a7810e2c801824a97e52b2",
+      "scope": "Discussion handles in relayed task results and task_status through both owner-served and agent-owned tools; status bus identifiers remain channel ids.",
+      "coverage": "partial",
+      "review": "Assertions read against §23.4 and the source Python tests for discussion background task names and task_status; no claim for the other delegation helpers in this composite clause.",
+      "assertions": [
+        {
+          "scenario": "tasks/a-own-task-status-tool-names-the-discussion-worker-by-handle",
+          "pointer": "/expect/models/agent:worker-01/2/tool_results",
+          "sha256": "f6c905c4c74cb5c5335bb8337bac01ef709ca19ddc2f2ef1ece8722072cf5262",
+          "scenario_sha256": "a75615bbce7e357b8f66f9e8acabd674e1f9e47b103f28dedc2e5e9103a68173",
+          "proves": "The model reads the task worker under its discussion handle through this tool installation."
+        },
+        {
+          "scenario": "tasks/a-own-task-status-tool-names-the-discussion-worker-by-handle",
+          "pointer": "/steps/5/expect",
+          "sha256": "1ec698c8a47469b928f349e561d8df0ce7c3ed80e969ae52f6b9680f09b292a7",
+          "scenario_sha256": "a75615bbce7e357b8f66f9e8acabd674e1f9e47b103f28dedc2e5e9103a68173",
+          "proves": "Reading task_status does not rename the agent id in the status bus entries."
+        },
+        {
+          "scenario": "tasks/a-owner-task-status-tool-names-the-discussion-worker-by-handle",
+          "pointer": "/expect/models/agent:worker-01/2/tool_results",
+          "sha256": "f6c905c4c74cb5c5335bb8337bac01ef709ca19ddc2f2ef1ece8722072cf5262",
+          "scenario_sha256": "26fb47344ec9ba7c5a44b042f56131a24a5dd41e92110d0b1df1b5159df1d8c6",
+          "proves": "The model reads the task worker under its discussion handle through this tool installation."
+        },
+        {
+          "scenario": "tasks/a-owner-task-status-tool-names-the-discussion-worker-by-handle",
+          "pointer": "/steps/6/expect",
+          "sha256": "1ec698c8a47469b928f349e561d8df0ce7c3ed80e969ae52f6b9680f09b292a7",
+          "scenario_sha256": "26fb47344ec9ba7c5a44b042f56131a24a5dd41e92110d0b1df1b5159df1d8c6",
+          "proves": "Reading task_status does not rename the agent id in the status bus entries."
+        },
+        {
+          "scenario": "tasks/a-relayed-task-result-names-its-worker-by-the-discussion-handle",
+          "pointer": "/expect/hooks/handback",
+          "sha256": "dd50d57c71dba4c75c72d89de0bb076f150cd566478980efb8299ab22c201a7f",
+          "scenario_sha256": "4b95170b9787cda93a1a5de2c5e3b1f5bb8df53e24ab2a88d9f6fc562ac8de7e",
+          "proves": "The relayed instruction names the worker by handle while retaining the channel id in metadata."
+        },
+        {
+          "scenario": "tasks/a-relayed-task-result-names-its-worker-by-the-discussion-handle",
+          "pointer": "/expect/models/agent:worker-01/3/messages",
+          "sha256": "7d7c6d0a60e739b0b2da823cd907b297e1db5c4788d902d12cdf5d0a902c26b1",
+          "scenario_sha256": "4b95170b9787cda93a1a5de2c5e3b1f5bb8df53e24ab2a88d9f6fc562ac8de7e",
+          "proves": "The receiving model is given the result with the worker named by handle."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Other delegation-tool obligations, human input, background setup changes during a turn, and external executor/backend configurations are outside this mapping."
+      ]
     }
   ],
   "executions": [

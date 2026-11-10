@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "acd5d295dd472b513ea6ca591ca5a296fe366ed0470a6a795f8fcaf13ee97970",
-  "corpus_sha256": "5f50d6c07226cd5accadcd01ac54bf5348da6820ebcb9571bda2fa414c50f1db",
+  "corpus_sha256": "5ef09ae976199f796422cb9157d6a857523c4654fa437060b3b8737551b86333",
   "python_commit": "a7fac2fc0e63bb82f18b7ef78557aca383840521",
-  "scenario_count": 1784,
+  "scenario_count": 1787,
   "sections": [
     {
       "section": "0",
@@ -5615,7 +5615,10 @@
         "discussion/uninstalling-in-one-process-ends-the-discussion-in-the-others",
         "discussion/what-a-process-held-when-another-install-replaced-its-own-is-not-kept",
         "discussion/with-addressed-only-an-unaddressed-message-asks-no-agent",
-        "tasks/a-background-task-names-its-agent-by-the-discussion-s-handle"
+        "tasks/a-background-task-names-its-agent-by-the-discussion-s-handle",
+        "tasks/a-own-task-status-tool-names-the-discussion-worker-by-handle",
+        "tasks/a-owner-task-status-tool-names-the-discussion-worker-by-handle",
+        "tasks/a-relayed-task-result-names-its-worker-by-the-discussion-handle"
       ]
     },
     {
@@ -6142,6 +6145,7 @@
         "tasks/a-posted-result-says-its-task-failed-or-was-cancelled-never-its-error",
         "tasks/a-re-prompt-never-reaches-a-shared-transport",
         "tasks/a-re-prompted-worker-s-task-carries-its-last-turn-s-record-only",
+        "tasks/a-relayed-task-result-names-its-worker-by-the-discussion-handle",
         "tasks/a-result-call-an-on-tool-call-hook-blocks-is-no-result",
         "tasks/a-result-past-the-summary-is-kept-whole-for-task-status",
         "tasks/a-result-submitted-before-the-worker-s-failure-still-counts",
@@ -6184,7 +6188,8 @@
       "review": "normative",
       "requirements": 2,
       "mapping": {
-        "unmapped": 2
+        "mapped_partial": 1,
+        "unmapped": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -6195,6 +6200,9 @@
         "tasks/a-background-task-names-its-agent-by-the-discussion-s-handle",
         "tasks/a-line-for-a-task-the-room-does-not-hold-is-no-task-here",
         "tasks/a-line-the-bus-lists-ended-is-answered-as-it-lists-it",
+        "tasks/a-own-task-status-tool-names-the-discussion-worker-by-handle",
+        "tasks/a-owner-task-status-tool-names-the-discussion-worker-by-handle",
+        "tasks/a-relayed-task-result-names-its-worker-by-the-discussion-handle",
         "tasks/a-result-past-the-summary-is-kept-whole-for-task-status",
         "tasks/a-strategy-s-unposted-task-is-never-a-room-s-to-cancel",
         "tasks/a-task-whose-end-is-being-told-reads-ended-at-once",
@@ -20836,8 +20844,18 @@
     {
       "id": "RK-23.4-001",
       "section": "23.4",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "phase4-task-discussion-names",
+          "scope": "Discussion handles in relayed task results and task_status through both owner-served and agent-owned tools; status bus identifiers remain channel ids.",
+          "coverage": "partial",
+          "missing": [
+            "Other delegation-tool obligations, human input, background setup changes during a turn, and external executor/backend configurations are outside this mapping."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-23.4-002",
