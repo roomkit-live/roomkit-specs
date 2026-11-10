@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "acd5d295dd472b513ea6ca591ca5a296fe366ed0470a6a795f8fcaf13ee97970",
-  "corpus_sha256": "4ab6b2007d5470a4662edc13be51923fc48971d322dcfb0afd299edc9a9d3403",
+  "corpus_sha256": "5f50d6c07226cd5accadcd01ac54bf5348da6820ebcb9571bda2fa414c50f1db",
   "python_commit": "0aa9b53705940a4fd9c126e67b712eed010713f6",
-  "scenario_count": 1782,
+  "scenario_count": 1784,
   "sections": [
     {
       "section": "0",
@@ -2349,6 +2349,8 @@
         "delivery/an-adopted-call-waited-in-its-parse-reads-its-turn",
         "delivery/an-adopted-call-whose-set-the-close-drops-reads-its-hook-s-task-stored",
         "delivery/an-ai-cascade-has-advanced-its-cursor-when-the-call-returns",
+        "delivery/an-answer-from-after-broadcast-gets-grace-when-its-observer-closes-the-kit",
+        "delivery/an-answer-from-response-gets-grace-when-its-observer-closes-the-kit",
         "delivery/an-awaited-call-cancelled-before-its-commit-waits-for-no-turn",
         "delivery/an-awaited-call-cancelled-during-identity-waits-for-no-turn",
         "delivery/an-awaited-call-cancelled-during-routing-waits-for-no-turn",
@@ -4250,6 +4252,8 @@
         "delivery/a-deferred-event-s-wait-after-the-close-reads-its-own-end",
         "delivery/a-set-the-kit-s-close-drops-still-stores-its-hooks-side-effects",
         "delivery/an-adopted-call-whose-set-the-close-drops-reads-its-hook-s-task-stored",
+        "delivery/an-answer-from-after-broadcast-gets-grace-when-its-observer-closes-the-kit",
+        "delivery/an-answer-from-response-gets-grace-when-its-observer-closes-the-kit",
         "delivery/an-observer-refused-during-close-starts-no-due-room-timer",
         "status/a-status-posted-after-close-starts-no-room-hook",
         "tasks/nonempty-task-and-observation-reads-remain-available-during-close"
