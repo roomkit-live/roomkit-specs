@@ -237,7 +237,7 @@
     },
     {
       "section": "6.4",
-      "sha256": "b5cd19f8060654020aeed413bf9f3dac8607209f29aae4f5ad113c02c16f3cf6",
+      "sha256": "7e615fb06c73439efb4fa0aa81d5938bbeedf2fbc9fb5cd6959740bebdc90d14",
       "classification": "normative",
       "review": "Source inventory: Intelligence Channels. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },

@@ -2249,7 +2249,11 @@ schemas, arguments, events and rows are the same as without it. On:
   whose arguments do not read (marked partial) is left as it is. So the
   handler, `BEFORE_TOOL_USE`, the policy and the schema check see the tool's
   arguments only, and a closed schema (`additionalProperties: false`) does
-  not refuse the call over the property.
+  not refuse the call over the property. A model that drops the property's
+  leading underscore writes `roomkit_intent`: it is taken the same way, and
+  removed with the property when both come, the property's value being the
+  intent, unless the tool's own schema declares `roomkit_intent`, which then
+  stays its argument.
 - **What it becomes.** Only a string is an intent. Each control character
   (general category Cc) becomes a space, the bidirectional formatting
   characters (U+061C, U+200E, U+200F, U+202A to U+202E, U+2066 to U+2069) are
