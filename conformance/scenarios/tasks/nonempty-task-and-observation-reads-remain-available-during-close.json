@@ -1,11 +1,11 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "tasks/nonempty-task-and-observation-reads-remain-available-during-close",
-  "title": "Nonempty task and observation reads agree before, during and after the close while the memory store remains readable",
+  "title": "Nonempty task and observation reads agree before and during close while the store remains open",
   "rules": [
     "§12.10.4"
   ],
-  "notes": "Python: tests/test_kit_close.py::test_a_read_answers_during_the_close_and_after_it_while_its_store_is_open. Nonempty rows strengthen its read equality. The queued delivery is cut before the during-close reads, while the first send keeps close pending. This case uses the memory store; owned SQL-store reads after close have a separate refusal contract.",
+  "notes": "Python: tests/test_kit_close.py::test_a_read_answers_during_the_close_and_after_it_while_its_store_is_open. Nonempty rows strengthen its read equality. The queued delivery is cut before the during-close reads, while the first send keeps close pending. Native memory-store tests separately assert reads after close; an owned SQL store then refuses them.",
   "setup": {
     "channels": [
       {
@@ -182,6 +182,5 @@
         ]
       }
     }
-  },
-  "description": "Nonempty task and observation queries return the same records before and during shutdown, while the store remains open."
+  }
 }
