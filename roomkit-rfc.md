@@ -8262,7 +8262,9 @@ room, beside the declaration.
 <!-- rfc: {"id": "RK-10.6.2-002", "kind": "behavior", "applies": "§10.6.2 Channels on each side; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **On the executor, a factory.** The executor builds the channel through a
 factory the host gives it: an agent holds live objects (its provider, its MCP
-clients, its memory). The kit's own executor reads the live channels the host
+clients, its memory). A factory that builds nothing for a channel the executor
+declares fails that channel's turns and channel calls with `no_executor`
+(§10.6.7). The kit's own executor reads the live channels the host
 registered on the kit, and declares them; it alone runs them, closed or not:
 once it closed, their turns fail with `no_executor` rather than run on another
 executor's copy (§10.6.7). The executor gives the channel what
@@ -8846,11 +8848,26 @@ changes a room only through `TurnHost` (§10.6.5); between turns, where
 An executor declares the channels it can host and the names of the room hooks
 it registered. The backend MUST deliver a request only to an executor that
 declares the request's channel and registered every name of its `room_hooks`;
-a request no executor accepts within `accept_timeout` fails (§10.6.8). To
-other processes an executor declares its channels as a set: one that declares
-them by a rule (every channel, a predicate) takes the turns of its own process
-only. A turn placed on an executor of the owner's own process is carried in
-that process, as the in-memory backend carries it; one placed elsewhere crosses
+a request no executor accepts within `accept_timeout` fails (§10.6.8). An
+executor declares its channels as ids and prefixes: an entry ending in `*`
+declares every channel whose id starts with what precedes it (`acme-*`), and
+`*` alone every channel; an entry with a `*` anywhere else is refused when the
+executor is built. A distributed backend tells these entries to the other
+processes as they are. An executor given a predicate, or given no
+declaration at all (every channel), takes the turns of its own process only.
+A pool of executors that build an organization's agents from its
+configuration declares the organization's prefix, so an agent created after
+the pool started needs no executor told of it. A declaration names no room
+and no organization (§17.2): an executor declaring `*` takes the declared
+channels of every organization its backend's owners serve, and a host keeps
+apart what it must by the channel ids it assigns. A turn or channel call
+placed on an executor whose factory builds nothing for its channel fails with
+`no_executor`, and is not placed again (§10.6.2). That executor still holds
+the room for the channel, so the room's next turns go to it while it lives
+and takes them: a host gives every executor a factory that builds every
+channel its entries cover.
+A turn placed on an executor of the owner's own process is carried in that
+process, as the in-memory backend carries it; one placed elsewhere crosses
 the backend's transport. A backend that knows every executor alive (the
 in-memory one; a distributed one keeping a registry of the executors alive and
 what they declare) fails at once, with `no_executor`, a request none of them
