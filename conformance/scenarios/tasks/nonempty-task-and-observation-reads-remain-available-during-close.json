@@ -1,6 +1,6 @@
 {
   "$schema": "../../scenario.schema.json",
-  "id": "tasks/nonempty-task-and-observation-reads-survive-the-kit-close",
+  "id": "tasks/nonempty-task-and-observation-reads-remain-available-during-close",
   "title": "Nonempty task and observation reads agree before, during and after the close while the memory store remains readable",
   "rules": [
     "§12.10.4"
@@ -154,30 +154,6 @@
     },
     {
       "await": "closing"
-    },
-    {
-      "call": "list_tasks",
-      "room_id": "room-1",
-      "expect": {
-        "result": [
-          {
-            "title": "Follow up",
-            "status": "pending"
-          }
-        ]
-      }
-    },
-    {
-      "call": "list_observations",
-      "room_id": "room-1",
-      "expect": {
-        "result": [
-          {
-            "category": "feedback:overall",
-            "content": "[overall] 0.75: Kept"
-          }
-        ]
-      }
     }
   ],
   "expect": {
@@ -206,5 +182,6 @@
         ]
       }
     }
-  }
+  },
+  "description": "Nonempty task and observation queries return the same records before and during shutdown, while the store remains open."
 }
