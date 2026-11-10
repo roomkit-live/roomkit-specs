@@ -184,6 +184,12 @@
     "timeline": {
       "call": [
         {
+          "type": "instruction_read",
+          "source": {
+            "channel_id": "dev"
+          }
+        },
+        {
           "source": {
             "channel_id": "dev"
           },
@@ -204,6 +210,12 @@
           "metadata": {
             "agent_id": "helper",
             "task_status": "completed"
+          }
+        },
+        {
+          "type": "instruction_read",
+          "source": {
+            "channel_id": "dev"
           }
         },
         {
