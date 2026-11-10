@@ -1257,9 +1257,9 @@
     },
     {
       "section": "19.7",
-      "sha256": "fb5d43af0c9de159ae2f3836e620b35ff8af82ee398443b71053bcb23b3b69af",
+      "sha256": "8c84dda27fe05f0261f9c868897a558c43038e6c4842b96379c4c23530e183f4",
       "classification": "normative",
-      "review": "Source inventory: Orchestration Strategies. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Orchestration Strategies. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the initial snapshot failure recovery clarification against the Python source test and native Rust regression; no complete implementation coverage is claimed."
     },
     {
       "section": "19.7.1",

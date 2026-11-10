@@ -18917,6 +18917,10 @@ path:
   intelligence channels, and its hooks, tools, turn runners and state are set
   up, the owner keeping an agent's for the room (§10.6.1). The room's
   timeline stays, and the agents' turns read it (Section 20.1).
+  If the initial snapshot of the room cannot be read after the install
+  claims it, the error is returned and the claim remains until an explicit
+  `uninstall_strategy`. That failed attempt is over: an uninstall MUST NOT
+  keep waiting for it, and releases the claim so another install can run.
 - While a strategy is installed, installing another one is refused, whatever
   the strategy, the host's own included: one rule decides who speaks.
   `uninstall_strategy` comes first. One exception: a Discussion installed in

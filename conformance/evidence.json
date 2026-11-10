@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "a0eedcbb52e0014e51e78d8887b34192ed5c2ea3",
+  "python_commit": "ca8693f4aa1fafca99dd7d6e42229f955b12ad76",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -13392,6 +13392,97 @@
       ],
       "missing": [
         "Voice and conference doors; handler-native retention and lifecycle proofs are outside these shared assertions."
+      ]
+    },
+    {
+      "id": "strategy-installation-and-cleanup",
+      "requirement": "RK-19.7-004",
+      "clause_sha256": "622619fdee101027da9619d471d8971800bb3e32542c1806fd9bef91ce6b0603",
+      "scope": "Local strategy installation, explicit override, refusal and removal; preservation of existing room contents.",
+      "coverage": "partial",
+      "review": "Compared the 20 source methods in test_strategy_install and test_framework_orchestration with shared assertions and native Rust tests. Native initial-snapshot and incomplete-uninstall failures are not claimed by scenario execution receipts. The broader discussion lifecycle, cross-process replacement and media remain outside this lot.",
+      "assertions": [
+        {
+          "scenario": "orchestration/a-hosts-own-strategy-is-taken-back-out-whole",
+          "pointer": "/expect",
+          "sha256": "35043ec12679aed8342e76091031a165f4d49ad0abb33f5196c99740bdafc027",
+          "scenario_sha256": "a77cc2d0ea5fe2103f7f654daa82146fb31ff9f8a755c3ab2cfe5f52ea247a0e",
+          "proves": "The strategy hook and metadata are removed, while the host hook still runs and existing metadata, transport binding and both messages remain."
+        },
+        {
+          "scenario": "orchestration/a-swarm-hands-the-room-from-agent-to-agent",
+          "pointer": "/expect",
+          "sha256": "484f158f0e72a936c360a16ff4653acce06f34dc15c498a1614287229a036fb6",
+          "scenario_sha256": "e2ff093cc5b038c0858e475d63e052e03ec4b7ef70487053b7acb6596a8773b2",
+          "proves": "An already-used room accepts a Swarm, keeps its prior exchange and routes following messages through handoffs to the named agents."
+        },
+        {
+          "scenario": "orchestration/a-kit-s-pipeline-is-installed-in-the-rooms-it-creates",
+          "pointer": "/steps/6/expect",
+          "sha256": "63c49671e4c0faf619ee397c992e45e4c411dce55a4ef9410067b01fc9c93a0f",
+          "scenario_sha256": "e2c25e7e2bbccbb26b9fb51af1b9e2d7a40883ec5379bd1e554d8ab0a5bc6c96",
+          "proves": "An explicit None overrides the kit default with no bindings."
+        },
+        {
+          "scenario": "orchestration/a-kit-s-pipeline-is-installed-in-the-rooms-it-creates",
+          "pointer": "/steps/9/expect",
+          "sha256": "28a257b8c7d5181d8936e91a974100d6caba8fcb488746a4021d1435c79192bf",
+          "scenario_sha256": "e2c25e7e2bbccbb26b9fb51af1b9e2d7a40883ec5379bd1e554d8ab0a5bc6c96",
+          "proves": "A Swarm created through create_room sets its configured entry and phase."
+        },
+        {
+          "scenario": "orchestration/a-kit-s-pipeline-is-installed-in-the-rooms-it-creates",
+          "pointer": "/steps/11/expect",
+          "sha256": "63c49671e4c0faf619ee397c992e45e4c411dce55a4ef9410067b01fc9c93a0f",
+          "scenario_sha256": "e2c25e7e2bbccbb26b9fb51af1b9e2d7a40883ec5379bd1e554d8ab0a5bc6c96",
+          "proves": "Uninstall removes all agents attached by create_room."
+        },
+        {
+          "scenario": "discussion/a-room-with-a-voice-channel-is-refused",
+          "pointer": "/expect/bindings",
+          "sha256": "5c24f88243c2ab07c30f0f97499ede7beda6d1ade6eabd46215da8b9e1ad2750",
+          "scenario_sha256": "7120e654077d22223697f1af0ec35a5145002b28f2f0cdfa8eb1137ba1420bf6",
+          "proves": "A refused Discussion install leaves its prior transport binding and removes its own agent."
+        },
+        {
+          "scenario": "discussion/a-room-with-a-voice-channel-is-refused",
+          "pointer": "/steps/2/expect",
+          "sha256": "ff9c534d8448cd26fb0c3076ac8e5b6fcf4d3537e8d4a5249e4bec6d56664582",
+          "scenario_sha256": "7120e654077d22223697f1af0ec35a5145002b28f2f0cdfa8eb1137ba1420bf6",
+          "proves": "The refused install leaves no claimed strategy."
+        },
+        {
+          "scenario": "discussion/a-room-moves-from-a-swarm-to-a-discussion-and-back",
+          "pointer": "/steps/4/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "ea3bcedc9f22e56bcb391e2270ac14fdf7deedd4885ba5041d2bf4cf85787b19",
+          "proves": "A room held by a Discussion refuses a Swarm."
+        },
+        {
+          "scenario": "discussion/a-room-moves-from-a-swarm-to-a-discussion-and-back",
+          "pointer": "/steps/5/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "ea3bcedc9f22e56bcb391e2270ac14fdf7deedd4885ba5041d2bf4cf85787b19",
+          "proves": "A room held by a Discussion refuses a custom host strategy."
+        },
+        {
+          "scenario": "discussion/a-discussion-room-created-again-takes-a-discussion-again",
+          "pointer": "/steps/3/expect",
+          "sha256": "e9d2785f70ac6853dc684c8ccc8fce012e808cddfba367874fd11234019fb65e",
+          "scenario_sha256": "318f082494713301c47f7150cfc2a7f7d41537bd0c19af094a3fad4968b19065",
+          "proves": "Recreating the room installs the new Discussion object."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/orchestration/test_strategy_install.py::test_an_uninstall_after_an_install_the_store_cut_short_frees_the_room",
+          "sha256": "ae336316f21096f66ee049cc5fc84ad53df42bd2797476478c26fdd54ad9737d",
+          "proves": "A failed initial binding read retains the strategy claim, refuses a replacement, and allows explicit uninstall followed by a fresh install. Source evidence only; the matching Rust store-fault test failed before the fix."
+        }
+      ],
+      "missing": [
+        "Full discussion replacement and lifecycle across processes, every built-in strategy configuration and voice/media execution remain outside these reviewed assertions.",
+        "Store-failure and cancellation seams need native tests; shared scenario receipts do not execute them."
       ]
     }
   ],
