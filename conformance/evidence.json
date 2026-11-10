@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "257c0c26f8c05a4f3b25528c0bcf94dfa1b489da",
+  "python_commit": "4ae0c95cbdd9bc120d05d4971763a90ad1dc755c",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -249530,11 +249530,11 @@
       ]
     },
     {
-      "id": "python-strategy-nonstreaming-257c0c2-memory",
+      "id": "python-strategy-nonstreaming-4ae0c95-memory",
       "implementation": "python",
-      "implementation_commit": "257c0c26f8c05a4f3b25528c0bcf94dfa1b489da",
-      "rfc_commit": "e73a2f56af30e1430d3a2bdf4a1e9c845531774d",
-      "corpus_commit": "e73a2f56af30e1430d3a2bdf4a1e9c845531774d",
+      "implementation_commit": "4ae0c95cbdd9bc120d05d4971763a90ad1dc755c",
+      "rfc_commit": "9edc96c10d5ff9bdd6387ef0de1a95d7ec1440c7",
+      "corpus_commit": "9edc96c10d5ff9bdd6387ef0de1a95d7ec1440c7",
       "rfc_sha256": "d6d65112b56b283f4605f330c5b3485c418e1a22f0089f67f64ad2cfc0ac31c7",
       "backend": "memory",
       "runtime": "asyncio",
@@ -249554,7 +249554,7 @@
         "--junitxml=python-final-memory.xml"
       ],
       "artifact": {
-        "path": "conformance/executions/python-strategy-nonstreaming-257c0c2.xml",
+        "path": "conformance/executions/python-strategy-nonstreaming-4ae0c95.xml",
         "format": "pytest_junit",
         "sha256": "3b62936344711962ebe6099446b7cef6b4d92f2fd6edcdf6c600ca72f98c48a3"
       },
@@ -256856,7 +256856,7 @@
         },
         {
           "scenario": "tasks/the-kit-cancels-a-background-task-once",
-          "sha256": "87a91629cba77bf9bae40380b1782f73c0a53a45c187df8ee4c2428e7448d026",
+          "sha256": "7543aec93c164177041d86ef2bcee45b96eb8349170337d6ec5c396b3b203445",
           "outcome": "passed"
         },
         {
@@ -258622,11 +258622,11 @@
       ]
     },
     {
-      "id": "python-strategy-nonstreaming-257c0c2-sqlite",
+      "id": "python-strategy-nonstreaming-4ae0c95-sqlite",
       "implementation": "python",
-      "implementation_commit": "257c0c26f8c05a4f3b25528c0bcf94dfa1b489da",
-      "rfc_commit": "e73a2f56af30e1430d3a2bdf4a1e9c845531774d",
-      "corpus_commit": "e73a2f56af30e1430d3a2bdf4a1e9c845531774d",
+      "implementation_commit": "4ae0c95cbdd9bc120d05d4971763a90ad1dc755c",
+      "rfc_commit": "9edc96c10d5ff9bdd6387ef0de1a95d7ec1440c7",
+      "corpus_commit": "9edc96c10d5ff9bdd6387ef0de1a95d7ec1440c7",
       "rfc_sha256": "d6d65112b56b283f4605f330c5b3485c418e1a22f0089f67f64ad2cfc0ac31c7",
       "backend": "sqlite",
       "runtime": "asyncio",
@@ -258646,7 +258646,7 @@
         "--junitxml=python-final-memory.xml"
       ],
       "artifact": {
-        "path": "conformance/executions/python-strategy-nonstreaming-257c0c2.xml",
+        "path": "conformance/executions/python-strategy-nonstreaming-4ae0c95.xml",
         "format": "pytest_junit",
         "sha256": "3b62936344711962ebe6099446b7cef6b4d92f2fd6edcdf6c600ca72f98c48a3"
       },
