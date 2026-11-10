@@ -1125,3 +1125,7 @@ or a skip to a passing result.
 - Run `check.py --fix`, then both runners, before committing. A scenario that
   fails on an implementation is either wrong, and fixed, or a known failure,
   listed above with its probe.
+
+A scripted round's `stream` also accepts `{tool_call_delta: {id, name, index, arguments_delta}}`,
+with index 0 and empty arguments by default. A `refuses` or `fails` after an
+explicit stream comes before its done event, or after it with `failure_after_done`.
