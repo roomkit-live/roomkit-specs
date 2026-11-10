@@ -128,7 +128,18 @@
         {},
         {},
         {
-          "messages": []
+          "messages": [
+            "$any",
+            "$any",
+            "$any",
+            "$any",
+            {
+              "role": "user",
+              "text": {
+                "$contains": "[Background task from Ops completed."
+              }
+            }
+          ]
         }
       ]
     }
