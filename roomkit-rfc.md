@@ -8909,6 +8909,37 @@ took its last turn or channel call, while it serves and declares the
 channel. A channel control message is placed as §10.6.3 says.
 <!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.7-002", "kind": "behavior", "applies": "§10.6.7 Placement; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+**Which agents can answer.** A backend lists the executors it carries turns
+to, the owner's own aside: each one's id, process, declared entries, room hook
+names, last beat, and whether it is online, that is not closed and beating
+within `heartbeat_timeout` (§10.6.8); a closed executor is not listed, and a
+silent one stays listed, offline, until its process's entry is forgotten. An
+agent is online in a room while an executor online covers it there, declaring
+its channel and defining the room's enabled hooks; an agent the owner holds
+live, while the owner's own executor takes its turns there. The owner answers
+a room's agent presence, each agent with the executors covering it, sorted by
+channel id. It publishes an agent's presence in a room as the presence
+ephemerals of §8.4 (`presence_online` / `presence_offline`, `user_id` the
+agent's channel id): as the agent is attached there, and, for an agent it
+holds by its declaration, in each active or paused room the agent is attached
+to when the executors covering it change. It looks at the executors at each
+heartbeat interval, and at once when an executor of its process other than its
+own is served or closes, so an executor's silence turns its agents offline at
+`heartbeat_timeout`, never at one late beat. A backend keeps the presence last
+published per agent and room, and each change is published by the owner that
+records it there first: of the owners that see the same change, one alone
+publishes it, and, where the backend keeps it beyond the owner's process (a
+distributed backend), an owner restarting publishes nothing that did not
+change. A publication, or a claim, that fails is tried again at a later look
+of the owner that made it, while that owner runs; closing, it lets go of the
+claims it could not publish, which the room's next change or attach, or an
+owner that starts, then publishes. A detach, and a room's close, forget what
+was published for the agent in the room. A backend that cannot list its
+executors has the owner publish nothing for the agents it holds by
+declaration, whose presence it cannot tell.
+<!-- /rfc -->
+
 #### 10.6.8 Liveness, cancellation and errors
 
 <!-- rfc: {"id": "RK-10.6.8-001", "kind": "behavior", "applies": "§10.6.8 Liveness, cancellation and errors; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->

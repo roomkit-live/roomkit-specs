@@ -471,7 +471,7 @@
     },
     {
       "section": "10.6.7",
-      "sha256": "7418916fa97848b83af4e7de5b16fb6b9582ad6badd8c88aea2e64ee22a45329",
+      "sha256": "276376a486274cab1c450596a58d3abf42af910b57e85551fc56ea9c4ad402ac",
       "classification": "normative",
       "review": "Source inventory: Placement. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
