@@ -13305,6 +13305,83 @@
       "missing": [
         "Other supervisor strategies, timeout and cancellation paths, and its internal release callback are outside these shared assertions."
       ]
+    },
+    {
+      "id": "human-input-answer-and-timeout",
+      "requirement": "RK-9.3-017",
+      "clause_sha256": "65c4cb5ef68352f7d19263067b32a92a635ff921258f88e3eb2d9ecb778ff06d",
+      "scope": "AI text-channel human input: notification-independent answers, timeout precedence and refusal versus failure.",
+      "coverage": "partial",
+      "review": "Reviewed with the Python human-input tests and Rust channel tests. The held notification is released only after the next model generation is reached. Voice/conference doors, mutable PendingInput handles (RMK-1637), and native handler lifecycle proofs are not claimed by this shared-scenario mapping.",
+      "assertions": [
+        {
+          "scenario": "inputs/a-request-is-answerable-while-its-notification-runs",
+          "pointer": "/steps/2/expect",
+          "sha256": "39d160e97e2bea07b0cf1c647259ffa4f0bd07069dba4e6c19a22d38b408510f",
+          "scenario_sha256": "11a00d9e185cd56a0fac93b1c82819ec3190c01f3e4ef3f0f244a34bf6ad8c26",
+          "proves": "The answer is accepted with the notification held; the gated next generation is reached before that notification opens, and the model and tool observer read Blue as a successful result."
+        },
+        {
+          "scenario": "inputs/a-request-is-answerable-while-its-notification-runs",
+          "pointer": "/expect/hooks/calls",
+          "sha256": "934a0deb8311f3e290477c6dbf54b00f2088277ad75e89b68c7442e291da4a6d",
+          "scenario_sha256": "11a00d9e185cd56a0fac93b1c82819ec3190c01f3e4ef3f0f244a34bf6ad8c26",
+          "proves": "The answer is accepted with the notification held; the gated next generation is reached before that notification opens, and the model and tool observer read Blue as a successful result."
+        },
+        {
+          "scenario": "inputs/a-request-is-answerable-while-its-notification-runs",
+          "pointer": "/expect/models",
+          "sha256": "85db12c91430dd71bdbf3c2316ecc3ccf645ef18c4c96ac5f59d307f4fd059d1",
+          "scenario_sha256": "11a00d9e185cd56a0fac93b1c82819ec3190c01f3e4ef3f0f244a34bf6ad8c26",
+          "proves": "The answer is accepted with the notification held; the gated next generation is reached before that notification opens, and the model and tool observer read Blue as a successful result."
+        },
+        {
+          "scenario": "inputs/a-request-no-one-answers-in-time-fails",
+          "pointer": "/expect/hooks/calls",
+          "sha256": "82779c289deab1ee6702ec3b5ad6b2e59cb410d4cc06ad1c9bab0a0feb9c1d3a",
+          "scenario_sha256": "1856417fd11003da9a6790e4ac3e5be3fa8f1ed6a9427a6cc134ddcbef286031",
+          "proves": "The human input timeout of 100 ms prevails over the channel default of 20 ms; the model and observer read a failure, not a refusal, and late answers and rejections are refused."
+        },
+        {
+          "scenario": "inputs/a-request-no-one-answers-in-time-fails",
+          "pointer": "/expect/models",
+          "sha256": "e0e704a741cb24726c0a0452ca830b61d5fc48b2cb426d6f47e5e1ebc57c84fd",
+          "scenario_sha256": "1856417fd11003da9a6790e4ac3e5be3fa8f1ed6a9427a6cc134ddcbef286031",
+          "proves": "The human input timeout of 100 ms prevails over the channel default of 20 ms; the model and observer read a failure, not a refusal, and late answers and rejections are refused."
+        },
+        {
+          "scenario": "inputs/a-request-no-one-answers-in-time-fails",
+          "pointer": "/steps/2/expect",
+          "sha256": "929701ed632814943e3df803ddd9e3f179ccf889c0ad7b7f3392bd8d109b174f",
+          "scenario_sha256": "1856417fd11003da9a6790e4ac3e5be3fa8f1ed6a9427a6cc134ddcbef286031",
+          "proves": "The human input timeout of 100 ms prevails over the channel default of 20 ms; the model and observer read a failure, not a refusal, and late answers and rejections are refused."
+        },
+        {
+          "scenario": "inputs/a-request-no-one-answers-in-time-fails",
+          "pointer": "/steps/3/expect",
+          "sha256": "929701ed632814943e3df803ddd9e3f179ccf889c0ad7b7f3392bd8d109b174f",
+          "scenario_sha256": "1856417fd11003da9a6790e4ac3e5be3fa8f1ed6a9427a6cc134ddcbef286031",
+          "proves": "The human input timeout of 100 ms prevails over the channel default of 20 ms; the model and observer read a failure, not a refusal, and late answers and rejections are refused."
+        },
+        {
+          "scenario": "inputs/a-blocked-request-is-a-refusal",
+          "pointer": "/expect/models",
+          "sha256": "bfdd338e81a2094596af161ceb3616210401f702facfd367bde4bba2f823944d",
+          "scenario_sha256": "4dc39c56dc592d762948da1310ae5117c7593409c9a45212077ba871c47e1a32",
+          "proves": "A hook block reaches the model as a refused human-input call."
+        },
+        {
+          "scenario": "inputs/a-rejection-reaches-the-tool-as-a-refusal",
+          "pointer": "/expect/models",
+          "sha256": "78c9477c57abad643dd2530c2b7c9b127dbf5d4d33d75fa628bf84dfbe8798a5",
+          "scenario_sha256": "4b3c327faa12813cda326498a9fb9d743bc83c79dee3b377fe4ce9b5710b8aa0",
+          "proves": "The human rejection reaches the model as the tool result."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Voice and conference doors; handler-native retention and lifecycle proofs; live PendingInput object transitions tracked by RMK-1637."
+      ]
     }
   ],
   "executions": [
