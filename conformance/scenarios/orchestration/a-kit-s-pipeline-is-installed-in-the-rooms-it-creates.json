@@ -104,6 +104,13 @@
       "expect": {
         "result": "other"
       }
+    },
+    {
+      "call": "list_bindings",
+      "room_id": "r2",
+      "expect": {
+        "result": []
+      }
     }
   ],
   "expect": {
