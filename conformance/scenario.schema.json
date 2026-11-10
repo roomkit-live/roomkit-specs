@@ -1717,6 +1717,8 @@
             "channel.publish",
             "channel_call",
             "release_channel",
+            "agent_presence",
+            "executors",
             "enable_room_hook",
             "store.check_idempotency",
             "store.get_event_by_idempotency_key",
@@ -4260,6 +4262,25 @@
           "if": {
             "properties": {
               "call": {
+                "const": "agent_presence"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
                 "const": "enable_room_hook"
               }
             }
@@ -4560,6 +4581,13 @@
         },
         "tool_events": {
           "description": "Per room, the TOOL_CALL_START, TOOL_CALL_END and TOOL_CALL_DELTA ephemeral events its subscribers read (\u00a76.4, \u00a78.4), in order: each `{type, tool_calls, round, channel_id}`, and `duration_ms` for an end that ran its calls.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "array"
+          }
+        },
+        "presence_events": {
+          "description": "Per room, the presence_online and presence_offline ephemeral events its subscribers read during the steps, in order: each {type, user_id} (\u00a710.6.7).",
           "type": "object",
           "additionalProperties": {
             "type": "array"
