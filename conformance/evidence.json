@@ -13605,6 +13605,210 @@
         "This link does not cover all host/built-in/tool-server collisions, turn-supplied tools, Tool Search filtering or discovery inventories.",
         "Execution receipts for shared scenarios do not establish execution of the specialized reinstallation test."
       ]
+    },
+    {
+      "id": "discussion-instruction-boundaries",
+      "requirement": "RK-19.7.5-002",
+      "clause_sha256": "9f957200c380aafa136d8b3068ff79083c0b79ff838bac9a476234483be4599c",
+      "scope": "Local instruction admission and turn boundaries, including a first read of a stored discussion that ended (rules 7, 8, 11, 15 and 16).",
+      "coverage": "partial",
+      "review": "Compared eight Python source tests with existing scenarios. Adds six shared cases and makes the stored-over instruction use a fresh kit. Local kits share a store; this is not proof of separate processes, external services or distributed leases. A rejected stored configuration was already covered and is referenced rather than duplicated.",
+      "assertions": [
+        {
+          "scenario": "discussion/an-instruction-to-several-agents-gives-each-its-turn",
+          "pointer": "/expect",
+          "sha256": "9c0727b34de7c3979d1988485fb924a7343326177a30f670974746a1582ec755",
+          "scenario_sha256": "69c7ebf4f59958a14ca6734e67d4ee934c8fbc280b806892a058ca7d6a460bfc",
+          "proves": "Each addressed agent generates once, keeps its own instruction_read row and delivers its answer, in address order; the instruction itself is not delivered."
+        },
+        {
+          "scenario": "discussion/an-instruction-to-several-agents-gives-each-its-turn",
+          "pointer": "/steps/1/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "69c7ebf4f59958a14ca6734e67d4ee934c8fbc280b806892a058ca7d6a460bfc",
+          "proves": "The input is admitted without a pipeline error; final observations assert what is subsequently queued or answered."
+        },
+        {
+          "scenario": "discussion/an-instruction-to-several-agents-gives-each-its-turn",
+          "pointer": "/steps/3/expect",
+          "sha256": "c924b71526ef609b488850a96be606143cd55fc5329c6fe45d156723a2872f1e",
+          "scenario_sha256": "69c7ebf4f59958a14ca6734e67d4ee934c8fbc280b806892a058ca7d6a460bfc",
+          "proves": "After idle, the queue has no speaker, queued entry or wait for a person."
+        },
+        {
+          "scenario": "discussion/an-instruction-past-the-depth-limit-is-dropped-and-reported",
+          "pointer": "/expect",
+          "sha256": "6bc061dab57a32f17c760de682c11b129b5f04430f84df3ffe7e136b28ed76db",
+          "scenario_sha256": "95adf0b11db615200e8a41d11484ae74e6fa074ddba673a1bcfe369a93f373f4",
+          "proves": "No model generates and nothing is stored or delivered; queued and instruction_dropped name the same event and target once."
+        },
+        {
+          "scenario": "discussion/an-instruction-past-the-depth-limit-is-dropped-and-reported",
+          "pointer": "/steps/1/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "95adf0b11db615200e8a41d11484ae74e6fa074ddba673a1bcfe369a93f373f4",
+          "proves": "The input is admitted without a pipeline error; final observations assert what is subsequently queued or answered."
+        },
+        {
+          "scenario": "discussion/an-instruction-past-the-depth-limit-is-dropped-and-reported",
+          "pointer": "/steps/3/expect",
+          "sha256": "c924b71526ef609b488850a96be606143cd55fc5329c6fe45d156723a2872f1e",
+          "scenario_sha256": "95adf0b11db615200e8a41d11484ae74e6fa074ddba673a1bcfe369a93f373f4",
+          "proves": "After idle, the queue has no speaker, queued entry or wait for a person."
+        },
+        {
+          "scenario": "discussion/an-agent-s-answer-typed-instruction-gives-no-turn",
+          "pointer": "/expect",
+          "sha256": "fd3e63fc64fec8d51b8410a62a96fbc226ac63d5fb426a0d351fc8242030a9e7",
+          "scenario_sha256": "5bc890a60d42a38021f9daa3e07bf13331e7c050df2edb0d60acca57d18c144d",
+          "proves": "The source agent receives the original message once, and the instruction destination makes no model request."
+        },
+        {
+          "scenario": "discussion/an-agent-s-answer-typed-instruction-gives-no-turn",
+          "pointer": "/steps/1/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "5bc890a60d42a38021f9daa3e07bf13331e7c050df2edb0d60acca57d18c144d",
+          "proves": "The input is admitted without a pipeline error; final observations assert what is subsequently queued or answered."
+        },
+        {
+          "scenario": "discussion/an-agent-s-answer-typed-instruction-gives-no-turn",
+          "pointer": "/steps/3/expect",
+          "sha256": "c924b71526ef609b488850a96be606143cd55fc5329c6fe45d156723a2872f1e",
+          "scenario_sha256": "5bc890a60d42a38021f9daa3e07bf13331e7c050df2edb0d60acca57d18c144d",
+          "proves": "After idle, the queue has no speaker, queued entry or wait for a person."
+        },
+        {
+          "scenario": "discussion/a-hook-s-injected-instruction-gives-no-turn",
+          "pointer": "/expect",
+          "sha256": "cb80eee73c68c08b07bc9884b9d303cb94a2db0893ae1a796c3964cf83a0b94c",
+          "scenario_sha256": "b2c822aae3208ea4ef7a1564ddb837ccfba9575e675ecbfe5834f4aa9a4ab10e",
+          "proves": "Only the originally addressed agent generates and is queued; the timeline and deliveries contain no injected instruction."
+        },
+        {
+          "scenario": "discussion/a-hook-s-injected-instruction-gives-no-turn",
+          "pointer": "/steps/1/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "b2c822aae3208ea4ef7a1564ddb837ccfba9575e675ecbfe5834f4aa9a4ab10e",
+          "proves": "The input is admitted without a pipeline error; final observations assert what is subsequently queued or answered."
+        },
+        {
+          "scenario": "discussion/a-hook-s-injected-instruction-gives-no-turn",
+          "pointer": "/steps/3/expect",
+          "sha256": "c924b71526ef609b488850a96be606143cd55fc5329c6fe45d156723a2872f1e",
+          "scenario_sha256": "b2c822aae3208ea4ef7a1564ddb837ccfba9575e675ecbfe5834f4aa9a4ab10e",
+          "proves": "After idle, the queue has no speaker, queued entry or wait for a person."
+        },
+        {
+          "scenario": "discussion/an-instruction-to-an-unbound-agent-reports-it-unavailable",
+          "pointer": "/expect",
+          "sha256": "3235cf1a155dfd8b5e49bbd7a68f34c241fa4d3fe0051ddd95adea58e5fd4604",
+          "scenario_sha256": "5603c100bb7ca8502f5da4e94d5f930eca768044cf6907012a47106584734e83",
+          "proves": "No model generates and nothing is stored or delivered for the unbound target."
+        },
+        {
+          "scenario": "discussion/an-instruction-to-an-unbound-agent-reports-it-unavailable",
+          "pointer": "/steps/1/expect",
+          "sha256": "2e969a1114bd23a4f00c6a9e2ab8549ddb73adb06f04adcd6d4f5bd86d5af721",
+          "scenario_sha256": "5603c100bb7ca8502f5da4e94d5f930eca768044cf6907012a47106584734e83",
+          "proves": "The instruction is not blocked and explicitly reports the registered but unbound target as unavailable."
+        },
+        {
+          "scenario": "discussion/an-instruction-to-an-unbound-agent-reports-it-unavailable",
+          "pointer": "/steps/3/expect",
+          "sha256": "c924b71526ef609b488850a96be606143cd55fc5329c6fe45d156723a2872f1e",
+          "scenario_sha256": "5603c100bb7ca8502f5da4e94d5f930eca768044cf6907012a47106584734e83",
+          "proves": "After idle, the queue has no speaker, queued entry or wait for a person."
+        },
+        {
+          "scenario": "discussion/an-instruction-to-a-discussion-that-is-over-is-blocked",
+          "pointer": "/expect",
+          "sha256": "5f899a56a6f8632a8ba9b5bc4efc8614c111354387646774b17b92ab65538bd4",
+          "scenario_sha256": "679ca426f2fe22e88db9cbda5fa116d296c362292f15120e287bf8774bd17763",
+          "proves": "No agent turn, stored event or delivery follows the instruction."
+        },
+        {
+          "scenario": "discussion/an-instruction-to-a-discussion-that-is-over-is-blocked",
+          "pointer": "/steps/4/expect",
+          "sha256": "c9cf15b5ffbfc30a918268911760404dea54c07d2c634e6d6630f5ae40c5a9cf",
+          "scenario_sha256": "679ca426f2fe22e88db9cbda5fa116d296c362292f15120e287bf8774bd17763",
+          "proves": "The fresh kit refuses its first room operation with blocked=true, reason=discussion_over and no result event."
+        },
+        {
+          "scenario": "discussion/a-stored-over-discussion-refuses-regeneration-on-the-first-call",
+          "pointer": "/expect",
+          "sha256": "26fbb33638c6adedb84f01e3ad78419fd45bc18f916fdf72864b9ceb1dc97e5c",
+          "scenario_sha256": "04c6a338dc6b9d831e1840570a5042b6090b5b2dcc4ba6c4995402a87d37de28",
+          "proves": "The original message is unchanged and no agent turn or delivery follows regeneration."
+        },
+        {
+          "scenario": "discussion/a-stored-over-discussion-refuses-regeneration-on-the-first-call",
+          "pointer": "/steps/5/expect",
+          "sha256": "c9cf15b5ffbfc30a918268911760404dea54c07d2c634e6d6630f5ae40c5a9cf",
+          "scenario_sha256": "04c6a338dc6b9d831e1840570a5042b6090b5b2dcc4ba6c4995402a87d37de28",
+          "proves": "The fresh kit refuses its first room operation with blocked=true, reason=discussion_over and no result event."
+        },
+        {
+          "scenario": "discussion/a-stored-discussion-the-constructor-refuses-holds-no-room",
+          "pointer": "/steps/15/expect",
+          "sha256": "bf3da56d9213d91f62d521ae8905180cc4b0ba837aa66f5daec31cd796afb4d4",
+          "scenario_sha256": "37f0bd3f2a72435164c19c290b8a15f5518240c54629c23ee5a44c5436433cfb",
+          "proves": "The invalid stored configuration marked over does not block the instruction."
+        },
+        {
+          "scenario": "discussion/a-stored-discussion-the-constructor-refuses-holds-no-room",
+          "pointer": "/expect/timeline/refused-over",
+          "sha256": "6ffeb216d74e68548202f2fd47c092c2714b32111440f4864f0b0197a15f631c",
+          "scenario_sha256": "37f0bd3f2a72435164c19c290b8a15f5518240c54629c23ee5a44c5436433cfb",
+          "proves": "The agent response is stored in the room whose invalid configuration was marked over."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/test_discussion_core.py::test_an_instruction_to_a_stored_discussion_over_is_blocked_at_the_rooms_first_call",
+          "sha256": "6dd5a2a1bb44a5947a801d3b0b514346004f9adf5f80891cc79ab40a75815203",
+          "proves": "A kit first reading the room refuses an instruction to its stored-over discussion."
+        },
+        {
+          "nodeid": "tests/test_discussion_core.py::test_a_discussion_stored_over_refuses_a_regeneration_at_the_rooms_first_call",
+          "sha256": "fb14b14a5c71129985251fd51c859e41db9cc88a64cac93dc354b277ebef0a1f",
+          "proves": "A kit first reading the room refuses regeneration after the stored discussion ended."
+        },
+        {
+          "nodeid": "tests/test_discussion_core.py::test_a_refused_configuration_stored_over_holds_no_instruction_back",
+          "sha256": "2c033642de98c8f982974244cb12956592cc86be3f7eb975272922dd91daf1b3",
+          "proves": "A refused stored configuration does not block an instruction merely because its queue says over."
+        },
+        {
+          "nodeid": "tests/orchestration/test_discussion_edges.py::test_an_instruction_to_several_agents_gives_each_its_turn",
+          "sha256": "64480156f4e23525fc3f03487b10ebda5b8f52ecddc34b2828df77d75635d14e",
+          "proves": "Each addressed agent generates once for one application instruction."
+        },
+        {
+          "nodeid": "tests/orchestration/test_discussion_edges.py::test_an_instruction_past_the_depth_limit_is_dropped_and_reported",
+          "sha256": "184cb5103d3ecfb6379a8f2520eafd1b6e274b896b6848c1186cf8c689374fff",
+          "proves": "The depth-limited instruction generates nothing, is reported dropped and leaves the queue empty and not waiting."
+        },
+        {
+          "nodeid": "tests/orchestration/test_discussion_edges.py::test_an_agent_s_answer_typed_instruction_gives_no_turn",
+          "sha256": "4926da68de75c57dadd9432b4ed9fcfb6bd8224074b94f6d2132f7f69de41495",
+          "proves": "An agent-produced instruction gives its destination no turn and leaves no queued entry."
+        },
+        {
+          "nodeid": "tests/orchestration/test_discussion_edges.py::test_a_hook_s_injected_instruction_gives_no_turn",
+          "sha256": "2ac25d73c8123244b3f79930cc531e59b3cceb7f6b9b59c6069a9039245b2434",
+          "proves": "A hook-injected instruction gives no turn; only the message-addressed agent is queued."
+        },
+        {
+          "nodeid": "tests/orchestration/test_discussion_edges.py::test_an_instruction_to_an_agent_the_room_lacks_reports_it_unavailable",
+          "sha256": "ab055f40db65112c980d0981a8371e79dfa8e37635050e44dd181e614f662861",
+          "proves": "An instruction to an unbound registered target proceeds, reports it unavailable and never calls it."
+        }
+      ],
+      "missing": [
+        "Other Discussion rules, queue fairness and merging, normal regeneration, transcript replay, names and dispatch require their own assertion audit.",
+        "External process failure, distributed stores and executors are not proven by these local scenarios.",
+        "Only eight methods of the 90-method candidate inventory are audited in this lot."
+      ]
     }
   ],
   "executions": [
