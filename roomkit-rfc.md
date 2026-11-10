@@ -8273,8 +8273,8 @@ the kit gives a channel it registers, each on the executor's side:
   into owner calls;
 - the host's media resolver and attached-media reader (§6.4), which the host
   gives the executor as it gives the kit;
-- its readers of the store, which read the store: a distributed backend
-  requires it shared (§10.6.9).
+- what its turn reads of the room, which comes with the turn (§10.6.5), and
+  the room's context for its hooks, which the owner gives (§10.6.6).
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-10.6.2-003", "kind": "behavior", "applies": "§10.6.2 Channels on each side; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
@@ -8362,6 +8362,8 @@ TurnRequest
 ├── previous_turn: {turn_id, executor_id} | null
 │                                       # the room's previous turn or channel
 │                                       # call of the channel (§10.6.2)
+├── channel_rows: list<RoomEvent>       # the channel's own rows its turn reads,
+│                                       # oldest first (§10.6.5)
 └── trace: map<string, string> | null   # trace context of the broadcast span
 
 OwnerTool
@@ -8649,7 +8651,8 @@ minimal and enumerated: each verb is one `host_call`, every argument is data
 TurnHost
 ├── send_event(room_id, channel_id, content, ...) → RoomEvent    # §10.5
 ├── delegate(room_id, agent_id, task, ...) → string              # the task id (§23.3)
-└── wait_task(task_id, timeout) → DelegatedTaskResult | null     # §23.2
+├── wait_task(task_id, timeout) → DelegatedTaskResult | null     # §23.2
+└── room_context() → RoomContext                                 # as the owner builds it now (§10.6.6)
 ```
 
 An implementation adds the verbs its own tools and hooks need to write (a
@@ -8683,8 +8686,14 @@ for any other, as it does past its timeout. A room-metadata update through it
 MUST NOT write a key of the implementation's own namespace (§5.1: a detach's
 revocation, §7.5; what the room keeps for a channel, §10.6.2).
 
-Reads go to the store, which the executor shares; every write goes through
-`TurnHost`. Each call carries the room and the turn it is made from, and the
+An executor holds no store. What a turn reads of its room comes with the
+request: its context, and, for a channel run on an executor other than the
+owner's own, `channel_rows`, which the owner reads for the turn: the channel's
+own tool-call rows and the instructions it read, each once, those its history
+replays and its latest calls, which rebuild
+its tool memory and the skills it activated (§6.4, §24.4). A deleted row is
+withheld (§7.5 rule 8), and a store that fails costs the turn those rows, not
+the turn. Every write goes through `TurnHost`. Each call carries the room and the turn it is made from, and the
 owner applies to it the reentrancy of its own task waiting on that turn when
 the call arrives (the delivery-set target awaiting `output`, or the reader
 awaiting an `item`): a call that would wait on the room's own delivery from a
@@ -8815,10 +8824,16 @@ refused, so that a room never holds two hooks of one name.
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-10.6.6-004", "kind": "behavior", "applies": "§10.6.6 Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
-**Context.** A hook on the executor receives a `RoomContext` built from the
-shared store when it fires, as a hook on the owner does, and changes a room
-only through `TurnHost` (§10.6.5); between turns, where `TurnHost` is empty,
-it changes none.
+**Context.** A hook on the executor receives the `RoomContext` its room's
+owner builds when the hook fires, asked as the `host_call` verb `room_context`,
+as a hook on the owner does; once its turn is over, or when a cut leaves the
+owner no longer answering it, the context the turn started with. Outside any
+turn (an external agent's own activity between two prompts) it receives the
+context of the last turn the executor ran in that room, and none when it ran
+no turn there. A context the owner fails to build is one the hook does not
+get, as on the owner. A hook
+changes a room only through `TurnHost` (§10.6.5); between turns, where
+`TurnHost` is empty, it changes none.
 <!-- /rfc -->
 
 #### 10.6.7 Placement
@@ -9011,10 +9026,9 @@ processes.
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-10.6.9-002", "kind": "behavior", "applies": "§10.6.9 Telemetry and prerequisites; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
-**Prerequisites.** A backend whose executors run in other processes requires
-a store they share (Section 14): the executor reads it. It SHOULD warn when an
-executor that takes turns from other processes has none. The distributed lock
-manager of §13.5 is what several owner processes need among themselves; an
+**Prerequisites.** An executor in another process needs no store (§10.6.5):
+the store is the room owner's, and several owner processes share theirs
+(Section 14). The distributed lock manager of §13.5 is what several owner processes need among themselves; an
 executor takes no room lock. Every process of a backend keeps the same
 timeouts (§10.6.8).
 <!-- /rfc -->
