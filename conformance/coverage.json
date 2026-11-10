@@ -1,7 +1,7 @@
 {
   "version": 1,
   "rfc_sha256": "a3436fef41725ba6f43abdc69a1ae74b75299f4d78b75d8655386a59de6aa38d",
-  "corpus_sha256": "65fc9c010b04978f2d1e3ba321bfd5ff86738ddb2f5a7b04b7f0779fbae5c4cf",
+  "corpus_sha256": "330c9117abb438153476090990dddd4f048e94e1896575a611de5454c68b3801",
   "python_commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
   "scenario_count": 1797,
   "sections": [
@@ -5423,7 +5423,7 @@
       "review": "normative",
       "requirements": 1,
       "mapping": {
-        "unmapped": 1
+        "mapped_partial": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -23976,8 +23976,163 @@
     {
       "id": "RK-19.7.3-001",
       "section": "19.7.3",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "phase4-supervisor-handback-model-content",
+          "scope": "A background supervisor reads bounded worker outputs or a sanitized failure through a real model turn, and preserves its private instruction record.",
+          "coverage": "partial",
+          "missing": [
+            "Other supervisor strategies, timeout and cancellation paths, and its internal release callback are outside these shared assertions."
+          ],
+          "executions": [
+            {
+              "execution": "python-lifecycle-final-corpus-746d6bd-memory",
+              "implementation": "python",
+              "commit": "746d6bdc0a3b9fe358e983c06046bfd232195d26",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-lifecycle-final-corpus-ecac963-memory",
+              "implementation": "python",
+              "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-indexing-final-corpus-428f285-memory",
+              "implementation": "python",
+              "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-routing-final-corpus-a7b039c-memory",
+              "implementation": "python",
+              "commit": "a7b039caefe4892208e3cee330ff75664f051604",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-storage-delivery-final-corpus-56d7240-memory",
+              "implementation": "python",
+              "commit": "56d724054e28329a7f320cb5c55341c7c16ac94e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-reentrancy-final-corpus-9b44d51-memory",
+              "implementation": "python",
+              "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-core-close-final-corpus-e89dc28-memory",
+              "implementation": "python",
+              "commit": "e89dc28e3b09d708ad1448125585d3e8bf99b657",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-core-lanes-final-corpus-89dae1b-memory",
+              "implementation": "python",
+              "commit": "89dae1b79d1d99c38cc5fac7d4cdee0cf9993140",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-core-cancellation-final-corpus-aab89a9-memory",
+              "implementation": "python",
+              "commit": "aab89a9911953da78380313b8dff9415e5dc6118",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-core-reentry-merged-corpus-eb519bb-memory",
+              "implementation": "python",
+              "commit": "eb519bb0dfb4f19f80fc577e8668025069283cb9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-core-preflight-corpus-00197fd-memory",
+              "implementation": "python",
+              "commit": "00197fd445a81d47761fc65a6796f6c388119639",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-core-shutdown-boundaries-0aa9b53-memory",
+              "implementation": "python",
+              "commit": "0aa9b53705940a4fd9c126e67b712eed010713f6",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-core-shutdown-answers-a7fac2f-memory",
+              "implementation": "python",
+              "commit": "a7fac2fc0e63bb82f18b7ef78557aca383840521",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-names-1280f23-memory",
+              "implementation": "python",
+              "commit": "1280f23489f044354d552703d99dcadf3eefc08e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-options-25d0695-memory",
+              "implementation": "python",
+              "commit": "25d0695493c78587365a87d8399ab2b237df13f4",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-outcomes-16baeaa-memory",
+              "implementation": "python",
+              "commit": "16baeaad421bc044bebb4cf89f0ad5be8c6180a9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-timeout-70d2850-memory",
+              "implementation": "python",
+              "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "RK-19.7.4-001",
@@ -24442,6 +24597,160 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
+            }
+          ]
+        },
+        {
+          "id": "phase4-task-handback-model-content",
+          "scope": "Text task hand-backs preserve the configured persona and deliver a framed result to the intended model, including the tool default recipient and a configured bound above 4000.",
+          "coverage": "partial",
+          "missing": [
+            "Other delegation protocol steps, realtime session delivery, lifecycle cancellation and internal completion callbacks are outside this assertion set."
+          ],
+          "executions": [
+            {
+              "execution": "python-lifecycle-final-corpus-746d6bd-memory",
+              "implementation": "python",
+              "commit": "746d6bdc0a3b9fe358e983c06046bfd232195d26",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-lifecycle-final-corpus-ecac963-memory",
+              "implementation": "python",
+              "commit": "ecac9632ce1acc3ec76d66a5fb5db7c3738e3d70",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-indexing-final-corpus-428f285-memory",
+              "implementation": "python",
+              "commit": "428f285d6154574c564d2d6fa56de3cd46b55f2a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-routing-final-corpus-a7b039c-memory",
+              "implementation": "python",
+              "commit": "a7b039caefe4892208e3cee330ff75664f051604",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-storage-delivery-final-corpus-56d7240-memory",
+              "implementation": "python",
+              "commit": "56d724054e28329a7f320cb5c55341c7c16ac94e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-reentrancy-final-corpus-9b44d51-memory",
+              "implementation": "python",
+              "commit": "9b44d5159b8909376d499bd78d76fdf627ad32d8",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-core-close-final-corpus-e89dc28-memory",
+              "implementation": "python",
+              "commit": "e89dc28e3b09d708ad1448125585d3e8bf99b657",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-core-lanes-final-corpus-89dae1b-memory",
+              "implementation": "python",
+              "commit": "89dae1b79d1d99c38cc5fac7d4cdee0cf9993140",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-core-cancellation-final-corpus-aab89a9-memory",
+              "implementation": "python",
+              "commit": "aab89a9911953da78380313b8dff9415e5dc6118",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-core-reentry-merged-corpus-eb519bb-memory",
+              "implementation": "python",
+              "commit": "eb519bb0dfb4f19f80fc577e8668025069283cb9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-core-preflight-corpus-00197fd-memory",
+              "implementation": "python",
+              "commit": "00197fd445a81d47761fc65a6796f6c388119639",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-core-shutdown-boundaries-0aa9b53-memory",
+              "implementation": "python",
+              "commit": "0aa9b53705940a4fd9c126e67b712eed010713f6",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-core-shutdown-answers-a7fac2f-memory",
+              "implementation": "python",
+              "commit": "a7fac2fc0e63bb82f18b7ef78557aca383840521",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-names-1280f23-memory",
+              "implementation": "python",
+              "commit": "1280f23489f044354d552703d99dcadf3eefc08e",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-options-25d0695-memory",
+              "implementation": "python",
+              "commit": "25d0695493c78587365a87d8399ab2b237df13f4",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-outcomes-16baeaa-memory",
+              "implementation": "python",
+              "commit": "16baeaad421bc044bebb4cf89f0ad5be8c6180a9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-timeout-70d2850-memory",
+              "implementation": "python",
+              "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
             }
           ]
         }

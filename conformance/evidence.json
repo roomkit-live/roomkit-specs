@@ -13207,6 +13207,104 @@
       "missing": [
         "Task creation hooks, completed and cancelled task variants are outside this mapping."
       ]
+    },
+    {
+      "id": "phase4-task-handback-model-content",
+      "requirement": "RK-23.3-001",
+      "clause_sha256": "02d70d71e8be5043c4e72f88ca7adfc69978b94c4e516ca0ed45aae9c0120b74",
+      "scope": "Text task hand-backs preserve the configured persona and deliver a framed result to the intended model, including the tool default recipient and a configured bound above 4000.",
+      "coverage": "partial",
+      "review": "Compared with tests/tasks/test_delegation_result_delivery.py and the RFC, including an independent review of the scenario schedules and exact model inputs. Native seams and voice routes are kept distinct from shared assertions.",
+      "assertions": [
+        {
+          "scenario": "tasks/a-hand-back-leaves-the-notified-agent-s-prompt-as-its-binding-holds-it",
+          "pointer": "/expect/models/main",
+          "sha256": "d28868e7ce9e1f52eef37722339e87142cc6ede25a724331027c62b46d628318",
+          "scenario_sha256": "fbfc84d268bdbe4ae16e0f0fa0db95f3bf918431ac05851dec266b4bd25a9a2e",
+          "proves": "Two model turns begin with the binding persona and read their complete result as an application instruction."
+        },
+        {
+          "scenario": "tasks/a-hand-back-leaves-the-notified-agent-s-prompt-as-its-binding-holds-it",
+          "pointer": "/expect/bindings",
+          "sha256": "55d4960d848baea5a89de18b80ef05d5026186cc37f4570dfdbe04a8d0c43b99",
+          "scenario_sha256": "fbfc84d268bdbe4ae16e0f0fa0db95f3bf918431ac05851dec266b4bd25a9a2e",
+          "proves": "The binding system prompt is unchanged after both delegations."
+        },
+        {
+          "scenario": "tasks/a-hand-back-leaves-the-notified-agent-s-prompt-as-its-binding-holds-it",
+          "pointer": "/expect/timeline/room-1",
+          "sha256": "f5021cec1aa21059764615e44f5f94130c885349ca058c898f6da986a8afba3e",
+          "scenario_sha256": "fbfc84d268bdbe4ae16e0f0fa0db95f3bf918431ac05851dec266b4bd25a9a2e",
+          "proves": "Each result is kept as a private instruction_read; the only participant messages are the two model replies."
+        },
+        {
+          "scenario": "tasks/delegate-task-answers-its-model-with-the-task-or-why-not",
+          "pointer": "/expect/models/assistant",
+          "sha256": "6b06cfcffe4e0a1d7828103573c0a598ba7e27e4e9502ab6ce8c7e6061c0de39",
+          "scenario_sha256": "ba19107e8cd16fa0bcee90ba81556443a20b3b83b047b5e275354d3a5b6b7836",
+          "proves": "The default recipient reads one framed result after its delegate_task call without an explicit notify."
+        },
+        {
+          "scenario": "tasks/delegate-task-hands-back-as-much-as-its-handler-allows",
+          "pointer": "/expect/models/main",
+          "sha256": "465b96c2e0a14a60935914ce4353a21b10661d62cefcf9adab41f04aeec35d9d",
+          "scenario_sha256": "82286c3ae1f40422af3010e2afd913df2d5b3fa0fad24147686ee9c0b7fadc56",
+          "proves": "A real delegate_task call installed with the custom handler hands 4100 characters back to the model with its truncation marker and result-only note."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Other delegation protocol steps, realtime session delivery, lifecycle cancellation and internal completion callbacks are outside this assertion set."
+      ]
+    },
+    {
+      "id": "phase4-supervisor-handback-model-content",
+      "requirement": "RK-19.7.3-001",
+      "clause_sha256": "6b45a660313af8a2aaf2fc34114f0d821e5901e74ddff5cccf674d734c5e8a38",
+      "scope": "A background supervisor reads bounded worker outputs or a sanitized failure through a real model turn, and preserves its private instruction record.",
+      "coverage": "partial",
+      "review": "Compared with tests/tasks/test_delegation_result_delivery.py and the RFC, including an independent review of the scenario schedules and exact model inputs. Native seams and voice routes are kept distinct from shared assertions.",
+      "assertions": [
+        {
+          "scenario": "orchestration/a-supervisor-s-team-tool-in-the-background-answers-at-once-and-hands-the-results-back",
+          "pointer": "/expect/models/sup",
+          "sha256": "e76aaf4a8d018f2549bd67b666807724df11193430d304972914268eb5c1e10e",
+          "scenario_sha256": "bfd570917b5f1c9595a4297c3f94b3f8c14dea04410e033823002e55d46b00e6",
+          "proves": "The supervisor receives 4000 characters of the first worker, the complete second result, application framing and the result-only turn note."
+        },
+        {
+          "scenario": "orchestration/a-supervisor-s-team-tool-in-the-background-answers-at-once-and-hands-the-results-back",
+          "pointer": "/expect/timeline/r1",
+          "sha256": "14c169f5800a90d75c9a42fd4475d281d472e6c66ab6ff1f11302c40b5d91145",
+          "scenario_sha256": "bfd570917b5f1c9595a4297c3f94b3f8c14dea04410e033823002e55d46b00e6",
+          "proves": "The results are stored as one private instruction_read, never as participant messages."
+        },
+        {
+          "scenario": "orchestration/a-supervisor-s-background-team-that-fails-hands-back-its-failure",
+          "pointer": "/expect/models/sup",
+          "sha256": "8c744fdd0aea8c43258fd42bb567480d4fe7ba7241a745364cf0eab5dd217bc8",
+          "scenario_sha256": "1e3b4f4a21d6d3bf42538fd7a3518b17726c4cf9a2f2815b3120ddb1bfc1ad51",
+          "proves": "The real supervisor reads the generic failure instruction rather than the registration error."
+        },
+        {
+          "scenario": "orchestration/a-supervisor-s-background-team-that-fails-hands-back-its-failure",
+          "pointer": "/expect/timeline/r1",
+          "sha256": "6450cd50a1d17458df9d9bee2f943d89a3ebf08da00e184a8d044afb092f509a",
+          "scenario_sha256": "1e3b4f4a21d6d3bf42538fd7a3518b17726c4cf9a2f2815b3120ddb1bfc1ad51",
+          "proves": "The private failure record contains only the framework failure text and the turn note."
+        },
+        {
+          "scenario": "orchestration/a-supervisor-s-background-team-that-fails-hands-back-its-failure",
+          "pointer": "/steps/6/expect",
+          "sha256": "7522db24f84b40ef29ba889dc46e79420803279926d5fcab3b6dde65eca7060d",
+          "scenario_sha256": "1e3b4f4a21d6d3bf42538fd7a3518b17726c4cf9a2f2815b3120ddb1bfc1ad51",
+          "proves": "One failed pipeline status retains the not-registered cause and worker metadata."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Other supervisor strategies, timeout and cancellation paths, and its internal release callback are outside these shared assertions."
+      ]
     }
   ],
   "executions": [
