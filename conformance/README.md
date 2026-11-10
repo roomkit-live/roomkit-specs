@@ -1126,7 +1126,12 @@ or a skip to a passing result.
   that run side by side end, and start, in either order on several threads:
   assert their order only where the RFC gives one.
 - Keep timing out of it: a gate orders two calls, never a delay. A hook's or a
-  call's timeout, when the scenario is about it, is a few tens of milliseconds.
+  call's timeout, when the scenario is about it, must leave enough margin for
+  any work expected to complete within the same budget, including store I/O
+  and CI scheduling. Hold the worker expected to time out at a gate no step
+  opens. A short timeout is suitable only when no successful work races it;
+  the parallel-team timeout scenario uses 2 s (RMK-1331). Real-time scenarios
+  still depend on the runner making progress within their budgets.
 - Run `check.py --fix`, then both runners, before committing. A scenario that
   fails on an implementation is either wrong, and fixed, or a known failure,
   listed above with its probe.
