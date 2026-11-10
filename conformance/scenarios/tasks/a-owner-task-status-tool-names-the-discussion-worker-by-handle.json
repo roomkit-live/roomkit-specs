@@ -120,8 +120,7 @@
             "status": "completed",
             "detail": "Findings.",
             "metadata": {
-              "task_status": "completed",
-              "task": "Count the tickets."
+              "task_status": "completed"
             }
           }
         ]
