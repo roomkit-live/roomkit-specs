@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/roomkit-live/roomkit-specs/conformance/scenario.schema.json",
   "title": "RoomKit conformance scenario",
-  "description": "One scenario of the shared conformance suite: a setup, the kit's calls, and what the RFC says they come to. Records (rooms, events, messages, contents, hook results) are written in the RFC's serialized form (\u00a71.4). conformance/README.md defines how a runner reads each member.",
+  "description": "One scenario of the shared conformance suite: a setup, the kit's calls, and what the RFC says they come to. Records (rooms, events, messages, contents, hook results) are written in the RFC's serialized form (§1.4). conformance/README.md defines how a runner reads each member.",
   "type": "object",
   "required": [
     "id",
@@ -25,13 +25,13 @@
       "minLength": 1
     },
     "rules": {
-      "description": "The RFC's rules the scenario checks, in the RFC's terms: \"\u00a710.1 step 9\", \"\u00a77.5 rule 2\", \"\u00a79.5.1 Reentrance\", \"Appendix B.2\". The checker resolves each at the pinned RFC commit.",
+      "description": "The RFC's rules the scenario checks, in the RFC's terms: \"§10.1 step 9\", \"§7.5 rule 2\", \"§9.5.1 Reentrance\", \"Appendix B.2\". The checker resolves each at the pinned RFC commit.",
       "type": "array",
       "minItems": 1,
       "uniqueItems": true,
       "items": {
         "type": "string",
-        "pattern": "^(\u00a7[0-9]+(\\.[0-9]+)*|Appendix [A-Z](\\.[0-9]+)*)( .+)?$"
+        "pattern": "^(§[0-9]+(\\.[0-9]+)*|Appendix [A-Z](\\.[0-9]+)*)( .+)?$"
       }
     },
     "reentrancy": {
@@ -81,7 +81,7 @@
       ]
     },
     "record": {
-      "description": "A record in the RFC's serialized form; a reader takes an absent member as its default (\u00a71.4).",
+      "description": "A record in the RFC's serialized form; a reader takes an absent member as its default (§1.4).",
       "type": "object"
     },
     "label": {
@@ -105,7 +105,7 @@
               "minimum": 1
             },
             "router": {
-              "description": "A scripted router (\u00a710.4), the kit's in place of the default: it answers every routed message with `room_id`, whoever sent it, an answer the kit holds to \u00a710.1 step 2's rules; with a `gate`, it holds each routing there first. A null answer requests a new room. Calls are recorded before the gate under router_calls.",
+              "description": "A scripted router (§10.4), the kit's in place of the default: it answers every routed message with `room_id`, whoever sent it, an answer the kit holds to §10.1 step 2's rules; with a `gate`, it holds each routing there first. A null answer requests a new room. Calls are recorded before the gate under router_calls.",
               "type": "object",
               "additionalProperties": false,
               "required": [
@@ -127,19 +127,19 @@
               "$ref": "#/$defs/identity_resolver"
             },
             "identity_channel_types": {
-              "description": "The channel types identity resolution runs for (\u00a711.4); absent, every type.",
+              "description": "The channel types identity resolution runs for (§11.4); absent, every type.",
               "type": "array",
               "items": {
                 "type": "string"
               }
             },
             "identity_timeout_ms": {
-              "description": "How long the resolver may take (\u00a711.5); the implementation's default when absent.",
+              "description": "How long the resolver may take (§11.5); the implementation's default when absent.",
               "type": "integer",
               "minimum": 1
             },
             "delivery_backend": {
-              "description": "The kit's delivery backend (\u00a722.2), the in-memory one, started with the kit: deliver() then queues its requests and the backend's worker executes them. Each member is a bound of its own; absent, the implementation's default.",
+              "description": "The kit's delivery backend (§22.2), the in-memory one, started with the kit: deliver() then queues its requests and the backend's worker executes them. Each member is a bound of its own; absent, the implementation's default.",
               "type": "object",
               "additionalProperties": false,
               "properties": {
@@ -162,7 +162,7 @@
               }
             },
             "verification_policy": {
-              "description": "The kit's identity verification policy (\u00a711.7), the kit built with it: each member a bound or a switch of its own, the implementation's default when absent.",
+              "description": "The kit's identity verification policy (§11.7), the kit built with it: each member a bound or a switch of its own, the implementation's default when absent.",
               "type": "object",
               "additionalProperties": false,
               "properties": {
@@ -204,7 +204,7 @@
               }
             },
             "media_resolver": {
-              "description": "The kit's media resolver (\u00a76.4), serving every AI channel registered on it: the bytes of each reference `media` names, in base64; none for another reference.",
+              "description": "The kit's media resolver (§6.4), serving every AI channel registered on it: the bytes of each reference `media` names, in base64; none for another reference.",
               "type": "object",
               "additionalProperties": false,
               "required": [
@@ -220,7 +220,7 @@
               }
             },
             "attached_media": {
-              "description": "The kit's attached-media reader (\u00a76.4), serving every AI channel registered on it: the media an event carries outside its content are the media contents, in the serialized form, its metadata lists under `key`.",
+              "description": "The kit's attached-media reader (§6.4), serving every AI channel registered on it: the media an event carries outside its content are the media contents, in the serialized form, its metadata lists under `key`.",
               "type": "object",
               "additionalProperties": false,
               "required": [
@@ -233,16 +233,16 @@
               }
             },
             "orchestration": {
-              "description": "The id of the scripted strategy the kit is built with as its default: every room it creates takes it unless the creation names another or none (\u00a719.7).",
+              "description": "The id of the scripted strategy the kit is built with as its default: every room it creates takes it unless the creation names another or none (§19.7).",
               "type": "string"
             },
             "delivery_gap_timeout_ms": {
-              "description": "How long a delivery lane waits on a cursor hole no lane runs, while no lane holds the room's delivery claim, before it forces the cursor past the hole and emits delivery_skipped (\u00a713.5 Delivery lanes across processes); the implementation's default (30 s) when absent.",
+              "description": "How long a delivery lane waits on a cursor hole no lane runs, while no lane holds the room's delivery claim, before it forces the cursor past the hole and emits delivery_skipped (§13.5 Delivery lanes across processes); the implementation's default (30 s) when absent.",
               "type": "integer",
               "minimum": 1
             },
             "lock_manager": {
-              "description": "The kit's lock manager (\u00a713.5): the in-memory one, whose release fails with `release_error` while a `lock_releases` step has set it failing, as a distributed lock that finds its lease expired.",
+              "description": "The kit's lock manager (§13.5): the in-memory one, whose release fails with `release_error` while a `lock_releases` step has set it failing, as a distributed lock that finds its lease expired.",
               "type": "object",
               "required": [
                 "release_error"
@@ -256,7 +256,7 @@
               }
             },
             "inbound_rate_limit": {
-              "description": "The kit's inbound rate limit (\u00a710.1): a token bucket per channel, full at first and holding at least one token, refilled at the most precise bound's rate; a message past it is refused, blocked with reason rate_limited, before anything is read or written. Absent, none.",
+              "description": "The kit's inbound rate limit (§10.1): a token bucket per channel, full at first and holding at least one token, refilled at the most precise bound's rate; a message past it is refused, blocked with reason rate_limited, before anything is read or written. Absent, none.",
               "type": "object",
               "additionalProperties": false,
               "properties": {
@@ -275,7 +275,7 @@
               }
             },
             "persistence_policy": {
-              "description": "The kit's persistence policy (\u00a714.3): the event types the kit's commits store. `persist_types`, when given, the only types stored; `exclude_types` never stored, whatever `persist_types` names. An event of a type it keeps out is delivered all the same, and consumes no index. Absent, every type is stored.",
+              "description": "The kit's persistence policy (§14.3): the event types the kit's commits store. `persist_types`, when given, the only types stored; `exclude_types` never stored, whatever `persist_types` names. An event of a type it keeps out is delivered all the same, and consumes no index. Absent, every type is stored.",
               "type": "object",
               "additionalProperties": false,
               "properties": {
@@ -294,7 +294,7 @@
               }
             },
             "turn_timeouts": {
-              "description": "The bounds of a turn (\u00a710.6.8), each the implementation's default when absent.",
+              "description": "The bounds of a turn (§10.6.8), each the implementation's default when absent.",
               "type": "object",
               "additionalProperties": false,
               "properties": {
@@ -343,21 +343,21 @@
           }
         },
         "identities": {
-          "description": "Identities stored in the kit's store before the rooms are made (\u00a75.6), each an Identity in the serialized form.",
+          "description": "Identities stored in the kit's store before the rooms are made (§5.6), each an Identity in the serialized form.",
           "type": "array",
           "items": {
             "$ref": "#/$defs/record"
           }
         },
         "strategies": {
-          "description": "The scripted strategies the calls name (\u00a719.7), none installed yet.",
+          "description": "The scripted strategies the calls name (§19.7), none installed yet.",
           "type": "array",
           "items": {
             "$ref": "#/$defs/strategy"
           }
         },
         "session_auditor": {
-          "description": "The run's session auditor (\u00a715.8.2), the implementation's JSONL session auditor over a file of its own; with `attached`, attached to the kit before the steps, as the implementation's attach registers its hooks.",
+          "description": "The run's session auditor (§15.8.2), the implementation's JSONL session auditor over a file of its own; with `attached`, attached to the kit before the steps, as the implementation's attach registers its hooks.",
           "type": "object",
           "additionalProperties": false,
           "properties": {
@@ -367,7 +367,7 @@
           }
         },
         "processes": {
-          "description": "Other processes serving the rooms (\u00a719.7.5 rule 16): each a kit of its own over the run's store and lock manager, holding the setup's channels as objects of its own, a scripted agent answering from the one model of its channel id. A call's `kit` names the one it runs on.",
+          "description": "Other processes serving the rooms (§19.7.5 rule 16): each a kit of its own over the run's store and lock manager, holding the setup's channels as objects of its own, a scripted agent answering from the one model of its channel id. A call's `kit` names the one it runs on.",
           "type": "array",
           "items": {
             "type": "object",
@@ -383,7 +383,7 @@
           }
         },
         "executors": {
-          "description": "Turn executors beside the kit (\u00a710.6.2, \u00a710.6.7), which build and run the channels the setup marks `declared`.",
+          "description": "Turn executors beside the kit (§10.6.2, §10.6.7), which build and run the channels the setup marks `declared`.",
           "type": "array",
           "items": {
             "$ref": "#/$defs/executor"
@@ -404,7 +404,7 @@
           "type": "string"
         },
         "type": {
-          "description": "A ChannelType, serialized (\u00a76.2): sms, websocket, ai, host...",
+          "description": "A ChannelType, serialized (§6.2): sms, websocket, ai, host...",
           "type": "string"
         },
         "category": {
@@ -439,27 +439,27 @@
           "$ref": "#/$defs/reactions"
         },
         "reads_usage": {
-          "description": "With `streams`: its `deliver_stream` also records what each generation tells of its usage (\u00a76.1 deliver_stream, \u00a76.4) as `{\"usage\": ..., \"model\": ..., \"provider\": ...}` under `streamed`. Without it, the channel skips it, as a reader that does not show usage does.",
+          "description": "With `streams`: its `deliver_stream` also records what each generation tells of its usage (§6.1 deliver_stream, §6.4) as `{\"usage\": ..., \"model\": ..., \"provider\": ...}` under `streamed`. Without it, the channel skips it, as a reader that does not show usage does.",
           "type": "boolean"
         },
         "reads_loop_end": {
-          "description": "With `streams`: its `deliver_stream` also records the turn's end, the loop's `LoopEndMarker` the stream hands last (\u00a76.1 deliver_stream, \u00a76.4), as `{\"loop_end\": {\"reason\": ..., \"rounds\": ..., \"usage\": ...}}` under `streamed`. Without it, the channel skips it, as a reader that does not show how a turn ended does.",
+          "description": "With `streams`: its `deliver_stream` also records the turn's end, the loop's `LoopEndMarker` the stream hands last (§6.1 deliver_stream, §6.4), as `{\"loop_end\": {\"reason\": ..., \"rounds\": ..., \"usage\": ...}}` under `streamed`. Without it, the channel skips it, as a reader that does not show how a turn ended does.",
           "type": "boolean"
         },
         "streams": {
-          "description": "Whether the channel takes a streamed response as it is written (\u00a76.1 `supports_streaming_delivery`): its `deliver_stream` reads what it is handed, each item recorded under `streamed`, to the stream's end unless a reaction stops it.",
+          "description": "Whether the channel takes a streamed response as it is written (§6.1 `supports_streaming_delivery`): its `deliver_stream` reads what it is handed, each item recorded under `streamed`, to the stream's end unless a reaction stops it.",
           "type": "boolean"
         },
         "deliver_stream": {
-          "description": "Reactions of a streaming channel's `deliver_stream` (\u00a76.1), tried once per stream it is handed: `stop_after` stops its reading after that text delta or piece of reasoning, `fail` raises once it stopped.",
+          "description": "Reactions of a streaming channel's `deliver_stream` (§6.1), tried once per stream it is handed: `stop_after` stops its reading after that text delta or piece of reasoning, `fail` raises once it stopped.",
           "$ref": "#/$defs/reactions"
         },
         "on_room_attached": {
-          "description": "Reactions of the channel's `on_room_attached` (\u00a76.1), tried once per call: `fail` raises, refusing the attach. Each call is recorded under `room_callbacks`.",
+          "description": "Reactions of the channel's `on_room_attached` (§6.1), tried once per call: `fail` raises, refusing the attach. Each call is recorded under `room_callbacks`.",
           "$ref": "#/$defs/reactions"
         },
         "on_room_detached": {
-          "description": "Reactions of the channel's `on_room_detached` (\u00a76.1), tried once per call: `fail` raises. Each call is recorded under `room_callbacks`.",
+          "description": "Reactions of the channel's `on_room_detached` (§6.1), tried once per call: `fail` raises. Each call is recorded under `room_callbacks`.",
           "$ref": "#/$defs/reactions"
         },
         "model": {
@@ -472,7 +472,7 @@
           }
         },
         "tool_policy": {
-          "description": "A ToolPolicy (\u00a721.1): glob patterns.",
+          "description": "A ToolPolicy (§21.1): glob patterns.",
           "type": "object",
           "additionalProperties": false,
           "properties": {
@@ -491,7 +491,7 @@
           }
         },
         "tool_call_intents": {
-          "description": "A scripted agent's tool_call_intents (\u00a76.4): whether its model is shown each tool's schema with `_roomkit_intent` and its loop takes a call's intent out of the call's arguments; false when absent.",
+          "description": "A scripted agent's tool_call_intents (§6.4): whether its model is shown each tool's schema with `_roomkit_intent` and its loop takes a call's intent out of the call's arguments; false when absent.",
           "type": "boolean"
         },
         "max_tool_rounds": {
@@ -504,12 +504,12 @@
           "minimum": 0
         },
         "max_context_events": {
-          "description": "A scripted agent's max_context_events: the window of its default memory, a sliding window of the room's latest events (\u00a720.3).",
+          "description": "A scripted agent's max_context_events: the window of its default memory, a sliding window of the room's latest events (§20.3).",
           "type": "integer",
           "minimum": 1
         },
         "addresses": {
-          "description": "What the channel's own address methods answer (\u00a75.7, \u00a710.4), in place of the defaults, which write an address as given, name a message's conversation by its sender and record no recipient: `normalize_address` writes each address `normalizes` lists as its value, any other as given; `conversation_address` reads the message's metadata under `conversation_key`, a string not blank, else its sender; with a `recipient_key`, `reply_metadata` names the conversation under that key, `recipient_metadata` an address, and `recipient_address` reads a binding's value under it, or under `recipient_at`, written by `normalize_address`.",
+          "description": "What the channel's own address methods answer (§5.7, §10.4), in place of the defaults, which write an address as given, name a message's conversation by its sender and record no recipient: `normalize_address` writes each address `normalizes` lists as its value, any other as given; `conversation_address` reads the message's metadata under `conversation_key`, a string not blank, else its sender; with a `recipient_key`, `reply_metadata` names the conversation under that key, `recipient_metadata` an address, and `recipient_address` reads a binding's value under it, or under `recipient_at`, written by `normalize_address`.",
           "type": "object",
           "additionalProperties": false,
           "properties": {
@@ -529,34 +529,34 @@
           }
         },
         "streams_in": {
-          "description": "The rooms the channel takes a streamed response in (\u00a76.1 `supports_streaming_delivery_for`), asked whatever `streams` declares; in any other room it is delivered the answer whole. Absent, it streams wherever `streams` says.",
+          "description": "The rooms the channel takes a streamed response in (§6.1 `supports_streaming_delivery_for`), asked whatever `streams` declares; in any other room it is delivered the answer whole. Absent, it streams wherever `streams` says.",
           "type": "array",
           "items": {
             "type": "string"
           }
         },
         "recent_events_window": {
-          "description": "How many of the room's latest events the channel declares it reads (\u00a76.1 `recent_events_window`), 0 by default.",
+          "description": "How many of the room's latest events the channel declares it reads (§6.1 `recent_events_window`), 0 by default.",
           "type": "integer",
           "minimum": 0
         },
         "sender_is_participant": {
-          "description": "Whether the channel names its own senders: its inbound `sender_id` is a room's `Participant.id`, not an address (\u00a711.6), which no resolver is asked about.",
+          "description": "Whether the channel names its own senders: its inbound `sender_id` is a room's `Participant.id`, not an address (§11.6), which no resolver is asked about.",
           "type": "boolean"
         },
         "serialize_room_turns": {
-          "description": "A scripted agent's serialize_room_turns: its turns in a room run one after the other, each reading the answers before it (\u00a76.4, A room's turns one after the other).",
+          "description": "A scripted agent's serialize_room_turns: its turns in a room run one after the other, each reading the answers before it (§6.4, A room's turns one after the other).",
           "type": "boolean"
         },
         "steer_room_turns": {
-          "description": "A scripted agent's steer_room_turns: a message for a room where its turn runs is handed to that turn, read at its next stop, rather than a turn of its own (\u00a76.4, A message for the running turn; \u00a721.3). It implies serialize_room_turns.",
+          "description": "A scripted agent's steer_room_turns: a message for a room where its turn runs is handed to that turn, read at its next stop, rather than a turn of its own (§6.4, A message for the running turn; §21.3). It implies serialize_room_turns.",
           "type": "boolean"
         },
         "memory": {
           "$ref": "#/$defs/scripted_memory"
         },
         "human_input": {
-          "description": "A scripted agent's human_input_handler: the tools that ask a person (\u00a79.3 ON_USER_INPUT_REQUIRED, where the other party is a human; \u00a710.6.5 Human input). The agent declares `tools` and serves every name of `tool_names` itself, before its tools' handler, a name it does not define served when another of the agent's tools declares it; each call opens a request, which fires `on_user_input_required` and waits for its answer at most `timeout_ms` (300000 by default), bounded by that alone.",
+          "description": "A scripted agent's human_input_handler: the tools that ask a person (§9.3 ON_USER_INPUT_REQUIRED, where the other party is a human; §10.6.5 Human input). The agent declares `tools` and serves every name of `tool_names` itself, before its tools' handler, a name it does not define served when another of the agent's tools declares it; each call opens a request, which fires `on_user_input_required` and waits for its answer at most `timeout_ms` (300000 by default), bounded by that alone.",
           "type": "object",
           "required": [
             "tool_names"
@@ -598,7 +598,7 @@
           }
         },
         "kit_tools": {
-          "description": "Tools the kit makes that a scripted agent is given as its own, among its tools (\u00a723.4): `task_status`, the implementation's TaskStatusTool over the kit, and `cancel_task`, its CancelTaskTool, each reading the room and the channel of the call it serves, with their default windows.",
+          "description": "Tools the kit makes that a scripted agent is given as its own, among its tools (§23.4): `task_status`, the implementation's TaskStatusTool over the kit, and `cancel_task`, its CancelTaskTool, each reading the room and the channel of the call it serves, with their default windows.",
           "type": "array",
           "items": {
             "enum": [
@@ -609,7 +609,7 @@
           "uniqueItems": true
         },
         "tool_search": {
-          "description": "A scripted agent's tool_search (\u00a76.4): true hides its catalogue behind find_tools and list_tools, false never does; null, the default, decides each turn from the catalogue's size.",
+          "description": "A scripted agent's tool_search (§6.4): true hides its catalogue behind find_tools and list_tools, false never does; null, the default, decides each turn from the catalogue's size.",
           "type": [
             "boolean",
             "null"
@@ -648,7 +648,7 @@
           "minimum": 1
         },
         "tool_timeout_ms": {
-          "description": "A scripted agent's bound on each call of its tools (\u00a721.6), in milliseconds; null bounds nothing. The implementation's default when absent.",
+          "description": "A scripted agent's bound on each call of its tools (§21.6), in milliseconds; null bounds nothing. The implementation's default when absent.",
           "type": [
             "integer",
             "null"
@@ -656,7 +656,7 @@
           "minimum": 1
         },
         "tool_timeouts_ms": {
-          "description": "A scripted agent's bound per tool name (\u00a721.6), in milliseconds, above its default and above a tool's own bound; null leaves that tool unbounded.",
+          "description": "A scripted agent's bound per tool name (§21.6), in milliseconds, above its default and above a tool's own bound; null leaves that tool unbounded.",
           "type": "object",
           "additionalProperties": {
             "type": [
@@ -667,60 +667,60 @@
           }
         },
         "turn_budget_tokens": {
-          "description": "A scripted agent's budget of billed tokens per turn (\u00a76.4): its input, output, cache read, cache creation and image tokens, counted as each generation reports them; past it the turn ends budget_exceeded at its next round boundary.",
+          "description": "A scripted agent's budget of billed tokens per turn (§6.4): its input, output, cache read, cache creation and image tokens, counted as each generation reports them; past it the turn ends budget_exceeded at its next round boundary.",
           "type": "integer",
           "minimum": 1
         },
         "turn_budget_usd": {
-          "description": "A scripted agent's cost budget per turn (\u00a76.4): each generation's usage priced at its model's catalogue price (`model.pricing`), added up; past it the turn ends budget_exceeded at its next round boundary. A model with no price refuses it.",
+          "description": "A scripted agent's cost budget per turn (§6.4): each generation's usage priced at its model's catalogue price (`model.pricing`), added up; past it the turn ends budget_exceeded at its next round boundary. A model with no price refuses it.",
           "type": "number",
           "exclusiveMinimum": 0
         },
         "system_prompt": {
-          "description": "A scripted agent's system_prompt (\u00a76.4, Appendix A.9): what its turns' system prompt opens with, under the one its binding's metadata or its config_provider sets. None when absent.",
+          "description": "A scripted agent's system_prompt (§6.4, Appendix A.9): what its turns' system prompt opens with, under the one its binding's metadata or its config_provider sets. None when absent.",
           "type": "string"
         },
         "temperature": {
-          "description": "A scripted agent's temperature (\u00a76.4): how freely its model samples, under the one its binding's metadata or its config_provider sets; 0.7 when absent.",
+          "description": "A scripted agent's temperature (§6.4): how freely its model samples, under the one its binding's metadata or its config_provider sets; 0.7 when absent.",
           "type": "number"
         },
         "max_tokens": {
-          "description": "A scripted agent's max_tokens (\u00a76.4): the most tokens a generation writes, under the one its binding's metadata or its config_provider sets. None when absent.",
+          "description": "A scripted agent's max_tokens (§6.4): the most tokens a generation writes, under the one its binding's metadata or its config_provider sets. None when absent.",
           "type": "integer",
           "minimum": 1
         },
         "thinking_budget": {
-          "description": "A scripted agent's thinking_budget (\u00a76.7, Appendix A.9): the tokens a turn may reason with, 0 stating off, under the one its binding's metadata or its config_provider sets. None when absent.",
+          "description": "A scripted agent's thinking_budget (§6.7, Appendix A.9): the tokens a turn may reason with, 0 stating off, under the one its binding's metadata or its config_provider sets. None when absent.",
           "type": "integer"
         },
         "enable_thinking": {
-          "description": "A scripted agent's enable_thinking (\u00a76.7, Appendix A.9): whether a turn reasons, under the one its binding's metadata or its config_provider sets, an off turning off a budget a less specific level set. None when absent.",
+          "description": "A scripted agent's enable_thinking (§6.7, Appendix A.9): whether a turn reasons, under the one its binding's metadata or its config_provider sets, an off turning off a budget a less specific level set. None when absent.",
           "type": "boolean"
         },
         "thinking_coalesce_ms": {
-          "description": "A scripted agent's thinking_coalesce_ms (\u00a76.7): how long its model's reasoning batches into one THINKING_DELTA, 0 publishing each piece; 80 when absent.",
+          "description": "A scripted agent's thinking_coalesce_ms (§6.7): how long its model's reasoning batches into one THINKING_DELTA, 0 publishing each piece; 80 when absent.",
           "type": "number"
         },
         "thinking_coalesce_chars": {
-          "description": "A scripted agent's thinking_coalesce_chars (\u00a76.7): how many characters batch into one THINKING_DELTA; 256 when absent.",
+          "description": "A scripted agent's thinking_coalesce_chars (§6.7): how many characters batch into one THINKING_DELTA; 256 when absent.",
           "type": "integer",
           "minimum": 1
         },
         "text_coalesce_ms": {
-          "description": "A scripted agent's text_coalesce_ms (\u00a76.4): how long its answer's text batches into one TEXT_DELTA, 0 for none; 80 when absent",
+          "description": "A scripted agent's text_coalesce_ms (§6.4): how long its answer's text batches into one TEXT_DELTA, 0 for none; 80 when absent",
           "type": "number"
         },
         "text_coalesce_chars": {
-          "description": "A scripted agent's text_coalesce_chars (\u00a76.4): how many characters batch into one TEXT_DELTA; 256 when absent",
+          "description": "A scripted agent's text_coalesce_chars (§6.4): how many characters batch into one TEXT_DELTA; 256 when absent",
           "type": "integer",
           "minimum": 1
         },
         "publish_text_deltas": {
-          "description": "A scripted agent's publish_text_deltas (\u00a76.4): whether a turn read as a delegated task's trace publishes its answer's text",
+          "description": "A scripted agent's publish_text_deltas (§6.4): whether a turn read as a delegated task's trace publishes its answer's text",
           "type": "boolean"
         },
         "publish_thinking_text": {
-          "description": "A scripted agent's publish_thinking_text (\u00a76.7): whether its thinking events carry the reasoning's text to the room's subscribers; false when absent, which reads its length alone.",
+          "description": "A scripted agent's publish_thinking_text (§6.7): whether its thinking events carry the reasoning's text to the room's subscribers; false when absent, which reads its length alone.",
           "type": "boolean"
         },
         "config_provider": {
@@ -752,32 +752,32 @@
           }
         },
         "skills": {
-          "description": "A scripted agent's skills (\u00a724.3): its registry, each skill written to a directory of its own and discovered from there; an empty list is an empty registry, which is not none: a turn's registry is read only on an agent given one. None when absent.",
+          "description": "A scripted agent's skills (§24.3): its registry, each skill written to a directory of its own and discovered from there; an empty list is an empty registry, which is not none: a turn's registry is read only on an agent given one. None when absent.",
           "type": "array",
           "items": {
             "$ref": "#/$defs/scripted_skill"
           }
         },
         "skills_in_prompt": {
-          "description": "A scripted agent's skills_in_prompt (\u00a724.3): whether its turns' system prompt lists the skills, whichever registry a turn reads; the instructions of the skills active are written either way. True when absent.",
+          "description": "A scripted agent's skills_in_prompt (§24.3): whether its turns' system prompt lists the skills, whichever registry a turn reads; the instructions of the skills active are written either way. True when absent.",
           "type": "boolean"
         },
         "reasoning_effort": {
-          "description": "A scripted agent's reasoning_effort (\u00a76.7): the effort its turns ask for, under the one its binding's metadata sets; null, as absent, sets none.",
+          "description": "A scripted agent's reasoning_effort (§6.7): the effort its turns ask for, under the one its binding's metadata sets; null, as absent, sets none.",
           "type": [
             "string",
             "null"
           ]
         },
         "response_schema": {
-          "description": "A scripted agent's response_schema (\u00a76.7, Appendix A.9): the JSON Schema each turn's answer must satisfy, under the one its binding's metadata or its config_provider sets; null, as absent, sets none.",
+          "description": "A scripted agent's response_schema (§6.7, Appendix A.9): the JSON Schema each turn's answer must satisfy, under the one its binding's metadata or its config_provider sets; null, as absent, sets none.",
           "type": [
             "object",
             "null"
           ]
         },
         "retry_policy": {
-          "description": "A scripted agent's retry_policy (\u00a76.4, a generation's retries): how many times a generation its provider refused as worth another try, before it handed anything, is tried again, each delay `base_delay_ms` times `exponential_base` to the attempt, at most `max_delay_ms`. No retry when absent.",
+          "description": "A scripted agent's retry_policy (§6.4, a generation's retries): how many times a generation its provider refused as worth another try, before it handed anything, is tried again, each delay `base_delay_ms` times `exponential_base` to the attempt, at most `max_delay_ms`. No retry when absent.",
           "type": "object",
           "additionalProperties": false,
           "properties": {
@@ -804,11 +804,11 @@
           }
         },
         "fallback_model": {
-          "description": "A scripted agent's fallback_provider (\u00a76.4): a second scripted model, asked once a generation's retries are spent on refusals worth another try, before anything was handed; its requests are under `<agent>/fallback` in `expect.models`.",
+          "description": "A scripted agent's fallback_provider (§6.4): a second scripted model, asked once a generation's retries are spent on refusals worth another try, before anything was handed; its requests are under `<agent>/fallback` in `expect.models`.",
           "$ref": "#/$defs/model"
         },
         "max_author_images": {
-          "description": "A scripted agent's max_author_images: how many of the newest author images a turn sends as images, its history and its input counted together (\u00a76.4), the rest read as a mention; null bounds nothing. 4 by default.",
+          "description": "A scripted agent's max_author_images: how many of the newest author images a turn sends as images, its history and its input counted together (§6.4), the rest read as a mention; null bounds nothing. 4 by default.",
           "type": [
             "integer",
             "null"
@@ -816,12 +816,12 @@
           "minimum": 0
         },
         "evict_threshold_tokens": {
-          "description": "A scripted agent's evict_threshold_tokens: the estimated tokens past which a tool's outcome reaches the model as a preview, its whole text stored for read_stored_result (\u00a721.5). 5000 by default.",
+          "description": "A scripted agent's evict_threshold_tokens: the estimated tokens past which a tool's outcome reaches the model as a preview, its whole text stored for read_stored_result (§21.5). 5000 by default.",
           "type": "integer",
           "minimum": 0
         },
         "describe_empty_event": {
-          "description": "A scripted agent's describe_empty_event: the host's describer, asked of an event whose content reads as nothing in the turn's transcript (\u00a76.4), which answers every event it is asked about with `says`; null keeps the event left out.",
+          "description": "A scripted agent's describe_empty_event: the host's describer, asked of an event whose content reads as nothing in the turn's transcript (§6.4), which answers every event it is asked about with `says`; null keeps the event left out.",
           "type": "object",
           "required": [
             "says"
@@ -837,7 +837,7 @@
           }
         },
         "agent": {
-          "description": "A scripted agent built as an Agent (RFC \u00a719.7) with this identity: its role, description and scope written at the end of its turns' system prompt as an identity block, in its language unless the room's conversation state sets one, unless identity_in_prompt is false. With a greeting and auto_greet (true unless set false), it greets each room a session starts in that binds it, once per room (\u00a719.1).",
+          "description": "A scripted agent built as an Agent (RFC §19.7) with this identity: its role, description and scope written at the end of its turns' system prompt as an identity block, in its language unless the room's conversation state sets one, unless identity_in_prompt is false. With a greeting and auto_greet (true unless set false), it greets each room a session starts in that binds it, once per room (§19.1).",
           "type": "object",
           "additionalProperties": false,
           "properties": {
@@ -871,7 +871,7 @@
           }
         },
         "audit": {
-          "description": "The auditor the agent's tool calls are recorded to (\u00a715.8): its tool handler, serving every scripted tool, wrapped in the implementation's audit_tool_handler under the agent's id, recording to the run's tool auditor (`tool_auditor`) or to the run's session auditor through its tool_auditor bridge (`session_auditor`).",
+          "description": "The auditor the agent's tool calls are recorded to (§15.8): its tool handler, serving every scripted tool, wrapped in the implementation's audit_tool_handler under the agent's id, recording to the run's tool auditor (`tool_auditor`) or to the run's session auditor through its tool_auditor bridge (`session_auditor`).",
           "enum": [
             "tool_auditor",
             "session_auditor"
@@ -881,11 +881,11 @@
           "$ref": "#/$defs/acp_channel"
         },
         "declared": {
-          "description": "The kit holds the channel by its declaration alone, and the executors of `setup.executors` that host it build it (\u00a710.6.2).",
+          "description": "The kit holds the channel by its declaration alone, and the executors of `setup.executors` that host it build it (§10.6.2).",
           "type": "boolean"
         },
         "verbs": {
-          "description": "A scripted channel's per-room verbs (\u00a710.6.3), by name: `keeps` merges the call's arguments into what this build keeps for the room and answers it, `reads` answers it, `result` is answered as written.",
+          "description": "A scripted channel's per-room verbs (§10.6.3), by name: `keeps` merges the call's arguments into what this build keeps for the room and answers it, `reads` answers it, `result` is answered as written.",
           "type": "object",
           "additionalProperties": {
             "type": "object",
@@ -1192,15 +1192,15 @@
               "type": "object"
             },
             "response_metadata": {
-              "description": "In an `on_event` reaction: the record the channel's turn writes (\u00a76.4, a ChannelOutput's response_metadata), which its caller's record reads.",
+              "description": "In an `on_event` reaction: the record the channel's turn writes (§6.4, a ChannelOutput's response_metadata), which its caller's record reads.",
               "type": "object"
             },
             "error": {
-              "description": "In an `on_event` reaction: the error the channel met while producing its output, with this message (\u00a76.1, a ChannelOutput's error): the output goes on, its response events kept, and the error surfaces as a raised one's (\u00a79.3 ON_ERROR).",
+              "description": "In an `on_event` reaction: the error the channel met while producing its output, with this message (§6.1, a ChannelOutput's error): the output goes on, its response events kept, and the error surfaces as a raised one's (§9.3 ON_ERROR).",
               "type": "string"
             },
             "provider_result": {
-              "description": "The provider receipt returned in ChannelOutput, preserved in the delivery result (\u00a75.13). A refusal is scripted with refuse instead.",
+              "description": "The provider receipt returned in ChannelOutput, preserved in the delivery result (§5.13). A refusal is scripted with refuse instead.",
               "type": [
                 "object",
                 "null"
@@ -1236,7 +1236,7 @@
           "$ref": "#/$defs/hook_result"
         },
         "hold_after": {
-          "description": "In a `deliver_stream` reaction: the channel holds its read at `hold_gate` once it was handed the text delta this string equals, until a step opens the gate (\u00a710.6.4).",
+          "description": "In a `deliver_stream` reaction: the channel holds its read at `hold_gate` once it was handed the text delta this string equals, until a step opens the gate (§10.6.4).",
           "type": "string"
         },
         "hold_gate": {
@@ -1244,20 +1244,20 @@
           "type": "string"
         },
         "stop_after": {
-          "description": "In a `deliver_stream` reaction: the channel stops reading the stream once it was handed the text delta or the piece of reasoning this string equals (\u00a712.2 step 13s).",
+          "description": "In a `deliver_stream` reaction: the channel stops reading the stream once it was handed the text delta or the piece of reasoning this string equals (§12.2 step 13s).",
           "type": "string"
         },
         "stop_after_rows": {
-          "description": "In a `deliver_stream` reaction: the channel stops reading the stream once it was handed this many of its rows, a call's start or end (\u00a712.2 step 13s).",
+          "description": "In a `deliver_stream` reaction: the channel stops reading the stream once it was handed this many of its rows, a call's start or end (§12.2 step 13s).",
           "type": "integer",
           "minimum": 1
         },
         "parsed": {
-          "description": "In a `parse` reaction: a patch on the event the channel builds (\u00a710.1 step 4), what a channel reads off its own wire. Its members replace the built event's, those of its `source` the built source's; its strings name what the run made, as an action's arguments do.",
+          "description": "In a `parse` reaction: a patch on the event the channel builds (§10.1 step 4), what a channel reads off its own wire. Its members replace the built event's, those of its `source` the built source's; its strings name what the run made, as an action's arguments do.",
           "$ref": "#/$defs/record"
         },
         "refuse": {
-          "description": "In a `deliver` or `on_event` reaction: then the call fails with the provider's explicit refusal (\u00a75.13): `error`, its words, `code` and `retryable`, what the refusal declares, and the `provider_message_id` it names.",
+          "description": "In a `deliver` or `on_event` reaction: then the call fails with the provider's explicit refusal (§5.13): `error`, its words, `code` and `retryable`, what the refusal declares, and the `provider_message_id` it names.",
           "type": "object",
           "additionalProperties": false,
           "properties": {
@@ -1276,14 +1276,14 @@
           }
         },
         "after_turn": {
-          "description": "In an `on_event` reaction: actions the turn leaves to work it began, a task in the turn's execution context that makes them in order once the turn ended (\u00a710.6.5): a verb of the turn's host then crosses as a `room_call`.",
+          "description": "In an `on_event` reaction: actions the turn leaves to work it began, a task in the turn's execution context that makes them in order once the turn ended (§10.6.5): a verb of the turn's host then crosses as a `room_call`.",
           "type": "array",
           "items": {
             "$ref": "#/$defs/action"
           }
         },
         "writes_record": {
-          "description": "In a hook's reaction: writes these keys on the turn's record, on `before_ai_generation` through its context's `response_metadata`, on another trigger through current_response_metadata(), when it answers one (\u00a76.7).",
+          "description": "In a hook's reaction: writes these keys on the turn's record, on `before_ai_generation` through its context's `response_metadata`, on another trigger through current_response_metadata(), when it answers one (§6.7).",
           "type": "object"
         },
         "invalid_result": {
@@ -1331,7 +1331,7 @@
       }
     },
     "hook_result": {
-      "description": "A HookResult (\u00a79.4). A modify's `event` is a patch on the payload: its members replace the payload's.",
+      "description": "A HookResult (§9.4). A modify's `event` is a patch on the payload: its members replace the payload's.",
       "type": "object",
       "required": [
         "action"
@@ -1719,7 +1719,8 @@
             "release_channel",
             "enable_room_hook",
             "store.check_idempotency",
-            "store.get_event_by_idempotency_key"
+            "store.get_event_by_idempotency_key",
+            "store.patch_room_metadata"
           ]
         },
         "organization_id": {
@@ -1758,7 +1759,7 @@
               },
               "defer_delivery": {
                 "type": "boolean",
-                "description": "Returns at the commit, the call's completion handle (\u00a710.1 step 18) named by the call's `as` label for `delivery.cancel` and `delivery.wait`."
+                "description": "Returns at the commit, the call's completion handle (§10.1 step 18) named by the call's `as` label for `delivery.cancel` and `delivery.wait`."
               }
             }
           }
@@ -2579,7 +2580,7 @@
                 "minimum": 1
               },
               "require_structured_result": {
-                "description": "Inline runs only (\u00a723.3): the agent hands its work back by calling the result tool, submit_result, served in the child room alone; a turn ending without the call is re-prompted with the tool's reminder, up to max_result_retries times, then the task's output is the tool's missing payload.",
+                "description": "Inline runs only (§23.3): the agent hands its work back by calling the result tool, submit_result, served in the child room alone; a turn ending without the call is re-prompted with the tool's reminder, up to max_result_retries times, then the task's output is the tool's missing payload.",
                 "type": "boolean"
               },
               "max_result_retries": {
@@ -2688,7 +2689,7 @@
                 "type": "string"
               },
               "timeout_ms": {
-                "description": "The bound on the wait, the RFC's `timeout` in milliseconds (\u00a710.6.5): null once it passes first. None by default.",
+                "description": "The bound on the wait, the RFC's `timeout` in milliseconds (§10.6.5): null once it passes first. None by default.",
                 "type": "integer",
                 "minimum": 1
               }
@@ -3253,7 +3254,7 @@
             ],
             "properties": {
               "key": {
-                "description": "The delivery key the call cancels (\u00a710.1 Explicit delivery cancellation).",
+                "description": "The delivery key the call cancels (§10.1 Explicit delivery cancellation).",
                 "type": "string"
               },
               "reason": {
@@ -3286,7 +3287,7 @@
                 "type": "string"
               },
               "directive": {
-                "description": "A steering directive in the serialized form (\u00a721.3): `{\"type\": \"cancel\", \"reason\": ...}`, `{\"type\": \"inject_message\", \"content\": ...}` or `{\"type\": \"update_system_prompt\", \"append\": ...}`.",
+                "description": "A steering directive in the serialized form (§21.3): `{\"type\": \"cancel\", \"reason\": ...}`, `{\"type\": \"inject_message\", \"content\": ...}` or `{\"type\": \"update_system_prompt\", \"append\": ...}`.",
                 "type": "object",
                 "required": [
                   "type"
@@ -3411,7 +3412,7 @@
           "then": {
             "properties": {
               "orchestration": {
-                "description": "The id of the scripted strategy the room is created with, `null` for none; absent, the kit's default (\u00a719.7).",
+                "description": "The id of the scripted strategy the room is created with, `null` for none; absent, the kit's default (§19.7).",
                 "type": [
                   "string",
                   "null"
@@ -4193,7 +4194,7 @@
                 "type": "string"
               },
               "kind": {
-                "description": "An ephemeral event's type (\u00a78.4).",
+                "description": "An ephemeral event's type (§8.4).",
                 "type": "string"
               },
               "data": {
@@ -4437,7 +4438,7 @@
           }
         },
         "room_callbacks": {
-          "description": "Per room and scripted channel, the room callbacks the kit made (\u00a76.1), in order: `{\"call\": \"on_room_attached\", \"binding\": ...}` with the binding it was handed, `{\"call\": \"on_room_detached\"}`.",
+          "description": "Per room and scripted channel, the room callbacks the kit made (§6.1), in order: `{\"call\": \"on_room_attached\", \"binding\": ...}` with the binding it was handed, `{\"call\": \"on_room_detached\"}`.",
           "type": "object",
           "additionalProperties": {
             "type": "object",
@@ -4462,7 +4463,7 @@
           }
         },
         "ingested": {
-          "description": "Per room and scripted agent with a scripted memory, the events its memory was handed (\u00a720 ingest), in order, matched as the timeline's events.",
+          "description": "Per room and scripted agent with a scripted memory, the events its memory was handed (§20 ingest), in order, matched as the timeline's events.",
           "type": "object",
           "additionalProperties": {
             "type": "object",
@@ -4472,7 +4473,7 @@
           }
         },
         "compacted": {
-          "description": "Per room and scripted agent with a scripted memory, the compactions between two tool rounds its memory was asked (\u00a76.4, \u00a720.1), in order: each `{history, usage}`, `history` the messages it was handed, each as `models` reads a request's, `usage` the round's token counters.",
+          "description": "Per room and scripted agent with a scripted memory, the compactions between two tool rounds its memory was asked (§6.4, §20.1), in order: each `{history, usage}`, `history` the messages it was handed, each as `models` reads a request's, `usage` the round's token counters.",
           "type": "object",
           "additionalProperties": {
             "type": "object",
@@ -4551,21 +4552,21 @@
           }
         },
         "thinking_events": {
-          "description": "Per room, the THINKING_START, THINKING_DELTA and THINKING_END ephemeral events its subscribers read (\u00a76.7), in order: each `{type, thinking_length, round, channel_id}`, and `thinking` for an agent that publishes its text.",
+          "description": "Per room, the THINKING_START, THINKING_DELTA and THINKING_END ephemeral events its subscribers read (§6.7), in order: each `{type, thinking_length, round, channel_id}`, and `thinking` for an agent that publishes its text.",
           "type": "object",
           "additionalProperties": {
             "type": "array"
           }
         },
         "tool_events": {
-          "description": "Per room, the TOOL_CALL_START, TOOL_CALL_END and TOOL_CALL_DELTA ephemeral events its subscribers read (\u00a76.4, \u00a78.4), in order: each `{type, tool_calls, round, channel_id}`, and `duration_ms` for an end that ran its calls.",
+          "description": "Per room, the TOOL_CALL_START, TOOL_CALL_END and TOOL_CALL_DELTA ephemeral events its subscribers read (§6.4, §8.4), in order: each `{type, tool_calls, round, channel_id}`, and `duration_ms` for an end that ran its calls.",
           "type": "object",
           "additionalProperties": {
             "type": "array"
           }
         },
         "models": {
-          "description": "Per scripted agent, each generation's request as the model received it, in order: the `messages` it carries, each `{role, text, parts}` (`parts` its text and image parts in order, each `{text}` or `{image, mime_type}`, null for a text content), the `tool_results`, each `{tool_call_id, name, content, is_error}` (`name` the tool of its call, `content` a text, or a result's text and image parts in order, written as `parts`), its `system_prompt`, its `temperature` and `max_tokens` (\u00a76.4), its `reasoning_effort`, `thinking_budget` and `enable_thinking` (\u00a76.7), its `response_schema`, null for none (\u00a76.7), and the names of the `tools` it declares, in order.",
+          "description": "Per scripted agent, each generation's request as the model received it, in order: the `messages` it carries, each `{role, text, parts}` (`parts` its text and image parts in order, each `{text}` or `{image, mime_type}`, null for a text content), the `tool_results`, each `{tool_call_id, name, content, is_error}` (`name` the tool of its call, `content` a text, or a result's text and image parts in order, written as `parts`), its `system_prompt`, its `temperature` and `max_tokens` (§6.4), its `reasoning_effort`, `thinking_budget` and `enable_thinking` (§6.7), its `response_schema`, null for none (§6.7), and the names of the `tools` it declares, in order.",
           "type": "object",
           "additionalProperties": {
             "type": [
@@ -4575,7 +4576,7 @@
           }
         },
         "participants": {
-          "description": "Per room, the participants the store holds (\u00a75.5), in the store's order.",
+          "description": "Per room, the participants the store holds (§5.5), in the store's order.",
           "type": "object",
           "additionalProperties": {
             "type": [
@@ -4592,28 +4593,28 @@
           ]
         },
         "media_resolver": {
-          "description": "The kit's media resolver's calls (\u00a76.4), in order: the `url` of each media it is asked for and the `room_id` of the turn that asks.",
+          "description": "The kit's media resolver's calls (§6.4), in order: the `url` of each media it is asked for and the `room_id` of the turn that asks.",
           "type": [
             "array",
             "object"
           ]
         },
         "ai_events": {
-          "description": "Per room, the framework events an AI channel's turn emits (\u00a78.2, Level 1: `before_ai_generation`, `ai_response`), in emission order, matched as `framework_events`.",
+          "description": "Per room, the framework events an AI channel's turn emits (§8.2, Level 1: `before_ai_generation`, `ai_response`), in emission order, matched as `framework_events`.",
           "type": "object",
           "additionalProperties": {
             "type": "array"
           }
         },
         "tool_audit": {
-          "description": "The run's tool auditor's entries in the order it recorded them, each with its entry's members (\u00a715.8.3); its JSONL file holds one line per entry, those members.",
+          "description": "The run's tool auditor's entries in the order it recorded them, each with its entry's members (§15.8.3); its JSONL file holds one line per entry, those members.",
           "type": [
             "array",
             "object"
           ]
         },
         "session_audit": {
-          "description": "The run's session auditor's entries in the order it recorded them, each with its entry's members (\u00a715.8.3); its JSONL file holds one line per entry, those members.",
+          "description": "The run's session auditor's entries in the order it recorded them, each with its entry's members (§15.8.3); its JSONL file holds one line per entry, those members.",
           "type": [
             "array",
             "object"
@@ -4684,7 +4685,7 @@
           }
         },
         "chat_dialect": {
-          "description": "The implementation's Chat Completions rendering each of the model's requests is also written through, kept as `chat_messages` under `models` (\u00a76.4, what a provider renders of a replayed round's reasoning): `openai`, a generic server's, `openai_thinking_field`, a generic server's told by its configuration that it reads `reasoning_content`, or `deepseek`, `minimax` or `kimi`, that vendor's. Not rendered when absent. The model still answers from its rounds. `anthropic` renders native Messages content blocks, without cache markers.",
+          "description": "The implementation's Chat Completions rendering each of the model's requests is also written through, kept as `chat_messages` under `models` (§6.4, what a provider renders of a replayed round's reasoning): `openai`, a generic server's, `openai_thinking_field`, a generic server's told by its configuration that it reads `reasoning_content`, or `deepseek`, `minimax` or `kimi`, that vendor's. Not rendered when absent. The model still answers from its rounds. `anthropic` renders native Messages content blocks, without cache markers.",
           "enum": [
             "openai",
             "openai_thinking_field",
@@ -4695,19 +4696,19 @@
           ]
         },
         "vision": {
-          "description": "Whether the model sees images (\u00a76.4, a provider's supports_vision): false by default.",
+          "description": "Whether the model sees images (§6.4, a provider's supports_vision): false by default.",
           "type": "boolean"
         },
         "response_schema": {
-          "description": "Whether the model takes a response schema (\u00a76.7, a provider's supports_response_schema): false by default. The model then keeps the provider's contract, as the implementation's mock provider does: a request under a schema it cannot take is refused before it is made, unsupported, and no request is kept; a round that calls no tool and does not end on a call its provider could not hand over is checked, a finish_reason of refusal refused, one that ran out of room truncated, any other text not the JSON document the schema asks for invalid_json; a streamed round's check comes before its done event, which the error replaces.",
+          "description": "Whether the model takes a response schema (§6.7, a provider's supports_response_schema): false by default. The model then keeps the provider's contract, as the implementation's mock provider does: a request under a schema it cannot take is refused before it is made, unsupported, and no request is kept; a round that calls no tool and does not end on a call its provider could not hand over is checked, a finish_reason of refusal refused, one that ran out of room truncated, any other text not the JSON document the schema asks for invalid_json; a streamed round's check comes before its done event, which the error replaces.",
           "type": "boolean"
         },
         "response_schema_with_tools": {
-          "description": "Whether the model takes a response schema beside tools (\u00a76.7, a provider's supports_response_schema_with_tools): false by default.",
+          "description": "Whether the model takes a response schema beside tools (§6.7, a provider's supports_response_schema_with_tools): false by default.",
           "type": "boolean"
         },
         "pricing": {
-          "description": "The model's catalogue price (\u00a76.7, a provider's catalog_entry().pricing): Python's ModelPricing, per million tokens, which a cost budget prices each generation at (\u00a76.4). No price when absent.",
+          "description": "The model's catalogue price (§6.7, a provider's catalog_entry().pricing): Python's ModelPricing, per million tokens, which a cost budget prices each generation at (§6.4). No price when absent.",
           "type": "object",
           "required": [
             "input_per_million",
@@ -4764,16 +4765,16 @@
           }
         },
         "context_window": {
-          "description": "The model's input context window in tokens (\u00a76.7, a provider's catalog_entry().context_window), which Tool Search measures a catalogue against (\u00a76.4). Unknown when absent.",
+          "description": "The model's input context window in tokens (§6.7, a provider's catalog_entry().context_window), which Tool Search measures a catalogue against (§6.4). Unknown when absent.",
           "type": "integer",
           "minimum": 0
         },
         "name": {
-          "description": "The model's name (\u00a76.7, a provider's model_name), which a turn's record names as ai_model (\u00a76.4): scripted when absent.",
+          "description": "The model's name (§6.7, a provider's model_name), which a turn's record names as ai_model (§6.4): scripted when absent.",
           "type": "string"
         },
         "provider": {
-          "description": "The provider's name (\u00a76.7, a provider's name), which a turn's record names as ai_provider (\u00a76.4): scripted when absent.",
+          "description": "The provider's name (§6.7, a provider's name), which a turn's record names as ai_provider (§6.4): scripted when absent.",
           "type": "string"
         },
         "deferred_tools": {
@@ -4791,14 +4792,14 @@
           "type": "string"
         },
         "thinking": {
-          "description": "The round's reasoning, in the pieces the model streams it before its text (\u00a76.1 deliver_stream, \u00a76.7): a streaming channel reads each non-empty piece as `{\"thinking\": ...}`, in order, and no other channel reads it. The store holds none of it.",
+          "description": "The round's reasoning, in the pieces the model streams it before its text (§6.1 deliver_stream, §6.7): a streaming channel reads each non-empty piece as `{\"thinking\": ...}`, in order, and no other channel reads it. The store holds none of it.",
           "type": "array",
           "items": {
             "type": "string"
           }
         },
         "deltas": {
-          "description": "The round's text, in the pieces the model writes it, waiting between two, so a reader is handed each apart (\u00a710.6.4): in place of `text`.",
+          "description": "The round's text, in the pieces the model writes it, waiting between two, so a reader is handed each apart (§10.6.4): in place of `text`.",
           "type": "array",
           "items": {
             "type": "string"
@@ -4820,7 +4821,7 @@
           }
         },
         "fails": {
-          "description": "The model fails with this message once it wrote its text, before its calls and its end: the response stream raises (\u00a712.2 step 13s).",
+          "description": "The model fails with this message once it wrote its text, before its calls and its end: the response stream raises (§12.2 step 13s).",
           "type": "string"
         },
         "done": {
@@ -4832,7 +4833,7 @@
           "type": "string"
         },
         "refuses": {
-          "description": "The provider refuses the request once the model wrote its text, before its calls and its end: an error it does not retry, with this HTTP status and message (\u00a76.4).",
+          "description": "The provider refuses the request once the model wrote its text, before its calls and its end: an error it does not retry, with this HTTP status and message (§6.4).",
           "type": "object",
           "additionalProperties": false,
           "required": [
@@ -4847,7 +4848,7 @@
               "type": "string"
             },
             "context_overflow": {
-              "description": "Whether the provider classes the refusal as a context too long for the model (\u00a76.4, a provider error's `context_overflow`); unclassed when absent.",
+              "description": "Whether the provider classes the refusal as a context too long for the model (§6.4, a provider error's `context_overflow`); unclassed when absent.",
               "type": "boolean"
             },
             "provider": {
@@ -4855,7 +4856,7 @@
               "type": "string"
             },
             "retryable": {
-              "description": "Whether the provider says the refusal is worth another try (a provider error's `retryable`, \u00a76.4): false by default.",
+              "description": "Whether the provider says the refusal is worth another try (a provider error's `retryable`, §6.4): false by default.",
               "type": "boolean"
             }
           }
@@ -4869,7 +4870,7 @@
           "type": "boolean"
         },
         "stream": {
-          "description": "The round's events in the order the model streams them, in place of `text`, `deltas`, `thinking` and `calls` (\u00a76.4): a piece of reasoning, its `thinking` empty for a block's signature or redacted data alone, the `block` a vendor names it with; a piece of text; a call.",
+          "description": "The round's events in the order the model streams them, in place of `text`, `deltas`, `thinking` and `calls` (§6.4): a piece of reasoning, its `thinking` empty for a block's signature or redacted data alone, the `block` a vendor names it with; a piece of text; a call.",
           "type": "array",
           "items": {
             "oneOf": [
@@ -4955,7 +4956,7 @@
           }
         },
         "whole_response": {
-          "description": "The round is a whole response, as a provider that does not stream returns it (\u00a76.4): its text and calls as the round gives them, its reasoning read from these members, handed to the loop first.",
+          "description": "The round is a whole response, as a provider that does not stream returns it (§6.4): its text and calls as the round gives them, its reasoning read from these members, handed to the loop first.",
           "type": "object",
           "additionalProperties": false,
           "properties": {
@@ -4991,7 +4992,7 @@
       }
     },
     "model_call": {
-      "description": "A call the round makes. `cut`: the response was cut short over its arguments, which never arrived whole (\u00a76.4); only a round's last call, under a finish_reason that cuts calls.",
+      "description": "A call the round makes. `cut`: the response was cut short over its arguments, which never arrived whole (§6.4); only a round's last call, under a finish_reason that cuts calls.",
       "type": "object",
       "required": [
         "id",
@@ -5012,13 +5013,13 @@
           "type": "boolean"
         },
         "metadata": {
-          "description": "Provider-owned data of the call (a thought signature), which goes back with it when the round is replayed (\u00a76.4).",
+          "description": "Provider-owned data of the call (a thought signature), which goes back with it when the round is replayed (§6.4).",
           "type": "object"
         }
       }
     },
     "scripted_skill": {
-      "description": "A skill a scripted registry holds (\u00a724.1): a directory named after it holding its SKILL.md, whose frontmatter gives `name` and `description` and whose body is `instructions`, and each of `references` under its references/ directory, by file name.",
+      "description": "A skill a scripted registry holds (§24.1): a directory named after it holding its SKILL.md, whose frontmatter gives `name` and `description` and whose body is `instructions`, and each of `references` under its references/ directory, by file name.",
       "type": "object",
       "required": [
         "name",
@@ -5044,7 +5045,7 @@
       }
     },
     "turn_config": {
-      "description": "One turn's configuration (Appendix A.9, per-turn settings), Python's AIChannelTurnConfig: each setting under the binding's metadata and over the agent's own, a null or absent one not set. `tools` replaces the toolset the binding's metadata declares, the agent's own tools still added after it; `tool_handler` serves the host's tools for this turn alone, in place of the agent's handler: each a scripted tool answering its calls, a name it does not hold unserved. `skills` gives the turn a skill registry of its own (\u00a724.3), written as a scripted agent's, in place of the agent's for this turn alone, an empty list an empty registry.",
+      "description": "One turn's configuration (Appendix A.9, per-turn settings), Python's AIChannelTurnConfig: each setting under the binding's metadata and over the agent's own, a null or absent one not set. `tools` replaces the toolset the binding's metadata declares, the agent's own tools still added after it; `tool_handler` serves the host's tools for this turn alone, in place of the agent's handler: each a scripted tool answering its calls, a name it does not hold unserved. `skills` gives the turn a skill registry of its own (§24.3), written as a scripted agent's, in place of the agent's for this turn alone, an empty list an empty registry.",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -5141,7 +5142,7 @@
       }
     },
     "scripted_tool": {
-      "description": "A tool the scripted agent serves, declared with its definition, answering every call one way: `returns` a text; `raises` an error of a kind (\u00a79.3: the model reads the kind, the observers the message); `fails` or `refuses` with words the model reads (\u00a79.3); `hangs`, never answering; `declines`, served by nothing.",
+      "description": "A tool the scripted agent serves, declared with its definition, answering every call one way: `returns` a text; `raises` an error of a kind (§9.3: the model reads the kind, the observers the message); `fails` or `refuses` with words the model reads (§9.3); `hangs`, never answering; `declines`, served by nothing.",
       "type": "object",
       "required": [
         "name"
@@ -5158,14 +5159,14 @@
           "type": "object"
         },
         "tags": {
-          "description": "The tool's tags: English keywords find_tools searches beside its name and description (\u00a76.4).",
+          "description": "The tool's tags: English keywords find_tools searches beside its name and description (§6.4).",
           "type": "array",
           "items": {
             "type": "string"
           }
         },
         "changes_state": {
-          "description": "Whether the tool's definition declares that a call it answers may change what later calls read (\u00a76.4, the anti-loop guard): false by default.",
+          "description": "Whether the tool's definition declares that a call it answers may change what later calls read (§6.4, the anti-loop guard): false by default.",
           "type": "boolean"
         },
         "returns": {
@@ -5197,7 +5198,7 @@
           "type": "boolean"
         },
         "declines": {
-          "description": "The tool's handler declines every call as not its own (\u00a721.4): a call served by nothing, which an `on_tool_call` SYNC hook may serve (\u00a79.3).",
+          "description": "The tool's handler declines every call as not its own (§21.4): a call served by nothing, which an `on_tool_call` SYNC hook may serve (§9.3).",
           "type": "boolean"
         },
         "gate": {
@@ -5205,14 +5206,14 @@
           "type": "string"
         },
         "declared": {
-          "description": "Whether the agent declares the tool among its own (\u00a721.1), true by default: an undeclared tool is served by the agent's tool handler all the same, for a hook that declares it (\u00a76.4, What the generation hooks see).",
+          "description": "Whether the agent declares the tool among its own (§21.1), true by default: an undeclared tool is served by the agent's tool handler all the same, for a hook that declares it (§6.4, What the generation hooks see).",
           "type": "boolean"
         },
         "returns_json": {
-          "description": "The tool answers this JSON value, not a text: the model reads it as JSON (\u00a76.7), an object's members in the order written; a list whose every item is a mapping in a part's exact shape (`{\"type\": \"text\", \"text\"}`, `{\"type\": \"image\", \"url\", \"mime_type\"}`) as those parts (\u00a721.4)."
+          "description": "The tool answers this JSON value, not a text: the model reads it as JSON (§6.7), an object's members in the order written; a list whose every item is a mapping in a part's exact shape (`{\"type\": \"text\", \"text\"}`, `{\"type\": \"image\", \"url\", \"mime_type\"}`) as those parts (§21.4)."
         },
         "returns_parts": {
-          "description": "The tool answers these content parts in order, each `{text}` or `{image, mime_type}` (\u00a721.4): a text and the images a model that sees reads in the round (\u00a76.4).",
+          "description": "The tool answers these content parts in order, each `{text}` or `{image, mime_type}` (§21.4): a text and the images a model that sees reads in the round (§6.4).",
           "type": "array",
           "minItems": 1,
           "items": {
@@ -5251,7 +5252,7 @@
           }
         },
         "writes_record": {
-          "description": "Before it answers, each call writes these keys on the turn's record through current_response_metadata(), when it answers one (\u00a76.7).",
+          "description": "Before it answers, each call writes these keys on the turn's record through current_response_metadata(), when it answers one (§6.7).",
           "type": "object"
         }
       },
@@ -5299,7 +5300,7 @@
       ]
     },
     "room_hook": {
-      "description": "A hook registered for one room (\u00a79.1): what a registration for a room declares, a hook's name, trigger, execution, priority, fail_closed and needs_lock, with no filter and the default timeout.",
+      "description": "A hook registered for one room (§9.1): what a registration for a room declares, a hook's name, trigger, execution, priority, fail_closed and needs_lock, with no filter and the default timeout.",
       "type": "object",
       "required": [
         "name",
@@ -5408,7 +5409,7 @@
       ]
     },
     "store_call": {
-      "description": "A call of the store's own interface (RFC \u00a714.1), `store.` and the operation's name, with the operation's arguments by name: what the store answers, whatever the kit does.",
+      "description": "A call of the store's own interface (RFC §14.1), `store.` and the operation's name, with the operation's arguments by name: what the store answers, whatever the kit does.",
       "allOf": [
         {
           "if": {
@@ -5975,11 +5976,37 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "store.patch_room_metadata"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "patch"
+            ],
+            "properties": {
+              "patch": {
+                "type": "object"
+              },
+              "unset": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
         }
       ]
     },
     "identity_resolver": {
-      "description": "A scripted identity resolver (\u00a711.1), the kit's: it records each call (`expect.resolver`), then answers with the first of its `answers` whose `when` holds, `{\"status\": \"unknown\"}` when none does.",
+      "description": "A scripted identity resolver (§11.1), the kit's: it records each call (`expect.resolver`), then answers with the first of its `answers` whose `when` holds, `{\"status\": \"unknown\"}` when none does.",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -5992,7 +6019,7 @@
       }
     },
     "resolver_answer": {
-      "description": "One answer of a scripted resolver, used once unless it repeats: it holds at its `gate` first, then raises with `fail`, or answers `result`, an IdentityResult (\u00a711.1).",
+      "description": "One answer of a scripted resolver, used once unless it repeats: it holds at its `gate` first, then raises with `fail`, or answers `result`, an IdentityResult (§11.1).",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -6029,7 +6056,7 @@
       }
     },
     "identity_hook": {
-      "description": "An identity hook (\u00a711.2), registered apart from the hooks of \u00a79.1: it records each call, its payload the event and the IdentityResult it is handed, then answers with its reaction's `result`, an IdentityHookResult (\u00a711.3), or null with none.",
+      "description": "An identity hook (§11.2), registered apart from the hooks of §9.1: it records each call, its payload the event and the IdentityResult it is handed, then answers with its reaction's `result`, an IdentityHookResult (§11.3), or null with none.",
       "type": "object",
       "required": [
         "name",
@@ -6101,7 +6128,7 @@
       }
     },
     "scripted_memory": {
-      "description": "A scripted agent's memory (\u00a720), in place of its default: the room's latest `max_events` events as a sliding window reads them (\u00a720.3, the agent's max_context_events by default), with the `messages` it built, read before them, the `notes` it retrieved for the turn alone and the `speakers` its messages name (\u00a720.2). `compacts` scripts what it answers each compaction between two tool rounds (\u00a76.4, \u00a720.1). `budget_aware` wraps it in the implementation's budget-aware memory (\u00a720.3), which trims the oldest events to what the window leaves once the rest of the turn is paid for.",
+      "description": "A scripted agent's memory (§20), in place of its default: the room's latest `max_events` events as a sliding window reads them (§20.3, the agent's max_context_events by default), with the `messages` it built, read before them, the `notes` it retrieved for the turn alone and the `speakers` its messages name (§20.2). `compacts` scripts what it answers each compaction between two tool rounds (§6.4, §20.1). `budget_aware` wraps it in the implementation's budget-aware memory (§20.3), which trims the oldest events to what the window leaves once the rest of the turn is paid for.",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -6112,7 +6139,7 @@
         "messages": {
           "type": "array",
           "items": {
-            "description": "A message the memory built: its `role` and its `text`, or its `parts`, texts the message holds back to back as text parts, in order (\u00a76.4).",
+            "description": "A message the memory built: its `role` and its `text`, or its `parts`, texts the message holds back to back as text parts, in order (§6.4).",
             "type": "object",
             "required": [
               "role"
@@ -6164,7 +6191,7 @@
           }
         },
         "compacts": {
-          "description": "What the memory answers each compaction between two tool rounds (\u00a76.4, \u00a720.1), the n-th its n-th item, nothing past the last: `null` hands back nothing, the turn left as it is; an object hands back its `messages` (each `role` and `text`), then the last `keep` messages of the history it was handed (default 0), or `fails` with that message. Each compaction it is asked is kept, which `expect.compacted` reads.",
+          "description": "What the memory answers each compaction between two tool rounds (§6.4, §20.1), the n-th its n-th item, nothing past the last: `null` hands back nothing, the turn left as it is; an object hands back its `messages` (each `role` and `text`), then the last `keep` messages of the history it was handed (default 0), or `fails` with that message. Each compaction it is asked is kept, which `expect.compacted` reads.",
           "type": "array",
           "items": {
             "oneOf": [
@@ -6301,7 +6328,7 @@
           "$ref": "#/$defs/model"
         },
         "retrieval": {
-          "description": "The retrieval memory's knowledge `sources`, `max_results` (default 5) and `min_query_length` (default 3), wrapping the memories above it (\u00a720.2): each source answers every search with its `results` (each `content`, `score`, default 0, and `source`, default empty), at most the search's limit, or `fails` with that message.",
+          "description": "The retrieval memory's knowledge `sources`, `max_results` (default 5) and `min_query_length` (default 3), wrapping the memories above it (§20.2): each source answers every search with its `results` (each `content`, `score`, default 0, and `source`, default empty), at most the search's limit, or `fails` with that message.",
           "type": "object",
           "required": [
             "sources"
@@ -6358,13 +6385,13 @@
           }
         },
         "writes_record": {
-          "description": "Each read writes these keys on the turn's record through current_response_metadata(), when it answers one (\u00a76.7).",
+          "description": "Each read writes these keys on the turn's record through current_response_metadata(), when it answers one (§6.7).",
           "type": "object"
         }
       }
     },
     "strategy_step": {
-      "description": "What a scripted strategy's install does (\u00a719.7), as a reaction does: it holds at its `gate`, makes its actions in order (`$room` the room it is installed in), then refuses the room with `refuse`.",
+      "description": "What a scripted strategy's install does (§19.7), as a reaction does: it holds at its `gate`, makes its actions in order (`$room` the room it is installed in), then refuses the room with `refuse`.",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -6385,7 +6412,7 @@
       }
     },
     "strategy": {
-      "description": "A scripted strategy (\u00a719.7), a host's own: the agents it names by their channel ids, which the kit holds, and what its install and its own uninstall step do.",
+      "description": "A scripted strategy (§19.7), a host's own: the agents it names by their channel ids, which the kit holds, and what its install and its own uninstall step do.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -6589,7 +6616,7 @@
       }
     },
     "loop": {
-      "description": "The implementation's Loop (\u00a719.7.4) in place of a scripted strategy, its agents named by the channel ids of scripted agents with an `agent` identity: the producer answers the room, each message's text its task, and its reviewers review each output in child rooms (\u00a723.3) until they approve or the iterations run out. A strategy with a `loop` has no `agents`, `install` or `uninstall`.",
+      "description": "The implementation's Loop (§19.7.4) in place of a scripted strategy, its agents named by the channel ids of scripted agents with an `agent` identity: the producer answers the room, each message's text its task, and its reviewers review each output in child rooms (§23.3) until they approve or the iterations run out. A strategy with a `loop` has no `agents`, `install` or `uninstall`.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -6626,7 +6653,7 @@
       }
     },
     "supervisor": {
-      "description": "The implementation's Supervisor (\u00a719.7.3) in place of a scripted strategy, its agents named by the channel ids of scripted agents with an `agent` identity: the supervisor answers the room, its workers registered on the kit and never attached. With no `strategy`, the supervisor is given one `delegate_to_<worker>` tool per worker; with one, a single `delegate_workers` tool that runs the whole team, supervised step by step when sequential. A strategy with a `supervisor` has no `agents`, `install`, `uninstall` or `loop`.",
+      "description": "The implementation's Supervisor (§19.7.3) in place of a scripted strategy, its agents named by the channel ids of scripted agents with an `agent` identity: the supervisor answers the room, its workers registered on the kit and never attached. With no `strategy`, the supervisor is given one `delegate_to_<worker>` tool per worker; with one, a single `delegate_workers` tool that runs the whole team, supervised step by step when sequential. A strategy with a `supervisor` has no `agents`, `install`, `uninstall` or `loop`.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -6699,7 +6726,7 @@
       }
     },
     "strategy_uninstall_step": {
-      "description": "What a scripted strategy's own uninstall step does (\u00a719.7): it holds at its `gate`, then makes its actions in order, `$room` the room it is installed in.",
+      "description": "What a scripted strategy's own uninstall step does (§19.7): it holds at its `gate`, then makes its actions in order, `$room` the room it is installed in.",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -6716,7 +6743,7 @@
       }
     },
     "conversation_router": {
-      "description": "A conversation router (\u00a719.4), the implementation's ConversationRouter: its hook is the hook's handler, which records no call.",
+      "description": "A conversation router (§19.4), the implementation's ConversationRouter: its hook is the hook's handler, which records no call.",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -6741,7 +6768,7 @@
       }
     },
     "routing_rule": {
-      "description": "A RoutingRule (\u00a719.4): the agent its conditions select, tried in ascending priority.",
+      "description": "A RoutingRule (§19.4): the agent its conditions select, tried in ascending priority.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -6789,7 +6816,7 @@
       }
     },
     "handoff_options": {
-      "description": "What a handoff handler (\u00a719.6) is built with: the router it serves, the aliases of its targets and the phase each target leads to.",
+      "description": "What a handoff handler (§19.6) is built with: the router it serves, the aliases of its targets and the phase each target leads to.",
       "type": "object",
       "properties": {
         "router": {
@@ -6810,7 +6837,7 @@
       }
     },
     "swarm": {
-      "description": "The implementation's Swarm (\u00a719.7): its agents named by their channel ids, its entry the first when absent.",
+      "description": "The implementation's Swarm (§19.7): its agents named by their channel ids, its entry the first when absent.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -6829,7 +6856,7 @@
       }
     },
     "pipeline": {
-      "description": "The implementation's Pipeline (\u00a719.7.1): its agents named by their channel ids, each handing off to the next, the first the entry point, and the supervisor every event also asks.",
+      "description": "The implementation's Pipeline (§19.7.1): its agents named by their channel ids, each handing off to the next, the first the entry point, and the supervisor every event also asks.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -6848,7 +6875,7 @@
       }
     },
     "pipeline_stage": {
-      "description": "A stage of a ConversationPipeline (\u00a719.5).",
+      "description": "A stage of a ConversationPipeline (§19.5).",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -6899,7 +6926,7 @@
       }
     },
     "scripted_dispatch": {
-      "description": "A scripted dispatch policy (\u00a719.7.5 rule 18), the implementation's MockDispatchPolicy: each decision asked takes the next of `decisions`, a list of channel ids (reason `scripted`) or a decision whole, the last one repeating, and with none it decides what the message asks with no policy; it holds at `gate` and waits `delay_ms` first, then raises `error` when given. It records each turn it is handed, which `expect.dispatch_turns` reads by the strategy's id.",
+      "description": "A scripted dispatch policy (§19.7.5 rule 18), the implementation's MockDispatchPolicy: each decision asked takes the next of `decisions`, a list of channel ids (reason `scripted`) or a decision whole, the last one repeating, and with none it decides what the message asks with no policy; it holds at `gate` and waits `delay_ms` first, then raises `error` when given. It records each turn it is handed, which `expect.dispatch_turns` reads by the strategy's id.",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -6950,7 +6977,7 @@
       }
     },
     "pipeline_options": {
-      "description": "What a ConversationPipeline (\u00a719.5) is built with: its stages, the phase naming its default agent (the first stage's when absent), and its supervisor.",
+      "description": "What a ConversationPipeline (§19.5) is built with: its stages, the phase naming its default agent (the first stage's when absent), and its supervisor.",
       "type": "object",
       "properties": {
         "stages": {
@@ -6968,7 +6995,7 @@
       }
     },
     "discussion_strategy": {
-      "description": "The implementation's Discussion (\u00a719.7.5), installed through the kit: its agents named by their channel ids, its keywords; with done, done(room_id) answers what the last discussion.done call named, false until one.",
+      "description": "The implementation's Discussion (§19.7.5), installed through the kit: its agents named by their channel ids, its keywords; with done, done(room_id) answers what the last discussion.done call named, false until one.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -7027,7 +7054,7 @@
       }
     },
     "acp_channel": {
-      "description": "The channel is the implementation's ACP agent channel (\u00a76.4), RoomKit the ACP client, over a scripted ACP agent the runner serves in its own process on a pipe, at the wire's level (README, \"Scripted ACP agents\"). The channel's `type` is `ai`.",
+      "description": "The channel is the implementation's ACP agent channel (§6.4), RoomKit the ACP client, over a scripted ACP agent the runner serves in its own process on a pipe, at the wire's level (README, \"Scripted ACP agents\"). The channel's `type` is `ai`.",
       "type": "object",
       "required": [
         "cwd",
@@ -7183,14 +7210,14 @@
           }
         },
         "hooks": {
-          "description": "The hooks it registers on triggers a turn fires (\u00a710.6.6), as in the setup's `hooks`.",
+          "description": "The hooks it registers on triggers a turn fires (§10.6.6), as in the setup's `hooks`.",
           "type": "array",
           "items": {
             "$ref": "#/$defs/hook"
           }
         },
         "room_hooks": {
-          "description": "The room hooks it defines on triggers a turn fires (\u00a710.6.6).",
+          "description": "The room hooks it defines on triggers a turn fires (§10.6.6).",
           "type": "array",
           "items": {
             "$ref": "#/$defs/room_hook"

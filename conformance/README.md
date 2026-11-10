@@ -796,6 +796,7 @@ scenarios of `store/` and `idempotency/` on each store it ships that needs no se
 | `store.record_delivery_results` | `room_id`, `event_id`, `results` | null |
 | `store.write_change_target` | `room_id`, `target` | null |
 | `store.get_room` | `room_id` | the room, or null |
+| `store.patch_room_metadata` | `room_id`, `patch`, `unset` (default empty) | the room with only those metadata keys changed, or null |
 | `store.update_room_if` | `room`, `status`, `paused_at`, `last_activity_at` | the room written, or null |
 | `store.mark_read` | `room_id`, `channel_id`, `event_id` | null |
 | `store.mark_all_read` | `room_id`, `channel_id` | null |
