@@ -17,7 +17,13 @@
       {
         "id": "dev",
         "type": "ai",
-        "category": "intelligence"
+        "model": {
+          "rounds": [
+            {
+              "text": "Unused."
+            }
+          ]
+        }
       },
       {
         "id": "helper",
@@ -126,7 +132,8 @@
             }
           ]
         }
-      ]
+      ],
+      "dev": []
     },
     "rooms": {
       "$r2": null

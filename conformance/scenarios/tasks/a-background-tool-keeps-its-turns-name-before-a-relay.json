@@ -7,7 +7,7 @@
     "§21.4",
     "§19.7.5 rule 4"
   ],
-  "notes": "Python: tests/orchestration/test_discussion_handles.py::test_a_background_task_names_its_agent_by_handle; tests/test_tool_context.py::TestCurrentToolRoom; tasks/background.py::background_tool_server and start_background_task. A generation gate proves the turn loaded OldName before the store patch. This is a metadata snapshot test, not a public API for renaming an installed discussion.",
+  "notes": "Python: tests/orchestration/test_discussion_handles.py::test_a_background_task_names_its_agent_by_handle; tests/test_tool_context.py::TestCurrentToolRoom; tasks/background.py::background_tool_server and start_background_task. A generation gate proves the turn loaded OldName before the store patch. This is a metadata snapshot test, not a public API for renaming an installed discussion. A BEFORE_DELIVER hook blocks the relayed result so the assertions isolate the original tool turn.",
   "setup": {
     "channels": [
       {
@@ -90,6 +90,22 @@
       "hand_back": "relay"
     },
     {
+      "call": "add_room_hook",
+      "room_id": "call",
+      "hook": {
+        "name": "hold-result",
+        "trigger": "before_deliver",
+        "reactions": [
+          {
+            "result": {
+              "action": "block",
+              "reason": "The result is observed by the host."
+            }
+          }
+        ]
+      }
+    },
+    {
       "call": "process_inbound",
       "room_id": "call",
       "message": {
@@ -155,8 +171,7 @@
               }
             }
           ]
-        },
-        {}
+        }
       ],
       "helper": [
         {

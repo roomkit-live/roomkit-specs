@@ -17,46 +17,33 @@
       {
         "id": "dev",
         "type": "ai",
-        "category": "intelligence",
-        "on_event": [
-          {
-            "when": {
-              "source_channel_id": "system",
-              "type": "message"
+        "model": {
+          "rounds": [
+            {
+              "text": "Findings."
             },
-            "respond": [
-              {
-                "content": {
-                  "type": "text",
-                  "body": "Findings."
-                }
-              }
-            ],
-            "repeat": true
-          }
-        ]
+            {
+              "text": "Shared default."
+            },
+            {
+              "text": "Shared override."
+            }
+          ]
+        }
       },
       {
         "id": "helper",
         "type": "ai",
-        "category": "intelligence",
-        "on_event": [
-          {
-            "when": {
-              "source_channel_id": "system",
-              "type": "message"
+        "model": {
+          "rounds": [
+            {
+              "text": "Findings."
             },
-            "respond": [
-              {
-                "content": {
-                  "type": "text",
-                  "body": "Findings."
-                }
-              }
-            ],
-            "repeat": true
-          }
-        ]
+            {
+              "text": "Findings."
+            }
+          ]
+        }
       }
     ],
     "rooms": [
@@ -197,6 +184,15 @@
     "timeline": {
       "call": [
         {
+          "source": {
+            "channel_id": "dev"
+          },
+          "content": {
+            "type": "text",
+            "body": "Shared default."
+          }
+        },
+        {
           "type": "message",
           "source": {
             "channel_id": "dev"
@@ -208,6 +204,15 @@
           "metadata": {
             "agent_id": "helper",
             "task_status": "completed"
+          }
+        },
+        {
+          "source": {
+            "channel_id": "dev"
+          },
+          "content": {
+            "type": "text",
+            "body": "Shared override."
           }
         }
       ]
