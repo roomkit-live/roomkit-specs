@@ -5882,6 +5882,9 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   the caller that asked for it. An outcome already delivered SHOULD stay
   readable for long enough that a second read, or a caller that lost track of
   the request, reads the outcome rather than an error.
+  A request object returned by a human-input handler MUST keep exposing its
+  recorded status, answer and rejection reason after settlement, including
+  after it leaves the handler's active set.
 - A human-input tool call follows the line between a refusal and a failure:
   a request a human or a BLOCK rejected is a refusal, the model reading why;
   one nobody answered in time is a failure, the tool having run without an

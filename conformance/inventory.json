@@ -357,9 +357,9 @@
     },
     {
       "section": "9.3",
-      "sha256": "0ac153ecc272a72e108b48718568ed76fc71e59fd533fc4dd474f0fff895deae",
+      "sha256": "bf0eadfe6af0a233ab38b0f3714b9e231d65584a11f88e28b5e61f19604c26f8",
       "classification": "normative",
-      "review": "Source inventory: Hook Execution Modes. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Hook Execution Modes. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Re-reviewed after the live human-input request clarification (RMK-1637); no execution-mode or capability condition changed."
     },
     {
       "section": "9.4",

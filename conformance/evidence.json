@@ -13309,10 +13309,10 @@
     {
       "id": "human-input-answer-and-timeout",
       "requirement": "RK-9.3-017",
-      "clause_sha256": "65c4cb5ef68352f7d19263067b32a92a635ff921258f88e3eb2d9ecb778ff06d",
+      "clause_sha256": "429529bc568fcdf03788636c667de6a662cbd5b38124c0da9a5f31c1ce4b0980",
       "scope": "AI text-channel human input: notification-independent answers, timeout precedence and refusal versus failure.",
       "coverage": "partial",
-      "review": "Reviewed with the Python human-input tests and Rust channel tests. The held notification is released only after the next model generation is reached. Voice/conference doors, mutable PendingInput handles (RMK-1637), and native handler lifecycle proofs are not claimed by this shared-scenario mapping.",
+      "review": "Reviewed against the Python human-input tests and Rust channel tests. The held notification is released only after the next model generation is reached. Voice/conference doors and native handler lifecycle proofs are not claimed by these shared scenarios. Live request transitions have Python source references and native Rust proofs (RMK-1637).",
       "assertions": [
         {
           "scenario": "inputs/a-request-is-answerable-while-its-notification-runs",
@@ -13378,9 +13378,20 @@
           "proves": "The human rejection reaches the model as the tool result."
         }
       ],
-      "tests": [],
+      "tests": [
+        {
+          "nodeid": "tests/test_human_input.py::test_wait_timeout",
+          "sha256": "d508206525164476258553583aa60da8dbaa2a2ac34b23b69eea62b51fbff987",
+          "proves": "The originally returned request exposes its settled status after wait; Python source reference, with matching native Rust tests (RMK-1637)."
+        },
+        {
+          "nodeid": "tests/test_human_input.py::test_wait_returns_an_answer_accepted_at_the_deadline",
+          "sha256": "c4e46cb6cfe2381d97f7d9605f0376330c1cb7b2a814dcb3cae31f34e88ce26c",
+          "proves": "The originally returned request exposes its settled status after wait; Python source reference, with matching native Rust tests (RMK-1637)."
+        }
+      ],
       "missing": [
-        "Voice and conference doors; handler-native retention and lifecycle proofs; live PendingInput object transitions tracked by RMK-1637."
+        "Voice and conference doors; handler-native retention and lifecycle proofs are outside these shared assertions."
       ]
     }
   ],
