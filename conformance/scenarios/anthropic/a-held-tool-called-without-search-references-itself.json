@@ -3,7 +3,7 @@
   "id": "anthropic/a-held-tool-called-without-search-references-itself",
   "title": "A held tool recovered by exact name references itself once its call answers",
   "rules": [
-    "\u00a76.4"
+    "§6.4"
   ],
   "notes": "Python: tests/test_deferred_tools.py::test_a_held_tool_called_without_a_search_references_itself. RMK-1306.",
   "setup": {
