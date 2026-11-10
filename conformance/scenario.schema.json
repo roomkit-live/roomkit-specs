@@ -490,6 +490,10 @@
             }
           }
         },
+        "tool_call_intents": {
+          "description": "A scripted agent's tool_call_intents (§6.4): whether its model is shown each tool's schema with `_roomkit_intent` and its loop takes a call's intent out of the call's arguments; false when absent.",
+          "type": "boolean"
+        },
         "max_tool_rounds": {
           "type": "integer",
           "minimum": 1

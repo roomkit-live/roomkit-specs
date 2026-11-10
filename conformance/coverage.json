@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "d920e00d7e7e34b147710e31b971be692dddaedfab64d139aa12815165d588f5",
-  "corpus_sha256": "21582a6137ed9f9ac83140f3f725d60bdb69b0a18fd3d704c76a5a2e3d6df026",
+  "corpus_sha256": "332070e1129cab6ed776fa085f4e97d65ef52ab58b998d2830d51bfc8044fb48",
   "python_commit": "eb519bb0dfb4f19f80fc577e8668025069283cb9",
-  "scenario_count": 1763,
+  "scenario_count": 1765,
   "sections": [
     {
       "section": "0",
@@ -1119,6 +1119,7 @@
         "tools/a-tool-s-image-rides-the-next-turn-s-input",
         "tools/a-tool-s-part-shaped-json-reaches-the-model-as-parts",
         "tools/a-tool-s-parts-reach-the-model-intact",
+        "tools/a-tool-that-declares-the-name-without-the-underscore-keeps-it",
         "tools/a-tool-the-generation-hook-added-stays-declared",
         "tools/a-tool-the-generation-hook-adds-is-declared-without-tools-of-its-own",
         "tools/a-tool-the-generation-hook-edited-keeps-its-edit",
@@ -1134,6 +1135,7 @@
         "tools/an-empty-answer-after-the-force-stop-ends-the-turn",
         "tools/an-empty-answer-asked-again-gives-up-past-its-retries",
         "tools/an-empty-answer-with-no-round-before-it-is-not-asked-again",
+        "tools/an-intent-written-without-its-underscore-is-taken-as-the-intent",
         "tools/an-on-tool-call-hook-s-structured-copy-reaches-the-end-row",
         "tools/an-unexpected-call-is-told-and-tried-again-on-the-first-round",
         "tools/another-turn-among-a-round-s-starts-leaves-its-results-paired",
