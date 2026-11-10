@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
-  "id": "hooks/recursive-send-event-from-a-off-lock-hook-stops-at-the-cap",
-  "title": "Recursive send_event from a off-lock hook consumes its cascade budget",
+  "id": "hooks/recursive-send-event-from-an-off-lock-hook-stops-at-the-cap",
+  "title": "Recursive send_event from an off-lock hook consumes its cascade budget",
   "rules": [
     "§8.3",
     "§9.5.1"
@@ -322,184 +322,180 @@
   ],
   "expect": {
     "timeline": {
-      "room-1": [
-        {
-          "$unordered": [
-            {
-              "content": {
-                "type": "text",
-                "body": "hello"
-              },
-              "blocked_by": null
+      "room-1": {
+        "$unordered": [
+          {
+            "content": {
+              "type": "text",
+              "body": "hello"
             },
-            {
-              "content": {
-                "type": "text",
-                "body": "again"
-              },
-              "blocked_by": null,
-              "chain_depth": 0
+            "blocked_by": null
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
             },
-            {
-              "content": {
-                "type": "text",
-                "body": "again"
-              },
-              "blocked_by": null,
-              "chain_depth": 0
+            "blocked_by": null,
+            "chain_depth": 0
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
             },
-            {
-              "content": {
-                "type": "text",
-                "body": "again"
-              },
-              "blocked_by": null,
-              "chain_depth": 0
+            "blocked_by": null,
+            "chain_depth": 0
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
             },
-            {
-              "content": {
-                "type": "text",
-                "body": "again"
-              },
-              "blocked_by": null,
-              "chain_depth": 0
+            "blocked_by": null,
+            "chain_depth": 0
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
             },
-            {
-              "content": {
-                "type": "text",
-                "body": "again"
-              },
-              "blocked_by": null,
-              "chain_depth": 0
+            "blocked_by": null,
+            "chain_depth": 0
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
             },
-            {
-              "content": {
-                "type": "text",
-                "body": "again"
-              },
-              "blocked_by": null,
-              "chain_depth": 0
+            "blocked_by": null,
+            "chain_depth": 0
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
             },
-            {
-              "content": {
-                "type": "text",
-                "body": "again"
-              },
-              "blocked_by": null,
-              "chain_depth": 0
+            "blocked_by": null,
+            "chain_depth": 0
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
             },
-            {
-              "content": {
-                "type": "text",
-                "body": "again"
-              },
-              "blocked_by": null,
-              "chain_depth": 0
+            "blocked_by": null,
+            "chain_depth": 0
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
             },
-            {
-              "content": {
-                "type": "text",
-                "body": "again"
-              },
-              "blocked_by": null,
-              "chain_depth": 0
+            "blocked_by": null,
+            "chain_depth": 0
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
             },
-            {
-              "content": {
-                "type": "text",
-                "body": "again"
-              },
-              "blocked_by": null,
-              "chain_depth": 0
+            "blocked_by": null,
+            "chain_depth": 0
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
             },
-            {
-              "content": {
-                "type": "text",
-                "body": "again"
-              },
-              "blocked_by": "reentry_loop_cap",
-              "status": "blocked",
-              "chain_depth": 0
-            }
-          ]
-        }
-      ]
+            "blocked_by": null,
+            "chain_depth": 0
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
+            },
+            "blocked_by": "reentry_loop_cap",
+            "status": "blocked",
+            "chain_depth": 0
+          }
+        ]
+      }
     },
     "deliveries": {
       "room-1": {
         "sms": [],
-        "ws": [
-          {
-            "$unordered": [
-              {
-                "content": {
-                  "type": "text",
-                  "body": "again"
-                }
-              },
-              {
-                "content": {
-                  "type": "text",
-                  "body": "again"
-                }
-              },
-              {
-                "content": {
-                  "type": "text",
-                  "body": "again"
-                }
-              },
-              {
-                "content": {
-                  "type": "text",
-                  "body": "again"
-                }
-              },
-              {
-                "content": {
-                  "type": "text",
-                  "body": "again"
-                }
-              },
-              {
-                "content": {
-                  "type": "text",
-                  "body": "again"
-                }
-              },
-              {
-                "content": {
-                  "type": "text",
-                  "body": "again"
-                }
-              },
-              {
-                "content": {
-                  "type": "text",
-                  "body": "again"
-                }
-              },
-              {
-                "content": {
-                  "type": "text",
-                  "body": "again"
-                }
-              },
-              {
-                "content": {
-                  "type": "text",
-                  "body": "again"
-                }
-              },
-              {
-                "content": {
-                  "type": "text",
-                  "body": "hello"
-                }
+        "ws": {
+          "$unordered": [
+            {
+              "content": {
+                "type": "text",
+                "body": "again"
               }
-            ]
-          }
-        ]
+            },
+            {
+              "content": {
+                "type": "text",
+                "body": "again"
+              }
+            },
+            {
+              "content": {
+                "type": "text",
+                "body": "again"
+              }
+            },
+            {
+              "content": {
+                "type": "text",
+                "body": "again"
+              }
+            },
+            {
+              "content": {
+                "type": "text",
+                "body": "again"
+              }
+            },
+            {
+              "content": {
+                "type": "text",
+                "body": "again"
+              }
+            },
+            {
+              "content": {
+                "type": "text",
+                "body": "again"
+              }
+            },
+            {
+              "content": {
+                "type": "text",
+                "body": "again"
+              }
+            },
+            {
+              "content": {
+                "type": "text",
+                "body": "again"
+              }
+            },
+            {
+              "content": {
+                "type": "text",
+                "body": "again"
+              }
+            },
+            {
+              "content": {
+                "type": "text",
+                "body": "hello"
+              }
+            }
+          ]
+        }
       }
     }
   }

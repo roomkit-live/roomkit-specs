@@ -322,184 +322,180 @@
   ],
   "expect": {
     "timeline": {
-      "room-1": [
-        {
-          "$unordered": [
-            {
-              "content": {
-                "type": "text",
-                "body": "hello"
-              },
-              "blocked_by": null
+      "room-1": {
+        "$unordered": [
+          {
+            "content": {
+              "type": "text",
+              "body": "hello"
             },
-            {
-              "content": {
-                "type": "text",
-                "body": "again"
-              },
-              "blocked_by": null,
-              "chain_depth": 0
+            "blocked_by": null
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
             },
-            {
-              "content": {
-                "type": "text",
-                "body": "again"
-              },
-              "blocked_by": null,
-              "chain_depth": 0
+            "blocked_by": null,
+            "chain_depth": 0
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
             },
-            {
-              "content": {
-                "type": "text",
-                "body": "again"
-              },
-              "blocked_by": null,
-              "chain_depth": 0
+            "blocked_by": null,
+            "chain_depth": 0
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
             },
-            {
-              "content": {
-                "type": "text",
-                "body": "again"
-              },
-              "blocked_by": null,
-              "chain_depth": 0
+            "blocked_by": null,
+            "chain_depth": 0
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
             },
-            {
-              "content": {
-                "type": "text",
-                "body": "again"
-              },
-              "blocked_by": null,
-              "chain_depth": 0
+            "blocked_by": null,
+            "chain_depth": 0
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
             },
-            {
-              "content": {
-                "type": "text",
-                "body": "again"
-              },
-              "blocked_by": null,
-              "chain_depth": 0
+            "blocked_by": null,
+            "chain_depth": 0
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
             },
-            {
-              "content": {
-                "type": "text",
-                "body": "again"
-              },
-              "blocked_by": null,
-              "chain_depth": 0
+            "blocked_by": null,
+            "chain_depth": 0
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
             },
-            {
-              "content": {
-                "type": "text",
-                "body": "again"
-              },
-              "blocked_by": null,
-              "chain_depth": 0
+            "blocked_by": null,
+            "chain_depth": 0
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
             },
-            {
-              "content": {
-                "type": "text",
-                "body": "again"
-              },
-              "blocked_by": null,
-              "chain_depth": 0
+            "blocked_by": null,
+            "chain_depth": 0
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
             },
-            {
-              "content": {
-                "type": "text",
-                "body": "again"
-              },
-              "blocked_by": null,
-              "chain_depth": 0
+            "blocked_by": null,
+            "chain_depth": 0
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
             },
-            {
-              "content": {
-                "type": "text",
-                "body": "again"
-              },
-              "blocked_by": "reentry_loop_cap",
-              "status": "blocked",
-              "chain_depth": 0
-            }
-          ]
-        }
-      ]
+            "blocked_by": null,
+            "chain_depth": 0
+          },
+          {
+            "content": {
+              "type": "text",
+              "body": "again"
+            },
+            "blocked_by": "reentry_loop_cap",
+            "status": "blocked",
+            "chain_depth": 0
+          }
+        ]
+      }
     },
     "deliveries": {
       "room-1": {
         "sms": [],
-        "ws": [
-          {
-            "$unordered": [
-              {
-                "content": {
-                  "type": "text",
-                  "body": "again"
-                }
-              },
-              {
-                "content": {
-                  "type": "text",
-                  "body": "again"
-                }
-              },
-              {
-                "content": {
-                  "type": "text",
-                  "body": "again"
-                }
-              },
-              {
-                "content": {
-                  "type": "text",
-                  "body": "again"
-                }
-              },
-              {
-                "content": {
-                  "type": "text",
-                  "body": "again"
-                }
-              },
-              {
-                "content": {
-                  "type": "text",
-                  "body": "again"
-                }
-              },
-              {
-                "content": {
-                  "type": "text",
-                  "body": "again"
-                }
-              },
-              {
-                "content": {
-                  "type": "text",
-                  "body": "again"
-                }
-              },
-              {
-                "content": {
-                  "type": "text",
-                  "body": "again"
-                }
-              },
-              {
-                "content": {
-                  "type": "text",
-                  "body": "again"
-                }
-              },
-              {
-                "content": {
-                  "type": "text",
-                  "body": "hello"
-                }
+        "ws": {
+          "$unordered": [
+            {
+              "content": {
+                "type": "text",
+                "body": "again"
               }
-            ]
-          }
-        ]
+            },
+            {
+              "content": {
+                "type": "text",
+                "body": "again"
+              }
+            },
+            {
+              "content": {
+                "type": "text",
+                "body": "again"
+              }
+            },
+            {
+              "content": {
+                "type": "text",
+                "body": "again"
+              }
+            },
+            {
+              "content": {
+                "type": "text",
+                "body": "again"
+              }
+            },
+            {
+              "content": {
+                "type": "text",
+                "body": "again"
+              }
+            },
+            {
+              "content": {
+                "type": "text",
+                "body": "again"
+              }
+            },
+            {
+              "content": {
+                "type": "text",
+                "body": "again"
+              }
+            },
+            {
+              "content": {
+                "type": "text",
+                "body": "again"
+              }
+            },
+            {
+              "content": {
+                "type": "text",
+                "body": "again"
+              }
+            },
+            {
+              "content": {
+                "type": "text",
+                "body": "hello"
+              }
+            }
+          ]
+        }
       }
     }
   }
