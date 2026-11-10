@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "a3436fef41725ba6f43abdc69a1ae74b75299f4d78b75d8655386a59de6aa38d",
   "corpus_sha256": "65fc9c010b04978f2d1e3ba321bfd5ff86738ddb2f5a7b04b7f0779fbae5c4cf",
-  "python_commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+  "python_commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
   "scenario_count": 1797,
   "sections": [
     {
@@ -7438,12 +7438,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -7760,12 +7776,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -8080,12 +8112,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -8378,12 +8426,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -8697,12 +8761,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -9003,12 +9083,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -9530,12 +9626,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -10159,6 +10271,14 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -10334,6 +10454,14 @@
               "execution": "python-task-timeout-70d2850-memory",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -10517,6 +10645,14 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -10692,6 +10828,14 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -10859,6 +11003,14 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -11024,6 +11176,14 @@
               "execution": "python-task-timeout-70d2850-memory",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -11201,6 +11361,14 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -11366,6 +11534,14 @@
               "execution": "python-task-timeout-70d2850-memory",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -11541,6 +11717,14 @@
               "execution": "python-task-timeout-70d2850-memory",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -11720,6 +11904,14 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -11896,6 +12088,14 @@
               "execution": "python-task-timeout-70d2850-memory",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -12083,6 +12283,14 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -12235,6 +12443,14 @@
               "execution": "python-task-timeout-70d2850-memory",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -12540,12 +12756,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -12697,6 +12929,14 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -12808,6 +13048,14 @@
               "execution": "python-task-timeout-70d2850-memory",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -13035,6 +13283,14 @@
               "execution": "python-task-timeout-70d2850-memory",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -13384,12 +13640,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -13601,6 +13873,14 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -13798,6 +14078,14 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -13981,6 +14269,14 @@
               "execution": "python-task-timeout-70d2850-memory",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -14172,6 +14468,14 @@
               "execution": "python-task-timeout-70d2850-memory",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -14375,6 +14679,14 @@
               "execution": "python-task-timeout-70d2850-memory",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -14737,12 +15049,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -14902,6 +15230,14 @@
               "execution": "python-task-timeout-70d2850-memory",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -15071,6 +15407,14 @@
               "execution": "python-task-timeout-70d2850-memory",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -15434,12 +15778,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -15507,6 +15867,14 @@
               "execution": "python-task-timeout-70d2850-memory",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -15758,12 +16126,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -16013,12 +16397,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -16180,6 +16580,14 @@
               "execution": "python-task-timeout-70d2850-memory",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -16504,12 +16912,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -16761,12 +17185,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -16970,6 +17410,14 @@
               "execution": "python-task-timeout-70d2850-memory",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -17253,12 +17701,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -17518,12 +17982,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -17815,12 +18295,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -18104,12 +18600,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -18369,12 +18881,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -18634,12 +19162,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -18899,12 +19443,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -20809,12 +21369,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -20916,12 +21492,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -21007,12 +21599,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -21616,12 +22224,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -21765,6 +22389,14 @@
               "execution": "python-task-timeout-70d2850-memory",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -22076,12 +22708,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -22423,12 +23071,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -22705,12 +23369,28 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-task-timeout-70d2850-sqlite",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-sqlite",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -23502,6 +24182,14 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -23745,6 +24433,14 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -23806,6 +24502,14 @@
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -23838,6 +24542,14 @@
               "execution": "python-task-timeout-70d2850-memory",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -23997,6 +24709,14 @@
               "execution": "python-task-timeout-70d2850-memory",
               "implementation": "python",
               "commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-task-cancellation-7b1d2b1-memory",
+              "implementation": "python",
+              "commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -24679,6 +25399,24 @@
       "implementation_commit": "70d2850a0051435175b436f7061792c96f0f8f6a",
       "rfc_commit": "3291f1549ad913845db0b14fc613089bfe148f8b",
       "corpus_commit": "3291f1549ad913845db0b14fc613089bfe148f8b",
+      "backend": "sqlite",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-task-cancellation-7b1d2b1-memory",
+      "implementation": "python",
+      "implementation_commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+      "rfc_commit": "54db1f2fd12fefda6742d657b38b1a6d1377820b",
+      "corpus_commit": "54db1f2fd12fefda6742d657b38b1a6d1377820b",
+      "backend": "memory",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-task-cancellation-7b1d2b1-sqlite",
+      "implementation": "python",
+      "implementation_commit": "7b1d2b1a5bd7ac1d69b2d1b81827a489c03020f5",
+      "rfc_commit": "54db1f2fd12fefda6742d657b38b1a6d1377820b",
+      "corpus_commit": "54db1f2fd12fefda6742d657b38b1a6d1377820b",
       "backend": "sqlite",
       "runtime": "asyncio"
     }
