@@ -1134,7 +1134,8 @@ or a skip to a passing result.
   any work expected to complete within the same budget, including store I/O
   and CI scheduling. Hold the worker expected to time out at a gate no step
   opens. A short timeout is suitable only when no successful work races it;
-  the parallel-team timeout scenario uses 2 s (RMK-1331). Real-time scenarios
+  the parallel-team and supervised-step timeout scenarios use 2 s (RMK-1331),
+  including the supervisor's task-framing pass. Real-time scenarios
   still depend on the runner making progress within their budgets.
 - Run `check.py --fix`, then both runners, before committing. A scenario that
   fails on an implementation is either wrong, and fixed, or a known failure,
