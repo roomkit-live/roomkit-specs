@@ -160,3 +160,25 @@ executed by this command. It supplies a temporal premise that an un-gated
 scenario cannot establish on several workers. This receipt neither certifies
 Rust execution nor closes the remaining shutdown annex, other stores or remote
 executor variants. The linked RFC requirement remains partially covered.
+
+## Discussion task names
+
+`python-task-names-1280f23.xml` retains the clean run on Python
+`1280f23489f044354d552703d99dcadf3eefc08e`, with copied corpus and reviewed RFC
+`d5ee856f626f4266ff18f1bb3a0b8c682cba6fa5`. All 2,213 cases pass without skips,
+failures or errors: 1,787 memory scenarios, 393 SQLite scenarios and 33 auxiliary
+runner cases. Only the scenarios enter the execution receipts. Host, timestamp,
+duration and local-path attributes are removed; classes, names and outcomes
+are preserved.
+
+The three added scenarios cover a relayed result and both task-status tool
+installations naming a discussion worker by its handle, while internal task
+records retain channel ids. They ran on memory only. The composite discussion
+requirement remains partially covered; this receipt does not certify Rust,
+remote executors or the remaining task-result paths.
+
+The command records a portable output filename in place of its machine-local
+destination. The same normalization applies to the four command arguments in
+the earlier `python-core-shutdown-boundaries-0aa9b53` and
+`python-core-shutdown-answers-a7fac2f` receipts. Only output destinations were
+normalized; their retained XML, results and fingerprints are unchanged.

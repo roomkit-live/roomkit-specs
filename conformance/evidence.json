@@ -127887,7 +127887,7 @@
         "-n",
         "0",
         "-q",
-        "--junitxml=/home/quintana/dev/roomkit-live/plan-rfc/results/phase-03/core-close/python-core-shutdown-boundaries.xml"
+        "--junitxml=python-core-shutdown-boundaries.xml"
       ],
       "artifact": {
         "path": "conformance/executions/python-core-shutdown-boundaries-0aa9b53.xml",
@@ -136774,7 +136774,7 @@
         "-n",
         "0",
         "-q",
-        "--junitxml=/home/quintana/dev/roomkit-live/plan-rfc/results/phase-03/core-close/python-core-shutdown-boundaries.xml"
+        "--junitxml=python-core-shutdown-boundaries.xml"
       ],
       "artifact": {
         "path": "conformance/executions/python-core-shutdown-boundaries-0aa9b53.xml",
@@ -138761,7 +138761,7 @@
         "-n",
         "0",
         "-q",
-        "--junitxml=/home/quintana/dev/roomkit-live/plan-rfc/results/phase-03/core-close/python-core-shutdown-answers.xml"
+        "--junitxml=python-core-shutdown-answers.xml"
       ],
       "artifact": {
         "path": "conformance/executions/python-core-shutdown-answers-a7fac2f.xml",
@@ -147713,7 +147713,7 @@
         "-n",
         "0",
         "-q",
-        "--junitxml=/home/quintana/dev/roomkit-live/plan-rfc/results/phase-03/core-close/python-core-shutdown-answers.xml"
+        "--junitxml=python-core-shutdown-answers.xml"
       ],
       "artifact": {
         "path": "conformance/executions/python-core-shutdown-answers-a7fac2f.xml",
@@ -149710,7 +149710,7 @@
         "-n",
         "0",
         "-q",
-        "--junitxml=/home/quintana/dev/roomkit-live/plan-rfc/results/phase-04/task-names/python-task-names.xml"
+        "--junitxml=python-task-names.xml"
       ],
       "artifact": {
         "path": "conformance/executions/python-task-names-1280f23.xml",
@@ -158677,7 +158677,7 @@
         "-n",
         "0",
         "-q",
-        "--junitxml=/home/quintana/dev/roomkit-live/plan-rfc/results/phase-04/task-names/python-task-names.xml"
+        "--junitxml=python-task-names.xml"
       ],
       "artifact": {
         "path": "conformance/executions/python-task-names-1280f23.xml",
