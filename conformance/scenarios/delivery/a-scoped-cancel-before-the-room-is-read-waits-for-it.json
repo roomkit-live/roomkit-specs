@@ -3,9 +3,9 @@
   "id": "delivery/a-scoped-cancel-before-the-room-is-read-waits-for-it",
   "title": "A cancel for an organization reaching a delivery whose call named none, before its room is read, counts nothing and waits: the room proves that organization's, and no turn starts",
   "rules": [
-    "\u00a710.1 Explicit delivery cancellation",
-    "\u00a717.2",
-    "\u00a710.1 step 2"
+    "§10.1 Explicit delivery cancellation",
+    "§17.2",
+    "§10.1 step 2"
   ],
   "notes": "Python: tests/test_delivery_cancel_turns.py::test_a_scoped_cancel_before_the_commit_reaches_only_its_organization[room-not-read-yet]. This holds the router before the room is read; the context-read-in-progress variant is a separate native proof.",
   "setup": {

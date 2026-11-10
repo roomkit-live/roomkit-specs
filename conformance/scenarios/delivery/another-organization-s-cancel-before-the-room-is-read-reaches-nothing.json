@@ -3,9 +3,9 @@
   "id": "delivery/another-organization-s-cancel-before-the-room-is-read-reaches-nothing",
   "title": "A cancel for another organization reaching a delivery before its room is read counts nothing, and the room proving its own organization's, the turn runs",
   "rules": [
-    "\u00a710.1 Explicit delivery cancellation",
-    "\u00a717.2",
-    "\u00a710.1 step 2"
+    "§10.1 Explicit delivery cancellation",
+    "§17.2",
+    "§10.1 step 2"
   ],
   "notes": "Python: tests/test_delivery_cancel_turns.py::test_a_scoped_cancel_before_the_commit_reaches_only_its_organization[unread-other-organization]. This holds the router before the room is read; it makes no assertion about a held context read.",
   "setup": {
