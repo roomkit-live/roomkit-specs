@@ -4775,6 +4775,10 @@
         "provider": {
           "description": "The provider's name (§6.7, a provider's name), which a turn's record names as ai_provider (§6.4): scripted when absent.",
           "type": "string"
+        },
+        "deferred_tools": {
+          "type": "boolean",
+          "description": "Whether this provider can hold tools declared but unseen (RFC 6.4). False by default."
         }
       }
     },
