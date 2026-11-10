@@ -1,0 +1,190 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "tasks/the-repeat-guard-holds-on-delegate-task",
+  "title": "The third identical delegate_task in a turn is refused: the first two create exactly two worker tasks",
+  "rules": [
+    "§6.4",
+    "§9.3",
+    "§23.4"
+  ],
+  "notes": "Python: tests/orchestration/test_room_installs.py::test_the_repeat_guard_holds_on_an_orchestration_tool. Real child task creation witnesses the first two calls, without replacing DelegateHandler.handle.",
+  "setup": {
+    "channels": [
+      {
+        "id": "sms",
+        "type": "sms",
+        "category": "transport"
+      },
+      {
+        "id": "lead",
+        "type": "ai",
+        "agent": {},
+        "model": {
+          "rounds": [
+            {
+              "calls": [
+                {
+                  "id": "c1",
+                  "name": "delegate_task",
+                  "arguments": {
+                    "agent": "worker",
+                    "task": "Same task."
+                  }
+                }
+              ]
+            },
+            {
+              "calls": [
+                {
+                  "id": "c2",
+                  "name": "delegate_task",
+                  "arguments": {
+                    "agent": "worker",
+                    "task": "Same task."
+                  }
+                }
+              ]
+            },
+            {
+              "calls": [
+                {
+                  "id": "c3",
+                  "name": "delegate_task",
+                  "arguments": {
+                    "agent": "worker",
+                    "task": "Same task."
+                  }
+                }
+              ]
+            },
+            {
+              "text": "Done delegating."
+            }
+          ]
+        }
+      },
+      {
+        "id": "worker",
+        "type": "ai",
+        "agent": {},
+        "model": {
+          "rounds": [
+            {
+              "text": "Worked."
+            },
+            {
+              "text": "Worked."
+            }
+          ]
+        }
+      },
+      {
+        "id": "observer",
+        "type": "ai",
+        "category": "intelligence"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "parent",
+        "bindings": [
+          {
+            "channel_id": "sms"
+          },
+          {
+            "channel_id": "lead"
+          },
+          {
+            "channel_id": "observer"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "delegate_handler",
+      "handler": "tasks",
+      "notify": "observer"
+    },
+    {
+      "call": "setup_delegation",
+      "agent_id": "lead",
+      "handler": "tasks"
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "parent",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "user",
+        "content": {
+          "type": "text",
+          "body": "Go."
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "idle": true
+    }
+  ],
+  "expect": {
+    "models": {
+      "lead": [
+        {},
+        {},
+        {},
+        {
+          "tool_results": [
+            {
+              "tool_call_id": "c1",
+              "is_error": false,
+              "content": {
+                "$contains": "\"status\": \"delegated\""
+              }
+            },
+            {
+              "tool_call_id": "c2",
+              "is_error": false,
+              "content": {
+                "$contains": "\"status\": \"delegated\""
+              }
+            },
+            {
+              "tool_call_id": "c3",
+              "is_error": true,
+              "content": {
+                "$contains": "You already called 'delegate_task'"
+              }
+            }
+          ]
+        }
+      ],
+      "worker": [
+        {},
+        {}
+      ]
+    },
+    "rooms": {
+      "$r1": {
+        "metadata": {
+          "task_agent_id": "worker",
+          "task_input": "Same task."
+        }
+      },
+      "$r2": {
+        "metadata": {
+          "task_agent_id": "worker",
+          "task_input": "Same task."
+        }
+      },
+      "$r3": null
+    }
+  }
+}
