@@ -8264,11 +8264,21 @@ room, beside the declaration.
 factory the host gives it: an agent holds live objects (its provider, its MCP
 clients, its memory). A factory that builds nothing for a channel the executor
 declares fails that channel's turns and channel calls with `no_executor`
-(§10.6.7). The kit's own executor reads the live channels the host
-registered on the kit, and declares them; it alone runs them, closed or not:
-once it closed, their turns fail with `no_executor` rather than run on another
-executor's copy (§10.6.7). The executor gives the channel what
-the kit gives a channel it registers, each on the executor's side:
+(§10.6.7). An executor MAY keep a bounded number of channels built: past its
+bound, it lets go of the build it used least recently that nothing runs on
+(a turn, a channel call, a committed event, a room's attach or detach), as
+`channel_released` lets a build go (§10.6.3), and its next turn builds the
+channel anew, its request carrying what the turn reads (§10.6.5). A turn or
+a channel call uses a build; a committed event does not, and a build begun
+for a committed event alone is the least recent. What the build held for its
+rooms that the room does not keep (an ACP session, a speak policy's listening
+state) starts anew, as after the executor's restart; a bound below the number
+of agents an executor serves at once makes that routine. The kit's own
+executor reads the live channels the host registered on the kit, and declares
+them; it alone runs them, closed or not: once it closed, their turns fail
+with `no_executor` rather than run on another executor's copy (§10.6.7). The
+executor gives the channel what the kit gives a channel it registers, each
+on the executor's side:
 
 - the hooks the channel fires, against the executor's own registry
   (§10.6.6), the after-response hook every intelligence channel gets included;
@@ -8446,12 +8456,14 @@ per-room state, or its build:
 
 `room_attached` and `room_detached` reach every executor that may run the
 channel's turns: the owner's own executor alone for a channel the owner holds
-live (§10.6.7), so an executor that declares it and never takes its turns
-builds no copy of it; every executor that declares the channel otherwise. They
-need no result: the executor applies them as the channel's own
-attach and detach would for a channel the kit holds, and logs what the
-channel raises. A binding of category `INTELLIGENCE` (§5.7) is therefore kept
-when its channel raises on `room_attached`, and a detach does not report what
+live (§10.6.7); every executor that declares the channel otherwise. They
+need no result: an executor holding a build of the channel applies them as
+the channel's own attach and detach would for a channel the kit holds, and
+logs what the channel raises; one holding no build has nothing to apply and
+builds none for them, so a channel is built at its first turn, channel call
+or committed event on an executor (§10.6.2). A binding of category
+`INTELLIGENCE` (§5.7) is therefore kept when its channel raises on
+`room_attached`, and a detach does not report what
 the channel raised; only a backend that cannot carry `room_attached` fails
 the attachment, which is then undone. After `room_detached`, the owner names
 no previous turn for the channel in the room (`previous_turn` is null), so an
@@ -8460,13 +8472,14 @@ turn (§10.6.2), and the owner forgets what the room kept for the channel,
 even when the message could not be sent.
 
 `channel_released` reaches the same executors. One that built the channel
-lets the build go: the next turn or channel control of the channel builds it
-anew, and the build let go is closed once the turns running on it, or still
-getting it, end, which it never cuts for this. One that holds no build builds
-none for the message. For a channel the owner holds live it changes nothing:
-that channel is the owner's registry's, and its host replaces it there. A host
-sends it through the kit's `release_channel(channel_id)`, which fails when the
-kit holds no channel of that id.
+lets the build go: the next turn, channel call or committed event of the
+channel builds it anew, and the build let go is closed once the turns running
+on it, or still getting it, end, which it never cuts for this. One that holds
+no build builds none for the message. For a channel the owner holds live it
+changes nothing: that channel is the owner's registry's, and its host
+replaces it there. A host sends it through the kit's
+`release_channel(channel_id)`, which fails when the kit holds no channel of
+that id.
 
 A `committed_event` reaches one executor: the owner's own for a channel the
 owner holds live (§10.6.7), else the one that holds the room's state for the

@@ -441,13 +441,13 @@
     },
     {
       "section": "10.6.2",
-      "sha256": "7a6ba5700613b26ab74f773bfebfc0d96dcb859390471990021701e62c348a24",
+      "sha256": "698466768a83b01374a089d25639c8b69ecd1ce275d3511562e0abd8ac87f53d",
       "classification": "normative",
       "review": "Source inventory: Channels on each side. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
     {
       "section": "10.6.3",
-      "sha256": "7a3b4e5023addbb49bf26a1f0df30b1607553d4ab10146e9255414ec1f09cdda",
+      "sha256": "aebd714f8f34a370129b4ecf05aff0654d6aafe2ff9ffa24709d95327a772b6c",
       "classification": "normative",
       "review": "Source inventory: Messages. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
