@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "759105e8048d05fc46ee3bdb0ed8a33652642f92",
+  "python_commit": "8e288af6a819019db63ae12104d0298e58132131",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -238443,11 +238443,11 @@
       ]
     },
     {
-      "id": "python-strategy-rooms-759105e-memory",
+      "id": "python-strategy-rooms-8e288af-memory",
       "implementation": "python",
-      "implementation_commit": "759105e8048d05fc46ee3bdb0ed8a33652642f92",
-      "rfc_commit": "1c719941dc1c6059abac115bb4bf314e083974b8",
-      "corpus_commit": "1c719941dc1c6059abac115bb4bf314e083974b8",
+      "implementation_commit": "8e288af6a819019db63ae12104d0298e58132131",
+      "rfc_commit": "f8afcfe701a0d9ae5edd2fc0492f6e4ba0cb4de1",
+      "corpus_commit": "f8afcfe701a0d9ae5edd2fc0492f6e4ba0cb4de1",
       "rfc_sha256": "d6d65112b56b283f4605f330c5b3485c418e1a22f0089f67f64ad2cfc0ac31c7",
       "backend": "memory",
       "runtime": "asyncio",
@@ -238467,9 +238467,9 @@
         "--junitxml=python-final-memory.xml"
       ],
       "artifact": {
-        "path": "conformance/executions/python-strategy-rooms-759105e.xml",
+        "path": "conformance/executions/python-strategy-rooms-8e288af.xml",
         "format": "pytest_junit",
-        "sha256": "1aede61adfe706ac8bbc05dcb4fe7968f85fc6428a9460de746208cdaf2e34c4"
+        "sha256": "5fbfd21d259d288a764308aba5a0d4c1770fe664e99a941a0ef06d9505344f85"
       },
       "results": [
         {
@@ -242289,7 +242289,7 @@
         },
         {
           "scenario": "orchestration/a-supervised-step-past-its-task-timeout-stops-the-chain-unreviewed",
-          "sha256": "c15bb94e9ad1534e9ee646ca605cc5c1ad3ed29ea5d99755ad22d4416d8bfb2c",
+          "sha256": "11775c3e3ec8251d5b90f1f9c2fb0f51d8a4abdd060ba6a9568d2d2b14335262",
           "outcome": "passed"
         },
         {
@@ -247520,11 +247520,11 @@
       ]
     },
     {
-      "id": "python-strategy-rooms-759105e-sqlite",
+      "id": "python-strategy-rooms-8e288af-sqlite",
       "implementation": "python",
-      "implementation_commit": "759105e8048d05fc46ee3bdb0ed8a33652642f92",
-      "rfc_commit": "1c719941dc1c6059abac115bb4bf314e083974b8",
-      "corpus_commit": "1c719941dc1c6059abac115bb4bf314e083974b8",
+      "implementation_commit": "8e288af6a819019db63ae12104d0298e58132131",
+      "rfc_commit": "f8afcfe701a0d9ae5edd2fc0492f6e4ba0cb4de1",
+      "corpus_commit": "f8afcfe701a0d9ae5edd2fc0492f6e4ba0cb4de1",
       "rfc_sha256": "d6d65112b56b283f4605f330c5b3485c418e1a22f0089f67f64ad2cfc0ac31c7",
       "backend": "sqlite",
       "runtime": "asyncio",
@@ -247544,9 +247544,9 @@
         "--junitxml=python-final-memory.xml"
       ],
       "artifact": {
-        "path": "conformance/executions/python-strategy-rooms-759105e.xml",
+        "path": "conformance/executions/python-strategy-rooms-8e288af.xml",
         "format": "pytest_junit",
-        "sha256": "1aede61adfe706ac8bbc05dcb4fe7968f85fc6428a9460de746208cdaf2e34c4"
+        "sha256": "5fbfd21d259d288a764308aba5a0d4c1770fe664e99a941a0ef06d9505344f85"
       },
       "results": [
         {
