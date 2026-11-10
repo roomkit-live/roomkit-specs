@@ -7169,7 +7169,14 @@
           "$ref": "#/$defs/label"
         },
         "hosts": {
-          "description": "The channel ids it declares (\u00a710.6.7).",
+          "description": "The channel ids it declares, each a name or a prefix ending in `*` (`acme-*`; `*` every channel) (\u00a710.6.7).",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "builds": {
+          "description": "The channel ids its factory builds, among the setup's `declared` ones; every one when absent. For another, it builds nothing (\u00a710.6.2).",
           "type": "array",
           "items": {
             "type": "string"

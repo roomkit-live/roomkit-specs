@@ -306,7 +306,10 @@ room callbacks of the setup are not compared.
   process runs its turn. The rooms, hooks and strategies of the setup are
   the run's own kit's.
 - `executors`: **turn executors** beside the kit (§10.6.2, §10.6.7), served
-  on the kit's turn backend, each `id`, the channel ids it `hosts`, the
+  on the kit's turn backend, each `id`, the channel ids it `hosts` (each a
+  name, or a prefix ending in `*`: `acme-*`, and `*` for every channel), the
+  ones its factory `builds` (every declared one when absent; for another it
+  builds nothing), the
   `hooks` it registers and the `room_hooks` it defines on triggers a turn
   fires (§10.6.6), `started` (default true; false: served only by an
   `executor.start` step) and `answers` (default true; false: it takes each
