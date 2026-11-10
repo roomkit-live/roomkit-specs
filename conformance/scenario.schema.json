@@ -4808,8 +4808,68 @@
         "deferred_tools": {
           "type": "boolean",
           "description": "Whether this provider can hold tools declared but unseen (RFC 6.4). False by default."
+        },
+        "streaming": {
+          "description": "Whether the scripted provider streams (default true). False uses generate() through the provider's default whole-response adapter. Stream-only round fields are refused.",
+          "type": "boolean"
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "streaming": {
+                "const": false
+              }
+            },
+            "required": [
+              "streaming"
+            ]
+          },
+          "then": {
+            "properties": {
+              "rounds": {
+                "items": {
+                  "not": {
+                    "anyOf": [
+                      {
+                        "required": [
+                          "deltas"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "thinking"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "stream"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "done"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "failure_after_calls"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "failure_after_done"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "model_round": {
       "description": "One generation's answer: its text, the calls it makes, why it stopped, and what it used; or its text, then a failure.",
