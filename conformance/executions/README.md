@@ -140,3 +140,23 @@ receipts. PostgreSQL and Rust checks are recorded separately. The mapping of
 shutdown and processing deadlines remains partial: no execution fills a missing
 assertion or proves an untested lifecycle entry point. Volatile host, timestamp,
 duration and local-path metadata is removed from the artifact.
+
+
+## Core shutdown answers
+
+`python-core-shutdown-answers-a7fac2f.xml` retains the clean run on Python
+`a7fac2fc0e63bb82f18b7ef78557aca383840521`, with copied corpus and reviewed RFC
+`14a09d13f65d1ff01101da3e053c991462f4bce4`. The command in `evidence.json`
+runs `tests/conformance` with in-process turns and one pytest worker.
+All 2,210 cases pass without skips, failures or errors: 1,784 memory scenarios,
+393 SQLite scenarios and 33 auxiliary runner cases. Only the scenarios enter
+the execution receipts. Host, timestamp, duration and local-path attributes
+are removed; testcase classes, names and outcomes are preserved.
+
+The new assertions cover an answer's observer closing the kit after a channel
+response or an AFTER_BROADCAST send. The native retained-cursor witness in
+`tests/test_kit_close_own_answer.py` is referenced as source evidence and is not
+executed by this command. It supplies a temporal premise that an un-gated
+scenario cannot establish on several workers. This receipt neither certifies
+Rust execution nor closes the remaining shutdown annex, other stores or remote
+executor variants. The linked RFC requirement remains partially covered.
