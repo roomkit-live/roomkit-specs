@@ -12882,10 +12882,10 @@
     {
       "id": "phase4-task-discussion-names",
       "requirement": "RK-23.4-001",
-      "clause_sha256": "8da20f25e89731e56d4189a9e3a36a45459124d3e3a7810e2c801824a97e52b2",
+      "clause_sha256": "519b09de21abf6bb77e70e58130f0cda36fc5ba5be38d929e613a27513955569",
       "scope": "Discussion handles in relayed task results and task_status through both owner-served and agent-owned tools; status bus identifiers remain channel ids.",
       "coverage": "partial",
-      "review": "Assertions read against §23.4 and the source Python tests for discussion background task names and task_status; no claim for the other delegation helpers in this composite clause.",
+      "review": "Assertions read against §23.4 and the source Python tests for discussion background task names and task_status; no claim for the other delegation helpers in this composite clause. Re-read after the start_task null-or-empty clarification: these unchanged scenarios and their six assertions still prove only the stated naming scope.",
       "assertions": [
         {
           "scenario": "tasks/a-own-task-status-tool-names-the-discussion-worker-by-handle",
@@ -12934,6 +12934,174 @@
       "missing": [
         "Other delegation-tool obligations, human input, background setup changes during a turn, and external executor/backend configurations are outside this mapping."
       ]
+    },
+    {
+      "id": "phase4-background-turn-context",
+      "requirement": "RK-21.4-001",
+      "scope": "Owner-served work_in_background reads its turn snapshot for agent naming and the nested-task guard, while start_task builds the worker brief from current storage.",
+      "assertions": [
+        {
+          "scenario": "tasks/a-background-tool-keeps-its-turns-name-before-a-post",
+          "pointer": "/expect/models/dev/1/tool_results",
+          "sha256": "46e2a045ad39c7843c63ca6f74e3497382e0a55e826280dd14af0e4c69a07550",
+          "scenario_sha256": "b2f2783b3465ee35bf13728e8edfe02b37e3afcd76703bfba656225560c1f82d",
+          "proves": "The tool result keeps the discussion handle loaded for this turn after a gated metadata patch."
+        },
+        {
+          "scenario": "tasks/a-background-tool-keeps-its-turns-name-before-a-post",
+          "pointer": "/expect/models/helper/0/messages",
+          "sha256": "32cd3763aa614943c1501836bf216a15c35b2fb69e3563b710f0e215e12b6c4d",
+          "scenario_sha256": "b2f2783b3465ee35bf13728e8edfe02b37e3afcd76703bfba656225560c1f82d",
+          "proves": "The new worker brief reads the current stored handle, independently of the calling turn snapshot."
+        },
+        {
+          "scenario": "tasks/a-background-tool-keeps-its-turns-name-before-a-relay",
+          "pointer": "/expect/models/dev/1/tool_results",
+          "sha256": "c23191a67533867991a769f48b62569471cff3dbfba0e6d6b63dff91595f991b",
+          "scenario_sha256": "6d8a38a3809440bed1fd2522c482f2a5df585635e83e7c9577ee0f019dda6165",
+          "proves": "The tool result keeps the discussion handle loaded for this turn after a gated metadata patch."
+        },
+        {
+          "scenario": "tasks/a-background-tool-keeps-its-turns-name-before-a-relay",
+          "pointer": "/expect/models/helper/0/messages",
+          "sha256": "32cd3763aa614943c1501836bf216a15c35b2fb69e3563b710f0e215e12b6c4d",
+          "scenario_sha256": "6d8a38a3809440bed1fd2522c482f2a5df585635e83e7c9577ee0f019dda6165",
+          "proves": "The new worker brief reads the current stored handle, independently of the calling turn snapshot."
+        },
+        {
+          "scenario": "tasks/a-background-worker-keeps-its-turns-task-boundary-after-a-store-patch",
+          "pointer": "/expect",
+          "sha256": "7668abd76c7bac51a5e7d4432382b6c03de99434ba814370f25acd7b83fd85b7",
+          "scenario_sha256": "dd433cd28549c76e0f723293a66def12fb3e7718416b0697197edb239523c970",
+          "proves": "The worker refuses its nested task after the store loses its task marker; no second child room exists."
+        }
+      ],
+      "missing": [
+        "Other context accessors, realtime calls, handler result shapes and arbitrary custom handlers are outside this mapping."
+      ],
+      "clause_sha256": "e942a89fb94648dfa04a5ebbc5af9af9cc4fb7abf0b6c597dc292b02020769c4",
+      "coverage": "partial",
+      "review": "Read against the Python background/task-context implementation and its source tests; four new scenarios passed Python memory and Redis and reproduced the Rust defects before the correction. These are bounded shared scenarios, not complete coverage of the composite clause.",
+      "tests": []
+    },
+    {
+      "id": "phase4-background-task-options",
+      "requirement": "RK-23.4-001",
+      "scope": "Background task name and nested-task boundary through gated stored-metadata changes; empty start_task hand_back falls back to default or configured mode, explicit relay overrides post, and invalid non-empty values or an empty setup mode are refused.",
+      "assertions": [
+        {
+          "scenario": "tasks/a-background-tool-keeps-its-turns-name-before-a-post",
+          "pointer": "/expect/models/dev/1/tool_results",
+          "sha256": "46e2a045ad39c7843c63ca6f74e3497382e0a55e826280dd14af0e4c69a07550",
+          "scenario_sha256": "b2f2783b3465ee35bf13728e8edfe02b37e3afcd76703bfba656225560c1f82d",
+          "proves": "The tool result keeps the discussion handle loaded for this turn after a gated metadata patch."
+        },
+        {
+          "scenario": "tasks/a-background-tool-keeps-its-turns-name-before-a-post",
+          "pointer": "/expect/models/helper/0/messages",
+          "sha256": "32cd3763aa614943c1501836bf216a15c35b2fb69e3563b710f0e215e12b6c4d",
+          "scenario_sha256": "b2f2783b3465ee35bf13728e8edfe02b37e3afcd76703bfba656225560c1f82d",
+          "proves": "The new worker brief reads the current stored handle, independently of the calling turn snapshot."
+        },
+        {
+          "scenario": "tasks/a-background-tool-keeps-its-turns-name-before-a-relay",
+          "pointer": "/expect/models/dev/1/tool_results",
+          "sha256": "c23191a67533867991a769f48b62569471cff3dbfba0e6d6b63dff91595f991b",
+          "scenario_sha256": "6d8a38a3809440bed1fd2522c482f2a5df585635e83e7c9577ee0f019dda6165",
+          "proves": "The tool result keeps the discussion handle loaded for this turn after a gated metadata patch."
+        },
+        {
+          "scenario": "tasks/a-background-tool-keeps-its-turns-name-before-a-relay",
+          "pointer": "/expect/models/helper/0/messages",
+          "sha256": "32cd3763aa614943c1501836bf216a15c35b2fb69e3563b710f0e215e12b6c4d",
+          "scenario_sha256": "6d8a38a3809440bed1fd2522c482f2a5df585635e83e7c9577ee0f019dda6165",
+          "proves": "The new worker brief reads the current stored handle, independently of the calling turn snapshot."
+        },
+        {
+          "scenario": "tasks/a-background-worker-keeps-its-turns-task-boundary-after-a-store-patch",
+          "pointer": "/expect",
+          "sha256": "7668abd76c7bac51a5e7d4432382b6c03de99434ba814370f25acd7b83fd85b7",
+          "scenario_sha256": "dd433cd28549c76e0f723293a66def12fb3e7718416b0697197edb239523c970",
+          "proves": "The worker refuses its nested task after the store loses its task marker; no second child room exists."
+        },
+        {
+          "scenario": "tasks/an-empty-start-task-hand-back-keeps-the-default-or-configured-mode",
+          "pointer": "/expect",
+          "sha256": "85f037ef7201d70fd3017b07d8fffd8dccc0cd59af6576dad92988c2368e5e5b",
+          "scenario_sha256": "1c802c341cda1bc5825e314444e2fc83c02670784b56079f33ef1207306b5a81",
+          "proves": "Default relay, configured post and explicit relay produce the expected parent timeline, with no fourth task room."
+        },
+        {
+          "scenario": "tasks/an-empty-start-task-hand-back-keeps-the-default-or-configured-mode",
+          "pointer": "/steps/0/expect",
+          "sha256": "e4ac6f467da528bf41f016fe995868c4187250c59b13f306283524d9a39f17dc",
+          "scenario_sha256": "1c802c341cda1bc5825e314444e2fc83c02670784b56079f33ef1207306b5a81",
+          "proves": "The returned task selects the expected mode, completes, or rejects the invalid option without starting work as specified by this step."
+        },
+        {
+          "scenario": "tasks/an-empty-start-task-hand-back-keeps-the-default-or-configured-mode",
+          "pointer": "/steps/1/expect",
+          "sha256": "97982edff2f0e1024889fac7e54ede8e60f8c535d0161a5421c2ba4079446018",
+          "scenario_sha256": "1c802c341cda1bc5825e314444e2fc83c02670784b56079f33ef1207306b5a81",
+          "proves": "The returned task selects the expected mode, completes, or rejects the invalid option without starting work as specified by this step."
+        },
+        {
+          "scenario": "tasks/an-empty-start-task-hand-back-keeps-the-default-or-configured-mode",
+          "pointer": "/steps/4/expect",
+          "sha256": "12aa190f7dd928300813570fb5e4f5d8e378efcd062899ded5e7b5969dbef1b4",
+          "scenario_sha256": "1c802c341cda1bc5825e314444e2fc83c02670784b56079f33ef1207306b5a81",
+          "proves": "The returned task selects the expected mode, completes, or rejects the invalid option without starting work as specified by this step."
+        },
+        {
+          "scenario": "tasks/an-empty-start-task-hand-back-keeps-the-default-or-configured-mode",
+          "pointer": "/steps/5/expect",
+          "sha256": "97982edff2f0e1024889fac7e54ede8e60f8c535d0161a5421c2ba4079446018",
+          "scenario_sha256": "1c802c341cda1bc5825e314444e2fc83c02670784b56079f33ef1207306b5a81",
+          "proves": "The returned task selects the expected mode, completes, or rejects the invalid option without starting work as specified by this step."
+        },
+        {
+          "scenario": "tasks/an-empty-start-task-hand-back-keeps-the-default-or-configured-mode",
+          "pointer": "/steps/7/expect",
+          "sha256": "f398c27dafd15d52e7179bc40ca8cb4c297600b30ba8b29b7332e1b8f77946e6",
+          "scenario_sha256": "1c802c341cda1bc5825e314444e2fc83c02670784b56079f33ef1207306b5a81",
+          "proves": "The returned task selects the expected mode, completes, or rejects the invalid option without starting work as specified by this step."
+        },
+        {
+          "scenario": "tasks/an-empty-start-task-hand-back-keeps-the-default-or-configured-mode",
+          "pointer": "/steps/8/expect",
+          "sha256": "97982edff2f0e1024889fac7e54ede8e60f8c535d0161a5421c2ba4079446018",
+          "scenario_sha256": "1c802c341cda1bc5825e314444e2fc83c02670784b56079f33ef1207306b5a81",
+          "proves": "The returned task selects the expected mode, completes, or rejects the invalid option without starting work as specified by this step."
+        },
+        {
+          "scenario": "tasks/an-empty-start-task-hand-back-keeps-the-default-or-configured-mode",
+          "pointer": "/steps/10/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "1c802c341cda1bc5825e314444e2fc83c02670784b56079f33ef1207306b5a81",
+          "proves": "The returned task selects the expected mode, completes, or rejects the invalid option without starting work as specified by this step."
+        },
+        {
+          "scenario": "tasks/an-empty-start-task-hand-back-keeps-the-default-or-configured-mode",
+          "pointer": "/steps/11/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "1c802c341cda1bc5825e314444e2fc83c02670784b56079f33ef1207306b5a81",
+          "proves": "The returned task selects the expected mode, completes, or rejects the invalid option without starting work as specified by this step."
+        },
+        {
+          "scenario": "tasks/an-empty-start-task-hand-back-keeps-the-default-or-configured-mode",
+          "pointer": "/steps/12/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "1c802c341cda1bc5825e314444e2fc83c02670784b56079f33ef1207306b5a81",
+          "proves": "The returned task selects the expected mode, completes, or rejects the invalid option without starting work as specified by this step."
+        }
+      ],
+      "missing": [
+        "Other delegation tools, cancellation, concurrent setup replacement and external executor configurations are outside this mapping."
+      ],
+      "clause_sha256": "519b09de21abf6bb77e70e58130f0cda36fc5ba5be38d929e613a27513955569",
+      "coverage": "partial",
+      "review": "Read against the Python background/task-context implementation and its source tests; four new scenarios passed Python memory and Redis and reproduced the Rust defects before the correction. These are bounded shared scenarios, not complete coverage of the composite clause.",
+      "tests": []
     }
   ],
   "executions": [

@@ -1413,9 +1413,9 @@
     },
     {
       "section": "23.4",
-      "sha256": "6c2222c7ace8404872d98d762633e848069f0f8fb1c3c858e7a640c5b6d4715e",
+      "sha256": "42b9c46fadf92ebed7dcf6351573e4c02e3d700f0a6111edcae4730a1ea08140",
       "classification": "normative",
-      "review": "Source inventory: Delegation Tools. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Reviewed the complete delegation-tools section after clarifying start_task empty-string fallback from Python behavior. The setup default and valid explicit modes remain unchanged; the mixed source units retain their existing boundaries. Coverage remains scoped to reviewed assertions, not the whole section."
     },
     {
       "section": "23.5",

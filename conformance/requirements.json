@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "bf69c1a5ebd9e98ce57517092d792d45cc4089267e267286b9bd9a2e9573e061",
+  "rfc_sha256": "a683ea95f297b94e17bdc214597f8f5de9bcc36fe2594fafec2b44eb2799671c",
   "sections": [
     {
       "section": "0",
@@ -1905,14 +1905,14 @@
       "section": "23.4",
       "title": "Delegation Tools",
       "line": 21113,
-      "sha256": "6c2222c7ace8404872d98d762633e848069f0f8fb1c3c858e7a640c5b6d4715e",
+      "sha256": "42b9c46fadf92ebed7dcf6351573e4c02e3d700f0a6111edcae4730a1ea08140",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
     {
       "section": "23.5",
       "title": "Delegation Hooks",
-      "line": 21325,
+      "line": 21326,
       "sha256": "22c7d59abde4f9f3570afa6ae5ee7816085226b4f32c7fac0c3f8678d26f6c74",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -1920,7 +1920,7 @@
     {
       "section": "24",
       "title": "Skills Framework",
-      "line": 21336,
+      "line": 21337,
       "sha256": "adb773866e49a1bff655e26c48a2e128caf3464112a761b436ef395ae0834d7d",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -1928,7 +1928,7 @@
     {
       "section": "24.1",
       "title": "Skill Definition",
-      "line": 21343,
+      "line": 21344,
       "sha256": "08adcb8d7d40830951f6387b049b14f019711e048739bf6c2608e314815e89dd",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -1936,7 +1936,7 @@
     {
       "section": "24.2",
       "title": "SkillMetadata",
-      "line": 21390,
+      "line": 21391,
       "sha256": "b4bc872714961b68959f9057a7cc53748a2d563ba829a829568c6de0ae3b2c39",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -1944,7 +1944,7 @@
     {
       "section": "24.3",
       "title": "SkillRegistry",
-      "line": 21413,
+      "line": 21414,
       "sha256": "1650facdc786686c17b726bfbd2b49f8721292e0c092c3ad8f5a19ab76ae44dc",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -1952,7 +1952,7 @@
     {
       "section": "24.4",
       "title": "Activation Lifecycle",
-      "line": 21483,
+      "line": 21484,
       "sha256": "687400ac29e2e1523c96d6c76aba5d9223735bad5848c841c6cced5a9d578972",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -1960,7 +1960,7 @@
     {
       "section": "24.5",
       "title": "Loading Failures",
-      "line": 21549,
+      "line": 21550,
       "sha256": "df5da41db9b1eb149f99bfbdcd032dc980f29220601c90ef37f68e0bdd0e5b89",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -1968,7 +1968,7 @@
     {
       "section": "24.6",
       "title": "Access to Bundled Files",
-      "line": 21592,
+      "line": 21593,
       "sha256": "fe57ac2c8cbee09b4e6a35cf1a07eb4192c33fdfc78887e929ac31189e1b1cbe",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -1976,7 +1976,7 @@
     {
       "section": "24.7",
       "title": "Skills Served over MCP",
-      "line": 21620,
+      "line": 21621,
       "sha256": "937acb13f420ab6848de12494526b9607f606827e48970f60e7449ef8f309159",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -1984,7 +1984,7 @@
     {
       "section": "25",
       "title": "Image Generation",
-      "line": 21776,
+      "line": 21777,
       "sha256": "1e4d73872f06c46dc965b873bfbf45797396add1fdca913eef94fdb32d237804",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -1992,7 +1992,7 @@
     {
       "section": "25.1",
       "title": "A Surface of Its Own",
-      "line": 21786,
+      "line": 21787,
       "sha256": "059cf8528b58ce948214babe836b97c801ec9c708f7b8c214f467793d220ff42",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2000,7 +2000,7 @@
     {
       "section": "25.2",
       "title": "ImageProvider",
-      "line": 21808,
+      "line": 21809,
       "sha256": "622c47d992e4c00ee6fab38fa43735cedb7655fc43720e543523df0ed05db19e",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2008,7 +2008,7 @@
     {
       "section": "25.3",
       "title": "ImageResult",
-      "line": 21861,
+      "line": 21862,
       "sha256": "02aee398e0608064fe5c19758def4d47d75a3fc3c4470f54a100e6c8f4ef34d6",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2016,7 +2016,7 @@
     {
       "section": "25.4",
       "title": "Editing",
-      "line": 21901,
+      "line": 21902,
       "sha256": "f07107e57a6167de051408300b60bf473f0b5cd6947e5d312ca1c50263d23e3c",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2024,7 +2024,7 @@
     {
       "section": "25.5",
       "title": "Usage Accounting",
-      "line": 21925,
+      "line": 21926,
       "sha256": "03dfb8c3717cf14379abcc9c4a596f84ce9e819a3d4627ad75f9a16f512dbc09",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2032,7 +2032,7 @@
     {
       "section": "25.6",
       "title": "Model Catalogue",
-      "line": 21962,
+      "line": 21963,
       "sha256": "48bedc8f68d85bb1effaa70d6d92fd4a2bf64708f21a730d119992b2a6fc7cb3",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2040,7 +2040,7 @@
     {
       "section": "25.7",
       "title": "Non-Goals",
-      "line": 21983,
+      "line": 21984,
       "sha256": "549e76e67b81172a9303bdfcde6f76e67ca29eca01820f422f0f2e761f25ef88",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2048,7 +2048,7 @@
     {
       "section": "26",
       "title": "Conformance Levels",
-      "line": 21999,
+      "line": 22000,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2056,7 +2056,7 @@
     {
       "section": "26.1",
       "title": "Level 0: Core (REQUIRED)",
-      "line": 22001,
+      "line": 22002,
       "sha256": "745b52e3c9e784a33d40e98f1beab9fa0f9577c3e20f00818dff5641d8c09bd1",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2064,7 +2064,7 @@
     {
       "section": "26.2",
       "title": "Level 1: Transport (RECOMMENDED)",
-      "line": 22075,
+      "line": 22076,
       "sha256": "93199b6294873a9fae8ac00798b9ad15a504c07cb2697b4fee0eb4ec04c0b2e2",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2072,7 +2072,7 @@
     {
       "section": "26.3",
       "title": "Level 2: Rich (OPTIONAL)",
-      "line": 22097,
+      "line": 22098,
       "sha256": "abb6e1cf63e159e0981e2f4f19577051e239c9712eeb71cddc91d1d9bf46eace",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2080,7 +2080,7 @@
     {
       "section": "26.4",
       "title": "Level 3: Real-Time Media (OPTIONAL)",
-      "line": 22137,
+      "line": 22138,
       "sha256": "2f047029b0c076537536046fb6dbf8eafa441f1721c5e0d7d7f1205181b5b346",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2088,7 +2088,7 @@
     {
       "section": "A",
       "title": "Channel Reference",
-      "line": 22227,
+      "line": 22228,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2096,7 +2096,7 @@
     {
       "section": "A.1",
       "title": "SMS Channel",
-      "line": 22229,
+      "line": 22230,
       "sha256": "76902df3239f6b9d7253fcd2fc11748f5c05e6331d2e8b468280ebef66d486ef",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2104,7 +2104,7 @@
     {
       "section": "A.2",
       "title": "Email Channel",
-      "line": 22254,
+      "line": 22255,
       "sha256": "8a316a3a3cb97b22a3abda8d9f7d1050dbd720838c54653acad1106cf3da8d40",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2112,7 +2112,7 @@
     {
       "section": "A.3",
       "title": "WhatsApp Channel",
-      "line": 22279,
+      "line": 22280,
       "sha256": "b9f6d906e7d1bbab3571861ec33bb97446dbc06ceaa9154e778982506dcffa54",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2120,7 +2120,7 @@
     {
       "section": "A.4",
       "title": "WhatsApp Personal Channel",
-      "line": 22307,
+      "line": 22308,
       "sha256": "e7abe23ccf812806ae3b18a244ad30746ecf13ce42fa4a7f9488aa235512355e",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2128,7 +2128,7 @@
     {
       "section": "A.5",
       "title": "Messenger Channel",
-      "line": 22343,
+      "line": 22344,
       "sha256": "0402ee0be54d867357cad2caf39eae47b4bc085125ff896b908a0aaa1dcfe04e",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2136,7 +2136,7 @@
     {
       "section": "A.6",
       "title": "Teams Channel",
-      "line": 22368,
+      "line": 22369,
       "sha256": "73bdbcb889173ed8f452388f0c939a932ddd08bbe454c2f549dd0a64bcdf5469",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2144,7 +2144,7 @@
     {
       "section": "A.7",
       "title": "RCS Channel",
-      "line": 22396,
+      "line": 22397,
       "sha256": "7f68e7b60bee3770f0e9e9958fe3755034bf251bf3541de900104f3a0edbf1d2",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2152,7 +2152,7 @@
     {
       "section": "A.8",
       "title": "WebSocket Channel",
-      "line": 22426,
+      "line": 22427,
       "sha256": "d66548e9fd036395587203cd751548b85edce7d71f7391b3bb51ff9edc2dad9a",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2160,7 +2160,7 @@
     {
       "section": "A.9",
       "title": "AI Channel",
-      "line": 22472,
+      "line": 22473,
       "sha256": "bce5a640de6668b726ac53ba559b5fb985fdfc5e73ce167efb74869f884fd635",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2168,7 +2168,7 @@
     {
       "section": "A.9.1",
       "title": "ACP Agent Channel",
-      "line": 22595,
+      "line": 22596,
       "sha256": "116b36f3a851df69c7a0ee61529cd5c7d8f592ed133f2c13060356eeca768f48",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2176,7 +2176,7 @@
     {
       "section": "A.10",
       "title": "Voice Channel",
-      "line": 22666,
+      "line": 22667,
       "sha256": "f522e7d32102b7bc775fd534cfca2063974197e184628e0be33fac7d4763850e",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2184,7 +2184,7 @@
     {
       "section": "A.11",
       "title": "Realtime Voice Channel",
-      "line": 22709,
+      "line": 22710,
       "sha256": "98b2d5636c5031f06a40a273a220478f81d1dc51ad8314ed3085c401e758d67c",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2192,7 +2192,7 @@
     {
       "section": "A.12",
       "title": "Video Channel",
-      "line": 22744,
+      "line": 22745,
       "sha256": "187b7bf73e250ae7055c8bb2c40ace502ea532da4741b21a338b5dbf918f36fc",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2200,7 +2200,7 @@
     {
       "section": "A.13",
       "title": "Telegram Channel",
-      "line": 22782,
+      "line": 22783,
       "sha256": "ae0a705e7f2bad947bb4f514f8da55da0bb472a05d22d6c70d21d9ed7c283da2",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2208,7 +2208,7 @@
     {
       "section": "A.14",
       "title": "CLI Channel",
-      "line": 22812,
+      "line": 22813,
       "sha256": "c72f431a09fb1c8679ac3dc199d74a9a40c9d01567d6402b1ea0fcbdeefd874a",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2216,7 +2216,7 @@
     {
       "section": "A.14.1",
       "title": "Host Channel",
-      "line": 22830,
+      "line": 22831,
       "sha256": "cd360d20c864ff1686a5329eeb8243a7bd1f40c2481422aa1eeed95435222a34",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2224,7 +2224,7 @@
     {
       "section": "A.15",
       "title": "Conference Channel",
-      "line": 22848,
+      "line": 22849,
       "sha256": "e9efbf41060d29fbae9230308390f0a3b28307169267a9952540c8df43bd81de",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
@@ -2232,23 +2232,22 @@
     {
       "section": "B",
       "title": "Complete Event Flow Examples",
-      "line": 22897,
+      "line": 22898,
       "sha256": "960b4e386cbdc5a3b262f44af32a4aa737bf50fb310b85ec193865b5d092893d",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": [
-        22899,
         22900,
-        22901
+        22901,
+        22902
       ]
     },
     {
       "section": "B.1",
       "title": "Customer (SMS) + AI — Basic Conversation",
-      "line": 22903,
+      "line": 22904,
       "sha256": "02ecdfd46777ce12b34f1960cb1ce3a918c028ca09ddf82b2faa2a5d6663c409",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": [
-        22905,
         22906,
         22907,
         22908,
@@ -2294,17 +2293,17 @@
         22948,
         22949,
         22950,
-        22951
+        22951,
+        22952
       ]
     },
     {
       "section": "B.2",
       "title": "Sensitivity Scanning — Block and Inject",
-      "line": 22953,
+      "line": 22954,
       "sha256": "a2bc38a8165812aaed634fd9835fd45f5f058c416e1c71a12fa5f7eef234870b",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": [
-        22955,
         22956,
         22957,
         22958,
@@ -2345,17 +2344,17 @@
         22993,
         22994,
         22995,
-        22996
+        22996,
+        22997
       ]
     },
     {
       "section": "B.3",
       "title": "Ambiguous Identity — Shared Family Phone",
-      "line": 22998,
+      "line": 22999,
       "sha256": "0d59e7eb1f548fe986df21c6c9ddc1a9f39b4f732c770bcce8f7a967b05a23b5",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": [
-        23000,
         23001,
         23002,
         23003,
@@ -2394,21 +2393,21 @@
         23036,
         23037,
         23038,
-        23039
+        23039,
+        23040
       ]
     },
     {
       "section": "B.4",
       "title": "AI ↔ AI Multi-Agent with Chain Depth",
-      "line": 23041,
+      "line": 23042,
       "sha256": "3551b6c238cd6e3ff199387d186e07ca38081929ee8bf69e96573a0e35fd0779",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": [
-        23043,
         23044,
         23045,
         23046,
-        23048,
+        23047,
         23049,
         23050,
         23051,
@@ -2443,57 +2442,57 @@
         23080,
         23081,
         23082,
-        23084,
+        23083,
         23085,
-        23086
+        23086,
+        23087
       ]
     },
     {
       "section": "B.5",
       "title": "Dynamic Channel Management — Advisor Joins",
-      "line": 23088,
+      "line": 23089,
       "sha256": "3b58db7e25ebb1a9686e376d182c1b216afc1de4e34e47ec373313f20534a2eb",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": [
-        23090,
         23091,
-        23093,
+        23092,
         23094,
         23095,
         23096,
-        23098,
+        23097,
         23099,
-        23101,
+        23100,
         23102,
         23103,
         23104,
-        23106,
+        23105,
         23107,
         23108,
         23109,
         23110,
         23111,
-        23113,
+        23112,
         23114,
-        23116,
+        23115,
         23117,
         23118,
         23119,
-        23121,
+        23120,
         23122,
         23123,
         23124,
-        23125
+        23125,
+        23126
       ]
     },
     {
       "section": "B.6",
       "title": "Message Edit — Cross-Channel with Fallback",
-      "line": 23127,
+      "line": 23128,
       "sha256": "c285aa712a940319cfc73f788b0246ba8e1c3c4810204d8b4585f1d7399be864",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": [
-        23129,
         23130,
         23131,
         23132,
@@ -2543,17 +2542,17 @@
         23176,
         23177,
         23178,
-        23179
+        23179,
+        23180
       ]
     },
     {
       "section": "B.7",
       "title": "Message Delete — Cross-Channel with Fallback",
-      "line": 23181,
+      "line": 23182,
       "sha256": "0bf21f50cc9bcb67459dfc304dbcf9c61f768420d7a3e9216f54537a1f5fbc88",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": [
-        23183,
         23184,
         23185,
         23186,
@@ -2603,17 +2602,17 @@
         23230,
         23231,
         23232,
-        23233
+        23233,
+        23234
       ]
     },
     {
       "section": "B.8",
       "title": "SIP Call → Unified process_inbound with Protocol Traces",
-      "line": 23235,
+      "line": 23236,
       "sha256": "0062d2b2955038a52fb827fe4ed92fb1f30128890d0b10c76f055e65f031d0d9",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": [
-        23237,
         23238,
         23239,
         23240,
@@ -2695,17 +2694,17 @@
         23316,
         23317,
         23318,
-        23319
+        23319,
+        23320
       ]
     },
     {
       "section": "B.9",
       "title": "Multi-Agent Pipeline — Triage → Specialist → Resolution",
-      "line": 23321,
+      "line": 23322,
       "sha256": "c701ba4a3f44cad2dc4cb3cde35f84865d7d9a25f5bc8d92bb07a3f8b35389d8",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": [
-        23323,
         23324,
         23325,
         23326,
@@ -2783,7 +2782,8 @@
         23398,
         23399,
         23400,
-        23404
+        23401,
+        23405
       ]
     }
   ],
@@ -9508,15 +9508,15 @@
       "applies": "§23.4 Delegation Tools; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "23.4",
       "line": 21115,
-      "text": "Implementations SHOULD provide helpers for AI-driven delegation:\n\n- `build_delegate_tool(agents)` — Creates an AI tool definition that lets\n  an agent delegate work to other agents. The `agents` parameter lists\n  available delegation targets with descriptions.\n\n- `setup_delegation(agent, handler, tool)` — Wires the delegation tool into\n  an AI channel, connecting it to the TaskRunner. It takes no room: the tool\n  is declared wherever the agent serves. `tool` (default null) replaces the\n  default definition; setting it up twice on a channel is refused. A tool\n  built from a list of agents holds the model to it: a call naming another is\n  answered with an error and starts nothing, since a list a model can ignore\n  holds nothing; a tool whose list of agents is no list is refused. A host's own\n  call on the handler is not held to it.\n\n- `setup_realtime_delegation(channel, handler, tool)` — The same for a\n  realtime voice channel, whose sessions declare the tool.\n\n- `delegate_task` — The tool those helpers serve, through a handler\n  (`DelegateHandler(kit, notify = null, default_share_channels = null,\n  delivery_strategy = null, cache = null, serialize_per_room = false,\n  max_conversation = 0, max_result_chars = 4000)`). Its arguments are\n  `agent` and `task`, then `context` and `share_channels`, and `conversation`\n  when the handler allows it. A `task` that is no text, or a `share_channels` that\n  is no list, is refused, nothing made, and an `agent` that is no text names no\n  channel of the kit (a model may send them whatever the tool declares); in the\n  list, only a text names a channel, and none or an empty list is the handler's\n  `default_share_channels`. A call delegates (Section 23.3) with the `task` as its\n  model wrote it, the label the parent room's records name the task by, and\n  notifies the handler's `notify`, or else the agent that called. The worker\n  reads the call's `brief`: the `task`, then each of the following that the call\n  has, in a block of its own as Section 6.4 sets a text from outside apart.\n  Once one of them follows it, the `task`, which the model wrote too, is set\n  apart as well, in `<task>` under the line `Your task, as the delegating agent\n  wrote it:`, so that it cannot read as the block after it; with none of them\n  the call has no brief, and the worker reads the `task` as it is, its whole\n  instruction:\n\n  1. `context`, which a model wrote and which may hold what a tool returned, in\n     `<task_context>`, as JSON on one line (separators `, ` and\n     `: `, its keys in their order), bounded at 4,000 characters. Each of its\n     strings, an object's keys included, has every double quote mark but `\"` made\n     a single one and the marks that reorder text dropped, as a quote has (Section\n     6.4), and is read for the block's tags, before it is written as JSON, which\n     would hide a line break or a slash as an escape. A value that is no object, which\n     a model may send, is kept under `context`; null, an empty string, an empty\n     list and an empty object are none, and `0` and `false` are values. The\n     child room's `task_context` holds it.\n  2. The agent's previous tasks of the room, with a cache, in\n     `<previous_tasks>`: what its last three completed tasks asked, newest first,\n     each once, each a JSON string on its line, bounded at 600 characters, read\n     for the block's tags as `context` is, which `task_context` also holds as\n     `previous_tasks`. Another agent's tasks stay out: they may quote what this\n     one may not read. A task the host itself wrote into the cache is any\n     agent's.\n  3. The room's last `conversation` messages, as Section 23.3 step 4 gives them\n     but those both the agent that called and the notified channel may read: a\n     model chooses what it hands over, and hands over nothing it may not read\n     itself (§7.5 rule 1), and the worker's result goes back to the notified\n     channel.\n\n  An intelligence channel shared into the child room, the host's\n  `default_share_channels` included, stops 2 and 3, what the framework rebuilds:\n  it reads the description, and may read less than the agent that called (§7.5\n  rule 8). It does not stop `context`, which the model wrote in this call as it\n  wrote the `task` that channel reads too. A shared transport stops nothing.\n\n  `max_result_chars` is the bound of each result its delegations relay (§23.3\n  step 8): the host's too, and the same whichever agent the call names.\n\n  `max_conversation` is the host's, since the model chooses the worker, which\n  may be another vendor's or hold another workspace. With 0, the tool declares\n  no `conversation` argument, whatever definition the host gave it, and nothing\n  is handed over. Above 0, it declares one bounded by it, and the handler holds\n  every call to it whatever the tool declares: a larger value reads as the\n  maximum; a negative one, or one JSON Schema does not read as an integer (`1.0`\n  is one), as none.\n\n  A cache (RoomKit: `CompletedTaskCache(ttl_seconds = 300)`) keeps a completed\n  task for its time to live, once its end is known (RoomKit: a task running past\n  600 s is not kept). It answers a repeat\n  with what its task returned, the task's receipt with its `result`,\n  `status = completed` and `from_cache = true`, and starts nothing. A repeat is\n  a call by the same agent to the same worker in the same room with the same\n  `task` (its case and outer spaces aside) and the same `context` (the order of\n  its keys aside), asking for no conversation, of a task that completed: another\n  `context` is other work, a task that failed or was cancelled runs again, and\n  another agent's call runs, what the first's task returned possibly holding what\n  that agent passed or may read. A task the host itself wrote into the cache\n  answers any agent, the latest of that and the agent's own when both are kept. A\n  call asking\n  for the conversation always runs, and what it returned answers no later call,\n  since it holds for the room as it stood; its task still counts among the agent's\n  previous tasks. With `serialize_per_room`, a room's calls delegate one at a\n  time.\n\n- `task_status` — A tool an agent can be given on its own, independently of\n  the delegation helpers. It answers with the tasks posted on the StatusBus for\n  the room of the call, read from the tool call context (Section 21.4): those\n  running and those ended, the latest entry of each, with its worker (named\n  by its handle when it is an agent of the room's discussion, Section 19.7.5\n  rule 4, as the worker's brief, the tool's answer that starts a task, the\n  relayed result and the tasks' block of a turn's notes name it), the task,\n  its status, its latest progress and when it was posted (Section 23.3), its\n  whole result (Section 19.8) or that it failed, and when it was posted; a\n  `task_id` argument narrows the answer to one task. It reads the bus for that\n  room only: one room's tasks never show in another. A tool reply that tells\n  its agent to follow the work (a strategy's background dispatch, Section\n  19.7.3) names `task_status` only when the agent was given it.\n\n- `work_in_background` — A tool an agent of a room is given\n  (`setup_background(agent, worker = null, hand_back = \"relay\")`), to start\n  long work as a task and free its turn: going through many records, files or\n  traces, an analysis of several tool calls. Its argument is `task`, what to\n  do and report. The task is the calling agent's own, and runs on that\n  agent's worker: the agent itself, unless its background was set up with\n  another (any intelligence channel the kit holds, another agent or an\n  external agent among them, Section 6.4). A model never starts a task for\n  another agent, whose worker may hold more than it does (a workspace, its\n  tools) and in whose name the result would come back: it asks that agent by\n  name, and only the host's `start_task` reaches any agent. It is handed\n  the room's last messages (`conversation`, RoomKit: 12), and its result goes\n  back to the calling agent (`notify`), as any delegation's (Section 23.3),\n  relayed or posted as the setup's `hand_back` says: the host's choice for\n  that agent's tasks, never the model's. Its worker's brief sets the task\n  apart in `<task>` under the line `Your task, as it was asked:`, before the\n  runtime's text that says how to work and where the findings go, and before\n  those messages, so that the task cannot read as either (Section 6.4); a\n  task the host's `start_task` or a person gives is set apart the same way.\n  The tool answers at once, with the\n  task's id, and tells the agent to say once, in a sentence, that the work is\n  under way (before the call or after it, never both) and to end its turn. A\n  call from a task's child room is refused: a worker does its work and starts\n  no task of its own. The host starts the same\n  task with `start_task(room_id, agent_id, task, hand_back = null)`, a\n  delegation made outside a tool call whose `hand_back` is the agent's setup's\n  when null; a person starts one through whatever the host gives them (a\n  console's `/task`). Whether work is long is the agent's judgment through its\n  tool or the host's: a model may keep long work in its own turn whatever its\n  tool says, and a host whose agents do so starts their tasks itself.\n\n- `cancel_task` — A tool an agent can be given on its own, as `task_status`,\n  so that a request the person changed or dropped stops its work. It cancels\n  one task of the room of the call, named by its `task_id` (from the\n  delegation's answer or `task_status`): a task still running ends\n  `cancelled`, as any task cancelled from outside does (Section 23.3). It\n  reaches only the tasks the bus lists for that room: a call never cancels\n  another room's task, nor one a strategy runs without posting it\n  (`post_status = false`), which that strategy follows itself. It answers\n  that the task was cancelled, that it had already ended (with its status),\n  that the room has no such task, or, for a task of the room it may not\n  cancel, that it is still running and why: an inline delegation runs inside\n  the turn that asked for it and ends with it; a task a strategy runs without\n  posting it is the strategy's to follow, which the host may cancel when it\n  runs in the background. Calls that cancel one task at once cancel it once,\n  the host's `cancel_task(task_id)` among them: each is answered that it was\n  cancelled, and none of the agents that made them is handed the\n  cancellation back. A call made while such a cancel's end is still being\n  completed, the task ended `cancelled` but whom its end is handed back to\n  not yet decided, is one of them when it could have cancelled the task\n  running; made once that is decided, or on a task that ended otherwise, it\n  is answered that the task ended. A task the bus lists ended is\n  answered as the bus lists it, as `task_status` reads it: nothing is left to\n  act on. Whether a\n  task the bus lists running is the room's is what the framework knows of the\n  tasks it runs for each room, never what the bus lists: a task of another\n  room, one the framework never ran, or one another framework runs for the\n  room on a bus they share, is no task of the room there. One it ran for the\n  room and that ended is answered ended, with its status, even before the bus\n  shows that end: an inline task from its completion's start, before its\n  hooks run, and a background task from its runner's handing over of its\n  end, a call meanwhile waiting for that (RoomKit keeps the latest 1024\n  ended, all rooms together). Past that bound, a task that ended while the\n  bus still lists its line running (a bus that lags behind its end) reads as\n  no task of the room: the bound is the same for every room, and what a room\n  is answered depends on how many tasks ended elsewhere, never on what they\n  were.",
-      "sha256": "8da20f25e89731e56d4189a9e3a36a45459124d3e3a7810e2c801824a97e52b2"
+      "text": "Implementations SHOULD provide helpers for AI-driven delegation:\n\n- `build_delegate_tool(agents)` — Creates an AI tool definition that lets\n  an agent delegate work to other agents. The `agents` parameter lists\n  available delegation targets with descriptions.\n\n- `setup_delegation(agent, handler, tool)` — Wires the delegation tool into\n  an AI channel, connecting it to the TaskRunner. It takes no room: the tool\n  is declared wherever the agent serves. `tool` (default null) replaces the\n  default definition; setting it up twice on a channel is refused. A tool\n  built from a list of agents holds the model to it: a call naming another is\n  answered with an error and starts nothing, since a list a model can ignore\n  holds nothing; a tool whose list of agents is no list is refused. A host's own\n  call on the handler is not held to it.\n\n- `setup_realtime_delegation(channel, handler, tool)` — The same for a\n  realtime voice channel, whose sessions declare the tool.\n\n- `delegate_task` — The tool those helpers serve, through a handler\n  (`DelegateHandler(kit, notify = null, default_share_channels = null,\n  delivery_strategy = null, cache = null, serialize_per_room = false,\n  max_conversation = 0, max_result_chars = 4000)`). Its arguments are\n  `agent` and `task`, then `context` and `share_channels`, and `conversation`\n  when the handler allows it. A `task` that is no text, or a `share_channels` that\n  is no list, is refused, nothing made, and an `agent` that is no text names no\n  channel of the kit (a model may send them whatever the tool declares); in the\n  list, only a text names a channel, and none or an empty list is the handler's\n  `default_share_channels`. A call delegates (Section 23.3) with the `task` as its\n  model wrote it, the label the parent room's records name the task by, and\n  notifies the handler's `notify`, or else the agent that called. The worker\n  reads the call's `brief`: the `task`, then each of the following that the call\n  has, in a block of its own as Section 6.4 sets a text from outside apart.\n  Once one of them follows it, the `task`, which the model wrote too, is set\n  apart as well, in `<task>` under the line `Your task, as the delegating agent\n  wrote it:`, so that it cannot read as the block after it; with none of them\n  the call has no brief, and the worker reads the `task` as it is, its whole\n  instruction:\n\n  1. `context`, which a model wrote and which may hold what a tool returned, in\n     `<task_context>`, as JSON on one line (separators `, ` and\n     `: `, its keys in their order), bounded at 4,000 characters. Each of its\n     strings, an object's keys included, has every double quote mark but `\"` made\n     a single one and the marks that reorder text dropped, as a quote has (Section\n     6.4), and is read for the block's tags, before it is written as JSON, which\n     would hide a line break or a slash as an escape. A value that is no object, which\n     a model may send, is kept under `context`; null, an empty string, an empty\n     list and an empty object are none, and `0` and `false` are values. The\n     child room's `task_context` holds it.\n  2. The agent's previous tasks of the room, with a cache, in\n     `<previous_tasks>`: what its last three completed tasks asked, newest first,\n     each once, each a JSON string on its line, bounded at 600 characters, read\n     for the block's tags as `context` is, which `task_context` also holds as\n     `previous_tasks`. Another agent's tasks stay out: they may quote what this\n     one may not read. A task the host itself wrote into the cache is any\n     agent's.\n  3. The room's last `conversation` messages, as Section 23.3 step 4 gives them\n     but those both the agent that called and the notified channel may read: a\n     model chooses what it hands over, and hands over nothing it may not read\n     itself (§7.5 rule 1), and the worker's result goes back to the notified\n     channel.\n\n  An intelligence channel shared into the child room, the host's\n  `default_share_channels` included, stops 2 and 3, what the framework rebuilds:\n  it reads the description, and may read less than the agent that called (§7.5\n  rule 8). It does not stop `context`, which the model wrote in this call as it\n  wrote the `task` that channel reads too. A shared transport stops nothing.\n\n  `max_result_chars` is the bound of each result its delegations relay (§23.3\n  step 8): the host's too, and the same whichever agent the call names.\n\n  `max_conversation` is the host's, since the model chooses the worker, which\n  may be another vendor's or hold another workspace. With 0, the tool declares\n  no `conversation` argument, whatever definition the host gave it, and nothing\n  is handed over. Above 0, it declares one bounded by it, and the handler holds\n  every call to it whatever the tool declares: a larger value reads as the\n  maximum; a negative one, or one JSON Schema does not read as an integer (`1.0`\n  is one), as none.\n\n  A cache (RoomKit: `CompletedTaskCache(ttl_seconds = 300)`) keeps a completed\n  task for its time to live, once its end is known (RoomKit: a task running past\n  600 s is not kept). It answers a repeat\n  with what its task returned, the task's receipt with its `result`,\n  `status = completed` and `from_cache = true`, and starts nothing. A repeat is\n  a call by the same agent to the same worker in the same room with the same\n  `task` (its case and outer spaces aside) and the same `context` (the order of\n  its keys aside), asking for no conversation, of a task that completed: another\n  `context` is other work, a task that failed or was cancelled runs again, and\n  another agent's call runs, what the first's task returned possibly holding what\n  that agent passed or may read. A task the host itself wrote into the cache\n  answers any agent, the latest of that and the agent's own when both are kept. A\n  call asking\n  for the conversation always runs, and what it returned answers no later call,\n  since it holds for the room as it stood; its task still counts among the agent's\n  previous tasks. With `serialize_per_room`, a room's calls delegate one at a\n  time.\n\n- `task_status` — A tool an agent can be given on its own, independently of\n  the delegation helpers. It answers with the tasks posted on the StatusBus for\n  the room of the call, read from the tool call context (Section 21.4): those\n  running and those ended, the latest entry of each, with its worker (named\n  by its handle when it is an agent of the room's discussion, Section 19.7.5\n  rule 4, as the worker's brief, the tool's answer that starts a task, the\n  relayed result and the tasks' block of a turn's notes name it), the task,\n  its status, its latest progress and when it was posted (Section 23.3), its\n  whole result (Section 19.8) or that it failed, and when it was posted; a\n  `task_id` argument narrows the answer to one task. It reads the bus for that\n  room only: one room's tasks never show in another. A tool reply that tells\n  its agent to follow the work (a strategy's background dispatch, Section\n  19.7.3) names `task_status` only when the agent was given it.\n\n- `work_in_background` — A tool an agent of a room is given\n  (`setup_background(agent, worker = null, hand_back = \"relay\")`), to start\n  long work as a task and free its turn: going through many records, files or\n  traces, an analysis of several tool calls. Its argument is `task`, what to\n  do and report. The task is the calling agent's own, and runs on that\n  agent's worker: the agent itself, unless its background was set up with\n  another (any intelligence channel the kit holds, another agent or an\n  external agent among them, Section 6.4). A model never starts a task for\n  another agent, whose worker may hold more than it does (a workspace, its\n  tools) and in whose name the result would come back: it asks that agent by\n  name, and only the host's `start_task` reaches any agent. It is handed\n  the room's last messages (`conversation`, RoomKit: 12), and its result goes\n  back to the calling agent (`notify`), as any delegation's (Section 23.3),\n  relayed or posted as the setup's `hand_back` says: the host's choice for\n  that agent's tasks, never the model's. Its worker's brief sets the task\n  apart in `<task>` under the line `Your task, as it was asked:`, before the\n  runtime's text that says how to work and where the findings go, and before\n  those messages, so that the task cannot read as either (Section 6.4); a\n  task the host's `start_task` or a person gives is set apart the same way.\n  The tool answers at once, with the\n  task's id, and tells the agent to say once, in a sentence, that the work is\n  under way (before the call or after it, never both) and to end its turn. A\n  call from a task's child room is refused: a worker does its work and starts\n  no task of its own. The host starts the same\n  task with `start_task(room_id, agent_id, task, hand_back = null)`, a\n  delegation made outside a tool call whose `hand_back` is the agent's setup's\n  when null or an empty string; a non-empty value overrides it and MUST be\n  `\"relay\"` or `\"post\"`. A person starts one through whatever the host gives them (a\n  console's `/task`). Whether work is long is the agent's judgment through its\n  tool or the host's: a model may keep long work in its own turn whatever its\n  tool says, and a host whose agents do so starts their tasks itself.\n\n- `cancel_task` — A tool an agent can be given on its own, as `task_status`,\n  so that a request the person changed or dropped stops its work. It cancels\n  one task of the room of the call, named by its `task_id` (from the\n  delegation's answer or `task_status`): a task still running ends\n  `cancelled`, as any task cancelled from outside does (Section 23.3). It\n  reaches only the tasks the bus lists for that room: a call never cancels\n  another room's task, nor one a strategy runs without posting it\n  (`post_status = false`), which that strategy follows itself. It answers\n  that the task was cancelled, that it had already ended (with its status),\n  that the room has no such task, or, for a task of the room it may not\n  cancel, that it is still running and why: an inline delegation runs inside\n  the turn that asked for it and ends with it; a task a strategy runs without\n  posting it is the strategy's to follow, which the host may cancel when it\n  runs in the background. Calls that cancel one task at once cancel it once,\n  the host's `cancel_task(task_id)` among them: each is answered that it was\n  cancelled, and none of the agents that made them is handed the\n  cancellation back. A call made while such a cancel's end is still being\n  completed, the task ended `cancelled` but whom its end is handed back to\n  not yet decided, is one of them when it could have cancelled the task\n  running; made once that is decided, or on a task that ended otherwise, it\n  is answered that the task ended. A task the bus lists ended is\n  answered as the bus lists it, as `task_status` reads it: nothing is left to\n  act on. Whether a\n  task the bus lists running is the room's is what the framework knows of the\n  tasks it runs for each room, never what the bus lists: a task of another\n  room, one the framework never ran, or one another framework runs for the\n  room on a bus they share, is no task of the room there. One it ran for the\n  room and that ended is answered ended, with its status, even before the bus\n  shows that end: an inline task from its completion's start, before its\n  hooks run, and a background task from its runner's handing over of its\n  end, a call meanwhile waiting for that (RoomKit keeps the latest 1024\n  ended, all rooms together). Past that bound, a task that ended while the\n  bus still lists its line running (a bus that lags behind its end) reads as\n  no task of the room: the bound is the same for every room, and what a room\n  is answered depends on how many tasks ended elsewhere, never on what they\n  were.",
+      "sha256": "519b09de21abf6bb77e70e58130f0cda36fc5ba5be38d929e613a27513955569"
     },
     {
       "id": "RK-23.4-002",
       "kind": "behavior",
       "applies": "§23.4 Delegation Tools; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "23.4",
-      "line": 21295,
+      "line": 21296,
       "text": "**The room's tasks in the turn's notes.** An AI channel's turn reads the\nroom's tasks without a tool call: when the StatusBus lists tasks for the room\nof the turn, the channel's notes (Section 6.4) carry the latest of them\n(RoomKit: 6), each with its worker and what was asked, then either how long it\nhas run, its latest progress with how long ago it was posted, and that no\nresult has come back yet, so none of its data may be given, or how it ended.\nThe notes say that each task's progress is the latest its worker gave, to\nanswer from without a tool call when asked how far a task got, to speak of a\nrunning task only when asked, and to give nothing of its result before it\ncomes back; a result itself comes back by its hand-back, never through the\nnotes. What was asked and the progress are a\nworker's text: each is quoted as Section 6.4 quotes a text from outside (on\none line, bounded, between marks it cannot close), set apart as data. What\nthe notes give unquoted carries no text of its own: a worker's name keeps to an\nidentifier's characters, and a task's ending is `completed`, `failed`,\n`cancelled`, or else `ended`. The notes are read\nfrom the bus as the turn is built, and nothing is stored: a task the bus no\nlonger lists is no longer in them. A standalone turn carries none (Section\n10.1.1), and a realtime session, which builds no turn, carries none either.\n\nA delegation tool, whichever helper wired it (a supervisor's per-worker and\nstrategy tools included), delegates from the room of the call, read from the\ntool call context (Section 21.4), as a handoff does (Section 19.6): the child\nroom's parent is the room that issued the call, never the room the tool was\nwired in. A worker delegating in turn runs in its own child room, so its\ndelegation hangs off that room. A call made outside a tool call MUST be\nrefused.",
       "sha256": "0e312e5e29368c2571358ce4a4b6aeb74574d811e1cb4f52cf820467b376ff8d"
     },
@@ -9525,7 +9525,7 @@
       "kind": "behavior",
       "applies": "§23.5 Delegation Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "23.5",
-      "line": 21327,
+      "line": 21328,
       "text": "| Hook | Execution | When |\n|---|---|---|\n| ON_TASK_DELEGATED | ASYNC | Task created and child room initialized |\n| ON_TASK_COMPLETED | ASYNC | Task ended: completed with its result, failed with its error, or cancelled |",
       "sha256": "633e48ed4e724fe99e6695935f5c8d7c60f59a9527da76682e976226e198bcbd"
     },
@@ -9534,7 +9534,7 @@
       "kind": "behavior",
       "applies": "§24 Skills Framework; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "24",
-      "line": 21338,
+      "line": 21339,
       "text": "The Skills Framework enables agent capabilities to be defined as discoverable,\nself-contained packages.",
       "sha256": "e69bf499444b67d9c5195bd39e889f78e09bc8ec7f5852cc89a9e5e586d78f41"
     },
@@ -9543,7 +9543,7 @@
       "kind": "behavior",
       "applies": "§24.1 Skill Definition; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "24.1",
-      "line": 21345,
+      "line": 21346,
       "text": "A Skill is defined by a `SKILL.md` file with YAML frontmatter:\n\n```\n---\nname: \"web-search\"\ndescription: \"Search the web for current information\"\nlicense: \"MIT\"\ncompatibility: \"Needs network access\"\nallowed_tools:\n  - \"search_*\"\n  - \"fetch_*\"\nrequires:\n  - search_web\n---\n\n## Instructions\n\nYou are a web search specialist. When asked to find information...\n\n## References\n\n- [Search API docs](https://...)\n```\n\nThe frontmatter is read as YAML, within bounds that keep a few hundred bytes\nfrom exhausting the host: a YAML alias is refused, and so are collections\nnested past 64 levels, more than 64 brackets or braces open at once (quoted\nones counted too) and a frontmatter past 65536 characters, each before\nanything is built. Past a bound, the skill cannot be parsed (Section 24.5),\nand a served skill's content fails its check (Section 24.7).\n\nA host's own skill whose frontmatter is not YAML, or is read without a YAML\nreader, MAY be read line by line, each `key: value` line at the top level a\nfield; a line indented under a key is not one. That reading MUST keep both\nYAML list forms: a key alone on its line followed by `- item` lines, as in the\nexample, and `[a, b]` whole on the key's line. Of a frontmatter that is also\nYAML, it MUST NOT gate or require less than the YAML reading does. Whichever\nreader, an `allowed_tools` or `requires` that is neither a text nor a list of\ntexts, or that a line-by-line reading cannot read whole (a list spread over\nseveral lines, a block scalar, a line under the key that is not a `- item`),\nmeans the skill cannot be parsed: a skill read without what it gates hands\nthe model, before any activation, the tools it was meant to keep closed.",
       "sha256": "329f794adfd85a5d7a13ee90b1198429893afb3f07bfd09bd7c7ab37a7baab3f"
     },
@@ -9552,7 +9552,7 @@
       "kind": "structural",
       "applies": "§24.2 SkillMetadata; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "24.2",
-      "line": 21392,
+      "line": 21393,
       "text": "```\nSkillMetadata\n├── name: string                            # Unique skill identifier\n├── description: string                     # What the skill does\n├── license: string | null                  # License identifier\n├── compatibility: string | null            # Free text, not interpreted; shown with\n│       # the license in to_prompt_xml()\n├── allowed_tools: list<string>             # Tool access patterns (ToolPolicy globs);\n│       # in frontmatter, a list or comma-separated (a text `[a, b]` and\n│       # quoted entries read as that list; a text in brackets also gates\n│       # itself, the glob it is: `[ab]` covers `a` and `b`)\n├── requires: list<string>                  # Exact names of the tools the skill needs\n│       # (Section 24.3), read from extra_metadata `requires` as\n│       # allowed_tools is, its glob reading aside; empty by default\n└── extra_metadata: map<string, string>     # Every other frontmatter key (`version`,\n        # `requires`, ...), its value as a string, a list's items joined\n        # by commas\n```",
       "sha256": "a482211c17a32dcafbca4774e8ab56c282d1db66db036ac6b6a253a4b4de7d77"
     },
@@ -9561,7 +9561,7 @@
       "kind": "behavior",
       "applies": "§24.3 SkillRegistry; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "24.3",
-      "line": 21415,
+      "line": 21416,
       "text": "```\nSkillRegistry\n├── discover(*directories) → int            # Scan directories for SKILL.md files, return count\n├── register(skill_dir) → SkillMetadata     # Register a single skill\n├── get_metadata(name) → SkillMetadata | null  # Look up skill metadata\n├── get_skill(name) → Skill | null          # Load full skill (metadata, instructions and\n│       # the path of its directory)\n├── add(skill: Skill) → void                # Register a skill built in memory\n├── add_mcp_server(provider, label, ...) → int  # Register the skills an MCP server\n│       # serves (Section 24.7)\n├── copy(names?, marks = true) → SkillRegistry  # A subset, its paths and marks kept\n├── all_metadata() → list<SkillMetadata>    # List all registered skills\n├── mark_unavailable(name, reason) → void   # The skill leaves the available set, its reason kept; what it gated stays closed\n├── get_unavailable_reason(name) → string | null\n├── unavailable_skills → map<string, string>  # Unavailable skill name → reason\n├── mark_unlisted(name) → void              # Still activatable, left out of to_prompt_xml()\n├── gated_tool_names(activated) → set<string>  # Patterns kept closed: unactivated skills', closed ones\n├── closed_tool_names(activated) → set<string> # Patterns only unavailable skills gate, none activated opens\n├── requires_match: (name, offered) → bool  # How a requires name is served (default: an exact tool name)\n└── to_prompt_xml() → string               # Generate <available_skills> XML for AI context\n```\n\nA host that builds its skills elsewhere (a store, a marketplace) registers them\nwith `add`, and one that narrows a registry for an agent copies it with\n`copy`: a copy finds every skill the source finds, a skill discovered but not\nyet loaded included, and keeps the source's marks unless asked not to.\n\nA channel's registry is the one it was built with. A host whose skills depend\non the person a turn is for (their own skills beside the agent's) gives each\nturn a registry of its own through the channel's per-turn configuration\n(Appendix A.9, per-turn settings). That turn's manifest, its activation,\nreference and script tools and its skill gating MUST read it in place of the\nchannel's; it MUST NOT be installed on the channel nor read by another turn,\nso a channel that serves one agent in several rooms serves each person their\nown skills, concurrent turns included. A turn whose configuration gives none\nreads the channel's. A turn's registry is read only on a channel built with\none, an empty one included: a channel built without skills declares no skill\ntools, and ignores a turn's registry with a warning. Activation stays the\nconversation's (Section 24.4): a skill active in the room that the turn's\nregistry does not hold leaves the room's active skills, as one its registry no\nlonger serves does, since its instructions cannot be in front of the model; its\nnext activation delivers its body again.\n\nSkills are injected into the AI agent's system prompt via `to_prompt_xml()`.\nThe agent can then select and apply skills based on the user's request. A\nskill a host marks unavailable is listed there with its reason, and a registry\nwhose every skill is unavailable still has something to tell: the prompt\ncarries the reasons and the activation tools are declared, on every path, so\nthe model says why instead of guessing. A skill's `requires` is checked by\nevery activation, on a text turn as on a realtime session, with one rule:\nagainst every tool the conversation declares, the channel's own and what\norchestration set up included, once its tool policy is applied and skill\ngating aside (the skill opens what it gates). A `requires` name is an exact\ntool name unless the registry's host says how its names are served\n(`requires_match`: a hub served by any tool named `<hub>_*`, say), and an\nactivation hands over the schemas of the tools that serve it. A tool the\npolicy denies is no tool the skill can use: the activation is refused\n(`Required tools not available: <names>`) and never hands over that tool's\nschema, to the model or to a hook. A skill marked unavailable can never be\nactivated, so the tools it gates stay closed (marked while the registry holds\nit): marking it does not open them, a required tool only such a gate holds is\nmissing, and a call to it reads that a skill not available here gates it.\nA pattern an activated skill gates is that skill's to open: an unavailable\nskill gating the same pattern does not hold it closed (`closed_tool_names`).\n`gated_tool_names` is the one reading of skill gating both doors use.",
       "sha256": "4bfcb63a41da5de2458f84506e5faa7a063a0e1f17757764df056e70d375be04"
     },
@@ -9570,7 +9570,7 @@
       "kind": "behavior",
       "applies": "§24.4 Activation Lifecycle; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "24.4",
-      "line": 21485,
+      "line": 21486,
       "text": "Loading a skill's body is an **activation**, and an activation is scoped to the\n**conversation**, not to the turn that made it. A model working across several\nturns on the same task is following the same rules throughout; a skill that\nsilently stops applying between two turns is a skill the model cannot rely on.\n\nAn implementation MUST keep an active skill's instructions reachable by the\nmodel for as long as the skill is active. It MUST NOT report a skill as active\nwhile its instructions are absent from the model's context.\n\nThe instructions MAY travel through the system prompt rather than through the\nactivation tool's result. This is RECOMMENDED where the context is rebuilt per\nturn from stored events: tool results that do not survive that rebuild force the\nmodel to re-activate — and re-pay the full body — on every turn, whereas the\nsystem prompt is composed fresh each turn and can carry the body once. Where the\nbody is carried this way, the activation tool SHOULD answer subsequent calls with\na short acknowledgement instead of the body, and that acknowledgement MUST state\nthat the instructions are already in force.\n\nAn active skill's instructions MUST NOT be truncated, evicted, or summarized by\na large-result or context-compression mechanism. Such mechanisms exist for\n*data*, which can be paginated or condensed without changing what it means;\nbinding rules reduced to a preview are no longer binding rules. Skill\n*references* are data and remain subject to those mechanisms.\n\nActivation state is per (implementation-defined) conversation scope — a room, a\nsession — and is never global to a channel serving several conversations. An\nimplementation MAY bound the number of simultaneously active skills; when it\ndoes, retiring a skill MUST be equivalent to it never having been activated, so\nthat a later activation delivers the body again.\n\nAn implementation whose activation record is lost (process restart, a channel\nobject replaced) MUST fall back to delivering the body: losing the record and\nlosing the prompt block are the same event, and the model is never left holding\nan acknowledgement without rules.\n\nA turn that stands alone (Section 10.1.1) carries no active skill in its prompt,\nso an activation in it MUST deliver the body, the skill active or not. What it\nactivates counts for the conversation all the same, with what the room's stored\nrows show activated, which the turn reads first, none of it reaching its prompt:\nthe next turn that reads the room carries the instructions. A stored row shows\nthe skill its call ran with, its `TOOL_CALL_END`'s arguments, a `BEFORE_TOOL_USE`\nrewrite included: those are the rules the model received.\n\nTool gating (Section 21) follows the same scope: tools revealed by activating a\nskill stay revealed while the skill is active.\n\nA skill an MCP server serves follows this lifecycle with what Section 24.7\nadds: its instructions are data set apart as that server's, never among the\nbinding rules of the host's own skills, and a lost record of its activation\nis not restored from the stored history.\n\nAn activation that finds no skill under its name, when that name matches tools\nthe turn may call (a model that took the `spotify_play` tool for a \"spotify\"\nskill), answers with the skill's absence and names those tools, and reveals\nthem as `find_tools` reveals its matches (the window swapped, what is declared\nanyway left out), for the rest of the session, once the call is served: an\n`ON_TOOL_CALL` block reveals nothing. The same answer and the same reveal on\nevery door, text or realtime; where the tools are reached through `call_tool`,\nthe answer says so. Only the turn's own catalogue is matched, never the tools\nthe channel serves itself. A skill that exists but is unavailable answers with\nits reason and no such hint.",
       "sha256": "d0de8c90d0b84d824d97871695d418f3081c39be0fdde0ae913bba0518d1e9a8"
     },
@@ -9579,7 +9579,7 @@
       "kind": "behavior",
       "applies": "§24.5 Loading Failures; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "24.5",
-      "line": 21551,
+      "line": 21552,
       "text": "A skill that cannot be parsed, or whose metadata does not validate, is a\ndeployment error rather than a runtime condition. The two have opposite\nremedies. A skill that exists but cannot be used in the present context is a\nfact the model can be told and can work around; a malformed `SKILL.md` is a\nmistake in what someone deployed, and nothing the model does at runtime will\nrepair it.\n\nAn implementation MUST NOT silently omit a skill it failed to load. Omission is\nthe worst outcome available: the catalogue simply does not list the capability,\nthe model is never told it was meant to exist, and the agent answers as though\nnothing were missing. Nobody reading the conversation sees a gap either. The\nerror surfaces much later, as an agent that inexplicably cannot do the thing it\nwas configured to do, by which point the frontmatter typo that caused it is far\nout of view.\n\nDiscovery MUST therefore fail by default on the first skill it cannot load, and\nMUST report which skill failed and why. A directory that cannot be scanned is\nthe same class of failure and MUST be reported the same way: returning an empty\ncount for a path that does not exist is, to the caller, indistinguishable from a\ndirectory that is genuinely empty.\n\nAn implementation MAY offer a mode that logs each failure and continues. It is\nthe right behaviour where skills come from a source the deployment does not\ncontrol and a partial catalogue beats no service at all. That mode MUST be\nrequested explicitly by the caller and MUST NOT be the default, and every\nskipped skill MUST be logged with the reason it was skipped.\n\nDiscovery MUST NOT leave the registry partially populated. Whatever the outcome,\nthe registry a caller observes afterwards MUST be either the state that preceded\nthe call or the state with every discovered skill present. A half-filled\ncatalogue reproduces exactly the silent gap this section exists to prevent, and\ndoes so at the moment the caller has most reason to believe the opposite.\n\nThe registry's manifest, which every system prompt carries (§24.3), MUST NOT\npass 65,536 characters. A discovery or a registration that would make it pass\nthem fails, says so, and leaves the registry as it was: a manifest without a\nbound grows each prompt, and every turn's cost, with each skill a deployment\nadds.",
       "sha256": "e05af48ed6033c618d1fac0b4f0c89cfeedccdacbc9c968d5a7fb91eaa090372"
     },
@@ -9588,7 +9588,7 @@
       "kind": "behavior",
       "applies": "§24.6 Access to Bundled Files; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "24.6",
-      "line": 21594,
+      "line": 21595,
       "text": "A skill's references and scripts are addressed by name, and the name is chosen\nby the model. Resolution MUST be confined to the skill's own directory.\n\nFiltering the name does not achieve that, and an implementation MUST NOT rely on\nname filtering alone. A name containing no traversal sequence, no separator and\nno drive letter still leaves the directory when a symbolic link bearing that\nname sits inside it. An implementation MUST resolve the candidate path, with\nlinks followed, and MUST verify that the result is still inside the skill\ndirectory, rejecting it otherwise. Containment is a property of where a path\nends up, not of how it is spelled.\n\nNames MUST be normalized before they are inspected, so that a character which is\nnot the ASCII separator but normalizes onto it cannot pass a check performed on\nthe raw string. Absolute paths MUST be rejected, in every spelling the host\nplatform recognises.\n\nThe requirement does not lapse where execution policy — sandboxing, timeouts,\npermitted interpreters — is delegated to the integrator. *What* runs is part of\nthe skill boundary; *how* it runs is not. An implementation that delegates\nexecution MUST resolve the script name under these same rules and MUST reject a\nname that fails them before any integrator-supplied executor is invoked, and\nSHOULD make the resolved path available to that executor. A check every\nintegrator is expected to rediscover is a check some integrator will omit.",
       "sha256": "92023a269b217f58db01c5604d8ed13c0105243ab6b306dc97c5d18fbd7e50c8"
     },
@@ -9597,7 +9597,7 @@
       "kind": "behavior",
       "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "24.7",
-      "line": 21622,
+      "line": 21623,
       "text": "An MCP server MAY serve skills beside its tools under the MCP Skills\nextension (`io.modelcontextprotocol/skills`, SEP-2640): it lists them with\n`skills/list`, answers `skills/get` for one by the URI of its `SKILL.md`, and\nserves each file of a skill as a resource read with `resources/read`. The\nskill format is the one Section 24.1 reads. This section is what a registry,\nand every channel serving its skills, adds for such a skill; a skill the host\ndeploys itself is unchanged.\n\n```\nSkillRegistry\n└── add_mcp_server(provider, label, allow_dynamic = false,\n                   approve_execution = null, execution_tools = []) → int\n```",
       "sha256": "f54fe24287791fdd5b62e8e31f0704a7f640ca14df669d2af7fdbe805c00958b"
     },
@@ -9606,7 +9606,7 @@
       "kind": "behavior",
       "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "24.7",
-      "line": 21638,
+      "line": 21639,
       "text": "**Registration.** `add_mcp_server` lists the skills of the server `provider`\nis connected to (Section 21.2) and registers them under `label`, returning\nhow many it registered. The label is the host's name for that server: an\nidentifier, never the name the server gives itself, which any server can\ncopy. A registry MUST refuse a label it already holds for another provider,\nand MUST raise for a server that does not declare the extension rather than\nregister nothing in silence. The listing follows the cursor across every page\nwithin the bounds of a tool listing (Section 21.2) and reads no file: nothing\nof a skill is fetched before it is activated. A listing answered over a\nconnection that negotiated an earlier protocol revision may lack `ttlMs`,\n`cacheScope` and `resultType`, and is read as complete. Registering a server\nagain replaces its entries: a skill it no longer offers, or offers in a form\nthe host does not take, retires and is served nowhere any more; one it still\noffers keeps, while active, the entry it was loaded from. A copy of a registry\nnarrowed to some names (Section 24.3) reaches those names and no other: only\na registry that took the server whole asks it for a skill its listing did not\nhold. A registry and its copies share the entries the servers gave: a skill\none of them retires, when it registers the server again or when a file fails\nits check, is retired in each of them, an active one included, and a copy made\nwithout the names its source marks unavailable never asks a server for them\neither.",
       "sha256": "718ed28580eafd2b87d2cd38b770b60934c1442bd80336b7464c59ab7f9f666e"
     },
@@ -9615,7 +9615,7 @@
       "kind": "behavior",
       "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "24.7",
-      "line": 21662,
+      "line": 21663,
       "text": "**Entries.** Each entry is read on its own. An entry whose `resources` is\nmissing or neither a list nor `\"dynamic\"`, whose URI's last segment before\n`SKILL.md` is not its frontmatter `name`, whose list omits its own `SKILL.md`,\nnames a file outside the skill's directory or one file twice; an entry past\n512 files or 16 MiB in all; and an entry whose `resources` is `\"dynamic\"`\nwhile the host did not allow them (`allow_dynamic`) is registered as\nunavailable with its reason (Section 24.5: a skill the server meant to offer\nis never dropped in silence). The server's other skills stay usable. A\n`\"dynamic\"` skill offers nothing to verify: a host that allows one takes its\ncontent unverified, and an implementation MUST stop reading such a skill once\nwhat it read reaches 16 MiB.",
       "sha256": "5e0f41a04c873e890b09fc742116275117a3216b7b57d69afd35a1284f15d05c"
     },
@@ -9624,7 +9624,7 @@
       "kind": "behavior",
       "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "24.7",
-      "line": 21676,
+      "line": 21677,
       "text": "**Names.** A skill an MCP server serves is registered under `<label>:<path>`,\nwhich is its name in the registry (Section 24.2): its path is its URI without\nthe trailing `/SKILL.md`, and without the scheme when the scheme is\n`skill://` (`hf:hf-cli`, `hf:acme/billing/refunds`,\n`docs:github://owner/repo/skills/refunds`). A host's own skill is named as\nSection 24.1 names it, which never holds `:`, and a registry MUST refuse to\ngive a name it holds to a skill of another origin, so that a served skill\nnever shadows a host's skill nor another server's, and the reverse. Two\nentries of one listing sharing a frontmatter `name` keep distinct paths. The\nskill's identity is the pair of its label and its URI everywhere it is kept:\nthe activation record, the entry held, what was verified. The manifest\n(`to_prompt_xml()`) names the label as the skill's origin and gives its\ndescription as Section 6.4 quotes a text from outside. `requires` is read from\nthe frontmatter as for any skill (Section 24.3).",
       "sha256": "dafabc15360830fe78f6f4aa4ff55f757ab206264ce5d1adb819f80572bc2352"
     },
@@ -9633,7 +9633,7 @@
       "kind": "behavior",
       "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "24.7",
-      "line": 21693,
+      "line": 21694,
       "text": "**Activation.** Activating such a skill reads its `SKILL.md` from its own\nserver then, and not before. The content MUST match the entry before anything\nof it reaches the model: its length the entry's `size`, its SHA-256 digest\nthe entry's `digest`, and its frontmatter, parsed, the entry's `frontmatter`\nfield by field. A mismatch loads nothing: the registry reads the entry again\nwith `skills/get`, and the activation answers that the skill changed on its\nserver or could not be verified, without its body. An entry read again is held\nto the rules a listed one is (Entries): one the host does not take leaves the\nskill unavailable with its reason. The instructions then\nfollow Section 24.4 (whole, carried by the system prompt, acknowledged\nafterwards, retired as if never activated) as data: in a `<skill>` block\n(Section 6.4) naming the label and the URI, after the host's own skills and\nnever among their binding rules. Where the body travels in the activation's\nresult (a realtime provider whose instructions are fixed), it is set apart\nthe same way. A skill's content outranks nothing else in the context. An\nactivation records what it loaded, never what a second lookup finds: a skill\nmarked unavailable is never activated, one loaded before included. A session\nkeeps an activated skill's body as it rendered it, set apart, so nothing read\nlater delivers it otherwise.\n\nA listing may be partial or empty, which proves no skill missing. An\nactivation naming `<label>:<path>` that the registry does not hold, under a\nlabel it holds, asks that server for the entry with `skills/get`: an entry it\nreturns is registered as a listed one would be, kept out of the manifest\n(`mark_unlisted`), and activated; an error answers that the server serves no\nsuch skill. A skill the server's own instructions point to is reached so.",
       "sha256": "d3cf58ffa14f25ffeb3c31b8d5cb3e81a77352dacf8bd658ee2b3953aa9bcfa1"
     },
@@ -9642,7 +9642,7 @@
       "kind": "behavior",
       "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "24.7",
-      "line": 21722,
+      "line": 21723,
       "text": "**Files.** While such a skill is active, the registry holds the entry it was\nloaded from. `read_skill_reference` resolves the name it is given against the\nskill's directory (`templates/invoice.md`), reads the file from the same\nserver, and reads only a file that entry lists: a name the entry does not\nlist is refused as content that failed verification, whatever the server\nwould serve. Each file read is verified against the entry as `SKILL.md` is,\nand reaches the model naming the same origin. A file that fails retires the\nskill (Section 24.4): the registry reads the entry again, and the model is\ntold to activate the skill again, which delivers its current body. A read\nnever reaches another server: the content of one server's skill causes no\nread on another.",
       "sha256": "a4683e015ef1ac73f38da4d2ebd8547d422a45aa625fceedc3edbd3ac427549a"
     },
@@ -9651,7 +9651,7 @@
       "kind": "behavior",
       "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "24.7",
-      "line": 21736,
+      "line": 21737,
       "text": "**Lost record.** An activation of such a skill is not restored from the\nstored history: its body is no longer held, so its next activation delivers it\nagain (Section 24.4). A delivery that hands every skill's body over when a\nsession starts (a realtime session in `inline_full` mode) would fetch them all\nahead of need: there, a skill an MCP server serves is unavailable, with that\nreason.",
       "sha256": "f9edf215cda239be25f843f2a03c708abc458288750a9e53029341cb72393976"
     },
@@ -9660,7 +9660,7 @@
       "kind": "behavior",
       "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "24.7",
-      "line": 21745,
+      "line": 21746,
       "text": "**Permissions.** What such a skill's frontmatter would grant is not granted:\nits `allowed_tools` gates nothing and opens nothing (Section 24.2), and a\n`SKILL.md` within its directory is one of its files, never a skill activated\nwith it. Its files are never written to disk to be run: `run_skill_script`\nrefuses it. While such a skill is active in a conversation, a call to a tool\nthat runs code (a sandbox command, `sandbox_*`, and every tool the host names\nin `execution_tools`) is served only when `approve_execution` approves each\nsuch skill active there; an implementation MUST refuse the call otherwise (a\nrefused call, Section 9.3), and always when the host gave no callback. The\ncallback receives the label, the URI, the conversation and the entry's\nfingerprint (the SHA-256 of its files' URIs and digests, sorted), and an\napproval holds for that conversation, that fingerprint and the registry's\nserver that gave it only: an entry read again with another set of files is\nasked again, and the same entry another registry serves (a turn's own,\nSection 24.3) asks that registry's callback. A host that keeps approvals keeps\nthem by fingerprint. A `\"dynamic\"` skill has no fingerprint an approval could bind,\nand the callback is told so.",
       "sha256": "4d0b410604afdc04dbe1a23d5ad79aeec4de37177834ba37b7a124ea17049bc6"
     },
@@ -9669,7 +9669,7 @@
       "kind": "behavior",
       "applies": "§24.7 Skills Served over MCP; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "24.7",
-      "line": 21765,
+      "line": 21766,
       "text": "**Trust.** A digest the server supplies proves the content consistent with an\nentry from the same server, never trustworthy: the content stays text from\noutside (Section 6.4). Content kept on disk between reads MUST meet the\nextension's cache requirements (out of reach of what the model runs, verified\nagain on each read, outside every directory a registry discovers skills in);\ncontent kept in memory for the entry held needs none of them.",
       "sha256": "dd31ef9421d2aa96df592881ab32d42c84ac914695f6e812801d7974246ef3be"
     },
@@ -9678,7 +9678,7 @@
       "kind": "behavior",
       "applies": "§25 Image Generation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "25",
-      "line": 21778,
+      "line": 21779,
       "text": "An agent that can describe a picture cannot draw one. Image synthesis is a\ncapability a small number of models hold, and the model holding a conversation\nis rarely one of them — so it is specified here as its own provider surface,\nthe way speech-to-text and text-to-speech already are, and not as an extension\nof the conversational response.",
       "sha256": "069a856f1aba558960d287143be79a998a4ed3ac5953922b785b795a58eed9a1"
     },
@@ -9687,7 +9687,7 @@
       "kind": "behavior",
       "applies": "§25.1 A Surface of Its Own; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "25.1",
-      "line": 21788,
+      "line": 21789,
       "text": "An implementation MUST expose image generation through a provider interface\ndistinct from the AI provider interface, and MUST NOT require that the two be\nserved by the same vendor, credential, or object. An agent conversing through\none provider MUST be able to draw through another, exactly as it transcribes\nthrough a third.\n\nThis is a normative requirement rather than an implementation preference. Image\ngeneration reached as a mode of the conversational response inherits that\nresponse's provider: the capability then exists only for the subset of\nconversations already held by a model that draws, and acquiring it means\nmigrating the conversation. The decoupled form is what makes the capability\navailable to every conversation, and it is the property this section protects.\n\nAn implementation MUST NOT widen the conversational response type to carry\ngenerated images. `AIResponse.content` is read by every consumer of the\nframework; turning it into a union imposes a migration on all of them for a\ncapability that two providers offer.",
       "sha256": "7052cb560b3b8fef1a2a861a2bffe20331950f548a6a22f701fbb868788a4a8f"
     },
@@ -9696,7 +9696,7 @@
       "kind": "behavior",
       "applies": "§25.2 ImageProvider; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "25.2",
-      "line": 21810,
+      "line": 21811,
       "text": "```\nImageProvider\n├── name → string                             # Provider identifier\n├── model_name → string                       # Active model id\n├── supports_editing → bool                   # Whether reference_images is honoured\n├── available_models() → list<ModelInfo>      # Offline catalogue (Section 25.6)\n├── generate(prompt, size, n, reference_images) → list<ImageResult>\n└── close()                                   # Release resources\n```\n\n`generate` MUST return exactly `n` results or raise. Returning fewer without\nerror leaves the caller to discover the shortfall by indexing, which it will do\nin production and not in testing.\n\n`size` is a `\"WIDTHxHEIGHT\"` string, or null for the provider's default. A\nprovider whose API expresses geometry differently — an aspect ratio and a\nresolution tier, say — MUST translate, and MUST NOT require the caller to know\nwhich form its vendor speaks. A provider that cannot honour a requested size\nMUST raise rather than silently substitute another: an image of the wrong\ngeometry is a failure the caller can neither see nor correct.\n\n`n` greater than one MUST produce `n` distinct results. A provider whose API\nhas no batch parameter satisfies this with concurrent calls: the alternative —\nhonouring `n` on some providers and refusing it on others — leaves a parameter\nin the interface that a caller cannot use without first knowing which provider\nis behind it, which is the coupling this section exists to remove.\n\nImplementations MAY accept an optional typed `options` argument for controls\nsuch as quality, output format, background, compression, aspect ratio and\nresolution tier. An explicit aspect ratio and tier are native geometry, not a\npromise of exact pixels. An implementation MUST reject incompatible or\nunsupported options before making a billable request. Omitted options inherit\nprovider defaults; explicit values override them. Existing calls without\noptions MUST remain valid. A mask MAY accompany references when supported.\n\nAn error after a request has started MUST preserve every available result and\nusage report. A partial generation still raises, carrying successful results\nand the outcomes of individual vendor calls. An implementation MUST NOT mark\nan ambiguous network failure as unbilled or automatically retry a paid\ngeneration. A failed status is marked retryable only where the vendor did not\nrun the generation (408, 409, 429, 503); a 500, 502 or 504 may follow one it\nran and billed, and is final: the host decides. A transport failure is\nretryable only when the request never left (the connection could not be\nmade); a timeout or a connection lost once the request went out is ambiguous,\nand final. An image the vendor delivered in a form the provider cannot return\nwas generated and billed: that failure is final too. Independent concurrent calls SHOULD settle so their outcomes can\nbe collected. Cancellation MUST remain cancellation, with already received\noutcomes accessible through an optional asynchronous progress callback.",
       "sha256": "7b95b16db48404a69a2c1e4576e0bcb1c4dbf1b1b1f40491a4cf045dd277df6a"
     },
@@ -9705,7 +9705,7 @@
       "kind": "behavior",
       "applies": "§25.3 ImageResult; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "25.3",
-      "line": 21863,
+      "line": 21864,
       "text": "```\nImageResult\n├── data: string                              # data:<mime_type>;base64,<payload>\n├── mime_type: string                         # Media type of the payload\n├── revised_prompt: string | null             # Prompt as the model rewrote it, if reported\n└── usage: map<string, any>                   # Token counters (Section 25.5)\n```\n\n`data` MUST be a data URI, always, and its media type MUST equal `mime_type`.\nThe alternative — a field documented as \"a data URI or bare base64\" — forces\nevery consumer to sniff the value before it can use it, and one consumer will\nsniff it wrong. The invariant also makes the result directly usable: a data URI\nis what image message content and image message parts already accept, so a\ngenerated image enters a room, or returns as a reference for a subsequent\nedit, without conversion.\n\nA provider whose API returns a fetchable URL rather than bytes MUST retrieve\nthe bytes and encode them. Such URLs expire, and a result that decays into a\ndead link some time after it was returned is not a result.\n\n`revised_prompt` is null where the vendor reports none. An implementation MUST\nNOT substitute the original prompt for it: the field exists to show the caller\nwhat the model actually drew from, and echoing the input back conceals exactly\nthe divergence it exists to reveal.\n\nResults MAY carry a vendor request or interaction identifier, the vendor's\noriginal usage report, effective parameters, actual dimensions where reported,\nand grounding attribution. Usage shared by a batch MUST be represented once,\nwith its scope explicit; it MUST NOT be divided into invented per-image\nmeasurements. Original metadata MUST omit inline image payloads and secrets.\n\nA progress callback MAY receive individual call outcomes or preview images.\nPreviews MUST be distinguished from final results. Callback delivery does not\nimply vendor cancellation or a refund, and failure to deliver an outcome MUST\nNOT trigger another generation.",
       "sha256": "188d411f9dad0ec5708d1d6225570eb80ced86895108e020b198ef5003d12756"
     },
@@ -9714,7 +9714,7 @@
       "kind": "behavior",
       "applies": "§25.4 Editing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "25.4",
-      "line": 21903,
+      "line": 21904,
       "text": "Editing — an image and a prompt in, an image out — is expressed through\n`reference_images` on `generate`, not through a second method.\n\nThe distinction is the vendor's, not the caller's: one API takes reference\nimages as ordinary content on the same endpoint, another routes them to a\nseparate one. A provider MUST absorb that difference. A provider that cannot\nedit MUST report `supports_editing` as false and MUST raise when\n`reference_images` is non-empty, rather than generating from the prompt alone —\na caller that asked for an edit and silently received a fresh image has no\nsignal that the reference was dropped.\n\nA provider MAY support continuity through a previous interaction identifier.\nThe caller remains responsible for authorizing access to that interaction.\nA stateful provider MUST expose an explicit storage choice so applications can\ndisable remote history retention. Omitting this choice MAY preserve the\nprovider default; applications MUST NOT assume that omitted means stateless.\nGrounding with external search MAY be requested only on compatible models;\navailable citations and search-suggestion metadata MUST be retained for the\ncaller to display according to the provider's requirements.",
       "sha256": "4ee10a0dc9f390e01d437feea24468bd7540eec48c814666ec9ad8eca4fed53c"
     },
@@ -9723,7 +9723,7 @@
       "kind": "behavior",
       "applies": "§25.5 Usage Accounting; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "25.5",
-      "line": 21927,
+      "line": 21928,
       "text": "A generation reports what it consumed. An image and the text around it are\nmetered separately by the vendors that meter them at all, so the counters stay\napart rather than collapsing into one number:\n\n```\nusage\n├── input_tokens: int                         # Text input tokens\n├── input_image_tokens: int                   # Reference-image input tokens\n├── output_tokens: int                        # Text output tokens, where the model emits any\n└── output_image_tokens: int                  # Generated-image tokens\n```\n\nThe counters MUST be disjoint: a token appears under exactly one of them.\nWhere a vendor reports image tokens as a subset of a total, an implementation\nMUST subtract them before reporting the text counter, so a consumer summing\nthe counters counts each token once. Without that guarantee the counters cannot\nbe combined at all, and the breakdown is worth less than the single total it\nreplaced.\n\nCounters a vendor does not report are absent, not zero: a reported zero and an\nunreported quantity are different claims, and only one of them is safe to add\nup.\n\nUsage is a report, not a price. What a generation costs depends on how its\nvendor meters it — per token in some lineups, a flat amount per image in\nothers, varying by resolution or quality — and on commercial terms no\nspecification can observe. An implementation MAY carry a price list and MAY\nderive a cost from these counters; neither the shape of such a list nor the\narithmetic over it is specified here, beyond what a turn's cost budget counts\n(Section 6.4). What is specified is that the counters\nmean what they say, so that whatever does price them has something unambiguous\nto price.",
       "sha256": "8af916100040befaec153080614c46d75ab75d6aad9455e297cf0e8254fa13d2"
     },
@@ -9732,7 +9732,7 @@
       "kind": "behavior",
       "applies": "§25.6 Model Catalogue; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "25.6",
-      "line": 21964,
+      "line": 21965,
       "text": "An image catalogue is a set disjoint from the conversational one: a model that\ndraws is not a model that converses, and neither list contains an id belonging\nto the other.\n\nAn implementation MUST NOT merge the two into the response of a single\nenumeration. Merging saves no maintenance — the entries are written once\neither way — while obliging every consumer of the conversational catalogue,\nincluding those populating a model field for a conversational agent, to filter\na class of models it can never use. Entries SHOULD nevertheless carry a\ncapability tag identifying them as image-generating, so a consumer that\ndeliberately combines the lists can still tell them apart.\n\nCatalogue entries MAY carry structured image capabilities, including accepted\ncontrols and values, geometry constraints, reference limits, continuity,\nmasking, search, and retirement dates. Unknown capabilities MUST remain unknown\nrather than being inferred from another model in the same vendor's lineup.",
       "sha256": "7cffe39849d372eb2131e15865e05600603d2f4b63098e331e28bfea81201f67"
     },
@@ -9741,7 +9741,7 @@
       "kind": "behavior",
       "applies": "§25.7 Non-Goals; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "25.7",
-      "line": 21985,
+      "line": 21986,
       "text": "Image generation is not a pipeline stage and defines no hook triggers. It is\ninvoked by a caller — a tool handler, an application — and its result enters a\nroom as ordinary message content, which the inbound and broadcast pipelines\n(Section 10) already govern. Introducing a parallel path for images would\nduplicate ordering, permission, and visibility rules that Section 7 and\nSection 10 state once.\n\nVideo generation, image *understanding* (already covered by multimodal message\nparts) and avatar synthesis (Section 12) are outside this section.",
       "sha256": "52395efcf702310d7184ed4b6013677f78aabd26ed7bec62b95de49e19e146fb"
     },
@@ -9750,7 +9750,7 @@
       "kind": "behavior",
       "applies": "§26.1 Level 0: Core (REQUIRED); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "26.1",
-      "line": 22003,
+      "line": 22004,
       "text": "A conforming implementation MUST support:\n\n- Room model with lifecycle (ACTIVE, PAUSED, CLOSED, ARCHIVED), including\n  refusing new events at every entry point once the status says so (Section 5.1)\n- Room timers (auto-pause, auto-close, resume on activity; Section 5.1)\n- RoomEvent with all EventType values and all EventContent types\n- Sequential event indexing\n- Channel interface (handle_inbound, deliver, on_event, capabilities)\n- ChannelBinding with access, mute, and visibility\n- Permission enforcement (Section 7.5)\n- Hook engine with SYNC and ASYNC execution\n- BEFORE_BROADCAST and AFTER_BROADCAST hooks with HookResult\n- InjectedEvent delivery, whatever the hook's action\n- Event chain depth tracking and limiting\n- Inbound processing pipeline (Section 10.1); its identity steps belong to\n  higher levels, identity resolution (step 5) to Level 1 and identity\n  verification (step 5b) to Level 2, and an implementation skips the step of\n  a feature it does not provide\n- Broadcast pipeline (Section 10.2)\n- Reentry passes (response events re-enter the pipeline as commit passes)\n- Inbound room routing (pluggable)\n- Room-level locking\n- ConversationStore interface with in-memory implementation\n- Content transcoding (at least text fallback)\n- The hook triggers and the framework events (Section 8.2) of the steps and\n  operations below\n- Structured logging\n- Idempotency checking\n- Event addressing: `RoomEvent.addressed_to`, honoured when set (Section 19.3)\n- Turn backend with its in-memory implementation and the kit's own executor:\n  every turn through its serialized messages (Section 10.6)",
       "sha256": "a32a54f0625f26c6530f21ce8bdad0469c686191f2d4260d137d1a9301f7450f"
     },
@@ -9759,7 +9759,7 @@
       "kind": "behavior",
       "applies": "§26.1 Level 0: Core (REQUIRED); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "26.1",
-      "line": 22037,
+      "line": 22038,
       "text": "**Triggers and framework events.** A Level 0 implementation MUST fire each\nhook trigger, and emit each framework event, that the table below names for a\nstep or an operation, whenever that step or operation runs. The table is\nLevel 0's conformance list; the Status column of Section 9.2 tells what one\nimplementation emits, not what conformance requires. A feature of a higher level, or one no level\nlists, owes the triggers and the framework events its own section names, and\nonly an implementation that provides it owes them: identity resolution\n(Level 1) owes ON_IDENTITY_AMBIGUOUS and ON_IDENTITY_UNKNOWN at §10.1 step 5,\nidentity verification (Level 2) ON_VERIFICATION_REQUIRED at step 5b and the\nother triggers of Section 11.7, and an AI channel (Level 1) the triggers of\nits turn (Section 6.4). Section 8.2 says which level or feature owes each\nframework event.\n\n| Step or operation | Hook triggers | Framework events |\n|---|---|---|\n| A room created, by the integrator or at §10.1 step 2 | ON_ROOM_CREATED | room_created |\n| §10.1 step 2: a room created for a channel other than VOICE and REALTIME_VOICE | ON_SESSION_STARTED | session_started |\n| A channel attached to a room, by the integrator or at §10.1 step 2 | ON_CHANNEL_ATTACHED | room_channel_attached |\n| A channel detached from a room | ON_CHANNEL_DETACHED | room_channel_detached |\n| A channel muted or unmuted in a room (§7.2) | ON_CHANNEL_MUTED, ON_CHANNEL_UNMUTED | — |\n| A channel registered with the framework, or unregistered | — | channel_registered, channel_unregistered |\n| A room transitioned to PAUSED (§5.1) | ON_ROOM_PAUSED | room_paused, when its inactivity timer paused it |\n| A room transitioned to CLOSED | ON_ROOM_CLOSED | room_closed |\n| A room transitioned to ARCHIVED | — | room_archived |\n| An event the room's status refuses (§5.1, §10.1 steps 6 and 9a) | — | room_refused_event |\n| §10.1 steps 5a and 9 | BEFORE_BROADCAST | hook_error |\n| §10.1 steps 10 and 11 | — | event_blocked |\n| §10.1 steps 10, 11 and 15: a task stored | ON_TASK_CREATED | — |\n| §10.2 step 3c: a record the chain depth limit stores (§8.3) | — | chain_depth_exceeded |\n| §10.2 step 3c: a turn that failed or returned an error (§6.1, §10.6.8) | ON_ERROR | — |\n| §10.2 steps 3c and 3d: a target's `on_event()` or `deliver()`; a solicited intelligence channel no longer registered (§10.2 step 3) | — | delivery_succeeded, delivery_failed, broadcast_partial_failure |\n| §10.1 step 16 | AFTER_BROADCAST | — |\n| §10.1 step 17 | — | event_processed |\n| §10.3: an EDIT or a DELETE committed; a direct `update_event()` or `delete_event()` | ON_EVENT_UPDATED, ON_EVENT_DELETED | — |\n| A hook that exceeds its timeout (§9.1) | — | hook_timeout |",
       "sha256": "24622d21bf8a3e9669c001640615db9595572a943f4cf07a7289e5b7c449272e"
     },
@@ -9768,7 +9768,7 @@
       "kind": "behavior",
       "applies": "§26.2 Level 1: Transport (RECOMMENDED); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "26.2",
-      "line": 22077,
+      "line": 22078,
       "text": "A Level 1 implementation SHOULD additionally support:\n\n- At least one SMS provider\n- At least one Email provider\n- WebSocket channel\n- HTTP/Webhook channel\n- AI channel with at least one AI provider\n- Agent class (AIChannel subclass with identity metadata)\n- Provider abstraction (swappable per channel type)\n- Identity resolution pipeline (Section 10.1 step 5, Sections 11.1–11.6)\n- Identity hooks (ON_IDENTITY_AMBIGUOUS, ON_IDENTITY_UNKNOWN)\n- Participant model with identification status\n- Memory system with at least SlidingWindowMemory (Section 20)\n- Circuit breaker\n- Retry policy\n- Rate limiting\n- Telemetry provider abstraction (Section 15.7)",
       "sha256": "ba9e5ad432adf3ad2b39533e3c9110350aa0690960a42a55308c124e9c1a174d"
     },
@@ -9777,7 +9777,7 @@
       "kind": "behavior",
       "applies": "§26.3 Level 2: Rich (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "26.3",
-      "line": 22099,
+      "line": 22100,
       "text": "A Level 2 implementation MAY additionally support:\n\n- WhatsApp channel (Business and/or Personal)\n- Messenger channel\n- Teams channel\n- Telegram channel\n- RCS channel with SMS fallback\n- Template content support\n- Source providers (persistent connections)\n- REST API (Section 16.1)\n- MCP Server (Section 16.2)\n- ACP agent channel (Section 6.4)\n- Realtime/ephemeral events backend\n- Per-room hooks\n- Multi-agent orchestration (Section 19):\n  - ConversationRouter with routing rules, addresses taking precedence\n    (Section 19.4, step 0)\n  - Both agent-response policies, selectable per room (Section 19.3.1)\n  - ConversationPipeline with stages\n  - HandoffHandler with tool-based handoff protocol\n  - At least Pipeline and Swarm strategies; Discussion MAY be provided\n    (Section 19.7.5)\n- Tool access control with ToolPolicy (Section 21)\n- Task delegation with child rooms (Section 23)\n- Delivery strategies: Immediate, WaitForIdle, Queued (Section 22)\n- Skills framework with SkillRegistry (Section 24)\n- Image generation through an ImageProvider decoupled from the AI provider\n  (Section 25)\n- Response schemas: an AI provider constraining its answer to a portable\n  JSON Schema (Section 6.7)\n- Identity verification: requests, labels, holding and release, the three\n  verification triggers (Section 10.1 step 5b, Section 11.7)\n- AI steering directives (Section 21.3)\n- Advanced memory providers: Summarizing, Retrieval (Section 20)\n- A turn backend whose executors run in other processes (Section 10.6)",
       "sha256": "4afa4e670984712137c0e4783fe398afaad9c26a27d063c8c58e343a576c66a5"
     },
@@ -9786,7 +9786,7 @@
       "kind": "behavior",
       "applies": "§26.4 Level 3: Real-Time Media (OPTIONAL); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "26.4",
-      "line": 22139,
+      "line": 22140,
       "text": "A Level 3 implementation MAY additionally support audio and/or video real-time media:\n\n#### Audio (Voice)\n\n- Audio Processing Pipeline with:\n  - AudioFrame and AudioFormat data models\n  - AudioPipelineConfig with pipeline format contract\n  - ResamplerConfig (RECOMMENDED)\n  - VADProvider interface with at least one implementation (e.g., Silero) — REQUIRED for VoiceChannel, OPTIONAL for RealtimeVoiceChannel\n  - DenoiserProvider interface (OPTIONAL, e.g., sherpa-onnx)\n  - AECProvider interface (OPTIONAL, RECOMMENDED for non-WebRTC transports)\n  - AGCProvider interface (OPTIONAL, built-in implementation REQUIRED)\n  - DTMFDetector interface (OPTIONAL, RECOMMENDED for SIP/PSTN)\n  - DiarizationProvider interface (OPTIONAL)\n  - TurnDetector interface (OPTIONAL)\n  - BackchannelDetector interface (OPTIONAL)\n  - AudioRecorder interface (OPTIONAL, RECOMMENDED for regulated industries)\n  - AudioPostProcessor interface (OPTIONAL)\n  - InterruptionConfig\n- Voice channel (STT/TTS pipeline)\n- VoiceBackend interface with at least one implementation\n- AudioCaptureSource interface (OPTIONAL, REQUIRED for capture that outlives a session — Section 12.12)\n- Packet loss concealment for lossy transports (OPTIONAL, RECOMMENDED for RTP backends — Section 12.2.1)\n- TTS conversation context — TTSContextLevel, TTSContext, `release_context` (OPTIONAL — Section 12.2.2)\n- STTProvider interface with at least one implementation\n- TTSProvider interface with at least one implementation\n- Voice catalog — `VoiceInfo`, `available_voices`, `list_voices` (OPTIONAL — Section 12.2)\n- Dialogue synthesis — `synthesize_dialogue`, `DialogueTurn` (OPTIONAL — Section 12.2)\n- VoiceLibrary interface — custom voices, designed or replicated with consent (OPTIONAL — Section 12.2.4)\n- Voice hooks (ON_SPEECH_START through ON_RECORDING_STOPPED)\n- Barge-in and interruption handling (InterruptionStrategy)\n- Audio bridging — AudioBridge (OPTIONAL — Section 12.7)\n- Realtime Voice channel (speech-to-speech)\n- RealtimeVoiceProvider interface\n- Full-duplex providers and reasoning delegation (OPTIONAL — Section 12.4.1)\n- RealtimeAudioTransport interface\n- Realtime voice hooks (ON_TOOL_CALL, ON_REALTIME_TEXT_INJECTED, ON_PROTOCOL_TRACE)\n- Protocol trace infrastructure (ProtocolTrace, emit_trace, on_trace, pre-room buffering)\n\n#### Video\n\n- Video data models:\n  - VideoFrame — inbound frame container (encoded NAL units or raw pixels)\n  - VideoChunk — outbound encoded frame container\n  - VideoSession — active video connection state\n  - VideoCapability flags (SIMULCAST, SVC, SCREEN_SHARE, RECORDING, BANDWIDTH_ESTIMATION)\n- VideoBackend interface — transport abstraction (connect, disconnect, send_video, callbacks)\n- VideoChannel — session-based channel orchestrator:\n  - Session lifecycle with dual-signal ready mechanism (matching VoiceChannel pattern)\n  - Hook triggers: ON_VIDEO_SESSION_STARTED, ON_VIDEO_SESSION_ENDED, ON_VISION_RESULT, ON_VIDEO_DETECTION, BEFORE_BRIDGE_VIDEO (ON_VIDEO_TRACK_ADDED and ON_VIDEO_TRACK_REMOVED are Planned, Section 9.2)\n  - Optional VisionProvider integration with configurable analysis interval\n  - Vision results emitted as framework events (video_vision_result)\n- VisionProvider interface — frame analysis abstraction:\n  - analyze_frame(frame, prompt, response_schema) → VisionResult (description, labels, confidence, faces, OCR text)\n  - analyze_stream(frames, interval_ms, assumed_fps) for streaming analysis (Section 12.8.7)\n  - Implementations: OpenAI-compatible (GPT-4o, Ollama, vLLM), Gemini, Mock\n- VideoRecorder interface (OPTIONAL — Section 12.8.10)\n- AI integration: vision results reach the AI channels' turns as a `<vision>` block (Section 12.8.7); `setup_video_vision()` is deprecated and wires nothing\n- Video and voice channels operate independently in the same room, enabling combined audio+video sessions where the AI can both hear (via STT) and see (via VisionProvider)\n\n#### Room media recording\n\n- MediaRecorder interface (OPTIONAL — Section 12.11); REQUIRED for an\n  implementation that records conferences in framework mode (Section 12.10.8)\n\n#### Conference (SFU)\n\n- Conference data models (ConferenceTrack, TrackKind, ConferenceParticipant,\n  ConferenceGrants, ConferenceAccess, BotSession, ConferenceCapability)\n- ConferenceBackend interface with MockConferenceBackend (Section 12.10.3)\n- ConferenceChannel with per-track STT lanes and bot TTS publication\n  (Section 12.10.4)\n- Conference hooks (ON_CONFERENCE_PARTICIPANT_JOINED/LEFT,\n  ON_CONFERENCE_TRACK_PUBLISHED/UNPUBLISHED, ON_CONFERENCE_TRACK_MUTED/UNMUTED,\n  ON_ACTIVE_SPEAKER_CHANGED, ON_CONNECTION_QUALITY_CHANGED, and\n  ON_SCREEN_SHARE_STARTED/STOPPED for screen-share tracks)\n- Explicit track subscription, participant identity correlation, and bot\n  self-exclusion (Sections 12.10.2–12.10.4)\n- Multi-party interruption policy (ConferenceInterruptionConfig)\n- Participant lifecycle integration (conference events create/update\n  Participant records)\n- Optional: vision on tracks (Planned), egress recording delegation, SIP gateway\n  interop, bot video publication (avatar), speech-to-speech composition",
       "sha256": "684fdd827c7208a84340dbff242dfeeeacb79204e5a14418862715b1c79c756c"
     },
@@ -9795,7 +9795,7 @@
       "kind": "structural",
       "applies": "§A.1 SMS Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.1",
-      "line": 22231,
+      "line": 22232,
       "text": "```\nSMSChannel\n├── type: SMS\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT, MEDIA]\n├── capabilities:\n│   ├── max_length: 1600\n│   ├── supports_read_receipts: true\n│   ├── supports_media: true\n│   ├── supported_media_types: [\"image/jpeg\", \"image/png\", \"image/gif\"]\n│   ├── supports_edit: false\n│   └── supports_delete: false\n├── provider_interface: SMSProvider\n│   ├── send(event, to, from) → ProviderResult\n│   ├── parse_webhook(payload) → InboundMessage\n│   └── verify_signature(payload, signature, timestamp) → bool\n└── binding_metadata:\n    └── phone_number: string (recipient)\n```",
       "sha256": "a4a50c8c7317f29e1c37fa6ea6dbd291f34bbf2d6e579d608175196a1446ddd3"
     },
@@ -9804,7 +9804,7 @@
       "kind": "structural",
       "applies": "§A.2 Email Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.2",
-      "line": 22256,
+      "line": 22257,
       "text": "```\nEmailChannel\n├── type: EMAIL\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT, RICH, MEDIA]\n├── capabilities:\n│   ├── max_length: null (unlimited)\n│   ├── supports_threading: true\n│   ├── supports_rich_text: true\n│   ├── supports_media: true\n│   ├── supports_edit: false\n│   └── supports_delete: false\n├── provider_interface: EmailProvider\n│   ├── send(event, to, from, subject) → ProviderResult\n│   └── parse_inbound(payload) → InboundMessage\n└── binding_metadata:\n    ├── email_address: string (recipient)\n    └── subject: string | null\n```",
       "sha256": "b212c3aa9165e682dc408e751bfcc956d5350e209be0d09a70c39ce8744e9d33"
     },
@@ -9813,7 +9813,7 @@
       "kind": "structural",
       "applies": "§A.3 WhatsApp Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.3",
-      "line": 22281,
+      "line": 22282,
       "text": "```\nWhatsAppChannel\n├── type: WHATSAPP\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT, RICH, MEDIA, LOCATION, TEMPLATE]\n├── capabilities:\n│   ├── max_length: 4096\n│   ├── supports_reactions: true\n│   ├── supports_templates: true\n│   ├── supports_buttons: true (max 3)\n│   ├── supports_quick_replies: true\n│   ├── supports_read_receipts: true\n│   ├── supports_media: true\n│   ├── supports_edit: true\n│   └── supports_delete: true\n├── provider_interface: WhatsAppProvider\n│   ├── send(event, to) → ProviderResult\n│   ├── send_template(template, to) → ProviderResult\n│   └── send_reaction(chat, message_id, emoji) → ProviderResult\n└── binding_metadata:\n    └── phone_number: string (recipient)\n```",
       "sha256": "2109ad2a3aa59258f9d534adb6a07a4eaee3e92c594c71d3646838ec7bac86ee"
     },
@@ -9822,7 +9822,7 @@
       "kind": "structural",
       "applies": "§A.4 WhatsApp Personal Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.4",
-      "line": 22309,
+      "line": 22310,
       "text": "```\nWhatsAppPersonalChannel\n├── type: WHATSAPP_PERSONAL\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT, RICH, MEDIA, AUDIO, VIDEO, LOCATION]\n├── capabilities:\n│   ├── max_length: 4096\n│   ├── supports_reactions: true\n│   ├── supports_typing: true\n│   ├── supports_read_receipts: true\n│   ├── supports_audio: true\n│   ├── supports_video: true\n│   ├── supports_media: true\n│   ├── supports_edit: true\n│   └── supports_delete: true\n├── source: WhatsAppPersonalSourceProvider\n│   └── Persistent multidevice connection via neonize or equivalent\n├── provider_interface: WhatsAppPersonalProvider\n│   ├── send_message(jid, text) → ProviderResult\n│   ├── send_image(jid, data, caption) → ProviderResult\n│   ├── send_audio(jid, data, ptt) → ProviderResult\n│   ├── send_video(jid, data, caption) → ProviderResult\n│   ├── send_document(jid, data, filename) → ProviderResult\n│   ├── send_location(jid, lat, lon, name, address) → ProviderResult\n│   └── send_reaction(chat, sender, message_id, emoji) → ProviderResult\n├── binding_metadata:\n│   └── phone_number: string (recipient)\n└── chat_key: group_jid (a group message's group; a private message is its\n    sender's, §5.7)\n```",
       "sha256": "048e801d739d4d8666b66934c307fb4ee4fd4c72df407fb828aaaa21526bea98"
     },
@@ -9831,7 +9831,7 @@
       "kind": "structural",
       "applies": "§A.5 Messenger Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.5",
-      "line": 22345,
+      "line": 22346,
       "text": "```\nMessengerChannel\n├── type: MESSENGER\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT, RICH, MEDIA, TEMPLATE]\n├── capabilities:\n│   ├── max_length: 2000\n│   ├── supports_buttons: true (max 3)\n│   ├── supports_quick_replies: true\n│   ├── supports_read_receipts: true\n│   ├── supports_media: true\n│   ├── supports_edit: false\n│   └── supports_delete: true\n├── provider_interface: MessengerProvider\n│   ├── send(event, recipient_id) → ProviderResult\n│   └── parse_webhook(payload) → InboundMessage\n└── binding_metadata:\n    └── facebook_user_id: string (recipient)\n```",
       "sha256": "85452be9f5c2b5bc79946efe48bab310241ffed8eee14fcb0f2084295f964c24"
     },
@@ -9840,7 +9840,7 @@
       "kind": "structural",
       "applies": "§A.6 Teams Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.6",
-      "line": 22370,
+      "line": 22371,
       "text": "```\nTeamsChannel\n├── type: TEAMS\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT, RICH]\n├── capabilities:\n│   ├── max_length: 28000\n│   ├── supports_threading: true\n│   ├── supports_reactions: true\n│   ├── supports_read_receipts: true\n│   ├── supports_rich_text: true\n│   ├── supports_edit: true\n│   └── supports_delete: true\n├── provider_interface: TeamsProvider\n│   ├── send(event, conversation_reference) → ProviderResult\n│   ├── parse_webhook(activity) → InboundMessage\n│   └── save_conversation_reference(activity) → void\n├── requires: ConversationReferenceStore\n├── binding_metadata:\n│   └── teams_conversation_id: string (recipient: the chat, §5.7)\n└── chat_key: conversation_id\n```",
       "sha256": "f6d6941ce9d5ce44cc822b39418779d89c90bd29505327f6a8e58c9795d532aa"
     },
@@ -9849,7 +9849,7 @@
       "kind": "structural",
       "applies": "§A.7 RCS Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.7",
-      "line": 22398,
+      "line": 22399,
       "text": "```\nRCSChannel\n├── type: RCS\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT, RICH, MEDIA]\n├── capabilities:\n│   ├── max_length: 8000\n│   ├── supports_buttons: true\n│   ├── supports_cards: true\n│   ├── supports_quick_replies: true\n│   ├── supports_read_receipts: true\n│   ├── supports_typing: true\n│   ├── supports_media: true\n│   ├── supports_edit: false\n│   └── supports_delete: false\n├── provider_interface: RCSProvider\n│   ├── send(event, to) → RCSDeliveryResult\n│   ├── check_capability(phone) → bool\n│   └── RCSDeliveryResult includes: channel_used, fallback flag\n├── binding_metadata:\n│   └── phone_number: string (recipient)\n└── configuration:\n    └── fallback: bool (auto-fallback to SMS when RCS unavailable)\n```",
       "sha256": "2d399aa9528b3886aaba8ec4bf00ad047aafb72fd4590ebe6bf8b66483666fc4"
     },
@@ -9858,7 +9858,7 @@
       "kind": "structural",
       "applies": "§A.8 WebSocket Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.8",
-      "line": 22428,
+      "line": 22429,
       "text": "```\nWebSocketChannel\n├── type: WEBSOCKET\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT, RICH, MEDIA, AUDIO, VIDEO, LOCATION]\n├── capabilities:\n│   ├── max_length: null (unlimited)\n│   ├── supports_typing: true\n│   ├── supports_read_receipts: true\n│   ├── supports_reactions: true\n│   ├── supports_buttons: true\n│   ├── supports_cards: true\n│   ├── supports_quick_replies: true\n│   ├── supports_audio: true\n│   ├── supports_video: true\n│   ├── supports_media: true\n│   ├── supports_edit: true\n│   └── supports_delete: true\n├── connection_registry: map<connection_id, send_function>\n│   ├── register_connection(id, send_fn, room_id,\n│   │       stream_send_fn: function | null,\n│   │       organization_id: string | null) → void\n│   │       # Subscribes the connection to room_id; with stream_send_fn\n│   │       # it also receives streamed responses as they are produced.\n│   │       # With organization_id the connection is that organization's:\n│   │       # refused for an id held for another organization or for none\n│   │       # (§17.2)\n│   ├── subscribe(id, room_id, organization_id: string | null) → void\n│   │       # Also deliver room_id's events; scoped: only the\n│   │       # organization's connection\n│   ├── unsubscribe(id, room_id, organization_id: string | null) → void\n│   │       # Stop delivering room_id's events; scoped as subscribe\n│   └── unregister_connection(id, organization_id: string | null) → void\n│           # Also drops its subscriptions; scoped: refused for a\n│           # connection not registered for the organization, nothing changed\n└── delivery: sends to the connections subscribed to the event's room,\n    none registered for another organization than the room's (§17.2);\n    a stream sends only to the registrations present when it started,\n    checked as each send starts\n```",
       "sha256": "ce2306e7d41ceee60598d7cdc84f07ecf82bc9c64a4d1c08954961239961f4ec"
     },
@@ -9867,7 +9867,7 @@
       "kind": "structural",
       "applies": "§A.9 AI Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.9",
-      "line": 22474,
+      "line": 22475,
       "text": "```\nAIChannel\n├── type: AI\n├── category: INTELLIGENCE\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT, RICH, MEDIA]\n├── capabilities:\n│   ├── supports_rich_text: true (provider-dependent)\n│   ├── supports_edit: false\n│   └── supports_delete: false\n├── configuration:\n│   ├── provider: AIProvider\n│   ├── system_prompt: string | null\n│   ├── temperature: float | null\n│   ├── max_tokens: int | null\n│   ├── max_context_events: int | null\n│   ├── thinking_budget: int | null         # Token budget for extended thinking/reasoning\n│   ├── enable_thinking: bool | null        # Reasoning switch, after thinking_budget (Section 6.7)\n│   ├── reasoning_effort: string | null     # How much the model reasons (Section 6.7)\n│   ├── response_schema: map | null         # Each turn answers in this JSON Schema (Section 6.7)\n│   ├── max_tool_rounds: int (default 50)   # Maximum tool call iterations per generation\n│   ├── max_empty_retries: int (default 1)  # Tries an empty round and the continuation share\n│   ├── continuation: policy | null         # Goes on an answer that did not act (Section 6.4)\n│   ├── turn_budget_tokens: int | null      # Billed tokens a turn may spend (Section 6.4)\n│   ├── turn_budget_usd: float | null       # What a turn may cost at the catalogue price\n│   ├── tool_loop_timeout_seconds: float | null (default 300)  # Timeout for entire tool loop\n│   ├── retry_policy: RetryPolicy | null    # Tries a generation again (Section 6.4)\n│   ├── fallback_provider: AIProvider | null # Asked once the retries are spent (Section 6.4)\n│   ├── evict_threshold_tokens: int (default 5000)  # Token threshold for context eviction\n│   ├── memory: MemoryProvider | null       # Pluggable context construction (Section 20)\n│   ├── describe_empty_event: callable | null # What an event with no content reads as\n│   ├── max_author_images: int | null (default 4)  # Newest author images a turn sends (Section 6.4)\n│   ├── publish_thinking_text: bool (default false)  # Reasoning text on the realtime channel (Section 8.4)\n│   ├── tool_policy: ToolPolicy | null      # Tool access control (Section 21)\n│   └── skills: SkillRegistry | null        # Available skills (Section 24)\n├── per_room_overrides (via binding metadata):\n│   ├── system_prompt\n│   ├── temperature\n│   ├── max_tokens\n│   ├── thinking_budget\n│   ├── enable_thinking\n│   ├── reasoning_effort\n│   ├── response_schema\n│   ├── turn_budget_tokens\n│   ├── turn_budget_usd\n│   └── tools\n├── ai_message_parts:\n│   │   # AIMessage content parts (AIContentPart, Section 6.7), in the\n│   │   # conversation a turn is built from and its tool loop extends:\n│   ├── AITextPart                          # Text content\n│   ├── AIImagePart                         # Image content\n│   ├── AIThinkingPart                      # Chain-of-thought reasoning (preserved in history)\n│   ├── AIToolCallPart                      # Function call with name and arguments\n│   └── AIToolResultPart                    # Tool execution result\n└── behavior:\n    ├── on_event() builds conversation history + target capabilities\n    ├── Reads provider.generate_structured_stream(context) (generate() wrapped when it does not stream)\n    ├── Runs one tool loop: generate → call tools → feed results → re-generate (up to max_tool_rounds)\n    ├── Skips events from self (loop prevention)\n    └── Returns ChannelOutput with a response stream, which the framework\n        delivers with deliver_stream() and stores segment by segment\n```",
       "sha256": "1afc8b2a3942bdbcad07d5d348a6adbcc864e99c58e4e8bb96f482075917ee99"
     },
@@ -9876,7 +9876,7 @@
       "kind": "behavior",
       "applies": "§A.9 AI Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.9",
-      "line": 22539,
+      "line": 22540,
       "text": "**Per-turn settings.** Each per-turn setting (`system_prompt`, `temperature`,\n`max_tokens`, `thinking_budget`, `enable_thinking`, `reasoning_effort`,\n`response_schema`, `turn_budget_tokens`, `turn_budget_usd`) resolves from the\nbinding metadata, then the channel's per-turn configuration, then the channel\ndefault. A level that does not set it, its key absent or `null`, defers to the\nnext: `null` never clears a setting, at either level, so an integrator that\nserializes an empty form field as `null` keeps the next level's value. A\nsetting is lifted for one room only by an explicit value that states off\n(`thinking_budget: 0`, `enable_thinking: false`, `reasoning_effort: \"none\"`,\n`system_prompt: \"\"`). The reasoning switch is read across two keys (Section\n6.7): an `enable_thinking: false` set at a level turns reasoning off whatever\n`thinking_budget` a less specific level set, while a budget set at the same or\na more specific level still states the switch. A setting with no value that\nstates off (`temperature`, `max_tokens`, `response_schema`, and the turn\nbudgets of Section 6.4) cannot be lifted for a room once a less specific level\nsets it, only replaced. The binding's `tools` is a toolset of its own, and a\n`null` there declares none, like an absent key. The per-turn configuration's\n`tools`, when it gives them, replace the binding's for that turn. Either\ntoolset is declared before the tools the channel was built with, and none of\nits tools under the name of one of those, of a tool the channel provides or of\none the room's setup serves it (Section 21.1) is declared: that tool stands. A\nbinding's value is read as its setting's type reads one of another kind: a\nnumber written as a text, a whole float or a whole number's text for an integer, a boolean for a number\n(`\"0.3\"` reads 0.3, `64.0` and `\"100\"` read 64 and 100). One that does not read\nso (a `temperature` of `\"hot\"`, a `max_tokens` of `1.5`, a `system_prompt` that\nis no text) fails the turn before its model is asked, its error naming every\nsetting refused, and so does a `turn_budget_tokens` that is not a positive\ninteger or a `turn_budget_usd` that is not a positive number, the budgets read\nstrictly (a text or a boolean refused): a binding written wrong shows at its\nfirst turn, never replaced by the next level's value.\n\nThe per-turn configuration may also give the turn a skill registry of its own\n(Section 24.3). It is not a binding setting: it replaces the channel's registry\nfor that turn alone, and a turn that gives none reads the channel's.\nIt may give the turn a tool handler of its own the same way: it serves the\nhost's tools for that turn in place of the channel's handler, the tools the\nchannel was built with that serve themselves included, and a turn that gives\nnone, the next one included, reads the channel's.\nIt may give the bounds of the turn's tool calls the same way (Section 21.6):\nabove the channel's own bounds per tool name, for that turn alone.",
       "sha256": "b48616192c45cfbab4ea9b916f76433b11c126942b09201d1cf4f3fcc7be3420"
     },
@@ -9885,7 +9885,7 @@
       "kind": "behavior",
       "applies": "§A.9 AI Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.9",
-      "line": 22582,
+      "line": 22583,
       "text": "**Constrained turn.** A turn's `response_schema` resolves like the other\nper-turn settings. When it is set, the channel MUST NOT\ndeliver or store any of the answer's text before the provider's check has\npassed (Section 6.7): a streamed answer is held until the done event, and a\nfailed check fails the turn with its `ResponseSchemaError`, leaving nothing in\nthe room. A turn whose tool loop stops before a final answer, on its round cap,\nits deadline or its spending budget, because it was stopped, or because the provider interrupted it\nafter a round, has no document to deliver and fails with `truncated`. The turn's tools include those the channel adds itself\n(skills, sandbox, planning, orchestration), so a schema on a channel that adds\nany needs a provider whose `supports_response_schema_with_tools` is true.",
       "sha256": "4f6ac0f79eed8fcf26aba15adc91d9654ec3de4635cd73842a9a5596b2ae3e72"
     },
@@ -9894,7 +9894,7 @@
       "kind": "behavior",
       "applies": "§A.9.1 ACP Agent Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.9.1",
-      "line": 22597,
+      "line": 22598,
       "text": "```\nACPChannel\n├── type: AI\n├── category: INTELLIGENCE\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT, RICH]\n├── protocol side: ACP client (external coding agent is the ACP server)\n├── transport:\n│   ├── stable default: stdio\n│   ├── command: argument vector (never shell-expanded)\n│   └── protocol_version: stable ACP version\n├── sessions:\n│   ├── one ACP connection per channel instance\n│   ├── one ACP session per Room\n│   ├── a standalone turn: its own session, declared as the turn's (§10.1.1)\n│   ├── setup on every open: mcp_servers for the Room, session_config, then the\n│   │   values the host set on the Room; a refused value fails the open\n│   └── prompts serialized per session\n├── configuration:\n│   ├── command: list<string>\n│   ├── cwd: absolute path\n│   ├── additional_directories: list<absolute path>\n│   ├── environment: map<string, string> | null\n│   ├── authentication_method: string | null\n│   ├── mcp_servers: list<ACP MCPServer> | (room_id) → list<ACP MCPServer>\n│   ├── session_config: map<string, string | bool> | null  # set on every session opened\n│   ├── external_tool_handler: ExternalToolHandler | null\n│   ├── name, role, description: string | null  # its identity, as an Agent's (§6.4)\n│   └── instructions: string | null             # sent once per session (§6.4)\n├── update_mapping:\n│   ├── agent_message_chunk → text stream delta\n│   ├── agent_thought_chunk → thinking stream marker + ephemeral event\n│   ├── tool_call_start/progress → tool-call markers + ephemeral events\n│   └── agent_plan_update → ephemeral custom event\n├── end_of_turn:\n│   ├── completed turn → ON_AI_RESPONSE (text, tool count, duration, usage)\n│   ├── errored or abandoned turn → no trigger\n│   └── usage: agent's token counters relayed unaltered, plus context and cost\n└── safety:\n    ├── filesystem/terminal client capabilities disabled by default\n    ├── permission requests denied by default\n    ├── cancellation forwarded to ACP session\n    └── close releases sessions and process transport\n```\n\nACP response observations MAY include optional `usage_metadata` alongside the\nexisting numeric `usage` map. This metadata identifies the native session,\nmeasurement source and scope, separately from the host room/channel/request.\nA session cost MUST remain a cumulative observation, not a prompt cost; context\noccupancy/capacity MUST NOT be treated as consumed-token counters. Missing\nmeasurements MUST remain absent and reported zero MUST remain zero.\n\nTransport-provided report/session/result identities and timestamps MUST be\npreserved across recovery and replay when available. A recovered terminal\nsnapshot MUST NOT be combined with live observations from another session.\nAn observation without a source prompt identity MUST NOT be assigned one from\nthe currently active prompt. Locally assigned receipt identities MUST be\nidentified as local and MUST NOT imply durable continuity across resets.\nA model observed at prompt start or report receipt MUST NOT be claimed as the\nmodel responsible for a whole cumulative session cost.\n\nThe end-of-turn trigger remains unchanged: a consumed prompt response can\nreport a non-success stop reason; an exception or abandoned stream is not a\nresponse. Intermediate usage observations MAY remain observable as ephemeral\nevents in those cases, but do not establish successful completion or durable\naccounting. No tariff, credit policy or inferred cost delta is specified here.",
       "sha256": "74dcce7648e89e7475c3e229d49c8fac85650cdf708afdbd86170002c3603b52"
     },
@@ -9903,7 +9903,7 @@
       "kind": "structural",
       "applies": "§A.10 Voice Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.10",
-      "line": 22668,
+      "line": 22669,
       "text": "```\nVoiceChannel\n├── type: VOICE\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [AUDIO]\n├── requires:\n│   ├── stt: STTProvider\n│   ├── tts: TTSProvider\n│   ├── backend: VoiceBackend\n│   └── audio_pipeline: AudioPipelineConfig\n├── configuration:\n│   ├── streaming: bool (default true)\n│   ├── interruption: InterruptionConfig | null   # Section 12.6 — the current surface\n│   ├── enable_barge_in: bool (default true)      # legacy; superseded by interruption\n│   └── barge_in_threshold_ms: int (default 200)  # legacy; maps to allow_during_first_ms\n│                                                 # (IMMEDIATE strategy; used only when\n│                                                 # no InterruptionConfig is given)\n├── streaming_delivery:\n│   ├── supports_streaming_delivery: bool\n│   │   # True when TTS supports streaming input AND backend is configured\n│   └── deliver_stream(text_stream, event, binding, context) → ChannelOutput\n│       # Pipes text stream → sentence_splitter → synthesize_stream_input → outbound → transport\n│       # Fires AFTER_TTS hook after stream completes\n├── session_management:\n│   ├── bind_session(session, room_id, binding)\n│   └── unbind_session(session)\n└── delivery:\n    ├── Standard path:\n    │   ├── AudioContent → [postprocessors] → [recorder] → [resampler] → transport → [AEC ref †]\n    │   ├── TextContent → TTS → AudioChunk stream → outbound pipeline → transport → [AEC ref †]\n    │   └── Other (system, tool-call, a composite keeping a part that is\n    │       neither text nor audio) → not spoken, no delivery error\n    ├── Streaming AI → TTS path (framework-native):\n    │   └── Framework pipes AIChannel.response_stream → deliver_stream()\n    │       → sentence_splitter → synthesize_stream_input() → outbound pipeline → transport\n    └── † AEC ref fed at transport level (local hw) or pipeline level (network) — see 12.3.4\n```",
       "sha256": "46cff283fc9a68c7d3b5879699f2d876425cb02b2a7319cb6e55c7ce51a1bfcb"
     },
@@ -9912,7 +9912,7 @@
       "kind": "structural",
       "applies": "§A.11 Realtime Voice Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.11",
-      "line": 22711,
+      "line": 22712,
       "text": "```\nRealtimeVoiceChannel\n├── type: REALTIME_VOICE\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [AUDIO]\n├── requires:\n│   ├── provider: RealtimeVoiceProvider\n│   ├── transport: RealtimeAudioTransport\n│   ├── reasoning_backend: ReasoningBackend | null  # OPTIONAL: serves integrator-side reasoning delegation (Section 12.4.1)\n│   └── audio_pipeline: AudioPipelineConfig | null  # OPTIONAL in speech-to-speech mode\n├── configuration:\n│   ├── system_prompt: string | null\n│   ├── voice: string | null\n│   ├── tools: list<ToolDefinition>\n│   ├── temperature: float | null\n│   ├── input_sample_rate: int\n│   ├── output_sample_rate: int\n│   ├── reasoning_timeout_s: float              # Bound on one delegation's run (Section 12.4.1)\n│   └── emit_transcription_events: bool\n├── session_management:\n│   ├── start_session(room_id, participant_id, connection, metadata, organization_id)\n│   └── end_session(session)\n├── tool_handling:\n│   ├── async handler function (priority)\n│   └── ON_TOOL_CALL hook (fallback)\n└── delegation_handling:                            # Section 12.4.1\n    ├── hosted backend → its function calls go through tool_handling\n    └── integrator backend → reasoning_backend, outputs returned via submit_delegation_output\n```",
       "sha256": "30d9461bf837340c5139ba7f410ed29b2d1446dfd7a6434764f96810793fa87a"
     },
@@ -9921,7 +9921,7 @@
       "kind": "structural",
       "applies": "§A.12 Video Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.12",
-      "line": 22746,
+      "line": 22747,
       "text": "```\nVideoChannel\n├── channel_type: VIDEO\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [VIDEO]\n├── requires:\n│   ├── backend: VideoBackend\n│   ├── vision: VisionProvider | null     # OPTIONAL\n│   └── vision_interval_ms: int           # default 2000\n├── session_lifecycle:\n│   ├── connect_video(room_id, participant_id, channel_id)\n│   ├── bind_session(session, room_id, binding)\n│   ├── unbind_session(session)\n│   └── disconnect_video(session)\n├── hooks:\n│   ├── ON_VIDEO_SESSION_STARTED — SessionStartedEvent\n│   ├── ON_VIDEO_SESSION_ENDED — SessionStartedEvent (same type as STARTED)\n│   ├── ON_VISION_RESULT, ON_VIDEO_DETECTION\n│   └── BEFORE_BRIDGE_VIDEO (Section 12.8.11)\n├── framework_events:\n│   ├── video_session_started\n│   ├── video_session_ended\n│   └── video_vision_result (description, labels, confidence, text, faces)\n├── ai_integration:\n│   └── vision results reach the AI turns as a `<vision>` block\n│       (Section 12.8.7); setup_video_vision() is deprecated, wires nothing\n└── backends:\n    ├── LocalVideoBackend — OpenCV webcam capture (dev/testing)\n    ├── ScreenCaptureBackend — mss screen capture (screen sharing, monitoring)\n    ├── MockVideoBackend — Unit testing with call tracking\n    └── optional (MAY): WebRTC (FastRTC), RTP, SIP video, WebSocket backends\n```",
       "sha256": "cc928b899cb6e9d33972f308ccfd7cc278ce74a012d2f7482d65edf744215e39"
     },
@@ -9930,7 +9930,7 @@
       "kind": "structural",
       "applies": "§A.13 Telegram Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.13",
-      "line": 22784,
+      "line": 22785,
       "text": "```\nTelegramChannel\n├── type: TELEGRAM\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT, RICH, MEDIA, AUDIO, VIDEO, LOCATION]\n├── capabilities:\n│   ├── max_length: 4096\n│   ├── supports_rich_text: true (HTML subset)\n│   ├── supports_buttons: true (inline keyboards)\n│   ├── supports_edit: true\n│   ├── supports_delete: true\n│   └── supports_typing: true\n├── provider: TelegramBotProvider\n│   ├── bot_token: string (secret)\n│   ├── webhook_url: string | null\n│   ├── parse_webhook(request) → InboundMessage\n│   ├── verify_signature(request) → bool\n│   └── send(chat_id, content, options) → DeliveryResult\n├── binding_metadata:\n│   └── telegram_chat_id: string | int (recipient: the chat, §5.7; the\n│       framework writes a string)\n├── chat_key: chat_id\n└── delivery: sends via Telegram Bot API (sendMessage, sendPhoto, etc.)\n```",
       "sha256": "91c9140ab2af7730e6b153adfd926f52c60f8db282b8a33964ceba8182f7f202"
     },
@@ -9939,7 +9939,7 @@
       "kind": "structural",
       "applies": "§A.14 CLI Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.14",
-      "line": 22814,
+      "line": 22815,
       "text": "```\nCLIChannel\n├── type: CLI\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [TEXT]\n├── capabilities:\n│   ├── max_length: null (unlimited)\n│   └── supports_rich_text: false\n└── purpose: Development and testing via terminal stdin/stdout\n```",
       "sha256": "a83107d5ea04e53ba84baf42d43a935d9a5ae085adc64811ddaf98d79ccf00ce"
     },
@@ -9948,7 +9948,7 @@
       "kind": "structural",
       "applies": "§A.14.1 Host Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.14.1",
-      "line": 22832,
+      "line": 22833,
       "text": "```\nHostChannel\n├── type: HOST\n├── category: TRANSPORT\n├── direction: INBOUND             # brings the host's words in; never delivered to\n├── media_types: every type        # post() injects any content, transcoded per transport (§6.6)\n├── narrows: nothing               # an answer carries what the transports that send carry (§10.5)\n├── receives: nothing              # no external payload: post() and send_event inject\n└── purpose: The host application writing to a room's people in its own\n             name, through post() (§10.5)\n```",
       "sha256": "86a5251172162d72e5c41374140e5d909dc924a5fe1e3ea4f6e27d9d2476ffe4"
     },
@@ -9957,7 +9957,7 @@
       "kind": "structural",
       "applies": "§A.15 Conference Channel; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "A.15",
-      "line": 22850,
+      "line": 22851,
       "text": "```\nConferenceChannel\n├── channel_type: CONFERENCE\n├── category: TRANSPORT\n├── direction: BIDIRECTIONAL\n├── media_types: [AUDIO]\n├── requires:\n│   ├── backend: ConferenceBackend\n│   ├── stt: STTProvider | null           # Per-track transcription\n│   ├── tts: TTSProvider | null           # AI voice via bot track\n│   ├── realtime: ConferenceRealtimeConfig | null  # OPTIONAL — speech-to-speech; excludes tts\n│   ├── pipeline: AudioPipelineConfig | null       # Lane stages; null = default VAD and format contract\n│   ├── vision: VisionProvider | null     # Planned — video/screen tracks\n│   ├── interruption: ConferenceInterruptionConfig\n│   ├── recording: ConferenceRecordingConfig | null\n│   ├── recorder: MediaRecorder | null    # Required with recording, refused without it\n│   ├── bot_identity: string              # Bot's display identity\n│   ├── bot_grants: ConferenceGrants | null  # Explicit grants for join_as_bot(); null = derived\n│   ├── default_grants: ConferenceGrants  # Grants minted for participants\n│   ├── e2ee: bool                        # default false — requires E2EE cap\n│   ├── close_room_on_detach: bool        # default false\n│   └── speak_text_events: bool           # default false\n├── lifecycle:\n│   ├── attach → ensure_room() [+ lazy join_as_bot(…, bot_grants)]\n│   ├── on_participant_joined → Participant record + hook (bot excluded)\n│   ├── on_track_published → subscribe_track() if consumed → pipeline lane\n│   ├── on_track_unpublished → lane teardown + unsubscribe_track()\n│   └── detach → leave() [+ close_room() if close_room_on_detach]\n├── hooks:\n│   ├── ON_CONFERENCE_PARTICIPANT_JOINED / LEFT\n│   ├── ON_CONFERENCE_TRACK_PUBLISHED / UNPUBLISHED\n│   ├── ON_CONFERENCE_TRACK_MUTED / UNMUTED\n│   ├── ON_ACTIVE_SPEAKER_CHANGED\n│   ├── ON_CONNECTION_QUALITY_CHANGED\n│   ├── ON_SCREEN_SHARE_STARTED / STOPPED\n│   └── ON_TRANSCRIPTION — per track, participant-attributed\n├── framework_events:\n│   ├── conference_started / conference_ended\n│   ├── conference_participant_joined / conference_participant_left\n│   └── conference_bot_grants_changed\n└── backends:\n    ├── MockConferenceBackend — unit testing with scripted event sequences\n    └── SFU providers (e.g., LiveKit)\n```",
       "sha256": "2a4d5d7e50f19a3379104cb23487a7fc6c072e3470cc6f4b278cfe1f0750f10d"
     }

@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "bf69c1a5ebd9e98ce57517092d792d45cc4089267e267286b9bd9a2e9573e061",
-  "corpus_sha256": "bea1dfd5a986251f1d53f1a1cad6feb402543e77d14440412e8b007e9f17867f",
+  "rfc_sha256": "a683ea95f297b94e17bdc214597f8f5de9bcc36fe2594fafec2b44eb2799671c",
+  "corpus_sha256": "4a50a6e04547837ec0687114e3a3dc12a665049d0d08b8fefc187d037dd96c2b",
   "python_commit": "1280f23489f044354d552703d99dcadf3eefc08e",
-  "scenario_count": 1791,
+  "scenario_count": 1795,
   "sections": [
     {
       "section": "0",
@@ -5621,6 +5621,8 @@
         "discussion/what-a-process-held-when-another-install-replaced-its-own-is-not-kept",
         "discussion/with-addressed-only-an-unaddressed-message-asks-no-agent",
         "tasks/a-background-task-names-its-agent-by-the-discussion-s-handle",
+        "tasks/a-background-tool-keeps-its-turns-name-before-a-post",
+        "tasks/a-background-tool-keeps-its-turns-name-before-a-relay",
         "tasks/a-own-task-status-tool-names-the-discussion-worker-by-handle",
         "tasks/a-owner-task-status-tool-names-the-discussion-worker-by-handle",
         "tasks/a-relayed-task-result-names-its-worker-by-the-discussion-handle"
@@ -5831,11 +5833,14 @@
       "review": "normative",
       "requirements": 1,
       "mapping": {
-        "unmapped": 1
+        "mapped_partial": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "orchestration/an-audited-answer-reaches-the-model-unchanged",
+        "tasks/a-background-tool-keeps-its-turns-name-before-a-post",
+        "tasks/a-background-tool-keeps-its-turns-name-before-a-relay",
+        "tasks/a-background-worker-keeps-its-turns-task-boundary-after-a-store-patch",
         "tools/a-json-result-keeps-its-members-order",
         "tools/a-tool-s-part-shaped-json-reaches-the-model-as-parts",
         "tools/a-tool-s-parts-reach-the-model-intact",
@@ -6172,6 +6177,7 @@
         "tasks/a-worker-whose-trace-holds-only-another-tool-s-call-ends-with-the-missing-payload",
         "tasks/an-agent-s-turn-cancels-its-room-s-task-and-is-not-told-twice",
         "tasks/an-agent-starts-its-work-in-the-background",
+        "tasks/an-empty-start-task-hand-back-keeps-the-default-or-configured-mode",
         "tasks/an-inline-delegation-runs-its-agent-in-a-child-room",
         "tasks/an-inline-task-its-worker-s-round-cap-cut-fails-with-its-narration",
         "tasks/delegate-task-answers-its-model-with-the-task-or-why-not",
@@ -6203,6 +6209,9 @@
         "orchestration/a-supervisor-given-task-status-is-pointed-at-it-by-its-dispatched-team",
         "tasks/a-background-task-cannot-close-its-frame",
         "tasks/a-background-task-names-its-agent-by-the-discussion-s-handle",
+        "tasks/a-background-tool-keeps-its-turns-name-before-a-post",
+        "tasks/a-background-tool-keeps-its-turns-name-before-a-relay",
+        "tasks/a-background-worker-keeps-its-turns-task-boundary-after-a-store-patch",
         "tasks/a-line-for-a-task-the-room-does-not-hold-is-no-task-here",
         "tasks/a-line-the-bus-lists-ended-is-answered-as-it-lists-it",
         "tasks/a-own-task-status-tool-names-the-discussion-worker-by-handle",
@@ -6215,6 +6224,7 @@
         "tasks/an-agent-s-own-task-tools-read-and-cancel-its-room-s-tasks",
         "tasks/an-agent-s-turn-cancels-its-room-s-task-and-is-not-told-twice",
         "tasks/an-agent-starts-its-work-in-the-background",
+        "tasks/an-empty-start-task-hand-back-keeps-the-default-or-configured-mode",
         "tasks/delegate-task-answers-its-model-with-the-task-or-why-not",
         "tasks/delegate-task-frames-and-bounds-what-the-model-passed",
         "tasks/delegate-task-hands-its-worker-the-room-s-previous-tasks-as-data",
@@ -21415,8 +21425,18 @@
     {
       "id": "RK-21.4-001",
       "section": "21.4",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "phase4-background-turn-context",
+          "scope": "Owner-served work_in_background reads its turn snapshot for agent naming and the nested-task guard, while start_task builds the worker brief from current storage.",
+          "coverage": "partial",
+          "missing": [
+            "Other context accessors, realtime calls, handler result shapes and arbitrary custom handlers are outside this mapping."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-21.5-001",
@@ -21548,6 +21568,15 @@
               "state": "stale"
             }
           ]
+        },
+        {
+          "id": "phase4-background-task-options",
+          "scope": "Background task name and nested-task boundary through gated stored-metadata changes; empty start_task hand_back falls back to default or configured mode, explicit relay overrides post, and invalid non-empty values or an empty setup mode are refused.",
+          "coverage": "partial",
+          "missing": [
+            "Other delegation tools, cancellation, concurrent setup replacement and external executor configurations are outside this mapping."
+          ],
+          "executions": []
         }
       ]
     },

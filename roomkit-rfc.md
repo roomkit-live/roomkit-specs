@@ -21249,7 +21249,8 @@ Implementations SHOULD provide helpers for AI-driven delegation:
   no task of its own. The host starts the same
   task with `start_task(room_id, agent_id, task, hand_back = null)`, a
   delegation made outside a tool call whose `hand_back` is the agent's setup's
-  when null; a person starts one through whatever the host gives them (a
+  when null or an empty string; a non-empty value overrides it and MUST be
+  `"relay"` or `"post"`. A person starts one through whatever the host gives them (a
   console's `/task`). Whether work is long is the agent's judgment through its
   tool or the host's: a model may keep long work in its own turn whatever its
   tool says, and a host whose agents do so starts their tasks itself.
