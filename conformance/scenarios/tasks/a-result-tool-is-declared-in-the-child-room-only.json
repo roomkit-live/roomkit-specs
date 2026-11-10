@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "tasks/a-result-tool-is-declared-in-the-child-room-only",
-  "title": "A child delegation's result tool is neither declared nor served in another room of the same agent, while capture is live and after it ends",
+  "title": "A child's result tool is isolated during capture and removed from that child after capture",
   "rules": [
     "§19.7",
     "§23.3"
@@ -53,6 +53,9 @@
             },
             {
               "text": "After capture."
+            },
+            {
+              "text": "Child after capture."
             }
           ]
         },
@@ -123,9 +126,7 @@
         "result": {
           "status": "completed",
           "result": {
-            "output": {
-              "$contains": "Private result."
-            }
+            "output": "{\"status\": \"completed\", \"summary\": \"Private result.\", \"data\": {}, \"deliverables\": [], \"reason\": \"\"}"
           }
         }
       }
@@ -139,6 +140,29 @@
         "content": {
           "type": "text",
           "body": "Again."
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "call": "attach_channel",
+      "room_id": "$r1",
+      "channel_id": "sms"
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "$r1",
+      "message": {
+        "channel_id": "sms",
+        "sender_id": "user",
+        "content": {
+          "type": "text",
+          "body": "Continue without capture."
         }
       },
       "expect": {
@@ -184,7 +208,8 @@
           "tool_results": [
             {
               "tool_call_id": "stray",
-              "is_error": true
+              "is_error": true,
+              "content": "{\"error\": \"Tool 'submit_result' is not declared.\"}"
             }
           ]
         },
@@ -195,6 +220,16 @@
               "content": "{\"status\": \"received\"}"
             }
           ]
+        },
+        {
+          "tools": {
+            "lookup": {
+              "$present": true
+            },
+            "submit_result": {
+              "$absent": true
+            }
+          }
         },
         {
           "tools": {
