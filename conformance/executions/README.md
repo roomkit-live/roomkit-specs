@@ -182,3 +182,24 @@ destination. The same normalization applies to the four command arguments in
 the earlier `python-core-shutdown-boundaries-0aa9b53` and
 `python-core-shutdown-answers-a7fac2f` receipts. Only output destinations were
 normalized; their retained XML, results and fingerprints are unchanged.
+
+## Local executor and named room hooks
+
+`python-kit-executor-43d2f2e.xml` retains the clean run on Python
+`43d2f2e29020481721bddc422901276a4f8f8bde`, with copied corpus
+`8e9a51f0a132f679cbfd6d6832e6dc8f1c7bf1a4` and reviewed RFC
+`17d793e75512f562bc879329b94089a6c0fd59c2`. The run follows the approved
+clarification that enabling the same name again preserves one activation and
+its order; collisions with another room-hook registration remain refused.
+The scenario corpus is unchanged by that clarification.
+
+The receipts' command runs `tests/conformance` with in-process turns, asyncio
+and one pytest worker. All 2,395 cases pass without skips, failures or errors:
+1,899 memory scenarios, 409 SQLite scenarios and 87 auxiliary runner cases.
+Only scenarios enter the two receipts; the nine new named-hook cases are
+memory only. The XML keeps testcase identity and outcome, with host, timestamp
+and local-path attributes removed and durations normalized to zero.
+
+The links remain partial. This run does not certify the paired native API tests,
+Rust, remote executors, real PostgreSQL or all lifecycle methods of the local
+executor. The 75 previously published receipts remain unchanged.
