@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "39ca121a17e16ec93ed6f2d839b36a14e43abadc",
+  "python_commit": "9b5682cc5bcc9b20d2b26e28b40a4cdafa584b35",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -14989,6 +14989,51 @@
       ],
       "missing": [
         "Does not establish every provider or distributed executor lifecycle, nor wall-clock coalescing."
+      ]
+    },
+    {
+      "id": "openai-composition-wire",
+      "requirement": "RK-6.4-006",
+      "clause_sha256": "7aa5fa5367b03723bfde1cb0b083c8faf932e8ffdeb28ce0be7ea1d3ea0a480f",
+      "scope": "Chat Completions tool-call composition, through the actual provider decoder and public room bus on simulated HTTP responses.",
+      "coverage": "partial",
+      "review": "Reviewed paired Python and Rust native provider tests. The decoder hands composition events before complete calls, with stable ids and exact argument fragments; the room integration checks privacy and absence from history. This link pins specialized Python source; execution logs and the Rust counterpart are retained separately, not represented as scenario receipts.",
+      "assertions": [],
+      "tests": [
+        {
+          "nodeid": "tests/test_providers/test_openai_composition.py::test_wire_fragments_keep_each_calls_final_id",
+          "sha256": "319636387a265950dfc954c04445ede59a4efa29d6a7e69761daae067c681d4a",
+          "proves": "Real SDK decoding preserves encounter slots and final call identity across interleaving, reused or absent ids, late names/ids, empty fragments, object arguments and Unicode."
+        },
+        {
+          "nodeid": "tests/test_providers/test_openai_composition.py::test_composition_precedes_reasoning_and_text_in_the_same_chunk",
+          "sha256": "93024021513c748e1f3d455bdea82e700579531fa670c655dec8f509266790db",
+          "proves": "Composition is read before reasoning and text carried by the same chunk."
+        },
+        {
+          "nodeid": "tests/test_providers/test_openai_composition.py::test_a_failed_wire_keeps_its_fragment_without_a_complete_call",
+          "sha256": "98dfea79f6f1872f237c7d7406e2cd6066ef80f12b913795a7d718c6e0927567",
+          "proves": "A subsequent provider error preserves the fragment already read and produces no complete call."
+        },
+        {
+          "nodeid": "tests/test_providers/test_openai_composition.py::test_a_later_malformed_call_keeps_the_first_fragment_of_its_chunk",
+          "sha256": "b9fa0a3ff09a0e4ab3a2aa36190a2f5366792f595ee4751cc2e1c8984689cee7",
+          "proves": "A later malformed member of the same chunk preserves the preceding composition event."
+        },
+        {
+          "nodeid": "tests/test_providers/test_openai_composition.py::test_a_cut_call_keeps_its_fragments_and_partial_arguments",
+          "sha256": "dbec58d1b7335c5d90950d7cb99dc58801c09196bc3b0ab3915df104f9fdaa03",
+          "proves": "A truncated call retains its announced id and raw partial arguments."
+        },
+        {
+          "nodeid": "tests/test_providers/test_openai_composition.py::test_wire_composition_reaches_the_bus_before_execution",
+          "sha256": "17e728431f5af4a1bb76205463f7ceb0cb9b0c40c22533028cf8e9a72e86acd6",
+          "proves": "A real provider through AIChannel publishes exact count-only DELTA frames, one terminal before START/END, and stores no DELTA."
+        }
+      ],
+      "missing": [
+        "Does not establish every provider protocol, remote service behavior, distributed executor or publication failure.",
+        "Wall-clock coalescing and all other outcomes of this broad clause remain outside this source link."
       ]
     }
   ],
