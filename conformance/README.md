@@ -1174,6 +1174,11 @@ explicit stream comes before its done event, or after it with `failure_after_don
 
 ### The kit's own executor hooks
 
+`kit_executor.close` awaits `kit.turn_executor.close()`; `kit_executor.closed`
+reads its `closed` property. Neither takes arguments. Closing the local executor
+refuses new turns and cancels other running turns, sparing those the call runs
+under; the kit and its registered transports remain usable (§10.6.7–§10.6.8).
+
 `kit_executor.hook` registers `hook` on `kit.turn_executor.hook`; it takes
 `setup.hooks`' fields except `router` and `needs_lock`. `kit_executor.room_hook`
 defines the hook under its `name` on that executor: `name`, `trigger`,

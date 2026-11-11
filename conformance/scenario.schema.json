@@ -1762,6 +1762,8 @@
             "store.check_idempotency",
             "store.get_event_by_idempotency_key",
             "store.patch_room_metadata",
+            "kit_executor.close",
+            "kit_executor.closed",
             "kit_executor.hook",
             "kit_executor.room_hook",
             "kit_executor.remove_room_hook",
