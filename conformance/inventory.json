@@ -1017,9 +1017,9 @@
     },
     {
       "section": "14.1",
-      "sha256": "8ebef5100957fa9e74df441609589520c78cd62638c49fa16dca5b2ee4f6bbc9",
+      "sha256": "a2f908cd076526f1b95503dfad196514541a960bc4e7224d646fa2389fdba51d",
       "classification": "normative",
-      "review": "Source inventory: Conversation Store. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Conversation Store. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed binding-order amendment RK-14.1-005 against shared streaming-recipient scenarios, native store mutation, reopen and migration tests, and the matching Python/Rust implementation. Existing section content is unchanged."
     },
     {
       "section": "14.2",
