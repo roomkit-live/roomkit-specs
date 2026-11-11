@@ -218,7 +218,10 @@ room callbacks of the setup are not compared.
   - with `verbs`, its per-room verbs (§10.6.3), by name: `keeps` merges the
     call's arguments into what this build keeps for the room and answers
     that, `reads` answers it, `result` is answered as written; what it keeps
-    is the room's state of §10.6.2, dropped by `on_room_detached`;
+    is the room's state of §10.6.2, dropped by `on_room_detached`.
+    A `gate` holds before any change; `forgets` clears the state after
+    `keeps`; `fail` raises the scripted failure after changes and before
+    answering (the Python harness declares that exception for reconstruction);
   - with `declared`, the kit holds it by its declaration alone, and the
     executors of `executors` that host it build it (below);
   - an `ai` channel with a `model` is a **scripted agent** instead (below).
