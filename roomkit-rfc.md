@@ -9129,6 +9129,21 @@ that read it counts its cleanup done. A turn already over
 keeps what its end reported: one whose `end` is owed stays incomplete.
 <!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.8-005", "kind": "behavior", "applies": "§10.6.8 Independent executor closure; local and remote executors, subject to their supported capabilities. Conformance levels are declared in §26."} -->
+**Closing an executor.** `TurnExecutor.close()` refuses new turns, cancels
+its running turns and waits for their end, except the turns the closing call
+runs under. That exemption applies to this call: a later close from outside
+those turns cancels them too. A turn spared by its own close can finish its
+work if its owner later cancels it: the executor ends the owner's wait and
+carries no further output on that turn's link. A later external executor close
+still cancels that work. The executor closes only channels it owns
+(§10.6.3). The kit's local executor borrows its registered channels; closing
+it leaves the kit, its backend and its registered channels open, and their later
+intelligence turns fail with `no_executor` (§10.6.7). A separate room delivery
+has its own turn scope; a `process_inbound` called by a turn does not make
+that turn an ancestor in the new delivery's executor scope.
+<!-- /rfc -->
+
 <!-- rfc: {"id": "RK-10.6.8-003", "kind": "behavior", "applies": "§10.6.8 Liveness, cancellation and errors; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Steering.** The owner offers the host an asynchronous `steer(room_id,
 channel_id, directive, turn_id | null)` that answers the number of loops it
