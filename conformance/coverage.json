@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "c764e1f99df3d68edb68fb39ab33a798840f805c8f25b6fb9a2e35d4baa46ea8",
-  "corpus_sha256": "f8ac5777a1cf6de572684b29daac73f2bcbc0c350acf8434983810f5bc15f60b",
-  "python_commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
-  "scenario_count": 1908,
+  "corpus_sha256": "4ac6db0bd33c0df43b626d4c48fffb6024adf7a69a6e9265b9f6bf5f11cfa212",
+  "python_commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+  "scenario_count": 1924,
   "sections": [
     {
       "section": "0",
@@ -3146,11 +3146,26 @@
       "review": "normative",
       "requirements": 4,
       "mapping": {
-        "mapped_partial": 1,
-        "unmapped": 3
+        "mapped_partial": 2,
+        "unmapped": 2
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "channel-call/a-call-is-scoped-to-the-room-s-organization",
+        "channel-call/a-call-keeps-its-changed-state-with-the-room",
+        "channel-call/a-call-restores-the-room-s-state",
+        "channel-call/a-call-validates-its-room-and-binding",
+        "channel-call/a-channel-keeps-each-room-apart",
+        "channel-call/a-closed-kit-takes-no-calls",
+        "channel-call/a-closed-local-executor-takes-no-calls",
+        "channel-call/a-detach-callback-can-reattach-its-channel",
+        "channel-call/a-detach-forgets-the-room-s-state",
+        "channel-call/a-failed-call-keeps-its-changed-state",
+        "channel-call/a-failed-detach-still-forgets-the-room-s-state",
+        "channel-call/a-late-call-does-not-restore-a-detached-binding",
+        "channel-call/a-local-verb-answers-its-result",
+        "channel-call/a-verb-the-channel-lacks-fails",
+        "channel-call/an-empty-state-is-forgotten",
         "eviction/a-room-the-agent-joins-again-keeps-no-stored-result",
         "executors/a-declared-agent-s-turn-runs-on-the-executor-hosting-it",
         "executors/a-detach-forgets-what-the-room-kept-for-a-channel",
@@ -3170,12 +3185,29 @@
       "review": "normative",
       "requirements": 8,
       "mapping": {
-        "unmapped": 8
+        "mapped_partial": 1,
+        "unmapped": 7
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "author-images/a-room-the-agent-joins-again-sends-a-refused-image-again",
         "author-images/an-agent-attached-over-its-attachment-sends-a-refused-image-again",
+        "channel-call/a-call-is-scoped-to-the-room-s-organization",
+        "channel-call/a-call-keeps-its-changed-state-with-the-room",
+        "channel-call/a-call-restores-the-room-s-state",
+        "channel-call/a-call-validates-its-room-and-binding",
+        "channel-call/a-channel-keeps-each-room-apart",
+        "channel-call/a-closed-kit-takes-no-calls",
+        "channel-call/a-closed-local-executor-takes-no-calls",
+        "channel-call/a-detach-callback-can-reattach-its-channel",
+        "channel-call/a-detach-forgets-the-room-s-state",
+        "channel-call/a-failed-call-keeps-its-changed-state",
+        "channel-call/a-failed-detach-still-forgets-the-room-s-state",
+        "channel-call/a-late-call-does-not-restore-a-detached-binding",
+        "channel-call/a-local-verb-answers-its-result",
+        "channel-call/a-verb-closing-its-executor-keeps-its-calling-turn",
+        "channel-call/a-verb-the-channel-lacks-fails",
+        "channel-call/an-empty-state-is-forgotten",
         "executors/a-channel-call-no-executor-takes-fails-no-executor",
         "executors/a-channel-call-runs-on-the-executor-holding-the-room",
         "executors/a-publication-from-an-executor-no-longer-holding-the-room-is-dropped",
@@ -3348,6 +3380,7 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "channel-call/a-verb-closing-its-executor-keeps-its-calling-turn",
         "delivery/a-key-cuts-an-agent-s-running-generation",
         "delivery/a-key-cuts-the-running-turn-of-its-delivery",
         "executor-close/a-later-close-cuts-a-previously-spared-turn",
@@ -8013,12 +8046,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -8623,12 +8672,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -9231,12 +9296,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -9817,12 +9898,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -10424,12 +10521,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -11018,12 +11131,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -11833,12 +11962,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -11978,12 +12123,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -12161,6 +12322,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -12210,6 +12379,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -12278,6 +12455,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -12327,6 +12512,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -12624,6 +12817,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -13220,6 +13421,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -13539,6 +13748,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -13866,6 +14083,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -14185,6 +14410,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -14496,6 +14729,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -14805,6 +15046,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -15126,6 +15375,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -15435,6 +15692,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -15754,6 +16019,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -16077,6 +16350,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -16397,6 +16678,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -16728,6 +17017,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -17024,6 +17321,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -17617,12 +17922,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -17918,6 +18239,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -18173,6 +18502,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -18546,6 +18883,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -18595,6 +18940,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -19208,12 +19561,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -19569,6 +19938,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -19910,6 +20287,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -20237,6 +20622,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -20574,6 +20967,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -20901,6 +21302,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -21210,6 +21619,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -21860,12 +22277,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -22169,6 +22602,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -22482,6 +22923,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -23133,12 +23582,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -23350,6 +23815,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -23889,12 +24362,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -24432,12 +24921,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -24743,6 +25248,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -25355,12 +25868,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -25900,12 +26429,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -26253,6 +26798,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -26824,12 +27377,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -27377,12 +27946,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -27962,12 +28547,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -28539,12 +29140,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -29092,12 +29709,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -29645,12 +30278,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -30198,12 +30847,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -30273,14 +30938,68 @@
             "Channel calls, post-handover failures, process restarts and other per-room state transitions are not established by this test."
           ],
           "executions": []
+        },
+        {
+          "id": "channel-call-previous-state",
+          "scope": "Channel-call to turn continuity, post-handover cancellation, bounded local state and retry of failed or interrupted stale-state cleanup.",
+          "coverage": "partial",
+          "missing": [
+            "Remote placement, process restart and every cache owned by a concrete channel remain outside this local contract.",
+            "The Rust JSON value boundary cannot construct arbitrary unserializable Python objects; the native serialization ordering is reviewed separately."
+          ],
+          "executions": [
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
     {
       "id": "RK-10.6.2-004",
       "section": "10.6.2",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "channel-call-stored-state",
+          "scope": "Only changed per-room state is persisted; later calls and turns restore it, empty state is removed, detach forgets it even on callback failure or cancellation.",
+          "coverage": "partial",
+          "missing": [
+            "The reserved metadata namespace write filters and restoration on a different process are not established by this link."
+          ],
+          "executions": [
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "RK-10.6.3-001",
@@ -30321,8 +31040,36 @@
     {
       "id": "RK-10.6.3-007",
       "section": "10.6.3",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "channel-call-local-control",
+          "scope": "Local attached-channel verbs: JSON result, null, typed errors, validation, organization scope, changed state before error, detach and closed executor/kit refusal.",
+          "coverage": "partial",
+          "missing": [
+            "Distributed placement, executor factories, replacement and process transport remain deferred in Rust.",
+            "Committed-event delivery and channel release are distinct controls, not established by these scenarios."
+          ],
+          "executions": [
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "RK-10.6.3-008",
@@ -30400,6 +31147,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -30429,6 +31184,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -30468,6 +31231,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -30493,6 +31264,40 @@
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            }
+          ]
+        },
+        {
+          "id": "channel-call-inherited-turn",
+          "scope": "A local channel call inherits the calling turn and host, so closing its executor spares that turn.",
+          "coverage": "partial",
+          "missing": [
+            "Other executor closure paths have separate evidence; distributed control transport is not established here."
+          ],
+          "executions": [
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
             }
@@ -32504,12 +33309,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -32899,12 +33720,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -33278,12 +34115,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -33382,6 +34235,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -34273,12 +35134,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -34396,6 +35273,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -34665,6 +35550,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -35264,12 +36157,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -35899,12 +36808,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -36469,12 +37394,28 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-executor-close-ec202ed-sqlite",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -36794,6 +37735,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -37346,6 +38295,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -37648,6 +38605,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -37957,6 +38922,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -38270,6 +39243,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -38367,6 +39348,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -38660,6 +39649,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -38784,6 +39781,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -38859,6 +39864,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -38916,6 +39929,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -39031,6 +40052,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -39356,6 +40385,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -39581,6 +40618,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -39970,6 +41015,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -40260,6 +41313,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -40465,6 +41526,14 @@
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -40641,6 +41710,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -40944,6 +42021,14 @@
               "execution": "python-executor-close-ec202ed-memory",
               "implementation": "python",
               "commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -41950,6 +43035,24 @@
       "implementation_commit": "ec202ed5de529148a6f3c8fef396256e8ed2d629",
       "rfc_commit": "5a79ea72e1fb44a12ac981cbb0fc09b4e9f7fe23",
       "corpus_commit": "81a5d0cbd3f61f8cb7dec4d90c8e1d6f991934c7",
+      "backend": "sqlite",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-channel-call-77889b4-memory",
+      "implementation": "python",
+      "implementation_commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+      "rfc_commit": "9fcd1db0af82090a53486f0b29228a53c43ebbac",
+      "corpus_commit": "9fcd1db0af82090a53486f0b29228a53c43ebbac",
+      "backend": "memory",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-channel-call-77889b4-sqlite",
+      "implementation": "python",
+      "implementation_commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+      "rfc_commit": "9fcd1db0af82090a53486f0b29228a53c43ebbac",
+      "corpus_commit": "9fcd1db0af82090a53486f0b29228a53c43ebbac",
       "backend": "sqlite",
       "runtime": "asyncio"
     }
