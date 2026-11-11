@@ -15018,7 +15018,7 @@
         {
           "nodeid": "tests/test_providers/test_openai_composition.py::test_a_later_malformed_call_keeps_the_first_fragment_of_its_chunk",
           "sha256": "b9fa0a3ff09a0e4ab3a2aa36190a2f5366792f595ee4751cc2e1c8984689cee7",
-          "proves": "A later malformed member of the same chunk preserves the preceding composition event."
+          "proves": "A later non-text call id, call name, or content (id/name/content) in the same chunk preserves the preceding composition event."
         },
         {
           "nodeid": "tests/test_providers/test_openai_composition.py::test_a_cut_call_keeps_its_fragments_and_partial_arguments",
