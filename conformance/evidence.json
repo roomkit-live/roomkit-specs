@@ -14548,6 +14548,107 @@
       "missing": [
         "Other own-note producers, tool declaration and replay costs, media accounting, between-round compaction and distributed recovery are outside this assertion."
       ]
+    },
+    {
+      "id": "deferred-turn-between-round-compaction",
+      "requirement": "RK-6.4-023",
+      "clause_sha256": "26ca6d0e7fafc3113d28b20a64af7650844b0e9118ac002d20b9d2e7bafa88f3",
+      "scope": "A real Discussion delays a turn while later messages arrive. Between tool rounds, compact receives only the history before the answered input; a returned summary preserves that input, the later messages, runtime notes and tool pairs, even after an emergency or initial-memory summary.",
+      "coverage": "partial",
+      "review": "Read against RFC sections 6.4 and 20.1; these assertions cover deferred-turn boundaries and do not establish the entire capability.",
+      "assertions": [
+        {
+          "scenario": "memory/a-deferred-turn-compacts-only-the-history-before-its-input",
+          "pointer": "/expect",
+          "sha256": "ddee2719335a0f7a007ed2e0d1e1df8246e2526644884051a6b9fb95a84f0117",
+          "scenario_sha256": "38f6f0c7493d72da4a9cfd980cc357e2c23339e3c2fc569649a754ebdbabf0ae",
+          "proves": "A real Discussion delays a turn while later messages arrive. Between tool rounds, compact receives only the history before the answered input; a returned summary preserves that input, the later messages, runtime notes and tool pairs, even after an emergency or initial-memory summary."
+        },
+        {
+          "scenario": "memory/a-deferred-turn-keeps-compacting-after-an-overflow",
+          "pointer": "/expect",
+          "sha256": "7b993f546bbab3254c513bb52eee7bfd0faea4f85ef4c84255a8249d86ae2ca8",
+          "scenario_sha256": "0074d5c0756870db8934603f04b38d6fece934cc56e8185ef301faf17c6abf13",
+          "proves": "A real Discussion delays a turn while later messages arrive. Between tool rounds, compact receives only the history before the answered input; a returned summary preserves that input, the later messages, runtime notes and tool pairs, even after an emergency or initial-memory summary."
+        },
+        {
+          "scenario": "memory/a-memory-summary-keeps-the-deferred-compaction-boundary",
+          "pointer": "/expect",
+          "sha256": "6895bf70fd23636bb4b5735f3042b7ad09c72c00bb3f25878e3e1ae1a778713f",
+          "scenario_sha256": "ed94e750eb82e0295a94899b885b0c74cf535d518a84bd17e485fab37edf6b34",
+          "proves": "A real Discussion delays a turn while later messages arrive. Between tool rounds, compact receives only the history before the answered input; a returned summary preserves that input, the later messages, runtime notes and tool pairs, even after an emergency or initial-memory summary."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Arbitrary BEFORE_AI_GENERATION replacements that erase or move the answered message have no stable source identity in this fixture (remaining RMK-1576 scope).",
+        "Other memory providers, external agents and distributed recovery remain outside these cases."
+      ]
+    },
+    {
+      "id": "deferred-turn-emergency-compaction",
+      "requirement": "RK-6.4-022",
+      "clause_sha256": "2afc2cc84cb85928be93bb502ada7129167062fd697070f6ec651ceff2d1accb",
+      "scope": "A deferred turn's long answered input stays whole through one or two context overflows; later rounds build on the compacted request, keep call/result pairs and store the first long result while retaining recent results.",
+      "coverage": "partial",
+      "review": "Read against RFC sections 6.4 and 20.1; these assertions cover deferred-turn boundaries and do not establish the entire capability.",
+      "assertions": [
+        {
+          "scenario": "memory/a-deferred-turn-keeps-compacting-after-an-overflow",
+          "pointer": "/expect",
+          "sha256": "7b993f546bbab3254c513bb52eee7bfd0faea4f85ef4c84255a8249d86ae2ca8",
+          "scenario_sha256": "0074d5c0756870db8934603f04b38d6fece934cc56e8185ef301faf17c6abf13",
+          "proves": "A deferred turn's long answered input stays whole through one or two context overflows; later rounds build on the compacted request, keep call/result pairs and store the first long result while retaining recent results."
+        },
+        {
+          "scenario": "memory/a-deferred-turn-keeps-its-input-through-two-overflows",
+          "pointer": "/expect",
+          "sha256": "9729f434ae227d8120bcc7863cc882d83202c1bb962075f8cf5035a780eae324",
+          "scenario_sha256": "f316bfd7e61ee30505d109d6d964fc3cbc4609f258d46444f1203f1e47481194",
+          "proves": "A deferred turn's long answered input stays whole through one or two context overflows; later rounds build on the compacted request, keep call/result pairs and store the first long result while retaining recent results."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Arbitrary BEFORE_AI_GENERATION replacements that erase or move the answered message have no stable source identity in this fixture (remaining RMK-1576 scope).",
+        "Other memory providers, external agents and distributed recovery remain outside these cases."
+      ]
+    },
+    {
+      "id": "deferred-turn-memory-compaction",
+      "requirement": "RK-20.1-001",
+      "clause_sha256": "aa8b5fa23f8bd744c1f6ee7d4f4b5ae7217667d8d7ff299a56fde6939d6ba25a",
+      "scope": "MemoryProvider.compact receives the model's history before the answered event and the exact generation usage after each tool round of a deferred Discussion turn.",
+      "coverage": "partial",
+      "review": "Read against RFC sections 6.4 and 20.1; these assertions cover deferred-turn boundaries and do not establish the entire capability.",
+      "assertions": [
+        {
+          "scenario": "memory/a-deferred-turn-compacts-only-the-history-before-its-input",
+          "pointer": "/expect",
+          "sha256": "ddee2719335a0f7a007ed2e0d1e1df8246e2526644884051a6b9fb95a84f0117",
+          "scenario_sha256": "38f6f0c7493d72da4a9cfd980cc357e2c23339e3c2fc569649a754ebdbabf0ae",
+          "proves": "MemoryProvider.compact receives the model's history before the answered event and the exact generation usage after each tool round of a deferred Discussion turn."
+        },
+        {
+          "scenario": "memory/a-deferred-turn-keeps-compacting-after-an-overflow",
+          "pointer": "/expect",
+          "sha256": "7b993f546bbab3254c513bb52eee7bfd0faea4f85ef4c84255a8249d86ae2ca8",
+          "scenario_sha256": "0074d5c0756870db8934603f04b38d6fece934cc56e8185ef301faf17c6abf13",
+          "proves": "MemoryProvider.compact receives the model's history before the answered event and the exact generation usage after each tool round of a deferred Discussion turn."
+        },
+        {
+          "scenario": "memory/a-memory-summary-keeps-the-deferred-compaction-boundary",
+          "pointer": "/expect",
+          "sha256": "6895bf70fd23636bb4b5735f3042b7ad09c72c00bb3f25878e3e1ae1a778713f",
+          "scenario_sha256": "ed94e750eb82e0295a94899b885b0c74cf535d518a84bd17e485fab37edf6b34",
+          "proves": "MemoryProvider.compact receives the model's history before the answered event and the exact generation usage after each tool round of a deferred Discussion turn."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Arbitrary BEFORE_AI_GENERATION replacements that erase or move the answered message have no stable source identity in this fixture (remaining RMK-1576 scope).",
+        "Other memory providers, external agents and distributed recovery remain outside these cases."
+      ]
     }
   ],
   "executions": [
