@@ -35,8 +35,10 @@
               "calls": [
                 {
                   "id": "c1",
-                  "name": "lookup",
-                  "arguments": {}
+                  "name": "lookup1",
+                  "arguments": {
+                    "n": 1
+                  }
                 }
               ],
               "usage": {
@@ -48,8 +50,10 @@
               "calls": [
                 {
                   "id": "c2",
-                  "name": "lookup",
-                  "arguments": {}
+                  "name": "lookup2",
+                  "arguments": {
+                    "n": 2
+                  }
                 }
               ],
               "usage": {
@@ -78,11 +82,41 @@
         "max_tokens": 64,
         "tools": [
           {
-            "name": "lookup",
+            "name": "lookup1",
             "description": "Look it up",
             "parameters": {
               "type": "object",
-              "properties": {}
+              "properties": {
+                "n": {
+                  "type": "integer"
+                }
+              }
+            },
+            "returns": "found"
+          },
+          {
+            "name": "lookup2",
+            "description": "Look it up",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "n": {
+                  "type": "integer"
+                }
+              }
+            },
+            "returns": "found"
+          },
+          {
+            "name": "lookup3",
+            "description": "Look it up",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "n": {
+                  "type": "integer"
+                }
+              }
             },
             "returns": "found"
           }
@@ -253,7 +287,9 @@
               "round": [
                 {
                   "call": "c1",
-                  "arguments": {},
+                  "arguments": {
+                    "n": 1
+                  },
                   "metadata": {}
                 }
               ]
@@ -294,7 +330,9 @@
               "round": [
                 {
                   "call": "c1",
-                  "arguments": {},
+                  "arguments": {
+                    "n": 1
+                  },
                   "metadata": {}
                 }
               ]
@@ -307,7 +345,9 @@
               "round": [
                 {
                   "call": "c2",
-                  "arguments": {},
+                  "arguments": {
+                    "n": 2
+                  },
                   "metadata": {}
                 }
               ]
