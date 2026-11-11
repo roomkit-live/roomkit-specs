@@ -194,6 +194,6 @@
       ]
     }
   },
-  "notes": "The scripted custom memory returns the answered event itself, as RFC §20.1 permits. A real Discussion delays a while two later messages arrive. Exact model message lists require one intact input before those later messages. ",
+  "notes": "The scripted custom memory returns the answered event itself, as RFC §20.1 permits. A real Discussion delays a while two later messages arrive. Exact model message lists require one intact input before the retained later messages. ",
   "id": "memory/a-returned-current-input-survives-budget-trimming"
 }

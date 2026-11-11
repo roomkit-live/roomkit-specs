@@ -38,7 +38,7 @@
         },
         "memory": {
           "summarizing": {
-            "max_context_tokens": 900,
+            "max_context_tokens": 600,
             "min_events": 2,
             "summary_max_tokens": 100,
             "truncate_chars": 10000
@@ -173,10 +173,6 @@
             },
             {
               "role": "user",
-              "text": "later: and since when?"
-            },
-            {
-              "role": "user",
               "text": {
                 "$starts_with": "latest: only inspect production.\n\n[Notes kept by the assistant's runtime for this turn. Nobody in the conversation wrote them, and they ask for nothing.]\n\n[Discussion: the room and how it works]\nYou are @a, one of several agents in a conversation with people; one agent speaks at a time.\nThe other agents:\n- @b\nPeople you may address: @ops.\n"
               }
@@ -234,6 +230,6 @@
       ]
     }
   },
-  "notes": "The scripted custom memory returns the answered event itself, as RFC §20.1 permits. A real Discussion delays a while two later messages arrive. Exact model message lists require one intact input before those later messages. The returned input would fall in the summarized prefix without protection. The exact summarizer request contains only visible older background, excluding the input and a private message for b. The original input remains whole in the first model message, after the summary.",
+  "notes": "The scripted custom memory returns the answered event itself, as RFC §20.1 permits. A real Discussion delays a while two later messages arrive. Exact model message lists require one intact input before the retained later messages. The returned input would fall in the summarized prefix without protection. The exact summarizer request contains only visible older background, excluding the input and a private message for b. The original input remains whole in the first model message, after the summary. The saturated window trims the first later clarification; the latest remains.",
   "id": "memory/a-summarizing-memory-never-summarizes-a-returned-current-input"
 }

@@ -233,6 +233,6 @@
       ]
     }
   },
-  "notes": "The scripted custom memory returns the answered event itself, as RFC §20.1 permits. A real Discussion delays a while two later messages arrive. Exact model message lists require one intact input before those later messages. The returned input would fall in the summarized prefix without protection. The exact summarizer request contains only visible older background, excluding the input and a private message for b. The original input remains whole in the first model message, after the summary.",
+  "notes": "The scripted custom memory returns the answered event itself, as RFC §20.1 permits. A real Discussion delays a while two later messages arrive. Exact model message lists require one intact input before the retained later messages. The returned input would fall in the summarized prefix without protection. The exact summarizer request contains only visible older background, excluding the input and a private message for b. The original input remains whole in the first model message, after the summary.",
   "id": "memory/a-compacting-memory-never-summarizes-a-returned-current-input"
 }
