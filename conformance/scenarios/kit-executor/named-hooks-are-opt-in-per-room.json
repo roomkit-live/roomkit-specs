@@ -148,6 +148,12 @@
           "type": "text",
           "body": "hello"
         }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
       }
     },
     {
@@ -173,6 +179,12 @@
           "type": "text",
           "body": "hello"
         }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
       }
     },
     {
@@ -187,6 +199,12 @@
         "content": {
           "type": "text",
           "body": "hello"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
         }
       }
     },
@@ -218,6 +236,12 @@
         "content": {
           "type": "text",
           "body": "hello"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
         }
       }
     }
@@ -262,6 +286,18 @@
             "tool_call_id": "call-4"
           }
         }
+      ]
+    },
+    "models": {
+      "agent": [
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}
       ]
     }
   }

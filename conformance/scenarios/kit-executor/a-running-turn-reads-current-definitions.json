@@ -151,7 +151,13 @@
       "open": "entered"
     },
     {
-      "await": "first"
+      "await": "first",
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
     }
   ],
   "expect": {

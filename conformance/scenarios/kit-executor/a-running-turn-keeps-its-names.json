@@ -148,7 +148,13 @@
       "open": "entered"
     },
     {
-      "await": "first"
+      "await": "first",
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
     },
     {
       "idle": true
@@ -163,6 +169,12 @@
           "type": "text",
           "body": "hello"
         }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
       }
     }
   ],
@@ -176,6 +188,14 @@
             "tool_call_id": "call-1"
           }
         }
+      ]
+    },
+    "models": {
+      "agent": [
+        {},
+        {},
+        {},
+        {}
       ]
     }
   }

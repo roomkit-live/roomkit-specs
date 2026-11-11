@@ -136,6 +136,12 @@
           "type": "text",
           "body": "hello"
         }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
       }
     },
     {
@@ -184,6 +190,12 @@
         "content": {
           "type": "text",
           "body": "hello"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
         }
       }
     }

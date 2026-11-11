@@ -183,6 +183,12 @@
           "type": "text",
           "body": "hello"
         }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
       }
     }
   ],
@@ -203,6 +209,12 @@
       ],
       "source_muted": [],
       "owner": []
+    },
+    "models": {
+      "agent": [
+        {},
+        {}
+      ]
     }
   }
 }
