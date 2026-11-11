@@ -6540,6 +6540,10 @@
         "writes_record": {
           "description": "Each read writes these keys on the turn's record through current_response_metadata(), when it answers one (\u00a76.7).",
           "type": "object"
+        },
+        "returns_current_event": {
+          "type": "boolean",
+          "description": "Also return the answered event once, in index order among the retained events (default false; RFC \u00a720.1)."
         }
       }
     },

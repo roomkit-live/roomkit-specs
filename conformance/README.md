@@ -576,7 +576,11 @@ scripted.
   started the session is processed (§19.1).
 - `memory`: a **scripted memory** in place of the default (§20): the room's
   latest `max_events` events as a sliding window reads them (default the
-  agent's `max_context_events`), with the `messages` it built (each `role`
+  agent's `max_context_events`); `returns_current_event: true` also returns
+  the answered event once, before the first retained event with a greater
+  index, or last when none has one (default false). This exercises the
+  provider style §20.1 permits alongside omitting the turn's input.
+  It also returns the `messages` it built (each `role`
   and `text`, or `role` and `parts`, texts it holds back to back as text
   parts), the `notes` it retrieved for the turn alone and the
   `speakers` its messages name (§20.2), and `writes_record`, keys each read
