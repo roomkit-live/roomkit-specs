@@ -382,6 +382,8 @@ See [requirements.json](requirements.json) for exact clauses and applicability,
 - `python-turn-compaction-d3502c7-sqlite`: python `d3502c79560a72cb2846860bce7d87d903003aca`, sqlite / asyncio; RFC `71923074bd9285266ee75785cb87f37cb5cc2ca8`, corpus `71923074bd9285266ee75785cb87f37cb5cc2ca8`.
 - `python-hook-input-83ad908-memory`: python `83ad90881065aaab5ceff041a21c2fd82f78e89e`, memory / asyncio; RFC `1a4741a548462bd7ec6bd64b9f013b6f1e62205e`, corpus `1a4741a548462bd7ec6bd64b9f013b6f1e62205e`.
 - `python-hook-input-83ad908-sqlite`: python `83ad90881065aaab5ceff041a21c2fd82f78e89e`, sqlite / asyncio; RFC `1a4741a548462bd7ec6bd64b9f013b6f1e62205e`, corpus `1a4741a548462bd7ec6bd64b9f013b6f1e62205e`.
+- `python-hook-protection-a6e7c58-memory`: python `a6e7c58801056fd2447ff1847f76ca83c945ad42`, memory / asyncio; RFC `1391dc40cad4ffcc1a64af40ef536f481c601f00`, corpus `cd45d6c283e6e0e68892daab07874c57a907866e`.
+- `python-hook-protection-a6e7c58-sqlite`: python `a6e7c58801056fd2447ff1847f76ca83c945ad42`, sqlite / asyncio; RFC `1391dc40cad4ffcc1a64af40ef536f481c601f00`, corpus `cd45d6c283e6e0e68892daab07874c57a907866e`.
 
 States below apply only to the link's declared scope. Partial mappings remain partial.
 
@@ -454,6 +456,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-5.1-002 | core-room-refused-events | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-5.1-002 | core-room-refused-events | python-hook-input-83ad908-memory | stale |
 | RK-5.1-002 | core-room-refused-events | python-hook-input-83ad908-sqlite | stale |
+| RK-5.1-002 | core-room-refused-events | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-5.1-002 | core-room-refused-events | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-5.1-002 | core-room-remaining-write-gates | python-hook-injections-a6daaf1 | stale |
 | RK-5.1-002 | core-room-remaining-write-gates | python-injection-obligations-d8cc647 | stale |
 | RK-5.1-002 | core-room-remaining-write-gates | python-room-lifecycle-a29102c | stale |
@@ -521,6 +525,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-5.1-002 | core-room-remaining-write-gates | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-5.1-002 | core-room-remaining-write-gates | python-hook-input-83ad908-memory | stale |
 | RK-5.1-002 | core-room-remaining-write-gates | python-hook-input-83ad908-sqlite | stale |
+| RK-5.1-002 | core-room-remaining-write-gates | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-5.1-002 | core-room-remaining-write-gates | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-5.1-004 | core-room-public-transitions | python-room-lifecycle-a29102c | stale |
 | RK-5.1-004 | core-room-public-transitions | python-room-lifecycle-completion-3bb0274-memory | stale |
 | RK-5.1-004 | core-room-public-transitions | python-room-lifecycle-completion-3bb0274-sqlite | stale |
@@ -586,6 +592,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-5.1-004 | core-room-public-transitions | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-5.1-004 | core-room-public-transitions | python-hook-input-83ad908-memory | stale |
 | RK-5.1-004 | core-room-public-transitions | python-hook-input-83ad908-sqlite | stale |
+| RK-5.1-004 | core-room-public-transitions | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-5.1-004 | core-room-public-transitions | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-5.1-004 | core-room-public-read-matrix | python-room-lifecycle-completion-3bb0274-memory | stale |
 | RK-5.1-004 | core-room-public-read-matrix | python-room-lifecycle-completion-3bb0274-sqlite | stale |
 | RK-5.1-004 | core-room-public-read-matrix | python-lifecycle-final-corpus-746d6bd-memory | stale |
@@ -650,6 +658,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-5.1-004 | core-room-public-read-matrix | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-5.1-004 | core-room-public-read-matrix | python-hook-input-83ad908-memory | stale |
 | RK-5.1-004 | core-room-public-read-matrix | python-hook-input-83ad908-sqlite | stale |
+| RK-5.1-004 | core-room-public-read-matrix | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-5.1-004 | core-room-public-read-matrix | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-5.1-006 | core-room-due-timers | python-room-lifecycle-a29102c | stale |
 | RK-5.1-006 | core-room-due-timers | python-room-lifecycle-completion-3bb0274-memory | stale |
 | RK-5.1-006 | core-room-due-timers | python-room-lifecycle-completion-3bb0274-sqlite | stale |
@@ -715,6 +725,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-5.1-006 | core-room-due-timers | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-5.1-006 | core-room-due-timers | python-hook-input-83ad908-memory | stale |
 | RK-5.1-006 | core-room-due-timers | python-hook-input-83ad908-sqlite | stale |
+| RK-5.1-006 | core-room-due-timers | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-5.1-006 | core-room-due-timers | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-5.1-006 | core-room-timer-completion | python-room-lifecycle-a29102c | stale |
 | RK-5.1-006 | core-room-timer-completion | python-room-lifecycle-completion-3bb0274-memory | stale |
 | RK-5.1-006 | core-room-timer-completion | python-room-lifecycle-completion-3bb0274-sqlite | stale |
@@ -780,6 +792,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-5.1-006 | core-room-timer-completion | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-5.1-006 | core-room-timer-completion | python-hook-input-83ad908-memory | stale |
 | RK-5.1-006 | core-room-timer-completion | python-hook-input-83ad908-sqlite | stale |
+| RK-5.1-006 | core-room-timer-completion | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-5.1-006 | core-room-timer-completion | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-5.13-001 | storage-delivery-outcomes | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-5.13-001 | storage-delivery-outcomes | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-5.13-001 | storage-delivery-outcomes | python-indexing-final-corpus-428f285-memory | stale |
@@ -838,12 +852,18 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-5.13-001 | storage-delivery-outcomes | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-5.13-001 | storage-delivery-outcomes | python-hook-input-83ad908-memory | stale |
 | RK-5.13-001 | storage-delivery-outcomes | python-hook-input-83ad908-sqlite | stale |
+| RK-5.13-001 | storage-delivery-outcomes | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-5.13-001 | storage-delivery-outcomes | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-6.4-022 | deferred-turn-emergency-compaction | python-turn-compaction-d3502c7-memory | stale |
 | RK-6.4-022 | deferred-turn-emergency-compaction | python-hook-input-83ad908-memory | stale |
+| RK-6.4-022 | deferred-turn-emergency-compaction | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-6.4-022 | deferred-hook-copy-overflow | python-hook-input-83ad908-memory | stale |
+| RK-6.4-022 | deferred-hook-copy-overflow | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-6.4-023 | deferred-turn-between-round-compaction | python-turn-compaction-d3502c7-memory | stale |
 | RK-6.4-023 | deferred-turn-between-round-compaction | python-hook-input-83ad908-memory | stale |
+| RK-6.4-023 | deferred-turn-between-round-compaction | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-6.4-023 | deferred-hook-copy-compaction | python-hook-input-83ad908-memory | stale |
+| RK-6.4-023 | deferred-hook-copy-compaction | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-6.4-043 | deferred-hook-context-protection | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-6.4-043 | deferred-hook-context-protection | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-6.4-043 | deferred-hook-context-protection | python-indexing-final-corpus-428f285-memory | stale |
@@ -875,6 +895,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-6.4-043 | deferred-hook-context-protection | python-current-input-0c0a1aa-memory | stale |
 | RK-6.4-043 | deferred-hook-context-protection | python-turn-compaction-d3502c7-memory | stale |
 | RK-6.4-043 | deferred-hook-context-protection | python-hook-input-83ad908-memory | stale |
+| RK-6.4-043 | deferred-hook-context-protection | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-7.1-001 | core-access-matrix | python-permissions-ecf9bc5 | stale |
 | RK-7.1-001 | core-access-matrix | python-visibility-8fb44e9 | stale |
 | RK-7.1-001 | core-access-matrix | python-response-history-3e4e215 | stale |
@@ -909,6 +930,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.1-001 | core-access-matrix | python-current-input-0c0a1aa-memory | stale |
 | RK-7.1-001 | core-access-matrix | python-turn-compaction-d3502c7-memory | stale |
 | RK-7.1-001 | core-access-matrix | python-hook-input-83ad908-memory | stale |
+| RK-7.1-001 | core-access-matrix | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-7.2-001 | core-muted-read-effects | python-permissions-ecf9bc5 | stale |
 | RK-7.2-001 | core-muted-read-effects | python-visibility-8fb44e9 | stale |
 | RK-7.2-001 | core-muted-read-effects | python-response-history-3e4e215 | stale |
@@ -943,6 +965,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.2-001 | core-muted-read-effects | python-current-input-0c0a1aa-memory | stale |
 | RK-7.2-001 | core-muted-read-effects | python-turn-compaction-d3502c7-memory | stale |
 | RK-7.2-001 | core-muted-read-effects | python-hook-input-83ad908-memory | stale |
+| RK-7.2-001 | core-muted-read-effects | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-7.3-005 | visibility-grammar-values | python-visibility-8fb44e9 | stale |
 | RK-7.3-005 | visibility-grammar-values | python-response-history-3e4e215 | stale |
 | RK-7.3-005 | visibility-grammar-values | python-lifecycle-final-corpus-746d6bd-memory | stale |
@@ -976,6 +999,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.3-005 | visibility-grammar-values | python-current-input-0c0a1aa-memory | stale |
 | RK-7.3-005 | visibility-grammar-values | python-turn-compaction-d3502c7-memory | stale |
 | RK-7.3-005 | visibility-grammar-values | python-hook-input-83ad908-memory | stale |
+| RK-7.3-005 | visibility-grammar-values | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-7.3-006 | visibility-reserved-channel-ids | python-permissions-ecf9bc5 | stale |
 | RK-7.3-006 | visibility-reserved-channel-ids | python-visibility-8fb44e9 | stale |
 | RK-7.3-006 | visibility-reserved-channel-ids | python-response-history-3e4e215 | stale |
@@ -1010,6 +1034,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.3-006 | visibility-reserved-channel-ids | python-current-input-0c0a1aa-memory | stale |
 | RK-7.3-006 | visibility-reserved-channel-ids | python-turn-compaction-d3502c7-memory | stale |
 | RK-7.3-006 | visibility-reserved-channel-ids | python-hook-input-83ad908-memory | stale |
+| RK-7.3-006 | visibility-reserved-channel-ids | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-7.3-007 | visibility-whitespace | python-visibility-8fb44e9 | stale |
 | RK-7.3-007 | visibility-whitespace | python-response-history-3e4e215 | stale |
 | RK-7.3-007 | visibility-whitespace | python-lifecycle-final-corpus-746d6bd-memory | stale |
@@ -1043,6 +1068,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.3-007 | visibility-whitespace | python-current-input-0c0a1aa-memory | stale |
 | RK-7.3-007 | visibility-whitespace | python-turn-compaction-d3502c7-memory | stale |
 | RK-7.3-007 | visibility-whitespace | python-hook-input-83ad908-memory | stale |
+| RK-7.3-007 | visibility-whitespace | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-7.3-008 | visibility-empty-values-and-items | python-visibility-8fb44e9 | stale |
 | RK-7.3-008 | visibility-empty-values-and-items | python-response-history-3e4e215 | stale |
 | RK-7.3-008 | visibility-empty-values-and-items | python-lifecycle-final-corpus-746d6bd-memory | stale |
@@ -1076,6 +1102,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.3-008 | visibility-empty-values-and-items | python-current-input-0c0a1aa-memory | stale |
 | RK-7.3-008 | visibility-empty-values-and-items | python-turn-compaction-d3502c7-memory | stale |
 | RK-7.3-008 | visibility-empty-values-and-items | python-hook-input-83ad908-memory | stale |
+| RK-7.3-008 | visibility-empty-values-and-items | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-7.3-009 | visibility-empty-values-fail-closed | python-permissions-ecf9bc5 | stale |
 | RK-7.3-009 | visibility-empty-values-fail-closed | python-visibility-8fb44e9 | stale |
 | RK-7.3-009 | visibility-empty-values-fail-closed | python-response-history-3e4e215 | stale |
@@ -1110,6 +1137,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.3-009 | visibility-empty-values-fail-closed | python-current-input-0c0a1aa-memory | stale |
 | RK-7.3-009 | visibility-empty-values-fail-closed | python-turn-compaction-d3502c7-memory | stale |
 | RK-7.3-009 | visibility-empty-values-fail-closed | python-hook-input-83ad908-memory | stale |
+| RK-7.3-009 | visibility-empty-values-fail-closed | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-7.3-010 | visibility-canonical-id-lists | python-visibility-8fb44e9 | stale |
 | RK-7.3-010 | visibility-canonical-id-lists | python-response-history-3e4e215 | stale |
 | RK-7.3-010 | visibility-canonical-id-lists | python-lifecycle-final-corpus-746d6bd-memory | stale |
@@ -1143,6 +1171,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.3-010 | visibility-canonical-id-lists | python-current-input-0c0a1aa-memory | stale |
 | RK-7.3-010 | visibility-canonical-id-lists | python-turn-compaction-d3502c7-memory | stale |
 | RK-7.3-010 | visibility-canonical-id-lists | python-hook-input-83ad908-memory | stale |
+| RK-7.3-010 | visibility-canonical-id-lists | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-7.3-011 | visibility-unknown-and-unbound-ids | python-visibility-8fb44e9 | stale |
 | RK-7.3-011 | visibility-unknown-and-unbound-ids | python-response-history-3e4e215 | stale |
 | RK-7.3-011 | visibility-unknown-and-unbound-ids | python-hook-injections-a6daaf1 | stale |
@@ -1177,6 +1206,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.3-011 | visibility-unknown-and-unbound-ids | python-current-input-0c0a1aa-memory | stale |
 | RK-7.3-011 | visibility-unknown-and-unbound-ids | python-turn-compaction-d3502c7-memory | stale |
 | RK-7.3-011 | visibility-unknown-and-unbound-ids | python-hook-input-83ad908-memory | stale |
+| RK-7.3-011 | visibility-unknown-and-unbound-ids | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-7.3-003 | visibility-internal-public-doors | python-permissions-ecf9bc5 | stale |
 | RK-7.3-003 | visibility-internal-public-doors | python-visibility-8fb44e9 | stale |
 | RK-7.3-003 | visibility-internal-public-doors | python-response-history-3e4e215 | stale |
@@ -1211,6 +1241,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.3-003 | visibility-internal-public-doors | python-current-input-0c0a1aa-memory | stale |
 | RK-7.3-003 | visibility-internal-public-doors | python-turn-compaction-d3502c7-memory | stale |
 | RK-7.3-003 | visibility-internal-public-doors | python-hook-input-83ad908-memory | stale |
+| RK-7.3-003 | visibility-internal-public-doors | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-7.3-004 | visibility-committed-intersection-and-history | python-visibility-8fb44e9 | stale |
 | RK-7.3-004 | visibility-committed-intersection-and-history | python-response-history-3e4e215 | stale |
 | RK-7.3-004 | visibility-committed-intersection-and-history | python-hook-injections-a6daaf1 | stale |
@@ -1245,6 +1276,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.3-004 | visibility-committed-intersection-and-history | python-current-input-0c0a1aa-memory | stale |
 | RK-7.3-004 | visibility-committed-intersection-and-history | python-turn-compaction-d3502c7-memory | stale |
 | RK-7.3-004 | visibility-committed-intersection-and-history | python-hook-input-83ad908-memory | stale |
+| RK-7.3-004 | visibility-committed-intersection-and-history | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-7.5-001 | core-permission-gates | python-permissions-ecf9bc5 | stale |
 | RK-7.5-001 | core-permission-gates | python-visibility-8fb44e9 | stale |
 | RK-7.5-001 | core-permission-gates | python-response-history-3e4e215 | stale |
@@ -1279,6 +1311,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.5-001 | core-permission-gates | python-current-input-0c0a1aa-memory | stale |
 | RK-7.5-001 | core-permission-gates | python-turn-compaction-d3502c7-memory | stale |
 | RK-7.5-001 | core-permission-gates | python-hook-input-83ad908-memory | stale |
+| RK-7.5-001 | core-permission-gates | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-7.5-001 | response-refusals-and-reader-history | python-response-history-3e4e215 | stale |
 | RK-7.5-001 | response-refusals-and-reader-history | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-7.5-001 | response-refusals-and-reader-history | python-lifecycle-final-corpus-ecac963-memory | stale |
@@ -1311,6 +1344,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.5-001 | response-refusals-and-reader-history | python-current-input-0c0a1aa-memory | stale |
 | RK-7.5-001 | response-refusals-and-reader-history | python-turn-compaction-d3502c7-memory | stale |
 | RK-7.5-001 | response-refusals-and-reader-history | python-hook-input-83ad908-memory | stale |
+| RK-7.5-001 | response-refusals-and-reader-history | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-8.1-002 | core-event-index-allocation | python-hook-injections-a6daaf1 | stale |
 | RK-8.1-002 | core-event-index-allocation | python-injection-obligations-d8cc647 | stale |
 | RK-8.1-002 | core-event-index-allocation | python-lifecycle-final-corpus-746d6bd-memory | stale |
@@ -1375,6 +1409,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-8.1-002 | core-event-index-allocation | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-8.1-002 | core-event-index-allocation | python-hook-input-83ad908-memory | stale |
 | RK-8.1-002 | core-event-index-allocation | python-hook-input-83ad908-sqlite | stale |
+| RK-8.1-002 | core-event-index-allocation | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-8.1-002 | core-event-index-allocation | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-8.3-005 | reentrancy-replay-budget | python-reentrancy-final-corpus-9b44d51-memory | stale |
 | RK-8.3-005 | reentrancy-replay-budget | python-core-close-final-corpus-e89dc28-memory | stale |
 | RK-8.3-005 | reentrancy-replay-budget | python-core-lanes-final-corpus-89dae1b-memory | stale |
@@ -1401,6 +1437,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-8.3-005 | reentrancy-replay-budget | python-current-input-0c0a1aa-memory | stale |
 | RK-8.3-005 | reentrancy-replay-budget | python-turn-compaction-d3502c7-memory | stale |
 | RK-8.3-005 | reentrancy-replay-budget | python-hook-input-83ad908-memory | stale |
+| RK-8.3-005 | reentrancy-replay-budget | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-8.3-006 | reentrancy-independent-hook-budget | python-reentrancy-final-corpus-9b44d51-memory | stale |
 | RK-8.3-006 | reentrancy-independent-hook-budget | python-core-close-final-corpus-e89dc28-memory | stale |
 | RK-8.3-006 | reentrancy-independent-hook-budget | python-core-lanes-final-corpus-89dae1b-memory | stale |
@@ -1427,6 +1464,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-8.3-006 | reentrancy-independent-hook-budget | python-current-input-0c0a1aa-memory | stale |
 | RK-8.3-006 | reentrancy-independent-hook-budget | python-turn-compaction-d3502c7-memory | stale |
 | RK-8.3-006 | reentrancy-independent-hook-budget | python-hook-input-83ad908-memory | stale |
+| RK-8.3-006 | reentrancy-independent-hook-budget | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-8.5-004 | response-scopes-and-cascades | python-permissions-ecf9bc5 | stale |
 | RK-8.5-004 | response-scopes-and-cascades | python-visibility-8fb44e9 | stale |
 | RK-8.5-004 | response-scopes-and-cascades | python-response-history-3e4e215 | stale |
@@ -1462,6 +1500,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-8.5-004 | response-scopes-and-cascades | python-current-input-0c0a1aa-memory | stale |
 | RK-8.5-004 | response-scopes-and-cascades | python-turn-compaction-d3502c7-memory | stale |
 | RK-8.5-004 | response-scopes-and-cascades | python-hook-input-83ad908-memory | stale |
+| RK-8.5-004 | response-scopes-and-cascades | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-9.2-004 | core-room-timer-hook-context | python-room-lifecycle-a29102c | stale |
 | RK-9.2-004 | core-room-timer-hook-context | python-room-lifecycle-completion-3bb0274-memory | stale |
 | RK-9.2-004 | core-room-timer-hook-context | python-room-lifecycle-completion-3bb0274-sqlite | stale |
@@ -1527,6 +1566,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-9.2-004 | core-room-timer-hook-context | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-9.2-004 | core-room-timer-hook-context | python-hook-input-83ad908-memory | stale |
 | RK-9.2-004 | core-room-timer-hook-context | python-hook-input-83ad908-sqlite | stale |
+| RK-9.2-004 | core-room-timer-hook-context | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-9.2-004 | core-room-timer-hook-context | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-9.3-005 | pilot-fail-open | python-hooks-33d1f4 | stale |
 | RK-9.3-005 | pilot-fail-open | python-permissions-ecf9bc5 | stale |
 | RK-9.3-005 | pilot-fail-open | python-visibility-8fb44e9 | stale |
@@ -1562,6 +1603,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-9.3-005 | pilot-fail-open | python-current-input-0c0a1aa-memory | stale |
 | RK-9.3-005 | pilot-fail-open | python-turn-compaction-d3502c7-memory | stale |
 | RK-9.3-005 | pilot-fail-open | python-hook-input-83ad908-memory | stale |
+| RK-9.3-005 | pilot-fail-open | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-9.3-008 | pilot-fail-closed | python-hooks-33d1f4 | stale |
 | RK-9.3-008 | pilot-fail-closed | python-permissions-ecf9bc5 | stale |
 | RK-9.3-008 | pilot-fail-closed | python-visibility-8fb44e9 | stale |
@@ -1597,6 +1639,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-9.3-008 | pilot-fail-closed | python-current-input-0c0a1aa-memory | stale |
 | RK-9.3-008 | pilot-fail-closed | python-turn-compaction-d3502c7-memory | stale |
 | RK-9.3-008 | pilot-fail-closed | python-hook-input-83ad908-memory | stale |
+| RK-9.3-008 | pilot-fail-closed | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-9.3-009 | pilot-missing-payload | python-hooks-33d1f4 | stale |
 | RK-9.3-009 | pilot-missing-payload | python-permissions-ecf9bc5 | stale |
 | RK-9.3-009 | pilot-missing-payload | python-visibility-8fb44e9 | stale |
@@ -1632,6 +1675,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-9.3-009 | pilot-missing-payload | python-current-input-0c0a1aa-memory | stale |
 | RK-9.3-009 | pilot-missing-payload | python-turn-compaction-d3502c7-memory | stale |
 | RK-9.3-009 | pilot-missing-payload | python-hook-input-83ad908-memory | stale |
+| RK-9.3-009 | pilot-missing-payload | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-9.3-011 | pilot-invalid-effects | python-hooks-33d1f4 | stale |
 | RK-9.3-011 | pilot-invalid-effects | python-permissions-ecf9bc5 | stale |
 | RK-9.3-011 | pilot-invalid-effects | python-visibility-8fb44e9 | stale |
@@ -1667,6 +1711,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-9.3-011 | pilot-invalid-effects | python-current-input-0c0a1aa-memory | stale |
 | RK-9.3-011 | pilot-invalid-effects | python-turn-compaction-d3502c7-memory | stale |
 | RK-9.3-011 | pilot-invalid-effects | python-hook-input-83ad908-memory | stale |
+| RK-9.3-011 | pilot-invalid-effects | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-9.3-017 | human-input-answer-and-timeout | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-9.3-017 | human-input-answer-and-timeout | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-9.3-017 | human-input-answer-and-timeout | python-indexing-final-corpus-428f285-memory | stale |
@@ -1698,6 +1743,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-9.3-017 | human-input-answer-and-timeout | python-current-input-0c0a1aa-memory | stale |
 | RK-9.3-017 | human-input-answer-and-timeout | python-turn-compaction-d3502c7-memory | stale |
 | RK-9.3-017 | human-input-answer-and-timeout | python-hook-input-83ad908-memory | stale |
+| RK-9.3-017 | human-input-answer-and-timeout | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-9.4-002 | response-hook-scope-restoration | python-response-history-3e4e215 | stale |
 | RK-9.4-002 | response-hook-scope-restoration | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-9.4-002 | response-hook-scope-restoration | python-lifecycle-final-corpus-ecac963-memory | stale |
@@ -1730,6 +1776,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-9.4-002 | response-hook-scope-restoration | python-current-input-0c0a1aa-memory | stale |
 | RK-9.4-002 | response-hook-scope-restoration | python-turn-compaction-d3502c7-memory | stale |
 | RK-9.4-002 | response-hook-scope-restoration | python-hook-input-83ad908-memory | stale |
+| RK-9.4-002 | response-hook-scope-restoration | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-9.4-004 | core-hook-injection-passes | python-hooks-33d1f4 | stale |
 | RK-9.4-004 | core-hook-injection-passes | python-permissions-ecf9bc5 | stale |
 | RK-9.4-004 | core-hook-injection-passes | python-visibility-8fb44e9 | stale |
@@ -1801,6 +1848,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-9.4-004 | core-hook-injection-passes | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-9.4-004 | core-hook-injection-passes | python-hook-input-83ad908-memory | stale |
 | RK-9.4-004 | core-hook-injection-passes | python-hook-input-83ad908-sqlite | stale |
+| RK-9.4-004 | core-hook-injection-passes | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-9.4-004 | core-hook-injection-passes | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-9.4-005 | core-hook-injected-instruction | python-injection-obligations-d8cc647 | stale |
 | RK-9.4-005 | core-hook-injected-instruction | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-9.4-005 | core-hook-injected-instruction | python-lifecycle-final-corpus-ecac963-memory | stale |
@@ -1833,6 +1882,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-9.4-005 | core-hook-injected-instruction | python-current-input-0c0a1aa-memory | stale |
 | RK-9.4-005 | core-hook-injected-instruction | python-turn-compaction-d3502c7-memory | stale |
 | RK-9.4-005 | core-hook-injected-instruction | python-hook-input-83ad908-memory | stale |
+| RK-9.4-005 | core-hook-injected-instruction | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-9.4-006 | core-hook-injection-triggers | python-hook-injections-a6daaf1 | stale |
 | RK-9.4-006 | core-hook-injection-triggers | python-injection-obligations-d8cc647 | stale |
 | RK-9.4-006 | core-hook-injection-triggers | python-lifecycle-final-corpus-746d6bd-memory | stale |
@@ -1866,6 +1916,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-9.4-006 | core-hook-injection-triggers | python-current-input-0c0a1aa-memory | stale |
 | RK-9.4-006 | core-hook-injection-triggers | python-turn-compaction-d3502c7-memory | stale |
 | RK-9.4-006 | core-hook-injection-triggers | python-hook-input-83ad908-memory | stale |
+| RK-9.4-006 | core-hook-injection-triggers | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-10.1-002 | core-routing-entry | python-hooks-33d1f4 | stale |
 | RK-10.1-002 | core-routing-entry | python-permissions-ecf9bc5 | stale |
 | RK-10.1-002 | core-routing-entry | python-visibility-8fb44e9 | stale |
@@ -1935,6 +1986,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.1-002 | core-routing-entry | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-10.1-002 | core-routing-entry | python-hook-input-83ad908-memory | stale |
 | RK-10.1-002 | core-routing-entry | python-hook-input-83ad908-sqlite | stale |
+| RK-10.1-002 | core-routing-entry | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-10.1-002 | core-routing-entry | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-10.1-002 | named-preflight-before-rate-and-address-callbacks | python-core-preflight-corpus-00197fd-memory | stale |
 | RK-10.1-002 | named-preflight-before-rate-and-address-callbacks | python-core-shutdown-boundaries-0aa9b53-memory | stale |
 | RK-10.1-002 | named-preflight-before-rate-and-address-callbacks | python-core-shutdown-answers-a7fac2f-memory | stale |
@@ -1956,6 +2009,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.1-002 | named-preflight-before-rate-and-address-callbacks | python-current-input-0c0a1aa-memory | stale |
 | RK-10.1-002 | named-preflight-before-rate-and-address-callbacks | python-turn-compaction-d3502c7-memory | stale |
 | RK-10.1-002 | named-preflight-before-rate-and-address-callbacks | python-hook-input-83ad908-memory | stale |
+| RK-10.1-002 | named-preflight-before-rate-and-address-callbacks | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-10.1-003 | reentrancy-cancellation-isolation | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-10.1-003 | reentrancy-cancellation-isolation | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-10.1-003 | reentrancy-cancellation-isolation | python-indexing-final-corpus-428f285-memory | stale |
@@ -2014,6 +2068,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.1-003 | reentrancy-cancellation-isolation | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-10.1-003 | reentrancy-cancellation-isolation | python-hook-input-83ad908-memory | stale |
 | RK-10.1-003 | reentrancy-cancellation-isolation | python-hook-input-83ad908-sqlite | stale |
+| RK-10.1-003 | reentrancy-cancellation-isolation | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-10.1-003 | reentrancy-cancellation-isolation | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-10.2-002 | storage-delivery-order | python-storage-delivery-final-corpus-56d7240-memory | stale |
 | RK-10.2-002 | storage-delivery-order | python-storage-delivery-final-corpus-56d7240-sqlite | stale |
 | RK-10.2-002 | storage-delivery-order | python-reentrancy-final-corpus-9b44d51-memory | stale |
@@ -2068,6 +2124,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.2-002 | storage-delivery-order | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-10.2-002 | storage-delivery-order | python-hook-input-83ad908-memory | stale |
 | RK-10.2-002 | storage-delivery-order | python-hook-input-83ad908-sqlite | stale |
+| RK-10.2-002 | storage-delivery-order | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-10.2-002 | storage-delivery-order | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-10.2-003 | transport-direction-observation-and-delivery | python-response-history-3e4e215 | stale |
 | RK-10.2-003 | transport-direction-observation-and-delivery | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-10.2-003 | transport-direction-observation-and-delivery | python-lifecycle-final-corpus-ecac963-memory | stale |
@@ -2100,6 +2158,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.2-003 | transport-direction-observation-and-delivery | python-current-input-0c0a1aa-memory | stale |
 | RK-10.2-003 | transport-direction-observation-and-delivery | python-turn-compaction-d3502c7-memory | stale |
 | RK-10.2-003 | transport-direction-observation-and-delivery | python-hook-input-83ad908-memory | stale |
+| RK-10.2-003 | transport-direction-observation-and-delivery | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-10.2-003 | storage-delivery-targets | python-permissions-ecf9bc5 | stale |
 | RK-10.2-003 | storage-delivery-targets | python-visibility-8fb44e9 | stale |
 | RK-10.2-003 | storage-delivery-targets | python-response-history-3e4e215 | stale |
@@ -2168,6 +2227,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.2-003 | storage-delivery-targets | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-10.2-003 | storage-delivery-targets | python-hook-input-83ad908-memory | stale |
 | RK-10.2-003 | storage-delivery-targets | python-hook-input-83ad908-sqlite | stale |
+| RK-10.2-003 | storage-delivery-targets | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-10.2-003 | storage-delivery-targets | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-10.2-004 | storage-delivery-context | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-10.2-004 | storage-delivery-context | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-10.2-004 | storage-delivery-context | python-indexing-final-corpus-428f285-memory | stale |
@@ -2226,6 +2287,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.2-004 | storage-delivery-context | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-10.2-004 | storage-delivery-context | python-hook-input-83ad908-memory | stale |
 | RK-10.2-004 | storage-delivery-context | python-hook-input-83ad908-sqlite | stale |
+| RK-10.2-004 | storage-delivery-context | python-hook-protection-a6e7c58-memory | recorded_pass |
+| RK-10.2-004 | storage-delivery-context | python-hook-protection-a6e7c58-sqlite | recorded_pass |
 | RK-10.3-004 | deleted-history-content-and-audit | python-response-history-3e4e215 | stale |
 | RK-10.3-004 | deleted-history-content-and-audit | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-10.3-004 | deleted-history-content-and-audit | python-lifecycle-final-corpus-ecac963-memory | stale |
@@ -2258,6 +2321,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.3-004 | deleted-history-content-and-audit | python-current-input-0c0a1aa-memory | stale |
 | RK-10.3-004 | deleted-history-content-and-audit | python-turn-compaction-d3502c7-memory | stale |
 | RK-10.3-004 | deleted-history-content-and-audit | python-hook-input-83ad908-memory | stale |
+| RK-10.3-004 | deleted-history-content-and-audit | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-10.4-001 | core-routing-inputs | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-10.4-001 | core-routing-inputs | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-10.4-001 | core-routing-inputs | python-indexing-final-corpus-428f285-memory | stale |
@@ -2317,6 +2381,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.4-001 | core-routing-inputs | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-10.4-001 | core-routing-inputs | python-hook-input-83ad908-memory | stale |
 | RK-10.4-001 | core-routing-inputs | python-hook-input-83ad908-sqlite | stale |
+| RK-10.4-001 | core-routing-inputs | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-10.4-001 | core-routing-inputs | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-10.4-002 | core-routing-selection | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-10.4-002 | core-routing-selection | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-10.4-002 | core-routing-selection | python-indexing-final-corpus-428f285-memory | stale |
@@ -2376,6 +2442,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.4-002 | core-routing-selection | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-10.4-002 | core-routing-selection | python-hook-input-83ad908-memory | stale |
 | RK-10.4-002 | core-routing-selection | python-hook-input-83ad908-sqlite | stale |
+| RK-10.4-002 | core-routing-selection | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-10.4-002 | core-routing-selection | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-10.4-003 | core-routing-admission | python-hooks-33d1f4 | stale |
 | RK-10.4-003 | core-routing-admission | python-permissions-ecf9bc5 | stale |
 | RK-10.4-003 | core-routing-admission | python-visibility-8fb44e9 | stale |
@@ -2439,6 +2507,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.4-003 | core-routing-admission | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-10.4-003 | core-routing-admission | python-hook-input-83ad908-memory | stale |
 | RK-10.4-003 | core-routing-admission | python-hook-input-83ad908-sqlite | stale |
+| RK-10.4-003 | core-routing-admission | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-10.4-003 | core-routing-admission | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-10.4-004 | storage-delivery-status | python-hooks-33d1f4 | stale |
 | RK-10.4-004 | storage-delivery-status | python-permissions-ecf9bc5 | stale |
 | RK-10.4-004 | storage-delivery-status | python-visibility-8fb44e9 | stale |
@@ -2501,6 +2571,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.4-004 | storage-delivery-status | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-10.4-004 | storage-delivery-status | python-hook-input-83ad908-memory | stale |
 | RK-10.4-004 | storage-delivery-status | python-hook-input-83ad908-sqlite | stale |
+| RK-10.4-004 | storage-delivery-status | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-10.4-004 | storage-delivery-status | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-10.4-005 | core-routing-channel-isolation | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-10.4-005 | core-routing-channel-isolation | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-10.4-005 | core-routing-channel-isolation | python-indexing-final-corpus-428f285-memory | stale |
@@ -2560,6 +2632,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.4-005 | core-routing-channel-isolation | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-10.4-005 | core-routing-channel-isolation | python-hook-input-83ad908-memory | stale |
 | RK-10.4-005 | core-routing-channel-isolation | python-hook-input-83ad908-sqlite | stale |
+| RK-10.4-005 | core-routing-channel-isolation | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-10.4-005 | core-routing-channel-isolation | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-10.4-006 | core-routing-ambiguity | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-10.4-006 | core-routing-ambiguity | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-10.4-006 | core-routing-ambiguity | python-indexing-final-corpus-428f285-memory | stale |
@@ -2619,6 +2693,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.4-006 | core-routing-ambiguity | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-10.4-006 | core-routing-ambiguity | python-hook-input-83ad908-memory | stale |
 | RK-10.4-006 | core-routing-ambiguity | python-hook-input-83ad908-sqlite | stale |
+| RK-10.4-006 | core-routing-ambiguity | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-10.4-006 | core-routing-ambiguity | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-10.4-007 | core-routing-determinism | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-10.4-007 | core-routing-determinism | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-10.4-007 | core-routing-determinism | python-indexing-final-corpus-428f285-memory | stale |
@@ -2678,6 +2754,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.4-007 | core-routing-determinism | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-10.4-007 | core-routing-determinism | python-hook-input-83ad908-memory | stale |
 | RK-10.4-007 | core-routing-determinism | python-hook-input-83ad908-sqlite | stale |
+| RK-10.4-007 | core-routing-determinism | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-10.4-007 | core-routing-determinism | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-12.10.4-005 | core-shutdown-admission | python-core-close-final-corpus-e89dc28-memory | stale |
 | RK-12.10.4-005 | core-shutdown-admission | python-core-close-final-corpus-e89dc28-sqlite | stale |
 | RK-12.10.4-005 | core-shutdown-admission | python-core-lanes-final-corpus-89dae1b-memory | stale |
@@ -2728,6 +2806,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-12.10.4-005 | core-shutdown-admission | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-12.10.4-005 | core-shutdown-admission | python-hook-input-83ad908-memory | stale |
 | RK-12.10.4-005 | core-shutdown-admission | python-hook-input-83ad908-sqlite | stale |
+| RK-12.10.4-005 | core-shutdown-admission | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-12.10.4-005 | core-shutdown-admission | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-12.10.4-005 | core-shutdown-boundaries | python-core-shutdown-boundaries-0aa9b53-memory | stale |
 | RK-12.10.4-005 | core-shutdown-boundaries | python-core-shutdown-boundaries-0aa9b53-sqlite | stale |
 | RK-12.10.4-005 | core-shutdown-boundaries | python-core-shutdown-answers-a7fac2f-memory | stale |
@@ -2768,6 +2848,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-12.10.4-005 | core-shutdown-boundaries | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-12.10.4-005 | core-shutdown-boundaries | python-hook-input-83ad908-memory | stale |
 | RK-12.10.4-005 | core-shutdown-boundaries | python-hook-input-83ad908-sqlite | stale |
+| RK-12.10.4-005 | core-shutdown-boundaries | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-12.10.4-005 | core-shutdown-boundaries | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-12.10.4-005 | core-shutdown-answers | python-core-shutdown-answers-a7fac2f-memory | stale |
 | RK-12.10.4-005 | core-shutdown-answers | python-core-shutdown-answers-a7fac2f-sqlite | stale |
 | RK-12.10.4-005 | core-shutdown-answers | python-task-names-1280f23-memory | stale |
@@ -2806,6 +2888,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-12.10.4-005 | core-shutdown-answers | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-12.10.4-005 | core-shutdown-answers | python-hook-input-83ad908-memory | stale |
 | RK-12.10.4-005 | core-shutdown-answers | python-hook-input-83ad908-sqlite | stale |
+| RK-12.10.4-005 | core-shutdown-answers | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-12.10.4-005 | core-shutdown-answers | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-12.10.4-005 | discussion-regeneration-close-boundaries | python-discussion-regeneration-19665b9-memory | stale |
 | RK-12.10.4-005 | discussion-regeneration-close-boundaries | python-discussion-context-b9c94b7-memory | stale |
 | RK-12.10.4-005 | discussion-regeneration-close-boundaries | python-deferred-memory-f252c9d-memory | stale |
@@ -2813,6 +2897,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-12.10.4-005 | discussion-regeneration-close-boundaries | python-current-input-0c0a1aa-memory | stale |
 | RK-12.10.4-005 | discussion-regeneration-close-boundaries | python-turn-compaction-d3502c7-memory | stale |
 | RK-12.10.4-005 | discussion-regeneration-close-boundaries | python-hook-input-83ad908-memory | stale |
+| RK-12.10.4-005 | discussion-regeneration-close-boundaries | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-13.4-001 | core-event-idempotency | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-13.4-001 | core-event-idempotency | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-13.4-001 | core-event-idempotency | python-indexing-final-corpus-428f285-memory | stale |
@@ -2873,6 +2958,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-13.4-001 | core-event-idempotency | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-13.4-001 | core-event-idempotency | python-hook-input-83ad908-memory | stale |
 | RK-13.4-001 | core-event-idempotency | python-hook-input-83ad908-sqlite | stale |
+| RK-13.4-001 | core-event-idempotency | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-13.4-001 | core-event-idempotency | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-13.5-003 | discussion-regeneration-release-errors | python-discussion-regeneration-19665b9-memory | stale |
 | RK-13.5-003 | discussion-regeneration-release-errors | python-discussion-context-b9c94b7-memory | stale |
 | RK-13.5-003 | discussion-regeneration-release-errors | python-deferred-memory-f252c9d-memory | stale |
@@ -2880,6 +2967,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-13.5-003 | discussion-regeneration-release-errors | python-current-input-0c0a1aa-memory | stale |
 | RK-13.5-003 | discussion-regeneration-release-errors | python-turn-compaction-d3502c7-memory | stale |
 | RK-13.5-003 | discussion-regeneration-release-errors | python-hook-input-83ad908-memory | stale |
+| RK-13.5-003 | discussion-regeneration-release-errors | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-13.6-001 | reentrancy-parser-deadline | python-reentrancy-final-corpus-9b44d51-memory | stale |
 | RK-13.6-001 | reentrancy-parser-deadline | python-core-close-final-corpus-e89dc28-memory | stale |
 | RK-13.6-001 | reentrancy-parser-deadline | python-core-lanes-final-corpus-89dae1b-memory | stale |
@@ -2906,6 +2994,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-13.6-001 | reentrancy-parser-deadline | python-current-input-0c0a1aa-memory | stale |
 | RK-13.6-001 | reentrancy-parser-deadline | python-turn-compaction-d3502c7-memory | stale |
 | RK-13.6-001 | reentrancy-parser-deadline | python-hook-input-83ad908-memory | stale |
+| RK-13.6-001 | reentrancy-parser-deadline | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-14.1-002 | storage-delivery-timeline | python-room-lifecycle-completion-3bb0274-memory | stale |
 | RK-14.1-002 | storage-delivery-timeline | python-room-lifecycle-completion-3bb0274-sqlite | stale |
 | RK-14.1-002 | storage-delivery-timeline | python-lifecycle-final-corpus-746d6bd-memory | stale |
@@ -2970,6 +3059,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-14.1-002 | storage-delivery-timeline | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-14.1-002 | storage-delivery-timeline | python-hook-input-83ad908-memory | stale |
 | RK-14.1-002 | storage-delivery-timeline | python-hook-input-83ad908-sqlite | stale |
+| RK-14.1-002 | storage-delivery-timeline | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-14.1-002 | storage-delivery-timeline | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-14.3-001 | core-event-commit-boundaries | python-hook-injections-a6daaf1 | stale |
 | RK-14.3-001 | core-event-commit-boundaries | python-injection-obligations-d8cc647 | stale |
 | RK-14.3-001 | core-event-commit-boundaries | python-room-lifecycle-a29102c | stale |
@@ -3037,6 +3128,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-14.3-001 | core-event-commit-boundaries | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-14.3-001 | core-event-commit-boundaries | python-hook-input-83ad908-memory | stale |
 | RK-14.3-001 | core-event-commit-boundaries | python-hook-input-83ad908-sqlite | stale |
+| RK-14.3-001 | core-event-commit-boundaries | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-14.3-001 | core-event-commit-boundaries | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-14.3-001 | storage-delivery-results-record | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-14.3-001 | storage-delivery-results-record | python-lifecycle-final-corpus-746d6bd-sqlite | stale |
 | RK-14.3-001 | storage-delivery-results-record | python-lifecycle-final-corpus-ecac963-memory | stale |
@@ -3099,6 +3192,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-14.3-001 | storage-delivery-results-record | python-turn-compaction-d3502c7-sqlite | stale |
 | RK-14.3-001 | storage-delivery-results-record | python-hook-input-83ad908-memory | stale |
 | RK-14.3-001 | storage-delivery-results-record | python-hook-input-83ad908-sqlite | stale |
+| RK-14.3-001 | storage-delivery-results-record | python-hook-protection-a6e7c58-memory | incomplete |
+| RK-14.3-001 | storage-delivery-results-record | python-hook-protection-a6e7c58-sqlite | incomplete |
 | RK-19.7-002 | strategy-room-isolation | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-19.7-002 | strategy-room-isolation | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-19.7-002 | strategy-room-isolation | python-indexing-final-corpus-428f285-memory | stale |
@@ -3130,6 +3225,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-19.7-002 | strategy-room-isolation | python-current-input-0c0a1aa-memory | stale |
 | RK-19.7-002 | strategy-room-isolation | python-turn-compaction-d3502c7-memory | stale |
 | RK-19.7-002 | strategy-room-isolation | python-hook-input-83ad908-memory | stale |
+| RK-19.7-002 | strategy-room-isolation | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-19.7-004 | strategy-installation-and-cleanup | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-19.7-004 | strategy-installation-and-cleanup | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-19.7-004 | strategy-installation-and-cleanup | python-indexing-final-corpus-428f285-memory | stale |
@@ -3161,6 +3257,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-19.7-004 | strategy-installation-and-cleanup | python-current-input-0c0a1aa-memory | stale |
 | RK-19.7-004 | strategy-installation-and-cleanup | python-turn-compaction-d3502c7-memory | stale |
 | RK-19.7-004 | strategy-installation-and-cleanup | python-hook-input-83ad908-memory | stale |
+| RK-19.7-004 | strategy-installation-and-cleanup | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-19.7.3-001 | phase4-supervisor-handback-model-content | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-19.7.3-001 | phase4-supervisor-handback-model-content | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-19.7.3-001 | phase4-supervisor-handback-model-content | python-indexing-final-corpus-428f285-memory | stale |
@@ -3192,6 +3289,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-19.7.3-001 | phase4-supervisor-handback-model-content | python-current-input-0c0a1aa-memory | stale |
 | RK-19.7.3-001 | phase4-supervisor-handback-model-content | python-turn-compaction-d3502c7-memory | stale |
 | RK-19.7.3-001 | phase4-supervisor-handback-model-content | python-hook-input-83ad908-memory | stale |
+| RK-19.7.3-001 | phase4-supervisor-handback-model-content | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-19.7.5-002 | discussion-instruction-boundaries | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-19.7.5-002 | discussion-instruction-boundaries | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-19.7.5-002 | discussion-instruction-boundaries | python-indexing-final-corpus-428f285-memory | stale |
@@ -3223,6 +3321,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-19.7.5-002 | discussion-instruction-boundaries | python-current-input-0c0a1aa-memory | stale |
 | RK-19.7.5-002 | discussion-instruction-boundaries | python-turn-compaction-d3502c7-memory | stale |
 | RK-19.7.5-002 | discussion-instruction-boundaries | python-hook-input-83ad908-memory | stale |
+| RK-19.7.5-002 | discussion-instruction-boundaries | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-19.7.5-002 | discussion-regeneration-turns | python-discussion-regeneration-19665b9-memory | stale |
 | RK-19.7.5-002 | discussion-regeneration-turns | python-discussion-context-b9c94b7-memory | stale |
 | RK-19.7.5-002 | discussion-regeneration-turns | python-deferred-memory-f252c9d-memory | stale |
@@ -3230,6 +3329,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-19.7.5-002 | discussion-regeneration-turns | python-current-input-0c0a1aa-memory | stale |
 | RK-19.7.5-002 | discussion-regeneration-turns | python-turn-compaction-d3502c7-memory | stale |
 | RK-19.7.5-002 | discussion-regeneration-turns | python-hook-input-83ad908-memory | stale |
+| RK-19.7.5-002 | discussion-regeneration-turns | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-19.7.5-002 | discussion-turn-context | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-19.7.5-002 | discussion-turn-context | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-19.7.5-002 | discussion-turn-context | python-indexing-final-corpus-428f285-memory | stale |
@@ -3261,20 +3361,25 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-19.7.5-002 | discussion-turn-context | python-current-input-0c0a1aa-memory | stale |
 | RK-19.7.5-002 | discussion-turn-context | python-turn-compaction-d3502c7-memory | stale |
 | RK-19.7.5-002 | discussion-turn-context | python-hook-input-83ad908-memory | stale |
+| RK-19.7.5-002 | discussion-turn-context | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-20.1-001 | deferred-turn-memory-retrieval | python-deferred-memory-f252c9d-memory | stale |
 | RK-20.1-001 | deferred-turn-memory-retrieval | python-current-input-a58b373-memory | stale |
 | RK-20.1-001 | deferred-turn-memory-retrieval | python-current-input-0c0a1aa-memory | stale |
 | RK-20.1-001 | deferred-turn-memory-retrieval | python-turn-compaction-d3502c7-memory | stale |
 | RK-20.1-001 | deferred-turn-memory-retrieval | python-hook-input-83ad908-memory | stale |
+| RK-20.1-001 | deferred-turn-memory-retrieval | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-20.1-001 | custom-memory-current-input | python-current-input-a58b373-memory | stale |
 | RK-20.1-001 | custom-memory-current-input | python-current-input-0c0a1aa-memory | stale |
 | RK-20.1-001 | custom-memory-current-input | python-turn-compaction-d3502c7-memory | stale |
 | RK-20.1-001 | custom-memory-current-input | python-hook-input-83ad908-memory | stale |
+| RK-20.1-001 | custom-memory-current-input | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-20.1-001 | deferred-turn-memory-compaction | python-turn-compaction-d3502c7-memory | stale |
 | RK-20.1-001 | deferred-turn-memory-compaction | python-hook-input-83ad908-memory | stale |
+| RK-20.1-001 | deferred-turn-memory-compaction | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-20.3-007 | discussion-notes-memory-footprint | python-current-input-0c0a1aa-memory | stale |
 | RK-20.3-007 | discussion-notes-memory-footprint | python-turn-compaction-d3502c7-memory | stale |
 | RK-20.3-007 | discussion-notes-memory-footprint | python-hook-input-83ad908-memory | stale |
+| RK-20.3-007 | discussion-notes-memory-footprint | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-21.1-005 | strategy-tool-install-integrity | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-21.1-005 | strategy-tool-install-integrity | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-21.1-005 | strategy-tool-install-integrity | python-indexing-final-corpus-428f285-memory | stale |
@@ -3306,6 +3411,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-21.1-005 | strategy-tool-install-integrity | python-current-input-0c0a1aa-memory | stale |
 | RK-21.1-005 | strategy-tool-install-integrity | python-turn-compaction-d3502c7-memory | stale |
 | RK-21.1-005 | strategy-tool-install-integrity | python-hook-input-83ad908-memory | stale |
+| RK-21.1-005 | strategy-tool-install-integrity | python-hook-protection-a6e7c58-memory | incomplete |
 | RK-21.4-001 | phase4-background-turn-context | python-task-options-25d0695-memory | stale |
 | RK-21.4-001 | phase4-background-turn-context | python-task-outcomes-16baeaa-memory | stale |
 | RK-21.4-001 | phase4-background-turn-context | python-task-timeout-70d2850-memory | stale |
@@ -3323,6 +3429,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-21.4-001 | phase4-background-turn-context | python-current-input-0c0a1aa-memory | stale |
 | RK-21.4-001 | phase4-background-turn-context | python-turn-compaction-d3502c7-memory | stale |
 | RK-21.4-001 | phase4-background-turn-context | python-hook-input-83ad908-memory | stale |
+| RK-21.4-001 | phase4-background-turn-context | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-23.3-001 | phase4-failed-task-end-surfaces | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-23.3-001 | phase4-failed-task-end-surfaces | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-23.3-001 | phase4-failed-task-end-surfaces | python-indexing-final-corpus-428f285-memory | stale |
@@ -3354,6 +3461,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-23.3-001 | phase4-failed-task-end-surfaces | python-current-input-0c0a1aa-memory | stale |
 | RK-23.3-001 | phase4-failed-task-end-surfaces | python-turn-compaction-d3502c7-memory | stale |
 | RK-23.3-001 | phase4-failed-task-end-surfaces | python-hook-input-83ad908-memory | stale |
+| RK-23.3-001 | phase4-failed-task-end-surfaces | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-23.3-001 | phase4-task-handback-model-content | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-23.3-001 | phase4-task-handback-model-content | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-23.3-001 | phase4-task-handback-model-content | python-indexing-final-corpus-428f285-memory | stale |
@@ -3385,6 +3493,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-23.3-001 | phase4-task-handback-model-content | python-current-input-0c0a1aa-memory | stale |
 | RK-23.3-001 | phase4-task-handback-model-content | python-turn-compaction-d3502c7-memory | stale |
 | RK-23.3-001 | phase4-task-handback-model-content | python-hook-input-83ad908-memory | stale |
+| RK-23.3-001 | phase4-task-handback-model-content | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-23.4-001 | phase4-task-discussion-names | python-task-names-1280f23-memory | stale |
 | RK-23.4-001 | phase4-task-discussion-names | python-task-options-25d0695-memory | stale |
 | RK-23.4-001 | phase4-task-discussion-names | python-task-outcomes-16baeaa-memory | stale |
@@ -3403,6 +3512,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-23.4-001 | phase4-task-discussion-names | python-current-input-0c0a1aa-memory | stale |
 | RK-23.4-001 | phase4-task-discussion-names | python-turn-compaction-d3502c7-memory | stale |
 | RK-23.4-001 | phase4-task-discussion-names | python-hook-input-83ad908-memory | stale |
+| RK-23.4-001 | phase4-task-discussion-names | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-23.4-001 | phase4-background-task-options | python-task-options-25d0695-memory | stale |
 | RK-23.4-001 | phase4-background-task-options | python-task-outcomes-16baeaa-memory | stale |
 | RK-23.4-001 | phase4-background-task-options | python-task-timeout-70d2850-memory | stale |
@@ -3420,6 +3530,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-23.4-001 | phase4-background-task-options | python-current-input-0c0a1aa-memory | stale |
 | RK-23.4-001 | phase4-background-task-options | python-turn-compaction-d3502c7-memory | stale |
 | RK-23.4-001 | phase4-background-task-options | python-hook-input-83ad908-memory | stale |
+| RK-23.4-001 | phase4-background-task-options | python-hook-protection-a6e7c58-memory | recorded_pass |
 | RK-23.5-001 | phase4-failed-task-completion-hooks | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-23.5-001 | phase4-failed-task-completion-hooks | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-23.5-001 | phase4-failed-task-completion-hooks | python-indexing-final-corpus-428f285-memory | stale |
@@ -3451,3 +3562,4 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-23.5-001 | phase4-failed-task-completion-hooks | python-current-input-0c0a1aa-memory | stale |
 | RK-23.5-001 | phase4-failed-task-completion-hooks | python-turn-compaction-d3502c7-memory | stale |
 | RK-23.5-001 | phase4-failed-task-completion-hooks | python-hook-input-83ad908-memory | stale |
+| RK-23.5-001 | phase4-failed-task-completion-hooks | python-hook-protection-a6e7c58-memory | recorded_pass |
