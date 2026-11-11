@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "76452ec40025c7b5a4fd42216c7b3e1a5e74f3b1b9ed0223ca37a72840bafb39",
-  "corpus_sha256": "7c3c4c3de70bcc234414b058fe5d21942b01f1aa17a9b574cd89878fbbae7545",
+  "corpus_sha256": "9b5d769e09e6da5e0efa853c18e203be8db34f21574d00edd641cd8d0489a947",
   "python_commit": "a6e7c58801056fd2447ff1847f76ca83c945ad42",
-  "scenario_count": 1874,
+  "scenario_count": 1890,
   "sections": [
     {
       "section": "0",
@@ -716,8 +716,8 @@
       "review": "normative",
       "requirements": 43,
       "mapping": {
-        "mapped_partial": 3,
-        "unmapped": 40
+        "mapped_partial": 4,
+        "unmapped": 39
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -1014,6 +1014,22 @@
         "tasks/one-agent-s-failure-in-a-delegated-room-never-carries-another-s-end",
         "tasks/the-repeat-guard-holds-on-delegate-task",
         "tasks/the-repeat-guard-holds-on-delegate-task-without-streaming",
+        "tool-composition/binding-scope-withholds-composition",
+        "tool-composition/cancel-before-execution-keeps-the-terminal-frame",
+        "tool-composition/complete-calls-without-fragments-publish-no-composition",
+        "tool-composition/empty-opening-still-closes-composition",
+        "tool-composition/fallback-failure-closes-composition",
+        "tool-composition/fallback-starts-a-fresh-composition",
+        "tool-composition/first-fragment-bypasses-the-window",
+        "tool-composition/fragments-publish-counts-before-execution",
+        "tool-composition/interleaved-slots-keep-their-order-and-late-ids",
+        "tool-composition/provider-failure-closes-composition",
+        "tool-composition/refused-call-keeps-composition-closed",
+        "tool-composition/retry-starts-a-fresh-composition",
+        "tool-composition/round-cap-closes-unexecuted-composition",
+        "tool-composition/size-window-batches-the-following-fragments",
+        "tool-composition/trigger-scope-withholds-composition",
+        "tool-composition/unicode-fragments-count-characters",
         "tool-search/a-binding-tool-s-tags-are-searched",
         "tool-search/a-binding-tool-under-a-discovery-name-yields-to-the-channel-s",
         "tool-search/a-blocked-search-reveals-nothing-this-turn-or-the-next",
@@ -1782,6 +1798,22 @@
         "streaming/a-narrowed-binding-s-turn-publishes-no-reasoning",
         "streaming/a-read-only-binding-s-turn-publishes-no-reasoning",
         "streaming/a-scoped-trigger-s-turn-publishes-no-reasoning",
+        "tool-composition/binding-scope-withholds-composition",
+        "tool-composition/cancel-before-execution-keeps-the-terminal-frame",
+        "tool-composition/complete-calls-without-fragments-publish-no-composition",
+        "tool-composition/empty-opening-still-closes-composition",
+        "tool-composition/fallback-failure-closes-composition",
+        "tool-composition/fallback-starts-a-fresh-composition",
+        "tool-composition/first-fragment-bypasses-the-window",
+        "tool-composition/fragments-publish-counts-before-execution",
+        "tool-composition/interleaved-slots-keep-their-order-and-late-ids",
+        "tool-composition/provider-failure-closes-composition",
+        "tool-composition/refused-call-keeps-composition-closed",
+        "tool-composition/retry-starts-a-fresh-composition",
+        "tool-composition/round-cap-closes-unexecuted-composition",
+        "tool-composition/size-window-batches-the-following-fragments",
+        "tool-composition/trigger-scope-withholds-composition",
+        "tool-composition/unicode-fragments-count-characters",
         "tools/a-call-s-result-is-previewed-on-the-realtime-in-500-characters",
         "tools/a-call-that-returns-once-its-turn-is-cut-ends-aborted",
         "tools/a-failed-call-ends-failed-on-the-room-s-realtime",
@@ -11509,8 +11541,20 @@
     {
       "id": "RK-6.4-006",
       "section": "6.4",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "tool-composition-local-events",
+          "scope": "Local tool-call composition: cumulative character counts, slot identity and order, size coalescing, terminal frames, retry/fallback isolation, visibility and absence of partial call persistence.",
+          "coverage": "partial",
+          "missing": [
+            "Provider wire parsing, distributed executors and publication failures are not established by these scenarios.",
+            "Wall-clock coalescing and forced consumer abandonment require specialized tests.",
+            "The rest of this broad clause, including all stored tool outcome combinations, remains outside this link."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-6.4-007",
