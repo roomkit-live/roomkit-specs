@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "6fd320970f91f5b66138cf989ac5fe7636587d7eded12d569dd71f52221d7e85",
-  "corpus_sha256": "807e707cd747a18e8164bc7d3d66df58dce9b55725bacd4cbbc66991b2ceeff5",
+  "corpus_sha256": "da0ab531e5bb0b0e41bef740830462ca9c7e788dc3eacd8927ac18c6e36295c3",
   "python_commit": "0c0a1aaebafc690c8ee7cc21909afb956ae5ac9a",
-  "scenario_count": 1858,
+  "scenario_count": 1862,
   "sections": [
     {
       "section": "0",
@@ -716,7 +716,8 @@
       "review": "normative",
       "requirements": 42,
       "mapping": {
-        "unmapped": 42
+        "mapped_partial": 2,
+        "unmapped": 40
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -828,9 +829,13 @@
         "memory/a-compacting-memory-summarizes-what-it-trims",
         "memory/a-compaction-between-rounds-stores-the-earlier-rounds-long-results",
         "memory/a-deferred-memory-reserves-discussion-notes",
+        "memory/a-deferred-turn-compacts-only-the-history-before-its-input",
+        "memory/a-deferred-turn-keeps-compacting-after-an-overflow",
+        "memory/a-deferred-turn-keeps-its-input-through-two-overflows",
         "memory/a-memory-compacts-the-history-between-two-tool-rounds",
         "memory/a-memory-s-notes-follow-the-turn-s-input",
         "memory/a-memory-s-user-text-joins-the-turn-after-it",
+        "memory/a-memory-summary-keeps-the-deferred-compaction-boundary",
         "memory/a-memory-that-fails-to-compact-leaves-the-turn-as-it-was",
         "memory/a-person-named-like-an-agent-s-label-reads-as-a-participant-in-a-summary-line",
         "memory/a-queued-turn-keeps-its-question-out-of-compaction",
@@ -5718,6 +5723,10 @@
         "discussion/with-addressed-only-an-unaddressed-message-asks-no-agent",
         "memory/a-compacting-memory-never-summarizes-a-returned-current-input",
         "memory/a-deferred-memory-reserves-discussion-notes",
+        "memory/a-deferred-turn-compacts-only-the-history-before-its-input",
+        "memory/a-deferred-turn-keeps-compacting-after-an-overflow",
+        "memory/a-deferred-turn-keeps-its-input-through-two-overflows",
+        "memory/a-memory-summary-keeps-the-deferred-compaction-boundary",
         "memory/a-queued-turn-keeps-its-question-out-of-compaction",
         "memory/a-queued-turn-keeps-its-question-out-of-the-summary",
         "memory/a-queued-turn-keeps-its-question-outside-the-window",
@@ -5793,7 +5802,11 @@
         "memory/a-compacting-memory-never-summarizes-a-returned-current-input",
         "memory/a-compaction-between-rounds-stores-the-earlier-rounds-long-results",
         "memory/a-deferred-memory-reserves-discussion-notes",
+        "memory/a-deferred-turn-compacts-only-the-history-before-its-input",
+        "memory/a-deferred-turn-keeps-compacting-after-an-overflow",
+        "memory/a-deferred-turn-keeps-its-input-through-two-overflows",
         "memory/a-memory-compacts-the-history-between-two-tool-rounds",
+        "memory/a-memory-summary-keeps-the-deferred-compaction-boundary",
         "memory/a-memory-that-fails-to-compact-leaves-the-turn-as-it-was",
         "memory/a-queued-turn-keeps-its-question-out-of-compaction",
         "memory/a-queued-turn-keeps-its-question-out-of-the-summary",
@@ -5844,6 +5857,10 @@
         "memory/a-compacting-memory-never-summarizes-a-returned-current-input",
         "memory/a-compacting-memory-summarizes-what-it-trims",
         "memory/a-deferred-memory-reserves-discussion-notes",
+        "memory/a-deferred-turn-compacts-only-the-history-before-its-input",
+        "memory/a-deferred-turn-keeps-compacting-after-an-overflow",
+        "memory/a-deferred-turn-keeps-its-input-through-two-overflows",
+        "memory/a-memory-summary-keeps-the-deferred-compaction-boundary",
         "memory/a-person-named-like-an-agent-s-label-reads-as-a-participant-in-a-summary-line",
         "memory/a-queued-turn-keeps-its-question-out-of-compaction",
         "memory/a-queued-turn-keeps-its-question-out-of-the-summary",
@@ -11204,14 +11221,36 @@
     {
       "id": "RK-6.4-022",
       "section": "6.4",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "deferred-turn-emergency-compaction",
+          "scope": "A deferred turn's long answered input stays whole through one or two context overflows; later rounds build on the compacted request, keep call/result pairs and store the first long result while retaining recent results.",
+          "coverage": "partial",
+          "missing": [
+            "Arbitrary BEFORE_AI_GENERATION replacements that erase or move the answered message have no stable source identity in this fixture (remaining RMK-1576 scope).",
+            "Other memory providers, external agents and distributed recovery remain outside these cases."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-6.4-023",
       "section": "6.4",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "deferred-turn-between-round-compaction",
+          "scope": "A real Discussion delays a turn while later messages arrive. Between tool rounds, compact receives only the history before the answered input; a returned summary preserves that input, the later messages, runtime notes and tool pairs, even after an emergency or initial-memory summary.",
+          "coverage": "partial",
+          "missing": [
+            "Arbitrary BEFORE_AI_GENERATION replacements that erase or move the answered message have no stable source identity in this fixture (remaining RMK-1576 scope).",
+            "Other memory providers, external agents and distributed recovery remain outside these cases."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-6.4-042",
@@ -33342,6 +33381,16 @@
               "state": "stale"
             }
           ]
+        },
+        {
+          "id": "deferred-turn-memory-compaction",
+          "scope": "MemoryProvider.compact receives the model's history before the answered event and the exact generation usage after each tool round of a deferred Discussion turn.",
+          "coverage": "partial",
+          "missing": [
+            "Arbitrary BEFORE_AI_GENERATION replacements that erase or move the answered message have no stable source identity in this fixture (remaining RMK-1576 scope).",
+            "Other memory providers, external agents and distributed recovery remain outside these cases."
+          ],
+          "executions": []
         }
       ]
     },
