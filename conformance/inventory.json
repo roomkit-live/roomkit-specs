@@ -477,9 +477,9 @@
     },
     {
       "section": "10.6.8",
-      "sha256": "23140ed3e40fb3333fd34e0c96122ae2763a5baae6c0569e62aafed12bda9d06",
+      "sha256": "e6434e80fc0c6b1a0c36d7e6e751fca89ebd7cf54f4fae9ec0c31160ab8179f0",
       "classification": "normative",
-      "review": "Source inventory: Liveness, cancellation and errors. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Liveness, cancellation and errors. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Re-read after adding RK-10.6.8-005: independent executor closure distinguishes turn ancestry, per-call exemptions, later owner cancellation and a later external close. Its new evidence links remain partial; remote executors and owned channel factories are not certified by the local scenarios."
     },
     {
       "section": "10.6.9",
