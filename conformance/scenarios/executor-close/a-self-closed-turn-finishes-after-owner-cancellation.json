@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "executor-close/a-self-closed-turn-finishes-after-owner-cancellation",
-  "title": "A turn spared by its own executor close can finish after its owner cancelled the delivery",
+  "title": "A turn spared by its own executor close continues after its owner cancelled the delivery",
   "rules": [
     "§10.6.7",
     "§10.6.8"
@@ -20,7 +20,8 @@
         "model": {
           "rounds": [
             {
-              "text": "answer"
+              "text": "answer",
+              "gate": "model-entered"
             }
           ]
         }
@@ -130,6 +131,12 @@
     },
     {
       "open": "closed-inside"
+    },
+    {
+      "wait_for": "model-entered"
+    },
+    {
+      "open": "model-entered"
     },
     {
       "idle": true
