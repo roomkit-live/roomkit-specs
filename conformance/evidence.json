@@ -14303,15 +14303,15 @@
         {
           "scenario": "discussion/a-turn-replays-its-round-with-no-later-message",
           "pointer": "/expect",
-          "sha256": "ec73961f2819149643c876a17a622e09a7cb428924bcb67b6741b71ae1eda932",
-          "scenario_sha256": "9b9657949bcf9eef36e0952bdddaf65345db40c26eddf23a0a37900179da98d8",
+          "sha256": "f8e862e34539cf6d5bd069cada8a35198429d30ab87b87be2bde79a08112404c",
+          "scenario_sha256": "4896c0f145b795226ebb211f9bb5713d5dccc340767ffbcad48fbfc76ad7be89",
           "proves": "The regenerated request reads user, assistant, tool, user; its first text is the answered input, its last contains the regeneration note and its only tool result is the saved result. The timeline is exactly the input and tool start/end, with no answer message."
         },
         {
           "scenario": "discussion/a-turn-keeps-its-round-before-later-messages",
           "pointer": "/expect",
-          "sha256": "2ff0778b2a4088d8a57d2747468291142afd074e60743d29e9e73f19e8dd2222",
-          "scenario_sha256": "446fa70f22e026d5a0da37f3a388ecc938baa525b2d40a1cffd50d8ce989f5ee",
+          "sha256": "f637aaa5d1db1eaecde784957c2b71b7b467e05e76033036acae5909fa61cc8a",
+          "scenario_sha256": "ded0a00f6b75ab8bd5c06537977a627d3fc4f045a724a9113fcad732b17bfdf8",
           "proves": "The regenerated request reads user, assistant, tool, assistant, user, placing the saved call/result before the previous answer and later inbound message. The last message includes the regeneration note; the timeline contains the specified input, tool rows, previous answer and later input."
         },
         {
