@@ -8510,9 +8510,13 @@ per-room state, or its build:
 | `channel_released` | The channel's build is stale (its host changed what it is built from): an executor holding a build lets it go, answered by nothing |
 | `channel_call` | A per-room verb of the channel, answered by `channel_result` (an ACP session's `set_config_option` or `close_session`, §6.4); an implementation documents each channel's set. It carries its `call_id`, its channel and room, the verb and its arguments, what the room keeps for the channel as the owner stores it (§10.6.2), and `previous_turn`; a later request's `previous_turn` names the call by its `call_id`. Cutting a running turn is never a channel call: it is the turn's `cancel` or `steer` |
 
-`room_attached` and `room_detached` reach every executor that may run the
-channel's turns: the owner's own executor alone for a channel the owner holds
-live (§10.6.7); every executor that declares the channel otherwise. They
+`room_attached`, `room_detached`, `committed_event` and `channel_call` carry
+the room's organization (§17.2), null for a room without one; a turn's
+request carries it in its context's room. `room_attached` and
+`room_detached` reach every executor that may run the channel's turns: the
+owner's own executor alone for a channel the owner holds live (§10.6.7);
+every executor that declares the channel and serves the room's organization
+otherwise. They
 need no result: an executor holding a build of the channel applies them as
 the channel's own attach and detach would for a channel the kit holds, and
 logs what the channel raises; one holding no build has nothing to apply and
@@ -8527,7 +8531,9 @@ executor that missed the message still discards the room's state at its next
 turn (§10.6.2), and the owner forgets what the room kept for the channel,
 even when the message could not be sent.
 
-`channel_released` reaches the same executors. One that built the channel
+`channel_released`, the channel's in all its rooms, reaches every executor
+that declares the channel, whatever organizations it serves, or the owner's
+own alone for a channel the owner holds live. One that built the channel
 lets the build go: the next turn, channel call or committed event of the
 channel builds it anew, and the build let go is closed once the turns running
 on it, or still getting it, end, which it never cuts for this. One that holds
@@ -8539,8 +8545,8 @@ that id.
 
 A `committed_event` reaches one executor: the owner's own for a channel the
 owner holds live (§10.6.7), else the one that holds the room's state for the
-channel, else one that would take the room's turns (the room's hooks it
-carries included, §10.6.6). It never makes that executor
+channel, else one that would take the room's turns (the room's hooks and
+organization it carries included, §10.6.6, §10.6.7). It never makes that executor
 the holder: it leaves the room's state as it is and names no
 previous turn. The executor hands the event to the channel (an AI channel's
 memory, §20), logs what the channel raises, and applies it before any later
@@ -8550,7 +8556,8 @@ dropped and logged by the owner.
 A `channel_call` is made for a channel attached to the room, in the room's
 organization (§17.2). It reaches one executor: the owner's own for a channel
 the owner holds live (§10.6.7), else the one that holds the room's state for
-the channel, else one that declares the channel. Its
+the channel, else one that declares the channel and serves the room's
+organization. Its
 `channel_result` is that executor's: the verb's result as data or its error
 record, what the room keeps for the channel when the verb changed it, and
 the executor's id. A backend answers a call on the call's own exchange, so
@@ -8916,9 +8923,10 @@ changes a room only through `TurnHost` (§10.6.5); between turns, where
 #### 10.6.7 Placement
 
 <!-- rfc: {"id": "RK-10.6.7-001", "kind": "behavior", "applies": "§10.6.7 Placement; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
-An executor declares the channels it can host and the names of the room hooks
-it registered. The backend MUST deliver a request only to an executor that
-declares the request's channel and registered every name of its `room_hooks`;
+An executor declares the channels it can host, the organizations whose rooms
+it serves, and the names of the room hooks it registered. The backend MUST
+deliver a request only to an executor that declares the request's channel,
+serves its room's organization and registered every name of its `room_hooks`;
 a request no executor accepts within `accept_timeout` fails (§10.6.8). An
 executor declares its channels as ids and prefixes: an entry ending in `*`
 declares every channel whose id starts with what precedes it (`acme-*`), and
@@ -8928,10 +8936,25 @@ processes as they are. An executor given a predicate, or given no
 declaration at all (every channel), takes the turns of its own process only.
 A pool of executors that build an organization's agents from its
 configuration declares the organization's prefix, so an agent created after
-the pool started needs no executor told of it. A declaration names no room
-and no organization (§17.2): an executor declaring `*` takes the declared
-channels of every organization its backend's owners serve, and a host keeps
-apart what it must by the channel ids it assigns. A turn or channel call
+the pool started needs no executor told of it. An executor declares its
+organizations (§17.2) as exact ids, and `*` alone for every organization; an
+empty declaration, or an entry holding a `*` with anything else, is refused
+when the executor is built. `*` serves the rooms of every organization and
+the rooms without one; exact ids serve those organizations' rooms alone, not
+the rooms without an organization. One that declares none serves the rooms
+without an organization alone, so an executor started without a declaration
+never takes the turns of a room that has one. A room's turns, channel calls and
+committed events go only to an executor serving the room's organization, and
+one none serves fails with `no_executor`. An executor MUST refuse the work of
+a room of an organization it does not serve, whatever placed it there: a
+turn or a channel call fails with `no_executor`, and a `room_attached` or a
+`committed_event` is dropped, nothing built for it. The kit's own executor
+serves every organization; an owner given an executor of the host's as its
+own runs the channels it holds live only in the rooms that executor serves. A declaration names no room: the owner already
+ties a room to the executor holding it. Organizations keep apart the
+executors that declare them honestly; a process that reaches the backend's
+transport can declare any, so who may reach it is the host's to control
+(§10.6.9). A turn or channel call
 placed on an executor whose factory builds nothing for its channel fails with
 `no_executor`, and is not placed again (§10.6.2). That executor still holds
 the room for the channel, so the room's next turns go to it while it lives
@@ -8969,12 +8992,13 @@ channel. A channel control message is placed as §10.6.3 says.
 
 <!-- rfc: {"id": "RK-10.6.7-002", "kind": "behavior", "applies": "§10.6.7 Placement; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Which agents can answer.** A backend lists the executors it carries turns
-to, the owner's own aside: each one's id, process, declared entries, room hook
-names, last beat, and whether it is online, that is not closed and beating
+to, the owner's own aside: each one's id, process, declared entries,
+organizations, room hook names, last beat, and whether it is online, that is not closed and beating
 within `heartbeat_timeout` (§10.6.8); a closed executor is not listed, and a
 silent one stays listed, offline, until its process's entry is forgotten. An
 agent is online in a room while an executor online covers it there, declaring
-its channel and defining the room's enabled hooks; an agent the owner holds
+its channel, serving the room's organization and defining the room's enabled
+hooks; an agent the owner holds
 live, while the owner's own executor takes its turns there. The owner answers
 a room's agent presence, each agent with the executors covering it, sorted by
 channel id. It publishes an agent's presence in a room as the presence

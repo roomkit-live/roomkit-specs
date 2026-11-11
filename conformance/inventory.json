@@ -447,7 +447,7 @@
     },
     {
       "section": "10.6.3",
-      "sha256": "aebd714f8f34a370129b4ecf05aff0654d6aafe2ff9ffa24709d95327a772b6c",
+      "sha256": "e57034552c97155d340f8c4fa181e96b7da9524f2c1816503d3ef9e865995d10",
       "classification": "normative",
       "review": "Source inventory: Messages. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
@@ -471,7 +471,7 @@
     },
     {
       "section": "10.6.7",
-      "sha256": "276376a486274cab1c450596a58d3abf42af910b57e85551fc56ea9c4ad402ac",
+      "sha256": "6ac8b8bce3e722df5f13adafc0eed3061742e23f450352a58d3d9810655f2c01",
       "classification": "normative",
       "review": "Source inventory: Placement. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
