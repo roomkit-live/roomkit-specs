@@ -6,7 +6,7 @@
     "§10.6.7",
     "§10.6.8"
   ],
-  "notes": "Python: TurnExecutor._spare_turns_run_under calls ExecutorTurn.spare; a later owner cancellation lets the owner go but leaves the work running. An independent external executor close still cancels that work.",
+  "notes": "Python: TurnExecutor._spare_turns_run_under calls ExecutorTurn.spare; a later owner cancellation lets the owner go but leaves the work running. An independent external executor close still cancels that work. Continuation is observed by a transport-only call from the spared hook; no model generation is promised after owner cancellation.",
   "setup": {
     "channels": [
       {
@@ -20,8 +20,7 @@
         "model": {
           "rounds": [
             {
-              "text": "answer",
-              "gate": "model-entered"
+              "text": "answer"
             }
           ]
         }
@@ -60,6 +59,20 @@
           }
         ]
       }
+    ],
+    "hooks": [
+      {
+        "name": "continued",
+        "trigger": "before_broadcast",
+        "reactions": [
+          {
+            "when": {
+              "room_id": "transport"
+            },
+            "gate": "continued"
+          }
+        ]
+      }
     ]
   },
   "steps": [
@@ -90,7 +103,27 @@
         "priority": 10,
         "reactions": [
           {
-            "gate": "closed-inside"
+            "gate": "closed-inside",
+            "do": [
+              {
+                "call": "process_inbound",
+                "room_id": "transport",
+                "message": {
+                  "channel_id": "ws",
+                  "sender_id": "alice",
+                  "content": {
+                    "type": "text",
+                    "body": "continued"
+                  }
+                },
+                "expect": {
+                  "result": {
+                    "blocked": false,
+                    "error": null
+                  }
+                }
+              }
+            ]
           }
         ]
       }
@@ -133,10 +166,10 @@
       "open": "closed-inside"
     },
     {
-      "wait_for": "model-entered"
+      "wait_for": "continued"
     },
     {
-      "open": "model-entered"
+      "open": "continued"
     },
     {
       "idle": true
@@ -151,11 +184,14 @@
             "body": "hello"
           }
         }
-      ]
-    },
-    "models": {
-      "agent": [
-        {}
+      ],
+      "transport": [
+        {
+          "content": {
+            "type": "text",
+            "body": "continued"
+          }
+        }
       ]
     }
   }
