@@ -237,7 +237,7 @@
     },
     {
       "section": "6.4",
-      "sha256": "7e615fb06c73439efb4fa0aa81d5938bbeedf2fbc9fb5cd6959740bebdc90d14",
+      "sha256": "f4d3239db58aef62e7f5373c57517a4482aea7b8688514548572f489415312b7",
       "classification": "normative",
       "review": "Source inventory: Intelligence Channels. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
@@ -1605,7 +1605,7 @@
     },
     {
       "section": "A.9",
-      "sha256": "bce5a640de6668b726ac53ba559b5fb985fdfc5e73ce167efb74869f884fd635",
+      "sha256": "f5ee68dc86c10ebe01e64ae76289a7581c34e2fe02f307a7580610001a71369a",
       "classification": "normative",
       "review": "Source inventory: AI Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },

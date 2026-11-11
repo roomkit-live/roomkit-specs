@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "68ccdec84045727061c2cf1633be713e414a65ce2b3d2c282daed59ad0fb28e2",
-  "corpus_sha256": "43a29ee26d76fb1edbe01ac0eda874aba9f6cdfed7843f6c533948bf2e36e636",
+  "rfc_sha256": "8c53024d64053390547679a03b7b2f91ba51841b419bf8875b6308182759def2",
+  "corpus_sha256": "7e6a8621a97234b73f7f9fb74d1e06dfc12635368b357eb4915cc81bbe31b2d0",
   "python_commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
-  "scenario_count": 1834,
+  "scenario_count": 1840,
   "sections": [
     {
       "section": "0",
@@ -714,9 +714,9 @@
       "section": "6.4",
       "title": "Intelligence Channels",
       "review": "normative",
-      "requirements": 41,
+      "requirements": 42,
       "mapping": {
-        "unmapped": 41
+        "unmapped": 42
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -728,6 +728,12 @@
         "acp/an-instruction-is-prompted-under-the-runtime-s-mark",
         "acp/each-room-has-its-own-session",
         "acp/on-ai-response-reports-the-agents-answer",
+        "ai-router/a-generation-that-spoke-is-not-handed-over",
+        "ai-router/a-generation-the-router-hands-over-keeps-the-turn-s-later-rounds",
+        "ai-router/a-retry-the-router-names-no-model-for-fails-with-the-last-refusal",
+        "ai-router/before-ai-generation-names-the-model-the-router-picks",
+        "ai-router/the-router-picks-each-turn-s-model-and-its-rounds-stay-on-it",
+        "ai-router/the-turn-s-context-is-built-for-the-model-the-router-picks",
         "anthropic/a-cancel-after-revealing-reports-referenced-tools",
         "anthropic/a-denied-tool-is-not-held",
         "anthropic/a-failed-call-composition-can-be-retried",
@@ -10695,6 +10701,12 @@
     },
     {
       "id": "RK-6.4-023",
+      "section": "6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-6.4-042",
       "section": "6.4",
       "mapping": "unmapped",
       "links": []

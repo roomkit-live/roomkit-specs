@@ -2105,9 +2105,9 @@ in number, and a block without its signature), so the tool loop replays a
 round's blocks one by one, in the order and at the place they came in relative
 to the round's calls and stretches of text. A block the response cut before
 its signature is not replayed, nor is a block without one at all: that is
-another vendor's reasoning, a round a `fallback_provider` (Appendix A.9)
-receives from the primary, which the vendor refuses and the round does
-without. A vendor that refuses, in the current turn, a call without its own
+another vendor's reasoning, a round a provider a router hands a generation
+to (below) receives from the provider before it, which the vendor refuses and
+the round does without. A vendor that refuses, in the current turn, a call without its own
 signature (Gemini 3, which signs each call it makes) receives such a round of
 that turn, none of whose calls carries one, as text: what it said, each call,
 then each result with the images it carries, the one form it takes for calls
@@ -3097,12 +3097,45 @@ fails is logged, and the turn goes on as it was. This compaction answers no
 refusal: a call it precedes keeps its compacted replay.
 <!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-042", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+**A provider per turn.** A channel is given one provider, or a router
+(`router`, Appendix A.9) that picks the provider of each turn, never both and
+never neither. The channel asks its router at the turn's start, before it
+builds the turn's context (`reason` `turn`), with what the turn answers as text
+(the text of the event it answers, each media read as its label; the text of
+its last user message for a turn that answers no room event, a voice
+delegation, Section 12.4.1), that event and its room, and builds the context
+for the provider it names: whether that model sees images and its context
+window are that provider's, and, for the whole turn, whether the turn holds a
+tool unseen and the rate a cost budget prices it at (below); a tool's result is
+read as the provider that reads it can take it. A thinker's thought, whose
+context is built as for a turn (above), asks the router as a turn's start does.
+A router MUST name a provider for a turn: naming none fails the turn. Once a
+generation's retries are spent before it handed anything (below), the channel
+asks its router again (`reason` `retry`), with the same text and event, the
+provider whose retries are spent (`previous`) and its last error (`failed`);
+the provider it names, if any, takes that generation. Every later round of the
+turn MUST run on the provider that served the round before it, whose reasoning
+and calls the round replays (above) and whose prompt cache holds the turn so
+far; a provider the turn moved to that cannot hold a tool unseen receives at
+each of them the tools the turn made callable declared plainly (below).
+`BEFORE_AI_GENERATION` names the provider the turn starts on (`provider_name`),
+and the turn's record names the provider of its last generation (below). A loop
+run inside another channel's turn reads none of that turn's provider: it is
+asked of its own channel. A router is plain code; the fallback router
+(`FallbackRouter`) names its primary provider at each turn's start and, once a
+generation's provider spent its retries, the other of its two providers. With a
+router, the channel's `provider` is null and its `provider_name` is the
+router's name. A channel closes its router when it closes, and a router closes
+the providers it holds.
+<!-- /rfc -->
+
 <!-- rfc: {"id": "RK-6.4-024", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A generation tried again.** A provider's error says whether another try may
 succeed (`retryable`). A channel with a retry policy (`retry_policy`, Section
 13.2) tries a generation again only while nothing of its answer has been
 handed on: a stream that handed text, a call or its end is never read again,
-by a retry, a compacted replay or a fallback, since the room and the turn
+by a retry, a compacted replay or another provider, since the room and the turn
 already hold what it handed. Reasoning is none of its answer, nor are a call's
 fragments: a stream that showed only those before it failed is read again as one
 that handed nothing. Its reasoning is left out of the round: the channel
@@ -3116,12 +3149,14 @@ An error not worth another try fails the call at once, an overflow's
 compacted replay aside. A context
 compacted for its replay (above) is what the later tries send, and a replay
 refused again as worth another try keeps its tries. Once they are spent, at
-once without a retry policy, a channel with a `fallback_provider` asks it
-once, with the same request, and its answer is the call's; without one,
-the last error is the call's. A fallback that fails before it handed
-anything, reasoning alone included, leaves the primary's last error as the
-call's, the fallback's error its cause; one that fails after is the call's
-error.
+once without a retry policy, a channel with a router asks it which provider
+takes the generation (above); the provider it names gets the same request
+once, as that provider can take it (below, the tools it cannot hold), and its
+answer is the call's; without a router, or when it names none, the last error
+is the call's. A provider so named that fails before it handed anything,
+reasoning alone included, leaves the last error of the provider whose retries
+were spent as the call's, its own error the cause; one that fails after is the
+call's error.
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-6.4-025", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
@@ -3323,8 +3358,9 @@ it denies is never declared; a gated tool so declared is still refused until
 its skill is active. A tool held unseen is reported in `declared_tools` once a
 result has made it callable, with the reason it is visible then (`revealed`
 for one `find_tools` named). A provider without that capability keeps the
-declaration described above; a `fallback_provider` without it receives the
-tools the turn made callable declared plainly and the held ones not at all. A
+declaration described above; a provider a router hands a generation to
+without it receives the tools the turn made callable declared plainly and the
+held ones not at all. A
 compaction that summarizes a referencing result away declares the tools it
 referenced from then on, since the reference was what made them callable.
 
@@ -3341,9 +3377,9 @@ input: a `find_tools` call where Tool Search is active, otherwise an
 `activate_skill` answers a skill already active, each with a result that
 references the tools it reopens. A tool neither reaches is shown instead. The
 exchange is the turn's context, never an event of the room: it is not stored,
-not delivered, and not counted as a tool call, and a `fallback_provider` that
-cannot hold a tool receives the tools it reopens declared plainly, without the
-exchange. A standalone turn (Section 10.1.1) neither reads nor keeps the
+not delivered, and not counted as a tool call, and a provider a router hands
+a generation to that cannot hold a tool receives the tools it reopens declared
+plainly, without the exchange. A standalone turn (Section 10.1.1) neither reads nor keeps the
 room's declaration, and reopens nothing. A tool the turn no longer shows (the
 policy denies it, its skill closed) leaves the declaration, and a room whose
 declaration is not known (a new room, a restarted process) takes the one its
@@ -3431,8 +3467,10 @@ for and asking for no further generation, a retry of an empty answer included; a
 final round that failed to answer past its budget ends `budget_exceeded` too. A
 budget that is not a positive number, or a cost budget for a model with no known
 price, is a configuration error, reported when the channel is built for a
-channel budget and by the turn that reads it otherwise. A generation a fallback
-provider serves is priced at the primary provider's rate.
+channel budget and by the turn that reads it otherwise; a channel with a router
+checks the price on the provider it names for each turn. Every generation of a
+turn is priced at the rate of the provider the turn started on, one a router
+hands to another provider included.
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-6.4-032", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
@@ -3462,7 +3500,8 @@ MESSAGE: `loop_end_reason` (the reason above), `ai_usage`
 its last generation used, null when that generation failed),
 `ai_usage_complete` (whether every generation reported its input and output
 counters), `ai_model` and `ai_provider` (what its last generation ran on, a
-fallback provider when it served it) in the message's metadata. A turn that ran
+provider a router handed a generation to when it served it) in the message's
+metadata. A turn that ran
 on an executor other than the room owner's own (§10.6), whatever its end, also
 records `executor_id` there, the id that executor took the turn under; a turn on
 the owner's own executor records none. That message is the one of
@@ -22552,7 +22591,8 @@ AIChannel
 │   ├── supports_edit: false
 │   └── supports_delete: false
 ├── configuration:
-│   ├── provider: AIProvider
+│   ├── provider: AIProvider | null         # Serves every turn; one of provider and router
+│   ├── router: AIRouter | null             # Picks each turn's provider (Section 6.4)
 │   ├── system_prompt: string | null
 │   ├── temperature: float | null
 │   ├── max_tokens: int | null
@@ -22568,7 +22608,6 @@ AIChannel
 │   ├── turn_budget_usd: float | null       # What a turn may cost at the catalogue price
 │   ├── tool_loop_timeout_seconds: float | null (default 300)  # Timeout for entire tool loop
 │   ├── retry_policy: RetryPolicy | null    # Tries a generation again (Section 6.4)
-│   ├── fallback_provider: AIProvider | null # Asked once the retries are spent (Section 6.4)
 │   ├── evict_threshold_tokens: int (default 5000)  # Token threshold for context eviction
 │   ├── memory: MemoryProvider | null       # Pluggable context construction (Section 20)
 │   ├── describe_empty_event: callable | null # What an event with no content reads as
