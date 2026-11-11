@@ -309,8 +309,10 @@ room callbacks of the setup are not compared.
   on the kit's turn backend, each `id`, the channel ids it `hosts` (each a
   name, or a prefix ending in `*`: `acme-*`, and `*` for every channel), the
   ones its factory `builds` (every declared one when absent; for another it
-  builds nothing), `max_channels`, how many it keeps built at most (no bound
-  when absent), the
+  builds nothing), `organizations`, the organizations whose rooms it serves
+  (each an exact organization id, `*` for every one; absent, the rooms
+  without an organization alone), `max_channels`, how many it keeps built at
+  most (no bound when absent), the
   `hooks` it registers and the `room_hooks` it defines on triggers a turn
   fires (§10.6.6), `started` (default true; false: served only by an
   `executor.start` step) and `answers` (default true; false: it takes each
@@ -775,8 +777,8 @@ run's own kit when absent.
 | `channel.publish` | `executor`, `channel_id`, `room_id`, `kind` (an ephemeral event's type), `data`, `gate`: in a reaction's `after_turn`, work the turn began publishes on the channel's realtime, once held at `gate` when it names one; the call returns once the room owner took it, or refused it (§10.6.3) | null |
 | `channel_call` | `channel_id`, `room_id`, `verb`, `arguments`: the channel's per-room verb, on the executor holding the room's state (§10.6.3) | the verb's result |
 | `release_channel` | `channel_id`: every executor holding a build of it lets it go, closed once the turns running on it end, and builds it anew for the next one (§10.6.3) | null |
-| `executors` | none: the executors served on the kit's turn backend, its own executor aside (§10.6.7) | the list, in any order, each `{executor_id, hosts, room_hooks, online}`: `hosts` the ids and prefixes it declares, sorted (null for a predicate or every id), `room_hooks` sorted; a closed executor is not listed |
-| `agent_presence` | `room_id`: the room's intelligence channels, each online while an executor alive covers it in the room (declares it, and defines the room's enabled hooks), a channel the kit holds live while the kit runs (§10.6.7, §10.6.8) | the list sorted by `channel_id`, each `{channel_id, online, executors}`, `executors` the ids of the executors covering it, sorted |
+| `executors` | none: the executors served on the kit's turn backend, its own executor aside (§10.6.7) | the list, in any order, each `{executor_id, hosts, organizations, room_hooks, online}`: `hosts` the ids and prefixes it declares, sorted (null for a predicate or every id), `organizations` the ones it serves, sorted (null: the rooms without an organization alone), `room_hooks` sorted; a closed executor is not listed |
+| `agent_presence` | `room_id`: the room's intelligence channels, each online while an executor alive covers it in the room (declares it, serves the room's organization, and defines the room's enabled hooks), a channel the kit holds live while the kit runs (§10.6.7, §10.6.8) | the list sorted by `channel_id`, each `{channel_id, online, executors}`, `executors` the ids of the executors covering it, sorted |
 | `enable_room_hook` | `room_id`, `name`: the room's turns run the room hook the executors define under `name`, and only an executor that defines it takes them (§10.6.6, §10.6.7) | null |
 | `install_pipeline` | `handler`, `stages`, `default_phase`, `supervisor_id`, `agents` (channel ids), `agent_aliases`, `hook_priority`: the ConversationPipeline's `install` on the kit, its handler named `handler` (§19.5) | null |
 | `setup_handoff` | `agent_id`, `handler`, `targets` (each an id and its description or null: the tool `build_handoff_tool` builds; absent: the generic one), `room_id` (absent: every room): serves the handoff tool on the agent (§19.6) | null |
