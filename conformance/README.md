@@ -1171,3 +1171,17 @@ or a skip to a passing result.
 A scripted round's `stream` also accepts `{tool_call_delta: {id, name, index, arguments_delta}}`,
 with index 0 and empty arguments by default. A `refuses` or `fails` after an
 explicit stream comes before its done event, or after it with `failure_after_done`.
+
+### The kit's own executor hooks
+
+`kit_executor.hook` registers `hook` on `kit.turn_executor.hook`; it takes
+`setup.hooks`' fields except `router` and `needs_lock`. `kit_executor.room_hook`
+defines the hook under its `name` on that executor: `name`, `trigger`,
+`execution`, `priority`, `timeout_ms`, `fail_closed` and `reactions`.
+`kit_executor.remove_room_hook` takes `name` and returns whether that definition
+was removed. None of these definitions activates a hook for a room.
+
+`enable_room_hook` and `disable_room_hook` take `room_id`, `name` and optional
+`organization_id`. Enable is idempotent; disable returns whether the name was
+selected. A turn keeps the names its request carried, while each firing reads
+the current definitions of those names (RFC §10.6.6).
