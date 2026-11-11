@@ -7552,7 +7552,7 @@
       }
     },
     "kit_executor_room_hook": {
-      "description": "A hook registered for one room (\u00a79.1): what a registration for a room declares, a hook's name, trigger, execution, priority, fail_closed and needs_lock, with no filter and the default timeout.",
+      "description": "A hook defined by name on the kit executor (section 10.6.6), activated separately per room. It accepts timeout_ms and no needs_lock or channel filter.",
       "type": "object",
       "required": [
         "name",
