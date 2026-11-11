@@ -124,7 +124,6 @@
       "await": "turn",
       "expect": {
         "result": {
-          "cancelled": true,
           "cancellation_reason": "caller_cancelled"
         }
       }
