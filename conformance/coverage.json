@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "76452ec40025c7b5a4fd42216c7b3e1a5e74f3b1b9ed0223ca37a72840bafb39",
-  "corpus_sha256": "9b5d769e09e6da5e0efa853c18e203be8db34f21574d00edd641cd8d0489a947",
-  "python_commit": "9b5682cc5bcc9b20d2b26e28b40a4cdafa584b35",
-  "scenario_count": 1890,
+  "corpus_sha256": "849f8b4ce4474eb0bb9b75b77a7b90219ef0bd20390b3d203fd69e539fd4cd0e",
+  "python_commit": "43d2f2e29020481721bddc422901276a4f8f8bde",
+  "scenario_count": 1899,
   "sections": [
     {
       "section": "0",
@@ -1858,7 +1858,7 @@
       "review": "normative",
       "requirements": 1,
       "mapping": {
-        "unmapped": 1
+        "mapped_partial": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -1875,6 +1875,15 @@
         "hooks/room-hook-registration-refusals",
         "hooks/room-hooks-join-the-kit-s-in-priority-order",
         "hooks/sync-hooks-run-in-priority-order",
+        "kit-executor/a-definition-is-replaced-per-trigger",
+        "kit-executor/a-running-turn-keeps-its-names",
+        "kit-executor/a-running-turn-reads-current-definitions",
+        "kit-executor/activation-obeys-room-organization",
+        "kit-executor/activation-order-wins-at-equal-priority",
+        "kit-executor/an-undefined-name-refuses-the-turn",
+        "kit-executor/named-hooks-are-opt-in-per-room",
+        "kit-executor/named-hooks-refuse-invalid-registrations",
+        "kit-executor/uninstalling-a-strategy-removes-only-its-activation",
         "orchestration/a-hosts-own-strategy-is-taken-back-out-whole",
         "orchestration/a-kit-s-router-tries-rules-of-one-priority-in-their-order",
         "orchestration/a-refused-install-takes-back-what-it-added",
@@ -3137,7 +3146,8 @@
       "review": "normative",
       "requirements": 4,
       "mapping": {
-        "unmapped": 4
+        "mapped_partial": 1,
+        "unmapped": 3
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -3261,14 +3271,24 @@
       "review": "normative",
       "requirements": 4,
       "mapping": {
-        "unmapped": 4
+        "mapped_partial": 1,
+        "unmapped": 3
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executors/a-hook-on-an-executor-reads-the-room-when-it-fires",
         "executors/a-room-hook-no-executor-defines-takes-its-agent-offline-in-that-room",
         "executors/an-executor-lacking-a-room-s-hook-does-not-cover-its-agent-there",
-        "executors/an-executor-lacking-a-room-s-hook-does-not-take-its-turn"
+        "executors/an-executor-lacking-a-room-s-hook-does-not-take-its-turn",
+        "kit-executor/a-definition-is-replaced-per-trigger",
+        "kit-executor/a-running-turn-keeps-its-names",
+        "kit-executor/a-running-turn-reads-current-definitions",
+        "kit-executor/activation-obeys-room-organization",
+        "kit-executor/activation-order-wins-at-equal-priority",
+        "kit-executor/an-undefined-name-refuses-the-turn",
+        "kit-executor/named-hooks-are-opt-in-per-room",
+        "kit-executor/named-hooks-refuse-invalid-registrations",
+        "kit-executor/uninstalling-a-strategy-removes-only-its-activation"
       ]
     },
     {
@@ -5057,7 +5077,7 @@
       "review": "normative",
       "requirements": 1,
       "mapping": {
-        "unmapped": 1
+        "mapped_partial": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -5081,6 +5101,15 @@
         "greeting/no-room-to-greet",
         "host/a-turn-s-host-acts-for-its-room-alone",
         "host/work-a-turn-began-acts-for-its-room-and-organization-after-it",
+        "kit-executor/a-definition-is-replaced-per-trigger",
+        "kit-executor/a-running-turn-keeps-its-names",
+        "kit-executor/a-running-turn-reads-current-definitions",
+        "kit-executor/activation-obeys-room-organization",
+        "kit-executor/activation-order-wins-at-equal-priority",
+        "kit-executor/an-undefined-name-refuses-the-turn",
+        "kit-executor/named-hooks-are-opt-in-per-room",
+        "kit-executor/named-hooks-refuse-invalid-registrations",
+        "kit-executor/uninstalling-a-strategy-removes-only-its-activation",
         "members/a-member-call-acts-for-its-organization",
         "members/resolve-participant-refuses-what-it-cannot-find",
         "observations/feedback-is-an-observation-the-hooks-observe",
@@ -5447,6 +5476,8 @@
         "discussion/a-room-moves-from-a-swarm-to-a-discussion-and-back",
         "discussion/an-install-right-after-another-process-uninstalled-is-the-room-s-strategy",
         "discussion/an-uninstall-detaches-what-another-process-s-install-attached",
+        "kit-executor/named-hooks-refuse-invalid-registrations",
+        "kit-executor/uninstalling-a-strategy-removes-only-its-activation",
         "orchestration/a-hosts-own-strategy-is-taken-back-out-whole",
         "orchestration/a-kit-s-pipeline-is-installed-in-the-rooms-it-creates",
         "orchestration/a-loop-leaves-its-producer-the-events-that-are-no-task",
@@ -17898,8 +17929,18 @@
     {
       "id": "RK-9.1-001",
       "section": "9.1",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "kit-executor-registration",
+          "scope": "Named executor hooks: refusal of invalid names/modes and collisions, stable equal-priority activation order and per-trigger replacement.",
+          "coverage": "partial",
+          "missing": [
+            "This link does not establish every trigger, filter, off-lock ordering rule or distributed registration path of the broad clause."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-9.2-001",
@@ -28937,8 +28978,18 @@
     {
       "id": "RK-10.6.2-003",
       "section": "10.6.2",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "kit-executor-refused-previous-turn",
+          "scope": "A missing named hook refuses placement before handover and preserves the previous successful turn.",
+          "coverage": "partial",
+          "missing": [
+            "Channel calls, post-handover failures, process restarts and other per-room state transitions are not established by this test."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-10.6.2-004",
@@ -29039,8 +29090,19 @@
     {
       "id": "RK-10.6.6-003",
       "section": "10.6.6",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "kit-executor-named-hooks",
+          "scope": "The kit's local executor: per-room activation, per-trigger replacement, selection captured at request time, current definitions, missing-name refusal and strategy cleanup.",
+          "coverage": "partial",
+          "missing": [
+            "Remote executors, declaration-only channels and every executor placement outcome remain outside this local proof.",
+            "Planner, speaking-policy and thinker triggers and executor-only close remain explicit API gaps."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-10.6.6-004",
@@ -35072,8 +35134,18 @@
     {
       "id": "RK-17.2-001",
       "section": "17.2",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "kit-executor-organization",
+          "scope": "Enabling and disabling named hooks observes the calling organization's room scope.",
+          "coverage": "partial",
+          "missing": [
+            "Other room operations, identity, media admissions and distributed organization placement are outside this link."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-17.3-001",

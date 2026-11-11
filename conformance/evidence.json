@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "9b5682cc5bcc9b20d2b26e28b40a4cdafa584b35",
+  "python_commit": "43d2f2e29020481721bddc422901276a4f8f8bde",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -15034,6 +15034,590 @@
       "missing": [
         "Does not establish every provider protocol, remote service behavior, distributed executor or publication failure.",
         "Wall-clock coalescing and all other outcomes of this broad clause remain outside this source link."
+      ]
+    },
+    {
+      "id": "kit-executor-named-hooks",
+      "requirement": "RK-10.6.6-003",
+      "clause_sha256": "5d0dd5a5b255afc8b76499ee6e46ebc186f7c9cd084b40f1fee12bb181b6f171",
+      "scope": "The kit's local executor: per-room activation, per-trigger replacement, selection captured at request time, current definitions, missing-name refusal and strategy cleanup.",
+      "coverage": "partial",
+      "review": "Read the Python contracts, the RFC and the paired Rust implementation. Each successful turn explicitly checks its outcome and model call count; rejected operations and hook sequences are asserted separately. Independent code review found and corrected the registration return and previous-turn record defects. Native source links are not scenario execution receipts.",
+      "assertions": [
+        {
+          "scenario": "kit-executor/a-definition-is-replaced-per-trigger",
+          "pointer": "/expect",
+          "sha256": "53606a75173bed637ae5c5e380a9d310e7182e1206e289a98a10d803c131913b",
+          "scenario_sha256": "26cf18edcc4e0594dc368093d7d343365b2720adfb29f8f7e2855f6ce663ca30",
+          "proves": "Replacing one trigger under a name preserves the other triggers, and removing the name removes them all"
+        },
+        {
+          "scenario": "kit-executor/a-definition-is-replaced-per-trigger",
+          "pointer": "/steps/4/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "26cf18edcc4e0594dc368093d7d343365b2720adfb29f8f7e2855f6ce663ca30",
+          "proves": "Replacing one trigger under a name preserves the other triggers, and removing the name removes them all"
+        },
+        {
+          "scenario": "kit-executor/a-definition-is-replaced-per-trigger",
+          "pointer": "/steps/6/expect",
+          "sha256": "39d160e97e2bea07b0cf1c647259ffa4f0bd07069dba4e6c19a22d38b408510f",
+          "scenario_sha256": "26cf18edcc4e0594dc368093d7d343365b2720adfb29f8f7e2855f6ce663ca30",
+          "proves": "Replacing one trigger under a name preserves the other triggers, and removing the name removes them all"
+        },
+        {
+          "scenario": "kit-executor/a-definition-is-replaced-per-trigger",
+          "pointer": "/steps/7/expect",
+          "sha256": "929701ed632814943e3df803ddd9e3f179ccf889c0ad7b7f3392bd8d109b174f",
+          "scenario_sha256": "26cf18edcc4e0594dc368093d7d343365b2720adfb29f8f7e2855f6ce663ca30",
+          "proves": "Replacing one trigger under a name preserves the other triggers, and removing the name removes them all"
+        },
+        {
+          "scenario": "kit-executor/a-definition-is-replaced-per-trigger",
+          "pointer": "/steps/8/expect",
+          "sha256": "39d160e97e2bea07b0cf1c647259ffa4f0bd07069dba4e6c19a22d38b408510f",
+          "scenario_sha256": "26cf18edcc4e0594dc368093d7d343365b2720adfb29f8f7e2855f6ce663ca30",
+          "proves": "Replacing one trigger under a name preserves the other triggers, and removing the name removes them all"
+        },
+        {
+          "scenario": "kit-executor/a-definition-is-replaced-per-trigger",
+          "pointer": "/steps/9/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "26cf18edcc4e0594dc368093d7d343365b2720adfb29f8f7e2855f6ce663ca30",
+          "proves": "Replacing one trigger under a name preserves the other triggers, and removing the name removes them all"
+        },
+        {
+          "scenario": "kit-executor/a-running-turn-keeps-its-names",
+          "pointer": "/expect",
+          "sha256": "882263d0cddc7aee1955399ff3864716237737d13fd8a47bff3db53220d164bf",
+          "scenario_sha256": "62d996713588e3065003cff3d83867bffa0e315f933dd1039d435a8ef0bd7da2",
+          "proves": "Disabling a hook affects the next turn while the running turn retains its requested names"
+        },
+        {
+          "scenario": "kit-executor/a-running-turn-keeps-its-names",
+          "pointer": "/steps/5/expect",
+          "sha256": "39d160e97e2bea07b0cf1c647259ffa4f0bd07069dba4e6c19a22d38b408510f",
+          "scenario_sha256": "62d996713588e3065003cff3d83867bffa0e315f933dd1039d435a8ef0bd7da2",
+          "proves": "Disabling a hook affects the next turn while the running turn retains its requested names"
+        },
+        {
+          "scenario": "kit-executor/a-running-turn-keeps-its-names",
+          "pointer": "/steps/7/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "62d996713588e3065003cff3d83867bffa0e315f933dd1039d435a8ef0bd7da2",
+          "proves": "Disabling a hook affects the next turn while the running turn retains its requested names"
+        },
+        {
+          "scenario": "kit-executor/a-running-turn-keeps-its-names",
+          "pointer": "/steps/9/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "62d996713588e3065003cff3d83867bffa0e315f933dd1039d435a8ef0bd7da2",
+          "proves": "Disabling a hook affects the next turn while the running turn retains its requested names"
+        },
+        {
+          "scenario": "kit-executor/a-running-turn-reads-current-definitions",
+          "pointer": "/expect",
+          "sha256": "eb0da5b3a82978155ea4f00b231173cf670ebca480fa4b17b9dab42b113d22ad",
+          "scenario_sha256": "1a126f341ab11e524d6551bbad454336be2843e19e7a1d1b7aa39c29c4c981c7",
+          "proves": "A running turn keeps its name selection but reads a replacement definition when the hook fires"
+        },
+        {
+          "scenario": "kit-executor/a-running-turn-reads-current-definitions",
+          "pointer": "/steps/7/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "1a126f341ab11e524d6551bbad454336be2843e19e7a1d1b7aa39c29c4c981c7",
+          "proves": "A running turn keeps its name selection but reads a replacement definition when the hook fires"
+        },
+        {
+          "scenario": "kit-executor/activation-order-wins-at-equal-priority",
+          "pointer": "/expect",
+          "sha256": "a62fb07484807a0df8179ad1e36e90d17827c5f96c808df8d4fea1932f42f62f",
+          "scenario_sha256": "d6498f88fec120bd25cd60c4114e15a8f0cb706143237f003a7b65114b38830a",
+          "proves": "At equal priority named hooks follow activation order, before hooks given by the kit for that room"
+        },
+        {
+          "scenario": "kit-executor/activation-order-wins-at-equal-priority",
+          "pointer": "/steps/5/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "d6498f88fec120bd25cd60c4114e15a8f0cb706143237f003a7b65114b38830a",
+          "proves": "At equal priority named hooks follow activation order, before hooks given by the kit for that room"
+        },
+        {
+          "scenario": "kit-executor/activation-order-wins-at-equal-priority",
+          "pointer": "/steps/7/expect",
+          "sha256": "39d160e97e2bea07b0cf1c647259ffa4f0bd07069dba4e6c19a22d38b408510f",
+          "scenario_sha256": "d6498f88fec120bd25cd60c4114e15a8f0cb706143237f003a7b65114b38830a",
+          "proves": "At equal priority named hooks follow activation order, before hooks given by the kit for that room"
+        },
+        {
+          "scenario": "kit-executor/activation-order-wins-at-equal-priority",
+          "pointer": "/steps/9/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "d6498f88fec120bd25cd60c4114e15a8f0cb706143237f003a7b65114b38830a",
+          "proves": "At equal priority named hooks follow activation order, before hooks given by the kit for that room"
+        },
+        {
+          "scenario": "kit-executor/an-undefined-name-refuses-the-turn",
+          "pointer": "/expect",
+          "sha256": "882263d0cddc7aee1955399ff3864716237737d13fd8a47bff3db53220d164bf",
+          "scenario_sha256": "3b4a9c0c4486268b9e930b40653f9829ba99ffb5dae4008230a7cec4cafe744e",
+          "proves": "An enabled name without a definition prevents execution; defining it admits the next turn"
+        },
+        {
+          "scenario": "kit-executor/an-undefined-name-refuses-the-turn",
+          "pointer": "/steps/1/expect",
+          "sha256": "68abc2a10c4eac37a7c2a9509ac6b054fd43f477411d3da3e965b64fd467113b",
+          "scenario_sha256": "3b4a9c0c4486268b9e930b40653f9829ba99ffb5dae4008230a7cec4cafe744e",
+          "proves": "An enabled name without a definition prevents execution; defining it admits the next turn"
+        },
+        {
+          "scenario": "kit-executor/an-undefined-name-refuses-the-turn",
+          "pointer": "/steps/3/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "3b4a9c0c4486268b9e930b40653f9829ba99ffb5dae4008230a7cec4cafe744e",
+          "proves": "An enabled name without a definition prevents execution; defining it admits the next turn"
+        },
+        {
+          "scenario": "kit-executor/an-undefined-name-refuses-the-turn",
+          "pointer": "/steps/5/expect",
+          "sha256": "39d160e97e2bea07b0cf1c647259ffa4f0bd07069dba4e6c19a22d38b408510f",
+          "scenario_sha256": "3b4a9c0c4486268b9e930b40653f9829ba99ffb5dae4008230a7cec4cafe744e",
+          "proves": "An enabled name without a definition prevents execution; defining it admits the next turn"
+        },
+        {
+          "scenario": "kit-executor/an-undefined-name-refuses-the-turn",
+          "pointer": "/steps/6/expect",
+          "sha256": "68abc2a10c4eac37a7c2a9509ac6b054fd43f477411d3da3e965b64fd467113b",
+          "scenario_sha256": "3b4a9c0c4486268b9e930b40653f9829ba99ffb5dae4008230a7cec4cafe744e",
+          "proves": "An enabled name without a definition prevents execution; defining it admits the next turn"
+        },
+        {
+          "scenario": "kit-executor/an-undefined-name-refuses-the-turn",
+          "pointer": "/steps/7/expect",
+          "sha256": "39d160e97e2bea07b0cf1c647259ffa4f0bd07069dba4e6c19a22d38b408510f",
+          "scenario_sha256": "3b4a9c0c4486268b9e930b40653f9829ba99ffb5dae4008230a7cec4cafe744e",
+          "proves": "An enabled name without a definition prevents execution; defining it admits the next turn"
+        },
+        {
+          "scenario": "kit-executor/an-undefined-name-refuses-the-turn",
+          "pointer": "/steps/8/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "3b4a9c0c4486268b9e930b40653f9829ba99ffb5dae4008230a7cec4cafe744e",
+          "proves": "An enabled name without a definition prevents execution; defining it admits the next turn"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-are-opt-in-per-room",
+          "pointer": "/expect",
+          "sha256": "452cbe21483f57b9ca9a4e658c8dede0e6b054d9b5770800421f20e1ede412cd",
+          "scenario_sha256": "055bfa267f5fc64ad56c6d587544a0a5f6d401df7dcd2f537e9669e85c4cab3a",
+          "proves": "A named hook needs activation; an executor global hook observes every room"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-are-opt-in-per-room",
+          "pointer": "/steps/2/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "055bfa267f5fc64ad56c6d587544a0a5f6d401df7dcd2f537e9669e85c4cab3a",
+          "proves": "A named hook needs activation; an executor global hook observes every room"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-are-opt-in-per-room",
+          "pointer": "/steps/6/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "055bfa267f5fc64ad56c6d587544a0a5f6d401df7dcd2f537e9669e85c4cab3a",
+          "proves": "A named hook needs activation; an executor global hook observes every room"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-are-opt-in-per-room",
+          "pointer": "/steps/8/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "055bfa267f5fc64ad56c6d587544a0a5f6d401df7dcd2f537e9669e85c4cab3a",
+          "proves": "A named hook needs activation; an executor global hook observes every room"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-are-opt-in-per-room",
+          "pointer": "/steps/10/expect",
+          "sha256": "39d160e97e2bea07b0cf1c647259ffa4f0bd07069dba4e6c19a22d38b408510f",
+          "scenario_sha256": "055bfa267f5fc64ad56c6d587544a0a5f6d401df7dcd2f537e9669e85c4cab3a",
+          "proves": "A named hook needs activation; an executor global hook observes every room"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-are-opt-in-per-room",
+          "pointer": "/steps/11/expect",
+          "sha256": "929701ed632814943e3df803ddd9e3f179ccf889c0ad7b7f3392bd8d109b174f",
+          "scenario_sha256": "055bfa267f5fc64ad56c6d587544a0a5f6d401df7dcd2f537e9669e85c4cab3a",
+          "proves": "A named hook needs activation; an executor global hook observes every room"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-are-opt-in-per-room",
+          "pointer": "/steps/12/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "055bfa267f5fc64ad56c6d587544a0a5f6d401df7dcd2f537e9669e85c4cab3a",
+          "proves": "A named hook needs activation; an executor global hook observes every room"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-refuse-invalid-registrations",
+          "pointer": "/expect",
+          "sha256": "e5580eb838008a4f626606a32eda50da2875967fd9b9d735e40e72f26f7ac49c",
+          "scenario_sha256": "d13b1191de24302d6be6244627bf0f433950407ada92264f2a557fb1fcb9704d",
+          "proves": "Invalid definitions leave the valid named hook unchanged"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-refuse-invalid-registrations",
+          "pointer": "/steps/1/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "d13b1191de24302d6be6244627bf0f433950407ada92264f2a557fb1fcb9704d",
+          "proves": "Invalid definitions leave the valid named hook unchanged"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-refuse-invalid-registrations",
+          "pointer": "/steps/2/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "d13b1191de24302d6be6244627bf0f433950407ada92264f2a557fb1fcb9704d",
+          "proves": "Invalid definitions leave the valid named hook unchanged"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-refuse-invalid-registrations",
+          "pointer": "/steps/3/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "d13b1191de24302d6be6244627bf0f433950407ada92264f2a557fb1fcb9704d",
+          "proves": "Invalid definitions leave the valid named hook unchanged"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-refuse-invalid-registrations",
+          "pointer": "/steps/4/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "d13b1191de24302d6be6244627bf0f433950407ada92264f2a557fb1fcb9704d",
+          "proves": "Invalid definitions leave the valid named hook unchanged"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-refuse-invalid-registrations",
+          "pointer": "/steps/5/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "d13b1191de24302d6be6244627bf0f433950407ada92264f2a557fb1fcb9704d",
+          "proves": "Invalid definitions leave the valid named hook unchanged"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-refuse-invalid-registrations",
+          "pointer": "/steps/7/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "d13b1191de24302d6be6244627bf0f433950407ada92264f2a557fb1fcb9704d",
+          "proves": "Invalid definitions leave the valid named hook unchanged"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-refuse-invalid-registrations",
+          "pointer": "/steps/9/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "d13b1191de24302d6be6244627bf0f433950407ada92264f2a557fb1fcb9704d",
+          "proves": "Invalid definitions leave the valid named hook unchanged"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-refuse-invalid-registrations",
+          "pointer": "/steps/10/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "d13b1191de24302d6be6244627bf0f433950407ada92264f2a557fb1fcb9704d",
+          "proves": "Invalid definitions leave the valid named hook unchanged"
+        },
+        {
+          "scenario": "kit-executor/uninstalling-a-strategy-removes-only-its-activation",
+          "pointer": "/expect",
+          "sha256": "ab5ce61d5d895141b5cd67691b3c78872f223576c260bc89f33d9498688804ec",
+          "scenario_sha256": "46efbd989e397c0b0bfae33d1250b28b9362781899a6753231c93039484d921d",
+          "proves": "Uninstalling a strategy disables its names without removing definitions or another room’s activation"
+        },
+        {
+          "scenario": "kit-executor/uninstalling-a-strategy-removes-only-its-activation",
+          "pointer": "/steps/3/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "46efbd989e397c0b0bfae33d1250b28b9362781899a6753231c93039484d921d",
+          "proves": "Uninstalling a strategy disables its names without removing definitions or another room’s activation"
+        },
+        {
+          "scenario": "kit-executor/uninstalling-a-strategy-removes-only-its-activation",
+          "pointer": "/steps/5/expect",
+          "sha256": "39d160e97e2bea07b0cf1c647259ffa4f0bd07069dba4e6c19a22d38b408510f",
+          "scenario_sha256": "46efbd989e397c0b0bfae33d1250b28b9362781899a6753231c93039484d921d",
+          "proves": "Uninstalling a strategy disables its names without removing definitions or another room’s activation"
+        },
+        {
+          "scenario": "kit-executor/uninstalling-a-strategy-removes-only-its-activation",
+          "pointer": "/steps/6/expect",
+          "sha256": "929701ed632814943e3df803ddd9e3f179ccf889c0ad7b7f3392bd8d109b174f",
+          "scenario_sha256": "46efbd989e397c0b0bfae33d1250b28b9362781899a6753231c93039484d921d",
+          "proves": "Uninstalling a strategy disables its names without removing definitions or another room’s activation"
+        },
+        {
+          "scenario": "kit-executor/uninstalling-a-strategy-removes-only-its-activation",
+          "pointer": "/steps/7/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "46efbd989e397c0b0bfae33d1250b28b9362781899a6753231c93039484d921d",
+          "proves": "Uninstalling a strategy disables its names without removing definitions or another room’s activation"
+        },
+        {
+          "scenario": "kit-executor/uninstalling-a-strategy-removes-only-its-activation",
+          "pointer": "/steps/9/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "46efbd989e397c0b0bfae33d1250b28b9362781899a6753231c93039484d921d",
+          "proves": "Uninstalling a strategy disables its names without removing definitions or another room’s activation"
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/test_kit_executor_contract.py::test_named_definitions_and_selection_are_separate_from_owner_hooks",
+          "sha256": "fd3e200f3f61dcf59423247f1e58c2bd7d25d8e17330f8d4b4cabcc271e8d776",
+          "proves": "test_named_definitions_and_selection_are_separate_from_owner_hooks"
+        },
+        {
+          "nodeid": "tests/test_kit_executor_contract.py::test_executor_and_owner_global_names_have_separate_removal_scopes",
+          "sha256": "1c2a940b4ed4874edb27f93475a058560cebbe8b135ac61689bcae687c9b6991",
+          "proves": "test_executor_and_owner_global_names_have_separate_removal_scopes"
+        },
+        {
+          "nodeid": "tests/test_kit_executor_contract.py::test_an_owner_hook_given_to_executor_can_share_a_named_definition",
+          "sha256": "4019d34665d173629e21862ffafb61db65e13e97ae3d59cccc11c8fe59869895",
+          "proves": "test_an_owner_hook_given_to_executor_can_share_a_named_definition"
+        },
+        {
+          "nodeid": "tests/test_kit_executor_contract.py::test_local_executor_queries_follow_registration_and_close",
+          "sha256": "278355566b17868d1ae64d7e83bf0961ddbbd85dfcd0ea447a4ca124297b04a7",
+          "proves": "test_local_executor_queries_follow_registration_and_close"
+        },
+        {
+          "nodeid": "tests/test_kit_executor_contract.py::test_refused_redefinition_keeps_the_original_and_default_options",
+          "sha256": "88f317d33c1bd9dabc6478356d95a0a2abcd7224dbc09e3e7b838cec870b6746",
+          "proves": "test_refused_redefinition_keeps_the_original_and_default_options"
+        },
+        {
+          "nodeid": "tests/test_kit_executor_contract.py::test_add_owner_room_hook_returns_the_registered_name",
+          "sha256": "fb15653b7881d52af03388d52de6bacb2db4fab9190cf64fdb1b2026a43bda5e",
+          "proves": "test_add_owner_room_hook_returns_the_registered_name"
+        }
+      ],
+      "missing": [
+        "Repeated activation of the same name is idempotent in Python and Rust, but RK-10.6.6-003 can be read as requiring refusal. This sub-contract is unresolved (HITL c1206a93-300d-4ff6-9b44-8f4d1a1f6385); its scenario proves parity only, not normative conformity.",
+        "Remote executors, declaration-only channels and every executor placement outcome remain outside this local proof.",
+        "Planner, speaking-policy and thinker triggers and executor-only close remain explicit API gaps."
+      ]
+    },
+    {
+      "id": "kit-executor-registration",
+      "requirement": "RK-9.1-001",
+      "clause_sha256": "c5fe134e44ee648c11804e0323a6866e679ba93bb96848c45e1d5d5bcd2def65",
+      "scope": "Named executor hooks: refusal of invalid names/modes and collisions, stable equal-priority activation order and per-trigger replacement.",
+      "coverage": "partial",
+      "review": "Read the Python contracts, the RFC and the paired Rust implementation. Each successful turn explicitly checks its outcome and model call count; rejected operations and hook sequences are asserted separately. Independent code review found and corrected the registration return and previous-turn record defects. Native source links are not scenario execution receipts.",
+      "assertions": [
+        {
+          "scenario": "kit-executor/named-hooks-refuse-invalid-registrations",
+          "pointer": "/expect",
+          "sha256": "e5580eb838008a4f626606a32eda50da2875967fd9b9d735e40e72f26f7ac49c",
+          "scenario_sha256": "d13b1191de24302d6be6244627bf0f433950407ada92264f2a557fb1fcb9704d",
+          "proves": "Invalid definitions leave the valid named hook unchanged"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-refuse-invalid-registrations",
+          "pointer": "/steps/1/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "d13b1191de24302d6be6244627bf0f433950407ada92264f2a557fb1fcb9704d",
+          "proves": "Invalid definitions leave the valid named hook unchanged"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-refuse-invalid-registrations",
+          "pointer": "/steps/2/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "d13b1191de24302d6be6244627bf0f433950407ada92264f2a557fb1fcb9704d",
+          "proves": "Invalid definitions leave the valid named hook unchanged"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-refuse-invalid-registrations",
+          "pointer": "/steps/3/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "d13b1191de24302d6be6244627bf0f433950407ada92264f2a557fb1fcb9704d",
+          "proves": "Invalid definitions leave the valid named hook unchanged"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-refuse-invalid-registrations",
+          "pointer": "/steps/4/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "d13b1191de24302d6be6244627bf0f433950407ada92264f2a557fb1fcb9704d",
+          "proves": "Invalid definitions leave the valid named hook unchanged"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-refuse-invalid-registrations",
+          "pointer": "/steps/5/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "d13b1191de24302d6be6244627bf0f433950407ada92264f2a557fb1fcb9704d",
+          "proves": "Invalid definitions leave the valid named hook unchanged"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-refuse-invalid-registrations",
+          "pointer": "/steps/7/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "d13b1191de24302d6be6244627bf0f433950407ada92264f2a557fb1fcb9704d",
+          "proves": "Invalid definitions leave the valid named hook unchanged"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-refuse-invalid-registrations",
+          "pointer": "/steps/9/expect",
+          "sha256": "05b049c696d2da4315ebc5aa3b81da3185e3654789ed24f181535eb2c712b0cc",
+          "scenario_sha256": "d13b1191de24302d6be6244627bf0f433950407ada92264f2a557fb1fcb9704d",
+          "proves": "Invalid definitions leave the valid named hook unchanged"
+        },
+        {
+          "scenario": "kit-executor/named-hooks-refuse-invalid-registrations",
+          "pointer": "/steps/10/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "d13b1191de24302d6be6244627bf0f433950407ada92264f2a557fb1fcb9704d",
+          "proves": "Invalid definitions leave the valid named hook unchanged"
+        },
+        {
+          "scenario": "kit-executor/activation-order-wins-at-equal-priority",
+          "pointer": "/expect",
+          "sha256": "a62fb07484807a0df8179ad1e36e90d17827c5f96c808df8d4fea1932f42f62f",
+          "scenario_sha256": "d6498f88fec120bd25cd60c4114e15a8f0cb706143237f003a7b65114b38830a",
+          "proves": "At equal priority named hooks follow activation order, before hooks given by the kit for that room"
+        },
+        {
+          "scenario": "kit-executor/activation-order-wins-at-equal-priority",
+          "pointer": "/steps/5/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "d6498f88fec120bd25cd60c4114e15a8f0cb706143237f003a7b65114b38830a",
+          "proves": "At equal priority named hooks follow activation order, before hooks given by the kit for that room"
+        },
+        {
+          "scenario": "kit-executor/activation-order-wins-at-equal-priority",
+          "pointer": "/steps/7/expect",
+          "sha256": "39d160e97e2bea07b0cf1c647259ffa4f0bd07069dba4e6c19a22d38b408510f",
+          "scenario_sha256": "d6498f88fec120bd25cd60c4114e15a8f0cb706143237f003a7b65114b38830a",
+          "proves": "At equal priority named hooks follow activation order, before hooks given by the kit for that room"
+        },
+        {
+          "scenario": "kit-executor/activation-order-wins-at-equal-priority",
+          "pointer": "/steps/9/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "d6498f88fec120bd25cd60c4114e15a8f0cb706143237f003a7b65114b38830a",
+          "proves": "At equal priority named hooks follow activation order, before hooks given by the kit for that room"
+        },
+        {
+          "scenario": "kit-executor/a-definition-is-replaced-per-trigger",
+          "pointer": "/expect",
+          "sha256": "53606a75173bed637ae5c5e380a9d310e7182e1206e289a98a10d803c131913b",
+          "scenario_sha256": "26cf18edcc4e0594dc368093d7d343365b2720adfb29f8f7e2855f6ce663ca30",
+          "proves": "Replacing one trigger under a name preserves the other triggers, and removing the name removes them all"
+        },
+        {
+          "scenario": "kit-executor/a-definition-is-replaced-per-trigger",
+          "pointer": "/steps/4/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "26cf18edcc4e0594dc368093d7d343365b2720adfb29f8f7e2855f6ce663ca30",
+          "proves": "Replacing one trigger under a name preserves the other triggers, and removing the name removes them all"
+        },
+        {
+          "scenario": "kit-executor/a-definition-is-replaced-per-trigger",
+          "pointer": "/steps/6/expect",
+          "sha256": "39d160e97e2bea07b0cf1c647259ffa4f0bd07069dba4e6c19a22d38b408510f",
+          "scenario_sha256": "26cf18edcc4e0594dc368093d7d343365b2720adfb29f8f7e2855f6ce663ca30",
+          "proves": "Replacing one trigger under a name preserves the other triggers, and removing the name removes them all"
+        },
+        {
+          "scenario": "kit-executor/a-definition-is-replaced-per-trigger",
+          "pointer": "/steps/7/expect",
+          "sha256": "929701ed632814943e3df803ddd9e3f179ccf889c0ad7b7f3392bd8d109b174f",
+          "scenario_sha256": "26cf18edcc4e0594dc368093d7d343365b2720adfb29f8f7e2855f6ce663ca30",
+          "proves": "Replacing one trigger under a name preserves the other triggers, and removing the name removes them all"
+        },
+        {
+          "scenario": "kit-executor/a-definition-is-replaced-per-trigger",
+          "pointer": "/steps/8/expect",
+          "sha256": "39d160e97e2bea07b0cf1c647259ffa4f0bd07069dba4e6c19a22d38b408510f",
+          "scenario_sha256": "26cf18edcc4e0594dc368093d7d343365b2720adfb29f8f7e2855f6ce663ca30",
+          "proves": "Replacing one trigger under a name preserves the other triggers, and removing the name removes them all"
+        },
+        {
+          "scenario": "kit-executor/a-definition-is-replaced-per-trigger",
+          "pointer": "/steps/9/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "26cf18edcc4e0594dc368093d7d343365b2720adfb29f8f7e2855f6ce663ca30",
+          "proves": "Replacing one trigger under a name preserves the other triggers, and removing the name removes them all"
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "This link does not establish every trigger, filter, off-lock ordering rule or distributed registration path of the broad clause."
+      ]
+    },
+    {
+      "id": "kit-executor-organization",
+      "requirement": "RK-17.2-001",
+      "clause_sha256": "0f5d784e82181c9b1c66851f5e87f13ab950f8fb0813ced3cf6d27e8b95dbeeb",
+      "scope": "Enabling and disabling named hooks observes the calling organization's room scope.",
+      "coverage": "partial",
+      "review": "Read the Python contracts, the RFC and the paired Rust implementation. Each successful turn explicitly checks its outcome and model call count; rejected operations and hook sequences are asserted separately. Independent code review found and corrected the registration return and previous-turn record defects. Native source links are not scenario execution receipts.",
+      "assertions": [
+        {
+          "scenario": "kit-executor/activation-obeys-room-organization",
+          "pointer": "/expect",
+          "sha256": "1f3e34abb883eff9250610ba2ca5b4b53e5e1cab71d5cff002f155b1c6ee0d78",
+          "scenario_sha256": "939171f673582fa3d56a60c90137fd0677c12148c186835a687a257310d2cd3f",
+          "proves": "A foreign organization cannot change a room hook selection"
+        },
+        {
+          "scenario": "kit-executor/activation-obeys-room-organization",
+          "pointer": "/steps/1/expect",
+          "sha256": "302a92d966245c60616dc29e9e0f52665e28f3bab7e9af75f7072c1aa353191c",
+          "scenario_sha256": "939171f673582fa3d56a60c90137fd0677c12148c186835a687a257310d2cd3f",
+          "proves": "A foreign organization cannot change a room hook selection"
+        },
+        {
+          "scenario": "kit-executor/activation-obeys-room-organization",
+          "pointer": "/steps/3/expect",
+          "sha256": "302a92d966245c60616dc29e9e0f52665e28f3bab7e9af75f7072c1aa353191c",
+          "scenario_sha256": "939171f673582fa3d56a60c90137fd0677c12148c186835a687a257310d2cd3f",
+          "proves": "A foreign organization cannot change a room hook selection"
+        },
+        {
+          "scenario": "kit-executor/activation-obeys-room-organization",
+          "pointer": "/steps/4/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "939171f673582fa3d56a60c90137fd0677c12148c186835a687a257310d2cd3f",
+          "proves": "A foreign organization cannot change a room hook selection"
+        },
+        {
+          "scenario": "kit-executor/activation-obeys-room-organization",
+          "pointer": "/steps/6/expect",
+          "sha256": "39d160e97e2bea07b0cf1c647259ffa4f0bd07069dba4e6c19a22d38b408510f",
+          "scenario_sha256": "939171f673582fa3d56a60c90137fd0677c12148c186835a687a257310d2cd3f",
+          "proves": "A foreign organization cannot change a room hook selection"
+        },
+        {
+          "scenario": "kit-executor/activation-obeys-room-organization",
+          "pointer": "/steps/8/expect",
+          "sha256": "39d160e97e2bea07b0cf1c647259ffa4f0bd07069dba4e6c19a22d38b408510f",
+          "scenario_sha256": "939171f673582fa3d56a60c90137fd0677c12148c186835a687a257310d2cd3f",
+          "proves": "A foreign organization cannot change a room hook selection"
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Other room operations, identity, media admissions and distributed organization placement are outside this link."
+      ]
+    },
+    {
+      "id": "kit-executor-refused-previous-turn",
+      "requirement": "RK-10.6.2-003",
+      "clause_sha256": "dba3b12602cbfa3f1b8edfe2d4a08e83e39a0095e3a817f1896a587442dc6de1",
+      "scope": "A missing named hook refuses placement before handover and preserves the previous successful turn.",
+      "coverage": "partial",
+      "review": "Read the Python contracts, the RFC and the paired Rust implementation. Each successful turn explicitly checks its outcome and model call count; rejected operations and hook sequences are asserted separately. Independent code review found and corrected the registration return and previous-turn record defects. Native source links are not scenario execution receipts.",
+      "assertions": [],
+      "tests": [
+        {
+          "nodeid": "tests/test_turns_channel_control.py::test_a_missing_hook_refusal_preserves_the_previous_turn",
+          "sha256": "fce1369c45dddcb730392f8e50e0a22ba073816c2e3f4f9c2fdabe2e41287ca4",
+          "proves": "After a successful turn, a missing-hook refusal sends no request; disabling it lets the next successful request name the first turn."
+        }
+      ],
+      "missing": [
+        "Channel calls, post-handover failures, process restarts and other per-room state transitions are not established by this test."
       ]
     }
   ],
