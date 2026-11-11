@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "d6d65112b56b283f4605f330c5b3485c418e1a22f0089f67f64ad2cfc0ac31c7",
   "corpus_sha256": "43a29ee26d76fb1edbe01ac0eda874aba9f6cdfed7843f6c533948bf2e36e636",
-  "python_commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+  "python_commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
   "scenario_count": 1834,
   "sections": [
     {
@@ -4488,7 +4488,8 @@
       "review": "normative",
       "requirements": 5,
       "mapping": {
-        "unmapped": 5
+        "mapped_partial": 1,
+        "unmapped": 4
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -7622,12 +7623,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -8056,12 +8073,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -8488,12 +8521,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -8898,12 +8947,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -9329,12 +9394,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -9747,12 +9828,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -10386,12 +10483,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -11071,6 +11184,14 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -11302,6 +11423,14 @@
               "execution": "python-discussion-local-ff7ca8d-memory",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -11541,6 +11670,14 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -11772,6 +11909,14 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -11995,6 +12140,14 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -12216,6 +12369,14 @@
               "execution": "python-discussion-local-ff7ca8d-memory",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -12449,6 +12610,14 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -12670,6 +12839,14 @@
               "execution": "python-discussion-local-ff7ca8d-memory",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -12901,6 +13078,14 @@
               "execution": "python-discussion-local-ff7ca8d-memory",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -13136,6 +13321,14 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -13368,6 +13561,14 @@
               "execution": "python-discussion-local-ff7ca8d-memory",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -13611,6 +13812,14 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -13819,6 +14028,14 @@
               "execution": "python-discussion-local-ff7ca8d-memory",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -14236,12 +14453,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -14449,6 +14682,14 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -14616,6 +14857,14 @@
               "execution": "python-discussion-local-ff7ca8d-memory",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -14899,6 +15148,14 @@
               "execution": "python-discussion-local-ff7ca8d-memory",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -15360,12 +15617,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -15633,6 +15906,14 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -15886,6 +16167,14 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -16125,6 +16414,14 @@
               "execution": "python-discussion-local-ff7ca8d-memory",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -16374,6 +16671,14 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -16613,6 +16918,14 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -16834,6 +17147,14 @@
               "execution": "python-discussion-local-ff7ca8d-memory",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -17308,12 +17629,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -17529,6 +17866,14 @@
               "execution": "python-discussion-local-ff7ca8d-memory",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -17754,6 +18099,14 @@
               "execution": "python-discussion-local-ff7ca8d-memory",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -18229,12 +18582,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -18358,6 +18727,14 @@
               "execution": "python-discussion-local-ff7ca8d-memory",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -18721,12 +19098,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -19088,12 +19481,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -19311,6 +19720,14 @@
               "execution": "python-discussion-local-ff7ca8d-memory",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -19747,12 +20164,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -20116,12 +20549,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -20381,6 +20830,14 @@
               "execution": "python-discussion-local-ff7ca8d-memory",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -20776,12 +21233,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -21153,12 +21626,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -21562,12 +22051,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -21963,12 +22468,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -22340,12 +22861,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -22717,12 +23254,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -23094,12 +23647,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -25122,12 +25691,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -25341,12 +25926,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -25544,13 +26145,47 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            }
+          ]
+        },
+        {
+          "id": "discussion-regeneration-close-boundaries",
+          "scope": "Regeneration refusal after kit close and its cut before committed selection.",
+          "coverage": "partial",
+          "missing": [
+            "Shutdown of other operations, services and separate processes is outside this link."
+          ],
+          "executions": [
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
             }
@@ -26265,12 +26900,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -26294,8 +26945,27 @@
     {
       "id": "RK-13.5-003",
       "section": "13.5",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "discussion-regeneration-release-errors",
+          "scope": "Failed lock release during discussion regeneration, after selection or queue mutation.",
+          "coverage": "partial",
+          "missing": [
+            "Other operations and external lock-manager failures are not proven by this link."
+          ],
+          "executions": [
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "RK-13.5-004",
@@ -26470,6 +27140,14 @@
               "execution": "python-discussion-local-ff7ca8d-memory",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -26893,12 +27571,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -27352,12 +28046,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -27746,12 +28456,28 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-discussion-local-ff7ca8d-sqlite",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-sqlite",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -28508,6 +29234,14 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -28722,6 +29456,14 @@
               "execution": "python-discussion-local-ff7ca8d-memory",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -28945,6 +29687,14 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -29166,6 +29916,33 @@
               "execution": "python-discussion-local-ff7ca8d-memory",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            }
+          ]
+        },
+        {
+          "id": "discussion-regeneration-turns",
+          "scope": "Regenerated discussion turns: target selection, fallback, deduplication, queue priority, waiting/listening, depth and stored state (rule 7 and associated queue rules).",
+          "coverage": "partial",
+          "missing": [
+            "Other rules in the broad Discussion clause remain outside this link.",
+            "Exact model context history, tool rounds, signed markers and cross-process failure recovery need their own evidence."
+          ],
+          "executions": [
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -29481,6 +30258,14 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -29618,6 +30403,14 @@
               "execution": "python-discussion-local-ff7ca8d-memory",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -29919,6 +30712,14 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -30121,6 +30922,14 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -30238,6 +31047,14 @@
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -30326,6 +31143,14 @@
               "execution": "python-discussion-local-ff7ca8d-memory",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -30541,6 +31366,14 @@
               "execution": "python-discussion-local-ff7ca8d-memory",
               "implementation": "python",
               "commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-discussion-regeneration-19665b9-memory",
+              "implementation": "python",
+              "commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -31349,6 +32182,24 @@
       "implementation_commit": "ff7ca8db42d5c731dd69299e363de810a9b79a3c",
       "rfc_commit": "6b2f5d823e2b6a5246fd67aeedaab16e82cd8c90",
       "corpus_commit": "6b2f5d823e2b6a5246fd67aeedaab16e82cd8c90",
+      "backend": "sqlite",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-discussion-regeneration-19665b9-memory",
+      "implementation": "python",
+      "implementation_commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+      "rfc_commit": "0456f978401561e0424d4fb2b7dbb2cac5110f98",
+      "corpus_commit": "0456f978401561e0424d4fb2b7dbb2cac5110f98",
+      "backend": "memory",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-discussion-regeneration-19665b9-sqlite",
+      "implementation": "python",
+      "implementation_commit": "19665b9b67fedb754fb684e79b3a7beef184ff02",
+      "rfc_commit": "0456f978401561e0424d4fb2b7dbb2cac5110f98",
+      "corpus_commit": "0456f978401561e0424d4fb2b7dbb2cac5110f98",
       "backend": "sqlite",
       "runtime": "asyncio"
     }
