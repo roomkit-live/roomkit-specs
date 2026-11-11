@@ -9029,13 +9029,14 @@ keeps what its end reported: one whose `end` is owed stays incomplete.
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-10.6.8-003", "kind": "behavior", "applies": "§10.6.8 Liveness, cancellation and errors; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
-**Steering.** The owner offers the host an asynchronous `steer(directive,
-channel_id, room_id | turn_id | null)` that answers the number of loops it
-reached; across the backend a turn's id names its loop. It resolves the target
-turns from the turns it submitted, in the order it started them, under the
-rules of §21.3 (a room's most recent loop is the loop of its most recently
-started turn still running, the channel's most recent loop that of its most
-recently started turn in any room), sends `steer` on each target's link, and
+**Steering.** The owner offers the host an asynchronous `steer(room_id,
+channel_id, directive, turn_id | null)` that answers the number of loops it
+reached; across the backend a turn's id names its loop. The room is always
+named: a turn id narrows the steer to that turn of the room, and a turn of
+another room is reached by nothing. It resolves the target turns from the
+turns it submitted, in the order it started them, under the rules of §21.3 (a
+room's most recent loop is the loop of its most recently started turn still
+running), sends `steer` on each target's link, and
 sums their `steer_result`. A channel without steering, or one whose steering
 cannot reach the turn yet (it answers none), receives a `Cancel` as the
 turn's `cancel`: the owner then waits for `end` as after `close`, without
@@ -17901,12 +17902,11 @@ should live in the integration surface layer.
   hook's registration, enabling,
   disabling and removal, and a claim for a strategy, fail as not found, as
   do a message that names the room (§10.1 step 1), an injection, a record, a
-  steer that names the room, a delivery, a delegation, a task, a greeting, a
+  steer, a delivery, a delegation, a task, a greeting, a
   regeneration and a feedback, before any
   hook runs, anything is queued or drawn from a reentry budget, a turn starts
   or is steered, or a room is created; an update or a delete is a no-op that
-  fires nothing, and a task's cancel cancels nothing. A steer that names no
-  room reaches only the turns of the caller's rooms. A call that takes the
+  fires nothing, and a task's cancel cancels nothing. A call that takes the
   room lock checks the room as the lock finds it, before its due timer
   transitions are applied, so nothing is written in it, those transitions
   included: they fall due all the same, and the room's next own call or the
@@ -20332,21 +20332,25 @@ directive the host is told reached a loop is one that loop reads, unless a
 <!-- rfc: {"id": "RK-21.3-003", "kind": "behavior", "applies": "§21.3 AI Steering Directives; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **Which loop a directive reaches.** One AI channel object serves every room it
 is bound to, so its running tool loops can belong to several rooms' turns at
-once. A host names the loop a directive is for, or its room, never both: a
-`Cancel` addressed to a room MUST reach every loop of that room, any other
-directive addressed to a room MUST reach the room's most recent loop, and a
-directive addressed to a room MUST NOT reach a loop of another room. A directive addressed to neither
-reaches the channel's most recent loop, whatever its room. A loop is reachable once its turn has started; a directive
-that comes before reaches nothing, and the host is told how many loops it
-reached. To stop the turns one message starts, whether they have started or
+once. A host steering the channel itself names exactly one of the loop, the
+room or the turn a directive is for: one that names none, or several, MUST be
+refused before any loop is reached, since the channel's most recent loop may
+be another person's turn in another room. A `Cancel` addressed to a room or a
+turn MUST reach every loop of it, any other directive addressed to a room or
+a turn MUST reach its most recent loop, and a directive addressed to a room
+MUST NOT reach a loop of another room. A loop is reachable once its turn has
+started; a directive that comes before reaches nothing, and the host is told
+how many loops it reached. To stop the turns one message starts, whether they have started or
 not, a host cancels that message's delivery (§10.1, *Explicit delivery
 cancellation*), by its handle or its `delivery_key`, rather than steering its
 room: the room's other turns go on.
 
-The loops of a room's turns run on turn executors (Section 10.6): the room's
-owner resolves the turns a directive reaches under the rules above, from the
-turns it started, sends it to each as the backend's `steer` message, and tells
-the host the sum of what they reached (§10.6.8).
+The loops of a room's turns run on turn executors (Section 10.6): the host
+steers them through the room's owner, which always takes the room and, to reach
+one turn, that turn of the room. The owner resolves the turns a directive reaches
+under the rules above, from the turns it started, sends it to each as the
+backend's `steer` message, and tells the host the sum of what they reached
+(§10.6.8).
 
 Steering directives are typically issued by orchestration logic (e.g.,
 supervisor injecting context for a worker agent) or by hooks reacting to

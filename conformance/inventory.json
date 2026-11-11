@@ -477,7 +477,7 @@
     },
     {
       "section": "10.6.8",
-      "sha256": "bd903cb48e10a9fd6cfa7f881ebfcc73b9584642c0b1d5cc6e9a06d5b696b0a3",
+      "sha256": "23140ed3e40fb3333fd34e0c96122ae2763a5baae6c0569e62aafed12bda9d06",
       "classification": "normative",
       "review": "Source inventory: Liveness, cancellation and errors. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
@@ -1155,7 +1155,7 @@
     },
     {
       "section": "17.2",
-      "sha256": "3bd5191ee3b6ba87008eb423d449930069e740dd303d12b34185f51d7629bf40",
+      "sha256": "55a7384bddb13be07f64a1f8d512e51b006e9834ef040d9dbbe4874dd3576113",
       "classification": "normative",
       "review": "Source inventory: Multi-Tenant Isolation. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
@@ -1341,7 +1341,7 @@
     },
     {
       "section": "21.3",
-      "sha256": "8eb27760b3ec46418d5bb2deeddb2d85a89a750696fc75eb066ad639b363e646",
+      "sha256": "14227bcbc4dcbe84a860535e35385c61d58f8bc565ac61f9cf3937ab2731436e",
       "classification": "normative",
       "review": "Source inventory: AI Steering Directives. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
