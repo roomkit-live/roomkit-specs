@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "41d69f2f2f5b5e972e9c6ebdb46d7b787849c68083f336cc8d07aaeab7c2f434",
   "corpus_sha256": "3074153ac561976b33dbb9e08192a5ad45ba20e7671b7bc5b7d3f443a9d65a79",
-  "python_commit": "b9c94b7f9dba32607c4211c6b00cc6e209e7a680",
+  "python_commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
   "scenario_count": 1849,
   "sections": [
     {
@@ -7701,6 +7701,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -8167,6 +8183,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -8631,6 +8663,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -9073,6 +9121,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -9536,6 +9600,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -9986,6 +10066,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -10657,6 +10753,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -11356,6 +11468,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -11605,6 +11725,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -11858,6 +11986,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -12105,6 +12241,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -12344,6 +12488,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -12583,6 +12735,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -12830,6 +12990,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -13069,6 +13237,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -13316,6 +13492,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -13565,6 +13749,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -13815,6 +14007,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -14072,6 +14272,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -14298,6 +14506,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -14753,6 +14969,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -14974,6 +15206,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -15159,6 +15399,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -15458,6 +15706,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -15957,6 +16213,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -16238,6 +16510,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -16507,6 +16787,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -16764,6 +17052,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -17027,6 +17323,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -17282,6 +17586,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -17521,6 +17833,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -18033,6 +18353,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -18264,6 +18600,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -18505,6 +18849,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -19018,6 +19370,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -19157,6 +19525,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -19558,6 +19934,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -19957,6 +20349,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -20190,6 +20598,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -20664,6 +21080,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -21065,6 +21497,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -21340,6 +21788,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -21773,6 +22229,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -22182,6 +22654,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -22623,6 +23111,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -23056,6 +23560,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -23465,6 +23985,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -23874,6 +24410,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -24283,6 +24835,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -26343,6 +26911,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -26594,6 +27178,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -26829,6 +27429,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -26855,6 +27471,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -27608,6 +28232,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -27653,6 +28293,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -27850,6 +28498,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -28311,6 +28967,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -28802,6 +29474,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -29228,6 +29916,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-sqlite",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -29998,6 +30702,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -30230,6 +30942,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -30467,6 +31187,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -30706,6 +31434,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -30733,6 +31469,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -30952,8 +31696,26 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
+        },
+        {
+          "id": "speaking-policy-recent-context",
+          "scope": "SpeakTurn.recent includes later visible messages already in the turn context, excluding the answered event (Discussion rule 9).",
+          "coverage": "partial",
+          "missing": [
+            "Rust SpeakPolicy/SpeakTurn API and its matching behavior remain unported.",
+            "Other Discussion rules and policy decisions are outside this native context assertion."
+          ],
+          "executions": []
         }
       ]
     },
@@ -30995,7 +31757,16 @@
             "Compacting and summarizing wrappers can send the current event to their summarizer when a custom inner memory includes it; this fails in Python and Rust and is not claimed conformant.",
             "Compaction between tool rounds, emergency compaction, external-agent history and distributed recovery remain outside these retrieval scenarios."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -31293,6 +32064,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -31448,6 +32227,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -31763,6 +32550,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -31981,6 +32776,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -32114,6 +32917,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -32220,6 +33031,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -32451,6 +33270,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-deferred-memory-f252c9d-memory",
+              "implementation": "python",
+              "commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -33292,6 +34119,24 @@
       "implementation_commit": "b9c94b7f9dba32607c4211c6b00cc6e209e7a680",
       "rfc_commit": "8db513339314833d85bffb65444771cb194affd4",
       "corpus_commit": "8db513339314833d85bffb65444771cb194affd4",
+      "backend": "sqlite",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-deferred-memory-f252c9d-memory",
+      "implementation": "python",
+      "implementation_commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+      "rfc_commit": "52bb52daaa7c8c0a951468408af98182470bd074",
+      "corpus_commit": "52bb52daaa7c8c0a951468408af98182470bd074",
+      "backend": "memory",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-deferred-memory-f252c9d-sqlite",
+      "implementation": "python",
+      "implementation_commit": "f252c9dfba4e21923b2b9e672041d13daeac5456",
+      "rfc_commit": "52bb52daaa7c8c0a951468408af98182470bd074",
+      "corpus_commit": "52bb52daaa7c8c0a951468408af98182470bd074",
       "backend": "sqlite",
       "runtime": "asyncio"
     }
