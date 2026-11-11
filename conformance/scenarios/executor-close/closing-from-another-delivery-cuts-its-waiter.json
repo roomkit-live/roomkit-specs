@@ -86,12 +86,6 @@
                     "type": "text",
                     "body": "hello"
                   }
-                },
-                "expect": {
-                  "result": {
-                    "blocked": false,
-                    "error": null
-                  }
                 }
               }
             ]

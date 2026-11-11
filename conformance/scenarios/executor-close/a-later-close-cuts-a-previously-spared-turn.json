@@ -3,8 +3,8 @@
   "id": "executor-close/a-later-close-cuts-a-previously-spared-turn",
   "title": "A later external close cuts a turn that its own close had spared",
   "rules": [
-    "\u00a710.6.7",
-    "\u00a710.6.8"
+    "§10.6.7",
+    "§10.6.8"
   ],
   "notes": "Python: tests/test_executor_close_contract.py::test_later_external_close_cuts_a_turn_previously_spared_by_its_own_close. Exemptions apply to each close call, not to the lifetime of a turn.",
   "setup": {
