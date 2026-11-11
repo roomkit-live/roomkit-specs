@@ -1,12 +1,12 @@
 {
   "$schema": "../../scenario.schema.json",
-  "id": "executor-close/closing-from-a-nested-turn-spares-its-ancestors",
-  "title": "A nested turn closing its executor lets itself and the ancestor turn finish",
+  "id": "executor-close/a-later-close-cuts-a-previously-spared-turn",
+  "title": "A later external close cuts a turn that its own close had spared",
   "rules": [
-    "§10.6.7",
-    "§10.6.8"
+    "\u00a710.6.7",
+    "\u00a710.6.8"
   ],
-  "notes": "Python: TurnExecutor._spare_turns_run_under spares every turn the close runs under, including ancestors in other rooms.",
+  "notes": "Python: tests/test_executor_close_contract.py::test_later_external_close_cuts_a_turn_previously_spared_by_its_own_close. Exemptions apply to each close call, not to the lifetime of a turn.",
   "setup": {
     "channels": [
       {
@@ -20,10 +20,7 @@
         "model": {
           "rounds": [
             {
-              "text": "nested"
-            },
-            {
-              "text": "outer"
+              "text": "answer"
             }
           ]
         }
@@ -72,34 +69,6 @@
         "trigger": "before_ai_generation",
         "reactions": [
           {
-            "when": {
-              "room_id": "r1"
-            },
-            "do": [
-              {
-                "call": "process_inbound",
-                "room_id": "r2",
-                "message": {
-                  "channel_id": "ws",
-                  "sender_id": "alice",
-                  "content": {
-                    "type": "text",
-                    "body": "hello"
-                  }
-                },
-                "expect": {
-                  "result": {
-                    "blocked": false,
-                    "error": null
-                  }
-                }
-              }
-            ]
-          },
-          {
-            "when": {
-              "room_id": "r2"
-            },
             "do": [
               {
                 "call": "kit_executor.close",
@@ -108,6 +77,19 @@
                 }
               }
             ]
+          }
+        ]
+      }
+    },
+    {
+      "call": "kit_executor.hook",
+      "hook": {
+        "name": "after-close",
+        "trigger": "before_ai_generation",
+        "priority": 10,
+        "reactions": [
+          {
+            "gate": "closed-inside"
           }
         ]
       }
@@ -123,10 +105,23 @@
           "body": "hello"
         }
       },
+      "background": true,
+      "as": "turn"
+    },
+    {
+      "wait_for": "closed-inside"
+    },
+    {
+      "call": "kit_executor.close"
+    },
+    {
+      "await": "turn",
       "expect": {
         "result": {
           "blocked": false,
-          "error": null
+          "error": {
+            "$present": true
+          }
         }
       }
     },
@@ -145,34 +140,11 @@
             "type": "text",
             "body": "hello"
           }
-        },
-        {
-          "content": {
-            "type": "text",
-            "body": "outer"
-          }
-        }
-      ],
-      "r2": [
-        {
-          "content": {
-            "type": "text",
-            "body": "hello"
-          }
-        },
-        {
-          "content": {
-            "type": "text",
-            "body": "nested"
-          }
         }
       ]
     },
     "models": {
-      "agent": [
-        {},
-        {}
-      ]
+      "agent": []
     }
   }
 }
