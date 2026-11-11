@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "83ad90881065aaab5ceff041a21c2fd82f78e89e",
+  "python_commit": "a6e7c58801056fd2447ff1847f76ca83c945ad42",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -14581,7 +14581,7 @@
       ],
       "tests": [],
       "missing": [
-        "Arbitrary BEFORE_AI_GENERATION replacements that erase or move the answered message have no stable source identity in this fixture (remaining RMK-1576 scope).",
+        "Rewritten, removed or ambiguously relocated inputs are covered separately by deferred-hook-context-protection.",
         "Other memory providers, external agents and distributed recovery remain outside these cases."
       ]
     },
@@ -14610,7 +14610,7 @@
       ],
       "tests": [],
       "missing": [
-        "Arbitrary BEFORE_AI_GENERATION replacements that erase or move the answered message have no stable source identity in this fixture (remaining RMK-1576 scope).",
+        "Rewritten, removed or ambiguously relocated inputs are covered separately by deferred-hook-context-protection.",
         "Other memory providers, external agents and distributed recovery remain outside these cases."
       ]
     },
@@ -14646,7 +14646,7 @@
       ],
       "tests": [],
       "missing": [
-        "Arbitrary BEFORE_AI_GENERATION replacements that erase or move the answered message have no stable source identity in this fixture (remaining RMK-1576 scope).",
+        "Rewritten, removed or ambiguously relocated inputs are covered separately by deferred-hook-context-protection.",
         "Other memory providers, external agents and distributed recovery remain outside these cases."
       ]
     },
@@ -14689,7 +14689,7 @@
       ],
       "tests": [],
       "missing": [
-        "Hooks that rewrite, remove or ambiguously relocate the answered input have no replacement association established by these scenarios (remaining RMK-1576 scope).",
+        "Rewritten, removed or ambiguously relocated inputs are covered separately by deferred-hook-context-protection.",
         "Other memory providers, external agents and distributed recovery remain outside these cases."
       ]
     },
@@ -14711,8 +14711,132 @@
       ],
       "tests": [],
       "missing": [
-        "Hooks that rewrite, remove or ambiguously relocate the answered input have no replacement association established by these scenarios (remaining RMK-1576 scope).",
+        "Rewritten, removed or ambiguously relocated inputs are covered separately by deferred-hook-context-protection.",
         "Other memory providers, external agents and distributed recovery remain outside these cases."
+      ]
+    },
+    {
+      "id": "deferred-hook-context-protection",
+      "requirement": "RK-6.4-043",
+      "clause_sha256": "ebb1a187f2b93aa24f0c06214258e4d7718918abbde0fcd21c5b11beb8c2260a",
+      "scope": "Full-value association of deferred inputs after generation hooks; exact protected context and empty memory history when ambiguous, explicit overflow failure without replay, subsequent tool results shortened only when eligible, and unchanged ordinary-turn behavior.",
+      "coverage": "partial",
+      "review": "Read the approved association policy, exact model requests, memory histories, tool results, timeline and ON_ERROR assertion together with the implementations. Empty and duplicate contexts are covered. This link records shared assertions only.",
+      "assertions": [
+        {
+          "scenario": "memory/a-hook-rewriting-the-deferred-input-protects-its-context",
+          "pointer": "/expect",
+          "sha256": "625e54f70e7c5d20c2a9f7599b9b33a6ed10df3bb962a358b295f5981ec59dbb",
+          "scenario_sha256": "f54825c482cfb553c2ad1164242f5f6287d3810a402c3faa20bc0d9525c20970",
+          "proves": "Full-value association of deferred inputs after generation hooks; exact protected context and empty memory history when ambiguous, explicit overflow failure without replay, subsequent tool results shortened only when eligible, and unchanged ordinary-turn behavior."
+        },
+        {
+          "scenario": "memory/a-hook-removing-the-deferred-input-protects-its-context",
+          "pointer": "/expect",
+          "sha256": "323839a9daf47fc4297653e0d913146a457c24b5c81e0076584f99094d150195",
+          "scenario_sha256": "b242f2fa2ffdbabb1bc27d650103e926ad8e5f907d4fa199cdb92e3cea42b0a9",
+          "proves": "Full-value association of deferred inputs after generation hooks; exact protected context and empty memory history when ambiguous, explicit overflow failure without replay, subsequent tool results shortened only when eligible, and unchanged ordinary-turn behavior."
+        },
+        {
+          "scenario": "memory/a-hook-moving-indistinguishable-inputs-protects-its-context",
+          "pointer": "/expect",
+          "sha256": "61fdc9de585c5eceed241f36290ba2481001ba01cb8bf9a2ac9073859fc673c8",
+          "scenario_sha256": "6b38a840dbaec979389cbcb3baaa69b92bbb288c0ea4e5e7b956445e45ff7d03",
+          "proves": "Full-value association of deferred inputs after generation hooks; exact protected context and empty memory history when ambiguous, explicit overflow failure without replay, subsequent tool results shortened only when eligible, and unchanged ordinary-turn behavior."
+        },
+        {
+          "scenario": "memory/a-hook-moving-and-rewriting-the-input-protects-its-context",
+          "pointer": "/expect",
+          "sha256": "7f2c83993e3a67989d72628e54e1942d5eb2bad1fff31edeffee994aeca1697b",
+          "scenario_sha256": "674dc7035f9608079d83a2bf62423f5d6c95c9bfeb1db67aab98c6f06dbaffc7",
+          "proves": "Full-value association of deferred inputs after generation hooks; exact protected context and empty memory history when ambiguous, explicit overflow failure without replay, subsequent tool results shortened only when eligible, and unchanged ordinary-turn behavior."
+        },
+        {
+          "scenario": "memory/an-ambiguous-input-refuses-an-unsafe-compaction",
+          "pointer": "/expect",
+          "sha256": "30048994e20bb12bfc9e112dd7b6e7a68678e4b8b703ec2cfdfb534fd7883245",
+          "scenario_sha256": "2be868b30ce57b7eb1f80a809d1cd428a0f70d005db1276cdd03fd6dc74998bb",
+          "proves": "Full-value association of deferred inputs after generation hooks; exact protected context and empty memory history when ambiguous, explicit overflow failure without replay, subsequent tool results shortened only when eligible, and unchanged ordinary-turn behavior."
+        },
+        {
+          "scenario": "memory/an-ambiguous-input-only-compacts-new-tool-results",
+          "pointer": "/expect",
+          "sha256": "b09661db7f4ee812b21d3850ad2c90ac4e5127559e345e5b96163db6fd07545d",
+          "scenario_sha256": "a4cb03139ab4f268aafe9266927a0f0c541b603cdd71785fde657605eb893e88",
+          "proves": "Full-value association of deferred inputs after generation hooks; exact protected context and empty memory history when ambiguous, explicit overflow failure without replay, subsequent tool results shortened only when eligible, and unchanged ordinary-turn behavior."
+        },
+        {
+          "scenario": "memory/an-ambiguous-input-relieves-overflow-with-new-tool-results",
+          "pointer": "/expect",
+          "sha256": "1970c6b1ca042af9465f2e199cd103a59c23d93b611ad921250f088d8df0b4e4",
+          "scenario_sha256": "10195a0919566d74281ff887df8836184aa3e1d60f723bc6f8da1c82209e8cd6",
+          "proves": "Full-value association of deferred inputs after generation hooks; exact protected context and empty memory history when ambiguous, explicit overflow failure without replay, subsequent tool results shortened only when eligible, and unchanged ordinary-turn behavior."
+        },
+        {
+          "scenario": "memory/a-hook-removing-every-message-keeps-the-empty-boundary",
+          "pointer": "/expect",
+          "sha256": "f9223c8d5ac0dec422aa5920695f01ee43f17c11d9453474eb52dc37e15eef65",
+          "scenario_sha256": "472b19e5fd4a871e38a8c6605cfe055b3eb72458bc710ce209b2b124dc3f90cd",
+          "proves": "Full-value association of deferred inputs after generation hooks; exact protected context and empty memory history when ambiguous, explicit overflow failure without replay, subsequent tool results shortened only when eligible, and unchanged ordinary-turn behavior."
+        },
+        {
+          "scenario": "memory/a-generation-hook-copy-keeps-the-deferred-input",
+          "pointer": "/expect",
+          "sha256": "ddee2719335a0f7a007ed2e0d1e1df8246e2526644884051a6b9fb95a84f0117",
+          "scenario_sha256": "6f1175d66e6e6504ed2758a902bf788085c5ad8bb4524e493d81779885e0b7de",
+          "proves": "Full-value association of deferred inputs after generation hooks; exact protected context and empty memory history when ambiguous, explicit overflow failure without replay, subsequent tool results shortened only when eligible, and unchanged ordinary-turn behavior."
+        },
+        {
+          "scenario": "memory/a-generation-hook-move-keeps-the-unique-deferred-input",
+          "pointer": "/expect",
+          "sha256": "2b9abf418cfb5c8b5aaaf9905127eaa0be13f30f572b3cc971486ba9c5fc2e88",
+          "scenario_sha256": "63d2928cc9405d65551dc3fc373b13ddf724653a6e42f2b45057b98490f375e1",
+          "proves": "Full-value association of deferred inputs after generation hooks; exact protected context and empty memory history when ambiguous, explicit overflow failure without replay, subsequent tool results shortened only when eligible, and unchanged ordinary-turn behavior."
+        },
+        {
+          "scenario": "memory/a-generation-hook-copy-keeps-identical-questions-in-place",
+          "pointer": "/expect",
+          "sha256": "d9e7079927d18c0a829ccbdcc9845a1f0535d02a7c3b44443204a45c11269875",
+          "scenario_sha256": "998321897071232950d3caf5b3aa192f12e6990c871da449b7456ec1b6fedcaf",
+          "proves": "Full-value association of deferred inputs after generation hooks; exact protected context and empty memory history when ambiguous, explicit overflow failure without replay, subsequent tool results shortened only when eligible, and unchanged ordinary-turn behavior."
+        },
+        {
+          "scenario": "memory/a-generation-hook-copy-keeps-the-input-after-an-overflow",
+          "pointer": "/expect",
+          "sha256": "7b993f546bbab3254c513bb52eee7bfd0faea4f85ef4c84255a8249d86ae2ca8",
+          "scenario_sha256": "327c10ad88c1c67cf04c04b15685fb1b3e68f423285deaf83be54d56d4b3b82d",
+          "proves": "Full-value association of deferred inputs after generation hooks; exact protected context and empty memory history when ambiguous, explicit overflow failure without replay, subsequent tool results shortened only when eligible, and unchanged ordinary-turn behavior."
+        },
+        {
+          "scenario": "tools/a-compaction-keeps-the-input-a-generation-hook-rewrote",
+          "pointer": "/expect",
+          "sha256": "a2e1c34061fe3bbf3db4528844867c2a002c1b5e18fb89deb999ce7a6ad83f5b",
+          "scenario_sha256": "51dc73686fb046745ed4c575246e0d40e4fc6ddc4462c2d053635c669cab206d",
+          "proves": "Full-value association of deferred inputs after generation hooks; exact protected context and empty memory history when ambiguous, explicit overflow failure without replay, subsequent tool results shortened only when eligible, and unchanged ordinary-turn behavior."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Multipart input matching and deferred-tool reopening combined with ambiguous inputs are outside these shared scenarios."
+      ]
+    },
+    {
+      "id": "deferred-hook-context-native-mutations",
+      "requirement": "RK-6.4-043",
+      "clause_sha256": "ebb1a187f2b93aa24f0c06214258e4d7718918abbde0fcd21c5b11beb8c2260a",
+      "scope": "In-place mutation, replacement, mutation followed by copying and input removal preserve historical tool results and memory additions while shortening only earlier new results, in both generation modes.",
+      "coverage": "partial",
+      "review": "Read the parameterized native regression, observed red without the fix and green with it; source evidence here, execution retained separately.",
+      "assertions": [],
+      "tests": [
+        {
+          "nodeid": "tests/test_channels/test_ai_hook_protection.py::test_ambiguous_input_keeps_old_tools_and_reduces_only_new_results",
+          "sha256": "c483fe5968f89ace1e8d55724348008edce63866e00cfed2e0fd5e7de8721be7",
+          "proves": "The protected prefix includes structured historical tools and a subsequently inserted assistant memory message."
+        }
+      ],
+      "missing": [
+        "Other input transformations and emergency overflow are covered by separate shared scenarios."
       ]
     }
   ],

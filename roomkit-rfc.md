@@ -3100,6 +3100,26 @@ fails is logged, and the turn goes on as it was. This compaction answers no
 refusal: a call it precedes keeps its compacted replay.
 <!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-043", "kind": "behavior", "applies": "Compaction of a discussion turn whose answered input was changed by BEFORE_AI_GENERATION (§6.4, §19.7.5)."} -->
+**An answered input changed by a hook.** A discussion's deferred input is
+associated with the messages left by `BEFORE_AI_GENERATION` by its full
+pre-hook value: an equal message at its original position keeps that
+association; otherwise exactly one equal message identifies its new position.
+Object identity, a partial text match or the last user message cannot replace
+that association. When no such association remains, every message the hook
+left is protected from summarization and shortening for the rest of the turn,
+including its existing tool results. The channel MUST NOT reconstruct a
+removed or rewritten input. Between tool rounds the memory receives an empty
+history; a history it returns is placed ahead of the protected context under
+the same joining rules, and remains protected too. Only results produced after
+the hook may then be shortened: those before the last round for memory
+compaction, those in the older half for emergency compaction, under the same
+storage and call/result pairing rules. An emergency compaction that cannot
+free room this way fails the call explicitly, without replaying it on a
+reduced protected context. Ordinary turns that read their current input last
+continue to use that last user message as the hooks left it.
+<!-- /rfc -->
+
 <!-- rfc: {"id": "RK-6.4-042", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **A provider per turn.** A channel is given one provider, or a router
 (`router`, Appendix A.9) that picks the provider of each turn, never both and
