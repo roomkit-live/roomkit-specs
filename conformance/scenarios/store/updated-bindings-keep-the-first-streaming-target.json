@@ -4,7 +4,8 @@
   "title": "Updates and upserts keep attachment order, even when timestamps are equal",
   "rules": [
     "§12.2 step 11s",
-    "§6.1"
+    "§6.1",
+    "§14.1"
   ],
   "notes": "Python: tests/test_store_binding_contract.py::test_binding_order_survives_updates_and_reattach. The target is observed through the public inbound API. Equal timestamps and reverse lexical ids must not replace insertion order.",
   "setup": {
