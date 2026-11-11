@@ -17208,6 +17208,20 @@ a subset (an agent's turns before an instant) never measures a page to get it
 and never inherits the page's cap.
 <!-- /rfc -->
 
+<!-- rfc: {"id": "RK-14.1-005", "kind": "behavior", "applies": "§14.1 Conversation Store; binding insertion order, updates, reattachment and durable reads."} -->
+**Binding order.** `list_bindings` MUST return a room's bindings in the order
+they were first added. Updating a binding, including replacing it through
+`add_binding`, MUST preserve its position. Removing a binding and adding it
+again places it after the bindings still present. Equal or backdated
+`attached_at` values and channel identifiers MUST NOT reorder new bindings.
+`load_room_context` MUST preserve the same order, and a durable store MUST
+retain it across reopening. This makes selection of the first eligible
+streaming transport (§12.2 step 11s) stable across store implementations.
+When upgrading historical data that did not record insertion order, a store
+MAY reconstruct it once from attachment timestamps with a deterministic
+tie-breaker; subsequent writes and reads MUST follow the rules above.
+<!-- /rfc -->
+
 ### 14.2 Required Implementations
 
 <!-- rfc: {"id": "RK-14.2-001", "kind": "behavior", "applies": "§14.2 Required Implementations; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
