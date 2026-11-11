@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "41d69f2f2f5b5e972e9c6ebdb46d7b787849c68083f336cc8d07aaeab7c2f434",
-  "corpus_sha256": "d509eadd2a5fb4090d558ac440ca1be3a836443a42abd787aa8cf9fe3b876b16",
+  "corpus_sha256": "3074153ac561976b33dbb9e08192a5ad45ba20e7671b7bc5b7d3f443a9d65a79",
   "python_commit": "b9c94b7f9dba32607c4211c6b00cc6e209e7a680",
-  "scenario_count": 1845,
+  "scenario_count": 1849,
   "sections": [
     {
       "section": "0",
@@ -831,6 +831,10 @@
         "memory/a-memory-s-user-text-joins-the-turn-after-it",
         "memory/a-memory-that-fails-to-compact-leaves-the-turn-as-it-was",
         "memory/a-person-named-like-an-agent-s-label-reads-as-a-participant-in-a-summary-line",
+        "memory/a-queued-turn-keeps-its-question-out-of-compaction",
+        "memory/a-queued-turn-keeps-its-question-out-of-the-summary",
+        "memory/a-queued-turn-keeps-its-question-outside-the-window",
+        "memory/a-queued-turn-keeps-its-question-through-budget-trimming",
         "memory/a-runtime-mark-split-over-two-text-parts-of-a-memory-s-message-is-replaced",
         "memory/a-summarizing-memory-compacts-a-turn-past-its-threshold-between-two-calls",
         "memory/a-summary-set-before-an-assistant-turn-is-one-of-the-messages-at-the-next-compaction",
@@ -5700,6 +5704,10 @@
         "discussion/uninstalling-in-one-process-ends-the-discussion-in-the-others",
         "discussion/what-a-process-held-when-another-install-replaced-its-own-is-not-kept",
         "discussion/with-addressed-only-an-unaddressed-message-asks-no-agent",
+        "memory/a-queued-turn-keeps-its-question-out-of-compaction",
+        "memory/a-queued-turn-keeps-its-question-out-of-the-summary",
+        "memory/a-queued-turn-keeps-its-question-outside-the-window",
+        "memory/a-queued-turn-keeps-its-question-through-budget-trimming",
         "tasks/a-background-task-names-its-agent-by-the-discussion-s-handle",
         "tasks/a-background-tool-keeps-its-turns-name-before-a-post",
         "tasks/a-background-tool-keeps-its-turns-name-before-a-relay",
@@ -5757,7 +5765,7 @@
       "review": "normative",
       "requirements": 1,
       "mapping": {
-        "unmapped": 1
+        "mapped_partial": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -5768,6 +5776,10 @@
         "memory/a-compaction-between-rounds-stores-the-earlier-rounds-long-results",
         "memory/a-memory-compacts-the-history-between-two-tool-rounds",
         "memory/a-memory-that-fails-to-compact-leaves-the-turn-as-it-was",
+        "memory/a-queued-turn-keeps-its-question-out-of-compaction",
+        "memory/a-queued-turn-keeps-its-question-out-of-the-summary",
+        "memory/a-queued-turn-keeps-its-question-outside-the-window",
+        "memory/a-queued-turn-keeps-its-question-through-budget-trimming",
         "memory/a-summarizing-memory-compacts-a-turn-past-its-threshold-between-two-calls",
         "memory/the-window-holds-the-turn-s-event"
       ]
@@ -5807,6 +5819,10 @@
         "memory/a-budget-keeps-the-latest-events-that-fit",
         "memory/a-compacting-memory-summarizes-what-it-trims",
         "memory/a-person-named-like-an-agent-s-label-reads-as-a-participant-in-a-summary-line",
+        "memory/a-queued-turn-keeps-its-question-out-of-compaction",
+        "memory/a-queued-turn-keeps-its-question-out-of-the-summary",
+        "memory/a-queued-turn-keeps-its-question-outside-the-window",
+        "memory/a-queued-turn-keeps-its-question-through-budget-trimming",
         "memory/a-summarizing-memory-compacts-a-turn-past-its-threshold-between-two-calls",
         "memory/a-summary-set-before-an-assistant-turn-is-one-of-the-messages-at-the-next-compaction",
         "memory/a-summary-stands-for-the-older-turns",
@@ -30968,8 +30984,20 @@
     {
       "id": "RK-20.1-001",
       "section": "20.1",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "deferred-turn-memory-retrieval",
+          "scope": "The answered event survives built-in memory windows, budget trimming and summaries at the start of a deferred Discussion turn; visibility is applied before a summarizer reads history.",
+          "coverage": "partial",
+          "missing": [
+            "A custom memory returning the current event itself duplicates it in Python; this path is not claimed conformant.",
+            "Compacting and summarizing wrappers can send the current event to their summarizer when a custom inner memory includes it; this fails in Python and Rust and is not claimed conformant.",
+            "Compaction between tool rounds, emergency compaction, external-agent history and distributed recovery remain outside these retrieval scenarios."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-20.2-001",

@@ -14408,6 +14408,50 @@
         "Other rules in the broad Discussion clause remain outside this link.",
         "Memory windows and summaries, speak-policy recent history, external-agent unread history and cross-process recovery need separate evidence."
       ]
+    },
+    {
+      "id": "deferred-turn-memory-retrieval",
+      "requirement": "RK-20.1-001",
+      "clause_sha256": "aa8b5fa23f8bd744c1f6ee7d4f4b5ae7217667d8d7ff299a56fde6939d6ba25a",
+      "scope": "The answered event survives built-in memory windows, budget trimming and summaries at the start of a deferred Discussion turn; visibility is applied before a summarizer reads history.",
+      "coverage": "partial",
+      "review": "A real Discussion queues one agent behind a gated peer, then new visible and private messages arrive before the queued turn starts. Model message lists are exact; only the trailing discussion notes use a prefix assertion. Summary inputs are exact, including the documented bounded quotation. All four memories wrap a sliding window that omits the current event. The cases therefore prove that the channel restores that omitted input, not that every custom memory composition preserves it.",
+      "assertions": [
+        {
+          "scenario": "memory/a-queued-turn-keeps-its-question-outside-the-window",
+          "pointer": "/expect",
+          "sha256": "6afa910ad833cf44706aed39647da744b99bccf7afa7fad4224fb1184d87fc38",
+          "scenario_sha256": "fc0226945bdc30a2a06bbe088ee7354c86c9d395ab3b17ff6801a159cbc99204",
+          "proves": "Exactly two user messages reach the deferred agent: the answered question outside its one-event window, then the latest message with the discussion notes. The earlier clarification and old background are absent."
+        },
+        {
+          "scenario": "memory/a-queued-turn-keeps-its-question-through-budget-trimming",
+          "pointer": "/expect",
+          "sha256": "bba3a6cc5922af9d66ab6374fb7aa18be3138a75b88aba4a0e516acf376c29e5",
+          "scenario_sha256": "eeca138cb283dce7f3e53b21db93b8532c0aba73d7affdf725951d1fe4e60087",
+          "proves": "Exactly three user messages reach the deferred agent after budget trimming: the answered question, the two later messages in order, and runtime notes on the last. The oversized old background is absent."
+        },
+        {
+          "scenario": "memory/a-queued-turn-keeps-its-question-out-of-compaction",
+          "pointer": "/expect",
+          "sha256": "34fdf37c617bd57a4e3a70ddca389341a1cb14381f34dc42b73ed7f580e25b04",
+          "scenario_sha256": "d33d42ec81df4b5cb0babf8ae0d5d5b3817f38eb57fa0462e55b6e4765fd6804",
+          "proves": "The compacting memory summarizes only the visible older background. Its exact summarizer request contains neither the answered question nor the private message that arrived while the turn waited. The model reads the summary joined to the answered question, then both later messages in order."
+        },
+        {
+          "scenario": "memory/a-queued-turn-keeps-its-question-out-of-the-summary",
+          "pointer": "/expect",
+          "sha256": "c7bae9c55b39323fb0534e29e5213dc7bea2d3519caac501517c5435ff9e91d0",
+          "scenario_sha256": "3e5a67c5013d901b9da0e9d651088c4fdf740f0a0c042cc692da7f2299e41b80",
+          "proves": "The summarizing memory summarizes only the visible older background. Its exact summarizer request contains neither the answered question nor the private message that arrived while the turn waited. The model reads the summary joined to the answered question, then both later messages in order."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "A custom memory returning the current event itself duplicates it in Python; this path is not claimed conformant.",
+        "Compacting and summarizing wrappers can send the current event to their summarizer when a custom inner memory includes it; this fails in Python and Rust and is not claimed conformant.",
+        "Compaction between tool rounds, emergency compaction, external-agent history and distributed recovery remain outside these retrieval scenarios."
+      ]
     }
   ],
   "executions": [
