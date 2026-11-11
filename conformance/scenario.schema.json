@@ -807,6 +807,45 @@
           "description": "A scripted agent's fallback_provider (\u00a76.4): a second scripted model, asked once a generation's retries are spent on refusals worth another try, before anything was handed; its requests are under `<agent>/fallback` in `expect.models`.",
           "$ref": "#/$defs/model"
         },
+        "router": {
+          "description": "A scripted agent's router (\u00a76.4), in place of a `fallback_model`: more scripted models, under their names, and the model it picks at each turn's start (`turns`) and once a generation's retries are spent on refusals worth another try before anything was handed (`retries`), each list taken in order, its last entry repeating. A pick names a model as `expect.models` does: the agent's own `model` by the agent's id, one of the router's `models` as `<agent>/<name>`; a retry's null picks none. What the router was asked is under `expect.ai_routes`.",
+          "type": "object",
+          "required": [
+            "turns"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "models": {
+              "description": "The router's scripted models by name, their requests under `<agent>/<name>` in `expect.models`.",
+              "type": "object",
+              "propertyNames": {
+                "pattern": "^[a-z][a-z0-9_-]*$"
+              },
+              "additionalProperties": {
+                "$ref": "#/$defs/model"
+              }
+            },
+            "turns": {
+              "description": "The model each turn's start picks, in order, the last repeating.",
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string"
+              }
+            },
+            "retries": {
+              "description": "The model each retry picks, in order, the last repeating; null picks none. [null] by default.",
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
         "max_author_images": {
           "description": "A scripted agent's max_author_images: how many of the newest author images a turn sends as images, its history and its input counted together (\u00a76.4), the rest read as a mention; null bounds nothing. 4 by default.",
           "type": [
@@ -4596,6 +4635,16 @@
         },
         "models": {
           "description": "Per scripted agent, each generation's request as the model received it, in order: the `messages` it carries, each `{role, text, parts}` (`parts` its text and image parts in order, each `{text}` or `{image, mime_type}`, null for a text content), the `tool_results`, each `{tool_call_id, name, content, is_error}` (`name` the tool of its call, `content` a text, or a result's text and image parts in order, written as `parts`), its `system_prompt`, its `temperature` and `max_tokens` (\u00a76.4), its `reasoning_effort`, `thinking_budget` and `enable_thinking` (\u00a76.7), its `response_schema`, null for none (\u00a76.7), and the names of the `tools` it declares, in order.",
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "array",
+              "object"
+            ]
+          }
+        },
+        "ai_routes": {
+          "description": "Per scripted agent with a `router`, each request its router was asked, in order (\u00a76.4): its `reason` (`turn` at a turn's start, `retry` once a generation's retries are spent), its `text` (what the turn answers, as text), `previous` (for a retry, the model whose retries are spent, named as `expect.models` names it; null at a turn's start) and `failed` (for a retry, the last refusal, `{status, message}`; null at a turn's start).",
           "type": "object",
           "additionalProperties": {
             "type": [

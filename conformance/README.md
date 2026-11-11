@@ -535,7 +535,18 @@ scripted.
   `exponential_base` (default 2) to the attempt's number, at most
   `max_delay_ms` (default 60000); no retry when absent. `fallback_model`:
   its fallback provider, a scripted model asked once those retries are
-  spent, whose requests `models` holds under `<agent>/fallback`.
+  spent, whose requests `models` holds under `<agent>/fallback`. The agent's
+  router is the implementation's fallback router over `model` and
+  `fallback_model`: every turn starts on `model`, and once a generation's
+  retries are spent it is handed to the other one.
+- `router`: the agent's router (§6.4), in place of a `fallback_model`, with
+  `model` still its own model. `models`: more scripted models by name, whose
+  requests `models` holds under `<agent>/<name>`. `turns`: the model each
+  turn's start picks, `retries`: the model each retry picks once a
+  generation's retries are spent (`[null]` by default, null picking none),
+  each list taken in order, its last entry repeating. A pick names a model as
+  `models` does: `<agent>` for the agent's own, `<agent>/<name>` for one of the
+  router's. What the router was asked is under `ai_routes`.
 - `max_context_events`: the window of the agent's default memory, a sliding
   window of the room's latest events (§20.3, default 50).
 - `max_author_images`: how many of the newest author images a turn sends as
@@ -939,6 +950,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `executors` | Per executor of the setup, what it did, in order: `{call, channel_id, build}`, and `room_id` for a call about a room: `built` (a copy of the channel made, `build` counting them per executor and channel), `on_event`, `on_room_attached`, `on_room_detached`, `channel_call` (with its `verb`) and `close`. A detach from a room this build never saw let go of nothing and is not listed |
 | `lifecycle` | Per room, the lifecycle records (§5.1) in index order, when the implementation writes them: an implementation that writes none passes. It says which changes write one, and which write none (a change that changes nothing, §7.2) |
 | `participants` | Per room, the participants the store holds (§5.5), in the store's order |
+| `ai_routes` | Per scripted agent with a `router`, each request its router was asked, in order (§6.4): `reason` (`turn` at a turn's start, `retry` once a generation's retries are spent), `text` (what the turn answers, as text: the text of the event it answers), `previous` (for a retry, the model whose retries are spent, named as `models` names it; null at a turn's start) and `failed` (for a retry, the last refusal as `{status, message}`; null at a turn's start) |
 | `router_calls` | The custom inbound router calls in order: `{channel_id, channel_type, participant_id, channel_data, organization_id, identity_id}`; absent identity, organization and sender are null |
 | `resolver` | The scripted resolver's calls, in order |
 | `media_resolver` | The kit's media resolver's calls, in order: `{url, room_id}` |
