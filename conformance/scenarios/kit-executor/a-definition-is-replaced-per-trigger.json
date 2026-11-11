@@ -223,10 +223,19 @@
           ]
         },
         {
-          "tool_results": []
+          "tool_results": [
+            {
+              "tool_call_id": "call-1",
+              "content": "{\"error\": \"new\"}"
+            }
+          ]
         },
         {
           "tool_results": [
+            {
+              "tool_call_id": "call-1",
+              "content": "{\"error\": \"new\"}"
+            },
             {
               "tool_call_id": "call-2",
               "content": "{\"order\": \"1\", \"status\": \"ready\"}"

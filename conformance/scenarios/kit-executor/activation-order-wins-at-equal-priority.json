@@ -231,10 +231,19 @@
           ]
         },
         {
-          "tool_results": []
+          "tool_results": [
+            {
+              "tool_call_id": "call-1",
+              "content": "{\"error\": \"second\"}"
+            }
+          ]
         },
         {
           "tool_results": [
+            {
+              "tool_call_id": "call-1",
+              "content": "{\"error\": \"second\"}"
+            },
             {
               "tool_call_id": "call-2",
               "content": "{\"error\": \"first\"}"
