@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "6fd320970f91f5b66138cf989ac5fe7636587d7eded12d569dd71f52221d7e85",
-  "corpus_sha256": "da0ab531e5bb0b0e41bef740830462ca9c7e788dc3eacd8927ac18c6e36295c3",
+  "corpus_sha256": "36caffd98cf2f12968b3465364e49915da0b2249816934f7cc933bdefc22dd92",
   "python_commit": "d3502c79560a72cb2846860bce7d87d903003aca",
-  "scenario_count": 1862,
+  "scenario_count": 1866,
   "sections": [
     {
       "section": "0",
@@ -832,6 +832,10 @@
         "memory/a-deferred-turn-compacts-only-the-history-before-its-input",
         "memory/a-deferred-turn-keeps-compacting-after-an-overflow",
         "memory/a-deferred-turn-keeps-its-input-through-two-overflows",
+        "memory/a-generation-hook-copy-keeps-identical-questions-in-place",
+        "memory/a-generation-hook-copy-keeps-the-deferred-input",
+        "memory/a-generation-hook-copy-keeps-the-input-after-an-overflow",
+        "memory/a-generation-hook-move-keeps-the-unique-deferred-input",
         "memory/a-memory-compacts-the-history-between-two-tool-rounds",
         "memory/a-memory-s-notes-follow-the-turn-s-input",
         "memory/a-memory-s-user-text-joins-the-turn-after-it",
@@ -5726,6 +5730,10 @@
         "memory/a-deferred-turn-compacts-only-the-history-before-its-input",
         "memory/a-deferred-turn-keeps-compacting-after-an-overflow",
         "memory/a-deferred-turn-keeps-its-input-through-two-overflows",
+        "memory/a-generation-hook-copy-keeps-identical-questions-in-place",
+        "memory/a-generation-hook-copy-keeps-the-deferred-input",
+        "memory/a-generation-hook-copy-keeps-the-input-after-an-overflow",
+        "memory/a-generation-hook-move-keeps-the-unique-deferred-input",
         "memory/a-memory-summary-keeps-the-deferred-compaction-boundary",
         "memory/a-queued-turn-keeps-its-question-out-of-compaction",
         "memory/a-queued-turn-keeps-its-question-out-of-the-summary",
@@ -5805,6 +5813,10 @@
         "memory/a-deferred-turn-compacts-only-the-history-before-its-input",
         "memory/a-deferred-turn-keeps-compacting-after-an-overflow",
         "memory/a-deferred-turn-keeps-its-input-through-two-overflows",
+        "memory/a-generation-hook-copy-keeps-identical-questions-in-place",
+        "memory/a-generation-hook-copy-keeps-the-deferred-input",
+        "memory/a-generation-hook-copy-keeps-the-input-after-an-overflow",
+        "memory/a-generation-hook-move-keeps-the-unique-deferred-input",
         "memory/a-memory-compacts-the-history-between-two-tool-rounds",
         "memory/a-memory-summary-keeps-the-deferred-compaction-boundary",
         "memory/a-memory-that-fails-to-compact-leaves-the-turn-as-it-was",
@@ -5860,6 +5872,10 @@
         "memory/a-deferred-turn-compacts-only-the-history-before-its-input",
         "memory/a-deferred-turn-keeps-compacting-after-an-overflow",
         "memory/a-deferred-turn-keeps-its-input-through-two-overflows",
+        "memory/a-generation-hook-copy-keeps-identical-questions-in-place",
+        "memory/a-generation-hook-copy-keeps-the-deferred-input",
+        "memory/a-generation-hook-copy-keeps-the-input-after-an-overflow",
+        "memory/a-generation-hook-move-keeps-the-unique-deferred-input",
         "memory/a-memory-summary-keeps-the-deferred-compaction-boundary",
         "memory/a-person-named-like-an-agent-s-label-reads-as-a-participant-in-a-summary-line",
         "memory/a-queued-turn-keeps-its-question-out-of-compaction",
@@ -11353,6 +11369,16 @@
               "state": "recorded_pass"
             }
           ]
+        },
+        {
+          "id": "deferred-hook-copy-overflow",
+          "scope": "A generation hook reconstructs a deferred turn's unchanged input. Emergency compaction keeps that entire input and later messages, and subsequent memory compactions and requests retain the same boundary.",
+          "coverage": "partial",
+          "missing": [
+            "Hooks that rewrite, remove or ambiguously relocate the answered input have no replacement association established by these scenarios (remaining RMK-1576 scope).",
+            "Other memory providers, external agents and distributed recovery remain outside these cases."
+          ],
+          "executions": []
         }
       ]
     },
@@ -11379,6 +11405,16 @@
               "state": "recorded_pass"
             }
           ]
+        },
+        {
+          "id": "deferred-hook-copy-compaction",
+          "scope": "A generation hook reconstructs a deferred turn's unchanged input, at the same position (identical questions included) or at a unique moved position. Between tool rounds the memory receives exactly the history before that input and the generation usage; its summary keeps the input, later messages, runtime notes and tool pairs whole.",
+          "coverage": "partial",
+          "missing": [
+            "Hooks that rewrite, remove or ambiguously relocate the answered input have no replacement association established by these scenarios (remaining RMK-1576 scope).",
+            "Other memory providers, external agents and distributed recovery remain outside these cases."
+          ],
+          "executions": []
         }
       ]
     },
