@@ -8920,9 +8920,11 @@ executor that has not registered every name a request carries does not take
 it (§10.6.7), so a turn never runs without one of its room's hooks. On an
 executor a name carries at most one hook per trigger, and a hook registered
 again under a name and a trigger it already carries replaces the first. A
-name the room enables joins the room's scope (§9.1): enabling a name a hook
-of the room already holds, the room's own or another enabled one, MUST be
-refused, so that a room never holds two hooks of one name.
+name the room enables joins the room's scope (§9.1). Enabling a name already
+enabled for that room MUST be a no-op: it creates no duplicate activation and
+preserves its place in the activation order. Enabling a name held by another
+hook registration of the room MUST be refused, so that a room never holds
+two different hooks of one name.
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-10.6.6-004", "kind": "behavior", "applies": "§10.6.6 Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->

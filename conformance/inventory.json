@@ -465,9 +465,9 @@
     },
     {
       "section": "10.6.6",
-      "sha256": "206e40bea4dfd0fe1b7208f58d7790544863f2becb5dfa2a347de93fdb3f5531",
+      "sha256": "445c834284561e1e8a2f1958f2fbae803217bfffd3122036f2339d24bdbb3bca",
       "classification": "normative",
-      "review": "Source inventory: Hooks. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Hooks. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Re-read after HITL c1206a93: repeating an existing named activation preserves its order; collisions with another room-hook registration are refused."
     },
     {
       "section": "10.6.7",
@@ -1667,55 +1667,55 @@
       "section": "B.1",
       "sha256": "02ecdfd46777ce12b34f1960cb1ce3a918c028ca09ddf82b2faa2a5d6663c409",
       "classification": "informative",
-      "review": "Source inventory: Customer (SMS) + AI \u2014 Basic Conversation. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+      "review": "Source inventory: Customer (SMS) + AI — Basic Conversation. Informative example, removed draft, or heading with no body; no independent obligation claimed."
     },
     {
       "section": "B.2",
       "sha256": "a2bc38a8165812aaed634fd9835fd45f5f058c416e1c71a12fa5f7eef234870b",
       "classification": "informative",
-      "review": "Source inventory: Sensitivity Scanning \u2014 Block and Inject. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+      "review": "Source inventory: Sensitivity Scanning — Block and Inject. Informative example, removed draft, or heading with no body; no independent obligation claimed."
     },
     {
       "section": "B.3",
       "sha256": "0d59e7eb1f548fe986df21c6c9ddc1a9f39b4f732c770bcce8f7a967b05a23b5",
       "classification": "informative",
-      "review": "Source inventory: Ambiguous Identity \u2014 Shared Family Phone. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+      "review": "Source inventory: Ambiguous Identity — Shared Family Phone. Informative example, removed draft, or heading with no body; no independent obligation claimed."
     },
     {
       "section": "B.4",
       "sha256": "3551b6c238cd6e3ff199387d186e07ca38081929ee8bf69e96573a0e35fd0779",
       "classification": "informative",
-      "review": "Source inventory: AI \u2194 AI Multi-Agent with Chain Depth. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+      "review": "Source inventory: AI ↔ AI Multi-Agent with Chain Depth. Informative example, removed draft, or heading with no body; no independent obligation claimed."
     },
     {
       "section": "B.5",
       "sha256": "3b58db7e25ebb1a9686e376d182c1b216afc1de4e34e47ec373313f20534a2eb",
       "classification": "informative",
-      "review": "Source inventory: Dynamic Channel Management \u2014 Advisor Joins. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+      "review": "Source inventory: Dynamic Channel Management — Advisor Joins. Informative example, removed draft, or heading with no body; no independent obligation claimed."
     },
     {
       "section": "B.6",
       "sha256": "c285aa712a940319cfc73f788b0246ba8e1c3c4810204d8b4585f1d7399be864",
       "classification": "informative",
-      "review": "Source inventory: Message Edit \u2014 Cross-Channel with Fallback. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+      "review": "Source inventory: Message Edit — Cross-Channel with Fallback. Informative example, removed draft, or heading with no body; no independent obligation claimed."
     },
     {
       "section": "B.7",
       "sha256": "0bf21f50cc9bcb67459dfc304dbcf9c61f768420d7a3e9216f54537a1f5fbc88",
       "classification": "informative",
-      "review": "Source inventory: Message Delete \u2014 Cross-Channel with Fallback. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+      "review": "Source inventory: Message Delete — Cross-Channel with Fallback. Informative example, removed draft, or heading with no body; no independent obligation claimed."
     },
     {
       "section": "B.8",
       "sha256": "0062d2b2955038a52fb827fe4ed92fb1f30128890d0b10c76f055e65f031d0d9",
       "classification": "informative",
-      "review": "Source inventory: SIP Call \u2192 Unified process_inbound with Protocol Traces. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+      "review": "Source inventory: SIP Call → Unified process_inbound with Protocol Traces. Informative example, removed draft, or heading with no body; no independent obligation claimed."
     },
     {
       "section": "B.9",
       "sha256": "c701ba4a3f44cad2dc4cb3cde35f84865d7d9a25f5bc8d92bb07a3f8b35389d8",
       "classification": "informative",
-      "review": "Source inventory: Multi-Agent Pipeline \u2014 Triage \u2192 Specialist \u2192 Resolution. Informative example, removed draft, or heading with no body; no independent obligation claimed."
+      "review": "Source inventory: Multi-Agent Pipeline — Triage → Specialist → Resolution. Informative example, removed draft, or heading with no body; no independent obligation claimed."
     }
   ]
 }
