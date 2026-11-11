@@ -220,7 +220,7 @@ room callbacks of the setup are not compared.
     that, `reads` answers it, `result` is answered as written; what it keeps
     is the room's state of §10.6.2, dropped by `on_room_detached`.
     A `gate` holds before any change; `forgets` clears the state after
-    `keeps`; `fail` raises the scripted failure after changes and before
+    `keeps`; `do` runs actions in the calling context; `fail` raises the scripted failure after changes and before
     answering (the Python harness declares that exception for reconstruction);
   - with `declared`, the kit holds it by its declaration alone, and the
     executors of `executors` that host it build it (below);
