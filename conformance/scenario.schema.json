@@ -3276,6 +3276,7 @@
           },
           "then": {
             "required": [
+              "room_id",
               "channel_id",
               "directive"
             ],
@@ -3285,7 +3286,7 @@
                 "type": "string"
               },
               "room_id": {
-                "description": "The room whose turns it steers: every one for a Cancel, the most recent for any other directive; the channel's most recent turn when absent.",
+                "description": "The room whose turns it steers, always named: every one for a Cancel, the most recent for any other directive; never a turn of another room.",
                 "type": "string"
               },
               "directive": {
