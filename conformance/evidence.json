@@ -423912,7 +423912,7 @@
       "artifact": {
         "path": "conformance/executions/python-postgres-contracts-ec7d228.xml",
         "format": "pytest_junit",
-        "sha256": "a3b33f8c3b0665bb41a8f4ca17c9c76d042697474972ab0e00902befef758242"
+        "sha256": "d266235477bdc9775a2a93b430d66237675dc7712b80d8648b68bda3dacf7a81"
       },
       "results": [
         {
@@ -433594,7 +433594,7 @@
       "artifact": {
         "path": "conformance/executions/python-postgres-contracts-ec7d228.xml",
         "format": "pytest_junit",
-        "sha256": "a3b33f8c3b0665bb41a8f4ca17c9c76d042697474972ab0e00902befef758242"
+        "sha256": "d266235477bdc9775a2a93b430d66237675dc7712b80d8648b68bda3dacf7a81"
       },
       "results": [
         {
