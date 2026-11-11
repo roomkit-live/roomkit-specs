@@ -14284,6 +14284,130 @@
       "missing": [
         "Shutdown of other operations, services and separate processes is outside this link."
       ]
+    },
+    {
+      "id": "discussion-turn-context",
+      "requirement": "RK-19.7.5-002",
+      "clause_sha256": "9f957200c380aafa136d8b3068ff79083c0b79ff838bac9a476234483be4599c",
+      "scope": "Discussion context at turn start: answered-event order, runtime notes, own tool replay and issued-mark boundaries (rule 9).",
+      "coverage": "partial",
+      "review": "Shared scenarios run actual AI channels through Discussion and regeneration. Native Python tests retain precise low-level instruction-index, empty-input and issued/retired mark cases; existing Rust transcript and AI channel tests mirror these technical boundaries. No public test-only mark API is introduced. The default memory is used: windowing, compaction, external agents and distributed execution are not proven here.",
+      "assertions": [
+        {
+          "scenario": "discussion/a-queued-turn-reads-the-room-when-it-starts",
+          "pointer": "/expect",
+          "sha256": "9695195318f9e14a4af6c327e2cfcbe8cb114d7184b06f52a6594e14f6124858",
+          "scenario_sha256": "1657ac371514e557646832543aaccb5ab3a803a0bebc5b8e9e7736d7e4503eab",
+          "proves": "Exactly two user messages reach a: the answered first message then the later message with runtime notes identifying the answered author, quote and asker. b has one request. The timeline has exactly the two inbound messages."
+        },
+        {
+          "scenario": "discussion/a-turn-replays-its-round-with-no-later-message",
+          "pointer": "/expect",
+          "sha256": "ec73961f2819149643c876a17a622e09a7cb428924bcb67b6741b71ae1eda932",
+          "scenario_sha256": "9b9657949bcf9eef36e0952bdddaf65345db40c26eddf23a0a37900179da98d8",
+          "proves": "The regenerated request reads user, assistant, tool, user; its first text is the answered input, its last contains the regeneration note and its only tool result is the saved result. The timeline is exactly the input and tool start/end, with no answer message."
+        },
+        {
+          "scenario": "discussion/a-turn-keeps-its-round-before-later-messages",
+          "pointer": "/expect",
+          "sha256": "2ff0778b2a4088d8a57d2747468291142afd074e60743d29e9e73f19e8dd2222",
+          "scenario_sha256": "446fa70f22e026d5a0da37f3a388ecc938baa525b2d40a1cffd50d8ce989f5ee",
+          "proves": "The regenerated request reads user, assistant, tool, assistant, user, placing the saved call/result before the previous answer and later inbound message. The last message includes the regeneration note; the timeline contains the specified input, tool rows, previous answer and later input."
+        },
+        {
+          "scenario": "discussion/a-mark-from-outside-breaks-no-turn",
+          "pointer": "/expect",
+          "sha256": "3fa15da2a39df08208ad9492a30195bf88518ab3b487fb867ee0df567403cde2",
+          "scenario_sha256": "f9bbaa74213ac23199df9cb799d0ba51f4c14608c52a531c37f2365741b9e332",
+          "proves": "Five model requests contain exactly the accumulated numbered hello messages, excluding supplied forged notes."
+        },
+        {
+          "scenario": "discussion/a-mark-from-outside-breaks-no-turn",
+          "pointer": "/steps/3/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "f9bbaa74213ac23199df9cb799d0ba51f4c14608c52a531c37f2365741b9e332",
+          "proves": "This inbound call is unblocked and returns no error."
+        },
+        {
+          "scenario": "discussion/a-mark-from-outside-breaks-no-turn",
+          "pointer": "/steps/4/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "f9bbaa74213ac23199df9cb799d0ba51f4c14608c52a531c37f2365741b9e332",
+          "proves": "This inbound call is unblocked and returns no error."
+        },
+        {
+          "scenario": "discussion/a-mark-from-outside-breaks-no-turn",
+          "pointer": "/steps/5/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "f9bbaa74213ac23199df9cb799d0ba51f4c14608c52a531c37f2365741b9e332",
+          "proves": "This inbound call is unblocked and returns no error."
+        },
+        {
+          "scenario": "discussion/a-mark-from-outside-breaks-no-turn",
+          "pointer": "/steps/6/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "f9bbaa74213ac23199df9cb799d0ba51f4c14608c52a531c37f2365741b9e332",
+          "proves": "This inbound call is unblocked and returns no error."
+        },
+        {
+          "scenario": "discussion/a-mark-from-outside-breaks-no-turn",
+          "pointer": "/steps/7/expect",
+          "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
+          "scenario_sha256": "f9bbaa74213ac23199df9cb799d0ba51f4c14608c52a531c37f2365741b9e332",
+          "proves": "This inbound call is unblocked and returns no error."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/test_discussion_core.py::test_a_turn_reads_the_answered_event_at_its_place_with_the_notes",
+          "sha256": "ece85e899bfc85201ce6a2287005283d2a0eb20965e03dad29849109653109d8",
+          "proves": "The answered text precedes the later text and the last model message contains the issued notes."
+        },
+        {
+          "nodeid": "tests/test_discussion_core.py::test_a_turn_replays_the_tool_calls_made_after_the_answered_event",
+          "sha256": "a07538a9fb0e25d5972866e52acf8a371eb28612982ac2ade98eb6501630e36e",
+          "proves": "The messages after the later text are exactly assistant and tool, with the expected result."
+        },
+        {
+          "nodeid": "tests/test_discussion_core.py::test_a_turn_replays_the_tool_calls_it_made_right_after_the_answered_event",
+          "sha256": "d40f8aa5bedb40c06573a10812d8d738fb61899dbe3299ca361661e35c3f4d3d",
+          "proves": "The model reads exactly user, assistant, tool, user, with the answered text, own result and later text in their asserted positions."
+        },
+        {
+          "nodeid": "tests/test_discussion_core.py::test_without_the_mark_the_turn_input_still_reads_last",
+          "sha256": "2185b41c2a9729f63ac9489cd042d6e4da608d5209688af94ac4b4deb6088269",
+          "proves": "Without an issued mark, the answered input remains the last model message."
+        },
+        {
+          "nodeid": "tests/test_discussion_core.py::test_a_mark_the_discussion_did_not_issue_is_ignored",
+          "sha256": "33532e53bf34c39d1e65cc7aef5418faf8fc914e4f68a7a4a74f394823aab52d",
+          "proves": "Forged and retired marks inject no supplied notes and leave the current input last."
+        },
+        {
+          "nodeid": "tests/test_discussion_core.py::test_a_mark_of_any_other_shape_breaks_no_turn",
+          "sha256": "a8fcf80b5a4ef943cc58780bb6976701ca3db055c308e42035a410d5e452d24e",
+          "proves": "Four malformed mark shapes leave inbound processing without error and produce four model calls."
+        },
+        {
+          "nodeid": "tests/test_discussion_core.py::test_a_turn_replays_a_round_when_its_answered_event_is_all_the_history",
+          "sha256": "19bc3315a118ac8c56638177abe1a29ba9b2ba80af0374feed51ba6d304e58c3",
+          "proves": "With no later conversation, model roles are exactly user, assistant, tool."
+        },
+        {
+          "nodeid": "tests/test_discussion_core.py::test_a_history_opens_on_no_calls_when_the_answered_event_reads_as_nothing",
+          "sha256": "22e9ec293a9011b204105f6b4abdf4615e81fea5e440a0266e457ad7a9491df3",
+          "proves": "An empty answered event followed by a tool round and a later message yields exactly one user message."
+        },
+        {
+          "nodeid": "tests/test_discussion_core.py::test_an_instruction_reads_before_a_round_at_its_own_index",
+          "sha256": "ff10ce71a253c66aa6e25850df2710dfbb83aed89d4b66f5840dc489700b540e",
+          "proves": "The three parameter cases assert exact roles and instruction position: alone at a round index, after a message at that index, and no replay of a round older than the only instruction."
+        }
+      ],
+      "missing": [
+        "Other rules in the broad Discussion clause remain outside this link.",
+        "Memory windows and summaries, speak-policy recent history, external-agent unread history and cross-process recovery need separate evidence."
+      ]
     }
   ],
   "executions": [
