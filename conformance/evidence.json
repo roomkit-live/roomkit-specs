@@ -14649,6 +14649,71 @@
         "Arbitrary BEFORE_AI_GENERATION replacements that erase or move the answered message have no stable source identity in this fixture (remaining RMK-1576 scope).",
         "Other memory providers, external agents and distributed recovery remain outside these cases."
       ]
+    },
+    {
+      "id": "deferred-hook-copy-compaction",
+      "requirement": "RK-6.4-023",
+      "clause_sha256": "26ca6d0e7fafc3113d28b20a64af7650844b0e9118ac002d20b9d2e7bafa88f3",
+      "scope": "A generation hook reconstructs a deferred turn's unchanged input, at the same position (identical questions included) or at a unique moved position. Between tool rounds the memory receives exactly the history before that input and the generation usage; its summary keeps the input, later messages, runtime notes and tool pairs whole.",
+      "coverage": "partial",
+      "review": "Read against RFC sections 6.4 and 9.3. These assertions cover an unchanged input copied by a generation hook, not the whole compaction capability.",
+      "assertions": [
+        {
+          "scenario": "memory/a-generation-hook-copy-keeps-the-deferred-input",
+          "pointer": "/expect",
+          "sha256": "ddee2719335a0f7a007ed2e0d1e1df8246e2526644884051a6b9fb95a84f0117",
+          "scenario_sha256": "6f1175d66e6e6504ed2758a902bf788085c5ad8bb4524e493d81779885e0b7de",
+          "proves": "A generation hook reconstructs a deferred turn's unchanged input, at the same position (identical questions included) or at a unique moved position. Between tool rounds the memory receives exactly the history before that input and the generation usage; its summary keeps the input, later messages, runtime notes and tool pairs whole."
+        },
+        {
+          "scenario": "memory/a-generation-hook-move-keeps-the-unique-deferred-input",
+          "pointer": "/expect",
+          "sha256": "2b9abf418cfb5c8b5aaaf9905127eaa0be13f30f572b3cc971486ba9c5fc2e88",
+          "scenario_sha256": "63d2928cc9405d65551dc3fc373b13ddf724653a6e42f2b45057b98490f375e1",
+          "proves": "A generation hook reconstructs a deferred turn's unchanged input, at the same position (identical questions included) or at a unique moved position. Between tool rounds the memory receives exactly the history before that input and the generation usage; its summary keeps the input, later messages, runtime notes and tool pairs whole."
+        },
+        {
+          "scenario": "memory/a-generation-hook-copy-keeps-identical-questions-in-place",
+          "pointer": "/expect",
+          "sha256": "d9e7079927d18c0a829ccbdcc9845a1f0535d02a7c3b44443204a45c11269875",
+          "scenario_sha256": "998321897071232950d3caf5b3aa192f12e6990c871da449b7456ec1b6fedcaf",
+          "proves": "A generation hook reconstructs a deferred turn's unchanged input, at the same position (identical questions included) or at a unique moved position. Between tool rounds the memory receives exactly the history before that input and the generation usage; its summary keeps the input, later messages, runtime notes and tool pairs whole."
+        },
+        {
+          "scenario": "memory/a-generation-hook-copy-keeps-the-input-after-an-overflow",
+          "pointer": "/expect",
+          "sha256": "7b993f546bbab3254c513bb52eee7bfd0faea4f85ef4c84255a8249d86ae2ca8",
+          "scenario_sha256": "327c10ad88c1c67cf04c04b15685fb1b3e68f423285deaf83be54d56d4b3b82d",
+          "proves": "A generation hook reconstructs a deferred turn's unchanged input, at the same position (identical questions included) or at a unique moved position. Between tool rounds the memory receives exactly the history before that input and the generation usage; its summary keeps the input, later messages, runtime notes and tool pairs whole."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Hooks that rewrite, remove or ambiguously relocate the answered input have no replacement association established by these scenarios (remaining RMK-1576 scope).",
+        "Other memory providers, external agents and distributed recovery remain outside these cases."
+      ]
+    },
+    {
+      "id": "deferred-hook-copy-overflow",
+      "requirement": "RK-6.4-022",
+      "clause_sha256": "2afc2cc84cb85928be93bb502ada7129167062fd697070f6ec651ceff2d1accb",
+      "scope": "A generation hook reconstructs a deferred turn's unchanged input. Emergency compaction keeps that entire input and later messages, and subsequent memory compactions and requests retain the same boundary.",
+      "coverage": "partial",
+      "review": "Read against RFC sections 6.4 and 9.3. These assertions cover an unchanged input copied by a generation hook, not the whole compaction capability.",
+      "assertions": [
+        {
+          "scenario": "memory/a-generation-hook-copy-keeps-the-input-after-an-overflow",
+          "pointer": "/expect",
+          "sha256": "7b993f546bbab3254c513bb52eee7bfd0faea4f85ef4c84255a8249d86ae2ca8",
+          "scenario_sha256": "327c10ad88c1c67cf04c04b15685fb1b3e68f423285deaf83be54d56d4b3b82d",
+          "proves": "A generation hook reconstructs a deferred turn's unchanged input. Emergency compaction keeps that entire input and later messages, and subsequent memory compactions and requests retain the same boundary."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Hooks that rewrite, remove or ambiguously relocate the answered input have no replacement association established by these scenarios (remaining RMK-1576 scope).",
+        "Other memory providers, external agents and distributed recovery remain outside these cases."
+      ]
     }
   ],
   "executions": [
