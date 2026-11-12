@@ -8,6 +8,7 @@ Protocol specifications and RFCs for [RoomKit](https://github.com/roomkit-live/r
 |---|---|
 | [roomkit-rfc.md](roomkit-rfc.md) | RoomKit protocol specification — room model, event lifecycle, hook pipeline, channel bindings, identity resolution, realtime media (voice, video, SFU conferencing, recording), and the contracts for AI participation (orchestration, memory, tool access control, skills) |
 | [conformance/](conformance/README.md) | The shared conformance suite: scenarios every implementation runs, as the executable form of the RFC's rules, with their schema and checker |
+| [Durable LLM usage history](proposals/llm-usage-history.md) | Draft proposal for local usage statistics: per-invocation records, scoped queries, optional cost estimates and proposed conformance scenarios; not normative |
 
 ## Purpose
 
