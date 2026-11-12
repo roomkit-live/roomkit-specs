@@ -1587,6 +1587,20 @@
               ]
             }
           }
+        },
+        {
+          "type": "object",
+          "required": [
+            "acp_disconnect"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "acp_disconnect": {
+              "description": "Close the named scripted ACP transport pipe; the channel detects the dead connection through is_alive.",
+              "type": "string",
+              "minLength": 1
+            }
+          }
         }
       ]
     },
@@ -4521,6 +4535,7 @@
         "already_set_up",
         "acp_setup_refused",
         "acp_request_refused",
+        "acp_connection_closed",
         "kind_not_stored",
         "turn_link",
         "idempotency_key_taken"

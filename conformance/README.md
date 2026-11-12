@@ -713,6 +713,7 @@ client's `clientInfo.version` is its implementation's own.
 | `{"idle": true}` | Waits until the kit runs nothing in the background; with `processes`, until none of the kits does, each discussion's driver roused first, so that it reads what another process stored |
 | `{"wait_for_lock": room, "waiters": n}` | Waits until `n` calls (1 by default) wait for the room's lock (a runner fails after 5 s): calls started in the background are then known to overlap. `room` may be a reference, a room the run created (`$r1`) |
 | `{"lock_releases": "fail"}`, `{"lock_releases": "succeed"}` | Sets the releases of the kit's `lock_manager` failing or succeeding, from the next one on |
+| `{"acp_disconnect": channel_id}` | Closes the named scripted ACP transport's pipe and drains its agent tasks. The transport then reports `is_alive=false`; the real channel decides whether and how to reconnect. Session and reply counters continue across connections. This is a fixture fault, not a framework API call. |
 
 A call that has not returned after 10 s fails the scenario.
 
@@ -1087,6 +1088,7 @@ refuses its value, a `ChannelId`).
 | `kind_not_stored` | `room_strategy_is_current` asked of a kind of strategy that is not stored with the room (§19.7.5 rule 16) | `TypeError` | `RoomKitError::Type` |
 | `turn_link` | A turn, channel call or event no executor could carry, with its `reason`: `no_executor` (§10.6.7), `executor_lost`, `backend_closed` (§10.6.8) | `TurnLinkError` | `RoomKitError::TurnLink` |
 | `acp_request_refused` | A live ACP session rejects a configuration request (§6.4) | ACP `RequestError`, including its remote wrapper | `RequestError` relayed by the channel |
+| `acp_connection_closed` | The ACP pipe closes while a request is waiting (§6.4) | `ConnectionError`, including its remote wrapper | `AcpError::ConnectionClosed`, relayed as `ConnectionError` |
 | `acp_setup_refused` | A new ACP session cannot apply its required configuration and is never prompted (§6.4) | ACP setup `RuntimeError` | ACP `AcpError::SetupRefused`, relayed as `RuntimeError` |
 | `already_set_up` | A handoff's tool set up again where it is declared, or an install over an agent whose handoff is set up already (§19.6); `delegate_task` set up again on an agent (§23.4) | `RuntimeError`, `setup_handoff() already called`, `setup_delegation() already called` | `RoomKitError::Runtime` |
 
