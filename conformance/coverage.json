@@ -1,7 +1,7 @@
 {
   "version": 1,
   "rfc_sha256": "dd8df96dcbe744fa14eb915b4c97136286746c5a76240b03ea83273ea7442dfb",
-  "corpus_sha256": "602b010e32bfc3c49a8bef2d63f60f732735d504b672ed1e32d249763b11b3e0",
+  "corpus_sha256": "e52371b14431c2d153d35fb1998904ce9223f895bb03bf7610a28abcbc2cc4c6",
   "python_commit": "ec7d22830fe062e87b8031f3e0015be99cc65c79",
   "scenario_count": 1932,
   "sections": [
@@ -22442,7 +22442,8 @@
           "coverage": "partial",
           "missing": [
             "Rust realtime/model-transport ingestion is not implemented or exercised by this core lot. Python silent-ingestion source evidence is linked, but does not certify Rust voice conformance (RMK-333).",
-            "Gate refusal is sampled at duplicate detection and room closure, with timeout after collection; this does not exhaust every pre-storage gate or every mutation revalidation race."
+            "Gate refusal is sampled at duplicate detection and room closure, with timeout after collection; this does not exhaust every pre-storage gate or every mutation revalidation race.",
+            "The interleaving fixtures do not establish queue ordering or fairness for a distributed lock manager."
           ],
           "executions": [
             {
@@ -23115,7 +23116,7 @@
               "commit": "ec7d22830fe062e87b8031f3e0015be99cc65c79",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-contracts-ec7d228-sqlite",

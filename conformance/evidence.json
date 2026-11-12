@@ -2079,7 +2079,7 @@
       "clause_sha256": "ea7ab507e9b3a01ffcd4438139b66ac896a28e378fc7f94f0ca354eec6d33472",
       "scope": "Injection pass ordering, off-lock collection, refusal before storage, authority and mutation recipients, next-turn history, plus specialized cancellation, late-failure and Python model-transport evidence.",
       "coverage": "partial",
-      "review": "Read the exact assertions against §9.4 and their Python reference tests. Event aliases in mutation injections are resolved before return, so a missing target cannot masquerade as an authorization refusal. The forced Python _name_held failure after a blocked decision has no fallible counterpart in Rust: delivery_keys::Named::decided returns immediately for result.blocked; driver::inbound::Record::decide then records the decision without a user callback. Existing failed-lock-release scenarios are not asserted to exercise that private fault point.",
+      "review": "Read the exact assertions against §9.4 and their Python reference tests. Event aliases in mutation injections are resolved before return, so a missing target cannot masquerade as an authorization refusal. The forced Python _name_held failure after a blocked decision has no fallible counterpart in Rust: delivery_keys::Named::decided returns immediately for result.blocked; driver::inbound::Record::decide then records the decision without a user callback. Existing failed-lock-release scenarios are not asserted to exercise that private fault point. Re-read after making the two interleaving fixtures' lock manager explicit: the same steps and assertions establish separate locked passes with a controlled FIFO queue; the backing store remains the runner's store.",
       "assertions": [
         {
           "scenario": "hooks/an-injected-event-asks-no-agent",
@@ -2176,15 +2176,15 @@
           "scenario": "hooks/an-injection-takes-its-own-lock-after-its-blocked-cause",
           "pointer": "/expect",
           "sha256": "bf27887d0f83c8ad0b6d1191915279f8f93dd468664fca953bf0e58cf2ea7d4b",
-          "scenario_sha256": "2037dea1a862f0b2f62addd1f47aca4eb36535ce064c814258c9af67e4a35214",
-          "proves": "A queued message commits between the cause and its hook injection, after the cause releases the room lock."
+          "scenario_sha256": "5850f0d9bc3b0fac6f236a2b06817250ae096cb9c302c83030ab40ae96a7b5eb",
+          "proves": "With an explicitly selected in-memory FIFO lock, a queued message commits between the cause and its hook injection, after the cause releases the room lock."
         },
         {
           "scenario": "hooks/an-injection-takes-its-own-lock-after-its-delivered-cause",
           "pointer": "/expect",
           "sha256": "18c9120c31dc592d79b3cafd2b20cba9482add790a9b5b7ff67f3ba5981834cd",
-          "scenario_sha256": "0b506ab9e036b55724d7474115ce9b535b715abe678fc9518dc1d4fdb9c8d096",
-          "proves": "A queued message commits between the cause and its hook injection, after the cause releases the room lock."
+          "scenario_sha256": "d335deaa08bf10bff0b486f051da13fd25fba16e046317266c70567f844d3871",
+          "proves": "With an explicitly selected in-memory FIFO lock, a queued message commits between the cause and its hook injection, after the cause releases the room lock."
         },
         {
           "scenario": "hooks/injections-use-the-reentry-budget-without-increasing-chain-depth",
@@ -2325,7 +2325,8 @@
       ],
       "missing": [
         "Rust realtime/model-transport ingestion is not implemented or exercised by this core lot. Python silent-ingestion source evidence is linked, but does not certify Rust voice conformance (RMK-333).",
-        "Gate refusal is sampled at duplicate detection and room closure, with timeout after collection; this does not exhaust every pre-storage gate or every mutation revalidation race."
+        "Gate refusal is sampled at duplicate detection and room closure, with timeout after collection; this does not exhaust every pre-storage gate or every mutation revalidation race.",
+        "The interleaving fixtures do not establish queue ordering or fairness for a distributed lock manager."
       ]
     },
     {
