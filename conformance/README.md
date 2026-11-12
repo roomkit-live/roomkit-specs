@@ -672,6 +672,8 @@ JSON-RPC 2.0 one message per line, in neither implementation's ACP code, so
 that both runners check the same messages.
 
 - `acp.cwd`: the channel's `cwd`, an absolute path.
+- `acp.additional_directories`: additional absolute directory paths declared in
+  each `session/new`; omitted and empty lists declare none.
 - `acp.session_config`: initial channel option values (strings or booleans).
 - `acp.transport.refuse_prompt`: ordered entries for calls to the transport's
   connection `prompt`, including rejected attempts. `null` (also the default

@@ -7408,6 +7408,13 @@
         },
         "transport": {
           "$ref": "#/$defs/acp_transport"
+        },
+        "additional_directories": {
+          "description": "Additional absolute directories declared by the channel in each new session. Omitted and empty lists declare none.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
