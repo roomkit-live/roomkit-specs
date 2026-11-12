@@ -4860,6 +4860,16 @@
             "array",
             "object"
           ]
+        },
+        "acp_prompts": {
+          "description": "Per ACP channel, every transport prompt attempt, including native refusals: session_id, event_id and text, before any forwarding.",
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "array",
+              "object"
+            ]
+          }
         }
       }
     },
@@ -7371,6 +7381,9 @@
               "boolean"
             ]
           }
+        },
+        "transport": {
+          "$ref": "#/$defs/acp_transport"
         }
       }
     },
@@ -7709,6 +7722,42 @@
           "result",
           "error"
         ]
+      }
+    },
+    "acp_transport": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "refuse_prompt": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "reason"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "reason": {
+                    "type": "string"
+                  },
+                  "recovery_authorized": {
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "after_prompt": {
+                    "type": "boolean",
+                    "default": false
+                  }
+                }
+              }
+            ]
+          }
+        }
       }
     }
   }

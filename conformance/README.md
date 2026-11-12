@@ -673,6 +673,13 @@ that both runners check the same messages.
 
 - `acp.cwd`: the channel's `cwd`, an absolute path.
 - `acp.session_config`: initial channel option values (strings or booleans).
+- `acp.transport.refuse_prompt`: ordered entries for calls to the transport's
+  connection `prompt`, including rejected attempts. `null` (also the default
+  past the last entry) forwards normally. An object raises the native
+  `ACPSessionInvalidatedError(reason, recovery_authorized=False)` before
+  forwarding. `after_prompt: true` forwards and awaits the real prompt first,
+  then raises: a deliberately late signal testing the channel's activity guard.
+  This is a host-side fault fixture, never an error decoded from JSON-RPC.
 - `acp.agent.new_sessions`, `set_config_options`, `close_sessions`: ordered
   replies to `session/new`, `session/set_config_option`, `session/close`. Each
   reply optionally waits at `gate`, then returns its raw JSON-RPC `result`
@@ -699,6 +706,11 @@ that both runners check the same messages.
 `expect.acp_wire`, per ACP channel: what its agent received, in order, each
 `{method, params}`, `params` as the client wrote them, matched as a patch. A
 client's `clientInfo.version` is its implementation's own.
+
+`expect.acp_prompts`, per ACP channel: every call at the transport's prompt
+boundary, before forwarding or refusal, as `{session_id, event_id, text}`.
+`text` concatenates the prompt's text blocks. Counts span reconnects; the
+agent's `prompts` count only calls actually forwarded to the wire.
 
 ### Steps
 
