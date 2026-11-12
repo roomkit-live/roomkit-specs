@@ -3,7 +3,7 @@
   "id": "acp/rebuild-activity-tool-forbids-replay",
   "title": "Observed tool activity forbids even an authorized replay",
   "rules": [
-    "\u00a76.4"
+    "§6.4"
   ],
   "notes": "Python: tests/test_channels/test_acp_recovery.py. Host-native refusal, never wire authorization. Standalone and public cancel are separate follow-ups.",
   "setup": {
