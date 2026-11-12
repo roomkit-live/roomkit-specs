@@ -674,6 +674,13 @@ that both runners check the same messages.
 - `acp.cwd`: the channel's `cwd`, an absolute path.
 - `acp.additional_directories`: additional absolute directory paths declared in
   each `session/new`; omitted and empty lists declare none.
+- `acp.mcp_servers`: a fixed list of ACP SDK descriptors, or
+  `{mode: "sync"|"async", responses: [...]}` supplying a callback. Each invocation
+  consumes one response, `{servers: [...]}` or `{error: "..."}`. An async
+  response can wait at `gate`. Descriptors use ACP's stdio (`command`, `args`,
+  `env`), HTTP or SSE (`type`, `url`, `headers`) shapes, with `name`.
+  Callback exhaustion is a runner failure, even if the scenario expects a
+  business error. An omitted list declares no servers.
 - `acp.session_config`: initial channel option values (strings or booleans).
 - `acp.transport.refuse_prompt`: ordered entries for calls to the transport's
   connection `prompt`, including rejected attempts. `null` (also the default
@@ -693,7 +700,8 @@ that both runners check the same messages.
 - `acp.agent.initialize`: its `initialize` answer: `protocol_version` (the
   client's when absent), `closes_sessions` (whether it announces
   `session/close`, true by default), `agent_info` (sent as written, none when
-  absent).
+  absent), and `mcp_capabilities` (`http`/`sse` booleans sent as
+  `agentCapabilities.mcpCapabilities`). Declare support when supplying URL servers.
 - Its `session/new` answers are `session-1`, `session-2`... in the order it
   is asked, with no config option; `session/close` is answered `{}`;
   `session/cancel` is taken.
@@ -718,6 +726,11 @@ client's `clientInfo.version` is its implementation's own.
 boundary, before forwarding or refusal, as `{session_id, event_id, text}`.
 `text` concatenates the prompt's text blocks. Counts span reconnects; the
 agent's `prompts` count only calls actually forwarded to the wire.
+
+`expect.acp_mcp_requests`, per ACP channel: exact room identifiers passed to
+its MCP callback, in invocation order before any gate. A fixed list records
+no callback. The fixture calls no external MCP server: the channel resolves
+and declares the descriptors in `session/new`.
 
 ### Steps
 

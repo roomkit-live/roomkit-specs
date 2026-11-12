@@ -4894,6 +4894,16 @@
               "object"
             ]
           }
+        },
+        "acp_mcp_requests": {
+          "description": "Per ACP channel, exact room identifiers passed to its scripted MCP callback, in invocation order before any gate. Fixed lists record no callback.",
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "array",
+              "object"
+            ]
+          }
         }
       }
     },
@@ -7415,6 +7425,9 @@
           "items": {
             "type": "string"
           }
+        },
+        "mcp_servers": {
+          "$ref": "#/$defs/acp_mcp_servers"
         }
       }
     },
@@ -7437,6 +7450,18 @@
             },
             "agent_info": {
               "$ref": "#/$defs/record"
+            },
+            "mcp_capabilities": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "http": {
+                  "type": "boolean"
+                },
+                "sse": {
+                  "type": "boolean"
+                }
+              }
             }
           }
         },
@@ -7794,6 +7819,192 @@
           }
         }
       }
+    },
+    "acp_mcp_server": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "command": {
+              "type": "string"
+            },
+            "args": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "env": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  },
+                  "_meta": {
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "name",
+                  "value"
+                ]
+              }
+            },
+            "_meta": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "name",
+            "command",
+            "args",
+            "env"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "enum": [
+                "http",
+                "sse"
+              ]
+            },
+            "name": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            },
+            "headers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  },
+                  "_meta": {
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "name",
+                  "value"
+                ]
+              }
+            },
+            "_meta": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "type",
+            "name",
+            "url",
+            "headers"
+          ]
+        }
+      ]
+    },
+    "acp_mcp_servers": {
+      "description": "Fixed SDK descriptors, or callback responses consumed on each real session opening. A gate requires async mode. Exhaustion fails the runner, independently of any expected business error.",
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/acp_mcp_server"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "mode": {
+              "enum": [
+                "sync",
+                "async"
+              ]
+            },
+            "responses": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "servers": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/acp_mcp_server"
+                    }
+                  },
+                  "error": {
+                    "type": "string"
+                  },
+                  "gate": {
+                    "type": "string"
+                  }
+                },
+                "oneOf": [
+                  {
+                    "required": [
+                      "servers"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "error"
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "required": [
+            "mode",
+            "responses"
+          ],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "mode": {
+                    "const": "sync"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "responses": {
+                    "items": {
+                      "not": {
+                        "required": [
+                          "gate"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
     }
   }
 }
