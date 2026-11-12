@@ -46,7 +46,7 @@
                     "sessionUpdate": "tool_call_update",
                     "toolCallId": "two",
                     "status": "completed",
-                    "rawOutput": "two"
+                    "rawOutput": "result two"
                   },
                   {
                     "sessionUpdate": "tool_call_update",
@@ -56,7 +56,7 @@
                       "new": true
                     },
                     "status": "completed",
-                    "rawOutput": "one"
+                    "rawOutput": "result one"
                   }
                 ]
               }
@@ -140,7 +140,7 @@
           "content": {
             "type": "tool_call",
             "tool_name": "Second",
-            "result": "two"
+            "result": "result two"
           }
         },
         {
@@ -151,7 +151,7 @@
             "arguments": {
               "new": true
             },
-            "result": "one"
+            "result": "result one"
           }
         }
       ]
@@ -185,7 +185,7 @@
           "tool_calls": [
             {
               "name": "Second",
-              "result": "two"
+              "result": "result two"
             }
           ]
         },
@@ -196,7 +196,7 @@
           "tool_calls": [
             {
               "name": "Renamed",
-              "result": "one"
+              "result": "result one"
             }
           ]
         }
@@ -209,7 +209,7 @@
           "tool_call": {
             "name": "Second",
             "arguments": {},
-            "result": "two",
+            "result": "result two",
             "is_error": false,
             "cancelled": false,
             "refused": false,
@@ -223,7 +223,7 @@
             "arguments": {
               "new": true
             },
-            "result": "one",
+            "result": "result one",
             "is_error": false,
             "cancelled": false,
             "refused": false,

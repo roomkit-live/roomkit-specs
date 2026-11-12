@@ -42,11 +42,11 @@
                     "status": "completed",
                     "content": [
                       {
-                        "type": "content",
                         "content": {
-                          "type": "text",
-                          "text": "Visible result"
-                        }
+                          "text": "Visible result",
+                          "type": "text"
+                        },
+                        "type": "content"
                       }
                     ]
                   }
@@ -128,21 +128,21 @@
             "status": "completed",
             "result": [
               {
-                "type": "content",
                 "content": {
-                  "type": "text",
-                  "text": "Visible result"
-                }
+                  "text": "Visible result",
+                  "type": "text"
+                },
+                "type": "content"
               }
             ],
             "structured_content": {
               "acp_content": [
                 {
-                  "type": "content",
                   "content": {
-                    "type": "text",
-                    "text": "Visible result"
-                  }
+                    "text": "Visible result",
+                    "type": "text"
+                  },
+                  "type": "content"
                 }
               ]
             }
@@ -170,7 +170,7 @@
             {
               "name": "Read",
               "status": "completed",
-              "result": "[{\"type\": \"content\", \"content\": {\"type\": \"text\", \"text\": \"Visible result\"}}]"
+              "result": "[{\"content\": {\"text\": \"Visible result\", \"type\": \"text\"}, \"type\": \"content\"}]"
             }
           ]
         }
@@ -183,15 +183,7 @@
           "tool_call": {
             "name": "Read",
             "arguments": {},
-            "result": [
-              {
-                "type": "content",
-                "content": {
-                  "type": "text",
-                  "text": "Visible result"
-                }
-              }
-            ],
+            "result": "[{\"content\": {\"text\": \"Visible result\", \"type\": \"text\"}, \"type\": \"content\"}]",
             "is_error": false,
             "cancelled": false,
             "refused": false,

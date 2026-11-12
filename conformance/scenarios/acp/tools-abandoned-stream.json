@@ -137,9 +137,7 @@
           "tool_call": {
             "name": "Read",
             "arguments": {},
-            "result": {
-              "error": "Tool 'Read' was cancelled. The turn ended before its result."
-            },
+            "result": "{\"error\": \"Tool call cancelled\", \"tool\": \"Read\", \"hint\": \"The turn ended before its result.\"}",
             "is_error": true,
             "cancelled": true,
             "refused": false,

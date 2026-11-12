@@ -219,9 +219,7 @@
             "arguments": {
               "path": "README.md"
             },
-            "result": {
-              "content": "RoomKit"
-            },
+            "result": "{\"content\": \"RoomKit\"}",
             "is_error": false,
             "cancelled": false,
             "refused": false,
