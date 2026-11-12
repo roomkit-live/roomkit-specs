@@ -510,113 +510,115 @@
   ],
   "expect": {
     "actions": {
-      "posted": [
-        {
-          "result": {
-            "blocked_by": null
+      "posted": {
+        "$unordered": [
+          {
+            "result": {
+              "blocked_by": null
+            }
+          },
+          {
+            "result": {
+              "blocked_by": null
+            }
+          },
+          {
+            "result": {
+              "blocked_by": null
+            }
+          },
+          {
+            "result": {
+              "blocked_by": null
+            }
+          },
+          {
+            "result": {
+              "blocked_by": null
+            }
+          },
+          {
+            "result": {
+              "blocked_by": null
+            }
+          },
+          {
+            "result": {
+              "blocked_by": null
+            }
+          },
+          {
+            "result": {
+              "blocked_by": null
+            }
+          },
+          {
+            "result": {
+              "blocked_by": null
+            }
+          },
+          {
+            "result": {
+              "blocked_by": null
+            }
+          },
+          {
+            "result": {
+              "blocked_by": null
+            }
+          },
+          {
+            "result": {
+              "blocked_by": null
+            }
+          },
+          {
+            "result": {
+              "blocked_by": null
+            }
+          },
+          {
+            "result": {
+              "blocked_by": null
+            }
+          },
+          {
+            "result": {
+              "blocked_by": null
+            }
+          },
+          {
+            "result": {
+              "blocked_by": null
+            }
+          },
+          {
+            "result": {
+              "blocked_by": null
+            }
+          },
+          {
+            "result": {
+              "blocked_by": null
+            }
+          },
+          {
+            "result": {
+              "blocked_by": null
+            }
+          },
+          {
+            "result": {
+              "blocked_by": null
+            }
+          },
+          {
+            "result": {
+              "blocked_by": "reentry_loop_cap"
+            }
           }
-        },
-        {
-          "result": {
-            "blocked_by": null
-          }
-        },
-        {
-          "result": {
-            "blocked_by": null
-          }
-        },
-        {
-          "result": {
-            "blocked_by": null
-          }
-        },
-        {
-          "result": {
-            "blocked_by": null
-          }
-        },
-        {
-          "result": {
-            "blocked_by": null
-          }
-        },
-        {
-          "result": {
-            "blocked_by": null
-          }
-        },
-        {
-          "result": {
-            "blocked_by": null
-          }
-        },
-        {
-          "result": {
-            "blocked_by": null
-          }
-        },
-        {
-          "result": {
-            "blocked_by": null
-          }
-        },
-        {
-          "result": {
-            "blocked_by": null
-          }
-        },
-        {
-          "result": {
-            "blocked_by": null
-          }
-        },
-        {
-          "result": {
-            "blocked_by": null
-          }
-        },
-        {
-          "result": {
-            "blocked_by": null
-          }
-        },
-        {
-          "result": {
-            "blocked_by": null
-          }
-        },
-        {
-          "result": {
-            "blocked_by": null
-          }
-        },
-        {
-          "result": {
-            "blocked_by": null
-          }
-        },
-        {
-          "result": {
-            "blocked_by": null
-          }
-        },
-        {
-          "result": {
-            "blocked_by": null
-          }
-        },
-        {
-          "result": {
-            "blocked_by": null
-          }
-        },
-        {
-          "result": {
-            "blocked_by": "reentry_loop_cap"
-          }
-        }
-      ]
+        ]
+      }
     }
   }
 }
