@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "f9d64ad900daed534439e2f531583012f56cf20c5a9df553f5aaeaa3938a73cf",
-  "corpus_sha256": "a21271b0bea82d7286881a28dc1f5df775d2d4b5524e54d6c0ad1b9b911cb2d1",
+  "corpus_sha256": "0376c6d834b4ff2ef65d71b70133573fe6fa985432c5f227e0b24a182011696e",
   "python_commit": "843e13abdde461483e9c1100c979786f625a96b7",
-  "scenario_count": 2005,
+  "scenario_count": 2012,
   "sections": [
     {
       "section": "0",
@@ -768,6 +768,13 @@
         "acp/detach-late-setting-during-prompt-keeps-no-value",
         "acp/detach-running-prompt-keeps-its-outcome",
         "acp/detach-targets-only-the-selected-room",
+        "acp/directories-empty-are-not-declared",
+        "acp/directories-normalize-lexically",
+        "acp/directories-omitted-are-not-declared",
+        "acp/directories-on-a-host-opened-session",
+        "acp/directories-reapplied-after-rebuild",
+        "acp/directories-reapplied-after-reconnect",
+        "acp/directories-shared-by-room",
         "acp/each-room-has-its-own-session",
         "acp/on-ai-response-reports-the-agents-answer",
         "acp/rebuild-activity-plan-forbids-replay",
@@ -7259,7 +7266,15 @@
         "unmapped": 1
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "acp/directories-empty-are-not-declared",
+        "acp/directories-normalize-lexically",
+        "acp/directories-omitted-are-not-declared",
+        "acp/directories-on-a-host-opened-session",
+        "acp/directories-reapplied-after-rebuild",
+        "acp/directories-reapplied-after-reconnect",
+        "acp/directories-shared-by-room"
+      ]
     },
     {
       "section": "A.10",
