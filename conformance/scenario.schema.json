@@ -242,18 +242,31 @@
               "minimum": 1
             },
             "lock_manager": {
-              "description": "The kit's lock manager (\u00a713.5): the in-memory one, whose release fails with `release_error` while a `lock_releases` step has set it failing, as a distributed lock that finds its lease expired.",
+              "description": "The kit's lock manager (\u00a713.5): kind memory explicitly selects the in-memory manager. With release_error it is the scripted in-memory manager whose release can fail. Absent, the runner uses its normal manager.",
               "type": "object",
-              "required": [
-                "release_error"
-              ],
               "additionalProperties": false,
               "properties": {
                 "release_error": {
                   "description": "What a failed release raises: its message.",
                   "type": "string"
+                },
+                "kind": {
+                  "description": "Use the in-memory lock manager explicitly, including on a durable store, when a scenario needs a controlled FIFO wait queue.",
+                  "const": "memory"
                 }
-              }
+              },
+              "anyOf": [
+                {
+                  "required": [
+                    "kind"
+                  ]
+                },
+                {
+                  "required": [
+                    "release_error"
+                  ]
+                }
+              ]
             },
             "inbound_rate_limit": {
               "description": "The kit's inbound rate limit (\u00a710.1): a token bucket per channel, full at first and holding at least one token, refilled at the most precise bound's rate; a message past it is refused, blocked with reason rate_limited, before anything is read or written. Absent, none.",

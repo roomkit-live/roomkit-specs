@@ -155,9 +155,11 @@ room callbacks of the setup are not compared.
   `orchestration`, the id of a scripted strategy (below) the kit is built
   with as its default, which every room it creates takes unless the
   creation names another or none (§19.7); and for the room lock (§13.5),
-  `lock_manager`, the in-memory lock manager whose release fails with its
-  `release_error` while a `lock_releases` step has set it failing, as a
-  distributed lock that finds its lease expired, and
+  `lock_manager`: `{"kind": "memory"}` explicitly selects the in-memory
+  lock manager, including on a durable store, for fixtures requiring a controlled
+  FIFO wait queue. With `release_error`, its release fails while a
+  `lock_releases` step has set it failing, as a distributed lock that finds its
+  lease expired. Absent, the runner keeps its normal manager. Also,
   `delivery_gap_timeout_ms`, how long a delivery lane waits on a cursor hole
   no lane runs before it skips it (the implementation's default when
   absent); and `inbound_rate_limit`, the kit's inbound rate limit
