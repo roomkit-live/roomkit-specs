@@ -16770,15 +16770,15 @@
         {
           "scenario": "orchestration/a-worker-cut-before-announcement-reports-only-what-started",
           "pointer": "/expect",
-          "sha256": "6164501809baec710c696bc65bfa3a2b89c6e87c8e963c4eb7bcf4e5b9bcaef2",
-          "scenario_sha256": "81126c0dc5f5459af1dc5406a84c24c198469dad27e5f591f6c2b1244548619d",
+          "sha256": "e8550ad518951a84bb39c0cdc3ec0bd3fa0ffc18186a668a4fc3d623aa13f08d",
+          "scenario_sha256": "d31340b8485dc99eafcaa262c0858023437bc548f4dfd67bfd3c1d4c825fd161",
           "proves": "The worker model has no call, the supervisor has one call, and neither the delegated nor completed task hook fires."
         },
         {
           "scenario": "orchestration/a-worker-cut-before-announcement-reports-only-what-started",
           "pointer": "/steps/5/expect",
           "sha256": "63f56b6546edb7e3c5ae4568ad91489b4b708ed31a03b62c6222049b88461f9a",
-          "scenario_sha256": "81126c0dc5f5459af1dc5406a84c24c198469dad27e5f591f6c2b1244548619d",
+          "scenario_sha256": "d31340b8485dc99eafcaa262c0858023437bc548f4dfd67bfd3c1d4c825fd161",
           "proves": "The worker run posts pending then failed/cancelled once, with its run marker and no task_id before announcement."
         },
         {
@@ -16798,15 +16798,15 @@
         {
           "scenario": "orchestration/a-team-cut-before-announcement-reports-only-what-started",
           "pointer": "/expect",
-          "sha256": "5c739bcf13220e82c8135a5540845db010a560dba5e4995dc9c471e3ec57e9db",
-          "scenario_sha256": "49cdbe326d7c30241fff0e0582e92418f4292233b53e78d078d245c153634053",
+          "sha256": "4cd450338888cdc30fc955acc4ca31c7b76ff971d3846471526f4eb993478757",
+          "scenario_sha256": "278a23151e629de3ebf01e62cffc4f34aab700ffc782664e40d053411bcc46ed",
           "proves": "The worker model has no call, the supervisor has one call, and neither the delegated nor completed task hook fires."
         },
         {
           "scenario": "orchestration/a-team-cut-before-announcement-reports-only-what-started",
           "pointer": "/steps/5/expect",
           "sha256": "63f56b6546edb7e3c5ae4568ad91489b4b708ed31a03b62c6222049b88461f9a",
-          "scenario_sha256": "49cdbe326d7c30241fff0e0582e92418f4292233b53e78d078d245c153634053",
+          "scenario_sha256": "278a23151e629de3ebf01e62cffc4f34aab700ffc782664e40d053411bcc46ed",
           "proves": "The worker run posts pending then failed/cancelled once, with its run marker and no task_id before announcement."
         },
         {
@@ -16847,15 +16847,15 @@
         {
           "scenario": "orchestration/a-worker-cut-before-announcement-reports-only-what-started",
           "pointer": "/expect",
-          "sha256": "6164501809baec710c696bc65bfa3a2b89c6e87c8e963c4eb7bcf4e5b9bcaef2",
-          "scenario_sha256": "81126c0dc5f5459af1dc5406a84c24c198469dad27e5f591f6c2b1244548619d",
+          "sha256": "e8550ad518951a84bb39c0cdc3ec0bd3fa0ffc18186a668a4fc3d623aa13f08d",
+          "scenario_sha256": "d31340b8485dc99eafcaa262c0858023437bc548f4dfd67bfd3c1d4c825fd161",
           "proves": "The worker model has no call, the supervisor has one call, and neither the delegated nor completed task hook fires."
         },
         {
           "scenario": "orchestration/a-worker-cut-before-announcement-reports-only-what-started",
           "pointer": "/steps/5/expect",
           "sha256": "63f56b6546edb7e3c5ae4568ad91489b4b708ed31a03b62c6222049b88461f9a",
-          "scenario_sha256": "81126c0dc5f5459af1dc5406a84c24c198469dad27e5f591f6c2b1244548619d",
+          "scenario_sha256": "d31340b8485dc99eafcaa262c0858023437bc548f4dfd67bfd3c1d4c825fd161",
           "proves": "The worker run posts pending then failed/cancelled once, with its run marker and no task_id before announcement."
         },
         {
@@ -16875,15 +16875,15 @@
         {
           "scenario": "orchestration/a-team-cut-before-announcement-reports-only-what-started",
           "pointer": "/expect",
-          "sha256": "5c739bcf13220e82c8135a5540845db010a560dba5e4995dc9c471e3ec57e9db",
-          "scenario_sha256": "49cdbe326d7c30241fff0e0582e92418f4292233b53e78d078d245c153634053",
+          "sha256": "4cd450338888cdc30fc955acc4ca31c7b76ff971d3846471526f4eb993478757",
+          "scenario_sha256": "278a23151e629de3ebf01e62cffc4f34aab700ffc782664e40d053411bcc46ed",
           "proves": "The worker model has no call, the supervisor has one call, and neither the delegated nor completed task hook fires."
         },
         {
           "scenario": "orchestration/a-team-cut-before-announcement-reports-only-what-started",
           "pointer": "/steps/5/expect",
           "sha256": "63f56b6546edb7e3c5ae4568ad91489b4b708ed31a03b62c6222049b88461f9a",
-          "scenario_sha256": "49cdbe326d7c30241fff0e0582e92418f4292233b53e78d078d245c153634053",
+          "scenario_sha256": "278a23151e629de3ebf01e62cffc4f34aab700ffc782664e40d053411bcc46ed",
           "proves": "The worker run posts pending then failed/cancelled once, with its run marker and no task_id before announcement."
         },
         {

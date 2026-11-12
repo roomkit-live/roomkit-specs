@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "dd8df96dcbe744fa14eb915b4c97136286746c5a76240b03ea83273ea7442dfb",
-  "corpus_sha256": "ccfdac203fe9260ad54178504062a514da5f74f9639c2173b79ac67dad522a66",
+  "corpus_sha256": "43565f293f49ff825b84e958fb423e1062758c325907f9b88088802f06da4e47",
   "python_commit": "ec7d22830fe062e87b8031f3e0015be99cc65c79",
-  "scenario_count": 1930,
+  "scenario_count": 1932,
   "sections": [
     {
       "section": "0",
@@ -687,6 +687,8 @@
         "streaming/stream-fails-mid-answer",
         "streaming/the-stream-goes-to-the-first-streaming-transport-bound",
         "streaming/what-a-target-s-outputs-leave-in-the-room",
+        "tasks/a-failed-background-preparation-keeps-its-child-and-reports-no-task",
+        "tasks/a-failed-inline-preparation-keeps-its-child-and-reports-no-task",
         "tools/a-room-the-agent-joins-again-replays-no-tool-image"
       ]
     },
@@ -6477,6 +6479,8 @@
         "tasks/a-delegation-outside-a-turn-opens-a-chain-at-depth-0",
         "tasks/a-delegation-sets-how-much-of-its-result-is-handed-back",
         "tasks/a-delegation-whose-worker-fails-ends-failed",
+        "tasks/a-failed-background-preparation-keeps-its-child-and-reports-no-task",
+        "tasks/a-failed-inline-preparation-keeps-its-child-and-reports-no-task",
         "tasks/a-failed-task-keeps-the-error-its-worker-s-turn-raised",
         "tasks/a-failed-task-s-exception-keeps-its-attributes",
         "tasks/a-failed-task-with-nothing-to-say-is-handed-back-as-failed",
@@ -41386,7 +41390,7 @@
               "commit": "ec7d22830fe062e87b8031f3e0015be99cc65c79",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-contracts-ec7d228-sqlite",
@@ -41394,7 +41398,7 @@
               "commit": "ec7d22830fe062e87b8031f3e0015be99cc65c79",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -43985,7 +43989,7 @@
               "commit": "ec7d22830fe062e87b8031f3e0015be99cc65c79",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-contracts-ec7d228-sqlite",
@@ -43993,7 +43997,7 @@
               "commit": "ec7d22830fe062e87b8031f3e0015be99cc65c79",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }

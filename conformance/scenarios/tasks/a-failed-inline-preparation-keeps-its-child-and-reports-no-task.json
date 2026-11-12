@@ -6,7 +6,7 @@
     "§23.3",
     "§6.1"
   ],
-  "notes": "Python: tests/tasks/test_delegation_preparation.py. A shared transport refuses the preparation after another transport stored a child record. The caller receives that refusal, the child task is failed, and its existing history, bindings and application metadata survive; no task was announced. Decision HITL 897512c8.",
+  "notes": "Python: tests/tasks/test_delegation_preparation.py. A shared transport refuses the preparation after another transport stored a child record. The caller receives that refusal, the child task is failed, and its existing history, bindings and application metadata survive; no task was announced.",
   "setup": {
     "channels": [
       {
