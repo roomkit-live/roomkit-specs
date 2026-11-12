@@ -21311,10 +21311,25 @@ span ends `error`, so no reader shows it running. The caller of an inline
 delegation, or of one its runner refused, receives the error and step 8
 hands nothing back; a background task whose run raised has no caller left,
 and its notified channel is told it failed, as for any failed task. A
-delegation that fails before its task is announced (the parent room's
-context unreadable as the announcement is built) raises to its caller, and
-nothing reports the end of a task never announced: no `ON_TASK_COMPLETED`,
-no end on the StatusBus, no completion callback.
+delegation that fails or is cancelled before its task is announced (the
+parent room's context unreadable as the announcement is built, or a shared
+channel's attachment interrupted) raises the error or cancellation to its
+caller. Nothing reports the end of a task never announced: no
+`ON_TASK_COMPLETED`, no end on the StatusBus, no completion callback and no
+hand-back. The worker's turn MUST NOT start.
+
+If preparation already created its child room, the framework MUST keep that
+room, its bindings, history and other metadata, and mark its `task_status`
+`failed` or `cancelled`, respectively, with `task_result = null`. It MUST
+NOT create a room just to record this end, or mark a room whose `task_id`
+belongs to another task. A creation already under way can finish after its
+caller stops waiting: its store write MUST be awaited before this cleanup
+reads the child, without prolonging the creation's hooks. The terminal write
+survives further caller cancellation and is
+tracked by the framework's close, within its grace and unwind budgets
+(Section 12.10.4). A failure to read or mark the child is logged and MUST NOT
+replace the preparation's original error or cancellation; it does not turn
+the preparation into an announced task.
 
 A delegation is followed on the framework's StatusBus (Section 19.8), so an
 agent or a host sees a task while it runs. Once its child room is ready, when
