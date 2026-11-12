@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "f9d64ad900daed534439e2f531583012f56cf20c5a9df553f5aaeaa3938a73cf",
-  "corpus_sha256": "bb0f07312d3e6f7c59e806b2bda600d10988ffbedd4b6d2b9336e3aa10631daf",
+  "corpus_sha256": "b8ee7f82d731b8dfe26bdf28fff614bbb5b69315140fab03b0f82ef0e902a735",
   "python_commit": "926888ef927c808893b1217dc7b4a7211c89f4a5",
-  "scenario_count": 2034,
+  "scenario_count": 2036,
   "sections": [
     {
       "section": "0",
@@ -294,6 +294,7 @@
         "rooms/a-response-closed-by-its-own-hook-is-refused",
         "rooms/a-response-pass-applies-its-own-due-pause",
         "rooms/a-response-the-room-refuses",
+        "rooms/a-response-whose-room-a-step-closes-during-its-turn-is-refused",
         "rooms/a-room-archived-mid-stream-refuses-later-rows",
         "rooms/a-room-closed-outside-the-kit-before-the-first-streamed-row-refuses-it",
         "rooms/a-room-timer-closed-mid-stream-refuses-later-rows",
@@ -301,6 +302,7 @@
         "rooms/a-streamed-row-whose-hook-closes-the-room-is-refused",
         "rooms/a-timer-check-does-not-change-another-due-room",
         "rooms/a-timer-check-scopes-before-applying-due-transitions",
+        "rooms/an-agent-s-answer-whose-room-a-step-closes-during-its-generation-is-refused",
         "rooms/archive-from-every-room-status",
         "rooms/archive-is-terminal",
         "rooms/close-from-every-room-status",
@@ -1791,8 +1793,10 @@
         "rooms/a-response-closed-by-its-own-hook-is-refused",
         "rooms/a-response-pass-applies-its-own-due-pause",
         "rooms/a-response-the-room-refuses",
+        "rooms/a-response-whose-room-a-step-closes-during-its-turn-is-refused",
         "rooms/a-timer-check-does-not-change-another-due-room",
         "rooms/a-timer-check-scopes-before-applying-due-transitions",
+        "rooms/an-agent-s-answer-whose-room-a-step-closes-during-its-generation-is-refused",
         "rooms/archive-from-every-room-status",
         "rooms/archive-is-terminal",
         "rooms/channel-registration-is-announced",
@@ -2705,6 +2709,8 @@
         "rooms/a-response-closed-by-its-own-hook-is-refused",
         "rooms/a-response-pass-applies-its-own-due-pause",
         "rooms/a-response-the-room-refuses",
+        "rooms/a-response-whose-room-a-step-closes-during-its-turn-is-refused",
+        "rooms/an-agent-s-answer-whose-room-a-step-closes-during-its-generation-is-refused",
         "rooms/closed-room-refuses-a-message",
         "rooms/replacement-records-after-room-deletion-report-a-null-status",
         "routing/a-binding-a-hook-made-in-a-room-opened-with-no-address-takes-in-no-one-else",
@@ -3246,7 +3252,9 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "executors/a-delegation-to-a-declared-worker-runs-on-its-executor",
-        "orchestration/an-auto-delegating-supervisor-s-two-passes-carry-a-correlation-id-each"
+        "orchestration/an-auto-delegating-supervisor-s-two-passes-carry-a-correlation-id-each",
+        "rooms/a-response-whose-room-a-step-closes-during-its-turn-is-refused",
+        "rooms/an-agent-s-answer-whose-room-a-step-closes-during-its-generation-is-refused"
       ]
     },
     {
@@ -7042,8 +7050,10 @@
         "rooms/a-response-closed-by-its-own-hook-is-refused",
         "rooms/a-response-pass-applies-its-own-due-pause",
         "rooms/a-response-the-room-refuses",
+        "rooms/a-response-whose-room-a-step-closes-during-its-turn-is-refused",
         "rooms/a-timer-check-does-not-change-another-due-room",
         "rooms/a-timer-check-scopes-before-applying-due-transitions",
+        "rooms/an-agent-s-answer-whose-room-a-step-closes-during-its-generation-is-refused",
         "rooms/archive-from-every-room-status",
         "rooms/archive-is-terminal",
         "rooms/channel-registration-is-announced",
