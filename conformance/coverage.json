@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "rfc_sha256": "f7bd986cc00b2afa5c4fad146133792aec144651dffcbb9619d27f26f9c15583",
+  "rfc_sha256": "f9d64ad900daed534439e2f531583012f56cf20c5a9df553f5aaeaa3938a73cf",
   "corpus_sha256": "e52371b14431c2d153d35fb1998904ce9223f895bb03bf7610a28abcbc2cc4c6",
-  "python_commit": "ec7d22830fe062e87b8031f3e0015be99cc65c79",
+  "python_commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
   "scenario_count": 1932,
   "sections": [
     {
@@ -8125,6 +8125,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -8783,6 +8799,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -9439,6 +9471,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -10073,6 +10121,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -10728,6 +10792,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -11370,6 +11450,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -12233,6 +12329,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -12426,6 +12538,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -12625,6 +12753,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -12700,6 +12836,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -12790,6 +12934,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -12865,6 +13017,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -13186,6 +13346,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -13804,6 +13972,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -14149,6 +14325,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -14498,6 +14682,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -14841,6 +15033,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -15176,6 +15376,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -15511,6 +15719,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -15854,6 +16070,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -16189,6 +16413,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -16532,6 +16764,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -16877,6 +17117,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -17223,6 +17471,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -17576,6 +17832,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -17898,6 +18162,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -18545,6 +18817,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -18862,6 +19150,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -19143,6 +19439,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -19538,6 +19842,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -19613,6 +19925,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -20280,6 +20600,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -20657,6 +20993,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -21022,6 +21366,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -21375,6 +21727,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -21734,6 +22094,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -22085,6 +22453,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -22420,6 +22796,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -23125,6 +23509,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -23452,6 +23852,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -23789,6 +24197,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -24494,6 +24910,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -24729,6 +25161,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -25322,6 +25762,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -25913,6 +26369,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -26242,6 +26714,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -26908,6 +27388,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -27501,6 +27997,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -27872,6 +28384,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -28497,6 +29017,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -29098,6 +29634,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -29731,6 +30283,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -30356,6 +30924,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -30957,6 +31541,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -31558,6 +32158,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -32159,6 +32775,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -32282,6 +32914,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -32347,6 +32995,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -32449,6 +33113,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -32561,6 +33241,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -32616,6 +33304,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -32677,6 +33373,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -32727,6 +33431,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -32785,6 +33497,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -34851,6 +35579,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -35294,6 +36038,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -35721,6 +36481,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -35843,6 +36619,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -36788,6 +37572,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -36929,6 +37729,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -37222,6 +38030,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -37875,6 +38691,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -38216,6 +39048,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -38887,6 +39735,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -39505,6 +40369,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -39848,6 +40728,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -40422,6 +41310,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -40750,6 +41646,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -41083,6 +41987,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -41406,6 +42318,22 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -41741,6 +42669,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -41864,6 +42800,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -42179,6 +43123,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -42327,6 +43279,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -42426,6 +43386,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -42509,6 +43477,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -42648,6 +43624,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -42995,6 +43979,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -43246,6 +44238,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -43657,6 +44657,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -43971,6 +44979,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -43986,8 +45002,8 @@
           "scope": "A deterministic caller cut before announcement produces no task-completion hook or worker model call; after announcement the child task and its completion hook end cancelled.",
           "coverage": "partial",
           "missing": [
-            "The cleanup and terminal metadata of a partially prepared, unannounced child room are not specified or proved here.",
-            "Structured results, task-runner rejection, completion callbacks and shutdown paths have separate evidence."
+            "Structured results, task-runner rejection, completion callbacks and shutdown paths have separate evidence.",
+            "Preparation cleanup and persistence failure are linked separately; this boundary link does not establish them."
           ],
           "executions": [
             {
@@ -44005,8 +45021,77 @@
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
+        },
+        {
+          "id": "delegation-unannounced-child-state",
+          "scope": "Cancelled or failed preparation retains the child, its application records and successful bindings, with terminal task metadata and no task announcement, worker turn or hand-back.",
+          "coverage": "partial",
+          "missing": [
+            "Repeated cancellation, late writes, cleanup storage failure and shutdown limits are linked through native tests separately.",
+            "Other structured-result and announced-task obligations of this broad unit are outside this link."
+          ],
+          "executions": [
+            {
+              "execution": "python-postgres-contracts-ec7d228-memory",
+              "implementation": "python",
+              "commit": "ec7d22830fe062e87b8031f3e0015be99cc65c79",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-postgres-contracts-ec7d228-sqlite",
+              "implementation": "python",
+              "commit": "ec7d22830fe062e87b8031f3e0015be99cc65c79",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            }
+          ]
+        },
+        {
+          "id": "delegation-preparation-write-boundaries",
+          "scope": "Native preparation boundaries, late creation, repeated cancellation, foreign room protection, cleanup failure and bounded shutdown preserve the preparation outcome.",
+          "coverage": "partial",
+          "missing": [
+            "Specialized test executions are not supported as formal receipts; retained native logs do not become recorded_pass.",
+            "No process-crash recovery or automatic retry after permanent storage failure is established."
+          ],
+          "executions": []
         }
       ]
     },
@@ -44228,6 +45313,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         },
@@ -44430,6 +45523,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -44757,6 +45858,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -45814,6 +46923,24 @@
       "implementation_commit": "ec7d22830fe062e87b8031f3e0015be99cc65c79",
       "rfc_commit": "fbd4d75afc99025b2ebdb2246f015b930e1331e4",
       "corpus_commit": "54b507231865d6f9baea296d83cedb1e257aaa16",
+      "backend": "sqlite",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-delegation-preparation-97e7459-memory",
+      "implementation": "python",
+      "implementation_commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+      "rfc_commit": "effaa63c7e3b6e1bc3050e7f3dd8adfc318a4381",
+      "corpus_commit": "7f8b89dbe0da73b01146f1d83aa4932808212521",
+      "backend": "memory",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-delegation-preparation-97e7459-sqlite",
+      "implementation": "python",
+      "implementation_commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+      "rfc_commit": "effaa63c7e3b6e1bc3050e7f3dd8adfc318a4381",
+      "corpus_commit": "7f8b89dbe0da73b01146f1d83aa4932808212521",
       "backend": "sqlite",
       "runtime": "asyncio"
     }

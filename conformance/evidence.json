@@ -435998,9 +435998,9 @@
       "id": "python-delegation-preparation-97e7459-memory",
       "implementation": "python",
       "implementation_commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
-      "rfc_commit": "d638db579013bb85a3c09a96a11ea0d4d58c5855",
+      "rfc_commit": "effaa63c7e3b6e1bc3050e7f3dd8adfc318a4381",
       "corpus_commit": "7f8b89dbe0da73b01146f1d83aa4932808212521",
-      "rfc_sha256": "d6aec89e3c5d69f6043cafbe17af902c865606ca9b2281ef226d1c60e41198a7",
+      "rfc_sha256": "f9d64ad900daed534439e2f531583012f56cf20c5a9df553f5aaeaa3938a73cf",
       "backend": "memory",
       "runtime": "asyncio",
       "command": [
@@ -445692,9 +445692,9 @@
       "id": "python-delegation-preparation-97e7459-sqlite",
       "implementation": "python",
       "implementation_commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
-      "rfc_commit": "d638db579013bb85a3c09a96a11ea0d4d58c5855",
+      "rfc_commit": "effaa63c7e3b6e1bc3050e7f3dd8adfc318a4381",
       "corpus_commit": "7f8b89dbe0da73b01146f1d83aa4932808212521",
-      "rfc_sha256": "d6aec89e3c5d69f6043cafbe17af902c865606ca9b2281ef226d1c60e41198a7",
+      "rfc_sha256": "f9d64ad900daed534439e2f531583012f56cf20c5a9df553f5aaeaa3938a73cf",
       "backend": "sqlite",
       "runtime": "asyncio",
       "command": [
