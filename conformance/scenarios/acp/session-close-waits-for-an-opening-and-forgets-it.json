@@ -149,6 +149,53 @@
                     }
                   ]
                 }
+              },
+              {
+                "result": {
+                  "configOptions": [
+                    {
+                      "id": "model",
+                      "name": "Model",
+                      "type": "select",
+                      "currentValue": "sonnet",
+                      "options": [
+                        {
+                          "value": "opus",
+                          "name": "Opus"
+                        },
+                        {
+                          "value": "sonnet",
+                          "name": "Sonnet"
+                        },
+                        {
+                          "value": "default",
+                          "name": "Default"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "mode",
+                      "name": "Mode",
+                      "type": "select",
+                      "currentValue": "auto",
+                      "options": [
+                        {
+                          "value": "auto",
+                          "name": "Auto"
+                        },
+                        {
+                          "value": "default",
+                          "name": "Default"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ],
+            "close_sessions": [
+              {
+                "gate": "closing"
               }
             ]
           }
@@ -211,6 +258,9 @@
       "open": "opening"
     },
     {
+      "wait_for": "closing"
+    },
+    {
       "await": "setting",
       "expect": {
         "result": {
@@ -220,9 +270,25 @@
       }
     },
     {
+      "open": "closing"
+    },
+    {
       "await": "closing",
       "expect": {
         "result": true
+      }
+    },
+    {
+      "call": "get_room",
+      "room_id": "room-1",
+      "expect": {
+        "result": {
+          "metadata": {
+            "roomkit:channel_state:claude": {
+              "$absent": true
+            }
+          }
+        }
       }
     },
     {
