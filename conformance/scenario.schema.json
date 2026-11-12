@@ -7448,6 +7448,10 @@
         },
         "mcp_servers": {
           "$ref": "#/$defs/acp_mcp_servers"
+        },
+        "publish_thinking_text": {
+          "description": "Publish thought text in room ephemeral deltas; false by default. The full thought still reaches the turn stream and completed response report.",
+          "type": "boolean"
         }
       }
     },
@@ -7559,6 +7563,10 @@
         "permission": {
           "$ref": "#/$defs/record",
           "description": "Raw request_permission params (toolCall and options); sessionId comes from the prompt. Sent immediately before its response, without awaiting the permission result."
+        },
+        "after_updates_gate": {
+          "description": "Hold the prompt after sending all its updates, before any permission request or response. A receiving stream can observe an update before a control call.",
+          "type": "string"
         }
       }
     },

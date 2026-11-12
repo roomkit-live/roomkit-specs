@@ -682,6 +682,8 @@ that both runners check the same messages.
   Callback exhaustion is a runner failure, even if the scenario expects a
   business error. An omitted list declares no servers.
 - `acp.session_config`: initial channel option values (strings or booleans).
+- `acp.publish_thinking_text`: publish thought text in ephemeral deltas (false
+  by default); the turn stream and response report still receive the full text.
 - `acp.transport.refuse_prompt`: ordered entries for calls to the transport's
   connection `prompt`, including rejected attempts. `null` (also the default
   past the last entry) forwards normally. An object raises the native
@@ -707,8 +709,8 @@ that both runners check the same messages.
   `session/cancel` is taken.
 - `acp.agent.prompts`: its answer to its n-th `session/prompt` of the run:
   held at its `gate` first when it names one, then each of its `updates`
-  sent as a `session/update` of the prompt's session, in order, then its
-  answer, `error` (a JSON-RPC error) or else `stopReason` (`stop_reason`,
+  sent as a `session/update` of the prompt's session, in order, optionally held
+  at `after_updates_gate`, then its answer, `error` (a JSON-RPC error) or else `stopReason` (`stop_reason`,
   `end_turn` by default) and `usage` when given. A prompt past the last is
   answered `end_turn` with no update.
 - Any other request is answered `method_not_found`.
