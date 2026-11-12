@@ -1174,11 +1174,12 @@ the final state. Timing races remain in the implementation tests.
 A runner may run the suite with every turn crossing a distributed backend's
 transport, the kit's own executor reached as one elsewhere. roomkit's is
 `ROOMKIT_TEST_TURN_BACKEND=redis REDIS_URL=... uv run pytest tests/conformance`,
-which its CI runs. It skips what a transport cannot give the runner, each
-with its reason in `tests/conformance/test_conformance.py`: a scripted turn
-that calls the kit it holds (across a backend a turn reaches its room through
-its host, `host.*`), an ASYNC hook whose timeout falls after its turn, and a
-tool answering right after its turn's cut.
+which its CI runs. It skips what a transport cannot give the runner, with
+its reason in `tests/conformance/test_conformance.py`: a scripted turn that
+calls the kit it holds (across a backend a turn reaches its room through its
+host, `host.*`). Its idle wait also waits for the work a turn began that
+reaches the owner after the turn across the transport (§10.6.3), as an ASYNC
+hook whose timeout falls after its turn.
 
 ## Known failures
 
