@@ -470,6 +470,7 @@
         "execution": "async",
         "reactions": [
           {
+            "repeat": true,
             "do": [
               {
                 "call": "send_event",
