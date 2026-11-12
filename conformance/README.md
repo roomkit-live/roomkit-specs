@@ -672,6 +672,15 @@ JSON-RPC 2.0 one message per line, in neither implementation's ACP code, so
 that both runners check the same messages.
 
 - `acp.cwd`: the channel's `cwd`, an absolute path.
+- `acp.session_config`: initial channel option values (strings or booleans).
+- `acp.agent.new_sessions`, `set_config_options`, `close_sessions`: ordered
+  replies to `session/new`, `session/set_config_option`, `session/close`. Each
+  reply optionally waits at `gate`, then returns its raw JSON-RPC `result`
+  or `error`. Opening merges its result into the generated `sessionId`;
+  setting defaults to `{"configOptions": []}`, closing to `{}`. Missing
+  entries use those defaults. Counts span the run, including reconnects.
+  The fake agent never calculates option values: scenarios supply descriptors
+  explicitly and assert what the real channel sends on `expect.acp_wire`.
 - `acp.agent.initialize`: its `initialize` answer: `protocol_version` (the
   client's when absent), `closes_sessions` (whether it announces
   `session/close`, true by default), `agent_info` (sent as written, none when
@@ -1077,6 +1086,7 @@ refuses its value, a `ChannelId`).
 | `channel_failed` | A channel's own error, which the caller is handed (§6.1): a transport's `on_room_attached` refusing an attach, its `on_room_detached` failing a detach | the scripted channel's failure, raised as it is | `RoomKitError::Channel` |
 | `kind_not_stored` | `room_strategy_is_current` asked of a kind of strategy that is not stored with the room (§19.7.5 rule 16) | `TypeError` | `RoomKitError::Type` |
 | `turn_link` | A turn, channel call or event no executor could carry, with its `reason`: `no_executor` (§10.6.7), `executor_lost`, `backend_closed` (§10.6.8) | `TurnLinkError` | `RoomKitError::TurnLink` |
+| `acp_setup_refused` | A new ACP session cannot apply its required configuration and is never prompted (§6.4) | ACP setup `RuntimeError` | ACP setup `AcpError::Runtime` |
 | `already_set_up` | A handoff's tool set up again where it is declared, or an install over an agent whose handoff is set up already (§19.6); `delegate_task` set up again on an agent (§23.4) | `RuntimeError`, `setup_handoff() already called`, `setup_delegation() already called` | `RoomKitError::Runtime` |
 
 ## Reentrancy cells

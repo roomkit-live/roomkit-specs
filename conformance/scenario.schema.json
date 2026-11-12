@@ -4519,6 +4519,7 @@
         "waits_for_itself",
         "channel_failed",
         "already_set_up",
+        "acp_setup_refused",
         "kind_not_stored",
         "turn_link",
         "idempotency_key_taken"
@@ -7344,6 +7345,16 @@
         },
         "agent": {
           "$ref": "#/$defs/acp_agent"
+        },
+        "session_config": {
+          "description": "Initial channel configuration, applied before a new session is prompted.",
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "boolean"
+            ]
+          }
         }
       }
     },
@@ -7374,6 +7385,27 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/acp_prompt"
+          }
+        },
+        "new_sessions": {
+          "description": "Ordered replies to session/new; result is merged with the generated sessionId. After the last scripted reply the default is used.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/acp_session_reply"
+          }
+        },
+        "set_config_options": {
+          "description": "Ordered replies to session/set_config_option; default result has an empty configOptions list. After the last scripted reply the default is used.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/acp_session_reply"
+          }
+        },
+        "close_sessions": {
+          "description": "Ordered replies to session/close; default result is empty. After the last scripted reply the default is used.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/acp_session_reply"
           }
         }
       }
@@ -7624,6 +7656,43 @@
           "type": "integer",
           "minimum": 1
         }
+      }
+    },
+    "acp_session_reply": {
+      "description": "A raw JSON-RPC result or error, optionally held at a gate. No configuration state is simulated by the agent.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "gate": {
+          "type": "string"
+        },
+        "result": {
+          "$ref": "#/$defs/record"
+        },
+        "error": {
+          "description": "The prompt is answered with this JSON-RPC error in place of a result.",
+          "type": "object",
+          "required": [
+            "code",
+            "message"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "type": "integer"
+            },
+            "message": {
+              "type": "string"
+            },
+            "data": {}
+          }
+        }
+      },
+      "not": {
+        "required": [
+          "result",
+          "error"
+        ]
       }
     }
   }
