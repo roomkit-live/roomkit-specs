@@ -4520,6 +4520,7 @@
         "channel_failed",
         "already_set_up",
         "acp_setup_refused",
+        "acp_request_refused",
         "kind_not_stored",
         "turn_link",
         "idempotency_key_taken"

@@ -1086,6 +1086,7 @@ refuses its value, a `ChannelId`).
 | `channel_failed` | A channel's own error, which the caller is handed (§6.1): a transport's `on_room_attached` refusing an attach, its `on_room_detached` failing a detach | the scripted channel's failure, raised as it is | `RoomKitError::Channel` |
 | `kind_not_stored` | `room_strategy_is_current` asked of a kind of strategy that is not stored with the room (§19.7.5 rule 16) | `TypeError` | `RoomKitError::Type` |
 | `turn_link` | A turn, channel call or event no executor could carry, with its `reason`: `no_executor` (§10.6.7), `executor_lost`, `backend_closed` (§10.6.8) | `TurnLinkError` | `RoomKitError::TurnLink` |
+| `acp_request_refused` | A live ACP session rejects a configuration request (§6.4) | ACP `RequestError`, including its remote wrapper | `RequestError` relayed by the channel |
 | `acp_setup_refused` | A new ACP session cannot apply its required configuration and is never prompted (§6.4) | ACP setup `RuntimeError` | ACP `AcpError::SetupRefused`, relayed as `RuntimeError` |
 | `already_set_up` | A handoff's tool set up again where it is declared, or an install over an agent whose handoff is set up already (§19.6); `delegate_task` set up again on an agent (§23.4) | `RuntimeError`, `setup_handoff() already called`, `setup_delegation() already called` | `RoomKitError::Runtime` |
 
