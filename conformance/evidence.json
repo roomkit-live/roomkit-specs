@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "ec7d22830fe062e87b8031f3e0015be99cc65c79",
+  "python_commit": "6484a86781f09141b9222cdff351e8de2261482e",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -16840,10 +16840,10 @@
     {
       "id": "delegation-announcement-cancellation-boundary",
       "requirement": "RK-23.3-002",
-      "clause_sha256": "27f1a9dce72522b23f27959a1294ac6f6446e528fea5cec3930eefa9abed6607",
+      "clause_sha256": "f332899f46c549bf96b6cfa5b7454892444f27e3c79148e0b9021927980d7d13",
       "scope": "A deterministic caller cut before announcement produces no task-completion hook or worker model call; after announcement the child task and its completion hook end cancelled.",
       "coverage": "partial",
-      "review": "Read the existing Python tests before the implementation, then paired Rust code and RFC. Independent review checked the shared scenarios, additive migration and before/after-announcement cancellation boundary. Native PostgreSQL and cross-read runs are retained separately; only supported Python memory/SQLite JUnit runs receive execution receipts.",
+      "review": "Read the existing Python tests before the implementation, then paired Rust code and RFC. Independent review checked the shared scenarios, additive migration and before/after-announcement cancellation boundary. Native PostgreSQL and cross-read runs are retained separately; only supported Python memory/SQLite JUnit runs receive execution receipts. Re-read after the preparation amendment: its announcement boundary is unchanged; terminal child state has its own partial link.",
       "assertions": [
         {
           "scenario": "orchestration/a-worker-cut-before-announcement-reports-only-what-started",
@@ -16904,8 +16904,232 @@
       ],
       "tests": [],
       "missing": [
-        "The cleanup and terminal metadata of a partially prepared, unannounced child room are not specified or proved here.",
-        "Structured results, task-runner rejection, completion callbacks and shutdown paths have separate evidence."
+        "Structured results, task-runner rejection, completion callbacks and shutdown paths have separate evidence.",
+        "Preparation cleanup and persistence failure are linked separately; this boundary link does not establish them."
+      ]
+    },
+    {
+      "requirement": "RK-23.3-002",
+      "clause_sha256": "f332899f46c549bf96b6cfa5b7454892444f27e3c79148e0b9021927980d7d13",
+      "coverage": "partial",
+      "review": "Paired production code, native regression tests, shared assertions and RFC amendment reviewed independently. Review reproduced late creation and shutdown failures before accepting their fixes. Source tests remain static evidence here; their run logs are retained outside formal scenario receipts.",
+      "id": "delegation-unannounced-child-state",
+      "scope": "Cancelled or failed preparation retains the child, its application records and successful bindings, with terminal task metadata and no task announcement, worker turn or hand-back.",
+      "assertions": [
+        {
+          "scenario": "orchestration/a-worker-cut-before-announcement-reports-only-what-started",
+          "pointer": "/expect/rooms",
+          "sha256": "a1db6d2e42fddce1320247b022b3a06ce451dc1339e0238b3fc2ea8c380b0f97",
+          "scenario_sha256": "d31340b8485dc99eafcaa262c0858023437bc548f4dfd67bfd3c1d4c825fd161",
+          "proves": "The child stays active with task_status cancelled or failed, no result, and inherited application metadata."
+        },
+        {
+          "scenario": "orchestration/a-worker-cut-before-announcement-reports-only-what-started",
+          "pointer": "/expect/bindings",
+          "sha256": "71fa912a351772d5533fc31542765c6ee38e16e326bee4894827b8e0ddab2f9d",
+          "scenario_sha256": "d31340b8485dc99eafcaa262c0858023437bc548f4dfd67bfd3c1d4c825fd161",
+          "proves": "The worker intelligence binding remains attached with read_write access."
+        },
+        {
+          "scenario": "orchestration/a-worker-cut-before-announcement-reports-only-what-started",
+          "pointer": "/expect/hooks",
+          "sha256": "e9252d68f54779ef15eb07ada57eb4ebb7113095cb7df7cafdc394b6dacf9336",
+          "scenario_sha256": "d31340b8485dc99eafcaa262c0858023437bc548f4dfd67bfd3c1d4c825fd161",
+          "proves": "Neither task-delegated nor task-completed hooks run before announcement."
+        },
+        {
+          "scenario": "orchestration/a-worker-cut-before-announcement-reports-only-what-started",
+          "pointer": "/expect/models",
+          "sha256": "a78a2061c5a492a45c032badf0c6afa2c8601a633b3fb1c2765662763bfb5434",
+          "scenario_sha256": "d31340b8485dc99eafcaa262c0858023437bc548f4dfd67bfd3c1d4c825fd161",
+          "proves": "The worker model is never called; only the supervisor began its request."
+        },
+        {
+          "scenario": "orchestration/a-team-cut-before-announcement-reports-only-what-started",
+          "pointer": "/expect/rooms",
+          "sha256": "a1db6d2e42fddce1320247b022b3a06ce451dc1339e0238b3fc2ea8c380b0f97",
+          "scenario_sha256": "278a23151e629de3ebf01e62cffc4f34aab700ffc782664e40d053411bcc46ed",
+          "proves": "The child stays active with task_status cancelled or failed, no result, and inherited application metadata."
+        },
+        {
+          "scenario": "orchestration/a-team-cut-before-announcement-reports-only-what-started",
+          "pointer": "/expect/bindings",
+          "sha256": "c66f23a5b066303472276622b4554d1478def9fa8c33f15e53513dc5aea534ea",
+          "scenario_sha256": "278a23151e629de3ebf01e62cffc4f34aab700ffc782664e40d053411bcc46ed",
+          "proves": "The worker intelligence binding remains attached with read_write access."
+        },
+        {
+          "scenario": "orchestration/a-team-cut-before-announcement-reports-only-what-started",
+          "pointer": "/expect/hooks",
+          "sha256": "e9252d68f54779ef15eb07ada57eb4ebb7113095cb7df7cafdc394b6dacf9336",
+          "scenario_sha256": "278a23151e629de3ebf01e62cffc4f34aab700ffc782664e40d053411bcc46ed",
+          "proves": "Neither task-delegated nor task-completed hooks run before announcement."
+        },
+        {
+          "scenario": "orchestration/a-team-cut-before-announcement-reports-only-what-started",
+          "pointer": "/expect/models",
+          "sha256": "65dbf5123bd4e9330ad8d248de64d07795f8eb113336f1c8111f085eed3fd3b8",
+          "scenario_sha256": "278a23151e629de3ebf01e62cffc4f34aab700ffc782664e40d053411bcc46ed",
+          "proves": "The worker model is never called; only the supervisor began its request."
+        },
+        {
+          "scenario": "tasks/a-failed-inline-preparation-keeps-its-child-and-reports-no-task",
+          "pointer": "/expect/rooms",
+          "sha256": "8704d2b54a4a755386d55f146addef41aa8fb53f8d77aab419d3c4a25ad4b925",
+          "scenario_sha256": "764246c6174ad72914ccc6ee77aae806823bd26cdf8317d987de94e1dda87bb4",
+          "proves": "The child stays active with task_status cancelled or failed, no result, and inherited application metadata."
+        },
+        {
+          "scenario": "tasks/a-failed-inline-preparation-keeps-its-child-and-reports-no-task",
+          "pointer": "/expect/bindings",
+          "sha256": "b6a66d37d0ecf11d2391604a938a047e2294cbbe830fded86ec1d40ed23c9ed5",
+          "scenario_sha256": "764246c6174ad72914ccc6ee77aae806823bd26cdf8317d987de94e1dda87bb4",
+          "proves": "The worker and successfully shared bindings remain; an attachment refused before completion is absent where asserted."
+        },
+        {
+          "scenario": "tasks/a-failed-inline-preparation-keeps-its-child-and-reports-no-task",
+          "pointer": "/expect/hooks",
+          "sha256": "e9252d68f54779ef15eb07ada57eb4ebb7113095cb7df7cafdc394b6dacf9336",
+          "scenario_sha256": "764246c6174ad72914ccc6ee77aae806823bd26cdf8317d987de94e1dda87bb4",
+          "proves": "Neither task-delegated nor task-completed hooks run before announcement."
+        },
+        {
+          "scenario": "tasks/a-failed-inline-preparation-keeps-its-child-and-reports-no-task",
+          "pointer": "/expect/timeline",
+          "sha256": "7412feea382be0696a48db201e55aa75d2759de807faff00fb97cbfd7d96e41c",
+          "scenario_sha256": "764246c6174ad72914ccc6ee77aae806823bd26cdf8317d987de94e1dda87bb4",
+          "proves": "The child keeps the application record committed during preparation and the parent receives no hand-back."
+        },
+        {
+          "scenario": "tasks/a-failed-inline-preparation-keeps-its-child-and-reports-no-task",
+          "pointer": "/expect/turns",
+          "sha256": "04acba3f31e199ae93c594b664268cc3bcb63cbb1a0d42e13962ec00745af4c3",
+          "scenario_sha256": "764246c6174ad72914ccc6ee77aae806823bd26cdf8317d987de94e1dda87bb4",
+          "proves": "The worker has no turn in the child."
+        },
+        {
+          "scenario": "tasks/a-failed-inline-preparation-keeps-its-child-and-reports-no-task",
+          "pointer": "/steps/0/expect",
+          "sha256": "ac5efe2465db07225b759158b8dc884c0a553d72b8feeaf4425ab8545e741c42",
+          "scenario_sha256": "764246c6174ad72914ccc6ee77aae806823bd26cdf8317d987de94e1dda87bb4",
+          "proves": "The preparation refusal reaches the caller as channel_failed."
+        },
+        {
+          "scenario": "tasks/a-failed-inline-preparation-keeps-its-child-and-reports-no-task",
+          "pointer": "/steps/2/expect",
+          "sha256": "63c49671e4c0faf619ee397c992e45e4c411dce55a4ef9410067b01fc9c93a0f",
+          "scenario_sha256": "764246c6174ad72914ccc6ee77aae806823bd26cdf8317d987de94e1dda87bb4",
+          "proves": "No task status was posted before announcement."
+        },
+        {
+          "scenario": "tasks/a-failed-background-preparation-keeps-its-child-and-reports-no-task",
+          "pointer": "/expect/rooms",
+          "sha256": "8704d2b54a4a755386d55f146addef41aa8fb53f8d77aab419d3c4a25ad4b925",
+          "scenario_sha256": "0a45f665c6c1c1b90697ababb2c3ec362754e7cdc320b90415438eb838363cf5",
+          "proves": "The child stays active with task_status cancelled or failed, no result, and inherited application metadata."
+        },
+        {
+          "scenario": "tasks/a-failed-background-preparation-keeps-its-child-and-reports-no-task",
+          "pointer": "/expect/bindings",
+          "sha256": "b6a66d37d0ecf11d2391604a938a047e2294cbbe830fded86ec1d40ed23c9ed5",
+          "scenario_sha256": "0a45f665c6c1c1b90697ababb2c3ec362754e7cdc320b90415438eb838363cf5",
+          "proves": "The worker and successfully shared bindings remain; an attachment refused before completion is absent where asserted."
+        },
+        {
+          "scenario": "tasks/a-failed-background-preparation-keeps-its-child-and-reports-no-task",
+          "pointer": "/expect/hooks",
+          "sha256": "e9252d68f54779ef15eb07ada57eb4ebb7113095cb7df7cafdc394b6dacf9336",
+          "scenario_sha256": "0a45f665c6c1c1b90697ababb2c3ec362754e7cdc320b90415438eb838363cf5",
+          "proves": "Neither task-delegated nor task-completed hooks run before announcement."
+        },
+        {
+          "scenario": "tasks/a-failed-background-preparation-keeps-its-child-and-reports-no-task",
+          "pointer": "/expect/timeline",
+          "sha256": "7412feea382be0696a48db201e55aa75d2759de807faff00fb97cbfd7d96e41c",
+          "scenario_sha256": "0a45f665c6c1c1b90697ababb2c3ec362754e7cdc320b90415438eb838363cf5",
+          "proves": "The child keeps the application record committed during preparation and the parent receives no hand-back."
+        },
+        {
+          "scenario": "tasks/a-failed-background-preparation-keeps-its-child-and-reports-no-task",
+          "pointer": "/expect/turns",
+          "sha256": "04acba3f31e199ae93c594b664268cc3bcb63cbb1a0d42e13962ec00745af4c3",
+          "scenario_sha256": "0a45f665c6c1c1b90697ababb2c3ec362754e7cdc320b90415438eb838363cf5",
+          "proves": "The worker has no turn in the child."
+        },
+        {
+          "scenario": "tasks/a-failed-background-preparation-keeps-its-child-and-reports-no-task",
+          "pointer": "/steps/0/expect",
+          "sha256": "ac5efe2465db07225b759158b8dc884c0a553d72b8feeaf4425ab8545e741c42",
+          "scenario_sha256": "0a45f665c6c1c1b90697ababb2c3ec362754e7cdc320b90415438eb838363cf5",
+          "proves": "The preparation refusal reaches the caller as channel_failed."
+        },
+        {
+          "scenario": "tasks/a-failed-background-preparation-keeps-its-child-and-reports-no-task",
+          "pointer": "/steps/2/expect",
+          "sha256": "63c49671e4c0faf619ee397c992e45e4c411dce55a4ef9410067b01fc9c93a0f",
+          "scenario_sha256": "0a45f665c6c1c1b90697ababb2c3ec362754e7cdc320b90415438eb838363cf5",
+          "proves": "No task status was posted before announcement."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Repeated cancellation, late writes, cleanup storage failure and shutdown limits are linked through native tests separately.",
+        "Other structured-result and announced-task obligations of this broad unit are outside this link."
+      ]
+    },
+    {
+      "requirement": "RK-23.3-002",
+      "clause_sha256": "f332899f46c549bf96b6cfa5b7454892444f27e3c79148e0b9021927980d7d13",
+      "coverage": "partial",
+      "review": "Paired production code, native regression tests, shared assertions and RFC amendment reviewed independently. Review reproduced late creation and shutdown failures before accepting their fixes. Source tests remain static evidence here; their run logs are retained outside formal scenario receipts.",
+      "id": "delegation-preparation-write-boundaries",
+      "scope": "Native preparation boundaries, late creation, repeated cancellation, foreign room protection, cleanup failure and bounded shutdown preserve the preparation outcome.",
+      "assertions": [],
+      "tests": [
+        {
+          "nodeid": "tests/tasks/test_delegation_preparation.py::test_interrupted_preparation_keeps_no_child_task_pending",
+          "sha256": "6e83353240cd5b79007a56a0bea52b7479799e774a1f855f85f6f576a1bbd3d5",
+          "proves": "Inline and background preparation, creation boundaries, error and cancellation; no task callbacks or bus and closed spans."
+        },
+        {
+          "nodeid": "tests/tasks/test_delegation_preparation.py::test_preparation_preserves_the_child_record",
+          "sha256": "b0ad097264084bb07de7c877340757e88462f7ba79788bcc7735cd3a572b141e",
+          "proves": "The complete room, bindings and timeline survive, apart from task end metadata and updated_at."
+        },
+        {
+          "nodeid": "tests/tasks/test_delegation_preparation.py::test_preparation_end_survives_repeated_cancellation",
+          "sha256": "519e6923c674fcdcd6919bcc37bd8acabaa0f984362c05009ddc7bf75a32af3b",
+          "proves": "Further cancellation cannot end the terminal write early; close drains it within grace."
+        },
+        {
+          "nodeid": "tests/tasks/test_delegation_preparation.py::test_preparation_cleanup_failure_keeps_the_original_error",
+          "sha256": "cef53643d2b0af460fe79ca3aeea118d23fdc39f6c3bfaef6699d5143afd0f4d",
+          "proves": "Read/write failures are logged without replacing the original error or cancellation."
+        },
+        {
+          "nodeid": "tests/tasks/test_delegation_preparation.py::test_failed_creation_never_marks_another_tasks_room",
+          "sha256": "0e5b5f482d332d73bc05d61fdcbd1e7d37ec96dd42b9a3feba7a5a5b63c65d67",
+          "proves": "A refused creation does not stamp a room owned by a different task."
+        },
+        {
+          "nodeid": "tests/tasks/test_delegation_preparation.py::test_close_past_grace_preserves_original_preparation_error",
+          "sha256": "d644b1638e3ea634c690eca03c8a47aa6c447656a7510510da6926360177fb38",
+          "proves": "A close that cuts cleanup logs the incomplete write and preserves the preparation cause."
+        },
+        {
+          "nodeid": "tests/tasks/test_delegation_preparation_creation.py::test_cleanup_waits_for_a_custom_stores_retained_create",
+          "sha256": "1b295154354bf038accfa817721bb6ea1eb8cffb01b6dbf03717cb067c83cc90",
+          "proves": "A store retaining its own creation write settles before cleanup reads the child."
+        },
+        {
+          "nodeid": "tests/tasks/test_delegation_preparation_creation.py::test_sqlite_cleanup_waits_for_the_late_create_thread",
+          "sha256": "5563b28a11dd0a1783ccb61ee8ec3c666fd5600c1c0309488356d7b04825b41d",
+          "proves": "A real SQLite write thread finishing after cancellation leaves a cancelled child."
+        }
+      ],
+      "missing": [
+        "Specialized test executions are not supported as formal receipts; retained native logs do not become recorded_pass.",
+        "No process-crash recovery or automatic retry after permanent storage failure is established."
       ]
     }
   ],
