@@ -1814,7 +1814,8 @@
             "kit_executor.hook",
             "kit_executor.room_hook",
             "kit_executor.remove_room_hook",
-            "disable_room_hook"
+            "disable_room_hook",
+            "acp.cancel"
           ]
         },
         "organization_id": {
@@ -4468,6 +4469,29 @@
                 "type": "string"
               },
               "name": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "acp.cancel"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "channel_id",
+              "room_id"
+            ],
+            "properties": {
+              "channel_id": {
+                "type": "string"
+              },
+              "room_id": {
                 "type": "string"
               }
             }
