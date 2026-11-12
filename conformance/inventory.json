@@ -459,7 +459,7 @@
     },
     {
       "section": "10.6.5",
-      "sha256": "02d022a93d8fbe5d7d0dc3807393c7388440ed1151a33181f30e15733b3fda33",
+      "sha256": "e29a45d59b439850f4152028327019dc684c6530aa12b90a317420a9e20a9d10",
       "classification": "normative",
       "review": "Source inventory: What a turn asks of the owner. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },

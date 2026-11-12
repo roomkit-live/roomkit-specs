@@ -8806,6 +8806,42 @@ kit it holds: a host that runs a kit beside an executor of another process
 MUST NOT let that executor's turns reach a room through it.
 <!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.6.5-005", "kind": "behavior", "applies": "§10.6.5 What a turn asks of the owner; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+**The turn's record on the owner.** The turn's response-metadata record
+(§6.7) is the executor's, and a handler the owner runs for the turn learns
+facts of the turn as a local one does: a document its tool read, a value its
+tool protected. A `tool_call` and a `host_call` made while the turn runs carry
+the record as the call leaves the executor, in the form a `record` message
+carries it (§10.6.4). The owner runs the handler, or the declared verb, on a
+record holding that copy, which `current_response_metadata()` answers there
+(§21.4). The handler works on a copy of its own, nothing of it shared with
+the record the call carried, and its `tool_result` or `host_result` carries
+what it changed, measured against what the call carried: each key it set to
+another value, and each key the call carried that it removed, whether the
+handler answered, refused or failed. The executor applies those changes to
+the turn's record before the call returns:
+
+- a key removed is removed;
+- a key whose new value is a mapping, where the call carried a mapping or
+  nothing and the turn's record holds a mapping, takes the handler's change
+  entry by entry: the entries it set are set, the entries the call carried
+  that it removed are removed, and the others the turn's record holds stay;
+- any other key set takes the value the handler wrote.
+
+So two calls of one turn served at once that each add entries to one mapping
+keep both, a key a concurrent call wrote is never removed by a call that did
+not carry it, and a call served alone leaves the record as a local handler
+would. Two calls that each set a key to a value other than a mapping leave the
+value of the one answered last: a host that has concurrent calls contribute to
+one fact writes each contribution under an entry of its own. The whole record
+crosses with each call, and only what the handler changed comes back. A call
+made outside the turn carries no record: a declared verb the owner serves
+between turns, and work the turn began once it ended, read the empty value
+from `current_response_metadata()`, as a realtime tool call does, and what
+they write reaches no message. A call or an answer without these fields reads
+as one that carries no record and changed nothing.
+<!-- /rfc -->
+
 <!-- rfc: {"id": "RK-10.6.5-003", "kind": "behavior", "applies": "§10.6.5 What a turn asks of the owner; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **The in-memory backend's execution context.** The in-memory backend runs in
 the owner's process, where a host's tool holds the kit itself and may call it
