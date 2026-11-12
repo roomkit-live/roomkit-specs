@@ -703,6 +703,11 @@ that both runners check the same messages.
   answered `end_turn` with no update.
 - Any other request is answered `method_not_found`.
 
+`prompts[].permission` sends one `session/request_permission` immediately before
+the prompt answer, without waiting for the permission decision. It supplies raw
+ACP `toolCall` and `options`; `sessionId` comes from the current prompt. This
+tests receipt ordering independently of the permission policy's decision.
+
 `expect.acp_wire`, per ACP channel: what its agent received, in order, each
 `{method, params}`, `params` as the client wrote them, matched as a patch. A
 client's `clientInfo.version` is its implementation's own.

@@ -7479,6 +7479,10 @@
             },
             "data": {}
           }
+        },
+        "permission": {
+          "$ref": "#/$defs/record",
+          "description": "Raw request_permission params (toolCall and options); sessionId comes from the prompt. Sent immediately before its response, without awaiting the permission result."
         }
       }
     },
