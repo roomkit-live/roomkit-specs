@@ -71,6 +71,11 @@
         "name": "tools",
         "trigger": "on_tool_call",
         "execution": "async"
+      },
+      {
+        "name": "sync",
+        "trigger": "on_tool_call",
+        "execution": "sync"
       }
     ]
   },
@@ -181,7 +186,8 @@
             "streaming": true
           }
         }
-      ]
+      ],
+      "sync": []
     }
   }
 }
