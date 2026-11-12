@@ -3,8 +3,8 @@
   "id": "tasks/a-failed-inline-preparation-keeps-its-child-and-reports-no-task",
   "title": "A failed inline preparation retains its child data and marks its task failed without announcing a task",
   "rules": [
-    "\u00a723.3",
-    "\u00a76.1"
+    "§23.3",
+    "§6.1"
   ],
   "notes": "Python: tests/tasks/test_delegation_preparation.py. A shared transport refuses the preparation after another transport stored a child record. The caller receives that refusal, the child task is failed, and its existing history, bindings and application metadata survive; no task was announced. Decision HITL 897512c8.",
   "setup": {
