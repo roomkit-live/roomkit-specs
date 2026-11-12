@@ -1342,6 +1342,11 @@
         },
         "invalid_result": {
           "$ref": "#/$defs/invalid_hook_result"
+        },
+        "delay_ms": {
+          "description": "Wait this many milliseconds after the gate and before the actions. Used to separate nested call deadlines, not to wait for completion.",
+          "type": "integer",
+          "minimum": 0
         }
       },
       "allOf": [

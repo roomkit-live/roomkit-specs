@@ -348,6 +348,7 @@ left, the call does what it does by default. A reaction:
 |---|---|
 | `when` | Holds when every member equals the call's: `room_id`, `text` (a text content's body), `type` (the event type), `source_channel_id`, `chain_depth` |
 | `gate` | Holds the call at this gate until a step opens it |
+| `delay_ms` | Waits this many milliseconds after the gate and before the actions, to separate the start of nested call deadlines; absent or zero, no delay |
 | `do` | Kit calls the hook or the channel makes while it runs, in its execution context, in order: an **action** is a call (below) with an optional `as` and `expect`. Its error is caught, kept and checked, never raised into the kit |
 | `after_turn` | In an `on_event` reaction: actions the turn leaves to work it began, a task in the turn's execution context that makes them in order once the turn ended (§10.6.5): a `host.<verb>` then crosses as a `room_call`. A runner waits for that work when it waits for the kit to go idle |
 | `fail` | Then raises, with this message |
