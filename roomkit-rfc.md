@@ -2097,6 +2097,26 @@ Both ephemeral events carry a call's `intent` beside its id when it has one
 (A call's intent, below).
 <!-- /rfc -->
 
+<!-- rfc: {"id": "RK-6.4-044", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+**One end per started call:** Every call whose `TOOL_CALL_START` a channel
+published on the realtime bus MUST get one `TOOL_CALL_END` there, whatever
+the turn backend (§10.6.1), its reader stopping or its turn cut included: a
+channel that publishes a call's end once its reader took the call's end
+marker publishes it all the same when the stream is closed first. Each end
+reads as the stored `TOOL_CALL_END` does (above). A reader that stopped
+(§12.2 step 13s) took the ends it was handed, and each call ends as it did.
+A cut turn's owner closes each call as its end reached it (§10.6.4): as it
+ended when its reader read that end or the end rode its start, `failed`
+otherwise. A call is thus `failed` when the cut came while it ran or while
+an external tool handler decided it (§9.3), and when the cut came as the
+first end of its round was handed out, an item the owner then drops (the
+round's other ends rode their starts before it): on an executor of another
+process the cut may arrive after the tool answered, and that end reads
+`failed` all the same. An `AIChannel`'s ephemeral end of such a call carries
+the result `{"error": "Tool call aborted"}`. A turn whose owner is lost
+(§10.6.8) publishes nothing more: no owner is left to publish it.
+<!-- /rfc -->
+
 <!-- rfc: {"id": "RK-6.4-007", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **What a provider hands the loop of its reasoning (normative).** A provider
 whose reasoning comes in blocks, each with its own signature (Anthropic), hands
