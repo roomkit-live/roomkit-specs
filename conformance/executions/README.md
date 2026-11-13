@@ -345,3 +345,27 @@ They do not prove PostgreSQL with turns across Redis, a real process death, an
 executor in another process, the specialized PostgreSQL and Redis tests (store
 contracts, advisory locks, multi-process and process-death tests), which stay
 source evidence, or Rust. No receipt is merged with another.
+
+
+## ACP history and host context
+
+The lot at Python `97304f75780ad5862faba722dd3c7b2083b9c0c4` uses corpus
+`d8ae5d29fab9a7f06fc8e9d3b88a4e09e3566cc0`.
+`python-acp-context-97304f7.xml` records 2,136 memory scenarios and 568
+SQLite variants. All 28 new `acp/context-*` scenarios passed in memory;
+none is a SQLite variant. The copy-integrity check is retained without
+scenario credit. Native codec, concurrency and callback tests remain separate
+proofs, not shared execution receipts.
+
+CI run [43448503184](https://github.com/roomkit-live/roomkit/actions/runs/43448503184)
+on the same commit supplies three additional receipts through the official
+workflow verifier: 447 PostgreSQL scenarios, 2,124 memory scenarios with Redis
+turns (12 skipped), and 559 SQLite variants with Redis turns (9 skipped).
+The 28 new context scenarios passed on memory with Redis turns. Skips are
+preserved and never credited as passes.
+
+The history link remains partial: its 23 reviewed assertions cover 19
+scenarios. Host-contributor scenarios have execution receipts but receive no
+new normative mapping here. These results do not certify a Rust remote
+executor, process death, standalone ACP turns, or complete ACP/RFC compliance.
+All 119 preceding receipts and 129 preceding links remain unchanged.
