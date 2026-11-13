@@ -3,8 +3,8 @@
   "id": "acp/standalone-response-before-session-close",
   "title": "A completed standalone response is reported while its temporary session close is pending",
   "rules": [
-    "\u00a76.4",
-    "\u00a710.1.1 step 7"
+    "§6.4",
+    "§10.1.1 step 7"
   ],
   "notes": "Review regression: complete prompt and text; retain only the session/close answer. The response observer must run before release, as Python _turn_stream finalization precedes _prompt_stream session cleanup.",
   "setup": {
