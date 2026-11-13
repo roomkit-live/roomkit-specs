@@ -369,3 +369,18 @@ scenarios. Host-contributor scenarios have execution receipts but receive no
 new normative mapping here. These results do not certify a Rust remote
 executor, process death, standalone ACP turns, or complete ACP/RFC compliance.
 All 119 preceding receipts and 129 preceding links remain unchanged.
+
+## ACP standing instructions (2026-11-13)
+
+`python-acp-instructions-880e5a2.xml` records the targeted memory run of
+`acp/instructions-*` on published Python `880e5a20ed13b841cbabb64ce36e99b7597c05fe`,
+using corpus `79db2588615668f699cd85669c87c9cef43e323a`: 13 passing scenarios.
+The four fixture validation tests in the raw run are not scenario results and
+are excluded from this cleaned artifact. This is not a full-corpus, SQLite,
+PostgreSQL or Redis receipt.
+
+Two partial links carry 13 prompt-text assertions: eleven on standing
+instructions (RK-6.4-040), two on literal copies of their runtime mark
+(RK-6.4-020). They do not establish identity, Discussion integration, session
+identifier changes, model output, native concurrency races or standalone turns.
+The 124 earlier receipts and 130 earlier links remain unchanged.

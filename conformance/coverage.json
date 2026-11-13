@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
   "corpus_sha256": "8925dcab7514d547233f7c0035aab7974a55830dbdf87eb8be32c0f28b91ade4",
-  "python_commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
+  "python_commit": "880e5a20ed13b841cbabb64ce36e99b7597c05fe",
   "scenario_count": 2149,
   "sections": [
     {
@@ -723,8 +723,8 @@
       "review": "normative",
       "requirements": 44,
       "mapping": {
-        "mapped_partial": 7,
-        "unmapped": 37
+        "mapped_partial": 9,
+        "unmapped": 35
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -8871,7 +8871,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -8879,7 +8879,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -8887,7 +8887,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "not_passed"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -8895,7 +8895,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "not_passed"
+              "state": "stale"
             }
           ]
         },
@@ -9817,7 +9817,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -9825,7 +9825,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -9833,7 +9833,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "not_passed"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -9841,7 +9841,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "not_passed"
+              "state": "stale"
             }
           ]
         }
@@ -10761,7 +10761,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -10769,7 +10769,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -10777,7 +10777,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -10785,7 +10785,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -11683,7 +11683,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -11691,7 +11691,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -11699,7 +11699,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -11707,7 +11707,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -12626,7 +12626,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -12634,7 +12634,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -12642,7 +12642,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -12650,7 +12650,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -13556,7 +13556,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -13564,7 +13564,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -13572,7 +13572,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -13580,7 +13580,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -14723,7 +14723,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -14731,7 +14731,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -14739,7 +14739,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -14747,7 +14747,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -14755,7 +14755,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -15212,7 +15212,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -15220,7 +15220,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -15228,7 +15228,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -15236,7 +15236,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -15348,8 +15348,29 @@
     {
       "id": "RK-6.4-020",
       "section": "6.4",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "acp-standing-instruction-mark-copies",
+          "scope": "Replacement of literal copies of the standing-instructions header and its recognized bracketed opening in a participant request.",
+          "coverage": "partial",
+          "missing": [
+            "Identity and Discussion integration are separate work; these assertions inspect prompt text, not returned model content or session identifiers.",
+            "The native received-RPC/abandoned-reader and late-response races are separate proofs and are not credited to these sequential scenarios.",
+            "No standalone-session, service backend, remote-executor or overall conformance-level claim follows from these assertions."
+          ],
+          "executions": [
+            {
+              "execution": "python-acp-instructions-880e5a2-memory",
+              "implementation": "python",
+              "commit": "880e5a20ed13b841cbabb64ce36e99b7597c05fe",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "RK-6.4-021",
@@ -15577,7 +15598,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -15585,7 +15606,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -15796,7 +15817,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -15804,7 +15825,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -16030,7 +16051,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -16038,7 +16059,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -16249,7 +16270,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -16257,7 +16278,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -16714,7 +16735,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -16722,7 +16743,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -16946,7 +16967,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -16954,7 +16975,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -17072,7 +17093,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -17080,7 +17101,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -17164,7 +17185,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -17172,7 +17193,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -17248,7 +17269,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -17256,7 +17277,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -17324,7 +17345,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -17332,7 +17353,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -17481,7 +17502,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -17489,7 +17510,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -17621,7 +17642,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -17629,7 +17650,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -17752,7 +17773,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -17760,7 +17781,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -17845,7 +17866,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -17853,7 +17874,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -17970,7 +17991,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -17978,7 +17999,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -18029,7 +18050,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -18037,7 +18058,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -18072,7 +18093,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -18080,7 +18101,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -18089,8 +18110,29 @@
     {
       "id": "RK-6.4-040",
       "section": "6.4",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "acp-standing-instruction-prompts",
+          "scope": "The exact texts of sequential ACP prompt attempts with standing application instructions, including absent/blank defaults, RPC failure, separate rooms, explicit close, transport reconnect and authorized session rebuild.",
+          "coverage": "partial",
+          "missing": [
+            "Identity and Discussion integration are separate work; these assertions inspect prompt text, not returned model content or session identifiers.",
+            "The native received-RPC/abandoned-reader and late-response races are separate proofs and are not credited to these sequential scenarios.",
+            "No standalone-session, service backend, remote-executor or overall conformance-level claim follows from these assertions."
+          ],
+          "executions": [
+            {
+              "execution": "python-acp-instructions-880e5a2-memory",
+              "implementation": "python",
+              "commit": "880e5a20ed13b841cbabb64ce36e99b7597c05fe",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "RK-6.4-041",
@@ -18237,7 +18279,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -18245,7 +18287,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -18792,7 +18834,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -18800,7 +18842,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -19281,7 +19323,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -19289,7 +19331,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -19774,7 +19816,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -19782,7 +19824,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -20261,7 +20303,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -20269,7 +20311,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -20740,7 +20782,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -20748,7 +20790,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -21219,7 +21261,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -21227,7 +21269,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -21706,7 +21748,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -21714,7 +21756,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -22185,7 +22227,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -22193,7 +22235,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -22672,7 +22714,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -22680,7 +22722,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -23161,7 +23203,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -23169,7 +23211,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -23651,7 +23693,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -23659,7 +23701,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -24148,7 +24190,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -24156,7 +24198,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -24614,7 +24656,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -24622,7 +24664,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -25549,7 +25591,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -25557,7 +25599,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -25565,7 +25607,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -25573,7 +25615,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -25581,7 +25623,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -26034,7 +26076,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -26042,7 +26084,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -26109,7 +26151,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -26117,7 +26159,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "not_passed"
+              "state": "stale"
             }
           ]
         }
@@ -26534,7 +26576,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -26542,7 +26584,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -26636,7 +26678,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -26644,7 +26686,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -27157,7 +27199,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -27165,7 +27207,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -27376,7 +27418,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -27384,7 +27426,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -28315,7 +28357,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -28323,7 +28365,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -28331,7 +28373,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -28339,7 +28381,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -28852,7 +28894,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -28860,7 +28902,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -28908,7 +28950,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -28916,7 +28958,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -29405,7 +29447,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -29413,7 +29455,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -29902,7 +29944,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -29910,7 +29952,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -30405,7 +30447,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -30413,7 +30455,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -30499,7 +30541,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -30507,7 +30549,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -30542,7 +30584,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -30550,7 +30592,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -30608,7 +30650,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -30616,7 +30658,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -30651,7 +30693,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -30659,7 +30701,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -31122,7 +31164,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -31130,7 +31172,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -31601,7 +31643,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -31609,7 +31651,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -32594,7 +32636,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -32602,7 +32644,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -32610,7 +32652,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -32618,7 +32660,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -32626,7 +32668,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -33089,7 +33131,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -33097,7 +33139,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -33570,7 +33612,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -33578,7 +33620,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -34563,7 +34605,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -34571,7 +34613,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -34579,7 +34621,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -34587,7 +34629,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -34595,7 +34637,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -34966,7 +35008,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -34974,7 +35016,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -35847,7 +35889,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -35855,7 +35897,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -35863,7 +35905,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -35871,7 +35913,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -35879,7 +35921,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -36750,7 +36792,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -36758,7 +36800,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -36766,7 +36808,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -36774,7 +36816,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -36782,7 +36824,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -37247,7 +37289,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -37255,7 +37297,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -38201,7 +38243,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -38209,7 +38251,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -38217,7 +38259,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -38225,7 +38267,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -38233,7 +38275,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -39090,7 +39132,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -39098,7 +39140,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -39106,7 +39148,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -39114,7 +39156,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -39621,7 +39663,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -39629,7 +39671,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -40534,7 +40576,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -40542,7 +40584,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -40550,7 +40592,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -40558,7 +40600,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -40566,7 +40608,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -41447,7 +41489,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -41455,7 +41497,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -41463,7 +41505,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -41471,7 +41513,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -41479,7 +41521,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -42392,7 +42434,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -42400,7 +42442,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -42408,7 +42450,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -42416,7 +42458,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -42424,7 +42466,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -43329,7 +43371,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -43337,7 +43379,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -43345,7 +43387,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -43353,7 +43395,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -43361,7 +43403,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -44242,7 +44284,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -44250,7 +44292,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -44258,7 +44300,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -44266,7 +44308,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -44274,7 +44316,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -45155,7 +45197,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -45163,7 +45205,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -45171,7 +45213,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -45179,7 +45221,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -45187,7 +45229,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -46068,7 +46110,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -46076,7 +46118,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -46084,7 +46126,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -46092,7 +46134,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -46100,7 +46142,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -46503,7 +46545,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -46511,7 +46553,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -46519,7 +46561,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -46527,7 +46569,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -46535,7 +46577,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -46880,7 +46922,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -46888,7 +46930,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -46896,7 +46938,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -46904,7 +46946,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -46912,7 +46954,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -47171,7 +47213,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -47179,7 +47221,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -47187,7 +47229,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -47195,7 +47237,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -47203,7 +47245,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -47585,7 +47627,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -47593,7 +47635,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -47601,7 +47643,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -47609,7 +47651,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "not_passed"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -47617,7 +47659,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "not_passed"
+              "state": "stale"
             }
           ]
         }
@@ -47865,7 +47907,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -47873,7 +47915,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -48064,7 +48106,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -48072,7 +48114,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -48269,7 +48311,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -48277,7 +48319,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -48463,7 +48505,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -48471,7 +48513,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -48809,7 +48851,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -48817,7 +48859,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -48825,7 +48867,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -48833,7 +48875,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "not_passed"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -48841,7 +48883,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "not_passed"
+              "state": "stale"
             }
           ]
         }
@@ -48950,7 +48992,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -48958,7 +49000,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -51298,7 +51340,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -51306,7 +51348,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -51314,7 +51356,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -51322,7 +51364,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -51330,7 +51372,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -52053,7 +52095,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -52061,7 +52103,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -52069,7 +52111,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -52077,7 +52119,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -52085,7 +52127,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -52792,7 +52834,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -52800,7 +52842,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -52808,7 +52850,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -52816,7 +52858,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -52824,7 +52866,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -53082,7 +53124,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -53090,7 +53132,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -54315,7 +54357,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -54323,7 +54365,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -54331,7 +54373,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -54339,7 +54381,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -54347,7 +54389,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -54712,7 +54754,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -54720,7 +54762,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -54728,7 +54770,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -54736,7 +54778,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -54744,7 +54786,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -55173,7 +55215,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -55181,7 +55223,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -56098,7 +56140,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -56106,7 +56148,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -56114,7 +56156,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -56122,7 +56164,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -56743,7 +56785,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -56751,7 +56793,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -56759,7 +56801,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -56767,7 +56809,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -56775,7 +56817,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -57726,7 +57768,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -57734,7 +57776,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -57742,7 +57784,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -57750,7 +57792,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -57758,7 +57800,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -58640,7 +58682,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -58648,7 +58690,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -58656,7 +58698,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -58664,7 +58706,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -59143,7 +59185,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -59151,7 +59193,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -59317,7 +59359,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -59325,7 +59367,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -59891,7 +59933,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -59899,7 +59941,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -60363,7 +60405,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -60371,7 +60413,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -60840,7 +60882,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -60848,7 +60890,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -61451,7 +61493,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -61459,7 +61501,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -61467,7 +61509,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -61475,7 +61517,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -61483,7 +61525,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -62042,7 +62084,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -62050,7 +62092,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -62058,7 +62100,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -62066,7 +62108,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -62074,7 +62116,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -62421,7 +62463,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -62429,7 +62471,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -62437,7 +62479,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -62445,7 +62487,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -62453,7 +62495,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -62904,7 +62946,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -62912,7 +62954,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -63196,7 +63238,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -63204,7 +63246,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -63439,7 +63481,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -63447,7 +63489,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -63666,7 +63708,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -63674,7 +63716,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -63949,7 +63991,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -63957,7 +63999,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -64005,7 +64047,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -64013,7 +64055,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -64484,7 +64526,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -64492,7 +64534,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -64879,7 +64921,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -64887,7 +64929,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -65434,7 +65476,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -65442,7 +65484,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -65892,7 +65934,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -65900,7 +65942,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -66214,7 +66256,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -66222,7 +66264,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -66230,7 +66272,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -66238,7 +66280,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -66246,7 +66288,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -66553,7 +66595,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-acp-context-97304f7-sqlite",
@@ -66561,7 +66603,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-postgres-scenarios-97304f7-postgres",
@@ -66569,7 +66611,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "postgres",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -66577,7 +66619,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
@@ -66585,7 +66627,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "sqlite+redis-turns",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -66954,7 +66996,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -66962,7 +67004,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -67300,7 +67342,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -67308,7 +67350,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -67771,7 +67813,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -67779,7 +67821,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -68120,7 +68162,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -68128,7 +68170,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -68204,7 +68246,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -68212,7 +68254,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         },
@@ -68279,7 +68321,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-redis-turns-97304f7-memory-redis-turns",
@@ -68287,7 +68329,7 @@
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -69451,6 +69493,15 @@
       "rfc_commit": "07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a",
       "corpus_commit": "d8ae5d29fab9a7f06fc8e9d3b88a4e09e3566cc0",
       "backend": "sqlite+redis-turns",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-acp-instructions-880e5a2-memory",
+      "implementation": "python",
+      "implementation_commit": "880e5a20ed13b841cbabb64ce36e99b7597c05fe",
+      "rfc_commit": "07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a",
+      "corpus_commit": "79db2588615668f699cd85669c87c9cef43e323a",
+      "backend": "memory",
       "runtime": "asyncio"
     }
   ]

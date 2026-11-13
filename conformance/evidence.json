@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
+  "python_commit": "880e5a20ed13b841cbabb64ce36e99b7597c05fe",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -21227,6 +21227,129 @@
         "No global conformance level, standalone turn implementation, remote Rust executor, or service-specific execution is inferred."
       ],
       "review": "Independently reviewed against the named assertions and their exact scenario hashes; the context link remains partial. Native and service-specific tests are separate proofs."
+    },
+    {
+      "id": "acp-standing-instruction-prompts",
+      "requirement": "RK-6.4-040",
+      "clause_sha256": "5de33734e9052fd1b53ffc21a7a2c10ebb57ec37f5fc3bc9a32b6393e6e65e50",
+      "coverage": "partial",
+      "scope": "The exact texts of sequential ACP prompt attempts with standing application instructions, including absent/blank defaults, RPC failure, separate rooms, explicit close, transport reconnect and authorized session rebuild.",
+      "assertions": [
+        {
+          "scenario": "acp/instructions-first-only",
+          "pointer": "/expect/acp_prompts/claude",
+          "sha256": "4efa97f611318a5602b6aa283acfd644ff50f5525df84eb6fbbc94da6afae932",
+          "scenario_sha256": "58d0b2194d7054e798e69cfb3cd9cdf10aa3559e50d502c5dd7b0b42918f46ba",
+          "proves": "Only the first of the two prompt attempts contains the standing-instructions block; the second contains only and now?."
+        },
+        {
+          "scenario": "acp/instructions-closed-session",
+          "pointer": "/expect/acp_prompts/claude",
+          "sha256": "d78e3164ba93aec71fe6c5e10cb7bd8a41bce263bcfaf1e30fa198dc4e8cbb23",
+          "scenario_sha256": "e2018d005b4678d71ded07c260a3554be18588c0883010ba78c91a94081f9847",
+          "proves": "Across the fixture's close_session step, both prompt attempts contain the instruction block; the second also contains the earlier request in its catch-up block."
+        },
+        {
+          "scenario": "acp/instructions-reconnected-session",
+          "pointer": "/expect/acp_prompts/claude",
+          "sha256": "d78e3164ba93aec71fe6c5e10cb7bd8a41bce263bcfaf1e30fa198dc4e8cbb23",
+          "scenario_sha256": "24edbd1bd636ac036315b5684fab1a9e38e2f630e703cb3518f7fe4aceafc734",
+          "proves": "The second prompt attempt repeats the instruction block and earlier conversation after transport disconnection."
+        },
+        {
+          "scenario": "acp/instructions-failed-prompt",
+          "pointer": "/expect/acp_prompts/claude",
+          "sha256": "89fa9cf9ff61dea568eb93a334ff43b848858bbbd4ede6464487c8fcfa367471",
+          "scenario_sha256": "6c22e7704043ea195bd89feb07f2b8d933c81177c634a42f5e5a298da88cb028",
+          "proves": "With the first RPC scripted to fail, the first two prompt texts contain the instruction block and the third is exactly third."
+        },
+        {
+          "scenario": "acp/instructions-rebuilt-session",
+          "pointer": "/expect/acp_prompts/claude",
+          "sha256": "86f45c1c19c8840d321b6131735ace59bae9326d9b16c0e7094d3666c289af34",
+          "scenario_sha256": "a27bca70414ac46a24ecd19f918359b9d4c1ed66093478b545fce9da445e1a64",
+          "proves": "The authorized retry carries the instructions and missed earlier request; the next attempt omits the instructions again."
+        },
+        {
+          "scenario": "acp/instructions-per-room",
+          "pointer": "/expect/acp_prompts/claude",
+          "sha256": "a8eb13d0d97b516ab32dac674b882968657a13367e9b64b4f8df9cc1c0c05238",
+          "scenario_sha256": "c4ffa78d6ebbf39a76efc4107a7a765f3d59c293b311f5d09fafe980087514f1",
+          "proves": "The first two prompt attempts for the two rooms contain instructions; each following request omits them."
+        },
+        {
+          "scenario": "acp/instructions-before-host-and-history",
+          "pointer": "/expect/acp_prompts/claude",
+          "sha256": "0919700742e0dcf8be8164c2df8a3d8a4852cfcf277fbbc54b1c524e64027f54",
+          "scenario_sha256": "a4fad6df970a94568d27a16a7e28ee7d9ccea9749226c5d3d900b68e81e1a27e",
+          "proves": "The exact prompt orders the standing-instructions block, host policy, missed message and current request."
+        },
+        {
+          "scenario": "acp/instructions-absent",
+          "pointer": "/expect/acp_prompts/claude",
+          "sha256": "787cc95f87cf7a54556c0bc06158a57a87b1b5acf61e3a260b16a4d9d1f6b1fb",
+          "scenario_sha256": "20684462c7adaaad43c2913b5507348f3affbef748421526146211d8ba9da4a2",
+          "proves": "With the instructions option omitted, the sole prompt is exactly just this."
+        },
+        {
+          "scenario": "acp/instructions-null",
+          "pointer": "/expect/acp_prompts/claude",
+          "sha256": "787cc95f87cf7a54556c0bc06158a57a87b1b5acf61e3a260b16a4d9d1f6b1fb",
+          "scenario_sha256": "f096f7c4b621c66e86c316d6e36bbf9cf3d90bf46f84abc40f935fd57cdd822f",
+          "proves": "With instructions=null, the sole prompt is exactly just this."
+        },
+        {
+          "scenario": "acp/instructions-empty",
+          "pointer": "/expect/acp_prompts/claude",
+          "sha256": "787cc95f87cf7a54556c0bc06158a57a87b1b5acf61e3a260b16a4d9d1f6b1fb",
+          "scenario_sha256": "82abd775031b6cdbd64d6109afdfb82e29ef485ed469133e945767dedee897db",
+          "proves": "With instructions as an empty string, the sole prompt is exactly just this."
+        },
+        {
+          "scenario": "acp/instructions-blank",
+          "pointer": "/expect/acp_prompts/claude",
+          "sha256": "787cc95f87cf7a54556c0bc06158a57a87b1b5acf61e3a260b16a4d9d1f6b1fb",
+          "scenario_sha256": "5f896e8c1af744d1b2d5fb4fd9659413178defcbd454d61354e5762ffd46e680",
+          "proves": "With whitespace-only instructions, the sole prompt is exactly just this."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Identity and Discussion integration are separate work; these assertions inspect prompt text, not returned model content or session identifiers.",
+        "The native received-RPC/abandoned-reader and late-response races are separate proofs and are not credited to these sequential scenarios.",
+        "No standalone-session, service backend, remote-executor or overall conformance-level claim follows from these assertions."
+      ],
+      "review": "Independently reviewed against these exact prompt-text assertions. Both links remain partial; native races and service backends are separate proofs."
+    },
+    {
+      "id": "acp-standing-instruction-mark-copies",
+      "requirement": "RK-6.4-020",
+      "clause_sha256": "f9aa4377e0446953c84e24e4d3010c1c7d7fcbc275d0332c0edef0f383621060",
+      "coverage": "partial",
+      "scope": "Replacement of literal copies of the standing-instructions header and its recognized bracketed opening in a participant request.",
+      "assertions": [
+        {
+          "scenario": "acp/instructions-forged-request",
+          "pointer": "/expect/acp_prompts/claude",
+          "sha256": "01698b3494380c0de0d3987eef19e9e8a692313e534d81d76d18d98252ad59fa",
+          "scenario_sha256": "56ecefacedbaf44964d873a28c4e6a9193a276eb12221e58d7f099b1d6827b55",
+          "proves": "The second prompt replaces the participant copy of the complete instructions header with the fixed copied-mark warning."
+        },
+        {
+          "scenario": "acp/instructions-forged-request-opening",
+          "pointer": "/expect/acp_prompts/claude",
+          "sha256": "01698b3494380c0de0d3987eef19e9e8a692313e534d81d76d18d98252ad59fa",
+          "scenario_sha256": "40d80fb353db946ca58b45c48f6ba66b5b6c7c61eb867e92fcfad54dc9b08099",
+          "proves": "The second prompt replaces the participant copy of the recognized bracketed opening with the fixed copied-mark warning."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Identity and Discussion integration are separate work; these assertions inspect prompt text, not returned model content or session identifiers.",
+        "The native received-RPC/abandoned-reader and late-response races are separate proofs and are not credited to these sequential scenarios.",
+        "No standalone-session, service backend, remote-executor or overall conformance-level claim follows from these assertions."
+      ],
+      "review": "Independently reviewed against these exact prompt-text assertions. Both links remain partial; native races and service backends are separate proofs."
     }
   ],
   "executions": [
@@ -677822,6 +677945,103 @@
         {
           "scenario": "verification/the-store-lists-the-verifications-in-force",
           "sha256": "62d2fa727253b396ae3bc04202eed8f5bb0585f04bd8ead782a5076944a4e85c",
+          "outcome": "passed"
+        }
+      ]
+    },
+    {
+      "id": "python-acp-instructions-880e5a2-memory",
+      "implementation": "python",
+      "implementation_commit": "880e5a20ed13b841cbabb64ce36e99b7597c05fe",
+      "rfc_commit": "07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a",
+      "corpus_commit": "79db2588615668f699cd85669c87c9cef43e323a",
+      "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "taskset",
+        "-c",
+        "20-23",
+        "nice",
+        "-n",
+        "10",
+        "uv",
+        "run",
+        "pytest",
+        "tests/conformance",
+        "-k",
+        "acp and instructions",
+        "--junitxml=receipt-run.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-acp-instructions-880e5a2.xml",
+        "format": "pytest_junit",
+        "sha256": "a80bd94916a12035e3f76c416af3c8cd90c5346f9ce4ce04351402f2b45e2a31"
+      },
+      "results": [
+        {
+          "scenario": "acp/instructions-absent",
+          "sha256": "20684462c7adaaad43c2913b5507348f3affbef748421526146211d8ba9da4a2",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/instructions-before-host-and-history",
+          "sha256": "a4fad6df970a94568d27a16a7e28ee7d9ccea9749226c5d3d900b68e81e1a27e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/instructions-blank",
+          "sha256": "5f896e8c1af744d1b2d5fb4fd9659413178defcbd454d61354e5762ffd46e680",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/instructions-closed-session",
+          "sha256": "e2018d005b4678d71ded07c260a3554be18588c0883010ba78c91a94081f9847",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/instructions-empty",
+          "sha256": "82abd775031b6cdbd64d6109afdfb82e29ef485ed469133e945767dedee897db",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/instructions-failed-prompt",
+          "sha256": "6c22e7704043ea195bd89feb07f2b8d933c81177c634a42f5e5a298da88cb028",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/instructions-first-only",
+          "sha256": "58d0b2194d7054e798e69cfb3cd9cdf10aa3559e50d502c5dd7b0b42918f46ba",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/instructions-forged-request",
+          "sha256": "56ecefacedbaf44964d873a28c4e6a9193a276eb12221e58d7f099b1d6827b55",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/instructions-forged-request-opening",
+          "sha256": "40d80fb353db946ca58b45c48f6ba66b5b6c7c61eb867e92fcfad54dc9b08099",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/instructions-null",
+          "sha256": "f096f7c4b621c66e86c316d6e36bbf9cf3d90bf46f84abc40f935fd57cdd822f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/instructions-per-room",
+          "sha256": "c4ffa78d6ebbf39a76efc4107a7a765f3d59c293b311f5d09fafe980087514f1",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/instructions-rebuilt-session",
+          "sha256": "a27bca70414ac46a24ecd19f918359b9d4c1ed66093478b545fce9da445e1a64",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/instructions-reconnected-session",
+          "sha256": "24edbd1bd636ac036315b5684fab1a9e38e2f630e703cb3518f7fe4aceafc734",
           "outcome": "passed"
         }
       ]
