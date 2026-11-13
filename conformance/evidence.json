@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "880e5a20ed13b841cbabb64ce36e99b7597c05fe",
+  "python_commit": "a23aa91a5900d979480816aae7e2a1a7a2b0c435",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -21350,6 +21350,162 @@
         "No standalone-session, service backend, remote-executor or overall conformance-level claim follows from these assertions."
       ],
       "review": "Independently reviewed against these exact prompt-text assertions. Both links remain partial; native races and service backends are separate proofs."
+    },
+    {
+      "id": "acp-standalone-session-isolation",
+      "requirement": "RK-10.1.1-001",
+      "clause_sha256": "edcb5b0ffe6f49c723ec22e013cc16a22369a61752c3c04334be9c3b4b0744f1",
+      "coverage": "partial",
+      "scope": "Fresh ACP turn sessions for standalone instructions, their declared scope, selected exact prompts, retirement, room-session preservation, catch-up and best-effort copy of current room configuration.",
+      "assertions": [
+        {
+          "scenario": "acp/standalone-first-leaves-no-room-session",
+          "pointer": "/expect/acp_wire/claude",
+          "sha256": "8d6f8895e1deefc995599f2b0e0258a6e3f5e2f7eff6046dfc421d9a630d27d0",
+          "scenario_sha256": "1a45afa912c46b1278b8437217a41ba8fe902a5e00b8ba333961dc144bcd4891",
+          "proves": "A turn-scoped session is prompted and closed before the first ordinary request opens a separate room-scoped session."
+        },
+        {
+          "scenario": "acp/standalone-fresh-session-each-time",
+          "pointer": "/expect/acp_wire/claude",
+          "sha256": "13a0e45a28b393208ec5c396bdcd015355506e6dbaad1e493b7f295bee83bafb",
+          "scenario_sha256": "b9f8c289cf395549eeb5fb194d7becee1d4bb3e824f8dce65fafcb14a2c00647",
+          "proves": "Each standalone request opens, prompts and closes a new session; the later ordinary request still prompts the original room session."
+        },
+        {
+          "scenario": "acp/standalone-preserves-room-cursor-and-replays-reply",
+          "pointer": "/expect/acp_wire/claude",
+          "sha256": "c01fbf808b8e29afdc4ff266f887c81f712faae824d9fee9d7abff4a1a93eacc",
+          "scenario_sha256": "bfba9621c2ec6c2e3388d18023336f4b4897bd16afb2d6a0c76ed9ca0bbdf08c",
+          "proves": "The standalone prompt contains only the marked instruction; the next room prompt catches up on both the missed message and the reply identified as its own words from a separate session."
+        },
+        {
+          "scenario": "acp/standalone-preserves-room-cursor-and-replays-reply",
+          "pointer": "/expect/timeline/room-1",
+          "sha256": "fad54ee8d76ebffda321f30bfe9c68bfe2d7f91a32bd0e35f91349fa56cc78ed",
+          "scenario_sha256": "bfba9621c2ec6c2e3388d18023336f4b4897bd16afb2d6a0c76ed9ca0bbdf08c",
+          "proves": "The timeline has exactly four entries with the asserted message bodies; the summary carries acp.standalone=true and the instruction body has no entry."
+        },
+        {
+          "scenario": "acp/standalone-duplicate-room-id",
+          "pointer": "/expect/acp_wire/claude",
+          "sha256": "6ab3722470e5220c6ecd8412b0e74a69bdfb0ce259e6c5925b45fa343bb7f29d",
+          "scenario_sha256": "3e216a8d33853aa20f52876c366e09676531c205ed8bae3a96faf15d3ce6985e",
+          "proves": "With the existing room session id scripted as the turn-opening result, no standalone prompt or close is sent for it; the later ordinary request still prompts the original room session."
+        },
+        {
+          "scenario": "acp/standalone-duplicate-other-room-id",
+          "pointer": "/expect/acp_wire/claude",
+          "sha256": "90bf96051a0728c5f540678cbed5f9789608edecd5cee8eaef79390b7c61b415",
+          "scenario_sha256": "a18431ff6166af55bc9fc0f447d3fa0044e8c2218d3674ed68a55e74777ca6f6",
+          "proves": "With another room’s existing session id scripted as the turn-opening result, no standalone prompt or close is sent for it; the later ordinary request still prompts that other room’s session."
+        },
+        {
+          "scenario": "acp/standalone-unclosable-is-never-reused",
+          "pointer": "/expect/acp_wire/claude",
+          "sha256": "65d973f304f79d138d3295778c28cd7c524761fd3651d69240d1e02c2c02c7b1",
+          "scenario_sha256": "d5f831418cb8bc6753b6db8f81a6379529b0015d456bf32516aee8f2ae94056b",
+          "proves": "With session/close unsupported, successive standalone instructions prompt new session ids and the room continues on its original id."
+        },
+        {
+          "scenario": "acp/standalone-refused-close-is-forgotten",
+          "pointer": "/expect/acp_wire/claude",
+          "sha256": "2423213a4ca31c37786ba9a59ad70784797e4c53b2c88595f40e3283ab91fca0",
+          "scenario_sha256": "d30f55312d491726ac8b8872acf2b183cd16c105aa19e10e5063f73fa221fd8a",
+          "proves": "After a scripted close refusal, another standalone request uses a fresh session and the original room session remains usable."
+        },
+        {
+          "scenario": "acp/standalone-host-context-without-history",
+          "pointer": "/expect/acp_wire/claude",
+          "sha256": "45afe259c37fd86946fadb581e1523ee2f7de187e42f4a6075fe518f7fbd39a4",
+          "scenario_sha256": "d4016b4213924029b323b2556f52bc3d9241d94e4e5e1eeccc5fd7536aa6a304",
+          "proves": "The exact standalone prompt contains the host-contributed fact and marked instruction, without the earlier room message."
+        },
+        {
+          "scenario": "acp/standalone-instructions-every-turn-not-room",
+          "pointer": "/expect/acp_wire/claude",
+          "sha256": "b2263f6fe5d93633c445a706be1095e341713dbf51d8159600ee7668b8993f1d",
+          "scenario_sha256": "f73d6ae95a10aa203211fbbb832d2798352784761f22f5897b56d523367bf80b",
+          "proves": "Every temporary session receives standing instructions; the room receives them on its first prompt and omits them afterwards."
+        },
+        {
+          "scenario": "acp/standalone-invalidated-preserves-room",
+          "pointer": "/expect/acp_wire/claude",
+          "sha256": "8e102ab80779e5c53c893bff2768eb705a711e891137558f873b0ed40c01ed81",
+          "scenario_sha256": "ac1a39babc996b4f119f96f25f3e3e5327f4c177adebf2800d03894cd6d8fe66",
+          "proves": "A scripted invalidation of the temporary prompt is followed by its close, with no rebuild and the later ordinary prompt still using the room session."
+        },
+        {
+          "scenario": "acp/standalone-invalidated-first",
+          "pointer": "/expect/acp_wire/claude",
+          "sha256": "b9454c38ec04b1d56b6b9751357dd90fab00e7ffd18fd96d55f3782b2d64ba32",
+          "scenario_sha256": "de135677c17a3d8b81c845df9005e3caac2fbb51534584251eb2f2a7c2b2079c",
+          "proves": "An invalidated first standalone session is retired without reconstruction before an ordinary request opens a room session."
+        },
+        {
+          "scenario": "acp/standalone-live-config-copied",
+          "pointer": "/expect/acp_wire/claude",
+          "sha256": "e9fab3f18742cf85ab55b47d22ef8eaef142718a415b15d95ad59bd2232f4c02",
+          "scenario_sha256": "dde247fbd62c5e7adb52a4ab9e8d519c419ae2d1c3b70e3ea3e1309840627d8b",
+          "proves": "The wire requests the model value previously reported for the room on the temporary session before prompting it; the later ordinary prompt uses the original room session."
+        },
+        {
+          "scenario": "acp/standalone-live-config-copy-refused",
+          "pointer": "/expect/acp_wire/claude",
+          "sha256": "e9fab3f18742cf85ab55b47d22ef8eaef142718a415b15d95ad59bd2232f4c02",
+          "scenario_sha256": "52e0eafddd1bec893d9f44b13ba4fb934bf4cea320caceeb9ba9215cb2c719d2",
+          "proves": "With a scripted refusal of the copied live model, the ordered wire list still contains the temporary prompt and close, followed by the ordinary prompt on the original room session."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "These assertions cover the scripted ACP channel only; memory-provider and other intelligence-channel reads, Discussion and model-generated output are not certified.",
+        "Reader abandonment, exact cancellation boundaries, log contents and hook ordering are outside these assertions; no service-backend, remote-executor or overall conformance-level claim follows."
+      ],
+      "review": "Independently reviewed against the exact wire and timeline assertions. Both links remain partial; native boundaries, hook ordering and service backends are separate proofs."
+    },
+    {
+      "id": "acp-standalone-required-setup",
+      "requirement": "RK-6.4-038",
+      "clause_sha256": "d49f0af3c9b50796bb2d585afc6a7858644d66184dc1ef4b866dc98634dad5fb",
+      "coverage": "partial",
+      "scope": "Required channel settings and locally retained host choices requested on temporary ACP sessions before prompting, including a scripted refusal and reconnection; the declared MCP server and additional directories.",
+      "assertions": [
+        {
+          "scenario": "acp/standalone-required-configuration",
+          "pointer": "/expect/acp_wire/claude",
+          "sha256": "3452e8e17cd214be51275aef28ef165fe0fd041e83fc178a75c9b70cd642d96b",
+          "scenario_sha256": "078b7eaff6593c4ff5c308d085c138b1ffa2576b9537c38406dab55a4f4b3218",
+          "proves": "The wire requests mode=default on the new turn-scoped session before its prompt, followed by its close."
+        },
+        {
+          "scenario": "acp/standalone-required-configuration-refused",
+          "pointer": "/expect/acp_wire/claude",
+          "sha256": "1d7cf2cf60f84e8078db44b8771ff362bb74d02e50685d22703ca19abb41c7c2",
+          "scenario_sha256": "e96e0444f17c1a56778f2048f692e85c272bf4e04730bd977a98f8e846331308",
+          "proves": "With a scripted refusal of the required setting, the ordered wire list contains a close of the temporary session and no prompt for it; a later ordinary request opens and prompts a room session."
+        },
+        {
+          "scenario": "acp/standalone-reconnect-keeps-host-choices",
+          "pointer": "/expect/acp_wire/claude",
+          "sha256": "f49cfefb1871f9f442ca53f95ea1788628d9e82d21a33d1c4b7a75ee75d0a850",
+          "scenario_sha256": "fcd6d768a398a8c9a5ce2e5ed738afd2da1d94f90a74f6b2b17ab0a5b3b9d9b9",
+          "proves": "After the scripted disconnect and new initialize exchange, the temporary session receives set_config_option requests for the earlier host-selected model and required mode before its prompt."
+        },
+        {
+          "scenario": "acp/standalone-declares-room-servers-and-directories",
+          "pointer": "/expect/acp_wire/claude",
+          "sha256": "c5c86d20b3807b387ea35e490ef71d0b0c59a39263b1937d453de973eee0e390",
+          "scenario_sha256": "11888481b66e8134d18f150ad82c01dcf114cf51efd0c30233c0b94e24e0bf1e",
+          "proves": "The turn-scoped session/new request carries the asserted MCP-server list, additionalDirectories list and roomId metadata."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Persistent and remote-executor configuration recovery, host-call races and every room-session setup case remain separate evidence.",
+        "These ordered wire assertions establish requested values and prompt/close behavior, not agent-side execution policy or successful application of a refused setting."
+      ],
+      "review": "Independently reviewed against the exact wire and timeline assertions. Both links remain partial; native boundaries, hook ordering and service backends are separate proofs."
     }
   ],
   "executions": [
@@ -678042,6 +678198,166 @@
         {
           "scenario": "acp/instructions-reconnected-session",
           "sha256": "24edbd1bd636ac036315b5684fab1a9e38e2f630e703cb3518f7fe4aceafc734",
+          "outcome": "passed"
+        }
+      ]
+    },
+    {
+      "id": "python-acp-standalone-a23aa91-memory",
+      "implementation": "python",
+      "implementation_commit": "a23aa91a5900d979480816aae7e2a1a7a2b0c435",
+      "rfc_commit": "07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a",
+      "corpus_commit": "34e9417e848eae68e7f8a8ba1c5f4e9be66bcc76",
+      "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "PYTHONPATH=src",
+        "uv",
+        "run",
+        "pytest",
+        "tests/conformance/test_conformance.py",
+        "-k",
+        "acp/standalone",
+        "-n",
+        "0",
+        "--junitxml=receipt-run.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-acp-standalone-a23aa91.xml",
+        "format": "pytest_junit",
+        "sha256": "0fb8a84aeb322f67e03627f30b886b82e4797557dd1ebe078061f5a2aab446f0"
+      },
+      "results": [
+        {
+          "scenario": "acp/standalone-cancel-active",
+          "sha256": "86af4fcd946c3c693499d3808d1659540fddf5d134170a6589a325a5d1f96e55",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-cancel-during-config",
+          "sha256": "bad7d053cf7bb5837643e4b34f2c99b055cfaa8a9f72aee4b7b39bd2eb7ea345",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-declares-room-servers-and-directories",
+          "sha256": "11888481b66e8134d18f150ad82c01dcf114cf51efd0c30233c0b94e24e0bf1e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-detach-closes-both-session-scopes",
+          "sha256": "136cec6f36282d3239ea74a491ee99eb25bce9104e18069170be5f2cf7bf5c2a",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-duplicate-other-room-id",
+          "sha256": "a18431ff6166af55bc9fc0f447d3fa0044e8c2218d3674ed68a55e74777ca6f6",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-duplicate-room-id",
+          "sha256": "3e216a8d33853aa20f52876c366e09676531c205ed8bae3a96faf15d3ce6985e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-first-leaves-no-room-session",
+          "sha256": "1a45afa912c46b1278b8437217a41ba8fe902a5e00b8ba333961dc144bcd4891",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-fresh-session-each-time",
+          "sha256": "b9f8c289cf395549eeb5fb194d7becee1d4bb3e824f8dce65fafcb14a2c00647",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-host-call-during-first-turn",
+          "sha256": "78befff65939a3cb3c06238d87fcbdeae13e171604617b04c436782210c64afd",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-host-context-without-history",
+          "sha256": "d4016b4213924029b323b2556f52bc3d9241d94e4e5e1eeccc5fd7536aa6a304",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-instruction-acknowledges-catch-up",
+          "sha256": "8182f3b53b8266f34f168bbf78a22c2602756b701392b890bdd15ea8b757e6b8",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-instruction-mark-and-record",
+          "sha256": "85906c18395898892a1b76fd3361add637749e24006a2dfe7cd4db9e160d390d",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-instructions-every-turn-not-room",
+          "sha256": "f73d6ae95a10aa203211fbbb832d2798352784761f22f5897b56d523367bf80b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-invalidated-first",
+          "sha256": "de135677c17a3d8b81c845df9005e3caac2fbb51534584251eb2f2a7c2b2079c",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-invalidated-preserves-room",
+          "sha256": "ac1a39babc996b4f119f96f25f3e3e5327f4c177adebf2800d03894cd6d8fe66",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-live-config-copied",
+          "sha256": "dde247fbd62c5e7adb52a4ab9e8d519c419ae2d1c3b70e3ea3e1309840627d8b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-live-config-copy-refused",
+          "sha256": "52e0eafddd1bec893d9f44b13ba4fb934bf4cea320caceeb9ba9215cb2c719d2",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-preserves-room-cursor-and-replays-reply",
+          "sha256": "bfba9621c2ec6c2e3388d18023336f4b4897bd16afb2d6a0c76ed9ca0bbdf08c",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-reconnect-keeps-host-choices",
+          "sha256": "fcd6d768a398a8c9a5ce2e5ed738afd2da1d94f90a74f6b2b17ab0a5b3b9d9b9",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-refused-close-is-forgotten",
+          "sha256": "d30f55312d491726ac8b8872acf2b183cd16c105aa19e10e5063f73fa221fd8a",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-required-configuration",
+          "sha256": "078b7eaff6593c4ff5c308d085c138b1ffa2576b9537c38406dab55a4f4b3218",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-required-configuration-refused",
+          "sha256": "e96e0444f17c1a56778f2048f692e85c272bf4e04730bd977a98f8e846331308",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-response-before-session-close",
+          "sha256": "1fa86d9ee32218248ddedd0966b7f35d173a59b6f089c6a61bfc33a4f60c5bd2",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-two-host-calls-open-one-room",
+          "sha256": "6d5c5791603069f47f5a2f9737963b4352134e69899ff3ea7b6afaddae67e8fb",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-unclosable-is-never-reused",
+          "sha256": "d5f831418cb8bc6753b6db8f81a6379529b0015d456bf32516aee8f2ae94056b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/standalone-updates-do-not-describe-room",
+          "sha256": "ba2ef0b19145fda8793bebe93c207f5e27b67d8c866fefd8c025ca04b50c048f",
           "outcome": "passed"
         }
       ]

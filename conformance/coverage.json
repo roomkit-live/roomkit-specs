@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
   "corpus_sha256": "981fa19b2b5fd51e5fd654efe65f7e5c1388a61355454983ba7ce573bda291ba",
-  "python_commit": "880e5a20ed13b841cbabb64ce36e99b7597c05fe",
+  "python_commit": "a23aa91a5900d979480816aae7e2a1a7a2b0c435",
   "scenario_count": 2175,
   "sections": [
     {
@@ -3102,7 +3102,8 @@
       "review": "normative",
       "requirements": 2,
       "mapping": {
-        "unmapped": 2
+        "mapped_partial": 1,
+        "unmapped": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -15418,7 +15419,7 @@
               "commit": "880e5a20ed13b841cbabb64ce36e99b7597c05fe",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -17929,6 +17930,25 @@
               "state": "stale"
             }
           ]
+        },
+        {
+          "id": "acp-standalone-required-setup",
+          "scope": "Required channel settings and locally retained host choices requested on temporary ACP sessions before prompting, including a scripted refusal and reconnection; the declared MCP server and additional directories.",
+          "coverage": "partial",
+          "missing": [
+            "Persistent and remote-executor configuration recovery, host-call races and every room-session setup case remain separate evidence.",
+            "These ordered wire assertions establish requested values and prompt/close behavior, not agent-side execution policy or successful application of a refused setting."
+          ],
+          "executions": [
+            {
+              "execution": "python-acp-standalone-a23aa91-memory",
+              "implementation": "python",
+              "commit": "a23aa91a5900d979480816aae7e2a1a7a2b0c435",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -18180,7 +18200,7 @@
               "commit": "880e5a20ed13b841cbabb64ce36e99b7597c05fe",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -35994,8 +36014,28 @@
     {
       "id": "RK-10.1.1-001",
       "section": "10.1.1",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "acp-standalone-session-isolation",
+          "scope": "Fresh ACP turn sessions for standalone instructions, their declared scope, selected exact prompts, retirement, room-session preservation, catch-up and best-effort copy of current room configuration.",
+          "coverage": "partial",
+          "missing": [
+            "These assertions cover the scripted ACP channel only; memory-provider and other intelligence-channel reads, Discussion and model-generated output are not certified.",
+            "Reader abandonment, exact cancellation boundaries, log contents and hook ordering are outside these assertions; no service-backend, remote-executor or overall conformance-level claim follows."
+          ],
+          "executions": [
+            {
+              "execution": "python-acp-standalone-a23aa91-memory",
+              "implementation": "python",
+              "commit": "a23aa91a5900d979480816aae7e2a1a7a2b0c435",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "RK-10.1.1-002",
@@ -69553,6 +69593,15 @@
       "implementation_commit": "880e5a20ed13b841cbabb64ce36e99b7597c05fe",
       "rfc_commit": "07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a",
       "corpus_commit": "79db2588615668f699cd85669c87c9cef43e323a",
+      "backend": "memory",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-acp-standalone-a23aa91-memory",
+      "implementation": "python",
+      "implementation_commit": "a23aa91a5900d979480816aae7e2a1a7a2b0c435",
+      "rfc_commit": "07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a",
+      "corpus_commit": "34e9417e848eae68e7f8a8ba1c5f4e9be66bcc76",
       "backend": "memory",
       "runtime": "asyncio"
     }

@@ -384,3 +384,21 @@ instructions (RK-6.4-040), two on literal copies of their runtime mark
 (RK-6.4-020). They do not establish identity, Discussion integration, session
 identifier changes, model output, native concurrency races or standalone turns.
 The 124 earlier receipts and 130 earlier links remain unchanged.
+
+
+## Standalone ACP instruction sessions
+
+`python-acp-standalone-a23aa91.xml` retains 26 passing scenarios from clean Python
+commit `a23aa91a5900d979480816aae7e2a1a7a2b0c435`, copied corpus
+`34e9417e848eae68e7f8a8ba1c5f4e9be66bcc76`, on the memory store and in-process
+turns. The receipt records the exact command and RFC revision. Its portable
+JUnit report retains every selected scenario outcome and removes machine paths,
+hostnames, timestamps and durations.
+
+The scenarios exercise temporary session scope, prompt isolation, room cursor
+preservation and reply catch-up, setup and copied configuration, cancellation,
+invalidation, detachment and response observation before session release. Two
+partial links add 18 reviewed wire/timeline assertions. Native reader and
+cancellation boundaries, the active-turn observer regression, Rust and service
+backends are separate checks; this receipt gives them no execution credit.
+The 125 earlier receipts and 132 earlier links remain unchanged.
