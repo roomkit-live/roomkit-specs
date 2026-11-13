@@ -4944,6 +4944,16 @@
               "object"
             ]
           }
+        },
+        "acp_context_requests": {
+          "description": "Per ACP channel, actual host callback inputs before any gate: room_id, event and recent_events (serialized event records).",
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "array",
+              "object"
+            ]
+          }
         }
       }
     },
@@ -7475,6 +7485,14 @@
         },
         "external_tool_handler": {
           "$ref": "#/$defs/acp_external_handler"
+        },
+        "room_history": {
+          "description": "ACP history window and declared recent-events window; omitted means20, zero disables catch-up.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "context_contributor": {
+          "$ref": "#/$defs/acp_context_contributor"
         }
       }
     },
@@ -8209,6 +8227,59 @@
             "raise_after",
             "skip"
           ]
+        }
+      }
+    },
+    "acp_context_contributor": {
+      "description": "Async host context callback, one scripted response per call. Errors fail open; exhaustion is a fixture failure. Native tests cover invalid Python return types.",
+      "type": "object",
+      "required": [
+        "responses"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "responses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "blocks": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "error": {
+                "type": "string"
+              },
+              "gate": {
+                "type": "string"
+              }
+            },
+            "oneOf": [
+              {
+                "required": [
+                  "blocks"
+                ],
+                "not": {
+                  "required": [
+                    "error"
+                  ]
+                }
+              },
+              {
+                "required": [
+                  "error"
+                ],
+                "not": {
+                  "required": [
+                    "blocks"
+                  ]
+                }
+              }
+            ]
+          }
         }
       }
     }
