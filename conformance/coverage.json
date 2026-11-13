@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
-  "corpus_sha256": "4a209d46318c4e9e5cd313474bbef7054df5f4e78c522bd6242b91f0840eaf93",
+  "corpus_sha256": "89fbfbba4c858fe719cb97fa2c4a29b556b92cdc9b066674fba87d109f9cb80b",
   "python_commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
-  "scenario_count": 2063,
+  "scenario_count": 2064,
   "sections": [
     {
       "section": "0",
@@ -338,6 +338,7 @@
         "tenancy/another-organization-s-room-is-not-found",
         "verification/a-release-from-a-hook-that-allows-its-event-is-answered-first",
         "verification/a-release-from-a-hook-that-closes-the-room-is-answered-by-no-agent",
+        "verification/a-release-whose-pass-goes-on-before-a-later-hook-closes-the-room-is-answered-by-no-agent",
         "verification/a-rerun-whose-room-is-deleted-in-the-lane-is-refused"
       ]
     },
@@ -2515,6 +2516,7 @@
         "verification/a-release-from-a-hook-keeps-its-answer-named",
         "verification/a-release-from-a-hook-that-allows-its-event-is-answered-first",
         "verification/a-release-from-a-hook-that-closes-the-room-is-answered-by-no-agent",
+        "verification/a-release-whose-pass-goes-on-before-a-later-hook-closes-the-room-is-answered-by-no-agent",
         "verification/an-adopted-held-message-is-named-until-its-release"
       ]
     },
@@ -3922,6 +3924,7 @@
         "verification/a-release-from-a-hook-keeps-its-answer-named",
         "verification/a-release-from-a-hook-that-allows-its-event-is-answered-first",
         "verification/a-release-from-a-hook-that-closes-the-room-is-answered-by-no-agent",
+        "verification/a-release-whose-pass-goes-on-before-a-later-hook-closes-the-room-is-answered-by-no-agent",
         "verification/a-released-message-s-turn-reads-what-came-after-it",
         "verification/a-rerun-whose-room-is-deleted-in-the-lane-is-refused",
         "verification/a-scoped-cancel-reaches-its-organization-s-held-message",
@@ -5014,6 +5017,7 @@
         "resilience/process-timeout-stores-nothing",
         "verification/a-release-from-a-hook-that-allows-its-event-is-answered-first",
         "verification/a-release-from-a-hook-that-closes-the-room-is-answered-by-no-agent",
+        "verification/a-release-whose-pass-goes-on-before-a-later-hook-closes-the-room-is-answered-by-no-agent",
         "verification/a-rerun-whose-room-is-deleted-in-the-lane-is-refused"
       ]
     },
