@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
   "corpus_sha256": "4a209d46318c4e9e5cd313474bbef7054df5f4e78c522bd6242b91f0840eaf93",
-  "python_commit": "f3415d597011232464acd47128d413f325c83344",
+  "python_commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
   "scenario_count": 2063,
   "sections": [
     {
@@ -2138,8 +2138,8 @@
       "review": "normative",
       "requirements": 17,
       "mapping": {
-        "mapped_partial": 6,
-        "unmapped": 11
+        "mapped_partial": 7,
+        "unmapped": 10
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -8585,12 +8585,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -9435,12 +9451,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -10283,12 +10315,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -11109,12 +11157,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -11956,12 +12020,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -12790,12 +12870,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -13845,12 +13941,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -14230,12 +14342,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -14539,6 +14667,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -14708,6 +14844,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -14896,6 +15040,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -15065,6 +15217,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -15484,6 +15644,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -15668,6 +15836,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -15746,6 +15922,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -15790,6 +15974,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -15826,6 +16018,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -15852,6 +16052,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -15963,6 +16171,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -16055,6 +16271,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -16138,6 +16362,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -16181,6 +16413,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -16258,6 +16498,33 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            }
+          ]
+        },
+        {
+          "id": "acp-default-permission-replies",
+          "scope": "ACP permissions with no external handler: actual reject option selection and cancellation fallback.",
+          "coverage": "partial",
+          "missing": [
+            "Configured external handler dispatch and approval remain separate contracts.",
+            "This link does not establish detach behavior, filesystem/terminal support, or transient plan/tool progress in the same RFC source unit."
+          ],
+          "executions": [
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -16375,6 +16642,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -16884,6 +17159,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -17323,6 +17606,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -17770,6 +18061,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -18209,6 +18508,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -18640,6 +18947,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -19069,6 +19384,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -19510,6 +19833,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -19939,6 +20270,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -20378,6 +20717,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -20821,6 +21168,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -21261,6 +21616,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -21712,6 +22075,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -22128,6 +22499,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -22961,12 +23340,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -23382,6 +23777,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -23407,6 +23810,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -23786,6 +24197,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -23838,6 +24257,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -24313,6 +24740,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -24482,6 +24917,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -25335,12 +25778,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -25816,6 +26275,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -26277,6 +26744,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -26724,6 +27199,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -27181,6 +27664,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -27227,6 +27718,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -27236,8 +27735,28 @@
     {
       "id": "RK-9.3-015",
       "section": "9.3",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "acp-default-permission-outcomes",
+          "scope": "Active ACP room calls refused without a handler, including unannounced calls and a call completed despite refusal.",
+          "coverage": "partial",
+          "missing": [
+            "Custom handler decisions, decision failures, report failures, re-approval and callback overrides remain separate contracts.",
+            "No native test or service-specific execution is inferred; out-of-turn and standalone callbacks remain separate."
+          ],
+          "executions": [
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "RK-9.3-016",
@@ -27654,6 +28173,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -28085,6 +28612,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -28976,12 +29511,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -29405,6 +29956,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -29838,6 +30397,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -30729,12 +31296,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -31066,6 +31649,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -31845,12 +32436,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -32628,12 +33235,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -33059,6 +33682,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -33911,12 +34542,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -34696,12 +35343,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -35169,6 +35832,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -35980,12 +36651,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -36773,12 +37460,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -37598,12 +38301,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -38415,12 +39134,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -39208,12 +39943,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -40001,12 +40752,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -40794,12 +41561,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -41109,12 +41892,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -41366,12 +42165,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -41537,12 +42352,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -41831,12 +42662,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -42047,6 +42894,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -42196,6 +43051,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -42355,6 +43218,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -42499,6 +43370,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -42743,12 +43622,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -42818,6 +43713,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -45064,12 +45967,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -45699,12 +46618,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -46318,12 +47253,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -46542,6 +47493,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -47673,12 +48632,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -47950,12 +48925,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -48345,6 +49336,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -49184,12 +50183,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -49717,12 +50732,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -50580,12 +51611,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -51390,12 +52437,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -51835,6 +52898,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -52507,6 +53578,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -52929,6 +54008,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -53358,6 +54445,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -53867,12 +54962,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -54338,12 +55449,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -54597,12 +55724,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -55016,6 +56159,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -55260,6 +56411,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -55455,6 +56614,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -55632,6 +56799,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -55867,6 +57042,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -56312,6 +57495,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "incomplete"
             }
           ]
@@ -56657,6 +57848,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -57166,6 +58365,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -57576,6 +58783,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -57794,12 +59009,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -58013,12 +59244,28 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             },
             {
               "execution": "python-acp-record-f3415d5-sqlite",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "sqlite",
               "runtime": "asyncio",
               "state": "incomplete"
@@ -58350,6 +59597,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -58646,6 +59901,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -59071,6 +60334,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -59372,6 +60643,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -59408,6 +60687,14 @@
               "commit": "f3415d597011232464acd47128d413f325c83344",
               "backend": "memory",
               "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
               "state": "recorded_pass"
             }
           ]
@@ -59433,6 +60720,14 @@
               "execution": "python-acp-record-f3415d5-memory",
               "implementation": "python",
               "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
               "backend": "memory",
               "runtime": "asyncio",
               "state": "recorded_pass"
@@ -60463,6 +61758,24 @@
       "implementation_commit": "f3415d597011232464acd47128d413f325c83344",
       "rfc_commit": "389a64ae9f8550a4303b218c3864c7aa8a0373ec",
       "corpus_commit": "389a64ae9f8550a4303b218c3864c7aa8a0373ec",
+      "backend": "sqlite",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-acp-permissions-6dc6edb-memory",
+      "implementation": "python",
+      "implementation_commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+      "rfc_commit": "1422b745b1b98d3b45034506ac57af6755fb1901",
+      "corpus_commit": "9552d7f4db41c05227e2f40cb0709029a37e9788",
+      "backend": "memory",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-acp-permissions-6dc6edb-sqlite",
+      "implementation": "python",
+      "implementation_commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+      "rfc_commit": "1422b745b1b98d3b45034506ac57af6755fb1901",
+      "corpus_commit": "9552d7f4db41c05227e2f40cb0709029a37e9788",
       "backend": "sqlite",
       "runtime": "asyncio"
     }
