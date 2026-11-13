@@ -203,3 +203,70 @@ and local-path attributes removed and durations normalized to zero.
 The links remain partial. This run does not certify the paired native API tests,
 Rust, remote executors, real PostgreSQL or all lifecycle methods of the local
 executor. The 75 previously published receipts remain unchanged.
+
+## Recording receipts
+
+`conformance/record.py` writes every receipt from a pytest JUnit report; none
+is edited by hand. It records at the `python_commit` of `evidence.json` only:
+whoever moves that commit moves it first, then records. It reads the corpus the
+implementation copied (`tests/conformance/SPECS_COMMIT` at that commit) and the
+last commit of `roomkit-rfc.md`, which must match the checkout's RFC.
+
+The retained report keeps only the testcases of the runner module of the
+recorded backends (`tests.conformance.test_conformance`, or
+`tests.conformance.test_postgres`), each with its class, its name and its
+outcome; a skip, failure or error keeps pytest's `type` and `message`, with the
+directories of local paths cut out of the message. Hosts, timestamps,
+durations, file and line attributes, properties, captured output and
+tracebacks are dropped, and the suite counts are recomputed from the cases kept.
+The command's `--junitxml` path becomes its file name. Each backend becomes one
+receipt, `<name>-<commit>-<backend>` with `+` written `-`, holding every
+scenario case of that backend in the report with its outcome and the scenario's
+hash at the copied corpus; a scenario with several cases in the report takes
+the worst of them. The import is refused when a backend has no case in the
+report; when a Redis turn-mode receipt's command does not set
+`ROOMKIT_TEST_TURN_BACKEND=redis`, another one's does, or the command names the
+variable where its turn mode cannot be read (a wrapper such as `flock` or
+`sh -c` around it: record the command without its wrapper); when the command
+still names a local path; when the implementation's copy of a scenario differs
+from the corpus; when the receipt id is already recorded; or when the retained
+file exists with other content.
+
+After `python_commit` moves, once roomkit's CI run of that commit is green,
+one command refreshes the PostgreSQL and Redis turn-mode receipts:
+
+```sh
+uv run --no-project --python 3.13 --with jsonschema==4.26.0 \
+  python conformance/record.py ci --python-repo ../roomkit
+```
+
+It takes the successful push run of the `CI` workflow on that exact commit,
+downloads its `integration-junit` artifact with `gh`, and records
+`postgres-scenarios.xml` as `python-postgres-scenarios-<commit>-postgres` and
+`redis-turns.xml` as `python-redis-turns-<commit>-memory-redis-turns` and
+`-sqlite-redis-turns`. Their commands are the CI steps' own, written in
+`CI_REPORTS` (`traceability/ci.py`). The import is refused unless
+`.github/workflows/ci.yml` at that commit sets no workflow environment, gives the
+integration job exactly the recorded environment, and holds each step exactly as
+recorded, comments aside. CI writes
+`redis-turns.xml` from roomkit `781f0c9d5fd01682e4f90285d942ba74fae2e0e7` on;
+an artifact without it records PostgreSQL only and says so. Then regenerate the
+report:
+
+```sh
+uv run --no-project --python 3.13 --with jsonschema==4.26.0 \
+  python conformance/check.py --strict --traceability --update-traceability \
+  --python-repo ../roomkit
+```
+
+A local run is recorded with `record.py junit`, the command that ran after
+`--`, for instance the memory and SQLite receipts of a conformance run:
+
+```sh
+uv run --no-project --python 3.13 --with jsonschema==4.26.0 \
+  python conformance/record.py junit --python-repo ../roomkit \
+  --junit ../roomkit/python-conformance.xml --name python-<lot> \
+  --backend memory --backend sqlite \
+  -- env -u POSTGRES_DSN ROOMKIT_TEST_TURN_BACKEND=memory uv run pytest \
+     tests/conformance -q --junitxml=python-conformance.xml
+```

@@ -90,12 +90,24 @@ by the checker. A receipt is a reviewed record of a run, not a signed attestatio
 that the working tree was clean; the author must run the exact clean commits.
 
 The checker validates the saved output, actual commit contents and the corpus
-copied into the implementation. Supported profiles are Python JUnit on memory
-or SQLite with `asyncio`. Rust's aggregate cargo summary is deliberately
-refused: memory and SQLite emit the same summary, and equal scenario counts do
-not identify the executed IDs. Retain such runs separately; they cannot create a
-`recorded_pass` here until a runner format identifies backend and cases. Other
-backends and specialized test executions also remain unrecorded.
+copied into the implementation. Supported profiles are Python JUnit with
+`asyncio`, one backend per receipt: `memory` and `sqlite` (cases of
+`tests.conformance.test_conformance`), `postgres` (cases of
+`tests.conformance.test_postgres`), and `memory+redis-turns` and
+`sqlite+redis-turns`, the kit's turns across Redis. That mode runs the same
+cases under the same names, so its receipt's command must set
+`ROOMKIT_TEST_TURN_BACKEND=redis`, no other receipt's command may, and a
+command whose turn mode cannot be read from its words is refused. A scenario
+with several cases in the report (a PostgreSQL slow-preparation variant) takes
+the worst of their outcomes. `conformance/record.py` writes receipts from a
+JUnit report; none is written by hand (see the
+[executions README](executions/README.md)).
+
+Rust's aggregate cargo summary is deliberately refused: memory and SQLite emit
+the same summary, and equal scenario counts do not identify the executed IDs.
+Retain such runs separately; they cannot create a `recorded_pass` here until a
+runner format identifies backend and cases. Other backends and specialized test
+executions also remain unrecorded.
 
 
 `recorded_pass` applies only to the named scope, revision, backend and runtime.
