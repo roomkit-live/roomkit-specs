@@ -727,6 +727,23 @@ that entry's `updates`, before proceeding to the next entry or ending the
 prompt. This differs from the existing unawaited `permission` receipt-order
 fixture, whose behavior stays unchanged.
 
+`acp.external_tool_handler` installs a real external handler. With no
+`decisions`, it delegates to `PolicyExternalToolHandler(policy=...)`; `policy`
+has the usual `allow`/`deny` lists. `decisions` instead supplies ordered
+`ToolDecision` objects (`approved` required, optional `modified_input`, `result`,
+`reason`, `detail`) or `{"raise": message}` callback failures. Exhausting an
+explicit decision list is a runner failure, not an implicit approval/refusal.
+`reports` selects normal `delegate` behavior, `raise_before`, `raise_after`, or
+`skip` (an override returning normally without delegation). The two failures
+happen before/after the real default report and raise `RuntimeError("audit sink down")`.
+
+`expect.acp_handlers`, per channel, records the actual calls before observation:
+`method`, the handler's registered `channel_id`, and for decisions/reports
+`name`, `arguments`, and the actual named parameters (`tool_call_id`, `room_id`,
+`session_id`, result/reason and outcome flags where supplied). `start` and
+`stop` are recorded when called; automatic cleanup after observation is not
+included. No expected report or permission outcome is manufactured by the fixture.
+
 `expect.acp_permissions`, per ACP channel: those awaited replies in received
 order, each `{session_id, tool_call_id, result}` (or `error` for a JSON-RPC
 error), with the raw reply body. The fixture never chooses an option or

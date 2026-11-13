@@ -4934,6 +4934,16 @@
               "object"
             ]
           }
+        },
+        "acp_handlers": {
+          "description": "Per ACP channel, callbacks actually received by the external handler before observation. Scripted decisions do not infer reports.",
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "array",
+              "object"
+            ]
+          }
         }
       }
     },
@@ -7462,6 +7472,9 @@
         "publish_thinking_text": {
           "description": "Publish thought text in room ephemeral deltas; false by default. The full thought still reaches the turn stream and completed response report.",
           "type": "boolean"
+        },
+        "external_tool_handler": {
+          "$ref": "#/$defs/acp_external_handler"
         }
       }
     },
@@ -8111,6 +8124,91 @@
           "items": {
             "$ref": "#/$defs/record"
           }
+        }
+      }
+    },
+    "acp_external_handler": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "policy": {
+          "description": "A ToolPolicy (\u00a721.1): glob patterns.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "allow": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "deny": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "decisions": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": [
+                  "approved"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "approved": {
+                    "type": "boolean"
+                  },
+                  "modified_input": {
+                    "type": [
+                      "object",
+                      "null"
+                    ]
+                  },
+                  "result": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "reason": {
+                    "type": "string"
+                  },
+                  "detail": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "required": [
+                  "raise"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "raise": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "reports": {
+          "enum": [
+            "delegate",
+            "raise_before",
+            "raise_after",
+            "skip"
+          ]
         }
       }
     }
