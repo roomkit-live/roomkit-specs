@@ -672,6 +672,9 @@ JSON-RPC 2.0 one message per line, in neither implementation's ACP code, so
 that both runners check the same messages.
 
 - `acp.cwd`: the channel's `cwd`, an absolute path.
+- `acp.instructions`: standing application instructions, absent by default; null
+  or whitespace-only text disables them. A session receives them until its first
+  prompt succeeds; close, reconnect or authorized rebuild opens a new session.
 - `acp.room_history`: nonnegative history window, 20 by default; zero disables
   catch-up and declares that this channel needs no recent-event history.
 - `acp.context_contributor`: `{responses: [...]}`, an async host callback with

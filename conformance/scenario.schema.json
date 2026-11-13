@@ -7493,6 +7493,13 @@
         },
         "context_contributor": {
           "$ref": "#/$defs/acp_context_contributor"
+        },
+        "instructions": {
+          "description": "Standing application instructions; omitted, null or blank disables them. Sent before host context on the first acknowledged prompt of each session.",
+          "type": [
+            "string",
+            "null"
+          ]
         }
       }
     },
