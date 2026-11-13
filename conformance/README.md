@@ -720,6 +720,18 @@ the prompt answer, without waiting for the permission decision. It supplies raw
 ACP `toolCall` and `options`; `sessionId` comes from the current prompt. This
 tests receipt ordering independently of the permission policy's decision.
 
+`prompts[].permission_steps` supplies ordered `{request, updates?}` entries.
+The `request` contains raw ACP `toolCall` and `options`; `sessionId` comes
+from the prompt. The agent waits for the actual permission reply, then sends
+that entry's `updates`, before proceeding to the next entry or ending the
+prompt. This differs from the existing unawaited `permission` receipt-order
+fixture, whose behavior stays unchanged.
+
+`expect.acp_permissions`, per ACP channel: those awaited replies in received
+order, each `{session_id, tool_call_id, result}` (or `error` for a JSON-RPC
+error), with the raw reply body. The fixture never chooses an option or
+infers a tool outcome from it.
+
 `expect.acp_wire`, per ACP channel: what its agent received, in order, each
 `{method, params}`, `params` as the client wrote them, matched as a patch. A
 client's `clientInfo.version` is its implementation's own.
@@ -1005,6 +1017,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `ai_events` | Per room, the framework events of an AI channel's turn (§8.2, Level 1): `before_ai_generation` and `ai_response`, in emission order, matched as `framework_events`, which does not hold them |
 | `models` | Per scripted agent, each generation's `method` (`generate` or `generate_structured_stream`, recorded at the actual script reservation; absent for native Rust memory summarizers), and its request as its model received it, in order: the `messages` it carries, each `{role, text, parts, round}`, `text` its text parts joined (empty for a message with none, a tool's result among them), `parts` its text and image parts in order, each `{"text": ...}` or `{"image": url, "mime_type": ...}`, null for a message whose content is a text, `round` its reasoning, text and call parts in order, each `{"thinking": ..., "signature": ..., "redacted": ...}`, `{"text": ...}` or `{"call": id, "arguments": ..., "metadata": ...}`, null for a message whose content is a text, and the `tool_results`, each `{tool_call_id, name, content, is_error, references}`, `name` the tool of its call, `content` as the model reads it (a text, or a result's text and image parts in order, written as `parts` are), `is_error` whether it reads the call as failed, its `system_prompt`, its `temperature` and `max_tokens`, its `reasoning_effort`, `thinking_budget` and `enable_thinking`, its `response_schema` (null for none), the `deferred_tools` names held unseen, the `reopened_tools` names referenced by synthetic opening exchanges, the `tools` it declares, by name: each one's position in the declaration, so that a scenario names those it asserts, declared or `$absent`, and, for a model with a `chat_dialect`, `chat_messages`: the request as that rendering writes it on the wire, its system prompt first when it has one, each message's `role`, `content`, `tool_calls`, `tool_call_id` and its dialect's reasoning field |
 | `acp_wire` | Per ACP channel, the requests and notifications its scripted ACP agent received, in order, each `{method, params}` (Scripted ACP agents) |
+| `acp_permissions` | Per ACP channel, actual replies to awaited permission requests, each `{session_id, tool_call_id, result}` or `error` (Scripted ACP agents) |
 | `executors` | Per executor of the setup, what it did, in order: `{call, channel_id, build}`, and `room_id` for a call about a room: `built` (a copy of the channel made, `build` counting them per executor and channel), `on_event`, `on_room_attached`, `on_room_detached`, `channel_call` (with its `verb`) and `close`. A detach from a room this build never saw let go of nothing and is not listed |
 | `lifecycle` | Per room, the lifecycle records (§5.1) in index order, when the implementation writes them: an implementation that writes none passes. It says which changes write one, and which write none (a change that changes nothing, §7.2) |
 | `participants` | Per room, the participants the store holds (§5.5), in the store's order |

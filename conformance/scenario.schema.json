@@ -4924,6 +4924,16 @@
               "object"
             ]
           }
+        },
+        "acp_permissions": {
+          "description": "Per ACP channel, actual replies to permission_steps, in received order: session_id, tool_call_id and result or error as written on the wire.",
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "array",
+              "object"
+            ]
+          }
         }
       }
     },
@@ -7567,6 +7577,13 @@
         "after_updates_gate": {
           "description": "Hold the prompt after sending all its updates, before any permission request or response. A receiving stream can observe an update before a control call.",
           "type": "string"
+        },
+        "permission_steps": {
+          "description": "Ordered permission requests. Each waits for the actual wire answer before sending its following updates; all complete before the prompt answer.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/acp_permission_step"
+          }
         }
       }
     },
@@ -8033,6 +8050,69 @@
           ]
         }
       ]
+    },
+    "acp_permission_step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request"
+      ],
+      "properties": {
+        "request": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "toolCall",
+            "options"
+          ],
+          "properties": {
+            "toolCall": {
+              "type": "object",
+              "required": [
+                "toolCallId"
+              ],
+              "properties": {
+                "toolCallId": {
+                  "type": "string"
+                }
+              }
+            },
+            "options": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "optionId",
+                  "name",
+                  "kind"
+                ],
+                "properties": {
+                  "optionId": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "kind": {
+                    "enum": [
+                      "allow_once",
+                      "allow_always",
+                      "reject_once",
+                      "reject_always"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "updates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/record"
+          }
+        }
+      }
     }
   }
 }
