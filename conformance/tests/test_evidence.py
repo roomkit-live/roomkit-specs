@@ -161,6 +161,79 @@ class EvidenceTests(unittest.TestCase):
         self.run["backend"] = "sqlite"
         self.assertEqual(junit(self.run, xml), [])
 
+    def test_junit_does_not_mix_postgres_with_another_store(self) -> None:
+        postgres = b'<testsuite><testcase classname="tests.conformance.test_postgres" name="test_scenario[a[postgres]]"/></testsuite>'
+        for backend in ["memory", "sqlite"]:
+            self.run["backend"] = backend
+            self.assertIn("JUnit says not_run", junit(self.run, postgres)[0])
+        self.run["backend"] = "postgres"
+        self.assertEqual(junit(self.run, postgres), [])
+        for other in [
+            b'<testsuite><testcase classname="tests.conformance.test_conformance" name="test_scenario[a[postgres]]"/></testsuite>',
+            b'<testsuite><testcase classname="tests.conformance.test_postgres" name="test_scenario[a]"/></testsuite>',
+        ]:
+            with self.subTest(other=other):
+                self.assertIn("JUnit says not_run", junit(self.run, other)[0])
+
+    def test_junit_postgres_scenario_takes_the_worst_of_its_cases(self) -> None:
+        self.run["backend"] = "postgres"
+        case = '<testcase classname="tests.conformance.test_postgres" name="test_shared_postgres_contract[a-{}]">{}</testcase>'
+        passed = case.format("False", "")
+        for variant, actual in [("<skipped/>", "skipped"), ("<failure/>", "failed")]:
+            xml = f"<testsuite>{passed}{case.format('True', variant)}</testsuite>".encode()
+            with self.subTest(actual=actual):
+                self.assertIn(f"JUnit says {actual}", junit(self.run, xml)[0])
+        self.assertEqual(junit(self.run, f"<testsuite>{passed}</testsuite>".encode()), [])
+
+    def test_junit_redis_turns_need_a_command_that_selects_them(self) -> None:
+        xml = b'<testsuite><testcase classname="tests.conformance.test_conformance" name="test_scenario[a[sqlite]]"/></testsuite>'
+        self.run["backend"] = "sqlite+redis-turns"
+        for command in [
+            ["pytest"],
+            ["env", "ROOMKIT_TEST_TURN_BACKEND=memory", "pytest"],
+            ["env", "-u", "ROOMKIT_TEST_TURN_BACKEND", "pytest"],
+        ]:
+            with self.subTest(command=command):
+                self.run["command"] = command
+                self.assertIn("does not select", junit(self.run, xml)[0])
+        for command in [
+            ["env", "-u", "POSTGRES_DSN", "ROOMKIT_TEST_TURN_BACKEND=redis", "pytest"],
+            ["env", "-C", "roomkit", "ROOMKIT_TEST_TURN_BACKEND=redis", "pytest"],
+            ["ROOMKIT_TEST_TURN_BACKEND=redis", "pytest"],
+        ]:
+            with self.subTest(command=command):
+                self.run["command"] = command
+                self.assertEqual(junit(self.run, xml), [])
+
+    def test_junit_a_redis_command_backs_no_receipt_of_local_turns(self) -> None:
+        xml = b'<testsuite><testcase classname="tests.conformance.test_conformance" name="test_scenario[a]"/></testsuite>'
+        self.run["command"] = ["env", "ROOMKIT_TEST_TURN_BACKEND=redis", "pytest"]
+        self.assertIn("selects the kit's turns", junit(self.run, xml)[0])
+        self.run["backend"] = "memory+redis-turns"
+        self.assertEqual(junit(self.run, xml), [])
+
+    def test_junit_refuses_a_command_whose_turn_mode_it_cannot_read(self) -> None:
+        xml = b'<testsuite><testcase classname="tests.conformance.test_conformance" name="test_scenario[a]"/></testsuite>'
+        for command in [
+            ["pytest", "ROOMKIT_TEST_TURN_BACKEND=redis"],
+            ["sh", "-c", "ROOMKIT_TEST_TURN_BACKEND=redis pytest"],
+            ["flock", "/run/suite.lock", "env", "ROOMKIT_TEST_TURN_BACKEND=redis", "pytest"],
+            ["env", "A=1", "env", "ROOMKIT_TEST_TURN_BACKEND=redis", "pytest"],
+            ["env", "-S", "ROOMKIT_TEST_TURN_BACKEND=redis pytest"],
+            ["env", "ROOMKIT_TEST_TURN_BACKEND=redis", "env", "-u", "ROOMKIT_TEST_TURN_BACKEND", "pytest"],
+        ]:
+            for backend in ["memory", "memory+redis-turns"]:
+                with self.subTest(command=command, backend=backend):
+                    self.run.update(command=command, backend=backend)
+                    self.assertIn("cannot tell the turn mode", junit(self.run, xml)[0])
+
+    def test_junit_refuses_a_backend_no_runner_profile_names(self) -> None:
+        xml = b'<testsuite><testcase classname="tests.conformance.test_postgres" name="test_scenario[a[postgres]]"/></testsuite>'
+        for backend in ["postgres+redis-turns", "redis", "memory+redis"]:
+            with self.subTest(backend=backend):
+                self.run["backend"] = backend
+                self.assertIn("unsupported pytest execution profile", junit(self.run, xml)[0])
+
     def test_cargo_requires_a_complete_runtime_summary(self) -> None:
         self.run.update(implementation="rust", runtime="multi_thread:4")
         self.assertTrue(
