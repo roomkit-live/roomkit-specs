@@ -175,7 +175,7 @@
             "outcome": "refused",
             "refused_but_ran": false,
             "result": null,
-            "error": "{\"error\": \"Tool 'Read' denied by pre-execution hook: no reads.\"}"
+            "error": "{\"error\": \"no reads\"}"
           }
         }
       ]
@@ -189,7 +189,7 @@
             "arguments": {
               "path": "notes.txt"
             },
-            "result": "{\"error\": \"Tool 'Read' denied by pre-execution hook: no reads.\"}",
+            "result": "{\"error\": \"no reads\"}",
             "is_error": true,
             "cancelled": false,
             "refused": true,
@@ -264,7 +264,7 @@
           },
           "tool_call_id": "call-1",
           "room_id": "room-1",
-          "reason": "{\"error\": \"Tool 'Read' denied by pre-execution hook: no reads.\"}"
+          "reason": "{\"error\": \"no reads\"}"
         }
       ]
     }
