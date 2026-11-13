@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "acp/tools-observer-turn-context",
-  "title": "An ACP tool observer writes the record of the second room turn, not the turn that opened the shared connection",
+  "title": "ACP hooks share the current turn record, which reaches its answer and does not leak into the next turn",
   "rules": [
     "§6.4",
     "§6.7",
@@ -45,9 +45,27 @@
                     "toolCallId": "call-1",
                     "status": "completed",
                     "rawOutput": "done"
+                  },
+                  {
+                    "sessionUpdate": "agent_message_chunk",
+                    "content": {
+                      "type": "text",
+                      "text": "Answer"
+                    }
                   }
                 ],
                 "after_updates_gate": "prompt-held"
+              },
+              {
+                "updates": [
+                  {
+                    "sessionUpdate": "agent_message_chunk",
+                    "content": {
+                      "type": "text",
+                      "text": "Fresh"
+                    }
+                  }
+                ]
               }
             ]
           }
@@ -102,6 +120,18 @@
               "tool_observed": true
             },
             "gate": "observed"
+          }
+        ]
+      },
+      {
+        "name": "sync",
+        "trigger": "on_tool_call",
+        "execution": "sync",
+        "reactions": [
+          {
+            "writes_record": {
+              "sync_observed": true
+            }
           }
         ]
       }
@@ -160,7 +190,32 @@
       "expect": {
         "result": {
           "response_metadata": {
-            "tool_observed": true
+            "tool_observed": true,
+            "sync_observed": true
+          }
+        }
+      }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-2",
+      "message": {
+        "channel_id": "web",
+        "sender_id": "alice",
+        "content": {
+          "type": "text",
+          "body": "Hello"
+        }
+      },
+      "expect": {
+        "result": {
+          "response_metadata": {
+            "tool_observed": {
+              "$absent": true
+            },
+            "sync_observed": {
+              "$absent": true
+            }
           }
         }
       }
@@ -200,6 +255,33 @@
             "tool_name": "Read",
             "tool_id": "call-1",
             "result": "done"
+          }
+        },
+        {
+          "content": {
+            "body": "Answer"
+          },
+          "metadata": {
+            "tool_observed": true,
+            "sync_observed": true
+          }
+        },
+        {
+          "content": {
+            "body": "Hello"
+          }
+        },
+        {
+          "content": {
+            "body": "Fresh"
+          },
+          "metadata": {
+            "tool_observed": {
+              "$absent": true
+            },
+            "sync_observed": {
+              "$absent": true
+            }
           }
         }
       ]
@@ -262,10 +344,36 @@
           "room_id": "room-2",
           "response": {
             "channel_id": "claude",
-            "segments": [],
-            "response_content": "",
+            "segments": [
+              "Answer"
+            ],
+            "response_content": "Answer",
             "tool_calls_count": 1,
             "streaming": true
+          }
+        },
+        {
+          "room_id": "room-2",
+          "response": {
+            "segments": [
+              "Fresh"
+            ],
+            "response_content": "Fresh",
+            "tool_calls_count": 0
+          }
+        }
+      ],
+      "sync": [
+        {
+          "room_id": "room-2",
+          "tool_call": {
+            "name": "Read",
+            "arguments": {},
+            "result": "done",
+            "is_error": false,
+            "cancelled": false,
+            "refused": false,
+            "error_detail": null
           }
         }
       ]
