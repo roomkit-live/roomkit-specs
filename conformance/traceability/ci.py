@@ -4,6 +4,7 @@ commands that wrote them, and the check that CI still runs those commands."""
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 import tempfile
 from collections.abc import Callable
@@ -96,7 +97,7 @@ def workflow_drift(workflow: str, report: CiReport) -> list[str]:
     workflow environment, another job environment, or another step."""
     lines = workflow.splitlines()
     fix = f"update CI_REPORTS ({report.file}) to what CI runs"
-    if any(line.split("#")[0].rstrip() == "env:" for line in lines):
+    if any(re.match(r"env\s*:", line) for line in lines):  # block or flow style
         return [f"{CI_WORKFLOW} sets a workflow environment: {fix}"]
     if f"  {CI_JOB}:" not in lines:
         return [f"{CI_WORKFLOW} has no job {CI_JOB}: {fix}"]

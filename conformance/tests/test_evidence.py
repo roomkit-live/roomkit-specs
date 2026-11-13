@@ -192,6 +192,7 @@ class EvidenceTests(unittest.TestCase):
             ["pytest"],
             ["env", "ROOMKIT_TEST_TURN_BACKEND=memory", "pytest"],
             ["env", "-u", "ROOMKIT_TEST_TURN_BACKEND", "pytest"],
+            ["env", "-a", "ROOMKIT_TEST_TURN_BACKEND=redis", "pytest"],
         ]:
             with self.subTest(command=command):
                 self.run["command"] = command

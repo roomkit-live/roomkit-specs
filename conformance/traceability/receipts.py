@@ -29,6 +29,8 @@ PROFILES = {
 }
 
 TURN_BACKEND = "ROOMKIT_TEST_TURN_BACKEND"
+# env's options whose argument is the next word (GNU coreutils, uutils).
+_ENV_OPTIONS_WITH_ARGUMENT = ("-a", "--argv0", "-C", "--chdir", "-f", "--file")
 
 # `test_scenario[<id>]`, `test_scenario[<id>[sqlite]]`, `test_scenario[<id>[postgres]]`,
 # and test_postgres.py's `test_shared_postgres_contract[<id>-False]` (plain) and
@@ -113,7 +115,7 @@ def turn_backend(command: list[str]) -> str | None:
             read += 2  # the variable unset: the run's default, not Redis
             continue
         if through_env and word.startswith("-") and not word.startswith(("-S", "--split")):
-            read += 2 if word in ("-C", "--chdir") else 1
+            read += 2 if word in _ENV_OPTIONS_WITH_ARGUMENT else 1
             continue
         name, equals, assigned = word.partition("=")
         if not equals or not name.isidentifier():

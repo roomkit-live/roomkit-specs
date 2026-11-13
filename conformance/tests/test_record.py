@@ -145,6 +145,9 @@ class WorkflowTests(unittest.TestCase):
              {"postgres-scenarios.xml", "redis-turns.xml"}),
             ("workflow env", WORKFLOW.replace("jobs:\n", "env:\n  A: b\n\njobs:\n"),
              {"postgres-scenarios.xml", "redis-turns.xml"}),
+            ("flow workflow env",
+             WORKFLOW.replace("jobs:\n", "env: {ROOMKIT_TEST_TURN_BACKEND: redis}\n\njobs:\n"),
+             {"postgres-scenarios.xml", "redis-turns.xml"}),
             ("step env", WORKFLOW.replace(
                 "      - name: Run the shared scenarios on PostgreSQL\n",
                 "      - name: Run the shared scenarios on PostgreSQL\n        env:\n"
