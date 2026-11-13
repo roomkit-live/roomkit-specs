@@ -204,6 +204,36 @@ The links remain partial. This run does not certify the paired native API tests,
 Rust, remote executors, real PostgreSQL or all lifecycle methods of the local
 executor. The 75 previously published receipts remain unchanged.
 
+## Configurable ACP external handlers
+
+`python-acp-external-handler-5a7a968.xml` retains the scenario cases from the
+clean run on Python `5a7a9683cd8c74bac850002cd4adfcc5a6e3dd25`, with copied
+corpus `dd54079dc0fbce8f92ced67e317886f23fc75004`. Its RFC text is the one at
+`07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a`; `dd54079` was the specs checkout
+used for validation. All 2,107 memory scenarios and 567 SQLite scenarios
+passed. The XML retains 2,675 cases from the shared-runner module, including
+its corpus-copy check. The two receipts certify only the 2,674 scenario cases;
+other native tests and PostgreSQL skips from the raw run are excluded.
+
+The 43 added handler scenarios cover permission choices, policy admission,
+unsupported overrides, reports and their failures. Five independently reviewed
+RFC links remain partial: 76 assertions across 38 scenarios. These receipts
+certify neither native handler lifecycle/concurrency tests, Rust execution,
+Redis turns, PostgreSQL nor complete ACP conformance. All 114 earlier receipts
+and 124 earlier links are preserved unchanged.
+
+Three separate receipts retain the successful CI run
+[43422098549](https://github.com/roomkit-live/roomkit/actions/runs/43422098549)
+on that same Python commit, imported from its `integration-junit` artifact
+with the official CI workflow verifier: 446 distinct PostgreSQL scenarios
+passed; Redis turn mode passed 2,095 memory scenarios (12 skipped) and 558
+SQLite scenarios (9 skipped). The skips retain their outcomes and receive no
+execution credit. These CI receipts do not certify remote executors in another
+process, real process death, native service tests or Rust. The earlier CI run
+on the parent commit exposed reversed response rows in a native SQLite/Redis
+verification test; the passing run retained here does not establish that this
+intermittent issue has been fixed.
+
 ## Recording receipts
 
 `conformance/record.py` writes every receipt from a pytest JUnit report; none
