@@ -6,7 +6,7 @@
     "§6.4",
     "§19.7.5"
   ],
-  "notes": "Python: tests/test_channels/test_acp_discussion.py. Real Discussion scheduling and ACP JSON-RPC; native tests cover exact note ordering, header count and issued-mark lifetime. No remote executor or agent-output guarantee is inferred.",
+  "notes": "Python: tests/test_channels/test_acp_discussion.py::test_a_turn_no_discussion_gave_carries_no_notes. Public send_event outside Discussion: unissued metadata supplies no trusted notes. Native tests also exercise malformed and retired marks directly.",
   "setup": {
     "kit": {
       "persistence_policy": {
