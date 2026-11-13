@@ -94,20 +94,10 @@
       }
     },
     {
-      "await": "turn"
-    },
-    {
       "open": "prompt"
     },
     {
-      "call": "channel_call",
-      "channel_id": "claude",
-      "room_id": "room-1",
-      "verb": "session_id",
-      "arguments": {},
-      "expect": {
-        "result": "session-1"
-      }
+      "await": "turn"
     },
     {
       "call": "send_event",

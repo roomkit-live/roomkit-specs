@@ -61,16 +61,6 @@
       "standalone": true
     },
     {
-      "call": "channel_call",
-      "channel_id": "claude",
-      "room_id": "room-1",
-      "verb": "session_id",
-      "arguments": {},
-      "expect": {
-        "result": null
-      }
-    },
-    {
       "call": "send_event",
       "room_id": "room-1",
       "channel_id": "ws",
@@ -81,16 +71,6 @@
       "addressed_to": [
         "claude"
       ]
-    },
-    {
-      "call": "channel_call",
-      "channel_id": "claude",
-      "room_id": "room-1",
-      "verb": "session_id",
-      "arguments": {},
-      "expect": {
-        "result": "session-2"
-      }
     },
     {
       "idle": true

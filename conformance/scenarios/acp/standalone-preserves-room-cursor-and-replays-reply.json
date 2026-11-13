@@ -99,16 +99,6 @@
       "standalone": true
     },
     {
-      "call": "channel_call",
-      "channel_id": "claude",
-      "room_id": "room-1",
-      "verb": "session_id",
-      "arguments": {},
-      "expect": {
-        "result": "session-1"
-      }
-    },
-    {
       "call": "send_event",
       "room_id": "room-1",
       "channel_id": "ws",

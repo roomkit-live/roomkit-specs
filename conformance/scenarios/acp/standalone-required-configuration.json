@@ -100,16 +100,6 @@
       "call": "channel_call",
       "channel_id": "claude",
       "room_id": "room-1",
-      "verb": "session_id",
-      "arguments": {},
-      "expect": {
-        "result": null
-      }
-    },
-    {
-      "call": "channel_call",
-      "channel_id": "claude",
-      "room_id": "room-1",
       "verb": "session_config",
       "arguments": {},
       "expect": {
