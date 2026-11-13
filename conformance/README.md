@@ -672,6 +672,9 @@ JSON-RPC 2.0 one message per line, in neither implementation's ACP code, so
 that both runners check the same messages.
 
 - `acp.cwd`: the channel's `cwd`, an absolute path.
+- `acp.name`, `acp.role`, `acp.description`: optional local identity attributes,
+  passed unchanged to the channel constructor; null or omitted means None.
+  Discussion reads them without turning the channel into a declared Agent.
 - `acp.instructions`: standing application instructions, absent by default; null
   or whitespace-only text disables them. A session receives them until its first
   prompt succeeds; close, reconnect or authorized rebuild opens a new session.

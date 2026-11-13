@@ -7500,6 +7500,27 @@
             "string",
             "null"
           ]
+        },
+        "name": {
+          "description": "The ACP channel constructor's local name; omitted or null means None. No declared Agent identity is created.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "role": {
+          "description": "The ACP channel constructor's local role; omitted or null means None. No declared Agent identity is created.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "description": {
+          "description": "The ACP channel constructor's local description; omitted or null means None. No declared Agent identity is created.",
+          "type": [
+            "string",
+            "null"
+          ]
         }
       }
     },
