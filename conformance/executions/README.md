@@ -270,3 +270,48 @@ uv run --no-project --python 3.13 --with jsonschema==4.26.0 \
   -- env -u POSTGRES_DSN ROOMKIT_TEST_TURN_BACKEND=memory uv run pytest \
      tests/conformance -q --junitxml=python-conformance.xml
 ```
+
+## PostgreSQL and the Redis turn mode
+
+`python-postgres-scenarios-6dc6edb.xml` retains the 447 cases of roomkit CI run
+43363231272 on Python `6dc6edb3f58722247ff9f851b686f73bf124f543`, job
+Integration, step "Run the shared scenarios on PostgreSQL": PostgreSQL 16 and
+Redis 7 services, Python 3.12, `pytest -n auto`, each case on a schema of its
+own. The copied corpus is `9552d7f4db41c05227e2f40cb0709029a37e9788`; the
+RFC is `07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a`. All 447 cases passed. They
+are 444 scenarios: 428 `test_scenario` cases (the scenarios whose contract
+writes to the store, and every scenario with other processes) and 16
+`test_shared_postgres_contract` cases, three of which also run a
+slow-preparation variant. The receipt
+`python-postgres-scenarios-6dc6edb-postgres` records 444 passes.
+
+`python-redis-turns-6dc6edb.xml` retains the 2,629
+`tests.conformance.test_conformance` cases of CI's Redis-pass command, restricted
+to `tests/conformance`, run on a clean detached checkout of the same commit:
+Linux, Python 3.13.3, pytest 9.1.1, pytest-xdist 3.8.0 and pytest-asyncio 1.4.0,
+and a local Redis 7.4 (the `REDIS_URL` in the command). A lock and a CPU
+affinity wrapped the command; neither changes what runs, and the recorded
+command leaves them out. The whole run passed 2,736
+cases and skipped 468, exit 0; the 447 PostgreSQL cases skip there by design,
+the Redis pass unsetting `POSTGRES_DSN`. The receipts record:
+
+- `python-redis-turns-6dc6edb-memory-redis-turns`: 2,063 scenarios, 2,051
+  passed and 12 skipped;
+- `python-redis-turns-6dc6edb-sqlite-redis-turns`: 565 scenarios, 556 passed
+  and 9 skipped.
+
+They select the same scenarios as `python-acp-permissions-6dc6edb-memory` and
+`-sqlite`. The 21 skips are the cases marked `in_process`: 20 whose scripted
+agent's turn calls the kit it holds, and `acp/tools-observer-reentry-bound`,
+whose tool observer calls its captured kit. Across Redis such a turn reaches the
+room through its TurnHost (RK-10.6.5-003); the receipts say skipped, so those
+scenarios have no Redis pass. CI's own Redis pass at roomkit
+`781f0c9d5fd01682e4f90285d942ba74fae2e0e7` (run 43379749129), whose tree
+differs only by `ci.yml`, gives the same counts for these cases.
+
+These receipts prove the named scenarios at that commit on real PostgreSQL, and
+with the kit's turns carried by Redis to its own executor in the same process.
+They do not prove PostgreSQL with turns across Redis, a real process death, an
+executor in another process, the specialized PostgreSQL and Redis tests (store
+contracts, advisory locks, multi-process and process-death tests), which stay
+source evidence, or Rust. No receipt is merged with another.

@@ -422,6 +422,9 @@ See [requirements.json](requirements.json) for exact clauses and applicability,
 - `python-acp-record-f3415d5-sqlite`: python `f3415d597011232464acd47128d413f325c83344`, sqlite / asyncio; RFC `389a64ae9f8550a4303b218c3864c7aa8a0373ec`, corpus `389a64ae9f8550a4303b218c3864c7aa8a0373ec`.
 - `python-acp-permissions-6dc6edb-memory`: python `6dc6edb3f58722247ff9f851b686f73bf124f543`, memory / asyncio; RFC `1422b745b1b98d3b45034506ac57af6755fb1901`, corpus `9552d7f4db41c05227e2f40cb0709029a37e9788`.
 - `python-acp-permissions-6dc6edb-sqlite`: python `6dc6edb3f58722247ff9f851b686f73bf124f543`, sqlite / asyncio; RFC `1422b745b1b98d3b45034506ac57af6755fb1901`, corpus `9552d7f4db41c05227e2f40cb0709029a37e9788`.
+- `python-postgres-scenarios-6dc6edb-postgres`: python `6dc6edb3f58722247ff9f851b686f73bf124f543`, postgres / asyncio; RFC `07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a`, corpus `9552d7f4db41c05227e2f40cb0709029a37e9788`.
+- `python-redis-turns-6dc6edb-memory-redis-turns`: python `6dc6edb3f58722247ff9f851b686f73bf124f543`, memory+redis-turns / asyncio; RFC `07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a`, corpus `9552d7f4db41c05227e2f40cb0709029a37e9788`.
+- `python-redis-turns-6dc6edb-sqlite-redis-turns`: python `6dc6edb3f58722247ff9f851b686f73bf124f543`, sqlite+redis-turns / asyncio; RFC `07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a`, corpus `9552d7f4db41c05227e2f40cb0709029a37e9788`.
 
 States below apply only to the link's declared scope. Partial mappings remain partial.
 
@@ -534,6 +537,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-5.1-002 | core-room-refused-events | python-acp-record-f3415d5-sqlite | stale |
 | RK-5.1-002 | core-room-refused-events | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-5.1-002 | core-room-refused-events | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-5.1-002 | core-room-refused-events | python-redis-turns-6dc6edb-memory-redis-turns | not_passed |
+| RK-5.1-002 | core-room-refused-events | python-redis-turns-6dc6edb-sqlite-redis-turns | not_passed |
 | RK-5.1-002 | core-room-remaining-write-gates | python-hook-injections-a6daaf1 | stale |
 | RK-5.1-002 | core-room-remaining-write-gates | python-injection-obligations-d8cc647 | stale |
 | RK-5.1-002 | core-room-remaining-write-gates | python-room-lifecycle-a29102c | stale |
@@ -641,6 +646,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-5.1-002 | core-room-remaining-write-gates | python-acp-record-f3415d5-sqlite | stale |
 | RK-5.1-002 | core-room-remaining-write-gates | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-5.1-002 | core-room-remaining-write-gates | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-5.1-002 | core-room-remaining-write-gates | python-redis-turns-6dc6edb-memory-redis-turns | not_passed |
+| RK-5.1-002 | core-room-remaining-write-gates | python-redis-turns-6dc6edb-sqlite-redis-turns | not_passed |
 | RK-5.1-004 | core-room-public-transitions | python-room-lifecycle-a29102c | stale |
 | RK-5.1-004 | core-room-public-transitions | python-room-lifecycle-completion-3bb0274-memory | stale |
 | RK-5.1-004 | core-room-public-transitions | python-room-lifecycle-completion-3bb0274-sqlite | stale |
@@ -746,6 +753,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-5.1-004 | core-room-public-transitions | python-acp-record-f3415d5-sqlite | stale |
 | RK-5.1-004 | core-room-public-transitions | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-5.1-004 | core-room-public-transitions | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-5.1-004 | core-room-public-transitions | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-5.1-004 | core-room-public-transitions | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-5.1-004 | core-room-public-read-matrix | python-room-lifecycle-completion-3bb0274-memory | stale |
 | RK-5.1-004 | core-room-public-read-matrix | python-room-lifecycle-completion-3bb0274-sqlite | stale |
 | RK-5.1-004 | core-room-public-read-matrix | python-lifecycle-final-corpus-746d6bd-memory | stale |
@@ -850,6 +859,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-5.1-004 | core-room-public-read-matrix | python-acp-record-f3415d5-sqlite | stale |
 | RK-5.1-004 | core-room-public-read-matrix | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-5.1-004 | core-room-public-read-matrix | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-5.1-004 | core-room-public-read-matrix | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-5.1-004 | core-room-public-read-matrix | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-5.1-006 | core-room-due-timers | python-room-lifecycle-a29102c | stale |
 | RK-5.1-006 | core-room-due-timers | python-room-lifecycle-completion-3bb0274-memory | stale |
 | RK-5.1-006 | core-room-due-timers | python-room-lifecycle-completion-3bb0274-sqlite | stale |
@@ -955,6 +966,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-5.1-006 | core-room-due-timers | python-acp-record-f3415d5-sqlite | stale |
 | RK-5.1-006 | core-room-due-timers | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-5.1-006 | core-room-due-timers | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-5.1-006 | core-room-due-timers | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-5.1-006 | core-room-due-timers | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-5.1-006 | core-room-timer-completion | python-room-lifecycle-a29102c | stale |
 | RK-5.1-006 | core-room-timer-completion | python-room-lifecycle-completion-3bb0274-memory | stale |
 | RK-5.1-006 | core-room-timer-completion | python-room-lifecycle-completion-3bb0274-sqlite | stale |
@@ -1060,6 +1073,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-5.1-006 | core-room-timer-completion | python-acp-record-f3415d5-sqlite | stale |
 | RK-5.1-006 | core-room-timer-completion | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-5.1-006 | core-room-timer-completion | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-5.1-006 | core-room-timer-completion | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-5.1-006 | core-room-timer-completion | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-5.13-001 | storage-delivery-outcomes | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-5.13-001 | storage-delivery-outcomes | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-5.13-001 | storage-delivery-outcomes | python-indexing-final-corpus-428f285-memory | stale |
@@ -1158,6 +1173,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-5.13-001 | storage-delivery-outcomes | python-acp-record-f3415d5-sqlite | stale |
 | RK-5.13-001 | storage-delivery-outcomes | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-5.13-001 | storage-delivery-outcomes | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-5.13-001 | storage-delivery-outcomes | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-5.13-001 | storage-delivery-outcomes | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-5.13-001 | storage-delivery-outcomes | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-6.4-006 | tool-composition-local-events | python-tool-composition-39ca121-memory | stale |
 | RK-6.4-006 | tool-composition-local-events | python-tool-composition-39ca121-sqlite | stale |
 | RK-6.4-006 | tool-composition-local-events | python-kit-executor-43d2f2e-memory | stale |
@@ -1196,6 +1214,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-6.4-006 | tool-composition-local-events | python-acp-record-f3415d5-sqlite | stale |
 | RK-6.4-006 | tool-composition-local-events | python-acp-permissions-6dc6edb-memory | recorded_pass |
 | RK-6.4-006 | tool-composition-local-events | python-acp-permissions-6dc6edb-sqlite | recorded_pass |
+| RK-6.4-006 | tool-composition-local-events | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
+| RK-6.4-006 | tool-composition-local-events | python-redis-turns-6dc6edb-sqlite-redis-turns | recorded_pass |
 | RK-6.4-022 | deferred-turn-emergency-compaction | python-turn-compaction-d3502c7-memory | stale |
 | RK-6.4-022 | deferred-turn-emergency-compaction | python-hook-input-83ad908-memory | stale |
 | RK-6.4-022 | deferred-turn-emergency-compaction | python-hook-protection-a6e7c58-memory | stale |
@@ -1218,6 +1238,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-6.4-022 | deferred-turn-emergency-compaction | python-acp-tools-7920d13-memory | stale |
 | RK-6.4-022 | deferred-turn-emergency-compaction | python-acp-record-f3415d5-memory | stale |
 | RK-6.4-022 | deferred-turn-emergency-compaction | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-6.4-022 | deferred-turn-emergency-compaction | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-6.4-022 | deferred-hook-copy-overflow | python-hook-input-83ad908-memory | stale |
 | RK-6.4-022 | deferred-hook-copy-overflow | python-hook-protection-a6e7c58-memory | stale |
 | RK-6.4-022 | deferred-hook-copy-overflow | python-tool-composition-39ca121-memory | stale |
@@ -1239,6 +1260,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-6.4-022 | deferred-hook-copy-overflow | python-acp-tools-7920d13-memory | stale |
 | RK-6.4-022 | deferred-hook-copy-overflow | python-acp-record-f3415d5-memory | stale |
 | RK-6.4-022 | deferred-hook-copy-overflow | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-6.4-022 | deferred-hook-copy-overflow | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-6.4-023 | deferred-turn-between-round-compaction | python-turn-compaction-d3502c7-memory | stale |
 | RK-6.4-023 | deferred-turn-between-round-compaction | python-hook-input-83ad908-memory | stale |
 | RK-6.4-023 | deferred-turn-between-round-compaction | python-hook-protection-a6e7c58-memory | stale |
@@ -1261,6 +1283,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-6.4-023 | deferred-turn-between-round-compaction | python-acp-tools-7920d13-memory | stale |
 | RK-6.4-023 | deferred-turn-between-round-compaction | python-acp-record-f3415d5-memory | stale |
 | RK-6.4-023 | deferred-turn-between-round-compaction | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-6.4-023 | deferred-turn-between-round-compaction | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-6.4-023 | deferred-hook-copy-compaction | python-hook-input-83ad908-memory | stale |
 | RK-6.4-023 | deferred-hook-copy-compaction | python-hook-protection-a6e7c58-memory | stale |
 | RK-6.4-023 | deferred-hook-copy-compaction | python-tool-composition-39ca121-memory | stale |
@@ -1282,6 +1305,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-6.4-023 | deferred-hook-copy-compaction | python-acp-tools-7920d13-memory | stale |
 | RK-6.4-023 | deferred-hook-copy-compaction | python-acp-record-f3415d5-memory | stale |
 | RK-6.4-023 | deferred-hook-copy-compaction | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-6.4-023 | deferred-hook-copy-compaction | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-6.4-043 | deferred-hook-context-protection | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-6.4-043 | deferred-hook-context-protection | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-6.4-043 | deferred-hook-context-protection | python-indexing-final-corpus-428f285-memory | stale |
@@ -1333,6 +1357,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-6.4-043 | deferred-hook-context-protection | python-acp-tools-7920d13-memory | stale |
 | RK-6.4-043 | deferred-hook-context-protection | python-acp-record-f3415d5-memory | stale |
 | RK-6.4-043 | deferred-hook-context-protection | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-6.4-043 | deferred-hook-context-protection | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-6.4-037 | acp-authorized-recovery-outcomes | python-acp-rebuild-158fe28-memory | stale |
 | RK-6.4-037 | acp-authorized-recovery-outcomes | python-acp-lifecycle-78ddda9-memory | stale |
 | RK-6.4-037 | acp-authorized-recovery-outcomes | python-acp-detach-5262357-memory | stale |
@@ -1343,6 +1368,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-6.4-037 | acp-authorized-recovery-outcomes | python-acp-tools-7920d13-memory | stale |
 | RK-6.4-037 | acp-authorized-recovery-outcomes | python-acp-record-f3415d5-memory | stale |
 | RK-6.4-037 | acp-authorized-recovery-outcomes | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-6.4-037 | acp-authorized-recovery-outcomes | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-6.4-037 | acp-public-room-cancellation | python-acp-lifecycle-78ddda9-memory | stale |
 | RK-6.4-037 | acp-public-room-cancellation | python-acp-detach-5262357-memory | stale |
 | RK-6.4-037 | acp-public-room-cancellation | python-acp-steering-843e13a-memory | stale |
@@ -1352,18 +1378,22 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-6.4-037 | acp-public-room-cancellation | python-acp-tools-7920d13-memory | stale |
 | RK-6.4-037 | acp-public-room-cancellation | python-acp-record-f3415d5-memory | stale |
 | RK-6.4-037 | acp-public-room-cancellation | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-6.4-037 | acp-public-room-cancellation | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-6.4-037 | acp-close-pending-mcp-supplier | python-acp-mcp-e979b14-memory | stale |
 | RK-6.4-037 | acp-close-pending-mcp-supplier | python-acp-thinking-926888e-memory | stale |
 | RK-6.4-037 | acp-close-pending-mcp-supplier | python-acp-tools-7920d13-memory | stale |
 | RK-6.4-037 | acp-close-pending-mcp-supplier | python-acp-record-f3415d5-memory | stale |
 | RK-6.4-037 | acp-close-pending-mcp-supplier | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-6.4-037 | acp-close-pending-mcp-supplier | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-6.4-037 | acp-active-turn-thought-lifecycle | python-acp-thinking-926888e-memory | stale |
 | RK-6.4-037 | acp-active-turn-thought-lifecycle | python-acp-tools-7920d13-memory | stale |
 | RK-6.4-037 | acp-active-turn-thought-lifecycle | python-acp-record-f3415d5-memory | stale |
 | RK-6.4-037 | acp-active-turn-thought-lifecycle | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-6.4-037 | acp-active-turn-thought-lifecycle | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-6.4-037 | acp-active-tool-lifecycle-and-context | python-acp-tools-7920d13-memory | stale |
 | RK-6.4-037 | acp-active-tool-lifecycle-and-context | python-acp-record-f3415d5-memory | stale |
 | RK-6.4-037 | acp-active-tool-lifecycle-and-context | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-6.4-037 | acp-active-tool-lifecycle-and-context | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-6.4-038 | acp-sequential-room-configuration | python-acp-config-17e1157-memory | stale |
 | RK-6.4-038 | acp-sequential-room-configuration | python-acp-recovery-4b32474-memory | stale |
 | RK-6.4-038 | acp-sequential-room-configuration | python-acp-rebuild-158fe28-memory | stale |
@@ -1376,6 +1406,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-6.4-038 | acp-sequential-room-configuration | python-acp-tools-7920d13-memory | stale |
 | RK-6.4-038 | acp-sequential-room-configuration | python-acp-record-f3415d5-memory | stale |
 | RK-6.4-038 | acp-sequential-room-configuration | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-6.4-038 | acp-sequential-room-configuration | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-6.4-038 | acp-room-opening-and-reconnection | python-acp-recovery-4b32474-memory | stale |
 | RK-6.4-038 | acp-room-opening-and-reconnection | python-acp-rebuild-158fe28-memory | stale |
 | RK-6.4-038 | acp-room-opening-and-reconnection | python-acp-lifecycle-78ddda9-memory | stale |
@@ -1387,6 +1418,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-6.4-038 | acp-room-opening-and-reconnection | python-acp-tools-7920d13-memory | stale |
 | RK-6.4-038 | acp-room-opening-and-reconnection | python-acp-record-f3415d5-memory | stale |
 | RK-6.4-038 | acp-room-opening-and-reconnection | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-6.4-038 | acp-room-opening-and-reconnection | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-6.4-038 | acp-rebuilt-session-required-settings | python-acp-rebuild-158fe28-memory | stale |
 | RK-6.4-038 | acp-rebuilt-session-required-settings | python-acp-lifecycle-78ddda9-memory | stale |
 | RK-6.4-038 | acp-rebuilt-session-required-settings | python-acp-detach-5262357-memory | stale |
@@ -1397,11 +1429,13 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-6.4-038 | acp-rebuilt-session-required-settings | python-acp-tools-7920d13-memory | stale |
 | RK-6.4-038 | acp-rebuilt-session-required-settings | python-acp-record-f3415d5-memory | stale |
 | RK-6.4-038 | acp-rebuilt-session-required-settings | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-6.4-038 | acp-rebuilt-session-required-settings | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-6.4-038 | acp-room-mcp-servers | python-acp-mcp-e979b14-memory | stale |
 | RK-6.4-038 | acp-room-mcp-servers | python-acp-thinking-926888e-memory | stale |
 | RK-6.4-038 | acp-room-mcp-servers | python-acp-tools-7920d13-memory | stale |
 | RK-6.4-038 | acp-room-mcp-servers | python-acp-record-f3415d5-memory | stale |
 | RK-6.4-038 | acp-room-mcp-servers | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-6.4-038 | acp-room-mcp-servers | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-6.4-039 | acp-room-detachment | python-acp-detach-5262357-memory | stale |
 | RK-6.4-039 | acp-room-detachment | python-acp-steering-843e13a-memory | stale |
 | RK-6.4-039 | acp-room-detachment | python-acp-directories-09666ea-memory | stale |
@@ -1410,9 +1444,12 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-6.4-039 | acp-room-detachment | python-acp-tools-7920d13-memory | stale |
 | RK-6.4-039 | acp-room-detachment | python-acp-record-f3415d5-memory | stale |
 | RK-6.4-039 | acp-room-detachment | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-6.4-039 | acp-room-detachment | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-6.4-039 | acp-default-permission-replies | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-6.4-039 | acp-default-permission-replies | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-6.7-008 | acp-shared-turn-record | python-acp-record-f3415d5-memory | stale |
 | RK-6.7-008 | acp-shared-turn-record | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-6.7-008 | acp-shared-turn-record | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-7.1-001 | core-access-matrix | python-permissions-ecf9bc5 | stale |
 | RK-7.1-001 | core-access-matrix | python-visibility-8fb44e9 | stale |
 | RK-7.1-001 | core-access-matrix | python-response-history-3e4e215 | stale |
@@ -1467,6 +1504,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.1-001 | core-access-matrix | python-acp-tools-7920d13-memory | stale |
 | RK-7.1-001 | core-access-matrix | python-acp-record-f3415d5-memory | stale |
 | RK-7.1-001 | core-access-matrix | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-7.1-001 | core-access-matrix | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-7.2-001 | core-muted-read-effects | python-permissions-ecf9bc5 | stale |
 | RK-7.2-001 | core-muted-read-effects | python-visibility-8fb44e9 | stale |
 | RK-7.2-001 | core-muted-read-effects | python-response-history-3e4e215 | stale |
@@ -1521,6 +1559,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.2-001 | core-muted-read-effects | python-acp-tools-7920d13-memory | stale |
 | RK-7.2-001 | core-muted-read-effects | python-acp-record-f3415d5-memory | stale |
 | RK-7.2-001 | core-muted-read-effects | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-7.2-001 | core-muted-read-effects | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-7.3-005 | visibility-grammar-values | python-visibility-8fb44e9 | stale |
 | RK-7.3-005 | visibility-grammar-values | python-response-history-3e4e215 | stale |
 | RK-7.3-005 | visibility-grammar-values | python-lifecycle-final-corpus-746d6bd-memory | stale |
@@ -1574,6 +1613,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.3-005 | visibility-grammar-values | python-acp-tools-7920d13-memory | stale |
 | RK-7.3-005 | visibility-grammar-values | python-acp-record-f3415d5-memory | stale |
 | RK-7.3-005 | visibility-grammar-values | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-7.3-005 | visibility-grammar-values | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-7.3-006 | visibility-reserved-channel-ids | python-permissions-ecf9bc5 | stale |
 | RK-7.3-006 | visibility-reserved-channel-ids | python-visibility-8fb44e9 | stale |
 | RK-7.3-006 | visibility-reserved-channel-ids | python-response-history-3e4e215 | stale |
@@ -1628,6 +1668,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.3-006 | visibility-reserved-channel-ids | python-acp-tools-7920d13-memory | stale |
 | RK-7.3-006 | visibility-reserved-channel-ids | python-acp-record-f3415d5-memory | stale |
 | RK-7.3-006 | visibility-reserved-channel-ids | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-7.3-006 | visibility-reserved-channel-ids | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-7.3-007 | visibility-whitespace | python-visibility-8fb44e9 | stale |
 | RK-7.3-007 | visibility-whitespace | python-response-history-3e4e215 | stale |
 | RK-7.3-007 | visibility-whitespace | python-lifecycle-final-corpus-746d6bd-memory | stale |
@@ -1681,6 +1722,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.3-007 | visibility-whitespace | python-acp-tools-7920d13-memory | stale |
 | RK-7.3-007 | visibility-whitespace | python-acp-record-f3415d5-memory | stale |
 | RK-7.3-007 | visibility-whitespace | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-7.3-007 | visibility-whitespace | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-7.3-008 | visibility-empty-values-and-items | python-visibility-8fb44e9 | stale |
 | RK-7.3-008 | visibility-empty-values-and-items | python-response-history-3e4e215 | stale |
 | RK-7.3-008 | visibility-empty-values-and-items | python-lifecycle-final-corpus-746d6bd-memory | stale |
@@ -1734,6 +1776,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.3-008 | visibility-empty-values-and-items | python-acp-tools-7920d13-memory | stale |
 | RK-7.3-008 | visibility-empty-values-and-items | python-acp-record-f3415d5-memory | stale |
 | RK-7.3-008 | visibility-empty-values-and-items | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-7.3-008 | visibility-empty-values-and-items | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-7.3-009 | visibility-empty-values-fail-closed | python-permissions-ecf9bc5 | stale |
 | RK-7.3-009 | visibility-empty-values-fail-closed | python-visibility-8fb44e9 | stale |
 | RK-7.3-009 | visibility-empty-values-fail-closed | python-response-history-3e4e215 | stale |
@@ -1788,6 +1831,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.3-009 | visibility-empty-values-fail-closed | python-acp-tools-7920d13-memory | stale |
 | RK-7.3-009 | visibility-empty-values-fail-closed | python-acp-record-f3415d5-memory | stale |
 | RK-7.3-009 | visibility-empty-values-fail-closed | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-7.3-009 | visibility-empty-values-fail-closed | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-7.3-010 | visibility-canonical-id-lists | python-visibility-8fb44e9 | stale |
 | RK-7.3-010 | visibility-canonical-id-lists | python-response-history-3e4e215 | stale |
 | RK-7.3-010 | visibility-canonical-id-lists | python-lifecycle-final-corpus-746d6bd-memory | stale |
@@ -1841,6 +1885,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.3-010 | visibility-canonical-id-lists | python-acp-tools-7920d13-memory | stale |
 | RK-7.3-010 | visibility-canonical-id-lists | python-acp-record-f3415d5-memory | stale |
 | RK-7.3-010 | visibility-canonical-id-lists | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-7.3-010 | visibility-canonical-id-lists | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-7.3-011 | visibility-unknown-and-unbound-ids | python-visibility-8fb44e9 | stale |
 | RK-7.3-011 | visibility-unknown-and-unbound-ids | python-response-history-3e4e215 | stale |
 | RK-7.3-011 | visibility-unknown-and-unbound-ids | python-hook-injections-a6daaf1 | stale |
@@ -1895,6 +1940,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.3-011 | visibility-unknown-and-unbound-ids | python-acp-tools-7920d13-memory | stale |
 | RK-7.3-011 | visibility-unknown-and-unbound-ids | python-acp-record-f3415d5-memory | stale |
 | RK-7.3-011 | visibility-unknown-and-unbound-ids | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-7.3-011 | visibility-unknown-and-unbound-ids | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-7.3-003 | visibility-internal-public-doors | python-permissions-ecf9bc5 | stale |
 | RK-7.3-003 | visibility-internal-public-doors | python-visibility-8fb44e9 | stale |
 | RK-7.3-003 | visibility-internal-public-doors | python-response-history-3e4e215 | stale |
@@ -1949,6 +1995,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.3-003 | visibility-internal-public-doors | python-acp-tools-7920d13-memory | stale |
 | RK-7.3-003 | visibility-internal-public-doors | python-acp-record-f3415d5-memory | stale |
 | RK-7.3-003 | visibility-internal-public-doors | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-7.3-003 | visibility-internal-public-doors | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-7.3-004 | visibility-committed-intersection-and-history | python-visibility-8fb44e9 | stale |
 | RK-7.3-004 | visibility-committed-intersection-and-history | python-response-history-3e4e215 | stale |
 | RK-7.3-004 | visibility-committed-intersection-and-history | python-hook-injections-a6daaf1 | stale |
@@ -2003,6 +2050,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.3-004 | visibility-committed-intersection-and-history | python-acp-tools-7920d13-memory | stale |
 | RK-7.3-004 | visibility-committed-intersection-and-history | python-acp-record-f3415d5-memory | stale |
 | RK-7.3-004 | visibility-committed-intersection-and-history | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-7.3-004 | visibility-committed-intersection-and-history | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-7.5-001 | core-permission-gates | python-permissions-ecf9bc5 | stale |
 | RK-7.5-001 | core-permission-gates | python-visibility-8fb44e9 | stale |
 | RK-7.5-001 | core-permission-gates | python-response-history-3e4e215 | stale |
@@ -2057,6 +2105,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.5-001 | core-permission-gates | python-acp-tools-7920d13-memory | stale |
 | RK-7.5-001 | core-permission-gates | python-acp-record-f3415d5-memory | stale |
 | RK-7.5-001 | core-permission-gates | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-7.5-001 | core-permission-gates | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-7.5-001 | response-refusals-and-reader-history | python-response-history-3e4e215 | stale |
 | RK-7.5-001 | response-refusals-and-reader-history | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-7.5-001 | response-refusals-and-reader-history | python-lifecycle-final-corpus-ecac963-memory | stale |
@@ -2109,6 +2158,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-7.5-001 | response-refusals-and-reader-history | python-acp-tools-7920d13-memory | stale |
 | RK-7.5-001 | response-refusals-and-reader-history | python-acp-record-f3415d5-memory | stale |
 | RK-7.5-001 | response-refusals-and-reader-history | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-7.5-001 | response-refusals-and-reader-history | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-8.1-002 | core-event-index-allocation | python-hook-injections-a6daaf1 | stale |
 | RK-8.1-002 | core-event-index-allocation | python-injection-obligations-d8cc647 | stale |
 | RK-8.1-002 | core-event-index-allocation | python-lifecycle-final-corpus-746d6bd-memory | stale |
@@ -2213,6 +2263,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-8.1-002 | core-event-index-allocation | python-acp-record-f3415d5-sqlite | stale |
 | RK-8.1-002 | core-event-index-allocation | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-8.1-002 | core-event-index-allocation | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-8.1-002 | core-event-index-allocation | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-8.1-002 | core-event-index-allocation | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-8.1-002 | core-event-index-allocation | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-8.3-005 | reentrancy-replay-budget | python-reentrancy-final-corpus-9b44d51-memory | stale |
 | RK-8.3-005 | reentrancy-replay-budget | python-core-close-final-corpus-e89dc28-memory | stale |
 | RK-8.3-005 | reentrancy-replay-budget | python-core-lanes-final-corpus-89dae1b-memory | stale |
@@ -2259,9 +2312,11 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-8.3-005 | reentrancy-replay-budget | python-acp-tools-7920d13-memory | stale |
 | RK-8.3-005 | reentrancy-replay-budget | python-acp-record-f3415d5-memory | stale |
 | RK-8.3-005 | reentrancy-replay-budget | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-8.3-005 | reentrancy-replay-budget | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-8.3-005 | acp-tool-observer-reentry-budget | python-acp-tools-7920d13-memory | stale |
 | RK-8.3-005 | acp-tool-observer-reentry-budget | python-acp-record-f3415d5-memory | stale |
 | RK-8.3-005 | acp-tool-observer-reentry-budget | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-8.3-005 | acp-tool-observer-reentry-budget | python-redis-turns-6dc6edb-memory-redis-turns | not_passed |
 | RK-8.3-006 | reentrancy-independent-hook-budget | python-reentrancy-final-corpus-9b44d51-memory | stale |
 | RK-8.3-006 | reentrancy-independent-hook-budget | python-core-close-final-corpus-e89dc28-memory | stale |
 | RK-8.3-006 | reentrancy-independent-hook-budget | python-core-lanes-final-corpus-89dae1b-memory | stale |
@@ -2308,10 +2363,12 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-8.3-006 | reentrancy-independent-hook-budget | python-acp-tools-7920d13-memory | stale |
 | RK-8.3-006 | reentrancy-independent-hook-budget | python-acp-record-f3415d5-memory | stale |
 | RK-8.3-006 | reentrancy-independent-hook-budget | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-8.3-006 | reentrancy-independent-hook-budget | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-8.4-002 | acp-thought-answer-scope | python-acp-thinking-926888e-memory | stale |
 | RK-8.4-002 | acp-thought-answer-scope | python-acp-tools-7920d13-memory | stale |
 | RK-8.4-002 | acp-thought-answer-scope | python-acp-record-f3415d5-memory | stale |
 | RK-8.4-002 | acp-thought-answer-scope | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-8.4-002 | acp-thought-answer-scope | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-8.5-004 | response-scopes-and-cascades | python-permissions-ecf9bc5 | stale |
 | RK-8.5-004 | response-scopes-and-cascades | python-visibility-8fb44e9 | stale |
 | RK-8.5-004 | response-scopes-and-cascades | python-response-history-3e4e215 | stale |
@@ -2367,6 +2424,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-8.5-004 | response-scopes-and-cascades | python-acp-tools-7920d13-memory | stale |
 | RK-8.5-004 | response-scopes-and-cascades | python-acp-record-f3415d5-memory | stale |
 | RK-8.5-004 | response-scopes-and-cascades | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-8.5-004 | response-scopes-and-cascades | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-9.1-001 | kit-executor-registration | python-kit-executor-43d2f2e-memory | stale |
 | RK-9.1-001 | kit-executor-registration | python-executor-close-ec202ed-memory | stale |
 | RK-9.1-001 | kit-executor-registration | python-channel-call-77889b4-memory | stale |
@@ -2385,6 +2443,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-9.1-001 | kit-executor-registration | python-acp-tools-7920d13-memory | stale |
 | RK-9.1-001 | kit-executor-registration | python-acp-record-f3415d5-memory | stale |
 | RK-9.1-001 | kit-executor-registration | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-9.1-001 | kit-executor-registration | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-9.2-004 | core-room-timer-hook-context | python-room-lifecycle-a29102c | stale |
 | RK-9.2-004 | core-room-timer-hook-context | python-room-lifecycle-completion-3bb0274-memory | stale |
 | RK-9.2-004 | core-room-timer-hook-context | python-room-lifecycle-completion-3bb0274-sqlite | stale |
@@ -2490,6 +2549,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-9.2-004 | core-room-timer-hook-context | python-acp-record-f3415d5-sqlite | stale |
 | RK-9.2-004 | core-room-timer-hook-context | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-9.2-004 | core-room-timer-hook-context | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-9.2-004 | core-room-timer-hook-context | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-9.2-004 | core-room-timer-hook-context | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-9.3-005 | pilot-fail-open | python-hooks-33d1f4 | stale |
 | RK-9.3-005 | pilot-fail-open | python-permissions-ecf9bc5 | stale |
 | RK-9.3-005 | pilot-fail-open | python-visibility-8fb44e9 | stale |
@@ -2545,6 +2606,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-9.3-005 | pilot-fail-open | python-acp-tools-7920d13-memory | stale |
 | RK-9.3-005 | pilot-fail-open | python-acp-record-f3415d5-memory | stale |
 | RK-9.3-005 | pilot-fail-open | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-9.3-005 | pilot-fail-open | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-9.3-008 | pilot-fail-closed | python-hooks-33d1f4 | stale |
 | RK-9.3-008 | pilot-fail-closed | python-permissions-ecf9bc5 | stale |
 | RK-9.3-008 | pilot-fail-closed | python-visibility-8fb44e9 | stale |
@@ -2600,6 +2662,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-9.3-008 | pilot-fail-closed | python-acp-tools-7920d13-memory | stale |
 | RK-9.3-008 | pilot-fail-closed | python-acp-record-f3415d5-memory | stale |
 | RK-9.3-008 | pilot-fail-closed | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-9.3-008 | pilot-fail-closed | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-9.3-009 | pilot-missing-payload | python-hooks-33d1f4 | stale |
 | RK-9.3-009 | pilot-missing-payload | python-permissions-ecf9bc5 | stale |
 | RK-9.3-009 | pilot-missing-payload | python-visibility-8fb44e9 | stale |
@@ -2655,6 +2718,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-9.3-009 | pilot-missing-payload | python-acp-tools-7920d13-memory | stale |
 | RK-9.3-009 | pilot-missing-payload | python-acp-record-f3415d5-memory | stale |
 | RK-9.3-009 | pilot-missing-payload | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-9.3-009 | pilot-missing-payload | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-9.3-011 | pilot-invalid-effects | python-hooks-33d1f4 | stale |
 | RK-9.3-011 | pilot-invalid-effects | python-permissions-ecf9bc5 | stale |
 | RK-9.3-011 | pilot-invalid-effects | python-visibility-8fb44e9 | stale |
@@ -2710,10 +2774,13 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-9.3-011 | pilot-invalid-effects | python-acp-tools-7920d13-memory | stale |
 | RK-9.3-011 | pilot-invalid-effects | python-acp-record-f3415d5-memory | stale |
 | RK-9.3-011 | pilot-invalid-effects | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-9.3-011 | pilot-invalid-effects | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-9.3-014 | acp-external-tool-report-chain | python-acp-tools-7920d13-memory | stale |
 | RK-9.3-014 | acp-external-tool-report-chain | python-acp-record-f3415d5-memory | stale |
 | RK-9.3-014 | acp-external-tool-report-chain | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-9.3-014 | acp-external-tool-report-chain | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-9.3-015 | acp-default-permission-outcomes | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-9.3-015 | acp-default-permission-outcomes | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-9.3-017 | human-input-answer-and-timeout | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-9.3-017 | human-input-answer-and-timeout | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-9.3-017 | human-input-answer-and-timeout | python-indexing-final-corpus-428f285-memory | stale |
@@ -2765,6 +2832,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-9.3-017 | human-input-answer-and-timeout | python-acp-tools-7920d13-memory | stale |
 | RK-9.3-017 | human-input-answer-and-timeout | python-acp-record-f3415d5-memory | stale |
 | RK-9.3-017 | human-input-answer-and-timeout | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-9.3-017 | human-input-answer-and-timeout | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-9.4-002 | response-hook-scope-restoration | python-response-history-3e4e215 | stale |
 | RK-9.4-002 | response-hook-scope-restoration | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-9.4-002 | response-hook-scope-restoration | python-lifecycle-final-corpus-ecac963-memory | stale |
@@ -2817,6 +2885,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-9.4-002 | response-hook-scope-restoration | python-acp-tools-7920d13-memory | stale |
 | RK-9.4-002 | response-hook-scope-restoration | python-acp-record-f3415d5-memory | stale |
 | RK-9.4-002 | response-hook-scope-restoration | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-9.4-002 | response-hook-scope-restoration | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-9.4-004 | core-hook-injection-passes | python-hooks-33d1f4 | stale |
 | RK-9.4-004 | core-hook-injection-passes | python-permissions-ecf9bc5 | stale |
 | RK-9.4-004 | core-hook-injection-passes | python-visibility-8fb44e9 | stale |
@@ -2928,6 +2997,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-9.4-004 | core-hook-injection-passes | python-acp-record-f3415d5-sqlite | stale |
 | RK-9.4-004 | core-hook-injection-passes | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-9.4-004 | core-hook-injection-passes | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-9.4-004 | core-hook-injection-passes | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-9.4-004 | core-hook-injection-passes | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-9.4-004 | core-hook-injection-passes | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-9.4-005 | core-hook-injected-instruction | python-injection-obligations-d8cc647 | stale |
 | RK-9.4-005 | core-hook-injected-instruction | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-9.4-005 | core-hook-injected-instruction | python-lifecycle-final-corpus-ecac963-memory | stale |
@@ -2980,6 +3052,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-9.4-005 | core-hook-injected-instruction | python-acp-tools-7920d13-memory | stale |
 | RK-9.4-005 | core-hook-injected-instruction | python-acp-record-f3415d5-memory | stale |
 | RK-9.4-005 | core-hook-injected-instruction | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-9.4-005 | core-hook-injected-instruction | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-9.4-006 | core-hook-injection-triggers | python-hook-injections-a6daaf1 | stale |
 | RK-9.4-006 | core-hook-injection-triggers | python-injection-obligations-d8cc647 | stale |
 | RK-9.4-006 | core-hook-injection-triggers | python-lifecycle-final-corpus-746d6bd-memory | stale |
@@ -3033,6 +3106,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-9.4-006 | core-hook-injection-triggers | python-acp-tools-7920d13-memory | stale |
 | RK-9.4-006 | core-hook-injection-triggers | python-acp-record-f3415d5-memory | stale |
 | RK-9.4-006 | core-hook-injection-triggers | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-9.4-006 | core-hook-injection-triggers | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-10.1-002 | core-routing-entry | python-hooks-33d1f4 | stale |
 | RK-10.1-002 | core-routing-entry | python-permissions-ecf9bc5 | stale |
 | RK-10.1-002 | core-routing-entry | python-visibility-8fb44e9 | stale |
@@ -3142,6 +3216,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.1-002 | core-routing-entry | python-acp-record-f3415d5-sqlite | stale |
 | RK-10.1-002 | core-routing-entry | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-10.1-002 | core-routing-entry | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-10.1-002 | core-routing-entry | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-10.1-002 | core-routing-entry | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-10.1-002 | core-routing-entry | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-10.1-002 | named-preflight-before-rate-and-address-callbacks | python-core-preflight-corpus-00197fd-memory | stale |
 | RK-10.1-002 | named-preflight-before-rate-and-address-callbacks | python-core-shutdown-boundaries-0aa9b53-memory | stale |
 | RK-10.1-002 | named-preflight-before-rate-and-address-callbacks | python-core-shutdown-answers-a7fac2f-memory | stale |
@@ -3183,6 +3260,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.1-002 | named-preflight-before-rate-and-address-callbacks | python-acp-tools-7920d13-memory | stale |
 | RK-10.1-002 | named-preflight-before-rate-and-address-callbacks | python-acp-record-f3415d5-memory | stale |
 | RK-10.1-002 | named-preflight-before-rate-and-address-callbacks | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-10.1-002 | named-preflight-before-rate-and-address-callbacks | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-10.1-003 | reentrancy-cancellation-isolation | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-10.1-003 | reentrancy-cancellation-isolation | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-10.1-003 | reentrancy-cancellation-isolation | python-indexing-final-corpus-428f285-memory | stale |
@@ -3281,6 +3359,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.1-003 | reentrancy-cancellation-isolation | python-acp-record-f3415d5-sqlite | stale |
 | RK-10.1-003 | reentrancy-cancellation-isolation | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-10.1-003 | reentrancy-cancellation-isolation | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-10.1-003 | reentrancy-cancellation-isolation | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-10.1-003 | reentrancy-cancellation-isolation | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-10.1-003 | reentrancy-cancellation-isolation | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-10.2-002 | storage-delivery-order | python-storage-delivery-final-corpus-56d7240-memory | stale |
 | RK-10.2-002 | storage-delivery-order | python-storage-delivery-final-corpus-56d7240-sqlite | stale |
 | RK-10.2-002 | storage-delivery-order | python-reentrancy-final-corpus-9b44d51-memory | stale |
@@ -3375,6 +3456,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.2-002 | storage-delivery-order | python-acp-record-f3415d5-sqlite | stale |
 | RK-10.2-002 | storage-delivery-order | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-10.2-002 | storage-delivery-order | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-10.2-002 | storage-delivery-order | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-10.2-002 | storage-delivery-order | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-10.2-002 | storage-delivery-order | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-10.2-003 | transport-direction-observation-and-delivery | python-response-history-3e4e215 | stale |
 | RK-10.2-003 | transport-direction-observation-and-delivery | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-10.2-003 | transport-direction-observation-and-delivery | python-lifecycle-final-corpus-ecac963-memory | stale |
@@ -3427,6 +3511,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.2-003 | transport-direction-observation-and-delivery | python-acp-tools-7920d13-memory | stale |
 | RK-10.2-003 | transport-direction-observation-and-delivery | python-acp-record-f3415d5-memory | stale |
 | RK-10.2-003 | transport-direction-observation-and-delivery | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-10.2-003 | transport-direction-observation-and-delivery | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-10.2-003 | storage-delivery-targets | python-permissions-ecf9bc5 | stale |
 | RK-10.2-003 | storage-delivery-targets | python-visibility-8fb44e9 | stale |
 | RK-10.2-003 | storage-delivery-targets | python-response-history-3e4e215 | stale |
@@ -3535,6 +3620,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.2-003 | storage-delivery-targets | python-acp-record-f3415d5-sqlite | stale |
 | RK-10.2-003 | storage-delivery-targets | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-10.2-003 | storage-delivery-targets | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-10.2-003 | storage-delivery-targets | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-10.2-003 | storage-delivery-targets | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-10.2-003 | storage-delivery-targets | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-10.2-004 | storage-delivery-context | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-10.2-004 | storage-delivery-context | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-10.2-004 | storage-delivery-context | python-indexing-final-corpus-428f285-memory | stale |
@@ -3633,6 +3721,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.2-004 | storage-delivery-context | python-acp-record-f3415d5-sqlite | stale |
 | RK-10.2-004 | storage-delivery-context | python-acp-permissions-6dc6edb-memory | recorded_pass |
 | RK-10.2-004 | storage-delivery-context | python-acp-permissions-6dc6edb-sqlite | recorded_pass |
+| RK-10.2-004 | storage-delivery-context | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
+| RK-10.2-004 | storage-delivery-context | python-redis-turns-6dc6edb-sqlite-redis-turns | recorded_pass |
 | RK-10.3-004 | deleted-history-content-and-audit | python-response-history-3e4e215 | stale |
 | RK-10.3-004 | deleted-history-content-and-audit | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-10.3-004 | deleted-history-content-and-audit | python-lifecycle-final-corpus-ecac963-memory | stale |
@@ -3685,6 +3775,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.3-004 | deleted-history-content-and-audit | python-acp-tools-7920d13-memory | stale |
 | RK-10.3-004 | deleted-history-content-and-audit | python-acp-record-f3415d5-memory | stale |
 | RK-10.3-004 | deleted-history-content-and-audit | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-10.3-004 | deleted-history-content-and-audit | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-10.4-001 | core-routing-inputs | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-10.4-001 | core-routing-inputs | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-10.4-001 | core-routing-inputs | python-indexing-final-corpus-428f285-memory | stale |
@@ -3784,6 +3875,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.4-001 | core-routing-inputs | python-acp-record-f3415d5-sqlite | stale |
 | RK-10.4-001 | core-routing-inputs | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-10.4-001 | core-routing-inputs | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-10.4-001 | core-routing-inputs | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-10.4-001 | core-routing-inputs | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-10.4-001 | core-routing-inputs | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-10.4-002 | core-routing-selection | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-10.4-002 | core-routing-selection | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-10.4-002 | core-routing-selection | python-indexing-final-corpus-428f285-memory | stale |
@@ -3883,6 +3977,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.4-002 | core-routing-selection | python-acp-record-f3415d5-sqlite | stale |
 | RK-10.4-002 | core-routing-selection | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-10.4-002 | core-routing-selection | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-10.4-002 | core-routing-selection | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-10.4-002 | core-routing-selection | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-10.4-002 | core-routing-selection | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-10.4-003 | core-routing-admission | python-hooks-33d1f4 | stale |
 | RK-10.4-003 | core-routing-admission | python-permissions-ecf9bc5 | stale |
 | RK-10.4-003 | core-routing-admission | python-visibility-8fb44e9 | stale |
@@ -3986,6 +4083,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.4-003 | core-routing-admission | python-acp-record-f3415d5-sqlite | stale |
 | RK-10.4-003 | core-routing-admission | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-10.4-003 | core-routing-admission | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-10.4-003 | core-routing-admission | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-10.4-003 | core-routing-admission | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-10.4-003 | core-routing-admission | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-10.4-004 | storage-delivery-status | python-hooks-33d1f4 | stale |
 | RK-10.4-004 | storage-delivery-status | python-permissions-ecf9bc5 | stale |
 | RK-10.4-004 | storage-delivery-status | python-visibility-8fb44e9 | stale |
@@ -4088,6 +4188,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.4-004 | storage-delivery-status | python-acp-record-f3415d5-sqlite | stale |
 | RK-10.4-004 | storage-delivery-status | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-10.4-004 | storage-delivery-status | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-10.4-004 | storage-delivery-status | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-10.4-004 | storage-delivery-status | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-10.4-004 | storage-delivery-status | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-10.4-005 | core-routing-channel-isolation | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-10.4-005 | core-routing-channel-isolation | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-10.4-005 | core-routing-channel-isolation | python-indexing-final-corpus-428f285-memory | stale |
@@ -4187,6 +4290,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.4-005 | core-routing-channel-isolation | python-acp-record-f3415d5-sqlite | stale |
 | RK-10.4-005 | core-routing-channel-isolation | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-10.4-005 | core-routing-channel-isolation | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-10.4-005 | core-routing-channel-isolation | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-10.4-005 | core-routing-channel-isolation | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-10.4-005 | core-routing-channel-isolation | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-10.4-006 | core-routing-ambiguity | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-10.4-006 | core-routing-ambiguity | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-10.4-006 | core-routing-ambiguity | python-indexing-final-corpus-428f285-memory | stale |
@@ -4286,6 +4392,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.4-006 | core-routing-ambiguity | python-acp-record-f3415d5-sqlite | stale |
 | RK-10.4-006 | core-routing-ambiguity | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-10.4-006 | core-routing-ambiguity | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-10.4-006 | core-routing-ambiguity | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-10.4-006 | core-routing-ambiguity | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-10.4-006 | core-routing-ambiguity | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-10.4-007 | core-routing-determinism | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-10.4-007 | core-routing-determinism | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-10.4-007 | core-routing-determinism | python-indexing-final-corpus-428f285-memory | stale |
@@ -4385,6 +4494,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.4-007 | core-routing-determinism | python-acp-record-f3415d5-sqlite | stale |
 | RK-10.4-007 | core-routing-determinism | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-10.4-007 | core-routing-determinism | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-10.4-007 | core-routing-determinism | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-10.4-007 | core-routing-determinism | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-10.4-007 | core-routing-determinism | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-10.6.2-003 | channel-call-previous-state | python-channel-call-77889b4-memory | stale |
 | RK-10.6.2-003 | channel-call-previous-state | python-channel-call-77889b4-sqlite | stale |
 | RK-10.6.2-003 | channel-call-previous-state | python-channel-call-fbc87b6-memory | stale |
@@ -4417,6 +4529,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.6.2-003 | channel-call-previous-state | python-acp-record-f3415d5-sqlite | stale |
 | RK-10.6.2-003 | channel-call-previous-state | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-10.6.2-003 | channel-call-previous-state | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-10.6.2-003 | channel-call-previous-state | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-10.6.2-003 | channel-call-previous-state | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-10.6.2-003 | channel-call-previous-state | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-10.6.2-004 | channel-call-stored-state | python-channel-call-77889b4-memory | stale |
 | RK-10.6.2-004 | channel-call-stored-state | python-channel-call-77889b4-sqlite | stale |
 | RK-10.6.2-004 | channel-call-stored-state | python-channel-call-fbc87b6-memory | stale |
@@ -4449,6 +4564,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.6.2-004 | channel-call-stored-state | python-acp-record-f3415d5-sqlite | stale |
 | RK-10.6.2-004 | channel-call-stored-state | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-10.6.2-004 | channel-call-stored-state | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-10.6.2-004 | channel-call-stored-state | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-10.6.2-004 | channel-call-stored-state | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-10.6.2-004 | channel-call-stored-state | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-10.6.2-004 | channel-call-overlapping-state-reports | python-acp-recovery-4b32474-memory | stale |
 | RK-10.6.2-004 | channel-call-overlapping-state-reports | python-acp-recovery-4b32474-sqlite | stale |
 | RK-10.6.2-004 | channel-call-overlapping-state-reports | python-acp-rebuild-158fe28-memory | stale |
@@ -4471,6 +4589,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.6.2-004 | channel-call-overlapping-state-reports | python-acp-record-f3415d5-sqlite | stale |
 | RK-10.6.2-004 | channel-call-overlapping-state-reports | python-acp-permissions-6dc6edb-memory | recorded_pass |
 | RK-10.6.2-004 | channel-call-overlapping-state-reports | python-acp-permissions-6dc6edb-sqlite | recorded_pass |
+| RK-10.6.2-004 | channel-call-overlapping-state-reports | python-postgres-scenarios-6dc6edb-postgres | recorded_pass |
+| RK-10.6.2-004 | channel-call-overlapping-state-reports | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
+| RK-10.6.2-004 | channel-call-overlapping-state-reports | python-redis-turns-6dc6edb-sqlite-redis-turns | recorded_pass |
 | RK-10.6.3-007 | channel-call-local-control | python-channel-call-77889b4-memory | stale |
 | RK-10.6.3-007 | channel-call-local-control | python-channel-call-77889b4-sqlite | stale |
 | RK-10.6.3-007 | channel-call-local-control | python-channel-call-fbc87b6-memory | stale |
@@ -4503,6 +4624,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.6.3-007 | channel-call-local-control | python-acp-record-f3415d5-sqlite | stale |
 | RK-10.6.3-007 | channel-call-local-control | python-acp-permissions-6dc6edb-memory | recorded_pass |
 | RK-10.6.3-007 | channel-call-local-control | python-acp-permissions-6dc6edb-sqlite | recorded_pass |
+| RK-10.6.3-007 | channel-call-local-control | python-postgres-scenarios-6dc6edb-postgres | recorded_pass |
+| RK-10.6.3-007 | channel-call-local-control | python-redis-turns-6dc6edb-memory-redis-turns | not_passed |
+| RK-10.6.3-007 | channel-call-local-control | python-redis-turns-6dc6edb-sqlite-redis-turns | not_passed |
 | RK-10.6.6-003 | kit-executor-named-hooks | python-kit-executor-43d2f2e-memory | stale |
 | RK-10.6.6-003 | kit-executor-named-hooks | python-executor-close-ec202ed-memory | stale |
 | RK-10.6.6-003 | kit-executor-named-hooks | python-channel-call-77889b4-memory | stale |
@@ -4521,6 +4645,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.6.6-003 | kit-executor-named-hooks | python-acp-tools-7920d13-memory | stale |
 | RK-10.6.6-003 | kit-executor-named-hooks | python-acp-record-f3415d5-memory | stale |
 | RK-10.6.6-003 | kit-executor-named-hooks | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-10.6.6-003 | kit-executor-named-hooks | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-10.6.7-001 | executor-close-placement | python-executor-close-ec202ed-memory | stale |
 | RK-10.6.7-001 | executor-close-placement | python-channel-call-77889b4-memory | stale |
 | RK-10.6.7-001 | executor-close-placement | python-channel-call-fbc87b6-memory | stale |
@@ -4538,6 +4663,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.6.7-001 | executor-close-placement | python-acp-tools-7920d13-memory | stale |
 | RK-10.6.7-001 | executor-close-placement | python-acp-record-f3415d5-memory | stale |
 | RK-10.6.7-001 | executor-close-placement | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-10.6.7-001 | executor-close-placement | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-10.6.8-002 | executor-close-cancellation | python-executor-close-ec202ed-memory | stale |
 | RK-10.6.8-002 | executor-close-cancellation | python-channel-call-77889b4-memory | stale |
 | RK-10.6.8-002 | executor-close-cancellation | python-channel-call-fbc87b6-memory | stale |
@@ -4555,6 +4681,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.6.8-002 | executor-close-cancellation | python-acp-tools-7920d13-memory | stale |
 | RK-10.6.8-002 | executor-close-cancellation | python-acp-record-f3415d5-memory | stale |
 | RK-10.6.8-002 | executor-close-cancellation | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-10.6.8-002 | executor-close-cancellation | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-10.6.8-005 | executor-close-local-lifecycle | python-executor-close-ec202ed-memory | stale |
 | RK-10.6.8-005 | executor-close-local-lifecycle | python-channel-call-77889b4-memory | stale |
 | RK-10.6.8-005 | executor-close-local-lifecycle | python-channel-call-fbc87b6-memory | stale |
@@ -4572,6 +4699,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.6.8-005 | executor-close-local-lifecycle | python-acp-tools-7920d13-memory | stale |
 | RK-10.6.8-005 | executor-close-local-lifecycle | python-acp-record-f3415d5-memory | stale |
 | RK-10.6.8-005 | executor-close-local-lifecycle | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-10.6.8-005 | executor-close-local-lifecycle | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-10.6.8-005 | channel-call-inherited-turn | python-channel-call-77889b4-memory | stale |
 | RK-10.6.8-005 | channel-call-inherited-turn | python-channel-call-77889b4-sqlite | stale |
 | RK-10.6.8-005 | channel-call-inherited-turn | python-channel-call-fbc87b6-memory | stale |
@@ -4604,6 +4732,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.6.8-005 | channel-call-inherited-turn | python-acp-record-f3415d5-sqlite | stale |
 | RK-10.6.8-005 | channel-call-inherited-turn | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-10.6.8-005 | channel-call-inherited-turn | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-10.6.8-005 | channel-call-inherited-turn | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-10.6.8-005 | channel-call-inherited-turn | python-redis-turns-6dc6edb-memory-redis-turns | not_passed |
+| RK-10.6.8-005 | channel-call-inherited-turn | python-redis-turns-6dc6edb-sqlite-redis-turns | not_passed |
 | RK-10.6.8-003 | acp-turn-steering | python-acp-steering-843e13a-memory | stale |
 | RK-10.6.8-003 | acp-turn-steering | python-acp-directories-09666ea-memory | stale |
 | RK-10.6.8-003 | acp-turn-steering | python-acp-mcp-e979b14-memory | stale |
@@ -4611,6 +4742,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-10.6.8-003 | acp-turn-steering | python-acp-tools-7920d13-memory | stale |
 | RK-10.6.8-003 | acp-turn-steering | python-acp-record-f3415d5-memory | stale |
 | RK-10.6.8-003 | acp-turn-steering | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-10.6.8-003 | acp-turn-steering | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-12.10.4-005 | core-shutdown-admission | python-core-close-final-corpus-e89dc28-memory | stale |
 | RK-12.10.4-005 | core-shutdown-admission | python-core-close-final-corpus-e89dc28-sqlite | stale |
 | RK-12.10.4-005 | core-shutdown-admission | python-core-lanes-final-corpus-89dae1b-memory | stale |
@@ -4701,6 +4833,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-12.10.4-005 | core-shutdown-admission | python-acp-record-f3415d5-sqlite | stale |
 | RK-12.10.4-005 | core-shutdown-admission | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-12.10.4-005 | core-shutdown-admission | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-12.10.4-005 | core-shutdown-admission | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-12.10.4-005 | core-shutdown-admission | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-12.10.4-005 | core-shutdown-admission | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-12.10.4-005 | core-shutdown-boundaries | python-core-shutdown-boundaries-0aa9b53-memory | stale |
 | RK-12.10.4-005 | core-shutdown-boundaries | python-core-shutdown-boundaries-0aa9b53-sqlite | stale |
 | RK-12.10.4-005 | core-shutdown-boundaries | python-core-shutdown-answers-a7fac2f-memory | stale |
@@ -4781,6 +4916,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-12.10.4-005 | core-shutdown-boundaries | python-acp-record-f3415d5-sqlite | stale |
 | RK-12.10.4-005 | core-shutdown-boundaries | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-12.10.4-005 | core-shutdown-boundaries | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-12.10.4-005 | core-shutdown-boundaries | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-12.10.4-005 | core-shutdown-boundaries | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-12.10.4-005 | core-shutdown-boundaries | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-12.10.4-005 | core-shutdown-answers | python-core-shutdown-answers-a7fac2f-memory | stale |
 | RK-12.10.4-005 | core-shutdown-answers | python-core-shutdown-answers-a7fac2f-sqlite | stale |
 | RK-12.10.4-005 | core-shutdown-answers | python-task-names-1280f23-memory | stale |
@@ -4859,6 +4997,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-12.10.4-005 | core-shutdown-answers | python-acp-record-f3415d5-sqlite | stale |
 | RK-12.10.4-005 | core-shutdown-answers | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-12.10.4-005 | core-shutdown-answers | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-12.10.4-005 | core-shutdown-answers | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-12.10.4-005 | core-shutdown-answers | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-12.10.4-005 | core-shutdown-answers | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-12.10.4-005 | discussion-regeneration-close-boundaries | python-discussion-regeneration-19665b9-memory | stale |
 | RK-12.10.4-005 | discussion-regeneration-close-boundaries | python-discussion-context-b9c94b7-memory | stale |
 | RK-12.10.4-005 | discussion-regeneration-close-boundaries | python-deferred-memory-f252c9d-memory | stale |
@@ -4886,6 +5027,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-12.10.4-005 | discussion-regeneration-close-boundaries | python-acp-tools-7920d13-memory | stale |
 | RK-12.10.4-005 | discussion-regeneration-close-boundaries | python-acp-record-f3415d5-memory | stale |
 | RK-12.10.4-005 | discussion-regeneration-close-boundaries | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-12.10.4-005 | discussion-regeneration-close-boundaries | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-13.4-001 | core-event-idempotency | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-13.4-001 | core-event-idempotency | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-13.4-001 | core-event-idempotency | python-indexing-final-corpus-428f285-memory | stale |
@@ -4986,6 +5128,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-13.4-001 | core-event-idempotency | python-acp-record-f3415d5-sqlite | stale |
 | RK-13.4-001 | core-event-idempotency | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-13.4-001 | core-event-idempotency | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-13.4-001 | core-event-idempotency | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-13.4-001 | core-event-idempotency | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-13.4-001 | core-event-idempotency | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-13.5-003 | discussion-regeneration-release-errors | python-discussion-regeneration-19665b9-memory | stale |
 | RK-13.5-003 | discussion-regeneration-release-errors | python-discussion-context-b9c94b7-memory | stale |
 | RK-13.5-003 | discussion-regeneration-release-errors | python-deferred-memory-f252c9d-memory | stale |
@@ -5019,6 +5164,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-13.5-003 | discussion-regeneration-release-errors | python-acp-record-f3415d5-sqlite | stale |
 | RK-13.5-003 | discussion-regeneration-release-errors | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-13.5-003 | discussion-regeneration-release-errors | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-13.5-003 | discussion-regeneration-release-errors | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-13.5-003 | discussion-regeneration-release-errors | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-13.5-003 | discussion-regeneration-release-errors | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-13.6-001 | reentrancy-parser-deadline | python-reentrancy-final-corpus-9b44d51-memory | stale |
 | RK-13.6-001 | reentrancy-parser-deadline | python-core-close-final-corpus-e89dc28-memory | stale |
 | RK-13.6-001 | reentrancy-parser-deadline | python-core-lanes-final-corpus-89dae1b-memory | stale |
@@ -5065,6 +5213,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-13.6-001 | reentrancy-parser-deadline | python-acp-tools-7920d13-memory | stale |
 | RK-13.6-001 | reentrancy-parser-deadline | python-acp-record-f3415d5-memory | stale |
 | RK-13.6-001 | reentrancy-parser-deadline | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-13.6-001 | reentrancy-parser-deadline | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-14.1-002 | storage-delivery-timeline | python-room-lifecycle-completion-3bb0274-memory | stale |
 | RK-14.1-002 | storage-delivery-timeline | python-room-lifecycle-completion-3bb0274-sqlite | stale |
 | RK-14.1-002 | storage-delivery-timeline | python-lifecycle-final-corpus-746d6bd-memory | stale |
@@ -5169,6 +5318,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-14.1-002 | storage-delivery-timeline | python-acp-record-f3415d5-sqlite | stale |
 | RK-14.1-002 | storage-delivery-timeline | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-14.1-002 | storage-delivery-timeline | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-14.1-002 | storage-delivery-timeline | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-14.1-002 | storage-delivery-timeline | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-14.1-005 | store-binding-insertion-order | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-14.1-005 | store-binding-insertion-order | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-14.1-005 | store-binding-insertion-order | python-indexing-final-corpus-428f285-memory | stale |
@@ -5234,6 +5385,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-14.1-005 | store-binding-insertion-order | python-acp-record-f3415d5-sqlite | stale |
 | RK-14.1-005 | store-binding-insertion-order | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-14.1-005 | store-binding-insertion-order | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-14.1-005 | store-binding-insertion-order | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-14.1-005 | store-binding-insertion-order | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-14.1-005 | store-binding-insertion-order | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-14.3-001 | core-event-commit-boundaries | python-hook-injections-a6daaf1 | stale |
 | RK-14.3-001 | core-event-commit-boundaries | python-injection-obligations-d8cc647 | stale |
 | RK-14.3-001 | core-event-commit-boundaries | python-room-lifecycle-a29102c | stale |
@@ -5341,6 +5495,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-14.3-001 | core-event-commit-boundaries | python-acp-record-f3415d5-sqlite | stale |
 | RK-14.3-001 | core-event-commit-boundaries | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-14.3-001 | core-event-commit-boundaries | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-14.3-001 | core-event-commit-boundaries | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-14.3-001 | core-event-commit-boundaries | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-14.3-001 | core-event-commit-boundaries | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-14.3-001 | storage-delivery-results-record | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-14.3-001 | storage-delivery-results-record | python-lifecycle-final-corpus-746d6bd-sqlite | stale |
 | RK-14.3-001 | storage-delivery-results-record | python-lifecycle-final-corpus-ecac963-memory | stale |
@@ -5443,6 +5600,8 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-14.3-001 | storage-delivery-results-record | python-acp-record-f3415d5-sqlite | stale |
 | RK-14.3-001 | storage-delivery-results-record | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-14.3-001 | storage-delivery-results-record | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-14.3-001 | storage-delivery-results-record | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-14.3-001 | storage-delivery-results-record | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-17.2-001 | kit-executor-organization | python-kit-executor-43d2f2e-memory | stale |
 | RK-17.2-001 | kit-executor-organization | python-executor-close-ec202ed-memory | stale |
 | RK-17.2-001 | kit-executor-organization | python-channel-call-77889b4-memory | stale |
@@ -5461,6 +5620,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-17.2-001 | kit-executor-organization | python-acp-tools-7920d13-memory | stale |
 | RK-17.2-001 | kit-executor-organization | python-acp-record-f3415d5-memory | stale |
 | RK-17.2-001 | kit-executor-organization | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-17.2-001 | kit-executor-organization | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-19.7-002 | strategy-room-isolation | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-19.7-002 | strategy-room-isolation | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-19.7-002 | strategy-room-isolation | python-indexing-final-corpus-428f285-memory | stale |
@@ -5512,6 +5672,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-19.7-002 | strategy-room-isolation | python-acp-tools-7920d13-memory | stale |
 | RK-19.7-002 | strategy-room-isolation | python-acp-record-f3415d5-memory | stale |
 | RK-19.7-002 | strategy-room-isolation | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-19.7-002 | strategy-room-isolation | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-19.7-004 | strategy-installation-and-cleanup | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-19.7-004 | strategy-installation-and-cleanup | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-19.7-004 | strategy-installation-and-cleanup | python-indexing-final-corpus-428f285-memory | stale |
@@ -5563,6 +5724,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-19.7-004 | strategy-installation-and-cleanup | python-acp-tools-7920d13-memory | stale |
 | RK-19.7-004 | strategy-installation-and-cleanup | python-acp-record-f3415d5-memory | stale |
 | RK-19.7-004 | strategy-installation-and-cleanup | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-19.7-004 | strategy-installation-and-cleanup | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-19.7.3-001 | phase4-supervisor-handback-model-content | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-19.7.3-001 | phase4-supervisor-handback-model-content | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-19.7.3-001 | phase4-supervisor-handback-model-content | python-indexing-final-corpus-428f285-memory | stale |
@@ -5614,6 +5776,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-19.7.3-001 | phase4-supervisor-handback-model-content | python-acp-tools-7920d13-memory | stale |
 | RK-19.7.3-001 | phase4-supervisor-handback-model-content | python-acp-record-f3415d5-memory | stale |
 | RK-19.7.3-001 | phase4-supervisor-handback-model-content | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-19.7.3-001 | phase4-supervisor-handback-model-content | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-19.7.3-001 | orchestration-worker-preparation-and-cuts | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-19.7.3-001 | orchestration-worker-preparation-and-cuts | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-19.7.3-001 | orchestration-worker-preparation-and-cuts | python-indexing-final-corpus-428f285-memory | stale |
@@ -5679,6 +5842,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-19.7.3-001 | orchestration-worker-preparation-and-cuts | python-acp-record-f3415d5-sqlite | stale |
 | RK-19.7.3-001 | orchestration-worker-preparation-and-cuts | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-19.7.3-001 | orchestration-worker-preparation-and-cuts | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-19.7.3-001 | orchestration-worker-preparation-and-cuts | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-19.7.3-001 | orchestration-worker-preparation-and-cuts | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-19.7.3-001 | orchestration-worker-preparation-and-cuts | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-19.7.5-002 | discussion-instruction-boundaries | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-19.7.5-002 | discussion-instruction-boundaries | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-19.7.5-002 | discussion-instruction-boundaries | python-indexing-final-corpus-428f285-memory | stale |
@@ -5736,6 +5902,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-19.7.5-002 | discussion-instruction-boundaries | python-acp-record-f3415d5-sqlite | stale |
 | RK-19.7.5-002 | discussion-instruction-boundaries | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-19.7.5-002 | discussion-instruction-boundaries | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-19.7.5-002 | discussion-instruction-boundaries | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-19.7.5-002 | discussion-instruction-boundaries | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-19.7.5-002 | discussion-instruction-boundaries | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-19.7.5-002 | discussion-regeneration-turns | python-discussion-regeneration-19665b9-memory | stale |
 | RK-19.7.5-002 | discussion-regeneration-turns | python-discussion-context-b9c94b7-memory | stale |
 | RK-19.7.5-002 | discussion-regeneration-turns | python-deferred-memory-f252c9d-memory | stale |
@@ -5769,6 +5938,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-19.7.5-002 | discussion-regeneration-turns | python-acp-record-f3415d5-sqlite | stale |
 | RK-19.7.5-002 | discussion-regeneration-turns | python-acp-permissions-6dc6edb-memory | incomplete |
 | RK-19.7.5-002 | discussion-regeneration-turns | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-19.7.5-002 | discussion-regeneration-turns | python-postgres-scenarios-6dc6edb-postgres | incomplete |
+| RK-19.7.5-002 | discussion-regeneration-turns | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
+| RK-19.7.5-002 | discussion-regeneration-turns | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-19.7.5-002 | discussion-turn-context | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-19.7.5-002 | discussion-turn-context | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-19.7.5-002 | discussion-turn-context | python-indexing-final-corpus-428f285-memory | stale |
@@ -5820,6 +5992,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-19.7.5-002 | discussion-turn-context | python-acp-tools-7920d13-memory | stale |
 | RK-19.7.5-002 | discussion-turn-context | python-acp-record-f3415d5-memory | stale |
 | RK-19.7.5-002 | discussion-turn-context | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-19.7.5-002 | discussion-turn-context | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-20.1-001 | deferred-turn-memory-retrieval | python-deferred-memory-f252c9d-memory | stale |
 | RK-20.1-001 | deferred-turn-memory-retrieval | python-current-input-a58b373-memory | stale |
 | RK-20.1-001 | deferred-turn-memory-retrieval | python-current-input-0c0a1aa-memory | stale |
@@ -5845,6 +6018,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-20.1-001 | deferred-turn-memory-retrieval | python-acp-tools-7920d13-memory | stale |
 | RK-20.1-001 | deferred-turn-memory-retrieval | python-acp-record-f3415d5-memory | stale |
 | RK-20.1-001 | deferred-turn-memory-retrieval | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-20.1-001 | deferred-turn-memory-retrieval | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-20.1-001 | custom-memory-current-input | python-current-input-a58b373-memory | stale |
 | RK-20.1-001 | custom-memory-current-input | python-current-input-0c0a1aa-memory | stale |
 | RK-20.1-001 | custom-memory-current-input | python-turn-compaction-d3502c7-memory | stale |
@@ -5869,6 +6043,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-20.1-001 | custom-memory-current-input | python-acp-tools-7920d13-memory | stale |
 | RK-20.1-001 | custom-memory-current-input | python-acp-record-f3415d5-memory | stale |
 | RK-20.1-001 | custom-memory-current-input | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-20.1-001 | custom-memory-current-input | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-20.1-001 | deferred-turn-memory-compaction | python-turn-compaction-d3502c7-memory | stale |
 | RK-20.1-001 | deferred-turn-memory-compaction | python-hook-input-83ad908-memory | stale |
 | RK-20.1-001 | deferred-turn-memory-compaction | python-hook-protection-a6e7c58-memory | stale |
@@ -5891,6 +6066,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-20.1-001 | deferred-turn-memory-compaction | python-acp-tools-7920d13-memory | stale |
 | RK-20.1-001 | deferred-turn-memory-compaction | python-acp-record-f3415d5-memory | stale |
 | RK-20.1-001 | deferred-turn-memory-compaction | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-20.1-001 | deferred-turn-memory-compaction | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-20.3-007 | discussion-notes-memory-footprint | python-current-input-0c0a1aa-memory | stale |
 | RK-20.3-007 | discussion-notes-memory-footprint | python-turn-compaction-d3502c7-memory | stale |
 | RK-20.3-007 | discussion-notes-memory-footprint | python-hook-input-83ad908-memory | stale |
@@ -5914,6 +6090,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-20.3-007 | discussion-notes-memory-footprint | python-acp-tools-7920d13-memory | stale |
 | RK-20.3-007 | discussion-notes-memory-footprint | python-acp-record-f3415d5-memory | stale |
 | RK-20.3-007 | discussion-notes-memory-footprint | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-20.3-007 | discussion-notes-memory-footprint | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-21.1-005 | strategy-tool-install-integrity | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-21.1-005 | strategy-tool-install-integrity | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-21.1-005 | strategy-tool-install-integrity | python-indexing-final-corpus-428f285-memory | stale |
@@ -5965,6 +6142,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-21.1-005 | strategy-tool-install-integrity | python-acp-tools-7920d13-memory | stale |
 | RK-21.1-005 | strategy-tool-install-integrity | python-acp-record-f3415d5-memory | stale |
 | RK-21.1-005 | strategy-tool-install-integrity | python-acp-permissions-6dc6edb-memory | incomplete |
+| RK-21.1-005 | strategy-tool-install-integrity | python-redis-turns-6dc6edb-memory-redis-turns | incomplete |
 | RK-21.4-001 | phase4-background-turn-context | python-task-options-25d0695-memory | stale |
 | RK-21.4-001 | phase4-background-turn-context | python-task-outcomes-16baeaa-memory | stale |
 | RK-21.4-001 | phase4-background-turn-context | python-task-timeout-70d2850-memory | stale |
@@ -6002,6 +6180,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-21.4-001 | phase4-background-turn-context | python-acp-tools-7920d13-memory | stale |
 | RK-21.4-001 | phase4-background-turn-context | python-acp-record-f3415d5-memory | stale |
 | RK-21.4-001 | phase4-background-turn-context | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-21.4-001 | phase4-background-turn-context | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-23.3-001 | phase4-failed-task-end-surfaces | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-23.3-001 | phase4-failed-task-end-surfaces | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-23.3-001 | phase4-failed-task-end-surfaces | python-indexing-final-corpus-428f285-memory | stale |
@@ -6053,6 +6232,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-23.3-001 | phase4-failed-task-end-surfaces | python-acp-tools-7920d13-memory | stale |
 | RK-23.3-001 | phase4-failed-task-end-surfaces | python-acp-record-f3415d5-memory | stale |
 | RK-23.3-001 | phase4-failed-task-end-surfaces | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-23.3-001 | phase4-failed-task-end-surfaces | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-23.3-001 | phase4-task-handback-model-content | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-23.3-001 | phase4-task-handback-model-content | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-23.3-001 | phase4-task-handback-model-content | python-indexing-final-corpus-428f285-memory | stale |
@@ -6104,6 +6284,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-23.3-001 | phase4-task-handback-model-content | python-acp-tools-7920d13-memory | stale |
 | RK-23.3-001 | phase4-task-handback-model-content | python-acp-record-f3415d5-memory | stale |
 | RK-23.3-001 | phase4-task-handback-model-content | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-23.3-001 | phase4-task-handback-model-content | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-23.3-002 | delegation-announcement-cancellation-boundary | python-postgres-contracts-ec7d228-memory | stale |
 | RK-23.3-002 | delegation-announcement-cancellation-boundary | python-postgres-contracts-ec7d228-sqlite | stale |
 | RK-23.3-002 | delegation-announcement-cancellation-boundary | python-delegation-preparation-97e7459-memory | stale |
@@ -6132,6 +6313,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-23.3-002 | delegation-announcement-cancellation-boundary | python-acp-record-f3415d5-sqlite | stale |
 | RK-23.3-002 | delegation-announcement-cancellation-boundary | python-acp-permissions-6dc6edb-memory | recorded_pass |
 | RK-23.3-002 | delegation-announcement-cancellation-boundary | python-acp-permissions-6dc6edb-sqlite | recorded_pass |
+| RK-23.3-002 | delegation-announcement-cancellation-boundary | python-postgres-scenarios-6dc6edb-postgres | recorded_pass |
+| RK-23.3-002 | delegation-announcement-cancellation-boundary | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
+| RK-23.3-002 | delegation-announcement-cancellation-boundary | python-redis-turns-6dc6edb-sqlite-redis-turns | recorded_pass |
 | RK-23.3-002 | delegation-unannounced-child-state | python-postgres-contracts-ec7d228-memory | stale |
 | RK-23.3-002 | delegation-unannounced-child-state | python-postgres-contracts-ec7d228-sqlite | stale |
 | RK-23.3-002 | delegation-unannounced-child-state | python-delegation-preparation-97e7459-memory | stale |
@@ -6160,6 +6344,9 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-23.3-002 | delegation-unannounced-child-state | python-acp-record-f3415d5-sqlite | stale |
 | RK-23.3-002 | delegation-unannounced-child-state | python-acp-permissions-6dc6edb-memory | recorded_pass |
 | RK-23.3-002 | delegation-unannounced-child-state | python-acp-permissions-6dc6edb-sqlite | incomplete |
+| RK-23.3-002 | delegation-unannounced-child-state | python-postgres-scenarios-6dc6edb-postgres | recorded_pass |
+| RK-23.3-002 | delegation-unannounced-child-state | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
+| RK-23.3-002 | delegation-unannounced-child-state | python-redis-turns-6dc6edb-sqlite-redis-turns | incomplete |
 | RK-23.4-001 | phase4-task-discussion-names | python-task-names-1280f23-memory | stale |
 | RK-23.4-001 | phase4-task-discussion-names | python-task-options-25d0695-memory | stale |
 | RK-23.4-001 | phase4-task-discussion-names | python-task-outcomes-16baeaa-memory | stale |
@@ -6198,6 +6385,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-23.4-001 | phase4-task-discussion-names | python-acp-tools-7920d13-memory | stale |
 | RK-23.4-001 | phase4-task-discussion-names | python-acp-record-f3415d5-memory | stale |
 | RK-23.4-001 | phase4-task-discussion-names | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-23.4-001 | phase4-task-discussion-names | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-23.4-001 | phase4-background-task-options | python-task-options-25d0695-memory | stale |
 | RK-23.4-001 | phase4-background-task-options | python-task-outcomes-16baeaa-memory | stale |
 | RK-23.4-001 | phase4-background-task-options | python-task-timeout-70d2850-memory | stale |
@@ -6235,6 +6423,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-23.4-001 | phase4-background-task-options | python-acp-tools-7920d13-memory | stale |
 | RK-23.4-001 | phase4-background-task-options | python-acp-record-f3415d5-memory | stale |
 | RK-23.4-001 | phase4-background-task-options | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-23.4-001 | phase4-background-task-options | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-23.5-001 | phase4-failed-task-completion-hooks | python-lifecycle-final-corpus-746d6bd-memory | stale |
 | RK-23.5-001 | phase4-failed-task-completion-hooks | python-lifecycle-final-corpus-ecac963-memory | stale |
 | RK-23.5-001 | phase4-failed-task-completion-hooks | python-indexing-final-corpus-428f285-memory | stale |
@@ -6286,16 +6475,20 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-23.5-001 | phase4-failed-task-completion-hooks | python-acp-tools-7920d13-memory | stale |
 | RK-23.5-001 | phase4-failed-task-completion-hooks | python-acp-record-f3415d5-memory | stale |
 | RK-23.5-001 | phase4-failed-task-completion-hooks | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-23.5-001 | phase4-failed-task-completion-hooks | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-A.9.1-001 | acp-room-directories | python-acp-directories-09666ea-memory | stale |
 | RK-A.9.1-001 | acp-room-directories | python-acp-mcp-e979b14-memory | stale |
 | RK-A.9.1-001 | acp-room-directories | python-acp-thinking-926888e-memory | stale |
 | RK-A.9.1-001 | acp-room-directories | python-acp-tools-7920d13-memory | stale |
 | RK-A.9.1-001 | acp-room-directories | python-acp-record-f3415d5-memory | stale |
 | RK-A.9.1-001 | acp-room-directories | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-A.9.1-001 | acp-room-directories | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-A.9.1-001 | acp-active-turn-thought-mapping | python-acp-thinking-926888e-memory | stale |
 | RK-A.9.1-001 | acp-active-turn-thought-mapping | python-acp-tools-7920d13-memory | stale |
 | RK-A.9.1-001 | acp-active-turn-thought-mapping | python-acp-record-f3415d5-memory | stale |
 | RK-A.9.1-001 | acp-active-turn-thought-mapping | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-A.9.1-001 | acp-active-turn-thought-mapping | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
 | RK-A.9.1-001 | acp-active-tool-markers-and-response | python-acp-tools-7920d13-memory | stale |
 | RK-A.9.1-001 | acp-active-tool-markers-and-response | python-acp-record-f3415d5-memory | stale |
 | RK-A.9.1-001 | acp-active-tool-markers-and-response | python-acp-permissions-6dc6edb-memory | recorded_pass |
+| RK-A.9.1-001 | acp-active-tool-markers-and-response | python-redis-turns-6dc6edb-memory-redis-turns | recorded_pass |
