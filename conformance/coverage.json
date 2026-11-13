@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
-  "corpus_sha256": "f1316bc21303dcc1dd7ffc48a16d7f5d2fb44c327eaed2fc88b9fb6224108ee9",
+  "corpus_sha256": "a5de6d510df908005bf594f21738416f7304661eb7faf0e94851fd595a18e1e6",
   "python_commit": "7920d13ae89c17fdc2e43a780ec80fc30a841b1c",
-  "scenario_count": 2056,
+  "scenario_count": 2058,
   "sections": [
     {
       "section": "0",
@@ -845,6 +845,7 @@
         "acp/tools-interleaved-identifiers",
         "acp/tools-observer-post-depth",
         "acp/tools-observer-reentry-bound",
+        "acp/tools-observer-turn-context",
         "acp/tools-per-room",
         "acp/tools-refusal-after-text",
         "acp/tools-report-block",
@@ -853,6 +854,7 @@
         "acp/tools-terminal-start-duplicates",
         "acp/tools-unicode-preview",
         "acp/tools-update-without-start",
+        "acp/turn-record-concurrent-rooms",
         "ai-router/a-generation-that-spoke-is-not-handed-over",
         "ai-router/a-generation-the-router-hands-over-keeps-the-turn-s-later-rounds",
         "ai-router/a-retry-the-router-names-no-model-for-fails-with-the-last-refusal",
@@ -1423,6 +1425,8 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "acp/tools-observer-turn-context",
+        "acp/turn-record-concurrent-rooms",
         "author-images/a-schema-the-model-does-not-take-refuses-no-image",
         "author-images/a-text-held-on-a-first-try-refuses-no-image-when-its-retry-is-refused",
         "author-images/a-text-held-under-a-schema-before-a-refusal-refuses-no-image",
@@ -2145,6 +2149,7 @@
         "acp/tools-interleaved-identifiers",
         "acp/tools-observer-post-depth",
         "acp/tools-observer-reentry-bound",
+        "acp/tools-observer-turn-context",
         "acp/tools-per-room",
         "acp/tools-refusal-after-text",
         "acp/tools-report-block",
@@ -2153,6 +2158,7 @@
         "acp/tools-terminal-start-duplicates",
         "acp/tools-unicode-preview",
         "acp/tools-update-without-start",
+        "acp/turn-record-concurrent-rooms",
         "appendix-b/b1-customer-and-ai",
         "delivery/a-status-is-handled-while-its-hooks-run",
         "delivery/an-awaited-adopted-call-ends-with-its-hook-s-timeout",
@@ -7374,6 +7380,7 @@
         "acp/tools-interleaved-identifiers",
         "acp/tools-observer-post-depth",
         "acp/tools-observer-reentry-bound",
+        "acp/tools-observer-turn-context",
         "acp/tools-per-room",
         "acp/tools-refusal-after-text",
         "acp/tools-report-block",
@@ -7381,7 +7388,8 @@
         "acp/tools-report-modify",
         "acp/tools-terminal-start-duplicates",
         "acp/tools-unicode-preview",
-        "acp/tools-update-without-start"
+        "acp/tools-update-without-start",
+        "acp/turn-record-concurrent-rooms"
       ]
     },
     {
