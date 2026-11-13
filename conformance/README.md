@@ -678,7 +678,8 @@ that both runners check the same messages.
   one `{blocks: ["..."]}` or `{error: "..."}` response per invocation, optionally
   held at `gate`. Errors exercise the channel's fail-open path; exhaustion is
   always a fixture failure. `expect.acp_context_requests` records actual inputs
-  before any gate: `room_id`, `event` and `recent_events`, as event records.
+  before any gate: `room_id`, `event` and `recent_events`, as event records,
+  and the context's `history_start_index` (null when unknown).
   Python-only invalid return types and a lone string are checked natively;
   Rust uses the approved typed list return. The fixture does not compose prompts.
 - `acp.additional_directories`: additional absolute directory paths declared in
