@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "acp/standalone-updates-do-not-describe-room",
-  "title": "Standalone config and usage updates do not replace the room session configuration",
+  "title": "Standalone configuration updates do not replace the room session configuration",
   "rules": [
     "§6.4",
     "§10.1.1 step 7"
