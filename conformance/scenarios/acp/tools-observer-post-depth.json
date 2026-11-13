@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "acp/tools-observer-post-depth",
-  "title": "A post made by an ACP tool observer retains the answer depth and can ask its agent again",
+  "title": "A post made by an ACP tool observer adds no AI-loop depth and can ask its agent again",
   "rules": [
     "§6.4",
     "§9.3",
@@ -129,7 +129,7 @@
       "posted": [
         {
           "result": {
-            "chain_depth": 1,
+            "chain_depth": 0,
             "blocked_by": null
           }
         }
