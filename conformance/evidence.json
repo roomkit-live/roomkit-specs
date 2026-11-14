@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "1231c59c586c48c2f77cd10ef191b2be9bb85655",
+  "python_commit": "7c06017ea2b7e0528876353415b64cd17a0d86b1",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -678585,6 +678585,101 @@
         {
           "scenario": "acp/input-whitespace-host",
           "sha256": "496e3847d0989804150f173f83797d863fd3c6eeafe205295aa790c87db3e61d",
+          "outcome": "passed"
+        }
+      ]
+    },
+    {
+      "id": "python-acp-usage-7c06017-memory",
+      "implementation": "python",
+      "implementation_commit": "7c06017ea2b7e0528876353415b64cd17a0d86b1",
+      "rfc_commit": "07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a",
+      "corpus_commit": "821ba0ed9eba9e5d585952187a26b1e8b93d2b84",
+      "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "PYTHONPATH=src",
+        "uv",
+        "run",
+        "pytest",
+        "tests/conformance/test_conformance.py",
+        "-k",
+        "acp/usage-",
+        "-n",
+        "0",
+        "--junitxml=receipt-run.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-acp-usage-7c06017.xml",
+        "format": "pytest_junit",
+        "sha256": "936f01bb50d0d1abc5faf937477e01cd4ea738c9ee842862f6b33824cab5c4b7"
+      },
+      "results": [
+        {
+          "scenario": "acp/usage-absent-measurements",
+          "sha256": "55239400573c65ec6ceb2eaed185282bd04f55eaf8c8591c9040b9ffc6ba32bc",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/usage-cache-counters",
+          "sha256": "bc7404318a78be61b31b400e5d197b404ae16536e680fcde683bc0f8f42d91f2",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/usage-counters-and-session-cost",
+          "sha256": "a09835d39c817422940e33627ab28b0e1495274323a17a49a109e3f869cb5a2b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/usage-live-origin",
+          "sha256": "f3dfe8bdba29f31370798e0a081bb8ee726f795a1a258499f05d54a07e1305ed",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/usage-live-wrong-session",
+          "sha256": "15d613141ec8afdf73d501cc9a1827dd2e7e8efcafa24ee38bb1ad5b17a28938",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/usage-model-snapshots",
+          "sha256": "7d0ff439fbc291a4dbb9846af9eb8e89d89ead8f9a56517db9395dfba2bdf548",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/usage-native-id-new-epoch",
+          "sha256": "faea16d021591ee3cf67882d654a395356be97ed68127b578f22a1ee48b59bdb",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/usage-recovered-absent",
+          "sha256": "234644c56b9950a2decf3c79b2a91dbe168e2e6f7b64bb8e7d139155fc57b4a1",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/usage-recovered-report",
+          "sha256": "96a721e74e1db4972c9932fd56f8cacdd1ec7150d5b22d85d1f348615a2128e2",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/usage-two-agents-trusted",
+          "sha256": "59156decfc0bd2f161082074ca1420cf724acaa98c20da0cac1d133255659f61",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/usage-two-agents-untrusted",
+          "sha256": "5ce3d18df135f71ba88e118640a2457828f4256abf1574efa91e7c536714e82d",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/usage-unchanged-counters",
+          "sha256": "4d70ab1400ec9af2b6566f5461ec452d3e5f1fde1383456c9a4373e0275871e7",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/usage-untrusted-envelope",
+          "sha256": "23c0f767e7c7db18c25a82f6a5ee7b1f25579751bc0984e9897bbcb849eb6070",
           "outcome": "passed"
         }
       ]
