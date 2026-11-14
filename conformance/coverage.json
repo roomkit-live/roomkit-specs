@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
   "corpus_sha256": "54725b53e5580a1c2fac764a7851528e17ce775a1fcb524cf063d8426028d03a",
-  "python_commit": "fc6810da1db14711de8db5eef4076f115b4309a5",
+  "python_commit": "a1100814feae29bcb8ab1689ab316063ee07847c",
   "scenario_count": 2207,
   "sections": [
     {
@@ -69745,6 +69745,15 @@
       "implementation_commit": "fc6810da1db14711de8db5eef4076f115b4309a5",
       "rfc_commit": "07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a",
       "corpus_commit": "152442d06b69adae37d87cb63848f02484747232",
+      "backend": "memory",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-acp-handler-reentry-a110081-memory",
+      "implementation": "python",
+      "implementation_commit": "a1100814feae29bcb8ab1689ab316063ee07847c",
+      "rfc_commit": "07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a",
+      "corpus_commit": "f9de104ceaeaecc94ba7f915dd987eef23eac294",
       "backend": "memory",
       "runtime": "asyncio"
     }

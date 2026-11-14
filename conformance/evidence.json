@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "fc6810da1db14711de8db5eef4076f115b4309a5",
+  "python_commit": "a1100814feae29bcb8ab1689ab316063ee07847c",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -678715,6 +678715,46 @@
         {
           "scenario": "acp/a-truncated-turn-preserves-max-tokens",
           "sha256": "af735c0d6d7c0f5dd68f2e188964174c5988d02a0bf62183de3b4c3f3c410604",
+          "outcome": "passed"
+        }
+      ]
+    },
+    {
+      "id": "python-acp-handler-reentry-a110081-memory",
+      "implementation": "python",
+      "implementation_commit": "a1100814feae29bcb8ab1689ab316063ee07847c",
+      "rfc_commit": "07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a",
+      "corpus_commit": "f9de104ceaeaecc94ba7f915dd987eef23eac294",
+      "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "PYTHONPATH=src",
+        "uv",
+        "run",
+        "pytest",
+        "tests/conformance/test_conformance.py",
+        "-k",
+        "acp/handler-on-tool-call-observer-reentry-bound or acp/handler-before-tool-use-observer-reentry-bound",
+        "-n",
+        "0",
+        "--junitxml=receipt-run.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-acp-handler-reentry-a110081.xml",
+        "format": "pytest_junit",
+        "sha256": "3649b330d8fdc6a6638a3b6463d1a4f966b18b00c45c7a798d0fde9b358105e5"
+      },
+      "results": [
+        {
+          "scenario": "acp/handler-before-tool-use-observer-reentry-bound",
+          "sha256": "2561a33c3272e3f1de7f6b596204720abd73f4450604cb6f1eb4de2a23e2ded4",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/handler-on-tool-call-observer-reentry-bound",
+          "sha256": "7bdd4c20a517d18326fa7288eac1e8189368471c1f60c6d1d21366056b9a210b",
           "outcome": "passed"
         }
       ]
