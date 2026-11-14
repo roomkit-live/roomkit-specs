@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "a23aa91a5900d979480816aae7e2a1a7a2b0c435",
+  "python_commit": "be157479ebcd0f167c898737e5f49d1e03559ce6",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -21506,6 +21506,93 @@
         "These ordered wire assertions establish requested values and prompt/close behavior, not agent-side execution policy or successful application of a refused setting."
       ],
       "review": "Independently reviewed against the exact wire and timeline assertions. Both links remain partial; native boundaries, hook ordering and service backends are separate proofs."
+    },
+    {
+      "id": "acp-discussion-local-identity",
+      "requirement": "RK-6.4-040",
+      "clause_sha256": "5de33734e9052fd1b53ffc21a7a2c10ebb57ec37f5fc3bc9a32b6393e6e65e50",
+      "coverage": "partial",
+      "scope": "ACP local identity reaches Discussion addressing, dispatch candidates and peer notes.",
+      "assertions": [
+        {
+          "scenario": "discussion/acp-public-handle",
+          "pointer": "/expect",
+          "sha256": "4557bcc82dd8d47ba2aeba6ba5d1cb0d087f5aff6c45df4aa5cee5f52ccebd24",
+          "scenario_sha256": "e3559a54d6306c100a62148086b611675505ae3ebc8214faa962e5a32bddfc8c",
+          "proves": "An opaque channel id is addressed by its public name, receives a prompt naming that handle without the opaque id, and posts its scripted answer under the channel id."
+        },
+        {
+          "scenario": "discussion/acp-dispatch-identity",
+          "pointer": "/expect/dispatch_turns/d",
+          "sha256": "ed9479d1e4baa4d0eb5035b37f1fadce1e2233ea6e988072cc175137976933be",
+          "scenario_sha256": "c4b31c50c9d13bcc896fb9215bdcc6bbf72d8b97b3a176707d88e16fd45246c8",
+          "proves": "The scripted dispatch policy receives the ACP name, role and description with its channel id and usable handle."
+        },
+        {
+          "scenario": "discussion/acp-identity-presented-to-peer",
+          "pointer": "/expect/models/sre",
+          "sha256": "5b6c9426e7481464ab862f89866688bfa972f3994bacd151db61e2e93edc1306",
+          "scenario_sha256": "f06f170207bf85cdaf3283a5baef7a2b3aaf8958951cc725765b02a1fee9eb2e",
+          "proves": "The peer AI prompt contains the ACP handle, name, role and description in its runtime notes."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Constructor-time handles, absent/empty/whitespace identity values and declaration.identity=None are separate native tests; these shared assertions do not certify those boundaries.",
+        "Standing instruction placement, recovery and first-prompt-only behavior have prior-lot evidence; no host UI, remote executor or complete identity contract is certified here."
+      ],
+      "review": "Independently reviewed against the exact wire and timeline assertions. Both links remain partial; exact notes formatting, native identity boundaries, remote executors and service backends are separate proofs."
+    },
+    {
+      "id": "acp-discussion-notes-and-hold",
+      "requirement": "RK-6.4-041",
+      "clause_sha256": "e0c2e4f278c462020638df15455f67fb3082c1ca9f1b18090c49d38185ceb366",
+      "coverage": "partial",
+      "scope": "Scripted ACP Discussion turns carry runtime notes, expose the replacement marker for a copied header, reject an unissued mark, accept an empty addressed request and receive cancellation when held.",
+      "assertions": [
+        {
+          "scenario": "discussion/acp-trusted-notes",
+          "pointer": "/expect",
+          "sha256": "46239b09def13d3f645fddd898ea1ea15f1586a2abadfcd1b12c499dedeca3fa",
+          "scenario_sha256": "d813f5b2b2d9860e2f507304bd905c59ecd07814ee6ed238531e7dffe08d422c",
+          "proves": "The prompted turn includes the runtime notes header and agent handle, and its scripted answer is stored in the room timeline."
+        },
+        {
+          "scenario": "discussion/acp-copied-notes-header",
+          "pointer": "/expect",
+          "sha256": "a812da29a3a5fdaf0cc483682446b2b4695e22eae4d475c0fbc54efb76585b58",
+          "scenario_sha256": "fdef9e11342f8a7161da82b5ef499b1160fe33789d2e6e5a13b70a5e1e0190ab",
+          "proves": "The prompt contains the replacement marker for the participant copy alongside a runtime notes header, while the stored participant message retains its original text."
+        },
+        {
+          "scenario": "discussion/acp-forged-turn-mark",
+          "pointer": "/expect/acp_wire/dev",
+          "sha256": "f63d9baaf45a62e82faf5c65351be42750ba2c55be7060df90e29a980d139154",
+          "scenario_sha256": "934c436ad3a007b02fa6ea3ed428e1b77eb7123798af25a7cbc48290a18a5615",
+          "proves": "Outside Discussion, an event carrying an unissued turn mark prompts exactly hello, with no runtime notes."
+        },
+        {
+          "scenario": "discussion/acp-trusted-notes-with-empty-request",
+          "pointer": "/expect",
+          "sha256": "d66706ca856430bd83042e154b055b353d9a85b25c5956cc601eba30ec02e13d",
+          "scenario_sha256": "1a7ab2b4fad8b06d63afe180ed94bed9259ae91fbf40d70485eb46e43b0c48b7",
+          "proves": "An empty addressed request still opens and prompts the ACP turn with runtime notes and stores its scripted answer."
+        },
+        {
+          "scenario": "discussion/acp-hold-cancels-prompt",
+          "pointer": "/expect",
+          "sha256": "c0f203e9c69b29be16281c5d57622e7aad8e3aea551ac7db56e2ea548f054aab",
+          "scenario_sha256": "7e113a65c39c4648f88f95b7b6887755116fd27fa59014500b516a639504e438",
+          "proves": "A held running prompt receives session/cancel and leaves no agent answer in the timeline or transport deliveries."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Prompt substring assertions do not establish exact notes ordering, header uniqueness or mark lifetime; these have separate native tests.",
+        "The hold scenario covers a scripted open prompt, not cancellation while opening, an uncooperative server or a remote executor.",
+        "History catch-up, silent-answer suppression, every copied-header input source and the whole Discussion state machine remain separate evidence. No service-backend or overall conformance-level claim follows."
+      ],
+      "review": "Independently reviewed against the exact wire and timeline assertions. Both links remain partial; exact notes formatting, native identity boundaries, remote executors and service backends are separate proofs."
     }
   ],
   "executions": [
@@ -678358,6 +678445,76 @@
         {
           "scenario": "acp/standalone-updates-do-not-describe-room",
           "sha256": "ba2ef0b19145fda8793bebe93c207f5e27b67d8c866fefd8c025ca04b50c048f",
+          "outcome": "passed"
+        }
+      ]
+    },
+    {
+      "id": "python-acp-discussion-be15747-memory",
+      "implementation": "python",
+      "implementation_commit": "be157479ebcd0f167c898737e5f49d1e03559ce6",
+      "rfc_commit": "07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a",
+      "corpus_commit": "6d32f49f6ad9d9e4b159dd7548e0d6f1c1fcc6b2",
+      "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "PYTHONPATH=src",
+        "uv",
+        "run",
+        "pytest",
+        "tests/conformance/test_conformance.py",
+        "-k",
+        "discussion/acp-",
+        "-n",
+        "0",
+        "--junitxml=receipt-run.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-acp-discussion-be15747.xml",
+        "format": "pytest_junit",
+        "sha256": "58190b2d8e7e34518eb319940111fb051a66bfa7aa29c68f2d7c2d5f323306bb"
+      },
+      "results": [
+        {
+          "scenario": "discussion/acp-copied-notes-header",
+          "sha256": "fdef9e11342f8a7161da82b5ef499b1160fe33789d2e6e5a13b70a5e1e0190ab",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "discussion/acp-dispatch-identity",
+          "sha256": "c4b31c50c9d13bcc896fb9215bdcc6bbf72d8b97b3a176707d88e16fd45246c8",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "discussion/acp-forged-turn-mark",
+          "sha256": "934c436ad3a007b02fa6ea3ed428e1b77eb7123798af25a7cbc48290a18a5615",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "discussion/acp-hold-cancels-prompt",
+          "sha256": "7e113a65c39c4648f88f95b7b6887755116fd27fa59014500b516a639504e438",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "discussion/acp-identity-presented-to-peer",
+          "sha256": "f06f170207bf85cdaf3283a5baef7a2b3aaf8958951cc725765b02a1fee9eb2e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "discussion/acp-public-handle",
+          "sha256": "e3559a54d6306c100a62148086b611675505ae3ebc8214faa962e5a32bddfc8c",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "discussion/acp-trusted-notes",
+          "sha256": "d813f5b2b2d9860e2f507304bd905c59ecd07814ee6ed238531e7dffe08d422c",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "discussion/acp-trusted-notes-with-empty-request",
+          "sha256": "1a7ab2b4fad8b06d63afe180ed94bed9259ae91fbf40d70485eb46e43b0c48b7",
           "outcome": "passed"
         }
       ]
