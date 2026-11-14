@@ -3,9 +3,9 @@
   "id": "tool-structured/a-non-object-hook-copy-is-dropped",
   "title": "A non object hook copy is dropped",
   "rules": [
-    "\u00a75.3",
-    "\u00a79.3",
-    "\u00a721.4"
+    "§5.3",
+    "§9.3",
+    "§21.4"
   ],
   "notes": "Python: tests/test_tool_context.py::TestCurrentToolCall and tests/test_tool_call_structured_copy.py; the handler writes the actual current_tool_call record before the result hook reads it.",
   "setup": {
