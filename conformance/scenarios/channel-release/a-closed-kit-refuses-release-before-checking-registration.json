@@ -1,11 +1,11 @@
 {
   "$schema": "../../scenario.schema.json",
-  "id": "channel-release/an-unknown-channel-is-checked-before-a-closed-backend",
-  "title": "Release checks registration before sending a control message to the backend",
+  "id": "channel-release/a-closed-kit-refuses-release-before-checking-registration",
+  "title": "A closed kit refuses release before looking up an unknown channel",
   "rules": [
-    "\u00a710.6.3"
+    "§10.6.3"
   ],
-  "notes": "Python: tests/test_turns_channel_release.py local registry cases; ChannelStateMixin.release_channel checks registration before backend control. No separately served executor is needed.",
+  "notes": "Python: RoomKit public methods are wrapped by _work_refused_once_closed before ChannelStateMixin.release_channel; the public close error precedes registration and backend control.",
   "setup": {
     "channels": [
       {
@@ -69,7 +69,7 @@
       "call": "release_channel",
       "channel_id": "nobody",
       "expect": {
-        "error": "channel_not_registered"
+        "error": "kit_closed"
       }
     }
   ],

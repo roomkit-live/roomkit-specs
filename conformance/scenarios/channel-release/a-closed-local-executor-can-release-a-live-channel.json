@@ -3,7 +3,7 @@
   "id": "channel-release/a-closed-local-executor-can-release-a-live-channel",
   "title": "A closed local executor leaves release of a registered live channel harmless",
   "rules": [
-    "\u00a710.6.3"
+    "§10.6.3"
   ],
   "notes": "Python: tests/test_turns_channel_release.py local registry cases; ChannelStateMixin.release_channel checks registration before backend control. No separately served executor is needed.",
   "setup": {
