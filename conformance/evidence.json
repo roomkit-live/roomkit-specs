@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "559d042d1b07f4c782bf6737ab7e6753495b6792",
+  "python_commit": "500ffa55b2796f555ff3ff85afa1dd763f4bd45f",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -21656,6 +21656,205 @@
       "missing": [
         "Public remote executor construction, build retirement/replacement, distributed fanout and execution across processes remain deferred in Rust.",
         "Other channel controls and the complete shutdown contract are not established by this link."
+      ]
+    },
+    {
+      "id": "tool-structured-handler-copies",
+      "requirement": "RK-9.3-014",
+      "clause_sha256": "46c8987a6f44c6c30fca691daf0e6c4762220e5013732f1593a3447fc33904b0",
+      "coverage": "partial",
+      "scope": "Local AI handler copies reach result hooks and persisted end rows. Shared cases cover replacement, clearing, text-only rewrite, invalid copy normalization, withholding, unsuccessful outcomes, parallel calls and cancellation after a handler write.",
+      "review": "Python source tests and shared scenarios passed first. Rust witnesses use the actual current_tool_call record, not an adapter-only payload. Independent review verified per-call identity, successful-result snapshot and MCP publication. Object patches do not establish exact key equality: empty-object identity is proven separately by native tests and is not execution credit here.",
+      "assertions": [
+        {
+          "scenario": "tool-structured/a-blocked-call-publishes-no-handler-copy",
+          "pointer": "/expect/timeline/room-1",
+          "sha256": "7a14e2ed1ba45abc4689ddd2c3b6c2afeacf210c1a9edaf59f71b099a8275cea",
+          "scenario_sha256": "2d64c2fec97d99d912ea9e2cd0edabee51bf295b9d8d8079f998a947681651c5",
+          "proves": "The stored end rows have the asserted structured values and outcomes; object expectations are patches, not exact key equality."
+        },
+        {
+          "scenario": "tool-structured/a-blocked-call-publishes-no-handler-copy",
+          "pointer": "/expect/hooks",
+          "sha256": "72dc7a4d676651217ce287556d22858dcc427b42f63aa92268c209edd5aabdfd",
+          "scenario_sha256": "2d64c2fec97d99d912ea9e2cd0edabee51bf295b9d8d8079f998a947681651c5",
+          "proves": "The recorded result-hook calls contain the asserted per-call structured content; object expectations are patches and null also permits absence."
+        },
+        {
+          "scenario": "tool-structured/a-cancelled-call-publishes-no-handler-copy",
+          "pointer": "/expect/timeline/room-1",
+          "sha256": "5b6ac21e2e498ccfb3e6758846f07d73e4553a0630b76763daa66357513b30db",
+          "scenario_sha256": "05aecfdcee9d5580a863b134a7e18de870a20347568653665648333a51e5fb20",
+          "proves": "The stored end rows have the asserted structured values and outcomes; object expectations are patches, not exact key equality."
+        },
+        {
+          "scenario": "tool-structured/a-failed-closed-hook-withholds-the-copy",
+          "pointer": "/expect/timeline/room-1",
+          "sha256": "7a14e2ed1ba45abc4689ddd2c3b6c2afeacf210c1a9edaf59f71b099a8275cea",
+          "scenario_sha256": "923db3ca138d1b054c2960b3f3a7634130d9e6309949be9a6d440832a430354d",
+          "proves": "The stored end rows have the asserted structured values and outcomes; object expectations are patches, not exact key equality."
+        },
+        {
+          "scenario": "tool-structured/a-failed-closed-hook-withholds-the-copy",
+          "pointer": "/expect/hooks",
+          "sha256": "72dc7a4d676651217ce287556d22858dcc427b42f63aa92268c209edd5aabdfd",
+          "scenario_sha256": "923db3ca138d1b054c2960b3f3a7634130d9e6309949be9a6d440832a430354d",
+          "proves": "The recorded result-hook calls contain the asserted per-call structured content; object expectations are patches and null also permits absence."
+        },
+        {
+          "scenario": "tool-structured/a-failed-handler-publishes-no-copy",
+          "pointer": "/expect/timeline/room-1",
+          "sha256": "e6946f7dca21f5b0c647ccfe991aafdecff758932088ce805d4960026cbb7b5e",
+          "scenario_sha256": "588131b79282216358df864c645519d480dc32e0d559ea8c50864b70d71672c8",
+          "proves": "The stored end rows have the asserted structured values and outcomes; object expectations are patches, not exact key equality."
+        },
+        {
+          "scenario": "tool-structured/a-handler-copy-reaches-the-hook-and-row-non-streaming",
+          "pointer": "/expect/timeline/room-1",
+          "sha256": "2b6e1bac9c2f3b7417234fab95fccbeefbb6d0d894fa5b1f5e60d35c726caf2c",
+          "scenario_sha256": "16e63e31c862eefc34f0922c598bc7859aff9eccb367cd530515147d1a2cb4c5",
+          "proves": "The stored end rows have the asserted structured values and outcomes; object expectations are patches, not exact key equality."
+        },
+        {
+          "scenario": "tool-structured/a-handler-copy-reaches-the-hook-and-row-non-streaming",
+          "pointer": "/expect/hooks",
+          "sha256": "72dc7a4d676651217ce287556d22858dcc427b42f63aa92268c209edd5aabdfd",
+          "scenario_sha256": "16e63e31c862eefc34f0922c598bc7859aff9eccb367cd530515147d1a2cb4c5",
+          "proves": "The recorded result-hook calls contain the asserted per-call structured content; object expectations are patches and null also permits absence."
+        },
+        {
+          "scenario": "tool-structured/a-handler-copy-reaches-the-hook-and-row-streaming",
+          "pointer": "/expect/timeline/room-1",
+          "sha256": "2b6e1bac9c2f3b7417234fab95fccbeefbb6d0d894fa5b1f5e60d35c726caf2c",
+          "scenario_sha256": "b4083274c0216f7c9ec77598dd2c9cd51e2d83a856633e4a06d3d703e0f0f4ef",
+          "proves": "The stored end rows have the asserted structured values and outcomes; object expectations are patches, not exact key equality."
+        },
+        {
+          "scenario": "tool-structured/a-handler-copy-reaches-the-hook-and-row-streaming",
+          "pointer": "/expect/hooks",
+          "sha256": "72dc7a4d676651217ce287556d22858dcc427b42f63aa92268c209edd5aabdfd",
+          "scenario_sha256": "b4083274c0216f7c9ec77598dd2c9cd51e2d83a856633e4a06d3d703e0f0f4ef",
+          "proves": "The recorded result-hook calls contain the asserted per-call structured content; object expectations are patches and null also permits absence."
+        },
+        {
+          "scenario": "tool-structured/a-hook-clears-the-handler-copy",
+          "pointer": "/expect/timeline/room-1",
+          "sha256": "a6c70a5504922386aa9708a363f0f706b04899a993c866ef85e13a65f0bbe435",
+          "scenario_sha256": "2b49f36a55de4a86aedc037cb752c46632d3c0abc2c22d92605a7f8e06854a93",
+          "proves": "The stored end rows have the asserted structured values and outcomes; object expectations are patches, not exact key equality."
+        },
+        {
+          "scenario": "tool-structured/a-hook-clears-the-handler-copy",
+          "pointer": "/expect/hooks",
+          "sha256": "72dc7a4d676651217ce287556d22858dcc427b42f63aa92268c209edd5aabdfd",
+          "scenario_sha256": "2b49f36a55de4a86aedc037cb752c46632d3c0abc2c22d92605a7f8e06854a93",
+          "proves": "The recorded result-hook calls contain the asserted per-call structured content; object expectations are patches and null also permits absence."
+        },
+        {
+          "scenario": "tool-structured/a-hook-replaces-the-handler-copy",
+          "pointer": "/expect/timeline/room-1",
+          "sha256": "2836523410397093e582c7144b7b6c80d8c727a645a10c39ac52305f83535af5",
+          "scenario_sha256": "9ebdd03b0aea010461eb95889d9a2d7dd1adebd1eeea8dd5e19b5df1736462cf",
+          "proves": "The stored end rows have the asserted structured values and outcomes; object expectations are patches, not exact key equality."
+        },
+        {
+          "scenario": "tool-structured/a-hook-replaces-the-handler-copy",
+          "pointer": "/expect/hooks",
+          "sha256": "72dc7a4d676651217ce287556d22858dcc427b42f63aa92268c209edd5aabdfd",
+          "scenario_sha256": "9ebdd03b0aea010461eb95889d9a2d7dd1adebd1eeea8dd5e19b5df1736462cf",
+          "proves": "The recorded result-hook calls contain the asserted per-call structured content; object expectations are patches and null also permits absence."
+        },
+        {
+          "scenario": "tool-structured/a-non-object-hook-copy-is-dropped",
+          "pointer": "/expect/timeline/room-1",
+          "sha256": "a6c70a5504922386aa9708a363f0f706b04899a993c866ef85e13a65f0bbe435",
+          "scenario_sha256": "8bd9ab1d0c9870ac07a4184973edf774dcbd72cc268e937589d5b06f43c5b462",
+          "proves": "The stored end rows have the asserted structured values and outcomes; object expectations are patches, not exact key equality."
+        },
+        {
+          "scenario": "tool-structured/a-non-object-hook-copy-is-dropped",
+          "pointer": "/expect/hooks",
+          "sha256": "72dc7a4d676651217ce287556d22858dcc427b42f63aa92268c209edd5aabdfd",
+          "scenario_sha256": "8bd9ab1d0c9870ac07a4184973edf774dcbd72cc268e937589d5b06f43c5b462",
+          "proves": "The recorded result-hook calls contain the asserted per-call structured content; object expectations are patches and null also permits absence."
+        },
+        {
+          "scenario": "tool-structured/a-refused-handler-publishes-no-copy",
+          "pointer": "/expect/timeline/room-1",
+          "sha256": "ba9cba0269bda835f9aa2acdb484df35d6746bead24ed5ab45fc2cc10a10aea9",
+          "scenario_sha256": "a49ebd932768f5f49394d0005c3dac52ea2eb60e129d27f0741fd4e803cfef6b",
+          "proves": "The stored end rows have the asserted structured values and outcomes; object expectations are patches, not exact key equality."
+        },
+        {
+          "scenario": "tool-structured/a-text-only-rewrite-keeps-the-handler-copy",
+          "pointer": "/expect/timeline/room-1",
+          "sha256": "ea7fe5edd9b380a082d52f8883231e0a7c7cc33537f03315d82ae310ebfdf5fb",
+          "scenario_sha256": "176644ef08c3813da661f8efd3d7e865937426ad676ed6c3a7b4370fe42f4fdf",
+          "proves": "The stored end rows have the asserted structured values and outcomes; object expectations are patches, not exact key equality."
+        },
+        {
+          "scenario": "tool-structured/a-text-only-rewrite-keeps-the-handler-copy",
+          "pointer": "/expect/hooks",
+          "sha256": "72dc7a4d676651217ce287556d22858dcc427b42f63aa92268c209edd5aabdfd",
+          "scenario_sha256": "176644ef08c3813da661f8efd3d7e865937426ad676ed6c3a7b4370fe42f4fdf",
+          "proves": "The recorded result-hook calls contain the asserted per-call structured content; object expectations are patches and null also permits absence."
+        },
+        {
+          "scenario": "tool-structured/an-absent-copy-remains-null",
+          "pointer": "/expect/timeline/room-1",
+          "sha256": "a6c70a5504922386aa9708a363f0f706b04899a993c866ef85e13a65f0bbe435",
+          "scenario_sha256": "f8c2de1adb448fc97672bafae9e43678acab6cc861a8ea8b5ed1ff88bb2bf95b",
+          "proves": "The stored end rows have the asserted structured values and outcomes; object expectations are patches, not exact key equality."
+        },
+        {
+          "scenario": "tool-structured/an-absent-copy-remains-null",
+          "pointer": "/expect/hooks",
+          "sha256": "0e19c232cbcfc2689c389c5884c2124f2432df491f9a71ee594bc2b6890c7253",
+          "scenario_sha256": "f8c2de1adb448fc97672bafae9e43678acab6cc861a8ea8b5ed1ff88bb2bf95b",
+          "proves": "The recorded result-hook calls contain the asserted per-call structured content; object expectations are patches and null also permits absence."
+        },
+        {
+          "scenario": "tool-structured/an-empty-copy-remains-an-empty-object",
+          "pointer": "/expect/timeline/room-1",
+          "sha256": "8c1e6b7fa99c56e07b02ba865f6de6f595a6fe83bfe40d205d0b5177526c1454",
+          "scenario_sha256": "9d6417451f9c4f5afa20f1f183c65ee127da48127f082a0daada8c080180d41a",
+          "proves": "The stored end rows have the asserted structured values and outcomes; object expectations are patches, not exact key equality."
+        },
+        {
+          "scenario": "tool-structured/an-empty-copy-remains-an-empty-object",
+          "pointer": "/expect/hooks",
+          "sha256": "7d293dedce02667caee1ecb9f14935da44ee4842ac034b3b1e6a396413f5bec8",
+          "scenario_sha256": "9d6417451f9c4f5afa20f1f183c65ee127da48127f082a0daada8c080180d41a",
+          "proves": "The recorded result-hook calls contain the asserted per-call structured content; object expectations are patches and null also permits absence."
+        },
+        {
+          "scenario": "tool-structured/an-unserved-handler-publishes-no-copy",
+          "pointer": "/expect/timeline/room-1",
+          "sha256": "5145f549cf28d5c5a239ae8c389c055ce5bc8ae62c2bf21d9e93b781b2e9aca1",
+          "scenario_sha256": "dd0d3609e403a1021bc4c1d58df26b939ad96eb4c3de1d922b5df4167ddc80a8",
+          "proves": "The stored end rows have the asserted structured values and outcomes; object expectations are patches, not exact key equality."
+        },
+        {
+          "scenario": "tool-structured/parallel-calls-keep-their-own-structured-copies",
+          "pointer": "/expect/timeline/room-1",
+          "sha256": "9567fa0b63197d28f80ad6588890aeb129b6f9ab0e1fd05e072c48ee6dd53d0f",
+          "scenario_sha256": "5462884aa5c331b51f868c278241be6d624b3ae40ccea1334e36f61846f70cd0",
+          "proves": "The stored end rows have the asserted structured values and outcomes; object expectations are patches, not exact key equality."
+        },
+        {
+          "scenario": "tool-structured/parallel-calls-keep-their-own-structured-copies",
+          "pointer": "/expect/hooks",
+          "sha256": "7be5926cfe12e78692264394957cac56f268a52de4b0cf5bb4e89a192557e4ee",
+          "scenario_sha256": "5462884aa5c331b51f868c278241be6d624b3ae40ccea1334e36f61846f70cd0",
+          "proves": "The recorded result-hook calls contain the asserted per-call structured content; object expectations are patches and null also permits absence."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Other ON_TOOL_CALL requirements, external-agent reporting and every possible cancellation window are not established by this link.",
+        "Only initial handler-copy transmission is duplicated in streaming and non-streaming; every hook variant is not claimed in both modes.",
+        "MCP bounds, shared map aliases, kept tasks, exact empty dictionaries and private Python dispatcher/context fault injections have no shared execution credit here.",
+        "No actual text-eviction execution is credited."
       ]
     }
   ],
@@ -678984,6 +679183,111 @@
         {
           "scenario": "executors/releasing-an-unknown-channel-fails",
           "sha256": "5c9e6d8c728c074b61577d107daccd4fdd82a24c71c80b79c88b592cbf580075",
+          "outcome": "passed"
+        }
+      ]
+    },
+    {
+      "id": "python-tool-structured-500ffa5-memory",
+      "implementation": "python",
+      "implementation_commit": "500ffa55b2796f555ff3ff85afa1dd763f4bd45f",
+      "rfc_commit": "07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a",
+      "corpus_commit": "ebefd1ec721534284bea345409bb5877ed498ee3",
+      "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "PYTHONPATH=src",
+        "uv",
+        "run",
+        "pytest",
+        "tests/conformance/test_conformance.py",
+        "-k",
+        "tool-structured",
+        "-n",
+        "0",
+        "--junitxml=receipt-run.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-tool-structured-500ffa5.xml",
+        "format": "pytest_junit",
+        "sha256": "1b01c11316421fa66e6c6018e2be85871536dad601ff55c9455cf06046e2e145"
+      },
+      "results": [
+        {
+          "scenario": "tool-structured/a-blocked-call-publishes-no-handler-copy",
+          "sha256": "2d64c2fec97d99d912ea9e2cd0edabee51bf295b9d8d8079f998a947681651c5",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/a-cancelled-call-publishes-no-handler-copy",
+          "sha256": "05aecfdcee9d5580a863b134a7e18de870a20347568653665648333a51e5fb20",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/a-failed-closed-hook-withholds-the-copy",
+          "sha256": "923db3ca138d1b054c2960b3f3a7634130d9e6309949be9a6d440832a430354d",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/a-failed-handler-publishes-no-copy",
+          "sha256": "588131b79282216358df864c645519d480dc32e0d559ea8c50864b70d71672c8",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/a-handler-copy-reaches-the-hook-and-row-non-streaming",
+          "sha256": "16e63e31c862eefc34f0922c598bc7859aff9eccb367cd530515147d1a2cb4c5",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/a-handler-copy-reaches-the-hook-and-row-streaming",
+          "sha256": "b4083274c0216f7c9ec77598dd2c9cd51e2d83a856633e4a06d3d703e0f0f4ef",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/a-hook-clears-the-handler-copy",
+          "sha256": "2b49f36a55de4a86aedc037cb752c46632d3c0abc2c22d92605a7f8e06854a93",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/a-hook-replaces-the-handler-copy",
+          "sha256": "9ebdd03b0aea010461eb95889d9a2d7dd1adebd1eeea8dd5e19b5df1736462cf",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/a-non-object-hook-copy-is-dropped",
+          "sha256": "8bd9ab1d0c9870ac07a4184973edf774dcbd72cc268e937589d5b06f43c5b462",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/a-refused-handler-publishes-no-copy",
+          "sha256": "a49ebd932768f5f49394d0005c3dac52ea2eb60e129d27f0741fd4e803cfef6b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/a-text-only-rewrite-keeps-the-handler-copy",
+          "sha256": "176644ef08c3813da661f8efd3d7e865937426ad676ed6c3a7b4370fe42f4fdf",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/an-absent-copy-remains-null",
+          "sha256": "f8c2de1adb448fc97672bafae9e43678acab6cc861a8ea8b5ed1ff88bb2bf95b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/an-empty-copy-remains-an-empty-object",
+          "sha256": "9d6417451f9c4f5afa20f1f183c65ee127da48127f082a0daada8c080180d41a",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/an-unserved-handler-publishes-no-copy",
+          "sha256": "dd0d3609e403a1021bc4c1d58df26b939ad96eb4c3de1d922b5df4167ddc80a8",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/parallel-calls-keep-their-own-structured-copies",
+          "sha256": "5462884aa5c331b51f868c278241be6d624b3ae40ccea1334e36f61846f70cd0",
           "outcome": "passed"
         }
       ]

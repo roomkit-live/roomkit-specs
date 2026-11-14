@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
   "corpus_sha256": "315f33925febd2b7bab90a77262bcbd07d6f924eb329e74499818b1a84c9c488",
-  "python_commit": "559d042d1b07f4c782bf6737ab7e6753495b6792",
+  "python_commit": "500ffa55b2796f555ff3ff85afa1dd763f4bd45f",
   "scenario_count": 2237,
   "sections": [
     {
@@ -30854,6 +30854,27 @@
               "state": "stale"
             }
           ]
+        },
+        {
+          "id": "tool-structured-handler-copies",
+          "scope": "Local AI handler copies reach result hooks and persisted end rows. Shared cases cover replacement, clearing, text-only rewrite, invalid copy normalization, withholding, unsuccessful outcomes, parallel calls and cancellation after a handler write.",
+          "coverage": "partial",
+          "missing": [
+            "Other ON_TOOL_CALL requirements, external-agent reporting and every possible cancellation window are not established by this link.",
+            "Only initial handler-copy transmission is duplicated in streaming and non-streaming; every hook variant is not claimed in both modes.",
+            "MCP bounds, shared map aliases, kept tasks, exact empty dictionaries and private Python dispatcher/context fault injections have no shared execution credit here.",
+            "No actual text-eviction execution is credited."
+          ],
+          "executions": [
+            {
+              "execution": "python-tool-structured-500ffa5-memory",
+              "implementation": "python",
+              "commit": "500ffa55b2796f555ff3ff85afa1dd763f4bd45f",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -48389,7 +48410,7 @@
               "commit": "559d042d1b07f4c782bf6737ab7e6753495b6792",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -70312,6 +70333,15 @@
       "implementation_commit": "559d042d1b07f4c782bf6737ab7e6753495b6792",
       "rfc_commit": "07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a",
       "corpus_commit": "2d4c16e9fb6deb4d7d31acb9b34fc8e78c7d9381",
+      "backend": "memory",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-tool-structured-500ffa5-memory",
+      "implementation": "python",
+      "implementation_commit": "500ffa55b2796f555ff3ff85afa1dd763f4bd45f",
+      "rfc_commit": "07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a",
+      "corpus_commit": "ebefd1ec721534284bea345409bb5877ed498ee3",
       "backend": "memory",
       "runtime": "asyncio"
     }
