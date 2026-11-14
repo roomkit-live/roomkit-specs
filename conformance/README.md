@@ -700,6 +700,9 @@ that both runners check the same messages.
 - `acp.session_config`: initial channel option values (strings or booleans).
 - `acp.publish_thinking_text`: publish thought text in ephemeral deltas (false
   by default); the turn stream and response report still receive the full text.
+- `acp.transport.provides_usage_metadata`: the transport's opt-in trust flag, false
+  by default. `acp.agent.prompts[].meta` is sent unchanged as the response's
+  `_meta`; the fixture does not construct usage or provenance.
 - `acp.transport.refuse_prompt`: ordered entries for calls to the transport's
   connection `prompt`, including rejected attempts. `null` (also the default
   past the last entry) forwards normally. An object raises the native
@@ -1039,6 +1042,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `text_events` | Per room, a minted one's as `$r1`, the `text_delta` ephemeral events the room's realtime is handed, in order: each `{text, round, channel_id}` (§6.4) |
 | `thinking_events` | Per room, the `thinking_start`, `thinking_delta` and `thinking_end` ephemeral events its subscribers read, in order: each `{type, thinking_length, round, channel_id}`, and `thinking` for an agent with `publish_thinking_text` |
 | `tool_events` | Per room, the `tool_call_start`, `tool_call_end` and `tool_call_delta` ephemeral events its subscribers read, in order: each `{type, tool_calls, round, channel_id}`, and `duration_ms` for an end that ran its calls (§6.4, §8.4) |
+| `custom_events` | Per room, actual CUSTOM events read by the subscriber, in order, each `{room_id, channel_id, data}`; the data retains its own `type` without being overwritten |
 | `presence_events` | Per room, the `presence_online` and `presence_offline` ephemeral events its subscribers read during the steps, in order: each `{type, user_id}`, `user_id` the agent's channel id (§10.6.7, §8.4) |
 | `streamed` | Per room and streaming channel, the items its `deliver_stream` read, in order: `{"text": ...}` for a text delta, `{"thinking": ...}` for a piece of the model's reasoning, `{"usage": ..., "model": ..., "provider": ...}` for what a generation used, when the channel `reads_usage`, `{"row": event}` for a row the store holds, `{"loop_end": {"reason", "rounds", "usage"}}` for the turn's end, when the channel `reads_loop_end`, `{"failed": true}` where the stream raised |
 | `turns` | Per room and intelligence channel, the events its `on_event()` received |

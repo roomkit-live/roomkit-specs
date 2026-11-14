@@ -4954,6 +4954,13 @@
               "object"
             ]
           }
+        },
+        "custom_events": {
+          "description": "Per room, actual CUSTOM subscriber events as room_id, channel_id and data.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "array"
+          }
         }
       }
     },
@@ -7643,6 +7650,10 @@
           "items": {
             "$ref": "#/$defs/acp_permission_step"
           }
+        },
+        "meta": {
+          "description": "Raw response _meta, sent unchanged.",
+          "type": "object"
         }
       }
     },
@@ -7921,6 +7932,11 @@
               }
             ]
           }
+        },
+        "provides_usage_metadata": {
+          "description": "The existing transport trust flag; false by default. No usage fields are synthesized.",
+          "type": "boolean",
+          "default": false
         }
       }
     },
