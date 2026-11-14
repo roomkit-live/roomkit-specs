@@ -5648,6 +5648,13 @@
         "writes_record": {
           "description": "Before it answers, each call writes these keys on the turn's record through current_response_metadata(), when it answers one (\u00a76.7).",
           "type": "object"
+        },
+        "writes_structured_content": {
+          "description": "Each call first assigns this copy to current_tool_call().structured_content, before a gate holds it or its scripted answer succeeds or fails (\u00a79.3, \u00a721.4). Every call gets its own copy.",
+          "type": [
+            "object",
+            "null"
+          ]
         }
       },
       "oneOf": [
