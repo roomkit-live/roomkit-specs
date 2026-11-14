@@ -401,6 +401,13 @@
           "items": {
             "$ref": "#/$defs/executor"
           }
+        },
+        "event_handlers": {
+          "description": "Framework-event handlers registered on the kit (\u00a78.2), each reacting to the events of its type in the execution context the kit runs it in (README, `event_handlers`).",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/event_handler"
+          }
         }
       }
     },
@@ -6514,6 +6521,59 @@
             "object",
             "null"
           ]
+        }
+      }
+    },
+    "event_handler": {
+      "description": "A scripted framework-event handler: it records nothing, and reacts to each event of its type with the first of its reactions whose `when` holds.",
+      "type": "object",
+      "required": [
+        "event",
+        "reactions"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "event": {
+          "description": "The framework event's type it handles (\u00a78.2): before_tool_use, tool_call, ai_response...",
+          "type": "string"
+        },
+        "reactions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/event_handler_reaction"
+          }
+        }
+      }
+    },
+    "event_handler_reaction": {
+      "description": "A reaction of a framework-event handler: holds at its `gate`, then makes its actions in order, in the handler's execution context.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "when": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "room_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "repeat": {
+          "type": "boolean"
+        },
+        "gate": {
+          "description": "Hold the handler at this gate until a step opens it.",
+          "type": "string"
+        },
+        "do": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/action"
+          }
         }
       }
     },

@@ -330,6 +330,15 @@ room callbacks of the setup are not compared.
   `cancel_ms`, the implementation's default for each absent. Which of several
   executors declaring a channel takes a room's first turn is the backend's
   to choose (§10.6.7): a scenario that needs one starts the other afterwards.
+- `event_handlers`: **framework-event handlers** (§8.2), each registered on
+  the kit after the hooks, in order, for the events of its `event` type (a
+  framework event's name: `before_tool_use`, `tool_call`, `ai_response`...).
+  It records nothing, and reacts to each event with the first of its
+  `reactions` whose `when` holds (`room_id`, the event's room), used once
+  unless it has `"repeat": true`: it holds at the reaction's `gate`, then
+  makes its `do` actions in order, in the execution context the kit runs the
+  handler in, `$room` naming the event's room (only for an event that names
+  one).
 
 ### Identity resolution
 
