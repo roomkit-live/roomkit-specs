@@ -6,7 +6,7 @@
     "§6.4",
     "§19.3.2"
   ],
-  "notes": "Python: tests/test_channels/test_acp_empty_prompt.py::test_host_content_supplies_a_prompt_without_mutating_the_event, body='   ', blocks=['The user supplied an image without a caption.']. Exact prompt list, original contributor input and stored event. Native Rust tests cover the direct ChannelOutput and caller-owned event preservation; stored-event equality alone does not prove object identity.",
+  "notes": "Python: tests/test_channels/test_acp_empty_prompt.py::test_host_content_supplies_a_prompt_without_mutating_the_event, body='   ', blocks=['The user supplied an image without a caption.']. Exact prompt list, original contributor input and stored event. Native Rust tests cover the direct ChannelOutput and caller-owned event preservation; stored-event equality alone does not prove object identity. The source strips the prompt before comparing; the shared scenario preserves and pins the whitespace actually sent.",
   "setup": {
     "kit": {
       "persistence_policy": {
@@ -75,7 +75,7 @@
     "acp_prompts": {
       "claude": [
         {
-          "text": "The user supplied an image without a caption."
+          "text": "The user supplied an image without a caption.\n\n   "
         }
       ]
     },
