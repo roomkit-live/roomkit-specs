@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
   "corpus_sha256": "c227bce578e2cbad9bfe75625fb70c6e23b4a673c19c5abd5a2239c52fbdb319",
-  "python_commit": "be157479ebcd0f167c898737e5f49d1e03559ce6",
+  "python_commit": "1231c59c586c48c2f77cd10ef191b2be9bb85655",
   "scenario_count": 2191,
   "sections": [
     {
@@ -18251,7 +18251,7 @@
               "commit": "be157479ebcd0f167c898737e5f49d1e03559ce6",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -18278,7 +18278,7 @@
               "commit": "be157479ebcd0f167c898737e5f49d1e03559ce6",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -69683,6 +69683,15 @@
       "implementation_commit": "be157479ebcd0f167c898737e5f49d1e03559ce6",
       "rfc_commit": "07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a",
       "corpus_commit": "6d32f49f6ad9d9e4b159dd7548e0d6f1c1fcc6b2",
+      "backend": "memory",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-acp-empty-input-1231c59-memory",
+      "implementation": "python",
+      "implementation_commit": "1231c59c586c48c2f77cd10ef191b2be9bb85655",
+      "rfc_commit": "07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a",
+      "corpus_commit": "936908c90fe4ca0c9bc1a132db55fb6a6de2b13f",
       "backend": "memory",
       "runtime": "asyncio"
     }

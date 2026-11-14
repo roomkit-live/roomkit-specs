@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "be157479ebcd0f167c898737e5f49d1e03559ce6",
+  "python_commit": "1231c59c586c48c2f77cd10ef191b2be9bb85655",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -678515,6 +678515,76 @@
         {
           "scenario": "discussion/acp-trusted-notes-with-empty-request",
           "sha256": "1a7ab2b4fad8b06d63afe180ed94bed9259ae91fbf40d70485eb46e43b0c48b7",
+          "outcome": "passed"
+        }
+      ]
+    },
+    {
+      "id": "python-acp-empty-input-1231c59-memory",
+      "implementation": "python",
+      "implementation_commit": "1231c59c586c48c2f77cd10ef191b2be9bb85655",
+      "rfc_commit": "07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a",
+      "corpus_commit": "936908c90fe4ca0c9bc1a132db55fb6a6de2b13f",
+      "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "PYTHONPATH=src",
+        "uv",
+        "run",
+        "pytest",
+        "tests/conformance/test_conformance.py",
+        "-k",
+        "acp/input-",
+        "-n",
+        "0",
+        "--junitxml=receipt-run.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-acp-empty-input-1231c59.xml",
+        "format": "pytest_junit",
+        "sha256": "9521c0c70177ce8801899682b59086753cf0e425d0cd86fe332dd3cddaa343ad"
+      },
+      "results": [
+        {
+          "scenario": "acp/input-empty-absent",
+          "sha256": "dfd20c8d8172a533fc430aeebba2d029f0e31758a7e55949e6ad067b62e91d1a",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/input-empty-blank",
+          "sha256": "a5b81a7b65c590999fc8efc8a02af28a6e99a90b6622c1c81ae8158d5030403d",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/input-empty-empty",
+          "sha256": "c37582ec29d73707032646fae5297e09ee7309447a6dbec2232eb6bc9f71ffd1",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/input-empty-host",
+          "sha256": "73ea428cf338aa03ae727b78e20fcd29212525a8941e9c8691023f186cc6b743",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/input-whitespace-absent",
+          "sha256": "122cc47c6fbe3efe1a4e030d61dd179ced7633b24402d4706c5335a7ebb4d7de",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/input-whitespace-blank",
+          "sha256": "0fc1e578bb92bbdca6eb19752b4d96f67b299fe09893a9fea3d646bc67f66e11",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/input-whitespace-empty",
+          "sha256": "a361539d53a9e0c2900822e6f8393e87c390f426302f776ecd9f8b1cb07ea982",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/input-whitespace-host",
+          "sha256": "496e3847d0989804150f173f83797d863fd3c6eeafe205295aa790c87db3e61d",
           "outcome": "passed"
         }
       ]
