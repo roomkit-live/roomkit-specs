@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "7c06017ea2b7e0528876353415b64cd17a0d86b1",
+  "python_commit": "fc6810da1db14711de8db5eef4076f115b4309a5",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -678680,6 +678680,41 @@
         {
           "scenario": "acp/usage-untrusted-envelope",
           "sha256": "23c0f767e7c7db18c25a82f6a5ee7b1f25579751bc0984e9897bbcb849eb6070",
+          "outcome": "passed"
+        }
+      ]
+    },
+    {
+      "id": "python-acp-completion-fc6810d-memory",
+      "implementation": "python",
+      "implementation_commit": "fc6810da1db14711de8db5eef4076f115b4309a5",
+      "rfc_commit": "07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a",
+      "corpus_commit": "152442d06b69adae37d87cb63848f02484747232",
+      "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "PYTHONPATH=src",
+        "uv",
+        "run",
+        "pytest",
+        "tests/conformance/test_conformance.py",
+        "-k",
+        "acp/a-truncated-turn-preserves-max-tokens",
+        "-n",
+        "0",
+        "--junitxml=receipt-run.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-acp-completion-fc6810d.xml",
+        "format": "pytest_junit",
+        "sha256": "dd74f2859ad9f80ce3dae2518fafa8fcdbd7dc5811c8ddb1ff9d72df858b2f1c"
+      },
+      "results": [
+        {
+          "scenario": "acp/a-truncated-turn-preserves-max-tokens",
+          "sha256": "af735c0d6d7c0f5dd68f2e188964174c5988d02a0bf62183de3b4c3f3c410604",
           "outcome": "passed"
         }
       ]
