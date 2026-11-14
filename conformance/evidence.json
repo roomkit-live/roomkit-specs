@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "bbd4420bd314380f611980405feb9ccb3a1739d7",
+  "python_commit": "bf5da8d7b3886300831ca3856c0237b39f3a1288",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -678830,6 +678830,41 @@
         {
           "scenario": "acp/notifications-usage-live-wrong-session",
           "sha256": "75de6913cb478d5d61def64964e82254635adf79c3612f06c932781adc44d0f7",
+          "outcome": "passed"
+        }
+      ]
+    },
+    {
+      "id": "python-acp-lifecycle-bf5da8d-memory",
+      "implementation": "python",
+      "implementation_commit": "bf5da8d7b3886300831ca3856c0237b39f3a1288",
+      "rfc_commit": "07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a",
+      "corpus_commit": "af761e5c3b3541b1a2e4d1fd01a3b8cf5bec1319",
+      "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "PYTHONPATH=src",
+        "uv",
+        "run",
+        "pytest",
+        "tests/conformance/test_conformance.py",
+        "-k",
+        "a-finished-handler-turn-reports-its-complete-answer",
+        "-n",
+        "0",
+        "--junitxml=receipt-run.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-acp-lifecycle-bf5da8d.xml",
+        "format": "pytest_junit",
+        "sha256": "73e3d9e46cd0367fa8c6c2e5d68dc9b161006fc6faab8806d8e1437f3c769f5b"
+      },
+      "results": [
+        {
+          "scenario": "acp/a-finished-handler-turn-reports-its-complete-answer",
+          "sha256": "512e60c148303797587015c241e4d4697da2282e8bea9da6951eadad731d2ab0",
           "outcome": "passed"
         }
       ]
