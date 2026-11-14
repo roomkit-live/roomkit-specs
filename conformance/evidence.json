@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "a1100814feae29bcb8ab1689ab316063ee07847c",
+  "python_commit": "bbd4420bd314380f611980405feb9ccb3a1739d7",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -7557,7 +7557,7 @@
         },
         {
           "nodeid": "tests/test_framework.py::TestTimeouts::test_slow_store_commit_is_not_reported_blocked",
-          "sha256": "954cc7f12f63d901ebbe43735500e9e0b5b82b0bf1711a08750843d4e0568493",
+          "sha256": "730aed819fb1e1e708a9f59f02cd7f5368328a9881f5b41a29781693e0f35cca",
           "proves": "slow store commit is not reported blocked. Specialized source evidence; scenario execution receipts do not certify this test. "
         },
         {
@@ -678755,6 +678755,81 @@
         {
           "scenario": "acp/handler-on-tool-call-observer-reentry-bound",
           "sha256": "7bdd4c20a517d18326fa7288eac1e8189368471c1f60c6d1d21366056b9a210b",
+          "outcome": "passed"
+        }
+      ]
+    },
+    {
+      "id": "python-acp-notifications-bbd4420-memory",
+      "implementation": "python",
+      "implementation_commit": "bbd4420bd314380f611980405feb9ccb3a1739d7",
+      "rfc_commit": "07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a",
+      "corpus_commit": "75c5e7276dffed22851a046f5801dbb17b2c5efb",
+      "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "PYTHONPATH=src",
+        "uv",
+        "run",
+        "pytest",
+        "tests/conformance/test_conformance.py",
+        "-k",
+        "acp and notifications",
+        "-n",
+        "0",
+        "--junitxml=receipt-run.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-acp-notifications-bbd4420.xml",
+        "format": "pytest_junit",
+        "sha256": "931cb2e35209330b9f138593f249e6283c877b395240c884c8f5bcc40a4153e0"
+      },
+      "results": [
+        {
+          "scenario": "acp/notifications-binding-scope",
+          "sha256": "9e38bfe9587fd5d3aaae0355d90c84049a7a38edd263d5b76c7f9268ca49601c",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/notifications-configured-before-first-prompt",
+          "sha256": "de772db64a719bd37dcaa82662aea15fb188dca23648d38e962498e8b7c76f09",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/notifications-model-snapshots",
+          "sha256": "6fb379e9a484f1ec587c19ead59657d5f22b906c24324b0bf451d7873ad2a08b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/notifications-plan-and-tool-progress",
+          "sha256": "3b16bcb22453371ca5b8227c3f5c02d5de91b333b96a0ad67d91add63f1b7254",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/notifications-read-only",
+          "sha256": "ed197c45090c6165a235dfcf87563f229f525c92b29ef466ace0687de311d5cd",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/notifications-response-scope",
+          "sha256": "4b64ae23925a6fdc96ff021e4189dc8e66d08538e51ab4cc2a44d65132e9edcd",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/notifications-two-rooms",
+          "sha256": "beaf6b180de1aca11fdb63a2a35d97a12b1f503d7dcbe3f213941993d08c914f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/notifications-usage-live-origin",
+          "sha256": "146eb5adfd3beca59cc5b3e2de2ab9b1b98bbb947ba84d9d8da876666e8a3db7",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "acp/notifications-usage-live-wrong-session",
+          "sha256": "75de6913cb478d5d61def64964e82254635adf79c3612f06c932781adc44d0f7",
           "outcome": "passed"
         }
       ]
