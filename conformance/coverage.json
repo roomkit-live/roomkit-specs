@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
-  "corpus_sha256": "27c68a9a7ad8de4db2306ae1f3933bf78e08e63ecdabe2b440f3215a67cf9c3d",
+  "corpus_sha256": "5aa640fdf1ebfaafed81a67ed4d67c862a46c1335a0b614bf01713f6cf3bbbdd",
   "python_commit": "bf5da8d7b3886300831ca3856c0237b39f3a1288",
-  "scenario_count": 2218,
+  "scenario_count": 2222,
   "sections": [
     {
       "section": "0",
@@ -3669,6 +3669,10 @@
         "channel-call/a-verb-closing-its-executor-keeps-its-calling-turn",
         "channel-call/a-verb-the-channel-lacks-fails",
         "channel-call/an-empty-state-is-forgotten",
+        "channel-release/a-closed-kit-refuses-release",
+        "channel-release/a-closed-kit-refuses-release-before-checking-registration",
+        "channel-release/a-closed-local-executor-can-release-a-live-channel",
+        "channel-release/a-live-channel-keeps-its-rooms-after-release",
         "executors/a-channel-call-no-executor-takes-fails-no-executor",
         "executors/a-channel-call-runs-on-the-executor-holding-the-room",
         "executors/a-publication-from-an-executor-no-longer-holding-the-room-is-dropped",
