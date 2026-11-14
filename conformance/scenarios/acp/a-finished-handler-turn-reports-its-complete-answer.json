@@ -170,7 +170,8 @@
             "tool_calls_count": 1,
             "round_count": 0,
             "loop_end_reason": "completed",
-            "streaming": true
+            "streaming": true,
+            "room_id": "room-1"
           }
         }
       ]
