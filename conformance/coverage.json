@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
-  "corpus_sha256": "c7692c4161120087bf488dc889c73a1eb842c45047ba75e6b3f6b48f5cb12ffe",
+  "corpus_sha256": "34029f08f8d655cf3ac8ab6265ad8789fdb2880303a8ec7a94b3aa731880b9ea",
   "python_commit": "7c06017ea2b7e0528876353415b64cd17a0d86b1",
-  "scenario_count": 2204,
+  "scenario_count": 2205,
   "sections": [
     {
       "section": "0",
@@ -733,6 +733,7 @@
         "acp/a-prompt-the-agent-fails-fails-the-turn",
         "acp/a-room-keeps-its-session-across-turns",
         "acp/a-stop-reason-other-than-end-turn-is-named-on-the-turn",
+        "acp/a-truncated-turn-preserves-max-tokens",
         "acp/an-instruction-is-prompted-under-the-runtime-s-mark",
         "acp/cancel-during-configuration",
         "acp/cancel-during-opening",
