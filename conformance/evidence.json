@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "bf5da8d7b3886300831ca3856c0237b39f3a1288",
+  "python_commit": "559d042d1b07f4c782bf6737ab7e6753495b6792",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -21593,6 +21593,70 @@
         "History catch-up, silent-answer suppression, every copied-header input source and the whole Discussion state machine remain separate evidence. No service-backend or overall conformance-level claim follows."
       ],
       "review": "Independently reviewed against the exact wire and timeline assertions. Both links remain partial; exact notes formatting, native identity boundaries, remote executors and service backends are separate proofs."
+    },
+    {
+      "id": "channel-release-local-registry",
+      "requirement": "RK-10.6.3-007",
+      "clause_sha256": "0555cad66580394eb9ead778b2540888fa50a4533638168f16916a3d9efe59c4",
+      "coverage": "partial",
+      "scope": "Local live channels: release preserves the asserted per-room page values, succeeds after closing only the local executor, and rejects unknown ids while the kit is open.",
+      "review": "Python source methods and shared scenarios passed first, then the same cases on one and four Rust workers. Independent code review confirmed the registry no-op and public kit-close guard. The historical unknown-id case now actually executes in Rust. Native identity and close-count witnesses are separate from these shared assertions and are not execution receipts.",
+      "assertions": [
+        {
+          "scenario": "channel-release/a-live-channel-keeps-its-rooms-after-release",
+          "pointer": "/steps/2/expect",
+          "sha256": "ff9c534d8448cd26fb0c3076ac8e5b6fcf4d3537e8d4a5249e4bec6d56664582",
+          "scenario_sha256": "24a38f3897cd2fb0d23bf12a76bfb5b82696049a19f86daf80db19dc2515af64",
+          "proves": "The first release returns no value for the live channel."
+        },
+        {
+          "scenario": "channel-release/a-live-channel-keeps-its-rooms-after-release",
+          "pointer": "/steps/3/expect",
+          "sha256": "ff9c534d8448cd26fb0c3076ac8e5b6fcf4d3537e8d4a5249e4bec6d56664582",
+          "scenario_sha256": "24a38f3897cd2fb0d23bf12a76bfb5b82696049a19f86daf80db19dc2515af64",
+          "proves": "A repeated release still returns no value."
+        },
+        {
+          "scenario": "channel-release/a-live-channel-keeps-its-rooms-after-release",
+          "pointer": "/steps/4/expect",
+          "sha256": "fb69f3897e0248064828eb3fd01256ba9c3cda760e53bad90c8b7bfe881e9a16",
+          "scenario_sha256": "24a38f3897cd2fb0d23bf12a76bfb5b82696049a19f86daf80db19dc2515af64",
+          "proves": "The read verb in r1 returns page=3 after both releases."
+        },
+        {
+          "scenario": "channel-release/a-live-channel-keeps-its-rooms-after-release",
+          "pointer": "/steps/5/expect",
+          "sha256": "2ca002f3f1d85868c599492d11f9715fdfbd40a77ecd85f45a5982187b03e4fa",
+          "scenario_sha256": "24a38f3897cd2fb0d23bf12a76bfb5b82696049a19f86daf80db19dc2515af64",
+          "proves": "The read verb in r2 returns page=9 after both releases."
+        },
+        {
+          "scenario": "channel-release/a-closed-local-executor-can-release-a-live-channel",
+          "pointer": "/steps/1/expect",
+          "sha256": "ff9c534d8448cd26fb0c3076ac8e5b6fcf4d3537e8d4a5249e4bec6d56664582",
+          "scenario_sha256": "1488ca6dc5a3f19fe9112e3f975299931ee8ee543875bcae4c8402a15bfd1d83",
+          "proves": "Closing only the local executor does not refuse release of a live channel."
+        },
+        {
+          "scenario": "channel-release/a-closed-local-executor-can-release-a-live-channel",
+          "pointer": "/steps/2/expect",
+          "sha256": "40d6d88b4b204cedc514c358f38455174ffe5ebe711c0aeaed3cbf970e8407fd",
+          "scenario_sha256": "1488ca6dc5a3f19fe9112e3f975299931ee8ee543875bcae4c8402a15bfd1d83",
+          "proves": "Unknown channel ids are still refused while the kit is open."
+        },
+        {
+          "scenario": "executors/releasing-an-unknown-channel-fails",
+          "pointer": "/steps/0/expect",
+          "sha256": "40d6d88b4b204cedc514c358f38455174ffe5ebe711c0aeaed3cbf970e8407fd",
+          "scenario_sha256": "5c9e6d8c728c074b61577d107daccd4fdd82a24c71c80b79c88b592cbf580075",
+          "proves": "A release of an unknown channel is refused with channel_not_registered."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Public remote executor construction, build retirement/replacement, distributed fanout and execution across processes remain deferred in Rust.",
+        "Other channel controls and the complete shutdown contract are not established by this link."
+      ]
     }
   ],
   "executions": [
@@ -678865,6 +678929,61 @@
         {
           "scenario": "acp/a-finished-handler-turn-reports-its-complete-answer",
           "sha256": "512e60c148303797587015c241e4d4697da2282e8bea9da6951eadad731d2ab0",
+          "outcome": "passed"
+        }
+      ]
+    },
+    {
+      "id": "python-channel-release-559d042-memory",
+      "implementation": "python",
+      "implementation_commit": "559d042d1b07f4c782bf6737ab7e6753495b6792",
+      "rfc_commit": "07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a",
+      "corpus_commit": "2d4c16e9fb6deb4d7d31acb9b34fc8e78c7d9381",
+      "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "PYTHONPATH=src",
+        "uv",
+        "run",
+        "pytest",
+        "tests/conformance/test_conformance.py",
+        "-k",
+        "channel-release or releasing-an-unknown-channel-fails",
+        "-n",
+        "0",
+        "--junitxml=receipt-run.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-channel-release-559d042.xml",
+        "format": "pytest_junit",
+        "sha256": "4025fb0e09b50211a8a2b9f480a7d090a2ca292ed25c51df067591dc6b2a1bca"
+      },
+      "results": [
+        {
+          "scenario": "channel-release/a-closed-kit-refuses-release",
+          "sha256": "c050a48e308d9ca3b9590e5cccf668812cdc8c5d4a770fa6d6f4276e8350a9af",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "channel-release/a-closed-kit-refuses-release-before-checking-registration",
+          "sha256": "6de8d71dc2329f8c5090a9177d5d4f49d2f9e7ddcf479381d90a3013dc632def",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "channel-release/a-closed-local-executor-can-release-a-live-channel",
+          "sha256": "1488ca6dc5a3f19fe9112e3f975299931ee8ee543875bcae4c8402a15bfd1d83",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "channel-release/a-live-channel-keeps-its-rooms-after-release",
+          "sha256": "24a38f3897cd2fb0d23bf12a76bfb5b82696049a19f86daf80db19dc2515af64",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "executors/releasing-an-unknown-channel-fails",
+          "sha256": "5c9e6d8c728c074b61577d107daccd4fdd82a24c71c80b79c88b592cbf580075",
           "outcome": "passed"
         }
       ]
