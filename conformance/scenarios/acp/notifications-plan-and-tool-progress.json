@@ -4,7 +4,7 @@
   "title": "ACP publishes the plan and intermediate tool progress to the prompting room",
   "rules": [
     "§6.4",
-    "§A.9.1"
+    "Appendix A.9.1"
   ],
   "notes": "Python: tests/test_channels/test_acp.py::TestACPChannel::test_streams_updates_and_reuses_room_session. Real JSON-RPC updates and the realtime subscriber, not a synthetic notification oracle.",
   "setup": {
