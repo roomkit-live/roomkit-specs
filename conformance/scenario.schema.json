@@ -4806,6 +4806,13 @@
             "type": "array"
           }
         },
+        "custom_events": {
+          "description": "Per room, the CUSTOM ephemeral events its subscribers read, in order: each {room_id, channel_id, data}.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "array"
+          }
+        },
         "presence_events": {
           "description": "Per room, the presence_online and presence_offline ephemeral events its subscribers read during the steps, in order: each {type, user_id} (\u00a710.6.7).",
           "type": "object",
