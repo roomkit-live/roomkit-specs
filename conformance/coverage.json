@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
-  "corpus_sha256": "315f33925febd2b7bab90a77262bcbd07d6f924eb329e74499818b1a84c9c488",
+  "corpus_sha256": "28912738945729e44788e98bec185c17b5688185a13f5af4dd9d435d1dc89559",
   "python_commit": "500ffa55b2796f555ff3ff85afa1dd763f4bd45f",
-  "scenario_count": 2237,
+  "scenario_count": 2238,
   "sections": [
     {
       "section": "0",
@@ -263,6 +263,7 @@
         "injection/a-record-outside-the-pipeline",
         "instructions/an-agent-s-copy-of-an-instruction-runs-no-hook-and-is-no-activity",
         "locks/a-cursor-hole-no-lane-runs-is-skipped-after-the-gap-timeout",
+        "locks/an-instruction-s-set-waits-for-the-index-another-process-committed-before-it",
         "members/add-member-joins-once-and-records-a-new-channel",
         "members/remove-member-leaves-or-bans-and-a-join-reactivates",
         "members/rename-member-changes-the-display-name-only",
@@ -3236,6 +3237,7 @@
         "instructions/an-unaddressed-instruction-is-refused",
         "instructions/another-agent-s-history-never-reads-an-instruction-kept",
         "instructions/standalone-is-the-typed-field-s-word-alone",
+        "locks/an-instruction-s-set-waits-for-the-index-another-process-committed-before-it",
         "skills/a-standalone-activation-as-a-room-s-first-turn-rides-its-next",
         "skills/a-standalone-activation-in-a-room-already-read-rides-its-next",
         "skills/a-standalone-activation-of-an-active-skill-delivers-its-body",
@@ -5199,6 +5201,7 @@
         "locks/an-adopted-direct-injection-leaves-its-injected-event-s-failed-release-to-its-caller",
         "locks/an-adopted-message-held-for-its-sender-carries-its-challenge-s-failed-release",
         "locks/an-adopted-message-held-for-its-sender-carries-the-failed-release-of-what-a-call-nested-in-its-challenge-s-section-injected",
+        "locks/an-instruction-s-set-waits-for-the-index-another-process-committed-before-it",
         "locks/the-section-after-a-failed-release-takes-the-lock-again",
         "orchestration/an-install-holds-the-room-until-it-is-over",
         "orchestration/an-install-sends-into-the-room-it-holds",
