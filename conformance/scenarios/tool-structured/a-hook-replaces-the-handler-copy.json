@@ -3,9 +3,9 @@
   "id": "tool-structured/a-hook-replaces-the-handler-copy",
   "title": "A hook replaces the handler copy",
   "rules": [
-    "§5.3",
-    "§9.3",
-    "§21.4"
+    "\u00a75.3",
+    "\u00a79.3",
+    "\u00a721.4"
   ],
   "notes": "Python: tests/test_tool_context.py::TestCurrentToolCall and tests/test_tool_call_structured_copy.py; the handler writes the actual current_tool_call record before the result hook reads it.",
   "setup": {
@@ -139,7 +139,10 @@
             "outcome": "served",
             "status": "completed",
             "structured_content": {
-              "contact": "[PERSON_1]"
+              "contact": "[PERSON_1]",
+              "salary": {
+                "$absent": true
+              }
             },
             "result": "model text"
           }
