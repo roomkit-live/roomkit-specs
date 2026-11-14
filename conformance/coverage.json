@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
-  "corpus_sha256": "c227bce578e2cbad9bfe75625fb70c6e23b4a673c19c5abd5a2239c52fbdb319",
+  "corpus_sha256": "c7692c4161120087bf488dc889c73a1eb842c45047ba75e6b3f6b48f5cb12ffe",
   "python_commit": "1231c59c586c48c2f77cd10ef191b2be9bb85655",
-  "scenario_count": 2191,
+  "scenario_count": 2204,
   "sections": [
     {
       "section": "0",
@@ -979,6 +979,19 @@
         "acp/tools-unicode-preview",
         "acp/tools-update-without-start",
         "acp/turn-record-concurrent-rooms",
+        "acp/usage-absent-measurements",
+        "acp/usage-cache-counters",
+        "acp/usage-counters-and-session-cost",
+        "acp/usage-live-origin",
+        "acp/usage-live-wrong-session",
+        "acp/usage-model-snapshots",
+        "acp/usage-native-id-new-epoch",
+        "acp/usage-recovered-absent",
+        "acp/usage-recovered-report",
+        "acp/usage-two-agents-trusted",
+        "acp/usage-two-agents-untrusted",
+        "acp/usage-unchanged-counters",
+        "acp/usage-untrusted-envelope",
         "ai-router/a-generation-that-spoke-is-not-handed-over",
         "ai-router/a-generation-the-router-hands-over-keeps-the-turn-s-later-rounds",
         "ai-router/a-retry-the-router-names-no-model-for-fails-with-the-last-refusal",
@@ -7696,7 +7709,20 @@
         "acp/tools-terminal-start-duplicates",
         "acp/tools-unicode-preview",
         "acp/tools-update-without-start",
-        "acp/turn-record-concurrent-rooms"
+        "acp/turn-record-concurrent-rooms",
+        "acp/usage-absent-measurements",
+        "acp/usage-cache-counters",
+        "acp/usage-counters-and-session-cost",
+        "acp/usage-live-origin",
+        "acp/usage-live-wrong-session",
+        "acp/usage-model-snapshots",
+        "acp/usage-native-id-new-epoch",
+        "acp/usage-recovered-absent",
+        "acp/usage-recovered-report",
+        "acp/usage-two-agents-trusted",
+        "acp/usage-two-agents-untrusted",
+        "acp/usage-unchanged-counters",
+        "acp/usage-untrusted-envelope"
       ]
     },
     {
