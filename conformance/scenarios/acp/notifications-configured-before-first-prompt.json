@@ -6,7 +6,7 @@
     "§6.4",
     "Appendix A.9.1"
   ],
-  "notes": "Python: tests/test_channels/test_acp.py::TestACPChannel::test_set_config_option_opens_a_session_when_needed. Actual subscriber and channel_call; no prompt required.",
+  "notes": "Python: tests/test_channels/test_acp.py::TestACPChannel::test_set_config_option_opens_a_session_when_needed. Actual subscriber and channel_call; no prompt required. Opening announces once, then the successful explicit setter announces its full state again, as ACPChannel.set_config_option calls _publish_config_options after _room_session.",
   "setup": {
     "channels": [
       {
@@ -161,6 +161,38 @@
   "expect": {
     "custom_events": {
       "room-1": [
+        {
+          "room_id": "room-1",
+          "channel_id": "claude",
+          "data": {
+            "type": "acp_config_options",
+            "session_id": "session-1",
+            "values": {
+              "model": "sonnet"
+            },
+            "labels": {
+              "model": "Sonnet"
+            },
+            "config_options": [
+              {
+                "id": "model",
+                "name": "Model",
+                "type": "select",
+                "currentValue": "sonnet",
+                "options": [
+                  {
+                    "value": "opus",
+                    "name": "Opus"
+                  },
+                  {
+                    "value": "sonnet",
+                    "name": "Sonnet"
+                  }
+                ]
+              }
+            ]
+          }
+        },
         {
           "room_id": "room-1",
           "channel_id": "claude",
