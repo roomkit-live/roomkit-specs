@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
-  "corpus_sha256": "2c8ee7dc02ce683820723cf23f7d80f5128ca513c2f5fba8a8fd666fa53a64c9",
+  "corpus_sha256": "c227bce578e2cbad9bfe75625fb70c6e23b4a673c19c5abd5a2239c52fbdb319",
   "python_commit": "be157479ebcd0f167c898737e5f49d1e03559ce6",
-  "scenario_count": 2183,
+  "scenario_count": 2191,
   "sections": [
     {
       "section": "0",
@@ -850,6 +850,14 @@
         "acp/handler-unappliable-empty-input",
         "acp/handler-unappliable-empty-result",
         "acp/handler-unappliable-identical-input",
+        "acp/input-empty-absent",
+        "acp/input-empty-blank",
+        "acp/input-empty-empty",
+        "acp/input-empty-host",
+        "acp/input-whitespace-absent",
+        "acp/input-whitespace-blank",
+        "acp/input-whitespace-empty",
+        "acp/input-whitespace-host",
         "acp/instructions-absent",
         "acp/instructions-before-host-and-history",
         "acp/instructions-blank",
@@ -5867,7 +5875,15 @@
         "acp/context-per-room-cursor",
         "acp/context-rebuild-replays-history",
         "acp/context-reconnected-session",
-        "acp/context-visibility"
+        "acp/context-visibility",
+        "acp/input-empty-absent",
+        "acp/input-empty-blank",
+        "acp/input-empty-empty",
+        "acp/input-empty-host",
+        "acp/input-whitespace-absent",
+        "acp/input-whitespace-blank",
+        "acp/input-whitespace-empty",
+        "acp/input-whitespace-host"
       ]
     },
     {
