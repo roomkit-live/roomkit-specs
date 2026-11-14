@@ -3,10 +3,10 @@
   "id": "acp/handler-before-tool-use-observer-reentry-bound",
   "title": "A before_tool_use observer with an ACP policy handler stops at the local reentry cap",
   "rules": [
-    "\u00a76.4",
-    "\u00a79.3",
+    "§6.4",
+    "§9.3",
     "Appendix A.9.1",
-    "\u00a78.3"
+    "§8.3"
   ],
   "notes": "Python: tests/test_channels/test_acp.py::test_an_observer_posting_per_tool_call_the_agent_answers_stops[before_tool_use]. In-process owner/executor context only, as the source marker requires; the captured kit does not claim this across Redis.",
   "setup": {
