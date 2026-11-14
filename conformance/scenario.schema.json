@@ -4954,13 +4954,6 @@
               "object"
             ]
           }
-        },
-        "custom_events": {
-          "description": "Per room, actual CUSTOM subscriber events as room_id, channel_id and data.",
-          "type": "object",
-          "additionalProperties": {
-            "type": "array"
-          }
         }
       }
     },

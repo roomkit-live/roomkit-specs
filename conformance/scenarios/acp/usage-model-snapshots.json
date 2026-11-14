@@ -6,7 +6,7 @@
     "§6.4",
     "Appendix A.9.1"
   ],
-  "notes": "Python: tests/test_channels/test_acp_usage.py::TestUsageProvenance::test_model_snapshots_and_no_carry_into_next_prompt. This shared case covers active notifications and the next prompt; native tests cover the off-turn notification and report object identity.",
+  "notes": "Python: tests/test_channels/test_acp_usage.py::TestUsageProvenance::test_model_snapshots_and_no_carry_into_next_prompt. This shared case covers active notifications and the next prompt. Native tests cover owned report snapshots; the off-turn callback and publication are planned separately.",
   "setup": {
     "channels": [
       {
