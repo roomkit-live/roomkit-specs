@@ -974,6 +974,14 @@
               }
             }
           }
+        },
+        "skills_requires_match": {
+          "description": "Matcher used when constructing this scripted registry: exact names by default; hub also accepts <required>_ prefixes; fail raises a scripted matcher error.",
+          "enum": [
+            "exact",
+            "hub",
+            "fail"
+          ]
         }
       }
     },
@@ -5568,6 +5576,14 @@
           "items": {
             "$ref": "#/$defs/scripted_skill"
           }
+        },
+        "skills_requires_match": {
+          "description": "Matcher used when constructing this scripted registry: exact names by default; hub also accepts <required>_ prefixes; fail raises a scripted matcher error.",
+          "enum": [
+            "exact",
+            "hub",
+            "fail"
+          ]
         }
       }
     },

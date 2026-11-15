@@ -1,0 +1,131 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "skill-prerequisites/each-turn-uses-its-own-prerequisites-and-availability-streaming",
+  "title": "Each turn uses its own prerequisites and availability (streaming)",
+  "rules": [
+    "§24.2",
+    "§24.3",
+    "§24.4",
+    "§21.1"
+  ],
+  "notes": "Python: channels/_ai_policy.py::_turn_skills; tests/test_skills_integration.py per-turn registry; local requirements must read that registry too.",
+  "setup": {
+    "channels": [
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "agent",
+        "type": "ai",
+        "audit": "tool_auditor",
+        "tool_search": false,
+        "tools": [
+          {
+            "name": "calendar_read",
+            "description": "calendar_read",
+            "parameters": {
+              "type": "object"
+            },
+            "returns": "calendar_read ran"
+          }
+        ],
+        "skills": [
+          {
+            "name": "calendar",
+            "description": "calendar procedure",
+            "instructions": "Rules for calendar.",
+            "requires": "missing",
+            "unavailable": "not here"
+          }
+        ],
+        "model": {
+          "rounds": [
+            {
+              "calls": [
+                {
+                  "name": "activate_skill",
+                  "arguments": {
+                    "name": "calendar"
+                  },
+                  "id": "c1"
+                }
+              ]
+            },
+            {
+              "text": "done"
+            }
+          ],
+          "streaming": true
+        },
+        "config_provider": {
+          "r1": [
+            {
+              "skills": [
+                {
+                  "name": "calendar",
+                  "description": "calendar procedure",
+                  "instructions": "Rules for calendar.",
+                  "requires": "calendar_read"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "rooms": [
+      {
+        "id": "r1",
+        "bindings": [
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "agent",
+            "category": "intelligence"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "r1",
+      "message": {
+        "channel_id": "ws",
+        "sender_id": "alice",
+        "content": {
+          "type": "text",
+          "body": "Go."
+        }
+      }
+    },
+    {
+      "idle": true
+    }
+  ],
+  "expect": {
+    "models": {
+      "agent": [
+        {},
+        {
+          "tool_results": [
+            {
+              "content": {
+                "$contains": "Rules for calendar."
+              },
+              "is_error": false,
+              "tool_call_id": "c1"
+            }
+          ]
+        }
+      ]
+    },
+    "tool_audit": {
+      "$unordered": []
+    }
+  }
+}
