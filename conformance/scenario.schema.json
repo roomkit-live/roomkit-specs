@@ -5449,6 +5449,28 @@
           "additionalProperties": {
             "type": "string"
           }
+        },
+        "requires": {
+          "description": "Prerequisite tool names in SKILL.md, checked at activation against the policy-admitted tools (section 24.3); names are exact by default, not glob grants.",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "unavailable": {
+          "description": "After discovery, mark this skill unavailable with this reason; its gated patterns remain closed (section 24.3).",
+          "type": "string"
+        },
+        "unlisted": {
+          "description": "After discovery, hide this skill from the manifest while retaining activation (section 24.3).",
+          "type": "boolean"
         }
       }
     },
