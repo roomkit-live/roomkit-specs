@@ -143,10 +143,10 @@
       "agent": [
         {
           "tools": {
-            "run_query": {
+            "export_csv": {
               "$absent": true
             },
-            "export_csv": {
+            "run_query": {
               "$absent": true
             }
           }
@@ -188,10 +188,10 @@
         },
         {
           "tools": {
-            "run_query": {
+            "export_csv": {
               "$present": true
             },
-            "export_csv": {
+            "run_query": {
               "$present": true
             }
           }

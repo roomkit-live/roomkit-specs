@@ -5433,8 +5433,15 @@
         "allowed_tools": {
           "description": "The SKILL.md allowed_tools frontmatter, preserved as comma-separated text or a list of tool-name patterns (* and ? globs; \u00a724.2).",
           "oneOf": [
-            { "type": "string" },
-            { "type": "array", "items": { "type": "string" } }
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           ]
         },
         "references": {

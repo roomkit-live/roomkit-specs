@@ -7,7 +7,7 @@
     "§24.4",
     "§21.1"
   ],
-  "notes": "Python: tests/test_toolset_edges.py::test_a_withdrawn_tool_leaves_the_allowed_names; channels/_ai_policy.py::_apply_tool_filters, channels/_ai_tools.py::_execute_single_tool_call. Activation does not undo hook withdrawals.",
+  "notes": "Python: tests/test_toolset_edges.py::test_a_withdrawn_tool_leaves_the_allowed_names; channels/_ai_policy.py::_apply_tool_filters, channels/_ai_tools.py::_execute_single_tool_call. The hook withdraws search_web after safe_read, BEFORE the activation; activation opens fetch_v1 but must not restore search_web.",
   "setup": {
     "channels": [
       {
@@ -63,6 +63,15 @@
               "calls": [
                 {
                   "id": "c1",
+                  "name": "safe_read",
+                  "arguments": {}
+                }
+              ]
+            },
+            {
+              "calls": [
+                {
+                  "id": "c2",
                   "name": "activate_skill",
                   "arguments": {
                     "name": "research"
@@ -73,7 +82,7 @@
             {
               "calls": [
                 {
-                  "id": "c2",
+                  "id": "c3",
                   "name": "search_web",
                   "arguments": {}
                 }
@@ -155,16 +164,31 @@
           }
         },
         {
+          "tools": {
+            "fetch_v1": {
+              "$present": true
+            },
+            "search_web": {
+              "$absent": true
+            }
+          }
+        },
+        {
           "tool_results": [
             {
               "tool_call_id": "c1",
+              "content": "safe_read ran",
+              "is_error": false
+            },
+            {
+              "tool_call_id": "c2",
               "content": {
                 "$contains": "Rules for research."
               },
               "is_error": false
             },
             {
-              "tool_call_id": "c2",
+              "tool_call_id": "c3",
               "content": "{\"error\": \"Tool 'search_web' is not available in this turn.\"}",
               "is_error": true
             }
@@ -173,7 +197,13 @@
       ]
     },
     "tool_audit": {
-      "$unordered": []
+      "$unordered": [
+        {
+          "tool_name": "safe_read",
+          "status": "ok",
+          "result": "safe_read ran"
+        }
+      ]
     }
   }
 }
