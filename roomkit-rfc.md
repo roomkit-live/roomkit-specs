@@ -16858,15 +16858,22 @@ reaches the lane of the process that committed it once: an index with no
 delivery set (a record stored `BLOCKED`, a lifecycle record, §5.1, a record
 committed outside the pipeline, §10.5) advances the cursor at its turn and
 runs nothing. An instruction's set, which has no index, runs once the cursor
-has reached the latest index committed before it (§10.1.1). A committed index
+has reached the latest index committed before it (§10.1.1). When the store
+fails the read of that latest index, the set runs behind the sets its own
+process placed before it, under the room's delivery claim, waiting for no
+other process's index, and the failure is reported on its call's `error` once
+the set has run (§10.1.1 rule 5). A committed index
 whose set no lane runs (its process stopped between the commit and the
 delivery) holds the cursor: a lane that has waited on it for `gap_timeout`
 (default 30 s) while no lane held the claim forces the cursor past it and
 emits `delivery_skipped` with the indexes skipped (§8.2). The loss is bounded
 to what was in flight and observable, and the room never wedges; a lane that
 finds its own set skipped drops it, since running it then would break the
-room's order. A durable outbox that turns that loss into recovery is a
-separate capability (§13.6).
+room's order. The cursor of a room the store no longer holds reads `-1`, and
+no lane moves or skips it any more: a lane gives every set it holds for that
+room its turn, in its own order, with an index or without, and their runs find
+the room gone (a rerun is refused, §5.1). A durable outbox that turns that
+loss into recovery is a separate capability (§13.6).
 <!-- /rfc -->
 
 ### 13.6 Processing Timeout

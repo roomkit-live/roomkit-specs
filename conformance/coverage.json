@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "9c3aa99baa141401c508e1c45b8cf7d4d61ea177a3fc15b45f4a8c4a12762925",
+  "rfc_sha256": "39620959bdca0d855d00068a8932c3b4ed559c54bc809e69e83c1ff2a02c8d0a",
   "corpus_sha256": "313c27981070eeb610bf78eb641cf422a7233b3d5e0be38ef75a2d303e38e2b9",
   "python_commit": "500ffa55b2796f555ff3ff85afa1dd763f4bd45f",
   "scenario_count": 2242,
@@ -30887,7 +30887,7 @@
               "commit": "500ffa55b2796f555ff3ff85afa1dd763f4bd45f",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
