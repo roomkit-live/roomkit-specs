@@ -554,8 +554,9 @@ scripted.
   is read only on an agent given one. `skills_in_prompt`: false leaves the
   listing to the host, whichever registry a turn reads; the instructions of
   the skills active are written either way (default true).
-  `allowed_tools`, when present, is the space-separated frontmatter value
-  that gates those tools behind skill activation (§24.3).
+  `allowed_tools`, when present, is a comma-separated text or a list of
+  tool-name patterns (`*` and `?` globs), preserved as that frontmatter type.
+  Matching tools are gated behind skill activation (§24.2).
 - `retry_policy`: the agent's retry policy (§6.4): a generation its
   provider refused as worth another try (`refuses.retryable`) before it
   handed anything is tried again, at most `max_retries` times (default 3),
