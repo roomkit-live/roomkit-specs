@@ -16877,8 +16877,15 @@ a room deleted while its sets ran is another room, told apart by its
 `created_at`, which no write changes once the room is created: the deleted
 room's sets are those of a room the store no longer holds, and move or skip
 none of the new room's cursor, unless the room is deleted and created again
-between a lane's read of the room and its write of the cursor. A durable outbox
-that turns that loss into recovery is a separate capability (§13.6).
+between a lane's read of the room and its write of the cursor. Nor does
+anything of those sets reach the new room: an answer to one, each row its
+stream writes once the room is gone (the rows after the first refused before
+their hooks), and the record of an answer or a turn it refuses (§8.3) are
+refused as in a room gone, `room_refused_event` naming no status (§5.1,
+§8.2), as is a regeneration waiting in the deleted room's lane; a stream not
+yet read is instead closed unread, with no `room_refused_event`, and its call
+returns its result with no error (§13.6). A durable outbox that turns that
+loss into recovery is a separate capability (§13.6).
 <!-- /rfc -->
 
 ### 13.6 Processing Timeout
