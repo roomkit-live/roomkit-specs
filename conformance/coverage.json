@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "442406982e053a49c84b257c3d1b52cc081418156301da0b45f62bcbcf4b60ae",
-  "corpus_sha256": "687563f0a6f478c807f87294789ac1e2f75a796d2462d52244011a6ddc51313a",
-  "python_commit": "26b34d0bf53e60838f87167103c61c3fb64459ec",
-  "scenario_count": 2274,
+  "rfc_sha256": "a10929cb6c89017050234edd01d057341f23ef96d765e601cc36fcf682d5adb5",
+  "corpus_sha256": "24cb9f55cca91f20b29b064a4ddfad96da62dd39d6fd3efc0014743c0ff34750",
+  "python_commit": "41f5bbda57e8ead1502a2ccddfaf9b9b460fac5f",
+  "scenario_count": 2308,
   "sections": [
     {
       "section": "0",
@@ -3294,6 +3294,8 @@
         "instructions/standalone-is-the-typed-field-s-word-alone",
         "locks/a-set-waiting-on-another-process-s-index-takes-its-turn-once-its-room-is-deleted",
         "locks/an-instruction-s-set-waits-for-the-index-another-process-committed-before-it",
+        "skill-gating/room-activation-persists-but-a-standalone-turn-starts-closed-non-streaming",
+        "skill-gating/room-activation-persists-but-a-standalone-turn-starts-closed-streaming",
         "skills/a-standalone-activation-as-a-room-s-first-turn-rides-its-next",
         "skills/a-standalone-activation-in-a-room-already-read-rides-its-next",
         "skills/a-standalone-activation-of-an-active-skill-delivers-its-body",
@@ -6719,6 +6721,40 @@
         "eviction/reading-a-result-the-room-does-not-store-is-a-refusal",
         "orchestration/a-supervisor-install-refused-halfway-sets-nothing-up",
         "orchestration/a-supervisor-s-own-tools-stay-its-own",
+        "skill-gating/a-blocked-activation-never-references-a-held-tool-non-streaming",
+        "skill-gating/a-blocked-activation-never-references-a-held-tool-streaming",
+        "skill-gating/a-blocked-activation-opens-no-gate-non-streaming",
+        "skill-gating/a-blocked-activation-opens-no-gate-streaming",
+        "skill-gating/a-held-tool-stays-gated-until-the-activation-references-it-non-streaming",
+        "skill-gating/a-held-tool-stays-gated-until-the-activation-references-it-streaming",
+        "skill-gating/activating-one-skill-leaves-the-other-gate-closed-non-streaming",
+        "skill-gating/activating-one-skill-leaves-the-other-gate-closed-streaming",
+        "skill-gating/activation-cannot-restore-a-withdrawn-tool-non-streaming",
+        "skill-gating/activation-cannot-restore-a-withdrawn-tool-streaming",
+        "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-non-streaming",
+        "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-streaming",
+        "skill-gating/activation-opens-the-next-round-and-its-hook-catalogue-non-streaming",
+        "skill-gating/activation-opens-the-next-round-and-its-hook-catalogue-streaming",
+        "skill-gating/an-activation-in-one-room-does-not-open-another-non-streaming",
+        "skill-gating/an-activation-in-one-room-does-not-open-another-streaming",
+        "skill-gating/an-ordinary-success-does-not-reference-still-gated-tools-non-streaming",
+        "skill-gating/an-ordinary-success-does-not-reference-still-gated-tools-streaming",
+        "skill-gating/bracketed-text-is-a-list-not-a-character-class-non-streaming",
+        "skill-gating/bracketed-text-is-a-list-not-a-character-class-streaming",
+        "skill-gating/discovery-cannot-reveal-gated-tools-before-activation-non-streaming",
+        "skill-gating/discovery-cannot-reveal-gated-tools-before-activation-streaming",
+        "skill-gating/each-turn-uses-its-configured-gates-non-streaming",
+        "skill-gating/each-turn-uses-its-configured-gates-streaming",
+        "skill-gating/every-covering-skill-must-be-active-non-streaming",
+        "skill-gating/every-covering-skill-must-be-active-streaming",
+        "skill-gating/list-globs-hide-and-refuse-only-matching-tools-non-streaming",
+        "skill-gating/list-globs-hide-and-refuse-only-matching-tools-streaming",
+        "skill-gating/room-activation-persists-but-a-standalone-turn-starts-closed-non-streaming",
+        "skill-gating/room-activation-persists-but-a-standalone-turn-starts-closed-streaming",
+        "skill-gating/scalar-globs-hide-and-refuse-only-matching-tools-non-streaming",
+        "skill-gating/scalar-globs-hide-and-refuse-only-matching-tools-streaming",
+        "skill-gating/tool-search-keeps-an-activated-held-tool-unreferenced-until-found-non-streaming",
+        "skill-gating/tool-search-keeps-an-activated-held-tool-unreferenced-until-found-streaming",
         "skills/a-channel-given-an-empty-registry-keeps-the-skill-tools-names",
         "skills/a-channel-with-skills-keeps-the-script-tool-s-name",
         "skills/a-generation-hook-cannot-declare-a-skill-tool-s-name",
@@ -7308,7 +7344,42 @@
         "unmapped": 1
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "skill-gating/a-blocked-activation-never-references-a-held-tool-non-streaming",
+        "skill-gating/a-blocked-activation-never-references-a-held-tool-streaming",
+        "skill-gating/a-blocked-activation-opens-no-gate-non-streaming",
+        "skill-gating/a-blocked-activation-opens-no-gate-streaming",
+        "skill-gating/a-held-tool-stays-gated-until-the-activation-references-it-non-streaming",
+        "skill-gating/a-held-tool-stays-gated-until-the-activation-references-it-streaming",
+        "skill-gating/activating-one-skill-leaves-the-other-gate-closed-non-streaming",
+        "skill-gating/activating-one-skill-leaves-the-other-gate-closed-streaming",
+        "skill-gating/activation-cannot-restore-a-withdrawn-tool-non-streaming",
+        "skill-gating/activation-cannot-restore-a-withdrawn-tool-streaming",
+        "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-non-streaming",
+        "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-streaming",
+        "skill-gating/activation-opens-the-next-round-and-its-hook-catalogue-non-streaming",
+        "skill-gating/activation-opens-the-next-round-and-its-hook-catalogue-streaming",
+        "skill-gating/an-activation-in-one-room-does-not-open-another-non-streaming",
+        "skill-gating/an-activation-in-one-room-does-not-open-another-streaming",
+        "skill-gating/an-ordinary-success-does-not-reference-still-gated-tools-non-streaming",
+        "skill-gating/an-ordinary-success-does-not-reference-still-gated-tools-streaming",
+        "skill-gating/bracketed-text-is-a-list-not-a-character-class-non-streaming",
+        "skill-gating/bracketed-text-is-a-list-not-a-character-class-streaming",
+        "skill-gating/discovery-cannot-reveal-gated-tools-before-activation-non-streaming",
+        "skill-gating/discovery-cannot-reveal-gated-tools-before-activation-streaming",
+        "skill-gating/each-turn-uses-its-configured-gates-non-streaming",
+        "skill-gating/each-turn-uses-its-configured-gates-streaming",
+        "skill-gating/every-covering-skill-must-be-active-non-streaming",
+        "skill-gating/every-covering-skill-must-be-active-streaming",
+        "skill-gating/list-globs-hide-and-refuse-only-matching-tools-non-streaming",
+        "skill-gating/list-globs-hide-and-refuse-only-matching-tools-streaming",
+        "skill-gating/room-activation-persists-but-a-standalone-turn-starts-closed-non-streaming",
+        "skill-gating/room-activation-persists-but-a-standalone-turn-starts-closed-streaming",
+        "skill-gating/scalar-globs-hide-and-refuse-only-matching-tools-non-streaming",
+        "skill-gating/scalar-globs-hide-and-refuse-only-matching-tools-streaming",
+        "skill-gating/tool-search-keeps-an-activated-held-tool-unreferenced-until-found-non-streaming",
+        "skill-gating/tool-search-keeps-an-activated-held-tool-unreferenced-until-found-streaming"
+      ]
     },
     {
       "section": "24.3",
@@ -7350,12 +7421,46 @@
       "review": "normative",
       "requirements": 1,
       "mapping": {
-        "unmapped": 1
+        "mapped_partial": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "eviction/a-skill-s-instructions-are-never-stored",
         "executors/a-skill-activated-on-one-executor-rides-the-next-turn-on-another",
+        "skill-gating/a-blocked-activation-never-references-a-held-tool-non-streaming",
+        "skill-gating/a-blocked-activation-never-references-a-held-tool-streaming",
+        "skill-gating/a-blocked-activation-opens-no-gate-non-streaming",
+        "skill-gating/a-blocked-activation-opens-no-gate-streaming",
+        "skill-gating/a-held-tool-stays-gated-until-the-activation-references-it-non-streaming",
+        "skill-gating/a-held-tool-stays-gated-until-the-activation-references-it-streaming",
+        "skill-gating/activating-one-skill-leaves-the-other-gate-closed-non-streaming",
+        "skill-gating/activating-one-skill-leaves-the-other-gate-closed-streaming",
+        "skill-gating/activation-cannot-restore-a-withdrawn-tool-non-streaming",
+        "skill-gating/activation-cannot-restore-a-withdrawn-tool-streaming",
+        "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-non-streaming",
+        "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-streaming",
+        "skill-gating/activation-opens-the-next-round-and-its-hook-catalogue-non-streaming",
+        "skill-gating/activation-opens-the-next-round-and-its-hook-catalogue-streaming",
+        "skill-gating/an-activation-in-one-room-does-not-open-another-non-streaming",
+        "skill-gating/an-activation-in-one-room-does-not-open-another-streaming",
+        "skill-gating/an-ordinary-success-does-not-reference-still-gated-tools-non-streaming",
+        "skill-gating/an-ordinary-success-does-not-reference-still-gated-tools-streaming",
+        "skill-gating/bracketed-text-is-a-list-not-a-character-class-non-streaming",
+        "skill-gating/bracketed-text-is-a-list-not-a-character-class-streaming",
+        "skill-gating/discovery-cannot-reveal-gated-tools-before-activation-non-streaming",
+        "skill-gating/discovery-cannot-reveal-gated-tools-before-activation-streaming",
+        "skill-gating/each-turn-uses-its-configured-gates-non-streaming",
+        "skill-gating/each-turn-uses-its-configured-gates-streaming",
+        "skill-gating/every-covering-skill-must-be-active-non-streaming",
+        "skill-gating/every-covering-skill-must-be-active-streaming",
+        "skill-gating/list-globs-hide-and-refuse-only-matching-tools-non-streaming",
+        "skill-gating/list-globs-hide-and-refuse-only-matching-tools-streaming",
+        "skill-gating/room-activation-persists-but-a-standalone-turn-starts-closed-non-streaming",
+        "skill-gating/room-activation-persists-but-a-standalone-turn-starts-closed-streaming",
+        "skill-gating/scalar-globs-hide-and-refuse-only-matching-tools-non-streaming",
+        "skill-gating/scalar-globs-hide-and-refuse-only-matching-tools-streaming",
+        "skill-gating/tool-search-keeps-an-activated-held-tool-unreferenced-until-found-non-streaming",
+        "skill-gating/tool-search-keeps-an-activated-held-tool-unreferenced-until-found-streaming",
         "skills/a-host-that-lists-its-skills-itself-reads-a-turn-s-active-ones",
         "skills/a-skill-a-turn-activated-rides-the-next-turn-of-its-registry",
         "skills/a-skill-the-next-turn-s-registry-lacks-leaves-the-room",
@@ -65795,10 +65900,10 @@
         },
         {
           "id": "phase4-local-allowed-tool-catalogue",
-          "scope": "Local AI handlers read the resolved catalogue, policy denial and owned-tool exemptions, hidden Tool Search tools, hook additions/withdrawals, per-room configuration and first-round reread declarations, in both provider modes. Skill-gated cases describe Python and remain known Rust failures (RMK-1709).",
+          "scope": "Local AI handlers read the resolved catalogue, policy denial and owned-tool exemptions, hidden Tool Search tools, hook additions/withdrawals, per-room configuration and first-round reread declarations, in both provider modes. The two skill-gated cases now pass the Rust local runner (RMK-1709); Rust aggregate output is not an execution receipt.",
           "coverage": "partial",
           "missing": [
-            "Role-specific policies, Agent reasoning-backend driven turns and Rust skill gating (RMK-1709) remain retained dependencies.",
+            "Role-specific policies and Agent reasoning-backend driven turns remain retained dependencies.",
             "Native preparation/consumption lifetime, None/empty and explicit-scope tests are not shared scenario execution evidence.",
             "Other context accessors, realtime, owner-served remote calls, handler result shapes and other obligations of the composite clause are outside this mapping."
           ],
@@ -65810,6 +65915,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-skill-tool-gating-41f5bbd-memory",
+              "implementation": "python",
+              "commit": "41f5bbda57e8ead1502a2ccddfaf9b9b460fac5f",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -68734,8 +68847,29 @@
     {
       "id": "RK-24.4-001",
       "section": "24.4",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "phase4-local-skill-tool-gates",
+          "scope": "Local text tool-gating slice of activation lifetime in both provider modes: reachability, refusal, activation, room/standalone scope and deferred references.",
+          "coverage": "partial",
+          "missing": [
+            "Full activation instruction/body lifetime, truncation, retirement/restart and stored-row rewrite obligations are not established by this mapping.",
+            "Unavailable/closed gates, requires, MCP/scripts, realtime and reasoning-backend paths remain outside this slice.",
+            "Concurrent per-turn configuration, the unknown-skill hint branch and unasserted prompt/body contents receive no credit."
+          ],
+          "executions": [
+            {
+              "execution": "python-skill-tool-gating-41f5bbd-memory",
+              "implementation": "python",
+              "commit": "41f5bbda57e8ead1502a2ccddfaf9b9b460fac5f",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "RK-24.5-001",
@@ -70480,6 +70614,15 @@
       "implementation_commit": "26b34d0bf53e60838f87167103c61c3fb64459ec",
       "rfc_commit": "48c0af4a992bc3c8b0243288ce71415dedaecd98",
       "corpus_commit": "7492f083892b260b1fa2b041ac6051ffda6deef5",
+      "backend": "memory",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-skill-tool-gating-41f5bbd-memory",
+      "implementation": "python",
+      "implementation_commit": "41f5bbda57e8ead1502a2ccddfaf9b9b460fac5f",
+      "rfc_commit": "06acd618a87c84044eb9fa0f90b48f1d40fe45db",
+      "corpus_commit": "c797a7bb15a29ea711c6e868c78ac1e642e25468",
       "backend": "memory",
       "runtime": "asyncio"
     }

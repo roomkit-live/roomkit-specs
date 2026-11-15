@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "26b34d0bf53e60838f87167103c61c3fb64459ec",
+  "python_commit": "41f5bbda57e8ead1502a2ccddfaf9b9b460fac5f",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -7557,8 +7557,8 @@
         },
         {
           "nodeid": "tests/test_framework.py::TestTimeouts::test_slow_store_commit_is_not_reported_blocked",
-          "sha256": "730aed819fb1e1e708a9f59f02cd7f5368328a9881f5b41a29781693e0f35cca",
-          "proves": "slow store commit is not reported blocked. Specialized source evidence; scenario execution receipts do not certify this test. "
+          "sha256": "22a3c21ba9353cc5974f9f7dfbe62f11b57036f024ef456a104b55faa105ca34",
+          "proves": "A commit held past the process budget stays in flight, then completes without a timeout or blocked result, stores exactly one new message with DELIVERED status. RMK-1712 makes the clock advance deterministic; reviewed against the prior assertion. Specialized source evidence only: shared scenario receipts do not certify this test."
         },
         {
           "nodeid": "tests/test_store_binding_contract.py::test_a_key_its_channel_holds_refuses_another_event",
@@ -21861,9 +21861,9 @@
       "id": "phase4-local-allowed-tool-catalogue",
       "requirement": "RK-21.4-001",
       "clause_sha256": "e942a89fb94648dfa04a5ebbc5af9af9cc4fb7abf0b6c597dc292b02020769c4",
-      "scope": "Local AI handlers read the resolved catalogue, policy denial and owned-tool exemptions, hidden Tool Search tools, hook additions/withdrawals, per-room configuration and first-round reread declarations, in both provider modes. Skill-gated cases describe Python and remain known Rust failures (RMK-1709).",
+      "scope": "Local AI handlers read the resolved catalogue, policy denial and owned-tool exemptions, hidden Tool Search tools, hook additions/withdrawals, per-room configuration and first-round reread declarations, in both provider modes. The two skill-gated cases now pass the Rust local runner (RMK-1709); Rust aggregate output is not an execution receipt.",
       "coverage": "partial",
-      "review": "Compared with current_tool_allowed_names, _stamp_toolset, _adopt_hook_toolset and the source tests listed in the lot 54 checklist. Each assertion reads an actual public context accessor from a handler; neither runner derives the answer from scripted definitions. Rust skill-gated setup failures do not establish Rust execution coverage.",
+      "review": "Compared with current_tool_allowed_names, _stamp_toolset, _adopt_hook_toolset and the source tests listed in the lot 54 checklist. Each assertion reads an actual public context accessor from a handler; neither runner derives the answer from scripted definitions. The earlier Rust skill-gated setup failures are fixed by the reviewed local skill-gating port; historical receipts are preserved unchanged.",
       "assertions": [
         {
           "scenario": "tool-allowed-names/a-handler-reads-the-resolved-catalogue-and-first-round-reread-non-streaming",
@@ -21926,14 +21926,14 @@
           "pointer": "/expect/models/agent",
           "sha256": "24cab11f7c1862ad03d4129be501e9013d65a58cccaa2dbdd189ee1646fbe57d",
           "scenario_sha256": "39598ec02d702d28ae9273e454c88f8cea4835d44ba498e0a16c28e5dc5d641d",
-          "proves": "Python omits publish_site and delete_account from the provider declaration but the handler returns publish_site, inspect and the owned skill/reread tools; delete_account remains absent. Rust fails at skill setup (RMK-1709), so no Rust getter success is claimed."
+          "proves": "Python omits publish_site and delete_account from the provider declaration but the handler returns publish_site, inspect and the owned skill/reread tools; delete_account remains absent. Both local implementations now pass this assertion; no Rust execution receipt is inferred from the aggregate Cargo log."
         },
         {
           "scenario": "tool-allowed-names/skill-hidden-tools-remain-allowed-but-policy-denied-tools-do-not-streaming",
           "pointer": "/expect/models/agent",
           "sha256": "24cab11f7c1862ad03d4129be501e9013d65a58cccaa2dbdd189ee1646fbe57d",
           "scenario_sha256": "364b20f0770d234592629c4af39c3d6dc04b0f62129c62d8965d413aff2b2b44",
-          "proves": "Python omits publish_site and delete_account from the provider declaration but the handler returns publish_site, inspect and the owned skill/reread tools; delete_account remains absent. Rust fails at skill setup (RMK-1709), so no Rust getter success is claimed."
+          "proves": "Python omits publish_site and delete_account from the provider declaration but the handler returns publish_site, inspect and the owned skill/reread tools; delete_account remains absent. Both local implementations now pass this assertion; no Rust execution receipt is inferred from the aggregate Cargo log."
         },
         {
           "scenario": "tool-allowed-names/the-generation-hook-refreshes-the-allowed-catalogue-non-streaming",
@@ -21966,9 +21966,263 @@
       ],
       "tests": [],
       "missing": [
-        "Role-specific policies, Agent reasoning-backend driven turns and Rust skill gating (RMK-1709) remain retained dependencies.",
+        "Role-specific policies and Agent reasoning-backend driven turns remain retained dependencies.",
         "Native preparation/consumption lifetime, None/empty and explicit-scope tests are not shared scenario execution evidence.",
         "Other context accessors, realtime, owner-served remote calls, handler result shapes and other obligations of the composite clause are outside this mapping."
+      ]
+    },
+    {
+      "id": "phase4-local-skill-tool-gates",
+      "requirement": "RK-24.4-001",
+      "clause_sha256": "d0de8c90d0b84d824d97871695d418f3081c39be0fdde0ae913bba0518d1e9a8",
+      "scope": "Local text tool-gating slice of activation lifetime in both provider modes: reachability, refusal, activation, room/standalone scope and deferred references.",
+      "coverage": "partial",
+      "review": "Compared each provider observation with the Python reference, then executed unchanged on Rust. Fixtures load actual skills; expected results are not synthesized by the runners. Exact metadata/parser assertions remain native evidence, not scenario execution. Independent product review corrected the deferred ordinary-success boundary before this mapping.",
+      "assertions": [
+        {
+          "scenario": "skill-gating/a-blocked-activation-never-references-a-held-tool-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "df91616269434275897c65c5d44f4f5116a8713bb83c7780db2355e52a73b2d2",
+          "scenario_sha256": "3b1d720a7f2774ed37b631547db237dc5f47d6ddc101afa092a18160ef5e754c",
+          "proves": "Blocking activation of an existing skill gives no references and subsequent execution stays refused."
+        },
+        {
+          "scenario": "skill-gating/a-blocked-activation-never-references-a-held-tool-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "df91616269434275897c65c5d44f4f5116a8713bb83c7780db2355e52a73b2d2",
+          "scenario_sha256": "60bcd086a0f3c8a8fb7ded09e2c5b0d34b7a5f9bf9dad3912d887ba0c098e4b3",
+          "proves": "Blocking activation of an existing skill gives no references and subsequent execution stays refused."
+        },
+        {
+          "scenario": "skill-gating/a-blocked-activation-opens-no-gate-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "5435c69d9a62f7aaf38540b704d972984d3352c62919bb870d336232f10491ce",
+          "scenario_sha256": "0649f408ed5291c33a718b115409f672cfcfa7a99152f2b7c1234b988cbc9f39",
+          "proves": "Blocking activation of an existing skill leaves its ordinary declarations absent and execution refused."
+        },
+        {
+          "scenario": "skill-gating/a-blocked-activation-opens-no-gate-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "5435c69d9a62f7aaf38540b704d972984d3352c62919bb870d336232f10491ce",
+          "scenario_sha256": "a0d56d82b2542851b8b3d33d6322dc3e48d46e5fb20caf442e79ac19b6f3405e",
+          "proves": "Blocking activation of an existing skill leaves its ordinary declarations absent and execution refused."
+        },
+        {
+          "scenario": "skill-gating/a-held-tool-stays-gated-until-the-activation-references-it-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "dae26934d46b51e3d992b9002dcad0ef959dcc072b09a0e249a6c7e2e714aa89",
+          "scenario_sha256": "335240cd260a12ac0dd30d1b0df722f6473b3f22b1f800b0cba66749d682b859",
+          "proves": "The request retains the deferred definitions and guessed execution is refused; served activation supplies the exact newly reachable tool references."
+        },
+        {
+          "scenario": "skill-gating/a-held-tool-stays-gated-until-the-activation-references-it-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "dae26934d46b51e3d992b9002dcad0ef959dcc072b09a0e249a6c7e2e714aa89",
+          "scenario_sha256": "cf9f145c297e759d70105d4006542472e8a1084f5036bb3e348607b2fe501555",
+          "proves": "The request retains the deferred definitions and guessed execution is refused; served activation supplies the exact newly reachable tool references."
+        },
+        {
+          "scenario": "skill-gating/activating-one-skill-leaves-the-other-gate-closed-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "0cf47671950478d1e56e7b880986a280fa0ddf39e73425704717df9e5e55e4ca",
+          "scenario_sha256": "9a31ae054188952d613dab0f95a75899bfbf51b721ff2a0e9f05ae454943d63b",
+          "proves": "Activating analytics reveals run_query while export_csv stays absent from declarations; activating export then reveals export_csv, and both calls return their scripted success."
+        },
+        {
+          "scenario": "skill-gating/activating-one-skill-leaves-the-other-gate-closed-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "0cf47671950478d1e56e7b880986a280fa0ddf39e73425704717df9e5e55e4ca",
+          "scenario_sha256": "5743f7c36fa0df47e59ae8148a88eebd4035f091a096e7a71a70b26120b1cc89",
+          "proves": "Activating analytics reveals run_query while export_csv stays absent from declarations; activating export then reveals export_csv, and both calls return their scripted success."
+        },
+        {
+          "scenario": "skill-gating/activation-cannot-restore-a-withdrawn-tool-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "9b87e3df5d199a1e2c304ffa5e2fc0288f89831958b82a80d56ac48eda2ea08b",
+          "scenario_sha256": "b339fbd678b3efcd1d627b4b60d64b1e0ba0cfdc5a19942ca3a0de17ba01477c",
+          "proves": "A tool withdrawn before activation stays withdrawn; activation opens the other matching tool only."
+        },
+        {
+          "scenario": "skill-gating/activation-cannot-restore-a-withdrawn-tool-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "9b87e3df5d199a1e2c304ffa5e2fc0288f89831958b82a80d56ac48eda2ea08b",
+          "scenario_sha256": "e3e1dfc9f193e1db544ddabbbfd56093ef20a9f4c58940484718263798bbc587",
+          "proves": "A tool withdrawn before activation stays withdrawn; activation opens the other matching tool only."
+        },
+        {
+          "scenario": "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "f79b7a5d4b450df6f07a430ebd1775f3fab5e93b118d7b899bf986881fe8cd63",
+          "scenario_sha256": "65ae07c30171ce166c891e9a9d68e5eab93310c7437dd936ee399ff8cc2d21d3",
+          "proves": "Owned activation/reference tools remain callable; activation never restores policy-denied ordinary tools."
+        },
+        {
+          "scenario": "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "f79b7a5d4b450df6f07a430ebd1775f3fab5e93b118d7b899bf986881fe8cd63",
+          "scenario_sha256": "dd7e36b96fcb8b28fcc3f99723fb318e1a85d06449253e358e22afd0765df2d4",
+          "proves": "Owned activation/reference tools remain callable; activation never restores policy-denied ordinary tools."
+        },
+        {
+          "scenario": "skill-gating/activation-opens-the-next-round-and-its-hook-catalogue-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "0724f78eee4e52ef446035835b0f66fc1783e31b9990791760c8114b2a5d660e",
+          "scenario_sha256": "268232e003c93c0a12cf6dfd775b2895b1b4e82a9fb818bda837f53aa2c93d64",
+          "proves": "Served activation makes its ordinary tools visible on the next generation; Tool Search is off. Hook payloads are outside this assertion pointer."
+        },
+        {
+          "scenario": "skill-gating/activation-opens-the-next-round-and-its-hook-catalogue-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "0724f78eee4e52ef446035835b0f66fc1783e31b9990791760c8114b2a5d660e",
+          "scenario_sha256": "dc8998e47283d97deaf46ede48583a64f2462bd64bdcfc87627d949a6bf6a5ba",
+          "proves": "Served activation makes its ordinary tools visible on the next generation; Tool Search is off. Hook payloads are outside this assertion pointer."
+        },
+        {
+          "scenario": "skill-gating/an-activation-in-one-room-does-not-open-another-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "9dda6dc80471e779c46ddcb8e7b1e66a094bf6042dfccc3b246abdb5849750de",
+          "scenario_sha256": "04949ac31f15cf6f9f780e40c09d6966fdf1f2ac3cf8388c2b599843d751337b",
+          "proves": "A second room has no declarations or execution access opened by the first room activation; no prompt/body assertion is claimed."
+        },
+        {
+          "scenario": "skill-gating/an-activation-in-one-room-does-not-open-another-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "9dda6dc80471e779c46ddcb8e7b1e66a094bf6042dfccc3b246abdb5849750de",
+          "scenario_sha256": "43de5664aa83edc30f2d95cc108bd6f9b02fe50ecfdc863ee1c069deaea0d596",
+          "proves": "A second room has no declarations or execution access opened by the first room activation; no prompt/body assertion is claimed."
+        },
+        {
+          "scenario": "skill-gating/an-ordinary-success-does-not-reference-still-gated-tools-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "c94681a8332c718edf55684ab2262408a76e739167d0aa5f468b802380705396",
+          "scenario_sha256": "3d9777cbd878c6f8356eb4575e1600560ead22b20196f3a1d7ee4105999dfb99",
+          "proves": "An ordinary successful call references no still-gated tool; subsequent activation supplies the previously withheld references."
+        },
+        {
+          "scenario": "skill-gating/an-ordinary-success-does-not-reference-still-gated-tools-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "c94681a8332c718edf55684ab2262408a76e739167d0aa5f468b802380705396",
+          "scenario_sha256": "e27cd985717be753fbfd2ada66b88836004a627fe6d0d16e0d9420a1a438a78e",
+          "proves": "An ordinary successful call references no still-gated tool; subsequent activation supplies the previously withheld references."
+        },
+        {
+          "scenario": "skill-gating/bracketed-text-is-a-list-not-a-character-class-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "81ed3d8b6af03c49688ac0006c4b8a9aa5b41307ec2545b53b98ecf0af81d60d",
+          "scenario_sha256": "b3adaa51af5db52972e9433db1decfdf88788c7a49b4b75e9378c34967ff259b",
+          "proves": "A bracketed text gates ab alone, leaving a and b callable; this is a public behavior assertion, not exact metadata equality."
+        },
+        {
+          "scenario": "skill-gating/bracketed-text-is-a-list-not-a-character-class-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "81ed3d8b6af03c49688ac0006c4b8a9aa5b41307ec2545b53b98ecf0af81d60d",
+          "scenario_sha256": "6352612427760fb62a562ade2094cf59514c6e80d0f70196a479bbd7355e942b",
+          "proves": "A bracketed text gates ab alone, leaving a and b callable; this is a public behavior assertion, not exact metadata equality."
+        },
+        {
+          "scenario": "skill-gating/discovery-cannot-reveal-gated-tools-before-activation-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "3f49f4d9bbdeef62274dd0b501f95e215c89c00528bb9bb2eaf4f517dbd98541",
+          "scenario_sha256": "9c8ea5e0104989b573fe855f87a1b5a0df38309a59babe80f5753a9a2755441f",
+          "proves": "Discovery leaves search_web absent from the checked results before served activation, then finds search_web."
+        },
+        {
+          "scenario": "skill-gating/discovery-cannot-reveal-gated-tools-before-activation-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "3f49f4d9bbdeef62274dd0b501f95e215c89c00528bb9bb2eaf4f517dbd98541",
+          "scenario_sha256": "37e75857d330a6fc68c35be68bc1937ff49e2693d6d8f594ca8bdf349ea7e545",
+          "proves": "Discovery leaves search_web absent from the checked results before served activation, then finds search_web."
+        },
+        {
+          "scenario": "skill-gating/each-turn-uses-its-configured-gates-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "315f96eae25dcfc57130e0a6fa13b1d5220469b517465b6a32a3c99c748d382d",
+          "scenario_sha256": "518a759f9c06dd511b3d06799572407da373d668bf28390ce0b00d67a5283e43",
+          "proves": "Sequential turns use their configured registry instead of the channel registry; no overlapping configuration is claimed."
+        },
+        {
+          "scenario": "skill-gating/each-turn-uses-its-configured-gates-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "315f96eae25dcfc57130e0a6fa13b1d5220469b517465b6a32a3c99c748d382d",
+          "scenario_sha256": "81029a34a0a2ba03fa5c0e6266908a60a5ac064967d0ee6a441b2b12228dbd7d",
+          "proves": "Sequential turns use their configured registry instead of the channel registry; no overlapping configuration is claimed."
+        },
+        {
+          "scenario": "skill-gating/every-covering-skill-must-be-active-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "0fe738692737fd98933a0c785c2fa9d15b05b1bfa44c7ad50c7a2fa5a5ed1ee5",
+          "scenario_sha256": "e7d629b63524db5483dd7dca531430a2e85b6b5101bcf2181952b0de0d8359f6",
+          "proves": "An available skill sharing a gate keeps it closed until every covering available skill is activated."
+        },
+        {
+          "scenario": "skill-gating/every-covering-skill-must-be-active-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "0fe738692737fd98933a0c785c2fa9d15b05b1bfa44c7ad50c7a2fa5a5ed1ee5",
+          "scenario_sha256": "9f5e8e75e684373e044d8b85f7154136287fffd03e951a8b30fbf981adf0b327",
+          "proves": "An available skill sharing a gate keeps it closed until every covering available skill is activated."
+        },
+        {
+          "scenario": "skill-gating/list-globs-hide-and-refuse-only-matching-tools-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "b5b6b915c56a775b102af85f17c507817a79ce7f5c0f1ead031ab8719c329850",
+          "scenario_sha256": "8540562b2bb4738ff3528d0ae6fb3503c5e27ff6ea21b929cf7da1f07ceb6163",
+          "proves": "List-form patterns hide matching ordinary tools and refuse their guessed execution; an unmatched safe tool executes."
+        },
+        {
+          "scenario": "skill-gating/list-globs-hide-and-refuse-only-matching-tools-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "b5b6b915c56a775b102af85f17c507817a79ce7f5c0f1ead031ab8719c329850",
+          "scenario_sha256": "d845bf728631edf89d2df0bdb4a080e036a0e9d8f64ab1adac3472d835431264",
+          "proves": "List-form patterns hide matching ordinary tools and refuse their guessed execution; an unmatched safe tool executes."
+        },
+        {
+          "scenario": "skill-gating/room-activation-persists-but-a-standalone-turn-starts-closed-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "585b03606ac43ab21ff3548c7fdc1fccaf5cd48e5f2b8d2f4efc248d79add026",
+          "scenario_sha256": "483b261efc4072f8edd1ca81a46c1f9615bb50448a937b1860da6ab4665137ab",
+          "proves": "A later room turn retains tool access while a standalone turn starts closed and can activate for itself."
+        },
+        {
+          "scenario": "skill-gating/room-activation-persists-but-a-standalone-turn-starts-closed-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "585b03606ac43ab21ff3548c7fdc1fccaf5cd48e5f2b8d2f4efc248d79add026",
+          "scenario_sha256": "8e3a4e22798ef9fd9457507cb3e5ffc350932cf0778d2a17ee49fd46760707bc",
+          "proves": "A later room turn retains tool access while a standalone turn starts closed and can activate for itself."
+        },
+        {
+          "scenario": "skill-gating/scalar-globs-hide-and-refuse-only-matching-tools-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "b5b6b915c56a775b102af85f17c507817a79ce7f5c0f1ead031ab8719c329850",
+          "scenario_sha256": "cb5825c7f5179bed1fa29008ad36781d0fc7c1102515d102acd73d509e8b4a06",
+          "proves": "Text-form patterns hide matching ordinary tools and refuse their guessed execution; an unmatched safe tool executes."
+        },
+        {
+          "scenario": "skill-gating/scalar-globs-hide-and-refuse-only-matching-tools-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "b5b6b915c56a775b102af85f17c507817a79ce7f5c0f1ead031ab8719c329850",
+          "scenario_sha256": "22a58e7ffc70a716a92cfee9e3d681b65d81f2252008f1483dc4c943aba28936",
+          "proves": "Text-form patterns hide matching ordinary tools and refuse their guessed execution; an unmatched safe tool executes."
+        },
+        {
+          "scenario": "skill-gating/tool-search-keeps-an-activated-held-tool-unreferenced-until-found-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "c676dbf0112277455763ec815ffca82d2fda1be5819d0fb808f2c7679c40bcc2",
+          "scenario_sha256": "cd1e14f8a806e705bdf249f4165515476656bcda65c297baf612b7c95a35e36f",
+          "proves": "Activation under Tool Search references none of the tools it would still hide; successful discovery supplies the references."
+        },
+        {
+          "scenario": "skill-gating/tool-search-keeps-an-activated-held-tool-unreferenced-until-found-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "c676dbf0112277455763ec815ffca82d2fda1be5819d0fb808f2c7679c40bcc2",
+          "scenario_sha256": "b936502271e823871df285ab7b465067d52d4ca1829419d588bcf29af786ed8e",
+          "proves": "Activation under Tool Search references none of the tools it would still hide; successful discovery supplies the references."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Full activation instruction/body lifetime, truncation, retirement/restart and stored-row rewrite obligations are not established by this mapping.",
+        "Unavailable/closed gates, requires, MCP/scripts, realtime and reasoning-backend paths remain outside this slice.",
+        "Concurrent per-turn configuration, the unknown-skill hint branch and unasserted prompt/body contents receive no credit."
       ]
     }
   ],
@@ -679435,6 +679689,283 @@
         "sha256": "ecc2377e18029f10ad1e1e4222921033daacf9d0b411e9b1588984e913692042"
       },
       "results": [
+        {
+          "scenario": "tool-allowed-names/a-handler-reads-the-resolved-catalogue-and-first-round-reread-non-streaming",
+          "sha256": "f1dbf2cb0f73d54a6a94635e74ccf0b5ed455f00531ced5887da7bf9c31f770c",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/a-handler-reads-the-resolved-catalogue-and-first-round-reread-streaming",
+          "sha256": "9d4c9692af492701dc1d6c6c2d50eedcdbf76cb453d598dde83856ee027039a6",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/a-shared-channel-reads-each-turns-configured-catalogue-non-streaming",
+          "sha256": "7f05ed17fbbdb61481fa624eaa1b0f35b8dac6667ba0ccffaf1f3c22c8814c42",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/a-shared-channel-reads-each-turns-configured-catalogue-streaming",
+          "sha256": "2f56c76682f2051e7753a4a8dc4f06aabe4ab3a36a168d49c94dc44cb21ef1bb",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/policy-denial-removes-a-name-and-owned-tools-escape-the-allow-list-non-streaming",
+          "sha256": "41130def9fc374e406b748472c416b8cda5c6f197a6d80b26eb6e7ec809e22ef",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/policy-denial-removes-a-name-and-owned-tools-escape-the-allow-list-streaming",
+          "sha256": "2a04fb099051b53ca966f742a2ee042bf2994a543049cf32f622a32296b9c9cd",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/round-withdrawals-remove-base-and-declared-extra-tools-non-streaming",
+          "sha256": "95059d34e999248608bd2a019c52bf848b57f4fca1f2e93d2a34380d6f52a5d9",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/round-withdrawals-remove-base-and-declared-extra-tools-streaming",
+          "sha256": "0b71c006d6db619b65f4a9683449fb5bbcbc2856cb107540f501d1528fc00cc8",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/skill-hidden-tools-remain-allowed-but-policy-denied-tools-do-not-non-streaming",
+          "sha256": "39598ec02d702d28ae9273e454c88f8cea4835d44ba498e0a16c28e5dc5d641d",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/skill-hidden-tools-remain-allowed-but-policy-denied-tools-do-not-streaming",
+          "sha256": "364b20f0770d234592629c4af39c3d6dc04b0f62129c62d8965d413aff2b2b44",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/the-generation-hook-refreshes-the-allowed-catalogue-non-streaming",
+          "sha256": "63d1d4cd8af61760572e49948bc9527c088540600cb1b8e81801afeb33741e54",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/the-generation-hook-refreshes-the-allowed-catalogue-streaming",
+          "sha256": "137e7e110c93c5de8e33195e697abfdbf08ffd35c9007bb1360513824fd4945b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/tool-search-hides-definitions-without-narrowing-allowed-names-non-streaming",
+          "sha256": "c2d0e898932f3f2b980e49b73a543b945c644881accdc27a87d1c97f319734ea",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/tool-search-hides-definitions-without-narrowing-allowed-names-streaming",
+          "sha256": "607b69a8513985555ec6953959d4598e5307ea10c89ec6a67e16e77051042cc0",
+          "outcome": "passed"
+        }
+      ]
+    },
+    {
+      "id": "python-skill-tool-gating-41f5bbd-memory",
+      "implementation": "python",
+      "implementation_commit": "41f5bbda57e8ead1502a2ccddfaf9b9b460fac5f",
+      "rfc_commit": "06acd618a87c84044eb9fa0f90b48f1d40fe45db",
+      "corpus_commit": "c797a7bb15a29ea711c6e868c78ac1e642e25468",
+      "rfc_sha256": "a10929cb6c89017050234edd01d057341f23ef96d765e601cc36fcf682d5adb5",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "env",
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "taskset",
+        "-c",
+        "16-19",
+        "nice",
+        "-n",
+        "10",
+        "uv",
+        "run",
+        "pytest",
+        "tests/conformance/test_conformance.py",
+        "-k",
+        "skill-gating or tool-allowed-names",
+        "-n",
+        "0",
+        "-q",
+        "--junitxml=python-skill-gating.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-skill-tool-gating-41f5bbd.xml",
+        "format": "pytest_junit",
+        "sha256": "58e505789419aa4849357220f5cd494e9788fca88e227102e44281ce855a4557"
+      },
+      "results": [
+        {
+          "scenario": "skill-gating/a-blocked-activation-never-references-a-held-tool-non-streaming",
+          "sha256": "3b1d720a7f2774ed37b631547db237dc5f47d6ddc101afa092a18160ef5e754c",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/a-blocked-activation-never-references-a-held-tool-streaming",
+          "sha256": "60bcd086a0f3c8a8fb7ded09e2c5b0d34b7a5f9bf9dad3912d887ba0c098e4b3",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/a-blocked-activation-opens-no-gate-non-streaming",
+          "sha256": "0649f408ed5291c33a718b115409f672cfcfa7a99152f2b7c1234b988cbc9f39",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/a-blocked-activation-opens-no-gate-streaming",
+          "sha256": "a0d56d82b2542851b8b3d33d6322dc3e48d46e5fb20caf442e79ac19b6f3405e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/a-held-tool-stays-gated-until-the-activation-references-it-non-streaming",
+          "sha256": "335240cd260a12ac0dd30d1b0df722f6473b3f22b1f800b0cba66749d682b859",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/a-held-tool-stays-gated-until-the-activation-references-it-streaming",
+          "sha256": "cf9f145c297e759d70105d4006542472e8a1084f5036bb3e348607b2fe501555",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/activating-one-skill-leaves-the-other-gate-closed-non-streaming",
+          "sha256": "9a31ae054188952d613dab0f95a75899bfbf51b721ff2a0e9f05ae454943d63b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/activating-one-skill-leaves-the-other-gate-closed-streaming",
+          "sha256": "5743f7c36fa0df47e59ae8148a88eebd4035f091a096e7a71a70b26120b1cc89",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/activation-cannot-restore-a-withdrawn-tool-non-streaming",
+          "sha256": "b339fbd678b3efcd1d627b4b60d64b1e0ba0cfdc5a19942ca3a0de17ba01477c",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/activation-cannot-restore-a-withdrawn-tool-streaming",
+          "sha256": "e3e1dfc9f193e1db544ddabbbfd56093ef20a9f4c58940484718263798bbc587",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-non-streaming",
+          "sha256": "65ae07c30171ce166c891e9a9d68e5eab93310c7437dd936ee399ff8cc2d21d3",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/activation-never-overrides-policy-and-infrastructure-escapes-both-streaming",
+          "sha256": "dd7e36b96fcb8b28fcc3f99723fb318e1a85d06449253e358e22afd0765df2d4",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/activation-opens-the-next-round-and-its-hook-catalogue-non-streaming",
+          "sha256": "268232e003c93c0a12cf6dfd775b2895b1b4e82a9fb818bda837f53aa2c93d64",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/activation-opens-the-next-round-and-its-hook-catalogue-streaming",
+          "sha256": "dc8998e47283d97deaf46ede48583a64f2462bd64bdcfc87627d949a6bf6a5ba",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/an-activation-in-one-room-does-not-open-another-non-streaming",
+          "sha256": "04949ac31f15cf6f9f780e40c09d6966fdf1f2ac3cf8388c2b599843d751337b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/an-activation-in-one-room-does-not-open-another-streaming",
+          "sha256": "43de5664aa83edc30f2d95cc108bd6f9b02fe50ecfdc863ee1c069deaea0d596",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/an-ordinary-success-does-not-reference-still-gated-tools-non-streaming",
+          "sha256": "3d9777cbd878c6f8356eb4575e1600560ead22b20196f3a1d7ee4105999dfb99",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/an-ordinary-success-does-not-reference-still-gated-tools-streaming",
+          "sha256": "e27cd985717be753fbfd2ada66b88836004a627fe6d0d16e0d9420a1a438a78e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/bracketed-text-is-a-list-not-a-character-class-non-streaming",
+          "sha256": "b3adaa51af5db52972e9433db1decfdf88788c7a49b4b75e9378c34967ff259b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/bracketed-text-is-a-list-not-a-character-class-streaming",
+          "sha256": "6352612427760fb62a562ade2094cf59514c6e80d0f70196a479bbd7355e942b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/discovery-cannot-reveal-gated-tools-before-activation-non-streaming",
+          "sha256": "9c8ea5e0104989b573fe855f87a1b5a0df38309a59babe80f5753a9a2755441f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/discovery-cannot-reveal-gated-tools-before-activation-streaming",
+          "sha256": "37e75857d330a6fc68c35be68bc1937ff49e2693d6d8f594ca8bdf349ea7e545",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/each-turn-uses-its-configured-gates-non-streaming",
+          "sha256": "518a759f9c06dd511b3d06799572407da373d668bf28390ce0b00d67a5283e43",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/each-turn-uses-its-configured-gates-streaming",
+          "sha256": "81029a34a0a2ba03fa5c0e6266908a60a5ac064967d0ee6a441b2b12228dbd7d",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/every-covering-skill-must-be-active-non-streaming",
+          "sha256": "e7d629b63524db5483dd7dca531430a2e85b6b5101bcf2181952b0de0d8359f6",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/every-covering-skill-must-be-active-streaming",
+          "sha256": "9f5e8e75e684373e044d8b85f7154136287fffd03e951a8b30fbf981adf0b327",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/list-globs-hide-and-refuse-only-matching-tools-non-streaming",
+          "sha256": "8540562b2bb4738ff3528d0ae6fb3503c5e27ff6ea21b929cf7da1f07ceb6163",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/list-globs-hide-and-refuse-only-matching-tools-streaming",
+          "sha256": "d845bf728631edf89d2df0bdb4a080e036a0e9d8f64ab1adac3472d835431264",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/room-activation-persists-but-a-standalone-turn-starts-closed-non-streaming",
+          "sha256": "483b261efc4072f8edd1ca81a46c1f9615bb50448a937b1860da6ab4665137ab",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/room-activation-persists-but-a-standalone-turn-starts-closed-streaming",
+          "sha256": "8e3a4e22798ef9fd9457507cb3e5ffc350932cf0778d2a17ee49fd46760707bc",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/scalar-globs-hide-and-refuse-only-matching-tools-non-streaming",
+          "sha256": "cb5825c7f5179bed1fa29008ad36781d0fc7c1102515d102acd73d509e8b4a06",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/scalar-globs-hide-and-refuse-only-matching-tools-streaming",
+          "sha256": "22a58e7ffc70a716a92cfee9e3d681b65d81f2252008f1483dc4c943aba28936",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/tool-search-keeps-an-activated-held-tool-unreferenced-until-found-non-streaming",
+          "sha256": "cd1e14f8a806e705bdf249f4165515476656bcda65c297baf612b7c95a35e36f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-gating/tool-search-keeps-an-activated-held-tool-unreferenced-until-found-streaming",
+          "sha256": "b936502271e823871df285ab7b465067d52d4ca1829419d588bcf29af786ed8e",
+          "outcome": "passed"
+        },
         {
           "scenario": "tool-allowed-names/a-handler-reads-the-resolved-catalogue-and-first-round-reread-non-streaming",
           "sha256": "f1dbf2cb0f73d54a6a94635e74ccf0b5ed455f00531ced5887da7bf9c31f770c",

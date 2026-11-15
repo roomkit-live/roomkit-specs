@@ -1437,9 +1437,9 @@
     },
     {
       "section": "24.2",
-      "sha256": "b4bc872714961b68959f9057a7cc53748a2d563ba829a829568c6de0ae3b2c39",
+      "sha256": "268d23f77baa4c6deb6f3e6162174334f2379b8369c5562fa7b8289969fffcd8",
       "classification": "normative",
-      "review": "Source inventory: SkillMetadata. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: SkillMetadata. Reviewed the full structural block after preserving allowed_tools as string, list or null and correcting bracketed text to a list. All fields and defaults remain inventoried; no complete behavioral coverage is inferred. The metadata native tests and skill-gating bracket scenarios prove this amendment (RMK-1709)."
     },
     {
       "section": "24.3",
