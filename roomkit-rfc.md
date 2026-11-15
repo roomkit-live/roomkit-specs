@@ -21882,10 +21882,32 @@ catalogue reproduces exactly the silent gap this section exists to prevent, and
 does so at the moment the caller has most reason to believe the opposite.
 
 The registry's manifest, which every system prompt carries (§24.3), MUST NOT
-pass 65,536 characters. A discovery or a registration that would make it pass
-them fails, says so, and leaves the registry as it was: a manifest without a
-bound grows each prompt, and every turn's cost, with each skill a deployment
-adds.
+pass 65,536 Unicode characters in its final rendered XML, after escaping,
+including unavailable reasons, wrappers and served origins. Exactly 65,536
+characters is permitted. Operations that add or replace manifest content, or
+return a new registry, MUST validate the complete prospective manifest and fail
+with the manifest-size error before committing or returning an oversized result:
+discovery, registration, in-memory addition, an unavailable mark, a copy that
+removes unlisted marks, and registration or fetching of served entries included. A
+failed copy leaves its source unchanged; replacement is checked after removing
+the replaced name's old marks, not with both versions temporarily present.
+
+For served skills, a rejected listing or fetch MUST NOT change the shared
+catalog either. Following a catalog update already accepted by another registry
+is a local operation: if recording its refusal reason exceeds this registry's
+bound, the read fails before changing its local record and MUST NOT serve its
+old cached skill or file. It does not undo the earlier shared update or a
+verification retirement (§24.7).
+
+An implementation exposing mutable metadata shared with its caller MUST also
+reject an oversized manifest at rendering, without changing the caller's
+objects. Direct writes through such aliases are not registry transactions.
+Operations that only remove or hide entries MAY reduce an oversized state
+introduced through external aliases in several steps; they need not reject a
+partial repair, but rendering MUST still reject any oversized result. A caller
+can also replace an offending entry or return a fitting subset copy without
+repairing its source. A manifest without a bound grows each prompt, and every
+turn's cost, with each skill a deployment adds.
 <!-- /rfc -->
 
 ### 24.6 Access to Bundled Files

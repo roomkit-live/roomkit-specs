@@ -1455,9 +1455,9 @@
     },
     {
       "section": "24.5",
-      "sha256": "df5da41db9b1eb149f99bfbdcd032dc980f29220601c90ef37f68e0bdd0e5b89",
+      "sha256": "91ee41f69e84e236e795f5329809c42a3cd99d90db018c51ed9c09b9087e61f5",
       "classification": "normative",
-      "review": "Source inventory: Loading Failures. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Reviewed the global final XML bound amendment against local registry and existing Python MCP tests, including aliases, atomic preflights and shared retirement. The complete discovery source unit is retained; this is an inventory review, not a claim of full discovery coverage."
     },
     {
       "section": "24.6",

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "4bc78e84711f8e53ae95bc3e4dde6c3ddde12c5b",
+  "python_commit": "8eb4e4fc12ffc7892134f2cd9e98917689ec5ed1",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -22952,8 +22952,112 @@
       "missing": [
         "MCP-served skills, scripts, in-memory registration via add, role-specific policies and Agent reasoning-backend paths remain outside this local slice.",
         "Realtime/media and concurrent per-turn registry replacement receive no coverage credit.",
-        "Full instruction lifetime, bounded prompt truncation, retirement/restart and reference/script access obligations are not established by this mapping.",
-        "The global RFC 24.5 manifest bound is not enforced by Python mark_unavailable; Rust mirrors it. Retained decision HITL 7196c294-a66f-4477-9714-3f95dfcf814b, with a durable Python test and native Rust witness; no global-bound conformance is claimed."
+        "Full instruction lifetime, bounded prompt truncation, retirement/restart and reference/script access obligations are not established by this mapping."
+      ]
+    },
+    {
+      "id": "phase4-skill-manifest-bound",
+      "requirement": "RK-24.5-001",
+      "clause_sha256": "4e5d34f950757f3660b9e3599a2158d6dbe33431cb71421d4f5d0155bb447267",
+      "scope": "Global final manifest bound: local mutations/copies, shared mutable Python metadata, existing Python MCP registration/fetch/lazy refusal and retained verification retirement.",
+      "coverage": "partial",
+      "review": "Read source and tests, reproduced local/MCP failures, then independently reviewed Python, Rust local counterparts and RFC together. Native tests cover pure registry operations under the parity rules, with a public AIChannel/RoomKit consumer after rejection. These references record source assertions only; prior scenario receipts do not execute them.",
+      "assertions": [],
+      "tests": [
+        {
+          "nodeid": "tests/skills/test_manifest_bound.py::test_an_unavailable_reason_counts_escaped_characters_at_the_boundary",
+          "sha256": "ce6742bdb51a6f0bf66088247e39aafd82ac85461356b262a1efef158c259299",
+          "proves": "Exactly 65536 final escaped Unicode characters succeeds; adding one fails with exact size and preserves the prior reason. Non-ASCII bytes and quote expansion are included. Specialized Python source only; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_manifest_bound.py::test_a_rejected_mark_keeps_activation_and_tool_execution_working",
+          "sha256": "726e1bcc17f8804a49382936f327cf2ea1462326ea12fc116d26a8b81cbc8a23",
+          "proves": "After an oversized mark is rejected, a public AIChannel turn refuses a gated tool, activates its skill, then executes the tool once in both provider modes. Specialized Python source only; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_manifest_bound.py::test_a_refused_mark_preserves_the_available_skill_and_its_gates",
+          "sha256": "0201c8c18fffd3798bcdab6cbbc54358eb1568b953ed70e0460b8550301eafe0",
+          "proves": "Rejected marking preserves loaded skill and metadata identity, available/unlisted views and gates. Specialized Python source only; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_manifest_bound.py::test_a_refused_reason_update_preserves_order_and_closed_gates",
+          "sha256": "6edc97ddbfea9317aea3ac085fa2e31a232e3ac2a0cc2e8aba8d44cd8500aa2f",
+          "proves": "Rejected existing/new escaped reasons preserve ordered XML, prior reasons and closed gates. Specialized Python source only; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_manifest_bound.py::test_copy_cannot_relist_an_oversized_hidden_catalogue",
+          "sha256": "44fad52d4c1d897d7fe0345ff49eb688f44ae2ea6bd3346b75c7634e7da884be",
+          "proves": "Dropping marks cannot return an oversized copy; marked and fitting subset copies work without changing their source or shared skill identity. Specialized Python source only; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_manifest_bound.py::test_a_replacement_drops_the_old_reason_before_checking_its_size",
+          "sha256": "a2289b5509bb0c952025e7f280e149fa63b19bc986d04646498c1db10237f2c6",
+          "proves": "Registration removes the replaced name's exact-bound old reason before validating the new manifest. Specialized Python source only; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_manifest_bound.py::test_aliased_metadata_cannot_render_an_oversized_manifest_but_can_be_repaired",
+          "sha256": "fa98a4aa0a53a4cf9a5a12925739309d0b8fc3e8dc1c05fbd2bf2f93a1cf23d4",
+          "proves": "Host-mutated metadata cannot render oversized XML in either sharing registry; hiding and replacement repair the original, while a fitting subset copy returns a valid projection. Specialized Python source only; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_manifest_bound.py::test_preflights_use_the_renderers_visibility_after_an_aliased_rename",
+          "sha256": "228284db94da42b27ce2f2a10b069a8ab5c2523b9b06ea2873b4dac699a3569a",
+          "proves": "Mark/MCP preflights apply the same unlisted visibility as rendering after a host renames shared metadata. Specialized Python source only; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_mcp_manifest_bound.py::test_a_new_label_counts_aliased_names_outside_its_listing",
+          "sha256": "8dbf3f68bde2fb886d5ae0d57864495f7acaf98783586ec07c181ccd65a27d75",
+          "proves": "A new server label accounts for aliased metadata with its prefix even outside the listing, rejecting overflow without recording the server. Specialized Python source only; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_mcp_manifest_bound.py::test_a_local_name_equal_to_a_new_label_stays_local_at_the_bound",
+          "sha256": "b76a95072f2178aacee58779428a36b6e75ada8c22eee447fdc788fc28a56cbb",
+          "proves": "A local name equal to a new label without colon stays local; exact-bound empty server registration succeeds. Specialized Python source only; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_mcp_manifest_bound.py::test_oversized_first_listing_registers_neither_skills_nor_server",
+          "sha256": "7f967c821721b884ac59b3ab6d7fcaa5fbc07292577ee342c08d74a9f334e083",
+          "proves": "Oversized available, dynamic and malformed first listings register no skills, ownership or execution patterns and read no resource. Specialized Python source only; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_mcp_manifest_bound.py::test_rejected_relisting_keeps_old_entries_marks_and_shared_origin",
+          "sha256": "4ad77f94a7cbc51644989db5a02b99d5c55eeb5a7d693a47ed70d61163d31e88",
+          "proves": "Oversized replacement listing preserves source views, loaded entry, unlisted state, origin and execution patterns; the narrowed copy retains its loaded object identity. Specialized Python source only; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_mcp_manifest_bound.py::test_new_origin_is_counted_with_its_final_quoted_xml",
+          "sha256": "57bb2b895513a38b4d3de1bb0cca1811acf7695f2a70844e767346be2abc1e6b",
+          "proves": "Prospective MCP origin and quoted description contribute to the exact 65536/65537 boundary. Specialized Python source only; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_mcp_manifest_bound.py::test_fetched_available_skill_is_hidden_before_measuring",
+          "sha256": "7462812aff47b031ef2252e28f698907766e3cd63e8113c5fd245bab3f4a23ed",
+          "proves": "An unlisted available fetch succeeds at the manifest bound without advertising its metadata. Specialized Python source only; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_mcp_manifest_bound.py::test_rejected_fetch_does_not_modify_the_shared_catalog",
+          "sha256": "c16d1f7857c264f616153838452184a5dd3d38b1268e84b0f58fe54a161fa9cd",
+          "proves": "Overflow during a refused unlisted fetch leaves the original registry unchanged and a sibling still holding its previously loaded skill. Specialized Python source only; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_mcp_manifest_bound.py::test_following_a_shared_refusal_fails_closed_without_partial_local_changes",
+          "sha256": "a83088245c6a5290ff94dfa82c257aac97ffd11734537c4c1f75e76fe3cc7782",
+          "proves": "Get/load/read fail repeatedly rather than serve stale cache when a shared refusal cannot fit locally; freeing room permits the refusal to install. Specialized Python source only; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_mcp_manifest_bound.py::test_remote_reads_check_current_state_after_io",
+          "sha256": "28359d8cf42ad6444fe55aff953f1c54913f82d5cdcdd37b6b525dd385945339",
+          "proves": "Concurrent unrelated registry changes during listing or fetch are included in the candidate bound and preserved on rejection. Specialized Python source only; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_mcp_manifest_bound.py::test_manifest_pressure_never_undoes_a_shared_verification_retirement",
+          "sha256": "662ce6e628fadaf2f669b8841dc7de18f889a541fc3a9f1036eca19a343d4702",
+          "proves": "A verified-file failure retires the shared skill even when a sibling cannot fit the refreshed refusal; no cached skill escapes that guard. Specialized Python source only; no execution receipt is inferred."
+        }
+      ],
+      "missing": [
+        "This broad discovery unit also specifies directory parsing, strict/lenient discovery and discovery atomicity; those obligations are not fully mapped by this bound-only link.",
+        "Rust MCP served skills and mutable metadata aliases are not implemented or claimed by this slice. Specialized execution receipts are not supported; local test runs remain separate evidence."
       ]
     }
   ],
