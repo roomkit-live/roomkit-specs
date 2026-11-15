@@ -21856,6 +21856,120 @@
         "MCP bounds, shared map aliases, kept tasks, exact empty dictionaries and private Python dispatcher/context fault injections have no shared execution credit here.",
         "No actual text-eviction execution is credited."
       ]
+    },
+    {
+      "id": "phase4-local-allowed-tool-catalogue",
+      "requirement": "RK-21.4-001",
+      "clause_sha256": "e942a89fb94648dfa04a5ebbc5af9af9cc4fb7abf0b6c597dc292b02020769c4",
+      "scope": "Local AI handlers read the resolved catalogue, policy denial and owned-tool exemptions, hidden Tool Search tools, hook additions/withdrawals, per-room configuration and first-round reread declarations, in both provider modes. Skill-gated cases describe Python and remain known Rust failures (RMK-1709).",
+      "coverage": "partial",
+      "review": "Compared with current_tool_allowed_names, _stamp_toolset, _adopt_hook_toolset and the source tests listed in the lot 54 checklist. Each assertion reads an actual public context accessor from a handler; neither runner derives the answer from scripted definitions. Rust skill-gated setup failures do not establish Rust execution coverage.",
+      "assertions": [
+        {
+          "scenario": "tool-allowed-names/a-handler-reads-the-resolved-catalogue-and-first-round-reread-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "4d22bd1f96873d05f8154d311c4cb8b76a7acffb063dd116398c2a00957d57df",
+          "scenario_sha256": "f1dbf2cb0f73d54a6a94635e74ccf0b5ed455f00531ced5887da7bf9c31f770c",
+          "proves": "The first handler returns exactly inspect, book and read_stored_result; no prior result has been evicted."
+        },
+        {
+          "scenario": "tool-allowed-names/a-handler-reads-the-resolved-catalogue-and-first-round-reread-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "4d22bd1f96873d05f8154d311c4cb8b76a7acffb063dd116398c2a00957d57df",
+          "scenario_sha256": "9d4c9692af492701dc1d6c6c2d50eedcdbf76cb453d598dde83856ee027039a6",
+          "proves": "The first handler returns exactly inspect, book and read_stored_result; no prior result has been evicted."
+        },
+        {
+          "scenario": "tool-allowed-names/a-shared-channel-reads-each-turns-configured-catalogue-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "d1e527890396edace0409a297ed5c09267c56075833843544c821dab7853f6a7",
+          "scenario_sha256": "7f05ed17fbbdb61481fa624eaa1b0f35b8dac6667ba0ccffaf1f3c22c8814c42",
+          "proves": "Two sequential turns in distinct rooms return exactly the configured gmail or outlook catalogue plus inspect and read_stored_result. No interleaving is claimed."
+        },
+        {
+          "scenario": "tool-allowed-names/a-shared-channel-reads-each-turns-configured-catalogue-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "d1e527890396edace0409a297ed5c09267c56075833843544c821dab7853f6a7",
+          "scenario_sha256": "2f56c76682f2051e7753a4a8dc4f06aabe4ab3a36a168d49c94dc44cb21ef1bb",
+          "proves": "Two sequential turns in distinct rooms return exactly the configured gmail or outlook catalogue plus inspect and read_stored_result. No interleaving is claimed."
+        },
+        {
+          "scenario": "tool-allowed-names/policy-denial-removes-a-name-and-owned-tools-escape-the-allow-list-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "a05f0e5f3dd047fb697de525dcc5e031f6dfff88679d6c874e07a4ac30f4a48f",
+          "scenario_sha256": "41130def9fc374e406b748472c416b8cda5c6f197a6d80b26eb6e7ec809e22ef",
+          "proves": "The provider omits book despite its allow entry; the handler returns exactly inspect and the owned read_stored_result, which escapes the allow-list."
+        },
+        {
+          "scenario": "tool-allowed-names/policy-denial-removes-a-name-and-owned-tools-escape-the-allow-list-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "a05f0e5f3dd047fb697de525dcc5e031f6dfff88679d6c874e07a4ac30f4a48f",
+          "scenario_sha256": "2a04fb099051b53ca966f742a2ee042bf2994a543049cf32f622a32296b9c9cd",
+          "proves": "The provider omits book despite its allow entry; the handler returns exactly inspect and the owned read_stored_result, which escapes the allow-list."
+        },
+        {
+          "scenario": "tool-allowed-names/round-withdrawals-remove-base-and-declared-extra-tools-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "92d74c29a6fdc6d2edd309898d5cc010f0aa85b228bd68e99eff73c0699eae29",
+          "scenario_sha256": "95059d34e999248608bd2a019c52bf848b57f4fca1f2e93d2a34380d6f52a5d9",
+          "proves": "The first handler result names inspect, book and read_stored_result; after the round hook withdraws the latter two, the second handler result names only inspect. This does not assert the full hook payload."
+        },
+        {
+          "scenario": "tool-allowed-names/round-withdrawals-remove-base-and-declared-extra-tools-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "92d74c29a6fdc6d2edd309898d5cc010f0aa85b228bd68e99eff73c0699eae29",
+          "scenario_sha256": "0b71c006d6db619b65f4a9683449fb5bbcbc2856cb107540f501d1528fc00cc8",
+          "proves": "The first handler result names inspect, book and read_stored_result; after the round hook withdraws the latter two, the second handler result names only inspect. This does not assert the full hook payload."
+        },
+        {
+          "scenario": "tool-allowed-names/skill-hidden-tools-remain-allowed-but-policy-denied-tools-do-not-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "24cab11f7c1862ad03d4129be501e9013d65a58cccaa2dbdd189ee1646fbe57d",
+          "scenario_sha256": "39598ec02d702d28ae9273e454c88f8cea4835d44ba498e0a16c28e5dc5d641d",
+          "proves": "Python omits publish_site and delete_account from the provider declaration but the handler returns publish_site, inspect and the owned skill/reread tools; delete_account remains absent. Rust fails at skill setup (RMK-1709), so no Rust getter success is claimed."
+        },
+        {
+          "scenario": "tool-allowed-names/skill-hidden-tools-remain-allowed-but-policy-denied-tools-do-not-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "24cab11f7c1862ad03d4129be501e9013d65a58cccaa2dbdd189ee1646fbe57d",
+          "scenario_sha256": "364b20f0770d234592629c4af39c3d6dc04b0f62129c62d8965d413aff2b2b44",
+          "proves": "Python omits publish_site and delete_account from the provider declaration but the handler returns publish_site, inspect and the owned skill/reread tools; delete_account remains absent. Rust fails at skill setup (RMK-1709), so no Rust getter success is claimed."
+        },
+        {
+          "scenario": "tool-allowed-names/the-generation-hook-refreshes-the-allowed-catalogue-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "0079822c3454b67cbb7e9b3d861654334eda83e28a25bcaa963998447e09b1d7",
+          "scenario_sha256": "63d1d4cd8af61760572e49948bc9527c088540600cb1b8e81801afeb33741e54",
+          "proves": "After the generation hook retains inspect and defines added, the handler returns exactly added, inspect and read_stored_result; book is absent. This does not prove execution of the added handler."
+        },
+        {
+          "scenario": "tool-allowed-names/the-generation-hook-refreshes-the-allowed-catalogue-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "0079822c3454b67cbb7e9b3d861654334eda83e28a25bcaa963998447e09b1d7",
+          "scenario_sha256": "137e7e110c93c5de8e33195e697abfdbf08ffd35c9007bb1360513824fd4945b",
+          "proves": "After the generation hook retains inspect and defines added, the handler returns exactly added, inspect and read_stored_result; book is absent. This does not prove execution of the added handler."
+        },
+        {
+          "scenario": "tool-allowed-names/tool-search-hides-definitions-without-narrowing-allowed-names-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "151a0562b5839999a8402f69cb49c3517a3f528fbff4d2a25a73a349e68cf224",
+          "scenario_sha256": "c2d0e898932f3f2b980e49b73a543b945c644881accdc27a87d1c97f319734ea",
+          "proves": "The first provider declaration omits book while the actual handler returns exactly book, inspect, find_tools, list_tools and read_stored_result."
+        },
+        {
+          "scenario": "tool-allowed-names/tool-search-hides-definitions-without-narrowing-allowed-names-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "151a0562b5839999a8402f69cb49c3517a3f528fbff4d2a25a73a349e68cf224",
+          "scenario_sha256": "607b69a8513985555ec6953959d4598e5307ea10c89ec6a67e16e77051042cc0",
+          "proves": "The first provider declaration omits book while the actual handler returns exactly book, inspect, find_tools, list_tools and read_stored_result."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "Role-specific policies, Agent reasoning-backend driven turns and Rust skill gating (RMK-1709) remain retained dependencies.",
+        "Native preparation/consumption lifetime, None/empty and explicit-scope tests are not shared scenario execution evidence.",
+        "Other context accessors, realtime, owner-served remote calls, handler result shapes and other obligations of the composite clause are outside this mapping."
+      ]
     }
   ],
   "executions": [

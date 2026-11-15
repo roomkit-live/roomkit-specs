@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "f11a77521463dfc8f54936bfc79a8084414078b6afb5c9e345ccee8fd6599fbc",
-  "corpus_sha256": "e27935c3f76aac9a28388c275e73242a2fb25af26c040547c8d339415f569c85",
+  "corpus_sha256": "1aa558bca7cc0599ae40ea0016efa8a7157a191a70380495ebc3afe4fcd2a327",
   "python_commit": "500ffa55b2796f555ff3ff85afa1dd763f4bd45f",
-  "scenario_count": 2249,
+  "scenario_count": 2263,
   "sections": [
     {
       "section": "0",
@@ -1326,6 +1326,20 @@
         "tasks/one-agent-s-failure-in-a-delegated-room-never-carries-another-s-end",
         "tasks/the-repeat-guard-holds-on-delegate-task",
         "tasks/the-repeat-guard-holds-on-delegate-task-without-streaming",
+        "tool-allowed-names/a-handler-reads-the-resolved-catalogue-and-first-round-reread-non-streaming",
+        "tool-allowed-names/a-handler-reads-the-resolved-catalogue-and-first-round-reread-streaming",
+        "tool-allowed-names/a-shared-channel-reads-each-turns-configured-catalogue-non-streaming",
+        "tool-allowed-names/a-shared-channel-reads-each-turns-configured-catalogue-streaming",
+        "tool-allowed-names/policy-denial-removes-a-name-and-owned-tools-escape-the-allow-list-non-streaming",
+        "tool-allowed-names/policy-denial-removes-a-name-and-owned-tools-escape-the-allow-list-streaming",
+        "tool-allowed-names/round-withdrawals-remove-base-and-declared-extra-tools-non-streaming",
+        "tool-allowed-names/round-withdrawals-remove-base-and-declared-extra-tools-streaming",
+        "tool-allowed-names/skill-hidden-tools-remain-allowed-but-policy-denied-tools-do-not-non-streaming",
+        "tool-allowed-names/skill-hidden-tools-remain-allowed-but-policy-denied-tools-do-not-streaming",
+        "tool-allowed-names/the-generation-hook-refreshes-the-allowed-catalogue-non-streaming",
+        "tool-allowed-names/the-generation-hook-refreshes-the-allowed-catalogue-streaming",
+        "tool-allowed-names/tool-search-hides-definitions-without-narrowing-allowed-names-non-streaming",
+        "tool-allowed-names/tool-search-hides-definitions-without-narrowing-allowed-names-streaming",
         "tool-composition/binding-scope-withholds-composition",
         "tool-composition/cancel-before-execution-keeps-the-terminal-frame",
         "tool-composition/complete-calls-without-fragments-publish-no-composition",
@@ -6758,6 +6772,20 @@
         "tasks/a-background-tool-keeps-its-turns-name-before-a-post",
         "tasks/a-background-tool-keeps-its-turns-name-before-a-relay",
         "tasks/a-background-worker-keeps-its-turns-task-boundary-after-a-store-patch",
+        "tool-allowed-names/a-handler-reads-the-resolved-catalogue-and-first-round-reread-non-streaming",
+        "tool-allowed-names/a-handler-reads-the-resolved-catalogue-and-first-round-reread-streaming",
+        "tool-allowed-names/a-shared-channel-reads-each-turns-configured-catalogue-non-streaming",
+        "tool-allowed-names/a-shared-channel-reads-each-turns-configured-catalogue-streaming",
+        "tool-allowed-names/policy-denial-removes-a-name-and-owned-tools-escape-the-allow-list-non-streaming",
+        "tool-allowed-names/policy-denial-removes-a-name-and-owned-tools-escape-the-allow-list-streaming",
+        "tool-allowed-names/round-withdrawals-remove-base-and-declared-extra-tools-non-streaming",
+        "tool-allowed-names/round-withdrawals-remove-base-and-declared-extra-tools-streaming",
+        "tool-allowed-names/skill-hidden-tools-remain-allowed-but-policy-denied-tools-do-not-non-streaming",
+        "tool-allowed-names/skill-hidden-tools-remain-allowed-but-policy-denied-tools-do-not-streaming",
+        "tool-allowed-names/the-generation-hook-refreshes-the-allowed-catalogue-non-streaming",
+        "tool-allowed-names/the-generation-hook-refreshes-the-allowed-catalogue-streaming",
+        "tool-allowed-names/tool-search-hides-definitions-without-narrowing-allowed-names-non-streaming",
+        "tool-allowed-names/tool-search-hides-definitions-without-narrowing-allowed-names-streaming",
         "tool-structured/a-blocked-call-publishes-no-handler-copy",
         "tool-structured/a-cancelled-call-publishes-no-handler-copy",
         "tool-structured/a-failed-closed-hook-withholds-the-copy",
@@ -65719,6 +65747,17 @@
               "state": "stale"
             }
           ]
+        },
+        {
+          "id": "phase4-local-allowed-tool-catalogue",
+          "scope": "Local AI handlers read the resolved catalogue, policy denial and owned-tool exemptions, hidden Tool Search tools, hook additions/withdrawals, per-room configuration and first-round reread declarations, in both provider modes. Skill-gated cases describe Python and remain known Rust failures (RMK-1709).",
+          "coverage": "partial",
+          "missing": [
+            "Role-specific policies, Agent reasoning-backend driven turns and Rust skill gating (RMK-1709) remain retained dependencies.",
+            "Native preparation/consumption lifetime, None/empty and explicit-scope tests are not shared scenario execution evidence.",
+            "Other context accessors, realtime, owner-served remote calls, handler result shapes and other obligations of the composite clause are outside this mapping."
+          ],
+          "executions": []
         }
       ]
     },
