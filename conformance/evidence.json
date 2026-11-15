@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "41f5bbda57e8ead1502a2ccddfaf9b9b460fac5f",
+  "python_commit": "4bc78e84711f8e53ae95bc3e4dde6c3ddde12c5b",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -5301,8 +5301,8 @@
         },
         {
           "nodeid": "tests/test_stream_room_reads.py::test_a_row_reads_the_room_at_its_commit_and_at_its_cursor_write",
-          "sha256": "31c712dab85d29c7a72ece4ed34ee13e65174c4814eb328b020807b06d607a89",
-          "proves": "Comparing four tool rounds with one, the extra room reads are at most 18, covering commit and cursor write. Specialized source evidence only; the exact Python read count is an implementation choice under the RFC §5.1 MAY cache allowance, not a mandatory cross-language assertion. Scenario receipts do not execute this test."
+          "sha256": "67d3b200a73e72c392e53125580f55adc79bd6038fcdd161737f5fbe78e50892",
+          "proves": "Comparing four tool rounds with one, the extra room reads are at most 27, allowing the additional pre-hook room read alongside commit and cursor reads (RMK-1710). Specialized source evidence only; this upper bound is a Python implementation choice, not a mandatory cross-language assertion or proof of refusal-before-hooks. Scenario receipts do not execute this test."
         },
         {
           "nodeid": "tests/test_stream_room_reads.py::test_another_room_closing_costs_one_read_and_blocks_nothing",
@@ -22223,6 +22223,737 @@
         "Full activation instruction/body lifetime, truncation, retirement/restart and stored-row rewrite obligations are not established by this mapping.",
         "Unavailable/closed gates, requires, MCP/scripts, realtime and reasoning-backend paths remain outside this slice.",
         "Concurrent per-turn configuration, the unknown-skill hint branch and unasserted prompt/body contents receive no credit."
+      ]
+    },
+    {
+      "id": "phase4-local-skill-prerequisites",
+      "requirement": "RK-24.3-001",
+      "clause_sha256": "4bfcb63a41da5de2458f84506e5faa7a063a0e1f17757764df056e70d375be04",
+      "scope": "Local text prerequisite and availability slice, streaming and non-streaming: exact and host matching, admitted/nonwithdrawn catalogue, closed patterns, unavailable/unlisted views and sequential per-turn selection.",
+      "coverage": "partial",
+      "review": "Read the current Python implementation and specialized tests before writing 25 paired scenarios, executed them on Python first, then ported Rust and independently reviewed the complete code, fixture and API diff. Fixtures configure real registries through public methods; results are observed from the product. Native copy/parser/getter assertions are recorded separately and are not scenario receipts.",
+      "assertions": [
+        {
+          "scenario": "skill-prerequisites/a-absent-prerequisite-refuses-activation-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "04bcc8de5acec91414576ab40f5515c0e709e0bf71718000b9e7e0b1100d8856",
+          "scenario_sha256": "e816188eb5e05309263e5c6ab80fe4bd740882adf99fce98622c7017057516d3",
+          "proves": "An absent prerequisite refuses activation with the exact missing-name error."
+        },
+        {
+          "scenario": "skill-prerequisites/a-absent-prerequisite-refuses-activation-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "e816188eb5e05309263e5c6ab80fe4bd740882adf99fce98622c7017057516d3",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/a-absent-prerequisite-refuses-activation-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "04bcc8de5acec91414576ab40f5515c0e709e0bf71718000b9e7e0b1100d8856",
+          "scenario_sha256": "a598fd0e5d27baa9240f5052a4034da43a75f7ff4ad09b2f3745ca64afa15ad8",
+          "proves": "An absent prerequisite refuses activation with the exact missing-name error."
+        },
+        {
+          "scenario": "skill-prerequisites/a-absent-prerequisite-refuses-activation-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "a598fd0e5d27baa9240f5052a4034da43a75f7ff4ad09b2f3745ca64afa15ad8",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/a-candidate-opens-a-shared-closed-pattern-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "024435f23ba681a411dff2bca4354acf727f39bc71e751d168b730a5f128cd0f",
+          "scenario_sha256": "be6c01011e06ba4dfb6bb8f8687b5a782bb8070476d29733b74331cec4552eed",
+          "proves": "The candidate itself opens an identical closed pattern when checking its prerequisite."
+        },
+        {
+          "scenario": "skill-prerequisites/a-candidate-opens-a-shared-closed-pattern-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "be6c01011e06ba4dfb6bb8f8687b5a782bb8070476d29733b74331cec4552eed",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/a-candidate-opens-a-shared-closed-pattern-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "024435f23ba681a411dff2bca4354acf727f39bc71e751d168b730a5f128cd0f",
+          "scenario_sha256": "691c45a5588155f848a241c7d2e7f8595bf42032f473af870244223ad45a62af",
+          "proves": "The candidate itself opens an identical closed pattern when checking its prerequisite."
+        },
+        {
+          "scenario": "skill-prerequisites/a-candidate-opens-a-shared-closed-pattern-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "691c45a5588155f848a241c7d2e7f8595bf42032f473af870244223ad45a62af",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/a-closed-gate-makes-a-declared-prerequisite-unavailable-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "823c3d24c126298c588068997f878978a223dc32b7c4c49ebbaa155a8b874f0c",
+          "scenario_sha256": "0579f0760f4f3f40926f628a6bd493338c1a77842c5741926da586a1c85b138b",
+          "proves": "A declared tool held only by an unavailable skill does not satisfy a prerequisite."
+        },
+        {
+          "scenario": "skill-prerequisites/a-closed-gate-makes-a-declared-prerequisite-unavailable-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "0579f0760f4f3f40926f628a6bd493338c1a77842c5741926da586a1c85b138b",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/a-closed-gate-makes-a-declared-prerequisite-unavailable-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "823c3d24c126298c588068997f878978a223dc32b7c4c49ebbaa155a8b874f0c",
+          "scenario_sha256": "6b7a62bbdf60af082aaa84fee3160542cfee230914160b9f74a831586b24e6b8",
+          "proves": "A declared tool held only by an unavailable skill does not satisfy a prerequisite."
+        },
+        {
+          "scenario": "skill-prerequisites/a-closed-gate-makes-a-declared-prerequisite-unavailable-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "6b7a62bbdf60af082aaa84fee3160542cfee230914160b9f74a831586b24e6b8",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/a-denied-prerequisite-refuses-activation-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "04bcc8de5acec91414576ab40f5515c0e709e0bf71718000b9e7e0b1100d8856",
+          "scenario_sha256": "8ebc850d1e3ac52080c1b3439baac3f3436a2f49dd9aca4a70945cf0e075c3b0",
+          "proves": "A policy-denied prerequisite refuses activation and does not reveal its gated tool."
+        },
+        {
+          "scenario": "skill-prerequisites/a-denied-prerequisite-refuses-activation-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "8ebc850d1e3ac52080c1b3439baac3f3436a2f49dd9aca4a70945cf0e075c3b0",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/a-denied-prerequisite-refuses-activation-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "04bcc8de5acec91414576ab40f5515c0e709e0bf71718000b9e7e0b1100d8856",
+          "scenario_sha256": "84bb70e9c7970581cb2205b9ea3d783a313689b4469a630dfd5fdc2b556f29f2",
+          "proves": "A policy-denied prerequisite refuses activation and does not reveal its gated tool."
+        },
+        {
+          "scenario": "skill-prerequisites/a-denied-prerequisite-refuses-activation-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "84bb70e9c7970581cb2205b9ea3d783a313689b4469a630dfd5fdc2b556f29f2",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/a-failed-prerequisite-check-references-no-deferred-tool-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "889bdcbe17d715c6d99e4c5488f991ca4e7a7068aaa8647b5230bd54e5205df2",
+          "scenario_sha256": "7e246e7bdeaaa1cec2433d1d3745478e01f879bbfa395c9c5b078c8ad405311a",
+          "proves": "A refused prerequisite check supplies no deferred tool reference."
+        },
+        {
+          "scenario": "skill-prerequisites/a-failed-prerequisite-check-references-no-deferred-tool-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "7e246e7bdeaaa1cec2433d1d3745478e01f879bbfa395c9c5b078c8ad405311a",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/a-failed-prerequisite-check-references-no-deferred-tool-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "889bdcbe17d715c6d99e4c5488f991ca4e7a7068aaa8647b5230bd54e5205df2",
+          "scenario_sha256": "3d0da0e2e340f7dc179151060fcdfc70d1f89c4943ccb0d4a3c7d2f497fc755c",
+          "proves": "A refused prerequisite check supplies no deferred tool reference."
+        },
+        {
+          "scenario": "skill-prerequisites/a-failed-prerequisite-check-references-no-deferred-tool-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "3d0da0e2e340f7dc179151060fcdfc70d1f89c4943ccb0d4a3c7d2f497fc755c",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-failure-never-opens-a-gate-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "51a38d08fa030e60bb5ad1362d3018d65fe6377c2746af8487262e64d2d4d102",
+          "scenario_sha256": "56ced1245b78717ecde9d453e0538ff90d4f47cccfc758ce127bb4dc405be90e",
+          "proves": "A raised host matcher error fails activation, leaves the ordinary tool undeclared, and its guessed call is refused. Failure-versus-refusal classification is asserted separately in the hook pointer."
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-failure-never-opens-a-gate-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "56ced1245b78717ecde9d453e0538ff90d4f47cccfc758ce127bb4dc405be90e",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-failure-never-opens-a-gate-non-streaming",
+          "pointer": "/expect/hooks/observe",
+          "sha256": "0dc26f19de7c5b2c880ddcbc5595743516c54bbb1d584ba35f47eef9bde74303",
+          "scenario_sha256": "56ced1245b78717ecde9d453e0538ff90d4f47cccfc758ce127bb4dc405be90e",
+          "proves": "The host matcher exception is an errored, non-refused, non-cancelled activation; the later gated ordinary call is refused, not cancelled."
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-failure-never-opens-a-gate-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "51a38d08fa030e60bb5ad1362d3018d65fe6377c2746af8487262e64d2d4d102",
+          "scenario_sha256": "f23de32e14aa95a2eda3032e50e2498030548d5886a9b77b98eb2d7945efb571",
+          "proves": "A raised host matcher error fails activation, leaves the ordinary tool undeclared, and its guessed call is refused. Failure-versus-refusal classification is asserted separately in the hook pointer."
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-failure-never-opens-a-gate-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "f23de32e14aa95a2eda3032e50e2498030548d5886a9b77b98eb2d7945efb571",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-failure-never-opens-a-gate-streaming",
+          "pointer": "/expect/hooks/observe",
+          "sha256": "0dc26f19de7c5b2c880ddcbc5595743516c54bbb1d584ba35f47eef9bde74303",
+          "scenario_sha256": "f23de32e14aa95a2eda3032e50e2498030548d5886a9b77b98eb2d7945efb571",
+          "proves": "The host matcher exception is an errored, non-refused, non-cancelled activation; the later gated ordinary call is refused, not cancelled."
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-reads-only-closed-requirements-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "f5cc9db28ce85f7ea1678a0ba5d69d7ed84141b48de24f66640e62a52d4412bc",
+          "scenario_sha256": "796dfdde3cce2ef6846f0859843f4f0d7b8dfb64da98e2ee6491fc78aff7feac",
+          "proves": "The host matcher cannot satisfy a hub with a tool held only by a closed unavailable gate."
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-reads-only-closed-requirements-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "796dfdde3cce2ef6846f0859843f4f0d7b8dfb64da98e2ee6491fc78aff7feac",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-reads-only-closed-requirements-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "f5cc9db28ce85f7ea1678a0ba5d69d7ed84141b48de24f66640e62a52d4412bc",
+          "scenario_sha256": "ca534bef34feebad52d5aaa7a2382b9aaeb03dc88d0a8d75a391b034f1e60df7",
+          "proves": "The host matcher cannot satisfy a hub with a tool held only by a closed unavailable gate."
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-reads-only-closed-requirements-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "ca534bef34feebad52d5aaa7a2382b9aaeb03dc88d0a8d75a391b034f1e60df7",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-reads-only-denied-requirements-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "f5cc9db28ce85f7ea1678a0ba5d69d7ed84141b48de24f66640e62a52d4412bc",
+          "scenario_sha256": "ddbf60fba35750e7822efeb14ebfe4d72e807c2d4fe98280608aae2b2cea7b14",
+          "proves": "The host matcher cannot satisfy a hub using a policy-denied tool."
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-reads-only-denied-requirements-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "ddbf60fba35750e7822efeb14ebfe4d72e807c2d4fe98280608aae2b2cea7b14",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-reads-only-denied-requirements-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "f5cc9db28ce85f7ea1678a0ba5d69d7ed84141b48de24f66640e62a52d4412bc",
+          "scenario_sha256": "d30cd0e47d73f5c12516248c31162910c88e6917217508b713ce977146052cd9",
+          "proves": "The host matcher cannot satisfy a hub using a policy-denied tool."
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-reads-only-denied-requirements-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "d30cd0e47d73f5c12516248c31162910c88e6917217508b713ce977146052cd9",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-reads-only-offered-requirements-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "5b4e5d4ddf267b0e3035583c13b73b73ac0b80145de6b5aef16549983fe2de2d",
+          "scenario_sha256": "0db4204fceda89402c77ed5a6aec06038549a235f65bbf3e96ec85fb07bac22a",
+          "proves": "A host matcher can satisfy a hub using an offered tool and return successful activation instructions."
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-reads-only-offered-requirements-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "0db4204fceda89402c77ed5a6aec06038549a235f65bbf3e96ec85fb07bac22a",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-reads-only-offered-requirements-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "5b4e5d4ddf267b0e3035583c13b73b73ac0b80145de6b5aef16549983fe2de2d",
+          "scenario_sha256": "3faae579b6f621d8ac0127993caae89a7b9a3da0d9168af4704ea18fe5521c0f",
+          "proves": "A host matcher can satisfy a hub using an offered tool and return successful activation instructions."
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-reads-only-offered-requirements-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "3faae579b6f621d8ac0127993caae89a7b9a3da0d9168af4704ea18fe5521c0f",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/a-standalone-prerequisite-check-uses-only-its-own-activations-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "978fd759034c72a1d1c446401ebb1be29718d821648a1409a9bbdd7faf7a5577",
+          "scenario_sha256": "1434c30aa944bf60a7714aab70b7dc9bc08e88a12ce1be62e5faea6b166667db",
+          "proves": "A standalone turn ignores the room activation when checking a prerequisite, then its own served opener makes the prerequisite reachable."
+        },
+        {
+          "scenario": "skill-prerequisites/a-standalone-prerequisite-check-uses-only-its-own-activations-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "caad1e018a80e267a09526a91aaef3a30a5cbe6fc7997ebc1d2d93e12aa5b6bd",
+          "scenario_sha256": "1434c30aa944bf60a7714aab70b7dc9bc08e88a12ce1be62e5faea6b166667db",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/a-standalone-prerequisite-check-uses-only-its-own-activations-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "978fd759034c72a1d1c446401ebb1be29718d821648a1409a9bbdd7faf7a5577",
+          "scenario_sha256": "aa79d076beec965b5e2e23c4a65e7c0935cc7a4f769db7c2c25362b18c656a7f",
+          "proves": "A standalone turn ignores the room activation when checking a prerequisite, then its own served opener makes the prerequisite reachable."
+        },
+        {
+          "scenario": "skill-prerequisites/a-standalone-prerequisite-check-uses-only-its-own-activations-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "caad1e018a80e267a09526a91aaef3a30a5cbe6fc7997ebc1d2d93e12aa5b6bd",
+          "scenario_sha256": "aa79d076beec965b5e2e23c4a65e7c0935cc7a4f769db7c2c25362b18c656a7f",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/a-withdrawn-prerequisite-refuses-activation-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "81e0905428589c52e846c327206c73f656c7a16b11543d806f5f9d11b7ed49bc",
+          "scenario_sha256": "52ba8f0e7b336d0d10a2edc9a993e4e018bade431aa56bd43eaadd96e927ae46",
+          "proves": "A withdrawn tool stops satisfying a prerequisite before activation."
+        },
+        {
+          "scenario": "skill-prerequisites/a-withdrawn-prerequisite-refuses-activation-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "79161a515385006239a00d028f07003ab94d746ebc541b707d7fec689cc29147",
+          "scenario_sha256": "52ba8f0e7b336d0d10a2edc9a993e4e018bade431aa56bd43eaadd96e927ae46",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/a-withdrawn-prerequisite-refuses-activation-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "81e0905428589c52e846c327206c73f656c7a16b11543d806f5f9d11b7ed49bc",
+          "scenario_sha256": "4d6b8a5eeb81251d42c6d00126ad9cae0bbce3a442ebd3f1de7c692dd31c26e7",
+          "proves": "A withdrawn tool stops satisfying a prerequisite before activation."
+        },
+        {
+          "scenario": "skill-prerequisites/a-withdrawn-prerequisite-refuses-activation-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "79161a515385006239a00d028f07003ab94d746ebc541b707d7fec689cc29147",
+          "scenario_sha256": "4d6b8a5eeb81251d42c6d00126ad9cae0bbce3a442ebd3f1de7c692dd31c26e7",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/all-missing-requirements-retain-their-declared-order-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "48f94e4f18aabab7209a9a099f794913a324a69dd0ef2fb9e47e18f0de23d299",
+          "scenario_sha256": "19aa71af867292fdb2521af6587bf03288dca429a6da85966b7fced7b3e9fbea",
+          "proves": "The refusal lists all missing prerequisites in their declared order."
+        },
+        {
+          "scenario": "skill-prerequisites/all-missing-requirements-retain-their-declared-order-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "19aa71af867292fdb2521af6587bf03288dca429a6da85966b7fced7b3e9fbea",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/all-missing-requirements-retain-their-declared-order-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "48f94e4f18aabab7209a9a099f794913a324a69dd0ef2fb9e47e18f0de23d299",
+          "scenario_sha256": "53b02b4ea775556abda6069d6bd739e74b60bef26b9deaf197baa633c0c5749b",
+          "proves": "The refusal lists all missing prerequisites in their declared order."
+        },
+        {
+          "scenario": "skill-prerequisites/all-missing-requirements-retain-their-declared-order-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "53b02b4ea775556abda6069d6bd739e74b60bef26b9deaf197baa633c0c5749b",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/an-active-skill-opens-a-shared-closed-prerequisite-for-another-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "69aa73714ee31f810942a425a19269c99c042c01fdfe687293e4546e7be82874",
+          "scenario_sha256": "eb0926f5d2d1e2410c9974c1d2e3edbe092079a6b38a0adbf5f2247ee2410995",
+          "proves": "A served active skill opens an identical closed pattern for a later activation prerequisite check."
+        },
+        {
+          "scenario": "skill-prerequisites/an-active-skill-opens-a-shared-closed-prerequisite-for-another-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "caad1e018a80e267a09526a91aaef3a30a5cbe6fc7997ebc1d2d93e12aa5b6bd",
+          "scenario_sha256": "eb0926f5d2d1e2410c9974c1d2e3edbe092079a6b38a0adbf5f2247ee2410995",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/an-active-skill-opens-a-shared-closed-prerequisite-for-another-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "69aa73714ee31f810942a425a19269c99c042c01fdfe687293e4546e7be82874",
+          "scenario_sha256": "90691f99f1ceec2e78356011776c86d4072a9b6a425d22171bdcc3abf1e7b05a",
+          "proves": "A served active skill opens an identical closed pattern for a later activation prerequisite check."
+        },
+        {
+          "scenario": "skill-prerequisites/an-active-skill-opens-a-shared-closed-prerequisite-for-another-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "caad1e018a80e267a09526a91aaef3a30a5cbe6fc7997ebc1d2d93e12aa5b6bd",
+          "scenario_sha256": "90691f99f1ceec2e78356011776c86d4072a9b6a425d22171bdcc3abf1e7b05a",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/an-already-active-skill-rechecks-its-prerequisites-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "10ca6095312da5ff13ab6398e04bf18d6822a5b5c14451f4ccced58762c16e5e",
+          "scenario_sha256": "e30a530c14cc3916b16952e18a67a97e6a3aba2e5b7e6a0e7e42f0abd20753e4",
+          "proves": "An already-active skill is refused after its prerequisite is withdrawn instead of returning the already-active acknowledgement."
+        },
+        {
+          "scenario": "skill-prerequisites/an-already-active-skill-rechecks-its-prerequisites-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "e30a530c14cc3916b16952e18a67a97e6a3aba2e5b7e6a0e7e42f0abd20753e4",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/an-already-active-skill-rechecks-its-prerequisites-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "10ca6095312da5ff13ab6398e04bf18d6822a5b5c14451f4ccced58762c16e5e",
+          "scenario_sha256": "8be8fe493e447ddc42e4512dbde2a97211da5ca392fe3a93cd62322b35e22b55",
+          "proves": "An already-active skill is refused after its prerequisite is withdrawn instead of returning the already-active acknowledgement."
+        },
+        {
+          "scenario": "skill-prerequisites/an-already-active-skill-rechecks-its-prerequisites-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "8be8fe493e447ddc42e4512dbde2a97211da5ca392fe3a93cd62322b35e22b55",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/an-available-skill-can-open-a-pattern-also-gated-by-an-unavailable-skill-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "44cc6b1122f83a93c7da0712ce09c2c0684f5a0d08aaed170533d302e6e07c08",
+          "scenario_sha256": "bf1362f46cf1114d4bc8c3f9ea1aa15230ef3d284fabacacaaf19b4ffcfa4f57",
+          "proves": "A shared closed pattern remains openable through an available skill: the guessed call asks for activation, which then reveals the tool."
+        },
+        {
+          "scenario": "skill-prerequisites/an-available-skill-can-open-a-pattern-also-gated-by-an-unavailable-skill-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "caad1e018a80e267a09526a91aaef3a30a5cbe6fc7997ebc1d2d93e12aa5b6bd",
+          "scenario_sha256": "bf1362f46cf1114d4bc8c3f9ea1aa15230ef3d284fabacacaaf19b4ffcfa4f57",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/an-available-skill-can-open-a-pattern-also-gated-by-an-unavailable-skill-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "44cc6b1122f83a93c7da0712ce09c2c0684f5a0d08aaed170533d302e6e07c08",
+          "scenario_sha256": "213529f797fb82ec744480b7f7c4c0bf7d0bb2778c4623e21372dfb99a9ad023",
+          "proves": "A shared closed pattern remains openable through an available skill: the guessed call asks for activation, which then reveals the tool."
+        },
+        {
+          "scenario": "skill-prerequisites/an-available-skill-can-open-a-pattern-also-gated-by-an-unavailable-skill-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "caad1e018a80e267a09526a91aaef3a30a5cbe6fc7997ebc1d2d93e12aa5b6bd",
+          "scenario_sha256": "213529f797fb82ec744480b7f7c4c0bf7d0bb2778c4623e21372dfb99a9ad023",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/an-overlapping-but-different-pattern-does-not-open-a-closed-gate-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "823c3d24c126298c588068997f878978a223dc32b7c4c49ebbaa155a8b874f0c",
+          "scenario_sha256": "8af10eb52672db9c3ce605cd045bf532107ef91ec04b488a81ad855f7388f5b3",
+          "proves": "An overlapping but nonidentical pattern does not open an unavailable closed pattern."
+        },
+        {
+          "scenario": "skill-prerequisites/an-overlapping-but-different-pattern-does-not-open-a-closed-gate-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "8af10eb52672db9c3ce605cd045bf532107ef91ec04b488a81ad855f7388f5b3",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/an-overlapping-but-different-pattern-does-not-open-a-closed-gate-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "823c3d24c126298c588068997f878978a223dc32b7c4c49ebbaa155a8b874f0c",
+          "scenario_sha256": "74133530e6389cbff60a0a773cf13f6cabddc4b27df074e131d60e812e3c7ee4",
+          "proves": "An overlapping but nonidentical pattern does not open an unavailable closed pattern."
+        },
+        {
+          "scenario": "skill-prerequisites/an-overlapping-but-different-pattern-does-not-open-a-closed-gate-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "74133530e6389cbff60a0a773cf13f6cabddc4b27df074e131d60e812e3c7ee4",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/an-unavailable-skill-keeps-its-tools-closed-and-explains-why-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "0dc14a7a738752c30b04858b944f9fda974cee518de62410877ee83740e9ac9c",
+          "scenario_sha256": "3f8bc1694fdf6f2665b7b8a3368963bacc347c382ad6a9aa9fd536357874726d",
+          "proves": "The manifest includes the unavailable reason, activation returns that reason, and its ordinary tool stays closed."
+        },
+        {
+          "scenario": "skill-prerequisites/an-unavailable-skill-keeps-its-tools-closed-and-explains-why-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "79161a515385006239a00d028f07003ab94d746ebc541b707d7fec689cc29147",
+          "scenario_sha256": "3f8bc1694fdf6f2665b7b8a3368963bacc347c382ad6a9aa9fd536357874726d",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/an-unavailable-skill-keeps-its-tools-closed-and-explains-why-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "0dc14a7a738752c30b04858b944f9fda974cee518de62410877ee83740e9ac9c",
+          "scenario_sha256": "408d3ef36931c9b45297005b26dbcfe4e4e7364999dee0955af4188213d716fc",
+          "proves": "The manifest includes the unavailable reason, activation returns that reason, and its ordinary tool stays closed."
+        },
+        {
+          "scenario": "skill-prerequisites/an-unavailable-skill-keeps-its-tools-closed-and-explains-why-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "79161a515385006239a00d028f07003ab94d746ebc541b707d7fec689cc29147",
+          "scenario_sha256": "408d3ef36931c9b45297005b26dbcfe4e4e7364999dee0955af4188213d716fc",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/an-unavailable-skill-never-offers-a-matching-tool-hint-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "87726a37d40c1ace03cddc465d193cfd567c2581ec97d9d0f17a686ac40827db",
+          "scenario_sha256": "b05e489a5f40aae11fae6ced5b5293e91f155ebd2f20421e28736ad39c2f012e",
+          "proves": "Activation returns the unavailable reason and an empty available_skills list, without a matching-tool hint."
+        },
+        {
+          "scenario": "skill-prerequisites/an-unavailable-skill-never-offers-a-matching-tool-hint-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "b05e489a5f40aae11fae6ced5b5293e91f155ebd2f20421e28736ad39c2f012e",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/an-unavailable-skill-never-offers-a-matching-tool-hint-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "87726a37d40c1ace03cddc465d193cfd567c2581ec97d9d0f17a686ac40827db",
+          "scenario_sha256": "abb8e2460a820b36cb2ccfe229e7f40a528412ebcf272a417d2cbef7965f272c",
+          "proves": "Activation returns the unavailable reason and an empty available_skills list, without a matching-tool hint."
+        },
+        {
+          "scenario": "skill-prerequisites/an-unavailable-skill-never-offers-a-matching-tool-hint-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "abb8e2460a820b36cb2ccfe229e7f40a528412ebcf272a417d2cbef7965f272c",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/an-unlisted-skill-remains-activatable-and-opens-its-tools-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "7f0478c45987f7c9852acc1af05e62445dd2fe01d43ed2d2181f9621963ce0f5",
+          "scenario_sha256": "c9bf272738210e956fed4a597080d34a33eb0133939272604cb3e9afc0b65b94",
+          "proves": "An unlisted skill is absent from the manifest but can be activated to reveal its tools."
+        },
+        {
+          "scenario": "skill-prerequisites/an-unlisted-skill-remains-activatable-and-opens-its-tools-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "caad1e018a80e267a09526a91aaef3a30a5cbe6fc7997ebc1d2d93e12aa5b6bd",
+          "scenario_sha256": "c9bf272738210e956fed4a597080d34a33eb0133939272604cb3e9afc0b65b94",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/an-unlisted-skill-remains-activatable-and-opens-its-tools-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "7f0478c45987f7c9852acc1af05e62445dd2fe01d43ed2d2181f9621963ce0f5",
+          "scenario_sha256": "2fc0427e2a32660712fa577ee804f8de3e3deb8ebdc60b36b190dc285e1b712e",
+          "proves": "An unlisted skill is absent from the manifest but can be activated to reveal its tools."
+        },
+        {
+          "scenario": "skill-prerequisites/an-unlisted-skill-remains-activatable-and-opens-its-tools-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "caad1e018a80e267a09526a91aaef3a30a5cbe6fc7997ebc1d2d93e12aa5b6bd",
+          "scenario_sha256": "2fc0427e2a32660712fa577ee804f8de3e3deb8ebdc60b36b190dc285e1b712e",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/channel-owned-tools-count-as-prerequisites-despite-policy-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "5b4e5d4ddf267b0e3035583c13b73b73ac0b80145de6b5aef16549983fe2de2d",
+          "scenario_sha256": "7165612d9135c09418d54261463ae7797950a05c227009b6bfb425239ef20bf0",
+          "proves": "The owned reference tool satisfies a prerequisite despite ordinary tool-policy denial."
+        },
+        {
+          "scenario": "skill-prerequisites/channel-owned-tools-count-as-prerequisites-despite-policy-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "7165612d9135c09418d54261463ae7797950a05c227009b6bfb425239ef20bf0",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/channel-owned-tools-count-as-prerequisites-despite-policy-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "5b4e5d4ddf267b0e3035583c13b73b73ac0b80145de6b5aef16549983fe2de2d",
+          "scenario_sha256": "9d4064bacbf0bcb26633fbc2d4e46895be6744efd9ba9a2bec7552bd7f2759ed",
+          "proves": "The owned reference tool satisfies a prerequisite despite ordinary tool-policy denial."
+        },
+        {
+          "scenario": "skill-prerequisites/channel-owned-tools-count-as-prerequisites-despite-policy-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "9d4064bacbf0bcb26633fbc2d4e46895be6744efd9ba9a2bec7552bd7f2759ed",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/each-turn-uses-its-own-prerequisites-and-availability-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "4c5d98aa64446b9e22cc1f89607938b3fb67edf51209515808cc573791a03c08",
+          "scenario_sha256": "9764b63661faea7e01993ebaeccd06a41f884508daff4d05134a5410c31da89f",
+          "proves": "A first turn uses its configured registry and host matcher; the next restores the channel registry and its unavailable reason. No overlapping turn isolation is claimed."
+        },
+        {
+          "scenario": "skill-prerequisites/each-turn-uses-its-own-prerequisites-and-availability-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "9764b63661faea7e01993ebaeccd06a41f884508daff4d05134a5410c31da89f",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/each-turn-uses-its-own-prerequisites-and-availability-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "4c5d98aa64446b9e22cc1f89607938b3fb67edf51209515808cc573791a03c08",
+          "scenario_sha256": "ddc65b6552fb8485b73d65b56115a4b44e6b040191a9c9e8e100771e714de267",
+          "proves": "A first turn uses its configured registry and host matcher; the next restores the channel registry and its unavailable reason. No overlapping turn isolation is claimed."
+        },
+        {
+          "scenario": "skill-prerequisites/each-turn-uses-its-own-prerequisites-and-availability-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "ddc65b6552fb8485b73d65b56115a4b44e6b040191a9c9e8e100771e714de267",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/list-prerequisites-include-the-candidates-own-gated-tools-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "bfe5ca88fb10a085b2b5b3c6af0b421f8f8c59d17c72781dfba83946f718a60b",
+          "scenario_sha256": "b2334686811dfd473d0985ad9e34ffad629fdf80e68676b745987049b371d9da",
+          "proves": "List-form prerequisites count the candidate own gated tools before ordinary visibility filtering."
+        },
+        {
+          "scenario": "skill-prerequisites/list-prerequisites-include-the-candidates-own-gated-tools-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "137c8bcd42c647bd7dacfcc685281458cad6f198c1d9e5740b43a430f2e34296",
+          "scenario_sha256": "b2334686811dfd473d0985ad9e34ffad629fdf80e68676b745987049b371d9da",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/list-prerequisites-include-the-candidates-own-gated-tools-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "bfe5ca88fb10a085b2b5b3c6af0b421f8f8c59d17c72781dfba83946f718a60b",
+          "scenario_sha256": "b4bbd2b0a968bb463f334561b43b7d091481d2ffec0726aac26fefb561aa162d",
+          "proves": "List-form prerequisites count the candidate own gated tools before ordinary visibility filtering."
+        },
+        {
+          "scenario": "skill-prerequisites/list-prerequisites-include-the-candidates-own-gated-tools-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "137c8bcd42c647bd7dacfcc685281458cad6f198c1d9e5740b43a430f2e34296",
+          "scenario_sha256": "b4bbd2b0a968bb463f334561b43b7d091481d2ffec0726aac26fefb561aa162d",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/requirements-are-exact-names-not-glob-grants-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "94e0d2fb74f6acc5d5118e85306498b59aa9cd549a47104b566416bd1dae0dd2",
+          "scenario_sha256": "29e49f4ae801ad32a7c3a7fc8842ef3c97b6a18af8ffa8086a01d0d7272d70fc",
+          "proves": "The default matcher treats prerequisite text as an exact name, not a glob permission grant."
+        },
+        {
+          "scenario": "skill-prerequisites/requirements-are-exact-names-not-glob-grants-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "29e49f4ae801ad32a7c3a7fc8842ef3c97b6a18af8ffa8086a01d0d7272d70fc",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/requirements-are-exact-names-not-glob-grants-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "94e0d2fb74f6acc5d5118e85306498b59aa9cd549a47104b566416bd1dae0dd2",
+          "scenario_sha256": "9343b721a4fa163a2afa69f7397fd4b189605f2902f1f635ac3599a2d875df8a",
+          "proves": "The default matcher treats prerequisite text as an exact name, not a glob permission grant."
+        },
+        {
+          "scenario": "skill-prerequisites/requirements-are-exact-names-not-glob-grants-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "9343b721a4fa163a2afa69f7397fd4b189605f2902f1f635ac3599a2d875df8a",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/scalar-prerequisites-include-the-candidates-own-gated-tools-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "bfe5ca88fb10a085b2b5b3c6af0b421f8f8c59d17c72781dfba83946f718a60b",
+          "scenario_sha256": "028befd538ac3de7ba1be0db7f66aa5b4388db46b631fb2b9328be407c655fec",
+          "proves": "Scalar prerequisites count the candidate own gated tools before ordinary visibility filtering."
+        },
+        {
+          "scenario": "skill-prerequisites/scalar-prerequisites-include-the-candidates-own-gated-tools-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "137c8bcd42c647bd7dacfcc685281458cad6f198c1d9e5740b43a430f2e34296",
+          "scenario_sha256": "028befd538ac3de7ba1be0db7f66aa5b4388db46b631fb2b9328be407c655fec",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/scalar-prerequisites-include-the-candidates-own-gated-tools-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "bfe5ca88fb10a085b2b5b3c6af0b421f8f8c59d17c72781dfba83946f718a60b",
+          "scenario_sha256": "cf8c779d412b52da00415db60bce2f70fdfe458baefebe8ef96bc76474c338f6",
+          "proves": "Scalar prerequisites count the candidate own gated tools before ordinary visibility filtering."
+        },
+        {
+          "scenario": "skill-prerequisites/scalar-prerequisites-include-the-candidates-own-gated-tools-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "137c8bcd42c647bd7dacfcc685281458cad6f198c1d9e5740b43a430f2e34296",
+          "scenario_sha256": "cf8c779d412b52da00415db60bce2f70fdfe458baefebe8ef96bc76474c338f6",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/unavailable-references-explain-the-same-restriction-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "a7604f4cc0c029fa2610c8051034374e8df8cc08e102c5219546f263d7055e4d",
+          "scenario_sha256": "e0e62bc8cef46ae4881cc9724a372fd28ccbcb43d7c03956afa2989aaa72f3f5",
+          "proves": "Reference reads for an unavailable skill return the same unavailable reason."
+        },
+        {
+          "scenario": "skill-prerequisites/unavailable-references-explain-the-same-restriction-non-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "e0e62bc8cef46ae4881cc9724a372fd28ccbcb43d7c03956afa2989aaa72f3f5",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        },
+        {
+          "scenario": "skill-prerequisites/unavailable-references-explain-the-same-restriction-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "a7604f4cc0c029fa2610c8051034374e8df8cc08e102c5219546f263d7055e4d",
+          "scenario_sha256": "3f22efe7b593a3b4280622bcb405917b476d3767947cb7d7a19ccb1aeabb7b4c",
+          "proves": "Reference reads for an unavailable skill return the same unavailable reason."
+        },
+        {
+          "scenario": "skill-prerequisites/unavailable-references-explain-the-same-restriction-streaming",
+          "pointer": "/expect/tool_audit",
+          "sha256": "71efdfedb7d7e8b2afb48e57042e7ca44c00d67a3f4d15f5f88d848643de2838",
+          "scenario_sha256": "3f22efe7b593a3b4280622bcb405917b476d3767947cb7d7a19ccb1aeabb7b4c",
+          "proves": "The unordered ordinary-handler audit has exactly the expected entries and selected fields. It does not record built-in skill handlers or establish refusal by itself."
+        }
+      ],
+      "tests": [],
+      "missing": [
+        "MCP-served skills, scripts, in-memory registration via add, role-specific policies and Agent reasoning-backend paths remain outside this local slice.",
+        "Realtime/media and concurrent per-turn registry replacement receive no coverage credit.",
+        "Full instruction lifetime, bounded prompt truncation, retirement/restart and reference/script access obligations are not established by this mapping.",
+        "The global RFC 24.5 manifest bound is not enforced by Python mark_unavailable; Rust mirrors it. Retained decision HITL 7196c294-a66f-4477-9714-3f95dfcf814b, with a durable Python test and native Rust witness; no global-bound conformance is claimed."
       ]
     }
   ],
@@ -680034,6 +680765,293 @@
         {
           "scenario": "tool-allowed-names/tool-search-hides-definitions-without-narrowing-allowed-names-streaming",
           "sha256": "607b69a8513985555ec6953959d4598e5307ea10c89ec6a67e16e77051042cc0",
+          "outcome": "passed"
+        }
+      ]
+    },
+    {
+      "id": "python-skill-prerequisites-4bc78e8-memory",
+      "implementation": "python",
+      "implementation_commit": "4bc78e84711f8e53ae95bc3e4dde6c3ddde12c5b",
+      "rfc_commit": "71df54d27154786b1fb0b86393810d8ab9bf2eea",
+      "corpus_commit": "40ae5c00f4fb2151da32a7bc673d1cf89b36a815",
+      "rfc_sha256": "43b0821c3ff99677396bca66799dc007e3ad94beafd1ded29029f09543798698",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "env",
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "taskset",
+        "-c",
+        "16-19",
+        "nice",
+        "-n",
+        "10",
+        "uv",
+        "run",
+        "pytest",
+        "tests/conformance/test_conformance.py",
+        "-k",
+        "skill-prerequisites",
+        "-n",
+        "0",
+        "-q",
+        "--junitxml=python-skill-prerequisites.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-skill-prerequisites-4bc78e8.xml",
+        "format": "pytest_junit",
+        "sha256": "26d0bb8088e233e874984e5a33cf8a7879cb45a50b89e64ec2159d9c843f6ed5"
+      },
+      "results": [
+        {
+          "scenario": "skill-prerequisites/a-absent-prerequisite-refuses-activation-non-streaming",
+          "sha256": "e816188eb5e05309263e5c6ab80fe4bd740882adf99fce98622c7017057516d3",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/a-absent-prerequisite-refuses-activation-streaming",
+          "sha256": "a598fd0e5d27baa9240f5052a4034da43a75f7ff4ad09b2f3745ca64afa15ad8",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/a-candidate-opens-a-shared-closed-pattern-non-streaming",
+          "sha256": "be6c01011e06ba4dfb6bb8f8687b5a782bb8070476d29733b74331cec4552eed",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/a-candidate-opens-a-shared-closed-pattern-streaming",
+          "sha256": "691c45a5588155f848a241c7d2e7f8595bf42032f473af870244223ad45a62af",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/a-closed-gate-makes-a-declared-prerequisite-unavailable-non-streaming",
+          "sha256": "0579f0760f4f3f40926f628a6bd493338c1a77842c5741926da586a1c85b138b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/a-closed-gate-makes-a-declared-prerequisite-unavailable-streaming",
+          "sha256": "6b7a62bbdf60af082aaa84fee3160542cfee230914160b9f74a831586b24e6b8",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/a-denied-prerequisite-refuses-activation-non-streaming",
+          "sha256": "8ebc850d1e3ac52080c1b3439baac3f3436a2f49dd9aca4a70945cf0e075c3b0",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/a-denied-prerequisite-refuses-activation-streaming",
+          "sha256": "84bb70e9c7970581cb2205b9ea3d783a313689b4469a630dfd5fdc2b556f29f2",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/a-failed-prerequisite-check-references-no-deferred-tool-non-streaming",
+          "sha256": "7e246e7bdeaaa1cec2433d1d3745478e01f879bbfa395c9c5b078c8ad405311a",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/a-failed-prerequisite-check-references-no-deferred-tool-streaming",
+          "sha256": "3d0da0e2e340f7dc179151060fcdfc70d1f89c4943ccb0d4a3c7d2f497fc755c",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-failure-never-opens-a-gate-non-streaming",
+          "sha256": "56ced1245b78717ecde9d453e0538ff90d4f47cccfc758ce127bb4dc405be90e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-failure-never-opens-a-gate-streaming",
+          "sha256": "f23de32e14aa95a2eda3032e50e2498030548d5886a9b77b98eb2d7945efb571",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-reads-only-closed-requirements-non-streaming",
+          "sha256": "796dfdde3cce2ef6846f0859843f4f0d7b8dfb64da98e2ee6491fc78aff7feac",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-reads-only-closed-requirements-streaming",
+          "sha256": "ca534bef34feebad52d5aaa7a2382b9aaeb03dc88d0a8d75a391b034f1e60df7",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-reads-only-denied-requirements-non-streaming",
+          "sha256": "ddbf60fba35750e7822efeb14ebfe4d72e807c2d4fe98280608aae2b2cea7b14",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-reads-only-denied-requirements-streaming",
+          "sha256": "d30cd0e47d73f5c12516248c31162910c88e6917217508b713ce977146052cd9",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-reads-only-offered-requirements-non-streaming",
+          "sha256": "0db4204fceda89402c77ed5a6aec06038549a235f65bbf3e96ec85fb07bac22a",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/a-host-matcher-reads-only-offered-requirements-streaming",
+          "sha256": "3faae579b6f621d8ac0127993caae89a7b9a3da0d9168af4704ea18fe5521c0f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/a-standalone-prerequisite-check-uses-only-its-own-activations-non-streaming",
+          "sha256": "1434c30aa944bf60a7714aab70b7dc9bc08e88a12ce1be62e5faea6b166667db",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/a-standalone-prerequisite-check-uses-only-its-own-activations-streaming",
+          "sha256": "aa79d076beec965b5e2e23c4a65e7c0935cc7a4f769db7c2c25362b18c656a7f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/a-withdrawn-prerequisite-refuses-activation-non-streaming",
+          "sha256": "52ba8f0e7b336d0d10a2edc9a993e4e018bade431aa56bd43eaadd96e927ae46",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/a-withdrawn-prerequisite-refuses-activation-streaming",
+          "sha256": "4d6b8a5eeb81251d42c6d00126ad9cae0bbce3a442ebd3f1de7c692dd31c26e7",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/all-missing-requirements-retain-their-declared-order-non-streaming",
+          "sha256": "19aa71af867292fdb2521af6587bf03288dca429a6da85966b7fced7b3e9fbea",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/all-missing-requirements-retain-their-declared-order-streaming",
+          "sha256": "53b02b4ea775556abda6069d6bd739e74b60bef26b9deaf197baa633c0c5749b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/an-active-skill-opens-a-shared-closed-prerequisite-for-another-non-streaming",
+          "sha256": "eb0926f5d2d1e2410c9974c1d2e3edbe092079a6b38a0adbf5f2247ee2410995",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/an-active-skill-opens-a-shared-closed-prerequisite-for-another-streaming",
+          "sha256": "90691f99f1ceec2e78356011776c86d4072a9b6a425d22171bdcc3abf1e7b05a",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/an-already-active-skill-rechecks-its-prerequisites-non-streaming",
+          "sha256": "e30a530c14cc3916b16952e18a67a97e6a3aba2e5b7e6a0e7e42f0abd20753e4",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/an-already-active-skill-rechecks-its-prerequisites-streaming",
+          "sha256": "8be8fe493e447ddc42e4512dbde2a97211da5ca392fe3a93cd62322b35e22b55",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/an-available-skill-can-open-a-pattern-also-gated-by-an-unavailable-skill-non-streaming",
+          "sha256": "bf1362f46cf1114d4bc8c3f9ea1aa15230ef3d284fabacacaaf19b4ffcfa4f57",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/an-available-skill-can-open-a-pattern-also-gated-by-an-unavailable-skill-streaming",
+          "sha256": "213529f797fb82ec744480b7f7c4c0bf7d0bb2778c4623e21372dfb99a9ad023",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/an-overlapping-but-different-pattern-does-not-open-a-closed-gate-non-streaming",
+          "sha256": "8af10eb52672db9c3ce605cd045bf532107ef91ec04b488a81ad855f7388f5b3",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/an-overlapping-but-different-pattern-does-not-open-a-closed-gate-streaming",
+          "sha256": "74133530e6389cbff60a0a773cf13f6cabddc4b27df074e131d60e812e3c7ee4",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/an-unavailable-skill-keeps-its-tools-closed-and-explains-why-non-streaming",
+          "sha256": "3f8bc1694fdf6f2665b7b8a3368963bacc347c382ad6a9aa9fd536357874726d",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/an-unavailable-skill-keeps-its-tools-closed-and-explains-why-streaming",
+          "sha256": "408d3ef36931c9b45297005b26dbcfe4e4e7364999dee0955af4188213d716fc",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/an-unavailable-skill-never-offers-a-matching-tool-hint-non-streaming",
+          "sha256": "b05e489a5f40aae11fae6ced5b5293e91f155ebd2f20421e28736ad39c2f012e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/an-unavailable-skill-never-offers-a-matching-tool-hint-streaming",
+          "sha256": "abb8e2460a820b36cb2ccfe229e7f40a528412ebcf272a417d2cbef7965f272c",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/an-unlisted-skill-remains-activatable-and-opens-its-tools-non-streaming",
+          "sha256": "c9bf272738210e956fed4a597080d34a33eb0133939272604cb3e9afc0b65b94",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/an-unlisted-skill-remains-activatable-and-opens-its-tools-streaming",
+          "sha256": "2fc0427e2a32660712fa577ee804f8de3e3deb8ebdc60b36b190dc285e1b712e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/channel-owned-tools-count-as-prerequisites-despite-policy-non-streaming",
+          "sha256": "7165612d9135c09418d54261463ae7797950a05c227009b6bfb425239ef20bf0",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/channel-owned-tools-count-as-prerequisites-despite-policy-streaming",
+          "sha256": "9d4064bacbf0bcb26633fbc2d4e46895be6744efd9ba9a2bec7552bd7f2759ed",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/each-turn-uses-its-own-prerequisites-and-availability-non-streaming",
+          "sha256": "9764b63661faea7e01993ebaeccd06a41f884508daff4d05134a5410c31da89f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/each-turn-uses-its-own-prerequisites-and-availability-streaming",
+          "sha256": "ddc65b6552fb8485b73d65b56115a4b44e6b040191a9c9e8e100771e714de267",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/list-prerequisites-include-the-candidates-own-gated-tools-non-streaming",
+          "sha256": "b2334686811dfd473d0985ad9e34ffad629fdf80e68676b745987049b371d9da",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/list-prerequisites-include-the-candidates-own-gated-tools-streaming",
+          "sha256": "b4bbd2b0a968bb463f334561b43b7d091481d2ffec0726aac26fefb561aa162d",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/requirements-are-exact-names-not-glob-grants-non-streaming",
+          "sha256": "29e49f4ae801ad32a7c3a7fc8842ef3c97b6a18af8ffa8086a01d0d7272d70fc",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/requirements-are-exact-names-not-glob-grants-streaming",
+          "sha256": "9343b721a4fa163a2afa69f7397fd4b189605f2902f1f635ac3599a2d875df8a",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/scalar-prerequisites-include-the-candidates-own-gated-tools-non-streaming",
+          "sha256": "028befd538ac3de7ba1be0db7f66aa5b4388db46b631fb2b9328be407c655fec",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/scalar-prerequisites-include-the-candidates-own-gated-tools-streaming",
+          "sha256": "cf8c779d412b52da00415db60bce2f70fdfe458baefebe8ef96bc76474c338f6",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/unavailable-references-explain-the-same-restriction-non-streaming",
+          "sha256": "e0e62bc8cef46ae4881cc9724a372fd28ccbcb43d7c03956afa2989aaa72f3f5",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "skill-prerequisites/unavailable-references-explain-the-same-restriction-streaming",
+          "sha256": "3f22efe7b593a3b4280622bcb405917b476d3767947cb7d7a19ccb1aeabb7b4c",
           "outcome": "passed"
         }
       ]
