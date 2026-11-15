@@ -8,7 +8,7 @@
     "§24.4",
     "§21.1"
   ],
-  "notes": "Python: channels/_ai_policy.py::_turn_skills; tests/test_skills_integration.py per-turn registry; local requirements must read that registry too.",
+  "notes": "Python: channels/_ai_policy.py::_turn_skills; tests/test_skills_integration.py per-turn registry. The first turn uses its hub matcher; the second restores the channel unavailable mark.",
   "setup": {
     "channels": [
       {
@@ -23,12 +23,12 @@
         "tool_search": false,
         "tools": [
           {
-            "name": "calendar_read",
-            "description": "calendar_read",
+            "name": "boards_get_card",
+            "description": "boards_get_card",
             "parameters": {
               "type": "object"
             },
-            "returns": "calendar_read ran"
+            "returns": "boards_get_card ran"
           }
         ],
         "skills": [
@@ -36,7 +36,7 @@
             "name": "calendar",
             "description": "calendar procedure",
             "instructions": "Rules for calendar.",
-            "requires": "missing",
+            "requires": "boards",
             "unavailable": "not here"
           }
         ],
@@ -55,6 +55,20 @@
             },
             {
               "text": "done"
+            },
+            {
+              "calls": [
+                {
+                  "name": "activate_skill",
+                  "arguments": {
+                    "name": "calendar"
+                  },
+                  "id": "c2"
+                }
+              ]
+            },
+            {
+              "text": "done"
             }
           ],
           "streaming": false
@@ -67,10 +81,12 @@
                   "name": "calendar",
                   "description": "calendar procedure",
                   "instructions": "Rules for calendar.",
-                  "requires": "calendar_read"
+                  "requires": "boards"
                 }
-              ]
-            }
+              ],
+              "skills_requires_match": "hub"
+            },
+            {}
           ]
         }
       }
@@ -105,6 +121,21 @@
     },
     {
       "idle": true
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "r1",
+      "message": {
+        "channel_id": "ws",
+        "sender_id": "alice",
+        "content": {
+          "type": "text",
+          "body": "Go."
+        }
+      }
+    },
+    {
+      "idle": true
     }
   ],
   "expect": {
@@ -119,6 +150,29 @@
               },
               "is_error": false,
               "tool_call_id": "c1"
+            }
+          ]
+        },
+        {
+          "system_prompt": {
+            "$contains": "<reason>not here</reason>"
+          }
+        },
+        {
+          "tool_results": [
+            {
+              "content": {
+                "$contains": "Rules for calendar."
+              },
+              "is_error": false,
+              "tool_call_id": "c1"
+            },
+            {
+              "tool_call_id": "c2",
+              "content": {
+                "$contains": "is unavailable in this context: not here"
+              },
+              "is_error": true
             }
           ]
         }

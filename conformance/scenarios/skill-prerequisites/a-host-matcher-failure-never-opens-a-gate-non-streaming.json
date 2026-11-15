@@ -92,6 +92,13 @@
           }
         ]
       }
+    ],
+    "hooks": [
+      {
+        "name": "observe",
+        "trigger": "on_tool_call",
+        "execution": "async"
+      }
     ]
   },
   "steps": [
@@ -148,6 +155,30 @@
     },
     "tool_audit": {
       "$unordered": []
+    },
+    "hooks": {
+      "observe": {
+        "$unordered": [
+          {
+            "tool_call": {
+              "name": "activate_skill",
+              "tool_call_id": "c1",
+              "is_error": true,
+              "refused": false,
+              "cancelled": false
+            }
+          },
+          {
+            "tool_call": {
+              "name": "calendar_read",
+              "tool_call_id": "c2",
+              "is_error": true,
+              "refused": true,
+              "cancelled": false
+            }
+          }
+        ]
+      }
     }
   }
 }

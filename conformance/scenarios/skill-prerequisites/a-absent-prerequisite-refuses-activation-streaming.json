@@ -69,9 +69,7 @@
           "streaming": true
         },
         "tool_policy": {
-          "deny": [
-            "calendar_read"
-          ]
+          "deny": []
         }
       }
     ],
