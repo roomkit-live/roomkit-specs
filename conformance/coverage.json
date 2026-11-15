@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "rfc_sha256": "43b0821c3ff99677396bca66799dc007e3ad94beafd1ded29029f09543798698",
+  "rfc_sha256": "7c5cc8afb846f7fa069bcbf6cf3881ec046c42a7e2568e9976acac91767891c9",
   "corpus_sha256": "6f89b033455baff8eedfc8593c4b816040fd08c34e0fb2b8c9daf0bab71ed2cb",
-  "python_commit": "4bc78e84711f8e53ae95bc3e4dde6c3ddde12c5b",
+  "python_commit": "8eb4e4fc12ffc7892134f2cd9e98917689ec5ed1",
   "scenario_count": 2369,
   "sections": [
     {
@@ -7722,7 +7722,7 @@
       "review": "normative",
       "requirements": 1,
       "mapping": {
-        "unmapped": 1
+        "mapped_partial": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
@@ -69088,8 +69088,7 @@
           "missing": [
             "MCP-served skills, scripts, in-memory registration via add, role-specific policies and Agent reasoning-backend paths remain outside this local slice.",
             "Realtime/media and concurrent per-turn registry replacement receive no coverage credit.",
-            "Full instruction lifetime, bounded prompt truncation, retirement/restart and reference/script access obligations are not established by this mapping.",
-            "The global RFC 24.5 manifest bound is not enforced by Python mark_unavailable; Rust mirrors it. Retained decision HITL 7196c294-a66f-4477-9714-3f95dfcf814b, with a durable Python test and native Rust witness; no global-bound conformance is claimed."
+            "Full instruction lifetime, bounded prompt truncation, retirement/restart and reference/script access obligations are not established by this mapping."
           ],
           "executions": [
             {
@@ -69098,7 +69097,7 @@
               "commit": "4bc78e84711f8e53ae95bc3e4dde6c3ddde12c5b",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -69134,8 +69133,19 @@
     {
       "id": "RK-24.5-001",
       "section": "24.5",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "phase4-skill-manifest-bound",
+          "scope": "Global final manifest bound: local mutations/copies, shared mutable Python metadata, existing Python MCP registration/fetch/lazy refusal and retained verification retirement.",
+          "coverage": "partial",
+          "missing": [
+            "This broad discovery unit also specifies directory parsing, strict/lenient discovery and discovery atomicity; those obligations are not fully mapped by this bound-only link.",
+            "Rust MCP served skills and mutable metadata aliases are not implemented or claimed by this slice. Specialized execution receipts are not supported; local test runs remain separate evidence."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-24.6-001",
