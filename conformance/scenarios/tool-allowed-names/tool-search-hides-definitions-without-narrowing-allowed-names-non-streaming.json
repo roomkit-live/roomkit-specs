@@ -1,8 +1,8 @@
 {
   "$schema": "../../scenario.schema.json",
   "rules": [
-    "\u00a76.4",
-    "\u00a721.4"
+    "§6.4",
+    "§21.4"
   ],
   "setup": {
     "channels": [
