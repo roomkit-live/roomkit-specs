@@ -16872,8 +16872,13 @@ finds its own set skipped drops it, since running it then would break the
 room's order. The cursor of a room the store no longer holds reads `-1`, and
 no lane moves or skips it any more: a lane gives every set it holds for that
 room its turn, in its own order, with an index or without, and their runs find
-the room gone (a rerun is refused, §5.1). A durable outbox that turns that
-loss into recovery is a separate capability (§13.6).
+the room gone (a rerun is refused, §5.1). A room created again under the id of
+a room deleted while its sets ran is another room, told apart by its
+`created_at`, which no write changes once the room is created: the deleted
+room's sets are those of a room the store no longer holds, and move or skip
+none of the new room's cursor, unless the room is deleted and created again
+between a lane's read of the room and its write of the cursor. A durable outbox
+that turns that loss into recovery is a separate capability (§13.6).
 <!-- /rfc -->
 
 ### 13.6 Processing Timeout

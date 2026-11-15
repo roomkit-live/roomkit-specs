@@ -999,7 +999,7 @@
     },
     {
       "section": "13.5",
-      "sha256": "de7c77f30ff04900de954d902adb0c02743842872372891ee67a74c7dcf80b8c",
+      "sha256": "398302ef557d23ee1757053cf360aae522b66a269e814336f55456bd5eec4070",
       "classification": "normative",
       "review": "Source inventory: Room-Level Locking. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
