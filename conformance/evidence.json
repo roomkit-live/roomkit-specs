@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "500ffa55b2796f555ff3ff85afa1dd763f4bd45f",
+  "python_commit": "26b34d0bf53e60838f87167103c61c3fb64459ec",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -5300,9 +5300,9 @@
           "proves": "a streamed turn reads the status once around its hooks. Specialized source evidence: shared scenario receipts do not certify execution of this test. RFC §5.1 explicitly permits (MAY) caching status around streaming hooks. The exact Python cache read count and whether the first externally-refused row enters hooks are implementation choices, not mandatory cross-language assertions. The shared proof asserts room isolation, stored rows and no hook for the later message."
         },
         {
-          "nodeid": "tests/test_stream_room_reads.py::test_a_row_reads_the_room_once",
-          "sha256": "5906807f776e6ff0169f86a753759e8cb990135faef2c424b75452539047aae1",
-          "proves": "a row reads the room once. Specialized source evidence: shared scenario receipts do not certify execution of this test. RFC §5.1 explicitly permits (MAY) caching status around streaming hooks. The exact Python cache read count and whether the first externally-refused row enters hooks are implementation choices, not mandatory cross-language assertions. The shared proof asserts room isolation, stored rows and no hook for the later message."
+          "nodeid": "tests/test_stream_room_reads.py::test_a_row_reads_the_room_at_its_commit_and_at_its_cursor_write",
+          "sha256": "31c712dab85d29c7a72ece4ed34ee13e65174c4814eb328b020807b06d607a89",
+          "proves": "Comparing four tool rounds with one, the extra room reads are at most 18, covering commit and cursor write. Specialized source evidence only; the exact Python read count is an implementation choice under the RFC §5.1 MAY cache allowance, not a mandatory cross-language assertion. Scenario receipts do not execute this test."
         },
         {
           "nodeid": "tests/test_stream_room_reads.py::test_another_room_closing_costs_one_read_and_blocks_nothing",
@@ -9333,8 +9333,8 @@
         },
         {
           "nodeid": "tests/test_shared_channel_routing.py::TestARoomBeingCreated::test_a_deadline_passed_in_the_second_room_s_hooks_opens_no_third",
-          "sha256": "2f874b5a060f81a3643c98c10740b588be89d0f795bf9709feffb5c816c24ae5",
-          "proves": "a deadline passed in the second room s hooks opens no third. Specialized source evidence, including its parameterized variants. Scenario receipts do not execute this test."
+          "sha256": "bcb83ae61a4a4ed487debec1c4c2ed3eccd758a464d2ecb164fd1e5633342257",
+          "proves": "The call deadline expires in the second room hook; the message is refused as process_timeout and no third room opens. The fixture uses a bounded hook waiting on an event (RMK-1705), preserving the prior observable assertions. Specialized source evidence only; scenario receipts do not execute this wallclock test."
         }
       ],
       "missing": [
@@ -10280,8 +10280,8 @@
         },
         {
           "nodeid": "tests/test_shared_channel_routing.py::TestARoomBeingCreated::test_a_deadline_passed_in_the_second_room_s_hooks_opens_no_third",
-          "sha256": "2f874b5a060f81a3643c98c10740b588be89d0f795bf9709feffb5c816c24ae5",
-          "proves": "a deadline passed in the second room s hooks opens no third. Specialized source evidence, including its parameterized variants. Scenario receipts do not execute this test."
+          "sha256": "bcb83ae61a4a4ed487debec1c4c2ed3eccd758a464d2ecb164fd1e5633342257",
+          "proves": "The call deadline expires in the second room hook; the message is refused as process_timeout and no third room opens. The fixture uses a bounded hook waiting on an event (RMK-1705), preserving the prior observable assertions. Specialized source evidence only; scenario receipts do not execute this wallclock test."
         },
         {
           "nodeid": "tests/test_room_org_scoping.py::TestScopedInbound::test_an_explicit_room_of_another_organization_is_not_found",
@@ -679402,6 +679402,107 @@
         {
           "scenario": "tool-structured/parallel-calls-keep-their-own-structured-copies",
           "sha256": "5462884aa5c331b51f868c278241be6d624b3ae40ccea1334e36f61846f70cd0",
+          "outcome": "passed"
+        }
+      ]
+    },
+    {
+      "id": "python-tool-allowed-catalogue-26b34d0-memory",
+      "implementation": "python",
+      "implementation_commit": "26b34d0bf53e60838f87167103c61c3fb64459ec",
+      "rfc_commit": "48c0af4a992bc3c8b0243288ce71415dedaecd98",
+      "corpus_commit": "7492f083892b260b1fa2b041ac6051ffda6deef5",
+      "rfc_sha256": "f11a77521463dfc8f54936bfc79a8084414078b6afb5c9e345ccee8fd6599fbc",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "env",
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "uv",
+        "run",
+        "--extra",
+        "dev",
+        "pytest",
+        "tests/conformance/test_conformance.py",
+        "-k",
+        "tool-allowed-names",
+        "-q",
+        "--junitxml=python-allowed-catalogue.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-tool-allowed-catalogue-26b34d0.xml",
+        "format": "pytest_junit",
+        "sha256": "ecc2377e18029f10ad1e1e4222921033daacf9d0b411e9b1588984e913692042"
+      },
+      "results": [
+        {
+          "scenario": "tool-allowed-names/a-handler-reads-the-resolved-catalogue-and-first-round-reread-non-streaming",
+          "sha256": "f1dbf2cb0f73d54a6a94635e74ccf0b5ed455f00531ced5887da7bf9c31f770c",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/a-handler-reads-the-resolved-catalogue-and-first-round-reread-streaming",
+          "sha256": "9d4c9692af492701dc1d6c6c2d50eedcdbf76cb453d598dde83856ee027039a6",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/a-shared-channel-reads-each-turns-configured-catalogue-non-streaming",
+          "sha256": "7f05ed17fbbdb61481fa624eaa1b0f35b8dac6667ba0ccffaf1f3c22c8814c42",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/a-shared-channel-reads-each-turns-configured-catalogue-streaming",
+          "sha256": "2f56c76682f2051e7753a4a8dc4f06aabe4ab3a36a168d49c94dc44cb21ef1bb",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/policy-denial-removes-a-name-and-owned-tools-escape-the-allow-list-non-streaming",
+          "sha256": "41130def9fc374e406b748472c416b8cda5c6f197a6d80b26eb6e7ec809e22ef",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/policy-denial-removes-a-name-and-owned-tools-escape-the-allow-list-streaming",
+          "sha256": "2a04fb099051b53ca966f742a2ee042bf2994a543049cf32f622a32296b9c9cd",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/round-withdrawals-remove-base-and-declared-extra-tools-non-streaming",
+          "sha256": "95059d34e999248608bd2a019c52bf848b57f4fca1f2e93d2a34380d6f52a5d9",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/round-withdrawals-remove-base-and-declared-extra-tools-streaming",
+          "sha256": "0b71c006d6db619b65f4a9683449fb5bbcbc2856cb107540f501d1528fc00cc8",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/skill-hidden-tools-remain-allowed-but-policy-denied-tools-do-not-non-streaming",
+          "sha256": "39598ec02d702d28ae9273e454c88f8cea4835d44ba498e0a16c28e5dc5d641d",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/skill-hidden-tools-remain-allowed-but-policy-denied-tools-do-not-streaming",
+          "sha256": "364b20f0770d234592629c4af39c3d6dc04b0f62129c62d8965d413aff2b2b44",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/the-generation-hook-refreshes-the-allowed-catalogue-non-streaming",
+          "sha256": "63d1d4cd8af61760572e49948bc9527c088540600cb1b8e81801afeb33741e54",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/the-generation-hook-refreshes-the-allowed-catalogue-streaming",
+          "sha256": "137e7e110c93c5de8e33195e697abfdbf08ffd35c9007bb1360513824fd4945b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/tool-search-hides-definitions-without-narrowing-allowed-names-non-streaming",
+          "sha256": "c2d0e898932f3f2b980e49b73a543b945c644881accdc27a87d1c97f319734ea",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-allowed-names/tool-search-hides-definitions-without-narrowing-allowed-names-streaming",
+          "sha256": "607b69a8513985555ec6953959d4598e5307ea10c89ec6a67e16e77051042cc0",
           "outcome": "passed"
         }
       ]

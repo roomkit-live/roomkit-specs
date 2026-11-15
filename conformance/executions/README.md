@@ -402,3 +402,23 @@ partial links add 18 reviewed wire/timeline assertions. Native reader and
 cancellation boundaries, the active-turn observer regression, Rust and service
 backends are separate checks; this receipt gives them no execution credit.
 The 125 earlier receipts and 132 earlier links remain unchanged.
+
+## Allowed-tool catalogue in a local AI turn
+
+`python-tool-allowed-catalogue-26b34d0.xml` records 14 passing scenarios from
+clean Python commit `26b34d0bf53e60838f87167103c61c3fb64459ec`, copied corpus
+`7492f083892b260b1fa2b041ac6051ffda6deef5`, on the memory store and in-process
+turns. The receipt pins RFC revision `48c0af4a992bc3c8b0243288ce71415dedaecd98`
+and the exact command. It covers the resolved catalogue, sequential room
+configuration, policy denial, round withdrawals, skill-hidden tools, generation
+hook changes, and Tool Search presentation, in both streaming modes.
+
+The partial evidence link describes only the observed getter results and wire
+assertions. Native context lifetime checks, Rust runs, SQL stores and Redis
+turns receive no execution credit from this receipt. Rust's two skill-gating
+cases still fail during setup and remain tracked by RMK-1709.
+
+The source reference pin advances to the receipt's Python commit. Three native
+references in existing links are refreshed for two tests already changed on
+Python main (RMK-1705 and RMK-1707); this adds no shared execution credit.
+All 135 preceding receipts remain unchanged.

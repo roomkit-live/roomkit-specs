@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "f11a77521463dfc8f54936bfc79a8084414078b6afb5c9e345ccee8fd6599fbc",
   "corpus_sha256": "1aa558bca7cc0599ae40ea0016efa8a7157a191a70380495ebc3afe4fcd2a327",
-  "python_commit": "500ffa55b2796f555ff3ff85afa1dd763f4bd45f",
+  "python_commit": "26b34d0bf53e60838f87167103c61c3fb64459ec",
   "scenario_count": 2263,
   "sections": [
     {
@@ -65757,7 +65757,16 @@
             "Native preparation/consumption lifetime, None/empty and explicit-scope tests are not shared scenario execution evidence.",
             "Other context accessors, realtime, owner-served remote calls, handler result shapes and other obligations of the composite clause are outside this mapping."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-tool-allowed-catalogue-26b34d0-memory",
+              "implementation": "python",
+              "commit": "26b34d0bf53e60838f87167103c61c3fb64459ec",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
+            }
+          ]
         }
       ]
     },
@@ -70417,6 +70426,15 @@
       "implementation_commit": "500ffa55b2796f555ff3ff85afa1dd763f4bd45f",
       "rfc_commit": "07f7bf2b9ca7dd77b9bcbee91ad7c76bd34ea38a",
       "corpus_commit": "ebefd1ec721534284bea345409bb5877ed498ee3",
+      "backend": "memory",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-tool-allowed-catalogue-26b34d0-memory",
+      "implementation": "python",
+      "implementation_commit": "26b34d0bf53e60838f87167103c61c3fb64459ec",
+      "rfc_commit": "48c0af4a992bc3c8b0243288ce71415dedaecd98",
+      "corpus_commit": "7492f083892b260b1fa2b041ac6051ffda6deef5",
       "backend": "memory",
       "runtime": "asyncio"
     }
