@@ -5430,6 +5430,10 @@
         "instructions": {
           "type": "string"
         },
+        "allowed_tools": {
+          "description": "The SKILL.md allowed_tools frontmatter, as space-separated tool names (\u00a724.3).",
+          "type": "string"
+        },
         "references": {
           "type": "object",
           "additionalProperties": {
@@ -5606,6 +5610,10 @@
         "returns_json": {
           "description": "The tool answers this JSON value, not a text: the model reads it as JSON (\u00a76.7), an object's members in the order written; a list whose every item is a mapping in a part's exact shape (`{\"type\": \"text\", \"text\"}`, `{\"type\": \"image\", \"url\", \"mime_type\"}`) as those parts (\u00a721.4)."
         },
+        "returns_allowed_names": {
+          "description": "The handler calls current_tool_allowed_names() and returns its names as a sorted JSON array, or null when unresolved (\u00a721.4).",
+          "const": true
+        },
         "returns_parts": {
           "description": "The tool answers these content parts in order, each `{text}` or `{image, mime_type}` (\u00a721.4): a text and the images a model that sees reads in the round (\u00a76.4).",
           "type": "array",
@@ -5666,6 +5674,11 @@
         {
           "required": [
             "returns_json"
+          ]
+        },
+        {
+          "required": [
+            "returns_allowed_names"
           ]
         },
         {

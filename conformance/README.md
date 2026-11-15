@@ -489,6 +489,10 @@ scripted.
   holds it or its scripted answer succeeds or fails. Every call gets its own
   copy. The value is observed on the result hook and the stored end row;
   the model still reads only the scripted result.
+  `returns_allowed_names: true` is another answer: the handler calls
+  `current_tool_allowed_names()` and returns a sorted JSON array of its
+  names, or null when unresolved (§21.4). The runner reads the actual turn
+  context; it does not infer names from the scenario's tool definitions.
   `changes_state: true` declares it on its definition as a tool that
   changes state (Python's `AITool(changes_state=True)`, §6.4).
 - `tool_policy`: a ToolPolicy's `allow` and `deny` patterns (§21.1);
@@ -550,6 +554,8 @@ scripted.
   is read only on an agent given one. `skills_in_prompt`: false leaves the
   listing to the host, whichever registry a turn reads; the instructions of
   the skills active are written either way (default true).
+  `allowed_tools`, when present, is the space-separated frontmatter value
+  that gates those tools behind skill activation (§24.3).
 - `retry_policy`: the agent's retry policy (§6.4): a generation its
   provider refused as worth another try (`refuses.retryable`) before it
   handed anything is tried again, at most `max_retries` times (default 3),
