@@ -1,7 +1,7 @@
 {
   "version": 1,
   "rfc_sha256": "43b0821c3ff99677396bca66799dc007e3ad94beafd1ded29029f09543798698",
-  "corpus_sha256": "8de15681c94f7aa958e27632f71f6afa0347d12e8ccee6e02a47c89e31ad3aa4",
+  "corpus_sha256": "9b0f7bf121fcc65a472898f5e01774af8216abd3c583d29526d053767b2b44b2",
   "python_commit": "4bc78e84711f8e53ae95bc3e4dde6c3ddde12c5b",
   "scenario_count": 2365,
   "sections": [
@@ -2048,6 +2048,8 @@
         "rooms/a-response-pass-applies-its-own-due-pause",
         "rooms/a-response-the-room-refuses",
         "rooms/a-response-whose-room-a-step-closes-during-its-turn-is-refused",
+        "rooms/a-room-closed-outside-the-kit-before-the-first-streamed-row-refuses-it",
+        "rooms/a-store-closure-found-at-commit-spares-the-next-streamed-row-hooks",
         "rooms/a-timer-check-does-not-change-another-due-room",
         "rooms/a-timer-check-scopes-before-applying-due-transitions",
         "rooms/an-agent-s-answer-whose-room-a-step-closes-during-its-generation-is-refused",

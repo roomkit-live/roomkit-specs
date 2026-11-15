@@ -4340,14 +4340,14 @@
           "scenario": "rooms/a-room-closed-outside-the-kit-before-the-first-streamed-row-refuses-it",
           "pointer": "/steps/0/expect",
           "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
-          "scenario_sha256": "c9941d756cb01dbc1b0ec40bfcde23c5f0bce250262d0b5be38e9d214a7b52cd",
+          "scenario_sha256": "917fce14c7ad14af61bbd868e5efaa487be8a17456ae4b1b3d71dde2834c71ed",
           "proves": "The named process_inbound call returns the declared value or refusal in this fixture."
         },
         {
           "scenario": "rooms/a-room-closed-outside-the-kit-before-the-first-streamed-row-refuses-it",
           "pointer": "/expect",
-          "sha256": "31404206a55949a0f51954f6c10ee4911d05d70247ab09e96552034d6bdc4b7d",
-          "scenario_sha256": "c9941d756cb01dbc1b0ec40bfcde23c5f0bce250262d0b5be38e9d214a7b52cd",
+          "sha256": "a1626ed8685f7cc7d3d30461774fc7cd82d145b97d71dc88f8a7a7601b2e1748",
+          "scenario_sha256": "917fce14c7ad14af61bbd868e5efaa487be8a17456ae4b1b3d71dde2834c71ed",
           "proves": "The first streamed row reads a closure made directly in the store. The declared exact timelines, room state, hook observations and notifications are compared."
         },
         {
@@ -4368,14 +4368,14 @@
           "scenario": "rooms/a-store-closure-found-at-commit-spares-the-next-streamed-row-hooks",
           "pointer": "/steps/0/expect",
           "sha256": "391482a473a0f3393832941517ec68c881fa14bcfbe8ba4ee4b92d16c6b0eebc",
-          "scenario_sha256": "f275aae1fabb411d0428b159dd675f7709a3b34e98ba2bd470f58ff1a6635eb9",
+          "scenario_sha256": "d7dfaf74b1c1fbae471b3e7bade37acef28c43cf7b9d618de8eed394485f956b",
           "proves": "The named process_inbound call returns the declared value or refusal in this fixture."
         },
         {
           "scenario": "rooms/a-store-closure-found-at-commit-spares-the-next-streamed-row-hooks",
           "pointer": "/expect",
-          "sha256": "4af643257b8e4e218823946a1539e264921cf18441b90079b1337a330bf5adff",
-          "scenario_sha256": "f275aae1fabb411d0428b159dd675f7709a3b34e98ba2bd470f58ff1a6635eb9",
+          "sha256": "35b241f54c5f02383c71292bb2da4ed3a8437ecc160175394d9bc262908d5302",
+          "scenario_sha256": "d7dfaf74b1c1fbae471b3e7bade37acef28c43cf7b9d618de8eed394485f956b",
           "proves": "A streamed commit finds a store closure and skips the following rows and hooks. The declared exact timelines, room state, hook observations and notifications are compared."
         },
         {

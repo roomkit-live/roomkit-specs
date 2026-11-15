@@ -919,8 +919,12 @@ form, a map's values included. A record it takes is a template, completed as
 the record requires (Templates): a room's `created_at` and `updated_at`, a
 binding's `attached_at`, a participant's `joined_at` and an event's `id`,
 `type` and `created_at` are now when it leaves them out, and an event's room
-is the call's `room_id`, its source the framework's. A runner runs the
-scenarios of `store/` and `idempotency/` on each store it ships that needs no server.
+is the call's `room_id`, its source the framework's. A room
+`store.update_room_if` writes that leaves out its `created_at` takes instead
+the `created_at` of the room the store holds under its id, if any: the write
+updates that room, it creates none, and a room is its id and its `created_at`
+(§13.5). A runner runs the scenarios of `store/` and `idempotency/` on each
+store it ships that needs no server.
 
 | Call | Arguments | Result |
 |---|---|---|
