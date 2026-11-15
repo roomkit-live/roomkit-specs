@@ -393,7 +393,7 @@
     },
     {
       "section": "10.1",
-      "sha256": "a5cb4e8601539ce009533c0f42b947c142b58b2415efdce60a032decf92589e2",
+      "sha256": "07bdece7103c4ce55829ac92ebd48ed11e4ff8ea555da72ec34d8b950896d99a",
       "classification": "normative",
       "review": "Source inventory: Inbound Pipeline. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
@@ -999,7 +999,7 @@
     },
     {
       "section": "13.5",
-      "sha256": "36d874e8a328addd216444d0c40ed5e774851d5518f37bb899a9f271d53f5fa2",
+      "sha256": "1e7690246ced9f69e4781173741e09390bb79364996a44d4c452000f282ba460",
       "classification": "normative",
       "review": "Source inventory: Room-Level Locking. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },

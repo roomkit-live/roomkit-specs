@@ -6928,7 +6928,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     ├── Store all tasks and observations from hooks + channels: of a
     │   channel's outputs, those of on_event(); a transport's deliver()
     │   gives the room its metadata updates alone, and a streaming target's
-    │   deliver_stream() nothing but its failure (§12.2 step 13s)
+    │   deliver_stream() nothing but its failure (§12.2 step 13s); a set
+    │   whose room is gone, deleted or created again under its id, writes
+    │   none of its side effects (§13.5)
     ├── Apply the room metadata updates of the cascade's channel outputs
     │   (§6.1), from on_event() and deliver() alike: merged key by key in
     │   the order the targets answered, and written once per delivery set,
@@ -6950,8 +6952,9 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   delegated task's child room writes its turns' side effects so
     │   (§23.3).
     └── A delivery set the room's lane drops before it ran (the kit's close,
-        §12.10.4; an index another process declared lost, §13.5) stores
-        what its event's hooks gave all the same, and fires their tasks'
+        §12.10.4; an index another process declared lost, §13.5), its room
+        not gone (§13.5), stores what its event's hooks gave all the same,
+        and fires their tasks'
         `ON_TASK_CREATED`, stored before the call that made the set
         returns, or a deferred call's completion handle answers its wait
         (step 18): a task a hook decided is not lost with the delivery.
@@ -16879,13 +16882,19 @@ room's sets are those of a room the store no longer holds, and move or skip
 none of the new room's cursor, unless the room is deleted and created again
 between a lane's read of the room and its write of the cursor. Nor does
 anything of those sets reach the new room: an answer to one, each row its
-stream writes once the room is gone (the rows after the first refused before
-their hooks), and the record of an answer or a turn it refuses (§8.3) are
+stream writes once the room is gone (each refused before its hooks, the first
+included), and the record of an answer or a turn it refuses (§8.3) are
 refused as in a room gone, `room_refused_event` naming no status (§5.1,
 §8.2), as is a regeneration waiting in the deleted room's lane; a stream not
 yet read is instead closed unread, with no `room_refused_event`, and its call
-returns its result with no error (§13.6). A durable outbox that turns that
-loss into recovery is a separate capability (§13.6).
+returns its result with no error (§13.6). Nor are the side effects of a set
+whose room is gone, deleted or created again under its id, written (§10.1
+step 15, a set the lane drops included): the set reads its room before it
+writes them and, finding it gone, writes none, its event's hooks' included,
+fires no `ON_TASK_CREATED` and logs why; a read the store fails is logged and
+they are written, and a room deleted, or deleted and created again, between
+that read and the writes goes unseen. A durable outbox that turns that loss
+into recovery is a separate capability (§13.6).
 <!-- /rfc -->
 
 ### 13.6 Processing Timeout
