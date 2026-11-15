@@ -21686,7 +21686,7 @@ SkillMetadata
 ├── license: string | null                  # License identifier
 ├── compatibility: string | null            # Free text, not interpreted; shown with
 │       # the license in to_prompt_xml()
-├── allowed_tools: list<string>             # Tool access patterns (ToolPolicy globs);
+├── allowed_tools: string | list<string> | null  # Tool access patterns, null by default;
 │       # in frontmatter, a list or comma-separated (a text `[a, b]` and
 │       # quoted entries read as that list; `[ab]` reads as the single
 │       # name `ab`, not a character class. Only `*` and `?` are globs;
