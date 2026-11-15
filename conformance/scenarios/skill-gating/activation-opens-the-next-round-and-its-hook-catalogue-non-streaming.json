@@ -232,48 +232,7 @@
               "$unordered": [
                 "safe_read",
                 "activate_skill",
-                "read_skill_reference",
-                "read_stored_result"
-              ]
-            }
-          }
-        },
-        {
-          "generation": {
-            "tools": {
-              "$unordered": [
-                "safe_read",
-                "activate_skill",
-                "read_skill_reference",
-                "read_stored_result"
-              ]
-            }
-          }
-        },
-        {
-          "generation": {
-            "tools": {
-              "$unordered": [
-                "search_web",
-                "fetch_v1",
-                "safe_read",
-                "activate_skill",
-                "read_skill_reference",
-                "read_stored_result"
-              ]
-            }
-          }
-        },
-        {
-          "generation": {
-            "tools": {
-              "$unordered": [
-                "search_web",
-                "fetch_v1",
-                "safe_read",
-                "activate_skill",
-                "read_skill_reference",
-                "read_stored_result"
+                "read_skill_reference"
               ]
             }
           }
@@ -286,8 +245,7 @@
               "$unordered": [
                 "safe_read",
                 "activate_skill",
-                "read_skill_reference",
-                "read_stored_result"
+                "read_skill_reference"
               ]
             }
           }
@@ -300,8 +258,7 @@
                 "fetch_v1",
                 "safe_read",
                 "activate_skill",
-                "read_skill_reference",
-                "read_stored_result"
+                "read_skill_reference"
               ]
             }
           }
@@ -314,8 +271,7 @@
                 "fetch_v1",
                 "safe_read",
                 "activate_skill",
-                "read_skill_reference",
-                "read_stored_result"
+                "read_skill_reference"
               ]
             }
           }

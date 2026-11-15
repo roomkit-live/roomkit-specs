@@ -76,8 +76,8 @@
                   "id": "c2",
                   "name": "read_skill_reference",
                   "arguments": {
-                    "name": "research",
-                    "path": "guide.md"
+                    "skill_name": "research",
+                    "filename": "guide.md"
                   }
                 }
               ]
@@ -190,7 +190,7 @@
             },
             {
               "tool_call_id": "c3",
-              "content": "{\"error\": \"Tool 'search_web' is not allowed by the tool policy.\"}",
+              "content": "{\"error\": \"Tool 'search_web' is not permitted by the agent's tool policy.\"}",
               "is_error": true
             }
           ]

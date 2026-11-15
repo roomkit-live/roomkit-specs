@@ -74,7 +74,7 @@
                   "id": "c2",
                   "name": "find_tools",
                   "arguments": {
-                    "query": "search web"
+                    "query": "search"
                   }
                 }
               ]
