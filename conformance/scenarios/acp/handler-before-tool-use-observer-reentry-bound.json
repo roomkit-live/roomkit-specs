@@ -8,7 +8,7 @@
     "Appendix A.9.1",
     "§8.3"
   ],
-  "notes": "Python: tests/test_channels/test_acp.py::test_an_observer_posting_per_tool_call_the_agent_answers_stops[before_tool_use]. In-process owner/executor context only, as the source marker requires; the captured kit does not claim this across Redis. Each prompt stays active until its observer post returned. Barriers establish the live-delivery precondition in RFC §8.3; no scheduler ordering or delay is assumed.",
+  "notes": "Python: tests/test_channels/test_acp.py::test_an_observer_posting_per_tool_call_the_agent_answers_stops[before_tool_use]. In-process owner/executor context only, as the source marker requires; the captured kit does not claim this across Redis. Each of the first 20 prompts stays active until its observer post reaches BEFORE_BROADCAST, after budget charging; the final prompt stays active until its observer receives the cap refusal. A successful post may wait for its queued delivery, so its return is not used to release its own originating prompt. Barriers establish the live-delivery precondition in RFC §8.3; no scheduler ordering or delay is assumed.",
   "setup": {
     "channels": [
       {
@@ -1258,8 +1258,7 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-0"
+            ]
           },
           {
             "do": [
@@ -1273,8 +1272,7 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-1"
+            ]
           },
           {
             "do": [
@@ -1288,8 +1286,7 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-2"
+            ]
           },
           {
             "do": [
@@ -1303,8 +1300,7 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-3"
+            ]
           },
           {
             "do": [
@@ -1318,8 +1314,7 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-4"
+            ]
           },
           {
             "do": [
@@ -1333,8 +1328,7 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-5"
+            ]
           },
           {
             "do": [
@@ -1348,8 +1342,7 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-6"
+            ]
           },
           {
             "do": [
@@ -1363,8 +1356,7 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-7"
+            ]
           },
           {
             "do": [
@@ -1378,8 +1370,7 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-8"
+            ]
           },
           {
             "do": [
@@ -1393,8 +1384,7 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-9"
+            ]
           },
           {
             "do": [
@@ -1408,8 +1398,7 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-10"
+            ]
           },
           {
             "do": [
@@ -1423,8 +1412,7 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-11"
+            ]
           },
           {
             "do": [
@@ -1438,8 +1426,7 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-12"
+            ]
           },
           {
             "do": [
@@ -1453,8 +1440,7 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-13"
+            ]
           },
           {
             "do": [
@@ -1468,8 +1454,7 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-14"
+            ]
           },
           {
             "do": [
@@ -1483,8 +1468,7 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-15"
+            ]
           },
           {
             "do": [
@@ -1498,8 +1482,7 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-16"
+            ]
           },
           {
             "do": [
@@ -1513,8 +1496,7 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-17"
+            ]
           },
           {
             "do": [
@@ -1528,8 +1510,7 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-18"
+            ]
           },
           {
             "do": [
@@ -1543,8 +1524,7 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-19"
+            ]
           },
           {
             "do": [
@@ -1573,8 +1553,7 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-21"
+            ]
           },
           {
             "do": [
@@ -1588,8 +1567,7 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-22"
+            ]
           },
           {
             "do": [
@@ -1603,8 +1581,7 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-23"
+            ]
           },
           {
             "do": [
@@ -1618,8 +1595,134 @@
                 },
                 "as": "posted"
               }
-            ],
-            "after_do_gate": "posted-24"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "post-started",
+        "trigger": "before_broadcast",
+        "execution": "sync",
+        "reactions": [
+          {
+            "when": {
+              "source_channel_id": "bot"
+            },
+            "gate": "started-0"
+          },
+          {
+            "when": {
+              "source_channel_id": "bot"
+            },
+            "gate": "started-1"
+          },
+          {
+            "when": {
+              "source_channel_id": "bot"
+            },
+            "gate": "started-2"
+          },
+          {
+            "when": {
+              "source_channel_id": "bot"
+            },
+            "gate": "started-3"
+          },
+          {
+            "when": {
+              "source_channel_id": "bot"
+            },
+            "gate": "started-4"
+          },
+          {
+            "when": {
+              "source_channel_id": "bot"
+            },
+            "gate": "started-5"
+          },
+          {
+            "when": {
+              "source_channel_id": "bot"
+            },
+            "gate": "started-6"
+          },
+          {
+            "when": {
+              "source_channel_id": "bot"
+            },
+            "gate": "started-7"
+          },
+          {
+            "when": {
+              "source_channel_id": "bot"
+            },
+            "gate": "started-8"
+          },
+          {
+            "when": {
+              "source_channel_id": "bot"
+            },
+            "gate": "started-9"
+          },
+          {
+            "when": {
+              "source_channel_id": "bot"
+            },
+            "gate": "started-10"
+          },
+          {
+            "when": {
+              "source_channel_id": "bot"
+            },
+            "gate": "started-11"
+          },
+          {
+            "when": {
+              "source_channel_id": "bot"
+            },
+            "gate": "started-12"
+          },
+          {
+            "when": {
+              "source_channel_id": "bot"
+            },
+            "gate": "started-13"
+          },
+          {
+            "when": {
+              "source_channel_id": "bot"
+            },
+            "gate": "started-14"
+          },
+          {
+            "when": {
+              "source_channel_id": "bot"
+            },
+            "gate": "started-15"
+          },
+          {
+            "when": {
+              "source_channel_id": "bot"
+            },
+            "gate": "started-16"
+          },
+          {
+            "when": {
+              "source_channel_id": "bot"
+            },
+            "gate": "started-17"
+          },
+          {
+            "when": {
+              "source_channel_id": "bot"
+            },
+            "gate": "started-18"
+          },
+          {
+            "when": {
+              "source_channel_id": "bot"
+            },
+            "gate": "started-19"
           }
         ]
       }
@@ -1644,184 +1747,184 @@
       "as": "inbound"
     },
     {
-      "wait_for": "posted-0"
+      "wait_for": "started-0"
     },
     {
       "open": "prompt-0"
     },
     {
-      "open": "posted-0"
+      "open": "started-0"
     },
     {
-      "wait_for": "posted-1"
+      "wait_for": "started-1"
     },
     {
       "open": "prompt-1"
     },
     {
-      "open": "posted-1"
+      "open": "started-1"
     },
     {
-      "wait_for": "posted-2"
+      "wait_for": "started-2"
     },
     {
       "open": "prompt-2"
     },
     {
-      "open": "posted-2"
+      "open": "started-2"
     },
     {
-      "wait_for": "posted-3"
+      "wait_for": "started-3"
     },
     {
       "open": "prompt-3"
     },
     {
-      "open": "posted-3"
+      "open": "started-3"
     },
     {
-      "wait_for": "posted-4"
+      "wait_for": "started-4"
     },
     {
       "open": "prompt-4"
     },
     {
-      "open": "posted-4"
+      "open": "started-4"
     },
     {
-      "wait_for": "posted-5"
+      "wait_for": "started-5"
     },
     {
       "open": "prompt-5"
     },
     {
-      "open": "posted-5"
+      "open": "started-5"
     },
     {
-      "wait_for": "posted-6"
+      "wait_for": "started-6"
     },
     {
       "open": "prompt-6"
     },
     {
-      "open": "posted-6"
+      "open": "started-6"
     },
     {
-      "wait_for": "posted-7"
+      "wait_for": "started-7"
     },
     {
       "open": "prompt-7"
     },
     {
-      "open": "posted-7"
+      "open": "started-7"
     },
     {
-      "wait_for": "posted-8"
+      "wait_for": "started-8"
     },
     {
       "open": "prompt-8"
     },
     {
-      "open": "posted-8"
+      "open": "started-8"
     },
     {
-      "wait_for": "posted-9"
+      "wait_for": "started-9"
     },
     {
       "open": "prompt-9"
     },
     {
-      "open": "posted-9"
+      "open": "started-9"
     },
     {
-      "wait_for": "posted-10"
+      "wait_for": "started-10"
     },
     {
       "open": "prompt-10"
     },
     {
-      "open": "posted-10"
+      "open": "started-10"
     },
     {
-      "wait_for": "posted-11"
+      "wait_for": "started-11"
     },
     {
       "open": "prompt-11"
     },
     {
-      "open": "posted-11"
+      "open": "started-11"
     },
     {
-      "wait_for": "posted-12"
+      "wait_for": "started-12"
     },
     {
       "open": "prompt-12"
     },
     {
-      "open": "posted-12"
+      "open": "started-12"
     },
     {
-      "wait_for": "posted-13"
+      "wait_for": "started-13"
     },
     {
       "open": "prompt-13"
     },
     {
-      "open": "posted-13"
+      "open": "started-13"
     },
     {
-      "wait_for": "posted-14"
+      "wait_for": "started-14"
     },
     {
       "open": "prompt-14"
     },
     {
-      "open": "posted-14"
+      "open": "started-14"
     },
     {
-      "wait_for": "posted-15"
+      "wait_for": "started-15"
     },
     {
       "open": "prompt-15"
     },
     {
-      "open": "posted-15"
+      "open": "started-15"
     },
     {
-      "wait_for": "posted-16"
+      "wait_for": "started-16"
     },
     {
       "open": "prompt-16"
     },
     {
-      "open": "posted-16"
+      "open": "started-16"
     },
     {
-      "wait_for": "posted-17"
+      "wait_for": "started-17"
     },
     {
       "open": "prompt-17"
     },
     {
-      "open": "posted-17"
+      "open": "started-17"
     },
     {
-      "wait_for": "posted-18"
+      "wait_for": "started-18"
     },
     {
       "open": "prompt-18"
     },
     {
-      "open": "posted-18"
+      "open": "started-18"
     },
     {
-      "wait_for": "posted-19"
+      "wait_for": "started-19"
     },
     {
       "open": "prompt-19"
     },
     {
-      "open": "posted-19"
+      "open": "started-19"
     },
     {
       "wait_for": "posted-20"
