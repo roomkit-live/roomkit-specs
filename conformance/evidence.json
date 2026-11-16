@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "cd16b5b1685536616ad08c5ea2aefddd8e75958c",
+  "python_commit": "663aa0fa2249ccacdb88d9583739348aeaf92ed4",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -7557,7 +7557,7 @@
         },
         {
           "nodeid": "tests/test_framework.py::TestTimeouts::test_slow_store_commit_is_not_reported_blocked",
-          "sha256": "22a3c21ba9353cc5974f9f7dfbe62f11b57036f024ef456a104b55faa105ca34",
+          "sha256": "8d8805147c6eabcaf55a9bd1ca2b2843c93b225937723dd6cb002eb46cd0d40d",
           "proves": "A commit held past the process budget stays in flight, then completes without a timeout or blocked result, stores exactly one new message with DELIVERED status. RMK-1712 makes the clock advance deterministic; reviewed against the prior assertion. Specialized source evidence only: shared scenario receipts do not certify this test."
         },
         {
@@ -9243,8 +9243,8 @@
         },
         {
           "nodeid": "tests/test_shared_channel_routing.py::TestTheClaimFailsClosed::test_a_claim_the_lock_outlasts_refuses_the_message",
-          "sha256": "8e623e6e4abd137934a739b36eea4264c01842a3582adab420d273f603db52c6",
-          "proves": "a claim the lock outlasts refuses the message. Specialized source evidence, including its parameterized variants. Scenario receipts do not execute this test."
+          "sha256": "b3795f5cb7cda2f3a9b980c0825963b0c9ab83129fd01cc200d3e69bff593bf2",
+          "proves": "A claim waits for the held room lock until its controlled loop deadline passes. Once the lock is released, the inbound result is blocked as process_timeout and the binding still names no participant. Specialized Python source evidence only; scenario receipts do not execute this test."
         },
         {
           "nodeid": "tests/test_shared_channel_routing.py::TestABindingNamingAnIdentity::test_its_correspondent_is_routed_once",
@@ -9333,8 +9333,8 @@
         },
         {
           "nodeid": "tests/test_shared_channel_routing.py::TestARoomBeingCreated::test_a_deadline_passed_in_the_second_room_s_hooks_opens_no_third",
-          "sha256": "bcb83ae61a4a4ed487debec1c4c2ed3eccd758a464d2ecb164fd1e5633342257",
-          "proves": "The call deadline expires in the second room hook; the message is refused as process_timeout and no third room opens. The fixture uses a bounded hook waiting on an event (RMK-1705), preserving the prior observable assertions. Specialized source evidence only; scenario receipts do not execute this wallclock test."
+          "sha256": "742c6cccb74834b9caa3d79648003c72c33876cb93e43ac59fb0ec4b898be1a5",
+          "proves": "The held event-loop clock spends the call deadline inside the second room hook. The message is refused as process_timeout and exactly two rooms exist. Specialized Python source evidence only; scenario receipts do not execute this clock-controlled test."
         }
       ],
       "missing": [
@@ -10280,8 +10280,8 @@
         },
         {
           "nodeid": "tests/test_shared_channel_routing.py::TestARoomBeingCreated::test_a_deadline_passed_in_the_second_room_s_hooks_opens_no_third",
-          "sha256": "bcb83ae61a4a4ed487debec1c4c2ed3eccd758a464d2ecb164fd1e5633342257",
-          "proves": "The call deadline expires in the second room hook; the message is refused as process_timeout and no third room opens. The fixture uses a bounded hook waiting on an event (RMK-1705), preserving the prior observable assertions. Specialized source evidence only; scenario receipts do not execute this wallclock test."
+          "sha256": "742c6cccb74834b9caa3d79648003c72c33876cb93e43ac59fb0ec4b898be1a5",
+          "proves": "The held event-loop clock spends the call deadline inside the second room hook. The message is refused as process_timeout and exactly two rooms exist. Specialized Python source evidence only; scenario receipts do not execute this clock-controlled test."
         },
         {
           "nodeid": "tests/test_room_org_scoping.py::TestScopedInbound::test_an_explicit_room_of_another_organization_is_not_found",
@@ -11649,8 +11649,8 @@
       "tests": [
         {
           "nodeid": "tests/test_hook_observers.py::TestTheRoomGoesOn::test_a_trigger_of_this_implementation_alone_holds_nothing_up",
-          "sha256": "e75697e8f1bc77e0b45ab0897d1d45fab55ea84aac43c8fc038ad4c13f355aad",
-          "proves": "a trigger of this implementation alone holds nothing up. Specialized Python source evidence, including its parameterized variants; a scenario receipt does not execute this test."
+          "sha256": "1df714dd5f8bd72ae893ee90154639aaf5a363a6a244ed2443287f9e17022706",
+          "proves": "ON_DELIVERY_STATUS parameter only: the public status call returns while its ASYNC observer remains held; watchdogs are not the hook release. The other three trigger parameters are not credited by this delivery-status link. Specialized Python source evidence; no scenario execution is inferred."
         },
         {
           "nodeid": "tests/test_shared_channel_routing.py::TestADeliveryStatus::test_it_reaches_the_room_of_its_recipient",
@@ -11679,8 +11679,8 @@
         },
         {
           "nodeid": "tests/test_shared_channel_routing.py::TestADeliveryStatus::test_the_one_room_delivering_to_another_number_is_not_the_status",
-          "sha256": "9cc193261ce1613b8e91f0bf3ab1a93fd90fed6403a19069635f95652b2e5be2",
-          "proves": "the one room delivering to another number is not the status. Specialized Python source evidence, including its parameterized variants; a scenario receipt does not execute this test."
+          "sha256": "6d2d5e4bf9eab91fb80e889bbbcb9d6ef52d2ffac81b93fec84ef33bde8bb528",
+          "proves": "Seven registered-channel variants preserve the recipient checks: another or malformed recipient is refused, null/blank is admitted. Two additional unregistered-channel variants refuse another recipient and null. These are specialized Python source assertions; historical scenario receipts do not execute the test or certify its added variants."
         },
         {
           "nodeid": "tests/test_shared_channel_routing.py::TestAPausedConversation::test_a_delivery_status_reaches_the_paused_room_of_its_recipient",
@@ -23469,6 +23469,118 @@
       ],
       "missing": [
         "No executor invocation or script execution is claimed. Runtime-specific path/permission forms remain documented in the prior direct-file helper mapping."
+      ]
+    },
+    {
+      "id": "phase4-local-script-boundary",
+      "requirement": "RK-24.6-001",
+      "clause_sha256": "92023a269b217f58db01c5604d8ed13c0105243ab6b306dc97c5d18fbd7e50c8",
+      "scope": "Local host script invocation: arguments and results, undeclared execution without an executor, containment before host entry including an innocent-name symlink escape.",
+      "coverage": "partial",
+      "review": "Independent code/scenario review accepted the local ScriptExecutor port after reproducing and fixing discovery and activation-hint regressions. Python scenarios passed before Rust. Native symlink, helper failure and shutdown tests complement the shared corpus; source references are not execution receipts.",
+      "assertions": [],
+      "tests": [
+        {
+          "nodeid": "tests/test_skills_integration.py::TestRunScriptHandler::test_run_script",
+          "sha256": "058d8121faf1c228dec23b6d8d46ae9a47f8ee6e5715bb4edfab67a21818837a",
+          "proves": "Local script slice: run script. Native or shared Rust counterpart is recorded in the lot source checklist; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/test_skills_integration.py::TestRunScriptHandler::test_escaping_script_never_reaches_executor",
+          "sha256": "3c832dc76bb1dbfa2bbbea25f0189ac5aca378727a9d7ad0ce00fa73ed0cfa19",
+          "proves": "Local script slice: escaping script never reaches executor. Native or shared Rust counterpart is recorded in the lot source checklist; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/test_skills_integration.py::TestRunScriptHandler::test_run_script_no_executor",
+          "sha256": "5981db4012879b946b40a292fa62a652713ffd128da8fc5f8efd563dd11d991b",
+          "proves": "Local script slice: run script no executor. Native or shared Rust counterpart is recorded in the lot source checklist; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_script_executor.py::test_script_result_and_optional_arguments_cross_the_tool_boundary",
+          "sha256": "bc4ca170f54d836e36db6b11d221683b8eeaaff24db586d6e395818b8e623451",
+          "proves": "Local script slice: script result and optional arguments cross the tool boundary. Native or shared Rust counterpart is recorded in the lot source checklist; no execution receipt is inferred."
+        }
+      ],
+      "missing": [
+        "No OS process runner or sandbox is certified. Pure path helpers retain their prior evidence. MCP execution is outside this lot."
+      ]
+    },
+    {
+      "id": "phase4-local-script-declarations",
+      "requirement": "RK-24.3-001",
+      "clause_sha256": "4bfcb63a41da5de2458f84506e5faa7a063a0e1f17757764df056e70d375be04",
+      "scope": "Local script declarations and system prompt promises, with executor availability and policy. Activation and reference tools remain declared without an executor.",
+      "coverage": "partial",
+      "review": "Independent code/scenario review accepted the local ScriptExecutor port after reproducing and fixing discovery and activation-hint regressions. Python scenarios passed before Rust. Native symlink, helper failure and shutdown tests complement the shared corpus; source references are not execution receipts.",
+      "assertions": [],
+      "tests": [
+        {
+          "nodeid": "tests/test_skills_integration.py::TestSkillsSystemPrompt::test_no_scripts_note_when_no_executor",
+          "sha256": "42fcd329912928dc3512c5d6c774f9230840b116ef84e359ae34d3f2e22faf27",
+          "proves": "Local script slice: no scripts note when no executor. Native or shared Rust counterpart is recorded in the lot source checklist; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/test_skills_integration.py::TestSkillsSystemPrompt::test_no_scripts_note_absent_when_executor_set",
+          "sha256": "2c0c13842f7682a88540d98a5bc8ff7e2bd9ebd0951dd275abab73159ad86147",
+          "proves": "Local script slice: no scripts note absent when executor set. Native or shared Rust counterpart is recorded in the lot source checklist; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/test_skills_integration.py::TestSkillToolInjection::test_activate_and_read_tools_present",
+          "sha256": "3eb61cc39d98e3a813b0fdbf44e62f153e16d8de983c7203de85db473c92851e",
+          "proves": "Local script slice: activate and read tools present. Native or shared Rust counterpart is recorded in the lot source checklist; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/test_skills_integration.py::TestSkillToolInjection::test_run_script_tool_present_with_executor",
+          "sha256": "bdd20a48d2e4f2a5c6ea64577196ca091a437e94fee8b2e538e762370960dadf",
+          "proves": "Local script slice: run script tool present with executor. Native or shared Rust counterpart is recorded in the lot source checklist; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/test_tool_policy_exemptions.py::test_deny_all_keeps_the_prompt_from_promising_denied_tools",
+          "sha256": "5c394cf5ef95c7cb8bede3a67ba5dc9dbe77e6631e5d0ec39ad3cb0f111ad5f9",
+          "proves": "Local script slice: deny all keeps the prompt from promising denied tools. Native or shared Rust counterpart is recorded in the lot source checklist; no execution receipt is inferred."
+        }
+      ],
+      "missing": [
+        "Only the local-script variants of parameterized sources are covered here; other injected tools, media and MCP are not credited."
+      ]
+    },
+    {
+      "id": "phase4-local-script-failures",
+      "requirement": "RK-9.3-015",
+      "clause_sha256": "57749e14c9f99287b547a59ee42456e3de129d4f566250ee53b0a2c3b04a3d49",
+      "scope": "Script unknown-skill and policy refusals, raised executor failures, plus AI shutdown reports preserving executed arguments and distinguishing unstarted calls.",
+      "coverage": "partial",
+      "review": "Independent code/scenario review accepted the local ScriptExecutor port after reproducing and fixing discovery and activation-hint regressions. Python scenarios passed before Rust. Native symlink, helper failure and shutdown tests complement the shared corpus; source references are not execution receipts.",
+      "assertions": [],
+      "tests": [
+        {
+          "nodeid": "tests/test_skill_reference_unknown_skill.py::test_the_ai_channel_refuses_it",
+          "sha256": "f5bfdc84f5b78677a0675ab6223961bffe71407099e8a4028660970642045a12",
+          "proves": "Local script slice: the ai channel refuses it. Native or shared Rust counterpart is recorded in the lot source checklist; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/test_tool_failure_text.py::test_a_skill_script_that_raised_raises_on_to_the_channel",
+          "sha256": "82ddb70bf9e03afceac8633f6bb411f8104850b21d215045f3701e6642d14dd1",
+          "proves": "Local script slice: a skill script that raised raises on to the channel. Native or shared Rust counterpart is recorded in the lot source checklist; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/test_tool_policy_exemptions.py::test_deny_all_neither_declares_nor_runs_what_the_channel_injects",
+          "sha256": "c622cfd4f4de82675b59e1a7024c2af70059477ac6e8ada38feeffb2a8738317",
+          "proves": "Local script slice: deny all neither declares nor runs what the channel injects. Native or shared Rust counterpart is recorded in the lot source checklist; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/test_channel_close_arguments.py::test_a_closed_call_reports_the_arguments_its_handler_ran_with",
+          "sha256": "095b3a9a81a624369b90688d4c7ea18ba6deb63ef0431d914b8abb70289760a9",
+          "proves": "Generic AI shutdown prerequisite, plain and streaming: a running lookup receives rewritten arguments; its single observer report and stored end row preserve those arguments and the CHANNEL_CLOSED hint. Native counterpart: crates/roomkit-ai/tests/channel_close/arguments.rs. No script invocation or execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/test_channel_close_before_calls.py::test_a_close_while_the_start_row_is_read_never_starts_the_call",
+          "sha256": "cd31a94c58b07a910bb9bfc244c65efe8874dcc2ad8f30f6d8d0feb6df50e7aa",
+          "proves": "Generic AI shutdown prerequisite, plain and streaming: close while the consumer reads ToolCallStart runs no handler and no next round; one cancelled report carries TURN_ENDED, and the end row has null result, duration_ms=0 and error=cancelled. Native counterpart: crates/roomkit-ai/tests/channel_close/before_calls.rs. No script invocation or execution receipt is inferred."
+        }
+      ],
+      "missing": [
+        "Only AI text script variants and the named shutdown boundaries are covered; other provider doors, all cancellation races, and the entire composite clause are not certified. Executor teardown error forms remain native API parity evidence in the lot checklist."
       ]
     }
   ],
