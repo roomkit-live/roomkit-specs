@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "0a83de76bd3415b0ab7c072821b17e0cba9f2d056be3c91e377002528d2925f0",
-  "corpus_sha256": "7edcaebd7831b403b739dd02cb7357eabfd7c9f00a84fb6ed29f8971150e7926",
+  "corpus_sha256": "a13edeeab03c34b2b3426e051022c21abf1e25f48163e2251ef5114e776ddc3a",
   "python_commit": "cd16b5b1685536616ad08c5ea2aefddd8e75958c",
-  "scenario_count": 2380,
+  "scenario_count": 2387,
   "sections": [
     {
       "section": "0",
@@ -459,7 +459,11 @@
         "members/rename-member-changes-the-display-name-only",
         "members/resolve-participant-identifies-a-pending-record",
         "members/resolve-participant-refuses-what-it-cannot-find",
-        "rooms/member-changes-on-a-closed-room-write-no-lifecycle-record"
+        "rooms/member-changes-on-a-closed-room-write-no-lifecycle-record",
+        "routing/an-advisor-s-resolution-does-not-open-the-room-of-another-correspondent",
+        "routing/an-advisor-s-resolution-does-not-open-the-room-of-the-key-s-recipient",
+        "routing/an-advisor-s-resolution-names-the-identity-on-the-binding-delivering-to-the-participant",
+        "routing/an-advisor-s-resolution-on-an-unregistered-channel-does-not-open-the-room-of-the-key-s-recipient"
       ]
     },
     {
@@ -485,6 +489,8 @@
       "candidate_scenarios": [
         "delivery/a-status-for-the-key-s-value-is-not-the-room-the-channel-reads-another-in",
         "delivery/a-status-for-the-key-s-value-reaches-no-room-past-the-newest",
+        "delivery/a-status-on-an-unregistered-channel-is-not-the-room-of-the-key-s-recipient",
+        "delivery/a-status-on-an-unregistered-channel-reaches-the-room-naming-its-recipient",
         "delivery/a-status-recipient-is-found-through-a-binding-naming-no-correspondent",
         "delivery/a-status-recipient-is-read-as-step-one-reads-a-sender",
         "delivery/the-one-room-delivering-by-its-key-on-a-channel-reading-no-recipient-is-not-the-status",
@@ -555,6 +561,10 @@
         "routing/a-value-under-the-key-naming-the-sender-s-identity-is-recorded-as-written",
         "routing/a-value-under-the-key-that-is-not-a-recipient-admits-no-one",
         "routing/a-webhook-s-recipient-names-no-correspondent",
+        "routing/an-advisor-s-resolution-does-not-open-the-room-of-another-correspondent",
+        "routing/an-advisor-s-resolution-does-not-open-the-room-of-the-key-s-recipient",
+        "routing/an-advisor-s-resolution-names-the-identity-on-the-binding-delivering-to-the-participant",
+        "routing/an-advisor-s-resolution-on-an-unregistered-channel-does-not-open-the-room-of-the-key-s-recipient",
         "routing/an-attach-keeps-a-value-that-is-not-a-recipient-whatever-the-channel-answers",
         "routing/an-integer-under-the-key-in-another-form-is-read-in-the-channel-s-form",
         "routing/an-integer-under-the-key-of-a-channel-reading-no-recipient-names-its-conversation",
@@ -3188,6 +3198,9 @@
         "routing/a-value-under-the-key-in-another-form-finds-its-room-on-a-channel-reading-no-recipient",
         "routing/a-value-under-the-key-naming-the-sender-s-identity-is-recorded-as-written",
         "routing/a-value-under-the-key-that-is-not-a-recipient-admits-no-one",
+        "routing/an-advisor-s-resolution-does-not-open-the-room-of-another-correspondent",
+        "routing/an-advisor-s-resolution-does-not-open-the-room-of-the-key-s-recipient",
+        "routing/an-advisor-s-resolution-on-an-unregistered-channel-does-not-open-the-room-of-the-key-s-recipient",
         "routing/an-attach-keeps-a-value-that-is-not-a-recipient-whatever-the-channel-answers",
         "routing/an-explicit-room-bypasses-the-custom-router",
         "routing/an-identity-of-the-framework-s-name-enters-no-room-a-router-answers",
@@ -3486,7 +3499,10 @@
         "delivery/a-status-is-not-given-another-correspondent-s-room",
         "delivery/a-status-naming-its-room-reaches-it",
         "delivery/a-status-naming-no-recipient-gets-no-room-among-several",
+        "delivery/a-status-naming-no-recipient-on-an-unregistered-channel-reaches-the-one-room",
         "delivery/a-status-naming-no-recipient-reaches-the-one-room",
+        "delivery/a-status-on-an-unregistered-channel-is-not-the-room-of-the-key-s-recipient",
+        "delivery/a-status-on-an-unregistered-channel-reaches-the-room-naming-its-recipient",
         "delivery/a-status-picks-the-newest-eligible-active-room",
         "delivery/a-status-picks-the-newest-eligible-paused-room",
         "delivery/a-status-reaches-its-tenant-s-room-only",
@@ -3599,6 +3615,10 @@
         "routing/a-value-under-the-key-naming-the-sender-s-identity-is-recorded-as-written",
         "routing/a-value-under-the-key-that-is-not-a-recipient-admits-no-one",
         "routing/a-webhook-s-recipient-names-no-correspondent",
+        "routing/an-advisor-s-resolution-does-not-open-the-room-of-another-correspondent",
+        "routing/an-advisor-s-resolution-does-not-open-the-room-of-the-key-s-recipient",
+        "routing/an-advisor-s-resolution-names-the-identity-on-the-binding-delivering-to-the-participant",
+        "routing/an-advisor-s-resolution-on-an-unregistered-channel-does-not-open-the-room-of-the-key-s-recipient",
         "routing/an-attach-keeps-a-value-that-is-not-a-recipient-whatever-the-channel-answers",
         "routing/an-explicit-room-bypasses-the-custom-router",
         "routing/an-identity-of-the-framework-s-name-enters-no-room-a-router-answers",
@@ -8420,7 +8440,11 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "members/a-resolved-pending-sender-keeps-their-room",
-        "members/resolve-participant-identifies-a-pending-record"
+        "members/resolve-participant-identifies-a-pending-record",
+        "routing/an-advisor-s-resolution-does-not-open-the-room-of-another-correspondent",
+        "routing/an-advisor-s-resolution-does-not-open-the-room-of-the-key-s-recipient",
+        "routing/an-advisor-s-resolution-names-the-identity-on-the-binding-delivering-to-the-participant",
+        "routing/an-advisor-s-resolution-on-an-unregistered-channel-does-not-open-the-room-of-the-key-s-recipient"
       ]
     },
     {
