@@ -3285,6 +3285,12 @@ by the runtime:
   embeddings, overrides and isolates dropped, so that none shows the quote's
   end reversed.
 
+A tool's definition (its name, its description and its parameters, those an
+MCP server lists included) is not such text: a request declares it among its
+tools, which the model's API keeps apart from the prompt, or a Tool Search
+tool hands it as its own result. It is its server's declaration, which the
+host chose to serve, and is bounded (Section 21.2).
+
 What the runtime gives outside both carries no text of its own: an identifier
 kept to an identifier's characters (letters with their marks, digits,
 `_ . @ + -`), a value from a known set (a task's ending, a plan step's status),
@@ -20333,9 +20339,11 @@ tool runs under an alias that its own name is refused. A policy names a server
 through its aliases, which run on the server they name when every provider of
 the chain is labelled (Section 21.2): `deny: ["mcp__archive__*"]` keeps that
 server out, and `allow: ["mcp__crm__*", "delete_records"]` admits one tool of
-one server, both names passing. Such a policy holds only when the tools are
-declared under their aliases alone: a call under a bare name names no server,
-so a policy cannot hold it to one. The
+one server, both names passing. A call under a bare name names no server: a
+labelled provider serves it unless the policy names its server to keep it out
+(Section 21.2), so it runs on the first server of the chain the policy does
+not keep out, and on none when the policy keeps out every server that has it;
+a policy that names no server leaves it on the first server that has it. The
 declaration filter and the execution guard MUST apply one rule, so a tool the
 model is offered is a tool it may call.
 <!-- /rfc -->
@@ -20499,12 +20507,32 @@ construction. A labelled provider's tool handler serves an MCP alias
 alias naming another server is not served by it (Section 21.4), and the next
 handler of a chain takes it. A provider without a label serves an alias
 whatever server it names, so an alias runs on the server it names whatever the
-order of the chain only when every provider of the chain is labelled. A host
-that composes several servers SHOULD label each.
+order of the chain only when every provider of the chain is labelled. A
+labelled provider serves a tool called by its bare name unless the tool policy
+of the call names its server to keep it out: a deny pattern covers its alias
+`mcp__<label>__<tool>`, or the policy's allow patterns name aliases (one of
+them starts with `mcp__`) and none covers it. It then declines the call, so
+that the next handler of the chain takes it: a bare name runs on the first
+server of the chain the policy does not keep out, and on none when it keeps
+out every server that has it. An allow list of bare names alone names no
+server and keeps none out. Each door that judges a call under a policy (an AI
+channel's turn, a realtime voice session and the agent a reasoning backend
+drives for it, a conference) hands that judgement to the handlers the call
+runs (Section 21.4). A host that composes several servers SHOULD label each.
 
 A provider lists the server's tools once, when it connects, following the
 listing's cursor across every page, and keeps the output schema each tool was
-listed with. A listing that pages on without bringing anything new (an empty
+listed with. A listed tool is its server's declaration: its name, its
+description and its parameters reach the model as the server wrote them,
+among the tools a request declares, which the model's API keeps apart from the
+prompt, and not in a text of the runtime, so they are not framed (Section 6.4).
+A provider SHOULD bound them, so that a server cannot fill the model's request
+with them: the reference implementation cuts a description past 4,096
+characters at a word, leaves out a tool whose name is past 128 characters or
+whose parameters' schema, serialized, is past 32 KiB, and keeps 512 tools of a
+listing at most, each with a warning naming the server. A name the listing
+gives twice keeps its first definition, the others left out with a warning
+(Section 21.1, One tool per name). A listing that pages on without bringing anything new (an empty
 page that still carries a cursor, a cursor handed out twice) or past a bound
 of pages ends there, with a warning naming the server: a server that pages
 forever MUST NOT hold the connection open. With `discover` false it connects

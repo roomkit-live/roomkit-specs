@@ -237,7 +237,7 @@
     },
     {
       "section": "6.4",
-      "sha256": "e6231c06e55bedb233fb49691d9219d63f8bc4a36c5fc37107fca9859973ae98",
+      "sha256": "78d6f54f3927e1b01023c58efb07b2bbd87d202379368772985652125711604a",
       "classification": "normative",
       "review": "Source inventory: Intelligence Channels. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the added deferred-input association and protected-context clause against shared hook scenarios and native mutation/tool tests; existing source units are unchanged."
     },
@@ -1329,13 +1329,13 @@
     },
     {
       "section": "21.1",
-      "sha256": "0eccdc0c7163a596ac3c928d2a900009ccde77c08859a625ee3325093b55054b",
+      "sha256": "329256ee4c7209bf2d505d34653813ecde0fc44b11c3b3c9b81e6e4bb1aac547",
       "classification": "normative",
       "review": "Source inventory: ToolPolicy. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
     {
       "section": "21.2",
-      "sha256": "d7914fb7e6127334d4d50513c877b371b8e1def6ef82b71fbaa170414a31f3de",
+      "sha256": "f89bd581565163a9dfb85d43275c0ed0da9d6476a3eb559c8cde8dc53f8baf74",
       "classification": "normative",
       "review": "Source inventory: MCP Tool Provider. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
