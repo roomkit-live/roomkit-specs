@@ -1329,9 +1329,9 @@
     },
     {
       "section": "21.1",
-      "sha256": "329256ee4c7209bf2d505d34653813ecde0fc44b11c3b3c9b81e6e4bb1aac547",
+      "sha256": "936e8c98a9bbdcfaa7bcb61f5e8a1bc0d89ad30310bca350c329e2c25981ba92",
       "classification": "normative",
-      "review": "Source inventory: ToolPolicy. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: ToolPolicy. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. The RoleOverride table now explicitly uses non-null empty-default lists, matching the approved Python/Rust construction witnesses; the independent review covers this narrow correction and preserves the remaining source inventory without granting turn-role coverage."
     },
     {
       "section": "21.2",

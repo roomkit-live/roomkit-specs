@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "a4cefd47eecdcc0425f12ae9eeb40f31e70f4d988cd8327fb30f5e0827071408",
+  "rfc_sha256": "a05b3e67509dbe7e4ae0c6551557c145090b6f9478dd2863db48d85a36466d2d",
   "sections": [
     {
       "section": "0",
@@ -1793,7 +1793,7 @@
       "section": "21.1",
       "title": "ToolPolicy",
       "line": 20284,
-      "sha256": "329256ee4c7209bf2d505d34653813ecde0fc44b11c3b3c9b81e6e4bb1aac547",
+      "sha256": "936e8c98a9bbdcfaa7bcb61f5e8a1bc0d89ad30310bca350c329e2c25981ba92",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -9346,8 +9346,8 @@
       "applies": "§21.1 ToolPolicy; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
       "section": "21.1",
       "line": 20437,
-      "text": "**RoleOverride:**\n\n```\nRoleOverride\n├── allow: list<string> | null              # Allow patterns (see mode)\n├── deny: list<string> | null               # Additional deny patterns\n└── mode: \"restrict\" | \"replace\"            # Narrow the base or replace it entirely\n```\n\nThe role an override is chosen by is the role of the participant the waking\nevent's sender is on its channel (Section 5.5); a sender who names no\nparticipant there has no role, and the base rules apply.\n\nWhen `mode` is `\"restrict\"`, the override narrows the base policy: its deny\npatterns are added to the base's, and its allow patterns constrain alongside\nthe base's, so a tool must match both allow lists (each when non-empty). A\nrestricting override can take access away, never grant it. When `\"replace\"`,\nthe override completely replaces the base.",
-      "sha256": "92ee2952e12cb4612394d811f62b0a2f8e34c0f98b54666a824e5fb252150da2"
+      "text": "**RoleOverride:**\n\n```\nRoleOverride\n├── allow: list<string> = []                # Allow patterns (see mode); not nullable\n├── deny: list<string> = []                 # Additional deny patterns; not nullable\n└── mode: \"restrict\" | \"replace\"            # Narrow the base or replace it entirely\n```\n\nThe role an override is chosen by is the role of the participant the waking\nevent's sender is on its channel (Section 5.5); a sender who names no\nparticipant there has no role, and the base rules apply.\n\nWhen `mode` is `\"restrict\"`, the override narrows the base policy: its deny\npatterns are added to the base's, and its allow patterns constrain alongside\nthe base's, so a tool must match both allow lists (each when non-empty). A\nrestricting override can take access away, never grant it. When `\"replace\"`,\nthe override completely replaces the base.",
+      "sha256": "e3672a45c7088db38013c06dab0589c486a67028a1d7603f27b7050cfff1586b"
     },
     {
       "id": "RK-21.2-001",

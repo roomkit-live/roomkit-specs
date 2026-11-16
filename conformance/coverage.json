@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "a4cefd47eecdcc0425f12ae9eeb40f31e70f4d988cd8327fb30f5e0827071408",
+  "rfc_sha256": "a05b3e67509dbe7e4ae0c6551557c145090b6f9478dd2863db48d85a36466d2d",
   "corpus_sha256": "ad7ccc82536c59699565b29aa2531414ef3b309abf3caae54d2b399af7c617af",
   "python_commit": "2b7515cd03aff0b36ebb5818e3c0cfd303f7a941",
   "scenario_count": 2468,
@@ -66143,7 +66143,7 @@
               "commit": "2b7515cd03aff0b36ebb5818e3c0cfd303f7a941",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -66169,7 +66169,7 @@
               "commit": "2b7515cd03aff0b36ebb5818e3c0cfd303f7a941",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }

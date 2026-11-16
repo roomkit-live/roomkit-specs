@@ -20439,8 +20439,8 @@ have to find is a tool it does not call.
 
 ```
 RoleOverride
-├── allow: list<string> | null              # Allow patterns (see mode)
-├── deny: list<string> | null               # Additional deny patterns
+├── allow: list<string> = []                # Allow patterns (see mode); not nullable
+├── deny: list<string> = []                 # Additional deny patterns; not nullable
 └── mode: "restrict" | "replace"            # Narrow the base or replace it entirely
 ```
 
