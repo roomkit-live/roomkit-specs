@@ -1197,8 +1197,18 @@ reverse what a reader of the record sees; its data keeps the name as given.
 store holds: its `identity_id`, `resolved_by` (`manual` when the caller names
 no one) and `resolved_at` set, its candidates dropped, the identity's
 display name taken when the identity has one. The binding of the
-participant's primary channel names the identity from then on, whatever
-correspondent it named before, and
+participant's primary channel names the identity from then on, unless it is
+someone else's conversation: it names another correspondent (the framework's
+own name included, §10.4), or names none and routing reads its recipient
+(§5.7) as another address or as a value that is not a recipient. On a channel
+not registered nothing reads that recipient, and a binding naming no
+participant and not declared `group` is read as someone else's. The
+participant's own are their id, the identity they had and the one they get,
+and the address whose own record they are (§11.2); a `group` binding names no
+correspondent, and one delivering to no one is no one's. The advisor
+identifies a person and does not choose whom the room
+answers: a binding left so keeps its correspondent, and a message from the
+participant is admitted through it no more than before (§10.4). Either way
 `ON_PARTICIPANT_IDENTIFIED` fires with a `PARTICIPANT_IDENTIFIED` event as its
 payload, whose data carries `participant_id` and `identity_id` (stored as a
 lifecycle record only by an implementation that writes them, §5.1). A
@@ -7937,7 +7947,11 @@ whose binding of the status's channel names its recipient, as step 1 finds a
 sender's, unless it names no participant and its channel reads it as delivering
 to someone else; else the one ACTIVE room bound to the channel unless its
 binding names another correspondent (its participant, else its recipient, a
-value that is not a recipient included, §5.7); else none. A status is no
+value that is not a recipient included, §5.7); else none. On a channel not
+registered nothing reads a binding's recipient: a status naming a
+recipient finds the room of a binding naming them as its participant, and none
+through a binding naming no participant and not declared `group`, whatever its
+metadata holds. A status is no
 activity, and resumes no room (§5.1). It is never dispatched with the context of one room among
 several.
 

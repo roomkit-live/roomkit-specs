@@ -11458,7 +11458,7 @@
     {
       "id": "storage-delivery-status",
       "requirement": "RK-10.4-004",
-      "clause_sha256": "096f62e66a8d56ea2a70ead8e55a3c635375ee03abb6fdbc0e0b7523aef816a8",
+      "clause_sha256": "1707882d0143d9ab58fa9e5cde61eda05f6cf9e358a719625312adc814b019d2",
       "scope": "Recipient statuses select the newest ACTIVE or PAUSED room; explicit statuses preserve payload across lifecycle states and do not change activity, counters or updated_at. Async observers ignore event filters and do not hold the caller.",
       "coverage": "partial",
       "review": "Python source tests and parameterizations were reviewed first. Nine new scenarios and two strengthened scenarios passed on Python with memory, SQLite and PostgreSQL before their Rust comparison. Native tests retain provider adapters, exception classes, pure functions and ownership semantics. The SQLite runner uses an independent reader to observe durable records after the kit closes its own store. No production API or RFC behavior changed. This is a bounded core-storage and delivery proof, not certification of every provider, store or distributed runtime.",

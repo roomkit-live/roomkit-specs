@@ -153,7 +153,7 @@
     },
     {
       "section": "5.5",
-      "sha256": "9074b8a30b90250d2b68aa363f4b25850fe4fcb1a1cb89914633a160474413da",
+      "sha256": "f45458c7108bf08c9c79d3b92e0b7327f75baaf5d22c15f0fbe8be1474d8ef86",
       "classification": "normative",
       "review": "Source inventory: Participant. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
@@ -417,7 +417,7 @@
     },
     {
       "section": "10.4",
-      "sha256": "81d2b41b9fc589fb3e996d582f7e54f500fda57bcf6b4de9943eda66f972cb80",
+      "sha256": "0f27058ed2e6ab87c4ce9dac2c1887b22d4cb90cc3ea9f8af2628241b8386bfe",
       "classification": "normative",
       "review": "Source inventory: Inbound Room Routing. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
