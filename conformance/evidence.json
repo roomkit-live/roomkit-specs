@@ -23655,7 +23655,7 @@
       "clause_sha256": "a892807ce32837232750d357eda3f607f613321e4d323036d468f5e42e6b14ec",
       "scope": "Handshake information and extensions, raw request/resource fidelity, model boundaries and deadlines; native stdio adds instructions and cancellation witnesses.",
       "coverage": "partial",
-      "review": "Full independent production and fixture reviews accepted the MCP host slice after reproduced model-boundary and fixture-oracle defects were corrected. Source mapping retains 10 full, 4 partial and 1 unclosed selected source contracts. No historical execution receipt is changed.",
+      "review": "Full independent production and fixture reviews accepted the MCP host slice after reproduced model-boundary and fixture-oracle defects were corrected. Source mapping retains 10 full, 4 partial and 1 unclosed selected source contracts. No historical execution receipt is changed. The two MCP timeout witnesses use a 1-second caller deadline after a retained 32-session probe reproduced expiry before dispatch at 10 ms; the exact request/result assertions and the product deadlines are unchanged. Both fixtures now reject mismatched held requests immediately.",
       "assertions": [
         {
           "scenario": "mcp-host/disconnected-access",
@@ -23703,7 +23703,7 @@
           "scenario": "mcp-host/read-resource-timeout",
           "pointer": "/steps/0/expect",
           "sha256": "7320f0bc9a4e595f752745f2b8211c9a091ab89b3048603399069d6a75b9c3f3",
-          "scenario_sha256": "79b85887b69044d54b285149802418ac030fcddf4183aab559c7a06689351802",
+          "scenario_sha256": "e616ea2231705d9ab41eed6413e9890fcaf1d46b566cb6ee42ddb6c261147cc0",
           "proves": "read_resource obeys its explicit deadline and does not poison the next request. Exact canonical results and requests complement the readable observations."
         },
         {
@@ -23731,7 +23731,7 @@
           "scenario": "mcp-host/request-timeout",
           "pointer": "/steps/0/expect",
           "sha256": "89e066c496e8093af572329eecf450d3d5273e0754b6e79e8c4e4af48697dd46",
-          "scenario_sha256": "3e948d26b671c53840db4d7ca5d53b9b7144e1f0b57e5389e7665528f4d6802c",
+          "scenario_sha256": "11c60b5be25c5d58f987de07f3a23d92aad34823b0d3f8b6d01c9df5ff26eb9f",
           "proves": "request obeys its explicit deadline and does not poison the next request. Exact canonical results and requests complement the readable observations."
         },
         {
