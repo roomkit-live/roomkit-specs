@@ -1879,127 +1879,152 @@
         "$unordered": [
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           },
           {
             "result": {
-              "blocked_by": null
+              "blocked_by": null,
+              "chain_depth": 0
             }
           }
         ]
