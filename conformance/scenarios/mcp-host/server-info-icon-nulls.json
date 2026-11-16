@@ -5,7 +5,7 @@
   "rules": [
     "§21.2"
   ],
-  "notes": "Independent preliminary transport review witness. Python public provider.server_info uses model_dump(exclude_none=True), including nested Icon models; null values inside arbitrary JSON maps remain. No URI is fetched.",
+  "notes": "Independent preliminary transport review witness. Python public provider.server_info uses model_dump(exclude_none=True), including nested Icon models; null values inside arbitrary JSON maps remain. No URI is fetched. The Python SDK treats description and icon theme as arbitrary extra fields; a newer Rust SDK must not reject their values.",
   "steps": [
     {
       "call": "mcp_session",
@@ -24,10 +24,17 @@
               "nested": {
                 "keep": null
               }
+            },
+            {
+              "src": "icon.png",
+              "theme": "vendor-theme"
             }
           ],
           "vendor": {
             "keep": null
+          },
+          "description": {
+            "vendor": true
           }
         },
         "replies": []
@@ -59,10 +66,17 @@
                     "nested": {
                       "keep": null
                     }
+                  },
+                  {
+                    "src": "icon.png",
+                    "theme": "vendor-theme"
                   }
                 ],
                 "vendor": {
                   "keep": null
+                },
+                "description": {
+                  "vendor": true
                 }
               }
             },
@@ -70,7 +84,7 @@
               "result": null
             }
           ],
-          "results_json": "[{\"result\":null},{\"result\":{\"icons\":[{\"nested\":{\"keep\":null},\"src\":\"https://example.invalid/icon.png\"}],\"name\":\"host-test\",\"vendor\":{\"keep\":null},\"version\":\"1\"}},{\"result\":null}]",
+          "results_json": "[{\"result\":null},{\"result\":{\"description\":{\"vendor\":true},\"icons\":[{\"nested\":{\"keep\":null},\"src\":\"https://example.invalid/icon.png\"},{\"src\":\"icon.png\",\"theme\":\"vendor-theme\"}],\"name\":\"host-test\",\"vendor\":{\"keep\":null},\"version\":\"1\"}},{\"result\":null}]",
           "requests": [
             {
               "method": "initialize"
