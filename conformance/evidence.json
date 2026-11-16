@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "6383771f6ebc283fe9d942a21a557f16740c0c1e",
+  "python_commit": "80f1459207d67f5e1c566daecd3e06f250dfa9b9",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -23357,6 +23357,113 @@
       ],
       "missing": [
         "Executor invocation ordering and served skills remain under RMK-1709; these tests do not prove Rust script execution. The standalone safe_join_filename function is not exported by Rust in this lot."
+      ]
+    },
+    {
+      "id": "phase4-standalone-skill-tool-names",
+      "requirement": "RK-24.2-001",
+      "clause_sha256": "4e4a21653d00ba5108dae667f8d0a49e0b9882df2cb8cf6ec00bc53b4a01fa9a",
+      "scope": "Direct parse_tool_names entry point and the shared metadata reader: text/list forms, ordering, duplicates, supported heterogeneous values and Python whitespace.",
+      "coverage": "partial",
+      "review": "Python source tests passed before the Rust port. HITL 63fe8e98 approves the four public language forms; existing RequiresMatch/SkillPathError forms are reused. A native red/green witness reproduces Python whitespace stripped differently by the old Rust metadata reader. Source references remain separate from shared scenario execution.",
+      "assertions": [],
+      "tests": [
+        {
+          "nodeid": "tests/skills/test_standalone_helpers.py::test_parse_tool_names_preserves_forms_order_and_duplicates",
+          "sha256": "6ac756b6f09cb34e38244ebbdac2c1b5057e14ffc00b03f25560a244d801b9c7",
+          "proves": "Parse tool names preserves forms order and duplicates. Direct Python public API source, mirrored by native Rust tests; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_standalone_helpers.py::test_parse_tool_names_uses_python_whitespace",
+          "sha256": "cdb5b06538f9598870359ac7eee723fad92ea2f80f67b739a09b0ab2393fdc67",
+          "proves": "Parse tool names uses python whitespace. Direct Python public API source, mirrored by native Rust tests; no execution receipt is inferred."
+        }
+      ],
+      "missing": [
+        "YAML frontmatter parsing, arbitrary Python objects and served metadata validation are not proved by these native tests."
+      ]
+    },
+    {
+      "id": "phase4-standalone-skill-requirements",
+      "requirement": "RK-24.3-001",
+      "clause_sha256": "4bfcb63a41da5de2458f84506e5faa7a063a0e1f17757764df056e70d375be04",
+      "scope": "Direct serves_exactly and missing_required_tools entry points: admitted/closed filtering, exact/default and host matching, missing order/duplicates and first-error propagation.",
+      "coverage": "partial",
+      "review": "Python source tests passed before the Rust port. HITL 63fe8e98 approves the four public language forms; existing RequiresMatch/SkillPathError forms are reused. A native red/green witness reproduces Python whitespace stripped differently by the old Rust metadata reader. Source references remain separate from shared scenario execution.",
+      "assertions": [],
+      "tests": [
+        {
+          "nodeid": "tests/skills/test_standalone_helpers.py::test_serves_exactly_is_case_sensitive_membership",
+          "sha256": "e8d1747ca885e33727600d9e35c8380b660f97805ddd29cee72dc3cdd60406ac",
+          "proves": "Serves exactly is case sensitive membership. Direct Python public API source, mirrored by native Rust tests; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_standalone_helpers.py::test_missing_required_tools_keeps_order_duplicates_and_defaults",
+          "sha256": "4b271c048a221c3cda78bf2bfc0be3bf54af82b6e9b8f41e9394b06432dc31c6",
+          "proves": "Missing required tools keeps order duplicates and defaults. Direct Python public API source, mirrored by native Rust tests; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_standalone_helpers.py::test_missing_required_tools_consumes_iterables_and_filters_closed_patterns",
+          "sha256": "c98ea90643c109150e7f30e880b26b0f1acb2eed683990a4d22b8da35198fea1",
+          "proves": "Missing required tools consumes iterables and filters closed patterns. Direct Python public API source, mirrored by native Rust tests; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_standalone_helpers.py::test_missing_required_tools_passes_only_open_unique_names_to_the_matcher",
+          "sha256": "51470296ab2f414367325713e260aa7f36846af8b48304e06f23595f2601300a",
+          "proves": "Missing required tools passes only open unique names to the matcher. Direct Python public API source, mirrored by native Rust tests; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_standalone_helpers.py::test_missing_required_tools_propagates_the_matcher_error_without_more_calls",
+          "sha256": "458e7f44e290f55fdb74a576a7b70df5262cd9bf447e85702ed52b8fa09192e3",
+          "proves": "Missing required tools propagates the matcher error without more calls. Direct Python public API source, mirrored by native Rust tests; no execution receipt is inferred."
+        }
+      ],
+      "missing": [
+        "Registry lifecycle, served MCP skills, script execution and separate turn executors are outside this direct helper slice."
+      ]
+    },
+    {
+      "id": "phase4-standalone-skill-paths",
+      "requirement": "RK-24.6-001",
+      "clause_sha256": "92023a269b217f58db01c5604d8ed13c0105243ab6b306dc97c5d18fbd7e50c8",
+      "scope": "Public safe_join_filename export: default/custom diagnostics, NFKC, missing paths, Windows drive spellings, directory confinement and dangling symlink escapes.",
+      "coverage": "partial",
+      "review": "Python source tests passed before the Rust port. HITL 63fe8e98 approves the four public language forms; existing RequiresMatch/SkillPathError forms are reused. A native red/green witness reproduces Python whitespace stripped differently by the old Rust metadata reader. Source references remain separate from shared scenario execution.",
+      "assertions": [],
+      "tests": [
+        {
+          "nodeid": "tests/skills/test_standalone_helpers.py::test_safe_join_filename_uses_the_default_or_custom_error_kind",
+          "sha256": "3580338b69e9e1f6b1b201a4c84ef42cc2bf9c1b991233453a4ed6df4b75e5e5",
+          "proves": "Safe join filename uses the default or custom error kind. Direct Python public API source, mirrored by native Rust tests; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_standalone_helpers.py::test_safe_join_filename_accepts_punctuation_that_is_not_a_drive",
+          "sha256": "a1f86026aa8c7229eb8cd3df0e18f7ae2b493cd26e3c69ec27e5cbabc7437ba8",
+          "proves": "Safe join filename accepts punctuation that is not a drive. Direct Python public API source, mirrored by native Rust tests; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_standalone_helpers.py::test_safe_join_filename_rejects_windows_drives_on_every_platform",
+          "sha256": "1e07e5640e82c95f853ce9690a94af8b9dd04865c943e1ff0709e896bcadf956",
+          "proves": "Safe join filename rejects windows drives on every platform. Direct Python public API source, mirrored by native Rust tests; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_standalone_helpers.py::test_safe_join_filename_refuses_a_directory_escape_and_a_dangling_child",
+          "sha256": "c40a81034766644665e07a86c58b7ceb31ad7e9cc26c87f4c99e33430c2a57ff",
+          "proves": "Safe join filename refuses a directory escape and a dangling child. Direct Python public API source, mirrored by native Rust tests; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/skills/test_local_files.py::test_safe_join_can_resolve_a_file_that_does_not_exist",
+          "sha256": "59678ebccdf8a1ca0251be0e57495b5354c16b1c0393e4fb6593c6ee4a8031d5",
+          "proves": "The standalone path helper preserves missing targets and resolves normalized names. The native test calls the public export directly."
+        },
+        {
+          "nodeid": "tests/skills/test_local_files.py::test_direct_file_helpers_resolve_safe_names_after_nfkc",
+          "sha256": "155e08b066be6d631d2695c958e4594bb4b91e9ccc97ab5f7f883bfad88a1c19",
+          "proves": "The standalone path helper preserves missing targets and resolves normalized names. The native test calls the public export directly."
+        }
+      ],
+      "missing": [
+        "No executor invocation or script execution is claimed. Runtime-specific path/permission forms remain documented in the prior direct-file helper mapping."
       ]
     }
   ],

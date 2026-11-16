@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "7c5cc8afb846f7fa069bcbf6cf3881ec046c42a7e2568e9976acac91767891c9",
   "corpus_sha256": "5186dd714668b9402bbaf97ed0c0948782334f5a622b9d1849098027736cf322",
-  "python_commit": "6383771f6ebc283fe9d942a21a557f16740c0c1e",
+  "python_commit": "80f1459207d67f5e1c566daecd3e06f250dfa9b9",
   "scenario_count": 2373,
   "sections": [
     {
@@ -7435,7 +7435,7 @@
       "review": "normative",
       "requirements": 1,
       "mapping": {
-        "unmapped": 1
+        "mapped_partial": 1
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -69171,8 +69171,18 @@
     {
       "id": "RK-24.2-001",
       "section": "24.2",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "phase4-standalone-skill-tool-names",
+          "scope": "Direct parse_tool_names entry point and the shared metadata reader: text/list forms, ordering, duplicates, supported heterogeneous values and Python whitespace.",
+          "coverage": "partial",
+          "missing": [
+            "YAML frontmatter parsing, arbitrary Python objects and served metadata validation are not proved by these native tests."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-24.3-001",
@@ -69205,6 +69215,15 @@
           "coverage": "partial",
           "missing": [
             "Served MCP registration and execution tool patterns remain under RMK-1709. This link claims only local in-memory registration, not complete registry coverage or direct-file API parity."
+          ],
+          "executions": []
+        },
+        {
+          "id": "phase4-standalone-skill-requirements",
+          "scope": "Direct serves_exactly and missing_required_tools entry points: admitted/closed filtering, exact/default and host matching, missing order/duplicates and first-error propagation.",
+          "coverage": "partial",
+          "missing": [
+            "Registry lifecycle, served MCP skills, script execution and separate turn executors are outside this direct helper slice."
           ],
           "executions": []
         }
@@ -69265,6 +69284,15 @@
           "coverage": "partial",
           "missing": [
             "Executor invocation ordering and served skills remain under RMK-1709; these tests do not prove Rust script execution. The standalone safe_join_filename function is not exported by Rust in this lot."
+          ],
+          "executions": []
+        },
+        {
+          "id": "phase4-standalone-skill-paths",
+          "scope": "Public safe_join_filename export: default/custom diagnostics, NFKC, missing paths, Windows drive spellings, directory confinement and dangling symlink escapes.",
+          "coverage": "partial",
+          "missing": [
+            "No executor invocation or script execution is claimed. Runtime-specific path/permission forms remain documented in the prior direct-file helper mapping."
           ],
           "executions": []
         }
