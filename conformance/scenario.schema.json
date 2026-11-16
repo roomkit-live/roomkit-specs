@@ -8891,9 +8891,7 @@
         "server_info": {
           "type": "object"
         },
-        "extensions": {
-          "type": "object"
-        },
+        "extensions": {},
         "instructions": {
           "type": "string"
         },
@@ -8920,9 +8918,7 @@
               "server_info": {
                 "type": "object"
               },
-              "extensions": {
-                "type": "object"
-              },
+              "extensions": {},
               "instructions": {
                 "type": "string"
               }
