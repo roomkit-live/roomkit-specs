@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "9624dcbbe6467187def82ff78a3f1713199f30eb04d6af01c9e398f851700a03",
-  "corpus_sha256": "2b5a5f688b7d8c34cd6ccd01a0f8f5987ae1c6a5ac0e88176b44f6ac75850efa",
+  "corpus_sha256": "aed640ab79689539222e53c1c7c8aabed86aa6930c3cd5fa9fb372d2ef19d85c",
   "python_commit": "cd16b5b1685536616ad08c5ea2aefddd8e75958c",
-  "scenario_count": 2426,
+  "scenario_count": 2427,
   "sections": [
     {
       "section": "0",
@@ -1201,6 +1201,7 @@
         "memory/a-returned-current-input-reads-once-in-an-ordinary-turn",
         "memory/a-returned-current-input-survives-budget-trimming",
         "memory/a-runtime-mark-split-over-two-text-parts-of-a-memory-s-message-is-replaced",
+        "memory/a-split-mark-keeps-memory-speaker-labels",
         "memory/a-summarizing-memory-compacts-a-turn-past-its-threshold-between-two-calls",
         "memory/a-summarizing-memory-never-summarizes-a-returned-current-input",
         "memory/a-summary-set-before-an-assistant-turn-is-one-of-the-messages-at-the-next-compaction",
@@ -6804,6 +6805,7 @@
         "memory/a-memory-s-notes-follow-the-turn-s-input",
         "memory/a-memory-s-user-text-joins-the-turn-after-it",
         "memory/a-runtime-mark-split-over-two-text-parts-of-a-memory-s-message-is-replaced",
+        "memory/a-split-mark-keeps-memory-speaker-labels",
         "memory/a-summary-set-before-an-assistant-turn-is-one-of-the-messages-at-the-next-compaction",
         "memory/a-summary-stands-for-the-older-turns",
         "memory/knowledge-passages-ride-the-turn-s-notes",
