@@ -168,7 +168,9 @@
           "type": "text",
           "body": "Go."
         }
-      }
+      },
+      "defer_delivery": true,
+      "as": "observer-turn"
     },
     {
       "wait_for": "observer-held"
@@ -183,7 +185,9 @@
           "type": "text",
           "body": "Go."
         }
-      }
+      },
+      "defer_delivery": true,
+      "as": "owner-turn"
     },
     {
       "wait_for": "owner-finished"
@@ -192,7 +196,15 @@
       "open": "owner-finished"
     },
     {
+      "call": "delivery.wait",
+      "of": "owner-turn"
+    },
+    {
       "open": "observer-held"
+    },
+    {
+      "call": "delivery.wait",
+      "of": "observer-turn"
     },
     {
       "idle": true
