@@ -327,7 +327,7 @@
     },
     {
       "section": "8.4",
-      "sha256": "9ccc499c4d2ea590f8b2c1378d4cc2e36e8c8d8ff133f420ffaa6ed4e1e5a3ae",
+      "sha256": "deeda158b0848a068b6665cca2698331762683d6126b893ae1720578544d8797",
       "classification": "normative",
       "review": "Source inventory: Realtime / Ephemeral Events. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
@@ -345,7 +345,7 @@
     },
     {
       "section": "9.1",
-      "sha256": "7b7f58e889e8ff1b5ab62f0cc8106782a1b7d13f409dba4b172b2d5925dd046c",
+      "sha256": "bc8ab876412d596fe1ff8364086dc70bde662e315785a6059c7a49aa1593678b",
       "classification": "normative",
       "review": "Source inventory: Hook Registration. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
@@ -1155,7 +1155,7 @@
     },
     {
       "section": "17.2",
-      "sha256": "e00c135aafeb93d59f9719e9b858d4451cbb1bc8034d0df0844622c434548570",
+      "sha256": "d4adb6c7981092f9c26fe235fd04efbb672b1b0db9e8ce29550a30a91adbe47f",
       "classification": "normative",
       "review": "Source inventory: Multi-Tenant Isolation. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },

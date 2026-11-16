@@ -5178,7 +5178,8 @@ EphemeralEvent
 ├── id                               # fresh by default
 ├── channel_id | null
 ├── data: map
-└── timestamp
+├── timestamp
+└── room_created_at | null           # the creation mark of its room
 ```
 
 `type` is one of `typing_start`, `typing_stop`, `presence_online`,
@@ -5196,6 +5197,23 @@ callback in order, one at a time; a callback that fails is logged and the
 subscription goes on. The in-memory backend holds a bounded queue per
 subscription, the oldest event dropped past it, one event per id; a
 publication after its close reaches no one.
+
+A subscription ends with its room (§17.2). The kit's publications carry the
+creation mark of their room (`room_created_at`, the room's `created_at`):
+one that names no organization reads the room for it, a turn's names the
+room its turn ran in, whichever room holds the id when it is published,
+and a channel's publication outside a turn reads the room the store holds.
+A subscription made through the kit (`subscribe_room()`) keeps the mark of
+the room it read, and its callback reads no event of another mark: the
+room created again under a deleted room's id, in this process or another,
+reaches none of the deleted room's subscriptions. One made while no room
+held the id is the room's that holds the id when it reads its first event
+carrying a mark, read once from the store; an event of a room gone before
+it is not read. An event that carries no mark, published on the backend
+directly, reaches every subscription of the id. The kit that creates a
+room under the id of a room the store deleted also ends the subscriptions
+made through it for the deleted room, and keeps those made while no room
+held the id.
 
 A channel's reasoning is published as `thinking_start`, `thinking_delta` and
 `thinking_end`. A block opens with its first non-empty piece, which fires
@@ -5445,6 +5463,18 @@ strategy recorded for the id (§19.7), so that none of them runs for the new
 room and their names are free in its scope. Those registered
 while no room held the id are held for the new room, fire for its creation,
 and end with it in turn.
+
+So in every process, another process may create the room again: a kit
+MUST keep the creation mark (`created_at`) of the room an id's room hooks
+and enabled names are registered for, and compare it with the room in hand
+each time they fire, ASYNC hooks started apart from their operation
+included, a turn starts or a registration reads the room. A later mark
+means the room they were registered for is gone: they are forgotten first,
+as the kit that creates the room forgets them, and an operation that read
+them before runs none of them. An earlier mark is a room gone already:
+its work, still running, runs none of the id's room hooks and forgets
+none. Those registered while no room held the id, and those registered
+below the kit, which read no room, are the first room's they are read with.
 
 A hook's `name` is unique within its scope: the kit's hooks, registered
 globally, or the hooks of one room. Implementations MUST refuse at
@@ -18164,13 +18194,23 @@ should live in the integration surface layer.
   to it, and none of its recordings is told of the session's tracks. Called
   without an organization, a framework join reads the room unscoped, and a
   session start or a mint reads none for the scope.
-- A room's hooks end with the room (§9.1): the kit that creates a room
-  under the id of a room the store deleted, for the same organization,
-  another or none, forgets the room hooks registered for the deleted room
-  and the names enabled for it, so that a hook registered for one
-  organization's room never reads the events of the room another
-  organization creates after it. Hooks registered while no room held the
-  id are the new room's.
+- A room's hooks, its subscriptions and its turns end with the room
+  (§8.4, §9.1, §10.6.2): the kit that creates a room under the id of a room
+  the store deleted, for the same organization, another or none, forgets
+  the room hooks registered for the deleted room and the names enabled for
+  it, and ends the subscriptions made through it to the deleted room's
+  ephemerals. Nothing registered for one organization's room reads the
+  events of the room another organization creates after it. Hooks and
+  subscriptions registered while no room held the id are the new room's.
+  So in every process: a kit keeps the creation mark (`created_at`) of the
+  room its hooks and enabled names of an id are of, compares it with the
+  room in hand when they fire, and forgets them for a later room (§9.1); a
+  publication carries the mark of its room and a subscription reads its
+  own room's alone (§8.4); the owner keeps the mark of the room each turn
+  record is of, so that a turn or a channel call in a room of another mark
+  follows none of the earlier room's turns and an executor lets go of what
+  it held for the id (§10.6.2), and a host verb made after a deleted
+  room's turn is refused in the room created again since (§10.6.5).
 - A call that names no organization (an inbound message, a direct
   injection) reads rooms unscoped, and a room it creates belongs to no
   organization. A call acting for an organization reaches that
