@@ -97,6 +97,12 @@
           "tools": {
             "run_skill_script": {
               "$absent": true
+            },
+            "activate_skill": {
+              "name": "activate_skill"
+            },
+            "read_skill_reference": {
+              "name": "read_skill_reference"
             }
           },
           "system_prompt": {
