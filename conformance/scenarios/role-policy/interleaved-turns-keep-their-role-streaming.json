@@ -170,7 +170,7 @@
         }
       },
       "defer_delivery": true,
-      "as": "observer-turn"
+      "as": "observer_turn"
     },
     {
       "wait_for": "observer-held"
@@ -187,7 +187,7 @@
         }
       },
       "defer_delivery": true,
-      "as": "owner-turn"
+      "as": "owner_turn"
     },
     {
       "wait_for": "owner-finished"
@@ -197,14 +197,14 @@
     },
     {
       "call": "delivery.wait",
-      "of": "owner-turn"
+      "of": "owner_turn"
     },
     {
       "open": "observer-held"
     },
     {
       "call": "delivery.wait",
-      "of": "observer-turn"
+      "of": "observer_turn"
     },
     {
       "idle": true
