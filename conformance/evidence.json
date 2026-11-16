@@ -23586,10 +23586,10 @@
     {
       "id": "phase4-mcp-discovery",
       "requirement": "RK-21.2-001",
-      "clause_sha256": "0e420a4d1341785b9a3b0fc0f1ebc3162fcdc7091dd47a1244535f21f307956e",
+      "clause_sha256": "2067cc7016984cf898aa0e7a1a72c4a5fc3ce70ef41b233755d0269d2eefd1d0",
       "scope": "Connection/discovery, admitted tool metadata and owned copies; native stdio complements shared HTTP observations.",
       "coverage": "partial",
-      "review": "Full independent production and fixture reviews accepted the MCP host slice after reproduced model-boundary and fixture-oracle defects were corrected. Source mapping retains 10 full, 4 partial and 1 unclosed selected source contracts. No historical execution receipt is changed.",
+      "review": "Full independent production and fixture reviews accepted the MCP host slice after reproduced model-boundary and fixture-oracle defects were corrected. Source mapping retains 10 full, 4 partial and 1 unclosed selected source contracts. No historical execution receipt is changed. Reviewed again after 07fd11f clarified server-aware bare-name policy and listing bounds. The host access assertions are unchanged; this link does not certify those additional policy or listing-bound contracts.",
       "assertions": [
         {
           "scenario": "mcp-host/listing-metadata",
@@ -23645,7 +23645,8 @@
       ],
       "missing": [
         "Raw call_tool_result and output-schema behavior remain outside this slice.",
-        "The Python filter callback raising an exception is not certified by Rust server-listing cleanup."
+        "The Python filter callback raising an exception is not certified by Rust server-listing cleanup.",
+        "Server-aware tool policy and listing size, duplicate-name and warning bounds are outside this host-access link."
       ]
     },
     {
