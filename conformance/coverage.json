@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "0eb678702e6fccd9fa2072499fba33190019ffe596f672f29896d177f255657d",
-  "corpus_sha256": "31289e50afc6df12e763ce76265119018ce2fccd5207aff156558a5aba0d8ca0",
+  "corpus_sha256": "7edcaebd7831b403b739dd02cb7357eabfd7c9f00a84fb6ed29f8971150e7926",
   "python_commit": "cd16b5b1685536616ad08c5ea2aefddd8e75958c",
-  "scenario_count": 2379,
+  "scenario_count": 2380,
   "sections": [
     {
       "section": "0",
@@ -2681,6 +2681,7 @@
         "locks/the-first-row-an-agent-streams-once-its-room-is-created-again-is-refused-before-its-hooks",
         "locks/the-first-row-an-agent-streams-once-its-room-is-deleted-is-refused-before-its-hooks",
         "locks/the-side-effects-a-hook-gives-an-event-it-blocks-are-stored-at-its-commit",
+        "locks/the-side-effects-a-hook-gives-an-instruction-the-discussion-takes-are-stored-at-its-decision",
         "locks/the-side-effects-of-an-injected-event-s-set-of-a-deleted-room-stay-out-of-the-room-created-again",
         "permissions/a-blocked-injected-event-keeps-its-own-visibility",
         "permissions/a-hook-only-narrows-the-answer-scope",
@@ -3060,6 +3061,7 @@
         "locks/the-rows-of-a-stream-whose-room-is-deleted-before-its-first-row-are-refused",
         "locks/the-section-after-a-failed-release-takes-the-lock-again",
         "locks/the-side-effects-a-hook-gives-an-event-it-blocks-are-stored-at-its-commit",
+        "locks/the-side-effects-a-hook-gives-an-instruction-the-discussion-takes-are-stored-at-its-decision",
         "locks/the-side-effects-of-a-set-another-process-ran-in-a-deleted-room-stay-out-of-the-room-created-again",
         "locks/the-side-effects-of-a-set-of-a-deleted-room-are-not-written",
         "locks/the-side-effects-of-a-set-of-a-deleted-room-stay-out-of-the-room-created-again",
@@ -3338,6 +3340,7 @@
         "instructions/standalone-is-the-typed-field-s-word-alone",
         "locks/a-set-waiting-on-another-process-s-index-takes-its-turn-once-its-room-is-deleted",
         "locks/an-instruction-s-set-waits-for-the-index-another-process-committed-before-it",
+        "locks/the-side-effects-a-hook-gives-an-instruction-the-discussion-takes-are-stored-at-its-decision",
         "skill-gating/room-activation-persists-but-a-standalone-turn-starts-closed-non-streaming",
         "skill-gating/room-activation-persists-but-a-standalone-turn-starts-closed-streaming",
         "skill-prerequisites/a-standalone-prerequisite-check-uses-only-its-own-activations-non-streaming",
@@ -6569,6 +6572,7 @@
         "discussion/uninstalling-in-one-process-ends-the-discussion-in-the-others",
         "discussion/what-a-process-held-when-another-install-replaced-its-own-is-not-kept",
         "discussion/with-addressed-only-an-unaddressed-message-asks-no-agent",
+        "locks/the-side-effects-a-hook-gives-an-instruction-the-discussion-takes-are-stored-at-its-decision",
         "memory/a-compacting-memory-never-summarizes-a-returned-current-input",
         "memory/a-deferred-memory-reserves-discussion-notes",
         "memory/a-deferred-turn-compacts-only-the-history-before-its-input",
