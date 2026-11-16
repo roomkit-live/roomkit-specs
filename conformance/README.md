@@ -1366,7 +1366,8 @@ The peer automatically answers `initialize` with the requested protocol
 version, resources capability and its optional `server_info`, `extensions`
 and `instructions`. `replies` is an ordered script of `{method, params?,
 result|error|hold}`. Each request must match the next method and params
-(omitted means `{}`); exactly one result, protocol error (`code`, `message`,
+(omitted script params mean `{}`; only the initial discovery `tools/list`
+may omit empty wire params); exactly one result, protocol error (`code`, `message`,
 optional `data`) or `hold: true` is required. A held request gets no answer
 before its client closes it. Unexpected requests, unused replies and fixture
 errors fail the scenario independently of client errors. `framing` selects
@@ -1381,7 +1382,8 @@ operations may carry `mutate: {path: [key, ...], value: ...}`: mutate the
 returned object before recording it, so the next read proves whether it was
 an owned copy. No provider private state is read.
 
-The call returns `results` (each `{result: value}` or `{error: name}`) and
+The call returns `results` (each `{result: value}` or `{error: name}`,
+plus the server message for MCP errors) and
 `requests` (wire method and params in order; initialize is recorded by method
 only). Resources are normalized from the public model with JSON aliases and
 only fields sent by the peer, retaining explicit nulls and extension fields;
@@ -1395,3 +1397,10 @@ A peer may instead provide `initializations`, a nonempty list of handshake
 snapshots with optional `server_info`, `extensions` and `instructions`. Each
 new connection takes the next snapshot; exhausting or leaving one unused is
 a fixture error. This lets one provider reconnect to a changed catalogue.
+
+MCP sessions also return `results_json` and `requests_json`: canonical JSON
+with sorted object keys, UTF-8 characters and no insignificant whitespace.
+These exact expectations prove explicit nulls and absent fields in addition
+to the general partial-object matcher. Each operation result is frozen before
+the next operation. `initializations` optionally supplies one handshake per
+connection, checked for exhaustion just like the reply script.
