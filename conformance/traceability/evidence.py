@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from .references import check_assertion, check_test
+from .references import GitText, check_assertion, check_test, git_text
 from .source import digest
 
 
@@ -14,6 +14,8 @@ def validate(
     registry: dict[str, Any],
     scenarios: dict[str, Any],
     python_repo: Path | None,
+    *,
+    read: GitText = git_text,
 ) -> list[str]:
     """Check semantics after JSON Schema, without treating references as passes."""
     requirements = {item["id"]: item for item in registry["requirements"]}
@@ -51,7 +53,7 @@ def validate(
                 errors += [
                     f"{name}: {error}"
                     for error in check_test(
-                        reference, python_repo, document["python_commit"]
+                        reference, python_repo, document["python_commit"], read=read
                     )
                 ]
     errors += validate_executions(document, scenarios)

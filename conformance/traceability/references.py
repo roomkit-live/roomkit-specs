@@ -5,6 +5,7 @@ from __future__ import annotations
 import ast
 import re
 import subprocess
+from collections.abc import Callable
 from pathlib import Path, PurePosixPath
 from typing import Any
 
@@ -12,6 +13,7 @@ from .source import digest, text_digest
 
 COMMIT = re.compile(r"[0-9a-f]{40}")
 ASSERTION = re.compile(r"/(?:expect(?:/|$)|steps/[0-9]+/expect(?:/|$))")
+GitText = Callable[[Path, str, str], str]
 
 
 def pointer(document: Any, path: str) -> Any:
@@ -52,13 +54,18 @@ def check_assertion(reference: dict[str, Any], scenarios: dict[str, Any]) -> lis
     return []
 
 
-def git_text(repo: Path, commit: str, path: str) -> str:
-    """Read a relative file from a named commit, never from a mutable checkout."""
+def validate_git_reference(commit: str, path: str) -> None:
+    """Both Git readers accept exactly the same pinned, relative addresses."""
     relative = PurePosixPath(path)
     if not COMMIT.fullmatch(commit) or relative.is_absolute() or ".." in relative.parts:
         raise ValueError(
             "a source reference needs a full commit and a safe relative path"
         )
+
+
+def git_text(repo: Path, commit: str, path: str) -> str:
+    """Read a relative file from a named commit, never from a mutable checkout."""
+    validate_git_reference(commit, path)
     result = subprocess.run(
         ["git", "-C", str(repo), "show", f"{commit}:{path}"],
         capture_output=True,
@@ -100,7 +107,9 @@ def python_symbol(text: str, name: str) -> str:
     return "\n".join(text.splitlines()[start - 1 : node.end_lineno])
 
 
-def check_test(reference: dict[str, str], repo: Path, commit: str) -> list[str]:
+def check_test(
+    reference: dict[str, str], repo: Path, commit: str, *, read: GitText = git_text
+) -> list[str]:
     """Validate the exact qualified test, not a file or a name guessed from it."""
     try:
         path, name = reference["nodeid"].split("::", 1)
@@ -111,7 +120,7 @@ def check_test(reference: dict[str, str], repo: Path, commit: str) -> list[str]:
             or not (relative.name.startswith("test_") and relative.suffix == ".py")
         ):
             raise ValueError("a test reference must name tests/**/test_*.py")
-        text = git_text(repo, commit, path)
+        text = read(repo, commit, path)
         symbol = python_symbol(text, name)
         if text_digest(symbol) != reference["sha256"]:
             return [f"{reference['nodeid']}: test changed; review its requirement link"]

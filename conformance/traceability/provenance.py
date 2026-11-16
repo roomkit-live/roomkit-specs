@@ -8,18 +8,20 @@ from pathlib import Path
 from typing import Any
 
 from .receipts import validate_artifact
-from .references import git_text
+from .references import GitText, git_text
 from .source import digest, extract
 
 
-def copied_scenarios(run: dict[str, Any], repo: Path) -> list[str]:
+def copied_scenarios(
+    run: dict[str, Any], repo: Path, *, read: GitText = git_text
+) -> list[str]:
     """A test of one copy cannot certify assertions taken from another copy."""
     prefix = "tests/conformance" if run["implementation"] == "python" else "conformance"
     commit = run["implementation_commit"]
     errors = []
     for result in run["results"]:
         copied = json.loads(
-            git_text(repo, commit, f"{prefix}/scenarios/{result['scenario']}.json")
+            read(repo, commit, f"{prefix}/scenarios/{result['scenario']}.json")
         )
         if digest(copied) != result["sha256"]:
             errors.append(
@@ -58,21 +60,25 @@ def copied_scenarios(run: dict[str, Any], repo: Path) -> list[str]:
 
 
 def provenance(
-    document: dict[str, Any], root: Path, repositories: dict[str, Path | None]
+    document: dict[str, Any],
+    root: Path,
+    repositories: dict[str, Path | None],
+    *,
+    read: GitText = git_text,
 ) -> list[str]:
     """Receipts point to real source versions, not merely SHA-shaped strings."""
     errors = []
     for run in document["executions"]:
         errors += validate_artifact(run, root)
         try:
-            rfc = extract(git_text(root, run["rfc_commit"], "roomkit-rfc.md"))
+            rfc = extract(read(root, run["rfc_commit"], "roomkit-rfc.md"))
             if rfc["rfc_sha256"] != run["rfc_sha256"]:
                 errors.append(
                     f"{run['id']}: RFC receipt fingerprint does not match its commit"
                 )
             for result in run["results"]:
                 path = f"conformance/scenarios/{result['scenario']}.json"
-                scenario = json.loads(git_text(root, run["corpus_commit"], path))
+                scenario = json.loads(read(root, run["corpus_commit"], path))
                 if digest(scenario) != result["sha256"]:
                     errors.append(
                         f"{run['id']}: {result['scenario']}: corpus provenance mismatch"
@@ -84,7 +90,7 @@ def provenance(
                     f"{run['id']}: --{implementation}-repo required for implementation provenance"
                 )
             else:
-                errors += copied_scenarios(run, repository)
+                errors += copied_scenarios(run, repository, read=read)
         except (ValueError, subprocess.CalledProcessError) as error:
             errors.append(f"{run['id']}: {error}")
     return errors

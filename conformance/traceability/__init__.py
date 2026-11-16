@@ -9,8 +9,8 @@ from typing import Any
 from jsonschema import Draft202012Validator
 
 from . import evidence, report, source
+from ._git import GitReader
 from .provenance import provenance
-from .references import git_text
 
 
 def layout(value: Any) -> str:
@@ -73,21 +73,31 @@ def check(
         if errors:
             return errors
         by_id = {scenario["id"]: scenario for scenario in scenarios}
-        errors += evidence.validate(document, registry, by_id, python_repo)
-        errors += provenance(document, root, {"python": python_repo, "rust": rust_repo})
-        previous = {"requirements": []}
-        retired = []
-        if base_ref is not None:
-            previous = source.extract(git_text(root, base_ref, "roomkit-rfc.md"))
-            try:
-                retired = json.loads(
-                    git_text(root, base_ref, "conformance/evidence.json")
-                )["retired"]
-            except ValueError:
-                # The baseline predates traceability only when it has no annotated IDs.
-                if previous["requirements"]:
-                    raise
-        errors += source.check_history(registry, previous, document["retired"], retired)
+        with GitReader() as reader:
+            errors += evidence.validate(
+                document, registry, by_id, python_repo, read=reader.read
+            )
+            errors += provenance(
+                document,
+                root,
+                {"python": python_repo, "rust": rust_repo},
+                read=reader.read,
+            )
+            previous = {"requirements": []}
+            retired = []
+            if base_ref is not None:
+                previous = source.extract(reader.read(root, base_ref, "roomkit-rfc.md"))
+                try:
+                    retired = json.loads(
+                        reader.read(root, base_ref, "conformance/evidence.json")
+                    )["retired"]
+                except ValueError:
+                    # The baseline predates traceability only when it has no annotated IDs.
+                    if previous["requirements"]:
+                        raise
+            errors += source.check_history(
+                registry, previous, document["retired"], retired
+            )
         if errors:
             return errors
         coverage, review_errors = report.build(registry, document, by_id, reviews)

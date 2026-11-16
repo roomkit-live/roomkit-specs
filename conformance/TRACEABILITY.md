@@ -81,6 +81,12 @@ or execution (configuration, fixtures and skips still matter). Such a link is so
 a passing scenario cannot stand in for that specialized test's execution.
 Changing a fingerprint means rereading the proof, not just regenerating JSON.
 
+Each validation reads the pinned Git objects, never checkout files. It reuses
+one `git cat-file --batch` process per repository, without caching contents or
+skipping historical receipts. All readers must finish before reports are written;
+a broken response or failed process invalidates the check. Paths that cannot use
+the line protocol and non-blob objects retain the individual `git show` reader.
+
 ## Execution receipts
 
 Every receipt names implementation, RFC and corpus commits, backend, runtime,
