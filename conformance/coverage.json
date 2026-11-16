@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "a4cefd47eecdcc0425f12ae9eeb40f31e70f4d988cd8327fb30f5e0827071408",
-  "corpus_sha256": "8dd3a82151d03c28204064e9614ade582ebbbf497bb0c7758056a0d800f37832",
+  "corpus_sha256": "60e39770afb06a8c33d674d76a68923d0924c43850cb324ff4e6b12686dcffee",
   "python_commit": "831b985803444717f73408d4ef5cf412354e75d4",
-  "scenario_count": 2456,
+  "scenario_count": 2464,
   "sections": [
     {
       "section": "0",
@@ -2236,6 +2236,8 @@
         "streaming/a-narrowed-binding-s-turn-publishes-no-reasoning",
         "streaming/a-read-only-binding-s-turn-publishes-no-reasoning",
         "streaming/a-scoped-trigger-s-turn-publishes-no-reasoning",
+        "tenancy/a-deleted-room-s-subscription-reads-nothing-of-the-room-created-again",
+        "tenancy/a-deleted-room-s-turn-publishes-nothing-in-the-room-its-process-creates-again",
         "tool-composition/binding-scope-withholds-composition",
         "tool-composition/cancel-before-execution-keeps-the-terminal-frame",
         "tool-composition/complete-calls-without-fragments-publish-no-composition",
@@ -2331,7 +2333,10 @@
         "orchestration/a-room-created-again-takes-a-strategy-again",
         "orchestration/a-room-created-again-without-a-strategy-keeps-none-of-the-old",
         "orchestration/a-room-created-with-a-strategy-is-announced-once-it-is-installed",
+        "tenancy/a-deleted-room-s-hook-does-not-run-in-the-room-another-process-creates-again",
         "tenancy/a-deleted-room-s-hook-does-not-run-in-the-room-created-again",
+        "tenancy/a-deleted-room-s-lifecycle-hook-does-not-run-in-the-room-another-process-creates-again",
+        "tenancy/a-deleted-room-s-turn-runs-none-of-the-hooks-of-the-room-created-again",
         "tenancy/another-organization-s-room-hooks-stand",
         "tools/a-gate-hook-past-its-timeout-is-reported",
         "tools/a-room-s-tool-hook-gates-that-room-s-calls",
@@ -3941,6 +3946,8 @@
         "skills/a-standalone-turn-reads-the-room-s-stored-rows-first",
         "skills/a-stored-activation-past-the-bound-reads-as-activated",
         "skills/a-stored-activation-reads-the-turn-s-registry",
+        "tenancy/a-deleted-room-s-agent-session-does-not-go-on-in-the-room-created-again",
+        "tenancy/a-deleted-room-s-turn-reaches-nothing-of-the-room-created-again",
         "tool-search/a-tool-the-store-says-was-used-stays-declared",
         "tools/a-room-the-agent-joins-again-replays-no-tool-image"
       ]
@@ -5970,7 +5977,15 @@
         "tasks/start-task-runs-an-agent-s-work-in-the-background",
         "tasks/the-kit-cancels-a-background-task-once",
         "tasks/the-kit-lists-a-room-s-tasks-by-status",
+        "tenancy/a-deleted-room-s-agent-session-does-not-go-on-in-the-room-created-again",
+        "tenancy/a-deleted-room-s-hook-does-not-run-in-the-room-another-process-creates-again",
         "tenancy/a-deleted-room-s-hook-does-not-run-in-the-room-created-again",
+        "tenancy/a-deleted-room-s-lifecycle-hook-does-not-run-in-the-room-another-process-creates-again",
+        "tenancy/a-deleted-room-s-strategy-does-not-run-in-the-room-another-process-creates-again",
+        "tenancy/a-deleted-room-s-subscription-reads-nothing-of-the-room-created-again",
+        "tenancy/a-deleted-room-s-turn-publishes-nothing-in-the-room-its-process-creates-again",
+        "tenancy/a-deleted-room-s-turn-reaches-nothing-of-the-room-created-again",
+        "tenancy/a-deleted-room-s-turn-runs-none-of-the-hooks-of-the-room-created-again",
         "tenancy/another-organization-s-room-hooks-stand",
         "tenancy/another-organization-s-room-is-not-found",
         "tenancy/routing-stays-within-the-organization",
@@ -6379,6 +6394,7 @@
         "orchestration/the-kit-s-default-strategy-unless-the-room-names-another-or-none",
         "orchestration/the-room-strategy-is-read-within-a-tenant",
         "tasks/a-result-tool-is-declared-in-the-child-room-only",
+        "tenancy/a-deleted-room-s-strategy-does-not-run-in-the-room-another-process-creates-again",
         "tool-search/the-preamble-comes-before-an-agent-s-identity"
       ]
     },
