@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "831b985803444717f73408d4ef5cf412354e75d4",
+  "python_commit": "2b7515cd03aff0b36ebb5818e3c0cfd303f7a941",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -23824,6 +23824,67 @@
       "missing": [
         "Served-skills wire helpers, fingerprint and verification chains remain open: the named mixed sources receive only their host-access assertions.",
         "No complete MCP transport, model-result or RFC-section coverage is inferred."
+      ]
+    },
+    {
+      "id": "phase4-mcp-tool-dictionaries",
+      "requirement": "RK-21.2-001",
+      "clause_sha256": "2067cc7016984cf898aa0e7a1a72c4a5fc3ce70ef41b233755d0269d2eefd1d0",
+      "scope": "Public get_tools_as_dicts: connected filtered and paged catalogue snapshots with all six AITool model fields; native witnesses establish detached ownership.",
+      "coverage": "partial",
+      "review": "Full independent production, API, scenario and source review accepted this narrow slice. JSON and SSE are response framing over streamable HTTP. The four exact canonical oracles were independently checked. One existing source function is covered in full and one only for its dictionary guard; the new specialized ownership test is separate source evidence.",
+      "assertions": [
+        {
+          "scenario": "mcp-host/tool-dictionaries-empty-catalogue",
+          "pointer": "/steps/0/expect",
+          "sha256": "6dd49ffe318029457ac7281ea0ffcd86b276b34b73a45554612bd9d9e233e7d3",
+          "scenario_sha256": "a3a39313c192f2a846cfddc69a852c44355c44db41a5bc52002244d1d675438f",
+          "proves": "An empty discovered catalogue returns an empty dictionary list; the exact requests contain one initialize and one tools/list."
+        },
+        {
+          "scenario": "mcp-host/tool-dictionaries-json",
+          "pointer": "/steps/0/expect",
+          "sha256": "17678d2da33ac1521be4b669e605696b4d29e0f99571d98dbabca8fad2456485",
+          "scenario_sha256": "0e4081f091bf5593f17e9986c912545362dbd755a4976d823ddb8ba13d56ae52",
+          "proves": "Exact six-field dictionaries in filtered, paged catalogue order; connection guards before connect and after close; repeated snapshots trigger no relisting. HTTP JSON response framing."
+        },
+        {
+          "scenario": "mcp-host/tool-dictionaries-sse",
+          "pointer": "/steps/0/expect",
+          "sha256": "17678d2da33ac1521be4b669e605696b4d29e0f99571d98dbabca8fad2456485",
+          "scenario_sha256": "c903475444f07bcbba4eb6b4430ee659bf600e6b79a753984f4d850459bb24e2",
+          "proves": "Exact six-field dictionaries in filtered, paged catalogue order; connection guards before connect and after close; repeated snapshots trigger no relisting. SSE response framing over streamable HTTP, not legacy SSE transport."
+        },
+        {
+          "scenario": "mcp-host/tool-dictionaries-without-discovery",
+          "pointer": "/steps/0/expect",
+          "sha256": "d82d55d2cf13f01697f23191dcbbb1e48b92edc23bba2d53c6d40efd97e11985",
+          "scenario_sha256": "89cd0f37b260e2a7a208b2d5602125b3a3c31794ff690b0169c1e3572fc1b0a3",
+          "proves": "Disabling discovery returns an empty dictionary list; initialize is the only request."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/test_mcp_tool_provider.py::test_get_tools_as_dicts",
+          "sha256": "a80e67db3fe28b08cebeede80de3bf90f038dbf7cc342e8a92407093a911ddf7",
+          "proves": "The complete source function: a dictionary snapshot preserves the discovered tool name and mapping-valued parameters."
+        },
+        {
+          "nodeid": "tests/test_mcp_tool_provider.py::test_not_connected_guard",
+          "sha256": "6b4a65f60ce5f19f2fa280f683ec59a20946a094963b1b7b9a87834a87e01287",
+          "proves": "Only the get_tools_as_dicts refusal outside a connection; the other methods in this test receive no new credit."
+        },
+        {
+          "nodeid": "tests/tools/test_mcp_tool_dicts.py::test_tool_dictionaries_own_their_nested_values",
+          "sha256": "03d5fdad4a7380cf99902bc106de5dce5703b9f59d1f46996678a94cf131aebe",
+          "proves": "Exact six-field contents and independent nested schema, tags and dictionary keys; rereading preserves the catalogue and performs no listing. Native source evidence, not a shared execution receipt."
+        }
+      ],
+      "missing": [
+        "Raw call_tool_result and output-schema validation remain open.",
+        "Legacy SSE transport, constructor transport options and other MCP contracts are outside this slice.",
+        "Served-skill discovery, registry and execution are not established by dictionary snapshots.",
+        "No Rust, specialized-test, SQL-store or Redis-turn execution receipt is inferred from the targeted Python memory receipt."
       ]
     }
   ],
@@ -681922,6 +681983,67 @@
         {
           "scenario": "skill-prerequisites/unavailable-references-explain-the-same-restriction-streaming",
           "sha256": "3f22efe7b593a3b4280622bcb405917b476d3767947cb7d7a19ccb1aeabb7b4c",
+          "outcome": "passed"
+        }
+      ]
+    },
+    {
+      "id": "python-mcp-tool-dicts-2b7515c-memory",
+      "implementation": "python",
+      "implementation_commit": "2b7515cd03aff0b36ebb5818e3c0cfd303f7a941",
+      "rfc_commit": "07fd11f7db4a5d500935a3e90c373206bfa790ea",
+      "corpus_commit": "51be25be9bb1ab1625f86c349b6a2b5f9ebe7e4b",
+      "rfc_sha256": "a4cefd47eecdcc0425f12ae9eeb40f31e70f4d988cd8327fb30f5e0827071408",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "env",
+        "-u",
+        "POSTGRES_DSN",
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "uv",
+        "run",
+        "pytest",
+        "tests/conformance/test_conformance.py",
+        "-k",
+        "mcp-host and (tool-dictionaries or timeout)",
+        "-q",
+        "--junitxml=python-dicts-final.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-mcp-tool-dicts-2b7515c.xml",
+        "format": "pytest_junit",
+        "sha256": "be55ce42c795cf513eacb74dc445f095d3b0ae591072e68ab37a66a1fd902c56"
+      },
+      "results": [
+        {
+          "scenario": "mcp-host/read-resource-timeout",
+          "sha256": "e616ea2231705d9ab41eed6413e9890fcaf1d46b566cb6ee42ddb6c261147cc0",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "mcp-host/request-timeout",
+          "sha256": "11c60b5be25c5d58f987de07f3a23d92aad34823b0d3f8b6d01c9df5ff26eb9f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "mcp-host/tool-dictionaries-empty-catalogue",
+          "sha256": "a3a39313c192f2a846cfddc69a852c44355c44db41a5bc52002244d1d675438f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "mcp-host/tool-dictionaries-json",
+          "sha256": "0e4081f091bf5593f17e9986c912545362dbd755a4976d823ddb8ba13d56ae52",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "mcp-host/tool-dictionaries-sse",
+          "sha256": "c903475444f07bcbba4eb6b4430ee659bf600e6b79a753984f4d850459bb24e2",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "mcp-host/tool-dictionaries-without-discovery",
+          "sha256": "89cd0f37b260e2a7a208b2d5602125b3a3c31794ff690b0169c1e3572fc1b0a3",
           "outcome": "passed"
         }
       ]

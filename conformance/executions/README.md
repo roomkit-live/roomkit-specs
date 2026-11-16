@@ -422,3 +422,21 @@ The source reference pin advances to the receipt's Python commit. Three native
 references in existing links are refreshed for two tests already changed on
 Python main (RMK-1705 and RMK-1707); this adds no shared execution credit.
 All 135 preceding receipts remain unchanged.
+
+
+## MCP tool dictionaries and deadline witnesses
+
+The targeted memory receipt at clean Python `2b7515cd03aff0b36ebb5818e3c0cfd303f7a941` records six passing
+scenarios: four new `mcp-host/tool-dictionaries-*` cases and the two existing
+MCP timeout witnesses with their caller deadlines adjusted to one second.
+The copied corpus and exact command are pinned in the generated receipt.
+The dictionary cases cover exact model fields, catalogue order, filtering and
+pagination, connection guards, empty catalogues and absence of relisting.
+The deadline cases retain their exact request/result oracles and the ten-second
+harness bound; they do not certify millisecond scheduling precision.
+
+Native ownership and fail-fast fixture tests remain separate proofs. No Rust,
+SQL-store, Redis-turn or full-corpus execution credit is inferred from this
+receipt. Prior receipts are retained as historical runs; none is relabeled as
+an execution of the updated timeout scenarios. The new normative link remains
+partial, and raw results, schema validation and served-skill consumers stay open.
