@@ -5202,7 +5202,8 @@ A subscription ends with its room (§17.2). The kit's publications carry the
 creation mark of their room (`room_created_at`, the room's `created_at`):
 one that names no organization reads the room for it, a turn's names the
 room its turn ran in, whichever room holds the id when it is published,
-and a channel's publication outside a turn reads the room the store holds.
+and a channel's publication outside a turn names the room the kit's last
+turn or channel call of the id ran in, else the room the store holds.
 A subscription made through the kit (`subscribe_room()`) keeps the mark of
 the room it read, and its callback reads no event of another mark: the
 room created again under a deleted room's id, in this process or another,

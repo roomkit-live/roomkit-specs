@@ -327,7 +327,7 @@
     },
     {
       "section": "8.4",
-      "sha256": "deeda158b0848a068b6665cca2698331762683d6126b893ae1720578544d8797",
+      "sha256": "71be06e34144bafbf5f34a97f1a6f902cc81fe535cfc7fc9c672ea76073cc0a8",
       "classification": "normative",
       "review": "Source inventory: Realtime / Ephemeral Events. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
