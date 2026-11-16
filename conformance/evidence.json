@@ -20191,7 +20191,7 @@
           "scenario": "acp/tools-observer-reentry-bound",
           "pointer": "/expect/actions",
           "sha256": "69304baa0eac47fe0825a15d7500b28a2ce74073f40f7b8fa65b2483d3e81fc5",
-          "scenario_sha256": "72fc1f02cf1fdad2a8fb69f97540d47a0555597cec417b939a4527c62e6e4b1c",
+          "scenario_sha256": "c51b44cce1256d6e545f6c6ee55c8fe0b70246011a5c36b18a9dd6ae27d5dc64",
           "proves": "The unordered posted-result list has exactly twenty entries matching no blocked_by value (null or absent) and one matching blocked_by=reentry_loop_cap, with max_chain_depth=2 in the fixture. Return order and unmentioned result fields are not asserted."
         },
         {
@@ -23058,6 +23058,67 @@
       "missing": [
         "This broad discovery unit also specifies directory parsing, strict/lenient discovery and discovery atomicity; those obligations are not fully mapped by this bound-only link.",
         "Rust MCP served skills and mutable metadata aliases are not implemented or claimed by this slice. Specialized execution receipts are not supported; local test runs remain separate evidence."
+      ]
+    },
+    {
+      "id": "phase4-acp-observer-live-delivery-budget",
+      "requirement": "RK-8.3-006",
+      "clause_sha256": "f19b26904dad3bd27cf1c0123f03c9c51dce3d03a9a89b4bab30202e19003f19",
+      "scope": "In-process ACP per-tool observers: live delivery draws a pass; a post after delivery ends starts independent work at depth zero.",
+      "coverage": "partial",
+      "review": "Read Python source/tests and both context implementations. Retain the exact cap assertion while establishing its temporal precondition with barriers. Add the converse expired-context case for both policy-handler triggers. No production or RFC behavior change. Independent review covers the tests and fixture synchronization; execution is recorded separately.",
+      "assertions": [
+        {
+          "scenario": "acp/handler-before-tool-use-observer-after-turn-independent",
+          "pointer": "/expect/actions/posted",
+          "sha256": "253582caacaa4c56a18e2bcff227678828502bf0d8d33e51bc66daab0c508849",
+          "scenario_sha256": "1376310c10eccbf33be4ba2b25b6aca4f288a4c415eb88cd780378bbd4b1933c",
+          "proves": "Exactly 25 posts released after their originating delivery ended are unblocked at depth zero, exceeding a shared budget of 20."
+        },
+        {
+          "scenario": "acp/handler-before-tool-use-observer-reentry-bound",
+          "pointer": "/expect/actions/posted",
+          "sha256": "963bf2b374da882d13c630f2d4ac468c607b074460f133a018c656f2fdf94b8c",
+          "scenario_sha256": "9749742d000fa4be233235d40ce6ae9429b5da8454334b3349455c3f1706c075",
+          "proves": "Exactly 20 observer posts start while their prompt is live and pass; the next is refused with reentry_loop_cap. Barriers precede prompt completion."
+        },
+        {
+          "scenario": "acp/handler-on-tool-call-observer-after-turn-independent",
+          "pointer": "/expect/actions/posted",
+          "sha256": "253582caacaa4c56a18e2bcff227678828502bf0d8d33e51bc66daab0c508849",
+          "scenario_sha256": "e069d06a50adab9203c51d0ed1c49144344542e7b175319efecac4fdc0b66de9",
+          "proves": "Exactly 25 posts released after their originating delivery ended are unblocked at depth zero, exceeding a shared budget of 20."
+        },
+        {
+          "scenario": "acp/handler-on-tool-call-observer-reentry-bound",
+          "pointer": "/expect/actions/posted",
+          "sha256": "963bf2b374da882d13c630f2d4ac468c607b074460f133a018c656f2fdf94b8c",
+          "scenario_sha256": "6ec44822df939f24f3e8b7b1c5c4df2f4f473f0f6036e64b972369bd6b0c412f",
+          "proves": "Exactly 20 observer posts start while their prompt is live and pass; the next is refused with reentry_loop_cap. Barriers precede prompt completion."
+        },
+        {
+          "scenario": "acp/tools-observer-reentry-bound",
+          "pointer": "/expect/actions/posted",
+          "sha256": "963bf2b374da882d13c630f2d4ac468c607b074460f133a018c656f2fdf94b8c",
+          "scenario_sha256": "c51b44cce1256d6e545f6c6ee55c8fe0b70246011a5c36b18a9dd6ae27d5dc64",
+          "proves": "Exactly 20 observer posts start while their prompt is live and pass; the next is refused with reentry_loop_cap. Barriers precede prompt completion."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/test_channels/test_acp.py::TestACPChannel::test_an_observer_posting_per_tool_call_the_agent_answers_stops",
+          "sha256": "c87fc3ff542d6e5184d3bc32c09c15573fe975cbc3b4ea651110ac0a3ee8b1e4",
+          "proves": "The local ACP per-tool observer loop stops after 20 successful passes and one refusal, for both triggers."
+        },
+        {
+          "nodeid": "tests/test_reentrance.py::TestACallFromATurn::test_work_a_turn_began_starts_fresh_once_the_turn_is_over",
+          "sha256": "42d5be53a0c7c86e5a4487dd6e9b4afe021c881c662f65ba2be707181cfc30cd",
+          "proves": "Work a turn started posts independently at depth zero after the originating work ends; native variants include agent and tool handlers. The shared ACP cases claim only the per-tool observer path."
+        }
+      ],
+      "missing": [
+        "This broad unit also covers separate hook-call budgets, mutation loops, spawned work and optional realtime observers; these ACP cases do not establish all those paths.",
+        "No remote or Redis executor context is claimed. Historical receipts of the prior scenario revisions remain historical, not credited to the strengthened cases."
       ]
     }
   ],

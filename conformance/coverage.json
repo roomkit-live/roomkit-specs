@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "7c5cc8afb846f7fa069bcbf6cf3881ec046c42a7e2568e9976acac91767891c9",
-  "corpus_sha256": "6f89b033455baff8eedfc8593c4b816040fd08c34e0fb2b8c9daf0bab71ed2cb",
+  "corpus_sha256": "af2c5697b6d7c4eb84c682d63509e0000b294a46700fa33164aa71e820d254b7",
   "python_commit": "8eb4e4fc12ffc7892134f2cd9e98917689ec5ed1",
-  "scenario_count": 2369,
+  "scenario_count": 2371,
   "sections": [
     {
       "section": "0",
@@ -862,11 +862,13 @@
         "acp/handler-approval-detail-open-fallback",
         "acp/handler-approval-never-announced",
         "acp/handler-approval-without-allow-option",
+        "acp/handler-before-tool-use-observer-after-turn-independent",
         "acp/handler-before-tool-use-observer-reentry-bound",
         "acp/handler-hook-block",
         "acp/handler-hook-failure-completed",
         "acp/handler-hook-failure-open",
         "acp/handler-modify-identical-allowed",
+        "acp/handler-on-tool-call-observer-after-turn-independent",
         "acp/handler-on-tool-call-observer-reentry-bound",
         "acp/handler-policy-allow-list",
         "acp/handler-policy-deny",
@@ -2097,7 +2099,9 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "acp/handler-before-tool-use-observer-after-turn-independent",
         "acp/handler-before-tool-use-observer-reentry-bound",
+        "acp/handler-on-tool-call-observer-after-turn-independent",
         "acp/handler-on-tool-call-observer-reentry-bound",
         "acp/tools-observer-post-depth",
         "acp/tools-observer-reentry-bound",
@@ -2384,11 +2388,13 @@
         "acp/handler-approval-detail-open-fallback",
         "acp/handler-approval-never-announced",
         "acp/handler-approval-without-allow-option",
+        "acp/handler-before-tool-use-observer-after-turn-independent",
         "acp/handler-before-tool-use-observer-reentry-bound",
         "acp/handler-hook-block",
         "acp/handler-hook-failure-completed",
         "acp/handler-hook-failure-open",
         "acp/handler-modify-identical-allowed",
+        "acp/handler-on-tool-call-observer-after-turn-independent",
         "acp/handler-on-tool-call-observer-reentry-bound",
         "acp/handler-policy-allow-list",
         "acp/handler-policy-deny",
@@ -8165,11 +8171,13 @@
         "acp/handler-approval-detail-open-fallback",
         "acp/handler-approval-never-announced",
         "acp/handler-approval-without-allow-option",
+        "acp/handler-before-tool-use-observer-after-turn-independent",
         "acp/handler-before-tool-use-observer-reentry-bound",
         "acp/handler-hook-block",
         "acp/handler-hook-failure-completed",
         "acp/handler-hook-failure-open",
         "acp/handler-modify-identical-allowed",
+        "acp/handler-on-tool-call-observer-after-turn-independent",
         "acp/handler-on-tool-call-observer-reentry-bound",
         "acp/handler-policy-allow-list",
         "acp/handler-policy-deny",
@@ -27294,6 +27302,89 @@
               "implementation": "python",
               "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
               "backend": "memory+redis-turns",
+              "runtime": "asyncio",
+              "state": "stale"
+            }
+          ]
+        },
+        {
+          "id": "phase4-acp-observer-live-delivery-budget",
+          "scope": "In-process ACP per-tool observers: live delivery draws a pass; a post after delivery ends starts independent work at depth zero.",
+          "coverage": "partial",
+          "missing": [
+            "This broad unit also covers separate hook-call budgets, mutation loops, spawned work and optional realtime observers; these ACP cases do not establish all those paths.",
+            "No remote or Redis executor context is claimed. Historical receipts of the prior scenario revisions remain historical, not credited to the strengthened cases."
+          ],
+          "executions": [
+            {
+              "execution": "python-acp-tools-7920d13-memory",
+              "implementation": "python",
+              "commit": "7920d13ae89c17fdc2e43a780ec80fc30a841b1c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-record-f3415d5-memory",
+              "implementation": "python",
+              "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-redis-turns-6dc6edb-memory-redis-turns",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory+redis-turns",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-external-handler-5a7a968-memory",
+              "implementation": "python",
+              "commit": "5a7a9683cd8c74bac850002cd4adfcc5a6e3dd25",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-redis-turns-5a7a968-memory-redis-turns",
+              "implementation": "python",
+              "commit": "5a7a9683cd8c74bac850002cd4adfcc5a6e3dd25",
+              "backend": "memory+redis-turns",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-context-97304f7-memory",
+              "implementation": "python",
+              "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-redis-turns-97304f7-memory-redis-turns",
+              "implementation": "python",
+              "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
+              "backend": "memory+redis-turns",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-handler-reentry-a110081-memory",
+              "implementation": "python",
+              "commit": "a1100814feae29bcb8ab1689ab316063ee07847c",
+              "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
             }
