@@ -1353,3 +1353,40 @@ was removed. None of these definitions activates a hook for a room.
 `organization_id`. Enable is idempotent; disable returns whether the name was
 selected. A turn keeps the names its request carried, while each firing reads
 the current definitions of those names (RFC §10.6.6).
+
+### MCP host sessions
+
+`mcp_session` runs public `MCPToolProvider` operations against a local HTTP
+peer. The entire connection belongs to the call's coroutine, including its
+explicit `connect`/`close` operations. It takes `peer`, `operations`, optional
+`discover` (default true), and optional `tool_filter` (the admitted names).
+No SDK request/resource method is replaced by a fake.
+
+The peer automatically answers `initialize` with the requested protocol
+version, resources capability and its optional `server_info`, `extensions`
+and `instructions`. `replies` is an ordered script of `{method, params?,
+result|error|hold}`. Each request must match the next method and params
+(omitted means `{}`); exactly one result, protocol error (`code`, `message`,
+optional `data`) or `hold: true` is required. A held request gets no answer
+before its client closes it. Unexpected requests, unused replies and fixture
+errors fail the scenario independently of client errors. `framing` selects
+JSON (default) or SSE replies. The HTTP peer uses an ephemeral loopback port,
+closes every connection and bounds each request body to 4 MiB.
+
+Operations name `connect`, `close`, `connected`, `tool_names`, `tool_meta`,
+`server_info`, `server_extensions`, `request` or `read_resource`. Request
+uses `name` for its method and optional `params`; resource reads take `uri`.
+Both accept `timeout_ms`, passed to the public deadline option. Snapshot
+operations may carry `mutate: {path: [key, ...], value: ...}`: mutate the
+returned object before recording it, so the next read proves whether it was
+an owned copy. No provider private state is read.
+
+The call returns `results` (each `{result: value}` or `{error: name}`) and
+`requests` (wire method and params in order; initialize is recorded by method
+only). Resources are normalized from the public model with JSON aliases and
+only fields sent by the peer, retaining explicit nulls and extension fields;
+request and information values are the public return values themselves.
+Expected errors are `not_connected`, `mcp_error` and `timeout`. Every other
+exception is a runner failure. Explicit close and final cleanup occur in the
+same coroutine as connect. Native stdio and concurrent-close witnesses remain
+separate; a successful HTTP session does not certify those boundaries.
