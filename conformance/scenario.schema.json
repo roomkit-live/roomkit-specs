@@ -485,6 +485,14 @@
         "model": {
           "$ref": "#/$defs/model"
         },
+        "mcp_servers": {
+          "description": "MCP servers the agent's tool handler serves (\u00a721.2), each reached through the implementation's own MCP tool provider, their handlers chained in this order before the scripted tools'.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/mcp_server"
+          }
+        },
         "tools": {
           "type": "array",
           "items": {
@@ -5613,6 +5621,62 @@
             "hub",
             "fail"
           ]
+        }
+      }
+    },
+    "mcp_server": {
+      "description": "An MCP server the runner serves (a subprocess over stdio, or in process over HTTP), reached through the implementation's MCP tool provider (\u00a721.2), connected before the run and closed after it.",
+      "type": "object",
+      "required": [
+        "tools"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "description": "The provider's label, the <server> of its MCP aliases; none when absent.",
+          "type": "string"
+        },
+        "gate_discovery": {
+          "description": "Whether the provider's handler serves only the tools the server listed (true, the default) or forwards every name (false) (\u00a721.2).",
+          "type": "boolean"
+        },
+        "declare": {
+          "description": "How the agent declares the server's tools: `bare`, the provider's own definitions (the default); `aliases`, each under its alias mcp__<label>__<tool> with the provider's description and parameters; `none`, not at all.",
+          "enum": [
+            "bare",
+            "aliases",
+            "none"
+          ]
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/mcp_tool"
+          }
+        }
+      }
+    },
+    "mcp_tool": {
+      "description": "A tool the server lists, as it writes it, answering every call with `returns`, a text.",
+      "type": "object",
+      "required": [
+        "name",
+        "returns"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "input_schema": {
+          "description": "The tool's inputSchema as the server lists it; `{\"type\": \"object\"}` when absent.",
+          "type": "object"
+        },
+        "returns": {
+          "type": "string"
         }
       }
     },
