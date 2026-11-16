@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "ad7a936cc0e3ed841c093ad36891ecf163e788fd",
+  "python_commit": "831b985803444717f73408d4ef5cf412354e75d4",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -23581,6 +23581,248 @@
       ],
       "missing": [
         "Only AI text script variants and the named shutdown boundaries are covered; other provider doors, all cancellation races, and the entire composite clause are not certified. Executor teardown error forms remain native API parity evidence in the lot checklist."
+      ]
+    },
+    {
+      "id": "phase4-mcp-discovery",
+      "requirement": "RK-21.2-001",
+      "clause_sha256": "0e420a4d1341785b9a3b0fc0f1ebc3162fcdc7091dd47a1244535f21f307956e",
+      "scope": "Connection/discovery, admitted tool metadata and owned copies; native stdio complements shared HTTP observations.",
+      "coverage": "partial",
+      "review": "Full independent production and fixture reviews accepted the MCP host slice after reproduced model-boundary and fixture-oracle defects were corrected. Source mapping retains 10 full, 4 partial and 1 unclosed selected source contracts. No historical execution receipt is changed.",
+      "assertions": [
+        {
+          "scenario": "mcp-host/listing-metadata",
+          "pointer": "/steps/0/expect",
+          "sha256": "61af258676ca43873a8e9ce3dd64a9fccaeb025f623b87ce56c0584edd0dd58e",
+          "scenario_sha256": "053897956abc5bee79126325a349c031eb33ed6b9eb57df89be286fc63fb5c72",
+          "proves": "Tool metadata follows the one paged filtered listing and is copied deeply. Exact canonical results and requests complement the readable observations."
+        },
+        {
+          "scenario": "mcp-host/without-discovery",
+          "pointer": "/steps/0/expect",
+          "sha256": "4995eafa1ace8a3ebf24cbc0da260e2ea08165c449de335a41799396dd0cbd39",
+          "scenario_sha256": "239accd31faf58254e66bc4528d78b39a34ca0bf705f4a277a1d4364ad538e03",
+          "proves": "A resource-only connection never lists tools. Exact canonical results and requests complement the readable observations."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/test_mcp_listing.py::test_without_discovery_the_connection_lists_nothing",
+          "sha256": "c33987613a193fcb3ea86cf3aadbc453f19137f380421029d19da06fa95f3287",
+          "proves": "Connection/discovery state, empty public catalogue, no listing, and direct call remain available. Remaining assertions: call_tool_result returns an unvalidated structuredContent when discovery is off; raw call_tool_result/output-schema contract is outside this lot. Counterparts are recorded in the reviewed lot source map; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/test_mcp_listing.py::test_without_discovery_the_gated_handler_serves_no_name",
+          "sha256": "0ad7630120d4dfc991677914167bf7df77d33cf127d6b61f86db2adae380377f",
+          "proves": "Public default-gated handler refuses any tool name after discover(false); this is the native handler assertion, not the shared no-discovery observation alone. Counterparts are recorded in the reviewed lot source map; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/test_mcp_listing.py::test_from_command_connects_without_listing",
+          "sha256": "4eae49885c041a419434cee393b34b5b9fae49fe1dd6a91a1425c7a0497d351b",
+          "proves": "Native stdio assertions combine no-discovery get_tools()==[], direct echo success, and a default connection that exposes exactly the server listing (board in the Rust peer, echo in the Python peer). Counterparts are recorded in the reviewed lot source map; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/test_mcp_host_access.py::test_the_tool_meta_comes_from_the_listing_made_at_connection",
+          "sha256": "308c3f97cdb65ba8b98c4793e327286d0bad495fec5e8bc8d634570cf23e5a05",
+          "proves": "Shared listing-metadata asserts the complete ui resourceUri/csp metadata and absence of the filtered app-only name; the native resourceUri-only assertion is supplemental. Counterparts are recorded in the reviewed lot source map; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/test_mcp_host_access.py::test_the_meta_handed_out_is_a_copy",
+          "sha256": "74b085822b6a426879ac4763c40841003da16767cfc46ecc8ff102a610f7a65b",
+          "proves": "Shared listing-metadata mutates the handed-out nested metadata then rereads it and asserts the original; each earlier observation is frozen. Counterparts are recorded in the reviewed lot source map; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/test_mcp_host_access.py::test_connected_says_whether_the_connection_is_live",
+          "sha256": "067e3c1eee495cae1712595d69d75d06a27f003c5cc697462873e7a89e628e26",
+          "proves": "Shared without-discovery asserts connected before, during, and after the connection; the pending-close native test is additional lifecycle evidence. Counterparts are recorded in the reviewed lot source map; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/test_mcp_host_access.py::test_reading_before_connecting_is_refused",
+          "sha256": "f47411a50a1be74c2bf9579f49f0f401f981608d43e29c3f4e10a637dd58d30b",
+          "proves": "Shared disconnected-access refuses both tool_meta and read_resource before connection. Counterparts are recorded in the reviewed lot source map; no execution receipt is inferred."
+        }
+      ],
+      "missing": [
+        "Raw call_tool_result and output-schema behavior remain outside this slice.",
+        "The Python filter callback raising an exception is not certified by Rust server-listing cleanup."
+      ]
+    },
+    {
+      "id": "phase4-mcp-host-access",
+      "requirement": "RK-21.2-002",
+      "clause_sha256": "a892807ce32837232750d357eda3f607f613321e4d323036d468f5e42e6b14ec",
+      "scope": "Handshake information and extensions, raw request/resource fidelity, model boundaries and deadlines; native stdio adds instructions and cancellation witnesses.",
+      "coverage": "partial",
+      "review": "Full independent production and fixture reviews accepted the MCP host slice after reproduced model-boundary and fixture-oracle defects were corrected. Source mapping retains 10 full, 4 partial and 1 unclosed selected source contracts. No historical execution receipt is changed.",
+      "assertions": [
+        {
+          "scenario": "mcp-host/disconnected-access",
+          "pointer": "/steps/0/expect",
+          "sha256": "88c6edc3364bd290d09af56e2fdade833944e283c86053ef53fa9886c05dc01b",
+          "scenario_sha256": "a558ad52877413e7bca1c86f702eb15782958d751ebc5125994c807894852c1d",
+          "proves": "Every new host accessor refuses outside its connection. Exact canonical results and requests complement the readable observations."
+        },
+        {
+          "scenario": "mcp-host/extension-container-validation",
+          "pointer": "/steps/0/expect",
+          "sha256": "e5aff050230fd67b2047c69b76ee5df9ad4f1a116e61a139a6e3e59cc40ca1b7",
+          "scenario_sha256": "a2ec793b76007f65e120b634f919475b1a98ace32911ee0966d06b0d08a220c1",
+          "proves": "A non-object extension declaration admits no extension and does not reject connection. Exact canonical results and requests complement the readable observations."
+        },
+        {
+          "scenario": "mcp-host/handshake-copies",
+          "pointer": "/steps/0/expect",
+          "sha256": "fa07f5c575236bf58cc542e3fcc178a09e8e556bd01ebd0018c9365fbc8154a7",
+          "scenario_sha256": "55fbac2079eb516383184bd9518cb085f647845fc5c1f9ac22deddfafdd53fef",
+          "proves": "Host information and extension snapshots preserve the handshake and are owned copies. Exact canonical results and requests complement the readable observations."
+        },
+        {
+          "scenario": "mcp-host/mixed-extension-settings",
+          "pointer": "/steps/0/expect",
+          "sha256": "df896b8db032403f95407c4e0c326487150c3adbfd283b7329a2ae22089e60dc",
+          "scenario_sha256": "c483377064e32b94ce95ef617deeac30b0e4cd622cf4427c198ba989541428f3",
+          "proves": "A valid extension remains when a sibling declares non-object settings. Exact canonical results and requests complement the readable observations."
+        },
+        {
+          "scenario": "mcp-host/raw-results-json",
+          "pointer": "/steps/0/expect",
+          "sha256": "79f94ca7590e2e8bf1a99d3a4c963d4ac32f6e351e3f445188075a78d8e2e570",
+          "scenario_sha256": "2a9372c59bba66b4d9edf8bf36a278492247d34303c101b2c8cf8f27d41cbd5d",
+          "proves": "Raw host requests preserve fields that resemble known SDK results (json). Exact canonical results and requests complement the readable observations."
+        },
+        {
+          "scenario": "mcp-host/raw-results-sse",
+          "pointer": "/steps/0/expect",
+          "sha256": "79f94ca7590e2e8bf1a99d3a4c963d4ac32f6e351e3f445188075a78d8e2e570",
+          "scenario_sha256": "6b99974d586d7ba6389b22636b9ec395300599a6712f4aefc6cd5068d0154f38",
+          "proves": "Raw host requests preserve fields that resemble known SDK results (sse). Exact canonical results and requests complement the readable observations."
+        },
+        {
+          "scenario": "mcp-host/read-resource-timeout",
+          "pointer": "/steps/0/expect",
+          "sha256": "7320f0bc9a4e595f752745f2b8211c9a091ab89b3048603399069d6a75b9c3f3",
+          "scenario_sha256": "79b85887b69044d54b285149802418ac030fcddf4183aab559c7a06689351802",
+          "proves": "read_resource obeys its explicit deadline and does not poison the next request. Exact canonical results and requests complement the readable observations."
+        },
+        {
+          "scenario": "mcp-host/reconnect-snapshots",
+          "pointer": "/steps/0/expect",
+          "sha256": "d4d35afa18adab7706981a9452a3ae3870c923e51db2fb0edb89b8a1191b854f",
+          "scenario_sha256": "15cb598fcc63721f91448309acfcfd598339ae618aa839757649f963aea6491e",
+          "proves": "Reconnecting replaces the prior information, extension and tool metadata snapshots. Exact canonical results and requests complement the readable observations."
+        },
+        {
+          "scenario": "mcp-host/request-arguments",
+          "pointer": "/steps/0/expect",
+          "sha256": "690b14e1a3126a0cd03fc1c124195f7641ee46b1cf7329775d03b57b41f86f55",
+          "scenario_sha256": "b6de5cfa7892be127147319c671a317817dbaf050379a5f217806d0432e84293",
+          "proves": "Host parameters preserve explicit empty objects and caller-owned metadata. Exact canonical results and requests complement the readable observations."
+        },
+        {
+          "scenario": "mcp-host/request-metadata-validation",
+          "pointer": "/steps/0/expect",
+          "sha256": "529675562344c21b9d034b9ffb2453d1fb6067f5216e1a220f38b7d71ea51f0b",
+          "scenario_sha256": "f418ff09b39e49895affea32d8aac747b358f1c81a7b4c019c4602b7a0a16caa",
+          "proves": "Raw host results still validate the known metadata field. Exact canonical results and requests complement the readable observations."
+        },
+        {
+          "scenario": "mcp-host/request-timeout",
+          "pointer": "/steps/0/expect",
+          "sha256": "89e066c496e8093af572329eecf450d3d5273e0754b6e79e8c4e4af48697dd46",
+          "scenario_sha256": "3e948d26b671c53840db4d7ca5d53b9b7144e1f0b57e5389e7665528f4d6802c",
+          "proves": "request obeys its explicit deadline and does not poison the next request. Exact canonical results and requests complement the readable observations."
+        },
+        {
+          "scenario": "mcp-host/resource-results-json",
+          "pointer": "/steps/0/expect",
+          "sha256": "683c0f4f70e99b5bc214c0fee6998d3cc9aa50f45f4755aa84b9235786d47dad",
+          "scenario_sha256": "2fe31af92281fd347a74365815cf0a83ab3a42db68b0daf569659848473666a9",
+          "proves": "Resource reads retain ordered contents and extension fields and reach the peer again (json). Exact canonical results and requests complement the readable observations."
+        },
+        {
+          "scenario": "mcp-host/resource-results-sse",
+          "pointer": "/steps/0/expect",
+          "sha256": "683c0f4f70e99b5bc214c0fee6998d3cc9aa50f45f4755aa84b9235786d47dad",
+          "scenario_sha256": "3f076e534c8fa0a38dc1bf2b44a29d3e58d815bb3e46bcc755a8022ffb7a8fb0",
+          "proves": "Resource reads retain ordered contents and extension fields and reach the peer again (sse). Exact canonical results and requests complement the readable observations."
+        },
+        {
+          "scenario": "mcp-host/resource-uri-normalization",
+          "pointer": "/steps/0/expect",
+          "sha256": "f49623620ea815e94c8314eb015c6e0b32c42797d16c6623c170ae6412474d5e",
+          "scenario_sha256": "08a4343d0209bd74ca62c5d10daf8fdc00bf12c5cb04761b68beb608ec861d86",
+          "proves": "Resource URIs are normalized on the outgoing request and returned contents. Exact canonical results and requests complement the readable observations."
+        },
+        {
+          "scenario": "mcp-host/resource-validation",
+          "pointer": "/steps/0/expect",
+          "sha256": "4916d879d9a00d760a0898aef8400f4030464dba3b6f11ea56c07f1456ee9630",
+          "scenario_sha256": "974b5cdc4fe50e6322f8fe33c8a07914fc7d1291c56521cd9821cbf272054b39",
+          "proves": "Invalid resource input and malformed contents fail without poisoning the next request. Exact canonical results and requests complement the readable observations."
+        },
+        {
+          "scenario": "mcp-host/server-errors",
+          "pointer": "/steps/0/expect",
+          "sha256": "8bc8926d355f6e30aa9617b64e3b839095e0275650fe533385d4d4888c232618",
+          "scenario_sha256": "30b153c7c8cfe70f285ad351563d12d48b7420ffb1b4f5a123d5b2eea9f22808",
+          "proves": "Raw requests and resource reads preserve a refusal as a server error. Exact canonical results and requests complement the readable observations."
+        },
+        {
+          "scenario": "mcp-host/server-info-icon-nulls",
+          "pointer": "/steps/0/expect",
+          "sha256": "027caa21dc2daebcf4d16b623f58a160b45229023f3a588d39cc95b75ea17fa0",
+          "scenario_sha256": "53960ab05877f07b8dc6992081cd7e68772f172ba42ef8b875b8b1447bd3cd4f",
+          "proves": "Server information omits null fields at known Icon model boundaries and preserves nested JSON nulls. Exact canonical results and requests complement the readable observations."
+        },
+        {
+          "scenario": "mcp-host/undeclared-extensions",
+          "pointer": "/steps/0/expect",
+          "sha256": "fd18cd215146369098c08f4594412f72c40970f7b90b0653383f62ddd3a71ef3",
+          "scenario_sha256": "447d0e7fd5fc7fef9700d9cab656f0facdc4ab6a98a8d542191450739d9433c6",
+          "proves": "A server without declared extensions yields an empty snapshot. Exact canonical results and requests complement the readable observations."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/test_mcp_host_access.py::test_a_resource_is_read_as_the_server_returns_it",
+          "sha256": "339bb2946a668f3f12ae9a8346e6e3cb05f9809b00ebf15c48d5de9f933f42d8",
+          "proves": "Public resource contents and server error are exercised through the shared HTTP/SSE sessions and native stdio witness. Counterparts are recorded in the reviewed lot source map; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/test_mcp_skill_wire.py::TestAgainstARealServer::test_the_provider_carries_what_the_skills_need",
+          "sha256": "1590a85be250a53a1b0eb26b534e6ad92f5c82d17ba22032e9ee0f4a81755728",
+          "proves": "Declared extension settings, raw extension requests and resource reads supply the host prerequisites. Remaining assertions: list_skills, parse_entry name/URI, get_skill fingerprint, read_bytes and verify_skill_resource helper chain. Counterparts are recorded in the reviewed lot source map; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/test_mcp_skill_wire.py::TestAgainstARealServer::test_an_unknown_skill_is_the_servers_error",
+          "sha256": "145eb77b8d386b818f2fa5231493fd427ff6f6ea5819612fc51f1d0fac150e75",
+          "proves": "The public request/read_resource boundary preserves a real server refusal and its message. Remaining assertions: The selected source calls get_skill for a skill URI; that helper propagation is not tested by the native unknown-resource assertion. Counterparts are recorded in the reviewed lot source map; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/test_mcp_skill_wire.py::TestAgainstARealServer::test_a_server_that_declares_nothing_has_no_extensions",
+          "sha256": "690f1ea3846c81238ae6b07b3ecfa4e9e0cc785cc12330a88a68a2953eb55e57",
+          "proves": "A server with no declaration exposes server_extensions == {}. Remaining assertions: declared_settings(server) is None is a served-skills helper assertion, not an assertion on the host accessor alone. Counterparts are recorded in the reviewed lot source map; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/test_mcp_skill_wire.py::TestAgainstARealServer::test_the_extensions_are_read_only_while_connected",
+          "sha256": "73591cd533b53c6ac7bcf3397b0350741aaf8d67432334e7f01d5b31e6e3d46c",
+          "proves": "The selected source only requires refusal of server_extensions while disconnected; shared disconnected-access asserts it. Snapshot-copy checks are additional. Counterparts are recorded in the reviewed lot source map; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/test_mcp_server_instructions.py::test_the_provider_keeps_what_the_server_published",
+          "sha256": "9c87a7766967720efd31dd4b7dce583d04886156e3063c46dd2da59218fe5aa2",
+          "proves": "The native stdio test asserts instructions text and server_info name; shared handshake-copies supplies information ownership only, not instructions coverage. Counterparts are recorded in the reviewed lot source map; no execution receipt is inferred."
+        },
+        {
+          "nodeid": "tests/test_mcp_server_instructions.py::test_reading_them_before_connecting_is_refused",
+          "sha256": "a7ff6c6e26c86f077e4ed282bd842d93e658a1cf46b668c6af5d497e1c6740ac",
+          "proves": "Native stdio assertions now refuse both instructions and server_info before connecting; the shared DSL does not expose instructions. Counterparts are recorded in the reviewed lot source map; no execution receipt is inferred."
+        }
+      ],
+      "missing": [
+        "Served-skills wire helpers, fingerprint and verification chains remain open: the named mixed sources receive only their host-access assertions.",
+        "No complete MCP transport, model-result or RFC-section coverage is inferred."
       ]
     }
   ],
