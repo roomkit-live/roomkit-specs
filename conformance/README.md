@@ -872,8 +872,8 @@ run's own kit when absent.
 | `commit_event` | `room_id`, `event` (a template) | the event |
 | `update_event` | `room_id`, `event_id`, `content`, `source`, `metadata` | the event, or null |
 | `delete_event` | `room_id`, `event_id`, `cascade_replies` (default true) | the ids removed |
-| `create_room` | `room`: `id`, `organization_id`, `metadata`, `timers`; `orchestration`, a scripted strategy's id, `null` for none, the kit's default when absent (§19.7) | the room |
-| `attach_channel` | `room_id`, `channel_id`, and a binding's `category`, `access`, `visibility`, `muted`, `metadata`, `participant_id` | the binding |
+| `create_room` | `room`: `id`, `organization_id`, `metadata`, `timers`; `orchestration`, a scripted strategy's id, `null` for none, the kit's default when absent (§19.7); optional `kit` | the room |
+| `attach_channel` | `room_id`, `channel_id`, and a binding's `category`, `access`, `visibility`, `muted`, `metadata`, `participant_id`; optional `kit` | the binding |
 | `detach_channel` | `room_id`, `channel_id` | unspecified |
 | `mute`, `unmute` | `room_id`, `channel_id` | the binding |
 | `mute_output`, `unmute_output` | `room_id`, `channel_id` | the binding |
@@ -899,8 +899,10 @@ run's own kit when absent.
 | `mark_read` | `room_id`, `channel_id`, `event_id` | null |
 | `mark_all_read` | `room_id`, `channel_id` | null |
 | `list_read_markers` | `room_id` | each channel's marker, an index |
-| `add_room_hook` | `room_id`, `hook`: a hook as in the setup, for that room alone, with no filter and the default timeout (`name`, `trigger`, `execution`, `priority`, `fail_closed`, `needs_lock`, `reactions`) | unspecified |
+| `add_room_hook` | `room_id`, `hook`: a hook as in the setup, for that room alone, with no filter and the default timeout (`name`, `trigger`, `execution`, `priority`, `fail_closed`, `needs_lock`, `reactions`); optional `kit`, a process whose hook it is, which runs only there | unspecified |
 | `remove_room_hook` | `room_id`, `name` | whether the room held a hook of that name |
+| `subscribe_room` | `room_id`, `subscriber` (a label), optional `kit`: the kit's `subscribe_room` (§8.4), a callback recording each ephemeral event it reads under `expect.subscribers`, by the subscriber's name | unspecified |
+| `publish_typing` | `room_id`, `user_id`, `is_typing` (default true), optional `kit`: the kit's `publish_typing` (§8.4) | null |
 | `cancel_delivery` | `key`, the `delivery_key` of the messages whose delivery it cancels, and `reason` (§10.1 Explicit delivery cancellation) | how many deliveries it cancelled |
 | `close` | none | null once the kit's shutdown ended (§12.10.4) |
 | `steer` | `room_id`, the room whose turns it reaches, `channel_id`, the agent, and `directive` (a SteeringDirective in the serialized form: `{"type": "cancel", "reason"}`, ...) (§21.3) | how many of the agent's running loops in the room it reached |
@@ -1100,6 +1102,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `thinking_events` | Per room, the `thinking_start`, `thinking_delta` and `thinking_end` ephemeral events its subscribers read, in order: each `{type, thinking_length, round, channel_id}`, and `thinking` for an agent with `publish_thinking_text` |
 | `tool_events` | Per room, the `tool_call_start`, `tool_call_end` and `tool_call_delta` ephemeral events its subscribers read, in order: each `{type, tool_calls, round, channel_id}`, and `duration_ms` for an end that ran its calls (§6.4, §8.4) |
 | `custom_events` | Per room, the CUSTOM ephemeral events its subscribers read, in order: each `{room_id, channel_id, data}`; ACP configuration, plans, tool progress and usage retain their wire payload. |
+| `subscribers` | Per subscriber a `subscribe_room` call named, the ephemeral events its callback read during the steps, in order: each `{type, room_id, user_id}` (§8.4, §17.2); a subscriber that read none, `[]` |
 | `presence_events` | Per room, the `presence_online` and `presence_offline` ephemeral events its subscribers read during the steps, in order: each `{type, user_id}`, `user_id` the agent's channel id (§10.6.7, §8.4) |
 | `streamed` | Per room and streaming channel, the items its `deliver_stream` read, in order: `{"text": ...}` for a text delta, `{"thinking": ...}` for a piece of the model's reasoning, `{"usage": ..., "model": ..., "provider": ...}` for what a generation used, when the channel `reads_usage`, `{"row": event}` for a row the store holds, `{"loop_end": {"reason", "rounds", "usage"}}` for the turn's end, when the channel `reads_loop_end`, `{"failed": true}` where the stream raised |
 | `turns` | Per room and intelligence channel, the events its `on_event()` received |

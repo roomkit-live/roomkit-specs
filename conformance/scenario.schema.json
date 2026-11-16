@@ -1705,6 +1705,8 @@
             "register_hook",
             "add_room_hook",
             "remove_room_hook",
+            "subscribe_room",
+            "publish_typing",
             "store.create_room",
             "store.delete_room",
             "store.add_binding",
@@ -1857,7 +1859,7 @@
           ]
         },
         "kit": {
-          "description": "The process of `setup.processes` the call runs on; the run's own kit when absent. Taken by `process_inbound`, `install_strategy`, `uninstall_strategy`, `claim_room_strategy`, `room_strategy`, `room_strategy_is_current`, `speak_queue`, `listen_only`, `talk_again` and `close`.",
+          "description": "The process of `setup.processes` the call runs on; the run's own kit when absent. Taken by `process_inbound`, `create_room`, `attach_channel`, `add_room_hook`, `subscribe_room`, `publish_typing`, `install_strategy`, `uninstall_strategy`, `claim_room_strategy`, `room_strategy`, `room_strategy_is_current`, `speak_queue`, `listen_only`, `talk_again` and `close`.",
           "$ref": "#/$defs/label"
         }
       },
@@ -4583,6 +4585,56 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "subscribe_room"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "subscriber"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              },
+              "subscriber": {
+                "description": "The subscriber's name in `expect.subscribers`.",
+                "$ref": "#/$defs/label"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "publish_typing"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "room_id",
+              "user_id"
+            ],
+            "properties": {
+              "room_id": {
+                "type": "string"
+              },
+              "user_id": {
+                "type": "string"
+              },
+              "is_typing": {
+                "type": "boolean"
+              }
+            }
+          }
         }
       ]
     },
@@ -5034,6 +5086,13 @@
           "type": "object",
           "additionalProperties": {
             "type": "object"
+          }
+        },
+        "subscribers": {
+          "description": "Per subscriber a `subscribe_room` call named, the ephemeral events its callback read during the steps, in order: each `{type, room_id, user_id}` (\u00a78.4, \u00a717.2).",
+          "type": "object",
+          "additionalProperties": {
+            "type": "array"
           }
         }
       }
