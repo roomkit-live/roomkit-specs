@@ -6721,6 +6721,10 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "metadata": {
+                "type": "object",
+                "description": "The message metadata, including an existing runtime speaker label; empty by default."
               }
             }
           }

@@ -625,7 +625,8 @@ scripted.
   provider style §20.1 permits alongside omitting the turn's input.
   It also returns the `messages` it built (each `role`
   and `text`, or `role` and `parts`, texts it holds back to back as text
-  parts), the `notes` it retrieved for the turn alone and the
+  parts), with optional `metadata` (an object, empty by default), the
+  `notes` it retrieved for the turn alone and the
   `speakers` its messages name (§20.2), and `writes_record`, keys each read
   writes on the turn's record through `current_response_metadata()` (§6.7); it keeps each
   event it is handed (`ingest`), which `expect.ingested` reads; `compacts` scripts what it
