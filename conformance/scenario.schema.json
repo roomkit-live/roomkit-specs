@@ -5425,7 +5425,7 @@
       }
     },
     "scripted_skill": {
-      "description": "A skill a scripted registry holds (\u00a724.1): a directory named after it holding its SKILL.md, whose frontmatter gives `name` and `description` and whose body is `instructions`, and each of `references` under its references/ directory, by file name.",
+      "description": "A skill a scripted registry holds (sections 24.1 and 24.3). By default its SKILL.md is written and discovered; in_memory builds Skill/SkillMetadata and calls SkillRegistry.add without a SKILL.md. References are files in its own temporary directory in either mode.",
       "type": "object",
       "required": [
         "name",
@@ -5477,12 +5477,17 @@
           ]
         },
         "unavailable": {
-          "description": "After discovery, mark this skill unavailable with this reason; its gated patterns remain closed (section 24.3).",
+          "description": "After registration, mark this skill unavailable with this reason; its gated patterns remain closed (section 24.3).",
           "type": "string"
         },
         "unlisted": {
-          "description": "After discovery, hide this skill from the manifest while retaining activation (section 24.3).",
+          "description": "After registration, hide this skill from the manifest while retaining activation (section 24.3).",
           "type": "boolean"
+        },
+        "in_memory": {
+          "type": "boolean",
+          "default": false,
+          "description": "Register a Skill built in memory through public add, without writing SKILL.md. Its public name does not choose its filesystem directory."
         }
       }
     },

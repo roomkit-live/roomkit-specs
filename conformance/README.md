@@ -558,6 +558,11 @@ scripted.
   `allowed_tools`, when present, is a comma-separated text or a list of
   tool-name patterns (`*` and `?` globs), preserved as that frontmatter type.
   Matching tools are gated behind skill activation (§24.2).
+  A skill with `in_memory: true` instead builds `Skill`/`SkillMetadata` and calls
+  public `SkillRegistry.add`, without writing `SKILL.md`; references remain files
+  beneath a separate temporary path. Directory skills are discovered first, then
+  in-memory skills are added in script order. Availability/listing marks are
+  applied after registration. The control defaults to false and must be boolean.
 - `retry_policy`: the agent's retry policy (§6.4): a generation its
   provider refused as worth another try (`refuses.retryable`) before it
   handed anything is tried again, at most `max_retries` times (default 3),
