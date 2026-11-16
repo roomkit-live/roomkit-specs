@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "a4cefd47eecdcc0425f12ae9eeb40f31e70f4d988cd8327fb30f5e0827071408",
   "corpus_sha256": "8dd3a82151d03c28204064e9614ade582ebbbf497bb0c7758056a0d800f37832",
-  "python_commit": "ad7a936cc0e3ed841c093ad36891ecf163e788fd",
+  "python_commit": "831b985803444717f73408d4ef5cf412354e75d4",
   "scenario_count": 2456,
   "sections": [
     {
@@ -7023,7 +7023,7 @@
       "review": "normative",
       "requirements": 2,
       "mapping": {
-        "unmapped": 2
+        "mapped_partial": 2
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -66093,14 +66093,37 @@
     {
       "id": "RK-21.2-001",
       "section": "21.2",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "phase4-mcp-discovery",
+          "scope": "Connection/discovery, admitted tool metadata and owned copies; native stdio complements shared HTTP observations.",
+          "coverage": "partial",
+          "missing": [
+            "Raw call_tool_result and output-schema behavior remain outside this slice.",
+            "The Python filter callback raising an exception is not certified by Rust server-listing cleanup.",
+            "Server-aware tool policy and listing size, duplicate-name and warning bounds are outside this host-access link."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-21.2-002",
       "section": "21.2",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "phase4-mcp-host-access",
+          "scope": "Handshake information and extensions, raw request/resource fidelity, model boundaries and deadlines; native stdio adds instructions and cancellation witnesses.",
+          "coverage": "partial",
+          "missing": [
+            "Served-skills wire helpers, fingerprint and verification chains remain open: the named mixed sources receive only their host-access assertions.",
+            "No complete MCP transport, model-result or RFC-section coverage is inferred."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-21.3-001",
