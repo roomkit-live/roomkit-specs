@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "mcp-host/request-arguments",
-  "title": "Omitted and null request parameters send an explicit empty object",
+  "title": "Host parameters preserve explicit empty objects and caller-owned metadata",
   "rules": [
     "§21.2"
   ],
@@ -42,6 +42,46 @@
             "result": {
               "value": 3
             }
+          },
+          {
+            "method": "vendor/read",
+            "params": {
+              "_meta": {
+                "progressToken": "host-token",
+                "io.modelcontextprotocol/protocolVersion": "host-version",
+                "custom": null
+              }
+            },
+            "result": {
+              "value": 4
+            }
+          },
+          {
+            "method": "vendor/read",
+            "params": {
+              "_meta": null
+            },
+            "result": {
+              "value": 5
+            }
+          },
+          {
+            "method": "vendor/read",
+            "params": {
+              "_meta": "opaque"
+            },
+            "result": {
+              "value": 6
+            }
+          },
+          {
+            "method": "vendor/read",
+            "params": {
+              "_meta": {}
+            },
+            "result": {
+              "value": 7
+            }
           }
         ]
       },
@@ -70,6 +110,38 @@
             "nested": {
               "value": 3
             }
+          }
+        },
+        {
+          "method": "request",
+          "name": "vendor/read",
+          "params": {
+            "_meta": {
+              "progressToken": "host-token",
+              "io.modelcontextprotocol/protocolVersion": "host-version",
+              "custom": null
+            }
+          }
+        },
+        {
+          "method": "request",
+          "name": "vendor/read",
+          "params": {
+            "_meta": null
+          }
+        },
+        {
+          "method": "request",
+          "name": "vendor/read",
+          "params": {
+            "_meta": "opaque"
+          }
+        },
+        {
+          "method": "request",
+          "name": "vendor/read",
+          "params": {
+            "_meta": {}
           }
         },
         {
@@ -104,6 +176,26 @@
               }
             },
             {
+              "result": {
+                "value": 4
+              }
+            },
+            {
+              "result": {
+                "value": 5
+              }
+            },
+            {
+              "result": {
+                "value": 6
+              }
+            },
+            {
+              "result": {
+                "value": 7
+              }
+            },
+            {
               "result": null
             }
           ],
@@ -130,10 +222,38 @@
                   "value": 3
                 }
               }
+            },
+            {
+              "method": "vendor/read",
+              "params": {
+                "_meta": {
+                  "progressToken": "host-token",
+                  "io.modelcontextprotocol/protocolVersion": "host-version",
+                  "custom": null
+                }
+              }
+            },
+            {
+              "method": "vendor/read",
+              "params": {
+                "_meta": null
+              }
+            },
+            {
+              "method": "vendor/read",
+              "params": {
+                "_meta": "opaque"
+              }
+            },
+            {
+              "method": "vendor/read",
+              "params": {
+                "_meta": {}
+              }
             }
           ],
-          "results_json": "[{\"result\":null},{\"result\":{\"value\":0}},{\"result\":{\"value\":1}},{\"result\":{\"value\":2}},{\"result\":{\"value\":3}},{\"result\":null}]",
-          "requests_json": "[{\"method\":\"initialize\"},{\"method\":\"vendor/read\",\"params\":{}},{\"method\":\"vendor/read\",\"params\":{}},{\"method\":\"vendor/read\",\"params\":{}},{\"method\":\"vendor/read\",\"params\":{\"nested\":{\"value\":3}}}]"
+          "results_json": "[{\"result\":null},{\"result\":{\"value\":0}},{\"result\":{\"value\":1}},{\"result\":{\"value\":2}},{\"result\":{\"value\":3}},{\"result\":{\"value\":4}},{\"result\":{\"value\":5}},{\"result\":{\"value\":6}},{\"result\":{\"value\":7}},{\"result\":null}]",
+          "requests_json": "[{\"method\":\"initialize\"},{\"method\":\"vendor/read\",\"params\":{}},{\"method\":\"vendor/read\",\"params\":{}},{\"method\":\"vendor/read\",\"params\":{}},{\"method\":\"vendor/read\",\"params\":{\"nested\":{\"value\":3}}},{\"method\":\"vendor/read\",\"params\":{\"_meta\":{\"custom\":null,\"io.modelcontextprotocol/protocolVersion\":\"host-version\",\"progressToken\":\"host-token\"}}},{\"method\":\"vendor/read\",\"params\":{\"_meta\":null}},{\"method\":\"vendor/read\",\"params\":{\"_meta\":\"opaque\"}},{\"method\":\"vendor/read\",\"params\":{\"_meta\":{}}}]"
         }
       }
     }
