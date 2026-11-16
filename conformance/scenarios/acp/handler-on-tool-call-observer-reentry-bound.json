@@ -8,7 +8,7 @@
     "Appendix A.9.1",
     "§8.3"
   ],
-  "notes": "Python: tests/test_channels/test_acp.py::test_an_observer_posting_per_tool_call_the_agent_answers_stops[on_tool_call]. In-process owner/executor context only, as the source marker requires; the captured kit does not claim this across Redis.",
+  "notes": "Python: tests/test_channels/test_acp.py::test_an_observer_posting_per_tool_call_the_agent_answers_stops[on_tool_call]. In-process owner/executor context only, as the source marker requires; the captured kit does not claim this across Redis. Each prompt stays active until its observer post returned. Barriers establish the live-delivery precondition in RFC §8.3; no scheduler ordering or delay is assumed.",
   "setup": {
     "channels": [
       {
@@ -73,7 +73,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-0"
               },
               {
                 "updates": [
@@ -119,7 +120,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-1"
               },
               {
                 "updates": [
@@ -165,7 +167,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-2"
               },
               {
                 "updates": [
@@ -211,7 +214,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-3"
               },
               {
                 "updates": [
@@ -257,7 +261,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-4"
               },
               {
                 "updates": [
@@ -303,7 +308,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-5"
               },
               {
                 "updates": [
@@ -349,7 +355,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-6"
               },
               {
                 "updates": [
@@ -395,7 +402,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-7"
               },
               {
                 "updates": [
@@ -441,7 +449,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-8"
               },
               {
                 "updates": [
@@ -487,7 +496,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-9"
               },
               {
                 "updates": [
@@ -533,7 +543,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-10"
               },
               {
                 "updates": [
@@ -579,7 +590,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-11"
               },
               {
                 "updates": [
@@ -625,7 +637,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-12"
               },
               {
                 "updates": [
@@ -671,7 +684,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-13"
               },
               {
                 "updates": [
@@ -717,7 +731,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-14"
               },
               {
                 "updates": [
@@ -763,7 +778,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-15"
               },
               {
                 "updates": [
@@ -809,7 +825,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-16"
               },
               {
                 "updates": [
@@ -855,7 +872,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-17"
               },
               {
                 "updates": [
@@ -901,7 +919,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-18"
               },
               {
                 "updates": [
@@ -947,7 +966,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-19"
               },
               {
                 "updates": [
@@ -993,7 +1013,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-20"
               },
               {
                 "updates": [
@@ -1039,7 +1060,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-21"
               },
               {
                 "updates": [
@@ -1085,7 +1107,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-22"
               },
               {
                 "updates": [
@@ -1131,7 +1154,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-23"
               },
               {
                 "updates": [
@@ -1177,7 +1201,8 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "before_reply_gate": "prompt-24"
               }
             ]
           },
@@ -1222,7 +1247,6 @@
         "execution": "async",
         "reactions": [
           {
-            "repeat": true,
             "do": [
               {
                 "call": "send_event",
@@ -1234,7 +1258,368 @@
                 },
                 "as": "posted"
               }
-            ]
+            ],
+            "after_do_gate": "posted-0"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-1"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-2"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-3"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-4"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-5"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-6"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-7"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-8"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-9"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-10"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-11"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-12"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-13"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-14"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-15"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-16"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-17"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-18"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-19"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-20"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-21"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-22"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-23"
+          },
+          {
+            "do": [
+              {
+                "call": "send_event",
+                "room_id": "$room",
+                "channel_id": "bot",
+                "content": {
+                  "type": "text",
+                  "body": "next"
+                },
+                "as": "posted"
+              }
+            ],
+            "after_do_gate": "posted-24"
           }
         ]
       }
@@ -1254,7 +1639,201 @@
           "type": "text",
           "body": "Hello"
         }
-      }
+      },
+      "background": true,
+      "as": "inbound"
+    },
+    {
+      "wait_for": "posted-0"
+    },
+    {
+      "open": "prompt-0"
+    },
+    {
+      "open": "posted-0"
+    },
+    {
+      "wait_for": "posted-1"
+    },
+    {
+      "open": "prompt-1"
+    },
+    {
+      "open": "posted-1"
+    },
+    {
+      "wait_for": "posted-2"
+    },
+    {
+      "open": "prompt-2"
+    },
+    {
+      "open": "posted-2"
+    },
+    {
+      "wait_for": "posted-3"
+    },
+    {
+      "open": "prompt-3"
+    },
+    {
+      "open": "posted-3"
+    },
+    {
+      "wait_for": "posted-4"
+    },
+    {
+      "open": "prompt-4"
+    },
+    {
+      "open": "posted-4"
+    },
+    {
+      "wait_for": "posted-5"
+    },
+    {
+      "open": "prompt-5"
+    },
+    {
+      "open": "posted-5"
+    },
+    {
+      "wait_for": "posted-6"
+    },
+    {
+      "open": "prompt-6"
+    },
+    {
+      "open": "posted-6"
+    },
+    {
+      "wait_for": "posted-7"
+    },
+    {
+      "open": "prompt-7"
+    },
+    {
+      "open": "posted-7"
+    },
+    {
+      "wait_for": "posted-8"
+    },
+    {
+      "open": "prompt-8"
+    },
+    {
+      "open": "posted-8"
+    },
+    {
+      "wait_for": "posted-9"
+    },
+    {
+      "open": "prompt-9"
+    },
+    {
+      "open": "posted-9"
+    },
+    {
+      "wait_for": "posted-10"
+    },
+    {
+      "open": "prompt-10"
+    },
+    {
+      "open": "posted-10"
+    },
+    {
+      "wait_for": "posted-11"
+    },
+    {
+      "open": "prompt-11"
+    },
+    {
+      "open": "posted-11"
+    },
+    {
+      "wait_for": "posted-12"
+    },
+    {
+      "open": "prompt-12"
+    },
+    {
+      "open": "posted-12"
+    },
+    {
+      "wait_for": "posted-13"
+    },
+    {
+      "open": "prompt-13"
+    },
+    {
+      "open": "posted-13"
+    },
+    {
+      "wait_for": "posted-14"
+    },
+    {
+      "open": "prompt-14"
+    },
+    {
+      "open": "posted-14"
+    },
+    {
+      "wait_for": "posted-15"
+    },
+    {
+      "open": "prompt-15"
+    },
+    {
+      "open": "posted-15"
+    },
+    {
+      "wait_for": "posted-16"
+    },
+    {
+      "open": "prompt-16"
+    },
+    {
+      "open": "posted-16"
+    },
+    {
+      "wait_for": "posted-17"
+    },
+    {
+      "open": "prompt-17"
+    },
+    {
+      "open": "posted-17"
+    },
+    {
+      "wait_for": "posted-18"
+    },
+    {
+      "open": "prompt-18"
+    },
+    {
+      "open": "posted-18"
+    },
+    {
+      "wait_for": "posted-19"
+    },
+    {
+      "open": "prompt-19"
+    },
+    {
+      "open": "posted-19"
+    },
+    {
+      "wait_for": "posted-20"
+    },
+    {
+      "open": "prompt-20"
+    },
+    {
+      "open": "posted-20"
+    },
+    {
+      "await": "inbound"
     },
     {
       "idle": true

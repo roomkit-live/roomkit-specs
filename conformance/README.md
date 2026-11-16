@@ -361,6 +361,7 @@ left, the call does what it does by default. A reaction:
 | `gate` | Holds the call at this gate until a step opens it |
 | `delay_ms` | Waits this many milliseconds after the gate and before the actions, to separate the start of nested call deadlines; absent or zero, no delay |
 | `do` | Kit calls the hook or the channel makes while it runs, in its execution context, in order: an **action** is a call (below) with an optional `as` and `expect`. Its error is caught, kept and checked, never raised into the kit |
+| `after_do_gate` | Holds after all `do` actions returned, before `after_turn` work and the reaction's result or failure; lets steps observe completed work without a delay |
 | `after_turn` | In an `on_event` reaction: actions the turn leaves to work it began, a task in the turn's execution context that makes them in order once the turn ended (§10.6.5): a `host.<verb>` then crosses as a `room_call`. A runner waits for that work when it waits for the kit to go idle |
 | `fail` | Then raises, with this message |
 | `refuse` | In a `deliver` or `on_event` reaction: then fails with the provider's explicit refusal (§5.13), its `error`, the `code` and `retryable` it declares, and the `provider_message_id` it names |
@@ -759,6 +760,10 @@ that both runners check the same messages.
 the prompt answer, without waiting for the permission decision. It supplies raw
 ACP `toolCall` and `options`; `sessionId` comes from the current prompt. This
 tests receipt ordering independently of the permission policy's decision.
+
+`prompts[].before_reply_gate` holds after all updates and permission steps,
+before either the successful reply or its error. It can keep a turn active
+until an observer has completed a public call.
 
 `prompts[].permission_steps` supplies ordered `{request, updates?}` entries.
 The `request` contains raw ACP `toolCall` and `options`; `sessionId` comes

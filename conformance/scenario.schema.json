@@ -1375,6 +1375,10 @@
           "description": "Wait this many milliseconds after the gate and before the actions. Used to separate nested call deadlines, not to wait for completion.",
           "type": "integer",
           "minimum": 0
+        },
+        "after_do_gate": {
+          "description": "Hold after all do actions have completed, before after_turn work or the reaction result/failure.",
+          "type": "string"
         }
       },
       "allOf": [
@@ -7782,6 +7786,10 @@
         "meta": {
           "description": "Raw response _meta, sent unchanged.",
           "type": "object"
+        },
+        "before_reply_gate": {
+          "description": "Hold after all updates and awaited permissions, before either the prompt result or its error.",
+          "type": "string"
         }
       }
     },
