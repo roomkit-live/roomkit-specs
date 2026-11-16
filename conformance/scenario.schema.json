@@ -515,6 +515,34 @@
               "items": {
                 "type": "string"
               }
+            },
+            "role_overrides": {
+              "description": "Overrides selected by the waking participant's role on the source channel (§21.1).",
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "allow": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "deny": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "mode": {
+                    "enum": [
+                      "restrict",
+                      "replace"
+                    ]
+                  }
+                }
+              }
             }
           }
         },
