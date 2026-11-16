@@ -1390,7 +1390,8 @@ plus the server message for MCP errors) and
 only). Resources are normalized from the public model with JSON aliases and
 only fields sent by the peer, retaining explicit nulls and extension fields;
 request and information values are the public return values themselves.
-Expected errors are `not_connected`, `mcp_error` and `timeout`. Every other
+Expected errors are `not_connected`, `mcp_error`, `timeout` and
+`validation_error`. Every other
 exception is a runner failure. Explicit close and final cleanup occur in the
 same coroutine as connect. Native stdio and concurrent-close witnesses remain
 separate; a successful HTTP session does not certify those boundaries.
@@ -1404,6 +1405,7 @@ MCP sessions also return `results_json` and `requests_json`: canonical JSON
 with sorted object keys, UTF-8 characters and no insignificant whitespace.
 These exact expectations prove explicit nulls and absent fields in addition
 to the general partial-object matcher. Each operation result is frozen before
-the next operation. Resource input and content URI parsing failures are
-recorded as `validation_error`; normalization is observed through the public
-model.
+the next operation. Invalid raw result metadata, resource inputs and content
+URI parsing failures are recorded as `validation_error`; normalization is
+observed through the public model. Extension declarations remain opaque peer
+data, so a non-object declaration can exercise the provider's own handling.
