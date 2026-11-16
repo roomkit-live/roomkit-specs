@@ -38,6 +38,16 @@
                   "_meta": {
                     "private": true
                   }
+                },
+                {
+                  "name": "bad name",
+                  "description": "bad name",
+                  "inputSchema": {
+                    "type": "object"
+                  },
+                  "_meta": {
+                    "invalid": true
+                  }
                 }
               ],
               "nextCursor": "next"
@@ -102,7 +112,8 @@
       "tool_filter": [
         "board",
         "plain",
-        "later"
+        "later",
+        "bad name"
       ],
       "expect": {
         "result": {

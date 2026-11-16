@@ -1390,3 +1390,8 @@ Expected errors are `not_connected`, `mcp_error` and `timeout`. Every other
 exception is a runner failure. Explicit close and final cleanup occur in the
 same coroutine as connect. Native stdio and concurrent-close witnesses remain
 separate; a successful HTTP session does not certify those boundaries.
+
+A peer may instead provide `initializations`, a nonempty list of handshake
+snapshots with optional `server_info`, `extensions` and `instructions`. Each
+new connection takes the next snapshot; exhausting or leaving one unused is
+a fixture error. This lets one provider reconnect to a changed catalogue.

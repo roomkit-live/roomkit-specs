@@ -8694,87 +8694,189 @@
       ]
     },
     "mcp_operation": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "method"
-      ],
-      "properties": {
-        "method": {
-          "enum": [
-            "connect",
-            "close",
-            "connected",
-            "tool_names",
-            "tool_meta",
-            "server_info",
-            "server_extensions",
-            "request",
-            "read_resource"
-          ]
-        },
-        "name": {
-          "type": "string"
-        },
-        "params": {
-          "type": [
-            "object",
-            "null"
-          ]
-        },
-        "uri": {
-          "type": "string"
-        },
-        "timeout_ms": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "mutate": {
+      "oneOf": [
+        {
           "type": "object",
           "additionalProperties": false,
           "required": [
-            "path",
-            "value"
+            "method"
           ],
           "properties": {
-            "path": {
-              "type": "array",
-              "minItems": 1,
-              "items": {
-                "type": "string"
-              }
-            },
-            "value": {}
-          }
-        }
-      },
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "method": {
-                "const": "request"
-              }
+            "method": {
+              "const": "connect"
             }
-          },
-          "then": {
-            "required": [
-              "name"
-            ]
           }
         },
         {
-          "if": {
-            "properties": {
-              "method": {
-                "const": "read_resource"
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "method"
+          ],
+          "properties": {
+            "method": {
+              "const": "close"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "method"
+          ],
+          "properties": {
+            "method": {
+              "const": "connected"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "method"
+          ],
+          "properties": {
+            "method": {
+              "const": "tool_names"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "method"
+          ],
+          "properties": {
+            "method": {
+              "const": "tool_meta"
+            },
+            "mutate": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "path",
+                "value"
+              ],
+              "properties": {
+                "path": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "value": {}
               }
             }
-          },
-          "then": {
-            "required": [
-              "uri"
-            ]
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "method"
+          ],
+          "properties": {
+            "method": {
+              "const": "server_info"
+            },
+            "mutate": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "path",
+                "value"
+              ],
+              "properties": {
+                "path": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "value": {}
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "method"
+          ],
+          "properties": {
+            "method": {
+              "const": "server_extensions"
+            },
+            "mutate": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "path",
+                "value"
+              ],
+              "properties": {
+                "path": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "value": {}
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "method",
+            "name"
+          ],
+          "properties": {
+            "method": {
+              "const": "request"
+            },
+            "name": {
+              "type": "string"
+            },
+            "params": {
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "timeout_ms": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "method",
+            "uri"
+          ],
+          "properties": {
+            "method": {
+              "const": "read_resource"
+            },
+            "uri": {
+              "type": "string"
+            },
+            "timeout_ms": {
+              "type": "integer",
+              "minimum": 1
+            }
           }
         }
       ]
@@ -8806,6 +8908,26 @@
             "json",
             "sse"
           ]
+        },
+        "initializations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {
+              "server_info": {
+                "type": "object"
+              },
+              "extensions": {
+                "type": "object"
+              },
+              "instructions": {
+                "type": "string"
+              }
+            }
+          }
         }
       }
     }
