@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "a4cefd47eecdcc0425f12ae9eeb40f31e70f4d988cd8327fb30f5e0827071408",
   "corpus_sha256": "ad7ccc82536c59699565b29aa2531414ef3b309abf3caae54d2b399af7c617af",
-  "python_commit": "831b985803444717f73408d4ef5cf412354e75d4",
+  "python_commit": "2b7515cd03aff0b36ebb5818e3c0cfd303f7a941",
   "scenario_count": 2468,
   "sections": [
     {
@@ -66125,6 +66125,27 @@
             "Server-aware tool policy and listing size, duplicate-name and warning bounds are outside this host-access link."
           ],
           "executions": []
+        },
+        {
+          "id": "phase4-mcp-tool-dictionaries",
+          "scope": "Public get_tools_as_dicts: connected filtered and paged catalogue snapshots with all six AITool model fields; native witnesses establish detached ownership.",
+          "coverage": "partial",
+          "missing": [
+            "Raw call_tool_result and output-schema validation remain open.",
+            "Legacy SSE transport, constructor transport options and other MCP contracts are outside this slice.",
+            "Served-skill discovery, registry and execution are not established by dictionary snapshots.",
+            "No Rust, specialized-test, SQL-store or Redis-turn execution receipt is inferred from the targeted Python memory receipt."
+          ],
+          "executions": [
+            {
+              "execution": "python-mcp-tool-dicts-2b7515c-memory",
+              "implementation": "python",
+              "commit": "2b7515cd03aff0b36ebb5818e3c0cfd303f7a941",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -66141,7 +66162,16 @@
             "Served-skills wire helpers, fingerprint and verification chains remain open: the named mixed sources receive only their host-access assertions.",
             "No complete MCP transport, model-result or RFC-section coverage is inferred."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-mcp-tool-dicts-2b7515c-memory",
+              "implementation": "python",
+              "commit": "2b7515cd03aff0b36ebb5818e3c0cfd303f7a941",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -71345,6 +71375,15 @@
       "implementation_commit": "4bc78e84711f8e53ae95bc3e4dde6c3ddde12c5b",
       "rfc_commit": "71df54d27154786b1fb0b86393810d8ab9bf2eea",
       "corpus_commit": "40ae5c00f4fb2151da32a7bc673d1cf89b36a815",
+      "backend": "memory",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-mcp-tool-dicts-2b7515c-memory",
+      "implementation": "python",
+      "implementation_commit": "2b7515cd03aff0b36ebb5818e3c0cfd303f7a941",
+      "rfc_commit": "07fd11f7db4a5d500935a3e90c373206bfa790ea",
+      "corpus_commit": "51be25be9bb1ab1625f86c349b6a2b5f9ebe7e4b",
       "backend": "memory",
       "runtime": "asyncio"
     }
