@@ -237,7 +237,7 @@
     },
     {
       "section": "6.4",
-      "sha256": "e49a97909843b0efce1b23df9c4fe33d8d48f089006228f356a631a89352f5a2",
+      "sha256": "e6231c06e55bedb233fb49691d9219d63f8bc4a36c5fc37107fca9859973ae98",
       "classification": "normative",
       "review": "Source inventory: Intelligence Channels. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the added deferred-input association and protected-context clause against shared hook scenarios and native mutation/tool tests; existing source units are unchanged."
     },
