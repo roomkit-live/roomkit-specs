@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "7c5cc8afb846f7fa069bcbf6cf3881ec046c42a7e2568e9976acac91767891c9",
   "corpus_sha256": "5186dd714668b9402bbaf97ed0c0948782334f5a622b9d1849098027736cf322",
-  "python_commit": "80f1459207d67f5e1c566daecd3e06f250dfa9b9",
+  "python_commit": "cd16b5b1685536616ad08c5ea2aefddd8e75958c",
   "scenario_count": 2373,
   "sections": [
     {
@@ -69289,7 +69289,7 @@
         },
         {
           "id": "phase4-standalone-skill-paths",
-          "scope": "Public safe_join_filename export: default/custom diagnostics, NFKC, missing paths, Windows drive spellings, directory confinement and dangling symlink escapes.",
+          "scope": "Public safe_join_filename export: default/custom diagnostics, NFKC, missing paths, Windows drive spellings, directory confinement and dangling symlink escapes. Cyclic symlink handling is explicitly qualified by Python runtime.",
           "coverage": "partial",
           "missing": [
             "No executor invocation or script execution is claimed. Runtime-specific path/permission forms remain documented in the prior direct-file helper mapping."

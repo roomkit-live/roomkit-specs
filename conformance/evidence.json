@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "80f1459207d67f5e1c566daecd3e06f250dfa9b9",
+  "python_commit": "cd16b5b1685536616ad08c5ea2aefddd8e75958c",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -23426,9 +23426,9 @@
       "id": "phase4-standalone-skill-paths",
       "requirement": "RK-24.6-001",
       "clause_sha256": "92023a269b217f58db01c5604d8ed13c0105243ab6b306dc97c5d18fbd7e50c8",
-      "scope": "Public safe_join_filename export: default/custom diagnostics, NFKC, missing paths, Windows drive spellings, directory confinement and dangling symlink escapes.",
+      "scope": "Public safe_join_filename export: default/custom diagnostics, NFKC, missing paths, Windows drive spellings, directory confinement and dangling symlink escapes. Cyclic symlink handling is explicitly qualified by Python runtime.",
       "coverage": "partial",
-      "review": "Python source tests passed before the Rust port. HITL 63fe8e98 approves the four public language forms; existing RequiresMatch/SkillPathError forms are reused. A native red/green witness reproduces Python whitespace stripped differently by the old Rust metadata reader. Source references remain separate from shared scenario execution.",
+      "review": "Python source tests passed before the Rust port. HITL 63fe8e98 approves the four public language forms; existing RequiresMatch/SkillPathError forms are reused. A native red/green witness reproduces Python whitespace stripped differently by the old Rust metadata reader. Source references remain separate from shared scenario execution. Full review found the standalone cycle differs from the file-reading helpers: Python 3.13+ can return it rather than refusing at a later file check. A direct versioned witness records this distinction. HITL ef1a3d62 explicitly retains the Python 3.12 cycle refusal in Rust.",
       "assertions": [],
       "tests": [
         {
@@ -23454,12 +23454,17 @@
         {
           "nodeid": "tests/skills/test_local_files.py::test_safe_join_can_resolve_a_file_that_does_not_exist",
           "sha256": "59678ebccdf8a1ca0251be0e57495b5354c16b1c0393e4fb6593c6ee4a8031d5",
-          "proves": "The standalone path helper preserves missing targets and resolves normalized names. The native test calls the public export directly."
+          "proves": "The standalone path helper returns the contained resolved path even when its directory and target do not exist. The native test calls the public export directly."
         },
         {
           "nodeid": "tests/skills/test_local_files.py::test_direct_file_helpers_resolve_safe_names_after_nfkc",
           "sha256": "155e08b066be6d631d2695c958e4594bb4b91e9ccc97ab5f7f883bfad88a1c19",
-          "proves": "The standalone path helper preserves missing targets and resolves normalized names. The native test calls the public export directly."
+          "proves": "The standalone path helper resolves NFKC-normalized names to existing files, including full-width and decomposed Unicode names. The native test calls the public export directly."
+        },
+        {
+          "nodeid": "tests/skills/test_standalone_helpers.py::test_safe_join_filename_cycle_matches_the_python_runtime",
+          "sha256": "e736c36d2e7cb702970bdd60be9a332761c8c2b84fb1dddef83b8e1376d3e298",
+          "proves": "Python 3.12 raises SkillPathError for a cyclic symlink; Python 3.13 and 3.14 return its unresolved path. The native Rust witness retains the Python 3.12 refusal; this is not runtime-uniform equivalence."
         }
       ],
       "missing": [
