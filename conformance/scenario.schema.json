@@ -982,6 +982,9 @@
             "hub",
             "fail"
           ]
+        },
+        "script_executor": {
+          "$ref": "#/$defs/script_executor"
         }
       }
     },
@@ -4980,6 +4983,13 @@
               "object"
             ]
           }
+        },
+        "script_executors": {
+          "description": "Per channel, host executor calls (skill_name, script_name, arguments, contents) and the count of closes.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "object"
+          }
         }
       }
     },
@@ -5488,6 +5498,16 @@
           "type": "boolean",
           "default": false,
           "description": "Register a Skill built in memory through public add, without writing SKILL.md. Its public name does not choose its filesystem directory."
+        },
+        "scripts": {
+          "description": "Real script files in scripts/, never executed by the fixture.",
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
         }
       }
     },
@@ -8464,6 +8484,53 @@
                 }
               }
             ]
+          }
+        }
+      }
+    },
+    "script_executor": {
+      "description": "Host ScriptExecutor fixture. Records calls and closes, reads a checked script file, returns result or raises. Never starts a process.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "result": {
+          "type": "object",
+          "required": [
+            "exit_code"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "exit_code": {
+              "type": "integer"
+            },
+            "stdout": {
+              "type": "string"
+            },
+            "stderr": {
+              "type": "string"
+            },
+            "success": {
+              "type": "boolean"
+            },
+            "metadata": {
+              "type": "object"
+            }
+          }
+        },
+        "raises": {
+          "type": "object",
+          "required": [
+            "kind",
+            "message"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "message": {
+              "type": "string"
+            }
           }
         }
       }

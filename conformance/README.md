@@ -563,6 +563,14 @@ scripted.
   beneath a separate temporary path. Directory skills are discovered first, then
   in-memory skills are added in script order. Availability/listing marks are
   applied after registration. The control defaults to false and must be boolean.
+- `script_executor`: a host executor fixture (§24.6), present even as `{}`.
+  It starts no process: it records the owning skill, original script name,
+  optional arguments and checked file contents, then returns `result`
+  (ScriptResult fields, default `exit_code: 0`) or raises `raises.kind` with
+  `raises.message`. Skills may supply `scripts`, a map of portable filenames
+  to text written under their own `scripts/` directory. Each executor close
+  increments its counter. `expect.script_executors` checks each channel's
+  `{calls: [{skill_name, script_name, arguments, contents}], closes}`.
 - `retry_policy`: the agent's retry policy (§6.4): a generation its
   provider refused as worth another try (`refuses.retryable`) before it
   handed anything is tried again, at most `max_retries` times (default 3),
