@@ -1362,12 +1362,14 @@ explicit `connect`/`close` operations. It takes `peer`, `operations`, optional
 `discover` (default true), and optional `tool_filter` (the admitted names).
 No SDK request/resource method is replaced by a fake.
 
-The peer automatically answers `initialize` with the requested protocol
-version, resources capability and its optional `server_info`, `extensions`
+The peer answers `initialize` with MCP `2025-11-25` (the last protocol
+version using that handshake), resources capability and its optional `server_info`, `extensions`
 and `instructions`. `replies` is an ordered script of `{method, params?,
 result|error|hold}`. Each request must match the next method and params
 (omitted script params mean `{}`; only the initial discovery `tools/list`
-may omit empty wire params); exactly one result, protocol error (`code`, `message`,
+may omit empty wire params). Discovery-only SDK progress tokens are omitted
+from the observation; host request parameters, including `_meta`, stay exact.
+Exactly one result, protocol error (`code`, `message`,
 optional `data`) or `hold: true` is required. A held request gets no answer
 before its client closes it. Unexpected requests, unused replies and fixture
 errors fail the scenario independently of client errors. `framing` selects
@@ -1402,5 +1404,6 @@ MCP sessions also return `results_json` and `requests_json`: canonical JSON
 with sorted object keys, UTF-8 characters and no insignificant whitespace.
 These exact expectations prove explicit nulls and absent fields in addition
 to the general partial-object matcher. Each operation result is frozen before
-the next operation. `initializations` optionally supplies one handshake per
-connection, checked for exhaustion just like the reply script.
+the next operation. Resource input and content URI parsing failures are
+recorded as `validation_error`; normalization is observed through the public
+model.
