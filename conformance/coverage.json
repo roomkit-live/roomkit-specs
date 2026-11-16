@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "a4cefd47eecdcc0425f12ae9eeb40f31e70f4d988cd8327fb30f5e0827071408",
-  "corpus_sha256": "60e39770afb06a8c33d674d76a68923d0924c43850cb324ff4e6b12686dcffee",
+  "corpus_sha256": "ad7ccc82536c59699565b29aa2531414ef3b309abf3caae54d2b399af7c617af",
   "python_commit": "831b985803444717f73408d4ef5cf412354e75d4",
-  "scenario_count": 2464,
+  "scenario_count": 2468,
   "sections": [
     {
       "section": "0",
@@ -7061,6 +7061,10 @@
         "mcp-host/resource-validation",
         "mcp-host/server-errors",
         "mcp-host/server-info-icon-nulls",
+        "mcp-host/tool-dictionaries-empty-catalogue",
+        "mcp-host/tool-dictionaries-json",
+        "mcp-host/tool-dictionaries-sse",
+        "mcp-host/tool-dictionaries-without-discovery",
         "mcp-host/undeclared-extensions",
         "mcp-host/without-discovery",
         "mcp/a-bare-name-never-runs-on-a-server-the-policy-keeps-out",
