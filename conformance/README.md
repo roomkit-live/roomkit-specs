@@ -655,7 +655,11 @@ scripted.
   summarize with `summarizer`, a scripted model whose requests `models`
   holds under `<agent>/summarizer`; `retrieval` wraps them in the
   implementation's retrieval memory, which searches its scripted knowledge
-  `sources` for the turn's words (§20.2).
+  `sources` for the turn's words (§20.2): each answers with its `results`,
+  or fails with `fails`; with `indexes: true`, it first answers with the
+  passages the memory handed it to index, the latest first, each with the
+  metadata it was indexed with at score 1, leaving out one whose content
+  is the search's query.
 - `human_input`: its human-input handler (§9.3, ON_USER_INPUT_REQUIRED,
   where the other party is a human; §10.6.5, Human input): the agent
   declares `tools` (each `name`, `description`, `parameters`) and serves

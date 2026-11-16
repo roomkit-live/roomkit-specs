@@ -7081,6 +7081,9 @@
                   },
                   "fails": {
                     "type": "string"
+                  },
+                  "indexes": {
+                    "type": "boolean"
                   }
                 }
               }
