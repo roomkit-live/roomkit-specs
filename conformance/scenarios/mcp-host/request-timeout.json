@@ -73,7 +73,9 @@
               "method": "vendor/next",
               "params": {}
             }
-          ]
+          ],
+          "results_json": "[{\"result\":null},{\"error\":\"timeout\"},{\"result\":{\"alive\":true}},{\"result\":null}]",
+          "requests_json": "[{\"method\":\"initialize\"},{\"method\":\"vendor/read\",\"params\":{}},{\"method\":\"vendor/next\",\"params\":{}}]"
         }
       }
     }

@@ -51,7 +51,9 @@
             {
               "method": "initialize"
             }
-          ]
+          ],
+          "results_json": "[{\"result\":null},{\"result\":{\"vendor/good\":{\"enabled\":true}}},{\"result\":null}]",
+          "requests_json": "[{\"method\":\"initialize\"}]"
         }
       }
     }

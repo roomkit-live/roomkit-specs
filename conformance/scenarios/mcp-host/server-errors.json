@@ -55,10 +55,12 @@
               "result": null
             },
             {
-              "error": "mcp_error"
+              "error": "mcp_error",
+              "message": "unknown skill"
             },
             {
-              "error": "mcp_error"
+              "error": "mcp_error",
+              "message": "unknown resource"
             },
             {
               "result": null
@@ -78,7 +80,9 @@
                 "uri": "resource://missing"
               }
             }
-          ]
+          ],
+          "results_json": "[{\"result\":null},{\"error\":\"mcp_error\",\"message\":\"unknown skill\"},{\"error\":\"mcp_error\",\"message\":\"unknown resource\"},{\"result\":null}]",
+          "requests_json": "[{\"method\":\"initialize\"},{\"method\":\"vendor/read\",\"params\":{}},{\"method\":\"resources/read\",\"params\":{\"uri\":\"resource://missing\"}}]"
         }
       }
     }

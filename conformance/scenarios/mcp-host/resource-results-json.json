@@ -173,7 +173,9 @@
                 "uri": "resource://body"
               }
             }
-          ]
+          ],
+          "results_json": "[{\"result\":null},{\"result\":{\"_meta\":{\"server\":\"test\"},\"contents\":[{\"mimeType\":\"text/plain\",\"optional\":null,\"text\":\"Résumé\",\"uri\":\"resource://body\",\"vendor\":7},{\"blob\":\"AAEC\",\"mimeType\":\"application/octet-stream\",\"uri\":\"resource://blob\",\"vendor\":8}],\"optional\":null,\"ttlMs\":60000,\"vendor\":{\"revision\":8}}},{\"result\":{\"_meta\":{\"server\":\"test\"},\"contents\":[{\"mimeType\":\"text/plain\",\"optional\":null,\"text\":\"Résumé\",\"uri\":\"resource://body\",\"vendor\":7},{\"blob\":\"AAEC\",\"mimeType\":\"application/octet-stream\",\"uri\":\"resource://blob\",\"vendor\":8}],\"optional\":null,\"ttlMs\":60000,\"vendor\":{\"revision\":8}}},{\"result\":null}]",
+          "requests_json": "[{\"method\":\"initialize\"},{\"method\":\"resources/read\",\"params\":{\"uri\":\"resource://body\"}},{\"method\":\"resources/read\",\"params\":{\"uri\":\"resource://body\"}}]"
         }
       }
     }

@@ -99,7 +99,9 @@
             {
               "method": "initialize"
             }
-          ]
+          ],
+          "results_json": "[{\"error\":\"not_connected\"},{\"error\":\"not_connected\"},{\"error\":\"not_connected\"},{\"error\":\"not_connected\"},{\"error\":\"not_connected\"},{\"result\":null},{\"result\":null},{\"error\":\"not_connected\"},{\"error\":\"not_connected\"},{\"error\":\"not_connected\"},{\"error\":\"not_connected\"},{\"error\":\"not_connected\"}]",
+          "requests_json": "[{\"method\":\"initialize\"}]"
         }
       }
     }

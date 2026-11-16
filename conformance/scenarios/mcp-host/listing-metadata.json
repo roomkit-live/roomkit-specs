@@ -176,7 +176,9 @@
                 "cursor": "next"
               }
             }
-          ]
+          ],
+          "results_json": "[{\"result\":null},{\"result\":[\"board\",\"plain\",\"later\"]},{\"result\":{\"board\":{\"ui\":{\"csp\":\"*\",\"resourceUri\":\"ui://board/view.html\"}},\"later\":{\"vendor\":{\"keep\":1}}}},{\"result\":{\"board\":{\"ui\":{\"csp\":\"self\",\"resourceUri\":\"ui://board/view.html\"}},\"later\":{\"vendor\":{\"keep\":1}}}},{\"result\":null}]",
+          "requests_json": "[{\"method\":\"initialize\"},{\"method\":\"tools/list\",\"params\":{}},{\"method\":\"tools/list\",\"params\":{\"cursor\":\"next\"}}]"
         }
       }
     }
