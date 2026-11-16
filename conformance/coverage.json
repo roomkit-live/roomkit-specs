@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "7c5cc8afb846f7fa069bcbf6cf3881ec046c42a7e2568e9976acac91767891c9",
-  "corpus_sha256": "af2c5697b6d7c4eb84c682d63509e0000b294a46700fa33164aa71e820d254b7",
-  "python_commit": "8eb4e4fc12ffc7892134f2cd9e98917689ec5ed1",
-  "scenario_count": 2371,
+  "corpus_sha256": "5186dd714668b9402bbaf97ed0c0948782334f5a622b9d1849098027736cf322",
+  "python_commit": "6383771f6ebc283fe9d942a21a557f16740c0c1e",
+  "scenario_count": 2373,
   "sections": [
     {
       "section": "0",
@@ -7606,6 +7606,8 @@
         "skills/a-turn-s-tools-and-its-skills-are-both-declared",
         "skills/a-turn-s-tools-are-declared-the-owner-s-before-a-person-s-and-the-skills",
         "skills/a-turn-that-gives-none-reads-the-channel-s",
+        "skills/a-turn-uses-its-in-memory-skill-registry",
+        "skills/an-in-memory-skill-is-activated-and-its-reference-read",
         "skills/concurrent-turns-each-read-their-own-registry"
       ]
     },
@@ -7719,6 +7721,8 @@
         "skills/a-stored-activation-under-a-held-id-leaves-out-the-one-refused",
         "skills/a-stored-activation-under-a-held-id-reads-the-call-that-ran",
         "skills/a-turn-s-empty-registry-leaves-the-skills-out-and-active",
+        "skills/a-turn-uses-its-in-memory-skill-registry",
+        "skills/an-in-memory-skill-is-activated-and-its-reference-read",
         "tools/a-compaction-keeps-a-skill-s-instructions-and-a-page-read-back-whole"
       ]
     },
@@ -7739,10 +7743,13 @@
       "review": "normative",
       "requirements": 1,
       "mapping": {
-        "unmapped": 1
+        "mapped_partial": 1
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "skills/a-turn-uses-its-in-memory-skill-registry",
+        "skills/an-in-memory-skill-is-activated-and-its-reference-read"
+      ]
     },
     {
       "section": "24.7",
@@ -69191,6 +69198,15 @@
               "state": "stale"
             }
           ]
+        },
+        {
+          "id": "phase4-local-skill-memory-registration",
+          "scope": "Public in-memory add consumed by channel and per-turn registries; atomic replacement, mark clearing and local admission constraints. Direct file helpers and served skills are not claimed here.",
+          "coverage": "partial",
+          "missing": [
+            "Served MCP registration and execution tool patterns remain under RMK-1709. This link claims only local in-memory registration, not complete registry coverage or direct-file API parity."
+          ],
+          "executions": []
         }
       ]
     },
@@ -69241,8 +69257,18 @@
     {
       "id": "RK-24.6-001",
       "section": "24.6",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "phase4-direct-skill-file-helpers",
+          "scope": "The six public Skill helpers: presence, listing, UTF-8 reference reading and script path resolution. Native Rust mirrors exercise actual files and links; no script executor or standalone safe_join_filename export is claimed.",
+          "coverage": "partial",
+          "missing": [
+            "Executor invocation ordering and served skills remain under RMK-1709; these tests do not prove Rust script execution. The standalone safe_join_filename function is not exported by Rust in this lot."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-24.7-001",

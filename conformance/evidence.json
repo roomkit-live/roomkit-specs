@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "8eb4e4fc12ffc7892134f2cd9e98917689ec5ed1",
+  "python_commit": "6383771f6ebc283fe9d942a21a557f16740c0c1e",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -5311,12 +5311,12 @@
         },
         {
           "nodeid": "tests/test_stream_room_reads.py::test_every_close_refuses_the_rows_after_it",
-          "sha256": "510be0eff780178e5eeaae8a09ba5fae1b8464c10d651252bc9f0880cba46ecb",
+          "sha256": "ae97364bbe17721e20d687a072d2c30ffb476037d6f484a8b9426044a63f45ee",
           "proves": "every close refuses the rows after it. Specialized source evidence: shared scenario receipts do not certify execution of this test. "
         },
         {
           "nodeid": "tests/test_stream_room_reads.py::test_a_close_during_the_hooks_refuses_the_row",
-          "sha256": "ddaf503f7de6d118fbc4713ea5392e9497a16c84035cb9ff1b3d62993ff50a7a",
+          "sha256": "8f6bf92550165fa99fa5b65cca4c4831e7a83526930824ab9fb12ed1cd273a6f",
           "proves": "a close during the hooks refuses the row. Specialized source evidence: shared scenario receipts do not certify execution of this test. "
         },
         {
@@ -23119,6 +23119,244 @@
       "missing": [
         "This broad unit also covers separate hook-call budgets, mutation loops, spawned work and optional realtime observers; these ACP cases do not establish all those paths.",
         "No remote or Redis executor context is claimed. Historical receipts of the prior scenario revisions remain historical, not credited to the strengthened cases."
+      ]
+    },
+    {
+      "id": "phase4-local-skill-memory-registration",
+      "requirement": "RK-24.3-001",
+      "clause_sha256": "4bfcb63a41da5de2458f84506e5faa7a063a0e1f17757764df056e70d375be04",
+      "scope": "Public in-memory add consumed by channel and per-turn registries; atomic replacement, mark clearing and local admission constraints. Direct file helpers and served skills are not claimed here.",
+      "coverage": "partial",
+      "review": "The Python runner calls public add without writing SKILL.md. A non-kebab metadata name detects accidental discovery substitution. The same scenarios pass on Rust on one and four workers. Native add tests cover mutation and rejection; specialized Python references describe the public reference contract.",
+      "assertions": [
+        {
+          "scenario": "skills/an-in-memory-skill-is-activated-and-its-reference-read",
+          "pointer": "/expect/models/agent",
+          "sha256": "bdffcf0b7ba120a390ef17d6da43eacaa58b0ed554b0b51c3cea0dd425877f72",
+          "scenario_sha256": "fd81c512b48c32effda2ea0fcb58268911086e0a8c6967ee6c291b130aeea6db",
+          "proves": "A real AI turn lists, activates and reads a reference from the in-memory skill through its selected registry."
+        },
+        {
+          "scenario": "skills/a-turn-uses-its-in-memory-skill-registry",
+          "pointer": "/expect/models/agent",
+          "sha256": "4437aefcef7550b1ea26e53c5d296fcd42016d1945e87c49357cf728d3afd707",
+          "scenario_sha256": "41a2ed3c22aa6672d3935751516bef36eec1d55b9f39ae78c70ab1bbac688d42",
+          "proves": "A real AI turn lists, activates and reads a reference from the in-memory skill through its selected registry."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/test_skill_registry_copy.py::test_a_skill_built_in_memory_is_registered_and_found",
+          "sha256": "40f186ad7c0cde0ee7385080584b517c036b914eb67a5cf0cab47e1a3396f172",
+          "proves": "Public add preserves the already constructed skill and its bundled-file path, including direct script resolution."
+        },
+        {
+          "nodeid": "tests/test_skill_registry_copy.py::test_adding_a_skill_clears_its_marks",
+          "sha256": "82abcf0ad018ce6079b2de4a90bec0a668a5770a6149583ea3ca78d99d45de71",
+          "proves": "Public add clears a stale unavailable reason."
+        },
+        {
+          "nodeid": "tests/skills/test_local_registration.py::test_add_preserves_metadata_instructions_and_a_path_without_skill_md",
+          "sha256": "cdfad8693e1f9ea51eb8468a9be7927a26a7324293039fc81de4855df9639287",
+          "proves": "In-memory metadata, instructions and a nonexistent path are retained without directory validation."
+        },
+        {
+          "nodeid": "tests/skills/test_local_registration.py::test_add_replaces_in_place_and_clears_both_marks_and_closed_gates",
+          "sha256": "c7f9c547a225ae006722ac7c02a649d085f27709b78c72ce43694a79bf1643dc",
+          "proves": "Replacement preserves order while later re-addition removes unavailable/unlisted marks and closed gates."
+        },
+        {
+          "nodeid": "tests/skills/test_local_registration.py::test_a_refused_add_preserves_the_previous_skill_and_marks",
+          "sha256": "6b70b5d3fb4c4b86d037edfcc6a0528d4a560acc421aa20b7bf79fd9be8953b7",
+          "proves": "An oversized replacement leaves prior skill and availability state intact."
+        },
+        {
+          "nodeid": "tests/skills/test_local_registration.py::test_add_drops_the_replaced_unavailable_reason_before_checking_the_bound",
+          "sha256": "9c9c56168a02f85f0d8ec9ef5817dd6cd6ff7814d98fc41e3e9dd2e7341184ca",
+          "proves": "Replacing an unavailable entry removes its old reason before manifest admission."
+        },
+        {
+          "nodeid": "tests/test_skill_tool_gating.py::test_a_skill_added_with_a_bracketed_gate_is_refused",
+          "sha256": "6a5165ccb244743e931e9ca6c4c8c42fa5d4e6b17cbc086e2e04d1265383d027",
+          "proves": "Adding a bracketed gate is refused."
+        },
+        {
+          "nodeid": "tests/test_mcp_skill_registry.py::TestOrigins::test_a_host_skill_cannot_take_a_served_name",
+          "sha256": "c38334c9af925ba4f400fd0d2c8ea7f0077b89d1621325072fbe64d1da39c06f",
+          "proves": "A local addition cannot use a colon-separated served name; this does not claim a Rust served-skill implementation."
+        }
+      ],
+      "missing": [
+        "Served MCP registration and execution tool patterns remain under RMK-1709. This link claims only local in-memory registration, not complete registry coverage or direct-file API parity."
+      ]
+    },
+    {
+      "id": "phase4-direct-skill-file-helpers",
+      "requirement": "RK-24.6-001",
+      "clause_sha256": "92023a269b217f58db01c5604d8ed13c0105243ab6b306dc97c5d18fbd7e50c8",
+      "scope": "The six public Skill helpers: presence, listing, UTF-8 reference reading and script path resolution. Native Rust mirrors exercise actual files and links; no script executor or standalone safe_join_filename export is claimed.",
+      "coverage": "partial",
+      "review": "Compared public Python operations with native Rust tests, preserving direct unbounded reads, NFKC, containment after symlink resolution, child listing versus read checks, error categories and sorted native filenames. Python 3.12 and 3.14 reject symlink loops at different stages; the source test claims rejection, not one category across runtimes. Rust returns the path error used by Python 3.12. HITL 45d6fce8 approves typed errors/native filename forms; HITL 19458017 approves NFKC dependency. Review found stat failures hidden by Rust is_dir/is_file. Public metadata checks now retain permission errors, proved by real mode-zero directories and linked targets. Python 3.14 masks these failures; the source witnesses explicitly target the older supported behavior rather than claiming runtime uniformity.",
+      "assertions": [],
+      "tests": [
+        {
+          "nodeid": "tests/test_skills.py::TestSkillModel::test_list_scripts",
+          "sha256": "03ad8e4d4e7d6ec8fe1b9c993bf431314e8eeb7a497da31c62e7ecf5442888cd",
+          "proves": "Direct Skill filesystem contract: list scripts."
+        },
+        {
+          "nodeid": "tests/test_skills.py::TestSkillModel::test_list_references",
+          "sha256": "904f5a2602534a33770be5de749b8b1adcdc15838a92aef4cb72705b392757d8",
+          "proves": "Direct Skill filesystem contract: list references."
+        },
+        {
+          "nodeid": "tests/test_skills.py::TestSkillModel::test_read_reference",
+          "sha256": "b06ebb1027bac5fe74490cb44f8aedcc90e3e3ce7b0b0cc0a8f958b0cb89ac8c",
+          "proves": "Direct Skill filesystem contract: read reference."
+        },
+        {
+          "nodeid": "tests/test_skills.py::TestSkillModel::test_read_reference_symlink_escape_blocked",
+          "sha256": "7327ebedbd1522f11c5ed7e50e1317edab57307456ebe565637cc527031a77d2",
+          "proves": "Direct Skill filesystem contract: read reference symlink escape blocked."
+        },
+        {
+          "nodeid": "tests/test_skills.py::TestSkillModel::test_read_reference_directory_symlink_escape_blocked",
+          "sha256": "62d59ac8d5cbb0931e91b974f6b3daad80c7dc923dd1a2ab8904f7342a30e076",
+          "proves": "Direct Skill filesystem contract: read reference directory symlink escape blocked."
+        },
+        {
+          "nodeid": "tests/test_skills.py::TestSkillModel::test_read_reference_rejects_fullwidth_traversal",
+          "sha256": "5596fa3234d2b712f38ae2bedcf23475aeba26514466b9d31e15078ceff3ddf6",
+          "proves": "Direct Skill filesystem contract: read reference rejects fullwidth traversal."
+        },
+        {
+          "nodeid": "tests/test_skills.py::TestSkillModel::test_read_reference_rejects_absolute",
+          "sha256": "61028c9b7307be0f0532debf7aec3ddaab0d3a7e6309e169484c29c98210be9d",
+          "proves": "Direct Skill filesystem contract: read reference rejects absolute."
+        },
+        {
+          "nodeid": "tests/test_skills.py::TestSkillModel::test_read_reference_path_error_is_value_error",
+          "sha256": "6c2a416f8cae6f3ed5ed8165bfab0eac608439a539f802abd285648ac2d5c4d4",
+          "proves": "Direct Skill filesystem contract: read reference path error is value error."
+        },
+        {
+          "nodeid": "tests/test_skills.py::TestSkillModel::test_resolve_script_returns_path",
+          "sha256": "c98384d5bc075e060434c1a1e19f5d6e695eb058d694135ec4ab46187c9182d5",
+          "proves": "Direct Skill filesystem contract: resolve script returns path."
+        },
+        {
+          "nodeid": "tests/test_skills.py::TestSkillModel::test_resolve_script_symlink_escape_blocked",
+          "sha256": "3e6babd26ce2d51aab3ed4217aaa746a5767bf79b4a7490eb031ad1021aba491",
+          "proves": "Direct Skill filesystem contract: resolve script symlink escape blocked."
+        },
+        {
+          "nodeid": "tests/test_skills.py::TestSkillModel::test_resolve_script_directory_symlink_escape_blocked",
+          "sha256": "3d63db7e316ed48fab342096ec118fb49fc44635a59aeb69dbe05191d337dd32",
+          "proves": "Direct Skill filesystem contract: resolve script directory symlink escape blocked."
+        },
+        {
+          "nodeid": "tests/test_skills.py::TestSkillModel::test_resolve_script_traversal_blocked",
+          "sha256": "b3f188abff3fd82f569f1ec0b80d2a6fdcd67d5ce7c0cad3f892681ac310fb10",
+          "proves": "Direct Skill filesystem contract: resolve script traversal blocked."
+        },
+        {
+          "nodeid": "tests/test_skills.py::TestSkillModel::test_resolve_script_missing",
+          "sha256": "2d12fb05d16fea0bd074258c58177e15400e7d8f53a941d9c469130e1341f5d5",
+          "proves": "Direct Skill filesystem contract: resolve script missing."
+        },
+        {
+          "nodeid": "tests/test_skills.py::TestSkillModel::test_read_reference_traversal_blocked",
+          "sha256": "4fe2c87bf74b128d18de05d0d9b298925e089c1644e9c72854ec67c83250ab4b",
+          "proves": "Direct Skill filesystem contract: read reference traversal blocked."
+        },
+        {
+          "nodeid": "tests/test_skills.py::TestSkillModel::test_read_reference_not_found",
+          "sha256": "82a46cc37507562609904cf34e4af3a1464ea3522018f591cf26b78341425661",
+          "proves": "Direct Skill filesystem contract: read reference not found."
+        },
+        {
+          "nodeid": "tests/test_skills.py::TestSkillModel::test_has_scripts_empty",
+          "sha256": "5ecb9c72f5397b795a04a9e74c01832e80f8d189e7894854ed693e3cca629b0a",
+          "proves": "Direct Skill filesystem contract: has scripts empty."
+        },
+        {
+          "nodeid": "tests/test_skills.py::TestSkillModel::test_has_references_empty",
+          "sha256": "f3432dbd9bcf1bd4ed1d255be6349c7e08de522769b4d02f4d008aa3cddec1f4",
+          "proves": "Direct Skill filesystem contract: has references empty."
+        },
+        {
+          "nodeid": "tests/skills/test_local_files.py::test_direct_file_helpers_resolve_safe_names_after_nfkc",
+          "sha256": "155e08b066be6d631d2695c958e4594bb4b91e9ccc97ab5f7f883bfad88a1c19",
+          "proves": "Direct Skill filesystem contract: direct file helpers resolve safe names after nfkc."
+        },
+        {
+          "nodeid": "tests/skills/test_local_files.py::test_missing_bundled_directories_are_empty_but_reads_raise",
+          "sha256": "2ab1b71304438a27c5517a5e14c96ddaa38f9426799ffec759afd89418809883",
+          "proves": "Direct Skill filesystem contract: missing bundled directories are empty but reads raise."
+        },
+        {
+          "nodeid": "tests/skills/test_local_files.py::test_a_bundled_directory_entry_counts_without_being_a_listed_file",
+          "sha256": "8b1636e8cd5520be4c5eb8ce9a4b90950cd199166693b130fb57ad28f8a7a6a5",
+          "proves": "Direct Skill filesystem contract: a bundled directory entry counts without being a listed file."
+        },
+        {
+          "nodeid": "tests/skills/test_local_files.py::test_direct_reference_read_is_not_the_model_tool_bounded_read",
+          "sha256": "e2f6cd267ec6cb3085d757910b6cae0695482b10b8972bb4662da26b10fd1762",
+          "proves": "Direct Skill filesystem contract: direct reference read is not the model tool bounded read."
+        },
+        {
+          "nodeid": "tests/skills/test_local_files.py::test_direct_reference_read_preserves_an_encoding_failure",
+          "sha256": "ecd59e960861d294c800b05418e00af2f2c6bc9eda34a06912447090e2dd2679",
+          "proves": "Direct Skill filesystem contract: direct reference read preserves an encoding failure."
+        },
+        {
+          "nodeid": "tests/skills/test_local_files.py::test_direct_file_helpers_reject_unsafe_names",
+          "sha256": "1c6728f5ae4233f6d592f356de48c312e43b83ef555c00d8e00d70c66497f028",
+          "proves": "Direct Skill filesystem contract: direct file helpers reject unsafe names."
+        },
+        {
+          "nodeid": "tests/skills/test_local_files.py::test_direct_file_helpers_reject_a_dangling_symlink_escape",
+          "sha256": "418e9ff526734e77f70767caadfd6ae37902f10d3373b138ba84fe1d19f9ce8c",
+          "proves": "Direct Skill filesystem contract: direct file helpers reject a dangling symlink escape."
+        },
+        {
+          "nodeid": "tests/skills/test_local_files.py::test_lists_preserve_child_names_but_reading_still_checks_containment",
+          "sha256": "2da77a17afacc2b144b9d37c0cde7bd4f405349fc2c4e2d68d81577c394f91da",
+          "proves": "Direct Skill filesystem contract: lists preserve child names but reading still checks containment."
+        },
+        {
+          "nodeid": "tests/skills/test_local_files.py::test_direct_reference_read_uses_utf8_with_universal_newlines",
+          "sha256": "2d774e9a9f68ab57cb2b520547d93760df55ac92b721a51044d1d007b490e2e5",
+          "proves": "Direct Skill filesystem contract: direct reference read uses utf8 with universal newlines."
+        },
+        {
+          "nodeid": "tests/skills/test_local_files.py::test_lists_preserve_non_utf8_filenames_and_python_sort_order",
+          "sha256": "9c91ce66b7eeebad8602dd7e10b9fad2bb8b1560d1d098f1cada66f9beecaed2",
+          "proves": "Direct Skill filesystem contract: lists preserve non utf8 filenames and python sort order."
+        },
+        {
+          "nodeid": "tests/skills/test_local_files.py::test_direct_file_helpers_follow_links_that_stay_inside_the_skill",
+          "sha256": "4af3e8c346cb3dc50bf880662342224c4f195d586e947cd47e4ebcdfabc809b6",
+          "proves": "Direct Skill filesystem contract: direct file helpers follow links that stay inside the skill."
+        },
+        {
+          "nodeid": "tests/skills/test_local_files.py::test_direct_file_helpers_refuse_a_symlink_loop",
+          "sha256": "1d60eb4f4c738d9dbb8df552bb4ac4f903b1bcfc39cbfb1cf8f05c0af2587a45",
+          "proves": "Direct Skill filesystem contract: direct file helpers refuse a symlink loop."
+        },
+        {
+          "nodeid": "tests/skills/test_local_files.py::test_directory_stat_permission_errors_are_not_empty_results",
+          "sha256": "d304e009d4b8986186d6fe2b98c306cceab06195b0267325e0b5575be502fd33",
+          "proves": "Python 3.12 preserves stat permission failures for direct helpers; skipped on newer pathlib masking those failures. Rust keeps the explicit filesystem error."
+        },
+        {
+          "nodeid": "tests/skills/test_local_files.py::test_listing_propagates_permission_errors_on_a_link_target",
+          "sha256": "f59d8cb7090de0ef909e20984ba3163fa793dca7013ee996b12b45d871a0f5a5",
+          "proves": "Python 3.12 preserves stat permission failures for direct helpers; skipped on newer pathlib masking those failures. Rust keeps the explicit filesystem error."
+        }
+      ],
+      "missing": [
+        "Executor invocation ordering and served skills remain under RMK-1709; these tests do not prove Rust script execution. The standalone safe_join_filename function is not exported by Rust in this lot."
       ]
     }
   ],
