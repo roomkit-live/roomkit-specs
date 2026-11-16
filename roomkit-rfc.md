@@ -4938,8 +4938,8 @@ an event chain.
   Once the turn or the tool call is over, the floor is gone: work it began (a
   task it spawned) calls as a new arrival with the depth of its own event, 0
   for a message it creates (§9.5.1). The body of a hook it fired that runs
-  asynchronously is the exception: it keeps the floor for as long as it runs
-  (below).
+  asynchronously, and a handler of a framework event a turn's work emits,
+  are the exceptions: each keeps the floor for as long as it runs (below).
 - A call into a room made from the body of an ASYNC hook a cascade fires once
   an event's delivery set has run (§10.1 step 16's `AFTER_BROADCAST` hooks, a
   change's `ON_EVENT_UPDATED` and `ON_EVENT_DELETED` hooks, §10.3; and an
@@ -4968,6 +4968,19 @@ an event chain.
   hooks of the same trigger, still run or not: a hook that relaunches an agent
   on a new chain (a quality gate) does so from such a task. A hook a turn
   executor fires carries its floor with the verb it makes (§10.6.5).
+- A handler of a framework event a turn's work emits (§8.2, §10.6.3:
+  `before_ai_generation`, `before_tool_use`, `tool_call`,
+  `user_input_required`, `ai_response`, `hook_timeout`), during the turn
+  or once it is over (a `room_publication` naming the turn, §10.6.3), is
+  as deep as the body of a hook run asynchronously is, its depth alone
+  lent: a call into a room it makes is at least as deep as the turn's
+  response, for as long as the handler runs, so that a handler that tells
+  the agent something at each of its answers (an `ai_response` handler
+  that posts) stops at the limit as the hook does, an `ai_response` that
+  ASYNC `ON_AI_RESPONSE` hooks slower than the turn delay past its end
+  included. The floor is each handler's own: a task one starts calls at
+  the depth of its own event once that handler has returned, whether the
+  event's other handlers still run or not.
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-8.3-003", "kind": "behavior", "applies": "§8.3 Event Chain Depth; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
@@ -6368,8 +6381,10 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   within while that delivery runs, as any of the delivery's work does, and
   on a budget of its own once the delivery is over. The body of a hook run
   asynchronously keeps the floor its trigger fired under for as long as it
-  runs (§8.3); once it has returned, what it began calls at the depth of its
-  own event, whatever the work that fired the hook still does. Such a call that would
+  runs, and a handler of a framework event a turn emits keeps the turn's
+  (§8.3); once it has returned, what it began calls at the depth of its
+  own event, whatever the work that fired the hook or emitted the event
+  still does. Such a call that would
   wait on its own delivery from a context the delivery lane cannot progress
   past returns with its completion detached (§10.1 step 18). Only a call into
   its caller's own room is detached so: a call into another room waits for

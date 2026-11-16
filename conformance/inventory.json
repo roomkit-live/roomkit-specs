@@ -321,7 +321,7 @@
     },
     {
       "section": "8.3",
-      "sha256": "99621861637f219e050b5fa4a7ea827fccaee3e8035fb5e06c4a4c8d5e1daad9",
+      "sha256": "4441bed40b43faf6054a5aacc24c770f14fb4f747cc8e23ece245a6ec810c721",
       "classification": "normative",
       "review": "Source inventory: Event Chain Depth. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
@@ -375,7 +375,7 @@
     },
     {
       "section": "9.5.1",
-      "sha256": "a401ff76afef8f4a80056329cc0a107f4a13a5ca60287c538c3cd077034ca23b",
+      "sha256": "1125b1a6ae6101a5f605f10f301042971e04784393fc1130ce6a39defef5b604",
       "classification": "normative",
       "review": "Source inventory: Off-lock checks (`needs_lock = false`). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
