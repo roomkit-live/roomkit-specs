@@ -399,7 +399,7 @@
     },
     {
       "section": "10.1.1",
-      "sha256": "c9fa26a27260801de5cf03714e8f0933db2a8af1ad96e1e6256dd3d57ac53906",
+      "sha256": "3ef86748366059e4f3bdcae09080f752731ee3a59c734a407e483058465ad3c0",
       "classification": "normative",
       "review": "Source inventory: Instructions. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },

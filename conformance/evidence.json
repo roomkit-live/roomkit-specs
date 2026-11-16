@@ -21354,7 +21354,7 @@
     {
       "id": "acp-standalone-session-isolation",
       "requirement": "RK-10.1.1-001",
-      "clause_sha256": "edcb5b0ffe6f49c723ec22e013cc16a22369a61752c3c04334be9c3b4b0744f1",
+      "clause_sha256": "d703f803518bad25ad5b4e35704d6486332a51dd190b6b74ddd49cac6077e891",
       "coverage": "partial",
       "scope": "Fresh ACP turn sessions for standalone instructions, their declared scope, selected exact prompts, retirement, room-session preservation, catch-up and best-effort copy of current room configuration.",
       "assertions": [

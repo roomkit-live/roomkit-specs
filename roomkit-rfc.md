@@ -7199,7 +7199,13 @@ response typed `INSTRUCTION` does not re-enter (§8.5).
    blocked instruction is not stored (the BLOCKED commit of §10.1 steps 10–11
    does not apply) and the result reports the block (step 5); `event_blocked`
    is still emitted, and the injected events, tasks and observations of its
-   hooks are still processed.
+   hooks are still processed. An instruction its hooks let through,
+   addressed to an agent of the discussion holding the room (§19.7.5 rule
+   7), has no delivery set to store their tasks and observations with
+   (§10.1 step 15): they are stored once the discussion is handed it,
+   whether it queues the turn or reports the instruction dropped (§19.7.5
+   rule 16), before the room lock is released, as a blocked instruction's
+   are (§10.1 step 10), and each task stored fires `ON_TASK_CREATED` then.
 5. **It is not committed.** At step 12 nothing is stored, no index is
    consumed (the one step 8 assigned is provisional, for the hooks), and no
    room counter moves (§14.3 holds trivially); the copy an AI channel keeps
