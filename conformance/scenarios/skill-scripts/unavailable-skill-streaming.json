@@ -101,7 +101,7 @@
     "script_executors": {
       "agent": {
         "calls": [],
-        "closes": 0
+        "closes": 1
       }
     },
     "models": {
