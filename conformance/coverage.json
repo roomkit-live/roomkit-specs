@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "9624dcbbe6467187def82ff78a3f1713199f30eb04d6af01c9e398f851700a03",
   "corpus_sha256": "aed640ab79689539222e53c1c7c8aabed86aa6930c3cd5fa9fb372d2ef19d85c",
-  "python_commit": "cd16b5b1685536616ad08c5ea2aefddd8e75958c",
+  "python_commit": "45b17c15c8df3c7426eeaf2022344b806ecaeb3c",
   "scenario_count": 2427,
   "sections": [
     {
@@ -31716,6 +31716,15 @@
               "state": "stale"
             }
           ]
+        },
+        {
+          "id": "phase4-local-script-failures",
+          "scope": "Script unknown-skill and policy refusals, raised executor failures, plus AI shutdown reports preserving executed arguments and distinguishing unstarted calls.",
+          "coverage": "partial",
+          "missing": [
+            "Only AI text script variants and the named shutdown boundaries are covered; other provider doors, all cancellation races, and the entire composite clause are not certified. Executor teardown error forms remain native API parity evidence in the lot checklist."
+          ],
+          "executions": []
         }
       ]
     },
@@ -69408,6 +69417,15 @@
             "Registry lifecycle, served MCP skills, script execution and separate turn executors are outside this direct helper slice."
           ],
           "executions": []
+        },
+        {
+          "id": "phase4-local-script-declarations",
+          "scope": "Local script declarations and system prompt promises, with executor availability and policy. Activation and reference tools remain declared without an executor.",
+          "coverage": "partial",
+          "missing": [
+            "Only the local-script variants of parameterized sources are covered here; other injected tools, media and MCP are not credited."
+          ],
+          "executions": []
         }
       ]
     },
@@ -69475,6 +69493,15 @@
           "coverage": "partial",
           "missing": [
             "No executor invocation or script execution is claimed. Runtime-specific path/permission forms remain documented in the prior direct-file helper mapping."
+          ],
+          "executions": []
+        },
+        {
+          "id": "phase4-local-script-boundary",
+          "scope": "Local host script invocation: arguments and results, undeclared execution without an executor, containment before host entry including an innocent-name symlink escape.",
+          "coverage": "partial",
+          "missing": [
+            "No OS process runner or sandbox is certified. Pure path helpers retain their prior evidence. MCP execution is outside this lot."
           ],
           "executions": []
         }
