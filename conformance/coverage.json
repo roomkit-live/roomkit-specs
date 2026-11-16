@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "9624dcbbe6467187def82ff78a3f1713199f30eb04d6af01c9e398f851700a03",
-  "corpus_sha256": "aed640ab79689539222e53c1c7c8aabed86aa6930c3cd5fa9fb372d2ef19d85c",
+  "corpus_sha256": "09c0485ac89931d66dcd898ec1ceb5a774923a99e5d12fcd9fe9d2875ae5db8a",
   "python_commit": "ad7a936cc0e3ed841c093ad36891ecf163e788fd",
-  "scenario_count": 2427,
+  "scenario_count": 2436,
   "sections": [
     {
       "section": "0",
@@ -1169,6 +1169,7 @@
         "instructions/a-later-turn-replays-an-instruction-where-its-turn-read-it",
         "instructions/a-standalone-instruction-is-not-kept",
         "instructions/an-instruction-that-opened-the-room-opens-its-later-history",
+        "mcp/a-tool-description-reaches-the-model-as-the-server-wrote-it",
         "memory/a-blank-input-s-notes-join-the-last-user-message",
         "memory/a-compacting-memory-never-summarizes-a-returned-current-input",
         "memory/a-compacting-memory-summarizes-what-it-trims",
@@ -6880,6 +6881,14 @@
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
         "eviction/reading-a-result-the-room-does-not-store-is-a-refusal",
+        "mcp/a-bare-name-never-runs-on-a-server-the-policy-keeps-out",
+        "mcp/a-bare-name-no-server-admits-is-served-by-nothing",
+        "mcp/a-bare-name-runs-on-the-first-server-of-the-chain-that-serves-it",
+        "mcp/a-bare-name-runs-only-on-the-server-the-policy-admits",
+        "mcp/a-catalogue-of-aliases-holds-a-policy-that-names-a-server",
+        "mcp/a-forwarding-handler-runs-no-bare-name-the-policy-keeps-off-its-server",
+        "mcp/a-policy-that-names-no-server-leaves-a-bare-name-on-the-first-server",
+        "mcp/a-tool-listed-twice-is-declared-once",
         "orchestration/a-supervisor-install-refused-halfway-sets-nothing-up",
         "orchestration/a-supervisor-s-own-tools-stay-its-own",
         "skill-gating/a-blocked-activation-never-references-a-held-tool-non-streaming",
@@ -7017,7 +7026,17 @@
         "unmapped": 2
       },
       "unannotated_keyword_lines": [],
-      "candidate_scenarios": []
+      "candidate_scenarios": [
+        "mcp/a-bare-name-never-runs-on-a-server-the-policy-keeps-out",
+        "mcp/a-bare-name-no-server-admits-is-served-by-nothing",
+        "mcp/a-bare-name-runs-on-the-first-server-of-the-chain-that-serves-it",
+        "mcp/a-bare-name-runs-only-on-the-server-the-policy-admits",
+        "mcp/a-catalogue-of-aliases-holds-a-policy-that-names-a-server",
+        "mcp/a-forwarding-handler-runs-no-bare-name-the-policy-keeps-off-its-server",
+        "mcp/a-policy-that-names-no-server-leaves-a-bare-name-on-the-first-server",
+        "mcp/a-tool-description-reaches-the-model-as-the-server-wrote-it",
+        "mcp/a-tool-listed-twice-is-declared-once"
+      ]
     },
     {
       "section": "21.3",
@@ -7060,6 +7079,13 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "mcp/a-bare-name-never-runs-on-a-server-the-policy-keeps-out",
+        "mcp/a-bare-name-no-server-admits-is-served-by-nothing",
+        "mcp/a-bare-name-runs-on-the-first-server-of-the-chain-that-serves-it",
+        "mcp/a-bare-name-runs-only-on-the-server-the-policy-admits",
+        "mcp/a-catalogue-of-aliases-holds-a-policy-that-names-a-server",
+        "mcp/a-forwarding-handler-runs-no-bare-name-the-policy-keeps-off-its-server",
+        "mcp/a-policy-that-names-no-server-leaves-a-bare-name-on-the-first-server",
         "orchestration/an-audited-answer-reaches-the-model-unchanged",
         "tasks/a-background-tool-keeps-its-turns-name-before-a-post",
         "tasks/a-background-tool-keeps-its-turns-name-before-a-relay",
