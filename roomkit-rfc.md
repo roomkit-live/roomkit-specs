@@ -5398,10 +5398,14 @@ HookRegistration
 
 Hooks MAY be registered globally (apply to all rooms) or per-room. A room's
 hook fires for that room's payloads alone, its turns' tool calls among them,
-in the room's chains beside the global hooks (§9.3). Its registration reads no
-room unless it names an organization (§17.2): registered for a room id no room
-holds yet, the hook is held for that room and fires once a room of that id is
-created. On a
+in the room's chains beside the global hooks (§9.3). Registered through the
+kit for a room id no room holds yet, the hook is held for that room and fires
+once a room of that id is created: the kit's registration reads the room with
+the organization the caller names (§17.2), or, naming none, whether a room of
+any organization holds the id. A level below the kit that holds no store
+reads none (§17.2): a hook registered there, on a hook engine or given
+straight to an executor, counts as one registered while a room held the id.
+On a
 trigger that fires on the turn executor (§10.6.6), the channel filters read the
 turn's agent: `channel_ids` its id, `channel_types` its type when the trigger's
 payload carries it. A hook on such a trigger registered on the kit is a
@@ -5410,6 +5414,18 @@ channel the kit holds by its declaration alone could fire, whose turns run on
 another executor (§10.6.6). A room hook on such a trigger for those channels
 is registered on the executors under a name, which the room's owner keeps for
 the room (§10.6.6).
+
+A room's hooks end with the room. Once the store no longer holds a room
+(deleted from the store, which is the only way a room ends without its id
+staying taken, §14.3), a room created again under its id is another room,
+whichever organization it belongs to: the kit that creates it MUST forget
+the room hooks registered while the earlier room held the id, and the names
+enabled for that room (§10.6.6), before anything announces the new room
+(the start of its recordings, §12.11, and its creation), as it forgets the
+strategy recorded for the id (§19.7), so that none of them runs for the new
+room and their names are free in its scope. Those registered
+while no room held the id are held for the new room, fire for its creation,
+and end with it in turn.
 
 A hook's `name` is unique within its scope: the kit's hooks, registered
 globally, or the hooks of one room. Implementations MUST refuse at
@@ -9008,7 +9024,8 @@ kit's own executor: one registration covers both.
 room (above) is its own executor's hook for that room, and no request names
 it. One for a channel other executors run (§9.1) is registered on the
 executors under a name. The owner keeps which names a room has, as it keeps
-the room's other hooks, and the request carries them in `room_hooks`: the
+the room's other hooks, forgetting them with the room (§9.1), and the request
+carries them in `room_hooks`: the
 executor runs the hooks registered under those names for that turn. An
 executor that has not registered every name a request carries does not take
 it (§10.6.7), so a turn never runs without one of its room's hooks. On an
@@ -18128,6 +18145,13 @@ should live in the integration surface layer.
   to it, and none of its recordings is told of the session's tracks. Called
   without an organization, a framework join reads the room unscoped, and a
   session start or a mint reads none for the scope.
+- A room's hooks end with the room (§9.1): the kit that creates a room
+  under the id of a room the store deleted, for the same organization,
+  another or none, forgets the room hooks registered for the deleted room
+  and the names enabled for it, so that a hook registered for one
+  organization's room never reads the events of the room another
+  organization creates after it. Hooks registered while no room held the
+  id are the new room's.
 - A call that names no organization (an inbound message, a direct
   injection) reads rooms unscoped, and a room it creates belongs to no
   organization. A call acting for an organization reaches that

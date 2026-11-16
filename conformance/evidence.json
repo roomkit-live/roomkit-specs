@@ -15040,7 +15040,7 @@
     {
       "id": "kit-executor-named-hooks",
       "requirement": "RK-10.6.6-003",
-      "clause_sha256": "d85beb61292ba187917d32581be49fdcff4cda99c49773205f7d83f10892052f",
+      "clause_sha256": "b46113ba1288f20044ed9048655292f4b314e59fa6917e7a99ab9c51dd2315d2",
       "scope": "The kit's local executor: per-room activation, per-trigger replacement, selection captured at request time, current definitions, missing-name refusal and strategy cleanup.",
       "coverage": "partial",
       "review": "Read the Python contracts, the RFC and the paired Rust implementation. Each successful turn explicitly checks its outcome and model call count; rejected operations and hook sequences are asserted separately. Independent code review found and corrected the registration return and previous-turn record defects. HITL c1206a93 approved clarifying repeated activation as a no-op; its assertion and the collision refusals are unchanged. Native source links are not scenario execution receipts.",
@@ -15401,7 +15401,7 @@
     {
       "id": "kit-executor-registration",
       "requirement": "RK-9.1-001",
-      "clause_sha256": "c5fe134e44ee648c11804e0323a6866e679ba93bb96848c45e1d5d5bcd2def65",
+      "clause_sha256": "82c96943068dab5b6c5f85b7a7281455dca139afa65913085d5ae1d2949b214b",
       "scope": "Named executor hooks: refusal of invalid names/modes and collisions, stable equal-priority activation order and per-trigger replacement.",
       "coverage": "partial",
       "review": "Read the Python contracts, the RFC and the paired Rust implementation. Each successful turn explicitly checks its outcome and model call count; rejected operations and hook sequences are asserted separately. Independent code review found and corrected the registration return and previous-turn record defects. HITL c1206a93 approved clarifying repeated activation as a no-op; its assertion and the collision refusals are unchanged. Native source links are not scenario execution receipts.",
@@ -15548,7 +15548,7 @@
     {
       "id": "kit-executor-organization",
       "requirement": "RK-17.2-001",
-      "clause_sha256": "0f5d784e82181c9b1c66851f5e87f13ab950f8fb0813ced3cf6d27e8b95dbeeb",
+      "clause_sha256": "5136598b500a2cda0a4dcd6552272533da6c1807b517c48cdcc313b0fa0defb0",
       "scope": "Enabling and disabling named hooks observes the calling organization's room scope.",
       "coverage": "partial",
       "review": "Read the Python contracts, the RFC and the paired Rust implementation. Each successful turn explicitly checks its outcome and model call count; rejected operations and hook sequences are asserted separately. Independent code review found and corrected the registration return and previous-turn record defects. HITL c1206a93 approved clarifying repeated activation as a no-op; its assertion and the collision refusals are unchanged. Native source links are not scenario execution receipts.",
