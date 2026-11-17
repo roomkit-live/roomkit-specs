@@ -635,6 +635,16 @@ scripted.
   to text written under their own `scripts/` directory. Each executor close
   increments its counter. `expect.script_executors` checks each channel's
   `{calls: [{skill_name, script_name, arguments, contents}], closes}`.
+- `sandbox`: a host SandboxExecutor fixture, present even as `{}`. Its
+  `tools` are raw definitions (`name`, optional `description` and `parameters`),
+  defaulting to an empty catalogue; the fixture does not filter their prefix or
+  apply policy. It records `command` and `arguments` before returning `result`
+  (`exit_code` required, optional `output`, `error`, `metadata`; default result
+  has exit code zero) or raising `raises.kind` with `raises.message`.
+  `SandboxResult.success` is derived by the public model, never a fixture control.
+  No command, process or file operation is executed. Each close increments its
+  counter. `expect.sandbox_executors` checks each channel's
+  `{calls: [{command, arguments}], closes}` after harness cleanup.
 - `retry_policy`: the agent's retry policy (§6.4): a generation its
   provider refused as worth another try (`refuses.retryable`) before it
   handed anything is tried again, at most `max_retries` times (default 3),

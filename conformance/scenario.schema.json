@@ -1036,6 +1036,15 @@
         "script_executor": {
           "$ref": "#/$defs/script_executor"
         },
+        "sandbox": {
+          "$ref": "#/$defs/sandbox"
+        },
+        "sandbox": {
+          "$ref": "#/$defs/sandbox"
+        },
+        "sandbox": {
+          "$ref": "#/$defs/sandbox"
+        },
         "continuation": {
           "$ref": "#/$defs/continuation_policy"
         },
@@ -5320,6 +5329,11 @@
             ]
           }
         },
+        "sandbox_executors": {
+          "description": "Per channel, sandbox calls (command, arguments) and the count of closes.",
+          "type": "object",
+          "additionalProperties": {"type": "object"}
+        },
         "script_executors": {
           "description": "Per channel, host executor calls (skill_name, script_name, arguments, contents) and the count of closes.",
           "type": "object",
@@ -9018,6 +9032,71 @@
             },
             "success": {
               "type": "boolean"
+            },
+            "metadata": {
+              "type": "object"
+            }
+          }
+        },
+        "raises": {
+          "type": "object",
+          "required": [
+            "kind",
+            "message"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "message": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "sandbox": {
+      "description": "Host SandboxExecutor fixture; records calls and closes, returns result or raises, without executing any command.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "parameters": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "result": {
+          "type": "object",
+          "required": [
+            "exit_code"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "exit_code": {
+              "type": "integer"
+            },
+            "output": {
+              "type": "string"
+            },
+            "error": {
+              "type": "string"
             },
             "metadata": {
               "type": "object"
