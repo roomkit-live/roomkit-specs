@@ -44,6 +44,9 @@
                   }
                 }
               ]
+            },
+            {
+              "text": "Done."
             }
           ],
           "streaming": true
@@ -127,6 +130,15 @@
       "agent": [
         {
           "tools": {}
+        },
+        {
+          "tool_results": [
+            {
+              "tool_call_id": "p1",
+              "content": "{\"error\": \"Tool 'remote' is not available in this turn.\"}",
+              "is_error": true
+            }
+          ]
         }
       ]
     },
@@ -182,6 +194,12 @@
             },
             "status": "failed",
             "outcome": "refused"
+          }
+        },
+        {
+          "type": "message",
+          "content": {
+            "body": "Done."
           }
         }
       ]
