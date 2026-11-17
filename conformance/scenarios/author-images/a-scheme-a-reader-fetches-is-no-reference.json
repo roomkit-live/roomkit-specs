@@ -2,7 +2,7 @@
   "$schema": "../../scenario.schema.json",
   "id": "author-images/a-scheme-a-reader-fetches-is-no-reference",
   "title": "A reference in a scheme a reader fetches, opens or runs by itself is refused when its content is built, whatever its case, and so is a compound scheme one of whose parts joined by '+' is such a scheme or a link's; an application's own scheme, mixed-case or compound, and a cloud store the application resolves stay references",
-  "notes": "Python's MediaContent._validate_url (roomkit._media_url.is_safe_reference) and roomkit-rs's model::media_url: a reference's scheme, lower-cased and split on +, has no part among the schemes the RFC lists (files on the machine or a share, the network protocols generic readers fetch, code to run, http and https). A link and a data URI are not read this way. A refused content takes no index: the first accepted event is index 0.",
+  "notes": "Python's MediaContent._validate_url (roomkit._media_url.is_safe_reference) and roomkit-rs's model::media_url: a reference's scheme, lower-cased and split on +, has no part among the schemes the RFC lists (files on the machine, in an archive or on a share, the network protocols generic readers fetch, the wrappers that read through another protocol, a file or a descriptor, code to run, http and https). A link and a data URI are not read this way. A refused content takes no index: the first accepted event is index 0.",
   "rules": [
     "§6.4"
   ],
@@ -306,6 +306,97 @@
       "content": {
         "type": "media",
         "url": "git+ssh://host/x",
+        "mime_type": "image/png"
+      },
+      "expect": {
+        "error": "invalid_argument"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "ws",
+      "content": {
+        "type": "media",
+        "url": "cache:///tmp/x.wav",
+        "mime_type": "image/png"
+      },
+      "expect": {
+        "error": "invalid_argument"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "ws",
+      "content": {
+        "type": "media",
+        "url": "concat:///tmp/x.wav",
+        "mime_type": "image/png"
+      },
+      "expect": {
+        "error": "invalid_argument"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "ws",
+      "content": {
+        "type": "media",
+        "url": "admin:///etc/shadow",
+        "mime_type": "image/png"
+      },
+      "expect": {
+        "error": "invalid_argument"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "ws",
+      "content": {
+        "type": "media",
+        "url": "local:///etc/passwd",
+        "mime_type": "image/png"
+      },
+      "expect": {
+        "error": "invalid_argument"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "ws",
+      "content": {
+        "type": "media",
+        "url": "zip://x.png::file:///tmp/a.zip",
+        "mime_type": "image/png"
+      },
+      "expect": {
+        "error": "invalid_argument"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "ws",
+      "content": {
+        "type": "media",
+        "url": "php://filter/x",
+        "mime_type": "image/png"
+      },
+      "expect": {
+        "error": "invalid_argument"
+      }
+    },
+    {
+      "call": "send_event",
+      "room_id": "room-1",
+      "channel_id": "ws",
+      "content": {
+        "type": "media",
+        "url": "expect://id",
         "mime_type": "image/png"
       },
       "expect": {
