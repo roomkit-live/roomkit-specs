@@ -35,9 +35,6 @@
                   }
                 }
               ]
-            },
-            {
-              "text": "Submitted."
             }
           ]
         }
@@ -101,14 +98,6 @@
               "role": "user",
               "text": "You did not submit a result. You MUST now call the `submit_result` tool with your final structured result. Do NOT reply with plain text or a question — call submit_result.",
               "parts": null
-            }
-          ]
-        },
-        {
-          "tool_results": [
-            {
-              "tool_call_id": "c1",
-              "content": "{\"status\": \"received\"}"
             }
           ]
         }
