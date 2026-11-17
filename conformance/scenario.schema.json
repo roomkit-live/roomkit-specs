@@ -5438,6 +5438,11 @@
                       },
                       {
                         "required": [
+                          "usage_at_start"
+                        ]
+                      },
+                      {
+                        "required": [
                           "whole_response",
                           "fails"
                         ]
@@ -5492,6 +5497,13 @@
           ]
         },
         "usage": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "usage_at_start": {
+          "description": "Counters the model tells as its stream starts, before its gate and anything it writes (\u00a76.4, What a generation used): what the generation used so far, which its done event's usage replaces.",
           "type": "object",
           "additionalProperties": {
             "type": "integer"

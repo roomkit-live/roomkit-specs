@@ -1,11 +1,11 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "turn-record/a-turn-that-finishes-reports-to-its-hook-what-every-generation-used",
-  "title": "A turn that finishes fires ON_AI_RESPONSE with what every generation used, and its record reads complete",
+  "title": "A turn that finishes fires ON_AI_RESPONSE with what every generation used, the input a generation told as its stream started counted once, and reads complete",
   "rules": [
     "§6.4 The turn's record"
   ],
-  "notes": "RMK-369, the neighbour of turn-record/a-cancel-during-a-generation-reports-to-its-hook-what-the-generations-before-it-used. Python: channels/_ai_streaming.py _StreamTurnState.count_generation.",
+  "notes": "RMK-369, the neighbour of turn-record/a-cancel-during-a-generation-counts-the-input-it-told: the done event's usage replaces what the generation told first. Python: channels/_ai_streaming.py _StreamTurnState.count_generation.",
   "setup": {
     "channels": [
       {
@@ -40,9 +40,14 @@
               }
             },
             {
+              "usage_at_start": {
+                "input_tokens": 40,
+                "cache_read_input_tokens": 80
+              },
               "text": "Done.",
               "usage": {
                 "input_tokens": 40,
+                "cache_read_input_tokens": 80,
                 "output_tokens": 7
               }
             }
@@ -103,8 +108,10 @@
             "loop_end_reason": "completed",
             "usage": {
               "input_tokens": 140,
-              "output_tokens": 17
-            }
+              "output_tokens": 17,
+              "cache_read_input_tokens": 80
+            },
+            "usage_complete": true
           }
         }
       ]
@@ -135,10 +142,12 @@
             "loop_end_reason": "completed",
             "ai_usage": {
               "input_tokens": 140,
-              "output_tokens": 17
+              "output_tokens": 17,
+              "cache_read_input_tokens": 80
             },
             "ai_last_usage": {
               "input_tokens": 40,
+              "cache_read_input_tokens": 80,
               "output_tokens": 7
             },
             "ai_usage_complete": true
