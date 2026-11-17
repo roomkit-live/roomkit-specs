@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "26e77f7c813a4756ba8fb430560c27f9fda1371cd45829c62a4afe2542363f9d",
-  "corpus_sha256": "21266201da602ea48e8d8caaecc8af708f4bc06f1b63c43400d29b6b3dda16c8",
+  "corpus_sha256": "31027b4acd4c6cce7c19cec9ba7faeff9658ed8db168f6add57bd392ee492536",
   "python_commit": "b50c50a782668fc1681e21bcec52a3d83bc0d8c0",
-  "scenario_count": 2752,
+  "scenario_count": 2756,
   "sections": [
     {
       "section": "0",
@@ -3806,7 +3806,9 @@
         "verification/a-cancel-during-the-released-answer-cuts-it",
         "verification/a-code-reply-is-consumed-and-verifies",
         "verification/a-code-reply-releases-the-held-message",
+        "verification/a-code-reply-s-release-is-answered-past-its-budget",
         "verification/a-code-sent-in-another-room-is-an-ordinary-message",
+        "verification/a-deferred-code-reply-returns-before-its-release",
         "verification/a-held-message-a-hook-blocked-is-named-no-more",
         "verification/a-held-message-a-policy-keeps-held-is-named-no-more",
         "verification/a-held-message-cancelled-after-its-call-is-released-with-no-answer",
@@ -3828,6 +3830,7 @@
         "verification/a-rerun-whose-room-is-deleted-in-the-lane-is-refused",
         "verification/a-scoped-cancel-reaches-its-organization-s-held-message",
         "verification/a-sender-s-held-mark-is-dropped",
+        "verification/a-verification-hook-past-process-timeout-expires-its-message",
         "verification/a-verification-labels-only-its-organization-s-rooms",
         "verification/a-verified-sender-s-message-reaches-the-agents",
         "verification/an-adopted-held-message-is-named-until-its-release",
@@ -4830,6 +4833,7 @@
         "verification/a-new-request-goes-out-once-the-first-expired-unanswered",
         "verification/a-policy-that-does-not-hold-only-labels",
         "verification/a-sender-s-held-mark-is-dropped",
+        "verification/a-verification-hook-past-process-timeout-expires-its-message",
         "verification/a-verification-labels-only-its-organization-s-rooms",
         "verification/a-verified-sender-s-message-reaches-the-agents",
         "verification/an-unlabelled-event-has-no-sender-verification",
@@ -4852,8 +4856,10 @@
       "candidate_scenarios": [
         "verification/a-code-reply-is-consumed-and-verifies",
         "verification/a-code-reply-releases-the-held-message",
+        "verification/a-code-reply-s-release-is-answered-past-its-budget",
         "verification/a-code-request-is-completed-with-its-code",
         "verification/a-code-sent-in-another-room-is-an-ordinary-message",
+        "verification/a-deferred-code-reply-returns-before-its-release",
         "verification/a-reply-of-other-digits-is-a-wrong-code",
         "verification/digits-with-no-code-request-open-are-an-ordinary-message"
       ]
@@ -4896,6 +4902,8 @@
       "candidate_scenarios": [
         "verification/a-cancel-during-the-released-answer-cuts-it",
         "verification/a-code-reply-releases-the-held-message",
+        "verification/a-code-reply-s-release-is-answered-past-its-budget",
+        "verification/a-deferred-code-reply-returns-before-its-release",
         "verification/a-held-message-a-hook-blocked-is-named-no-more",
         "verification/a-held-message-a-policy-keeps-held-is-named-no-more",
         "verification/a-held-message-cancelled-after-its-call-is-released-with-no-answer",
@@ -4905,6 +4913,7 @@
         "verification/a-held-message-nobody-cancelled-is-named-no-more-once-answered",
         "verification/a-held-message-s-cancellation-is-written-on-its-mark",
         "verification/a-hook-updating-a-released-message-again-stops-at-the-cap",
+        "verification/a-link-s-release-is-answered-past-the-budget",
         "verification/a-marker-a-sender-supplies-releases-nothing",
         "verification/a-policy-can-keep-held-messages-held",
         "verification/a-release-during-the-held-message-s-own-delivery-is-named",
@@ -6086,11 +6095,14 @@
         "regenerate/without-a-trigger-id-the-newest-message-is-answered-again",
         "resilience/process-timeout-covers-the-inbound-parser",
         "resilience/process-timeout-stores-nothing",
+        "verification/a-code-reply-s-release-is-answered-past-its-budget",
+        "verification/a-link-s-release-is-answered-past-the-budget",
         "verification/a-release-from-a-hook-that-allows-its-event-is-answered-first",
         "verification/a-release-from-a-hook-that-closes-the-room-is-answered-by-no-agent",
         "verification/a-release-whose-pass-goes-on-before-a-later-hook-closes-the-room-is-answered-by-no-agent",
         "verification/a-rerun-whose-room-is-created-again-in-the-lane-is-refused",
-        "verification/a-rerun-whose-room-is-deleted-in-the-lane-is-refused"
+        "verification/a-rerun-whose-room-is-deleted-in-the-lane-is-refused",
+        "verification/a-verification-hook-past-process-timeout-expires-its-message"
       ]
     },
     {
