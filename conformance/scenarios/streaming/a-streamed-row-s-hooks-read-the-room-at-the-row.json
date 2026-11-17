@@ -3,11 +3,11 @@
   "id": "streaming/a-streamed-row-s-hooks-read-the-room-at-the-row",
   "title": "A streamed row's BEFORE_BROADCAST hooks, its synchronous ones and its observers, read the room as it stands at the row, at the row's index, not as it stood when the stream began",
   "rules": [
-    "§9.5",
+    "§9.5.1",
     "§10.1 step 12",
     "§10.2"
   ],
-  "notes": "The integrator commits web's “Any news?” while the agent's tool runs. Each row's hooks read the room's latest events when the row comes, that message included (tool-call rows are no part of them), and the row at the index it takes; a row's hooks still run off the room lock (§9.5).",
+  "notes": "The integrator commits web's “Any news?” while the agent's tool runs. Each row's hooks read the room's latest events when the row comes, that message included (tool-call rows are no part of them), and the row at the index it takes; a row's hooks still run off the room lock (§9.5.1).",
   "setup": {
     "channels": [
       {
