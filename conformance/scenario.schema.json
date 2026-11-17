@@ -6031,6 +6031,10 @@
           "description": "The handler calls current_tool_allowed_names() and returns its names as a sorted JSON array, or null when unresolved (\u00a721.4).",
           "const": true
         },
+        "returns_requester": {
+          "description": "The handler calls current_tool_requester() and returns it as JSON, a string or null (\u00a719.7, \u00a721.4).",
+          "const": true
+        },
         "returns_parts": {
           "description": "The tool answers these content parts in order, each `{text}` or `{image, mime_type}` (\u00a721.4): a text and the images a model that sees reads in the round (\u00a76.4).",
           "type": "array",
@@ -6081,6 +6085,10 @@
             "null"
           ]
         },
+        "posts_progress": {
+          "description": "Each call first posts this text as its task's progress with post_task_progress(kit, detail), before a gate holds it, then answers as its other member says; outside a task's child room it posts nothing (\u00a723.3).",
+          "type": "string"
+        },
         "report_claim_probe": {
           "description": "A handler reads and invokes the public turn_report_claim callback: matching checks lookup and once-only claims; reused_id invokes its first retained callback in each round; previous_turn retains the first callback without invoking it and invokes it in later turns. The result is a JSON array of actual callback results, not simulated report state.",
           "enum": [
@@ -6104,6 +6112,11 @@
         {
           "required": [
             "returns_allowed_names"
+          ]
+        },
+        {
+          "required": [
+            "returns_requester"
           ]
         },
         {
