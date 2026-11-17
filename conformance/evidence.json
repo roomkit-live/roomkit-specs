@@ -14435,15 +14435,15 @@
         {
           "scenario": "memory/a-queued-turn-keeps-its-question-out-of-compaction",
           "pointer": "/expect",
-          "sha256": "34fdf37c617bd57a4e3a70ddca389341a1cb14381f34dc42b73ed7f580e25b04",
-          "scenario_sha256": "d33d42ec81df4b5cb0babf8ae0d5d5b3817f38eb57fa0462e55b6e4765fd6804",
+          "sha256": "952933db4fc71a5012ef09d1b22ff4e977c3513fe5fb427a43cae11a697f0cdd",
+          "scenario_sha256": "a0bcdd1ddb1c37575875b30dc2e224a6c0ed27d38de87b91f022dc6b145848ed",
           "proves": "The compacting memory summarizes only the visible older background. Its exact summarizer request contains neither the answered question nor the private message that arrived while the turn waited. The model reads the summary joined to the answered question, then both later messages in order."
         },
         {
           "scenario": "memory/a-queued-turn-keeps-its-question-out-of-the-summary",
           "pointer": "/expect",
-          "sha256": "c7bae9c55b39323fb0534e29e5213dc7bea2d3519caac501517c5435ff9e91d0",
-          "scenario_sha256": "3e5a67c5013d901b9da0e9d651088c4fdf740f0a0c042cc692da7f2299e41b80",
+          "sha256": "999f1afa861fd2ec2eaf54ce1ba98fc28976a9d6479b2458b7f12c418cf3719c",
+          "scenario_sha256": "eaa15f39e856a14042aa36841799fe61984bf8cac2f0798f18907a263f9d69bf",
           "proves": "The summarizing memory summarizes only the visible older background. Its exact summarizer request contains neither the answered question nor the private message that arrived while the turn waited. The model reads the summary joined to the answered question, then both later messages in order."
         }
       ],
@@ -14498,15 +14498,15 @@
         {
           "scenario": "memory/a-compacting-memory-never-summarizes-a-returned-current-input",
           "pointer": "/expect",
-          "sha256": "aae9e93dbdadf604f9b4493a72bfaceded73074d82c50b61d520e97f7e020760",
-          "scenario_sha256": "aa029fdc63dea7f25b9f3cfb9acf57cd902ae316915fd6525e692598a2c52f72",
+          "sha256": "eaa3306bb79bce96273f66eb237b580527c40d2ce34dae038182ad5fd9aa974a",
+          "scenario_sha256": "c853a52ad5c2647be58b338a847371455fde654aa959dbdd268be8d16544900d",
           "proves": "The compacting wrapper sends only older visible background to its summarizer, excluding the current input and a private message. The model reads the complete original input once after the summary and before both retained later messages."
         },
         {
           "scenario": "memory/a-summarizing-memory-never-summarizes-a-returned-current-input",
           "pointer": "/expect",
-          "sha256": "7251d33a089e08b3425566240d9be4c17815c98bff4135d291cd3ca7c5c995be",
-          "scenario_sha256": "bac1cd503839beeced67cf27131f845e2c0c0716ecdc96ee5c00bb5d266e95b2",
+          "sha256": "2f2783fe854001987e76443e8d87a37fb84e9aae16faee945bda533517787d65",
+          "scenario_sha256": "8958179429a21fdc7804471d6a5bae5dcd06b03064831b35097f21656773632f",
           "proves": "In a saturated window the summarizing wrapper excludes the current input and a private message from the exact summarizer request. The model reads the complete original input once after the summary, then the latest message; the other later clarification is trimmed."
         },
         {
@@ -14532,7 +14532,7 @@
     {
       "id": "discussion-notes-memory-footprint",
       "requirement": "RK-20.3-007",
-      "clause_sha256": "cda08ff1a6d0323354ab9d25d3248b6f64e26a05c2c942e046b65ebc4920d01a",
+      "clause_sha256": "2adf499e47264f5d4b05dbcb0d2e4e6d23acbc5aa4b58c6a962ae619a7fb17e8",
       "coverage": "partial",
       "scope": "The initial memory read reserves the authenticated Discussion notes that the model request will contain.",
       "review": "A real deferred Discussion supplies a long answered input and later messages. Its summarizing memory must reduce older history at the remaining budget after the Discussion notes are reserved. Exact requests prove the summary occurs and retains both later messages. With the notes omitted from the footprint, Rust skips this summary; the case passes on Python before the Rust correction.",
@@ -14540,8 +14540,8 @@
         {
           "scenario": "memory/a-deferred-memory-reserves-discussion-notes",
           "pointer": "/expect",
-          "sha256": "638a7c063cbf6a729df3b59a0ac7305e6beec7c819194e01f149ec0dd5540d1e",
-          "scenario_sha256": "8723496a34bca9963000bf08a240c6a88a868c78ebd8114f823f010f49598abd",
+          "sha256": "7084e645dc71c62f1c50a025d6a2210b790ee33ee06222c6157b57eb3bac6629",
+          "scenario_sha256": "e8bcda2b8f6d5c0b9590eee7ff2e6ad019cf13fc06f12366977d31b8c0cf22e7",
           "proves": "The summarizer receives only visible older background; the model receives its summary joined to the intact answered question, then both later messages. Ignoring the Discussion notes in the budget fails these exact expectations."
         }
       ],
@@ -25674,7 +25674,7 @@
     {
       "id": "phase4-public-named-blocks",
       "requirement": "RK-6.4-025",
-      "clause_sha256": "2716fb6926db3451cb07be8de42649366bd484510ddc03831c83768099e1870a",
+      "clause_sha256": "a6070596183f41c9802bbb665ede16a562a4a5ec336ae54ea6bb6e9e0d8d48fc",
       "scope": "The public block-naming helper replaces selected framed blocks with their names, retaining surrounding text and caller-selected tag behavior.",
       "coverage": "partial",
       "review": "Independent source and full code reviews accepted the public helper and existing native algorithm counterparts. Native execution and final gate logs are retained separately; this link maps Python source assertions only.",
