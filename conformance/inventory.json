@@ -1467,9 +1467,9 @@
     },
     {
       "section": "24.7",
-      "sha256": "937acb13f420ab6848de12494526b9607f606827e48970f60e7449ef8f309159",
+      "sha256": "64afbff13eaa167f61a502a4c32e91cd680879a853042aef7e89f3cde6fc334e",
       "classification": "normative",
-      "review": "Source inventory: Skills Served over MCP. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Skills Served over MCP. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Re-read after the canonical YAML-set normalization amendment to Activation; the existing contextual classification is retained without implementation coverage credit."
     },
     {
       "section": "25",
