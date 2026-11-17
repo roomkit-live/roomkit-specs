@@ -297,7 +297,7 @@
     },
     {
       "section": "7.5",
-      "sha256": "a5691e3feb81d86d2b4c0b80ff168c054ef4fca3f929203b47fea9942e90fcfc",
+      "sha256": "30bcd3410070f02d30084cd0004f654a0c8db1a5f8e40ba36701dbd303105858",
       "classification": "normative",
       "review": "Source inventory: Permission Rules. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
@@ -375,7 +375,7 @@
     },
     {
       "section": "9.5.1",
-      "sha256": "1125b1a6ae6101a5f605f10f301042971e04784393fc1130ce6a39defef5b604",
+      "sha256": "3a51f2e32271e031526bff7247db7a0d7cc41d1ccab17527ca18c6d12e8bef70",
       "classification": "normative",
       "review": "Source inventory: Off-lock checks (`needs_lock = false`). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },

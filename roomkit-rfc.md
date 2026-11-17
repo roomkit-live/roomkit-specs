@@ -4719,10 +4719,13 @@ Implementations MUST enforce these rules:
    read-only or detached; a transport made write-only or detached) holds from
    the next row. Once the room no longer lets the streaming target read the
    response (its source can no longer write, the room refuses the row,
-   §5.1, or the target is no longer one the answer reaches, §12.2 step
-   11s), the target is handed nothing more of
+   §5.1, the target is no longer one the answer reaches, §12.2 step
+   11s, or a message's hooks narrowed its visibility away from the target,
+   §7.3), the target is handed nothing more of
    the stream, neither text nor rows, and the rows after are delivered as
-   their plans say. A source both read-only and muted is refused as read-only, so
+   their plans say. A tool-call row whose hooks narrowed it away from the
+   target is not handed to the target, and the stream goes on. A source
+   both read-only and muted is refused as read-only, so
    its stream is read to its end. An event a hook injects takes no source
    check: it is the hook's, not a channel's (§9.4). Nor does an event the
    framework itself writes through the pipeline, such as a delegation's task
@@ -6563,7 +6566,16 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   included. `needs_lock = false` permits a hook to run off the lock; it never
   lets an event skip it. A streamed row is the exception (§4): it runs every
   hook, the `needs_lock = true` ones included, without the room lock, then
-  takes the lock for its commit, which reads the room (§10.2). The events a streamed row's hooks inject
+  takes the lock for its commit, which reads the room (§10.2). Its hooks,
+  its observers and the record of a row they block read the room as it
+  stands when the row comes, read just before its hooks, with the row at
+  the room's next index as read then (an event committed meanwhile gives
+  the row a later one at its commit): never the room as it stood when its
+  stream began. A room that read finds gone, or created again under its
+  id, refuses the row before its hooks (§5.1, §13.5). An implementation
+  MAY skip that read for a row no hook and no observer of
+  `BEFORE_BROADCAST` applies to.
+  The events a streamed row's hooks inject
   take the room lock for their own commit, as every injected event does
   (§9.4).
 <!-- /rfc -->

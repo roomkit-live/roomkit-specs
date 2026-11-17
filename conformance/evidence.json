@@ -317,7 +317,7 @@
     {
       "id": "core-permission-gates",
       "requirement": "RK-7.5-001",
-      "clause_sha256": "76feb1d709fb78a714edc6fbcbb4948f509f994ed3010c747357726632a42419",
+      "clause_sha256": "5f1dc6d2d39dc8b38df16947abbae9282a1c6171863fca5658f2cb290c44efa2",
       "scope": "Rules 1-3 and 5 for static bindings: source refusal, readable targets, retained target effects and self-skip. Visibility is all throughout these matrices.",
       "coverage": "partial",
       "review": "Read against Python source and specialized tests at fb46cb7bf and the current RFC. The full source unit is broader than these static-binding scenarios; no whole-section conformance is inferred.",
@@ -1866,7 +1866,7 @@
     {
       "id": "response-refusals-and-reader-history",
       "requirement": "RK-7.5-001",
-      "clause_sha256": "76feb1d709fb78a714edc6fbcbb4948f509f994ed3010c747357726632a42419",
+      "clause_sha256": "5f1dc6d2d39dc8b38df16947abbae9282a1c6171863fca5658f2cb290c44efa2",
       "scope": "Rule 2 read-only/mute stream precedence and rule 8 refused/deleted reader history, live edits and unfiltered host histories.",
       "coverage": "partial",
       "review": "Read each scenario assertion and each named Python test against this exact clause. Lists assert cardinality and order; object fields assert only the named contract. Shared execution and specialized source evidence remain distinct.",
