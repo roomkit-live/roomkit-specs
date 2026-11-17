@@ -407,6 +407,11 @@ under test. Its turn builds the conversation and runs the loop as the
 implementation's AI channel does; only the provider and the tools are
 scripted.
 
+- `continuation`: a host callback `{prefix, nudge}` or `{prefix, error}`.
+  Every invocation records its exact text in `expect.continuations[channel_id]`.
+  Text beginning with `prefix` returns `nudge` (including an empty string or
+  null) or raises the scripted error; other text returns null. The real channel
+  decides whether and when to call it and whether another generation may run.
 - `model.streaming`: true by default. False runs `generate()` through the
   provider's default whole-response adapter, including tool calls and gates.
   Each round is reserved before waiting at its gate. In this mode the
@@ -1138,6 +1143,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `observations`, `tasks` | Per room, the stored side effects |
 | `actions` | Per action label, the outcomes of its runs, in the order they ended |
 | `ai_events` | Per room, the framework events of an AI channel's turn (§8.2, Level 1): `before_ai_generation` and `ai_response`, in emission order, matched as `framework_events`, which does not hold them |
+| `continuations` | Per channel, exact continuation callback inputs in invocation order; `[]` proves it was not called. |
 | `models` | Per scripted agent, each generation's `method` (`generate` or `generate_structured_stream`, recorded at the actual script reservation; absent for native Rust memory summarizers), and its request as its model received it, in order: the `messages` it carries, each `{role, text, parts, round}`, `text` its text parts joined (empty for a message with none, a tool's result among them), `parts` its text and image parts in order, each `{"text": ...}` or `{"image": url, "mime_type": ...}`, null for a message whose content is a text, `round` its reasoning, text and call parts in order, each `{"thinking": ..., "signature": ..., "redacted": ...}`, `{"text": ...}` or `{"call": id, "arguments": ..., "metadata": ...}`, null for a message whose content is a text, and the `tool_results`, each `{tool_call_id, name, content, is_error, references}`, `name` the tool of its call, `content` as the model reads it (a text, or a result's text and image parts in order, written as `parts` are), `is_error` whether it reads the call as failed, its `system_prompt`, its `temperature` and `max_tokens`, its `reasoning_effort`, `thinking_budget` and `enable_thinking`, its `response_schema` (null for none), `room` (the RoomContext snapshot, null when absent), `target_capabilities` (the outgoing transports' shared capabilities, null with no target) and `target_media_types` (their shared media types, compared as an unordered set), the `deferred_tools` names held unseen, the `reopened_tools` names referenced by synthetic opening exchanges, the `tools` it declares, by name: each one's position in the declaration, so that a scenario names those it asserts, declared or `$absent`, `tool_names`: their exact ordered list (including duplicates), `tool_definitions`: each declared tool's `description` and `parameters` as the model receives them, by name, and, for a model with a `chat_dialect`, `chat_messages`: the request as that rendering writes it on the wire, its system prompt first when it has one, each message's `role`, `content`, `tool_calls`, `tool_call_id` and its dialect's reasoning field |
 | `acp_wire` | Per ACP channel, the requests and notifications its scripted ACP agent received, in order, each `{method, params}` (Scripted ACP agents) |
 | `acp_permissions` | Per ACP channel, actual replies to awaited permission requests, each `{session_id, tool_call_id, result}` or `error` (Scripted ACP agents) |
