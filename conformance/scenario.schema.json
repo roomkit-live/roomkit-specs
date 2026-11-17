@@ -9525,6 +9525,44 @@
             "method"
           ],
           "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "method": {
+              "const": "install_channel"
+            },
+            "registry": {
+              "type": "string"
+            },
+            "channel": {
+              "$ref": "#/$defs/channel"
+            }
+          },
+          "required": [
+            "method",
+            "channel"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "method": {
+              "const": "room_call"
+            },
+            "registry": {
+              "type": "string"
+            },
+            "action": {
+              "$ref": "#/$defs/call"
+            }
+          },
+          "required": [
+            "method",
+            "action"
+          ],
+          "additionalProperties": false
         }
       ]
     },

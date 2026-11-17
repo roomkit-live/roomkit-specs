@@ -1437,13 +1437,19 @@ Operations select a `registry` (default `main`). They name `add_mcp_server`
 or `load_skill` (`name`), `read_file` (`name`, `filename`), `origin` or
 `is_served` (`name`), `copy` (`target`, optional `names` and `marks`),
 `mark_unavailable` (`name`, `reason`), `mark_unlisted` (`name`), or `snapshot`.
+`install_channel` takes a scripted `channel` with a `model` and installs the
+selected registry as its skills; a second local `skills` definition is refused.
+`room_call` takes an `action` using the ordinary call vocabulary, then drains
+the room. Registry sessions cannot be nested. The existing model observers
+record those real turns, including prompts and tool results.
 Copies use the SDK's shared catalogue and cache; the fixture keeps no duplicate
 catalogue. Snapshot reads the public metadata, names, marks, manifest and tool
 patterns without loading or following a cached skill.
 
 The result holds an ordered `results` list and `requests` by server. Each
-operation returns `{result: value}` or the public skill error's name and
-message. Loaded skills expose their instructions, metadata, references,
+operation returns `{status: "ok", result: value}` or
+`{status: "error", error: name, message: text}`. The explicit status prevents
+a missing result on a refusal from matching an expected null result. Loaded skills expose their instructions, metadata, references,
 origin, held URI, bytes read and verified cache (hexadecimal bytes by URI).
 No path on the host filesystem is used to represent served content.
 
