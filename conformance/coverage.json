@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "d8662dbbbde3342955d52cebf8ef5a27862366ae36289442d66ee1b95e937751",
-  "corpus_sha256": "5ab232d7873081910c00fb1b3d745a356c836da15dcf19f9d3f746411c03b78e",
+  "corpus_sha256": "c4a80794416d84044329aa1f52e28a5da8b43d75d567b36b5f0bb99526e01959",
   "python_commit": "b50c50a782668fc1681e21bcec52a3d83bc0d8c0",
-  "scenario_count": 2967,
+  "scenario_count": 2975,
   "sections": [
     {
       "section": "0",
@@ -4733,6 +4733,8 @@
         "executors/a-turn-apart-calls-the-host-verbs-during-and-after-it",
         "executors/one-build-serving-two-rooms-reads-each-turn-s-room-alone",
         "executors/work-a-turn-apart-began-publishes-to-its-room-after-it",
+        "host-context/fresh-context-window-0",
+        "host-context/fresh-context-window-50",
         "host-declared/admission-declare-after-close",
         "host-declared/admission-deleted-room",
         "host-declared/admission-recreated-room",
@@ -4879,7 +4881,13 @@
         "executors/an-executor-takes-the-turns-of-the-organizations-it-serves-alone",
         "executors/an-executor-that-never-answers-loses-the-turn-and-no-other-gets-it",
         "executors/executors-declaring-prefixes-take-only-the-agents-under-them",
-        "executors/the-kit-lists-the-executors-served-and-what-each-declares"
+        "executors/the-kit-lists-the-executors-served-and-what-each-declares",
+        "local-presence/agents-are-sorted-and-filtered",
+        "local-presence/automatic-publications-follow-local-changes",
+        "local-presence/room-hooks-and-executor-close",
+        "local-presence/tenant-named",
+        "local-presence/tenant-none",
+        "local-presence/the-kit-executor-is-not-listed"
       ]
     },
     {
