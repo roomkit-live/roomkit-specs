@@ -440,3 +440,20 @@ SQL-store, Redis-turn or full-corpus execution credit is inferred from this
 receipt. Prior receipts are retained as historical runs; none is relabeled as
 an execution of the updated timeout scenarios. The new normative link remains
 partial, and raw results, schema validation and served-skill consumers stay open.
+
+## Role policy in text turns
+
+`python-role-turns-2053261.xml` records 36 passing role-policy scenarios at
+published Python commit `20532614d24f6d6f920a66e66e5fb3e3de4ddae6`, with corpus
+`7edbe4928663bf4711f95aaa1fbd36c0acdd2d10`, the memory store and in-process
+turns. The receipt pins the exact command and RFC revision. Both provider
+modes exercise participant selection, restriction and replacement, role changes,
+concurrent isolation, declarations and dispatch, allowed-name readers, skills,
+scripts, Tool Search and MCP names.
+
+The search/list cases assert positive membership and independently exclude both
+a role-denied tool and a skill-gated tool from each result. Native model,
+unmatched-participant and context-lifetime tests remain separate proofs. The
+partial requirement link receives no additional scope from this receipt; Rust,
+SQL stores, Redis turns, sandbox, planner and realtime paths are not executed
+by it. All prior execution receipts remain unchanged.

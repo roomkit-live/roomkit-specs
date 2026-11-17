@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "c8092dcdf29228a9414bca202501a90fac7c736358d3ea333b11221dce7f956e",
   "corpus_sha256": "bccdfd7c8d194b76cd5982a176b7f13b8a9e1e445539b374cded23b85b4fbcb5",
-  "python_commit": "b13b8650296e29c32cc25bae64edef2e8e735081",
+  "python_commit": "20532614d24f6d6f920a66e66e5fb3e3de4ddae6",
   "scenario_count": 2508,
   "sections": [
     {
@@ -66268,7 +66268,16 @@
             "Sandbox, planner, reasoning backends, realtime and media policy paths are outside this text-turn slice.",
             "No Rust, specialized-test, SQL-store or Redis-turn execution credit is inferred from the Python memory receipt."
           ],
-          "executions": []
+          "executions": [
+            {
+              "execution": "python-role-turns-2053261-memory",
+              "implementation": "python",
+              "commit": "20532614d24f6d6f920a66e66e5fb3e3de4ddae6",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -71546,6 +71555,15 @@
       "implementation_commit": "2b7515cd03aff0b36ebb5818e3c0cfd303f7a941",
       "rfc_commit": "07fd11f7db4a5d500935a3e90c373206bfa790ea",
       "corpus_commit": "51be25be9bb1ab1625f86c349b6a2b5f9ebe7e4b",
+      "backend": "memory",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-role-turns-2053261-memory",
+      "implementation": "python",
+      "implementation_commit": "20532614d24f6d6f920a66e66e5fb3e3de4ddae6",
+      "rfc_commit": "5b5430371fbddc902935fba6e86ef52b5a2f001f",
+      "corpus_commit": "7edbe4928663bf4711f95aaa1fbd36c0acdd2d10",
       "backend": "memory",
       "runtime": "asyncio"
     }
