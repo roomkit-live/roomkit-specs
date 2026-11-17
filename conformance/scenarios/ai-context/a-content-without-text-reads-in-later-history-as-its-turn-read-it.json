@@ -1,0 +1,293 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "ai-context/a-content-without-text-reads-in-later-history-as-its-turn-read-it",
+  "title": "A location, a voice message, a video and a template read in a model's later history as the turn they started read them, their text form",
+  "rules": [
+    "§6.4",
+    "§6.6"
+  ],
+  "notes": "PROBE (RMK-1743).",
+  "setup": {
+    "channels": [
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport"
+      },
+      {
+        "id": "blind",
+        "type": "ai",
+        "model": {
+          "rounds": [
+            {
+              "text": "Read 0."
+            },
+            {
+              "text": "Read 1."
+            },
+            {
+              "text": "Read 2."
+            },
+            {
+              "text": "Read 3."
+            },
+            {
+              "text": "Read 4."
+            }
+          ]
+        }
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "blind",
+            "category": "intelligence"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "ws",
+        "sender_id": "alice",
+        "content": {
+          "type": "location",
+          "latitude": 45.5,
+          "longitude": -73.6,
+          "label": "Head office"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "ws",
+        "sender_id": "alice",
+        "content": {
+          "type": "audio",
+          "url": "https://cdn.example.com/note.ogg",
+          "mime_type": "audio/ogg"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "ws",
+        "sender_id": "alice",
+        "content": {
+          "type": "video",
+          "url": "https://cdn.example.com/clip.mp4",
+          "mime_type": "video/mp4"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "ws",
+        "sender_id": "alice",
+        "content": {
+          "type": "template",
+          "template_id": "welcome"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "idle": true
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "ws",
+        "sender_id": "alice",
+        "content": {
+          "type": "text",
+          "body": "and now?"
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "idle": true
+    }
+  ],
+  "expect": {
+    "models": {
+      "blind": [
+        {
+          "messages": [
+            {
+              "role": "user",
+              "text": "[Location: Head office (45.5, -73.6)]"
+            }
+          ]
+        },
+        {
+          "messages": [
+            {
+              "role": "user",
+              "text": "[Location: Head office (45.5, -73.6)]"
+            },
+            {
+              "role": "assistant",
+              "text": "Read 0."
+            },
+            {
+              "role": "user",
+              "text": "[Voice message: https://cdn.example.com/note.ogg]"
+            }
+          ]
+        },
+        {
+          "messages": [
+            {
+              "role": "user",
+              "text": "[Location: Head office (45.5, -73.6)]"
+            },
+            {
+              "role": "assistant",
+              "text": "Read 0."
+            },
+            {
+              "role": "user",
+              "text": "[Voice message: https://cdn.example.com/note.ogg]"
+            },
+            {
+              "role": "assistant",
+              "text": "Read 1."
+            },
+            {
+              "role": "user",
+              "text": "[Video: https://cdn.example.com/clip.mp4]"
+            }
+          ]
+        },
+        {
+          "messages": [
+            {
+              "role": "user",
+              "text": "[Location: Head office (45.5, -73.6)]"
+            },
+            {
+              "role": "assistant",
+              "text": "Read 0."
+            },
+            {
+              "role": "user",
+              "text": "[Voice message: https://cdn.example.com/note.ogg]"
+            },
+            {
+              "role": "assistant",
+              "text": "Read 1."
+            },
+            {
+              "role": "user",
+              "text": "[Video: https://cdn.example.com/clip.mp4]"
+            },
+            {
+              "role": "assistant",
+              "text": "Read 2."
+            },
+            {
+              "role": "user",
+              "text": "[Template: welcome]"
+            }
+          ]
+        },
+        {
+          "messages": [
+            {
+              "role": "user",
+              "text": "[Location: Head office (45.5, -73.6)]"
+            },
+            {
+              "role": "assistant",
+              "text": "Read 0."
+            },
+            {
+              "role": "user",
+              "text": "[Voice message: https://cdn.example.com/note.ogg]"
+            },
+            {
+              "role": "assistant",
+              "text": "Read 1."
+            },
+            {
+              "role": "user",
+              "text": "[Video: https://cdn.example.com/clip.mp4]"
+            },
+            {
+              "role": "assistant",
+              "text": "Read 2."
+            },
+            {
+              "role": "user",
+              "text": "[Template: welcome]"
+            },
+            {
+              "role": "assistant",
+              "text": "Read 3."
+            },
+            {
+              "role": "user",
+              "text": "and now?"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

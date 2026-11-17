@@ -1,0 +1,153 @@
+{
+  "$schema": "../../scenario.schema.json",
+  "id": "streaming/a-stream-cut-from-outside-hands-its-reader-the-cut-text-s-row",
+  "title": "A streamed answer cut from outside hands the reader of its stream the row of the text it was handed, marked cancelled, before the cut ends the stream",
+  "rules": [
+    "§12.2 step 13s",
+    "§12.2 step 14s"
+  ],
+  "notes": "PROBE (RMK-1756).",
+  "setup": {
+    "channels": [
+      {
+        "id": "ws",
+        "type": "websocket",
+        "category": "transport",
+        "streams": true,
+        "deliver_stream": [
+          {
+            "hold_after": "Partial ",
+            "hold_gate": "read"
+          }
+        ]
+      },
+      {
+        "id": "web",
+        "type": "webhook",
+        "category": "transport"
+      },
+      {
+        "id": "agent",
+        "type": "ai",
+        "model": {
+          "rounds": [
+            {
+              "deltas": [
+                "Partial ",
+                "more."
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "rooms": [
+      {
+        "id": "room-1",
+        "bindings": [
+          {
+            "channel_id": "ws"
+          },
+          {
+            "channel_id": "web"
+          },
+          {
+            "channel_id": "agent",
+            "category": "intelligence"
+          }
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "web",
+        "sender_id": "alice",
+        "content": {
+          "type": "text",
+          "body": "Go."
+        },
+        "delivery_key": "k"
+      },
+      "background": true,
+      "as": "a"
+    },
+    {
+      "wait_for": "read"
+    },
+    {
+      "call": "cancel_delivery",
+      "key": "k",
+      "expect": {
+        "result": 1
+      }
+    },
+    {
+      "open": "read"
+    },
+    {
+      "await": "a"
+    },
+    {
+      "idle": true
+    }
+  ],
+  "expect": {
+    "timeline": {
+      "room-1": [
+        {
+          "id": "room-1#0",
+          "content": {
+            "body": "Go."
+          }
+        },
+        {
+          "id": "room-1#1",
+          "content": {
+            "body": "Partial "
+          },
+          "metadata": {
+            "cancelled": true
+          }
+        }
+      ]
+    },
+    "streamed": {
+      "room-1": {
+        "ws": [
+          {
+            "text": "Partial "
+          },
+          {
+            "row": {
+              "id": "room-1#1",
+              "content": {
+                "body": "Partial "
+              },
+              "metadata": {
+                "cancelled": true
+              }
+            }
+          }
+        ]
+      }
+    },
+    "deliveries": {
+      "room-1": {
+        "ws": [
+          {
+            "id": "room-1#0"
+          }
+        ],
+        "web": [
+          {
+            "id": "room-1#1"
+          }
+        ]
+      }
+    }
+  }
+}
