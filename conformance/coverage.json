@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "rfc_sha256": "6aa7e7208afbd83ea294c102a0d58787320057c56cf90b5ecd423552fb212e7c",
-  "corpus_sha256": "ae83f3915c54f3f177b65846559bc07ed57de8baf822f89c2c53b73541d50220",
+  "rfc_sha256": "52e3117052f0ae631a4b6a82914fa92f2278c1e9c358151557e1f948c518fc08",
+  "corpus_sha256": "a6a019692d2bb6d7a6ad8c9530d04e127492488d276d1b7abb25d810b931e1b9",
   "python_commit": "b50c50a782668fc1681e21bcec52a3d83bc0d8c0",
   "scenario_count": 2698,
   "sections": [
@@ -5653,11 +5653,13 @@
         "delivery/a-call-the-close-finds-under-way-returns-kit-closed-while-its-adopted-call-s-stream-is-read",
         "delivery/a-closing-kit-refuses-new-operations-and-ignores-cancellation",
         "delivery/a-deferred-event-s-wait-after-the-close-reads-its-own-end",
+        "delivery/a-later-event-s-answer-ready-first-is-stored-first",
         "delivery/a-set-the-kit-s-close-drops-still-stores-its-hooks-side-effects",
         "delivery/an-adopted-call-whose-set-the-close-drops-reads-its-hook-s-task-stored",
         "delivery/an-answer-from-after-broadcast-gets-grace-when-its-observer-closes-the-kit",
         "delivery/an-answer-from-response-gets-grace-when-its-observer-closes-the-kit",
         "delivery/an-observer-refused-during-close-starts-no-due-room-timer",
+        "delivery/the-next-event-s-turn-runs-while-the-turn-before-it-is-held",
         "discussion/a-closed-kit-refuses-regeneration-before-reading-its-store",
         "locks/the-hooks-side-effects-of-a-set-of-a-deleted-room-the-close-drops-stay-out-of-the-room-created-again",
         "status/a-status-posted-after-close-starts-no-room-hook",

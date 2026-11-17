@@ -7095,6 +7095,17 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
         same reentry budget as a buffered response. Every response that
         re-enters counts against that budget, a muted or read-only
         source's included, whose pass stores it BLOCKED (§7.5 rule 2).
+        Answers read from streams are not kept in their events' order:
+        a turn whose response is a stream returns it as the stream is
+        read, once its event's delivery set is over (§10.2), and the
+        next event's set, its agent's turn included, does not wait for
+        it (§6.4, §12.10.4). The next event's turn runs while that
+        answer is still being written, without what the answer has not
+        yet written in its history, and its own answer, ready first, is
+        stored first. A turn whose on_event() returns its responses
+        whole ends within its event's set, which the next event's set
+        waits for (§10.2). Only a channel that takes a room's turns one
+        at a time keeps streamed answers in their events' order (§6.4).
         # Relaxation vs pre-lane implementations: a concurrent inbound
         # event MAY commit between a trigger and its response. Ordering
         # guarantees are per-room index monotonicity and parent linkage —

@@ -9835,7 +9835,7 @@
     {
       "id": "core-routing-entry",
       "requirement": "RK-10.1-002",
-      "clause_sha256": "2083634fe095917361288c52cebe1828263afd3b3e2a8b2fa88fcbd2708ff745",
+      "clause_sha256": "f7733f876fdf61d6e26ef84e9ffcec8aead606dca09fc873d5ac366ff56ef54e",
       "scope": "Step 2 only: explicit/custom routing, room creation, scoped refusal, auto-attach defaults, correspondent record before hooks and re-routing.",
       "coverage": "partial",
       "review": "Python sources and their parameterizations were read before the RFC clauses and shared assertions. Twelve new cases and three strengthened cases observe explicit/custom selection, scoped refusal before attach, router arguments and calls, null answers, deterministic newest selection, and recording before hook refusal. Scripted address normalization is not a proof of every provider normalizer. Specialized source tests retain paging, lock waits, exact identity lookup counts, stale creation reads and ordered actions within a creation hook. No global conformance claim or backend equivalence follows from this link.",
@@ -12634,7 +12634,7 @@
     {
       "id": "named-preflight-before-rate-and-address-callbacks",
       "requirement": "RK-10.1-002",
-      "clause_sha256": "2083634fe095917361288c52cebe1828263afd3b3e2a8b2fa88fcbd2708ff745",
+      "clause_sha256": "f7733f876fdf61d6e26ef84e9ffcec8aead606dca09fc873d5ac366ff56ef54e",
       "scope": "Named calls draw their room work budget before the inbound rate bucket and address callbacks. A cap refusal consumes no rate token; an already empty bucket does not mask the cap; a rate refusal still consumes one work unit.",
       "coverage": "partial",
       "review": "The three shared cases passed on Python before the Rust change. Native Python and Rust witnesses cover address callbacks in delivery, locked, off-lock and observer work, competition for the last unit, a scope read outliving its observer, and once-only charging through shared delegation. The pinned scenario setup also checks every nested call result. This link records only the explicitly linked expectations and source assertions, not the whole inbound pipeline.",
