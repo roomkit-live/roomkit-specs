@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "663efc3c493c3cd465b2d1ad5cc68f15ea24126557c58e90278dd11a016aa24f",
-  "corpus_sha256": "6e24649af98091876eea6f5f70cc338aa038e870535ad8e96bae106717e498be",
+  "corpus_sha256": "ff9693ff8ed6b586f3ca3a4f12c55f237e8490f0597f330a61d2cacf1027dae5",
   "python_commit": "b50c50a782668fc1681e21bcec52a3d83bc0d8c0",
-  "scenario_count": 2934,
+  "scenario_count": 2936,
   "sections": [
     {
       "section": "0",
@@ -844,6 +844,7 @@
         "streaming/a-model-s-reasoning-between-its-calls-stays-in-its-order",
         "streaming/a-model-s-reasoning-reaches-a-streaming-channel-before-its-text",
         "streaming/a-reader-that-stops-keeps-what-the-generations-used",
+        "streaming/a-stream-cut-from-outside-ends-its-reader-s-stream-with-the-cut-row",
         "streaming/an-answer-streams-to-its-first-streaming-target-and-is-delivered-whole-to-the-others",
         "streaming/each-generation-tells-a-streaming-channel-what-it-used",
         "streaming/rows-reach-the-others",
@@ -1168,6 +1169,7 @@
         "acp/usage-two-agents-untrusted",
         "acp/usage-unchanged-counters",
         "acp/usage-untrusted-envelope",
+        "ai-context/a-content-without-text-reads-in-later-history-as-its-turn-read-it",
         "ai-external-handler/close-during-decision-drains-cancelled-report-non-streaming",
         "ai-external-handler/close-during-decision-drains-cancelled-report-streaming",
         "ai-external-handler/cut-at-start-keeps-known-failure-non-streaming",
@@ -2040,6 +2042,7 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "ai-context/a-content-without-text-reads-in-later-history-as-its-turn-read-it",
         "appendix-b/b6-edit-with-fallback",
         "appendix-b/b7-delete-with-fallback",
         "author-images/a-copy-of-a-media-or-location-label-reads-as-the-runtime-s",
@@ -5260,6 +5263,7 @@
         "streaming/a-row-stored-after-its-agent-is-detached-is-blocked",
         "streaming/a-row-stored-after-its-agent-is-made-read-only-is-blocked",
         "streaming/a-row-stored-after-its-agent-is-muted-is-blocked",
+        "streaming/a-stream-cut-from-outside-ends-its-reader-s-stream-with-the-cut-row",
         "streaming/a-stream-reaches-an-outbound-only-transport-and-no-inbound-only-one",
         "streaming/a-stream-reaches-no-transport-its-agent-s-binding-excludes",
         "streaming/a-stream-row-under-an-internal-answer-scope-is-stored-for-no-channel",
