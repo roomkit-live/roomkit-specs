@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "2e7eb2183826be35f855b77fb6483e9796d8bf25",
+  "python_commit": "1f884dcf30c0d2f0a3524114cc2568f82c57a3c6",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -24241,6 +24241,287 @@
         "The broad provider interface remains partial; context fields, served-call markers, vendor protocols and unrelated methods are outside this slice.",
         "No automatic persistence of response tasks or observations is inferred. History intentionally omits the structured copy while replaying the recorded outcome.",
         "Native Rust and specialized Python execution logs are retained separately; this link creates no scenario, backend or runtime execution receipt."
+      ]
+    },
+    {
+      "id": "phase4-ai-provider-room-context",
+      "requirement": "RK-6.7-002",
+      "clause_sha256": "365777516b21124a8fbe5191858dae326893a42301b1ed32c7262edf0a770cad",
+      "coverage": "partial",
+      "scope": "AIContext room snapshots and outgoing target capability metadata, including empty targets, selection, intersections and preservation through hooks and interleaved tool rounds.",
+      "review": "Independent source and full Rust reviews accepted the 32 shared scenarios and native twins. Distinct per-room capabilities and distinct per-field limits prevent false-positive isolation and minimum checks. Full room snapshots and independent hook replacements are native proofs; no object-identity promise is added.",
+      "assertions": [
+        {
+          "scenario": "ai-context/a-disabled-target-still-supplies-capabilities-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "3dd67d70fcffff467059e6e6a43b5ed9a51ffcdfc76cec4ffa3962d5706ce3c0",
+          "scenario_sha256": "e53634242c52d9a6bf3405da875d0b57d0e016de52f8ce4f821db843f2133d4f",
+          "proves": "A disabled target still supplies capabilities (non-streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/a-disabled-target-still-supplies-capabilities-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "3dd67d70fcffff467059e6e6a43b5ed9a51ffcdfc76cec4ffa3962d5706ce3c0",
+          "scenario_sha256": "67965e78d0fd41819a9f6c3978531422178b7748e3de5da3c32d8b48992243e9",
+          "proves": "A disabled target still supplies capabilities (streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/a-muted-target-still-supplies-capabilities-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "3dd67d70fcffff467059e6e6a43b5ed9a51ffcdfc76cec4ffa3962d5706ce3c0",
+          "scenario_sha256": "c5825a1d475264ec167408793c45d763bb0532863076ec4a357fbed7e236cb4a",
+          "proves": "A muted target still supplies capabilities (non-streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/a-muted-target-still-supplies-capabilities-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "3dd67d70fcffff467059e6e6a43b5ed9a51ffcdfc76cec4ffa3962d5706ce3c0",
+          "scenario_sha256": "1f6caa6a441f49f2fb42cb02bcf3888654400a216e2ce78ba08937e143c92bfb",
+          "proves": "A muted target still supplies capabilities (streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/a-private-target-still-supplies-capabilities-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "3dd67d70fcffff467059e6e6a43b5ed9a51ffcdfc76cec4ffa3962d5706ce3c0",
+          "scenario_sha256": "e89fe86f4eed8a7b5310f0fc8fe7872f52c5ce6b69cde66a3f4f5e07081f9a93",
+          "proves": "A private target still supplies capabilities (non-streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/a-private-target-still-supplies-capabilities-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "3dd67d70fcffff467059e6e6a43b5ed9a51ffcdfc76cec4ffa3962d5706ce3c0",
+          "scenario_sha256": "e585d32a7e02bd52ac475883e3608b73aba0899e6dd70d2ec91b5f3f613fc693",
+          "proves": "A private target still supplies capabilities (streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/a-single-bidirectional-transport-supplies-all-capabilities-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "3dd67d70fcffff467059e6e6a43b5ed9a51ffcdfc76cec4ffa3962d5706ce3c0",
+          "scenario_sha256": "36ac58efc12818808d7c389de9f8ca230eb5173c386a6f1ca8f6fc967d62ece0",
+          "proves": "A single bidirectional transport supplies all capabilities (non-streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/a-single-bidirectional-transport-supplies-all-capabilities-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "3dd67d70fcffff467059e6e6a43b5ed9a51ffcdfc76cec4ffa3962d5706ce3c0",
+          "scenario_sha256": "0198a2a09099a6a0d8b09685d8edc67568d482bb54c3b12e8fa23224ddc55e96",
+          "proves": "A single bidirectional transport supplies all capabilities (streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/a-single-outbound-transport-supplies-all-capabilities-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "3dd67d70fcffff467059e6e6a43b5ed9a51ffcdfc76cec4ffa3962d5706ce3c0",
+          "scenario_sha256": "ef8217c6e32ee8882bfa233ff6d4ea9cf7afd68a8ce24b3ca491df032755913b",
+          "proves": "A single outbound transport supplies all capabilities (non-streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/a-single-outbound-transport-supplies-all-capabilities-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "3dd67d70fcffff467059e6e6a43b5ed9a51ffcdfc76cec4ffa3962d5706ce3c0",
+          "scenario_sha256": "1faa758731dec60cd9d43bd34c5446ecf282f6a1314f722d75bb5a3e13580f13",
+          "proves": "A single outbound transport supplies all capabilities (streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/a-write-only-target-still-supplies-capabilities-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "3dd67d70fcffff467059e6e6a43b5ed9a51ffcdfc76cec4ffa3962d5706ce3c0",
+          "scenario_sha256": "f1f6ccab641182bc2f01aac44c1b525139edc96184a80d4d55fd4a3c4fdf0860",
+          "proves": "A write only target still supplies capabilities (non-streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/a-write-only-target-still-supplies-capabilities-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "3dd67d70fcffff467059e6e6a43b5ed9a51ffcdfc76cec4ffa3962d5706ce3c0",
+          "scenario_sha256": "d6ec2170799ecd6f14f739591080b4c06eb9d9ea11a24e32cc40f3fc5fe077e9",
+          "proves": "A write only target still supplies capabilities (streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/bounded-first-target-survives-unlimited-second-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "44b4c3d69d54a0d1bcb2c4a071b07c0519e7e958b362c97d033166fb03d3b3ee",
+          "scenario_sha256": "8d798d0b7f04a97d596364c8993e22181654c1c2d62c798b35ce3e4e5671b409",
+          "proves": "Bounded first target survives unlimited second (non-streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/bounded-first-target-survives-unlimited-second-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "44b4c3d69d54a0d1bcb2c4a071b07c0519e7e958b362c97d033166fb03d3b3ee",
+          "scenario_sha256": "db55152805ad451409d99f5f933ab9e93b353e2e77fb9bec89bcae758254d912",
+          "proves": "Bounded first target survives unlimited second (streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/bounded-second-target-narrows-every-limit-and-flag-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "faae02673c7ec24c3a874898c0c3125c7fa8c668f4061dd9559ae1f84ddb0976",
+          "scenario_sha256": "65c2fb4e67865d1ed30c69525e5cefe26c66d87791b8b4b197dba1b5d0e0f5fc",
+          "proves": "Bounded second target narrows every limit and flag (non-streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/bounded-second-target-narrows-every-limit-and-flag-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "faae02673c7ec24c3a874898c0c3125c7fa8c668f4061dd9559ae1f84ddb0976",
+          "scenario_sha256": "c39ffcfd63882deaf4701aa7f53c81eb3cee9fbbb1a879161daaef049c028477",
+          "proves": "Bounded second target narrows every limit and flag (streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/disjoint-media-still-leave-present-target-capabilities-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "7a7e853786e40ab982ca9ed15a328117c59004fe949c775cae2e86650f5cc989",
+          "scenario_sha256": "dfa874f4cb01f5895cb566be33cf6c39e27c149452b99cbc8ae2f49883ddebf7",
+          "proves": "Disjoint media still leave present target capabilities (non-streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/disjoint-media-still-leave-present-target-capabilities-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "7a7e853786e40ab982ca9ed15a328117c59004fe949c775cae2e86650f5cc989",
+          "scenario_sha256": "cb77011074b9a314f7e947c0f21238b0dd1f91dac5ed4d550fc79cd08535eb8e",
+          "proves": "Disjoint media still leave present target capabilities (streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/each-distinct-limit-keeps-its-own-minimum-first-target-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "6fa31ca5f998202bbc43976c1525a17c2b7a0fc05d63adc034bac955e466ac67",
+          "scenario_sha256": "bd302bf8e3059b467474fb4c8017ea66fc7f2ce215ff9bdf70655e1725a8979b",
+          "proves": "Each distinct limit keeps its own minimum (first target, non-streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/each-distinct-limit-keeps-its-own-minimum-first-target-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "6fa31ca5f998202bbc43976c1525a17c2b7a0fc05d63adc034bac955e466ac67",
+          "scenario_sha256": "9e23918bd5746a0a34370da776a75dc096823bf969a6b2650c2d87fb00b5fad5",
+          "proves": "Each distinct limit keeps its own minimum (first target, streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/each-distinct-limit-keeps-its-own-minimum-second-target-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "6fa31ca5f998202bbc43976c1525a17c2b7a0fc05d63adc034bac955e466ac67",
+          "scenario_sha256": "57d4ee6c0e0c2ac6802d25d44f97c10b82c7b15c4bc5e8619418153dfa3e6aaf",
+          "proves": "Each distinct limit keeps its own minimum (second target, non-streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/each-distinct-limit-keeps-its-own-minimum-second-target-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "6fa31ca5f998202bbc43976c1525a17c2b7a0fc05d63adc034bac955e466ac67",
+          "scenario_sha256": "476cb6af1936506f1801307266dfe5f680583148e8ce6e9e66f77659ffc719c2",
+          "proves": "Each distinct limit keeps its own minimum (second target, streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/interleaved-rooms-and-hook-copies-preserve-provider-context-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "ac2ae576f6f12f1788e95ce32fe998bfdea693d79e0d45c26d375073e3badcf5",
+          "scenario_sha256": "4009dd8b6a94ad62c349a257a1b288011571992ceb13e05d00d11afb87a49896",
+          "proves": "Interleaved rooms and hook copies preserve provider context (non-streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/interleaved-rooms-and-hook-copies-preserve-provider-context-non-streaming",
+          "pointer": "/expect/hooks/generation",
+          "sha256": "06a7ddd12bd7d61116bf381710f37f7967dc76668b6a2bb58e986f7f0d52b4a7",
+          "scenario_sha256": "4009dd8b6a94ad62c349a257a1b288011571992ceb13e05d00d11afb87a49896",
+          "proves": "Interleaved rooms and hook copies preserve provider context (non-streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/interleaved-rooms-and-hook-copies-preserve-provider-context-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "ac2ae576f6f12f1788e95ce32fe998bfdea693d79e0d45c26d375073e3badcf5",
+          "scenario_sha256": "8121e2254d31f83f2da39f8ee3db9f4563951090675ec90ae352053990ccd076",
+          "proves": "Interleaved rooms and hook copies preserve provider context (streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/interleaved-rooms-and-hook-copies-preserve-provider-context-streaming",
+          "pointer": "/expect/hooks/generation",
+          "sha256": "06a7ddd12bd7d61116bf381710f37f7967dc76668b6a2bb58e986f7f0d52b4a7",
+          "scenario_sha256": "8121e2254d31f83f2da39f8ee3db9f4563951090675ec90ae352053990ccd076",
+          "proves": "Interleaved rooms and hook copies preserve provider context (streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/no-outgoing-transport-keeps-targets-absent-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "165942cff9d2f7adb3229ce6f6e57a7accc91da60d19203320eadc7ce8967d67",
+          "scenario_sha256": "430486adce0679e20d020a04decd01c59bdb536480ca16de5e75ac9f6cd58c44",
+          "proves": "No outgoing transport keeps targets absent (non-streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/no-outgoing-transport-keeps-targets-absent-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "165942cff9d2f7adb3229ce6f6e57a7accc91da60d19203320eadc7ce8967d67",
+          "scenario_sha256": "c29dfe645f4ffc128fa8c3b3dfd04834c6cdb09bd6a43550052f8af3120b36f6",
+          "proves": "No outgoing transport keeps targets absent (streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/reversing-targets-retains-the-other-formats-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "7a65849f9e29e5bebdaed955e3760bf37bfde106c415d40a2dd563e2aef9ffc7",
+          "scenario_sha256": "aeefe3c0b7d775dfb3dea23dd15430293de27198d428af89e65a409c94ad5b86",
+          "proves": "Reversing targets retains the other formats (non-streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/reversing-targets-retains-the-other-formats-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "7a65849f9e29e5bebdaed955e3760bf37bfde106c415d40a2dd563e2aef9ffc7",
+          "scenario_sha256": "6c90a5f4fd21ea6c5fa06075016fc4ebc4439b093c18f63ad07357a98c040333",
+          "proves": "Reversing targets retains the other formats (streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/two-bounded-targets-use-smaller-values-and-and-flags-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "5de67f928f0e87444b7c0733247ead5e041cfb6d9396b95581db5b681d7d3a98",
+          "scenario_sha256": "cd1d3847f2ac63201fe732ab07949cf517cd23d2ac8627180f5d8a96e7c89d93",
+          "proves": "Two bounded targets use smaller values and and flags (non-streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/two-bounded-targets-use-smaller-values-and-and-flags-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "5de67f928f0e87444b7c0733247ead5e041cfb6d9396b95581db5b681d7d3a98",
+          "scenario_sha256": "d9c74761129d6f9ba9bc15337d356d6e279a81502a17fbf7bce2f2f51626b5d4",
+          "proves": "Two bounded targets use smaller values and and flags (streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/unlimited-targets-retain-first-target-formats-non-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "28857e20f0015307f9d9c1c6dcd901fe3fd61becf7d7e08c321f61145574bd01",
+          "scenario_sha256": "a90a5ffe9bcc126eefb577ebc917b8865cac38e798f106f16e45d3d7fb4a02cb",
+          "proves": "Unlimited targets retain first target formats (non-streaming); observes room and target metadata at the provider or generation-hook boundary."
+        },
+        {
+          "scenario": "ai-context/unlimited-targets-retain-first-target-formats-streaming",
+          "pointer": "/expect/models/agent",
+          "sha256": "28857e20f0015307f9d9c1c6dcd901fe3fd61becf7d7e08c321f61145574bd01",
+          "scenario_sha256": "00a6900db4a2e13d2f3e2445d7e08528acd959354afa75cff62e8df959fd3981",
+          "proves": "Unlimited targets retain first target formats (streaming); observes room and target metadata at the provider or generation-hook boundary."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/test_channels/test_ai_context_fields.py::test_full_room_and_target_fields_reach_every_round_after_the_hook",
+          "sha256": "dc37006fdcbda6988f634c889b09968f65b427d240ea22918757845e4e12c608",
+          "proves": "Both provider modes read all six room-context fields and independently replaced target fields on both tool rounds; source snapshots remain unchanged. Supplied self, inbound and intelligence bindings are excluded, while a disabled/output-muted transport still contributes."
+        },
+        {
+          "nodeid": "tests/test_host_post.py::test_a_transport_that_does_not_send_narrows_nothing_an_agent_may_answer_with",
+          "sha256": "baaf54ca86037edcca25281cd8294b661e96d6bf6ef0baad2a97e46424189c64",
+          "proves": "Host and inbound-only transports do not narrow the outgoing target capabilities; the native assertion excludes target_capabilities.media_types, which the shared cases assert separately."
+        },
+        {
+          "nodeid": "tests/test_ai_stream_contract.py::test_interleaved_rounds_keep_room_state_and_usage_separate",
+          "sha256": "e3af4487326eb111c0dea10be9cf4a77870e8e9461a81d66c94ace9053499b98",
+          "proves": "Interleaved streamed provider calls retain their room IDs, tool rooms, reports and usage; the complete snapshot is established by the separate native test."
+        },
+        {
+          "nodeid": "tests/conformance/test_ai_context_observer.py::test_model_observer_keeps_absence_and_copies_the_room_at_request_time",
+          "sha256": "ea2534682751708714ad0c39f17b10f141e511b6d609e525fc296e2b5de19211",
+          "proves": "Fixture observations explicitly keep absent fields and snapshot the room at provider request time."
+        },
+        {
+          "nodeid": "tests/conformance/test_ai_context_observer.py::test_context_history_boundary_uses_its_room_lifecycle_indexes",
+          "sha256": "7fbeb26358a10bd3ff7a44ab79eecfcdeb6735fe1a8eda94aa3851f16a849ef2",
+          "proves": "Fixture normalization preserves unknown and whole-history boundaries and removes only the snapshot room's lifecycle indexes from a positive boundary."
+        }
+      ],
+      "missing": [
+        "The broad provider-interface unit remains partial; served-call markers and unrelated vendor/provider methods are outside this slice.",
+        "Capability fields are metadata only; this slice proves no media or realtime delivery.",
+        "The shared interleaving assertions do not claim all recent_events or author_register values; the native full-snapshot test supplies that separate evidence.",
+        "Native Rust executions are retained separately and create no backend/runtime execution receipt in this inventory."
       ]
     }
   ],
@@ -682612,6 +682893,326 @@
         {
           "scenario": "role-policy/the-named-record-selects-the-role-streaming",
           "sha256": "56835e0b55b183a3c65c3c3d37adc7c55aa45477f8a83771c66dff99c49427a4",
+          "outcome": "passed"
+        }
+      ]
+    },
+    {
+      "id": "python-ai-provider-context-1f884dc-memory",
+      "implementation": "python",
+      "implementation_commit": "1f884dcf30c0d2f0a3524114cc2568f82c57a3c6",
+      "rfc_commit": "fe41250ba392be60e656a56649ea43f6fa54a265",
+      "corpus_commit": "74777ee322fe465c191b85e5db9a7fe67d39adc6",
+      "rfc_sha256": "b24d906b75319bb539e26b61ed37b9f5be50a434aa864d58b0aec577e151d5d7",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "env",
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "PYTHONPATH=src",
+        "taskset",
+        "-c",
+        "16-23",
+        "uv",
+        "run",
+        "--python",
+        "3.12",
+        "pytest",
+        "tests/conformance/test_conformance.py",
+        "-k",
+        "ai-context or copy",
+        "-q",
+        "--junitxml=python-context-receipt.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-ai-provider-context-1f884dc.xml",
+        "format": "pytest_junit",
+        "sha256": "ccf09e8bfcdc194a2c670ba20ebdb3163c78ac1ba6ef805a4ebf5a8d6af40ffc"
+      },
+      "results": [
+        {
+          "scenario": "acp/standalone-live-config-copy-refused",
+          "sha256": "52e0eafddd1bec893d9f44b13ba4fb934bf4cea320caceeb9ba9215cb2c719d2",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/a-disabled-target-still-supplies-capabilities-non-streaming",
+          "sha256": "e53634242c52d9a6bf3405da875d0b57d0e016de52f8ce4f821db843f2133d4f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/a-disabled-target-still-supplies-capabilities-streaming",
+          "sha256": "67965e78d0fd41819a9f6c3978531422178b7748e3de5da3c32d8b48992243e9",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/a-muted-target-still-supplies-capabilities-non-streaming",
+          "sha256": "c5825a1d475264ec167408793c45d763bb0532863076ec4a357fbed7e236cb4a",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/a-muted-target-still-supplies-capabilities-streaming",
+          "sha256": "1f6caa6a441f49f2fb42cb02bcf3888654400a216e2ce78ba08937e143c92bfb",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/a-private-target-still-supplies-capabilities-non-streaming",
+          "sha256": "e89fe86f4eed8a7b5310f0fc8fe7872f52c5ce6b69cde66a3f4f5e07081f9a93",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/a-private-target-still-supplies-capabilities-streaming",
+          "sha256": "e585d32a7e02bd52ac475883e3608b73aba0899e6dd70d2ec91b5f3f613fc693",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/a-single-bidirectional-transport-supplies-all-capabilities-non-streaming",
+          "sha256": "36ac58efc12818808d7c389de9f8ca230eb5173c386a6f1ca8f6fc967d62ece0",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/a-single-bidirectional-transport-supplies-all-capabilities-streaming",
+          "sha256": "0198a2a09099a6a0d8b09685d8edc67568d482bb54c3b12e8fa23224ddc55e96",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/a-single-outbound-transport-supplies-all-capabilities-non-streaming",
+          "sha256": "ef8217c6e32ee8882bfa233ff6d4ea9cf7afd68a8ce24b3ca491df032755913b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/a-single-outbound-transport-supplies-all-capabilities-streaming",
+          "sha256": "1faa758731dec60cd9d43bd34c5446ecf282f6a1314f722d75bb5a3e13580f13",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/a-write-only-target-still-supplies-capabilities-non-streaming",
+          "sha256": "f1f6ccab641182bc2f01aac44c1b525139edc96184a80d4d55fd4a3c4fdf0860",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/a-write-only-target-still-supplies-capabilities-streaming",
+          "sha256": "d6ec2170799ecd6f14f739591080b4c06eb9d9ea11a24e32cc40f3fc5fe077e9",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/bounded-first-target-survives-unlimited-second-non-streaming",
+          "sha256": "8d798d0b7f04a97d596364c8993e22181654c1c2d62c798b35ce3e4e5671b409",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/bounded-first-target-survives-unlimited-second-streaming",
+          "sha256": "db55152805ad451409d99f5f933ab9e93b353e2e77fb9bec89bcae758254d912",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/bounded-second-target-narrows-every-limit-and-flag-non-streaming",
+          "sha256": "65c2fb4e67865d1ed30c69525e5cefe26c66d87791b8b4b197dba1b5d0e0f5fc",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/bounded-second-target-narrows-every-limit-and-flag-streaming",
+          "sha256": "c39ffcfd63882deaf4701aa7f53c81eb3cee9fbbb1a879161daaef049c028477",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/disjoint-media-still-leave-present-target-capabilities-non-streaming",
+          "sha256": "dfa874f4cb01f5895cb566be33cf6c39e27c149452b99cbc8ae2f49883ddebf7",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/disjoint-media-still-leave-present-target-capabilities-streaming",
+          "sha256": "cb77011074b9a314f7e947c0f21238b0dd1f91dac5ed4d550fc79cd08535eb8e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/each-distinct-limit-keeps-its-own-minimum-first-target-non-streaming",
+          "sha256": "bd302bf8e3059b467474fb4c8017ea66fc7f2ce215ff9bdf70655e1725a8979b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/each-distinct-limit-keeps-its-own-minimum-first-target-streaming",
+          "sha256": "9e23918bd5746a0a34370da776a75dc096823bf969a6b2650c2d87fb00b5fad5",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/each-distinct-limit-keeps-its-own-minimum-second-target-non-streaming",
+          "sha256": "57d4ee6c0e0c2ac6802d25d44f97c10b82c7b15c4bc5e8619418153dfa3e6aaf",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/each-distinct-limit-keeps-its-own-minimum-second-target-streaming",
+          "sha256": "476cb6af1936506f1801307266dfe5f680583148e8ce6e9e66f77659ffc719c2",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/interleaved-rooms-and-hook-copies-preserve-provider-context-non-streaming",
+          "sha256": "4009dd8b6a94ad62c349a257a1b288011571992ceb13e05d00d11afb87a49896",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/interleaved-rooms-and-hook-copies-preserve-provider-context-streaming",
+          "sha256": "8121e2254d31f83f2da39f8ee3db9f4563951090675ec90ae352053990ccd076",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/no-outgoing-transport-keeps-targets-absent-non-streaming",
+          "sha256": "430486adce0679e20d020a04decd01c59bdb536480ca16de5e75ac9f6cd58c44",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/no-outgoing-transport-keeps-targets-absent-streaming",
+          "sha256": "c29dfe645f4ffc128fa8c3b3dfd04834c6cdb09bd6a43550052f8af3120b36f6",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/reversing-targets-retains-the-other-formats-non-streaming",
+          "sha256": "aeefe3c0b7d775dfb3dea23dd15430293de27198d428af89e65a409c94ad5b86",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/reversing-targets-retains-the-other-formats-streaming",
+          "sha256": "6c90a5f4fd21ea6c5fa06075016fc4ebc4439b093c18f63ad07357a98c040333",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/two-bounded-targets-use-smaller-values-and-and-flags-non-streaming",
+          "sha256": "cd1d3847f2ac63201fe732ab07949cf517cd23d2ac8627180f5d8a96e7c89d93",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/two-bounded-targets-use-smaller-values-and-and-flags-streaming",
+          "sha256": "d9c74761129d6f9ba9bc15337d356d6e279a81502a17fbf7bce2f2f51626b5d4",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/unlimited-targets-retain-first-target-formats-non-streaming",
+          "sha256": "a90a5ffe9bcc126eefb577ebc917b8865cac38e798f106f16e45d3d7fb4a02cb",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "ai-context/unlimited-targets-retain-first-target-formats-streaming",
+          "sha256": "00a6900db4a2e13d2f3e2445d7e08528acd959354afa75cff62e8df959fd3981",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "instructions/an-agent-s-copy-of-an-instruction-runs-no-hook-and-is-no-activity",
+          "sha256": "7f4e60674262e918fc27e7af8e6344828326bef8c33f8c07468247b16cda699a",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "memory/a-generation-hook-copy-keeps-identical-questions-in-place",
+          "sha256": "998321897071232950d3caf5b3aa192f12e6990c871da449b7456ec1b6fedcaf",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "memory/a-generation-hook-copy-keeps-the-deferred-input",
+          "sha256": "6f1175d66e6e6504ed2758a902bf788085c5ad8bb4524e493d81779885e0b7de",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "memory/a-generation-hook-copy-keeps-the-input-after-an-overflow",
+          "sha256": "327c10ad88c1c67cf04c04b15685fb1b3e68f423285deaf83be54d56d4b3b82d",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "orchestration/a-mark-read-across-any-punctuation-between-its-letters-or-words-is-a-copy",
+          "sha256": "00cba15e23a37e926d9ca8f8d77abfe0ac4f3d08ae0283b0cf7f484a5313f19e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "orchestration/a-mark-s-opening-behind-any-opening-bracket-is-a-copy-the-notes-header-s-included",
+          "sha256": "b113f781bb5c9f1c0c338794e833abc0434c89c40564b9ea3f3ea2f295c8c752",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "orchestration/a-two-word-mark-opening-written-as-one-identifier-is-code-not-a-copy",
+          "sha256": "412156fec1fc7fe916aa659906623205bd077537e6943a55a044bd24d9396c9c",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tasks/a-copy-of-a-hand-back-header-is-replaced-and-the-runtime-s-is-kept",
+          "sha256": "59045af4eb8999a8e1b004b7b0b97607dd2db5714d859c73e3b3f58dd541ce1e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/a-blocked-call-publishes-no-handler-copy",
+          "sha256": "2d64c2fec97d99d912ea9e2cd0edabee51bf295b9d8d8079f998a947681651c5",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/a-cancelled-call-publishes-no-handler-copy",
+          "sha256": "05aecfdcee9d5580a863b134a7e18de870a20347568653665648333a51e5fb20",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/a-failed-closed-hook-withholds-the-copy",
+          "sha256": "923db3ca138d1b054c2960b3f3a7634130d9e6309949be9a6d440832a430354d",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/a-failed-handler-publishes-no-copy",
+          "sha256": "588131b79282216358df864c645519d480dc32e0d559ea8c50864b70d71672c8",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/a-handler-copy-reaches-the-hook-and-row-non-streaming",
+          "sha256": "16e63e31c862eefc34f0922c598bc7859aff9eccb367cd530515147d1a2cb4c5",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/a-handler-copy-reaches-the-hook-and-row-streaming",
+          "sha256": "b4083274c0216f7c9ec77598dd2c9cd51e2d83a856633e4a06d3d703e0f0f4ef",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/a-hook-clears-the-handler-copy",
+          "sha256": "2b49f36a55de4a86aedc037cb752c46632d3c0abc2c22d92605a7f8e06854a93",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/a-hook-replaces-the-handler-copy",
+          "sha256": "9ebdd03b0aea010461eb95889d9a2d7dd1adebd1eeea8dd5e19b5df1736462cf",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/a-non-object-hook-copy-is-dropped",
+          "sha256": "8bd9ab1d0c9870ac07a4184973edf774dcbd72cc268e937589d5b06f43c5b462",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/a-refused-handler-publishes-no-copy",
+          "sha256": "a49ebd932768f5f49394d0005c3dac52ea2eb60e129d27f0741fd4e803cfef6b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/a-text-only-rewrite-keeps-the-handler-copy",
+          "sha256": "176644ef08c3813da661f8efd3d7e865937426ad676ed6c3a7b4370fe42f4fdf",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/an-absent-copy-remains-null",
+          "sha256": "f8c2de1adb448fc97672bafae9e43678acab6cc861a8ea8b5ed1ff88bb2bf95b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/an-empty-copy-remains-an-empty-object",
+          "sha256": "9d6417451f9c4f5afa20f1f183c65ee127da48127f082a0daada8c080180d41a",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tool-structured/an-unserved-handler-publishes-no-copy",
+          "sha256": "dd0d3609e403a1021bc4c1d58df26b939ad96eb4c3de1d922b5df4167ddc80a8",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tools/a-copy-of-the-replayed-images-header-is-replaced-and-the-runtime-s-is-kept",
+          "sha256": "a6548bc74b9add6fac14085a6c535c0844cdec097753b875ab8d76bdeac4aa8a",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "tools/an-on-tool-call-hook-s-structured-copy-reaches-the-end-row",
+          "sha256": "827e738195bf9c97b62b9ad3278a5dd07a46e757fa10072dec236ef29d0df719",
           "outcome": "passed"
         }
       ]

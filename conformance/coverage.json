@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "b24d906b75319bb539e26b61ed37b9f5be50a434aa864d58b0aec577e151d5d7",
   "corpus_sha256": "47aa1f34e49b77759ca91600338f72fc071b8aa60fcbffb77896fd7de492e3ea",
-  "python_commit": "2e7eb2183826be35f855b77fb6483e9796d8bf25",
+  "python_commit": "1f884dcf30c0d2f0a3524114cc2568f82c57a3c6",
   "scenario_count": 2540,
   "sections": [
     {
@@ -16986,6 +16986,14 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-ai-provider-context-1f884dc-memory",
+              "implementation": "python",
+              "commit": "1f884dcf30c0d2f0a3524114cc2568f82c57a3c6",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "recorded_pass"
             }
           ]
         }
@@ -17439,6 +17447,14 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-ai-provider-context-1f884dc-memory",
+              "implementation": "python",
+              "commit": "1f884dcf30c0d2f0a3524114cc2568f82c57a3c6",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -17904,6 +17920,14 @@
               "backend": "memory+redis-turns",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-ai-provider-context-1f884dc-memory",
+              "implementation": "python",
+              "commit": "1f884dcf30c0d2f0a3524114cc2568f82c57a3c6",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         },
@@ -19416,6 +19440,27 @@
             "Native Rust and specialized Python execution logs are retained separately; this link creates no scenario, backend or runtime execution receipt."
           ],
           "executions": []
+        },
+        {
+          "id": "phase4-ai-provider-room-context",
+          "scope": "AIContext room snapshots and outgoing target capability metadata, including empty targets, selection, intersections and preservation through hooks and interleaved tool rounds.",
+          "coverage": "partial",
+          "missing": [
+            "The broad provider-interface unit remains partial; served-call markers and unrelated vendor/provider methods are outside this slice.",
+            "Capability fields are metadata only; this slice proves no media or realtime delivery.",
+            "The shared interleaving assertions do not claim all recent_events or author_register values; the native full-snapshot test supplies that separate evidence.",
+            "Native Rust executions are retained separately and create no backend/runtime execution receipt in this inventory."
+          ],
+          "executions": [
+            {
+              "execution": "python-ai-provider-context-1f884dc-memory",
+              "implementation": "python",
+              "commit": "1f884dcf30c0d2f0a3524114cc2568f82c57a3c6",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            }
+          ]
         }
       ]
     },
@@ -31928,6 +31973,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-ai-provider-context-1f884dc-memory",
+              "implementation": "python",
+              "commit": "1f884dcf30c0d2f0a3524114cc2568f82c57a3c6",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -37304,6 +37357,14 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            },
+            {
+              "execution": "python-ai-provider-context-1f884dc-memory",
+              "implementation": "python",
+              "commit": "1f884dcf30c0d2f0a3524114cc2568f82c57a3c6",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -71672,6 +71733,15 @@
       "implementation_commit": "20532614d24f6d6f920a66e66e5fb3e3de4ddae6",
       "rfc_commit": "5b5430371fbddc902935fba6e86ef52b5a2f001f",
       "corpus_commit": "7edbe4928663bf4711f95aaa1fbd36c0acdd2d10",
+      "backend": "memory",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-ai-provider-context-1f884dc-memory",
+      "implementation": "python",
+      "implementation_commit": "1f884dcf30c0d2f0a3524114cc2568f82c57a3c6",
+      "rfc_commit": "fe41250ba392be60e656a56649ea43f6fa54a265",
+      "corpus_commit": "74777ee322fe465c191b85e5db9a7fe67d39adc6",
       "backend": "memory",
       "runtime": "asyncio"
     }
