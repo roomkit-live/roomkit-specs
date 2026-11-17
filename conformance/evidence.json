@@ -9835,7 +9835,7 @@
     {
       "id": "core-routing-entry",
       "requirement": "RK-10.1-002",
-      "clause_sha256": "f7733f876fdf61d6e26ef84e9ffcec8aead606dca09fc873d5ac366ff56ef54e",
+      "clause_sha256": "9aa6165f0dd4ab5d3fdee1fad2b67d42f2c63398d8431deba00eed52d92d9949",
       "scope": "Step 2 only: explicit/custom routing, room creation, scoped refusal, auto-attach defaults, correspondent record before hooks and re-routing.",
       "coverage": "partial",
       "review": "Python sources and their parameterizations were read before the RFC clauses and shared assertions. Twelve new cases and three strengthened cases observe explicit/custom selection, scoped refusal before attach, router arguments and calls, null answers, deterministic newest selection, and recording before hook refusal. Scripted address normalization is not a proof of every provider normalizer. Specialized source tests retain paging, lock waits, exact identity lookup counts, stale creation reads and ordered actions within a creation hook. No global conformance claim or backend equivalence follows from this link.",
@@ -12491,7 +12491,7 @@
     {
       "id": "reentrancy-parser-deadline",
       "requirement": "RK-13.6-001",
-      "clause_sha256": "ad4d81012b89fbd00eb8e41d65eac28e28e96aec82d97d314cef03f0523c418d",
+      "clause_sha256": "c77d273781aa267758f3f355bae0410be8bbc4afac3d6c57520b0cfd0c520ce7",
       "scope": "The pre-commit timeout covers handle_inbound, refuses the call and leaves no timeline event or target delivery. Specialized source tests also cover context and nested scope reads and the direct-injection lock/hook/read matrix.",
       "coverage": "partial",
       "review": "Read Python source and its assertions before writing the shared cases; all seven changed cases pass on Python memory, SQLite and PostgreSQL. Six cases are new and one now queues the neighbor before cancellation. Public API and RFC semantics are unchanged. Native Rust waiter tests separately establish first-poll/drop and active multiwaiter behavior; the JSON runner does not express future destruction. The initial 231-method inventory is not a claim that every method or variant was reviewed in this slice.",
@@ -12634,7 +12634,7 @@
     {
       "id": "named-preflight-before-rate-and-address-callbacks",
       "requirement": "RK-10.1-002",
-      "clause_sha256": "f7733f876fdf61d6e26ef84e9ffcec8aead606dca09fc873d5ac366ff56ef54e",
+      "clause_sha256": "9aa6165f0dd4ab5d3fdee1fad2b67d42f2c63398d8431deba00eed52d92d9949",
       "scope": "Named calls draw their room work budget before the inbound rate bucket and address callbacks. A cap refusal consumes no rate token; an already empty bucket does not mask the cap; a rate refusal still consumes one work unit.",
       "coverage": "partial",
       "review": "The three shared cases passed on Python before the Rust change. Native Python and Rust witnesses cover address callbacks in delivery, locked, off-lock and observer work, competition for the last unit, a scope read outliving its observer, and once-only charging through shared delegation. The pinned scenario setup also checks every nested call result. This link records only the explicitly linked expectations and source assertions, not the whole inbound pipeline.",

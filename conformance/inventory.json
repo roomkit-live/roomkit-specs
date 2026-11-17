@@ -393,7 +393,7 @@
     },
     {
       "section": "10.1",
-      "sha256": "3fad677f44cf60425a944c1b1558f39cfaab49a08bf3601f9874164ea06b0f2f",
+      "sha256": "aad5b6a5e0a3af5f47eee3264a857b4281cf6669e9de8cdf7442948efa326b70",
       "classification": "normative",
       "review": "Source inventory: Inbound Pipeline. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
@@ -555,7 +555,7 @@
     },
     {
       "section": "11.7.4",
-      "sha256": "b2223e57c2f0bfcc330359a4e1c65a7b87213c7cd54da7b3d1e8dc44845193b1",
+      "sha256": "25adfa32110c3de76e21f4c54fdcdab25124e27fe5923afb25a69b957770d9b4",
       "classification": "normative",
       "review": "Source inventory: Codes in the conversation. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
@@ -567,7 +567,7 @@
     },
     {
       "section": "11.7.6",
-      "sha256": "f541d9c7caec30ddc9fd970d313c103cea8697f881b4265354c161d14de1e664",
+      "sha256": "5b51ee8c29328f94082a2e9c944f8f1d72399b869576652c3c6f56b8e2e391ae",
       "classification": "normative",
       "review": "Source inventory: Releasing held messages. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
@@ -1005,7 +1005,7 @@
     },
     {
       "section": "13.6",
-      "sha256": "882b48018972adf13eae42190f8ec326d80035d731f85d23d33dbcb5537f2ac5",
+      "sha256": "bcf2e329e5c2b7cd9545ecf596611e97a981c001fa9abc61257d2e972b17a59a",
       "classification": "normative",
       "review": "Source inventory: Processing Timeout. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },

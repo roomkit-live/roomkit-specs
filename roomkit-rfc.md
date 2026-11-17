@@ -7196,7 +7196,10 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
         delivery_results, after which the result reports what step 18
         reports on the waiting path. A call refused before the locked
         region reports the refusal alone — there is no deferred tail to
-        hand back. Waiting on the handle from a context the delivery
+        hand back; a deferred code reply (§11.7.4) is refused
+        `verification_code` once it is known for one, its attempt, the
+        release and its answer going on as the kit's own work, with no
+        handle. Waiting on the handle from a context the delivery
         lane cannot progress past (§10.2) MUST NOT deadlock: it returns
         unwaited, the same short-circuit the waiting path applies.
 ```
@@ -9847,9 +9850,12 @@ Unicode gives a digit value, the whitespace around them left out) is an
 attempt and is consumed (§10.1 step 5b): the call is refused `verification_code`, its text is never stored nor
 broadcast, no agent reads it, and the attempt is recorded by the framework
 events alone. A wrong code counts as an attempt and is consumed all the
-same. Any other message is an ordinary one: digits with no code request
-open, or a code sent in another room. A code is short, so its request's time
-and attempts MUST be bounded tightly.
+same. The attempt is a write: neither it nor what a completion runs (§11.7.6)
+carries the call's pre-commit deadline (§13.6), which bounds step 5b's read
+of the sender's verification and its hooks alone, and a caller that stops
+waiting cuts neither. Any other message is an ordinary one: digits with no
+code request open, or a code sent in another room. A code is short, so its
+request's time and attempts MUST be bounded tightly.
 <!-- /rfc -->
 
 #### 11.7.5 The end of a verification
@@ -9888,13 +9894,22 @@ copied, and the last released event alone solicits an answer, the earlier
 ones being its context. The event is handed to the intelligence channels
 alone, never again to a transport, and nothing of its first delivery runs
 again. A completion releases within its call: a code reply's (§11.7.4)
-before the reply's call returns; one made under the room's lock, from a hook,
-places the answer in the room's lane at the release, ahead of that work's own
-delivery, and the answer leaves its place once that work is over, on the room
-as that work left it: a hook that completes the request and lets its event
-through has the released message answered first, and one that then closes the
-room has no agent answer it. The answer is a regeneration of the released
-event (§13.6): `process_timeout`
+before the reply's call returns, outside its pre-commit budget, so the reply
+returns `verification_code` once the answer is in, however long the answer
+took (§13.6). A reply made with `defer_delivery` is the exception: its call
+returns once the reply is known for one, and the attempt, the release and
+the answer go on as the kit's own work, which its close ends as the rest of
+it (§12.10.4), a failure of theirs logged, with no handle; the held message's
+key still names the answer (§10.1, *Explicit delivery cancellation*). The
+deferred work is made apart from the call, never under a lock its caller
+holds: a deferred reply sent from a hook's locked section has its released
+message answered after that hook's work is delivered. A completion made under
+the room's lock, from a hook, places the answer in the room's lane at the
+release, ahead of that work's own delivery, and the answer leaves its place
+once that work is over, on the room as that work left it: a hook that
+completes the request and lets its event through has the released message
+answered first, and one that then closes the room has no agent answer it. The
+answer is a regeneration of the released event (§13.6): `process_timeout`
 bounds its wait for the room's lock (`process_timeout` with
 `operation = regenerate`), and a room closed or deleted while it waited in the
 lane refuses it before any agent runs (`room_refused_event`,
@@ -17138,10 +17153,16 @@ transaction that stores the event as DELIVERED and updates the room counters:
   timeout, and its attach), and stays when the event times out next: it is
   the room's state, not the event's; so is step 2's attach or record of a
   routed sender in a room that exists, whose deadline bounds its wait for
-  the room lock only. A hook's own timeout reached before the deadline is
-  the hook's (`hook_timeout`, then the fail-open or fail-closed rule of
-  §9.3); a deadline reached first is the call's: the hook is dropped, and
-  nothing reports it as the hook's failure.
+  the room lock only. A code reply's attempt at step 5b (§11.7.4) is a write
+  too, made whatever the deadline, and so is what its completion runs, the
+  release and its answer (§11.7.6): the call returns `verification_code` once
+  they are over (a deferred call, at once, §11.7.6), and a timeout they raise
+  is their own failure, never `process_timeout`; step 5b's read of the
+  sender's verification and its ON_VERIFICATION_REQUIRED hooks keep the
+  deadline. A hook's own timeout reached before the deadline is the hook's
+  (`hook_timeout`, then the fail-open or fail-closed rule of §9.3); a
+  deadline reached first is the call's: the hook is dropped, and nothing
+  reports it as the hook's failure.
 
 - **Commit point** (§10.1 step 12). Once the DELIVERED transaction has
   committed, the event is authoritative. `process_timeout` MUST NOT cancel,
@@ -17200,7 +17221,9 @@ commit in flight wrote it, which decides the call, and the event of a call it
 adopted (§9.5.1). A call it adopted that its work waits for and that has not
 committed ends with that work, nothing of it stored, but for a call its locked
 hook's task nested, which goes on as above (§9.5.1). A room step 2 creates is
-completed whatever becomes of its caller, as it is whatever the deadline.
+completed whatever becomes of its caller, as it is whatever the deadline, and
+so are a code reply's attempt at step 5b and what its completion runs, the
+release and its answer (§11.7.4).
 
 A regeneration re-broadcasts an event already committed, so it has no commit
 point of its own: `process_timeout` bounds its wait for the room lock and its
