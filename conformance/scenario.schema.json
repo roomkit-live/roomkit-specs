@@ -8833,6 +8833,14 @@
             "raise_after",
             "skip"
           ]
+        },
+        "decision_gate": {
+          "type": "string",
+          "description": "Named gate held after recording the decision request, before deciding."
+        },
+        "report_gate": {
+          "type": "string",
+          "description": "Named gate held after recording a report callback, before delegating it."
         }
       }
     },

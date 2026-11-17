@@ -862,6 +862,10 @@ explicit decision list is a runner failure, not an implicit approval/refusal.
 `skip` (an override returning normally without delegation). The two failures
 happen before/after the real default report and raise `RuntimeError("audit sink down")`.
 
+`decision_gate` holds after recording a decision request, before deciding it.
+`report_gate` holds after recording a report callback, before handing it to the
+default report. Both use the normal named gates and allow deterministic cuts.
+
 `expect.acp_handlers`, per channel, records the actual calls before observation:
 `method`, the handler's registered `channel_id`, and for decisions/reports
 `name`, `arguments`, and the actual named parameters (`tool_call_id`, `room_id`,
