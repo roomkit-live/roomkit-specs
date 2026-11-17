@@ -21324,7 +21324,7 @@
     {
       "id": "acp-standing-instruction-mark-copies",
       "requirement": "RK-6.4-020",
-      "clause_sha256": "500553b3a5a0a10ccc9885ec4c8955b115fb73ce0d590b15778770be83ffc4ef",
+      "clause_sha256": "dc4778bab8fcc77463cd84237f630f36f2b18ddc41f756ee75e105705801ae40",
       "coverage": "partial",
       "scope": "Replacement of literal copies of the standing-instructions header and its recognized bracketed opening in a participant request.",
       "assertions": [

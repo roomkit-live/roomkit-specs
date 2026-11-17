@@ -2996,7 +2996,15 @@ headers a realtime host injects into its own session (`[Tool X completed]`
 over a call recovered from speech, `[Respond in X]` over a greeting after a
 handoff) are no marks: the host writes them itself into its provider's
 session, where a participant's text arrives only quoted after its author's
-name. Which text is the runtime's is a provenance, never a reading of the
+name. Nor are the labels the runtime writes in place of a media or a
+location (Section 6.6: `[Media: invoice.pdf]`, `[Location: Head office
+(45.5, -73.6)]`), which a reader without the content reads in its place (a
+model, for a media that is no image and for a location; a channel without
+media; an ACP agent's prompt): each stands inside its sender's own message
+and names what that sender gave (a caption, a file name, coordinates), so a
+participant's copy claims nothing more than that participant could send,
+where a mark speaks for the runtime or the application; a model reads it as
+written. Which text is the runtime's is a provenance, never a reading of the
 text: a record the runtime writes into the timeline that holds its marks
 (the handoff relay) carries `metadata.runtime_record`, which the inbound
 pipeline removes from what a sender supplies, and nothing else does: a

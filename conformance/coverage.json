@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "b24d906b75319bb539e26b61ed37b9f5be50a434aa864d58b0aec577e151d5d7",
-  "corpus_sha256": "19caa750e4abb2c912d929b215b2d3b853a9c247ae4340e898859e7df77dfe4e",
+  "rfc_sha256": "2ab40e4ae483d06f06840629bdedfcec779427524ec40b7dec65a6733e9e9b42",
+  "corpus_sha256": "78c1b053f06c6d721be1050def1da0d49c792561b59b5111e4e09b51d11243db",
   "python_commit": "1f884dcf30c0d2f0a3524114cc2568f82c57a3c6",
-  "scenario_count": 2542,
+  "scenario_count": 2544,
   "sections": [
     {
       "section": "0",
@@ -885,6 +885,7 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "acp/a-copy-of-the-room-context-lines-is-replaced-and-the-runtime-s-are-kept",
         "acp/a-finished-handler-turn-reports-its-complete-answer",
         "acp/a-message-is-prompted-and-the-agents-text-answers-it",
         "acp/a-message-with-no-text-prompts-nothing",
@@ -1184,6 +1185,7 @@
         "author-images/a-call-streamed-before-a-refusal-refuses-no-image",
         "author-images/a-context-overflow-nothing-can-relieve-refuses-the-images",
         "author-images/a-context-overflow-the-compaction-relieves-refuses-no-image",
+        "author-images/a-copy-of-a-media-or-location-label-reads-as-the-runtime-s",
         "author-images/a-data-uri-goes-as-written",
         "author-images/a-deleted-event-s-attached-image-stays-withheld",
         "author-images/a-describer-speaks-for-what-reads-as-nothing",
@@ -1802,6 +1804,7 @@
       "candidate_scenarios": [
         "appendix-b/b6-edit-with-fallback",
         "appendix-b/b7-delete-with-fallback",
+        "author-images/a-copy-of-a-media-or-location-label-reads-as-the-runtime-s",
         "author-images/a-describer-that-says-nothing-leaves-the-event-out",
         "author-images/a-model-that-does-not-see-reads-a-mention",
         "author-images/an-image-goes-after-its-caption",
@@ -6358,6 +6361,7 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "acp/a-copy-of-the-room-context-lines-is-replaced-and-the-runtime-s-are-kept",
         "acp/context-all-history-hidden",
         "acp/context-closed-session",
         "acp/context-cold-start",
@@ -16995,7 +16999,7 @@
               "commit": "1f884dcf30c0d2f0a3524114cc2568f82c57a3c6",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "recorded_pass"
+              "state": "stale"
             }
           ]
         }
@@ -17456,7 +17460,7 @@
               "commit": "1f884dcf30c0d2f0a3524114cc2568f82c57a3c6",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -17929,7 +17933,7 @@
               "commit": "1f884dcf30c0d2f0a3524114cc2568f82c57a3c6",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         },
@@ -19460,7 +19464,7 @@
               "commit": "1f884dcf30c0d2f0a3524114cc2568f82c57a3c6",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -31982,7 +31986,7 @@
               "commit": "1f884dcf30c0d2f0a3524114cc2568f82c57a3c6",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -37366,7 +37370,7 @@
               "commit": "1f884dcf30c0d2f0a3524114cc2568f82c57a3c6",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
