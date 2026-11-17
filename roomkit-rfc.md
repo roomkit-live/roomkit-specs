@@ -5353,6 +5353,11 @@ when present. With the option enabled, it carries the full ACP update.
 Tool-call stream markers, stored rows and reports to tool hooks keep their
 ordinary contents.
 
+When the host enables an AI channel's planner, a successful `plan_tasks`
+update publishes that channel's updated plan for the room, including its task
+titles, in the `plan_updated` custom event. The `publish_tool_call_text` option controls
+the tool notifications independently of this planner update.
+
 Implementations SHOULD provide at least an in-memory realtime backend for
 single-process deployments.
 <!-- /rfc -->

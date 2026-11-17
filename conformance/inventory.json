@@ -327,9 +327,9 @@
     },
     {
       "section": "8.4",
-      "sha256": "33d14862d87efa023d9904c1a7d1b5e68aff4216d7a3349f3011b8187d7601ef",
+      "sha256": "5083ede9f380db243ecf666435be8eeefbd99b2f0405a145adea979ee7bdc1d3",
       "classification": "normative",
-      "review": "Source inventory: Realtime / Ephemeral Events. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the ACP subscriber tool-text option and the existing source units surrounding it."
+      "review": "Source inventory: Realtime / Ephemeral Events. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the ACP subscriber tool-text option and the existing source units surrounding it. Reviewed the separately enabled planner publication against its streaming and non-streaming scenarios."
     },
     {
       "section": "8.5",

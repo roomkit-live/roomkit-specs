@@ -25744,7 +25744,7 @@
     {
       "id": "phase4-acp-subscriber-tool-text",
       "requirement": "RK-8.4-001",
-      "clause_sha256": "db2cd955becc29c1d6658527129b0352dfecc79f784c541fd7207d16b0187e43",
+      "clause_sha256": "de82eb627de4f58961266c0ee00bd19e07011b6e62893c1b5cdc7806c9d16f4d",
       "coverage": "partial",
       "scope": "ACP lifecycle and intermediate custom progress on an ordinary room tool call, with default and explicit tool-text settings.",
       "assertions": [
