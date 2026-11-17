@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "6aa7e7208afbd83ea294c102a0d58787320057c56cf90b5ecd423552fb212e7c",
-  "corpus_sha256": "8003c0c80f0f231c218f4830bc42a5b7733dfac1396ce2d88e2a32ee697a1dd7",
+  "corpus_sha256": "e8ac8432b6e912af6eb4fa069d7f31a75d1c96dad6ff12a4c87eae2400c676b5",
   "python_commit": "b50c50a782668fc1681e21bcec52a3d83bc0d8c0",
-  "scenario_count": 2617,
+  "scenario_count": 2623,
   "sections": [
     {
       "section": "0",
@@ -2967,6 +2967,12 @@
         "tools/one-answer-from-two-tools-is-counted-apart",
         "tools/refusal-per-cause",
         "tools/refused-attempts-share-the-budget-and-reset-next-turn",
+        "tools/report-claim-matching-non-streaming",
+        "tools/report-claim-matching-streaming",
+        "tools/report-claim-previous-turn-non-streaming",
+        "tools/report-claim-previous-turn-streaming",
+        "tools/report-claim-reused-id-non-streaming",
+        "tools/report-claim-reused-id-streaming",
         "tools/rewritten-arguments-are-not-repaired",
         "tools/served-call-rows",
         "tools/the-guard-s-own-words-are-never-noted",
@@ -7585,6 +7591,12 @@
         "tools/a-json-result-keeps-its-members-order",
         "tools/a-tool-s-part-shaped-json-reaches-the-model-as-parts",
         "tools/a-tool-s-parts-reach-the-model-intact",
+        "tools/report-claim-matching-non-streaming",
+        "tools/report-claim-matching-streaming",
+        "tools/report-claim-previous-turn-non-streaming",
+        "tools/report-claim-previous-turn-streaming",
+        "tools/report-claim-reused-id-non-streaming",
+        "tools/report-claim-reused-id-streaming",
         "turn-config/a-turn-s-tool-handler-serves-the-host-s-tools-for-that-turn-alone"
       ]
     },
