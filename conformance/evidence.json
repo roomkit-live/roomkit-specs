@@ -13261,7 +13261,7 @@
     {
       "id": "phase4-supervisor-handback-model-content",
       "requirement": "RK-19.7.3-001",
-      "clause_sha256": "6b45a660313af8a2aaf2fc34114f0d821e5901e74ddff5cccf674d734c5e8a38",
+      "clause_sha256": "70e5300927975bb9b629d8c317c26f809776369299f4401a1cbb376599a6ac77",
       "scope": "A background supervisor reads bounded worker outputs or a sanitized failure through a real model turn, and preserves its private instruction record.",
       "coverage": "partial",
       "review": "Compared with tests/tasks/test_delegation_result_delivery.py and the RFC, including an independent review of the scenario schedules and exact model inputs. Native seams and voice routes are kept distinct from shared assertions.",
@@ -13518,8 +13518,8 @@
         {
           "scenario": "orchestration/each-room-s-loop-runs-with-its-own-reviewer",
           "pointer": "/expect",
-          "sha256": "d2c5dafcc4f9563ebd781dd482a873f209512c6e274a4136dd8a83cc85f651ed",
-          "scenario_sha256": "665ea9f4f3fdf1c2ef6df364b19c6a756a071f1ca6dc84dcf1b5ae19f2f6352b",
+          "sha256": "a6fa9e26fd86a3cfeebd7d4f2477be17ec667cc387c143be46d39f81ddc3157d",
+          "scenario_sha256": "0b4781e8c565555a56d0bd9e27bed199f1336a957f464d6fe81ba48e79049252",
           "proves": "Each room uses its own reviewer and iteration limit; the uninstalled room answers without a review pass."
         },
         {
@@ -16721,7 +16721,7 @@
     {
       "id": "orchestration-worker-preparation-and-cuts",
       "requirement": "RK-19.7.3-001",
-      "clause_sha256": "6b45a660313af8a2aaf2fc34114f0d821e5901e74ddff5cccf674d734c5e8a38",
+      "clause_sha256": "70e5300927975bb9b629d8c317c26f809776369299f4401a1cbb376599a6ac77",
       "scope": "Worker and team runs post one terminal cancelled status before or after task announcement; task_id appears after announcement; task and tool deadlines include preparation but these scenarios explicitly reach the worker before expiry.",
       "coverage": "partial",
       "review": "Read the existing Python tests before the implementation, then paired Rust code and RFC. Independent review checked the shared scenarios, additive migration and before/after-announcement cancellation boundary. Native PostgreSQL and cross-read runs are retained separately; only supported Python memory/SQLite JUnit runs receive execution receipts.",

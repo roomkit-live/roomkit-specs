@@ -6,7 +6,7 @@
     "§19.7.3",
     "§6.7"
   ],
-  "notes": "A host that names its agent channels agent:<uuid>. Python: tests/orchestration/test_strategy_supervisor.py TestSupervisorInstall::test_injects_delegation_tools (every built-in provider's rule checks the names), test_delegation_tool_handler. orchestration/strategies/supervisor/_worker_tool_names.py worker_tool_names; _inject_per_worker.py _worker_tool. The description still names the worker's id.",
+  "notes": "A host that names its agent channels agent:<uuid>. Python: tests/orchestration/test_strategy_supervisor.py TestSupervisorInstall::test_injects_delegation_tools (every built-in provider's rule checks the names), test_delegation_tool_handler. orchestration/strategies/supervisor/_worker_tool_names.py worker_tool_names; _inject_per_worker.py _worker_tool. The tool's description still names the worker's id (the on_ai_response hook reads the supervisor's declared tools).",
   "setup": {
     "channels": [
       {
@@ -114,6 +114,13 @@
           ]
         }
       }
+    ],
+    "hooks": [
+      {
+        "name": "seen",
+        "trigger": "on_ai_response",
+        "execution": "async"
+      }
     ]
   },
   "steps": [
@@ -191,6 +198,28 @@
             "body": "Here are the facts."
           },
           "responds_to": "r1#0"
+        }
+      ]
+    },
+    "hooks": {
+      "seen": [
+        {
+          "room_id": "$r1",
+          "response": {
+            "channel_id": "agent:6f1c2a9e-1111-2222-3333-444455556666"
+          }
+        },
+        {
+          "room_id": "r1",
+          "response": {
+            "channel_id": "sup",
+            "declared_tools": {
+              "delegate_to_agent_6f1c2a9e-1111-2222-3333-444455556666": {
+                "position": 0,
+                "description": "Delegate a task to agent:6f1c2a9e-1111-2222-3333-444455556666. Finds facts."
+              }
+            }
+          }
         }
       ]
     },

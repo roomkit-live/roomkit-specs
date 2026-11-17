@@ -19291,6 +19291,11 @@ participant's own words, `Requested by Alice (2), in the delegating agent's
 words:` before a task the delegating agent wrote. The heading names the
 asker of the task the block holds and nothing else: the runtime's own
 prompts and the input a worker acts on as its own carry no asker.
+A revision a strategy asks for (a supervised step's rework, a Loop
+producer's revision) starts from the original task, the step's or the
+producer's, as a `<task>` block, with only the latest output and the latest
+feedback: never from an earlier revision, whose text would nest one
+revision inside the next, and never without the task.
 
 No install and no turn writes into the shared agent or channel on behalf of
 one room: not its tools, its handler, its handling of events, its prompt, its
@@ -19474,6 +19479,17 @@ supervisor left unvalidated did not complete its work, as the supervisor
 reads it within the turn. A run asked for once the framework began closing
 does not start.
 
+A supervisor without a strategy declares one tool per worker in the room it
+is installed in, `delegate_to_<id>` after the worker's channel id, under a
+name every built-in provider accepts (Section 6.7): a worker whose
+`delegate_to_<id>` holds only ASCII letters, digits, `_` and `-`, within 128
+characters, keeps it; any other id has each other character replaced by `_`
+(`agent:<uuid>` gives `delegate_to_agent_<uuid>`). A replaced name that
+another worker's name already is, or one longer than 128 characters, ends
+instead with `_` and the first 8 hex digits of the SHA-256 of the id's UTF-8
+bytes, the name before them cut to fit 128 characters. A call on the name
+reaches its worker, and the tool's description names the worker's id.
+
 An instruction a strategy needs for one turn (a supervisor's task-formulation
 pass) is passed for that turn only, over the prompt the turn would have had.
 The supervisor, like any channel, serves every room it is attached to, so its
@@ -19520,6 +19536,18 @@ answered by the producer alone, as a one-pass supervisor answers it
 (§19.7.3), through the same reading of the message: the loop's
 tasks carry text, and the producer's own channel sees the media; it is never
 left without an answer.
+Each reviewer gives its verdict by calling `submit_review` (`approved`, a
+boolean; `feedback`, a text, any other value read as none), a tool its
+review's task declares and forces as a worker's structured result is forced
+(Section 23.3), reminders included. Only a verdict whose `approved` is true
+approves: a refusal, a review that never called the tool (its words saying
+APPROVED included), a reviewer whose turns take no owner tools (Section
+10.6.5), never given the tool, whatever its text holds (a verdict's JSON
+included), and a review whose task failed approve nothing, the reviewer's
+feedback, or its last words without a verdict, going back to the producer.
+A review given the tool hands the verdict's JSON payload back as its task's
+result; its terminal status entry carries the feedback, or `Approved.` or
+`Not approved.` when there is none.
 The loop's result is the agent's response to the event that started it, one
 deeper than that event (§8.3). A producer's task that failed (§23.3 step 6)
 stops the loop: the last output it produced, if any, is the result, not

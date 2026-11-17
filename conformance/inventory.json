@@ -1257,7 +1257,7 @@
     },
     {
       "section": "19.7",
-      "sha256": "8c84dda27fe05f0261f9c868897a558c43038e6c4842b96379c4c23530e183f4",
+      "sha256": "c162c9977755e41c1e6b0fc3dd15a469aa2eead9f0878c9d8da938f36c0a41ea",
       "classification": "normative",
       "review": "Source inventory: Orchestration Strategies. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the initial snapshot failure recovery clarification against the Python source test and native Rust regression; no complete implementation coverage is claimed."
     },
@@ -1275,13 +1275,13 @@
     },
     {
       "section": "19.7.3",
-      "sha256": "98bf85ed7fb69127b536e98c2f53e5a3173135a6c7d757a5236b357acfbe788e",
+      "sha256": "bfe64d54cc11e4e5dbba7417130edf20078806bfef10c84c30437321a4dfa1d7",
       "classification": "normative",
       "review": "Source inventory: Supervisor. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
     {
       "section": "19.7.4",
-      "sha256": "90ce50d4ea990682097f21c0571460d101448e241c0efda75395694fabe58b23",
+      "sha256": "2d364711016bfdfe5930630565c634992ed47292fc3c918633ad88898522b116",
       "classification": "normative",
       "review": "Source inventory: Loop. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
