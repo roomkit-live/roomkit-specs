@@ -3,8 +3,8 @@
   "id": "memory/history-omits-only-responses-marked-superseded",
   "title": "A text model reads ordinary history and skips a stored response marked superseded",
   "rules": [
-    "\u00a76.4",
-    "\u00a712.3.12"
+    "§6.4",
+    "§12.3.12"
   ],
   "notes": "The text channel reads already stored rows on its next turn. The stored cancellation reason is the public SUPERSEDED marker. Another cancellation reason keeps the response in history.",
   "setup": {
