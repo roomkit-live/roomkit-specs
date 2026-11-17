@@ -2123,7 +2123,8 @@ first end of its round was handed out, an item the owner then drops (the
 round's other ends rode their starts before it): on an executor of another
 process the cut may arrive after the tool answered, and that end reads
 `failed` all the same. An `AIChannel`'s ephemeral end of such a call carries
-the result `{"error": "Tool call aborted"}`. A turn whose owner is lost
+the result `{"error": "Tool call aborted"}` when the channel publishes its
+calls' text (§8.4). A turn whose owner is lost
 (§10.6.8) publishes nothing more: no owner is left to publish it.
 <!-- /rfc -->
 
@@ -5252,8 +5253,8 @@ presence (`online`, `away` and `offline` each its type, any other status a
 `custom` event carrying it under `data.status`), a read receipt
 (`data.event_id`), a reaction (`data.target_event_id`, `emoji`, `action`)
 and a channel's tool calls (`data.tool_calls`, `channel_id`, and
-`duration_ms` for an end), each published to the room's subscribers for the
-organization the call names (§17.2). A subscription hands its events to its
+`duration_ms` for an end that ran its calls), each published to the room's
+subscribers for the organization the call names (§17.2). A subscription hands its events to its
 callback in order, one at a time; a callback that fails is logged and the
 subscription goes on. The in-memory backend holds a bounded queue per
 subscription, the oldest event dropped past it, one event per id; a
@@ -5278,9 +5279,10 @@ made through it for the deleted room, and keeps those made while no room
 held the id.
 
 A channel's reasoning is published as `thinking_start`, `thinking_delta` and
-`thinking_end`. A block opens with its first non-empty piece, which fires
-`ON_AI_THINKING`, and closes with the answer's text, the end of the generation,
-a failure or a stop, `thinking_end` carrying that block alone. Each carries
+`thinking_end`. A block opens with its first non-empty piece and closes with
+the answer's text, the end of the generation, a failure or a stop,
+`thinking_end` carrying that block alone; `ON_AI_THINKING` fires once per
+block as it closes, its `thinking` the block's whole text (§9.2). Each carries
 `data.thinking_length`, `data.round` and `data.channel_id`. The reasoning
 repeats what the model read, and a subscriber is not a bound channel, so its
 text is opt-in: `data.thinking`, at most 1000 characters, is present only for a
@@ -5289,6 +5291,16 @@ channel built with `publish_thinking_text` (false by default). Deltas batch by
 1000 characters going in several, 0 ms publishing each piece. What a turn
 publishes never stops the turn: a slow or stuck backend delays only its own
 events.
+
+An AI channel's tool calls are published as `tool_call_start` before they
+run and `tool_call_end` once they ended, with `duration_ms` once their calls
+ran, and as `tool_call_delta` while a call is composed (§6.4). Each call reads its `id`,
+its `name`, its `intent` when it has one (§6.4) and, at its end, its
+`status`. A call's arguments and its result repeat what the turn's rows
+carry, which a `BEFORE_BROADCAST` hook judges and an ephemeral escapes, so
+they are opt-in: `arguments` on a start and `result`, at most 500
+characters, on an end, present only for a channel built with
+`publish_tool_call_text` (false by default).
 
 Implementations SHOULD provide at least an in-memory realtime backend for
 single-process deployments.
@@ -5316,9 +5328,12 @@ ephemerals and are unaffected.
 <!-- rfc: {"id": "RK-8.4-003", "kind": "behavior", "applies": "§8.4 Realtime / Ephemeral Events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **No hook judges a turn's ephemerals.** `BEFORE_BROADCAST` (§9.5) runs on the
 event the room stores; what a turn publishes live is neither blocked nor
-modified by it. A turn's reasoning and its tool calls' arguments and results
-are published as they are produced, whatever a hook later decides about the
-answer, and an ephemeral that carries the answer's own text (`TEXT_DELTA`,
+modified by it. The text of an AI channel's reasoning and its tool calls'
+arguments and results on `tool_call_start` and `tool_call_end` are published
+only for a channel the host builds to publish them (`publish_thinking_text`,
+`publish_tool_call_text`), and then as they are produced, whatever a hook
+later decides about the answer; an ephemeral that
+carries the answer's own text (`TEXT_DELTA`,
 §6.4) is published only when the host turns it on, and only for a turn read as
 a delegated task's trace, whose rows no hook judges either.
 <!-- /rfc -->
@@ -5655,7 +5670,7 @@ on the room's owner.
 | ON_SPEAK_QUEUE | ASYNC | Implemented | A discussion's speak queue changed: an agent queued, a turn given, ended or skipped (its agent offline), an agent listening only or talking again, the discussion waiting for a person or over (Section 19.7.5) |
 | ON_DISPATCH_DECISION | ASYNC | Implemented | A discussion's dispatch policy decided which agents take a person's message that names none (Section 19.7.5 rule 18) |
 | BEFORE_AI_GENERATION | SYNC | Implemented | Before AI provider generate() — can modify context; a turn's (`answer`) or a thinker's (`thought`, Section 6.4) |
-| ON_AI_THINKING | ASYNC | Implemented | AI model began extended thinking/reasoning |
+| ON_AI_THINKING | ASYNC | Implemented | A block of the AI model's extended reasoning closed: once per block, with its text (Section 8.4) |
 | ON_AI_RESPONSE | ASYNC | Implemented | A turn of intelligence completed (observability). Fired by any channel of category `INTELLIGENCE`, whether the turn ran in-process or in an external agent (Section 6.4) |
 | BEFORE_TOOL_USE | SYNC | Implemented | Before a tool executes — can block or override the call |
 | AFTER_TOOL_ROUND | SYNC | Implemented | After a round of an AI channel's tool loop ran its calls, before the next round is built — can withdraw tools for the rest of the turn and add messages for the next round (Section 6.4) |
@@ -23073,6 +23088,7 @@ AIChannel
 │   ├── describe_empty_event: callable | null # What an event with no content reads as
 │   ├── max_author_images: int | null (default 4)  # Newest author images a turn sends (Section 6.4)
 │   ├── publish_thinking_text: bool (default false)  # Reasoning text on the realtime channel (Section 8.4)
+│   ├── publish_tool_call_text: bool (default false)  # Tool calls' arguments and results on it (Section 8.4)
 │   ├── tool_policy: ToolPolicy | null      # Tool access control (Section 21)
 │   └── skills: SkillRegistry | null        # Available skills (Section 24)
 ├── per_room_overrides (via binding metadata):

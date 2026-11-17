@@ -237,7 +237,7 @@
     },
     {
       "section": "6.4",
-      "sha256": "4ee2a0668e320b42595cfb5a85e8dd8c8134bf6bfc6455c3c6d2dff683e11514",
+      "sha256": "12fe28506f3fe43d5c5884ef6558f88610aa0ea0ea3e7f838af34ff8dc7c83cc",
       "classification": "normative",
       "review": "Source inventory: Intelligence Channels. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the added deferred-input association and protected-context clause against shared hook scenarios and native mutation/tool tests; existing source units are unchanged."
     },
@@ -327,7 +327,7 @@
     },
     {
       "section": "8.4",
-      "sha256": "71be06e34144bafbf5f34a97f1a6f902cc81fe535cfc7fc9c672ea76073cc0a8",
+      "sha256": "bfa8fe7d7e5eac7390c8798aabf80b04ca0584b157767d6d7932b39bec3baa9c",
       "classification": "normative",
       "review": "Source inventory: Realtime / Ephemeral Events. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
@@ -351,7 +351,7 @@
     },
     {
       "section": "9.2",
-      "sha256": "e688f1cac8e0556f002e96c52ac31fd52fb6930b59889c5a924694e54335772f",
+      "sha256": "542895ed679da3253c8aa5a6920a293b62feb3f26f831497276c67789999d184",
       "classification": "normative",
       "review": "Source inventory: Hook Triggers. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the timer-context clarification against Python and Rust concurrent-greeting tests: the final stored context may already be ACTIVE. Existing blocks retain their conditions and exceptions; no unannotated normative content was introduced."
     },
@@ -1605,7 +1605,7 @@
     },
     {
       "section": "A.9",
-      "sha256": "f5ee68dc86c10ebe01e64ae76289a7581c34e2fe02f307a7580610001a71369a",
+      "sha256": "019272d78f974a25d68ebdef947d4e29948d4b3bd312e9edae8956149a91fcab",
       "classification": "normative",
       "review": "Source inventory: AI Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
