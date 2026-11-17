@@ -3051,12 +3051,38 @@ in the history and in the input alike.
 Its URL is a data URI, which carries the image; a link (`http` or `https`),
 handed to the provider as it is; or a reference, `<scheme>://…` in a scheme
 the application chooses and RoomKit never interprets, naming a media the
-application holds. A scheme a reader could fetch or open itself (`file`,
-`ftp`) or run (`javascript`, `vbscript`) is refused when the content is
-built, as is a URL without a scheme and a reference a path reader could
-follow (a one-letter scheme, read as a drive, a `..` segment, a backslash):
-some transports read a URL they are handed as a local path, and a transport
-MUST NOT read a reference as one. A link's scheme and a data URI's are kept in
+application holds. A scheme a reader fetches, opens or runs by itself,
+without the application, is refused when the content is built, whatever its
+case, alone or as one of the parts a compound scheme joins with `+`: the
+files on the machine, in an archive or on a share (`admin`, `afp`,
+`archive`, `cifs`, `dav`, `davs`, `file`, `ftp`, `ftps`, `local`, `nfs`,
+`phar`, `recent`, `resource`, `scp`, `sftp`, `smb`, `smbs`, `tar`, `tftp`,
+`trash`, `webdav`, `zip`), the network protocols generic readers fetch
+(`amqp`, `dict`, `ffrtmpcrypt`, `ffrtmphttp`, `gopher`, `gophers`, `hls`,
+`http`, `httpproxy`, `https`, `icecast`, `imap`, `imaps`, `ipfs`, `ipns`,
+`ldap`, `ldaps`, `mmsh`, `mmst`, `mqtt`, `pop3`, `pop3s`, `rist`, `rtmp`,
+`rtmpe`, `rtmps`, `rtmpt`, `rtmpte`, `rtmpts`, `rtp`, `rtsp`, `rtsps`,
+`sctp`, `smtp`, `smtps`, `srt`, `srtp`, `ssh`, `tcp`, `telnet`, `tls`,
+`udp`, `udplite`, `unix`, `ws`, `wss`, `zmq`), the wrappers that read
+through another protocol, a file or a descriptor (`async`, `bluray`,
+`cache`, `concat`, `concatf`, `crypto`, `fd`, `pipe`, `subfile`) and code to
+run (`expect`, `jar`, `javascript`, `php`, `vbscript`). `http` and `https`
+stand there for a compound scheme (`hls+http`); a link is no reference. A
+URL without a scheme is refused too, and so is a scheme not written as an
+ASCII letter then ASCII letters, digits, `+`, `-` or `.`, and a reference a
+path reader could follow: a one-letter scheme, read as a drive; or one whose
+rest after `://`, percent-decoded until it no longer changes, three times at most (a
+byte sequence that is no UTF-8 reads as U+FFFD), holds an escape a fourth
+decoding would still change, a backslash, a control character (Unicode Cc),
+or a segment between `/`, `?` and `#` that is `..` once trimmed of Unicode
+White_Space, or starts with `~`, an ASCII letter and a colon (a drive), or a
+`/` only decoding writes. Some transports read a URL they are handed as a local
+path, after decoding, trimming or joining it under a root, and a transport
+MUST NOT read a reference as one. An escape that leads nowhere
+(`file%2Ename.png`), `a..b`, a space and an empty authority
+(`app:///photos/1`) stay in a reference, and so does an application's own
+scheme, compound or not, or a store the application reads with its own
+rights (`s3`, `gs`). A link's scheme and a data URI's are kept in
 lower case, whatever case they were written in, since that is the spelling
 every reader tests: a transport that fetches only `http://` and `https://` read
 `HTTP://../secret` as a path. A reference keeps its scheme as the application
