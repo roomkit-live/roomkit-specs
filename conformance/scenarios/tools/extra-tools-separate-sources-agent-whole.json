@@ -46,7 +46,25 @@
               }
             ]
           }
-        }
+        },
+        "human_input": {
+          "tool_names": [
+            "ask"
+          ],
+          "tools": [
+            {
+              "name": "ask",
+              "description": "Ask"
+            }
+          ]
+        },
+        "skills": [
+          {
+            "name": "guide",
+            "description": "Guide",
+            "instructions": "Be helpful"
+          }
+        ]
       }
     ],
     "rooms": [
@@ -135,7 +153,10 @@
             "host": 1,
             "task_status": 2,
             "cancel_task": 3,
-            "read_stored_result": 4
+            "ask": 4,
+            "activate_skill": 5,
+            "read_skill_reference": 6,
+            "read_stored_result": 7
           }
         }
       ]
