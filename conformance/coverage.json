@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "d8662dbbbde3342955d52cebf8ef5a27862366ae36289442d66ee1b95e937751",
-  "corpus_sha256": "c55ca486a0e31b196a6eb168b6dcf4602178213ab9c38710be763c732350f812",
+  "corpus_sha256": "14aaae8eb708957ef522e9dc8af25c5f2ff2274a93aa02c758e5688dded70573",
   "python_commit": "b50c50a782668fc1681e21bcec52a3d83bc0d8c0",
-  "scenario_count": 3025,
+  "scenario_count": 3027,
   "sections": [
     {
       "section": "0",
@@ -2748,6 +2748,8 @@
         "acp/notifications-response-scope",
         "acp/thinking-scoped-second-room",
         "acp/thinking-scoped-trigger",
+        "acp/tool-publication-default",
+        "acp/tool-publication-opt-in",
         "executors/a-room-hook-no-executor-defines-takes-its-agent-offline-in-that-room",
         "executors/an-agent-s-presence-is-published-in-its-rooms-on-attach-and-when-its-coverage-changes",
         "streaming/a-narrowed-binding-s-turn-publishes-no-reasoning",
@@ -9821,6 +9823,8 @@
         "acp/thinking-scoped-second-room",
         "acp/thinking-scoped-trigger",
         "acp/thinking-without-visible-text",
+        "acp/tool-publication-default",
+        "acp/tool-publication-opt-in",
         "acp/tools-abandoned-stream",
         "acp/tools-cancelled-closes-pending",
         "acp/tools-completed-segments",

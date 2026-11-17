@@ -19830,154 +19830,154 @@
           "scenario": "acp/tools-completed-segments",
           "pointer": "/expect/timeline",
           "sha256": "69e1bccae581f59e9dd96dc2a09ae746592bda6e81b0b42ece6687b226eb8b25",
-          "scenario_sha256": "8a7f57e09ebc8850bb29ea88ef868a99a5a9e11a4782ed843d6126e170304779",
+          "scenario_sha256": "3322fb72afabd6f2a3ff7d7b60d02fd6cdb72027c9b270eac3077b6966711a62",
           "proves": "The exact timeline list checks the asserted start/end rows and their result, arguments, identity, display copy or error where specified. Each row is a patch; unmentioned fields are not established."
         },
         {
           "scenario": "acp/tools-completed-segments",
           "pointer": "/expect/tool_events",
           "sha256": "e8d045cdcf739254758e0fc56a7c2c9bad89968dace5e020f33229087d534e1d",
-          "scenario_sha256": "8a7f57e09ebc8850bb29ea88ef868a99a5a9e11a4782ed843d6126e170304779",
+          "scenario_sha256": "3322fb72afabd6f2a3ff7d7b60d02fd6cdb72027c9b270eac3077b6966711a62",
           "proves": "The ordered publication list is exact for room-1. Its object patches check the specified start/end types, normalized tool identities, names, results and status where present; unmentioned fields are not established."
         },
         {
           "scenario": "acp/tools-completed-segments",
           "pointer": "/expect/hooks/response",
           "sha256": "ab4e192af1a4549b770cecc3c4a028d28dc3b7d98e8ec8c5c189a63b1fd53f0d",
-          "scenario_sha256": "8a7f57e09ebc8850bb29ea88ef868a99a5a9e11a4782ed843d6126e170304779",
+          "scenario_sha256": "3322fb72afabd6f2a3ff7d7b60d02fd6cdb72027c9b270eac3077b6966711a62",
           "proves": "The exact response-hook list checks the stated text segments, joined response and distinct tool count of this consumed turn; it does not claim unasserted usage or timing."
         },
         {
           "scenario": "acp/tools-failed-result",
           "pointer": "/expect/timeline",
           "sha256": "2c59192466476420ee2611fbbde4f2d917f701dd2f87e9896f52337d00b2b074",
-          "scenario_sha256": "0098fa0cd60450869a92b67ba532260929dfa911db79ab2abad92c052175bc67",
+          "scenario_sha256": "9fd76ebb90fa4018f2a12b6e8c5018c89369689882af0f789a1a01d5bf38e92e",
           "proves": "The exact timeline list checks the asserted start/end rows and their result, arguments, identity, display copy or error where specified. Each row is a patch; unmentioned fields are not established."
         },
         {
           "scenario": "acp/tools-failed-result",
           "pointer": "/expect/tool_events",
           "sha256": "cc7913a1bd341c15df758141f3d43826dcb42f2cb3000bee40b9daa112f2bff4",
-          "scenario_sha256": "0098fa0cd60450869a92b67ba532260929dfa911db79ab2abad92c052175bc67",
+          "scenario_sha256": "9fd76ebb90fa4018f2a12b6e8c5018c89369689882af0f789a1a01d5bf38e92e",
           "proves": "The ordered publication list is exact for room-1. Its object patches check the specified start/end types, normalized tool identities, names, results and status where present; unmentioned fields are not established."
         },
         {
           "scenario": "acp/tools-failed-result",
           "pointer": "/expect/hooks/response",
           "sha256": "c44312a2c4bfd3ff55a12e80e6cc4a489451aed86c30cda054f1d7973955560e",
-          "scenario_sha256": "0098fa0cd60450869a92b67ba532260929dfa911db79ab2abad92c052175bc67",
+          "scenario_sha256": "9fd76ebb90fa4018f2a12b6e8c5018c89369689882af0f789a1a01d5bf38e92e",
           "proves": "The exact response-hook list checks the stated text segments, joined response and distinct tool count of this consumed turn; it does not claim unasserted usage or timing."
         },
         {
           "scenario": "acp/tools-update-without-start",
           "pointer": "/expect/timeline",
           "sha256": "441f234c5988df8de70e9779d401ec422139f8489ac27c31e306b27e7cd4456b",
-          "scenario_sha256": "5477f67ed3cb83d53272b8ad906e2ba855b4e197da91a033826e1c5cf015ddab",
+          "scenario_sha256": "c5fbed64c793402b3c409cea5bfe410e97ca1a35b6b0b26832ffa0705231c02c",
           "proves": "The exact timeline list checks the asserted start/end rows and their result, arguments, identity, display copy or error where specified. Each row is a patch; unmentioned fields are not established."
         },
         {
           "scenario": "acp/tools-update-without-start",
           "pointer": "/expect/tool_events",
           "sha256": "a2624111345f89aea5501ce43b9a92a986b7b27241508f3e86f62c1ad2ef25f7",
-          "scenario_sha256": "5477f67ed3cb83d53272b8ad906e2ba855b4e197da91a033826e1c5cf015ddab",
+          "scenario_sha256": "c5fbed64c793402b3c409cea5bfe410e97ca1a35b6b0b26832ffa0705231c02c",
           "proves": "The ordered publication list is exact for room-1. Its object patches check the specified start/end types, normalized tool identities, names, results and status where present; unmentioned fields are not established."
         },
         {
           "scenario": "acp/tools-update-without-start",
           "pointer": "/expect/hooks/response",
           "sha256": "c44312a2c4bfd3ff55a12e80e6cc4a489451aed86c30cda054f1d7973955560e",
-          "scenario_sha256": "5477f67ed3cb83d53272b8ad906e2ba855b4e197da91a033826e1c5cf015ddab",
+          "scenario_sha256": "c5fbed64c793402b3c409cea5bfe410e97ca1a35b6b0b26832ffa0705231c02c",
           "proves": "The exact response-hook list checks the stated text segments, joined response and distinct tool count of this consumed turn; it does not claim unasserted usage or timing."
         },
         {
           "scenario": "acp/tools-display-result-fallback",
           "pointer": "/expect/timeline",
           "sha256": "05c7ce5693228b895f371b14e1c96b8ae13fe840e99a89e8224e3e629a18f0dd",
-          "scenario_sha256": "4089c0281ff9555130582322384ea65674fc3a84c8b1bea3a79cda9caa4341eb",
+          "scenario_sha256": "3a335940acddfc5956bd1df2a13f98b40e5e1cd2f45a828f2c73c13dcdf5a40b",
           "proves": "The exact timeline list checks the asserted start/end rows and their result, arguments, identity, display copy or error where specified. Each row is a patch; unmentioned fields are not established."
         },
         {
           "scenario": "acp/tools-display-result-fallback",
           "pointer": "/expect/tool_events",
           "sha256": "7a738f712d815cc77f8f5b7296f1f0ddfbffde678308ac4961557389424bcb9d",
-          "scenario_sha256": "4089c0281ff9555130582322384ea65674fc3a84c8b1bea3a79cda9caa4341eb",
+          "scenario_sha256": "3a335940acddfc5956bd1df2a13f98b40e5e1cd2f45a828f2c73c13dcdf5a40b",
           "proves": "The ordered publication list is exact for room-1. Its object patches check the specified start/end types, normalized tool identities, names, results and status where present; unmentioned fields are not established."
         },
         {
           "scenario": "acp/tools-display-result-fallback",
           "pointer": "/expect/hooks/response",
           "sha256": "c44312a2c4bfd3ff55a12e80e6cc4a489451aed86c30cda054f1d7973955560e",
-          "scenario_sha256": "4089c0281ff9555130582322384ea65674fc3a84c8b1bea3a79cda9caa4341eb",
+          "scenario_sha256": "3a335940acddfc5956bd1df2a13f98b40e5e1cd2f45a828f2c73c13dcdf5a40b",
           "proves": "The exact response-hook list checks the stated text segments, joined response and distinct tool count of this consumed turn; it does not claim unasserted usage or timing."
         },
         {
           "scenario": "acp/tools-terminal-start-duplicates",
           "pointer": "/expect/timeline",
           "sha256": "b6378b485e4a3eab26b1f1fd64459dcc902706763456971cb819f931e9a555a0",
-          "scenario_sha256": "36cc6ee9ad3acd49b28cca92ba5ace5c8ac212d2408dabe1241c7801b2bed385",
+          "scenario_sha256": "d40e3b518bf1278b7b982003975f9e41fbb6fe90ef917c83f55cd46197c4ab2a",
           "proves": "The exact timeline list checks the asserted start/end rows and their result, arguments, identity, display copy or error where specified. Each row is a patch; unmentioned fields are not established."
         },
         {
           "scenario": "acp/tools-terminal-start-duplicates",
           "pointer": "/expect/tool_events",
           "sha256": "ccf7f04c82b67550b9a9a2ae4233d7c68baec44a5b9869f2c5c367621e05c419",
-          "scenario_sha256": "36cc6ee9ad3acd49b28cca92ba5ace5c8ac212d2408dabe1241c7801b2bed385",
+          "scenario_sha256": "d40e3b518bf1278b7b982003975f9e41fbb6fe90ef917c83f55cd46197c4ab2a",
           "proves": "The ordered publication list is exact for room-1. Its object patches check the specified start/end types, normalized tool identities, names, results and status where present; unmentioned fields are not established."
         },
         {
           "scenario": "acp/tools-terminal-start-duplicates",
           "pointer": "/expect/hooks/response",
           "sha256": "c44312a2c4bfd3ff55a12e80e6cc4a489451aed86c30cda054f1d7973955560e",
-          "scenario_sha256": "36cc6ee9ad3acd49b28cca92ba5ace5c8ac212d2408dabe1241c7801b2bed385",
+          "scenario_sha256": "d40e3b518bf1278b7b982003975f9e41fbb6fe90ef917c83f55cd46197c4ab2a",
           "proves": "The exact response-hook list checks the stated text segments, joined response and distinct tool count of this consumed turn; it does not claim unasserted usage or timing."
         },
         {
           "scenario": "acp/tools-interleaved-identifiers",
           "pointer": "/expect/timeline",
           "sha256": "a0de0e8e4f782b79b0eed7c00de08166a8c8582633775615b6271fede9590f78",
-          "scenario_sha256": "8aab818c7c61a808df59884e53d64b34ba146e8a312455757c2b9d6c73bf0aa6",
+          "scenario_sha256": "f0c3a782520415ebcf3bfa2390cc87e3f403901936628a8872b5d03a121f04b7",
           "proves": "The exact timeline list checks the asserted start/end rows and their result, arguments, identity, display copy or error where specified. Each row is a patch; unmentioned fields are not established."
         },
         {
           "scenario": "acp/tools-interleaved-identifiers",
           "pointer": "/expect/tool_events",
           "sha256": "e71a26dc45511aa8f460cad825f79d633e73b1f0c40b28550d5c4aacad06c08e",
-          "scenario_sha256": "8aab818c7c61a808df59884e53d64b34ba146e8a312455757c2b9d6c73bf0aa6",
+          "scenario_sha256": "f0c3a782520415ebcf3bfa2390cc87e3f403901936628a8872b5d03a121f04b7",
           "proves": "The ordered publication list is exact for room-1. Its object patches check the specified start/end types, normalized tool identities, names, results and status where present; unmentioned fields are not established."
         },
         {
           "scenario": "acp/tools-interleaved-identifiers",
           "pointer": "/expect/hooks/response",
           "sha256": "eb861bf38de6de3e4b5184e7d79931c68cd50c64971e4ecce211918a28173ea7",
-          "scenario_sha256": "8aab818c7c61a808df59884e53d64b34ba146e8a312455757c2b9d6c73bf0aa6",
+          "scenario_sha256": "f0c3a782520415ebcf3bfa2390cc87e3f403901936628a8872b5d03a121f04b7",
           "proves": "The exact response-hook list checks the stated text segments, joined response and distinct tool count of this consumed turn; it does not claim unasserted usage or timing."
         },
         {
           "scenario": "acp/tools-unicode-preview",
           "pointer": "/expect/timeline",
           "sha256": "9fbe510e1f0b6e01e7ccba7ae69795afb346ff4f8cccb59e8e9d9dd8e10b0482",
-          "scenario_sha256": "4687ee4c1f913e23aa1351ad02700bb6d9e482944636d58b52942e05885f236d",
+          "scenario_sha256": "fbc357f8dd834be553fea0f1de9675ea4307de7b78a2f1e351f3876068fe08cf",
           "proves": "The exact timeline list checks the asserted start/end rows and their result, arguments, identity, display copy or error where specified. Each row is a patch; unmentioned fields are not established."
         },
         {
           "scenario": "acp/tools-unicode-preview",
           "pointer": "/expect/tool_events",
           "sha256": "00e0608495f8c18a1f89a3803e15cadfc753e665f773922a5899f94a06f8cf37",
-          "scenario_sha256": "4687ee4c1f913e23aa1351ad02700bb6d9e482944636d58b52942e05885f236d",
+          "scenario_sha256": "fbc357f8dd834be553fea0f1de9675ea4307de7b78a2f1e351f3876068fe08cf",
           "proves": "The exact room-1 publication list contains one start and one completed end for the same normalized tool identity. The end preview is exactly the first 500 Unicode code points of the 600-code-point scripted result. This pointer does not assert the stored or observer result."
         },
         {
           "scenario": "acp/tools-unicode-preview",
           "pointer": "/expect/hooks/response",
           "sha256": "c44312a2c4bfd3ff55a12e80e6cc4a489451aed86c30cda054f1d7973955560e",
-          "scenario_sha256": "4687ee4c1f913e23aa1351ad02700bb6d9e482944636d58b52942e05885f236d",
+          "scenario_sha256": "fbc357f8dd834be553fea0f1de9675ea4307de7b78a2f1e351f3876068fe08cf",
           "proves": "The exact response-hook list checks the stated text segments, joined response and distinct tool count of this consumed turn; it does not claim unasserted usage or timing."
         },
         {
           "scenario": "acp/tools-completed-segments",
           "pointer": "/expect/streamed",
           "sha256": "a20cd9e93b60f1aea1a5e4e8d423742a3973c2918be11dbec350bada7999ca49",
-          "scenario_sha256": "8a7f57e09ebc8850bb29ea88ef868a99a5a9e11a4782ed843d6126e170304779",
+          "scenario_sha256": "3322fb72afabd6f2a3ff7d7b60d02fd6cdb72027c9b270eac3077b6966711a62",
           "proves": "The exact WebSocket stream alternates the asserted text and persisted tool markers; the raw result and ACP display copy are checked separately on the end marker."
         }
       ],
@@ -19999,63 +19999,63 @@
           "scenario": "acp/tools-report-metadata",
           "pointer": "/expect/hooks",
           "sha256": "1efb13eb7e83c796b0a7c85422b72a02bc0d4ce3857789229b4943e14f37306a",
-          "scenario_sha256": "8f2b290810169b65ccd4a95274ec84236eb657ed9a312a50abcd3e4145b3540f",
+          "scenario_sha256": "f098dc04493a0d374d2834ab3fac7482c7ee0a161f4d5c3949307e4ce2b15131",
           "proves": "The named SYNC hook lists check the asserted original and rewritten values, or the empty next-hook list after BLOCK. The ASYNC tool observer retains the original provider result and is_error=false. Lists are exact and objects are patches. No ExternalToolHandler is configured in this fixture; permission behavior is not asserted."
         },
         {
           "scenario": "acp/tools-report-metadata",
           "pointer": "/expect/timeline",
           "sha256": "c8d98eb9e07146aac0e6465f33077d78e2de2bff480b43b178d3b10ebf846340",
-          "scenario_sha256": "8f2b290810169b65ccd4a95274ec84236eb657ed9a312a50abcd3e4145b3540f",
+          "scenario_sha256": "f098dc04493a0d374d2834ab3fac7482c7ee0a161f4d5c3949307e4ce2b15131",
           "proves": "The stored tool outcome remains the asserted agent outcome despite the report-hook rewrite or block; this is an external report, not a tool whose result the local model has yet to read."
         },
         {
           "scenario": "acp/tools-report-modify",
           "pointer": "/expect/hooks",
           "sha256": "1efb13eb7e83c796b0a7c85422b72a02bc0d4ce3857789229b4943e14f37306a",
-          "scenario_sha256": "eead1f5b51b66717b5170203ef022c61b7571920d3da0771691d09326cda863e",
+          "scenario_sha256": "5921bf747615e9fefb7527abfb1ed6f4ddb8499f806a712f9d62472b874355d8",
           "proves": "The named SYNC hook lists check the asserted original and rewritten values, or the empty next-hook list after BLOCK. The ASYNC tool observer retains the original provider result and is_error=false. Lists are exact and objects are patches. No ExternalToolHandler is configured in this fixture; permission behavior is not asserted."
         },
         {
           "scenario": "acp/tools-report-modify",
           "pointer": "/expect/timeline",
           "sha256": "c8d98eb9e07146aac0e6465f33077d78e2de2bff480b43b178d3b10ebf846340",
-          "scenario_sha256": "eead1f5b51b66717b5170203ef022c61b7571920d3da0771691d09326cda863e",
+          "scenario_sha256": "5921bf747615e9fefb7527abfb1ed6f4ddb8499f806a712f9d62472b874355d8",
           "proves": "The stored tool outcome remains the asserted agent outcome despite the report-hook rewrite or block; this is an external report, not a tool whose result the local model has yet to read."
         },
         {
           "scenario": "acp/tools-report-block",
           "pointer": "/expect/hooks",
           "sha256": "9e5139e343236209b8f0b501a5e8ca49b394f375e097cb03161abe4bf2e1247d",
-          "scenario_sha256": "a63aaf2565889483eb1840e8866e84e7db94fc047197fc7974b66414c2fc533f",
+          "scenario_sha256": "d4de8186411ce010ec44a35fc56665e2734cda30e590d7d116d9933ac0483275",
           "proves": "The named SYNC hook lists check the asserted original and rewritten values, or the empty next-hook list after BLOCK. The ASYNC tool observer retains the original provider result and is_error=false. Lists are exact and objects are patches. No ExternalToolHandler is configured in this fixture; permission behavior is not asserted."
         },
         {
           "scenario": "acp/tools-report-block",
           "pointer": "/expect/timeline",
           "sha256": "c8d98eb9e07146aac0e6465f33077d78e2de2bff480b43b178d3b10ebf846340",
-          "scenario_sha256": "a63aaf2565889483eb1840e8866e84e7db94fc047197fc7974b66414c2fc533f",
+          "scenario_sha256": "d4de8186411ce010ec44a35fc56665e2734cda30e590d7d116d9933ac0483275",
           "proves": "The stored tool outcome remains the asserted agent outcome despite the report-hook rewrite or block; this is an external report, not a tool whose result the local model has yet to read."
         },
         {
           "scenario": "acp/tools-failed-report-chain",
           "pointer": "/expect/hooks",
           "sha256": "1c702e75c1adbce31775014de8a902bbdc01ded86207e267a1e9098e33627da8",
-          "scenario_sha256": "fa90ca284dc57b61f2b7b05f43004c8ce5f51dbc536c974267d9b93cf8cadcfc",
+          "scenario_sha256": "2bad23807ee278d41f261645fdd6d037c5a0906ae5fa2ab8ac6a8900b12ca5c5",
           "proves": "The exact SYNC and ASYNC tool-hook lists each contain the original failed agent result with is_error=true, despite the configured SYNC result override. The response-hook list contains the asserted consumed response. Objects are patches. No ExternalToolHandler is configured in this fixture; permission behavior is not asserted."
         },
         {
           "scenario": "acp/tools-failed-report-chain",
           "pointer": "/expect/timeline",
           "sha256": "dfeff9f1105da854f742f33411471fb2a6308d8991f30f59291a98a0fcc7f5a2",
-          "scenario_sha256": "fa90ca284dc57b61f2b7b05f43004c8ce5f51dbc536c974267d9b93cf8cadcfc",
+          "scenario_sha256": "2bad23807ee278d41f261645fdd6d037c5a0906ae5fa2ab8ac6a8900b12ca5c5",
           "proves": "The stored tool outcome remains the asserted agent outcome despite the report-hook rewrite or block; this is an external report, not a tool whose result the local model has yet to read."
         },
         {
           "scenario": "acp/tools-cut-during-report",
           "pointer": "/expect/hooks",
           "sha256": "b51984fbf6efbb1956f160e27bb26be221b93ee5ecbd39b10077ea29bdbe239d",
-          "scenario_sha256": "203bc695bf4823c0e537f7f38d0f9d77768379c932ab57aaea0cc8a62274a2b2",
+          "scenario_sha256": "77ad38e5226acbf26a8cdb75d59c3ef2c517aa60dfdeed28f00267870aa96582",
           "proves": "Cancellation while the SYNC report is held still produces exactly the one served ASYNC report with the asserted original outcome; no completed response hook is reported."
         }
       ],
@@ -20077,98 +20077,98 @@
           "scenario": "acp/tools-error-closes-pending",
           "pointer": "/expect/tool_events",
           "sha256": "e1d3941116fb2e9136fa62126efa77cd785c2beba8b4adc33944fcc8e2f1894d",
-          "scenario_sha256": "cb1247fbee17f0c187d606f32c24c9df81dabebe128eed07b966e9dcbaf6f10e",
+          "scenario_sha256": "acf81813f29640e75c8467dc461e93b2dfd5bd9cc14b020eb0008ee5c0fe414f",
           "proves": "The exact room-keyed lists check each asserted tool start/end publication. Interrupted open calls have the stated failed status and interruption explanation; per-room uses sequential prompts on one connection."
         },
         {
           "scenario": "acp/tools-error-closes-pending",
           "pointer": "/expect/hooks",
           "sha256": "ebe0fbc50d496a2d91c54ac3f13c9087b33cf9e9bcf5aa667b401426590db472",
-          "scenario_sha256": "cb1247fbee17f0c187d606f32c24c9df81dabebe128eed07b966e9dcbaf6f10e",
+          "scenario_sha256": "acf81813f29640e75c8467dc461e93b2dfd5bd9cc14b020eb0008ee5c0fe414f",
           "proves": "The exact tool-observer and response-hook lists check the stated outcomes and room. Error and abandoned-stream cases assert no completed response; returned cancelled/refusal outcomes retain their consumed response report."
         },
         {
           "scenario": "acp/tools-error-closes-pending",
           "pointer": "/expect/timeline",
           "sha256": "0d811bc7782b4f8fb8271b9a6ad3c7e1748d599a8e7bf1a7ceb94083f2bc4889",
-          "scenario_sha256": "cb1247fbee17f0c187d606f32c24c9df81dabebe128eed07b966e9dcbaf6f10e",
+          "scenario_sha256": "acf81813f29640e75c8467dc461e93b2dfd5bd9cc14b020eb0008ee5c0fe414f",
           "proves": "The exact timeline list checks the stored rows and asserted cancellation/outcome fields. Abandoned consumption has no timeline assertion in this link."
         },
         {
           "scenario": "acp/tools-cancelled-closes-pending",
           "pointer": "/expect/tool_events",
           "sha256": "e1d3941116fb2e9136fa62126efa77cd785c2beba8b4adc33944fcc8e2f1894d",
-          "scenario_sha256": "8da22210f26e1a1f3332dd11b5f7166a46ec0ff8aa1c2068fe63c90f87ce89ae",
+          "scenario_sha256": "f2f525a1576d1c6c9ab21121a7e39fc7fcc12d3645efaa6232bda3cc2fc8fbf4",
           "proves": "The exact room-keyed lists check each asserted tool start/end publication. Interrupted open calls have the stated failed status and interruption explanation; per-room uses sequential prompts on one connection."
         },
         {
           "scenario": "acp/tools-cancelled-closes-pending",
           "pointer": "/expect/hooks",
           "sha256": "6a5cae4f80750319a33163828cebb07f048b0287505449e140b5c203317a991c",
-          "scenario_sha256": "8da22210f26e1a1f3332dd11b5f7166a46ec0ff8aa1c2068fe63c90f87ce89ae",
+          "scenario_sha256": "f2f525a1576d1c6c9ab21121a7e39fc7fcc12d3645efaa6232bda3cc2fc8fbf4",
           "proves": "The exact tool-observer and response-hook lists check the stated outcomes and room. Error and abandoned-stream cases assert no completed response; returned cancelled/refusal outcomes retain their consumed response report."
         },
         {
           "scenario": "acp/tools-cancelled-closes-pending",
           "pointer": "/expect/timeline",
           "sha256": "0d811bc7782b4f8fb8271b9a6ad3c7e1748d599a8e7bf1a7ceb94083f2bc4889",
-          "scenario_sha256": "8da22210f26e1a1f3332dd11b5f7166a46ec0ff8aa1c2068fe63c90f87ce89ae",
+          "scenario_sha256": "f2f525a1576d1c6c9ab21121a7e39fc7fcc12d3645efaa6232bda3cc2fc8fbf4",
           "proves": "The exact timeline list checks the stored rows and asserted cancellation/outcome fields. Abandoned consumption has no timeline assertion in this link."
         },
         {
           "scenario": "acp/tools-refusal-after-text",
           "pointer": "/expect/tool_events",
           "sha256": "e1d3941116fb2e9136fa62126efa77cd785c2beba8b4adc33944fcc8e2f1894d",
-          "scenario_sha256": "2d6255dd9b4e5630a9e618e29ba9fc84466f7755c7477211ccd202b93bc27c4d",
+          "scenario_sha256": "1c79fbe91cce7884a291154afe7e18fc5e6fd6a59368be89be3c81a4ed35a2bf",
           "proves": "The exact room-keyed lists check each asserted tool start/end publication. Interrupted open calls have the stated failed status and interruption explanation; per-room uses sequential prompts on one connection."
         },
         {
           "scenario": "acp/tools-refusal-after-text",
           "pointer": "/expect/hooks",
           "sha256": "3155106db5ca076fdd630146f9265587f39e35e882c6eb8ffc6af8b1e8511205",
-          "scenario_sha256": "2d6255dd9b4e5630a9e618e29ba9fc84466f7755c7477211ccd202b93bc27c4d",
+          "scenario_sha256": "1c79fbe91cce7884a291154afe7e18fc5e6fd6a59368be89be3c81a4ed35a2bf",
           "proves": "The exact tool-observer and response-hook lists check the stated outcomes and room. Error and abandoned-stream cases assert no completed response; returned cancelled/refusal outcomes retain their consumed response report."
         },
         {
           "scenario": "acp/tools-refusal-after-text",
           "pointer": "/expect/timeline",
           "sha256": "4d3680eaaaa5a4d1f2f19773087d88eaaab2b8ad2c6cb815902b3bbf7a8d89fb",
-          "scenario_sha256": "2d6255dd9b4e5630a9e618e29ba9fc84466f7755c7477211ccd202b93bc27c4d",
+          "scenario_sha256": "1c79fbe91cce7884a291154afe7e18fc5e6fd6a59368be89be3c81a4ed35a2bf",
           "proves": "The exact timeline list checks the stored rows and asserted cancellation/outcome fields. Abandoned consumption has no timeline assertion in this link."
         },
         {
           "scenario": "acp/tools-abandoned-stream",
           "pointer": "/expect/tool_events",
           "sha256": "e1d3941116fb2e9136fa62126efa77cd785c2beba8b4adc33944fcc8e2f1894d",
-          "scenario_sha256": "a2a2c1361e8ddeef6c6ae11eb6b580df3c981a9a3566c6832c9b17c8b56dccce",
+          "scenario_sha256": "45e7fec8275af8b51c50e92b7ab435f449308b8e408316336e6d847cc826ecd3",
           "proves": "The exact room-keyed lists check each asserted tool start/end publication. Interrupted open calls have the stated failed status and interruption explanation; per-room uses sequential prompts on one connection."
         },
         {
           "scenario": "acp/tools-abandoned-stream",
           "pointer": "/expect/hooks",
           "sha256": "ebe0fbc50d496a2d91c54ac3f13c9087b33cf9e9bcf5aa667b401426590db472",
-          "scenario_sha256": "a2a2c1361e8ddeef6c6ae11eb6b580df3c981a9a3566c6832c9b17c8b56dccce",
+          "scenario_sha256": "45e7fec8275af8b51c50e92b7ab435f449308b8e408316336e6d847cc826ecd3",
           "proves": "The exact tool-observer and response-hook lists check the stated outcomes and room. Error and abandoned-stream cases assert no completed response; returned cancelled/refusal outcomes retain their consumed response report."
         },
         {
           "scenario": "acp/tools-per-room",
           "pointer": "/expect/tool_events",
           "sha256": "8a116d66251570664ffa5ca05fd11f0f33aeba721ac6b15c99c2f07295e8fc08",
-          "scenario_sha256": "82670fbcb0df3191621bcdd4ad662c9afa5b06b3a74ed3b6bb5c4ef52c90ccab",
+          "scenario_sha256": "9b3eb22807b180239506803b89a57b9742f72dbb8712a2e9200350aa27f9fc67",
           "proves": "The exact room-keyed lists check each asserted tool start/end publication. Interrupted open calls have the stated failed status and interruption explanation; per-room uses sequential prompts on one connection."
         },
         {
           "scenario": "acp/tools-per-room",
           "pointer": "/expect/hooks",
           "sha256": "9a594bff4e512e7fc19d732211d5d8f6d508b87001e87e0e43b3fb0109a900a7",
-          "scenario_sha256": "82670fbcb0df3191621bcdd4ad662c9afa5b06b3a74ed3b6bb5c4ef52c90ccab",
+          "scenario_sha256": "9b3eb22807b180239506803b89a57b9742f72dbb8712a2e9200350aa27f9fc67",
           "proves": "The exact tool-observer and response-hook lists check the stated outcomes and room. Error and abandoned-stream cases assert no completed response; returned cancelled/refusal outcomes retain their consumed response report."
         },
         {
           "scenario": "acp/tools-per-room",
           "pointer": "/expect/timeline",
           "sha256": "c704675c19eb0b6aaa46c845392eb8fc9a9ef177b0525ba9796c762a16842ac9",
-          "scenario_sha256": "82670fbcb0df3191621bcdd4ad662c9afa5b06b3a74ed3b6bb5c4ef52c90ccab",
+          "scenario_sha256": "9b3eb22807b180239506803b89a57b9742f72dbb8712a2e9200350aa27f9fc67",
           "proves": "The exact timeline list checks the stored rows and asserted cancellation/outcome fields. Abandoned consumption has no timeline assertion in this link."
         },
         {
@@ -20236,35 +20236,35 @@
           "scenario": "acp/tools-observer-turn-context",
           "pointer": "/steps/0/expect/result/response_metadata",
           "sha256": "01c27384c53f2374fed3281b879d80db2252bbfbce8ea681e12874be56877aaf",
-          "scenario_sha256": "fe3e1e1d78d0a23cc2910dfeb03b63b35dc3f103dcd54150c96dc7da431582c3",
+          "scenario_sha256": "ae88e2e88be5ac65981fd58cdad2ee406b44bebb517f68d3d8c0a5e0370005da",
           "proves": "The first room returns tool_observed as absent or null ($absent)."
         },
         {
           "scenario": "acp/tools-observer-turn-context",
           "pointer": "/steps/6/expect/result/response_metadata",
           "sha256": "dcdd54ba1c0a5bbb7b3b2d862448e535d9d5a6d4d09a2148c3635229736c8188",
-          "scenario_sha256": "fe3e1e1d78d0a23cc2910dfeb03b63b35dc3f103dcd54150c96dc7da431582c3",
+          "scenario_sha256": "ae88e2e88be5ac65981fd58cdad2ee406b44bebb517f68d3d8c0a5e0370005da",
           "proves": "The caller receives both the SYNC and ASYNC observer writes, made before the prompt is released."
         },
         {
           "scenario": "acp/tools-observer-turn-context",
           "pointer": "/steps/7/expect/result/response_metadata",
           "sha256": "d24ba4a7ecfa5010aa8089c0d30f17115ee5aa205fdea8684d123c671b612436",
-          "scenario_sha256": "fe3e1e1d78d0a23cc2910dfeb03b63b35dc3f103dcd54150c96dc7da431582c3",
+          "scenario_sha256": "ae88e2e88be5ac65981fd58cdad2ee406b44bebb517f68d3d8c0a5e0370005da",
           "proves": "A following turn without tool callbacks returns both observer fields as absent or null ($absent)."
         },
         {
           "scenario": "acp/tools-observer-turn-context",
           "pointer": "/expect/timeline/room-2/3/metadata",
           "sha256": "dcdd54ba1c0a5bbb7b3b2d862448e535d9d5a6d4d09a2148c3635229736c8188",
-          "scenario_sha256": "fe3e1e1d78d0a23cc2910dfeb03b63b35dc3f103dcd54150c96dc7da431582c3",
+          "scenario_sha256": "ae88e2e88be5ac65981fd58cdad2ee406b44bebb517f68d3d8c0a5e0370005da",
           "proves": "The completed answer MESSAGE carries both observer values, written before that message is created."
         },
         {
           "scenario": "acp/tools-observer-turn-context",
           "pointer": "/expect/timeline/room-2/5/metadata",
           "sha256": "d24ba4a7ecfa5010aa8089c0d30f17115ee5aa205fdea8684d123c671b612436",
-          "scenario_sha256": "fe3e1e1d78d0a23cc2910dfeb03b63b35dc3f103dcd54150c96dc7da431582c3",
+          "scenario_sha256": "ae88e2e88be5ac65981fd58cdad2ee406b44bebb517f68d3d8c0a5e0370005da",
           "proves": "The following answer MESSAGE has both observer fields absent or null ($absent), rather than the preceding turn’s true values."
         },
         {

@@ -812,6 +812,9 @@ that both runners check the same messages.
   Callback exhaustion is a runner failure, even if the scenario expects a
   business error. An omitted list declares no servers.
 - `acp.session_config`: initial channel option values (strings or booleans).
+- `acp.publish_tool_call_text`: whether room tool notifications carry call
+  arguments, result previews and full intermediate progress. Defaults to false.
+  Tool rows and the tool observer's report keep their ordinary contents.
 - `acp.publish_thinking_text`: publish thought text in ephemeral deltas (false
   by default); the turn stream and response report still receive the full text.
 - `acp.transport.provides_usage_metadata`: the transport's opt-in trust flag, false

@@ -8207,6 +8207,10 @@
           "description": "Publish thought text in room ephemeral deltas; false by default. The full thought still reaches the turn stream and completed response report.",
           "type": "boolean"
         },
+        "publish_tool_call_text": {
+          "description": "Include ACP tool input, result previews, and full intermediate progress in room tool notifications. Defaults to false.",
+          "type": "boolean"
+        },
         "external_tool_handler": {
           "$ref": "#/$defs/acp_external_handler"
         },
