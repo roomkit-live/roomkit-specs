@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "d8662dbbbde3342955d52cebf8ef5a27862366ae36289442d66ee1b95e937751",
-  "corpus_sha256": "fc010d6d3dece8e0005225b6b93893b0747a92e3248f6bed725fae7bda3e6def",
+  "corpus_sha256": "c55ca486a0e31b196a6eb168b6dcf4602178213ab9c38710be763c732350f812",
   "python_commit": "b50c50a782668fc1681e21bcec52a3d83bc0d8c0",
-  "scenario_count": 3011,
+  "scenario_count": 3025,
   "sections": [
     {
       "section": "0",
@@ -8170,6 +8170,20 @@
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
+        "mcp-construction/direct-sse-discovery-empty-headers",
+        "mcp-construction/direct-sse-discovery-retained-headers",
+        "mcp-construction/direct-sse-reentry",
+        "mcp-construction/direct-sse-resource-only-empty-headers",
+        "mcp-construction/direct-sse-resource-only-retained-headers",
+        "mcp-construction/direct-sse-timeout-endpoint",
+        "mcp-construction/direct-sse-timeout-listing",
+        "mcp-construction/from-url-sse-discovery-empty-headers",
+        "mcp-construction/from-url-sse-discovery-retained-headers",
+        "mcp-construction/from-url-sse-reentry",
+        "mcp-construction/from-url-sse-resource-only-empty-headers",
+        "mcp-construction/from-url-sse-resource-only-retained-headers",
+        "mcp-construction/from-url-sse-timeout-endpoint",
+        "mcp-construction/from-url-sse-timeout-listing",
         "mcp-host/disconnected-access",
         "mcp-host/extension-container-validation",
         "mcp-host/handshake-copies",
