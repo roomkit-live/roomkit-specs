@@ -1828,7 +1828,9 @@ Channel (interface)
 │       # Deliver streaming text to this channel. The stream yields the
 │       # response's text as it is written, a thinking delta per chunk of
 │       # the model's reasoning (Section 6.4), what each generation used
-│       # (Section 6.4), which a channel that shows none skips, each row
+│       # (Section 6.4), first what it told before its end when its
+│       # provider tells it (marked partial), which a channel that shows
+│       # none skips, each row
 │       # of the response once the store holds it (a text segment, a call's
 │       # start or end), and last how the turn's loop ended (Section 6.4),
 │       # before the response's failure when it fails
@@ -3645,9 +3647,11 @@ MESSAGE: `loop_end_reason` (the reason above), `ai_usage`
 (what its rounds used) and, when its channel says so, `ai_last_usage` (what
 its last generation used, null when that generation failed),
 `ai_usage_complete` (whether every generation reported its input and output
-counters), `ai_model` and `ai_provider` (what its last generation ran on, a
+counters at its end: one cut before it never did), `ai_model` and
+`ai_provider` (what its last generation ran on, a
 provider a router handed a generation to when it served it) in the message's
-metadata. A turn that ran
+metadata. `ON_AI_RESPONSE` carries that completeness beside its usage
+(`usage_complete`). A turn that ran
 on an executor other than the room owner's own (§10.6), whatever its end, also
 records `executor_id` there, the id that executor took the turn under; a turn on
 the owner's own executor records none. That message is the one of
@@ -3679,13 +3683,21 @@ caller reads the end and the usage under `turns`, and no more of it.
 yields what it used, its model and its provider (`UsageMarker`), in its order
 among the text and the rows, as it does a piece of reasoning, so a streaming
 channel can show what a long turn uses as it goes (Section 6.1). It is never
-stored. A generation that reported no counters tells an empty usage; one in
-flight has told nothing. A turn its reader stopped, or cut from outside, once
+stored. A generation that reported no counters tells an empty usage. A
+provider that tells what a generation used before its end (the input counters
+it tells as its stream starts, Section 6.7) has the loop yield it at once, as a
+`UsageMarker` marked `partial`, which the generation's own replaces: a reader
+that sums usage MUST skip a partial one. A generation whose end reports no
+usage (one a `Cancel` or a cut stopped, one that failed, one whose done event
+carries no counters) counts what it told before its end, once, into the turn's
+usage, its budget and its span, and its record reads incomplete. A turn its
+reader stopped, or cut from outside, once
 it began (Section 12.2 step 13s) records what its generations told as a turn
 that reached its end does, its end `cancelled`: `ai_usage` sums what they told,
-absent when no counter was told, `ai_last_usage`, `ai_model` and `ai_provider`
-are what the last of them told, and `ai_usage_complete` is false when one told
-no counters or one is in flight. A generation counts as in flight from the end
+a generation in flight counting what it told before its end, as the reader read
+it, absent when no counter was told, `ai_last_usage`, `ai_model` and
+`ai_provider` are what the last of them told, and `ai_usage_complete` is false
+when one told no counters or one is in flight. A generation counts as in flight from the end
 of the calls that followed the last one told, as the reader read it, or from a
 segment break, until it tells; a call that ends once the reader stopped asks no
 model again. A stream cut before anything told what it used records only its end,
@@ -4089,7 +4101,10 @@ AIProvider (interface)
 │       # (Section 6.4, One loop)
 │
 ├── generate_structured_stream(context: AIContext) → async_iterator<StreamEvent>
-│       # Yield thinking deltas, text deltas and tool calls, then one done event
+│       # Yield thinking deltas, text deltas and tool calls, then one done event;
+│       # a usage event before it tells what the generation used so far (the
+│       # input counters told as the stream starts), which the done event's
+│       # usage replaces and a generation cut before its end counts (§6.4)
 │
 ├── available_models() → list<ModelInfo>
 │       # Curated offline catalogue (MAY be empty)
@@ -23157,7 +23172,8 @@ WebSocketChannel
 └── delivery: sends to the connections subscribed to the event's room,
     none registered for another organization than the room's (§17.2);
     a stream sends only to the registrations present when it started,
-    checked as each send starts
+    checked as each send starts; a connection without stream_send_fn
+    reads each row the stream hands, once, and nothing more
 ```
 <!-- /rfc -->
 

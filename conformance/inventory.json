@@ -219,7 +219,7 @@
     },
     {
       "section": "6.1",
-      "sha256": "90103038a1f6e04b7289a75270cfe6d1dbefce39bcc7dc62c818eca3f3be8ea1",
+      "sha256": "726842b999bffc5245fc5784d2bcd98106ee192f28ec112d86ae7b081e9dfe5f",
       "classification": "normative",
       "review": "Source inventory: Channel Interface. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
@@ -237,7 +237,7 @@
     },
     {
       "section": "6.4",
-      "sha256": "968525598bd728918559d97025712364fd9846c87d72117c9cc2c8a251cd1fb8",
+      "sha256": "656d9ce3e5f8bf453ebc7fedf2684b9eb1ba5e8ac32065f87b5aca0313776333",
       "classification": "normative",
       "review": "Source inventory: Intelligence Channels. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the added deferred-input association and protected-context clause against shared hook scenarios and native mutation/tool tests; existing source units are unchanged."
     },
@@ -255,7 +255,7 @@
     },
     {
       "section": "6.7",
-      "sha256": "9ebba862d01475fbbfe5fa39fc59eca796aa51674f1fb9c83eda0b9bd44e4f35",
+      "sha256": "b27e17cb6c4653ceb82906e85382212eadc609a4c31587bc38df9a163c95a9a1",
       "classification": "normative",
       "review": "Source inventory: Provider Abstraction. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
@@ -1599,7 +1599,7 @@
     },
     {
       "section": "A.8",
-      "sha256": "d66548e9fd036395587203cd751548b85edce7d71f7391b3bb51ff9edc2dad9a",
+      "sha256": "4190211428cd38dcc506a0e8824641d9cd7f33b4796c6a1c0fb9fc3ae1e6ec4b",
       "classification": "normative",
       "review": "Source inventory: WebSocket Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },

@@ -24192,7 +24192,7 @@
     {
       "id": "phase4-ai-result-carriers",
       "requirement": "RK-6.7-002",
-      "clause_sha256": "365777516b21124a8fbe5191858dae326893a42301b1ed32c7262edf0a770cad",
+      "clause_sha256": "9e121e3cf54b044a632f6bc322e00f73afbbc8f1c0c9db491fb9e7db79477c19",
       "scope": "Four public AI result fields and their text-turn boundaries: response tasks/observations, tool structured copy/outcome, next-round reads, outcome replay and compaction retention.",
       "coverage": "partial",
       "review": "Independent review accepted the Python source assertions and native Rust counterparts, including actual provider requests, after missing outcomes and lost empty copies were reproduced and corrected. The shared fixture does not expose these provider-part fields. This link records source evidence only, not native execution receipts.",
@@ -24253,7 +24253,7 @@
     {
       "id": "phase4-ai-provider-room-context",
       "requirement": "RK-6.7-002",
-      "clause_sha256": "365777516b21124a8fbe5191858dae326893a42301b1ed32c7262edf0a770cad",
+      "clause_sha256": "9e121e3cf54b044a632f6bc322e00f73afbbc8f1c0c9db491fb9e7db79477c19",
       "coverage": "partial",
       "scope": "AIContext room snapshots and outgoing target capability metadata, including empty targets, selection, intersections and preservation through hooks and interleaved tool rounds.",
       "review": "Independent source and full Rust reviews accepted the 32 shared scenarios and native twins. Distinct per-room capabilities and distinct per-field limits prevent false-positive isolation and minimum checks. Full room snapshots and independent hook replacements are native proofs; no object-identity promise is added.",
@@ -25515,7 +25515,7 @@
     {
       "id": "phase4-extract-tools-definitions",
       "requirement": "RK-6.7-002",
-      "clause_sha256": "365777516b21124a8fbe5191858dae326893a42301b1ed32c7262edf0a770cad",
+      "clause_sha256": "9e121e3cf54b044a632f6bc322e00f73afbbc8f1c0c9db491fb9e7db79477c19",
       "scope": "The public extract_tools helper projects ordered tool definitions and a mixed schema/object channel sends their observed fields to its provider.",
       "coverage": "partial",
       "review": "Independent source and full code reviews accepted the public helper, existing composition counterparts and the standalone channel witness. Native Rust counterparts and final gate logs are retained separately; this link is source mapping only.",
