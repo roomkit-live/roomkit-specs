@@ -1,9 +1,9 @@
 {
   "$schema": "../../scenario.schema.json",
   "rules": [
-    "\u00a79.3",
-    "\u00a76.4",
-    "\u00a712.4"
+    "§9.3",
+    "§6.4",
+    "§12.4"
   ],
   "setup": {
     "channels": [

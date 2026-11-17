@@ -3,7 +3,7 @@
   "id": "provider-served/bounded-mixed-round-stream",
   "title": "A provider's whole result reaches observers before the model and stored end receive the bounded copy (streaming provider)",
   "rules": [
-    "\u00a721.5"
+    "§21.5"
   ],
   "notes": "Source checklist: tests/test_served_call_marker.py, test_external_call_routing.py, test_provider_result_bound.py, test_turn_calls_per_call.py, test_external_call_cut.py. The marker is provider data; writes_record witnesses real local execution.",
   "setup": {
@@ -174,16 +174,16 @@
           "type": "tool_call_start"
         },
         {
-          "index": 2,
-          "type": "tool_call_start"
-        },
-        {
           "index": 3,
           "type": "tool_call_end",
           "content": {
             "tool_id": "c1",
             "result": "Result too large (320 tokens). Full output saved as 'evicted_c1'. Use read_stored_result to read it with pagination.\n\nPreview:\nrow 001\nrow 002\nrow 003\nrow 004\nrow 005\n\n[... 150 lines omitted ...]\n\nrow 156\nrow 157\nrow 158\nrow 159\nrow 160"
           }
+        },
+        {
+          "index": 2,
+          "type": "tool_call_start"
         },
         {
           "index": 4,
@@ -199,6 +199,11 @@
           "content": {
             "type": "text",
             "body": "Done."
+          },
+          "metadata": {
+            "local_provider_called": {
+              "$absent": true
+            }
           }
         }
       ]
