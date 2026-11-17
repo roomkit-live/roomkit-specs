@@ -1,11 +1,11 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "memory/a-summary-is-carried-into-the-next-read",
-  "title": "A summarizing memory carries its summary into the room's next reads: a read gives the summary, then the turns after those it covers; the summarizer is called again only once they pass the second threshold, and then reads the prior summary and the new turns alone, so turns that left the window the memory wraps stay summarized",
+  "title": "A summarizing memory carries its summary into the room's next reads while the turns it covers are in the room's history: a read gives the summary, then the turns after those it covers; the summarizer is called again only once they pass the second threshold, and then reads the prior summary and the new turns alone",
   "rules": [
     "§20.3"
   ],
-  "notes": "Python's SummarizingMemory over a sliding window of 7 events, min_events 1, summary_max_tokens 100. At the fourth question the history passes tier 2: Question 1 to Answer 2 are summarized (Summary 1) and Question 3, Answer 3 kept. At the fifth, the summary and the turns after Answer 2 fit under the threshold: no call, Summary 1 stands again. At the sixth the window starts at Question 3, and the turns after Answer 2 pass it: the summarizer reads Summary 1 as the prior summary and Question 3 to Answer 4 alone (Summary 2), Question 5 and Answer 5 kept; Question 1 to Answer 2, out of the window, are still summarized. Before RMK-363 each read summarized its window afresh, a call per turn past the threshold, the prior summary never read (it was looked for among the window's messages, which hold none).",
+  "notes": "Python's SummarizingMemory over a sliding window of 11 events, min_events 1, summary_max_tokens 100. At the fourth question the history passes tier 2: Question 1 to Answer 2 are summarized (Summary 1) and Question 3, Answer 3 kept. At the fifth, the summary and the turns after Answer 2 fit under the threshold: no call, Summary 1 stands again for the turns it covers, which the read leaves out. At the sixth the turns after Answer 2 pass it: the summarizer reads Summary 1 as the prior summary and Question 3 to Answer 4 alone (Summary 2), Question 5 and Answer 5 kept. Before RMK-363 each read summarized its window afresh, a call per turn past the threshold, the prior summary never read (it was looked for among the window's messages, which hold none).",
   "setup": {
     "channels": [
       {
@@ -39,7 +39,7 @@
           ]
         },
         "memory": {
-          "max_events": 7,
+          "max_events": 11,
           "summarizing": {
             "max_context_tokens": 700,
             "min_events": 1,
