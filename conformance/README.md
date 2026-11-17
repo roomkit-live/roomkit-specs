@@ -1522,8 +1522,10 @@ version using that handshake), resources capability and its optional `server_inf
 and `instructions`. `replies` is an ordered script of `{method, params?,
 result|error|hold}`. Each request must match the next method and params
 (omitted script params mean `{}`; only the initial discovery `tools/list`
-may omit empty wire params). Discovery-only SDK progress tokens are omitted
-from the observation; host request parameters, including `_meta`, stay exact.
+may omit empty wire params). Numeric SDK progress tokens are omitted only
+while observing discovery or the public `call_tool` operation. Explicit host
+`request` parameters, including `_meta`, stay exact; other metadata is never
+removed. HTTP requests, including notifications, remain in the raw observation.
 Exactly one result, protocol error (`code`, `message`,
 optional `data`) or `hold: true` is required. A held request gets no answer
 before its client closes it. Unexpected requests, unused replies and fixture
