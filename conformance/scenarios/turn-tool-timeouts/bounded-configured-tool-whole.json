@@ -6,7 +6,7 @@
     "§21.6",
     "Appendix A.9"
   ],
-  "notes": "Python: tests/test_tool_timeout.py::test_a_turns_configuration_bounds_the_tools_it_declares. Gates establish call ordering without a sleep-based oracle.",
+  "notes": "Python: channels/_ai_context.py::_given_turn_timeouts and tools/timeout.py::ToolTimeouts.overridden. A finite bound supplied with the turn-declared tool cuts its pending handler while the channel default is unbounded.",
   "setup": {
     "channels": [
       {
