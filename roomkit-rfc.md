@@ -3412,7 +3412,7 @@ person the agent would never hear is not named to it), silent ones
 included, one per person in the order they joined, each
 named as the turns the reader reads name them: a person one of those turns
 is from by the label of their latest turn, the name their transport stamped
-included, so that no turn names someone the note does not; a silent one by
+included, so that the note names a person as their turns do; a silent one by
 the room's record of them (their name and its rank), or, with no name,
 their channel ranked after the labels the turns gave it (`@sms1 (2)`), so
 that two people with no name never read as one. A conference
@@ -20396,14 +20396,18 @@ summarized.
 
 The memory keeps, for each room and agent, the summary it last built, with
 the room's creation mark and each turn the summary covers with what that
-turn said. A read gives that summary, then the turns after those it covers,
-and asks the model again only once they pass the second threshold, the
-prior summary then read with the new turns alone. The summary stops
-standing, and a read starts from its window again, once the room is one
-created again under its id, or a turn it covers is deleted, edited, its
-content withheld (Section 10.3), or out of the history the channel reads,
-where the memory could no longer tell: a summary never hands on what a
-deleted turn said, nor a deleted room's conversation.
+turn said, in its process, forgotten once the room has not been read for
+`summary_cache_ttl_seconds`: another process starts from its window. A
+read gives that summary, then the turns after those it covers, and asks
+the model again only once they pass the second threshold, the prior
+summary then read with the new turns alone. The summary stops standing,
+and a read starts from its window again, once the room is one created
+again under its id, a turn it covers is deleted, edited, its content
+withheld (Section 10.3), or out of the history the channel reads, where the
+memory could no longer tell, or the window no longer holds the turn right
+after those it covers, which would be neither summarized nor read: a
+summary never hands on what a deleted turn said, nor a deleted room's
+conversation.
 Between two tool rounds it compacts once the round's counters, summed, pass its
 second threshold taken as a share of `max_context_tokens`: a model summarizes
 the history's older messages, each text read on one line after its role, a
