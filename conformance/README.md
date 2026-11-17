@@ -410,6 +410,24 @@ implementation's AI channel does; only the provider and the tools are
 scripted.
 
 - `external_tool_handler`: a real policy handler with the same `policy`, `decisions` and `reports` controls as `acp.external_tool_handler`. Its actual callbacks are read through `expect.external_handlers[channel_id]`; AIChannel does not start or stop this service.
+- `speak_policy`: a public `SpeakPolicy` with a nonempty `decisions` array.
+  Each entry contains exactly one `decision` or `fail`, and may contain a named
+  `gate`. The policy records the real `SpeakTurn`, waits at that gate when
+  present, then returns the decision or raises the scripted error. Calls use
+  entries in order and repeat the last one. A decision contains `mode`
+  (`speak`, `offer`, `silent`) and optional `reason`, numeric `judgments`, string
+  `notes`, and `final`; only silence can be final. Malformed controls fail
+  outside the product's policy-error fallback. `speak_timeout_ms` supplies the
+  channel's real timeout in milliseconds.
+  `expect.speak_turns[channel_id]` reads the actual inputs: `event`, `recent`,
+  `people`, `channel_id`, `speakers`, and `thought`. An empty array also exists
+  for a scripted AI channel without a policy, so it can prove no policy call.
+  An `on_speak_decision` hook records its payload under `speak_decision`:
+  `room_id`, `channel_id`, `event`, `decision`, `duration_ms`, `asked_again`,
+  `late`, and `thought`. A hook's modify patch contains only `decision`; the
+  fixture replaces that decision in the real payload, preserving its event.
+  Wall-clock timing and object identity are tested natively, not inferred
+  from these recorded snapshots.
 - `continuation`: a host callback `{prefix, nudge}` or `{prefix, error}`.
   Every invocation records its exact text in `expect.continuations[channel_id]`.
   Text beginning with `prefix` returns `nudge` (including an empty string or
@@ -1227,6 +1245,7 @@ stores a simulated plan nor derives its tool result from these observations.
 | `actions` | Per action label, the outcomes of its runs, in the order they ended |
 | `ai_events` | Per room, the framework events of an AI channel's turn (§8.2, Level 1): `before_ai_generation` and `ai_response`, in emission order, matched as `framework_events`, which does not hold them |
 | `external_handlers` | Per AI channel, the ordered external handler callbacks; an exact empty list proves none occurred. |
+| `speak_turns` | Per scripted AI channel, the real speaking-policy inputs, in order; `[]` proves no call. The scripted-policy protocol above defines the snapshots. |
 | `continuations` | Per channel, exact continuation callback inputs in invocation order; `[]` proves it was not called. |
 | `models` | Per scripted agent, each generation's `method` (`generate` or `generate_structured_stream`, recorded at the actual script reservation; absent for native Rust memory summarizers), and its request as its model received it, in order: the `messages` it carries, each `{role, text, parts, round}`, `text` its text parts joined (empty for a message with none, a tool's result among them), `parts` its text and image parts in order, each `{"text": ...}` or `{"image": url, "mime_type": ...}`, null for a message whose content is a text, `round` its reasoning, text and call parts in order, each `{"thinking": ..., "signature": ..., "redacted": ...}`, `{"text": ...}` or `{"call": id, "arguments": ..., "metadata": ...}`, null for a message whose content is a text, and the `tool_results`, each `{tool_call_id, name, content, is_error, references}`, `name` the tool of its call, `content` as the model reads it (a text, or a result's text and image parts in order, written as `parts` are), `is_error` whether it reads the call as failed, its `system_prompt`, its `temperature` and `max_tokens`, its `reasoning_effort`, `thinking_budget` and `enable_thinking`, its `response_schema` (null for none), `room` (the RoomContext snapshot, null when absent), `target_capabilities` (the outgoing transports' shared capabilities, null with no target) and `target_media_types` (their shared media types, compared as an unordered set), the `deferred_tools` names held unseen, the `reopened_tools` names referenced by synthetic opening exchanges, the `tools` it declares, by name: each one's position in the declaration, so that a scenario names those it asserts, declared or `$absent`, `tool_names`: their exact ordered list (including duplicates), `tool_definitions`: each declared tool's `description` and `parameters` as the model receives them, by name, and, for a model with a `chat_dialect`, `chat_messages`: the request as that rendering writes it on the wire, its system prompt first when it has one, each message's `role`, `content`, `tool_calls`, `tool_call_id` and its dialect's reasoning field |
 | `acp_wire` | Per ACP channel, the requests and notifications its scripted ACP agent received, in order, each `{method, params}` (Scripted ACP agents) |
