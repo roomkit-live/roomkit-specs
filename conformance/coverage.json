@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "2ab40e4ae483d06f06840629bdedfcec779427524ec40b7dec65a6733e9e9b42",
   "corpus_sha256": "e3a0b83b3128b40d8593f8240adfa7c007b8befc993dd181f2669c0484dd9e5c",
-  "python_commit": "470903e10cf5fff7c1213fe3ec65aecd119bbdd1",
+  "python_commit": "a6efb639e6c1afb9e10f71f8f9a121e226db558e",
   "scenario_count": 2588,
   "sections": [
     {
@@ -19595,6 +19595,19 @@
               "state": "stale"
             }
           ]
+        },
+        {
+          "id": "phase4-extract-tools-definitions",
+          "scope": "The public extract_tools helper projects ordered tool definitions and a mixed schema/object channel sends their observed fields to its provider.",
+          "coverage": "partial",
+          "missing": [
+            "This pure-helper slice adds no shared scenario assertions or backend/runtime execution receipts; native test execution is not inferred from these source references.",
+            "The provider interface and handler-composition source units remain partial; this extraction slice does not complete their other paths.",
+            "Extra/external channel tools, media/realtime execution, remote executors and served MCP/skill consumers remain outside this slice.",
+            "Private validation/coercion witnesses support the Rust parser review but are not public Python evidence or execution receipts.",
+            "Rust uses typed ToolEntry variants and field errors rather than Python runtime protocol checks, object identity or aggregated Pydantic diagnostics."
+          ],
+          "executions": []
         }
       ]
     },
@@ -31983,7 +31996,7 @@
               "commit": "470903e10cf5fff7c1213fe3ec65aecd119bbdd1",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -32159,7 +32172,7 @@
               "commit": "470903e10cf5fff7c1213fe3ec65aecd119bbdd1",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }
@@ -67090,6 +67103,19 @@
               "state": "stale"
             }
           ]
+        },
+        {
+          "id": "phase4-extract-tools-handlers",
+          "scope": "Extraction selects zero, one or composed handlers; existing composition and a standalone mixed channel preserve first-match dispatch and ordinary results.",
+          "coverage": "partial",
+          "missing": [
+            "This pure-helper slice adds no shared scenario assertions or backend/runtime execution receipts; native test execution is not inferred from these source references.",
+            "The provider interface and handler-composition source units remain partial; this extraction slice does not complete their other paths.",
+            "Extra/external channel tools, media/realtime execution, remote executors and served MCP/skill consumers remain outside this slice.",
+            "Private validation/coercion witnesses support the Rust parser review but are not public Python evidence or execution receipts.",
+            "Rust uses typed ToolEntry variants and field errors rather than Python runtime protocol checks, object identity or aggregated Pydantic diagnostics."
+          ],
+          "executions": []
         }
       ]
     },

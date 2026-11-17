@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "470903e10cf5fff7c1213fe3ec65aecd119bbdd1",
+  "python_commit": "a6efb639e6c1afb9e10f71f8f9a121e226db558e",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -25503,6 +25503,172 @@
         "Cancellation before report context loads is reviewed by code reading only; the gated runtime test cuts during SYNC after the context has loaded.",
         "The broad RFC source unit remains partial; local-handler result override rules and unrelated tool paths are not completed by provider-owned reports.",
         "Native Rust logs are retained separately; no aggregate Rust/backend/runtime execution receipt is synthesized."
+      ]
+    },
+    {
+      "id": "phase4-extract-tools-definitions",
+      "requirement": "RK-6.7-002",
+      "clause_sha256": "365777516b21124a8fbe5191858dae326893a42301b1ed32c7262edf0a770cad",
+      "scope": "The public extract_tools helper projects ordered tool definitions and a mixed schema/object channel sends their observed fields to its provider.",
+      "coverage": "partial",
+      "review": "Independent source and full code reviews accepted the public helper, existing composition counterparts and the standalone channel witness. Native Rust counterparts and final gate logs are retained separately; this link is source mapping only.",
+      "assertions": [],
+      "tests": [
+        {
+          "nodeid": "tests/test_tool_protocol.py::TestExtractTools::test_extract_tool_objects",
+          "sha256": "c47128d994b4d949fcf98dbd730fbc79cab15bff37f32ba72b62a314c4bbb5eb",
+          "proves": "Two Tool objects produce definitions whose names retain input order, and a handler is present."
+        },
+        {
+          "nodeid": "tests/test_tool_protocol.py::TestExtractTools::test_extract_aitool_objects",
+          "sha256": "c2af3d919228868eef40a7f236ddbdb474378316ee1002324338a1f8af035b53",
+          "proves": "An AITool produces its named definition without a handler."
+        },
+        {
+          "nodeid": "tests/test_tool_protocol.py::TestExtractTools::test_extract_dicts",
+          "sha256": "1b213b7c1f6041be5d603e36f83e47ba3ce653c14aa7f1d1419219ac6d1e193d",
+          "proves": "A schema dictionary produces its named definition without a handler."
+        },
+        {
+          "nodeid": "tests/test_tool_protocol.py::TestExtractTools::test_a_schema_dict_declares_that_its_tool_changes_state",
+          "sha256": "8db64f6cc96e6a78f15fec0f7dcf29f63ef47a1e4a8aa499ea915e7c7a53fbdb",
+          "proves": "Schema and Tool definitions retain an explicit changes_state value; omission gives false."
+        },
+        {
+          "nodeid": "tests/test_tool_protocol.py::TestExtractTools::test_mixed_tools_and_aitool",
+          "sha256": "20972065cf1f70dcf167853761d0f37e20de6aaef026c6bf7667124e7b3ea5fd",
+          "proves": "Mixed Tool and AITool definitions keep their name order and produce a handler."
+        },
+        {
+          "nodeid": "tests/tools/test_extract_tools.py::test_a_minimal_schema_supplies_the_extraction_defaults",
+          "sha256": "bc42ed8fbd59b19393cbf46875552f5d52e75597b5d9de722442e60f79cccc26",
+          "proves": "A name-only schema produces the exact extracted definition and no handler."
+        },
+        {
+          "nodeid": "tests/tools/test_extract_tools.py::test_typed_definitions_keep_fields_that_raw_schemas_do_not_extract",
+          "sha256": "1b3cdda85a358ca767b1ec4505640853a03cb62a9a4e1b6ec88d9ce205127d59",
+          "proves": "Typed definitions retain identity and defer_loading; schema and Tool projections retain nested parameters, tags and state, omit unknown fields and reset defer_loading; the input dictionary retains its explicit defer_loading=True."
+        },
+        {
+          "nodeid": "tests/tools/test_extract_tools.py::test_only_typed_definitions_skip_revalidation",
+          "sha256": "bf2a9fbd1139f624a5378640a4dc37972ed9acb3787415446186388fc5de167f",
+          "proves": "An already typed definition with a subsequently invalid name passes through; its raw-schema and Tool forms fail validation."
+        },
+        {
+          "nodeid": "tests/tools/test_extract_tools.py::test_raw_tags_follow_the_extractor_iterable_contract",
+          "sha256": "0de3a296061f934c68d7d19d316d69468ac8ddc33f1b2bd6db784f00310d3da1",
+          "proves": "The seven specified false, string and mapping tag inputs produce the exact tag lists, including mapping insertion order."
+        },
+        {
+          "nodeid": "tests/tools/test_extract_tools.py::test_a_raw_schema_requires_a_name",
+          "sha256": "641c26f0222269a53b03e079c4d704fc0fa3da86ce14602b405d5ec395fc1373",
+          "proves": "A raw schema without a name raises KeyError."
+        },
+        {
+          "nodeid": "tests/tools/test_extract_tools.py::test_truthy_non_iterable_tags_are_rejected",
+          "sha256": "4de5f30d5ed1d2bbbacd906127911aa113198ef9e521191da9e544606a0f3588",
+          "proves": "The two specified non-iterable tag inputs raise TypeError."
+        },
+        {
+          "nodeid": "tests/tools/test_extract_tools_channel.py::test_raw_schemas_and_tool_objects_reach_their_own_handlers",
+          "sha256": "59b1b539f6ae6a8460edf20b92505ae00859bf8ac8131d9f58adf8f4033360bf",
+          "proves": "The actual first provider request contains the raw-schema and Tool names, tags and state markers in order, followed by the automatic read_stored_result tool. The assertion does not compare every definition field."
+        }
+      ],
+      "missing": [
+        "This pure-helper slice adds no shared scenario assertions or backend/runtime execution receipts; native test execution is not inferred from these source references.",
+        "The provider interface and handler-composition source units remain partial; this extraction slice does not complete their other paths.",
+        "Extra/external channel tools, media/realtime execution, remote executors and served MCP/skill consumers remain outside this slice.",
+        "Private validation/coercion witnesses support the Rust parser review but are not public Python evidence or execution receipts.",
+        "Rust uses typed ToolEntry variants and field errors rather than Python runtime protocol checks, object identity or aggregated Pydantic diagnostics."
+      ]
+    },
+    {
+      "id": "phase4-extract-tools-handlers",
+      "requirement": "RK-21.4-001",
+      "clause_sha256": "e942a89fb94648dfa04a5ebbc5af9af9cc4fb7abf0b6c597dc292b02020769c4",
+      "scope": "Extraction selects zero, one or composed handlers; existing composition and a standalone mixed channel preserve first-match dispatch and ordinary results.",
+      "coverage": "partial",
+      "review": "Independent source and full code reviews accepted the public helper, existing composition counterparts and the standalone channel witness. Native Rust counterparts and final gate logs are retained separately; this link is source mapping only.",
+      "assertions": [],
+      "tests": [
+        {
+          "nodeid": "tests/test_tool_protocol.py::TestExtractTools::test_empty_list",
+          "sha256": "8431b70ab35da76081147d0334c1a7585742659c58508846d594cf852e111023",
+          "proves": "Empty extraction returns no definitions and no handler."
+        },
+        {
+          "nodeid": "tests/test_tool_protocol.py::TestExtractTools::test_composed_handler_dispatches",
+          "sha256": "937dabfc61b1fa6170c44a0003357d551e0682904f4b3d909cc0ba9087dd65c1",
+          "proves": "The composed handler dispatches each of the two tool names to its own result."
+        },
+        {
+          "nodeid": "tests/test_tool_protocol.py::TestExtractTools::test_single_tool_handler_not_composed",
+          "sha256": "5da49c9addb5365a74c93e3fda0e1acd967331567164449ecb0789dfa6e14310",
+          "proves": "A single extracted tool answers its own name."
+        },
+        {
+          "nodeid": "tests/tools/test_extract_tools.py::test_one_handler_is_returned_directly_with_its_decline_unchanged",
+          "sha256": "2474d557f03e24047e19679dd752422030044055d501378c387d6e7691d7dc92",
+          "proves": "A single tool returns its original bound handler and its exact decline for an unknown name."
+        },
+        {
+          "nodeid": "tests/tools/test_extract_tools.py::test_duplicate_definitions_keep_order_and_the_first_handler_wins",
+          "sha256": "0b4db87d79187d1b4e06d747985b37bfd2ddd992dbd4b608e5a63e8cd823d4a9",
+          "proves": "Extraction preserves duplicate definition names and the first matching handler result; this does not authorize duplicates in a channel catalogue."
+        },
+        {
+          "nodeid": "tests/test_compose_tool_handlers.py::test_first_handler_match",
+          "sha256": "eec44ac9bcc9c4a3a44d8253f35957d21bcf0e37944113eb1667f079fa0ea9ac",
+          "proves": "The first handler answers the requested weather call with its exact result."
+        },
+        {
+          "nodeid": "tests/test_compose_tool_handlers.py::test_second_handler_match",
+          "sha256": "e48b663f1e770d0f867e0df035133a27f44b780abc0e6f3fd70f0ba843f95d2c",
+          "proves": "After a decline, the second handler answers the requested addition with its exact result."
+        },
+        {
+          "nodeid": "tests/test_compose_tool_handlers.py::test_three_handlers",
+          "sha256": "8eb0ba7526b141611c070a4ec660355e43405641bfb8d95e8768329b010fde81",
+          "proves": "Three handlers can each answer their own call through the composed handler."
+        },
+        {
+          "nodeid": "tests/test_compose_tool_handlers.py::test_no_match_passthrough",
+          "sha256": "9a359e555368bccedebef73a83705e5b463305ac75ce1bcdbcbb1586f7e09497",
+          "proves": "An unhandled name returns the expected unknown-tool error after all handlers decline."
+        },
+        {
+          "nodeid": "tests/test_compose_tool_handlers.py::test_non_json_result_not_treated_as_unknown",
+          "sha256": "c408ebcb117c5f6a40d9f22ca257f3761673f143c86eb8219109ecc6943e7e3e",
+          "proves": "The exact plain text answer is returned rather than an unknown-tool result."
+        },
+        {
+          "nodeid": "tests/test_compose_tool_handlers.py::test_error_without_unknown_tool_prefix_not_skipped",
+          "sha256": "2d6780ba47b2812c792a14403c9a8232c7029b55658b4078a0cadc5d98a2795d",
+          "proves": "An ordinary error from the first handler is returned even when the later handler could answer that name."
+        },
+        {
+          "nodeid": "tests/test_compose_tool_handlers.py::test_requires_at_least_two_handlers",
+          "sha256": "ccd9aadaae0c2959cfad34e2a60ed80b81d5c1f8e0992d41021a145bcd7372a9",
+          "proves": "Direct composition with only one handler raises ValueError."
+        },
+        {
+          "nodeid": "tests/test_task_status.py::test_task_status_leaves_another_tools_call_to_that_tool",
+          "sha256": "3a3dc011a32ce61582727246034b892a4a6e5b72fe351542fb5d18b2aeaec80c",
+          "proves": "The real TaskStatusTool declines another tool name, allowing that tool to answer; the same extraction still serves task_status."
+        },
+        {
+          "nodeid": "tests/tools/test_extract_tools_channel.py::test_raw_schemas_and_tool_objects_reach_their_own_handlers",
+          "sha256": "59b1b539f6ae6a8460edf20b92505ae00859bf8ac8131d9f58adf8f4033360bf",
+          "proves": "A real standalone channel tries the explicit handler before extracted Tool handlers; the second provider request contains each exact result and error marker. No RoomKit storage boundary is exercised."
+        }
+      ],
+      "missing": [
+        "This pure-helper slice adds no shared scenario assertions or backend/runtime execution receipts; native test execution is not inferred from these source references.",
+        "The provider interface and handler-composition source units remain partial; this extraction slice does not complete their other paths.",
+        "Extra/external channel tools, media/realtime execution, remote executors and served MCP/skill consumers remain outside this slice.",
+        "Private validation/coercion witnesses support the Rust parser review but are not public Python evidence or execution receipts.",
+        "Rust uses typed ToolEntry variants and field errors rather than Python runtime protocol checks, object identity or aggregated Pydantic diagnostics."
       ]
     }
   ],
