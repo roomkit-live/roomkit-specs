@@ -150,7 +150,18 @@
     "models": {
       "agent": [
         {},
-        {}
+        {
+          "tool_results": [
+            {
+              "name": "remote",
+              "result": "proxy result"
+            },
+            {
+              "name": "lookup",
+              "result": "local result"
+            }
+          ]
+        }
       ]
     },
     "hooks": {
