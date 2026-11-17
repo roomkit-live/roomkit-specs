@@ -156,7 +156,17 @@
             "activate_skill": 5,
             "read_skill_reference": 6,
             "read_stored_result": 7
-          }
+          },
+          "tool_names": [
+            "configured",
+            "host",
+            "task_status",
+            "cancel_task",
+            "ask",
+            "activate_skill",
+            "read_skill_reference",
+            "read_stored_result"
+          ]
         }
       ]
     }

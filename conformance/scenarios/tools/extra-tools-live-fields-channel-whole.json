@@ -162,7 +162,10 @@
         {
           "tools": {
             "read_stored_result": 0
-          }
+          },
+          "tool_names": [
+            "read_stored_result"
+          ]
         },
         {
           "tools": {
@@ -176,7 +179,11 @@
                 "type": "object"
               }
             }
-          }
+          },
+          "tool_names": [
+            "read",
+            "read_stored_result"
+          ]
         }
       ]
     }

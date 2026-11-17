@@ -140,7 +140,12 @@
             "second": {
               "description": "second host"
             }
-          }
+          },
+          "tool_names": [
+            "from_binding",
+            "second",
+            "read_stored_result"
+          ]
         }
       ]
     }
