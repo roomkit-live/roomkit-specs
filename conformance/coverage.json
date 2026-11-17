@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "087af12445157430dabe07f921c1a1879dce4a4e12caaa66730fd6e32eb8fd0a",
-  "corpus_sha256": "610a0c902d82fa2caf7967ad9cc80f60ce494c26c2df89bb6c74835b3ba10782",
+  "corpus_sha256": "4252a34e902137083c7d192d910a5e910cde3ce91d0d4b70519708321255d0b5",
   "python_commit": "b50c50a782668fc1681e21bcec52a3d83bc0d8c0",
-  "scenario_count": 2700,
+  "scenario_count": 2720,
   "sections": [
     {
       "section": "0",
@@ -1897,6 +1897,10 @@
         "turn-record/an-adopted-call-s-wait-reads-its-stream-s-failure",
         "turn-record/an-answer-to-an-answer-is-not-the-agent-s-reply-to-the-caller",
         "turn-record/what-a-failed-generation-reported-counts-on-the-record",
+        "turn-tool-timeouts/budget-before-bound-stream",
+        "turn-tool-timeouts/budget-before-bound-whole",
+        "turn-tool-timeouts/route-before-bound-stream",
+        "turn-tool-timeouts/route-before-bound-whole",
         "verification/a-released-message-s-turn-reads-what-came-after-it"
       ]
     },
@@ -7805,7 +7809,27 @@
         "orchestration/an-audited-call-is-recorded-by-how-it-ended",
         "tools/a-tool-left-unbounded-outlives-the-default",
         "tools/a-tool-s-own-bound-cuts-its-call",
-        "tools/failure-reads-its-class"
+        "tools/failure-reads-its-class",
+        "turn-tool-timeouts/absent-name-stream",
+        "turn-tool-timeouts/absent-name-whole",
+        "turn-tool-timeouts/bounded-configured-tool-stream",
+        "turn-tool-timeouts/bounded-configured-tool-whole",
+        "turn-tool-timeouts/budget-before-bound-stream",
+        "turn-tool-timeouts/budget-before-bound-whole",
+        "turn-tool-timeouts/concurrent-turns-stream",
+        "turn-tool-timeouts/concurrent-turns-whole",
+        "turn-tool-timeouts/empty-map-stream",
+        "turn-tool-timeouts/empty-map-whole",
+        "turn-tool-timeouts/null-map-stream",
+        "turn-tool-timeouts/null-map-whole",
+        "turn-tool-timeouts/route-before-bound-stream",
+        "turn-tool-timeouts/route-before-bound-whole",
+        "turn-tool-timeouts/unbounded-configured-tool-stream",
+        "turn-tool-timeouts/unbounded-configured-tool-whole",
+        "turn-tool-timeouts/waiting-tool-stream",
+        "turn-tool-timeouts/waiting-tool-whole",
+        "turn-tool-timeouts/zero-refused-stream",
+        "turn-tool-timeouts/zero-refused-whole"
       ]
     },
     {
@@ -9010,7 +9034,27 @@
         "turn-config/an-off-turns-off-a-less-specific-budget",
         "turn-config/the-binding-s-metadata-outranks-the-turn-config",
         "turn-config/the-reasoning-settings-resolve-binding-then-turn-then-agent",
-        "turn-config/the-response-schema-resolves-binding-then-turn-then-agent"
+        "turn-config/the-response-schema-resolves-binding-then-turn-then-agent",
+        "turn-tool-timeouts/absent-name-stream",
+        "turn-tool-timeouts/absent-name-whole",
+        "turn-tool-timeouts/bounded-configured-tool-stream",
+        "turn-tool-timeouts/bounded-configured-tool-whole",
+        "turn-tool-timeouts/budget-before-bound-stream",
+        "turn-tool-timeouts/budget-before-bound-whole",
+        "turn-tool-timeouts/concurrent-turns-stream",
+        "turn-tool-timeouts/concurrent-turns-whole",
+        "turn-tool-timeouts/empty-map-stream",
+        "turn-tool-timeouts/empty-map-whole",
+        "turn-tool-timeouts/null-map-stream",
+        "turn-tool-timeouts/null-map-whole",
+        "turn-tool-timeouts/route-before-bound-stream",
+        "turn-tool-timeouts/route-before-bound-whole",
+        "turn-tool-timeouts/unbounded-configured-tool-stream",
+        "turn-tool-timeouts/unbounded-configured-tool-whole",
+        "turn-tool-timeouts/waiting-tool-stream",
+        "turn-tool-timeouts/waiting-tool-whole",
+        "turn-tool-timeouts/zero-refused-stream",
+        "turn-tool-timeouts/zero-refused-whole"
       ]
     },
     {
