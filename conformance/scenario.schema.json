@@ -1055,6 +1055,13 @@
         "speak_timeout_ms": {
           "type": "number",
           "description": "The real AIChannel speak_timeout, in milliseconds; malformed types are refused by the fixture before construction."
+        },
+        "thinker": {
+          "$ref": "#/$defs/scripted_thinker"
+        },
+        "think_wait_ms": {
+          "type": "number",
+          "description": "The real AIChannel think_wait in milliseconds, including zero."
         }
       }
     },
@@ -5425,6 +5432,13 @@
             "type": "array"
           },
           "description": "Per scripted speaking policy, the real SpeakTurn inputs recorded before a gate or error, in invocation order; an empty array proves the policy was not called."
+        },
+        "thinker_calls": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array"
+          },
+          "description": "Per channel, the actual thinker invocations before a gate or failure, in order: previous Thought and context (messages, system_prompt, tools and provider room context)."
         }
       }
     },
@@ -10104,6 +10118,65 @@
               {
                 "required": [
                   "decision"
+                ]
+              },
+              {
+                "required": [
+                  "fail"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    "thought": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "want_to_say": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "urgent": {
+          "type": "boolean"
+        }
+      }
+    },
+    "scripted_thinker": {
+      "description": "A public Thinker; records the actual context, waits at gate if present, then returns thought or raises fail; the last entry repeats.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "thoughts"
+      ],
+      "properties": {
+        "thoughts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "thought": {
+                "$ref": "#/$defs/thought"
+              },
+              "fail": {
+                "type": "string"
+              },
+              "gate": {
+                "type": "string"
+              }
+            },
+            "oneOf": [
+              {
+                "required": [
+                  "thought"
                 ]
               },
               {
