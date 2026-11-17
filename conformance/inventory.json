@@ -129,7 +129,7 @@
     },
     {
       "section": "5.1",
-      "sha256": "5c05cef20baa2f0d73404025f86487b5ef3b66d4e76561393863c26184875dbb",
+      "sha256": "9e8dfc901504c8ae268d9b7499f628bf3af4ee02a7e628587734d036ba973498",
       "classification": "normative",
       "review": "Source inventory: Room. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the timer-context clarification against Python and Rust concurrent-greeting tests: the final stored context may already be ACTIVE. Existing blocks retain their conditions and exceptions; no unannotated normative content was introduced."
     },
@@ -237,7 +237,7 @@
     },
     {
       "section": "6.4",
-      "sha256": "ef42aab57e22edd00361bd9b37d649e0d97905911a09b1318971730f28d8b7fb",
+      "sha256": "968525598bd728918559d97025712364fd9846c87d72117c9cc2c8a251cd1fb8",
       "classification": "normative",
       "review": "Source inventory: Intelligence Channels. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the added deferred-input association and protected-context clause against shared hook scenarios and native mutation/tool tests; existing source units are unchanged."
     },
@@ -447,7 +447,7 @@
     },
     {
       "section": "10.6.3",
-      "sha256": "e57034552c97155d340f8c4fa181e96b7da9524f2c1816503d3ef9e865995d10",
+      "sha256": "9189a5aec189f17bc3732418aac0b1067798f9bef3e54c70d7b25d4a7f11194f",
       "classification": "normative",
       "review": "Source inventory: Messages. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
@@ -1257,7 +1257,7 @@
     },
     {
       "section": "19.7",
-      "sha256": "c162c9977755e41c1e6b0fc3dd15a469aa2eead9f0878c9d8da938f36c0a41ea",
+      "sha256": "fd0a3551826783147a5b81f35a7d45cb547c367860d6a22f1cba80d1bc60ca25",
       "classification": "normative",
       "review": "Source inventory: Orchestration Strategies. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the initial snapshot failure recovery clarification against the Python source test and native Rust regression; no complete implementation coverage is claimed."
     },
@@ -1317,7 +1317,7 @@
     },
     {
       "section": "20.3",
-      "sha256": "d8a3b1cf89001ac88e81913c8260da5020a377c01ffbad5fb4b648b48b03fcc8",
+      "sha256": "fdf78123d86441b5b293245c43b1dd85b044bfb338936c15491b0b9e0747a2c9",
       "classification": "normative",
       "review": "Source inventory: Built-in Implementations. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },

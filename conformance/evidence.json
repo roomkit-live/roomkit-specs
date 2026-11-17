@@ -3129,10 +3129,10 @@
     {
       "id": "core-room-due-timers",
       "requirement": "RK-5.1-006",
-      "clause_sha256": "5912b5acf833daec7b269c3822d408fa9d1f051fd20739173e34a2b7304f0afc",
+      "clause_sha256": "b316347fa89a87c808754e71303527d40eb28ac51198e01c7308289421b7d444",
       "scope": "Named timer-check scope, overdue timers before public transitions, explicit/message resumption, timer-setting activity preservation, and timer closure before inbound.",
       "coverage": "partial",
-      "review": "Reviewed the Python source tests, public transition APIs, scenario setup, call results and exact observations. Shared room snapshots compare state but cannot prove zero writes; specialized store spies and Rust effect tests address that boundary. Optional lifecycle records remain normalized out. The whole composite RFC unit is not certified.",
+      "review": "Reviewed the Python source tests, public transition APIs, scenario setup, call results and exact observations. Shared room snapshots compare state but cannot prove zero writes; specialized store spies and Rust effect tests address that boundary. Optional lifecycle records remain normalized out. The whole composite RFC unit is not certified. Re-reviewed for the C40-11 amendment (RMK-341): the clause now adds that a reopened room holds no strategy; the timer assertions are unchanged and that sentence is evidenced by the strategy-installation-and-cleanup link.",
       "assertions": [
         {
           "scenario": "rooms/a-timer-check-does-not-change-another-due-room",
@@ -5372,10 +5372,10 @@
     {
       "id": "core-room-timer-completion",
       "requirement": "RK-5.1-006",
-      "clause_sha256": "5912b5acf833daec7b269c3822d408fa9d1f051fd20739173e34a2b7304f0afc",
+      "clause_sha256": "b316347fa89a87c808754e71303527d40eb28ac51198e01c7308289421b7d444",
       "scope": "Due timers at direct mutations and response passes; activity exclusions; inert checks; all-page scoped sweeps; cancellation and concurrent commits before and after the status write.",
       "coverage": "partial",
-      "review": "Reviewed each source method, scenario fixture and assertion against the named clause. Public calls forward to the framework API, not the store. Optional lifecycle rows are normalized out; specialized tests cover their exact counts, conditional writes and cancellation. The streamed pre-hook status cache is MAY in §5.1, so its exact read count and the first externally-refused row hook are not treated as mandatory. This link complements earlier room transition evidence; it does not certify unrelated capabilities or every store transaction.",
+      "review": "Reviewed each source method, scenario fixture and assertion against the named clause. Public calls forward to the framework API, not the store. Optional lifecycle rows are normalized out; specialized tests cover their exact counts, conditional writes and cancellation. The streamed pre-hook status cache is MAY in §5.1, so its exact read count and the first externally-refused row hook are not treated as mandatory. This link complements earlier room transition evidence; it does not certify unrelated capabilities or every store transaction. Re-reviewed for the C40-11 amendment (RMK-341): the clause now adds that a reopened room holds no strategy; the timer assertions are unchanged and that sentence is evidenced by the strategy-installation-and-cleanup link.",
       "assertions": [
         {
           "scenario": "rooms/a-blocked-record-does-not-resume-or-refresh-a-paused-room",
@@ -13398,10 +13398,10 @@
     {
       "id": "strategy-installation-and-cleanup",
       "requirement": "RK-19.7-004",
-      "clause_sha256": "622619fdee101027da9619d471d8971800bb3e32542c1806fd9bef91ce6b0603",
+      "clause_sha256": "9109b962a03de588c17ada48bf37a02b07f7b7fd74df6e1ad92177a20a54c4c5",
       "scope": "Local strategy installation, explicit override, refusal and removal; preservation of existing room contents.",
       "coverage": "partial",
-      "review": "Compared the 20 source methods in test_strategy_install and test_framework_orchestration with shared assertions and native Rust tests. Native initial-snapshot and incomplete-uninstall failures are not claimed by scenario execution receipts. The broader discussion lifecycle, cross-process replacement and media remain outside this lot. Independent review also reproduced the failed Discussion replacement; separate running, awaiting-uninstall and ready states were verified before delivery.",
+      "review": "Compared the 20 source methods in test_strategy_install and test_framework_orchestration with shared assertions and native Rust tests. Native initial-snapshot and incomplete-uninstall failures are not claimed by scenario execution receipts. The broader discussion lifecycle, cross-process replacement and media remain outside this lot. Independent review also reproduced the failed Discussion replacement; separate running, awaiting-uninstall and ready states were verified before delivery. Re-reviewed for the C40-11 amendment (RMK-341): a room's close, by close_room or its timers, and its archiving while open, uninstall its strategy after the close is announced, and a closed room refuses an install; orchestration/closing-a-room-takes-its-strategy-back-out pins them in both implementations.",
       "assertions": [
         {
           "scenario": "orchestration/a-hosts-own-strategy-is-taken-back-out-whole",
@@ -13472,6 +13472,13 @@
           "sha256": "e9d2785f70ac6853dc684c8ccc8fce012e808cddfba367874fd11234019fb65e",
           "scenario_sha256": "318f082494713301c47f7150cfc2a7f7d41537bd0c19af094a3fad4968b19065",
           "proves": "Recreating the room installs the new Discussion object."
+        },
+        {
+          "scenario": "orchestration/closing-a-room-takes-its-strategy-back-out",
+          "pointer": "/expect",
+          "sha256": "76533bc21c2c159ece2ecea397e396aba17dc5942c1aa5a2b0f9812403ce2649",
+          "scenario_sha256": "c2fc0cc2506ae27b6727958a2865cb63a0da5409721a5ee149b8bf9350053526",
+          "proves": "Rooms closed by close_room and by their timers, and one archived while open, hold the shared Pipeline no more, its router, agents and state taken back after room_closed; a closed room refuses an install; a reopened room's own agent answers alone; the room left open keeps its install."
         }
       ],
       "tests": [
@@ -16133,10 +16140,10 @@
     {
       "id": "channel-call-local-control",
       "requirement": "RK-10.6.3-007",
-      "clause_sha256": "0555cad66580394eb9ead778b2540888fa50a4533638168f16916a3d9efe59c4",
+      "clause_sha256": "4a3a2e8223ab73a7dd879b8a55274871daa6f20d74f4052e88772653eeda0e03",
       "scope": "Local attached-channel verbs: JSON result, null, typed errors, validation, organization scope, changed state before error, detach and closed executor/kit refusal.",
       "coverage": "partial",
-      "review": "Read the Python channel-call tests, the RFC and the paired local Rust implementation. Shared scenarios passed on Python first, then Rust with one and four workers and SQLite. Independent review reproduced and corrected interrupted stale-state cleanup, cancelled detach persistence and lost calling-turn context. Native tests supplement shared observations without counting as shared-scenario execution receipts.",
+      "review": "Read the Python channel-call tests, the RFC and the paired local Rust implementation. Shared scenarios passed on Python first, then Rust with one and four workers and SQLite. Independent review reproduced and corrected interrupted stale-state cleanup, cancelled detach persistence and lost calling-turn context. Native tests supplement shared observations without counting as shared-scenario execution receipts. Re-reviewed for the C40-11 amendment (RMK-1635): the clause now adds that a build let go leaves open the provider its factory handed it; executors/a-provider-the-factory-hands-every-build-outlives-a-build-let-go pins it in Python, Rust has no executor apart yet (RMK-1626).",
       "assertions": [
         {
           "scenario": "channel-call/a-call-is-scoped-to-the-room-s-organization",
@@ -21597,10 +21604,10 @@
     {
       "id": "channel-release-local-registry",
       "requirement": "RK-10.6.3-007",
-      "clause_sha256": "0555cad66580394eb9ead778b2540888fa50a4533638168f16916a3d9efe59c4",
+      "clause_sha256": "4a3a2e8223ab73a7dd879b8a55274871daa6f20d74f4052e88772653eeda0e03",
       "coverage": "partial",
       "scope": "Local live channels: release preserves the asserted per-room page values, succeeds after closing only the local executor, and rejects unknown ids while the kit is open.",
-      "review": "Python source methods and shared scenarios passed first, then the same cases on one and four Rust workers. Independent code review confirmed the registry no-op and public kit-close guard. The historical unknown-id case now actually executes in Rust. Native identity and close-count witnesses are separate from these shared assertions and are not execution receipts.",
+      "review": "Python source methods and shared scenarios passed first, then the same cases on one and four Rust workers. Independent code review confirmed the registry no-op and public kit-close guard. The historical unknown-id case now actually executes in Rust. Native identity and close-count witnesses are separate from these shared assertions and are not execution receipts. Re-reviewed for the C40-11 amendment (RMK-1635): the clause now adds that a build let go leaves open the provider its factory handed it; executors/a-provider-the-factory-hands-every-build-outlives-a-build-let-go pins it in Python, Rust has no executor apart yet (RMK-1626).",
       "assertions": [
         {
           "scenario": "channel-release/a-live-channel-keeps-its-rooms-after-release",

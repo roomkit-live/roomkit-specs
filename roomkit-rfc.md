@@ -645,7 +645,8 @@ Implementations MUST enforce timer transitions when configured:
   The integrator MAY resume a PAUSED room, as it MAY reopen a CLOSED one
   (above), and either moves `last_activity_at` to its instant, which
   restarts the inactivity timer. A resume, by a commit or by the integrator,
-  and a reopen fire no hook and emit no framework event.
+  and a reopen fire no hook and emit no framework event. A reopened room
+  holds no strategy: its close took it back out (Section 19.7).
 - **Close.** When `closed_after_seconds` elapses from `paused_at` without a
   resume, the room MUST transition to CLOSED.
 - **Setting.** The integrator MAY replace a room's timers
@@ -3250,8 +3251,12 @@ asked of its own channel. A router is plain code; the fallback router
 (`FallbackRouter`) names its primary provider at each turn's start and, once a
 generation's provider spent its retries, the other of its two providers. With a
 router, the channel's `provider` is null and its `provider_name` is the
-router's name. A channel closes its router when it closes, and a router closes
-the providers it holds.
+router's name. A provider or a router handed to a channel stays its owner's,
+who may hand it to other channels, every build of an executor's factory
+among them (Section 10.6.3): the channel's close MUST leave it open, as a
+router's close leaves open the providers it was handed, and a memory's the
+provider it summarizes with (Section 20.3). Its owner closes it once nothing
+uses it, as a classifier's (Section 6.8).
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-6.4-024", "kind": "behavior", "applies": "§6.4 Intelligence Channels; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
@@ -8786,7 +8791,9 @@ that declares the channel, whatever organizations it serves, or the owner's
 own alone for a channel the owner holds live. One that built the channel
 lets the build go: the next turn, channel call or committed event of the
 channel builds it anew, and the build let go is closed once the turns running
-on it, or still getting it, end, which it never cuts for this. One that holds
+on it, or still getting it, end, which it never cuts for this; its close
+leaves open the provider the factory handed it (Section 6.4), which the
+factory may hand every build. One that holds
 no build builds none for the message. For a channel the owner holds live it
 changes nothing: that channel is the owner's registry's, and its host
 replaces it there. A host sends it through the kit's
@@ -19383,6 +19390,20 @@ path:
   discussion stores the agents its installs attached with it (Section 19.7.5
   rule 16), so any process serving the room uninstalls it, one where no host
   installed it included.
+- A room holds its strategy only while it lives. Its close, by
+  `close_room` or by its timers (Section 5.1), and its archiving while it
+  is still open, uninstall the strategy as `uninstall_strategy` does, in
+  the process that closes it (a discussion, stored with the room, for every
+  process): once the close is written and announced (its record,
+  `room_closed`, its `ON_ROOM_CLOSED` hooks started), and before the call
+  that applied it returns; the timeline stays. An install still under way
+  is not waited for. A failure to take the strategy back is logged, and the
+  room is closed all the same. A CLOSED or ARCHIVED room takes no strategy:
+  `install_strategy` refuses it (`room_closed`, Python's `RoomClosedError`),
+  read under the room's lock, so an install claimed before a close does not
+  land after it. A reopened room holds no strategy until its host installs
+  one again: what the rooms an agent serves set up on it never outlives
+  their life.
 - A host MAY install and uninstall a strategy while it holds the room's lock
   (Section 13.5), as it does to serialise its own changes of the room: both
   take the lock again within the same task, and neither waits on work that
@@ -20419,7 +20440,9 @@ A summary the history still holds as a memory's message, its provenance kept,
 is carried into the new one; a summary the channel placed in the turn, joined
 to a user message or standing as a user message of its own, its text alone,
 is read as one of the messages. Its first threshold does not apply between
-rounds, and the memory it wraps is not asked.
+rounds, and the memory it wraps is not asked. Its close closes the memory it
+wraps and leaves open the provider it summarizes with, its owner's (Section
+6.4).
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-20.3-004", "kind": "behavior", "applies": "§20.3 Built-in Implementations; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
@@ -20444,7 +20467,8 @@ are paid for, dropping the oldest, its `min_events` latest always kept.
 BudgetAwareMemory, less the summary's share of the window, its `min_events`
 latest always kept, and has a model summarize the events it trims; the
 summary's message comes after the messages of the memory it wraps, before the
-events it keeps.
+events it keeps. Its close, as SummarizingMemory's, closes the memory it
+wraps and leaves open the provider it summarizes with.
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-20.3-007", "kind": "behavior", "applies": "§20.3 Built-in Implementations; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
