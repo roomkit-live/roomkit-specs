@@ -1,11 +1,11 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "memory/a-summary-is-not-carried-into-a-room-created-again",
-  "title": "A summary a memory carries for a room is not carried into a room created again under its id: the new room's first turn reads none of the deleted room's",
+  "title": "A summary a memory carries for a room is not carried into a room created again under its id: the new room's turns read none of the deleted room's",
   "rules": [
     "§20.3"
   ],
-  "notes": "Python's SummarizingMemory over a sliding window of 11 events: at the fourth question the room's first turns are summarized (Summary 1). The room is then deleted from the store and created again under its id, the channels attached again. The new room's first question reads alone: the summary belongs to the room created at the mark it was built for (the room's created_at), and the turns it covers are not in the new room's history.",
+  "notes": "Python's SummarizingMemory over a sliding window of 11 events: at the fourth question the room's first turns are summarized (Summary 1). The room is then deleted from the store and created again under its id, the channels attached again. The new room's first question reads alone, and its second reads the first and its answer, no summary: the summary belongs to the room created at the mark it was built for (the room's created_at), and the turns it covers are not in the new room's history.",
   "setup": {
     "channels": [
       {
@@ -215,6 +215,27 @@
     },
     {
       "idle": true
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-1",
+      "message": {
+        "channel_id": "ws",
+        "sender_id": "alice",
+        "content": {
+          "type": "text",
+          "body": "A second question in the room created again."
+        }
+      },
+      "expect": {
+        "result": {
+          "blocked": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "idle": true
     }
   ],
   "expect": {
@@ -289,6 +310,22 @@
             {
               "role": "user",
               "text": "A first question in the room created again."
+            }
+          ]
+        },
+        {
+          "messages": [
+            {
+              "role": "user",
+              "text": "A first question in the room created again."
+            },
+            {
+              "role": "assistant",
+              "text": "Answer 5: fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact fact."
+            },
+            {
+              "role": "user",
+              "text": "A second question in the room created again."
             }
           ]
         }
