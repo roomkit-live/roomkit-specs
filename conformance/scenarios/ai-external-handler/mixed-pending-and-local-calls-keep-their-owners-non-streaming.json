@@ -154,11 +154,15 @@
           "tool_results": [
             {
               "name": "remote",
-              "result": "proxy result"
+              "content": "proxy result",
+              "tool_call_id": "p1",
+              "is_error": false
             },
             {
               "name": "lookup",
-              "result": "local result"
+              "content": "local result",
+              "tool_call_id": "l1",
+              "is_error": false
             }
           ]
         }
