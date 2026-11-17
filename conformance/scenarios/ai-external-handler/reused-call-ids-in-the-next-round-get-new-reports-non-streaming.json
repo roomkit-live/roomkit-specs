@@ -225,6 +225,18 @@
               "content": "local result",
               "tool_call_id": "l1",
               "is_error": false
+            },
+            {
+              "name": "remote",
+              "content": "proxy result",
+              "tool_call_id": "p1",
+              "is_error": false
+            },
+            {
+              "name": "lookup",
+              "content": "local result",
+              "tool_call_id": "l1",
+              "is_error": false
             }
           ]
         }
