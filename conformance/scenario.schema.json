@@ -3153,6 +3153,10 @@
               "max_result_chars": {
                 "type": "integer",
                 "minimum": 1
+              },
+              "wait_in_task_rooms": {
+                "description": "A call made from a task's room runs its task inline (RFC \u00a723.4).",
+                "type": "boolean"
               }
             }
           }
