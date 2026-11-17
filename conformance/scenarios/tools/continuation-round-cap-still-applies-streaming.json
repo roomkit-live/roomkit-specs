@@ -36,11 +36,16 @@
             {
               "text": "I will check the run.",
               "finish_reason": "stop"
+            },
+            {
+              "text": "I will check the run.",
+              "finish_reason": "stop"
             }
           ],
           "streaming": true
         },
-        "max_tool_rounds": 1
+        "max_tool_rounds": 1,
+        "max_empty_retries": 2
       }
     ],
     "rooms": [
@@ -91,11 +96,13 @@
   "expect": {
     "continuations": {
       "agent": [
+        "I will check the run.",
         "I will check the run."
       ]
     },
     "models": {
       "agent": [
+        {},
         {}
       ]
     },
