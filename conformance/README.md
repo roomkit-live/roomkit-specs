@@ -1424,3 +1424,14 @@ the next operation. Invalid raw result metadata, resource inputs and content
 URI parsing failures are recorded as `validation_error`; normalization is
 observed through the public model. Extension declarations remain opaque peer
 data, so a non-object declaration can exercise the provider's own handling.
+
+### Host tool definitions
+
+`agent.extra_tools` takes `channel_id` and reads the public host definitions,
+in constructor order, with all six `AITool` fields. `agent.replace_extra_tool`
+is a fixture operation: it takes `channel_id`, zero-based `index`, and a complete
+`definition` (name and description required; the other fields use their usual
+defaults). It reads that element through the public accessor and assigns its
+fields in Python, or replaces the shared handle in Rust. It does not install
+or remove a tool, or change the handler. These operations precede a turn's
+preparation; they make no claim about references a running provider retained.
