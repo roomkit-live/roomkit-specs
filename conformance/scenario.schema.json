@@ -517,7 +517,7 @@
               }
             },
             "role_overrides": {
-              "description": "Overrides selected by the waking participant's role on the source channel (§21.1).",
+              "description": "Overrides selected by the waking participant's role on the source channel (\u00a721.1).",
               "type": "object",
               "additionalProperties": {
                 "type": "object",
@@ -4968,7 +4968,7 @@
           }
         },
         "models": {
-          "description": "Per scripted agent, each generation's request as the model received it, in order: the `messages` it carries, each `{role, text, parts}` (`parts` its text and image parts in order, each `{text}` or `{image, mime_type}`, null for a text content), the `tool_results`, each `{tool_call_id, name, content, is_error}` (`name` the tool of its call, `content` a text, or a result's text and image parts in order, written as `parts`), its `system_prompt`, its `temperature` and `max_tokens` (\u00a76.4), its `reasoning_effort`, `thinking_budget` and `enable_thinking` (\u00a76.7), its `response_schema`, null for none (\u00a76.7), and the names of the `tools` it declares, in order.",
+          "description": "Per scripted agent, each generation's request as the model received it, in order: the `messages` it carries, each `{role, text, parts}` (`parts` its text and image parts in order, each `{text}` or `{image, mime_type}`, null for a text content), the `tool_results`, each `{tool_call_id, name, content, is_error}` (`name` the tool of its call, `content` a text, or a result's text and image parts in order, written as `parts`), its `system_prompt`, its `temperature` and `max_tokens` (\u00a76.4), its `reasoning_effort`, `thinking_budget` and `enable_thinking` (\u00a76.7), its `response_schema`, null for none (\u00a76.7), and the names of the `tools` it declares, in order. Each request also exposes room (the RoomContext snapshot, null when absent), target_capabilities (the outgoing transports' shared capabilities, null with no target), and target_media_types (their shared media types; compare as an unordered set).",
           "type": "object",
           "additionalProperties": {
             "type": [
