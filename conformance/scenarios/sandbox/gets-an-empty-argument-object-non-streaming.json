@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "sandbox/gets-an-empty-argument-object-non-streaming",
-  "title": "The sandbox gets an empty argument object (non-streaming)",
+  "title": "The sandbox receives an empty argument object for an empty call (non-streaming)",
   "rules": [
     "§6.4",
     "§9.3",

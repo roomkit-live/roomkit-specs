@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "sandbox/defers-then-reveals-the-matching-command-streaming",
-  "title": "The sandbox defers then reveals the matching command (streaming)",
+  "title": "Tool Search reveals only the matching sandbox command (streaming)",
   "rules": [
     "§6.4",
     "§9.3",

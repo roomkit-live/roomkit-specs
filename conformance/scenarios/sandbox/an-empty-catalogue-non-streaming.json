@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "sandbox/an-empty-catalogue-non-streaming",
-  "title": "The sandbox an empty catalogue (non-streaming)",
+  "title": "The channel closes a sandbox with an empty catalogue (non-streaming)",
   "rules": [
     "§6.4",
     "§9.3",

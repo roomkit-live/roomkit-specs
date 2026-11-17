@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "sandbox/reports-an-executor-failure-streaming",
-  "title": "The sandbox reports an executor failure (streaming)",
+  "title": "A sandbox execution failure keeps its detail with the observer (streaming)",
   "rules": [
     "§6.4",
     "§9.3",

@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "sandbox/a-nonprefixed-name-non-streaming",
-  "title": "The sandbox a nonprefixed name (non-streaming)",
+  "title": "The channel skips sandbox definitions without the prefix (non-streaming)",
   "rules": [
     "§6.4",
     "§9.3",

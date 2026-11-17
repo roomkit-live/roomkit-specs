@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "sandbox/removes-only-the-first-prefix-streaming",
-  "title": "The sandbox removes only the first prefix (streaming)",
+  "title": "A sandbox command removes only the initial prefix (streaming)",
   "rules": [
     "§6.4",
     "§9.3",

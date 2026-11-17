@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "sandbox/receives-exact-command-and-arguments-non-streaming",
-  "title": "The sandbox receives exact command and arguments (non-streaming)",
+  "title": "The sandbox receives the exact command and arguments (non-streaming)",
   "rules": [
     "§6.4",
     "§9.3",

@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "sandbox/search-cannot-reveal-a-denied-command-non-streaming",
-  "title": "The sandbox search cannot reveal a denied command (non-streaming)",
+  "title": "Tool Search cannot reveal a denied sandbox command (non-streaming)",
   "rules": [
     "§6.4",
     "§9.3",

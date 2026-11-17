@@ -1039,12 +1039,6 @@
         "sandbox": {
           "$ref": "#/$defs/sandbox"
         },
-        "sandbox": {
-          "$ref": "#/$defs/sandbox"
-        },
-        "sandbox": {
-          "$ref": "#/$defs/sandbox"
-        },
         "continuation": {
           "$ref": "#/$defs/continuation_policy"
         },

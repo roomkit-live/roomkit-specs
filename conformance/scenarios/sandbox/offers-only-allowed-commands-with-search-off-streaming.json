@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "sandbox/offers-only-allowed-commands-with-search-off-streaming",
-  "title": "The sandbox offers only allowed commands with search off (streaming)",
+  "title": "Disabled Tool Search offers only allowed sandbox commands (streaming)",
   "rules": [
     "§6.4",
     "§9.3",

@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "sandbox/yields-a-prefix-only-name-to-the-host-non-streaming",
-  "title": "The sandbox yields a prefix only name to the host (non-streaming)",
+  "title": "A host tool sharing the sandbox prefix stays with the host (non-streaming)",
   "rules": [
     "§6.4",
     "§9.3",

@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "sandbox/is-denied-before-it-runs-non-streaming",
-  "title": "The sandbox is denied before it runs (non-streaming)",
+  "title": "The policy refuses a sandbox command before execution (non-streaming)",
   "rules": [
     "§6.4",
     "§9.3",

@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "sandbox/validates-a-hidden-command-before-execution-streaming",
-  "title": "The sandbox validates a hidden command before execution (streaming)",
+  "title": "A hidden sandbox command is validated before execution (streaming)",
   "rules": [
     "§6.4",
     "§9.3",

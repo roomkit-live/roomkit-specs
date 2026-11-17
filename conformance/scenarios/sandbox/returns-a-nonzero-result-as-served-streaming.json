@@ -1,7 +1,7 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "sandbox/returns-a-nonzero-result-as-served-streaming",
-  "title": "The sandbox returns a nonzero result as served (streaming)",
+  "title": "A nonzero sandbox result remains a served call (streaming)",
   "rules": [
     "§6.4",
     "§9.3",
