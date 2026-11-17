@@ -66275,7 +66275,7 @@
               "commit": "20532614d24f6d6f920a66e66e5fb3e3de4ddae6",
               "backend": "memory",
               "runtime": "asyncio",
-              "state": "incomplete"
+              "state": "stale"
             }
           ]
         }

@@ -6904,7 +6904,7 @@ States below apply only to the link's declared scope. Partial mappings remain pa
 | RK-21.1-005 | strategy-tool-install-integrity | python-redis-turns-5a7a968-memory-redis-turns | stale |
 | RK-21.1-005 | strategy-tool-install-integrity | python-acp-context-97304f7-memory | stale |
 | RK-21.1-005 | strategy-tool-install-integrity | python-redis-turns-97304f7-memory-redis-turns | stale |
-| RK-21.1-007 | phase4-role-policy-text-turns | python-role-turns-2053261-memory | incomplete |
+| RK-21.1-007 | phase4-role-policy-text-turns | python-role-turns-2053261-memory | stale |
 | RK-21.2-001 | phase4-mcp-tool-dictionaries | python-mcp-tool-dicts-2b7515c-memory | stale |
 | RK-21.2-002 | phase4-mcp-host-access | python-mcp-tool-dicts-2b7515c-memory | stale |
 | RK-21.4-001 | phase4-background-turn-context | python-task-options-25d0695-memory | stale |
