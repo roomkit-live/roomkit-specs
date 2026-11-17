@@ -89,7 +89,9 @@
               "status": "failed",
               "error": {
                 "code": "ValueError",
-                "message": "tool timeout for 'report' must be positive or None"
+                "message": {
+                  "$contains": "tool timeout for 'report' must be positive or None"
+                }
               }
             }
           }
