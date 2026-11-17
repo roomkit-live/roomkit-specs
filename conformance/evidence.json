@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "20532614d24f6d6f920a66e66e5fb3e3de4ddae6",
+  "python_commit": "2e7eb2183826be35f855b77fb6483e9796d8bf25",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -24180,6 +24180,67 @@
         "The no-matching-participant context is exercised by native public-channel tests; shared inbound creates a participant and does not prove that context boundary.",
         "Sandbox, planner, reasoning backends, realtime and media policy paths are outside this text-turn slice.",
         "No Rust, specialized-test, SQL-store or Redis-turn execution credit is inferred from the Python memory receipt."
+      ]
+    },
+    {
+      "id": "phase4-ai-result-carriers",
+      "requirement": "RK-6.7-002",
+      "clause_sha256": "365777516b21124a8fbe5191858dae326893a42301b1ed32c7262edf0a770cad",
+      "scope": "Four public AI result fields and their text-turn boundaries: response tasks/observations, tool structured copy/outcome, next-round reads, outcome replay and compaction retention.",
+      "coverage": "partial",
+      "review": "Independent review accepted the Python source assertions and native Rust counterparts, including actual provider requests, after missing outcomes and lost empty copies were reproduced and corrected. The shared fixture does not expose these provider-part fields. This link records source evidence only, not native execution receipts.",
+      "assertions": [],
+      "tests": [
+        {
+          "nodeid": "tests/test_resilience.py::TestProviderABCEnhancements::test_ai_response_with_tasks",
+          "sha256": "28181a2bd634b05340a98f60e5d0fcd386ef5f06a1009bad5fbcc256caedc7d6",
+          "proves": "Response model retains the explicit task and observation lists; no persistence assertion."
+        },
+        {
+          "nodeid": "tests/test_mcp_structured_content.py::test_event_models_carry_structured_content",
+          "sha256": "b085edba490b914d9e3956746d81f07be65181f108814fea1ecf1ed66362c036",
+          "proves": "Public result part to end marker to stored-content model preserves the structured copy; model serialization round-trip only, not an executed eviction."
+        },
+        {
+          "nodeid": "tests/test_tool_outcome_typed.py::test_a_part_carries_its_outcome",
+          "sha256": "e4278eadbfbcf4e2851dc3b97482d29b6697929e4b9cd9b2423296bdfbc3b745",
+          "proves": "The converter preserves all six typed outcomes, with the error flag, text and deferred references; outcome is asserted directly."
+        },
+        {
+          "nodeid": "tests/test_channels/test_ai_result_carriers.py::test_next_round_reads_the_structured_copy_and_typed_outcome",
+          "sha256": "9bd1a54fbe1d8aab7b958b5dcf9bb7f95b44e24388399785a29b586d5e7a6a28",
+          "proves": "Both provider modes read the exact absent, empty or populated structured copy and served outcome in the next round; text rendering remains unchanged."
+        },
+        {
+          "nodeid": "tests/test_channels/test_ai_result_carriers.py::test_a_later_turn_replays_typed_outcomes",
+          "sha256": "ab69c33d3df5dbe3bfa34c06fc84a0600f28e9f2bae530b9f633f6127570bf3c",
+          "proves": "Two real turns replay served and failed outcomes independently of their result text, in both provider modes."
+        },
+        {
+          "nodeid": "tests/test_channels/test_ai_result_carriers.py::test_compaction_stores_text_without_erasing_the_result_carriers",
+          "sha256": "0699ba526273d6137a0789b3829cff0b951bc20d8b95d2313aa2f80521e99138",
+          "proves": "The compaction helper replaces long result text while preserving the structured copy and typed outcome; the original result remains unchanged."
+        },
+        {
+          "nodeid": "tests/test_channels/test_ai_result_carriers.py::test_history_replays_the_outcome_but_not_the_structured_copy",
+          "sha256": "81b9b7445349e3204e6d7e43c615875e39fd6af8732f73bbfd345d870c4d44cf",
+          "proves": "A hook-provided copy reaches the next round, but is absent from the next turn history while its outcome remains; both provider modes."
+        },
+        {
+          "nodeid": "tests/test_channels/test_ai_result_carriers.py::test_history_preserves_outcome_independently_of_legacy_status",
+          "sha256": "e09e5f7c8a7788c9728d95923008867d7d13a99d0df4d7cd777ffb7b7acd3185",
+          "proves": "History preserves all five replayable outcomes and an absent outcome, independently of the stored error status."
+        },
+        {
+          "nodeid": "tests/test_channels/test_ai_result_carriers.py::test_response_lists_are_kept_by_the_model_but_not_added_to_the_stream",
+          "sha256": "6bfebff84b2cd32ff89ea2a9673bde9f7cd2ea7344fb5d6aac3fa3ec7db56687",
+          "proves": "Response tasks and observations remain on the model without adding events to the response-to-stream conversion."
+        }
+      ],
+      "missing": [
+        "The broad provider interface remains partial; context fields, served-call markers, vendor protocols and unrelated methods are outside this slice.",
+        "No automatic persistence of response tasks or observations is inferred. History intentionally omits the structured copy while replaying the recorded outcome.",
+        "Native Rust and specialized Python execution logs are retained separately; this link creates no scenario, backend or runtime execution receipt."
       ]
     }
   ],

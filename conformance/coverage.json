@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "b24d906b75319bb539e26b61ed37b9f5be50a434aa864d58b0aec577e151d5d7",
   "corpus_sha256": "bccdfd7c8d194b76cd5982a176b7f13b8a9e1e445539b374cded23b85b4fbcb5",
-  "python_commit": "20532614d24f6d6f920a66e66e5fb3e3de4ddae6",
+  "python_commit": "2e7eb2183826be35f855b77fb6483e9796d8bf25",
   "scenario_count": 2508,
   "sections": [
     {
@@ -1752,8 +1752,8 @@
       "review": "normative",
       "requirements": 17,
       "mapping": {
-        "mapped_partial": 1,
-        "unmapped": 16
+        "mapped_partial": 2,
+        "unmapped": 15
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -19308,8 +19308,20 @@
     {
       "id": "RK-6.7-002",
       "section": "6.7",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "phase4-ai-result-carriers",
+          "scope": "Four public AI result fields and their text-turn boundaries: response tasks/observations, tool structured copy/outcome, next-round reads, outcome replay and compaction retention.",
+          "coverage": "partial",
+          "missing": [
+            "The broad provider interface remains partial; context fields, served-call markers, vendor protocols and unrelated methods are outside this slice.",
+            "No automatic persistence of response tasks or observations is inferred. History intentionally omits the structured copy while replaying the recorded outcome.",
+            "Native Rust and specialized Python execution logs are retained separately; this link creates no scenario, backend or runtime execution receipt."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-6.7-003",
