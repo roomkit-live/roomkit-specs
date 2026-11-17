@@ -1087,6 +1087,8 @@ else, where no turn's host is.
 | `host.delegate` | `room_id`, `agent_id`, `task`, and `delegate`'s `context`, `share_channels`, `notify`, `post_status`, `brief`, `conversation`, `hand_back` | the task's id, which its `as` label names |
 | `host.wait_task` | `task_id`, `timeout_ms` (the RFC's `timeout`, in milliseconds; none by default) | `{result, exception}` once the task ended: its DelegatedTaskResult and its failure's error record; null for a task the room's hosts did not delegate, or once `timeout_ms` passed first |
 | `host.room_tasks` | none | the turn's room's tasks, as `task_status` reads them (§23.4) |
+| `declare_host_verb` | `name`, `handler` (below), `between_turns` (default false) | null; registers the callback on the kit through its public method (§10.6.5) |
+| `host.call` | `verb`, optional `arguments` (an object or null), optional `record_keys` | the actual call's `{result, error}`; an error has its recorded `kind` and exact `message`. With `record_keys`, also reads those keys from the caller's record after the reply, or null outside the turn |
 | `delegate` | `room_id`, `agent_id`, `task`, `wait` (default false), `context`, `share_channels`, `notify`, `post_status` (default true), `brief`, `conversation` (default 0), `hand_back` (default `relay`), `require_structured_result` (default false) and `max_result_retries` (default 3), an inline run's result tool, `submit_result`, served in the child room alone (§23.3) | the task: `id`, `child_room_id`, `parent_room_id`, `agent_id`, `task`, `brief`, `description`, `hand_back`, `status` and `result`, its DelegatedTaskResult once it ended (`task_id`, `child_room_id`, `parent_room_id`, `agent_id`, `status`, `output`, `error`, `duration_ms`, `metadata`); its `as` label names the task's id |
 | `task.wait` | `task_id`: a task `delegate` returned, named by its label | its DelegatedTaskResult, once it ended |
 | `start_task` | `room_id`, `agent_id`, `task`, `hand_back` (default: the agent's background setup's) | the task, as `delegate` returns it, started for the agent as its `work_in_background` call would (§23.4) |
@@ -1097,6 +1099,34 @@ else, where no turn's host is.
 | `answer_input` | `request_id`, `value` | whether the tool waiting on the human-input request reads the answer (§10.6.5): false for one settled otherwise first, or answered already |
 | `reject_input` | `request_id`, `reason` (default empty) | whether the waiting tool reads the rejection, as a refusal (§10.6.5, §9.3) |
 | `cancel_task` | `task_id` | whether a background task the kit's task runner held was running and is now cancelled (§23.3); false for any other, or one of a room of another organization than the call's `organization_id` (§17.2) |
+
+A declared host `handler` answers with `returns` (a JSON value),
+`returns_arguments: true`, `returns_context: true`, or raises `raises: {kind,
+message}` (`ValueError`, `RuntimeError`, or `PermissionError`). Its context
+snapshot reads the public tool accessors: arguments, room id, organization,
+room metadata, channel and tool-call ids, actor, requester, depth, allowed
+names (sorted or null), whether a record exists, and whether a turn host is
+installed. `as` records this snapshot in `expect.actions`; `record_keys` adds
+the selected record keys before and after its optional `gate`. A gate holds
+the callback until opened; `cancelled` names a gate reached only if that wait
+is cancelled. No wait is a fixed delay.
+
+After the gate, `writes_record` sets keys, `removes_record` removes named keys,
+`updates_record` adds or replaces entries of named mappings, and
+`removes_entries` removes named entries. These mutate the actual record the
+public accessor returns; each callback owns its scripted values. Changes
+happen before either the scripted result or error.
+
+A scripted tool may answer with `host_calls: {calls, concurrent, record_keys}`.
+Each call names `verb` and optional `arguments`; omitted arguments use the
+public default. Calls are sequential unless `concurrent: true`. A call's
+`returned` reaches a named gate only after its reply; `cancel_after` starts
+that call in its own task and cancels only that task once the named gate is
+reached. The tool returns canonical JSON text (sorted object keys) containing
+`calls`, the actual results/errors in call order, and `record`, the selected
+keys after all replies. A cancelled call has error `{kind: "cancelled",
+message: ""}`. Parent-task cancellation is never caught as a child result.
+This formatting is fixture syntax, not a product serialization requirement.
 
 The room's members (§5.5, Appendix B.3), each change under the room's lock:
 
