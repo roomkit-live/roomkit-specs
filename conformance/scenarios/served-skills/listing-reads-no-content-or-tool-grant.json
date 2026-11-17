@@ -68,15 +68,19 @@
         "result": {
           "results": [
             {
+              "status": "ok",
               "result": 1
             },
             {
+              "status": "ok",
               "result": null
             },
             {
+              "status": "ok",
               "result": true
             },
             {
+              "status": "ok",
               "result": {
                 "label": "docs",
                 "server": "remote",
@@ -88,6 +92,7 @@
               }
             },
             {
+              "status": "ok",
               "result": {
                 "skill_names": [
                   "docs:guide"

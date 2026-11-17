@@ -94,18 +94,24 @@
         "result": {
           "results": [
             {
+              "status": "ok",
               "result": 0
             },
             {
+              "status": "ok",
               "result": null
             },
             {
+              "status": "ok",
               "result": null
             },
             {
-              "result": null
+              "error": "SkillValidationError",
+              "message": "Skill 'docs:guide' not found",
+              "status": "error"
             },
             {
+              "status": "ok",
               "result": {
                 "instructions": "Follow the steps.",
                 "origin": "docs",
@@ -120,6 +126,7 @@
               }
             },
             {
+              "status": "ok",
               "result": {
                 "skill_names": [
                   "docs:guide"
@@ -129,6 +136,7 @@
               }
             },
             {
+              "status": "ok",
               "result": {
                 "skill_names": [],
                 "listed_names": [],

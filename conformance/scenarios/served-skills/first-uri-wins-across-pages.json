@@ -112,9 +112,11 @@
         "result": {
           "results": [
             {
+              "status": "ok",
               "result": 1
             },
             {
+              "status": "ok",
               "result": {
                 "skill_names": [
                   "docs:other"

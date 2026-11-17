@@ -144,9 +144,11 @@
         "result": {
           "results": [
             {
+              "status": "ok",
               "result": 1
             },
             {
+              "status": "ok",
               "result": {
                 "instructions": "Follow the steps.",
                 "origin": "docs",
@@ -163,16 +165,20 @@
               }
             },
             {
+              "status": "ok",
               "result": null
             },
             {
               "error": "SkillChangedError",
-              "message": "Skill 'docs:guide' changed on its server or could not be verified: it is no longer active. Activate it again to load its current version."
+              "message": "Skill 'docs:guide' changed on its server or could not be verified: it is no longer active. Activate it again to load its current version.",
+              "status": "error"
             },
             {
+              "status": "ok",
               "result": null
             },
             {
+              "status": "ok",
               "result": {
                 "instructions": "Current body.",
                 "origin": "docs",

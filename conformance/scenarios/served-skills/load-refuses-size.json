@@ -109,16 +109,20 @@
         "result": {
           "results": [
             {
+              "status": "ok",
               "result": 1
             },
             {
               "error": "SkillVerificationError",
-              "message": "Skill 'docs:guide' changed on its server or could not be verified"
+              "message": "Skill 'docs:guide' changed on its server or could not be verified",
+              "status": "error"
             },
             {
+              "status": "ok",
               "result": null
             },
             {
+              "status": "ok",
               "result": {
                 "instructions": "Current body.",
                 "origin": "docs",
