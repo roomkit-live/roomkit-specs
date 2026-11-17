@@ -104,7 +104,7 @@
           },
           {
             "channel_id": "out",
-            "visibility": "internal"
+            "visibility": "none"
           },
           {
             "channel_id": "agent",

@@ -211,7 +211,8 @@
               "event": {
                 "system_prompt": "Keep context."
               }
-            }
+            },
+            "repeat": true
           }
         ]
       }
@@ -283,24 +284,26 @@
               }
             },
             "bindings": {
-              "$contains": [
+              "$unordered": [
                 {
                   "channel_id": "ws",
                   "direction": "inbound"
                 },
                 {
                   "channel_id": "console"
-                }
-              ]
-            },
-            "participants": {
-              "$contains": [
+                },
                 {
-                  "id": "observer",
-                  "role": "observer"
+                  "channel_id": "agent",
+                  "category": "intelligence"
                 }
               ]
             },
+            "participants": [
+              {
+                "id": "observer",
+                "role": "observer"
+              }
+            ],
             "history_start_index": 0
           },
           "target_capabilities": {
@@ -361,24 +364,26 @@
               }
             },
             "bindings": {
-              "$contains": [
+              "$unordered": [
                 {
                   "channel_id": "ws",
                   "direction": "inbound"
                 },
                 {
                   "channel_id": "console"
-                }
-              ]
-            },
-            "participants": {
-              "$contains": [
+                },
                 {
-                  "id": "owner",
-                  "role": "owner"
+                  "channel_id": "agent",
+                  "category": "intelligence"
                 }
               ]
             },
+            "participants": [
+              {
+                "id": "owner",
+                "role": "owner"
+              }
+            ],
             "history_start_index": 0
           },
           "target_capabilities": {
@@ -439,24 +444,26 @@
               }
             },
             "bindings": {
-              "$contains": [
+              "$unordered": [
                 {
                   "channel_id": "ws",
                   "direction": "inbound"
                 },
                 {
                   "channel_id": "console"
-                }
-              ]
-            },
-            "participants": {
-              "$contains": [
+                },
                 {
-                  "id": "owner",
-                  "role": "owner"
+                  "channel_id": "agent",
+                  "category": "intelligence"
                 }
               ]
             },
+            "participants": [
+              {
+                "id": "owner",
+                "role": "owner"
+              }
+            ],
             "history_start_index": 0
           },
           "target_capabilities": {
@@ -517,24 +524,26 @@
               }
             },
             "bindings": {
-              "$contains": [
+              "$unordered": [
                 {
                   "channel_id": "ws",
                   "direction": "inbound"
                 },
                 {
                   "channel_id": "console"
-                }
-              ]
-            },
-            "participants": {
-              "$contains": [
+                },
                 {
-                  "id": "observer",
-                  "role": "observer"
+                  "channel_id": "agent",
+                  "category": "intelligence"
                 }
               ]
             },
+            "participants": [
+              {
+                "id": "observer",
+                "role": "observer"
+              }
+            ],
             "history_start_index": 0
           },
           "target_capabilities": {
@@ -624,24 +633,26 @@
                 }
               },
               "bindings": {
-                "$contains": [
+                "$unordered": [
                   {
                     "channel_id": "ws",
                     "direction": "inbound"
                   },
                   {
                     "channel_id": "console"
-                  }
-                ]
-              },
-              "participants": {
-                "$contains": [
+                  },
                   {
-                    "id": "observer",
-                    "role": "observer"
+                    "channel_id": "agent",
+                    "category": "intelligence"
                   }
                 ]
               },
+              "participants": [
+                {
+                  "id": "observer",
+                  "role": "observer"
+                }
+              ],
               "history_start_index": 0
             },
             "target_capabilities": {
@@ -703,182 +714,26 @@
                 }
               },
               "bindings": {
-                "$contains": [
-                  {
-                    "channel_id": "ws",
-                    "direction": "inbound"
-                  },
-                  {
-                    "channel_id": "console"
-                  }
-                ]
-              },
-              "participants": {
-                "$contains": [
-                  {
-                    "id": "owner",
-                    "role": "owner"
-                  }
-                ]
-              },
-              "history_start_index": 0
-            },
-            "target_capabilities": {
-              "supports_threading": true,
-              "supports_reactions": true,
-              "supports_edit": true,
-              "supports_delete": true,
-              "supports_read_receipts": true,
-              "supports_typing": true,
-              "supports_templates": true,
-              "supports_rich_text": true,
-              "supports_buttons": true,
-              "supports_cards": true,
-              "supports_quick_replies": true,
-              "supports_media": true,
-              "supports_audio": true,
-              "supports_video": true,
-              "max_length": null,
-              "max_buttons": null,
-              "max_media_size_bytes": null,
-              "max_audio_duration_seconds": null,
-              "max_video_duration_seconds": null,
-              "media_types": {
                 "$unordered": [
-                  "text",
-                  "rich",
-                  "media"
-                ]
-              },
-              "supported_media_types": [
-                "image/png"
-              ],
-              "supported_audio_formats": [
-                "wav"
-              ],
-              "supported_video_formats": [
-                "mp4"
-              ],
-              "custom": {
-                "owner": "first"
-              }
-            },
-            "target_media_types": {
-              "$unordered": [
-                "text",
-                "rich",
-                "media"
-              ]
-            }
-          }
-        },
-        {
-          "generation": {
-            "room": {
-              "room": {
-                "id": "owner-room",
-                "metadata": {
-                  "owner": "owner-room"
-                }
-              },
-              "bindings": {
-                "$contains": [
                   {
                     "channel_id": "ws",
                     "direction": "inbound"
                   },
                   {
                     "channel_id": "console"
-                  }
-                ]
-              },
-              "participants": {
-                "$contains": [
-                  {
-                    "id": "owner",
-                    "role": "owner"
-                  }
-                ]
-              },
-              "history_start_index": 0
-            },
-            "target_capabilities": {
-              "supports_threading": true,
-              "supports_reactions": true,
-              "supports_edit": true,
-              "supports_delete": true,
-              "supports_read_receipts": true,
-              "supports_typing": true,
-              "supports_templates": true,
-              "supports_rich_text": true,
-              "supports_buttons": true,
-              "supports_cards": true,
-              "supports_quick_replies": true,
-              "supports_media": true,
-              "supports_audio": true,
-              "supports_video": true,
-              "max_length": null,
-              "max_buttons": null,
-              "max_media_size_bytes": null,
-              "max_audio_duration_seconds": null,
-              "max_video_duration_seconds": null,
-              "media_types": {
-                "$unordered": [
-                  "text",
-                  "rich",
-                  "media"
-                ]
-              },
-              "supported_media_types": [
-                "image/png"
-              ],
-              "supported_audio_formats": [
-                "wav"
-              ],
-              "supported_video_formats": [
-                "mp4"
-              ],
-              "custom": {
-                "owner": "first"
-              }
-            },
-            "target_media_types": {
-              "$unordered": [
-                "text",
-                "rich",
-                "media"
-              ]
-            }
-          }
-        },
-        {
-          "generation": {
-            "room": {
-              "room": {
-                "id": "observer-room",
-                "metadata": {
-                  "owner": "observer-room"
-                }
-              },
-              "bindings": {
-                "$contains": [
-                  {
-                    "channel_id": "ws",
-                    "direction": "inbound"
                   },
                   {
-                    "channel_id": "console"
+                    "channel_id": "agent",
+                    "category": "intelligence"
                   }
                 ]
               },
-              "participants": {
-                "$contains": [
-                  {
-                    "id": "observer",
-                    "role": "observer"
-                  }
-                ]
-              },
+              "participants": [
+                {
+                  "id": "owner",
+                  "role": "owner"
+                }
+              ],
               "history_start_index": 0
             },
             "target_capabilities": {
