@@ -118,7 +118,7 @@
               "q": "original"
             },
             "result": {
-              "$contains": "incomplete"
+              "$contains": "before its arguments were complete"
             },
             "is_error": true,
             "cancelled": false,
@@ -154,7 +154,7 @@
               "q": "original"
             },
             "result": {
-              "$contains": "incomplete"
+              "$contains": "before its arguments were complete"
             },
             "status": "failed",
             "outcome": "refused"
