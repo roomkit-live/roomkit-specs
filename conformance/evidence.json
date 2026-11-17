@@ -13525,8 +13525,8 @@
         {
           "scenario": "orchestration/each-room-s-loop-runs-with-its-own-reviewer",
           "pointer": "/expect",
-          "sha256": "a6fa9e26fd86a3cfeebd7d4f2477be17ec667cc387c143be46d39f81ddc3157d",
-          "scenario_sha256": "0b4781e8c565555a56d0bd9e27bed199f1336a957f464d6fe81ba48e79049252",
+          "sha256": "d2c5dafcc4f9563ebd781dd482a873f209512c6e274a4136dd8a83cc85f651ed",
+          "scenario_sha256": "6de7ef22e882f4447f284cfa689103d8f575acc877780f720b083a5e35dc57f3",
           "proves": "Each room uses its own reviewer and iteration limit; the uninstalled room answers without a review pass."
         },
         {
@@ -13539,15 +13539,15 @@
         {
           "scenario": "tasks/a-result-tool-is-declared-in-the-child-room-only",
           "pointer": "/expect",
-          "sha256": "a7c78175189c02c0e4497b744beae3afa2b7eabf7dced3720eb8fa09a09b87ba",
-          "scenario_sha256": "26a37d63c0dac1ee70ab1d6149a7ae42e75bbcda8c8d76518de85eba20e97d1a",
+          "sha256": "963a1e2e6943ff7bf767f542e662aec431259a946bb0c1f73940a191ed2df18f",
+          "scenario_sha256": "8e1c2adce9c6b15ea17dca2fd1b101291d7c0a904964042fa7fa8110543aa390",
           "proves": "During a held child capture, the other room lacks submit_result and refuses an undeclared call; after capture, a new turn in that same child also lacks the tool."
         },
         {
           "scenario": "orchestration/a-supervised-team-has-each-step-framed-and-checked",
           "pointer": "/expect",
-          "sha256": "77e19df01107b81f87e6b0e07013f88965150a1033f5b1e565a1c4dbb267269b",
-          "scenario_sha256": "bce2a9ff1cc2fdc99dd532dbc811c08b15da8a9b7ebb01ee8de0caa5548dfd79",
+          "sha256": "79358af91911979520d0930ffc6b3dae12dc7564a3c8b48852bb2f62d0a54637",
+          "scenario_sha256": "b79231f632a58d4a55eec14abac45aaf2ac368caa4e8348a222f09108c43b756",
           "proves": "Child dispatch and review turns exclude the strategy delegation tool; the installed parents retain it after child captures."
         },
         {
