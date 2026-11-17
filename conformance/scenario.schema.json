@@ -5852,6 +5852,11 @@
             "null"
           ]
         },
+        "tool_timeouts_ms": {
+          "description": "Per-tool bounds for this turn in integer milliseconds, over the channel's named bounds. Null or omission keeps the channel map; a null value leaves a named tool unbounded. Zero reaches the implementation and must fail before generation.",
+          "type": ["object", "null"],
+          "additionalProperties": {"type": ["integer", "null"], "minimum": 0}
+        },
         "tool_handler": {
           "type": "array",
           "items": {

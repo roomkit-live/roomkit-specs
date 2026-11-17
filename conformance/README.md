@@ -588,6 +588,11 @@ scripted.
   the agent's handler, a name it does not hold unserved; its `skills` give
   the turn a registry of its own in place of the agent's, for that turn alone
   (§24.3).
+  Its `tool_timeouts_ms` overlays the channel's per-tool bounds for this turn
+  (§21.6): integer milliseconds by tool name, `null` values unbounded. An
+  omitted or null map keeps the channel's; an empty map changes no names.
+  Zero is accepted by the fixture so the public turn's validation must refuse
+  it before asking the model. No bounds are installed on the shared channel.
 - `skills`: the agent's skill registry (§24.3), each skill's `name`,
   `description`, `instructions` and `references` (file names and their text)
   written to a directory of its own, as a host's skills are, and discovered
