@@ -482,7 +482,11 @@
           "description": "Enable the synchronous binding callback recorder. Records update_binding and the exact binding under room_callbacks and hook_order; optional fail then raises without async reactions.",
           "type": "object",
           "additionalProperties": false,
-          "properties": {"fail": {"type": "string"}}
+          "properties": {
+            "fail": {
+              "type": "string"
+            }
+          }
         },
         "on_room_detached": {
           "description": "Reactions of the channel's `on_room_detached` (\u00a76.1), tried once per call: `fail` raises. Each call is recorded under `room_callbacks`.",
@@ -1034,6 +1038,9 @@
         },
         "continuation": {
           "$ref": "#/$defs/continuation_policy"
+        },
+        "external_tool_handler": {
+          "$ref": "#/$defs/acp_external_handler"
         }
       }
     },
@@ -1108,7 +1115,9 @@
             "none"
           ]
         },
-        "output_muted": {"type": "boolean"},
+        "output_muted": {
+          "type": "boolean"
+        },
         "muted": {
           "type": "boolean"
         },
@@ -5243,6 +5252,13 @@
             "items": {
               "type": "string"
             }
+          }
+        },
+        "external_handlers": {
+          "description": "Per AI channel, external handler callbacks actually received in order, without inferring reports from scripted decisions.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "array"
           }
         }
       }
