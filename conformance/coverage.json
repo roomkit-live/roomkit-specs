@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "f78642fc12a35e6068e334f237d6cb9fae11c5888f51cfe76bff1290b6c72f0f",
-  "corpus_sha256": "2902a5918beeb77901dda6def19f0b20d86a8068fc96c0331f7e7607ea8be668",
+  "rfc_sha256": "2164497e66f49b732070af3729441763c5f65698c09b8611e9438233fe3d6489",
+  "corpus_sha256": "a8858d59c7b8345fc3753903f8a6a865275fb8e6adb95699999a776e75ecf14b",
   "python_commit": "b50c50a782668fc1681e21bcec52a3d83bc0d8c0",
-  "scenario_count": 2614,
+  "scenario_count": 2617,
   "sections": [
     {
       "section": "0",
@@ -1930,6 +1930,7 @@
         "inbound/a-binding-s-reasoning-effort-that-is-no-text-fails-the-turn",
         "inbound/a-turn-takes-its-binding-s-reasoning-effort",
         "inbound/a-turn-with-no-effort-set-asks-for-none",
+        "orchestration/a-worker-tool-is-named-as-every-provider-accepts",
         "resilience/a-fallback-whose-answer-fails-its-check-leaves-the-primary-s-error",
         "resilience/a-refusal-after-text-a-schema-held-is-tried-again",
         "response-schema/a-binding-s-schema-outside-the-portable-subset-fails-the-turn",
@@ -6721,6 +6722,7 @@
         "orchestration/an-uninstalled-supervisor-takes-its-router-and-its-tools-back",
         "orchestration/an-uninstalled-swarm-takes-its-router-and-its-tools-back",
         "orchestration/create-room-installs-through-the-same-path",
+        "orchestration/each-revision-of-a-step-starts-from-its-own-task",
         "orchestration/each-room-s-background-team-runs-its-own-workers",
         "orchestration/each-room-s-background-team-runs-its-own-workers-without-streaming",
         "orchestration/each-room-s-loop-runs-with-its-own-reviewer",
@@ -6812,6 +6814,7 @@
         "orchestration/a-worker-cut-after-announcement-reports-only-what-started",
         "orchestration/a-worker-cut-before-announcement-reports-only-what-started",
         "orchestration/a-worker-past-its-task-timeout-is-cut-and-read-as-timed-out",
+        "orchestration/a-worker-tool-is-named-as-every-provider-accepts",
         "orchestration/an-async-auto-delegating-supervisor-without-a-voice-channel-delegates-nothing",
         "orchestration/an-auto-delegating-supervisor-in-two-rooms-runs-its-team-once-per-message-in-each",
         "orchestration/an-auto-delegating-supervisor-refines-with-its-own-instruction-and-supervises-a-sequential-team",
@@ -6830,6 +6833,7 @@
         "orchestration/an-empty-refine-instruction-gives-the-first-pass-the-implementation-s-own",
         "orchestration/an-uninstalled-auto-delegating-supervisor-answers-as-itself",
         "orchestration/an-uninstalled-supervisor-takes-its-router-and-its-tools-back",
+        "orchestration/each-revision-of-a-step-starts-from-its-own-task",
         "orchestration/each-room-s-background-team-runs-its-own-workers",
         "orchestration/each-room-s-background-team-runs-its-own-workers-without-streaming",
         "orchestration/each-room-s-per-worker-tools-run-with-its-own-install",
@@ -6849,6 +6853,7 @@
       "candidate_scenarios": [
         "orchestration/a-loop-leaves-its-producer-the-events-that-are-no-task",
         "orchestration/a-loop-out-of-iterations-answers-its-last-output-not-approved",
+        "orchestration/a-loop-reviewer-s-refusal-approves-nothing",
         "orchestration/a-loop-revises-its-output-until-its-reviewer-approves",
         "orchestration/a-loop-s-parallel-review-that-raises-fails-at-once-and-cuts-the-other-reviews",
         "orchestration/a-loop-s-parallel-reviewers-review-the-same-output-at-once",
