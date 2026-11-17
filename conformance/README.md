@@ -421,6 +421,11 @@ scripted.
   A `whole_response` cannot be combined with `fails` or `refuses` in this
   mode; script a failing round without `whole_response` instead.
   A `fallback_model` takes the same option.
+- `model.fails_once_closed`: false by default. True makes the model a client
+  its close releases for good, as a vendor's is: every generation asked after
+  its `close()` fails with a provider error, `the model was closed`. Its
+  close is shared by every copy of the agent, a process's or an executor's
+  build, as its script is.
 - `model.rounds`: the model's answer to the agent's n-th generation of the
   run is its n-th round: `text` (default empty), `calls`, `finish_reason`
   (default `tool_calls` when it calls, else `stop`) and `usage`, counters

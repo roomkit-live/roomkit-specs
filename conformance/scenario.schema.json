@@ -5365,6 +5365,10 @@
         "streaming": {
           "description": "Whether the scripted provider streams (default true). False uses generate() through the provider's default whole-response adapter. Stream-only round fields are refused.",
           "type": "boolean"
+        },
+        "fails_once_closed": {
+          "type": "boolean",
+          "description": "Whether every generation asked after the model's close() fails, as a vendor's client its close released; shared by every copy of the agent (a process's, an executor's build). False by default."
         }
       },
       "allOf": [
