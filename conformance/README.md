@@ -1187,6 +1187,14 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
   first showed them (a hook's payload, a `user_input_required` framework
   event).
 
+### Structured task plans
+
+A scripted AI channel's `enable_planning` is the public constructor boolean,
+false when absent. It installs the real `plan_tasks` tool. Its CUSTOM events
+are read under `custom_events`; `on_plan_updated` hooks expose `plan` with the
+public `room_id`, `channel_id`, `tasks` and ISO timestamp. The runner neither
+stores a simulated plan nor derives its tool result from these observations.
+
 ### Expectations
 
 `expect` names what is compared; what it does not name is not.

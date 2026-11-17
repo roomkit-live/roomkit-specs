@@ -1044,6 +1044,10 @@
         },
         "external_tool_handler": {
           "$ref": "#/$defs/acp_external_handler"
+        },
+        "enable_planning": {
+          "description": "A scripted AI channel's enable_planning: the channel-managed plan_tasks tool and room-scoped plan notes. False when absent.",
+          "type": "boolean"
         }
       }
     },
