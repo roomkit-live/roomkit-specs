@@ -22402,7 +22402,18 @@ the frontmatter as for any skill (Section 24.3).
 server then, and not before. The content MUST match the entry before anything
 of it reaches the model: its length the entry's `size`, its SHA-256 digest
 the entry's `digest`, and its frontmatter, parsed, the entry's `frontmatter`
-field by field. A mismatch loads nothing: the registry reads the entry again
+field by field. The parsed frontmatter is normalized as JSON before comparison:
+YAML sets, including nested sets, become arrays of their normalized elements,
+sorted by each element's canonical JSON text (sorted object keys, UTF-8 and
+compact separators); an empty set becomes `[]`. YAML's equality determines
+set membership before normalization. Dates and binary values retain their
+existing string normalization. This replaces process-dependent set display
+strings: a server publishing that former string MUST publish the canonical
+array instead; an old string is not an equivalent value. The file digests and
+approval fingerprint still cover the same file bytes, not their normalized
+representation. A previously loaded cache retains its held content until it
+is reloaded; new verified loads use this normalization.
+A mismatch loads nothing: the registry reads the entry again
 with `skills/get`, and the activation answers that the skill changed on its
 server or could not be verified, without its body. An entry read again is held
 to the rules a listed one is (Entries): one the host does not take leaves the
