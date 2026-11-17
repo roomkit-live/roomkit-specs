@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "dea582f0e0dd241691575ae435a52656a18d500d8af9291d934db4bca421a7f3",
-  "corpus_sha256": "fb0403dd2d0c10ca66efc13b85d5c14070d882e74064c103dfb33e6b44047eeb",
+  "corpus_sha256": "5c84e596d0614d500b8a401ae31af0ce3cddb210d21d9ddfece99e4e493c4fe6",
   "python_commit": "b50c50a782668fc1681e21bcec52a3d83bc0d8c0",
-  "scenario_count": 3027,
+  "scenario_count": 3028,
   "sections": [
     {
       "section": "0",
@@ -8743,6 +8743,7 @@
         "tasks/a-structured-delegation-re-prompts-until-its-worker-submits",
         "tasks/a-structured-delegation-refuses-the-workers-own-result-tool",
         "tasks/a-submit-round-that-gives-the-model-more-asks-it-again",
+        "tasks/a-submitted-result-normalizes-nested-summary-and-reason-values",
         "tasks/a-task-carries-its-worker-s-turn-record",
         "tasks/a-task-cut-before-its-worker-wrote-any-text-fails-with-no-output",
         "tasks/a-task-whose-shared-transport-stopped-reading-its-answer-fails-cancelled",
