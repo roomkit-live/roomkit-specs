@@ -457,3 +457,20 @@ unmatched-participant and context-lifetime tests remain separate proofs. The
 partial requirement link receives no additional scope from this receipt; Rust,
 SQL stores, Redis turns, sandbox, planner and realtime paths are not executed
 by it. All prior execution receipts remain unchanged.
+
+## Provider-served text tool calls
+
+`python-provider-served-470903e.xml` retains 44 passing scenarios from clean,
+published Python `470903e10cf5fff7c1213fe3ec65aecd119bbdd1`, copied corpus
+`c20267e7ebe8007ba41853c5537d54d1334713bc`, with the memory store and explicitly
+selected in-process turns. The receipt records the exact command and RFC
+revision. Its artifact preserves testcase identity and outcome, without local
+paths, hostnames, timestamps or durations.
+
+The two partial links cover provider-owned call markers, original outcomes,
+local-name collisions, reports, repeated wire ids, mixed replay, bounded copies
+and stopped/cut boundaries in the two text provider modes. Native carrier and
+cancellation tests remain separate source evidence. This receipt gives no
+credit to Rust execution, external-tool-handler integration, media/realtime
+execution, SQL stores or distributed turns, and does not complete either broad
+RFC source unit. All 141 preceding execution receipts remain unchanged.

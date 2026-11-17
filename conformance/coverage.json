@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "2ab40e4ae483d06f06840629bdedfcec779427524ec40b7dec65a6733e9e9b42",
   "corpus_sha256": "e3a0b83b3128b40d8593f8240adfa7c007b8befc993dd181f2669c0484dd9e5c",
-  "python_commit": "1f884dcf30c0d2f0a3524114cc2568f82c57a3c6",
+  "python_commit": "470903e10cf5fff7c1213fe3ec65aecd119bbdd1",
   "scenario_count": 2588,
   "sections": [
     {
@@ -2650,8 +2650,8 @@
       "review": "normative",
       "requirements": 17,
       "mapping": {
-        "mapped_partial": 8,
-        "unmapped": 9
+        "mapped_partial": 9,
+        "unmapped": 8
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -31963,8 +31963,31 @@
     {
       "id": "RK-9.3-013",
       "section": "9.3",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "phase4-provider-served-text-calls",
+          "scope": "Provider-owned text call markers, pending controls, local-name collisions, per-occurrence reporting, mixed replay, bounded copies and stopped/cut report boundaries.",
+          "coverage": "partial",
+          "missing": [
+            "AIChannel.external_tool_handler integration and its source-test variants remain open; the three excluded source functions receive no credit.",
+            "Media/realtime execution, remote executors and vendor gateways remain outside this text slice.",
+            "Cancellation before report context loads is reviewed by code reading only; the gated runtime test cuts during SYNC after the context has loaded.",
+            "The broad RFC source unit remains partial; local-handler result override rules and unrelated tool paths are not completed by provider-owned reports.",
+            "Native Rust logs are retained separately; no aggregate Rust/backend/runtime execution receipt is synthesized."
+          ],
+          "executions": [
+            {
+              "execution": "python-provider-served-470903e-memory",
+              "implementation": "python",
+              "commit": "470903e10cf5fff7c1213fe3ec65aecd119bbdd1",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "RK-9.3-014",
@@ -32115,6 +32138,28 @@
               "backend": "memory",
               "runtime": "asyncio",
               "state": "stale"
+            }
+          ]
+        },
+        {
+          "id": "phase4-provider-served-original-reports",
+          "scope": "Text provider-owned outcomes remain reports: blocking or clearing SYNC hooks cannot change the original outcome observed after them.",
+          "coverage": "partial",
+          "missing": [
+            "AIChannel.external_tool_handler integration and its source-test variants remain open; the three excluded source functions receive no credit.",
+            "Media/realtime execution, remote executors and vendor gateways remain outside this text slice.",
+            "Cancellation before report context loads is reviewed by code reading only; the gated runtime test cuts during SYNC after the context has loaded.",
+            "The broad RFC source unit remains partial; local-handler result override rules and unrelated tool paths are not completed by provider-owned reports.",
+            "Native Rust logs are retained separately; no aggregate Rust/backend/runtime execution receipt is synthesized."
+          ],
+          "executions": [
+            {
+              "execution": "python-provider-served-470903e-memory",
+              "implementation": "python",
+              "commit": "470903e10cf5fff7c1213fe3ec65aecd119bbdd1",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
             }
           ]
         }
@@ -71876,6 +71921,15 @@
       "implementation_commit": "1f884dcf30c0d2f0a3524114cc2568f82c57a3c6",
       "rfc_commit": "fe41250ba392be60e656a56649ea43f6fa54a265",
       "corpus_commit": "74777ee322fe465c191b85e5db9a7fe67d39adc6",
+      "backend": "memory",
+      "runtime": "asyncio"
+    },
+    {
+      "id": "python-provider-served-470903e-memory",
+      "implementation": "python",
+      "implementation_commit": "470903e10cf5fff7c1213fe3ec65aecd119bbdd1",
+      "rfc_commit": "371eceed2a0e9374f195f370a04c2b439323ef54",
+      "corpus_commit": "c20267e7ebe8007ba41853c5537d54d1334713bc",
       "backend": "memory",
       "runtime": "asyncio"
     }

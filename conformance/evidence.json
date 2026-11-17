@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "1f884dcf30c0d2f0a3524114cc2568f82c57a3c6",
+  "python_commit": "470903e10cf5fff7c1213fe3ec65aecd119bbdd1",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -24522,6 +24522,987 @@
         "Capability fields are metadata only; this slice proves no media or realtime delivery.",
         "The shared interleaving assertions do not claim all recent_events or author_register values; the native full-snapshot test supplies that separate evidence.",
         "Native Rust executions are retained separately and create no backend/runtime execution receipt in this inventory."
+      ]
+    },
+    {
+      "id": "phase4-provider-served-text-calls",
+      "requirement": "RK-9.3-013",
+      "scope": "Provider-owned text call markers, pending controls, local-name collisions, per-occurrence reporting, mixed replay, bounded copies and stopped/cut report boundaries.",
+      "tests": [
+        {
+          "nodeid": "tests/test_served_call_marker.py::test_a_call_survives_streaming_and_back",
+          "sha256": "8a9414aa75e6973e8a249d9e177a656e2a5546eb8320cfbc3b94d5ab6200e450",
+          "proves": "The provider-owned outcome survives both call conversions, together with all non-default call fields."
+        },
+        {
+          "nodeid": "tests/test_served_call_marker.py::test_a_call_the_provider_ran_and_failed_is_reported_failed",
+          "sha256": "f36dbe670aa1a12ba09fe2a79a5a7a31ac919529ed6805976c538bb32bc143ac",
+          "proves": "A provider failure retains its original result and failure marker and reaches the observer; local non-execution is witnessed after all calls in the bounded mixed shared case."
+        },
+        {
+          "nodeid": "tests/test_served_call_marker.py::test_a_model_written_result_key_is_an_argument_the_handler_reads",
+          "sha256": "3acc896ab8e6ebe0cf9d3c26ac8c85e0fccb678424ae9bf7a9733ae1ecb5dc06",
+          "proves": "A model-written _result remains an argument delivered to the actual local handler."
+        },
+        {
+          "nodeid": "tests/test_served_call_marker.py::test_a_model_written_result_key_does_not_pass_the_policy",
+          "sha256": "729c2e9090290be74fe1410b4c3d26f6751640cb12fe1bebd578250c6b70e6c1",
+          "proves": "Forged result arguments grant no policy exemption: refusal has a failed end without the forged result."
+        },
+        {
+          "nodeid": "tests/test_external_call_routing.py::test_a_call_the_provider_ran_reaches_the_observers_without_a_handler",
+          "sha256": "f6ec897ec9750fc89b737e06ebc4ffa6e6e3cd514ec83667f500212247c580d3",
+          "proves": "A provider-owned result reaches the observer without a local handler."
+        },
+        {
+          "nodeid": "tests/test_ai_streaming_tool_events.py::test_provider_executed_tool_never_fires_retroactive_before_hook",
+          "sha256": "c9f3414cc97e690ca1eae39aea7f11be779d87d8b172582d52f96f1d8539531f",
+          "proves": "A provider-owned call runs no retrospective BEFORE_TOOL_USE hook."
+        },
+        {
+          "nodeid": "tests/test_provider_result_bound.py::test_a_provider_served_result_is_bounded_like_a_served_one",
+          "sha256": "b655d8e8ca1bdbc9d3b4066cb1e3329a2e67755d5e9c53705dc0777ad8295ef8",
+          "proves": "Observers receive the original provider result before model and timeline copies are bounded; the shared oracle asserts its exact preview, not the source test literal length comparison."
+        },
+        {
+          "nodeid": "tests/test_external_call_cut.py::test_a_call_the_provider_ran_keeps_its_outcome_when_cut",
+          "sha256": "c65e0968246cd027261107b5ca259be5e9e8770b60cb21ddf29e8ac073bb7561",
+          "proves": "Stopping at the provider call start keeps its known outcome; only the no-external-handler variant is retained here."
+        },
+        {
+          "nodeid": "tests/test_external_call_cut.py::test_a_call_the_provider_ran_cut_while_reported_keeps_its_outcome",
+          "sha256": "642d73eb93642652f4f29797ddb63ad610dd07938efc78e3e8071159b85760fa",
+          "proves": "Cutting during the SYNC report keeps one original ASYNC outcome; the native Rust counterpart separately checks the framework report, without an external handler."
+        },
+        {
+          "nodeid": "tests/test_turn_calls_per_call.py::test_two_calls_the_provider_ran_under_one_id_are_each_reported",
+          "sha256": "1f2f8e0fbff8613929bdcfff7661545f897f7dfc2982347ae58cafa66bfd8160",
+          "proves": "Two provider-served occurrences under one wire id each retain their own report and result."
+        },
+        {
+          "nodeid": "tests/test_channels/test_loop_end_marker.py::test_provider_owned_tool_calls_still_end_with_a_marker",
+          "sha256": "f9a5cdd38f3eb16f2235a3e2ad190f4961e02c78991b98d95d55348df423a61c",
+          "proves": "A provider-only round still has exactly one final Completed marker and needs no additional generation; the native Rust proof inspects PreparedAnswer rather than a public iterator."
+        },
+        {
+          "nodeid": "tests/test_providers/test_thinking_blocks.py::TestTheLoopReplaysTheRound::test_a_call_the_provider_ran_keeps_its_place",
+          "sha256": "0d650a5976913b1b84f256692de38fac52614b876e7c3e82a0114b78d4d97cf7",
+          "proves": "Provider-served calls retain their position among reasoning and local calls; the shared case observes the next actual provider request."
+        },
+        {
+          "nodeid": "tests/test_ai_streaming_tool_events.py::test_a_stream_closed_on_a_call_s_end_still_publishes_it",
+          "sha256": "2d36ccf65573e9e5732d31a26bcf54ac5ded082ddf1f35b921525f6bf445c00f",
+          "proves": "The provider-served branch publishes one tool end when the reader stops on END; the native kit/transport/subscriber test also checks the exact cut boundary and duration distinction. Local-tool variants are not newly covered."
+        }
+      ],
+      "clause_sha256": "de409f03d37a2c55f2a2e3e5fdb807c24cb1e10f839db6501966d4f5cd663fb6",
+      "coverage": "partial",
+      "review": "Independent source and full product reviews accepted 44 shared scenarios and separate native conversion, marker and cancellation boundaries. The review retains the no-handler/text limitations and does not assign unobserved fields or execution backends.",
+      "assertions": [
+        {
+          "scenario": "provider-served/absent-is-pending-stream",
+          "pointer": "/expect/models",
+          "sha256": "512493814b9f48be78e5a4d57205d15a8617097b5e1f0e8ec0b9ffb8178c219b",
+          "scenario_sha256": "9753865ab8c1173490c4e02d98fb2eb9d98311ebd8ee72ea7b665f5911bae6c1",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/absent-is-pending-stream",
+          "pointer": "/expect/hooks",
+          "sha256": "026c9a3bea98a479ac218d189edb4b439c19ddf4659ff245abc8163ab8daf06a",
+          "scenario_sha256": "9753865ab8c1173490c4e02d98fb2eb9d98311ebd8ee72ea7b665f5911bae6c1",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/absent-is-pending-stream",
+          "pointer": "/expect/timeline",
+          "sha256": "867cf49a8a3003b3061e2d003f20dd6525f9ff0abb09be9d7a88d5d281766c25",
+          "scenario_sha256": "9753865ab8c1173490c4e02d98fb2eb9d98311ebd8ee72ea7b665f5911bae6c1",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/absent-is-pending-whole",
+          "pointer": "/expect/models",
+          "sha256": "512493814b9f48be78e5a4d57205d15a8617097b5e1f0e8ec0b9ffb8178c219b",
+          "scenario_sha256": "9fd5a79f5872266e134b2e0651d9f5940bcb63c0e3b900a400f530c2d628742f",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/absent-is-pending-whole",
+          "pointer": "/expect/hooks",
+          "sha256": "026c9a3bea98a479ac218d189edb4b439c19ddf4659ff245abc8163ab8daf06a",
+          "scenario_sha256": "9fd5a79f5872266e134b2e0651d9f5940bcb63c0e3b900a400f530c2d628742f",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/absent-is-pending-whole",
+          "pointer": "/expect/timeline",
+          "sha256": "867cf49a8a3003b3061e2d003f20dd6525f9ff0abb09be9d7a88d5d281766c25",
+          "scenario_sha256": "9fd5a79f5872266e134b2e0651d9f5940bcb63c0e3b900a400f530c2d628742f",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/bounded-mixed-round-stream",
+          "pointer": "/expect/models",
+          "sha256": "3429ec4177d3442b2f0d19827a380e0be92688ba2bcbc33ed1a523ab46c0539e",
+          "scenario_sha256": "56161c77590ed60a617c592c9e0dd79d1448746b5e51c9d509e1f15a1e1b1f98",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/bounded-mixed-round-stream",
+          "pointer": "/expect/hooks",
+          "sha256": "0c55a2f1e87a4ffacf7cc29ad6f7642abb7f9d55058d8bf124a4677755dd4f3c",
+          "scenario_sha256": "56161c77590ed60a617c592c9e0dd79d1448746b5e51c9d509e1f15a1e1b1f98",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/bounded-mixed-round-stream",
+          "pointer": "/expect/timeline",
+          "sha256": "2bdd7d21908130580036a369d28f3632c63824c36ca6284b6488383e91f25a4f",
+          "scenario_sha256": "56161c77590ed60a617c592c9e0dd79d1448746b5e51c9d509e1f15a1e1b1f98",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/bounded-mixed-round-whole",
+          "pointer": "/expect/models",
+          "sha256": "3429ec4177d3442b2f0d19827a380e0be92688ba2bcbc33ed1a523ab46c0539e",
+          "scenario_sha256": "be0f37a364aca614ee0292c0f1d91ed9a49aab3534e2d21f53d3bcbe8afaa406",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/bounded-mixed-round-whole",
+          "pointer": "/expect/hooks",
+          "sha256": "0c55a2f1e87a4ffacf7cc29ad6f7642abb7f9d55058d8bf124a4677755dd4f3c",
+          "scenario_sha256": "be0f37a364aca614ee0292c0f1d91ed9a49aab3534e2d21f53d3bcbe8afaa406",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/bounded-mixed-round-whole",
+          "pointer": "/expect/timeline",
+          "sha256": "2bdd7d21908130580036a369d28f3632c63824c36ca6284b6488383e91f25a4f",
+          "scenario_sha256": "be0f37a364aca614ee0292c0f1d91ed9a49aab3534e2d21f53d3bcbe8afaa406",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/cut-known-failure-stream",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "c8db1fd8a959ca225e908798deeadc3797c80241712ef09cece42529157c47aa",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/cut-known-failure-stream",
+          "pointer": "/expect/hooks",
+          "sha256": "63ee50768cd8dcb3e1460945aa35e2328636a1ce578c901af3905ddab3e130cc",
+          "scenario_sha256": "c8db1fd8a959ca225e908798deeadc3797c80241712ef09cece42529157c47aa",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/cut-known-failure-whole",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "b40f819fad8ca608587b932f4cc8ed2d3ce2d50b1142dd1501276e422c5b3192",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/cut-known-failure-whole",
+          "pointer": "/expect/hooks",
+          "sha256": "63ee50768cd8dcb3e1460945aa35e2328636a1ce578c901af3905ddab3e130cc",
+          "scenario_sha256": "b40f819fad8ca608587b932f4cc8ed2d3ce2d50b1142dd1501276e422c5b3192",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/cut-known-success-stream",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "1e76174be9e7c761affe7a92a073ea5afd5fce71da022c3795926971b84b1187",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/cut-known-success-stream",
+          "pointer": "/expect/hooks",
+          "sha256": "5d1fe2c45b591fe79c6e7ec936b021bccc5237ac33f4bc8479181464a674c7f4",
+          "scenario_sha256": "1e76174be9e7c761affe7a92a073ea5afd5fce71da022c3795926971b84b1187",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/cut-known-success-whole",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "8c40e1649e7e653763aa20372bf510c504bf95a556a881f72e19bee116693043",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/cut-known-success-whole",
+          "pointer": "/expect/hooks",
+          "sha256": "5d1fe2c45b591fe79c6e7ec936b021bccc5237ac33f4bc8479181464a674c7f4",
+          "scenario_sha256": "8c40e1649e7e653763aa20372bf510c504bf95a556a881f72e19bee116693043",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/empty-stream",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "cfd533d28cb81f785b93d5178cb6eecf035805364652d029395ec0e0d8531c3b",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/empty-stream",
+          "pointer": "/expect/hooks",
+          "sha256": "9fe400cfabddb6cf5c3cd8b050feb74017806c8cdfa2cf6fbdb953423a7e1baa",
+          "scenario_sha256": "cfd533d28cb81f785b93d5178cb6eecf035805364652d029395ec0e0d8531c3b",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/empty-stream",
+          "pointer": "/expect/timeline",
+          "sha256": "a8900b07b2aba581e43614a4d80ae41762a5332cda31769c21d6be05f9c6f66f",
+          "scenario_sha256": "cfd533d28cb81f785b93d5178cb6eecf035805364652d029395ec0e0d8531c3b",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/empty-whole",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "b24f707f8eea0bc401ab899a5c4c9d4cea2b64ad4310f152d0190849a60663b0",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/empty-whole",
+          "pointer": "/expect/hooks",
+          "sha256": "9fe400cfabddb6cf5c3cd8b050feb74017806c8cdfa2cf6fbdb953423a7e1baa",
+          "scenario_sha256": "b24f707f8eea0bc401ab899a5c4c9d4cea2b64ad4310f152d0190849a60663b0",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/empty-whole",
+          "pointer": "/expect/timeline",
+          "sha256": "a8900b07b2aba581e43614a4d80ae41762a5332cda31769c21d6be05f9c6f66f",
+          "scenario_sha256": "b24f707f8eea0bc401ab899a5c4c9d4cea2b64ad4310f152d0190849a60663b0",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/failure-stream",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "f25d1cf3e6be3c249cda88d71d1a2512df640e36f285492917294809e825e47f",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/failure-stream",
+          "pointer": "/expect/hooks",
+          "sha256": "f09dd580306bd4c9f5b36dfc8ea425172ab6809431270842b7fc63b479a0971c",
+          "scenario_sha256": "f25d1cf3e6be3c249cda88d71d1a2512df640e36f285492917294809e825e47f",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/failure-stream",
+          "pointer": "/expect/timeline",
+          "sha256": "b1621108e95da20c984e56e045c872bc7b4a56085e7e102df1585fc9ec1c9881",
+          "scenario_sha256": "f25d1cf3e6be3c249cda88d71d1a2512df640e36f285492917294809e825e47f",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/failure-whole",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "20a0be49e61824a0ce5be6c828ad1e7e66f91b4d8a6f5fcf8a1b5210ba3de0f1",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/failure-whole",
+          "pointer": "/expect/hooks",
+          "sha256": "f09dd580306bd4c9f5b36dfc8ea425172ab6809431270842b7fc63b479a0971c",
+          "scenario_sha256": "20a0be49e61824a0ce5be6c828ad1e7e66f91b4d8a6f5fcf8a1b5210ba3de0f1",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/failure-whole",
+          "pointer": "/expect/timeline",
+          "sha256": "b1621108e95da20c984e56e045c872bc7b4a56085e7e102df1585fc9ec1c9881",
+          "scenario_sha256": "20a0be49e61824a0ce5be6c828ad1e7e66f91b4d8a6f5fcf8a1b5210ba3de0f1",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/forged-arguments-refused-by-before-stream",
+          "pointer": "/expect/models",
+          "sha256": "6f000de7d183dab6300a49be0c7f29f3cd1269da0aa984c30eef4c15ad9e0193",
+          "scenario_sha256": "5ba873cedcada193649d2df1a84a326c6c129f7d1d18856f6287998e7d1b83f4",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/forged-arguments-refused-by-before-stream",
+          "pointer": "/expect/hooks",
+          "sha256": "4d9a4350fc9460d897e9596865f3e5a4be55f3a17a43d6373b41042e8c97cde9",
+          "scenario_sha256": "5ba873cedcada193649d2df1a84a326c6c129f7d1d18856f6287998e7d1b83f4",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/forged-arguments-refused-by-before-stream",
+          "pointer": "/expect/timeline",
+          "sha256": "d2f04b39f6898b21d357e03b9309a59214175be57de037e24b8f556eaee23474",
+          "scenario_sha256": "5ba873cedcada193649d2df1a84a326c6c129f7d1d18856f6287998e7d1b83f4",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/forged-arguments-refused-by-before-whole",
+          "pointer": "/expect/models",
+          "sha256": "6f000de7d183dab6300a49be0c7f29f3cd1269da0aa984c30eef4c15ad9e0193",
+          "scenario_sha256": "2b2e7582e17c2eee9b75ac440151eee757dd63c3ff13073e2dcada5a3fc92971",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/forged-arguments-refused-by-before-whole",
+          "pointer": "/expect/hooks",
+          "sha256": "4d9a4350fc9460d897e9596865f3e5a4be55f3a17a43d6373b41042e8c97cde9",
+          "scenario_sha256": "2b2e7582e17c2eee9b75ac440151eee757dd63c3ff13073e2dcada5a3fc92971",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/forged-arguments-refused-by-before-whole",
+          "pointer": "/expect/timeline",
+          "sha256": "d2f04b39f6898b21d357e03b9309a59214175be57de037e24b8f556eaee23474",
+          "scenario_sha256": "2b2e7582e17c2eee9b75ac440151eee757dd63c3ff13073e2dcada5a3fc92971",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/forged-arguments-refused-by-policy-stream",
+          "pointer": "/expect/models",
+          "sha256": "6f000de7d183dab6300a49be0c7f29f3cd1269da0aa984c30eef4c15ad9e0193",
+          "scenario_sha256": "33b96d3d9d7ebc5cdfa96fdee5d97fc54020446eb6abae90e2448fab9b0ba282",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/forged-arguments-refused-by-policy-stream",
+          "pointer": "/expect/hooks",
+          "sha256": "3663f175784c322724e84ca10ba57d0dca8070fa27724e6609490fd63788c84a",
+          "scenario_sha256": "33b96d3d9d7ebc5cdfa96fdee5d97fc54020446eb6abae90e2448fab9b0ba282",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/forged-arguments-refused-by-policy-stream",
+          "pointer": "/expect/timeline",
+          "sha256": "9b067b1ae0e88f3211c82d5495d64facc02d7798f6a2e0ae9d21e3f4271fb500",
+          "scenario_sha256": "33b96d3d9d7ebc5cdfa96fdee5d97fc54020446eb6abae90e2448fab9b0ba282",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/forged-arguments-refused-by-policy-whole",
+          "pointer": "/expect/models",
+          "sha256": "6f000de7d183dab6300a49be0c7f29f3cd1269da0aa984c30eef4c15ad9e0193",
+          "scenario_sha256": "798c7b4b302751e32dbdd4c9931c2aa1e420a4961f820ec2d2d547947c5a8358",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/forged-arguments-refused-by-policy-whole",
+          "pointer": "/expect/hooks",
+          "sha256": "3663f175784c322724e84ca10ba57d0dca8070fa27724e6609490fd63788c84a",
+          "scenario_sha256": "798c7b4b302751e32dbdd4c9931c2aa1e420a4961f820ec2d2d547947c5a8358",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/forged-arguments-refused-by-policy-whole",
+          "pointer": "/expect/timeline",
+          "sha256": "9b067b1ae0e88f3211c82d5495d64facc02d7798f6a2e0ae9d21e3f4271fb500",
+          "scenario_sha256": "798c7b4b302751e32dbdd4c9931c2aa1e420a4961f820ec2d2d547947c5a8358",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/mixed-reasoning-order",
+          "pointer": "/expect/models",
+          "sha256": "0ff0734a51f83d43b1cd00e470d7ab620fa57331d85cbf9478c5a2504f01c123",
+          "scenario_sha256": "961d39b2605e9d1b1c317a9cfaa00579b5f2a5184a79f4991c74630520a53bde",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/mixed-reasoning-order",
+          "pointer": "/expect/hooks",
+          "sha256": "0eced9c9c1dce772fb22f9d8152790b617b3b394d4faae5d1373fa1b696b258f",
+          "scenario_sha256": "961d39b2605e9d1b1c317a9cfaa00579b5f2a5184a79f4991c74630520a53bde",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/mixed-reasoning-order",
+          "pointer": "/expect/timeline",
+          "sha256": "97e6133c7bcd5be7b716df359387fea3efed91e2749186671974f8db5c239082",
+          "scenario_sha256": "961d39b2605e9d1b1c317a9cfaa00579b5f2a5184a79f4991c74630520a53bde",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/mixed-round-hook",
+          "pointer": "/expect/models",
+          "sha256": "8447573b22df3c7bcaa3a01d1c1af4379203dfd2c8761135b5be445b957d33a8",
+          "scenario_sha256": "0e30ee936e5635a0815e33d6ea1028a60bb3154665dd168257bdf7a062068d9f",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/mixed-round-hook",
+          "pointer": "/expect/hooks",
+          "sha256": "e6943ccbeb6aad9724930486fee78ed8c2764fa50a793a6aff46b5193868b354",
+          "scenario_sha256": "0e30ee936e5635a0815e33d6ea1028a60bb3154665dd168257bdf7a062068d9f",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/mixed-round-hook",
+          "pointer": "/expect/timeline",
+          "sha256": "97e6133c7bcd5be7b716df359387fea3efed91e2749186671974f8db5c239082",
+          "scenario_sha256": "0e30ee936e5635a0815e33d6ea1028a60bb3154665dd168257bdf7a062068d9f",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/mixed-round-stream",
+          "pointer": "/expect/models",
+          "sha256": "8447573b22df3c7bcaa3a01d1c1af4379203dfd2c8761135b5be445b957d33a8",
+          "scenario_sha256": "f1e67eddf6c55d847420419402d43cfded75858882b70c913580c3253e7a44bc",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/mixed-round-stream",
+          "pointer": "/expect/hooks",
+          "sha256": "0eced9c9c1dce772fb22f9d8152790b617b3b394d4faae5d1373fa1b696b258f",
+          "scenario_sha256": "f1e67eddf6c55d847420419402d43cfded75858882b70c913580c3253e7a44bc",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/mixed-round-stream",
+          "pointer": "/expect/timeline",
+          "sha256": "97e6133c7bcd5be7b716df359387fea3efed91e2749186671974f8db5c239082",
+          "scenario_sha256": "f1e67eddf6c55d847420419402d43cfded75858882b70c913580c3253e7a44bc",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/mixed-round-whole",
+          "pointer": "/expect/models",
+          "sha256": "8447573b22df3c7bcaa3a01d1c1af4379203dfd2c8761135b5be445b957d33a8",
+          "scenario_sha256": "54e8c3842bdba60f793b19adb0881067484771d0638ce2a036128ed10d0d2c11",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/mixed-round-whole",
+          "pointer": "/expect/hooks",
+          "sha256": "0eced9c9c1dce772fb22f9d8152790b617b3b394d4faae5d1373fa1b696b258f",
+          "scenario_sha256": "54e8c3842bdba60f793b19adb0881067484771d0638ce2a036128ed10d0d2c11",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/mixed-round-whole",
+          "pointer": "/expect/timeline",
+          "sha256": "97e6133c7bcd5be7b716df359387fea3efed91e2749186671974f8db5c239082",
+          "scenario_sha256": "54e8c3842bdba60f793b19adb0881067484771d0638ce2a036128ed10d0d2c11",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/null-is-pending-stream",
+          "pointer": "/expect/models",
+          "sha256": "512493814b9f48be78e5a4d57205d15a8617097b5e1f0e8ec0b9ffb8178c219b",
+          "scenario_sha256": "33f56872a03eddaa6310e7f9df9765b7de2b43d97c602f52edcb1fe793c60d31",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/null-is-pending-stream",
+          "pointer": "/expect/hooks",
+          "sha256": "026c9a3bea98a479ac218d189edb4b439c19ddf4659ff245abc8163ab8daf06a",
+          "scenario_sha256": "33f56872a03eddaa6310e7f9df9765b7de2b43d97c602f52edcb1fe793c60d31",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/null-is-pending-stream",
+          "pointer": "/expect/timeline",
+          "sha256": "867cf49a8a3003b3061e2d003f20dd6525f9ff0abb09be9d7a88d5d281766c25",
+          "scenario_sha256": "33f56872a03eddaa6310e7f9df9765b7de2b43d97c602f52edcb1fe793c60d31",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/null-is-pending-whole",
+          "pointer": "/expect/models",
+          "sha256": "512493814b9f48be78e5a4d57205d15a8617097b5e1f0e8ec0b9ffb8178c219b",
+          "scenario_sha256": "c4027a34405ca3a449adfad7ae3f695335f2b1d10b5a8c31df05eb8f71ec2ddd",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/null-is-pending-whole",
+          "pointer": "/expect/hooks",
+          "sha256": "026c9a3bea98a479ac218d189edb4b439c19ddf4659ff245abc8163ab8daf06a",
+          "scenario_sha256": "c4027a34405ca3a449adfad7ae3f695335f2b1d10b5a8c31df05eb8f71ec2ddd",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/null-is-pending-whole",
+          "pointer": "/expect/timeline",
+          "sha256": "867cf49a8a3003b3061e2d003f20dd6525f9ff0abb09be9d7a88d5d281766c25",
+          "scenario_sha256": "c4027a34405ca3a449adfad7ae3f695335f2b1d10b5a8c31df05eb8f71ec2ddd",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/reused-id-stream",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "3fc0ab925fb1cbfa9553de9220a562b194f024d06018988ac1a09900c820247e",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/reused-id-stream",
+          "pointer": "/expect/hooks",
+          "sha256": "5bf10c98655adecab6763cb55dbb2332a07b949a4e77355c8ab891a4a6bcafc3",
+          "scenario_sha256": "3fc0ab925fb1cbfa9553de9220a562b194f024d06018988ac1a09900c820247e",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/reused-id-stream",
+          "pointer": "/expect/timeline",
+          "sha256": "621c859f438d7b48a00844c06834a87199b9bceb17d0d6ad62256088f6ecd5a1",
+          "scenario_sha256": "3fc0ab925fb1cbfa9553de9220a562b194f024d06018988ac1a09900c820247e",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/reused-id-whole",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "f94499eb9f6a4eb6e05b3bd461457a25f20b1958a69ccd072b6f8f153ceb220d",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/reused-id-whole",
+          "pointer": "/expect/hooks",
+          "sha256": "5bf10c98655adecab6763cb55dbb2332a07b949a4e77355c8ab891a4a6bcafc3",
+          "scenario_sha256": "f94499eb9f6a4eb6e05b3bd461457a25f20b1958a69ccd072b6f8f153ceb220d",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/reused-id-whole",
+          "pointer": "/expect/timeline",
+          "sha256": "621c859f438d7b48a00844c06834a87199b9bceb17d0d6ad62256088f6ecd5a1",
+          "scenario_sha256": "f94499eb9f6a4eb6e05b3bd461457a25f20b1958a69ccd072b6f8f153ceb220d",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/stop-at-end-failure-stream",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "56892882909721606897523c93e8fd555693122c088186a1c856da2427edb58a",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/stop-at-end-failure-stream",
+          "pointer": "/expect/hooks",
+          "sha256": "f4d3a4ca91fc0f21b0b68c482e9e79d12cb3fd4e78ea97008f9dd0d37bfa7d9f",
+          "scenario_sha256": "56892882909721606897523c93e8fd555693122c088186a1c856da2427edb58a",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/stop-at-end-failure-stream",
+          "pointer": "/expect/tool_events",
+          "sha256": "7410943f7ee2b6edf6406bb92a1595b8bc09d5c5970513807b856550db854711",
+          "scenario_sha256": "56892882909721606897523c93e8fd555693122c088186a1c856da2427edb58a",
+          "proves": "Checks only the fields and matchers written under tool_events in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/stop-at-end-failure-whole",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "d4528b67d1a063552b043f00c92db2cbe6cb3f35bb64aa2f419949a3130193c6",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/stop-at-end-failure-whole",
+          "pointer": "/expect/hooks",
+          "sha256": "f4d3a4ca91fc0f21b0b68c482e9e79d12cb3fd4e78ea97008f9dd0d37bfa7d9f",
+          "scenario_sha256": "d4528b67d1a063552b043f00c92db2cbe6cb3f35bb64aa2f419949a3130193c6",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/stop-at-end-failure-whole",
+          "pointer": "/expect/tool_events",
+          "sha256": "7410943f7ee2b6edf6406bb92a1595b8bc09d5c5970513807b856550db854711",
+          "scenario_sha256": "d4528b67d1a063552b043f00c92db2cbe6cb3f35bb64aa2f419949a3130193c6",
+          "proves": "Checks only the fields and matchers written under tool_events in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/stop-at-end-success-stream",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "fa9fb4ab4aac2aebe74f206fadec7d655f35f5615f2b22d28781689d855b537d",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/stop-at-end-success-stream",
+          "pointer": "/expect/hooks",
+          "sha256": "3db7df6dc9b4f338eac57ce1c14dadceea99ca7336ddd89902f6ec0761aa6454",
+          "scenario_sha256": "fa9fb4ab4aac2aebe74f206fadec7d655f35f5615f2b22d28781689d855b537d",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/stop-at-end-success-stream",
+          "pointer": "/expect/tool_events",
+          "sha256": "db7c84fa4de60bc0a121664f1ea78aaa65a568f5b95af84116483cf2c6aab8a7",
+          "scenario_sha256": "fa9fb4ab4aac2aebe74f206fadec7d655f35f5615f2b22d28781689d855b537d",
+          "proves": "Checks only the fields and matchers written under tool_events in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/stop-at-end-success-whole",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "9f59d063b35fea406e582a7f4c62c2c67be8b71e3f17164763e41e2598db175e",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/stop-at-end-success-whole",
+          "pointer": "/expect/hooks",
+          "sha256": "3db7df6dc9b4f338eac57ce1c14dadceea99ca7336ddd89902f6ec0761aa6454",
+          "scenario_sha256": "9f59d063b35fea406e582a7f4c62c2c67be8b71e3f17164763e41e2598db175e",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/stop-at-end-success-whole",
+          "pointer": "/expect/tool_events",
+          "sha256": "db7c84fa4de60bc0a121664f1ea78aaa65a568f5b95af84116483cf2c6aab8a7",
+          "scenario_sha256": "9f59d063b35fea406e582a7f4c62c2c67be8b71e3f17164763e41e2598db175e",
+          "proves": "Checks only the fields and matchers written under tool_events in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/stop-at-start-failure-stream",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "c87a70f9f3161e85bce1073b3f199e39572ee3684ac9401c2bdd28e718f418ee",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/stop-at-start-failure-stream",
+          "pointer": "/expect/hooks",
+          "sha256": "f4d3a4ca91fc0f21b0b68c482e9e79d12cb3fd4e78ea97008f9dd0d37bfa7d9f",
+          "scenario_sha256": "c87a70f9f3161e85bce1073b3f199e39572ee3684ac9401c2bdd28e718f418ee",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/stop-at-start-failure-whole",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "8d822f98d503c5c911b42c5a1a86547ec10bd7b7fe0b5f3f4d37a751d1aaf402",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/stop-at-start-failure-whole",
+          "pointer": "/expect/hooks",
+          "sha256": "f4d3a4ca91fc0f21b0b68c482e9e79d12cb3fd4e78ea97008f9dd0d37bfa7d9f",
+          "scenario_sha256": "8d822f98d503c5c911b42c5a1a86547ec10bd7b7fe0b5f3f4d37a751d1aaf402",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/stop-at-start-success-stream",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "88f282210dc0fd51c6c567e8b13592dca63f3c18512b59c5fef971308ce49e1b",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/stop-at-start-success-stream",
+          "pointer": "/expect/hooks",
+          "sha256": "3db7df6dc9b4f338eac57ce1c14dadceea99ca7336ddd89902f6ec0761aa6454",
+          "scenario_sha256": "88f282210dc0fd51c6c567e8b13592dca63f3c18512b59c5fef971308ce49e1b",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/stop-at-start-success-whole",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "db7cffa19251823ad8f02c6508ccc5ba07c8760ec2ec3090daaeddb586362c5b",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/stop-at-start-success-whole",
+          "pointer": "/expect/hooks",
+          "sha256": "3db7df6dc9b4f338eac57ce1c14dadceea99ca7336ddd89902f6ec0761aa6454",
+          "scenario_sha256": "db7cffa19251823ad8f02c6508ccc5ba07c8760ec2ec3090daaeddb586362c5b",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/success-stream",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "99b1e8b6b7e39c9826686c62085c830de26dec4ad2b3a461ee2daf05831a5607",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/success-stream",
+          "pointer": "/expect/hooks",
+          "sha256": "3db7df6dc9b4f338eac57ce1c14dadceea99ca7336ddd89902f6ec0761aa6454",
+          "scenario_sha256": "99b1e8b6b7e39c9826686c62085c830de26dec4ad2b3a461ee2daf05831a5607",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/success-stream",
+          "pointer": "/expect/timeline",
+          "sha256": "bcae14fe919da174b3fe0044927c566b5b60fa4479e26ddb05f2a87aa8b14256",
+          "scenario_sha256": "99b1e8b6b7e39c9826686c62085c830de26dec4ad2b3a461ee2daf05831a5607",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/success-whole",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "89eaf63ab4ea1cb28b0aa42079a7bec7740f9bc0c6fadc02879ebd50e16b1599",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/success-whole",
+          "pointer": "/expect/hooks",
+          "sha256": "3db7df6dc9b4f338eac57ce1c14dadceea99ca7336ddd89902f6ec0761aa6454",
+          "scenario_sha256": "89eaf63ab4ea1cb28b0aa42079a7bec7740f9bc0c6fadc02879ebd50e16b1599",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/success-whole",
+          "pointer": "/expect/timeline",
+          "sha256": "bcae14fe919da174b3fe0044927c566b5b60fa4479e26ddb05f2a87aa8b14256",
+          "scenario_sha256": "89eaf63ab4ea1cb28b0aa42079a7bec7740f9bc0c6fadc02879ebd50e16b1599",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/without-handler-stream",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "4bae17a273ff97041e38c7e6e55243248954c9a73c9f87baa0db53cbd4bf826b",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/without-handler-stream",
+          "pointer": "/expect/hooks",
+          "sha256": "3db7df6dc9b4f338eac57ce1c14dadceea99ca7336ddd89902f6ec0761aa6454",
+          "scenario_sha256": "4bae17a273ff97041e38c7e6e55243248954c9a73c9f87baa0db53cbd4bf826b",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/without-handler-stream",
+          "pointer": "/expect/timeline",
+          "sha256": "bcae14fe919da174b3fe0044927c566b5b60fa4479e26ddb05f2a87aa8b14256",
+          "scenario_sha256": "4bae17a273ff97041e38c7e6e55243248954c9a73c9f87baa0db53cbd4bf826b",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/without-handler-whole",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "26edc9fca440e2080fcd302ebfbf5b0b9e600eb05c93f92c17124535e724c82b",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/without-handler-whole",
+          "pointer": "/expect/hooks",
+          "sha256": "3db7df6dc9b4f338eac57ce1c14dadceea99ca7336ddd89902f6ec0761aa6454",
+          "scenario_sha256": "26edc9fca440e2080fcd302ebfbf5b0b9e600eb05c93f92c17124535e724c82b",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/without-handler-whole",
+          "pointer": "/expect/timeline",
+          "sha256": "bcae14fe919da174b3fe0044927c566b5b60fa4479e26ddb05f2a87aa8b14256",
+          "scenario_sha256": "26edc9fca440e2080fcd302ebfbf5b0b9e600eb05c93f92c17124535e724c82b",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        }
+      ],
+      "missing": [
+        "AIChannel.external_tool_handler integration and its source-test variants remain open; the three excluded source functions receive no credit.",
+        "Media/realtime execution, remote executors and vendor gateways remain outside this text slice.",
+        "Cancellation before report context loads is reviewed by code reading only; the gated runtime test cuts during SYNC after the context has loaded.",
+        "The broad RFC source unit remains partial; local-handler result override rules and unrelated tool paths are not completed by provider-owned reports.",
+        "Native Rust logs are retained separately; no aggregate Rust/backend/runtime execution receipt is synthesized."
+      ]
+    },
+    {
+      "id": "phase4-provider-served-original-reports",
+      "requirement": "RK-9.3-014",
+      "scope": "Text provider-owned outcomes remain reports: blocking or clearing SYNC hooks cannot change the original outcome observed after them.",
+      "tests": [
+        {
+          "nodeid": "tests/test_ai_streaming_tool_events.py::test_a_provider_run_call_is_reported_as_the_provider_ran_it",
+          "sha256": "a4732e0257e9677291a4d0d10eea53adc05545c5eef2f10bc2bc0e1c6fd4576d",
+          "proves": "A provider-owned outcome survives a blocking or clearing SYNC report hook; the shared replacement uses MODIFY rather than claiming the separate ALLOW metadata syntax."
+        },
+        {
+          "nodeid": "tests/test_backend_provider_served_reports.py::test_a_call_the_provider_served_is_reported_once",
+          "sha256": "17c2abe00687818ca96f0795b340a6c8f200bf5dba41bd5ed5c957a78ad2fee0",
+          "proves": "Text modes preserve the original success or failure marker and one report; realtime backend variants are outside this slice."
+        }
+      ],
+      "clause_sha256": "46c8987a6f44c6c30fca691daf0e6c4762220e5013732f1593a3447fc33904b0",
+      "coverage": "partial",
+      "review": "Independent source and full product reviews accepted 44 shared scenarios and separate native conversion, marker and cancellation boundaries. The review retains the no-handler/text limitations and does not assign unobserved fields or execution backends.",
+      "assertions": [
+        {
+          "scenario": "provider-served/report-block-failure-stream",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "011a343101371f476a2fb4d2ea2355a8f29ca286050f5f8aaad67909cea2e852",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/report-block-failure-stream",
+          "pointer": "/expect/hooks",
+          "sha256": "e869088be5623b537b2f43e2d977385f2a2d05a8475db703b8fea8120bae7ef6",
+          "scenario_sha256": "011a343101371f476a2fb4d2ea2355a8f29ca286050f5f8aaad67909cea2e852",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/report-block-failure-stream",
+          "pointer": "/expect/timeline",
+          "sha256": "e461b3c80caa4177bf22e607d490a5205a00b8cc2ac5c0fd35b8f81104d5a39c",
+          "scenario_sha256": "011a343101371f476a2fb4d2ea2355a8f29ca286050f5f8aaad67909cea2e852",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/report-block-failure-whole",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "3eef1ca3b11b07517c5e8a174dee319a0dcd60afbb69e14d910d8a67c20f9de8",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/report-block-failure-whole",
+          "pointer": "/expect/hooks",
+          "sha256": "e869088be5623b537b2f43e2d977385f2a2d05a8475db703b8fea8120bae7ef6",
+          "scenario_sha256": "3eef1ca3b11b07517c5e8a174dee319a0dcd60afbb69e14d910d8a67c20f9de8",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/report-block-failure-whole",
+          "pointer": "/expect/timeline",
+          "sha256": "e461b3c80caa4177bf22e607d490a5205a00b8cc2ac5c0fd35b8f81104d5a39c",
+          "scenario_sha256": "3eef1ca3b11b07517c5e8a174dee319a0dcd60afbb69e14d910d8a67c20f9de8",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/report-block-success-stream",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "0ef10e58a30545b86b51e1c97546adf15cd67f9d3b9a79d571c0b66202a33a63",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/report-block-success-stream",
+          "pointer": "/expect/hooks",
+          "sha256": "eb602cfe61d2c9a35727d1029b4ad9aaacfde045f92a5b0d07f05adf1b4bd151",
+          "scenario_sha256": "0ef10e58a30545b86b51e1c97546adf15cd67f9d3b9a79d571c0b66202a33a63",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/report-block-success-stream",
+          "pointer": "/expect/timeline",
+          "sha256": "bcae14fe919da174b3fe0044927c566b5b60fa4479e26ddb05f2a87aa8b14256",
+          "scenario_sha256": "0ef10e58a30545b86b51e1c97546adf15cd67f9d3b9a79d571c0b66202a33a63",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/report-block-success-whole",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "33d953540be05819a69c0edebfff1e5798b063970b799955597b92be19e2a719",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/report-block-success-whole",
+          "pointer": "/expect/hooks",
+          "sha256": "eb602cfe61d2c9a35727d1029b4ad9aaacfde045f92a5b0d07f05adf1b4bd151",
+          "scenario_sha256": "33d953540be05819a69c0edebfff1e5798b063970b799955597b92be19e2a719",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/report-block-success-whole",
+          "pointer": "/expect/timeline",
+          "sha256": "bcae14fe919da174b3fe0044927c566b5b60fa4479e26ddb05f2a87aa8b14256",
+          "scenario_sha256": "33d953540be05819a69c0edebfff1e5798b063970b799955597b92be19e2a719",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/report-clear-failure-stream",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "87efd709991f4878b1380139b8ba0f183a05c37c70b1c09956dc7aa91b53c271",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/report-clear-failure-stream",
+          "pointer": "/expect/hooks",
+          "sha256": "e869088be5623b537b2f43e2d977385f2a2d05a8475db703b8fea8120bae7ef6",
+          "scenario_sha256": "87efd709991f4878b1380139b8ba0f183a05c37c70b1c09956dc7aa91b53c271",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/report-clear-failure-stream",
+          "pointer": "/expect/timeline",
+          "sha256": "e461b3c80caa4177bf22e607d490a5205a00b8cc2ac5c0fd35b8f81104d5a39c",
+          "scenario_sha256": "87efd709991f4878b1380139b8ba0f183a05c37c70b1c09956dc7aa91b53c271",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/report-clear-failure-whole",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "052b17136fa01ca25937d05c4ac283f7a4dcd6b9216ef6f73b823e29f3037c59",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/report-clear-failure-whole",
+          "pointer": "/expect/hooks",
+          "sha256": "e869088be5623b537b2f43e2d977385f2a2d05a8475db703b8fea8120bae7ef6",
+          "scenario_sha256": "052b17136fa01ca25937d05c4ac283f7a4dcd6b9216ef6f73b823e29f3037c59",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/report-clear-failure-whole",
+          "pointer": "/expect/timeline",
+          "sha256": "e461b3c80caa4177bf22e607d490a5205a00b8cc2ac5c0fd35b8f81104d5a39c",
+          "scenario_sha256": "052b17136fa01ca25937d05c4ac283f7a4dcd6b9216ef6f73b823e29f3037c59",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/report-clear-success-stream",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "6dbbad83a1b5390817e73c476be296ebce37652e25dc55fbefc45fc0e2914f91",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/report-clear-success-stream",
+          "pointer": "/expect/hooks",
+          "sha256": "eb602cfe61d2c9a35727d1029b4ad9aaacfde045f92a5b0d07f05adf1b4bd151",
+          "scenario_sha256": "6dbbad83a1b5390817e73c476be296ebce37652e25dc55fbefc45fc0e2914f91",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/report-clear-success-stream",
+          "pointer": "/expect/timeline",
+          "sha256": "bcae14fe919da174b3fe0044927c566b5b60fa4479e26ddb05f2a87aa8b14256",
+          "scenario_sha256": "6dbbad83a1b5390817e73c476be296ebce37652e25dc55fbefc45fc0e2914f91",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/report-clear-success-whole",
+          "pointer": "/expect/models",
+          "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
+          "scenario_sha256": "53c8f5f41f3b5ef638860c3359e5fd5e37c29cb109e0091f15fd9a412dab82a7",
+          "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/report-clear-success-whole",
+          "pointer": "/expect/hooks",
+          "sha256": "eb602cfe61d2c9a35727d1029b4ad9aaacfde045f92a5b0d07f05adf1b4bd151",
+          "scenario_sha256": "53c8f5f41f3b5ef638860c3359e5fd5e37c29cb109e0091f15fd9a412dab82a7",
+          "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        },
+        {
+          "scenario": "provider-served/report-clear-success-whole",
+          "pointer": "/expect/timeline",
+          "sha256": "bcae14fe919da174b3fe0044927c566b5b60fa4479e26ddb05f2a87aa8b14256",
+          "scenario_sha256": "53c8f5f41f3b5ef638860c3359e5fd5e37c29cb109e0091f15fd9a412dab82a7",
+          "proves": "Checks only the fields and matchers written under timeline in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
+        }
+      ],
+      "missing": [
+        "AIChannel.external_tool_handler integration and its source-test variants remain open; the three excluded source functions receive no credit.",
+        "Media/realtime execution, remote executors and vendor gateways remain outside this text slice.",
+        "Cancellation before report context loads is reviewed by code reading only; the gated runtime test cuts during SYNC after the context has loaded.",
+        "The broad RFC source unit remains partial; local-handler result override rules and unrelated tool paths are not completed by provider-owned reports.",
+        "Native Rust logs are retained separately; no aggregate Rust/backend/runtime execution receipt is synthesized."
       ]
     }
   ],
@@ -683213,6 +684194,259 @@
         {
           "scenario": "tools/an-on-tool-call-hook-s-structured-copy-reaches-the-end-row",
           "sha256": "827e738195bf9c97b62b9ad3278a5dd07a46e757fa10072dec236ef29d0df719",
+          "outcome": "passed"
+        }
+      ]
+    },
+    {
+      "id": "python-provider-served-470903e-memory",
+      "implementation": "python",
+      "implementation_commit": "470903e10cf5fff7c1213fe3ec65aecd119bbdd1",
+      "rfc_commit": "371eceed2a0e9374f195f370a04c2b439323ef54",
+      "corpus_commit": "c20267e7ebe8007ba41853c5537d54d1334713bc",
+      "rfc_sha256": "2ab40e4ae483d06f06840629bdedfcec779427524ec40b7dec65a6733e9e9b42",
+      "backend": "memory",
+      "runtime": "asyncio",
+      "command": [
+        "env",
+        "-u",
+        "POSTGRES_DSN",
+        "ROOMKIT_TEST_TURN_BACKEND=memory",
+        "uv",
+        "run",
+        "pytest",
+        "tests/conformance/test_conformance.py",
+        "-k",
+        "provider-served",
+        "-n",
+        "0",
+        "-q",
+        "--junitxml=python-provider-served-470903e.xml"
+      ],
+      "artifact": {
+        "path": "conformance/executions/python-provider-served-470903e.xml",
+        "format": "pytest_junit",
+        "sha256": "e739acc5cb42d7b76fec379fa17e6f459e2fc2954665e2128fd04424dcc01c92"
+      },
+      "results": [
+        {
+          "scenario": "provider-served/absent-is-pending-stream",
+          "sha256": "9753865ab8c1173490c4e02d98fb2eb9d98311ebd8ee72ea7b665f5911bae6c1",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/absent-is-pending-whole",
+          "sha256": "9fd5a79f5872266e134b2e0651d9f5940bcb63c0e3b900a400f530c2d628742f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/bounded-mixed-round-stream",
+          "sha256": "56161c77590ed60a617c592c9e0dd79d1448746b5e51c9d509e1f15a1e1b1f98",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/bounded-mixed-round-whole",
+          "sha256": "be0f37a364aca614ee0292c0f1d91ed9a49aab3534e2d21f53d3bcbe8afaa406",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/cut-known-failure-stream",
+          "sha256": "c8db1fd8a959ca225e908798deeadc3797c80241712ef09cece42529157c47aa",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/cut-known-failure-whole",
+          "sha256": "b40f819fad8ca608587b932f4cc8ed2d3ce2d50b1142dd1501276e422c5b3192",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/cut-known-success-stream",
+          "sha256": "1e76174be9e7c761affe7a92a073ea5afd5fce71da022c3795926971b84b1187",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/cut-known-success-whole",
+          "sha256": "8c40e1649e7e653763aa20372bf510c504bf95a556a881f72e19bee116693043",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/empty-stream",
+          "sha256": "cfd533d28cb81f785b93d5178cb6eecf035805364652d029395ec0e0d8531c3b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/empty-whole",
+          "sha256": "b24f707f8eea0bc401ab899a5c4c9d4cea2b64ad4310f152d0190849a60663b0",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/failure-stream",
+          "sha256": "f25d1cf3e6be3c249cda88d71d1a2512df640e36f285492917294809e825e47f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/failure-whole",
+          "sha256": "20a0be49e61824a0ce5be6c828ad1e7e66f91b4d8a6f5fcf8a1b5210ba3de0f1",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/forged-arguments-refused-by-before-stream",
+          "sha256": "5ba873cedcada193649d2df1a84a326c6c129f7d1d18856f6287998e7d1b83f4",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/forged-arguments-refused-by-before-whole",
+          "sha256": "2b2e7582e17c2eee9b75ac440151eee757dd63c3ff13073e2dcada5a3fc92971",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/forged-arguments-refused-by-policy-stream",
+          "sha256": "33b96d3d9d7ebc5cdfa96fdee5d97fc54020446eb6abae90e2448fab9b0ba282",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/forged-arguments-refused-by-policy-whole",
+          "sha256": "798c7b4b302751e32dbdd4c9931c2aa1e420a4961f820ec2d2d547947c5a8358",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/mixed-reasoning-order",
+          "sha256": "961d39b2605e9d1b1c317a9cfaa00579b5f2a5184a79f4991c74630520a53bde",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/mixed-round-hook",
+          "sha256": "0e30ee936e5635a0815e33d6ea1028a60bb3154665dd168257bdf7a062068d9f",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/mixed-round-stream",
+          "sha256": "f1e67eddf6c55d847420419402d43cfded75858882b70c913580c3253e7a44bc",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/mixed-round-whole",
+          "sha256": "54e8c3842bdba60f793b19adb0881067484771d0638ce2a036128ed10d0d2c11",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/null-is-pending-stream",
+          "sha256": "33f56872a03eddaa6310e7f9df9765b7de2b43d97c602f52edcb1fe793c60d31",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/null-is-pending-whole",
+          "sha256": "c4027a34405ca3a449adfad7ae3f695335f2b1d10b5a8c31df05eb8f71ec2ddd",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/report-block-failure-stream",
+          "sha256": "011a343101371f476a2fb4d2ea2355a8f29ca286050f5f8aaad67909cea2e852",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/report-block-failure-whole",
+          "sha256": "3eef1ca3b11b07517c5e8a174dee319a0dcd60afbb69e14d910d8a67c20f9de8",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/report-block-success-stream",
+          "sha256": "0ef10e58a30545b86b51e1c97546adf15cd67f9d3b9a79d571c0b66202a33a63",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/report-block-success-whole",
+          "sha256": "33d953540be05819a69c0edebfff1e5798b063970b799955597b92be19e2a719",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/report-clear-failure-stream",
+          "sha256": "87efd709991f4878b1380139b8ba0f183a05c37c70b1c09956dc7aa91b53c271",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/report-clear-failure-whole",
+          "sha256": "052b17136fa01ca25937d05c4ac283f7a4dcd6b9216ef6f73b823e29f3037c59",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/report-clear-success-stream",
+          "sha256": "6dbbad83a1b5390817e73c476be296ebce37652e25dc55fbefc45fc0e2914f91",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/report-clear-success-whole",
+          "sha256": "53c8f5f41f3b5ef638860c3359e5fd5e37c29cb109e0091f15fd9a412dab82a7",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/reused-id-stream",
+          "sha256": "3fc0ab925fb1cbfa9553de9220a562b194f024d06018988ac1a09900c820247e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/reused-id-whole",
+          "sha256": "f94499eb9f6a4eb6e05b3bd461457a25f20b1958a69ccd072b6f8f153ceb220d",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/stop-at-end-failure-stream",
+          "sha256": "56892882909721606897523c93e8fd555693122c088186a1c856da2427edb58a",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/stop-at-end-failure-whole",
+          "sha256": "d4528b67d1a063552b043f00c92db2cbe6cb3f35bb64aa2f419949a3130193c6",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/stop-at-end-success-stream",
+          "sha256": "fa9fb4ab4aac2aebe74f206fadec7d655f35f5615f2b22d28781689d855b537d",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/stop-at-end-success-whole",
+          "sha256": "9f59d063b35fea406e582a7f4c62c2c67be8b71e3f17164763e41e2598db175e",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/stop-at-start-failure-stream",
+          "sha256": "c87a70f9f3161e85bce1073b3f199e39572ee3684ac9401c2bdd28e718f418ee",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/stop-at-start-failure-whole",
+          "sha256": "8d822f98d503c5c911b42c5a1a86547ec10bd7b7fe0b5f3f4d37a751d1aaf402",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/stop-at-start-success-stream",
+          "sha256": "88f282210dc0fd51c6c567e8b13592dca63f3c18512b59c5fef971308ce49e1b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/stop-at-start-success-whole",
+          "sha256": "db7cffa19251823ad8f02c6508ccc5ba07c8760ec2ec3090daaeddb586362c5b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/success-stream",
+          "sha256": "99b1e8b6b7e39c9826686c62085c830de26dec4ad2b3a461ee2daf05831a5607",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/success-whole",
+          "sha256": "89eaf63ab4ea1cb28b0aa42079a7bec7740f9bc0c6fadc02879ebd50e16b1599",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/without-handler-stream",
+          "sha256": "4bae17a273ff97041e38c7e6e55243248954c9a73c9f87baa0db53cbd4bf826b",
+          "outcome": "passed"
+        },
+        {
+          "scenario": "provider-served/without-handler-whole",
+          "sha256": "26edc9fca440e2080fcd302ebfbf5b0b9e600eb05c93f92c17124535e724c82b",
           "outcome": "passed"
         }
       ]
