@@ -107,7 +107,7 @@
           "type": "channel_attached"
         },
         {
-          "type": "channel_access_changed"
+          "type": "channel_updated"
         }
       ]
     }

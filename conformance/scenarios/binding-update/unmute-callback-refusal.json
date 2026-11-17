@@ -6,7 +6,7 @@
     "§7.2",
     "§7.5"
   ],
-  "notes": "Python: tests/test_binding_updates.py::test_a_callback_refusal_keeps_storage_and_stops_records_and_hooks. The first call changes the binding; the second finds it unchanged. Both notify and propagate the failure, neither records nor fires a hook.",
+  "notes": "Python: tests/test_binding_updates.py::test_a_callback_refusal_keeps_storage_and_stops_records_and_hooks. The first call changes the binding; the second finds it unchanged. Both notify and propagate the failure, neither records nor fires a hook. The initial mute also refuses after storing, preparing the unmute through public calls.",
   "setup": {
     "channels": [
       {
@@ -23,7 +23,7 @@
         "bindings": [
           {
             "channel_id": "sms",
-            "muted": true,
+            "muted": false,
             "output_muted": false,
             "access": "read_write",
             "visibility": "all",
@@ -46,6 +46,14 @@
     ]
   },
   "steps": [
+    {
+      "call": "mute",
+      "room_id": "room",
+      "channel_id": "sms",
+      "expect": {
+        "error": "channel_failed"
+      }
+    },
     {
       "call": "unmute",
       "room_id": "room",
@@ -85,6 +93,18 @@
             "binding": {
               "room_id": "room",
               "channel_id": "sms",
+              "muted": true,
+              "output_muted": false,
+              "access": "read_write",
+              "visibility": "all",
+              "metadata": {}
+            }
+          },
+          {
+            "call": "update_binding",
+            "binding": {
+              "room_id": "room",
+              "channel_id": "sms",
               "muted": false,
               "output_muted": false,
               "access": "read_write",
@@ -108,6 +128,7 @@
       }
     },
     "hook_order": [
+      "sms.update_binding",
       "sms.update_binding",
       "sms.update_binding"
     ],

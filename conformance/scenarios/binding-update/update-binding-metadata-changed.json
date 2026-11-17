@@ -98,7 +98,7 @@
           "type": "channel_attached"
         },
         {
-          "type": "channel_metadata_updated"
+          "type": "channel_updated"
         }
       ]
     }

@@ -92,7 +92,7 @@
           "type": "channel_attached"
         },
         {
-          "type": "channel_visibility_changed"
+          "type": "channel_updated"
         }
       ]
     }
