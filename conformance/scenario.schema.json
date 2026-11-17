@@ -5563,6 +5563,24 @@
         "metadata": {
           "description": "Provider-owned data of the call (a thought signature), which goes back with it when the round is replayed (\u00a76.4).",
           "type": "object"
+        },
+        "served": {
+          "description": "The provider already executed this call (section 9.3); absent/null means a pending call, while an empty object is a present successful result. This is provider data, never read from model arguments.",
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "result": {
+              "type": "string",
+              "default": ""
+            },
+            "is_error": {
+              "type": "boolean",
+              "default": false
+            }
+          }
         }
       }
     },

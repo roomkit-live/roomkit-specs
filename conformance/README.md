@@ -445,6 +445,10 @@ scripted.
   reasoning its `thinking`, `thinking_signature` and `thinking_parts` (each
   `{thinking, signature, redacted}`), which reach the loop first (§6.4). A
   call's `metadata`: provider-owned data, replayed with it (§6.4).
+  A call's optional `served` is the provider's already executed result (§9.3):
+  `{result: string, is_error: boolean}`, defaulting to empty text and false.
+  Absent or null means no mark; `{}` is a present mark. Both regular calls
+  and explicit stream calls accept it; unknown members and wrong types are refused.
   `gate` holds the round at that gate, before it writes anything, until a
   step opens it. `model.vision`: whether the model sees images (§6.4, a
   provider's `supports_vision`), false by default. `model.response_schema`
