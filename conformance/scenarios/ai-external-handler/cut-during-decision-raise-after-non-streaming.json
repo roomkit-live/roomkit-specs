@@ -3,8 +3,8 @@
   "id": "ai-external-handler/cut-during-decision-raise-after-non-streaming",
   "title": "Cut during decision preserves the call report (raise_after, non-streaming)",
   "rules": [
-    "\u00a76.4",
-    "\u00a79.3"
+    "§6.4",
+    "§9.3"
   ],
   "notes": "Python: tests/test_external_call_cut.py and tests/test_handler_report_raise.py; the real handler or real SYNC hook holds at a deterministic gate. No sleep or guessed report.",
   "setup": {

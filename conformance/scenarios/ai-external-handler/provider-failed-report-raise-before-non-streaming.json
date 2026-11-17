@@ -3,8 +3,8 @@
   "id": "ai-external-handler/provider-failed-report-raise-before-non-streaming",
   "title": "A provider outcome is observed once when its handler raise_before",
   "rules": [
-    "\u00a76.4",
-    "\u00a79.3"
+    "§6.4",
+    "§9.3"
   ],
   "notes": "Python: tests/test_external_call_routing.py, tests/test_served_call_marker.py, tests/test_handler_report_raise.py and channels/_ai_stream_external_tools.py. A real external handler records callbacks; local results, hook observations, stored rows and model request counts are independent product observations.",
   "setup": {
