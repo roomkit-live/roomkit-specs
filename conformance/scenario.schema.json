@@ -1904,7 +1904,8 @@
             "acp.close",
             "mcp_session",
             "agent.extra_tools",
-            "agent.replace_extra_tool"
+            "agent.replace_extra_tool",
+            "skill_registry_session"
           ]
         },
         "organization_id": {
@@ -4781,6 +4782,36 @@
                   }
                 },
                 "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "skill_registry_session"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "servers",
+              "operations"
+            ],
+            "properties": {
+              "servers": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/skill_registry_server"
+                }
+              },
+              "operations": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/skill_registry_operation"
+                }
               }
             }
           }
@@ -9276,6 +9307,276 @@
           ]
         }
       ]
+    },
+    "skill_registry_operation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "method": {
+              "const": "add_mcp_server"
+            },
+            "registry": {
+              "type": "string"
+            },
+            "server": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "allow_dynamic": {
+              "type": "boolean"
+            },
+            "execution_tools": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "method",
+            "server",
+            "label"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "method": {
+              "const": "load_skill"
+            },
+            "registry": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "method",
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "method": {
+              "const": "get_skill"
+            },
+            "registry": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "method",
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "method": {
+              "const": "read_file"
+            },
+            "registry": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "filename": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "method",
+            "name",
+            "filename"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "method": {
+              "const": "is_served"
+            },
+            "registry": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "method",
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "method": {
+              "const": "origin"
+            },
+            "registry": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "method",
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "method": {
+              "const": "copy"
+            },
+            "registry": {
+              "type": "string"
+            },
+            "target": {
+              "type": "string"
+            },
+            "names": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "marks": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "method",
+            "target"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "method": {
+              "const": "mark_unavailable"
+            },
+            "registry": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "method",
+            "name",
+            "reason"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "method": {
+              "const": "mark_unlisted"
+            },
+            "registry": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "method",
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "method": {
+              "const": "snapshot"
+            },
+            "registry": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "method"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "skill_registry_server": {
+      "type": "object",
+      "properties": {
+        "extensions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
+        "replies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "method": {
+                "type": "string"
+              },
+              "params": {
+                "type": "object"
+              },
+              "result": {},
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "method",
+              "params"
+            ],
+            "additionalProperties": false,
+            "oneOf": [
+              {
+                "required": [
+                  "result"
+                ]
+              },
+              {
+                "required": [
+                  "error"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "replies"
+      ],
+      "additionalProperties": false
     }
   }
 }

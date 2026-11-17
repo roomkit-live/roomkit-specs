@@ -1421,6 +1421,32 @@ was removed. None of these definitions activates a hook for a room.
 selected. A turn keeps the names its request carried, while each firing reads
 the current definitions of those names (RFC §10.6.6).
 
+### Served skill registries
+
+`skill_registry_session` exercises public `SkillRegistry` operations against
+scripted `MCPSkillServer` implementations. It takes a `servers` map and nonempty
+`operations`. Each server declares optional `extensions` (the skills extension
+by default) and ordered `replies`: `{method, params, result|error}`. Parameters
+must match exactly, every reply is consumed once, and unexpected requests or
+unused replies fail independently of any error the registry sanitizes. These
+scenarios cover the registry boundary; MCP transport framing has its own host
+sessions below.
+
+Operations select a `registry` (default `main`). They name `add_mcp_server`
+(`server`, `label`, optional `allow_dynamic` and `execution_tools`), `get_skill`
+or `load_skill` (`name`), `read_file` (`name`, `filename`), `origin` or
+`is_served` (`name`), `copy` (`target`, optional `names` and `marks`),
+`mark_unavailable` (`name`, `reason`), `mark_unlisted` (`name`), or `snapshot`.
+Copies use the SDK's shared catalogue and cache; the fixture keeps no duplicate
+catalogue. Snapshot reads the public metadata, names, marks, manifest and tool
+patterns without loading or following a cached skill.
+
+The result holds an ordered `results` list and `requests` by server. Each
+operation returns `{result: value}` or the public skill error's name and
+message. Loaded skills expose their instructions, metadata, references,
+origin, held URI, bytes read and verified cache (hexadecimal bytes by URI).
+No path on the host filesystem is used to represent served content.
+
 ### MCP host sessions
 
 `mcp_session` runs public `MCPToolProvider` operations against a local HTTP
