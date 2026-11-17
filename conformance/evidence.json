@@ -16847,7 +16847,7 @@
     {
       "id": "delegation-announcement-cancellation-boundary",
       "requirement": "RK-23.3-002",
-      "clause_sha256": "f332899f46c549bf96b6cfa5b7454892444f27e3c79148e0b9021927980d7d13",
+      "clause_sha256": "5c860ee4fbb427cbf2867faca21bfcdfb5f7acc12fe3766646f3e1c0b82601be",
       "scope": "A deterministic caller cut before announcement produces no task-completion hook or worker model call; after announcement the child task and its completion hook end cancelled.",
       "coverage": "partial",
       "review": "Read the existing Python tests before the implementation, then paired Rust code and RFC. Independent review checked the shared scenarios, additive migration and before/after-announcement cancellation boundary. Native PostgreSQL and cross-read runs are retained separately; only supported Python memory/SQLite JUnit runs receive execution receipts. Re-read after the preparation amendment: its announcement boundary is unchanged; terminal child state has its own partial link.",
@@ -16917,7 +16917,7 @@
     },
     {
       "requirement": "RK-23.3-002",
-      "clause_sha256": "f332899f46c549bf96b6cfa5b7454892444f27e3c79148e0b9021927980d7d13",
+      "clause_sha256": "5c860ee4fbb427cbf2867faca21bfcdfb5f7acc12fe3766646f3e1c0b82601be",
       "coverage": "partial",
       "review": "Paired production code, native regression tests, shared assertions and RFC amendment reviewed independently. Review reproduced late creation and shutdown failures before accepting their fixes. Source tests remain static evidence here; their run logs are retained outside formal scenario receipts.",
       "id": "delegation-unannounced-child-state",
@@ -17086,7 +17086,7 @@
     },
     {
       "requirement": "RK-23.3-002",
-      "clause_sha256": "f332899f46c549bf96b6cfa5b7454892444f27e3c79148e0b9021927980d7d13",
+      "clause_sha256": "5c860ee4fbb427cbf2867faca21bfcdfb5f7acc12fe3766646f3e1c0b82601be",
       "coverage": "partial",
       "review": "Paired production code, native regression tests, shared assertions and RFC amendment reviewed independently. Review reproduced late creation and shutdown failures before accepting their fixes. Source tests remain static evidence here; their run logs are retained outside formal scenario receipts.",
       "id": "delegation-preparation-write-boundaries",

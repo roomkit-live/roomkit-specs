@@ -8722,8 +8722,10 @@ TurnRequest
 
 OwnerTool
 ├── tool: AITool                        # its declaration (§6.7)
-└── waits_by_design: bool               # bounded by its own bound, not the
-                                        # channel's default (§21.6)
+├── waits_by_design: bool               # bounded by its own bound, not the
+│                                       # channel's default (§21.6)
+└── ends_turn: bool                     # its served call ends the turn, a
+                                        # delegation's result tool (§23.3)
 ```
 <!-- /rfc -->
 
@@ -9606,7 +9608,8 @@ does not act on is read as null. A hook registered on these two triggers
 through HookRegistration (Section 9.1) runs after them as an observer and
 cannot decide. The pending participant carries the resolver's candidates on
 ON_IDENTITY_AMBIGUOUS, and on ON_IDENTITY_UNKNOWN the hook's, else the
-resolver's.
+resolver's; on either trigger, a hook's `pending()` gives the record it
+creates its `display_name`.
 
 A resolver's REJECTED is its refusal: the identity hooks of
 ON_IDENTITY_UNKNOWN read it as REJECTED, with its message, and may still
@@ -9635,7 +9638,7 @@ their room by it (§10.4 step 1).
 IdentityHookResult
 ├── status: IdentificationStatus            # The outcome (below)
 ├── identity: Identity | null               # For IDENTIFIED: the sender
-├── display_name: string | null             # Set by pending(); not read
+├── display_name: string | null             # For PENDING: the new record's name
 ├── candidates: list<Identity> | null       # For PENDING, on UNKNOWN only
 ├── inject: InjectedEvent | null            # For CHALLENGE_SENT: the challenge
 ├── reason: string | null                   # For REJECTED: the block's reason
@@ -21692,7 +21695,14 @@ a `TurnHost`'s refusing it (Section 10.6.5), the agent hands its work back by ca
 `submit_result` by default (status, summary, data, deliverables, reason). The
 tool is served in the child room alone, by the owner (Section 10.6.5): the
 same agent delegated from another room never sees it, and it answers the call
-`{"status": "received"}`. The result is read from the room's trace as step 6
+`{"status": "received"}`. Served by the owner, the call ends the agent's
+turn `completed` after its round, whose other calls run too: the model is
+asked nothing more, unless that round gives it something to read, a message
+an AFTER_TOOL_ROUND hook adds or a directive steered in (Section 21.3), a
+steered Cancel then ending the turn `cancelled`. A call an ON_TOOL_CALL hook
+blocks is no result, and the turn goes on; a result tool an MCP server
+serves under its prefix is read from the trace as step 6 says, and does not
+end the turn. The result is read from the room's trace as step 6
 says, and the task's output is its payload, normalized, as JSON. A turn that
 ends without the call is re-prompted with the tool's reminder, a system
 message only intelligence reads (step 4), up to `max_result_retries` times;

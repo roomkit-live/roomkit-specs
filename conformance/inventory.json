@@ -447,7 +447,7 @@
     },
     {
       "section": "10.6.3",
-      "sha256": "9189a5aec189f17bc3732418aac0b1067798f9bef3e54c70d7b25d4a7f11194f",
+      "sha256": "728cce396067eca314c035ffb0ea8a06161c33e0684bf903612beb2d2ea33e82",
       "classification": "normative",
       "review": "Source inventory: Messages. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
@@ -501,13 +501,13 @@
     },
     {
       "section": "11.2",
-      "sha256": "e042cfd7fa549f65ef62778e544138f1d4b47988c4fb7f616ce4f74158af480f",
+      "sha256": "793ac2c4d71cb5c8b07b92779daeded9d0586bf55891c51f34f7d46a33d4bb4d",
       "classification": "normative",
       "review": "Source inventory: Resolution Pipeline. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
     {
       "section": "11.3",
-      "sha256": "92d347d4fed471d01ec235f4b947eb971b039119f6e052dd65f286725412c19d",
+      "sha256": "93e72a656fd0ab9868722e41c19aa6c9dcb04bee56ed180daefe5457c1863566",
       "classification": "normative",
       "review": "Source inventory: Identity Hook Result. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
@@ -1407,7 +1407,7 @@
     },
     {
       "section": "23.3",
-      "sha256": "f5953764d8bfb0777b4605bed7647f9a88f9f863786a14f957d5504d9dcefd61",
+      "sha256": "a6fcf25bbe7763220a4c4b9aba500d487441c97538bb0247259ecef2f71968b7",
       "classification": "normative",
       "review": "Source inventory: Delegation Protocol. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed preparation cleanup against paired Python/Rust code, public scenarios and cancellation/store/shutdown tests; existing structured-result and announced-task contracts retained."
     },
