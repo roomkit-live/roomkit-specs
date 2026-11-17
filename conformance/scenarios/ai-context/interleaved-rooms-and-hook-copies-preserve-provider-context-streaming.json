@@ -58,6 +58,19 @@
         }
       },
       {
+        "id": "console-owner",
+        "type": "websocket",
+        "capabilities": {
+          "media_types": [
+            "text"
+          ],
+          "max_length": 53,
+          "custom": {
+            "owner": "second-room"
+          }
+        }
+      },
+      {
         "id": "agent",
         "type": "ai",
         "tool_search": false,
@@ -178,7 +191,7 @@
             "channel_id": "ws"
           },
           {
-            "channel_id": "console"
+            "channel_id": "console-owner"
           },
           {
             "channel_id": "agent",
@@ -370,7 +383,7 @@
                   "direction": "inbound"
                 },
                 {
-                  "channel_id": "console"
+                  "channel_id": "console-owner"
                 },
                 {
                   "channel_id": "agent",
@@ -387,52 +400,18 @@
             "history_start_index": 0
           },
           "target_capabilities": {
-            "supports_threading": true,
-            "supports_reactions": true,
-            "supports_edit": true,
-            "supports_delete": true,
-            "supports_read_receipts": true,
-            "supports_typing": true,
-            "supports_templates": true,
-            "supports_rich_text": true,
-            "supports_buttons": true,
-            "supports_cards": true,
-            "supports_quick_replies": true,
-            "supports_media": true,
-            "supports_audio": true,
-            "supports_video": true,
-            "max_length": null,
-            "max_buttons": null,
-            "max_media_size_bytes": null,
-            "max_audio_duration_seconds": null,
-            "max_video_duration_seconds": null,
-            "media_types": {
-              "$unordered": [
-                "text",
-                "rich",
-                "media"
-              ]
-            },
-            "supported_media_types": [
-              "image/png"
+            "media_types": [
+              "text"
             ],
-            "supported_audio_formats": [
-              "wav"
-            ],
-            "supported_video_formats": [
-              "mp4"
-            ],
+            "max_length": 53,
+            "supports_buttons": false,
             "custom": {
-              "owner": "first"
+              "owner": "second-room"
             }
           },
-          "target_media_types": {
-            "$unordered": [
-              "text",
-              "rich",
-              "media"
-            ]
-          }
+          "target_media_types": [
+            "text"
+          ]
         },
         {
           "system_prompt": "Keep context.",
@@ -450,7 +429,7 @@
                   "direction": "inbound"
                 },
                 {
-                  "channel_id": "console"
+                  "channel_id": "console-owner"
                 },
                 {
                   "channel_id": "agent",
@@ -467,52 +446,18 @@
             "history_start_index": 0
           },
           "target_capabilities": {
-            "supports_threading": true,
-            "supports_reactions": true,
-            "supports_edit": true,
-            "supports_delete": true,
-            "supports_read_receipts": true,
-            "supports_typing": true,
-            "supports_templates": true,
-            "supports_rich_text": true,
-            "supports_buttons": true,
-            "supports_cards": true,
-            "supports_quick_replies": true,
-            "supports_media": true,
-            "supports_audio": true,
-            "supports_video": true,
-            "max_length": null,
-            "max_buttons": null,
-            "max_media_size_bytes": null,
-            "max_audio_duration_seconds": null,
-            "max_video_duration_seconds": null,
-            "media_types": {
-              "$unordered": [
-                "text",
-                "rich",
-                "media"
-              ]
-            },
-            "supported_media_types": [
-              "image/png"
+            "media_types": [
+              "text"
             ],
-            "supported_audio_formats": [
-              "wav"
-            ],
-            "supported_video_formats": [
-              "mp4"
-            ],
+            "max_length": 53,
+            "supports_buttons": false,
             "custom": {
-              "owner": "first"
+              "owner": "second-room"
             }
           },
-          "target_media_types": {
-            "$unordered": [
-              "text",
-              "rich",
-              "media"
-            ]
-          }
+          "target_media_types": [
+            "text"
+          ]
         },
         {
           "system_prompt": "Keep context.",
@@ -720,7 +665,7 @@
                     "direction": "inbound"
                   },
                   {
-                    "channel_id": "console"
+                    "channel_id": "console-owner"
                   },
                   {
                     "channel_id": "agent",
@@ -737,52 +682,18 @@
               "history_start_index": 0
             },
             "target_capabilities": {
-              "supports_threading": true,
-              "supports_reactions": true,
-              "supports_edit": true,
-              "supports_delete": true,
-              "supports_read_receipts": true,
-              "supports_typing": true,
-              "supports_templates": true,
-              "supports_rich_text": true,
-              "supports_buttons": true,
-              "supports_cards": true,
-              "supports_quick_replies": true,
-              "supports_media": true,
-              "supports_audio": true,
-              "supports_video": true,
-              "max_length": null,
-              "max_buttons": null,
-              "max_media_size_bytes": null,
-              "max_audio_duration_seconds": null,
-              "max_video_duration_seconds": null,
-              "media_types": {
-                "$unordered": [
-                  "text",
-                  "rich",
-                  "media"
-                ]
-              },
-              "supported_media_types": [
-                "image/png"
+              "media_types": [
+                "text"
               ],
-              "supported_audio_formats": [
-                "wav"
-              ],
-              "supported_video_formats": [
-                "mp4"
-              ],
+              "max_length": 53,
+              "supports_buttons": false,
               "custom": {
-                "owner": "first"
+                "owner": "second-room"
               }
             },
-            "target_media_types": {
-              "$unordered": [
-                "text",
-                "rich",
-                "media"
-              ]
-            }
+            "target_media_types": [
+              "text"
+            ]
           }
         }
       ]
