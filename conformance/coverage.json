@@ -2,7 +2,7 @@
   "version": 1,
   "rfc_sha256": "90aa446f7eb54aa24d5e7047cfd6131e737173d79ca8a3b37de342be685929fa",
   "corpus_sha256": "e3a0b83b3128b40d8593f8240adfa7c007b8befc993dd181f2669c0484dd9e5c",
-  "python_commit": "a6efb639e6c1afb9e10f71f8f9a121e226db558e",
+  "python_commit": "b50c50a782668fc1681e21bcec52a3d83bc0d8c0",
   "scenario_count": 2588,
   "sections": [
     {
@@ -880,8 +880,8 @@
       "review": "normative",
       "requirements": 44,
       "mapping": {
-        "mapped_partial": 10,
-        "unmapped": 34
+        "mapped_partial": 11,
+        "unmapped": 33
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -18091,8 +18091,22 @@
     {
       "id": "RK-6.4-025",
       "section": "6.4",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "phase4-public-named-blocks",
+          "scope": "The public block-naming helper replaces selected framed blocks with their names, retaining surrounding text and caller-selected tag behavior.",
+          "coverage": "partial",
+          "missing": [
+            "This pure-helper slice adds no shared scenario assertions or backend/runtime execution receipts; native execution is not inferred from source references.",
+            "The native long-input counterparts assert returned text, not the Python timing bound or asymptotic complexity.",
+            "Summary and compaction integration, other context renderers and complete Unicode text-safety parity are not completed by this public export.",
+            "Custom and empty tag sets are explicit caller options; this link does not claim they frame unselected text safely.",
+            "The normative source unit remains partial; approved text-normalization exclusions and media/realtime/remote execution boundaries are unchanged."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-6.4-026",
