@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "2b7515cd03aff0b36ebb5818e3c0cfd303f7a941",
+  "python_commit": "b13b8650296e29c32cc25bae64edef2e8e735081",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -23885,6 +23885,301 @@
         "Legacy SSE transport, constructor transport options and other MCP contracts are outside this slice.",
         "Served-skill discovery, registry and execution are not established by dictionary snapshots.",
         "No Rust, specialized-test, SQL-store or Redis-turn execution receipt is inferred from the targeted Python memory receipt."
+      ]
+    },
+    {
+      "id": "phase4-role-policy-text-turns",
+      "requirement": "RK-21.1-007",
+      "clause_sha256": "e3672a45c7088db38013c06dab0589c486a67028a1d7603f27b7050cfff1586b",
+      "scope": "Role selection and effective policy in local AIChannel and Agent text turns, including declaration, dispatch, readers, search, script prompts and MCP names.",
+      "coverage": "partial",
+      "review": "Full independent review of product, runners, schema, source assertions and complete scenario expectations accepted this text-turn slice. Search and list separately assert positive membership and both role and skill exclusions. Native model and context tests remain separate proofs; the broad unit stays partial.",
+      "assertions": [
+        {
+          "scenario": "role-policy/a-later-turn-reads-the-new-role-non-streaming",
+          "pointer": "/expect",
+          "sha256": "5b59458cf150539b01fc258d625149f916f877408a459abb666924a5096fb487",
+          "scenario_sha256": "9a7fd64b468d7eaf6aa46fe57aed606f01ef2a0050246085125c2cd2eabfd6fa",
+          "proves": "Replacing an observer participant by an owner changes the next turn declarations, handler dispatch and allowed-name reader."
+        },
+        {
+          "scenario": "role-policy/a-later-turn-reads-the-new-role-streaming",
+          "pointer": "/expect",
+          "sha256": "5b59458cf150539b01fc258d625149f916f877408a459abb666924a5096fb487",
+          "scenario_sha256": "bc64741f83816932e6a613e88c69fced350e5fb73991f81f269934f425ee05e2",
+          "proves": "Replacing an observer participant by an owner changes the next turn declarations, handler dispatch and allowed-name reader."
+        },
+        {
+          "scenario": "role-policy/a-skill-hint-keeps-the-role-restriction-non-streaming",
+          "pointer": "/expect",
+          "sha256": "e176b14d916ad38ed1c67d356450a27ceeadc2fed81f74d08316f5722fe001ba",
+          "scenario_sha256": "20e555eafc17fbe1e413a5dae6d9529a1b2dfd1be405c788af60d3ca42138933",
+          "proves": "An unknown skill-name hint and its tool hook include the reachable export tool and exclude the role-denied delete tool."
+        },
+        {
+          "scenario": "role-policy/a-skill-hint-keeps-the-role-restriction-streaming",
+          "pointer": "/expect",
+          "sha256": "e176b14d916ad38ed1c67d356450a27ceeadc2fed81f74d08316f5722fe001ba",
+          "scenario_sha256": "429cd17549d22c7979c8de2cbde7eaa2cb217743b1cb5f3eb6ed49611ed74eae",
+          "proves": "An unknown skill-name hint and its tool hook include the reachable export tool and exclude the role-denied delete tool."
+        },
+        {
+          "scenario": "role-policy/activation-cannot-bypass-role-non-streaming",
+          "pointer": "/expect",
+          "sha256": "18f6dc3d928a87ac23552d39a16b94f6ce1c90886042ec3c3426f97a96b7920e",
+          "scenario_sha256": "aead15abb4565ad2a4103e11030009bbda818ae50cfcc237b32d2892457fb14c",
+          "proves": "Activating a skill does not grant its role-denied tool; infrastructure tools keep their existing exemptions."
+        },
+        {
+          "scenario": "role-policy/activation-cannot-bypass-role-streaming",
+          "pointer": "/expect",
+          "sha256": "18f6dc3d928a87ac23552d39a16b94f6ce1c90886042ec3c3426f97a96b7920e",
+          "scenario_sha256": "f849129eca6fec036932541e8bf889904448edb0b9d6b7fe872fc0acc9dffcf8",
+          "proves": "Activating a skill does not grant its role-denied tool; infrastructure tools keep their existing exemptions."
+        },
+        {
+          "scenario": "role-policy/agent-selects-each-senders-role-non-streaming",
+          "pointer": "/expect",
+          "sha256": "9fffb98d537108cdeb12e2e4e7dd15409cbf6c3aecb465dc0e53caadd561044c",
+          "scenario_sha256": "3ad78347504dca22831eac9e74102b782c140a0c2c9b6b76fa14eecabf3af932",
+          "proves": "The Agent uses the waking participant role for declarations, dispatch and allowed names; its descriptive owner role grants nothing."
+        },
+        {
+          "scenario": "role-policy/agent-selects-each-senders-role-streaming",
+          "pointer": "/expect",
+          "sha256": "9fffb98d537108cdeb12e2e4e7dd15409cbf6c3aecb465dc0e53caadd561044c",
+          "scenario_sha256": "f23bc507ed2e4bf299ffddb6ba1ee92446994a72e272a64a7e1e1d9066334512",
+          "proves": "The Agent uses the waking participant role for declarations, dispatch and allowed names; its descriptive owner role grants nothing."
+        },
+        {
+          "scenario": "role-policy/ai-selects-each-senders-role-non-streaming",
+          "pointer": "/expect",
+          "sha256": "9fffb98d537108cdeb12e2e4e7dd15409cbf6c3aecb465dc0e53caadd561044c",
+          "scenario_sha256": "441620ca1e5092ac02578223ffdecc9f9be98136056f89a9e9afc260fc50845a",
+          "proves": "AI declarations, actual handler audit and allowed-name reader follow observer restriction, unmatched override fallback and owner replacement across sequential rooms."
+        },
+        {
+          "scenario": "role-policy/ai-selects-each-senders-role-streaming",
+          "pointer": "/expect",
+          "sha256": "9fffb98d537108cdeb12e2e4e7dd15409cbf6c3aecb465dc0e53caadd561044c",
+          "scenario_sha256": "b2bf7d98a96b9ba0f1301bf2f3f9e4f0fc27db2353331740a4d4be829b4912a9",
+          "proves": "AI declarations, actual handler audit and allowed-name reader follow observer restriction, unmatched override fallback and owner replacement across sequential rooms."
+        },
+        {
+          "scenario": "role-policy/allowed-catalogue-keeps-gated-tools-non-streaming",
+          "pointer": "/expect",
+          "sha256": "82281c33dba37c4cf2394bd4989ea371306062bcaa7068853200e7786d4ca916",
+          "scenario_sha256": "5d84311a32ec99dd16f649e73233d03697d801304618911805be96c8b81358b1",
+          "proves": "The allowed-name reader includes a skill-hidden tool admitted by the role and excludes a role-denied tool."
+        },
+        {
+          "scenario": "role-policy/allowed-catalogue-keeps-gated-tools-streaming",
+          "pointer": "/expect",
+          "sha256": "82281c33dba37c4cf2394bd4989ea371306062bcaa7068853200e7786d4ca916",
+          "scenario_sha256": "102a69788bc96ddad2896b4ccfa9194bebf3eb5e11964db852c22caec3167693",
+          "proves": "The allowed-name reader includes a skill-hidden tool admitted by the role and excludes a role-denied tool."
+        },
+        {
+          "scenario": "role-policy/an-alias-must-pass-both-role-names-non-streaming",
+          "pointer": "/expect",
+          "sha256": "de5042f868d6dc3d4ff38218a9722f20a7e686050ecad17d1ea5d00f66b5d721",
+          "scenario_sha256": "a5054349890bc60b9303851feba71d1a2a0c4ef115778d84a2d5e73f935b5c52",
+          "proves": "Both bare-name and alias-name role denials refuse an explicit MCP alias before the audited handler."
+        },
+        {
+          "scenario": "role-policy/an-alias-must-pass-both-role-names-streaming",
+          "pointer": "/expect",
+          "sha256": "de5042f868d6dc3d4ff38218a9722f20a7e686050ecad17d1ea5d00f66b5d721",
+          "scenario_sha256": "2cc356e749f0fab8ee5e57ddedac8a8e062a97c8616a0c085d8d2ebf2ec70c72",
+          "proves": "Both bare-name and alias-name role denials refuse an explicit MCP alias before the audited handler."
+        },
+        {
+          "scenario": "role-policy/deferred-definitions-omit-denied-tools-non-streaming",
+          "pointer": "/expect",
+          "sha256": "4f0848824a6b34aec9d2f82e24529496835dabc9f2027d06fd203d897e980f76",
+          "scenario_sha256": "c5bb769c76de029fb04cfb9c722a3499d1bbb86ecdbebfe0b8c2988c49cc057b",
+          "proves": "The provider receives no deferred definition for a role-denied tool."
+        },
+        {
+          "scenario": "role-policy/deferred-definitions-omit-denied-tools-streaming",
+          "pointer": "/expect",
+          "sha256": "4f0848824a6b34aec9d2f82e24529496835dabc9f2027d06fd203d897e980f76",
+          "scenario_sha256": "09060c1af46d182028e3460db58377943fe538a60de9c577cced50d9d86e36dd",
+          "proves": "The provider receives no deferred definition for a role-denied tool."
+        },
+        {
+          "scenario": "role-policy/denied-prerequisite-non-streaming",
+          "pointer": "/expect",
+          "sha256": "ea04db1e913e27bfbeb6c1a325549db2eeef5611970080d1370aa3f93eee1790",
+          "scenario_sha256": "391a88eb42d131780fc461ff595c96941ae708164f4dc2b9214ea1f96cb107b6",
+          "proves": "A role-denied required tool prevents skill activation with the missing-tools result."
+        },
+        {
+          "scenario": "role-policy/denied-prerequisite-streaming",
+          "pointer": "/expect",
+          "sha256": "ea04db1e913e27bfbeb6c1a325549db2eeef5611970080d1370aa3f93eee1790",
+          "scenario_sha256": "423bbc104af1bb6b2bceca37a0cde8e2040a2ee367047c02a58496559e24bee4",
+          "proves": "A role-denied required tool prevents skill activation with the missing-tools result."
+        },
+        {
+          "scenario": "role-policy/exact-name-cannot-recover-denied-tool-non-streaming",
+          "pointer": "/expect",
+          "sha256": "bb8c90c0d7823f0300d63588e7f24ee67dbb0b4005633015502df78322da50cf",
+          "scenario_sha256": "fb5da7bc8285c7f00399b714d35c8fe0b849ba0a455c37b2929e9186635cd164",
+          "proves": "Calling the exact hidden name cannot recover a role-denied tool; the refusal does not run its handler or reveal it."
+        },
+        {
+          "scenario": "role-policy/exact-name-cannot-recover-denied-tool-streaming",
+          "pointer": "/expect",
+          "sha256": "bb8c90c0d7823f0300d63588e7f24ee67dbb0b4005633015502df78322da50cf",
+          "scenario_sha256": "f463ef7b1f45d47ebb739755e8fbbe98cdc9490f42c35e27a896452b7db23d93",
+          "proves": "Calling the exact hidden name cannot recover a role-denied tool; the refusal does not run its handler or reveal it."
+        },
+        {
+          "scenario": "role-policy/interleaved-turns-keep-their-role-non-streaming",
+          "pointer": "/expect",
+          "sha256": "d8daea11ab431be4ffbe7a67c40f54ee9b4351e8a002b5881c4f02b2f06bd507",
+          "scenario_sha256": "f2e1cd2ae1a326dd75de981a742b72066cf4077d0a95f11cae9b9f3c46db6afe",
+          "proves": "A suspended observer turn keeps its restricted declarations, reader and dispatch while the same agent executes an owner turn in another room."
+        },
+        {
+          "scenario": "role-policy/interleaved-turns-keep-their-role-streaming",
+          "pointer": "/expect",
+          "sha256": "d8daea11ab431be4ffbe7a67c40f54ee9b4351e8a002b5881c4f02b2f06bd507",
+          "scenario_sha256": "b1970fe4fc354802c63eefbc48eb262fd1cca67c9aa9cd66315331bfc31ba7af",
+          "proves": "A suspended observer turn keeps its restricted declarations, reader and dispatch while the same agent executes an owner turn in another room."
+        },
+        {
+          "scenario": "role-policy/mcp-allowed-server-non-streaming",
+          "pointer": "/expect",
+          "sha256": "f1b076db07ee1b9cf3af1488f22f5ad994f1c43f5bf50ffa610b38b5dc5b42d2",
+          "scenario_sha256": "cbaeb0f82bc1d23ec38abac9d6c704bea0573a562cc52656afd29003b6fac063",
+          "proves": "A bare MCP name is dispatched only to the server whose alias the role permits."
+        },
+        {
+          "scenario": "role-policy/mcp-allowed-server-streaming",
+          "pointer": "/expect",
+          "sha256": "f1b076db07ee1b9cf3af1488f22f5ad994f1c43f5bf50ffa610b38b5dc5b42d2",
+          "scenario_sha256": "ce02b5ac02ac901dc6769670b1e3b7b5cabfe46b55b69de1d0bdb909d704c5db",
+          "proves": "A bare MCP name is dispatched only to the server whose alias the role permits."
+        },
+        {
+          "scenario": "role-policy/mcp-bare-policy-non-streaming",
+          "pointer": "/expect",
+          "sha256": "4bb7b4cfca4116bef734ae5d6818c5b5e906e6115fecf1080f972998d16ac0f7",
+          "scenario_sha256": "136fd8021016aaa8c47f07c1023642b1344f34bda2d1a371d8a4c1a394142eb1",
+          "proves": "A role policy without alias patterns preserves the first-server selection for a bare MCP name."
+        },
+        {
+          "scenario": "role-policy/mcp-bare-policy-streaming",
+          "pointer": "/expect",
+          "sha256": "4bb7b4cfca4116bef734ae5d6818c5b5e906e6115fecf1080f972998d16ac0f7",
+          "scenario_sha256": "1f22f6215e19fb544c128799c9f8be85768238dd822ea885239bb27826ce6b40",
+          "proves": "A role policy without alias patterns preserves the first-server selection for a bare MCP name."
+        },
+        {
+          "scenario": "role-policy/mcp-denied-server-non-streaming",
+          "pointer": "/expect",
+          "sha256": "f1b076db07ee1b9cf3af1488f22f5ad994f1c43f5bf50ffa610b38b5dc5b42d2",
+          "scenario_sha256": "77487d6f386223e47ad900568baa346529ee1f2ed66a19d0dea1224e4907ab9b",
+          "proves": "A bare MCP name cannot dispatch to the server whose alias the role denies."
+        },
+        {
+          "scenario": "role-policy/mcp-denied-server-streaming",
+          "pointer": "/expect",
+          "sha256": "f1b076db07ee1b9cf3af1488f22f5ad994f1c43f5bf50ffa610b38b5dc5b42d2",
+          "scenario_sha256": "4ae91b1aa1dbcd2e6b5dc33aa894b8b1f32a2445f3232b60c734e07f792d97c8",
+          "proves": "A bare MCP name cannot dispatch to the server whose alias the role denies."
+        },
+        {
+          "scenario": "role-policy/script-denied-non-streaming",
+          "pointer": "/expect",
+          "sha256": "d7285ad4cd6a6c9fdc9b916e7d1979811dfb538762326f216186ed82ea1a3a88",
+          "scenario_sha256": "ab24b4c50f14db4b912331116f1c40d92decee9386beaaa27f40f734880a2ecf",
+          "proves": "A role denial suppresses the script declaration and executor call, returns the refusal, and makes the prompt explain that scripts are unavailable."
+        },
+        {
+          "scenario": "role-policy/script-denied-streaming",
+          "pointer": "/expect",
+          "sha256": "d7285ad4cd6a6c9fdc9b916e7d1979811dfb538762326f216186ed82ea1a3a88",
+          "scenario_sha256": "bf8c3750f82d4434f045646be916542943f3552b7be2cc286d6ffe5033d06898",
+          "proves": "A role denial suppresses the script declaration and executor call, returns the refusal, and makes the prompt explain that scripts are unavailable."
+        },
+        {
+          "scenario": "role-policy/script-owner-replaces-base-non-streaming",
+          "pointer": "/expect",
+          "sha256": "e8cdf92da18baa2b264cc262025e952238bc2f6a94d027cf458294261311da3f",
+          "scenario_sha256": "54317566e64fef0de5b6a52694bcf12269008f448c98b26991ef9317562932be",
+          "proves": "An owner replacement lifts the base script denial: the script is declared and its exact arguments reach the executor."
+        },
+        {
+          "scenario": "role-policy/script-owner-replaces-base-streaming",
+          "pointer": "/expect",
+          "sha256": "e8cdf92da18baa2b264cc262025e952238bc2f6a94d027cf458294261311da3f",
+          "scenario_sha256": "d525608f2ac17fe5a5ec65b6f83aeb77de81fe718066869b4f923accd785b496",
+          "proves": "An owner replacement lifts the base script denial: the script is declared and its exact arguments reach the executor."
+        },
+        {
+          "scenario": "role-policy/search-and-list-non-streaming",
+          "pointer": "/expect",
+          "sha256": "f82c9b9857073126b046b0af2d112cdef1dbeffec773c6cd274c10a75c7f1044",
+          "scenario_sha256": "af39221841bb9c60166fda82fcb4d848af1746ca9250c27e99ecd24aeb268c40",
+          "proves": "Tool Search inventories and search results omit role-denied and skill-gated tools."
+        },
+        {
+          "scenario": "role-policy/search-and-list-streaming",
+          "pointer": "/expect",
+          "sha256": "f82c9b9857073126b046b0af2d112cdef1dbeffec773c6cd274c10a75c7f1044",
+          "scenario_sha256": "40ec340b5dc4dac35d199dcf8a7283b8f540fb2dc8bfd061b2436f89cc3e6346",
+          "proves": "Tool Search inventories and search results omit role-denied and skill-gated tools."
+        },
+        {
+          "scenario": "role-policy/the-named-record-selects-the-role-non-streaming",
+          "pointer": "/expect",
+          "sha256": "db72fdcddb62a9c325a7969fb72ae5616d4a98d6b07fd99012df46200164927b",
+          "scenario_sha256": "e2036008cbfafc36997794c428cf9ad513f353a3bb9d8ec5a76c885cfeb2a0e5",
+          "proves": "Role permissions follow the reached record, direct id before identity, identity tie order, secondary channel and own-record fallback; a foreign-channel owner grants nothing."
+        },
+        {
+          "scenario": "role-policy/the-named-record-selects-the-role-streaming",
+          "pointer": "/expect",
+          "sha256": "db72fdcddb62a9c325a7969fb72ae5616d4a98d6b07fd99012df46200164927b",
+          "scenario_sha256": "56835e0b55b183a3c65c3c3d37adc7c55aa45477f8a83771c66dff99c49427a4",
+          "proves": "Role permissions follow the reached record, direct id before identity, identity tie order, secondary channel and own-record fallback; a foreign-channel owner grants nothing."
+        }
+      ],
+      "tests": [
+        {
+          "nodeid": "tests/test_channels/test_ai_skill_gating.py::TestRoleBasedPolicy::test_observer_restricted_by_role_override",
+          "sha256": "e955f117a6175246376a802478d70e9a2e9be8d63f04e6be27fd6d5e29a866cb",
+          "proves": "Resolver returns observer; manual loop context then provider-context tool list keeps search/read_file and drops write_file."
+        },
+        {
+          "nodeid": "tests/test_channels/test_ai_skill_gating.py::TestRoleBasedPolicy::test_no_participant_match_uses_base_policy",
+          "sha256": "373a62b9ce4b770731c736e0274d52b108a84ac87b524ed82b05e925581719a3",
+          "proves": "Unknown participant resolves None; base policy keeps search and write_file."
+        },
+        {
+          "nodeid": "tests/test_channels/test_ai_skill_gating.py::TestRoleBasedPolicy::test_replace_mode_owner_gets_full_access",
+          "sha256": "084efe595a3736f6357f17c14c8cd2a3e19b0c202b435142abecea0c0c1c0a7f",
+          "proves": "Owner replace with empty lists exposes search/admin_panel/delete_all despite restrictive base."
+        },
+        {
+          "nodeid": "tests/test_allowed_names_policy.py::test_a_text_turn_resolves_the_policy_for_its_participant",
+          "sha256": "b627136963dd591b347b0687e606768a5a8a44c05cfe1e73fcd1cf96f877d5d8",
+          "proves": "Observer/member over both provider modes changes delete_account membership; lookup_account remains in the handler reader."
+        },
+        {
+          "nodeid": "tests/test_sender_reach.py::TestToolPolicyRole::test_the_owner_s_tools_follow_the_owner_s_channels",
+          "sha256": "a62817b12af75a5b13d2dcd4d1229abcc65fa82fc95518a3d5d282183bfb8c38",
+          "proves": "Kit inbound on console/web with same sender id exposes refund only on owner channel."
+        }
+      ],
+      "missing": [
+        "The structural model, complete glob semantics and mutation/validation boundaries are separate native proofs; this link does not complete the broad unit.",
+        "The no-matching-participant context is exercised by native public-channel tests; shared inbound creates a participant and does not prove that context boundary.",
+        "Sandbox, planner, reasoning backends, realtime and media policy paths are outside this text-turn slice.",
+        "No Rust, specialized-test, SQL-store or Redis-turn execution credit is inferred from the Python memory receipt."
       ]
     }
   ],
