@@ -4,8 +4,10 @@
   "title": "The next event's turn runs while the turn before it is held, and the answer ready first is stored first",
   "rules": [
     "§10.1 step 14",
+    "§10.1 step 18",
     "§10.2",
-    "§6.4"
+    "§6.4",
+    "§12.10.4"
   ],
   "setup": {
     "channels": [
@@ -47,6 +49,23 @@
             }
           ]
         }
+      },
+      {
+        "id": "generated",
+        "type": "ai",
+        "model": {
+          "streaming": false,
+          "rounds": [
+            {
+              "text": "first answer",
+              "gate": "first-3"
+            },
+            {
+              "text": "second answer",
+              "gate": "second-3"
+            }
+          ]
+        }
       }
     ],
     "rooms": [
@@ -70,6 +89,18 @@
           },
           {
             "channel_id": "whole",
+            "category": "intelligence"
+          }
+        ]
+      },
+      {
+        "id": "room-3",
+        "bindings": [
+          {
+            "channel_id": "user"
+          },
+          {
+            "channel_id": "generated",
             "category": "intelligence"
           }
         ]
@@ -272,6 +303,104 @@
           ]
         }
       }
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-3",
+      "message": {
+        "channel_id": "user",
+        "sender_id": "person",
+        "content": {
+          "type": "text",
+          "body": "first task"
+        }
+      },
+      "background": true,
+      "as": "generated_first"
+    },
+    {
+      "wait_for": "first-3"
+    },
+    {
+      "call": "process_inbound",
+      "room_id": "room-3",
+      "message": {
+        "channel_id": "user",
+        "sender_id": "person",
+        "content": {
+          "type": "text",
+          "body": "second task"
+        }
+      },
+      "as": "generated_second",
+      "defer_delivery": true,
+      "expect": {
+        "result": {
+          "event": {
+            "id": "room-3#1"
+          }
+        }
+      }
+    },
+    {
+      "wait_for": "second-3"
+    },
+    {
+      "open": "first-3"
+    },
+    {
+      "await": "generated_first",
+      "expect": {
+        "result": {
+          "event": {
+            "id": "room-3#0"
+          },
+          "response_events": [
+            {
+              "id": "room-3#2",
+              "type": "message",
+              "status": "delivered",
+              "source": {
+                "channel_id": "generated"
+              },
+              "responds_to": "room-3#0",
+              "content": {
+                "type": "text",
+                "body": "first answer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "open": "second-3"
+    },
+    {
+      "call": "delivery.wait",
+      "of": "generated_second",
+      "expect": {
+        "result": {
+          "event": {
+            "id": "room-3#1"
+          },
+          "response_events": [
+            {
+              "id": "room-3#3",
+              "type": "message",
+              "status": "delivered",
+              "source": {
+                "channel_id": "generated"
+              },
+              "responds_to": "room-3#1",
+              "content": {
+                "type": "text",
+                "body": "second answer"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "expect": {
@@ -355,6 +484,46 @@
             "body": "second answer"
           }
         }
+      ],
+      "room-3": [
+        {
+          "id": "room-3#0",
+          "content": {
+            "body": "first task"
+          }
+        },
+        {
+          "id": "room-3#1",
+          "content": {
+            "body": "second task"
+          }
+        },
+        {
+          "id": "room-3#2",
+          "type": "message",
+          "status": "delivered",
+          "source": {
+            "channel_id": "generated"
+          },
+          "responds_to": "room-3#0",
+          "content": {
+            "type": "text",
+            "body": "first answer"
+          }
+        },
+        {
+          "id": "room-3#3",
+          "type": "message",
+          "status": "delivered",
+          "source": {
+            "channel_id": "generated"
+          },
+          "responds_to": "room-3#1",
+          "content": {
+            "type": "text",
+            "body": "second answer"
+          }
+        }
       ]
     },
     "models": {
@@ -401,8 +570,30 @@
             }
           ]
         }
+      ],
+      "generated": [
+        {
+          "messages": [
+            {
+              "role": "user",
+              "text": "first task"
+            }
+          ]
+        },
+        {
+          "messages": [
+            {
+              "role": "user",
+              "text": "first task"
+            },
+            {
+              "role": "user",
+              "text": "second task"
+            }
+          ]
+        }
       ]
     }
   },
-  "notes": "Both turns are held at their gates: the second event's turn reaches its gate while the first is held, its history the two messages and no answer. The first gate opens first, so the first answer is stored at #2, then the second at #3: the order is the order the answers are ready, the neighbour of a-later-event-s-answer-ready-first-is-stored-first, which opens them the other way. room-1's agent streams, room-2's reads its response whole."
+  "notes": "Both turns are held at their gates: the second event's turn reaches its gate while the first is held, its history the two messages and no answer. The first gate opens first, so the first answer is stored at #2, then the second at #3: the order is the order the answers are ready, the neighbour of a-later-event-s-answer-ready-first-is-stored-first, which opens them the other way. room-1's agent streams, room-2's reads a response its model gives whole, room-3's model answers through generate(), not streaming."
 }
