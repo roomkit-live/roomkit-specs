@@ -463,8 +463,9 @@ by it. All prior execution receipts remain unchanged.
 `python-provider-served-470903e.xml` retains 44 passing scenarios from clean,
 published Python `470903e10cf5fff7c1213fe3ec65aecd119bbdd1`, copied corpus
 `c20267e7ebe8007ba41853c5537d54d1334713bc`, with the memory store and explicitly
-selected in-process turns. The receipt records the exact command and RFC
-revision. Its artifact preserves testcase identity and outcome, without local
+selected in-process turns. The receipt records the pytest invocation and RFC
+revision, omitting the CPU-affinity and scheduling-priority wrappers used for
+the local run. Its artifact preserves testcase identity and outcome, without local
 paths, hostnames, timestamps or durations.
 
 The two partial links cover provider-owned call markers, original outcomes,
