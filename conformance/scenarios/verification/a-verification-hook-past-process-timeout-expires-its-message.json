@@ -7,7 +7,7 @@
     "§10.1 step 5b",
     "§11.7.3"
   ],
-  "notes": "Python: src/roomkit/core/mixins/verification.py (_apply_verification: the read and the hooks under the call's deadline, the attempt not); RMK-913, the boundary of the code reply's rule.",
+  "notes": "Python: src/roomkit/core/mixins/verification.py (_apply_verification: the read and the hooks under the call's deadline, _bounded_by; the attempt not); RMK-913, the boundary of the code reply's rule.",
   "setup": {
     "kit": {
       "identity_resolver": {
@@ -24,7 +24,7 @@
         ]
       },
       "verification_policy": {},
-      "process_timeout_ms": 100
+      "process_timeout_ms": 300
     },
     "channels": [
       {
