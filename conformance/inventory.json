@@ -219,7 +219,7 @@
     },
     {
       "section": "6.1",
-      "sha256": "726842b999bffc5245fc5784d2bcd98106ee192f28ec112d86ae7b081e9dfe5f",
+      "sha256": "5d86237f62ac31ea36db4a163914a908676ea2ef315192489e7e8ab40d5b3922",
       "classification": "normative",
       "review": "Source inventory: Channel Interface. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
@@ -591,7 +591,7 @@
     },
     {
       "section": "12.2",
-      "sha256": "8049e446f8798daa219ced845f1a03348d2296038e7f2c7fb11e304915c39225",
+      "sha256": "985121426c523d670cf4083a15846a63ac8c272c5141f0b3dedbfe9aa9da8db4",
       "classification": "normative",
       "review": "Source inventory: Voice Channel (STT/TTS Pipeline). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },
@@ -1599,7 +1599,7 @@
     },
     {
       "section": "A.8",
-      "sha256": "4190211428cd38dcc506a0e8824641d9cd7f33b4796c6a1c0fb9fc3ae1e6ec4b",
+      "sha256": "8036e06f736a1233caee573a6027c2338a745bb5bad3352aafdcae5bd56625ed",
       "classification": "normative",
       "review": "Source inventory: WebSocket Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
     },

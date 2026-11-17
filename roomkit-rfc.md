@@ -1838,6 +1838,15 @@ Channel (interface)
 │       # A stream that raises: deliver what was accumulated, then propagate
 │       # the failure (Section 12.2 step 13s)
 │
+├── deliver_cut(event, row: RoomEvent | null, binding, context) → void
+│       # The end of a stream a cut from outside ended while this channel
+│       # read it (Section 12.2 step 13s): event the one deliver_stream was
+│       # handed, row the cut text's stored row, null when no row is the
+│       # channel's (a blank text, a hook's refusal, a row kept out or
+│       # narrowed away from it); the row reaches the channel nowhere else.
+│       # A failure it raises is logged. Default: no-op, as for a channel
+│       # that rendered what it was handed (a voice spoke it)
+│
 ├── on_room_attached(room_id: string, binding: ChannelBinding) → void
 │       # Establish what the new binding claims exists (a conference's SFU
 │       # room, Section 12.10.4), and start the room afresh: an AI channel
@@ -10532,7 +10541,12 @@ enters a room as any other audio.
      reference implementation, storing past the target's `finally`, reads it as
      the failure of the streaming channel below. A TOOL_CALL_END written once the
      stream no longer carries rows goes to every channel, the streaming one
-     included. With `flush_partial_tts = false` the sessions keep reading, so the
+     included. A streaming channel whose stream a cut from outside ended
+     while it read it, before it was handed the stream's end or its
+     failure, is handed, once the text is stored, that row through
+     `deliver_cut` (Section 6.1), or no row when none is its: a blank text,
+     one a hook refused, kept out or narrowed away from it; it never
+     receives the row as an ordinary delivery. With `flush_partial_tts = false` the sessions keep reading, so the
      stream runs to its end and nothing is cancelled.
      Failed: when the response stream raises (its provider fails mid-response),
      the framework MUST store the text already produced as the AI response event
@@ -23184,7 +23198,11 @@ WebSocketChannel
     none registered for another organization than the room's (§17.2);
     a stream sends only to the registrations present when it started,
     checked as each send starts; a connection without stream_send_fn
-    reads each row the stream hands, once, and nothing more
+    reads each row the stream hands, once, and nothing more; the end a
+    connection with stream_send_fn reads carries no text a handed row
+    does not carry; a stream cut from outside ends with the row
+    deliver_cut is handed (§12.2 step 13s), which the connections with
+    stream_send_fn read in its end, and the others once
 ```
 <!-- /rfc -->
 
