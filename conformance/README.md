@@ -515,8 +515,8 @@ scripted.
   names, or null when unresolved (§21.4). The runner reads the actual turn
   context; it does not infer names from the scenario's tool definitions.
   `returns_requester: true` is another answer: the handler calls
-  `current_tool_requester()` and returns it as JSON, a string or null
-  (§19.7, §21.4).
+  `current_tool_requester()` and returns it as JSON, a string or null, its
+  characters unescaped (§19.7, §21.4).
   `posts_progress`: each call first posts this text as its task's progress
   with `post_task_progress(kit, detail)` (§23.3), before a `gate` holds it,
   then answers as its other member says; a call outside a task's child room
@@ -1236,9 +1236,9 @@ An expectation matches the actual value when:
   in `actions`, the outcomes in any order;
 - `{"$absent": true}`: absent or null; `{"$present": true}`: neither;
 - `{"$contains": "text"}`: a string holding the text; `{"$contains": ["a",
-  "b"]}`: a string holding each text in this order, each after the end of
-  the one before (the parts of a text around what a run cannot fix, a
-  duration);
+  "b"]}`: a string holding each text of a non-empty list in this order, each
+  after the end of the one before (the parts of a text around what a run
+  cannot fix, a duration); any other value is a scenario's mistake;
 - `{"$starts_with": "text"}`: a string beginning with the text;
 - `{"$lacks": "text"}`: a string not holding the text;
 - `{"$as": "name"}`: a value present, named: across the scenario's step
