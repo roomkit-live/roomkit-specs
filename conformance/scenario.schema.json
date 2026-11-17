@@ -9609,6 +9609,28 @@
               }
             ]
           }
+        },
+        "approvals": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "error"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
         }
       },
       "required": [

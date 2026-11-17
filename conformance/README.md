@@ -1430,7 +1430,10 @@ by default) and ordered `replies`: `{method, params, result|error}`. Parameters
 must match exactly, every reply is consumed once, and unexpected requests or
 unused replies fail independently of any error the registry sanitizes. These
 scenarios cover the registry boundary; MCP transport framing has its own host
-sessions below.
+sessions below. A server may also script host `approvals`: booleans or
+`{error: text}` failures. Omitting them registers no callback; an empty list
+registers one that must not be called. Every answer is consumed exactly once,
+and exhaustion remains a fixture failure even when the SDK refuses execution.
 
 Operations select a `registry` (default `main`). They name `add_mcp_server`
 (`server`, `label`, optional `allow_dynamic` and `execution_tools`), `get_skill`
@@ -1446,7 +1449,8 @@ Copies use the SDK's shared catalogue and cache; the fixture keeps no duplicate
 catalogue. Snapshot reads the public metadata, names, marks, manifest and tool
 patterns without loading or following a cached skill.
 
-The result holds an ordered `results` list and `requests` by server. Each
+The result holds an ordered `results` list, `requests` by server, and
+`approvals` containing the actual six-field host requests by server. Each
 operation returns `{status: "ok", result: value}` or
 `{status: "error", error: name, message: text}`. The explicit status prevents
 a missing result on a refusal from matching an expected null result. Loaded skills expose their instructions, metadata, references,
