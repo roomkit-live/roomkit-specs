@@ -498,6 +498,14 @@ scripted.
   `current_tool_allowed_names()` and returns a sorted JSON array of its
   names, or null when unresolved (§21.4). The runner reads the actual turn
   context; it does not infer names from the scenario's tool definitions.
+  `report_claim_probe` exercises `turn_report_claim` through the public tool
+  context. `matching` returns wrong-id availability, wrong-channel availability,
+  then three claims from two callbacks. `reused_id` retains the first callback
+  and returns its claim and a fresh callback's claim on each call.
+  `previous_turn` retains the first callback without invoking it, returns
+  `[null]` first, then invokes only that retained callback on later calls.
+  The handler owns this state; callback results are returned as a JSON array.
+  Scenarios separately assert model results and actual ASYNC observer reports.
   `changes_state: true` declares it on its definition as a tool that
   changes state (Python's `AITool(changes_state=True)`, §6.4).
 - `mcp_servers`: MCP servers the agent's tool handler serves (§21.2), each
