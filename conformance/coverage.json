@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "b24d906b75319bb539e26b61ed37b9f5be50a434aa864d58b0aec577e151d5d7",
-  "corpus_sha256": "47aa1f34e49b77759ca91600338f72fc071b8aa60fcbffb77896fd7de492e3ea",
+  "corpus_sha256": "19caa750e4abb2c912d929b215b2d3b853a9c247ae4340e898859e7df77dfe4e",
   "python_commit": "1f884dcf30c0d2f0a3524114cc2568f82c57a3c6",
-  "scenario_count": 2540,
+  "scenario_count": 2542,
   "sections": [
     {
       "section": "0",
@@ -1190,11 +1190,13 @@
         "author-images/a-describer-that-says-nothing-leaves-the-event-out",
         "author-images/a-link-goes-as-written",
         "author-images/a-model-that-does-not-see-reads-a-mention",
+        "author-images/a-reference-a-path-reader-could-follow-is-refused",
         "author-images/a-reference-reaches-the-model-as-the-kit-s-image",
         "author-images/a-reference-resolves-for-the-room-of-its-turn",
         "author-images/a-refused-image-takes-no-place-in-the-bound",
         "author-images/a-room-the-agent-joins-again-sends-a-refused-image-again",
         "author-images/a-schema-the-model-does-not-take-refuses-no-image",
+        "author-images/a-scheme-a-reader-fetches-is-no-reference",
         "author-images/a-text-held-on-a-first-try-refuses-no-image-when-its-retry-is-refused",
         "author-images/a-text-held-under-a-schema-before-a-refusal-refuses-no-image",
         "author-images/an-agent-attached-over-its-attachment-sends-a-refused-image-again",
