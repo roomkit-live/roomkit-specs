@@ -1565,6 +1565,32 @@ URI parsing failures are recorded as `validation_error`; normalization is
 observed through the public model. Extension declarations remain opaque peer
 data, so a non-object declaration can exercise the provider's own handling.
 
+MCP sessions may select `constructor: "direct"` (the common constructor)
+or `"from_url"` (the default), and `transport: "sse"` for legacy SSE or
+`"streamable_http"` (the default). Legacy SSE opens a GET stream, reads its
+announced POST endpoint and receives JSON-RPC replies on that stream; it is
+distinct from the existing peer's `framing: "sse"` Streamable HTTP replies.
+`headers`, `label` and `connect_timeout_ms` are passed to public construction.
+`headers_after_construction` requires `headers` and replaces the original
+mapping's contents before connection, exposing retention of a nonempty map
+and replacement of an empty map. No provider private state is inspected.
+
+The additional `call_tool` operation takes `name`, optional object `arguments`
+and optional `timeout_ms`; it invokes the public text-returning method.
+Repeated `connect` while connected is observed as `already_connected`.
+A legacy peer's optional `endpoint_on_connections` is a nonempty boolean list:
+each GET either announces its endpoint or leaves it pending. Every entry must
+be consumed, so a timeout/reconnect scenario cannot hide a missing connection.
+Explicit close and connection timeout wait for the peer to observe GET closure.
+
+Legacy sessions additionally return `http` and exact `http_json`, with the
+number of opened/closed GET connections and the ordered HTTP requests
+(`method`, `target`, selected `headers`). Header names are normalized to lower
+case on this wire observation; values, duplicate occurrences and their order
+are preserved. Only names supplied by the scenario are selected, excluding
+client-generated headers. This records the actual endpoint path and query,
+including initialized notifications, rather than inferring them from MCP calls.
+
 ### Host tool definitions
 
 `agent.extra_tools` takes `channel_id` and reads the public host definitions,

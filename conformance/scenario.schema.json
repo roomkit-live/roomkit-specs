@@ -4649,6 +4649,22 @@
               "peer",
               "operations"
             ],
+            "dependentRequired": {
+              "headers_after_construction": ["headers"]
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "peer": {"required": ["endpoint_on_connections"]}
+                  }
+                },
+                "then": {
+                  "required": ["transport"],
+                  "properties": {"transport": {"const": "sse"}}
+                }
+              }
+            ],
             "properties": {
               "peer": {
                 "$ref": "#/$defs/mcp_peer"
@@ -4659,6 +4675,37 @@
                 "items": {
                   "$ref": "#/$defs/mcp_operation"
                 }
+              },
+              "constructor": {
+                "enum": [
+                  "direct",
+                  "from_url"
+                ]
+              },
+              "transport": {
+                "enum": [
+                  "streamable_http",
+                  "sse"
+                ]
+              },
+              "headers": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "headers_after_construction": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "label": {
+                "type": "string"
+              },
+              "connect_timeout_ms": {
+                "type": "integer",
+                "minimum": 1
               },
               "discover": {
                 "type": "boolean"
@@ -9371,6 +9418,29 @@
               "const": "get_tools_as_dicts"
             }
           }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "method",
+            "name"
+          ],
+          "properties": {
+            "method": {
+              "const": "call_tool"
+            },
+            "name": {
+              "type": "string"
+            },
+            "arguments": {
+              "type": "object"
+            },
+            "timeout_ms": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
         }
       ]
     },
@@ -9416,6 +9486,13 @@
                 "type": "string"
               }
             }
+          }
+        },
+        "endpoint_on_connections": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "boolean"
           }
         }
       }
