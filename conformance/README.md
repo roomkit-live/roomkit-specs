@@ -549,6 +549,10 @@ scripted.
   ms publishes each piece.
 - `publish_thinking_text`: whether those events carry the reasoning's text;
   false when absent, a subscriber then reading its length alone (§6.7).
+- `publish_tool_call_text`: whether its `tool_call_start` events carry each
+  call's arguments and its `tool_call_end` events each result's preview;
+  false when absent, a subscriber then reading each call's id, name, status
+  and intent alone (§8.4).
 - `config_provider`: what the agent's per-turn configuration returns for a
   turn, by the room id of the binding it is called with (the room of the
   context must be the same): a `turn_config`, Python's

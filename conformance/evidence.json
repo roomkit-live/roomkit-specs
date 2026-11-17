@@ -14852,35 +14852,35 @@
           "scenario": "tool-composition/fragments-publish-counts-before-execution",
           "pointer": "/expect",
           "sha256": "31defe3f264b9fe8425ffc2cc7100c4bd8539202eeaebb71c1a2ec289777d508",
-          "scenario_sha256": "67e8046530ee5eb2611d8798b21fc72ef5a1fef94be59e01d3e36c2c33ba2504",
+          "scenario_sha256": "a22c508395238891b930c3172490ecb59f804f4b886b887b96d7319c9e911c8e",
           "proves": "Composition publishes cumulative character counts without argument content, closes before execution and stores only complete calls"
         },
         {
           "scenario": "tool-composition/unicode-fragments-count-characters",
           "pointer": "/expect",
           "sha256": "ba97111eac8784173536b26ae2a1eab825db691cb36d144fd5cb614991d395ee",
-          "scenario_sha256": "4e76ee831fceb310aee4278e371213bd9c8cb5b9d374ebfc8bc049f0fe03aa2c",
+          "scenario_sha256": "ed0339ab3677be0b429ba24234d95e5d304fb0c36dabbce6e6e21803e2c123d4",
           "proves": "Composition counts Unicode characters, not UTF-8 bytes"
         },
         {
           "scenario": "tool-composition/first-fragment-bypasses-the-window",
           "pointer": "/expect",
           "sha256": "929c739e0024faca7161e4111fc546b9500abc93776d5f3a9058d84df85136cd",
-          "scenario_sha256": "885071a85be0304ee89c79871d93078fb7c15ee4c5d7e7774196515c349e4cc1",
+          "scenario_sha256": "3a7f90cd53f48954c671f15744d90ea59c4461ca8e0ea55ead1ffa4b10514df6",
           "proves": "The first fragment publishes at once; a held residual is replaced by the terminal frame"
         },
         {
           "scenario": "tool-composition/size-window-batches-the-following-fragments",
           "pointer": "/expect",
           "sha256": "251ebbfa09f9118bf65a10b2cef85eaf34a44cc79de3db60a2106e4651e6eacb",
-          "scenario_sha256": "4b2f1aa4a4fbb8b131e774172d1a6dbff738d3db7ebc78e6286f7366421292a7",
+          "scenario_sha256": "ba2dd6adef7a0d30205e638ec46c23ee727246e960dd75246ba7708be64a92a0",
           "proves": "After the first fragment, only new characters spend the size window"
         },
         {
           "scenario": "tool-composition/interleaved-slots-keep-their-order-and-late-ids",
           "pointer": "/expect",
           "sha256": "2fe5e4c7f0a8819f9b76b743a76683d72ee5c32721a77914034271d99a023b33",
-          "scenario_sha256": "f3a3a7208974fba83925a50503cc6b3571e371cae9006a873692fc3fd0bb8579",
+          "scenario_sha256": "a443f2ca2cbe3a8f480f8761347c0d29194d428bcfa4735019072f1b59ecfa8e",
           "proves": "Parallel slots remain separate before ids arrive and retain encounter order when ids and names arrive later"
         },
         {
@@ -14894,14 +14894,14 @@
           "scenario": "tool-composition/retry-starts-a-fresh-composition",
           "pointer": "/expect",
           "sha256": "583904989362a105f69c9d9c9f4431c7e9babd6f7dcedfd03c9e6473438f5680",
-          "scenario_sha256": "dbe1f27e8c6c96da210c9e38e06514faf2410ff988900cacc2ffd8832b420463",
+          "scenario_sha256": "8008bc5c2cd14e2fd9b19026453bbc221b9f5f75d13cf4017edbf76d373e769c",
           "proves": "A retry closes the abandoned composition and restarts its cumulative counts in the same round"
         },
         {
           "scenario": "tool-composition/fallback-starts-a-fresh-composition",
           "pointer": "/expect",
           "sha256": "f8247b4903fb7c3d06b1d678f9f9ff395f94b64e4cec71529037a8b3f817f672",
-          "scenario_sha256": "d4d700f718cf2836dec298927a25796556eabcfc13f0a9219c6c57fe1af7a8f5",
+          "scenario_sha256": "e8c82078c8b9d837ec2d518476464925a684cc5ffd123e0849af81ce1aff3271",
           "proves": "A fallback owns a fresh composition and closes it before it executes"
         },
         {
@@ -14929,7 +14929,7 @@
           "scenario": "tool-composition/complete-calls-without-fragments-publish-no-composition",
           "pointer": "/expect",
           "sha256": "045370a2c6315fded1013da847aa8be25feae3adf12dad2355de707486d8934b",
-          "scenario_sha256": "3a2c4e16d937dc5fe33689d431db00223c7592ced44241c86bc4e8ad1f501c01",
+          "scenario_sha256": "a24d4426bb33e6487e42e60703b5a38114b81579d902d73b9ffd01cc96ba2469",
           "proves": "A provider handing only complete calls publishes no composition or terminal frame"
         },
         {
@@ -14950,14 +14950,14 @@
           "scenario": "tool-composition/round-cap-closes-unexecuted-composition",
           "pointer": "/expect",
           "sha256": "3af1b7871b774aef502037aa84dae468ee58b9a39e66d783092f7fc15bf41633",
-          "scenario_sha256": "7363ea2090ad409174822f90017f8b17220e8017491839b036a8ab11fb0d702d",
+          "scenario_sha256": "883b65b104963e0f996a4b105ca2f1cb401736bd749dbf73306821f734b1004b",
           "proves": "A call composed beyond the round cap closes without starting execution"
         },
         {
           "scenario": "tool-composition/refused-call-keeps-composition-closed",
           "pointer": "/expect",
           "sha256": "d97d6b5011e9f6c529e4a88baa9ff468d4798467e608ce31b036af0e8ebe6bf5",
-          "scenario_sha256": "1b849fefb150a259e1cd05b16b91bf9e57d790903e2c0e511f67587b9f56164a",
+          "scenario_sha256": "7381bff3616c41f05b5aca52566947f88c0482e9b6192aed7a534d8fc28fca32",
           "proves": "A complete call refused by BEFORE_TOOL_USE closes composition before its failed execution end"
         }
       ],
@@ -25079,84 +25079,84 @@
           "scenario": "provider-served/stop-at-end-failure-stream",
           "pointer": "/expect/models",
           "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
-          "scenario_sha256": "56892882909721606897523c93e8fd555693122c088186a1c856da2427edb58a",
+          "scenario_sha256": "55670ae4b77a6c6b388d1925979ff9a84677a55caa6a6a24fb1f977a36aefc53",
           "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
         },
         {
           "scenario": "provider-served/stop-at-end-failure-stream",
           "pointer": "/expect/hooks",
           "sha256": "f4d3a4ca91fc0f21b0b68c482e9e79d12cb3fd4e78ea97008f9dd0d37bfa7d9f",
-          "scenario_sha256": "56892882909721606897523c93e8fd555693122c088186a1c856da2427edb58a",
+          "scenario_sha256": "55670ae4b77a6c6b388d1925979ff9a84677a55caa6a6a24fb1f977a36aefc53",
           "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
         },
         {
           "scenario": "provider-served/stop-at-end-failure-stream",
           "pointer": "/expect/tool_events",
           "sha256": "7410943f7ee2b6edf6406bb92a1595b8bc09d5c5970513807b856550db854711",
-          "scenario_sha256": "56892882909721606897523c93e8fd555693122c088186a1c856da2427edb58a",
+          "scenario_sha256": "55670ae4b77a6c6b388d1925979ff9a84677a55caa6a6a24fb1f977a36aefc53",
           "proves": "Checks only the fields and matchers written under tool_events in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
         },
         {
           "scenario": "provider-served/stop-at-end-failure-whole",
           "pointer": "/expect/models",
           "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
-          "scenario_sha256": "d4528b67d1a063552b043f00c92db2cbe6cb3f35bb64aa2f419949a3130193c6",
+          "scenario_sha256": "3ee39ce8ba7dab431d54f3358374df14fc307d6d14d3547da5dbed7eb75b575d",
           "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
         },
         {
           "scenario": "provider-served/stop-at-end-failure-whole",
           "pointer": "/expect/hooks",
           "sha256": "f4d3a4ca91fc0f21b0b68c482e9e79d12cb3fd4e78ea97008f9dd0d37bfa7d9f",
-          "scenario_sha256": "d4528b67d1a063552b043f00c92db2cbe6cb3f35bb64aa2f419949a3130193c6",
+          "scenario_sha256": "3ee39ce8ba7dab431d54f3358374df14fc307d6d14d3547da5dbed7eb75b575d",
           "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
         },
         {
           "scenario": "provider-served/stop-at-end-failure-whole",
           "pointer": "/expect/tool_events",
           "sha256": "7410943f7ee2b6edf6406bb92a1595b8bc09d5c5970513807b856550db854711",
-          "scenario_sha256": "d4528b67d1a063552b043f00c92db2cbe6cb3f35bb64aa2f419949a3130193c6",
+          "scenario_sha256": "3ee39ce8ba7dab431d54f3358374df14fc307d6d14d3547da5dbed7eb75b575d",
           "proves": "Checks only the fields and matchers written under tool_events in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
         },
         {
           "scenario": "provider-served/stop-at-end-success-stream",
           "pointer": "/expect/models",
           "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
-          "scenario_sha256": "fa9fb4ab4aac2aebe74f206fadec7d655f35f5615f2b22d28781689d855b537d",
+          "scenario_sha256": "3382eb7e2840a84fd141ad83415effb3fa112c633415fc936ff54d024575f208",
           "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
         },
         {
           "scenario": "provider-served/stop-at-end-success-stream",
           "pointer": "/expect/hooks",
           "sha256": "3db7df6dc9b4f338eac57ce1c14dadceea99ca7336ddd89902f6ec0761aa6454",
-          "scenario_sha256": "fa9fb4ab4aac2aebe74f206fadec7d655f35f5615f2b22d28781689d855b537d",
+          "scenario_sha256": "3382eb7e2840a84fd141ad83415effb3fa112c633415fc936ff54d024575f208",
           "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
         },
         {
           "scenario": "provider-served/stop-at-end-success-stream",
           "pointer": "/expect/tool_events",
           "sha256": "db7c84fa4de60bc0a121664f1ea78aaa65a568f5b95af84116483cf2c6aab8a7",
-          "scenario_sha256": "fa9fb4ab4aac2aebe74f206fadec7d655f35f5615f2b22d28781689d855b537d",
+          "scenario_sha256": "3382eb7e2840a84fd141ad83415effb3fa112c633415fc936ff54d024575f208",
           "proves": "Checks only the fields and matchers written under tool_events in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
         },
         {
           "scenario": "provider-served/stop-at-end-success-whole",
           "pointer": "/expect/models",
           "sha256": "62b3a5035621e7e638a38803aeb32e2c2a74dbbeacb323b17b429eef51ffccab",
-          "scenario_sha256": "9f59d063b35fea406e582a7f4c62c2c67be8b71e3f17164763e41e2598db175e",
+          "scenario_sha256": "0ba8356eed728289eb0f232c9fde86f2b312bc16bfafccd79f9ced47f0943e29",
           "proves": "Checks only the fields and matchers written under models in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
         },
         {
           "scenario": "provider-served/stop-at-end-success-whole",
           "pointer": "/expect/hooks",
           "sha256": "3db7df6dc9b4f338eac57ce1c14dadceea99ca7336ddd89902f6ec0761aa6454",
-          "scenario_sha256": "9f59d063b35fea406e582a7f4c62c2c67be8b71e3f17164763e41e2598db175e",
+          "scenario_sha256": "0ba8356eed728289eb0f232c9fde86f2b312bc16bfafccd79f9ced47f0943e29",
           "proves": "Checks only the fields and matchers written under hooks in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
         },
         {
           "scenario": "provider-served/stop-at-end-success-whole",
           "pointer": "/expect/tool_events",
           "sha256": "db7c84fa4de60bc0a121664f1ea78aaa65a568f5b95af84116483cf2c6aab8a7",
-          "scenario_sha256": "9f59d063b35fea406e582a7f4c62c2c67be8b71e3f17164763e41e2598db175e",
+          "scenario_sha256": "0ba8356eed728289eb0f232c9fde86f2b312bc16bfafccd79f9ced47f0943e29",
           "proves": "Checks only the fields and matchers written under tool_events in this scenario; lists follow the fixture matching rules. No observation at another boundary is inferred from this pointer."
         },
         {
