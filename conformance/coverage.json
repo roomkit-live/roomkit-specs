@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "087af12445157430dabe07f921c1a1879dce4a4e12caaa66730fd6e32eb8fd0a",
-  "corpus_sha256": "4252a34e902137083c7d192d910a5e910cde3ce91d0d4b70519708321255d0b5",
+  "corpus_sha256": "4a9ad8d09671e0e1a1cf57f99384a050a036f63f70cf41f76bc8cdec33e6f93d",
   "python_commit": "b50c50a782668fc1681e21bcec52a3d83bc0d8c0",
-  "scenario_count": 2720,
+  "scenario_count": 2723,
   "sections": [
     {
       "section": "0",
@@ -330,6 +330,7 @@
         "members/rename-member-changes-the-display-name-only",
         "members/resolve-participant-identifies-a-pending-record",
         "orchestration/a-conversation-state-written-through-the-kit-moves-no-agent",
+        "orchestration/closing-a-room-takes-its-strategy-back-out",
         "permissions/binding-changes-and-their-triggers",
         "regenerate/a-closed-room-refuses-a-regeneration-before-the-agent-runs",
         "regenerate/a-closed-room-with-nothing-to-regenerate-refuses-it-too",
@@ -1249,6 +1250,7 @@
         "eviction/a-room-the-agent-joins-again-keeps-no-stored-result",
         "eviction/a-stored-result-of-parts-read-as-text-is-never-noted-as-a-repeat",
         "eviction/an-evicted-answer-given-a-third-time-is-noted",
+        "executors/a-provider-the-factory-hands-every-build-outlives-a-build-let-go",
         "executors/a-turn-apart-publishes-its-thinking-and-tool-calls-to-the-room",
         "executors/a-turn-cut-on-its-executor-names-it-in-its-record",
         "executors/a-turn-s-record-names-the-executor-that-ran-it-apart",
@@ -1377,6 +1379,7 @@
         "provider-served/success-whole",
         "provider-served/without-handler-stream",
         "provider-served/without-handler-whole",
+        "providers/a-kit-s-close-leaves-open-the-provider-its-agent-was-handed",
         "reasoning/a-block-cut-before-its-signature-is-not-replayed",
         "reasoning/a-compaction-keeps-the-rounds-reasoning",
         "reasoning/a-cut-block-is-still-the-turn-s-reasoning",
@@ -4373,6 +4376,7 @@
         "channel-release/a-live-channel-keeps-its-rooms-after-release",
         "executors/a-channel-call-no-executor-takes-fails-no-executor",
         "executors/a-channel-call-runs-on-the-executor-holding-the-room",
+        "executors/a-provider-the-factory-hands-every-build-outlives-a-build-let-go",
         "executors/a-publication-from-an-executor-no-longer-holding-the-room-is-dropped",
         "executors/a-released-channel-is-built-anew-for-the-next-turn",
         "executors/a-skill-activated-on-one-executor-rides-the-next-turn-on-another",
@@ -5666,6 +5670,7 @@
         "delivery/the-next-event-s-turn-runs-while-the-turn-before-it-is-held",
         "discussion/a-closed-kit-refuses-regeneration-before-reading-its-store",
         "locks/the-hooks-side-effects-of-a-set-of-a-deleted-room-the-close-drops-stay-out-of-the-room-created-again",
+        "providers/a-kit-s-close-leaves-open-the-provider-its-agent-was-handed",
         "status/a-status-posted-after-close-starts-no-room-hook",
         "tasks/nonempty-task-and-observation-reads-remain-available-during-close"
       ]
@@ -6885,6 +6890,7 @@
         "orchestration/an-uninstalled-pipeline-takes-its-router-and-its-tools-back",
         "orchestration/an-uninstalled-supervisor-takes-its-router-and-its-tools-back",
         "orchestration/an-uninstalled-swarm-takes-its-router-and-its-tools-back",
+        "orchestration/closing-a-room-takes-its-strategy-back-out",
         "orchestration/create-room-installs-through-the-same-path",
         "orchestration/each-revision-of-a-step-starts-from-its-own-task",
         "orchestration/each-room-s-background-team-runs-its-own-workers",
