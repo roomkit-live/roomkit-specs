@@ -1076,6 +1076,7 @@ else, where no turn's host is.
 | `start_task` | `room_id`, `agent_id`, `task`, `hand_back` (default: the agent's background setup's) | the task, as `delegate` returns it, started for the agent as its `work_in_background` call would (§23.4) |
 | `setup_background` | `agent_id`, `worker`, `hand_back` (default `relay`) | null; the agent is given `work_in_background`, served by the room's owner (§23.4, §10.6.5) |
 | `setup_task_tools` | `agent_id` | null; the agent is given `task_status` and `cancel_task`, served by the room's owner (§23.4, §10.6.5) |
+| `await_input_request` | `request_id`, optional `organization_id` | fixture-only bounded wait until the public owner reader sees the request; makes the asynchronous frame-arrival precondition explicit, without changing the synchronous reader |
 | `input_request` | `request_id`, optional `organization_id` | the open request of a turn this owner started (§10.6.5), with its nine `PendingInputEvent` fields and original creation `timestamp`; null when absent, settled, withdrawn or outside the organization |
 | `answer_input` | `request_id`, `value` | whether the tool waiting on the human-input request reads the answer (§10.6.5): false for one settled otherwise first, or answered already |
 | `reject_input` | `request_id`, `reason` (default empty) | whether the waiting tool reads the rejection, as a refusal (§10.6.5, §9.3) |

@@ -1823,6 +1823,7 @@
             "store.get_verification_request",
             "store.update_verification_request",
             "input_request",
+            "await_input_request",
             "answer_input",
             "reject_input",
             "request_verification",
@@ -3304,7 +3305,7 @@
           "if": {
             "properties": {
               "call": {
-                "const": "input_request"
+                "enum": ["input_request", "await_input_request"]
               }
             }
           },

@@ -82,6 +82,13 @@
           {
             "do": [
               {
+                "call": "await_input_request",
+                "request_id": "$request",
+                "expect": {
+                  "result": true
+                }
+              },
+              {
                 "call": "input_request",
                 "request_id": "$request",
                 "organization_id": "org-a",
