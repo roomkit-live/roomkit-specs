@@ -3317,21 +3317,14 @@
           "if": {
             "properties": {
               "call": {
-                "enum": [
-                  "input_request",
-                  "await_input_request"
-                ]
+                "enum": ["input_request", "await_input_request"]
               }
             }
           },
           "then": {
-            "required": [
-              "request_id"
-            ],
+            "required": ["request_id"],
             "properties": {
-              "request_id": {
-                "type": "string"
-              }
+              "request_id": {"type": "string"}
             }
           }
         },
@@ -6000,17 +5993,8 @@
         },
         "tool_timeouts_ms": {
           "description": "Per-tool bounds for this turn in integer milliseconds, over the channel's named bounds. Null or omission keeps the channel map; a null value leaves a named tool unbounded. Zero reaches the implementation and must fail before generation.",
-          "type": [
-            "object",
-            "null"
-          ],
-          "additionalProperties": {
-            "type": [
-              "integer",
-              "null"
-            ],
-            "minimum": 0
-          }
+          "type": ["object", "null"],
+          "additionalProperties": {"type": ["integer", "null"], "minimum": 0}
         },
         "tool_handler": {
           "type": "array",
