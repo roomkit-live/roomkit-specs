@@ -5024,7 +5024,7 @@
           }
         },
         "streamed": {
-          "description": "Per room and streaming channel, the items its `deliver_stream` read, in order: `{\"text\": ...}` for a text delta, `{\"usage\": ...}` for what a generation used when the channel `reads_usage`, `{\"row\": event}` for a stored row, `{\"loop_end\": ...}` for the turn's end when the channel `reads_loop_end`, `{\"failed\": true}` where the stream raised.",
+          "description": "Per room and streaming channel, the items its `deliver_stream` read, in order: `{\"text\": ...}` for a text delta, `{\"usage\": ...}` for what a generation used when the channel `reads_usage`, `{\"row\": event}` for a stored row, `{\"loop_end\": ...}` for the turn's end when the channel `reads_loop_end`, `{\"failed\": true}` where the stream raised, then `{\"cut\": event}` for the end of a stream cut from outside, the row its `deliver_cut` was handed, null for none.",
           "type": "object",
           "additionalProperties": {
             "type": "object",

@@ -207,7 +207,9 @@ room callbacks of the setup are not compared.
     with `reads_usage`, it also records what each generation tells of its
     usage (§6.1 `deliver_stream`, §6.4), which it skips otherwise; with
     `reads_loop_end`, the turn's end the stream hands last, its reason, its
-    rounds and its usage (§6.4), which it skips otherwise;
+    rounds and its usage (§6.4), which it skips otherwise; its
+    `deliver_cut` records the end of a stream cut from outside, the row it
+    is handed (§6.1, §12.2 step 13s);
   - `recent_events_window` (default 0): how many of the room's latest
     events it declares it reads (§6.1), which sizes the room's context;
   - with `addresses`, its own address methods answer in place of the
@@ -1193,7 +1195,7 @@ through a gate of a hook on `on_verification_ended`, never through a delay.
 | `custom_events` | Per room, the CUSTOM ephemeral events its subscribers read, in order: each `{room_id, channel_id, data}`; ACP configuration, plans, tool progress and usage retain their wire payload. |
 | `subscribers` | Per subscriber a `subscribe_room` call named, the ephemeral events its callback read during the steps, in order: each `{type, room_id, user_id}` (§8.4, §17.2); a subscriber that read none, `[]` |
 | `presence_events` | Per room, the `presence_online` and `presence_offline` ephemeral events its subscribers read during the steps, in order: each `{type, user_id}`, `user_id` the agent's channel id (§10.6.7, §8.4) |
-| `streamed` | Per room and streaming channel, the items its `deliver_stream` read, in order: `{"text": ...}` for a text delta, `{"thinking": ...}` for a piece of the model's reasoning, `{"usage": ..., "partial": ..., "model": ..., "provider": ...}` for what a generation used, `partial` true for what it told before its end, when the channel `reads_usage`, `{"row": event}` for a row the store holds, `{"loop_end": {"reason", "rounds", "usage"}}` for the turn's end, when the channel `reads_loop_end`, `{"failed": true}` where the stream raised |
+| `streamed` | Per room and streaming channel, the items its `deliver_stream` read, in order: `{"text": ...}` for a text delta, `{"thinking": ...}` for a piece of the model's reasoning, `{"usage": ..., "partial": ..., "model": ..., "provider": ...}` for what a generation used, `partial` true for what it told before its end, when the channel `reads_usage`, `{"row": event}` for a row the store holds, `{"loop_end": {"reason", "rounds", "usage"}}` for the turn's end, when the channel `reads_loop_end`, `{"failed": true}` where the stream raised, `{"cut": event}` for the end of a stream cut from outside, the row its `deliver_cut` was handed (§6.1, §12.2 step 13s), null for none |
 | `turns` | Per room and intelligence channel, the events its `on_event()` received |
 | `ingested` | Per room and scripted agent with a scripted `memory`, the events its memory was handed (§20, `ingest`), in order, matched as the timeline's |
 | `compacted` | Per room and scripted agent with a scripted `memory`, the compactions between two tool rounds its memory was asked (§6.4, §20.1, `compact`), in order: each `{history, usage}`, `history` the messages it was handed, each as `models` reads a request's (`{role, text, parts, round}`), `usage` the round's token counters |
