@@ -190,6 +190,12 @@ room callbacks of the setup are not compared.
     room callbacks (§6.1): it records each call under `room_callbacks`, and
     in `hook_order` as `<id>.on_room_attached` or `<id>.on_room_detached`,
     then reacts (`gate`, `do`, `fail`); with no reaction it does nothing;
+  - `update_binding: {}` enables its synchronous binding callback recorder (§7.2).
+    Each call records `{"call": "update_binding", "binding": ...}` under
+    `room_callbacks`, and `<id>.update_binding` in `hook_order`. An optional
+    `fail` string raises the scripted channel failure after recording. No
+    asynchronous reactions are accepted. Without this fixture the default
+    callback does nothing;
   - with `streams`, it takes a streamed response as it is written (§6.1
     `supports_streaming_delivery`): its `deliver_stream` reads what it is
     handed to the stream's end, recording each item under `streamed`, and
