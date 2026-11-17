@@ -1822,6 +1822,7 @@
             "store.create_verification_request",
             "store.get_verification_request",
             "store.update_verification_request",
+            "input_request",
             "answer_input",
             "reject_input",
             "request_verification",
@@ -3296,6 +3297,21 @@
                 "type": "integer",
                 "minimum": 0
               }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "call": {
+                "const": "input_request"
+              }
+            }
+          },
+          "then": {
+            "required": ["request_id"],
+            "properties": {
+              "request_id": {"type": "string"}
             }
           }
         },
