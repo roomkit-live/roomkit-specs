@@ -146,9 +146,7 @@
             "arguments": {
               "q": "original"
             },
-            "result": {
-              "$contains": "not on this host"
-            },
+            "result": "{\"error\": \"not on this host\"}",
             "is_error": true,
             "cancelled": false,
             "refused": true,
@@ -183,9 +181,7 @@
             "arguments": {
               "q": "original"
             },
-            "result": {
-              "$contains": "not on this host"
-            },
+            "result": "{\"error\": \"not on this host\"}",
             "status": "failed",
             "outcome": "refused"
           }
