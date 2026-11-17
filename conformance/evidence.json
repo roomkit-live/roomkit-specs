@@ -12883,7 +12883,7 @@
     {
       "id": "phase4-task-discussion-names",
       "requirement": "RK-23.4-001",
-      "clause_sha256": "519b09de21abf6bb77e70e58130f0cda36fc5ba5be38d929e613a27513955569",
+      "clause_sha256": "9e3a7ad575f1453a3cf1ac412678739fa92733009483cbe89316ed528aae4fc8",
       "scope": "Discussion handles in relayed task results and task_status through both owner-served and agent-owned tools; status bus identifiers remain channel ids.",
       "coverage": "partial",
       "review": "Assertions read against §23.4 and the source Python tests for discussion background task names and task_status; no claim for the other delegation helpers in this composite clause. Re-read after the start_task null-or-empty clarification: these unchanged scenarios and their six assertions still prove only the stated naming scope.",
@@ -13099,7 +13099,7 @@
       "missing": [
         "Other delegation tools, cancellation, concurrent setup replacement and external executor configurations are outside this mapping."
       ],
-      "clause_sha256": "519b09de21abf6bb77e70e58130f0cda36fc5ba5be38d929e613a27513955569",
+      "clause_sha256": "9e3a7ad575f1453a3cf1ac412678739fa92733009483cbe89316ed528aae4fc8",
       "coverage": "partial",
       "review": "Read against the Python background/task-context implementation and its source tests; four new scenarios passed Python memory and Redis and reproduced the Rust defects before the correction. These are bounded shared scenarios, not complete coverage of the composite clause.",
       "tests": []

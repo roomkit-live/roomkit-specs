@@ -1413,9 +1413,9 @@
     },
     {
       "section": "23.4",
-      "sha256": "42b9c46fadf92ebed7dcf6351573e4c02e3d700f0a6111edcae4730a1ea08140",
+      "sha256": "297608d7bf6067e2aa98abe30d3ab9914676f3b4d1b1f68e3f22a4090c78ddae",
       "classification": "normative",
-      "review": "Reviewed the complete delegation-tools section after clarifying start_task empty-string fallback from Python behavior. The setup default and valid explicit modes remain unchanged; the mixed source units retain their existing boundaries. Coverage remains scoped to reviewed assertions, not the whole section."
+      "review": "Reviewed the complete delegation-tools section after adding DelegateHandler's wait_in_task_rooms (RMK-1621), from the Python and Rust behavior its two task scenarios prove. The start_task fallback, the setup default and the explicit modes remain unchanged; the mixed source units retain their existing boundaries. Coverage remains scoped to reviewed assertions, not the whole section."
     },
     {
       "section": "23.5",

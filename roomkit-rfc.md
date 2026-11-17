@@ -21704,7 +21704,8 @@ Implementations SHOULD provide helpers for AI-driven delegation:
 - `delegate_task` — The tool those helpers serve, through a handler
   (`DelegateHandler(kit, notify = null, default_share_channels = null,
   delivery_strategy = null, cache = null, serialize_per_room = false,
-  max_conversation = 0, max_result_chars = 4000)`). Its arguments are
+  max_conversation = 0, max_result_chars = 4000, wait_in_task_rooms = false)`).
+  Its arguments are
   `agent` and `task`, then `context` and `share_channels`, and `conversation`
   when the handler allows it. A `task` that is no text, or a `share_channels` that
   is no list, is refused, nothing made, and an `agent` that is no text names no
@@ -21752,6 +21753,18 @@ Implementations SHOULD provide helpers for AI-driven delegation:
 
   `max_result_chars` is the bound of each result its delegations relay (§23.3
   step 8): the host's too, and the same whichever agent the call names.
+
+  `wait_in_task_rooms` is the host's too. With it, a call made from a task's
+  room (a child room the framework made for a delegated task, whose metadata
+  names that task), by a worker delegating in turn or by the host calling the
+  handler itself, delegates inline (Section 23.3): the call answers once the
+  task ended, with the task's receipt, its `status` the status the task ended
+  with, and its `result`, the task's work bounded by `max_result_chars` as a
+  relayed result is (empty for a task that failed). The task runs within the
+  call: one a worker's turn made ends with that turn, so cancelling the worker's
+  task cancels it, and the worker is not asked again. Without it, and from any
+  other room with it, a call starts a background task and answers with its
+  receipt, and a worker's own task may end before that result comes back.
 
   `max_conversation` is the host's, since the model chooses the worker, which
   may be another vendor's or hold another workspace. With 0, the tool declares
