@@ -3384,7 +3384,9 @@ string ends where the line does, so a `Name:` inside it reads as part of it.
 With the label alone, a `Name:` in the middle of a line was read as another
 author's (Haiku 5.5 28 times in 48, Sonnet 5.5 6 in 24, gpt-6-luna 22 in 32);
 with the string, 4 in 96, 0 in 24 and 0 in 32, an indented code block read
-right (RMK-635). Each line, not only the first: an API merges consecutive
+right (RMK-635), and a fenced one is labelled line by line like any other
+text, so that no line of it reads as written outside the turn (RMK-636).
+Each line, not only the first: an API merges consecutive
 user turns into one message, and a model then reads a `Bob:` line inside
 Alice's message as Bob's (measured on two models, RMK-616). Every line break
 (a carriage return, a Unicode line or paragraph separator, a form feed) is
@@ -3408,8 +3410,12 @@ reach the agent (a channel they are reached through is bound in the room
 with a visibility that lets its messages reach the agent, Section 7.5: a
 person the agent would never hear is not named to it), silent ones
 included, one per person in the order they joined, each
-named by the room's record of them (their name and its rank, or their
-channel when they have no name). A conference
+named as the turns the reader reads name them: a person one of those turns
+is from by the label of their latest turn, the name their transport stamped
+included, so that no turn names someone the note does not; a silent one by
+the room's record of them (their name and its rank), or, with no name,
+their channel ranked after the labels the turns gave it (`@sms1 (2)`), so
+that two people with no name never read as one. A conference
 keeps the roster (Section 12.10.4); an integration that carries several
 people through one stream (a meeting bridged into one audio stream) writes
 it, a member per person present, and matches each voice to its person
@@ -3419,7 +3425,11 @@ labelled, not as an anonymous user's. When two people or more take part,
 the turn's notes name them, each name in a quote (a participant may
 choose their name, and it must not read as the runtime's words), so the
 agent knows who is there before each has spoken and may address someone
-who has not said a word; the note is one of the runtime's marks, and a
+who has not said a word. It names twenty people at most, those whose turns
+the reader reads first, then the silent ones, each in the order they joined,
+and counts the others (`and 10 others`), so that a large group does not put
+every name in every turn; who takes part is still counted whole. The note is
+one of the runtime's marks, and a
 standalone turn, which reads nothing of the room, carries none. A speak policy's `SpeakTurn.people` is the same
 list, or the distinct voices of the turns when they are more (one
 microphone may carry several). A conversation a memory summarizes
@@ -20369,13 +20379,31 @@ place (Section 6.4).
 **SummarizingMemory** calls an AI provider to summarize older history,
 keeping recent events intact: each older turn is read on one line after its
 author's label, and the summary's message stands for them, a user text joined
-to the turn after it. The summary is cached and refreshed
-periodically or when the event count exceeds a threshold. Its thresholds are
+to the turn after it. Its thresholds are
 shares of what its `max_context_tokens` leaves once the turn's footprint
 (below), its reply budget included, and the current event are paid for: past
 the first it shortens the older events' long texts, past the second it
-summarizes them, and the messages, notes and events it returns are then cut,
-from the oldest event, to what is left, its latest event always kept.
+summarizes them, keeping the latest that fit the second threshold less the
+summary's `summary_max_tokens`, its `min_events` latest at least: the event
+that passes is summarized, never kept for the last cut to drop unsummarized.
+The messages, notes and events it returns are then cut,
+from the oldest event, to what is left, its latest event always kept. A
+summarizer (CompactingMemory's too) reads its instruction, which says the
+turns are a record to summarize, neither to answer nor to continue, then a
+prior summary when there is one, then the turns in a `<conversation>` block:
+a transcript ending on a question would otherwise be answered rather than
+summarized.
+
+The memory keeps, for each room and agent, the summary it last built, with
+the room's creation mark and each turn the summary covers with what that
+turn said. A read gives that summary, then the turns after those it covers,
+and asks the model again only once they pass the second threshold, the
+prior summary then read with the new turns alone. The summary stops
+standing, and a read starts from its window again, once the room is one
+created again under its id, or a turn it covers is deleted, edited, its
+content withheld (Section 10.3), or out of the history the channel reads,
+where the memory could no longer tell: a summary never hands on what a
+deleted turn said, nor a deleted room's conversation.
 Between two tool rounds it compacts once the round's counters, summed, pass its
 second threshold taken as a share of `max_context_tokens`: a model summarizes
 the history's older messages, each text read on one line after its role, a
@@ -20434,7 +20462,12 @@ channel sets none and the provider applies its own, and each piece its history
 replays as `(index, turn, tokens)`.
 
 A memory that keeps the turn within a window (BudgetAwareMemory,
-CompactingMemory and SummarizingMemory above) sizes the history against what
+CompactingMemory and SummarizingMemory above) counts each turn as the
+conversation sends it: where the conversation labels its turns (Section
+6.4), a participant's turn, the current one included, costs its label and
+the JSON string of each of its lines, a 14-line JSON paste 143 tokens where
+its text alone is 96; a one-to-one conversation's turns cost what was typed.
+It sizes the history against what
 the window, the model's, leaves once the turn's footprint and the current
 event are in it, never against the whole window: a 32,000-token window with a
 12,000-token system prompt, 8,000 tokens of tools and a 6,000-token reply
