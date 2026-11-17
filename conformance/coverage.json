@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "a50bf540ffe5001880db9a01701cec8f23cfcdc46749d82a1728eed50de8fdd1",
-  "corpus_sha256": "6be33676ef75bd480fe07da714525107b31677f39ab555d058ff7d0d455c7e49",
+  "corpus_sha256": "76323b1889568da1dd682ee4bc59cd1fd4f26e7ee0471553819ef8fffa248904",
   "python_commit": "b50c50a782668fc1681e21bcec52a3d83bc0d8c0",
-  "scenario_count": 2936,
+  "scenario_count": 2937,
   "sections": [
     {
       "section": "0",
@@ -1663,6 +1663,7 @@
         "tasks/a-helper-cut-short-leaves-the-task-to-its-worker-that-owes-a-result",
         "tasks/a-person-named-like-an-agent-s-label-reads-as-a-participant-in-a-worker-s-brief",
         "tasks/a-re-prompted-worker-s-task-carries-its-last-turn-s-record-only",
+        "tasks/a-submit-round-that-gives-the-model-more-asks-it-again",
         "tasks/a-task-carries-its-worker-s-turn-record",
         "tasks/a-task-cut-before-its-worker-wrote-any-text-fails-with-no-output",
         "tasks/a-task-whose-shared-transport-stopped-reading-its-answer-fails-cancelled",
@@ -8486,6 +8487,7 @@
         "tasks/a-shared-transport-is-told-the-answer-the-room-s-hooks-left",
         "tasks/a-structured-delegation-re-prompts-until-its-worker-submits",
         "tasks/a-structured-delegation-refuses-the-workers-own-result-tool",
+        "tasks/a-submit-round-that-gives-the-model-more-asks-it-again",
         "tasks/a-task-carries-its-worker-s-turn-record",
         "tasks/a-task-cut-before-its-worker-wrote-any-text-fails-with-no-output",
         "tasks/a-task-whose-shared-transport-stopped-reading-its-answer-fails-cancelled",
