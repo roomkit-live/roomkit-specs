@@ -2239,7 +2239,7 @@
           "scenario": "hooks/a-timeout-drops-already-collected-injections",
           "pointer": "/expect",
           "sha256": "f091822ac0a42ff87544fb7e466152288336fa2a8b487ed2ccc03a04df8562ad",
-          "scenario_sha256": "6c1efebf020e85678d12a5f81124a6b5d4e6d0956f04520a527ffab76bc1d451",
+          "scenario_sha256": "108578b282e2ddc21788472751300a55c24b38822138ce0a4228bb6203bd0668",
           "proves": "The first hook has returned its injection before the second waits past process_timeout; neither event is stored or delivered."
         },
         {
