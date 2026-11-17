@@ -136,7 +136,7 @@
           "round": 0,
           "tool_calls": [
             {
-              "id": "p1",
+              "id": "$e1",
               "name": "lookup",
               "arguments": {
                 "q": "original"
@@ -152,7 +152,7 @@
           },
           "tool_calls": [
             {
-              "id": "p1",
+              "id": "$e1",
               "name": "lookup",
               "result": "provider result",
               "status": "failed"
