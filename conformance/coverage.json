@@ -1,9 +1,9 @@
 {
   "version": 1,
   "rfc_sha256": "d8662dbbbde3342955d52cebf8ef5a27862366ae36289442d66ee1b95e937751",
-  "corpus_sha256": "4357e0ec12dbdbe93bb21fc5cc8da132bf11306dbc5bd749c3cbd8b665fdec89",
+  "corpus_sha256": "fc010d6d3dece8e0005225b6b93893b0747a92e3248f6bed725fae7bda3e6def",
   "python_commit": "b50c50a782668fc1681e21bcec52a3d83bc0d8c0",
-  "scenario_count": 3009,
+  "scenario_count": 3011,
   "sections": [
     {
       "section": "0",
@@ -1463,6 +1463,8 @@
         "planning/null-tasks-does-not-replace-the-plan-streaming",
         "planning/planning-is-disabled-by-default-non-streaming",
         "planning/planning-is-disabled-by-default-streaming",
+        "planning/sandbox-declarations-precede-the-planner-non-streaming",
+        "planning/sandbox-declarations-precede-the-planner-streaming",
         "planning/scalar-tasks-does-not-replace-the-plan-non-streaming",
         "planning/scalar-tasks-does-not-replace-the-plan-streaming",
         "planning/tool-search-always-declares-the-planner-before-and-after-use-non-streaming",
@@ -3295,6 +3297,8 @@
         "planning/null-tasks-does-not-replace-the-plan-streaming",
         "planning/planning-is-disabled-by-default-non-streaming",
         "planning/planning-is-disabled-by-default-streaming",
+        "planning/sandbox-declarations-precede-the-planner-non-streaming",
+        "planning/sandbox-declarations-precede-the-planner-streaming",
         "planning/scalar-tasks-does-not-replace-the-plan-non-streaming",
         "planning/scalar-tasks-does-not-replace-the-plan-streaming",
         "planning/tool-search-always-declares-the-planner-before-and-after-use-non-streaming",
@@ -7942,6 +7946,8 @@
         "mcp/a-tool-listed-twice-is-declared-once",
         "orchestration/a-supervisor-install-refused-halfway-sets-nothing-up",
         "orchestration/a-supervisor-s-own-tools-stay-its-own",
+        "planning/sandbox-declarations-precede-the-planner-non-streaming",
+        "planning/sandbox-declarations-precede-the-planner-streaming",
         "role-policy/a-later-turn-reads-the-new-role-non-streaming",
         "role-policy/a-later-turn-reads-the-new-role-streaming",
         "role-policy/a-skill-hint-keeps-the-role-restriction-non-streaming",

@@ -3,9 +3,9 @@
   "id": "planning/sandbox-declarations-precede-the-planner-streaming",
   "title": "Sandbox declarations precede the planner (streaming)",
   "rules": [
-    "\u00a76.4",
-    "\u00a79.3",
-    "\u00a721.1"
+    "§6.4",
+    "§9.3",
+    "§21.1"
   ],
   "notes": "Python: AIChannel public model request with sandbox and enable_planning; _ai_context._add_sandbox precedes the planner. The provider tool_names observation preserves declaration order.",
   "setup": {
