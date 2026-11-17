@@ -3,7 +3,7 @@
   "id": "local-presence/room-hooks-and-executor-close",
   "title": "Local presence follows required hook definitions in its room and the kit executor closure",
   "rules": [
-    "\u00a710.6.7"
+    "§10.6.7"
   ],
   "notes": "Python: tests/test_local_agent_presence.py; tests/test_agent_presence.py (local branch only).",
   "setup": {

@@ -3,7 +3,7 @@
   "id": "local-presence/tenant-none",
   "title": "Presence reads the requested room and organization without leaking another tenant",
   "rules": [
-    "\u00a710.6.7"
+    "§10.6.7"
   ],
   "notes": "Python: tests/test_local_agent_presence.py; tests/test_agent_presence.py (local branch only).",
   "setup": {

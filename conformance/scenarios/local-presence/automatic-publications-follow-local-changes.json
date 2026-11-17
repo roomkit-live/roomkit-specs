@@ -3,7 +3,7 @@
   "id": "local-presence/automatic-publications-follow-local-changes",
   "title": "Attach, hook coverage, detach and room close maintain automatic local presence publications",
   "rules": [
-    "\u00a710.6.7"
+    "§10.6.7"
   ],
   "notes": "Python: tests/test_local_agent_presence.py; tests/test_agent_presence.py (local branch only).",
   "setup": {

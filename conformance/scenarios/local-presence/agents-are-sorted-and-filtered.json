@@ -3,7 +3,7 @@
   "id": "local-presence/agents-are-sorted-and-filtered",
   "title": "Local presence is sorted by channel id and includes only intelligence bindings",
   "rules": [
-    "\u00a710.6.7"
+    "§10.6.7"
   ],
   "notes": "Python: tests/test_local_agent_presence.py; tests/test_agent_presence.py (local branch only).",
   "setup": {

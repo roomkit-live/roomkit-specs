@@ -3,7 +3,7 @@
   "id": "host-context/fresh-context-window-50",
   "title": "The host rereads room, bindings, participants and history during its local turn",
   "rules": [
-    "\u00a710.6.5"
+    "§10.6.5"
   ],
   "notes": "Python: tests/test_local_host_context.py; core/_turn_host.py KitHost._room_context; turns/host.py TurnHost.room_context. Fresh JSON read through a real local turn; native AI witnesses additionally cover both provider modes and detached nested result ownership.",
   "setup": {
