@@ -327,9 +327,9 @@
     },
     {
       "section": "8.4",
-      "sha256": "bfa8fe7d7e5eac7390c8798aabf80b04ca0584b157767d6d7932b39bec3baa9c",
+      "sha256": "33d14862d87efa023d9904c1a7d1b5e68aff4216d7a3349f3011b8187d7601ef",
       "classification": "normative",
-      "review": "Source inventory: Realtime / Ephemeral Events. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Realtime / Ephemeral Events. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the ACP subscriber tool-text option and the existing source units surrounding it."
     },
     {
       "section": "8.5",
@@ -1611,9 +1611,9 @@
     },
     {
       "section": "A.9.1",
-      "sha256": "116b36f3a851df69c7a0ee61529cd5c7d8f592ed133f2c13060356eeca768f48",
+      "sha256": "86f29f0c65291c19cb24171815b907b5fed5c393ea5ee78d1d4c0ee895b063d1",
       "classification": "normative",
-      "review": "Source inventory: ACP Agent Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: ACP Agent Channel. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the ACP subscriber tool-text option and the existing source units surrounding it."
     },
     {
       "section": "A.10",

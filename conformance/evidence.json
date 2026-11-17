@@ -19145,7 +19145,7 @@
     {
       "id": "acp-room-directories",
       "requirement": "RK-A.9.1-001",
-      "clause_sha256": "74dcce7648e89e7475c3e229d49c8fac85650cdf708afdbd86170002c3603b52",
+      "clause_sha256": "676d50af70b75f6e4feccf615b6d21631c9b987f7574049cc81858bcc0704c9e",
       "coverage": "partial",
       "scope": "Additional absolute directories are declared on room sessions opened for a prompt or by a host call, retained across rooms, reconnects and authorized rebuilds. Omission and an empty list omit the wire field. Absolute cwd and directories normalize redundant separators, dot segments and trailing slashes, retain exactly two leading POSIX slashes and do not resolve parent segments.",
       "assertions": [
@@ -19652,7 +19652,7 @@
         "Callbacks outside an active turn and standalone session handling are not covered.",
         "This link does not claim generic thinking-block segmentation, ON_AI_THINKING or coalescing from RK-8.4-001."
       ],
-      "clause_sha256": "74dcce7648e89e7475c3e229d49c8fac85650cdf708afdbd86170002c3603b52",
+      "clause_sha256": "676d50af70b75f6e4feccf615b6d21631c9b987f7574049cc81858bcc0704c9e",
       "coverage": "partial",
       "tests": [],
       "review": "Independent full review reads the Python source tests, shared scenarios, RFC and Rust port together. A baseline Rust run fails on the missing marker, report thought and ephemeral events. Review found the preview case did not enable publication; it now enables the actual option and asserts its 1000-character Unicode preview, full 1001-character marker/report and length. Python passes before Rust. Rust passes on one and four workers."
@@ -19824,7 +19824,7 @@
     {
       "id": "acp-active-tool-markers-and-response",
       "requirement": "RK-A.9.1-001",
-      "scope": "Active room tools: merged updates, stream markers, raw/display results, bounded text previews and response segmentation/counts.",
+      "scope": "Active room tools: merged updates, stream markers, raw/display results, bounded text previews and response segmentation/counts. Scenarios asserting subscriber previews explicitly enable tool text.",
       "assertions": [
         {
           "scenario": "acp/tools-completed-segments",
@@ -19985,7 +19985,7 @@
         "Permissions, plans, CUSTOM progress, usage and standalone sessions retain separate contracts.",
         "These shared cases do not establish binary bounds; the two source/native bound tests are recorded separately."
       ],
-      "clause_sha256": "74dcce7648e89e7475c3e229d49c8fac85650cdf708afdbd86170002c3603b52",
+      "clause_sha256": "676d50af70b75f6e4feccf615b6d21631c9b987f7574049cc81858bcc0704c9e",
       "coverage": "partial",
       "tests": [],
       "review": "Full independent review read Python source tests, scenarios, RFC and Rust. Missing tool output first failed on Rust, then passed after the port. Review additionally reproduced unbounded binary rows/errors and a stale hook room context; fixes have separate red/green evidence. Final gate and receipt status is recorded separately, not inferred from this review statement."
@@ -25739,6 +25739,84 @@
         "Summary and compaction integration, other context renderers and complete Unicode text-safety parity are not completed by this public export.",
         "Custom and empty tag sets are explicit caller options; this link does not claim they frame unselected text safely.",
         "The normative source unit remains partial; approved text-normalization exclusions and media/realtime/remote execution boundaries are unchanged."
+      ]
+    },
+    {
+      "id": "phase4-acp-subscriber-tool-text",
+      "requirement": "RK-8.4-001",
+      "clause_sha256": "db2cd955becc29c1d6658527129b0352dfecc79f784c541fd7207d16b0187e43",
+      "coverage": "partial",
+      "scope": "ACP lifecycle and intermediate custom progress on an ordinary room tool call, with default and explicit tool-text settings.",
+      "assertions": [
+        {
+          "scenario": "acp/tool-publication-default",
+          "pointer": "/expect/tool_events/room-1",
+          "sha256": "254f91d97c6a59615a10a7402c5ba3a696c43271e2dbedd8b66b6971653bd1fd",
+          "scenario_sha256": "12b594b5ba9c98a7b587c3ec0c2cfa2bedde3850f2d6ce20e97444552c8fe98d",
+          "proves": "The ordered start and end retain the call identity and terminal status, with an end duration. Arguments and the result preview follow the channel option."
+        },
+        {
+          "scenario": "acp/tool-publication-default",
+          "pointer": "/expect/custom_events/room-1",
+          "sha256": "e404485d02c379ab6169a9d80bdea9e56169d2c68230d7a82c8c96505443b7f4",
+          "scenario_sha256": "12b594b5ba9c98a7b587c3ec0c2cfa2bedde3850f2d6ce20e97444552c8fe98d",
+          "proves": "The intermediate ACP update preserves its identity, kind and status. Six scripted detail fields follow the option, including the path, title and extension metadata."
+        },
+        {
+          "scenario": "acp/tool-publication-opt-in",
+          "pointer": "/expect/tool_events/room-1",
+          "sha256": "853a3271524d33da994ee119bdf0fdd86221e794f3d6a05a23617bee46478921",
+          "scenario_sha256": "92dff776d30815584e5caa2c5ef19ae3482b9b0d0ec7733771a548f169cf45bc",
+          "proves": "The ordered start and end retain the call identity and terminal status, with an end duration. Arguments and the result preview follow the channel option."
+        },
+        {
+          "scenario": "acp/tool-publication-opt-in",
+          "pointer": "/expect/custom_events/room-1",
+          "sha256": "08c18db71120ebbf66dc76d6b154cd86952af771b7087aebfa6c20cbb69ad34e",
+          "scenario_sha256": "92dff776d30815584e5caa2c5ef19ae3482b9b0d0ec7733771a548f169cf45bc",
+          "proves": "The intermediate ACP update preserves its identity, kind and status. Six scripted detail fields follow the option, including the path, title and extension metadata."
+        }
+      ],
+      "tests": [],
+      "review": "Reviewed the two executable ACP subscriber scenarios, the typed source and target consumers, and their separate tool-report and stored-row paths. Native checks cover actual key omission. Assertion links do not record an execution.",
+      "missing": [
+        "Other ephemeral event types and channel kinds retain their own coverage.",
+        "These two scenarios do not measure the preview length limit or an interrupted call."
+      ]
+    },
+    {
+      "id": "phase4-acp-tool-rows-and-ephemerals",
+      "requirement": "RK-8.4-003",
+      "clause_sha256": "0d6a61afe2ebf8df6580432d38781833e95cc9777e2207cc2e742cd48514337a",
+      "coverage": "partial",
+      "scope": "The subscriber receives structural tool activity even when BEFORE_BROADCAST blocks the corresponding ACP room rows.",
+      "assertions": [
+        {
+          "scenario": "acp/tool-publication-default",
+          "pointer": "/expect/timeline/room-1",
+          "sha256": "412f5e815c14b215975cabed552bb65b63481d4226775e1f17d4bb30ea81e456",
+          "scenario_sha256": "12b594b5ba9c98a7b587c3ec0c2cfa2bedde3850f2d6ce20e97444552c8fe98d",
+          "proves": "Both tool rows retain their full asserted contents with blocked status and the identity of the blocking hook."
+        },
+        {
+          "scenario": "acp/tool-publication-default",
+          "pointer": "/expect/tool_events/room-1",
+          "sha256": "254f91d97c6a59615a10a7402c5ba3a696c43271e2dbedd8b66b6971653bd1fd",
+          "scenario_sha256": "12b594b5ba9c98a7b587c3ec0c2cfa2bedde3850f2d6ce20e97444552c8fe98d",
+          "proves": "The subscriber still receives a start and an end for the same tool, with no asserted input or result text."
+        },
+        {
+          "scenario": "acp/tool-publication-default",
+          "pointer": "/expect/hooks/tool_report",
+          "sha256": "b2f2208218bddd95c862ee8d6a94a73e1450469a4cc3a07df65d2168c10dcd92",
+          "scenario_sha256": "12b594b5ba9c98a7b587c3ec0c2cfa2bedde3850f2d6ce20e97444552c8fe98d",
+          "proves": "The independent tool observer receives the full final arguments and result."
+        }
+      ],
+      "tests": [],
+      "review": "Reviewed the two executable ACP subscriber scenarios, the typed source and target consumers, and their separate tool-report and stored-row paths. Native checks cover actual key omission. Assertion links do not record an execution.",
+      "missing": [
+        "This scenario does not cover answer-text publications, reasoning, hook modifications or other channels."
       ]
     }
   ],

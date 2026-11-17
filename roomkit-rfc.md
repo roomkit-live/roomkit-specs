@@ -5341,6 +5341,18 @@ they are opt-in: `arguments` on a start and `result`, at most 500
 characters, on an end, present only for a channel built with
 `publish_tool_call_text` (false by default).
 
+An ACP channel applies the same option to its room subscribers. Its start
+carries the call ID and name. Its end carries the ID, name, terminal status
+and elapsed duration, including when the channel closes an unfinished call.
+The name follows the latest title the ACP agent supplied. A title containing
+a path or other text is visible as the call name with either setting.
+Only an opted-in start includes the arguments, and only an opted-in end
+includes the result preview (at most 500 characters). Intermediate ACP tool
+progress includes only `sessionUpdate`, `toolCallId`, `status` and `kind`
+when present. With the option enabled, it carries the full ACP update.
+Tool-call stream markers, stored rows and reports to tool hooks keep their
+ordinary contents.
+
 Implementations SHOULD provide at least an in-memory realtime backend for
 single-process deployments.
 <!-- /rfc -->
@@ -5367,7 +5379,7 @@ ephemerals and are unaffected.
 <!-- rfc: {"id": "RK-8.4-003", "kind": "behavior", "applies": "§8.4 Realtime / Ephemeral Events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
 **No hook judges a turn's ephemerals.** `BEFORE_BROADCAST` (§9.5) runs on the
 event the room stores; what a turn publishes live is neither blocked nor
-modified by it. The text of an AI channel's reasoning and its tool calls'
+modified by it. The text of an AI or ACP channel's reasoning and its tool calls'
 arguments and results on `tool_call_start` and `tool_call_end` are published
 only for a channel the host builds to publish them (`publish_thinking_text`,
 `publish_tool_call_text`), and then as they are produced, whatever a hook
@@ -23369,6 +23381,7 @@ ACPChannel
 │   ├── authentication_method: string | null
 │   ├── mcp_servers: list<ACP MCPServer> | (room_id) → list<ACP MCPServer>
 │   ├── session_config: map<string, string | bool> | null  # set on every session opened
+│   ├── publish_tool_call_text: bool (default false)  # room tool notifications (§8.4)
 │   ├── external_tool_handler: ExternalToolHandler | null
 │   ├── name, role, description: string | null  # its identity, as an Agent's (§6.4)
 │   └── instructions: string | null             # sent once per session (§6.4)

@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "rfc_sha256": "d8662dbbbde3342955d52cebf8ef5a27862366ae36289442d66ee1b95e937751",
-  "corpus_sha256": "14aaae8eb708957ef522e9dc8af25c5f2ff2274a93aa02c758e5688dded70573",
+  "rfc_sha256": "dea582f0e0dd241691575ae435a52656a18d500d8af9291d934db4bca421a7f3",
+  "corpus_sha256": "fb0403dd2d0c10ca66efc13b85d5c14070d882e74064c103dfb33e6b44047eeb",
   "python_commit": "b50c50a782668fc1681e21bcec52a3d83bc0d8c0",
   "scenario_count": 3027,
   "sections": [
@@ -2738,8 +2738,7 @@
       "review": "normative",
       "requirements": 3,
       "mapping": {
-        "mapped_partial": 1,
-        "unmapped": 2
+        "mapped_partial": 3
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -29077,8 +29076,19 @@
     {
       "id": "RK-8.4-001",
       "section": "8.4",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "phase4-acp-subscriber-tool-text",
+          "scope": "ACP lifecycle and intermediate custom progress on an ordinary room tool call, with default and explicit tool-text settings.",
+          "coverage": "partial",
+          "missing": [
+            "Other ephemeral event types and channel kinds retain their own coverage.",
+            "These two scenarios do not measure the preview length limit or an interrupted call."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-8.4-002",
@@ -29173,8 +29183,18 @@
     {
       "id": "RK-8.4-003",
       "section": "8.4",
-      "mapping": "unmapped",
-      "links": []
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "phase4-acp-tool-rows-and-ephemerals",
+          "scope": "The subscriber receives structural tool activity even when BEFORE_BROADCAST blocks the corresponding ACP room rows.",
+          "coverage": "partial",
+          "missing": [
+            "This scenario does not cover answer-text publications, reasoning, hook modifications or other channels."
+          ],
+          "executions": []
+        }
+      ]
     },
     {
       "id": "RK-8.5-001",
@@ -71534,7 +71554,7 @@
         },
         {
           "id": "acp-active-tool-markers-and-response",
-          "scope": "Active room tools: merged updates, stream markers, raw/display results, bounded text previews and response segmentation/counts.",
+          "scope": "Active room tools: merged updates, stream markers, raw/display results, bounded text previews and response segmentation/counts. Scenarios asserting subscriber previews explicitly enable tool text.",
           "coverage": "partial",
           "missing": [
             "Permissions, plans, CUSTOM progress, usage and standalone sessions retain separate contracts.",
