@@ -17,6 +17,7 @@
       {
         "id": "agent",
         "type": "ai",
+        "system_prompt": "Host instructions.",
         "sandbox": {
           "tools": [
             {
