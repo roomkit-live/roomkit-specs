@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "python_commit": "a6efb639e6c1afb9e10f71f8f9a121e226db558e",
+  "python_commit": "b50c50a782668fc1681e21bcec52a3d83bc0d8c0",
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
@@ -25669,6 +25669,69 @@
         "Extra/external channel tools, media/realtime execution, remote executors and served MCP/skill consumers remain outside this slice.",
         "Private validation/coercion witnesses support the Rust parser review but are not public Python evidence or execution receipts.",
         "Rust uses typed ToolEntry variants and field errors rather than Python runtime protocol checks, object identity or aggregated Pydantic diagnostics."
+      ]
+    },
+    {
+      "id": "phase4-public-named-blocks",
+      "requirement": "RK-6.4-025",
+      "clause_sha256": "2716fb6926db3451cb07be8de42649366bd484510ddc03831c83768099e1870a",
+      "scope": "The public block-naming helper replaces selected framed blocks with their names, retaining surrounding text and caller-selected tag behavior.",
+      "coverage": "partial",
+      "review": "Independent source and full code reviews accepted the public helper and existing native algorithm counterparts. Native execution and final gate logs are retained separately; this link maps Python source assertions only.",
+      "assertions": [],
+      "tests": [
+        {
+          "nodeid": "tests/tools/test_named_blocks.py::test_default_tags_replace_the_whole_block",
+          "sha256": "92d62c1860e801b4c8ed6967b7d36681ae00d3df7815be7cee1d6455882bcefd",
+          "proves": "Each default tag replaces its entire block with a bracketed name through the public helper, with both implicit and explicit FENCED_TAGS."
+        },
+        {
+          "nodeid": "tests/tools/test_named_blocks.py::test_custom_tags_replace_only_the_selected_blocks",
+          "sha256": "bd1000e133ff2fa418056542e50abb2d1b8aef6ceab142340a521c9cb550a913",
+          "proves": "A supplied custom tag replaces its block while an unselected tool_result block stays unchanged."
+        },
+        {
+          "nodeid": "tests/tools/test_named_blocks.py::test_empty_tags_preserve_the_text",
+          "sha256": "b1f723d6c0f90b97eb3d8c5cba76051fc5d55cc741014ff461e5bc3393efd518",
+          "proves": "An explicitly empty tag set preserves the input, including an unfinished block."
+        },
+        {
+          "nodeid": "tests/tools/test_named_blocks.py::test_custom_tags_are_applied_in_the_given_order",
+          "sha256": "118b7e8dbe151d1c9d92203c93dc9263ab5fc06cd8512ca70ca354a0d435d154",
+          "proves": "The two supplied orders of custom/CUSTOM produce the spelling of the first matching tag."
+        },
+        {
+          "nodeid": "tests/test_external_text.py::test_a_block_named_with_an_invisible_character_is_named_when_cut",
+          "sha256": "95509261693b9a5f9d1e94e7dbe624413936d3daa72108da4e85ccbe271eba36",
+          "proves": "For each of the 22 specified ignorable characters inserted in the opening name, the selected tool_result block is replaced and the surrounding text kept."
+        },
+        {
+          "nodeid": "tests/test_external_text.py::test_a_longer_tag_name_opens_no_block_to_name",
+          "sha256": "28a67d37027ba12a54344029fcf3126bfdf0f28eed441653150724a675fa2ed9",
+          "proves": "The task-list opening is not a task block and its surrounding text stays unchanged."
+        },
+        {
+          "nodeid": "tests/test_external_text.py::test_a_block_opened_with_long_attributes_is_named",
+          "sha256": "98295c4e74edb6be47164af55c8266bdca408d8c0638b4b3f7972e9abad02a3d",
+          "proves": "A tool_result opening with a 300-character attribute is replaced with its whole block while surrounding text stays unchanged."
+        },
+        {
+          "nodeid": "tests/test_external_text.py::test_tags_are_read_in_linear_time",
+          "sha256": "375a2f7dcc87edcbee6e54710a37f69b3386116a93e82e71f642136d63706baa",
+          "proves": "Only the four named_blocks parameter cases are credited: opening+invisibles, openings, closings in a block, and parts of closing names in a block. Each runs within the Python test's one-second bound after pattern compilation; it asserts neither the returned text nor asymptotic complexity."
+        },
+        {
+          "nodeid": "tests/test_channels/test_compaction_keeps_input.py::test_a_summary_never_leaves_a_delimited_block_open",
+          "sha256": "12f3cac3e1c59aae24eba2e6ab97246412009c86889c6971645083414a60710c",
+          "proves": "Only the direct named_blocks call is credited: a worker_output block becomes its bracketed name and keeps the text before and after. The separate summary_text assertions are outside this link."
+        }
+      ],
+      "missing": [
+        "This pure-helper slice adds no shared scenario assertions or backend/runtime execution receipts; native execution is not inferred from source references.",
+        "The native long-input counterparts assert returned text, not the Python timing bound or asymptotic complexity.",
+        "Summary and compaction integration, other context renderers and complete Unicode text-safety parity are not completed by this public export.",
+        "Custom and empty tag sets are explicit caller options; this link does not claim they frame unselected text safely.",
+        "The normative source unit remains partial; approved text-normalization exclusions and media/realtime/remote execution boundaries are unchanged."
       ]
     }
   ],
