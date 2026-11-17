@@ -1,19 +1,25 @@
 {
   "$schema": "../../scenario.schema.json",
   "id": "streaming/a-generation-cut-from-outside-counts-the-input-it-told",
-  "title": "A generation in flight that told its input as its stream started counts that input when its turn is cut from outside: the caller and the record read it beside what the generations before it used, and incomplete",
+  "title": "A generation in flight that told its input as its stream started counts that input when its turn is cut from outside once its reader read it: the caller and the record read it beside what the generations before it used, and incomplete",
   "rules": [
     "§6.4 The turn's record",
     "§12.2 step 13s"
   ],
-  "notes": "RMK-369 (HITL 69bc2a10, 242a9f5e). The neighbour streaming/a-generation-in-flight-at-a-cut-is-not-counted keeps a generation that told nothing out. Python: core/mixins/_streaming_segments.py _GenerationsRead (a partial UsageMarker).",
+  "notes": "RMK-369 (HITL 69bc2a10, 242a9f5e). The reader holds after the second generation's first text, the told input read before it; the cut comes then. The neighbour streaming/a-generation-in-flight-at-a-cut-is-not-counted keeps a generation that told nothing out. Python: core/mixins/_streaming_segments.py _GenerationsRead (a partial UsageMarker).",
   "setup": {
     "channels": [
       {
         "id": "ws",
         "type": "websocket",
         "category": "transport",
-        "streams": true
+        "streams": true,
+        "deliver_stream": [
+          {
+            "hold_after": "Two ",
+            "hold_gate": "read"
+          }
+        ]
       },
       {
         "id": "agent",
@@ -36,11 +42,13 @@
               }
             },
             {
-              "gate": "second",
               "usage_at_start": {
                 "input_tokens": 2000
               },
-              "text": "Two.",
+              "deltas": [
+                "Two ",
+                "more."
+              ],
               "usage": {
                 "input_tokens": 2000,
                 "output_tokens": 10
@@ -89,7 +97,7 @@
       "as": "a"
     },
     {
-      "wait_for": "second"
+      "wait_for": "read"
     },
     {
       "call": "cancel_delivery",
@@ -98,6 +106,9 @@
       "expect": {
         "result": 1
       }
+    },
+    {
+      "open": "read"
     },
     {
       "await": "a",
@@ -132,6 +143,18 @@
           "index": 1,
           "content": {
             "body": "One."
+          }
+        },
+        {
+          "index": 2
+        },
+        {
+          "index": 3
+        },
+        {
+          "index": 4,
+          "content": {
+            "body": "Two "
           },
           "metadata": {
             "loop_end_reason": "cancelled",
@@ -149,12 +172,6 @@
             "ai_model": "opus",
             "ai_provider": "anthropic"
           }
-        },
-        {
-          "index": 2
-        },
-        {
-          "index": 3
         }
       ]
     }
