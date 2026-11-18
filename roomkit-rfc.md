@@ -5364,8 +5364,14 @@ narrowed during the turn, or after it while work it began still publishes,
 stops its ephemerals from that publish on. Otherwise the owner publishes none
 of them: an agent whose answers are scoped to a
 supervisor, an internal agent, or one the room keeps from writing shows no
-live activity to the room's subscribers. Framework events (§8.2) are not
-ephemerals and are unaffected.
+live activity to the room's subscribers. A text channel wired by an executor and called directly with a room event
+MUST enforce the same audience for that prompt, including work it starts.
+Without an owner-issued turn, the executor MUST check the triggering event's
+answer scope and the current binding for that incarnation of the room at
+each publication. If it cannot establish write access to the whole room,
+it MUST withhold the publication. A session notification made while no
+prompt is active retains its outside-turn semantics (§10.6.3).
+Framework events (§8.2) are not ephemerals and are unaffected.
 <!-- /rfc -->
 
 <!-- rfc: {"id": "RK-8.4-003", "kind": "behavior", "applies": "§8.4 Realtime / Ephemeral Events; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
