@@ -191,13 +191,32 @@ that commit, or whose text, kind, applicability or level changed:
 - `may`: nothing;
 - no level: listed as unreviewed, never blocking.
 
-A `non_testable` unit is exempt: its kind is its reason. CI does not run the
-rule yet.
+A `non_testable` unit is exempt: its kind is its reason. A unit's text is
+read as written, so rewording it, or only rewrapping its lines, changes it.
 
 ```text
 $ python3 conformance/check.py --changed-units --base-ref 2f35a764a425fe69453e22bdba378482673c7e34
+process rule: units added or changed since 2f35a764a425: 1
 error: RK-10.4-999 (must, added since 2f35a764a425): no scenario cites it and untested.json gives no reason
 ```
+
+CI runs the rule on every push to main and every pull request, in the step
+that checks the current RFC, against the base that step reads: the pull
+request's base, the commit before the push, or the parent commit when there
+is neither. The rule's errors fail the job; its errors and warnings show as
+GitHub annotations titled "Process rule" (`--github-annotations`). When the
+RFC is the same as at the base, the rule reads no unit and costs nothing.
+
+When it fires on a `must` unit, either:
+
+- cite the unit in the `requirements` of the scenario that tests it, writing
+  the scenario if none does, and pin the citation once read (`--pin
+  RK-10.4-999 routing/x`);
+- or, when no scenario can test it, give the reason in `untested.json`.
+
+A `should` warning asks for a scenario or a reason without blocking. Before pushing, run the rule
+against the commit your change starts from: `--base-ref "$(git merge-base
+origin/main HEAD)"`.
 
 `untested.json` maps a current unit to its reason; a unit scenarios cite cannot
 keep an entry (`--strict` says so):

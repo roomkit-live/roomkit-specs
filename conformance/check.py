@@ -26,6 +26,7 @@ table (README, "Reentrancy cells").
     python3 conformance/check.py --strict   # coverage gaps and lock drift are errors too
     python3 conformance/check.py --pin RK-10.4-022 routing/x   # re-pin after reading
     python3 conformance/check.py --changed-units --base-ref <sha>   # the process rule
+    python3 conformance/check.py --changed-units --base-ref <sha> --github-annotations   # as CI
 
 It needs `jsonschema` (pip install jsonschema).
 """
@@ -324,9 +325,17 @@ def main() -> int:
         help="the process rule: each unit added or changed since --base-ref needs, "
         "by its level, a citing scenario or a reason in untested.json",
     )
+    parser.add_argument(
+        "--github-annotations",
+        action="store_true",
+        help="print the process rule's errors and warnings as GitHub Actions "
+        "annotations, as the specs CI runs it",
+    )
     args = parser.parse_args()
     if args.update_traceability and not args.traceability:
         parser.error("--update-traceability requires --traceability")
+    if args.github_annotations and not args.changed_units:
+        parser.error("--github-annotations requires --changed-units")
     if args.changed_units and not (
         args.base_ref and re.fullmatch(r"[0-9a-f]{40}", args.base_ref)
     ):
@@ -375,6 +384,8 @@ def main() -> int:
     gaps += [
         f"reentrancy cell {cell}: no scenario" for cell in CELLS if cell not in cells
     ]
+    # found.process stays out of errors: the process rule never holds back
+    # the traceability check.
     if args.traceability and not errors:
         from traceability import check
 
@@ -387,20 +398,31 @@ def main() -> int:
             update=args.update_traceability,
             base_ref=args.base_ref,
         )
-    # The process rule's errors never hold back the traceability check.
-    errors += found.process
     print(f"{len(scenarios)} scenarios, rules resolved against {source}")
     for line in found.notes:
         print(line)
+    for line in found.warnings:
+        print(mark("warning", line, github=args.github_annotations))
     for line in errors:
         print(f"error: {line}")
+    for line in found.process:
+        print(mark("error", line, github=args.github_annotations))
     for line in found.drift:
         print(f"lock: {line}")
     for line in gaps:
         print(f"gap: {line}")
-    if errors or (args.strict and (gaps or found.drift)):
+    if errors or found.process or (args.strict and (gaps or found.drift)):
         return 1
     return 0
+
+
+def mark(kind: str, line: str, *, github: bool) -> str:
+    """A line of the process rule, as `error: ...` or as a GitHub Actions
+    annotation, its message escaped as a workflow command requires."""
+    if not github:
+        return f"{kind}: {line}"
+    escaped = line.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+    return f"::{kind} title=Process rule::{escaped}"
 
 
 class Citations(NamedTuple):
@@ -408,8 +430,9 @@ class Citations(NamedTuple):
 
     errors: list[str]
     drift: list[str]  # lock problems: errors under --strict
-    notes: list[str]  # what --pin did, the process rule's warnings and unreviewed units
+    notes: list[str]  # what --pin did, what the process rule read, unreviewed units
     process: list[str]  # the process rule's errors
+    warnings: list[str]  # the process rule's warnings
 
 
 def citation_checks(
@@ -425,12 +448,13 @@ def citation_checks(
     from traceability import links, process, source
 
     try:
-        registry = source.extract(rfc.read_text(encoding="utf-8"))
+        text = rfc.read_text(encoding="utf-8")
+        registry = source.extract(text)
         retired = json.loads((HERE / "evidence.json").read_text())["retired"]
         untested = links.read_untested(HERE)
         lock = links.read_lock(HERE)
     except (OSError, ValueError, KeyError) as error:
-        return Citations([f"requirements: {error}"], [], [], [])
+        return Citations([f"requirements: {error}"], [], [], [], [])
     errors = links.check_citations(scenarios, registry, retired)
     errors += links.check_untested(untested, registry, retired)
     notes = []
@@ -445,17 +469,24 @@ def citation_checks(
     errors += links.lock_layout_errors(HERE, lock)  # after --pin, which rewrites it
     drift = links.lock_problems(scenarios, registry, lock, untested)
     if not args.changed_units:
-        return Citations(errors, drift, notes, [])
+        return Citations(errors, drift, notes, [], [])
+    since = args.base_ref[:12]
     try:
-        base = source.extract(git_show(args.base_ref, "roomkit-rfc.md"))
+        before = git_show(args.base_ref, "roomkit-rfc.md")
+        if before == text:  # no unit changed: nothing to extract
+            notes.append(f"process rule: roomkit-rfc.md unchanged since {since}")
+            return Citations(errors, drift, notes, [], [])
+        base = source.extract(before)
     except (subprocess.CalledProcessError, ValueError) as error:
-        return Citations(errors, drift, notes, [f"--base-ref {args.base_ref}: {error}"])
+        failed = [f"--base-ref {args.base_ref}: {error}"]
+        return Citations(errors, drift, notes, failed, [])
+    changed = len(process.changed_units(registry, base))
+    notes.append(f"process rule: units added or changed since {since}: {changed}")
     failed, warned, unreviewed = process.process_rule(
         registry, base, scenarios, untested, args.base_ref
     )
-    notes += [f"warning: {line}" for line in warned]
     notes += [f"unreviewed: {line}" for line in unreviewed]
-    return Citations(errors, drift, notes, failed)
+    return Citations(errors, drift, notes, failed, warned)
 
 
 if __name__ == "__main__":

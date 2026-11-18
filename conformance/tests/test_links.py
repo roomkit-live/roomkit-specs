@@ -340,7 +340,8 @@ class CommandTests(unittest.TestCase):
             ["git", "-C", str(self.root), *args], text=True
         ).strip()
 
-    def test_the_process_rule_reads_the_base_commit(self) -> None:
+    def commit(self) -> str:
+        """Commit the copy as it stands, and give the commit's full sha."""
         self.git("init", "-q")
         self.git("add", ".")
         self.git(
@@ -354,7 +355,10 @@ class CommandTests(unittest.TestCase):
             "-qm",
             "base",
         )
-        base = self.git("rev-parse", "HEAD")
+        return self.git("rev-parse", "HEAD")
+
+    def test_the_process_rule_reads_the_base_commit(self) -> None:
+        base = self.commit()
         self.rfc.write_text(
             self.rfc.read_text() + marked("Log it.", "RK-10.4-002", level="must")
         )
@@ -371,6 +375,112 @@ class CommandTests(unittest.TestCase):
         run = self.check("--changed-units", "--base-ref", base[:12])
         self.assertEqual(run.returncode, 2)
         self.assertIn("full 40-character sha", run.stderr)
+
+    def ci(self, base: str) -> subprocess.CompletedProcess[str]:
+        """The process rule as the specs CI runs it."""
+        return self.check(
+            "--strict", "--changed-units", "--base-ref", base, "--github-annotations"
+        )
+
+    def test_ci_reports_each_changed_unit_by_its_level(self) -> None:
+        """Errors and warnings of the process rule are GitHub annotations, and
+        only its errors fail the run."""
+        route = marked("Route it.", "RK-10.4-001", level="must")
+        log = marked("Log it.", "RK-10.4-002", level="may")
+        keep = marked("Keep it.", "RK-10.4-003", level="must")
+        self.rfc.write_text("### 10.4 Routing\n" + route + log + keep)
+        self.assertEqual(self.check("--pin", "routing/a").returncode, 0)
+        base = self.commit()
+        since = base[:12]
+        scenario = self.directory / "scenarios/routing/a.json"
+        files = (self.rfc, scenario, self.directory / "evidence.json", self.directory / links.LOCK)
+        kept = {path: path.read_text() for path in files}
+
+        def added(**metadata: str) -> str:
+            return route + log + keep + marked("Trace it.", "RK-10.4-004", **metadata)
+
+        def reason() -> None:
+            self.write("untested.json", {"version": 1, "units": {"RK-10.4-004": "a trace"}})
+
+        def cite() -> None:
+            value = json.loads(scenario.read_text())
+            value["requirements"].append("RK-10.4-004")
+            self.write("scenarios/routing/a.json", value)
+            self.assertEqual(self.check("--pin", "routing/a").returncode, 0)
+
+        def retire() -> None:
+            self.write("evidence.json", {"retired": ["RK-10.4-003"]})
+
+        error = "::error title=Process rule::"
+        missing = "no scenario cites it and untested.json gives no reason"
+        cases = [
+            (
+                "a must unit added with neither",
+                added(level="must"),
+                None,
+                1,
+                [f"{error}RK-10.4-004 (must, added since {since}): {missing}"],
+            ),
+            ("a must unit added with a reason", added(level="must"), reason, 0, []),
+            ("a must unit added with a scenario", added(level="must"), cite, 0, []),
+            (
+                "a should unit added with neither",
+                added(level="should"),
+                None,
+                0,
+                [
+                    "::warning title=Process rule::RK-10.4-004 (should, added since "
+                    f"{since}): no scenario cites it"
+                ],
+            ),
+            ("a may unit added", added(level="may"), None, 0, []),
+            (
+                "a non_testable unit added",
+                added(level="must", kind="non_testable"),
+                None,
+                0,
+                [],
+            ),
+            ("a unit retired", route + log, retire, 0, []),
+            (
+                "a unit's level raised",
+                route + marked("Log it.", "RK-10.4-002", level="must") + keep,
+                None,
+                1,
+                [f"{error}RK-10.4-002 (must, changed since {since}): {missing}"],
+            ),
+            (
+                "a must unit reworded",
+                route + log + marked("Keep it whole.", "RK-10.4-003", level="must"),
+                None,
+                1,
+                [f"{error}RK-10.4-003 (must, changed since {since}): {missing}"],
+            ),
+        ]
+        for case, units, prepare, code, annotations in cases:
+            with self.subTest(case):
+                for path, text in kept.items():
+                    path.write_text(text)
+                (self.directory / links.UNTESTED).unlink(missing_ok=True)
+                self.rfc.write_text("### 10.4 Routing\n" + units)
+                if prepare is not None:
+                    prepare()
+                run = self.ci(base)
+                self.assertEqual(run.returncode, code, run.stdout + run.stderr)
+                self.assertEqual(
+                    [line for line in run.stdout.splitlines() if line.startswith("::")],
+                    annotations,
+                )
+                self.assertNotIn("error: RK-", run.stdout)
+
+    def test_ci_reads_no_unit_when_the_rfc_is_unchanged(self) -> None:
+        self.assertEqual(self.check("--pin", "routing/a").returncode, 0)
+        base = self.commit()
+        run = self.ci(base)
+        self.assertEqual(run.returncode, 0, run.stdout)
+        self.assertIn(
+            f"process rule: roomkit-rfc.md unchanged since {base[:12]}", run.stdout
+        )
 
     def test_the_process_rule_does_not_hold_back_the_traceability_check(self) -> None:
         self.write(
