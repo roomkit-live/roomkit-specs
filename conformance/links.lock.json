@@ -229,7 +229,6 @@
       "routing/two-messages-with-no-address-on-one-missing-room-hold-a-room-each": "f1c55d2c54f506ed098cc015e3095300c9e55c17c06b78369b85c81295ee59e4"
     },
     "RK-10.4-039": {
-      "routing/a-group-binding-s-value-under-the-key-names-no-one": "dec9c7eb493a04d2fe10627151474ff96c7ad728ddeaff63c36990948778d2d8",
       "routing/a-hook-refusal-keeps-the-routed-correspondent": "dec9c7eb493a04d2fe10627151474ff96c7ad728ddeaff63c36990948778d2d8",
       "routing/a-recipient-naming-the-sender-s-identity-is-recorded-as-the-channel-reads-it": "dec9c7eb493a04d2fe10627151474ff96c7ad728ddeaff63c36990948778d2d8",
       "routing/a-room-opened-for-no-one-keeps-its-first-sender": "dec9c7eb493a04d2fe10627151474ff96c7ad728ddeaff63c36990948778d2d8",
@@ -398,10 +397,7 @@
       "routing/the-record-names-the-sender-on-an-attach-whatever-the-channel-wrote": "59279e08f16c2feb9b0c151e848405616c1097fb3caef796e2c2e3b63c72299a"
     },
     "RK-10.4-060": {
-      "routing/a-binding-a-hook-made-in-a-room-opened-with-no-address-takes-in-no-one-else": "2d4a2e372963153cdf9be5c1add4dc77ef95f17c7e21f89a6f3cd7a236430c26",
-      "routing/a-hook-s-binding-the-channel-s-own-method-reads-keeps-its-recipient": "2d4a2e372963153cdf9be5c1add4dc77ef95f17c7e21f89a6f3cd7a236430c26",
-      "routing/a-hook-s-binding-under-the-key-of-a-channel-reading-no-recipient-keeps-its-recipient": "2d4a2e372963153cdf9be5c1add4dc77ef95f17c7e21f89a6f3cd7a236430c26",
-      "routing/a-hook-s-binding-with-a-recipient-keeps-its-correspondent": "2d4a2e372963153cdf9be5c1add4dc77ef95f17c7e21f89a6f3cd7a236430c26"
+      "routing/a-binding-a-hook-made-in-a-room-opened-with-no-address-takes-in-no-one-else": "2d4a2e372963153cdf9be5c1add4dc77ef95f17c7e21f89a6f3cd7a236430c26"
     },
     "RK-10.4-061": {
       "routing/a-message-with-no-address-leaves-a-room-the-host-prepared": "09ab3cbaf2a77bce1612dbf6d2bd2e2ddeb04b713dff920f2f6c32d1da908d3e"
@@ -413,6 +409,9 @@
       "routing/two-messages-with-no-address-on-one-missing-room-hold-a-room-each": "78d3f909140f794ac14f9f6011cd3803a87ab18867fc12cf19f8d8fce3e17492"
     },
     "RK-10.4-063": {
+      "routing/a-hook-s-binding-the-channel-s-own-method-reads-keeps-its-recipient": "a5dd7deffb1e00bbf71cd995b9d51b8e86fbaf44e75a50e03c88f35e0abd80f3",
+      "routing/a-hook-s-binding-under-the-key-of-a-channel-reading-no-recipient-keeps-its-recipient": "a5dd7deffb1e00bbf71cd995b9d51b8e86fbaf44e75a50e03c88f35e0abd80f3",
+      "routing/a-hook-s-binding-with-a-recipient-keeps-its-correspondent": "a5dd7deffb1e00bbf71cd995b9d51b8e86fbaf44e75a50e03c88f35e0abd80f3",
       "routing/a-recipient-given-to-a-room-opened-with-no-address-replaces-the-name-on-a-channel-reading-no-recipient": "a5dd7deffb1e00bbf71cd995b9d51b8e86fbaf44e75a50e03c88f35e0abd80f3",
       "routing/a-room-named-for-a-message-with-no-address-names-no-one": "a5dd7deffb1e00bbf71cd995b9d51b8e86fbaf44e75a50e03c88f35e0abd80f3",
       "routing/a-room-opened-with-no-address-is-named-by-the-integrator": "a5dd7deffb1e00bbf71cd995b9d51b8e86fbaf44e75a50e03c88f35e0abd80f3"
