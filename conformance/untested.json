@@ -2,6 +2,9 @@
   "version": 1,
   "units": {
     "RK-10.1-073": "That no room-state write follows the commit's transaction is the shape of the store's writes: a scenario sees the timeline and the counters agree after every call, which RK-10.1-070 and RK-10.1-071 cover, never a write made apart from the commit.",
-    "RK-10.2-007": "BroadcastResult is what the pipeline's own broadcast() returns: no public call hands it out, so a scenario reads its members only through the units that produce them (deliveries, reentry events, tasks, observations, per-channel errors)."
+    "RK-10.2-007": "BroadcastResult is what the pipeline's own broadcast() returns: no public call hands it out, so a scenario reads its members only through the units that produce them (deliveries, reentry events, tasks, observations, per-channel errors).",
+    "RK-10.6.1-016": "Holds of the suite as a whole, not of one scenario: every scenario of an intelligence channel runs through the in-memory backend, and their receipts are the evidence.",
+    "RK-10.6.3-009": "A turn link's sequence numbers lie below the public API a scenario drives: no step can reorder, duplicate or drop a link message, which a backend's own tests do.",
+    "RK-10.6.8-049": "Whether a side imports a module or runs its code to resolve a name is not observable through the public API: a scenario sees only the class an error comes back as (RK-10.6.8-047)."
   }
 }

@@ -2037,6 +2037,699 @@
       "idempotency/a-muted-sources-record-is-stored-as-given-but-for-its-author": "3f7e64eb0d4215dd684eda9a658a30d9b03c74cc1d8f8fff79ce81e330f0da09",
       "injection/a-record-outside-the-pipeline": "3f7e64eb0d4215dd684eda9a658a30d9b03c74cc1d8f8fff79ce81e330f0da09"
     },
+    "RK-10.6.1-003": {
+      "executors/a-delegation-to-a-declared-worker-runs-on-its-executor": "934f95bff30bfcf73bae01caa3e7fc0031dcb0abc454c1c67f3adad3539b2ab1"
+    },
+    "RK-10.6.1-004": {
+      "hooks/an-injected-event-asks-no-agent": "2731200185348753906e69b58b85732d55d8f96cbb13c5a523b92114caca5ef7",
+      "hooks/an-injection-is-in-its-agent-target-s-next-context": "2731200185348753906e69b58b85732d55d8f96cbb13c5a523b92114caca5ef7"
+    },
+    "RK-10.6.1-007": {
+      "orchestration/an-auto-delegating-supervisor-s-two-passes-carry-a-correlation-id-each": "e91340870e1792cbe32f10baf8113b751def8bffe576a60dc9c5b5d887678f80",
+      "speaking/strategy-bypasses-policy-and-thinker-one-pass-non-streaming": "e91340870e1792cbe32f10baf8113b751def8bffe576a60dc9c5b5d887678f80",
+      "speaking/strategy-bypasses-policy-and-thinker-one-pass-streaming": "e91340870e1792cbe32f10baf8113b751def8bffe576a60dc9c5b5d887678f80",
+      "speaking/strategy-bypasses-policy-and-thinker-two-passes-non-streaming": "e91340870e1792cbe32f10baf8113b751def8bffe576a60dc9c5b5d887678f80",
+      "speaking/strategy-bypasses-policy-and-thinker-two-passes-streaming": "e91340870e1792cbe32f10baf8113b751def8bffe576a60dc9c5b5d887678f80"
+    },
+    "RK-10.6.1-009": {
+      "executors/a-delegation-to-a-declared-worker-runs-on-its-executor": "ab23a5702179265d904051c035b41b312c66c22e168d83f9c9719e572b3d0c07"
+    },
+    "RK-10.6.2-008": {
+      "executors/a-declared-agent-s-turn-runs-on-the-executor-hosting-it": "d58dc801a72998975123c17eaa2d52809a1819b26bd6cc8363aec679ed0ae981",
+      "executors/a-delegation-to-a-declared-worker-runs-on-its-executor": "d58dc801a72998975123c17eaa2d52809a1819b26bd6cc8363aec679ed0ae981"
+    },
+    "RK-10.6.2-010": {
+      "executors/a-declared-agent-s-turn-runs-on-the-executor-hosting-it": "562293958b0726917a1557e5315aa0618737bc84e35d1596c7a7a07c27eec1f9"
+    },
+    "RK-10.6.2-014": {
+      "executors/a-room-whose-executor-builds-nothing-for-its-agent-stays-on-it": "d3d5bfd0d0fa7ed5a0e884bbdc9c85d0e6c47afdca3c2eb688e0efbbf3ac25e4",
+      "executors/an-agent-its-executor-builds-nothing-for-fails-no-executor": "d3d5bfd0d0fa7ed5a0e884bbdc9c85d0e6c47afdca3c2eb688e0efbbf3ac25e4"
+    },
+    "RK-10.6.2-015": {
+      "executors/a-provider-the-factory-hands-every-build-outlives-a-build-let-go": "f093b8415b2ae109a437594fa3f4d0a10729347df857b2d7c5bcdef27d08168d",
+      "executors/an-executor-past-its-bound-closes-the-agent-it-used-least-recently": "f093b8415b2ae109a437594fa3f4d0a10729347df857b2d7c5bcdef27d08168d"
+    },
+    "RK-10.6.2-016": {
+      "executors/an-executor-past-its-bound-closes-the-agent-it-used-least-recently": "41f37df33b5bff23396a5dc8d17667e50267601a1029706652834f7fb5bef1a8"
+    },
+    "RK-10.6.2-018": {
+      "executors/a-live-agent-s-turn-stays-on-the-kit-s-executor": "dd80367ab4726c7817fca02ac5e90c01d653736ff77ba2d973d359c204eb872f"
+    },
+    "RK-10.6.2-019": {
+      "executors/a-hook-on-an-executor-reads-the-room-when-it-fires": "7229bf4723a9b909764d68c3e31182271b04ebb63f8c70b776d36c585f5846df"
+    },
+    "RK-10.6.2-020": {
+      "executors/a-turn-apart-publishes-its-thinking-and-tool-calls-to-the-room": "2eda556353eca65335efa13a04d251de56536f199ca3b8185fee50965186645f"
+    },
+    "RK-10.6.2-021": {
+      "executors/a-turn-apart-emits-its-framework-events": "cf62850f0766ca2faad407ea0920befe47e740ec124afe112ac59974446004b5"
+    },
+    "RK-10.6.2-024": {
+      "executors/a-hook-on-an-executor-reads-the-room-when-it-fires": "24de17eb3922cedd550543f75f9b3c7e359e6a57ed50580fb3cfceaad509cff1"
+    },
+    "RK-10.6.2-027": {
+      "tool-search/a-tool-the-store-says-was-used-stays-declared": "475601329727df81b165dd7ad242eb3cd5f464fc6b90402e30c5bcfb72575614"
+    },
+    "RK-10.6.2-029": {
+      "executors/one-build-serving-two-rooms-reads-each-turn-s-room-alone": "9bf2ea4db3744f854839067cc83f16d22aa7b55bb41ed38a59ebdea6111fc7bb"
+    },
+    "RK-10.6.2-030": {
+      "channel-call/a-channel-keeps-each-room-apart": "6665881a2e298dc28bcb5117e1d266a4978e3e03b388c2ada8cddea5cf890703",
+      "executors/one-build-serving-two-rooms-reads-each-turn-s-room-alone": "6665881a2e298dc28bcb5117e1d266a4978e3e03b388c2ada8cddea5cf890703"
+    },
+    "RK-10.6.2-031": {
+      "executors/one-build-serving-two-rooms-reads-each-turn-s-room-alone": "5d2ba12cd0fe91fb40e4fa33b02b7412b9fa2b3c8a14caa116e6bf20418b21c4"
+    },
+    "RK-10.6.2-032": {
+      "executors/an-executor-drops-the-state-a-turn-elsewhere-made-stale": "b1baba430f73a8a42b4df2c8c7190134b312af22752677ca66faa7fba70fbf75"
+    },
+    "RK-10.6.2-036": {
+      "executors/an-executor-drops-the-state-a-turn-elsewhere-made-stale": "0ec57f2c44f9145a22721ee7d619fb8a8789d394eda7d9041562b4ca33f95f05",
+      "tenancy/a-deleted-room-s-agent-session-does-not-go-on-in-the-room-created-again": "0ec57f2c44f9145a22721ee7d619fb8a8789d394eda7d9041562b4ca33f95f05"
+    },
+    "RK-10.6.2-037": {
+      "executors/an-executor-drops-the-state-a-turn-elsewhere-made-stale": "f26e283982a080a8370b79c4abe1f3b4baf48603c073ea07c079987de0f841d0"
+    },
+    "RK-10.6.2-039": {
+      "channel-call/a-concurrent-call-restores-empty-state-on-failure": "6473fe3f419ab1967f1c1d04685d504d6dc101e8124de4ca75b13fd819b9a1f4",
+      "channel-call/a-concurrent-call-restores-empty-state-on-success": "6473fe3f419ab1967f1c1d04685d504d6dc101e8124de4ca75b13fd819b9a1f4",
+      "channel-call/a-concurrent-call-restores-initial-state-on-failure": "6473fe3f419ab1967f1c1d04685d504d6dc101e8124de4ca75b13fd819b9a1f4",
+      "channel-call/a-concurrent-call-restores-initial-state-on-success": "6473fe3f419ab1967f1c1d04685d504d6dc101e8124de4ca75b13fd819b9a1f4"
+    },
+    "RK-10.6.2-040": {
+      "channel-call/a-call-keeps-its-changed-state-with-the-room": "fd9b3d60debbe0c8e9cdbb2eac693a783691a4fba5e590c3d2fb5b803aef1e8f",
+      "channel-call/a-concurrent-call-restores-empty-state-on-failure": "fd9b3d60debbe0c8e9cdbb2eac693a783691a4fba5e590c3d2fb5b803aef1e8f",
+      "channel-call/a-concurrent-call-restores-empty-state-on-success": "fd9b3d60debbe0c8e9cdbb2eac693a783691a4fba5e590c3d2fb5b803aef1e8f",
+      "channel-call/a-concurrent-call-restores-initial-state-on-failure": "fd9b3d60debbe0c8e9cdbb2eac693a783691a4fba5e590c3d2fb5b803aef1e8f",
+      "channel-call/a-concurrent-call-restores-initial-state-on-success": "fd9b3d60debbe0c8e9cdbb2eac693a783691a4fba5e590c3d2fb5b803aef1e8f",
+      "channel-call/a-failed-call-keeps-its-changed-state": "fd9b3d60debbe0c8e9cdbb2eac693a783691a4fba5e590c3d2fb5b803aef1e8f",
+      "channel-call/an-empty-state-is-forgotten": "fd9b3d60debbe0c8e9cdbb2eac693a783691a4fba5e590c3d2fb5b803aef1e8f",
+      "executors/what-the-room-keeps-for-a-channel-reaches-the-next-executor": "fd9b3d60debbe0c8e9cdbb2eac693a783691a4fba5e590c3d2fb5b803aef1e8f"
+    },
+    "RK-10.6.2-041": {
+      "channel-call/a-call-keeps-its-changed-state-with-the-room": "f9d0a530518cce5dee32fce4f426aa4d263b9851ae5ce4c4a65f55df0fc287d3",
+      "channel-call/a-call-restores-the-room-s-state": "f9d0a530518cce5dee32fce4f426aa4d263b9851ae5ce4c4a65f55df0fc287d3",
+      "executors/what-the-room-keeps-for-a-channel-reaches-the-next-executor": "f9d0a530518cce5dee32fce4f426aa4d263b9851ae5ce4c4a65f55df0fc287d3"
+    },
+    "RK-10.6.2-042": {
+      "channel-call/a-call-restores-the-room-s-state": "fecd9180a285a8a0fc7ceb252232a9d45b98857707381294bdfd85bc63dfa2c4"
+    },
+    "RK-10.6.2-043": {
+      "channel-call/a-detach-callback-can-reattach-its-channel": "b9bd97e3f13b93223561ee6a5e9155ddc867454e162a969fca8f65080afb99c2",
+      "channel-call/a-detach-forgets-the-room-s-state": "b9bd97e3f13b93223561ee6a5e9155ddc867454e162a969fca8f65080afb99c2",
+      "channel-call/a-failed-detach-still-forgets-the-room-s-state": "b9bd97e3f13b93223561ee6a5e9155ddc867454e162a969fca8f65080afb99c2",
+      "channel-call/a-late-call-does-not-restore-a-detached-binding": "b9bd97e3f13b93223561ee6a5e9155ddc867454e162a969fca8f65080afb99c2",
+      "executors/a-detach-forgets-what-the-room-kept-for-a-channel": "b9bd97e3f13b93223561ee6a5e9155ddc867454e162a969fca8f65080afb99c2"
+    },
+    "RK-10.6.3-002": {
+      "speaking/strategy-bypasses-policy-and-thinker-one-pass-non-streaming": "2c2934d112db6d794ec8d9ffda45aa25e78365fbe7083bd81fea5ec9dbfc3cb3",
+      "speaking/strategy-bypasses-policy-and-thinker-one-pass-streaming": "2c2934d112db6d794ec8d9ffda45aa25e78365fbe7083bd81fea5ec9dbfc3cb3",
+      "speaking/strategy-bypasses-policy-and-thinker-two-passes-non-streaming": "2c2934d112db6d794ec8d9ffda45aa25e78365fbe7083bd81fea5ec9dbfc3cb3",
+      "speaking/strategy-bypasses-policy-and-thinker-two-passes-streaming": "2c2934d112db6d794ec8d9ffda45aa25e78365fbe7083bd81fea5ec9dbfc3cb3"
+    },
+    "RK-10.6.3-013": {
+      "executors/attach-and-detach-reach-every-executor-declaring-the-channel": "b26285a2daed8d5d1ae41821a70ebd3c77081cbe1e9162050c4455cfc3a2df0c"
+    },
+    "RK-10.6.3-014": {
+      "author-images/a-room-the-agent-joins-again-sends-a-refused-image-again": "dad5ce7fdca37389fcdfe6b9c1cac73536006a45b4c4e392ee9c58431888f65c",
+      "author-images/an-agent-attached-over-its-attachment-sends-a-refused-image-again": "dad5ce7fdca37389fcdfe6b9c1cac73536006a45b4c4e392ee9c58431888f65c",
+      "eviction/a-room-the-agent-joins-again-keeps-no-stored-result": "dad5ce7fdca37389fcdfe6b9c1cac73536006a45b4c4e392ee9c58431888f65c",
+      "executors/an-executor-builds-an-agent-at-its-first-turn-not-when-a-room-attaches-it": "dad5ce7fdca37389fcdfe6b9c1cac73536006a45b4c4e392ee9c58431888f65c",
+      "executors/attach-and-detach-reach-every-executor-declaring-the-channel": "dad5ce7fdca37389fcdfe6b9c1cac73536006a45b4c4e392ee9c58431888f65c",
+      "rooms/an-agent-that-refuses-its-attach-stays-attached": "dad5ce7fdca37389fcdfe6b9c1cac73536006a45b4c4e392ee9c58431888f65c",
+      "tool-search/a-tool-the-store-says-was-used-stays-declared": "dad5ce7fdca37389fcdfe6b9c1cac73536006a45b4c4e392ee9c58431888f65c"
+    },
+    "RK-10.6.3-015": {
+      "channel-call/a-failed-detach-still-forgets-the-room-s-state": "99302cf26bc687b730f63bb297eef2e2e616ad291f78470ce78f651d53c21757",
+      "rooms/an-agent-that-refuses-its-attach-stays-attached": "99302cf26bc687b730f63bb297eef2e2e616ad291f78470ce78f651d53c21757"
+    },
+    "RK-10.6.3-016": {
+      "channel-call/a-detach-forgets-the-room-s-state": "fe98a5985efe212a9c34253f3c697da7a69423fa1ec7f09f1bd5c6e8c2bf56c6",
+      "channel-call/a-failed-detach-still-forgets-the-room-s-state": "fe98a5985efe212a9c34253f3c697da7a69423fa1ec7f09f1bd5c6e8c2bf56c6",
+      "channel-call/a-late-call-does-not-restore-a-detached-binding": "fe98a5985efe212a9c34253f3c697da7a69423fa1ec7f09f1bd5c6e8c2bf56c6",
+      "executors/a-detach-forgets-what-the-room-kept-for-a-channel": "fe98a5985efe212a9c34253f3c697da7a69423fa1ec7f09f1bd5c6e8c2bf56c6"
+    },
+    "RK-10.6.3-017": {
+      "executors/a-released-channel-is-built-anew-for-the-next-turn": "50c6de44f16373a03e379aba13303cfa4caeb30d786e469570983b2e6ed7fad6"
+    },
+    "RK-10.6.3-018": {
+      "executors/a-provider-the-factory-hands-every-build-outlives-a-build-let-go": "c80b284d8c0138e13aa5a996afc3656160dceec38ca53af7932881adfc773512",
+      "executors/a-released-channel-is-built-anew-for-the-next-turn": "c80b284d8c0138e13aa5a996afc3656160dceec38ca53af7932881adfc773512",
+      "executors/a-turn-running-on-a-released-channel-ends-on-it": "c80b284d8c0138e13aa5a996afc3656160dceec38ca53af7932881adfc773512"
+    },
+    "RK-10.6.3-020": {
+      "channel-release/a-closed-local-executor-can-release-a-live-channel": "b3de4664e49c5422c3366937c8d6cacee0a6d1bd425733eb2384b55aec64b66e",
+      "channel-release/a-live-channel-keeps-its-rooms-after-release": "b3de4664e49c5422c3366937c8d6cacee0a6d1bd425733eb2384b55aec64b66e"
+    },
+    "RK-10.6.3-021": {
+      "channel-release/a-closed-local-executor-can-release-a-live-channel": "f3107342ad1c3018cfc4802530fec3b552c58a857245cdbc67846483cb466bf6",
+      "executors/releasing-an-unknown-channel-fails": "f3107342ad1c3018cfc4802530fec3b552c58a857245cdbc67846483cb466bf6"
+    },
+    "RK-10.6.3-026": {
+      "channel-call/a-call-is-scoped-to-the-room-s-organization": "05a2907d8fef3dd0068352a22ebc6badd904fd9603e765f09e3d7b98a7127f8e",
+      "channel-call/a-call-validates-its-room-and-binding": "05a2907d8fef3dd0068352a22ebc6badd904fd9603e765f09e3d7b98a7127f8e"
+    },
+    "RK-10.6.3-027": {
+      "executors/a-channel-call-runs-on-the-executor-holding-the-room": "fb3fa9fe6b42d50b6f82df3991f3dbd4b92f15b5643255ecbfd2451969d8af72"
+    },
+    "RK-10.6.3-028": {
+      "channel-call/a-failed-call-keeps-its-changed-state": "09b342a7ca75d8295d90e5c180488e1fed79a4d6e3f2c496e4598d0a68c5e463",
+      "channel-call/a-local-verb-answers-its-result": "09b342a7ca75d8295d90e5c180488e1fed79a4d6e3f2c496e4598d0a68c5e463",
+      "executors/a-channel-call-runs-on-the-executor-holding-the-room": "09b342a7ca75d8295d90e5c180488e1fed79a4d6e3f2c496e4598d0a68c5e463"
+    },
+    "RK-10.6.3-030": {
+      "executors/a-channel-call-no-executor-takes-fails-no-executor": "41b42eba139ce15c616bc2d1bf3189895af3694abfe1547dd8c092ee553c5cef",
+      "executors/executors-declaring-prefixes-take-only-the-agents-under-them": "41b42eba139ce15c616bc2d1bf3189895af3694abfe1547dd8c092ee553c5cef"
+    },
+    "RK-10.6.3-031": {
+      "channel-call/a-verb-the-channel-lacks-fails": "eb30cff4d6833f24e03cd32c7fbbe70a55466ffc923ffa91824ddc1340c82b8a",
+      "executors/a-verb-the-channel-lacks-fails": "eb30cff4d6833f24e03cd32c7fbbe70a55466ffc923ffa91824ddc1340c82b8a"
+    },
+    "RK-10.6.3-032": {
+      "executors/a-room-whose-executor-closed-moves-to-another": "5903395252d45460a6b0878079ba16e6594763fa868699bbf9f11fba30d5f081",
+      "executors/an-executor-closed-during-a-turn-ends-it": "5903395252d45460a6b0878079ba16e6594763fa868699bbf9f11fba30d5f081",
+      "executors/an-executor-drops-the-state-a-turn-elsewhere-made-stale": "5903395252d45460a6b0878079ba16e6594763fa868699bbf9f11fba30d5f081",
+      "executors/what-the-room-keeps-for-a-channel-reaches-the-next-executor": "5903395252d45460a6b0878079ba16e6594763fa868699bbf9f11fba30d5f081"
+    },
+    "RK-10.6.3-035": {
+      "executors/a-publication-from-an-executor-no-longer-holding-the-room-is-dropped": "8c07337e7499c82a831c9846cc3d3d2f32e0c7f9d90a70a3fd1567d019a3f72d"
+    },
+    "RK-10.6.3-038": {
+      "executors/work-a-turn-apart-began-publishes-to-its-room-after-it": "7a1b9135ed65a3bd4f8d0b13bb7b370e7647c307cceddb515fbb4b2670467e99"
+    },
+    "RK-10.6.3-039": {
+      "tenancy/a-deleted-room-s-turn-reaches-nothing-of-the-room-created-again": "30090bbda0c6b47e8e7ea1b4544be4f455b5e06b105d192f58b5af8a5709b6a5"
+    },
+    "RK-10.6.4-003": {
+      "streaming/a-model-s-reasoning-reaches-a-streaming-channel-before-its-text": "c5b98755ab9c762e68245d0f2a0638ebae64aafce59bc9332d4b33c007107218"
+    },
+    "RK-10.6.4-004": {
+      "greeting/a-stream-answering-a-greeting-is-chained": "8db1b7af6e3fa63c5bccfd3673b47f44eaea766db33e4f67ef77488a8513373f",
+      "locks/the-streamed-answer-of-a-set-of-a-deleted-room-is-not-read": "8db1b7af6e3fa63c5bccfd3673b47f44eaea766db33e4f67ef77488a8513373f",
+      "locks/the-streamed-answer-of-a-set-of-a-deleted-room-stays-out-of-the-room-created-again": "8db1b7af6e3fa63c5bccfd3673b47f44eaea766db33e4f67ef77488a8513373f",
+      "permissions/a-muted-agent-s-stream-is-closed-unread": "8db1b7af6e3fa63c5bccfd3673b47f44eaea766db33e4f67ef77488a8513373f",
+      "permissions/a-muted-supervisor-s-second-pass-is-closed-unread": "8db1b7af6e3fa63c5bccfd3673b47f44eaea766db33e4f67ef77488a8513373f",
+      "streaming/chained-stream-past-the-cap": "8db1b7af6e3fa63c5bccfd3673b47f44eaea766db33e4f67ef77488a8513373f",
+      "streaming/reader-stops": "8db1b7af6e3fa63c5bccfd3673b47f44eaea766db33e4f67ef77488a8513373f"
+    },
+    "RK-10.6.4-005": {
+      "streaming/a-cancel-while-a-reader-shows-a-generation-closes-its-calls": "48b119338fff56d46cc57cd1f17f5b983186aaf1ddfd37a42e07a4c7e8faf50e"
+    },
+    "RK-10.6.4-007": {
+      "streaming/a-message-steered-at-an-answer-a-reader-still-shows-is-too-late": "7265357431a62a589519922f5375ce9881786bdb578bc59cf077f6ec987b7133"
+    },
+    "RK-10.6.4-009": {
+      "streaming/reader-stops": "94372f40618fdc9d9f2de538d499dcd23876c1246072e9d62fdc92ec4a8a28ad"
+    },
+    "RK-10.6.4-011": {
+      "streaming/a-stream-cut-from-outside-ends-its-reader-s-stream-with-the-cut-row": "b68ffc981394d264e725d006a5b22ca3b38285f116ef295d5282982e0e0a7885",
+      "streaming/reader-stops": "b68ffc981394d264e725d006a5b22ca3b38285f116ef295d5282982e0e0a7885"
+    },
+    "RK-10.6.5-006": {
+      "executors/a-turn-apart-calls-a-tool-the-room-owner-serves": "136f5da9752b1fda21eca95d16d358c524b94bc4228dde2e7af6cafa1e51154a"
+    },
+    "RK-10.6.5-007": {
+      "orchestration/a-supervisor-s-own-tools-stay-its-own": "ecb88ad2bb8b37e68699f31de3d2e9812ae2a4331ea59b3e499ccb057c5c552d"
+    },
+    "RK-10.6.5-008": {
+      "executors/a-turn-apart-calls-a-tool-the-room-owner-serves": "3aad05b8e87f7957d0d4950765fdaf8822dc58b05842db07581188292f6a0714"
+    },
+    "RK-10.6.5-012": {
+      "host-declared/cancelling-one-call-non-streaming": "802035d345adb3008339b5e57634ac49bc480f91dab75668df0b2dba24e34c77",
+      "host-declared/cancelling-one-call-streaming": "802035d345adb3008339b5e57634ac49bc480f91dab75668df0b2dba24e34c77"
+    },
+    "RK-10.6.5-020": {
+      "executors/a-turn-apart-calls-the-host-verbs-during-and-after-it": "b73f240f1292394b6f1526ef0058c3d676e487de292f415a9c3ff45bae944641"
+    },
+    "RK-10.6.5-021": {
+      "executors/a-turn-apart-calls-the-host-verbs-during-and-after-it": "57881b1f9bf9899997345474cd4bfd16884d725be451282bbe9e2ac6d867656a"
+    },
+    "RK-10.6.5-022": {
+      "executors/a-turn-apart-calls-the-host-verbs-during-and-after-it": "970e2455e306ecd9cb2edb44c244af0479dd1130b29d783490cdef24ed4e5c5a",
+      "host/work-a-turn-began-acts-for-its-room-and-organization-after-it": "970e2455e306ecd9cb2edb44c244af0479dd1130b29d783490cdef24ed4e5c5a"
+    },
+    "RK-10.6.5-024": {
+      "executors/work-a-turn-apart-began-publishes-to-its-room-after-it": "6c3042084526c8e2664ad24d2e00b46d7e3c37244241f9f47cdca0b1937272f4"
+    },
+    "RK-10.6.5-026": {
+      "host-context/fresh-context-window-0": "9b09c09578d61be5d7258f8c1a4bd2d3714c0ab3fca3204325d0457266893579",
+      "host-context/fresh-context-window-50": "9b09c09578d61be5d7258f8c1a4bd2d3714c0ab3fca3204325d0457266893579",
+      "host/a-turn-s-host-delegates-and-waits-for-its-task": "9b09c09578d61be5d7258f8c1a4bd2d3714c0ab3fca3204325d0457266893579",
+      "host/a-turn-s-host-waits-for-its-task-at-most-its-timeout": "9b09c09578d61be5d7258f8c1a4bd2d3714c0ab3fca3204325d0457266893579"
+    },
+    "RK-10.6.5-027": {
+      "host/a-turn-s-host-writes-its-room-s-metadata-status-and-observations": "a7f46f0d7bd7e200e78513fd8461cec82195a55661894f5433d725e0abc30614"
+    },
+    "RK-10.6.5-028": {
+      "host-declared/admission-deleted-room": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/admission-recreated-room": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/admission-unknown-between-turns": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/arguments-and-results-non-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/arguments-and-results-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/between-turns-admitted": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/between-turns-refused": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/builtin-call-refused-non-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/builtin-call-refused-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/cancelling-one-call-non-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/cancelling-one-call-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/concurrent-record-contributions-non-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/concurrent-record-contributions-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/concurrent-record-merges-non-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/concurrent-record-merges-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/owner-context-non-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/owner-context-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/record-equal-values-non-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/record-equal-values-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/record-error-permissionerror-non-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/record-error-permissionerror-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/record-error-runtimeerror-non-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/record-error-runtimeerror-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/record-error-valueerror-non-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/record-error-valueerror-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/record-return-non-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/record-return-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/registration-refuses-add-observation": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/registration-refuses-app-twice": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/registration-refuses-delegate": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/registration-refuses-empty": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/registration-refuses-post-status": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/registration-refuses-room-context": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/registration-refuses-room-tasks": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/registration-refuses-room-vision": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/registration-refuses-send-event": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/registration-refuses-update-room-metadata": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/registration-refuses-wait-task": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/unknown-name-non-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1",
+      "host-declared/unknown-name-streaming": "757da6ee31d718e3e39eaf15279d46b116c4d854c04fa186027125fbfbbf12c1"
+    },
+    "RK-10.6.5-029": {
+      "host-declared/admission-unknown-between-turns": "0ce38b4c99b7686ef89858c2099ec851a3e466bbd296bf7dd25ba1ff4845a6fb",
+      "host-declared/builtin-call-refused-non-streaming": "0ce38b4c99b7686ef89858c2099ec851a3e466bbd296bf7dd25ba1ff4845a6fb",
+      "host-declared/builtin-call-refused-streaming": "0ce38b4c99b7686ef89858c2099ec851a3e466bbd296bf7dd25ba1ff4845a6fb",
+      "host-declared/owner-context-non-streaming": "0ce38b4c99b7686ef89858c2099ec851a3e466bbd296bf7dd25ba1ff4845a6fb",
+      "host-declared/owner-context-streaming": "0ce38b4c99b7686ef89858c2099ec851a3e466bbd296bf7dd25ba1ff4845a6fb",
+      "host-declared/registration-refuses-add-observation": "0ce38b4c99b7686ef89858c2099ec851a3e466bbd296bf7dd25ba1ff4845a6fb",
+      "host-declared/registration-refuses-app-twice": "0ce38b4c99b7686ef89858c2099ec851a3e466bbd296bf7dd25ba1ff4845a6fb",
+      "host-declared/registration-refuses-delegate": "0ce38b4c99b7686ef89858c2099ec851a3e466bbd296bf7dd25ba1ff4845a6fb",
+      "host-declared/registration-refuses-post-status": "0ce38b4c99b7686ef89858c2099ec851a3e466bbd296bf7dd25ba1ff4845a6fb",
+      "host-declared/registration-refuses-room-context": "0ce38b4c99b7686ef89858c2099ec851a3e466bbd296bf7dd25ba1ff4845a6fb",
+      "host-declared/registration-refuses-room-tasks": "0ce38b4c99b7686ef89858c2099ec851a3e466bbd296bf7dd25ba1ff4845a6fb",
+      "host-declared/registration-refuses-room-vision": "0ce38b4c99b7686ef89858c2099ec851a3e466bbd296bf7dd25ba1ff4845a6fb",
+      "host-declared/registration-refuses-send-event": "0ce38b4c99b7686ef89858c2099ec851a3e466bbd296bf7dd25ba1ff4845a6fb",
+      "host-declared/registration-refuses-update-room-metadata": "0ce38b4c99b7686ef89858c2099ec851a3e466bbd296bf7dd25ba1ff4845a6fb",
+      "host-declared/registration-refuses-wait-task": "0ce38b4c99b7686ef89858c2099ec851a3e466bbd296bf7dd25ba1ff4845a6fb",
+      "host-declared/unknown-name-non-streaming": "0ce38b4c99b7686ef89858c2099ec851a3e466bbd296bf7dd25ba1ff4845a6fb",
+      "host-declared/unknown-name-streaming": "0ce38b4c99b7686ef89858c2099ec851a3e466bbd296bf7dd25ba1ff4845a6fb"
+    },
+    "RK-10.6.5-030": {
+      "host-declared/admission-deleted-room": "84c8af07b4943e43f98e06e2975af96a0eec141a60b752844c3dfddc38b58b4c",
+      "host-declared/admission-recreated-room": "84c8af07b4943e43f98e06e2975af96a0eec141a60b752844c3dfddc38b58b4c",
+      "host-declared/between-turns-admitted": "84c8af07b4943e43f98e06e2975af96a0eec141a60b752844c3dfddc38b58b4c"
+    },
+    "RK-10.6.5-031": {
+      "host-declared/admission-unknown-between-turns": "75a6c78fde89c5773ba2a832029ccb0259bca15ef4610457cc509848d5be3e6f",
+      "host-declared/between-turns-refused": "75a6c78fde89c5773ba2a832029ccb0259bca15ef4610457cc509848d5be3e6f"
+    },
+    "RK-10.6.5-032": {
+      "host/a-turn-s-host-acts-for-its-room-alone": "99d18acbaf9966cc90d793c77a151f1eb5bba12fc97172bf058d38e7181bb4d1",
+      "host/a-turn-s-host-delegates-and-waits-for-its-task": "99d18acbaf9966cc90d793c77a151f1eb5bba12fc97172bf058d38e7181bb4d1",
+      "host/work-a-turn-began-acts-for-its-room-and-organization-after-it": "99d18acbaf9966cc90d793c77a151f1eb5bba12fc97172bf058d38e7181bb4d1"
+    },
+    "RK-10.6.5-033": {
+      "host/a-turn-s-host-acts-for-its-room-alone": "54afb84d80f4fb4f0b922783b7661c1be00c436ead0c58d9ed79276b18793d6d",
+      "host/a-turn-s-host-writes-its-room-s-metadata-status-and-observations": "54afb84d80f4fb4f0b922783b7661c1be00c436ead0c58d9ed79276b18793d6d"
+    },
+    "RK-10.6.5-035": {
+      "host/a-task-cut-short-hands-its-failure-to-wait-task": "eb0ee042b12a589b8d6568ddc5b65432cce59725a5da1b4a0df21677c468792b",
+      "host/a-turn-s-host-delegates-and-waits-for-its-task": "eb0ee042b12a589b8d6568ddc5b65432cce59725a5da1b4a0df21677c468792b",
+      "host/a-turn-s-host-waits-for-its-task-at-most-its-timeout": "eb0ee042b12a589b8d6568ddc5b65432cce59725a5da1b4a0df21677c468792b"
+    },
+    "RK-10.6.5-038": {
+      "executors/a-later-turn-on-another-executor-replays-the-instruction-it-read": "1a064f931834d969638ee680b5e37f6e869c2957024d3ff9426f53590b16ace7",
+      "executors/a-skill-activated-on-one-executor-rides-the-next-turn-on-another": "1a064f931834d969638ee680b5e37f6e869c2957024d3ff9426f53590b16ace7",
+      "executors/another-executor-replays-the-tool-calls-of-the-first": "1a064f931834d969638ee680b5e37f6e869c2957024d3ff9426f53590b16ace7"
+    },
+    "RK-10.6.5-044": {
+      "host-declared/record-return-non-streaming": "0f29288855b51149092c06bb2ba20fee90a4b3c2a1fe090db787f2b78ad84ce4",
+      "host-declared/record-return-streaming": "0f29288855b51149092c06bb2ba20fee90a4b3c2a1fe090db787f2b78ad84ce4"
+    },
+    "RK-10.6.5-045": {
+      "host-declared/record-return-non-streaming": "3d460e312e4d1b508572b7fbb77f68b5f112ad3709a64ee7493984d71ed7c142",
+      "host-declared/record-return-streaming": "3d460e312e4d1b508572b7fbb77f68b5f112ad3709a64ee7493984d71ed7c142"
+    },
+    "RK-10.6.5-046": {
+      "host-declared/concurrent-record-contributions-non-streaming": "16a4ce0f4ff706dc8ecf209587ef15eb51bc56007e221d77e5c0bfd3bde770a8",
+      "host-declared/concurrent-record-contributions-streaming": "16a4ce0f4ff706dc8ecf209587ef15eb51bc56007e221d77e5c0bfd3bde770a8",
+      "host-declared/record-equal-values-non-streaming": "16a4ce0f4ff706dc8ecf209587ef15eb51bc56007e221d77e5c0bfd3bde770a8",
+      "host-declared/record-equal-values-streaming": "16a4ce0f4ff706dc8ecf209587ef15eb51bc56007e221d77e5c0bfd3bde770a8",
+      "host-declared/record-error-permissionerror-non-streaming": "16a4ce0f4ff706dc8ecf209587ef15eb51bc56007e221d77e5c0bfd3bde770a8",
+      "host-declared/record-error-permissionerror-streaming": "16a4ce0f4ff706dc8ecf209587ef15eb51bc56007e221d77e5c0bfd3bde770a8",
+      "host-declared/record-error-runtimeerror-non-streaming": "16a4ce0f4ff706dc8ecf209587ef15eb51bc56007e221d77e5c0bfd3bde770a8",
+      "host-declared/record-error-runtimeerror-streaming": "16a4ce0f4ff706dc8ecf209587ef15eb51bc56007e221d77e5c0bfd3bde770a8",
+      "host-declared/record-error-valueerror-non-streaming": "16a4ce0f4ff706dc8ecf209587ef15eb51bc56007e221d77e5c0bfd3bde770a8",
+      "host-declared/record-error-valueerror-streaming": "16a4ce0f4ff706dc8ecf209587ef15eb51bc56007e221d77e5c0bfd3bde770a8",
+      "host-declared/record-return-non-streaming": "16a4ce0f4ff706dc8ecf209587ef15eb51bc56007e221d77e5c0bfd3bde770a8",
+      "host-declared/record-return-streaming": "16a4ce0f4ff706dc8ecf209587ef15eb51bc56007e221d77e5c0bfd3bde770a8"
+    },
+    "RK-10.6.5-047": {
+      "host-declared/concurrent-record-contributions-non-streaming": "2d533bd906e53d317d5f250251e466cddfe3f960ac001029d26100392add4156",
+      "host-declared/concurrent-record-contributions-streaming": "2d533bd906e53d317d5f250251e466cddfe3f960ac001029d26100392add4156",
+      "host-declared/record-return-non-streaming": "2d533bd906e53d317d5f250251e466cddfe3f960ac001029d26100392add4156",
+      "host-declared/record-return-streaming": "2d533bd906e53d317d5f250251e466cddfe3f960ac001029d26100392add4156"
+    },
+    "RK-10.6.5-048": {
+      "host-declared/concurrent-record-contributions-non-streaming": "409e6416cdecaf1aa7e7ad08117f1d92297f372268593862543d3b86afe8ff64",
+      "host-declared/concurrent-record-contributions-streaming": "409e6416cdecaf1aa7e7ad08117f1d92297f372268593862543d3b86afe8ff64",
+      "host-declared/concurrent-record-merges-non-streaming": "409e6416cdecaf1aa7e7ad08117f1d92297f372268593862543d3b86afe8ff64",
+      "host-declared/concurrent-record-merges-streaming": "409e6416cdecaf1aa7e7ad08117f1d92297f372268593862543d3b86afe8ff64"
+    },
+    "RK-10.6.5-050": {
+      "host-declared/concurrent-record-contributions-non-streaming": "e36d8f37ef07f0320cf943872329dd337723670259a457ce3d6badbbcf2e360a",
+      "host-declared/concurrent-record-contributions-streaming": "e36d8f37ef07f0320cf943872329dd337723670259a457ce3d6badbbcf2e360a",
+      "host-declared/concurrent-record-merges-non-streaming": "e36d8f37ef07f0320cf943872329dd337723670259a457ce3d6badbbcf2e360a",
+      "host-declared/concurrent-record-merges-streaming": "e36d8f37ef07f0320cf943872329dd337723670259a457ce3d6badbbcf2e360a"
+    },
+    "RK-10.6.5-051": {
+      "host-declared/concurrent-record-merges-non-streaming": "331bd73088140f142bf014e63801a0e99bde93e9b3ee94443da4e3aacdc03e78",
+      "host-declared/concurrent-record-merges-streaming": "331bd73088140f142bf014e63801a0e99bde93e9b3ee94443da4e3aacdc03e78"
+    },
+    "RK-10.6.5-052": {
+      "host-declared/between-turns-admitted": "028f9d80d4abf546bed1caeac8d34f4a8a7fba36deffe5e6e45e07e0cdf1f726"
+    },
+    "RK-10.6.5-058": {
+      "executors/a-turn-apart-asks-a-person-through-the-room-owner": "7ac4f0ef7b11b56eafdfccae5a2959ddb6de4ae5fdfa0bdcc61d5524f644194a",
+      "input-request/open-record-stream": "7ac4f0ef7b11b56eafdfccae5a2959ddb6de4ae5fdfa0bdcc61d5524f644194a",
+      "input-request/open-record-whole": "7ac4f0ef7b11b56eafdfccae5a2959ddb6de4ae5fdfa0bdcc61d5524f644194a",
+      "input-request/rejected-stream": "7ac4f0ef7b11b56eafdfccae5a2959ddb6de4ae5fdfa0bdcc61d5524f644194a",
+      "input-request/rejected-whole": "7ac4f0ef7b11b56eafdfccae5a2959ddb6de4ae5fdfa0bdcc61d5524f644194a",
+      "inputs/a-rejection-reaches-the-tool-as-a-refusal": "7ac4f0ef7b11b56eafdfccae5a2959ddb6de4ae5fdfa0bdcc61d5524f644194a",
+      "inputs/a-request-is-answerable-while-its-notification-runs": "7ac4f0ef7b11b56eafdfccae5a2959ddb6de4ae5fdfa0bdcc61d5524f644194a",
+      "inputs/the-kit-answers-a-turn-s-request": "7ac4f0ef7b11b56eafdfccae5a2959ddb6de4ae5fdfa0bdcc61d5524f644194a"
+    },
+    "RK-10.6.5-059": {
+      "input-request/blocked-stream": "009d30a11c19f9d839358737477dc10fc7edb6073e41e5dd6d902f1c39b0b22d",
+      "input-request/blocked-whole": "009d30a11c19f9d839358737477dc10fc7edb6073e41e5dd6d902f1c39b0b22d",
+      "input-request/open-record-stream": "009d30a11c19f9d839358737477dc10fc7edb6073e41e5dd6d902f1c39b0b22d",
+      "input-request/open-record-whole": "009d30a11c19f9d839358737477dc10fc7edb6073e41e5dd6d902f1c39b0b22d",
+      "input-request/organization-scope-stream": "009d30a11c19f9d839358737477dc10fc7edb6073e41e5dd6d902f1c39b0b22d",
+      "input-request/organization-scope-whole": "009d30a11c19f9d839358737477dc10fc7edb6073e41e5dd6d902f1c39b0b22d",
+      "input-request/rejected-stream": "009d30a11c19f9d839358737477dc10fc7edb6073e41e5dd6d902f1c39b0b22d",
+      "input-request/rejected-whole": "009d30a11c19f9d839358737477dc10fc7edb6073e41e5dd6d902f1c39b0b22d",
+      "input-request/timed-out-stream": "009d30a11c19f9d839358737477dc10fc7edb6073e41e5dd6d902f1c39b0b22d",
+      "input-request/timed-out-whole": "009d30a11c19f9d839358737477dc10fc7edb6073e41e5dd6d902f1c39b0b22d"
+    },
+    "RK-10.6.5-060": {
+      "input-request/blocked-stream": "0b1f09391bce6fec73d6b4b42219899510bc16003f24a3876afa2ade6dd64ada",
+      "input-request/blocked-whole": "0b1f09391bce6fec73d6b4b42219899510bc16003f24a3876afa2ade6dd64ada",
+      "input-request/timed-out-stream": "0b1f09391bce6fec73d6b4b42219899510bc16003f24a3876afa2ade6dd64ada",
+      "input-request/timed-out-whole": "0b1f09391bce6fec73d6b4b42219899510bc16003f24a3876afa2ade6dd64ada",
+      "inputs/a-block-after-an-answer-does-not-take-it-back": "0b1f09391bce6fec73d6b4b42219899510bc16003f24a3876afa2ade6dd64ada",
+      "inputs/a-blocked-request-is-a-refusal": "0b1f09391bce6fec73d6b4b42219899510bc16003f24a3876afa2ade6dd64ada",
+      "inputs/a-request-no-one-answers-in-time-fails": "0b1f09391bce6fec73d6b4b42219899510bc16003f24a3876afa2ade6dd64ada",
+      "inputs/the-kit-answers-a-turn-s-request": "0b1f09391bce6fec73d6b4b42219899510bc16003f24a3876afa2ade6dd64ada"
+    },
+    "RK-10.6.5-061": {
+      "inputs/a-hook-that-raises-leaves-the-request-answerable": "ef91a2f8f6816a12b6a8037d717be2010ae16f0bda4fe24326a503ae39dfcba2",
+      "inputs/a-request-is-answerable-while-its-notification-runs": "ef91a2f8f6816a12b6a8037d717be2010ae16f0bda4fe24326a503ae39dfcba2",
+      "inputs/the-kit-answers-a-turn-s-request": "ef91a2f8f6816a12b6a8037d717be2010ae16f0bda4fe24326a503ae39dfcba2"
+    },
+    "RK-10.6.5-062": {
+      "executors/a-turn-apart-asks-a-person-through-the-room-owner": "0cb7c87814376d52e256744c75d107518a02e504b72dc62b047cf3d50dbeb02f",
+      "input-request/open-record-stream": "0cb7c87814376d52e256744c75d107518a02e504b72dc62b047cf3d50dbeb02f",
+      "input-request/open-record-whole": "0cb7c87814376d52e256744c75d107518a02e504b72dc62b047cf3d50dbeb02f",
+      "input-request/rejected-stream": "0cb7c87814376d52e256744c75d107518a02e504b72dc62b047cf3d50dbeb02f",
+      "input-request/rejected-whole": "0cb7c87814376d52e256744c75d107518a02e504b72dc62b047cf3d50dbeb02f",
+      "inputs/a-rejection-reaches-the-tool-as-a-refusal": "0cb7c87814376d52e256744c75d107518a02e504b72dc62b047cf3d50dbeb02f",
+      "inputs/the-kit-answers-a-turn-s-request": "0cb7c87814376d52e256744c75d107518a02e504b72dc62b047cf3d50dbeb02f"
+    },
+    "RK-10.6.5-063": {
+      "input-request/blocked-stream": "17e1478cb917e50159086a141b4e7166817ac8413f92beb25b1ca3755635fb2d",
+      "input-request/blocked-whole": "17e1478cb917e50159086a141b4e7166817ac8413f92beb25b1ca3755635fb2d",
+      "input-request/timed-out-stream": "17e1478cb917e50159086a141b4e7166817ac8413f92beb25b1ca3755635fb2d",
+      "input-request/timed-out-whole": "17e1478cb917e50159086a141b4e7166817ac8413f92beb25b1ca3755635fb2d",
+      "inputs/a-blocked-request-is-a-refusal": "17e1478cb917e50159086a141b4e7166817ac8413f92beb25b1ca3755635fb2d",
+      "inputs/a-request-no-one-answers-in-time-fails": "17e1478cb917e50159086a141b4e7166817ac8413f92beb25b1ca3755635fb2d"
+    },
+    "RK-10.6.6-005": {
+      "kit-executor/named-hooks-refuse-invalid-registrations": "ffab49e9c4a3a6d650e187e193fc70e2c0e6b2ec1044bf6d0018334dad806ecf"
+    },
+    "RK-10.6.6-016": {
+      "hooks/a-deleted-room-s-hooks-and-enabled-names-end-with-it": "a38d9fd9e9a396f3c2c6cc7e18d656cdefb76ec571b69a96289a9bad462622e7",
+      "kit-executor/a-running-turn-keeps-its-names": "a38d9fd9e9a396f3c2c6cc7e18d656cdefb76ec571b69a96289a9bad462622e7",
+      "kit-executor/a-running-turn-reads-current-definitions": "a38d9fd9e9a396f3c2c6cc7e18d656cdefb76ec571b69a96289a9bad462622e7"
+    },
+    "RK-10.6.6-017": {
+      "executors/an-executor-lacking-a-room-s-hook-does-not-take-its-turn": "33d88d9dd80552028db4d6f26bb98fee6453a3715f7fdc4f986a224d2082f1c1",
+      "kit-executor/an-undefined-name-refuses-the-turn": "33d88d9dd80552028db4d6f26bb98fee6453a3715f7fdc4f986a224d2082f1c1"
+    },
+    "RK-10.6.6-018": {
+      "kit-executor/a-definition-is-replaced-per-trigger": "7de0431608377975b208427130314f3d12f228a2f874f7a1e96f5244320ce571",
+      "kit-executor/a-running-turn-reads-current-definitions": "7de0431608377975b208427130314f3d12f228a2f874f7a1e96f5244320ce571"
+    },
+    "RK-10.6.6-019": {
+      "kit-executor/named-hooks-are-opt-in-per-room": "b605b3a930788cbaba09d192cc6ae8a056da4de2e7d92090909909f77dd07154"
+    },
+    "RK-10.6.6-020": {
+      "kit-executor/named-hooks-are-opt-in-per-room": "607b2502e9127f7cae6d05b5cfcbe9eed6a9795a740d82af099c055d6012ab69"
+    },
+    "RK-10.6.6-021": {
+      "kit-executor/named-hooks-refuse-invalid-registrations": "9844a32be32fae0e386bb85456f70e10c0fd321919ec5681577e0032f08b96b3"
+    },
+    "RK-10.6.6-022": {
+      "executors/a-hook-on-an-executor-reads-the-room-when-it-fires": "de84d7d8bd33e93829b436780d5dc34fa0cc1ef3365bb988dfbcdc09b6235ada"
+    },
+    "RK-10.6.7-003": {
+      "executors/the-kit-lists-the-executors-served-and-what-each-declares": "f384428024b7d234010ae7eeb962d366c465783b5a962fa80de2f4a6ae737380"
+    },
+    "RK-10.6.7-004": {
+      "executors/a-declared-agent-s-turn-runs-on-the-executor-hosting-it": "fa4e74a534b3bc0f2a08d5ad4e8fd7c3f098350037a9b6324b3782873bd136f6",
+      "executors/a-delegation-to-a-declared-worker-runs-on-its-executor": "fa4e74a534b3bc0f2a08d5ad4e8fd7c3f098350037a9b6324b3782873bd136f6",
+      "executors/an-executor-lacking-a-room-s-hook-does-not-take-its-turn": "fa4e74a534b3bc0f2a08d5ad4e8fd7c3f098350037a9b6324b3782873bd136f6",
+      "executors/executors-declaring-prefixes-take-only-the-agents-under-them": "fa4e74a534b3bc0f2a08d5ad4e8fd7c3f098350037a9b6324b3782873bd136f6"
+    },
+    "RK-10.6.7-005": {
+      "executors/a-room-s-agent-presence-names-the-executors-covering-each-agent": "3bd77568c7a89d18fe11893159761592999ccab95e43ae5b14c4c5c6d89b0891",
+      "executors/an-executor-declaring-every-agent-takes-the-turns-of-agents-it-was-never-named": "3bd77568c7a89d18fe11893159761592999ccab95e43ae5b14c4c5c6d89b0891",
+      "executors/executors-declaring-prefixes-take-only-the-agents-under-them": "3bd77568c7a89d18fe11893159761592999ccab95e43ae5b14c4c5c6d89b0891"
+    },
+    "RK-10.6.7-009": {
+      "executors/an-executor-serving-every-organization-takes-every-room-s-turns": "c4a77075fc1a838d3df0e3f7bf11bc3d0817a0a123a554a545874b75fcacdcb1"
+    },
+    "RK-10.6.7-010": {
+      "executors/an-executor-serving-every-organization-takes-every-room-s-turns": "dacfae1b111db3574f174cadbb088745afcf4a27b18bdbfa776470480920e658",
+      "executors/an-executor-takes-the-turns-of-the-organizations-it-serves-alone": "dacfae1b111db3574f174cadbb088745afcf4a27b18bdbfa776470480920e658"
+    },
+    "RK-10.6.7-011": {
+      "executors/an-executor-takes-the-turns-of-the-organizations-it-serves-alone": "4310e69e2834d53e34c0319802e222a8901cfe3593ed65b625e5596ece070f52"
+    },
+    "RK-10.6.7-012": {
+      "executors/an-executor-takes-the-turns-of-the-organizations-it-serves-alone": "7b57c8baa9d68d35dee030b6419fc1abc772b3be158b3aaf4e396f362711783d"
+    },
+    "RK-10.6.7-016": {
+      "executors/an-executor-takes-the-turns-of-the-organizations-it-serves-alone": "b5cbb60aac53bb9def08c97a81e80e2124a513c44f167f6e3744f9bbba5b163b"
+    },
+    "RK-10.6.7-017": {
+      "executors/a-room-whose-executor-builds-nothing-for-its-agent-stays-on-it": "ecf644913b9c013a5182497c4f59a975aede2e05245e6afc9f141783bb2db165",
+      "executors/an-agent-its-executor-builds-nothing-for-fails-no-executor": "ecf644913b9c013a5182497c4f59a975aede2e05245e6afc9f141783bb2db165"
+    },
+    "RK-10.6.7-018": {
+      "executors/a-room-whose-executor-builds-nothing-for-its-agent-stays-on-it": "8e010e3d13dfd1e33d0dd40fe66f7bcc4a5dc7afdd54e962b7f4bd845507dddc"
+    },
+    "RK-10.6.7-020": {
+      "executors/a-turn-no-executor-declares-fails-and-the-room-goes-on": "f0fab32b2be181068b608697625d33f373e9c09004101f2262d6feec04c2c91b"
+    },
+    "RK-10.6.7-021": {
+      "executors/a-live-agent-s-turn-stays-on-the-kit-s-executor": "c81037720ad2b8b8c6da70b8ad057c248978417bd80ea4bfe9e38b8c25dde8d5",
+      "executors/an-executor-declaring-every-agent-takes-the-turns-of-agents-it-was-never-named": "c81037720ad2b8b8c6da70b8ad057c248978417bd80ea4bfe9e38b8c25dde8d5",
+      "kit-executor/an-undefined-name-refuses-the-turn": "c81037720ad2b8b8c6da70b8ad057c248978417bd80ea4bfe9e38b8c25dde8d5"
+    },
+    "RK-10.6.7-022": {
+      "channel-call/a-closed-local-executor-takes-no-calls": "4928ee4c58c795d599630e5f875f016076d5e085d4aa58e21b3932f12c795033",
+      "executor-close/closing-refuses-new-turns-and-keeps-transports": "4928ee4c58c795d599630e5f875f016076d5e085d4aa58e21b3932f12c795033"
+    },
+    "RK-10.6.7-024": {
+      "executors/an-executor-that-never-answers-loses-the-turn-and-no-other-gets-it": "4e1d1c1bc922d5187978774e243254e286c8398ca2cf0aff651ec40cd4f9e0a2"
+    },
+    "RK-10.6.7-025": {
+      "executors/a-room-s-turns-stay-on-the-executor-holding-its-state": "98926648ae9f6b994f92169903bcaf388510c085f7791da079a2fc5a1b75dbd9",
+      "executors/a-room-whose-executor-closed-moves-to-another": "98926648ae9f6b994f92169903bcaf388510c085f7791da079a2fc5a1b75dbd9",
+      "executors/after-a-lost-executor-the-room-s-next-turn-runs-elsewhere": "98926648ae9f6b994f92169903bcaf388510c085f7791da079a2fc5a1b75dbd9"
+    },
+    "RK-10.6.7-026": {
+      "executors/a-channel-call-runs-on-the-executor-holding-the-room": "65c6ba55cfb21aa65cf3a27459483ef900fef08721acb3880aa4521fc6b763a0"
+    },
+    "RK-10.6.7-027": {
+      "executors/the-kit-lists-the-executors-served-and-what-each-declares": "31a7f61bc90970ab8ca2d20e7f39f90b37155e368f478471a5db0a23b284e5c6",
+      "local-presence/the-kit-executor-is-not-listed": "31a7f61bc90970ab8ca2d20e7f39f90b37155e368f478471a5db0a23b284e5c6"
+    },
+    "RK-10.6.7-028": {
+      "discussion/an-offline-agent-s-turn-is-skipped-not-failed": "78c51aee1bdfc0c0da612262226972c9480121a86885cd3384c82cc8d5aa3d44",
+      "executors/a-room-hook-no-executor-defines-takes-its-agent-offline-in-that-room": "78c51aee1bdfc0c0da612262226972c9480121a86885cd3384c82cc8d5aa3d44",
+      "executors/a-room-s-agent-presence-names-the-executors-covering-each-agent": "78c51aee1bdfc0c0da612262226972c9480121a86885cd3384c82cc8d5aa3d44",
+      "executors/an-agent-is-offline-in-a-room-of-an-organization-its-executors-do-not-serve": "78c51aee1bdfc0c0da612262226972c9480121a86885cd3384c82cc8d5aa3d44",
+      "executors/an-agent-s-presence-is-published-in-its-rooms-on-attach-and-when-its-coverage-changes": "78c51aee1bdfc0c0da612262226972c9480121a86885cd3384c82cc8d5aa3d44",
+      "executors/an-executor-lacking-a-room-s-hook-does-not-cover-its-agent-there": "78c51aee1bdfc0c0da612262226972c9480121a86885cd3384c82cc8d5aa3d44",
+      "local-presence/agents-are-sorted-and-filtered": "78c51aee1bdfc0c0da612262226972c9480121a86885cd3384c82cc8d5aa3d44",
+      "local-presence/automatic-publications-follow-local-changes": "78c51aee1bdfc0c0da612262226972c9480121a86885cd3384c82cc8d5aa3d44",
+      "local-presence/room-hooks-and-executor-close": "78c51aee1bdfc0c0da612262226972c9480121a86885cd3384c82cc8d5aa3d44"
+    },
+    "RK-10.6.7-029": {
+      "executors/a-room-s-agent-presence-names-the-executors-covering-each-agent": "b8a7d2cad4c73fa576675b789851899f4f15c4d5625eec40a54091cc97ace1c8",
+      "executors/an-agent-is-offline-in-a-room-of-an-organization-its-executors-do-not-serve": "b8a7d2cad4c73fa576675b789851899f4f15c4d5625eec40a54091cc97ace1c8",
+      "executors/an-executor-lacking-a-room-s-hook-does-not-cover-its-agent-there": "b8a7d2cad4c73fa576675b789851899f4f15c4d5625eec40a54091cc97ace1c8",
+      "local-presence/agents-are-sorted-and-filtered": "b8a7d2cad4c73fa576675b789851899f4f15c4d5625eec40a54091cc97ace1c8",
+      "local-presence/room-hooks-and-executor-close": "b8a7d2cad4c73fa576675b789851899f4f15c4d5625eec40a54091cc97ace1c8",
+      "local-presence/tenant-named": "b8a7d2cad4c73fa576675b789851899f4f15c4d5625eec40a54091cc97ace1c8",
+      "local-presence/tenant-none": "b8a7d2cad4c73fa576675b789851899f4f15c4d5625eec40a54091cc97ace1c8"
+    },
+    "RK-10.6.7-030": {
+      "executors/a-room-hook-no-executor-defines-takes-its-agent-offline-in-that-room": "0dbcc568f8540e2adb3a00256dc4c84a9ee2208e5ee19916fafde7917611ae06",
+      "executors/an-agent-is-offline-in-a-room-of-an-organization-its-executors-do-not-serve": "0dbcc568f8540e2adb3a00256dc4c84a9ee2208e5ee19916fafde7917611ae06",
+      "executors/an-agent-s-presence-is-published-in-its-rooms-on-attach-and-when-its-coverage-changes": "0dbcc568f8540e2adb3a00256dc4c84a9ee2208e5ee19916fafde7917611ae06",
+      "local-presence/automatic-publications-follow-local-changes": "0dbcc568f8540e2adb3a00256dc4c84a9ee2208e5ee19916fafde7917611ae06"
+    },
+    "RK-10.6.7-031": {
+      "executors/a-room-hook-no-executor-defines-takes-its-agent-offline-in-that-room": "359e511ccf1e5ddb1761d7702569119bc43ae3de62d1295ee83bdca865f93a7e",
+      "executors/an-agent-is-offline-in-a-room-of-an-organization-its-executors-do-not-serve": "359e511ccf1e5ddb1761d7702569119bc43ae3de62d1295ee83bdca865f93a7e",
+      "executors/an-agent-s-presence-is-published-in-its-rooms-on-attach-and-when-its-coverage-changes": "359e511ccf1e5ddb1761d7702569119bc43ae3de62d1295ee83bdca865f93a7e"
+    },
+    "RK-10.6.7-034": {
+      "local-presence/automatic-publications-follow-local-changes": "e7b553242f7460a29b9ca01dfbeb9eb20031bfff5996caffd276a6d5c336484c"
+    },
+    "RK-10.6.8-007": {
+      "executors/an-executor-killed-mid-answer-loses-its-turn-and-what-was-shown-stays": "2bdc189cfa3961221b0aa5200198a95d544a11effc6ca27aced655f8dc8e767b",
+      "executors/an-executor-that-never-answers-loses-the-turn-and-no-other-gets-it": "2bdc189cfa3961221b0aa5200198a95d544a11effc6ca27aced655f8dc8e767b"
+    },
+    "RK-10.6.8-014": {
+      "executor-close/a-later-close-cuts-a-previously-spared-turn": "261d39653472f86ea3b41c79e4527d570c9a3a8ae1d699bc14abab113b197e75",
+      "executor-close/closing-cuts-a-held-generation": "261d39653472f86ea3b41c79e4527d570c9a3a8ae1d699bc14abab113b197e75",
+      "executor-close/closing-cuts-a-held-tool": "261d39653472f86ea3b41c79e4527d570c9a3a8ae1d699bc14abab113b197e75",
+      "executor-close/closing-from-a-turn-cuts-another": "261d39653472f86ea3b41c79e4527d570c9a3a8ae1d699bc14abab113b197e75",
+      "executors/a-turn-no-executor-declares-fails-and-the-room-goes-on": "261d39653472f86ea3b41c79e4527d570c9a3a8ae1d699bc14abab113b197e75",
+      "executors/an-executor-closed-during-a-turn-ends-it": "261d39653472f86ea3b41c79e4527d570c9a3a8ae1d699bc14abab113b197e75",
+      "executors/an-executor-killed-mid-answer-loses-its-turn-and-what-was-shown-stays": "261d39653472f86ea3b41c79e4527d570c9a3a8ae1d699bc14abab113b197e75",
+      "executors/an-executor-that-never-answers-loses-the-turn-and-no-other-gets-it": "261d39653472f86ea3b41c79e4527d570c9a3a8ae1d699bc14abab113b197e75"
+    },
+    "RK-10.6.8-016": {
+      "executors/a-turn-no-executor-declares-fails-and-the-room-goes-on": "ca845cc092e4e24ce635d65c6369dd96745686500a41a066aafa2c68268ac510",
+      "executors/an-executor-closed-during-a-turn-ends-it": "ca845cc092e4e24ce635d65c6369dd96745686500a41a066aafa2c68268ac510",
+      "executors/an-executor-killed-mid-answer-loses-its-turn-and-what-was-shown-stays": "ca845cc092e4e24ce635d65c6369dd96745686500a41a066aafa2c68268ac510"
+    },
+    "RK-10.6.8-018": {
+      "delivery/a-key-cut-after-a-round-that-spoke-tells-its-caller-the-turn-s-end": "97a2e274e3d277135ffa5ba3fb9539fc812112771f4faab32786ed974a7cd9ec",
+      "delivery/a-key-cut-between-rounds-tells-its-caller-the-turn-s-end": "97a2e274e3d277135ffa5ba3fb9539fc812112771f4faab32786ed974a7cd9ec",
+      "delivery/a-key-cut-while-the-adopting-hook-waits-reaches-the-adopted-call": "97a2e274e3d277135ffa5ba3fb9539fc812112771f4faab32786ed974a7cd9ec",
+      "delivery/a-key-cuts-an-agent-s-running-generation": "97a2e274e3d277135ffa5ba3fb9539fc812112771f4faab32786ed974a7cd9ec",
+      "delivery/a-key-cuts-the-running-turn-of-its-delivery": "97a2e274e3d277135ffa5ba3fb9539fc812112771f4faab32786ed974a7cd9ec",
+      "delivery/an-adopted-call-cut-by-its-key-past-its-adopter-s-deadline": "97a2e274e3d277135ffa5ba3fb9539fc812112771f4faab32786ed974a7cd9ec",
+      "delivery/an-adopted-call-s-key-cuts-its-turn-while-a-target-reads": "97a2e274e3d277135ffa5ba3fb9539fc812112771f4faab32786ed974a7cd9ec",
+      "executors/a-turn-cut-on-its-executor-names-it-in-its-record": "97a2e274e3d277135ffa5ba3fb9539fc812112771f4faab32786ed974a7cd9ec",
+      "streaming/a-cut-after-two-generations-keeps-what-they-used": "97a2e274e3d277135ffa5ba3fb9539fc812112771f4faab32786ed974a7cd9ec",
+      "streaming/a-cut-in-a-round-tried-again-reads-incomplete": "97a2e274e3d277135ffa5ba3fb9539fc812112771f4faab32786ed974a7cd9ec",
+      "streaming/a-cut-turn-that-wrote-no-message-tells-its-caller-what-it-used": "97a2e274e3d277135ffa5ba3fb9539fc812112771f4faab32786ed974a7cd9ec",
+      "streaming/a-generation-cut-from-outside-counts-the-input-it-told": "97a2e274e3d277135ffa5ba3fb9539fc812112771f4faab32786ed974a7cd9ec",
+      "streaming/a-generation-in-flight-at-a-cut-is-not-counted": "97a2e274e3d277135ffa5ba3fb9539fc812112771f4faab32786ed974a7cd9ec",
+      "streaming/a-generation-that-reported-nothing-leaves-a-cut-record-incomplete": "97a2e274e3d277135ffa5ba3fb9539fc812112771f4faab32786ed974a7cd9ec"
+    },
+    "RK-10.6.8-019": {
+      "delivery/a-cancel-under-the-room-lock-returns-at-once": "a39ab58414c6b3fd28ba155dd143d55b6906d6419402522583264dce8a1bbb24",
+      "delivery/a-locked-hook-cancels-an-already-committed-queued-delivery": "a39ab58414c6b3fd28ba155dd143d55b6906d6419402522583264dce8a1bbb24",
+      "delivery/a-reentrant-call-s-key-names-its-delivery-until-it-runs": "a39ab58414c6b3fd28ba155dd143d55b6906d6419402522583264dce8a1bbb24",
+      "delivery/a-reentrant-call-waits-in-the-lane-while-its-hook-works-on": "a39ab58414c6b3fd28ba155dd143d55b6906d6419402522583264dce8a1bbb24"
+    },
+    "RK-10.6.8-020": {
+      "streaming/a-cancel-while-a-reader-shows-a-generation-closes-its-calls": "62a3adad8e8f3f80cc1fdfb03f4b056242e486fc666531ea82236c6c721bdd68",
+      "streaming/a-generation-a-fallback-serves-names-it-on-what-it-told-and-on-its-cut": "62a3adad8e8f3f80cc1fdfb03f4b056242e486fc666531ea82236c6c721bdd68",
+      "turn-record/a-cancel-during-a-generation-counts-the-input-it-told": "62a3adad8e8f3f80cc1fdfb03f4b056242e486fc666531ea82236c6c721bdd68",
+      "turn-record/a-generation-a-cancel-stopped-leaves-the-record-incomplete": "62a3adad8e8f3f80cc1fdfb03f4b056242e486fc666531ea82236c6c721bdd68"
+    },
+    "RK-10.6.8-022": {
+      "delivery/a-key-cut-after-a-round-that-spoke-tells-its-caller-the-turn-s-end": "f0b91a726528ea72e243f1d9c642586c226900a4b28179369d5a323a9962584f",
+      "delivery/a-key-cut-between-rounds-tells-its-caller-the-turn-s-end": "f0b91a726528ea72e243f1d9c642586c226900a4b28179369d5a323a9962584f",
+      "delivery/a-key-cut-while-the-adopting-hook-waits-reaches-the-adopted-call": "f0b91a726528ea72e243f1d9c642586c226900a4b28179369d5a323a9962584f",
+      "delivery/an-adopted-call-cut-by-its-key-past-its-adopter-s-deadline": "f0b91a726528ea72e243f1d9c642586c226900a4b28179369d5a323a9962584f",
+      "delivery/an-adopted-call-s-key-cuts-its-turn-while-a-target-reads": "f0b91a726528ea72e243f1d9c642586c226900a4b28179369d5a323a9962584f",
+      "executor-close/closing-cuts-a-held-tool": "f0b91a726528ea72e243f1d9c642586c226900a4b28179369d5a323a9962584f",
+      "executors/a-turn-cut-on-its-executor-names-it-in-its-record": "f0b91a726528ea72e243f1d9c642586c226900a4b28179369d5a323a9962584f",
+      "executors/an-executor-closed-during-a-turn-ends-it": "f0b91a726528ea72e243f1d9c642586c226900a4b28179369d5a323a9962584f",
+      "streaming/a-cut-after-two-generations-keeps-what-they-used": "f0b91a726528ea72e243f1d9c642586c226900a4b28179369d5a323a9962584f",
+      "streaming/a-cut-in-a-round-tried-again-reads-incomplete": "f0b91a726528ea72e243f1d9c642586c226900a4b28179369d5a323a9962584f",
+      "streaming/a-cut-turn-that-wrote-no-message-tells-its-caller-what-it-used": "f0b91a726528ea72e243f1d9c642586c226900a4b28179369d5a323a9962584f",
+      "streaming/a-generation-cut-from-outside-counts-the-input-it-told": "f0b91a726528ea72e243f1d9c642586c226900a4b28179369d5a323a9962584f",
+      "streaming/a-generation-in-flight-at-a-cut-is-not-counted": "f0b91a726528ea72e243f1d9c642586c226900a4b28179369d5a323a9962584f",
+      "streaming/a-generation-that-reported-nothing-leaves-a-cut-record-incomplete": "f0b91a726528ea72e243f1d9c642586c226900a4b28179369d5a323a9962584f"
+    },
+    "RK-10.6.8-028": {
+      "channel-call/a-verb-closing-its-executor-keeps-its-calling-turn": "1dc8d8941d6f7b11a96561f57059813f363f58a752cca42a880b4f2522232003",
+      "executor-close/a-later-close-cuts-a-previously-spared-turn": "1dc8d8941d6f7b11a96561f57059813f363f58a752cca42a880b4f2522232003",
+      "executor-close/a-self-closed-turn-finishes-after-owner-cancellation": "1dc8d8941d6f7b11a96561f57059813f363f58a752cca42a880b4f2522232003",
+      "executor-close/closing-cuts-a-held-generation": "1dc8d8941d6f7b11a96561f57059813f363f58a752cca42a880b4f2522232003",
+      "executor-close/closing-cuts-a-held-tool": "1dc8d8941d6f7b11a96561f57059813f363f58a752cca42a880b4f2522232003",
+      "executor-close/closing-from-a-turn-cuts-another": "1dc8d8941d6f7b11a96561f57059813f363f58a752cca42a880b4f2522232003",
+      "executor-close/closing-from-a-turn-spares-it": "1dc8d8941d6f7b11a96561f57059813f363f58a752cca42a880b4f2522232003",
+      "executor-close/closing-from-another-delivery-cuts-its-waiter": "1dc8d8941d6f7b11a96561f57059813f363f58a752cca42a880b4f2522232003",
+      "executor-close/closing-refuses-new-turns-and-keeps-transports": "1dc8d8941d6f7b11a96561f57059813f363f58a752cca42a880b4f2522232003",
+      "executors/an-executor-closed-during-a-turn-ends-it": "1dc8d8941d6f7b11a96561f57059813f363f58a752cca42a880b4f2522232003"
+    },
+    "RK-10.6.8-029": {
+      "executor-close/a-later-close-cuts-a-previously-spared-turn": "9685613f83bae74e7e0d2343b0b7c5f816ec71145e0e6ee7911193fda96d759f"
+    },
+    "RK-10.6.8-030": {
+      "executor-close/a-self-closed-turn-finishes-after-owner-cancellation": "770117789a2c45882326b7dc3f538c4ed62c4eed52f3b6b757b5a14547b6124b",
+      "executor-close/an-external-close-cuts-work-kept-after-owner-cancellation": "770117789a2c45882326b7dc3f538c4ed62c4eed52f3b6b757b5a14547b6124b"
+    },
+    "RK-10.6.8-031": {
+      "executor-close/an-external-close-cuts-work-kept-after-owner-cancellation": "b9ee046fc688cbfc651c1a7e30c506767bdc70077fa5a02d1f6511137b85084c"
+    },
+    "RK-10.6.8-033": {
+      "executor-close/closing-cuts-a-held-generation": "4769c7bad960d95d56e6b6aa6f4c92d5e06ed1b1f28239d4dd66f8d25258708c",
+      "executor-close/closing-from-a-turn-spares-it": "4769c7bad960d95d56e6b6aa6f4c92d5e06ed1b1f28239d4dd66f8d25258708c",
+      "executor-close/closing-refuses-new-turns-and-keeps-transports": "4769c7bad960d95d56e6b6aa6f4c92d5e06ed1b1f28239d4dd66f8d25258708c"
+    },
+    "RK-10.6.8-034": {
+      "executor-close/closing-from-another-delivery-cuts-its-waiter": "738d3d44947b4ce0af8ce60ab2c32d9db81ab41cccceed1aa9eca9c7cc1819b0"
+    },
+    "RK-10.6.8-035": {
+      "steering/a-steer-reaches-the-room-it-names-alone": "9189f229f619704489aa6fe22a8b3327f61b2a892752a984aedd68e25b60df27"
+    },
+    "RK-10.6.8-036": {
+      "steering/a-steer-reaches-the-room-it-names-alone": "d99c2d2a24e53e93ba499c077f14639da69dd26efa6c13c014e8432c2ea075ce"
+    },
+    "RK-10.6.8-037": {
+      "steering/a-steer-reaches-the-room-it-names-alone": "db46930c8d114abef184422937d69a3db1947c61ae24c1518115c88d1aee7fa9"
+    },
+    "RK-10.6.8-040": {
+      "discussion/listen-only-cuts-the-turn-its-agent-is-taking": "a310d9ef8a557bc1a300b83c4204499f5f6b0f455de278b7883476dc015736c7",
+      "discussion/uninstalling-cuts-the-turn-under-way": "a310d9ef8a557bc1a300b83c4204499f5f6b0f455de278b7883476dc015736c7"
+    },
+    "RK-10.6.8-042": {
+      "host/a-task-cut-short-hands-its-failure-to-wait-task": "82628d731457259788979cf5a0a834f37bfefe23e9f62ef465aca1975d61c7a5",
+      "inbound/an-agent-s-provider-refusal-keeps-its-retryability": "82628d731457259788979cf5a0a834f37bfefe23e9f62ef465aca1975d61c7a5",
+      "tasks/a-failed-task-keeps-the-error-its-worker-s-turn-raised": "82628d731457259788979cf5a0a834f37bfefe23e9f62ef465aca1975d61c7a5",
+      "tasks/a-failed-task-s-exception-keeps-its-attributes": "82628d731457259788979cf5a0a834f37bfefe23e9f62ef465aca1975d61c7a5"
+    },
+    "RK-10.6.8-043": {
+      "host-declared/record-error-permissionerror-non-streaming": "d89d406b483c75ae195eaa639b14572707494b6edaf548a9a31c999ca8a1604b",
+      "host-declared/record-error-permissionerror-streaming": "d89d406b483c75ae195eaa639b14572707494b6edaf548a9a31c999ca8a1604b",
+      "host-declared/record-error-runtimeerror-non-streaming": "d89d406b483c75ae195eaa639b14572707494b6edaf548a9a31c999ca8a1604b",
+      "host-declared/record-error-runtimeerror-streaming": "d89d406b483c75ae195eaa639b14572707494b6edaf548a9a31c999ca8a1604b",
+      "host-declared/record-error-valueerror-non-streaming": "d89d406b483c75ae195eaa639b14572707494b6edaf548a9a31c999ca8a1604b",
+      "host-declared/record-error-valueerror-streaming": "d89d406b483c75ae195eaa639b14572707494b6edaf548a9a31c999ca8a1604b",
+      "inbound/a-headless-turn-s-provider-error-reaches-the-caller-and-on-error": "d89d406b483c75ae195eaa639b14572707494b6edaf548a9a31c999ca8a1604b",
+      "inbound/a-turn-refused-before-its-stream-names-its-error-type-to-on-error": "d89d406b483c75ae195eaa639b14572707494b6edaf548a9a31c999ca8a1604b",
+      "inbound/an-agent-s-provider-refusal-keeps-its-retryability": "d89d406b483c75ae195eaa639b14572707494b6edaf548a9a31c999ca8a1604b",
+      "tasks/a-failed-task-keeps-the-error-its-worker-s-turn-raised": "d89d406b483c75ae195eaa639b14572707494b6edaf548a9a31c999ca8a1604b",
+      "tasks/a-failed-task-s-exception-keeps-its-attributes": "d89d406b483c75ae195eaa639b14572707494b6edaf548a9a31c999ca8a1604b"
+    },
+    "RK-10.6.8-044": {
+      "host-declared/record-error-permissionerror-non-streaming": "e579b68c2e3be272db905ee87ba32ef1e8511d802307cd24dd21cf66ebbc8645",
+      "host-declared/record-error-permissionerror-streaming": "e579b68c2e3be272db905ee87ba32ef1e8511d802307cd24dd21cf66ebbc8645",
+      "host-declared/record-error-runtimeerror-non-streaming": "e579b68c2e3be272db905ee87ba32ef1e8511d802307cd24dd21cf66ebbc8645",
+      "host-declared/record-error-runtimeerror-streaming": "e579b68c2e3be272db905ee87ba32ef1e8511d802307cd24dd21cf66ebbc8645",
+      "host-declared/record-error-valueerror-non-streaming": "e579b68c2e3be272db905ee87ba32ef1e8511d802307cd24dd21cf66ebbc8645",
+      "host-declared/record-error-valueerror-streaming": "e579b68c2e3be272db905ee87ba32ef1e8511d802307cd24dd21cf66ebbc8645",
+      "inbound/an-agent-s-provider-refusal-keeps-its-retryability": "e579b68c2e3be272db905ee87ba32ef1e8511d802307cd24dd21cf66ebbc8645"
+    },
     "RK-9.3-002": {
       "hooks/a-room-hook-runs-in-its-room-alone": "df893f81ca5f146526cff32bf988be6d45496fbe549290068b50b54cc4292f8b",
       "hooks/an-async-hook-on-a-sync-trigger-observes": "df893f81ca5f146526cff32bf988be6d45496fbe549290068b50b54cc4292f8b",
