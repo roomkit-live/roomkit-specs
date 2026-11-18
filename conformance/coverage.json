@@ -2870,9 +2870,10 @@
       "section": "9.1",
       "title": "Hook Registration",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 21,
       "mapping": {
-        "mapped_partial": 1
+        "mapped_partial": 1,
+        "unmapped": 20
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -2923,10 +2924,10 @@
       "section": "9.2",
       "title": "Hook Triggers",
       "review": "normative",
-      "requirements": 4,
+      "requirements": 111,
       "mapping": {
         "mapped_partial": 1,
-        "unmapped": 3
+        "unmapped": 110
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -3635,11 +3636,11 @@
       "section": "9.4",
       "title": "HookResult",
       "review": "normative",
-      "requirements": 6,
+      "requirements": 35,
       "mapping": {
         "mapped_complete": 1,
         "mapped_partial": 3,
-        "unmapped": 2
+        "unmapped": 31
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -3752,9 +3753,9 @@
       "section": "9.5.1",
       "title": "Off-lock checks (`needs_lock = false`)",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 70,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 70
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -3866,9 +3867,9 @@
       "section": "9.6",
       "title": "When to Use What",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 6,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 6
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
@@ -32948,7 +32949,97 @@
       "links": []
     },
     {
-      "id": "RK-9.1-001",
+      "id": "RK-9.1-002",
+      "section": "9.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.1-003",
+      "section": "9.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.1-004",
+      "section": "9.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.1-005",
+      "section": "9.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.1-006",
+      "section": "9.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.1-007",
+      "section": "9.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.1-008",
+      "section": "9.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.1-009",
+      "section": "9.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.1-010",
+      "section": "9.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.1-011",
+      "section": "9.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.1-012",
+      "section": "9.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.1-013",
+      "section": "9.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.1-014",
+      "section": "9.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.1-015",
+      "section": "9.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.1-016",
+      "section": "9.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.1-017",
       "section": "9.1",
       "mapping": "mapped_partial",
       "links": [
@@ -33205,25 +33296,697 @@
       ]
     },
     {
-      "id": "RK-9.2-001",
+      "id": "RK-9.1-018",
+      "section": "9.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.1-019",
+      "section": "9.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.1-020",
+      "section": "9.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.1-021",
+      "section": "9.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.1-022",
+      "section": "9.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-005",
       "section": "9.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-9.2-002",
+      "id": "RK-9.2-006",
       "section": "9.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-9.2-003",
+      "id": "RK-9.2-007",
       "section": "9.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-9.2-004",
+      "id": "RK-9.2-008",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-009",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-010",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-011",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-012",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-013",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-014",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-015",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-016",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-017",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-018",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-019",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-020",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-021",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-022",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-023",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-024",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-025",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-026",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-027",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-028",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-029",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-030",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-031",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-032",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-033",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-034",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-035",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-036",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-037",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-038",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-039",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-040",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-041",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-042",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-043",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-044",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-045",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-046",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-047",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-048",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-049",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-050",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-051",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-052",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-053",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-054",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-055",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-056",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-057",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-058",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-059",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-060",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-061",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-062",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-063",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-064",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-065",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-066",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-067",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-068",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-069",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-070",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-071",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-072",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-073",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-074",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-075",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-076",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-077",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-078",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-079",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-080",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-081",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-082",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-083",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-084",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-085",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-086",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-087",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-088",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-089",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-090",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-091",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-092",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-093",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-094",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-095",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-096",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-097",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-098",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-099",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-100",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-101",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-102",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-103",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-104",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-105",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-106",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-107",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-108",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-109",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-110",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-111",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-112",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-113",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-114",
+      "section": "9.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.2-115",
       "section": "9.2",
       "mapping": "mapped_partial",
       "links": [
@@ -38357,13 +39120,67 @@
       "links": []
     },
     {
-      "id": "RK-9.4-001",
+      "id": "RK-9.4-007",
       "section": "9.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-9.4-002",
+      "id": "RK-9.4-040",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-008",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-009",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-010",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-011",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-012",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-013",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-014",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-015",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-016",
       "section": "9.4",
       "mapping": "mapped_partial",
       "links": [
@@ -38892,13 +39709,37 @@
       ]
     },
     {
+      "id": "RK-9.4-017",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-018",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
       "id": "RK-9.4-003",
       "section": "9.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-9.4-004",
+      "id": "RK-9.4-019",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-020",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-021",
       "section": "9.4",
       "mapping": "mapped_partial",
       "links": [
@@ -39973,7 +40814,91 @@
       ]
     },
     {
-      "id": "RK-9.4-005",
+      "id": "RK-9.4-022",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-023",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-024",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-025",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-026",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-027",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-028",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-029",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-030",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-031",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-032",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-033",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-034",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-035",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-036",
       "section": "9.4",
       "mapping": "mapped_complete",
       "links": [
@@ -40500,7 +41425,19 @@
       ]
     },
     {
-      "id": "RK-9.4-006",
+      "id": "RK-9.4-037",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-038",
+      "section": "9.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.4-039",
       "section": "9.4",
       "mapping": "mapped_partial",
       "links": [
@@ -41043,13 +41980,457 @@
       "links": []
     },
     {
-      "id": "RK-9.5.1-001",
+      "id": "RK-9.5.1-002",
       "section": "9.5.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-9.6-001",
+      "id": "RK-9.5.1-003",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-004",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-005",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-006",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-007",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-008",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-009",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-010",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-011",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-012",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-013",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-014",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-015",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-016",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-017",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-018",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-019",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-020",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-021",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-022",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-023",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-024",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-025",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-026",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-027",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-028",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-029",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-030",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-031",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-032",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-033",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-034",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-035",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-036",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-037",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-038",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-039",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-040",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-041",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-042",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-043",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-044",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-045",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-046",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-047",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-048",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-049",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-050",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-051",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-052",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-053",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-054",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-055",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-056",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-057",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-058",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-059",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-060",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-061",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-062",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-063",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-064",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-065",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-066",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-067",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-068",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-069",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-070",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.5.1-071",
+      "section": "9.5.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.6-002",
+      "section": "9.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.6-003",
+      "section": "9.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.6-004",
+      "section": "9.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.6-005",
+      "section": "9.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.6-006",
+      "section": "9.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.6-007",
       "section": "9.6",
       "mapping": "unmapped",
       "links": []
