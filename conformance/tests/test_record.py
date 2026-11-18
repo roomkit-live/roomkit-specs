@@ -7,12 +7,14 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from jsonschema import Draft202012Validator
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from test_source import marked
 from traceability import layout
 from traceability.ci import CI_REPORTS, from_ci, workflow_drift
-from traceability.importer import clean, leftovers, portable, prepare, write
+from traceability.importer import clean, leftovers, portable, prepare, prepare_rust, write
 from traceability.provenance import provenance
 from traceability.receipts import validate_artifact
 from traceability.source import digest
@@ -28,6 +30,15 @@ REPORT = f"""<?xml version="1.0" encoding="utf-8"?>
 <testcase classname="{MODULE}" name="test_scenario[a[sqlite]]" time="0.2"><failure message="/tmp/run/x.py:3: /expect/timeline/r differs">Traceback /home/someone/x.py</failure><system-out>log /home/someone</system-out></testcase>
 <testcase classname="tests.conformance.test_acp_fixture" name="test_fixture[/srv/shared]" time="0.1"/>
 </testsuite></testsuites>""".encode()
+RUST_CLASS = "conformance.memory.multi_thread_4"
+RUST_REPORT = f"""<?xml version="1.0" encoding="utf-8"?>
+<testsuites name="cargo tests">
+<testsuite name="{RUST_CLASS}" tests="2" failures="0" errors="0" skipped="1">
+<testcase classname="{RUST_CLASS}" name="a"/>
+<testcase classname="{RUST_CLASS}" name="b"><skipped message="§10.6.7: an executor apart needs a public turn backend"/></testcase>
+</testsuite>
+</testsuites>
+""".encode()
 POSTGRES_REPORT = b"""<testsuites><testsuite name="pytest">
 <testcase classname="tests.conformance.test_postgres" name="test_scenario[a[postgres]]"/>
 <testcase classname="tests.conformance.test_postgres" name="test_shared_postgres_contract[b-False]"/>
@@ -311,6 +322,100 @@ class RecordingTests(unittest.TestCase):
         (self.specs / "conformance" / "evidence.json").write_text(layout(self.evidence))
         with self.assertRaisesRegex(ValueError, "no integration step"):
             self.from_ci(self.gh(green, {"redis-turns.xml": REPORT})[0])
+
+
+class RustRecordingTests(unittest.TestCase):
+    """The importer of a Rust pass against two throwaway repositories: specs and roomkit-rs."""
+
+    def setUp(self) -> None:
+        temp = tempfile.TemporaryDirectory()
+        self.addCleanup(temp.cleanup)
+        self.specs = Path(temp.name) / "specs"
+        self.rust = Path(temp.name) / "roomkit-rs"
+        self.scenarios = {"a": {"id": "a", "expect": {"v": 1}}, "b": {"id": "b", "expect": {"v": 2}}}
+        (self.specs / "conformance" / "executions").mkdir(parents=True)
+        (self.specs / "roomkit-rfc.md").write_text("## 9. Hooks\n" + marked("Keep the event."))
+        self.place(self.specs / "conformance" / "scenarios")
+        schema = Path(__file__).resolve().parents[1] / "evidence.schema.json"
+        (self.specs / "conformance" / schema.name).write_bytes(schema.read_bytes())
+        corpus = self.commit(self.specs)
+        self.place(self.rust / "conformance" / "scenarios")
+        (self.rust / "conformance" / "SPECS_COMMIT").write_text(corpus + "\n")
+        self.rust_commit = self.commit(self.rust)
+        self.evidence = {
+            "version": 1, "python_commit": "a" * 40, "retired": [], "links": [], "executions": [],
+        }
+        (self.specs / "conformance" / "evidence.json").write_text(layout(self.evidence))
+        self.command = ["env", "ROOMKIT_CONFORMANCE_JUNIT=target/conformance",
+                        "cargo", "test", "-p", "roomkit", "--test", "conformance"]
+
+    def place(self, directory: Path) -> None:
+        directory.mkdir(parents=True)
+        for name, scenario in self.scenarios.items():
+            (directory / f"{name}.json").write_text(json.dumps(scenario))
+
+    def commit(self, repo: Path) -> str:
+        def git(*args: str) -> str:
+            return subprocess.check_output(["git", "-C", str(repo), *args], text=True).strip()
+
+        if not (repo / ".git").exists():
+            git("init", "-q")
+        git("add", ".")
+        git("-c", "user.name=Conformance Test", "-c", "user.email=test@example.invalid",
+            "-c", "commit.gpgsign=false", "commit", "-qm", "fixture")
+        return git("rev-parse", "HEAD")
+
+    def record(self, report: bytes = RUST_REPORT):
+        return prepare_rust(self.specs, self.rust, report, self.command)
+
+    def test_a_rust_pass_becomes_a_receipt_check_py_accepts(self) -> None:
+        recording = self.record()
+        write(self.specs, [recording])
+        document = json.loads((self.specs / "conformance" / "evidence.json").read_text())
+        (run,) = document["executions"]
+        self.assertEqual(run["id"], f"rust-{self.rust_commit[:7]}-memory-multi-thread-4")
+        self.assertEqual(
+            (run["implementation"], run["implementation_commit"], run["backend"], run["runtime"]),
+            ("rust", self.rust_commit, "memory", "multi_thread_4"),
+        )
+        self.assertEqual(run["artifact"]["format"], "cargo_junit")
+        self.assertEqual(
+            [(r["scenario"], r["outcome"]) for r in run["results"]],
+            [("a", "passed"), ("b", "skipped")],
+        )
+        self.assertEqual(recording.artifact.name, f"{run['id']}.xml")
+        self.assertEqual(leftovers(recording.artifact.read_bytes()), [])
+        schema = json.loads((self.specs / "conformance" / "evidence.schema.json").read_text())
+        self.assertEqual(list(Draft202012Validator(schema).iter_errors(document)), [])
+        self.assertEqual(validate_artifact(run, self.specs), [])
+        self.assertEqual(provenance(document, self.specs, {"rust": self.rust}), [])
+        self.assertIn("--rust-repo required", provenance(document, self.specs, {})[0])
+
+    def test_a_rust_run_of_uncommitted_changes_is_refused(self) -> None:
+        (self.rust / "conformance" / "SPECS_COMMIT").write_text("edited\n")
+        with self.assertRaisesRegex(ValueError, "uncommitted changes"):
+            self.record()
+
+    def test_a_rust_report_holds_exactly_one_pass(self) -> None:
+        other = RUST_REPORT.replace(
+            b'<testcase classname="conformance.memory.multi_thread_4" name="b">',
+            b'<testcase classname="conformance.sqlite.current_thread" name="b">',
+        )
+        for report in [other, POSTGRES_REPORT]:
+            with self.subTest(report=report[:40]), self.assertRaisesRegex(ValueError, "one pass"):
+                self.record(report)
+
+    def test_a_rust_pass_that_left_out_a_scenario_is_refused(self) -> None:
+        partial = RUST_REPORT.replace(f'<testcase classname="{RUST_CLASS}" name="a"/>'.encode(), b"")
+        with self.assertRaisesRegex(ValueError, "entire filtered selection"):
+            self.record(partial)
+
+    def test_a_rust_copy_that_differs_from_the_corpus_is_refused(self) -> None:
+        copy = self.rust / "conformance" / "scenarios" / "a.json"
+        copy.write_text(json.dumps({"id": "a", "expect": {"v": 3}}))
+        self.rust_commit = self.commit(self.rust)
+        with self.assertRaisesRegex(ValueError, "copy differs"):
+            self.record()
 
 
 if __name__ == "__main__":

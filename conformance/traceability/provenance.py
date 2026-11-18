@@ -28,7 +28,8 @@ def copied_scenarios(
                 f"{run['id']}: {result['scenario']}: implementation's copy differs"
             )
     if run["implementation"] == "rust":
-        # The Rust runner emits an aggregate count, so all selected IDs are required.
+        # A Rust receipt is a whole pass: every scenario of the copy, narrowed only
+        # by `scenario_filter`, never a selection of the cases it reported.
         names = subprocess.run(
             [
                 "git",

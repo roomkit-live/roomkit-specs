@@ -28,6 +28,17 @@ PROFILES = {
     "postgres": Profile("tests.conformance.test_postgres", "postgres", False),
 }
 
+# roomkit-rs's passes, each a backend and a tokio runtime: one thread
+# (`current_thread`) or four workers (`multi_thread_4`). Its runner writes one
+# JUnit case per scenario, named by the scenario's id, under the class
+# `conformance.<backend>.<runtime>`, so the report itself names the pass.
+RUST_PROFILES = {
+    ("memory", "current_thread"),
+    ("memory", "multi_thread_4"),
+    ("sqlite", "current_thread"),
+    ("postgres", "current_thread"),
+}
+
 TURN_BACKEND = "ROOMKIT_TEST_TURN_BACKEND"
 # env's options whose argument is the next word (GNU coreutils, uutils).
 _ENV_OPTIONS_WITH_ARGUMENT = ("-a", "--argv0", "-C", "--chdir", "-f", "--file")
@@ -54,6 +65,8 @@ def validate_artifact(run: dict[str, Any], root: Path) -> list[str]:
             return [f"{run['id']}: execution artifact fingerprint differs"]
         if reference["format"] == "pytest_junit":
             return junit(run, raw)
+        if reference["format"] == "cargo_junit":
+            return rust_junit(run, raw)
         return cargo(run, raw.decode())
     except (OSError, UnicodeError, ET.ParseError, ValueError) as error:
         return [f"{run['id']}: cannot read execution artifact: {error}"]
@@ -97,6 +110,25 @@ def outcomes(raw: bytes, backend: str) -> dict[str, str]:
         if scenario in found:
             outcome = min(found[scenario], outcome, key=_SEVERITY.index)
         found[scenario] = outcome
+    return found
+
+
+def rust_class(backend: str, runtime: str) -> str:
+    """The JUnit class of the Rust runner's cases on *backend* and *runtime*."""
+    return f"conformance.{backend}.{runtime}"
+
+
+def rust_outcomes(raw: bytes, backend: str, runtime: str) -> dict[str, str]:
+    """Each scenario's outcome in the Rust runner's pass on *backend* and *runtime*,
+    read from that pass's cases only. Raises ValueError on a duplicate case."""
+    found: dict[str, str] = {}
+    for case in ET.fromstring(raw).iter("testcase"):
+        if case.get("classname") != rust_class(backend, runtime):
+            continue
+        name = case.get("name", "")
+        if name in found:
+            raise ValueError(f"duplicate JUnit case {name}")
+        found[name] = case_outcome(case)
     return found
 
 
@@ -147,6 +179,24 @@ def junit(run: dict[str, Any], raw: bytes) -> list[str]:
         cases = outcomes(raw, run["backend"])
     except ValueError as error:
         return [f"{run['id']}: {error}"]
+    return compare(run, cases)
+
+
+def rust_junit(run: dict[str, Any], raw: bytes) -> list[str]:
+    """Resolve the Rust runner's pass: its cases' class names the backend and the
+    runtime, so the command is not read."""
+    profile = (run["backend"], run["runtime"])
+    if run["implementation"] != "rust" or profile not in RUST_PROFILES:
+        return [f"{run['id']}: unsupported Rust execution profile"]
+    try:
+        cases = rust_outcomes(raw, *profile)
+    except ValueError as error:
+        return [f"{run['id']}: {error}"]
+    return compare(run, cases)
+
+
+def compare(run: dict[str, Any], cases: dict[str, str]) -> list[str]:
+    """Each outcome the receipt records is the one its saved report holds."""
     errors = []
     for result in run["results"]:
         name = result["scenario"]
@@ -159,7 +209,7 @@ def junit(run: dict[str, Any], raw: bytes) -> list[str]:
 
 
 def cargo(run: dict[str, Any], text: str) -> list[str]:
-    """Aggregate Rust summaries cannot identify the executed backend and IDs."""
+    """Aggregate cargo summaries cannot identify the executed backend and IDs."""
     return [
         (
             f"{run['id']}: cargo receipts are unsupported: aggregate output does not "

@@ -8,7 +8,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from traceability.evidence import execution_status, validate
-from traceability.receipts import cargo, junit
+from traceability.receipts import cargo, junit, rust_junit
 from traceability.references import check_assertion, pointer, python_symbol
 from traceability.source import digest
 
@@ -251,6 +251,53 @@ class EvidenceTests(unittest.TestCase):
             with self.subTest(backend=backend):
                 self.run["backend"] = backend
                 self.assertIn("unsupported pytest execution profile", junit(self.run, xml)[0])
+
+    def rust_run(self, backend: str, runtime: str) -> dict:
+        self.run.update(implementation="rust", backend=backend, runtime=runtime)
+        self.run["command"] = ["cargo", "test", "-p", "roomkit", "--test", "conformance"]
+        return self.run
+
+    def test_rust_junit_records_the_outcome_of_each_named_scenario(self) -> None:
+        run = self.rust_run("memory", "multi_thread_4")
+        case = '<testcase classname="conformance.memory.multi_thread_4" name="{}">{}</testcase>'
+        xml = f"<testsuite>{case.format('a', '')}{case.format('b', '<skipped/>')}</testsuite>".encode()
+        self.assertEqual(rust_junit(run, xml), [])
+        run["results"].append({"scenario": "b", "sha256": digest(self.scenarios["b"]), "outcome": "passed"})
+        self.assertIn("b: receipt says passed, JUnit says skipped", rust_junit(run, xml)[0])
+        failed = f"<testsuite>{case.format('a', '<failure/>')}</testsuite>".encode()
+        self.assertIn("a: receipt says passed, JUnit says failed", rust_junit(run, failed)[0])
+        twice = f"<testsuite>{case.format('a', '')}{case.format('a', '')}</testsuite>".encode()
+        self.assertIn("duplicate JUnit case a", rust_junit(run, twice)[0])
+
+    def test_rust_junit_reads_only_the_pass_of_the_receipt(self) -> None:
+        xml = b'<testsuite><testcase classname="conformance.memory.current_thread" name="a"/></testsuite>'
+        for backend, runtime in [
+            ("memory", "multi_thread_4"),
+            ("sqlite", "current_thread"),
+            ("postgres", "current_thread"),
+        ]:
+            with self.subTest(backend=backend, runtime=runtime):
+                run = self.rust_run(backend, runtime)
+                self.assertIn("JUnit says not_run", rust_junit(run, xml)[0])
+        self.assertEqual(rust_junit(self.rust_run("memory", "current_thread"), xml), [])
+
+    def test_rust_junit_refuses_a_pass_no_runner_profile_names(self) -> None:
+        xml = b'<testsuite><testcase classname="conformance.sqlite.multi_thread_4" name="a"/></testsuite>'
+        for backend, runtime in [
+            ("sqlite", "multi_thread_4"),
+            ("memory", "asyncio"),
+            ("memory+redis-turns", "current_thread"),
+        ]:
+            with self.subTest(backend=backend, runtime=runtime):
+                run = self.rust_run(backend, runtime)
+                self.assertIn("unsupported Rust execution profile", rust_junit(run, xml)[0])
+        self.rust_run("memory", "current_thread")["implementation"] = "python"
+        self.assertIn("unsupported Rust execution profile", rust_junit(self.run, xml)[0])
+
+    def test_a_rust_receipt_is_never_read_as_a_pytest_one(self) -> None:
+        xml = b'<testsuite><testcase classname="tests.conformance.test_conformance" name="test_scenario[a]"/></testsuite>'
+        self.rust_run("memory", "asyncio")
+        self.assertIn("unsupported pytest execution profile", junit(self.run, xml)[0])
 
     def test_cargo_requires_a_complete_runtime_summary(self) -> None:
         self.run.update(implementation="rust", runtime="multi_thread:4")

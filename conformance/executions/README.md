@@ -286,7 +286,7 @@ report:
 ```sh
 uv run --no-project --python 3.13 --with jsonschema==4.26.0 \
   python conformance/check.py --strict --traceability --update-traceability \
-  --python-repo ../roomkit
+  --python-repo ../roomkit --rust-repo ../roomkit-rs
 ```
 
 A local run is recorded with `record.py junit`, the command that ran after
@@ -299,6 +299,24 @@ uv run --no-project --python 3.13 --with jsonschema==4.26.0 \
   --backend memory --backend sqlite \
   -- env -u POSTGRES_DSN ROOMKIT_TEST_TURN_BACKEND=memory uv run pytest \
      tests/conformance -q --junitxml=python-conformance.xml
+```
+
+A roomkit-rs run is recorded with `record.py rust`, at the commit the
+roomkit-rs checkout is on: each `--junit` file, one pass of the runner, becomes
+`rust-<commit>-<backend>-<runtime>.xml` and the receipt of the same name, with
+`_` written `-`. The import is refused when the checkout has uncommitted
+changes to tracked files, when a file holds no pass or several, when the pass
+left out a scenario of the copy (`ROOMKIT_CONFORMANCE_FILTER` runs are not
+recorded), and for the reasons above. The memory runner's two passes come from
+one command:
+
+```sh
+uv run --no-project --python 3.13 --with jsonschema==4.26.0 \
+  python conformance/record.py rust --rust-repo ../roomkit-rs \
+  --junit ../roomkit-rs/target/conformance/memory-current_thread.xml \
+  --junit ../roomkit-rs/target/conformance/memory-multi_thread_4.xml \
+  -- env ROOMKIT_CONFORMANCE_JUNIT=target/conformance \
+     cargo test -p roomkit --test conformance
 ```
 
 ## PostgreSQL and the Redis turn mode

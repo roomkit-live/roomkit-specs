@@ -1,8 +1,10 @@
-"""Record Python execution receipts from pytest JUnit reports, never by hand.
+"""Record execution receipts from JUnit reports, never by hand.
 
-A report is cleaned (no host, timestamp, duration or local path), retained under
-`conformance/executions/`, and each backend it holds becomes one receipt in
-`evidence.json` at the evidence's `python_commit`.
+A report is cleaned (no host, timestamp, duration or local path) and retained
+under `conformance/executions/`. Each backend of a pytest report becomes one
+receipt in `evidence.json` at the evidence's `python_commit`; a report of the
+Rust runner holds one pass, which becomes one receipt at the roomkit-rs
+checkout's commit.
 """
 
 from __future__ import annotations
@@ -19,7 +21,16 @@ from typing import Any, NamedTuple
 
 from . import layout
 from .evidence import validate_executions
-from .receipts import PROFILES, junit, outcomes
+from .provenance import copied_scenarios
+from .receipts import (
+    PROFILES,
+    RUST_PROFILES,
+    junit,
+    outcomes,
+    rust_class,
+    rust_junit,
+    rust_outcomes,
+)
 from .references import git_text
 from .source import extract, scenario_digest
 
@@ -49,15 +60,15 @@ class Recording(NamedTuple):
     receipts: list[dict[str, Any]]
 
 
-def clean(raw: bytes, modules: set[str]) -> bytes:
+def clean(raw: bytes, modules: set[str], runner: str = "pytest") -> bytes:
     """The report's cases of *modules*, each with its class, name and outcome, and
-    the reason pytest gave for a skip or a failure with local paths cut out. The
-    suite counts are recomputed from the cases kept."""
+    the reason the runner gave for a skip or a failure with local paths cut out.
+    The suite counts are recomputed from the cases kept."""
     source = ET.fromstring(raw)
     if source.tag not in ("testsuites", "testsuite"):
         raise ValueError(f"not a JUnit report: root element {source.tag}")
     cases = [case for case in source.iter("testcase") if case.get("classname") in modules]
-    suite = ET.Element("testsuite", {"name": "pytest"})
+    suite = ET.Element("testsuite", {"name": runner})
     for case in cases:
         suite.append(_copy(case))
     for tag, count in [
@@ -67,7 +78,7 @@ def clean(raw: bytes, modules: set[str]) -> bytes:
     ]:
         suite.set(tag, str(sum(case.find(count) is not None for case in cases)))
     suite.set("tests", str(len(cases)))
-    root = ET.Element("testsuites", {"name": "pytest tests"})
+    root = ET.Element("testsuites", {"name": f"{runner} tests"})
     root.append(suite)
     return ET.tostring(root, encoding="utf-8", xml_declaration=True) + b"\n"
 
@@ -149,16 +160,22 @@ def scenarios_at(repo: Path, commit: str, directory: str) -> dict[str, Any]:
     return found
 
 
-def revisions(specs: Path, python_repo: Path, commit: str) -> dict[str, Any]:
+# Where each implementation keeps its copy of the scenarios and its SPECS_COMMIT.
+COPIES = {"python": "tests/conformance", "rust": "conformance"}
+
+
+def revisions(
+    specs: Path, repo: Path, commit: str, implementation: str = "python"
+) -> dict[str, Any]:
     """The revisions a receipt at *commit* names: the corpus its copy was synced
     from, and the last commit of the RFC, whose text must be the checkout's."""
-    corpus = git_text(python_repo, commit, "tests/conformance/SPECS_COMMIT").strip()
+    corpus = git_text(repo, commit, f"{COPIES[implementation]}/SPECS_COMMIT").strip()
     rfc_commit = git(specs, "log", "-1", "--format=%H", "--", "roomkit-rfc.md")
     rfc = git_text(specs, rfc_commit, "roomkit-rfc.md")
     if rfc != (specs / "roomkit-rfc.md").read_text():
         raise ValueError("roomkit-rfc.md differs from its last commit; commit it first")
     return {
-        "implementation": "python",
+        "implementation": implementation,
         "implementation_commit": commit,
         "rfc_commit": rfc_commit,
         "corpus_commit": corpus,
@@ -202,7 +219,14 @@ def prepare(
     corpus = scenarios_at(specs, template["corpus_commit"], "conformance/scenarios")
     copied = scenarios_at(python_repo, commit, "tests/conformance/scenarios")
     receipts = [
-        receipt(template, f"{name}-{commit[:7]}", backend, content, corpus, copied)
+        receipt(
+            template,
+            f"{name}-{commit[:7]}-{backend.replace('+', '-')}",
+            backend,
+            outcomes(content, backend),
+            corpus,
+            copied,
+        )
         for backend in backends
     ]
     errors = validate_executions({"executions": document["executions"] + receipts})
@@ -222,14 +246,13 @@ _RECEIPT_KEYS = (
 
 def receipt(
     template: dict[str, Any],
-    prefix: str,
+    name: str,
     backend: str,
-    content: bytes,
+    found: dict[str, str],
     corpus: dict[str, Any],
     copied: dict[str, Any],
 ) -> dict[str, Any]:
-    """The receipt of *backend*'s scenarios in the cleaned report."""
-    found = outcomes(content, backend)
+    """The receipt *name* of *backend*'s scenarios, *found* in the cleaned report."""
     if not found:
         raise ValueError(f"the report holds no {backend} scenario case")
     results = []
@@ -247,8 +270,59 @@ def receipt(
                 "outcome": found[scenario],
             }
         )
-    run = {"id": f"{prefix}-{backend.replace('+', '-')}", "backend": backend, "results": results}
+    run = {"id": name, "backend": backend, "results": results}
     return {key: run[key] if key in run else template[key] for key in _RECEIPT_KEYS}
+
+
+def rust_commit(repo: Path) -> str:
+    """The roomkit-rs checkout's commit, whose tracked files are all committed."""
+    if git(repo, "status", "--porcelain", "--untracked-files=no"):
+        raise ValueError(f"{repo} has uncommitted changes: record a run of a clean commit")
+    return git(repo, "rev-parse", "HEAD")
+
+
+def rust_pass(raw: bytes) -> tuple[str, str]:
+    """The backend and runtime of the one Rust runner pass a report holds."""
+    classes = {case.get("classname") for case in ET.fromstring(raw).iter("testcase")}
+    passes = [profile for profile in sorted(RUST_PROFILES) if rust_class(*profile) in classes]
+    if len(passes) != 1:
+        raise ValueError(f"a Rust report holds one pass of {sorted(RUST_PROFILES)}: {passes}")
+    return passes[0]
+
+
+def prepare_rust(specs: Path, rust_repo: Path, raw: bytes, command: list[str]) -> Recording:
+    """Clean *raw*, one pass of the Rust runner, and build its receipt at the
+    roomkit-rs checkout's commit, checked as `check.py` checks it. Nothing is
+    written."""
+    commit = rust_commit(rust_repo)
+    template = revisions(specs, rust_repo, commit, "rust")
+    backend, runtime = rust_pass(raw)
+    content = clean(raw, {rust_class(backend, runtime)}, "cargo")
+    if found := leftovers(content):
+        raise ValueError(f"the cleaned report still carries {found}")
+    name = f"rust-{commit[:7]}-{backend}-{runtime.replace('_', '-')}"
+    artifact = specs / "conformance" / "executions" / f"{name}.xml"
+    if artifact.exists() and artifact.read_bytes() != content:
+        raise ValueError(f"{artifact.name} exists with other content")
+    template |= {
+        "runtime": runtime,
+        "command": portable(command),
+        "artifact": {
+            "path": artifact.relative_to(specs).as_posix(),
+            "format": "cargo_junit",
+            "sha256": hashlib.sha256(content).hexdigest(),
+        },
+    }
+    corpus = scenarios_at(specs, template["corpus_commit"], "conformance/scenarios")
+    copied = scenarios_at(rust_repo, commit, f"{COPIES['rust']}/scenarios")
+    found = rust_outcomes(content, backend, runtime)
+    run = receipt(template, name, backend, found, corpus, copied)
+    document = json.loads((specs / "conformance" / "evidence.json").read_text())
+    errors = validate_executions({"executions": document["executions"] + [run]})
+    errors += rust_junit(run, content) + copied_scenarios(run, rust_repo)
+    if errors:
+        raise ValueError("; ".join(errors))
+    return Recording(artifact, content, [run])
 
 
 def write(specs: Path, recordings: list[Recording]) -> list[dict[str, Any]]:

@@ -192,6 +192,7 @@
               "format": {
                 "enum": [
                   "pytest_junit",
+                  "cargo_junit",
                   "cargo"
                 ]
               }

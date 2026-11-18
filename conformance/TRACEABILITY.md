@@ -8,10 +8,12 @@ They do not certify a conformance level or calculate a percentage of compliance.
 ## Check and regenerate
 
 Use Python 3.12+ with the checker's existing `jsonschema` dependency. A local
-clone of roomkit must contain the full `python_commit` from `evidence.json`.
+clone of roomkit must contain the full `python_commit` from `evidence.json`,
+and a clone of roomkit-rs the commits its Rust receipts name.
 
 ```sh
-python conformance/check.py --strict --traceability --python-repo ../roomkit
+python conformance/check.py --strict --traceability --python-repo ../roomkit \
+  --rust-repo ../roomkit-rs
 python -m unittest discover -s conformance/tests -v
 ```
 
@@ -233,8 +235,8 @@ by the checker. A receipt is a reviewed record of a run, not a signed attestatio
 that the working tree was clean; the author must run the exact clean commits.
 
 The checker validates the saved output, actual commit contents and the corpus
-copied into the implementation. Supported profiles are Python JUnit with
-`asyncio`, one backend per receipt: `memory` and `sqlite` (cases of
+copied into the implementation. Python's profiles are JUnit with `asyncio`,
+one backend per receipt: `memory` and `sqlite` (cases of
 `tests.conformance.test_conformance`), `postgres` (cases of
 `tests.conformance.test_postgres`), and `memory+redis-turns` and
 `sqlite+redis-turns`, the kit's turns across Redis. That mode runs the same
@@ -246,11 +248,27 @@ the worst of their outcomes. `conformance/record.py` writes receipts from a
 JUnit report; none is written by hand (see the
 [executions README](executions/README.md)).
 
-Rust's aggregate cargo summary is deliberately refused: memory and SQLite emit
-the same summary, and equal scenario counts do not identify the executed IDs.
-Retain such runs separately; they cannot create a `recorded_pass` here until a
-runner format identifies backend and cases. Other backends and specialized test
-executions also remain unrecorded.
+Rust receipts come from roomkit-rs's result files (format `cargo_junit`), one
+receipt per pass: a backend, `memory`, `sqlite` or `postgres`, and a tokio
+runtime, `current_thread` (one thread) or `multi_thread_4` (four workers, run
+on memory only). The runner writes one case per scenario, named by its id,
+under the class `conformance.<backend>.<runtime>`, so the report names its
+pass and the command is not read. A receipt holds the whole pass, every
+scenario of the copy with the scenarios the runner sets apart as skipped, and
+its corpus is the copy in roomkit-rs `conformance/`. From a clean roomkit-rs
+commit on main:
+
+```sh
+ROOMKIT_CONFORMANCE_JUNIT=target/conformance cargo test -p roomkit --test conformance
+python conformance/record.py rust --rust-repo ../roomkit-rs \
+  --junit ../roomkit-rs/target/conformance/memory-current_thread.xml \
+  -- env ROOMKIT_CONFORMANCE_JUNIT=target/conformance cargo test -p roomkit --test conformance
+```
+
+Rust's aggregate cargo summary (format `cargo`) stays refused: memory and
+SQLite emit the same summary, and equal scenario counts do not identify the
+executed IDs. Other backends and specialized test executions remain
+unrecorded.
 
 
 `recorded_pass` applies only to the named scope, revision, backend and runtime.
@@ -258,8 +276,7 @@ Missing cases, skips, failures, stale inputs and source-only specialized tests
 never become passes. Separate partial runs are never combined into one complete
 execution. An absent receipt means **not recorded**, not failed or verified.
 The hooks pilot and static access/mute matrices have partial mappings and
-Python memory receipts. The specialized wrong-payload test remains source-only;
-Rust execution is not recorded here.
+Python memory receipts. The specialized wrong-payload test remains source-only.
 Historical runs are not silently relabeled as current results.
 A receipt may name a scenario renamed or removed since its run: its results
 are read at its corpus commit, and only a link has to name a current scenario.

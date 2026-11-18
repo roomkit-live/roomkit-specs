@@ -39,6 +39,14 @@ jobs:
           path: .reference/roomkit
           fetch-depth: 0
           persist-credentials: false
+      # Rust receipts name commits of roomkit-rs's main: its whole history.
+      - uses: actions/checkout@v7
+        with:
+          repository: roomkit-live/roomkit-rs
+          ref: main
+          path: .reference/roomkit-rs
+          fetch-depth: 0
+          persist-credentials: false
       - uses: astral-sh/setup-uv@v7
       - name: Checker regressions
         run: uv run --no-project --python ${{ matrix.python }} --with jsonschema==4.26.0 python -m unittest discover -s conformance/tests -v
@@ -51,4 +59,4 @@ jobs:
           if [ -z "$TRACEABILITY_BASE" ] || [ "$TRACEABILITY_BASE" = "0000000000000000000000000000000000000000" ]; then
             TRACEABILITY_BASE="$(git rev-parse HEAD^)"
           fi
-          uv run --no-project --python ${{ matrix.python }} --with jsonschema==4.26.0 python conformance/check.py --strict --traceability --python-repo .reference/roomkit --base-ref "$TRACEABILITY_BASE"
+          uv run --no-project --python ${{ matrix.python }} --with jsonschema==4.26.0 python conformance/check.py --strict --traceability --python-repo .reference/roomkit --rust-repo .reference/roomkit-rs --base-ref "$TRACEABILITY_BASE"
