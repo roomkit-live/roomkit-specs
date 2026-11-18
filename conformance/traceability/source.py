@@ -16,6 +16,7 @@ KEYWORD = re.compile(
     r"\b(?:MUST(?: NOT)?|SHALL(?: NOT)?|SHOULD(?: NOT)?|MAY|REQUIRED|RECOMMENDED)\b"
 )
 KINDS = {"behavior", "structural", "non_testable"}
+LEVELS = ("must", "should", "may")
 
 
 def digest(value: Any) -> str:
@@ -93,15 +94,24 @@ def section_spans(text: str) -> list[dict[str, Any]]:
 
 
 def annotation(metadata: Any) -> dict[str, str]:
-    """An annotation names a requirement and its scope, never a test result."""
-    if not isinstance(metadata, dict) or set(metadata) != {"id", "kind", "applies"}:
-        raise ValueError("an rfc annotation requires exactly id, kind and applies")
+    """An annotation names a requirement and its scope, never a test result.
+
+    Its optional `level` is set when the unit is reviewed; it stays out of the
+    unit's fingerprint, so setting it reopens no link or lock entry."""
+    if not isinstance(metadata, dict) or not (
+        {"id", "kind", "applies"} <= set(metadata) <= {"id", "kind", "applies", "level"}
+    ):
+        raise ValueError(
+            "an rfc annotation requires exactly id, kind and applies, and an optional level"
+        )
     if not isinstance(metadata["id"], str) or ID.fullmatch(metadata["id"]) is None:
         raise ValueError(f"invalid requirement id: {metadata['id']!r}")
     if not isinstance(metadata["kind"], str) or metadata["kind"] not in KINDS:
         raise ValueError(f"invalid requirement kind: {metadata['kind']!r}")
     if not isinstance(metadata["applies"], str) or not metadata["applies"].strip():
         raise ValueError("an rfc annotation requires non-empty applicability")
+    if "level" in metadata and metadata["level"] not in LEVELS:
+        raise ValueError(f"invalid requirement level: {metadata['level']!r}")
     return metadata
 
 

@@ -30,6 +30,21 @@ class SourceTests(unittest.TestCase):
                 requirement["sha256"], other["requirements"][0]["sha256"]
             )
 
+    def test_a_level_is_carried_but_never_fingerprinted(self) -> None:
+        plain = extract("### 9.3 Hooks\n" + marked("Keep it."))["requirements"][0]
+        self.assertNotIn("level", plain)
+        for level in ("must", "should", "may"):
+            with self.subTest(level=level):
+                unit = extract("### 9.3 Hooks\n" + marked("Keep it.", level=level))
+                self.assertEqual(unit["requirements"][0]["level"], level)
+                self.assertEqual(unit["requirements"][0]["sha256"], plain["sha256"])
+        for level in ("MUST", "required", None, 1):
+            with self.subTest(level=level):
+                with self.assertRaisesRegex(ValueError, "invalid requirement level"):
+                    extract("### 9.3 Hooks\n" + marked("Keep it.", level=level))
+        with self.assertRaisesRegex(ValueError, "optional level"):
+            extract("### 9.3 Hooks\n" + marked("Keep it.", tier="must"))
+
     def test_move_keeps_the_id_and_current_section_is_separate(self) -> None:
         result = extract("### 9.4 New location\n" + marked("Keep the event."))
         self.assertEqual(result["requirements"][0]["id"], "RK-9.3-001")
