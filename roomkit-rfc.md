@@ -6652,7 +6652,7 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
 
 ### 10.1 Inbound Pipeline
 
-<!-- rfc: {"id": "RK-10.1-001", "kind": "behavior", "applies": "§10.1 Inbound Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.1-001", "kind": "behavior", "applies": "§10.1 Inbound Pipeline: process_inbound(), the call that takes a message from an external source. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The inbound pipeline processes messages arriving from external sources.
 
 ```
@@ -6660,7 +6660,7 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.1-002", "kind": "behavior", "applies": "§10.1 Inbound Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.1-006", "kind": "behavior", "applies": "§10.1 step 1, a message that names its room and draws on the reentry budget of that room's work (§9.5.1): the organization read and the budget charged first. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Step-by-step:**
 
 ```
@@ -6676,6 +6676,10 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   message of its deliveries and turns, and one of theirs naming a room
    │   the store does not hold, are charged at step 2, once their room is
    │   known
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-007", "kind": "behavior", "applies": "§10.1 step 1, with the kit's inbound rate limit (§13.3): a message past its channel's bucket. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    ├── With the kit's inbound rate limit (a RateLimit, §13.3): a message
    │   past the bucket of its channel_id → refused before the channel is
    │   read, nothing created, stored or traced:
@@ -6685,10 +6689,22 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   binding's outbound limit (§13.3), the message is not queued. A
    │   proactive delivery's publication (§22.1) is a message of the
    │   transport that carries it, refused so too
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-008", "kind": "behavior", "applies": "§10.1 step 1: the channel a message names, and a channel the kit does not register. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    ├── Look up registered channel by message.channel_id
    ├── Fail if channel not registered
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-009", "kind": "behavior", "applies": "§10.1 step 1: a message handed to the inbound pipeline on a host channel (§10.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    ├── Fail if the channel is a host channel, which receives no external
    │   payload (§10.5): nothing read, nothing routed, opened or attached
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-010", "kind": "behavior", "applies": "§10.1 step 1: the sender's address in the channel's form, and the conversation and reply address the channel answers. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    └── Write sender_id in the channel's form (E.164 on a channel
        addressed by phone number, §5.7) before anything reads it: the
        channel's own `normalize_address`, which also writes the
@@ -6698,30 +6714,58 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
        records the sender by them, and a channel that names no reply
        address records the sender with no recipient
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-011", "kind": "behavior", "applies": "§10.1 step 2: a message whose caller names its room (room_id provided). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 2. ROUTE TO ROOM
    ├── If room_id provided → use it: the caller's choice, which no message
    │   carries; a host naming the room sets sender_id itself (§10.4)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-012", "kind": "behavior", "applies": "§10.1 step 2: a message that names no room, whose sender or routing address is the framework's own sender `system`. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    ├── Otherwise, when the message's sender is the framework's own sender
    │   `system` (§10.4), or the address it would be routed by is, on a chat
    │   channel the chat's → refused, nothing read, opened or written and
    │   the router not asked:
    │   InboundResult(blocked=true, reason=reserved_sender)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-013", "kind": "behavior", "applies": "§10.1 step 2: a message that names no room, routed by the kit's InboundRoomRouter (§10.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    ├── Otherwise → read the sender's identity once, scoped to the
    │   caller's organization (resolve_identity, §14.1, §17.2), then call
    │   InboundRoomRouter.route(channel_id, channel_type, sender_id,
    │   metadata, organization_id, identity) (§10.4)
    │   ├── Router returns a room id → use it
    │   └── Router returns null → create new room
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-014", "kind": "behavior", "applies": "§10.1 step 2, a room id in hand, provided or routed: a room of another organization than the one the caller acts for (§17.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    ├── For a room id in hand (provided or routed), whoever gave it:
    │   ├── A room of another organization than the one the caller acts for
    │   │   → fail, nothing written (§17.2)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-015", "kind": "behavior", "applies": "§10.1 step 2, a room id in hand, provided or routed: an id the store does not hold, and a creation another call made first. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    │   ├── No room with that id → create a new room with that id; a
    │   │   creation the store refuses because another call created the
    │   │   room meanwhile reads the room again, as one that exists, checked
    │   │   for the caller's organization as above
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-016", "kind": "behavior", "applies": "§10.1 step 2: a routed message whose room's lock its caller holds, or in whose admission order it stands (§9.5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    │   ├── Routed (not provided) to a room that exists, whose lock the caller
    │   │   holds or in whose admission order it stands (§9.5.1, Reentrance)
    │   │   → fail at once, nothing written, the room lock not asked for
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-017", "kind": "behavior", "applies": "§10.1 step 2, a room id in hand, provided or routed: a room that exists and does not bind the message's channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    │   ├── Room exists, channel not bound to it → under the room lock,
    │   │   the room's due timers applied first (§5.1), attach the channel
    │   │   at its declaration's defaults (read-write, unmuted, visible to
@@ -6731,6 +6775,10 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   │   by then (§7.5 rule 7): a channel left unbound goes on without a
    │   │   binding, and step 11 refuses its event (source_unbound), unless
    │   │   step 6 refuses the room first (room_closed)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-018", "kind": "behavior", "applies": "§10.1 step 2: a routed message in a room that exists, checked under the room lock as still the message's, and routed again when it is not. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    │   └── Routed (not provided) → under the room lock, the room's due
    │       timers applied first, check that the room is still the
    │       message's (§10.4), then record the sender, before step 3:
@@ -6760,6 +6808,10 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │       │   once created (below). A routed message is never refused
    │       │   room_closed at this step; a room closed after its section is
    │       │   refused at step 6, as for any event
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-019", "kind": "behavior", "applies": "§10.1 step 2: a routed message in a room that exists and is still the message's; the sender recorded on the channel's binding. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    │       └── Otherwise, where the binding names no participant and is
    │           not `group`, record the sender on it: a binding update
    │           (§7.5 rule 6) that writes as its correspondent
@@ -6781,6 +6833,10 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │           `group` binding is never written, and a message with no
    │           address records no one; the binding this step makes for it
    │           names no sender (§10.4)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-020", "kind": "behavior", "applies": "§10.1 step 2, the reentry budget of a message a room's deliveries or turns send that step 1 did not charge (§9.5.1): a room step 2 creates. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    ├── The reentry budget, for a message a room's deliveries or turns
    │   send that step 1 did not charge (§9.5.1, The room's work outside
    │   the lock), once its room is known:
@@ -6792,8 +6848,16 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   │   charge stays when another call created the room first, the room
    │   │   having been read absent: the message goes on into that room as
    │   │   one that exists, its cascade on a budget of its own
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-021", "kind": "behavior", "applies": "§10.1 step 2, the reentry budget of a message a room's deliveries or turns send that step 1 did not charge (§9.5.1): a message already charged. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    │   ├── A message already charged is not charged again, wherever
    │   │   routing places it once more
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-022", "kind": "behavior", "applies": "§10.1 step 2, the reentry budget of a message a room's deliveries or turns send that step 1 did not charge (§9.5.1): a routed message in a room that exists, the room the work delivers in. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    │   └── A routed message in a room that exists, once the locked check
    │       above kept the room for it, after any re-route:
    │       ├── The room the work delivers in → one pass drawn on the
@@ -6801,7 +6865,15 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │       │   the message stored, what this step wrote to route it kept
    │       │   (the attach, the sender's record): InboundResult(blocked=true,
    │       │   reason=reentry_loop_cap)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-023", "kind": "behavior", "applies": "§10.1 step 2, the reentry budget of a message a room's deliveries or turns send that step 1 did not charge (§9.5.1): a routed message in a room that exists, another room than the one the work delivers in. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    │       └── Another room → a budget of its own, nothing drawn
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-024", "kind": "behavior", "applies": "§10.1 step 2: a room created for the message, its ON_ROOM_CREATED hooks and the channel's attach. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    └── If new room created → fire ON_ROOM_CREATED and wait for its hooks,
        each within its timeout (§9.3), their context the room as created,
        with no binding of the channel; emit `room_created`; then, under the
@@ -6822,6 +6894,10 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
        `group` binding takes either. With a binding naming no one, a
        PAUSED room is no one's to be admitted into, as for a routed room
        that exists.
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-025", "kind": "behavior", "applies": "§10.1 step 2, a room created for the message: the call's deadline over routing, the session's start, and a creation hook that closed the room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
        The call's deadline bounds the routing that follows, and is read
        before the last new room is opened. When that room is no longer
        the message's either, no room opened for it being its own, the
@@ -6839,25 +6915,49 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
        no attach is made, and step 6 refuses it (room_closed), nothing of it
        stored, the room kept as the hook left it
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-026", "kind": "behavior", "applies": "§10.1 step 3: the context a channel is handed to parse the message. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 3. BUILD CONTEXT
    ├── Fetch room state
    ├── Fetch all bindings
    ├── Fetch all participants
    └── Fetch recent events (for AI context)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-137", "kind": "behavior", "applies": "§10.1 step 3: a channel with no binding in the room, and the context it parses the message with. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
        # A channel with no binding in the room (step 2) is handed none: it
        # parses the message at step 4 with a context that holds no event
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-027", "kind": "behavior", "applies": "§10.1 step 4: the channel's parse of the message into an event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 4. CHANNEL PROCESSES INBOUND
    ├── channel.handle_inbound(message, context) → RoomEvent
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-028", "kind": "behavior", "applies": "§10.1 step 4: the source of the event a parse builds. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    ├── The event is sourced from the channel that received the message,
    │   whatever channel its parse named: a parse never passes a message off
    │   as another channel's. The rest of its source stands as parsed, its
    │   direction too: a channel's echo of its own output travelled OUTBOUND
    │   and is the channel's own (§10.3 Validation rule 3)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-029", "kind": "behavior", "applies": "§10.1 step 4: the room and the answered event of the event a parse builds. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    ├── The event is in the room the message was routed to (step 2) and
    │   answers no event (`responds_to = null`, §8.5), whatever room or
    │   answer its parse named: a parse never moves a message, nor makes it
    │   a response
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-030", "kind": "behavior", "applies": "§10.1 step 4: the fields a parse sets and those the message fills, an instruction's and the event's depth included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    ├── What the channel set on the event stands, read off its own wire
    │   (a type, its source's type, a visibility, an address, a thread, an
    │   idempotency key, a depth, a response scope, an instant); the
@@ -6870,43 +6970,107 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   deep as the turn the call runs within (§8.3), whatever depth the
    │   parse set; an instruction whose parse set a key is refused as one
    │   the caller keyed (§10.1.1 rule 2)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-031", "kind": "behavior", "applies": "§10.1 step 4: a metadata key in the publication namespace (§5.2), from the message or the parse. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    ├── Drop a key in the publication namespace (§5.2), whoever wrote it,
    │   the message's or the parser's: the event carries no key, save the
    │   one a proactive delivery publishes under (§22.1)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-032", "kind": "behavior", "applies": "§10.1 step 4: the id of the event a parse builds. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    └── Give the event its id (§8.1), whatever id the channel built it with
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-033", "kind": "behavior", "applies": "§10.1 step 5, with an identity resolver configured and a sender with an address left to resolve (§11.6): the resolver's call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 5. IDENTITY RESOLUTION (if resolver configured and the sender has an address
    left to resolve — §11.6 skips a channel that names its own senders, and a
    sender the room has already identified)
    ├── Call resolver.resolve(message, context) with timeout
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-034", "kind": "behavior", "applies": "§10.1 step 5, with an identity resolver configured and a sender with an address left to resolve (§11.6): an IDENTIFIED result. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    ├── Handle result:
    │   ├── IDENTIFIED → create/update identified participant
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-035", "kind": "behavior", "applies": "§10.1 step 5, with an identity resolver configured and a sender with an address left to resolve (§11.6): an AMBIGUOUS or PENDING result. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    │   ├── AMBIGUOUS or PENDING → fire ON_IDENTITY_AMBIGUOUS hook
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-036", "kind": "behavior", "applies": "§10.1 step 5, with an identity resolver configured and a sender with an address left to resolve (§11.6): an UNKNOWN or REJECTED result. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    │   ├── UNKNOWN or REJECTED → fire ON_IDENTITY_UNKNOWN hook (§11.2)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-037", "kind": "behavior", "applies": "§10.1 step 5, with an identity resolver configured and a sender with an address left to resolve (§11.6): a CHALLENGE_SENT result. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    │   └── CHALLENGE_SENT → commit the challenge as an injected event
    │       (§9.4), block processing
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-038", "kind": "behavior", "applies": "§10.1 step 5, with an identity resolver configured and a sender with an address left to resolve (§11.6): the participant the event names. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    └── Stamp participant_id on event: the identity's, or a pending
        sender's record (§11.2)
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-039", "kind": "behavior", "applies": "§10.1 step 5b, with verification configured and an IDENTIFIED sender (§11.7): a reply that is the code of the identity's open code request. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 5b. VERIFICATION (§11.7; when verification is configured and the sender is
     IDENTIFIED)
    ├── A reply that is the code of the identity's open code request in this
    │   room (§11.7.4) → attempt it; the message is consumed: its text is
    │   never stored nor broadcast, and no agent reads it
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-040", "kind": "behavior", "applies": "§10.1 step 5b, with verification configured and an IDENTIFIED sender (§11.7): the verification the event's source carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    ├── Stamp source.verification
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-041", "kind": "behavior", "applies": "§10.1 step 5b, with verification configured and an IDENTIFIED sender (§11.7): a sender who is not VERIFIED. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    └── Not VERIFIED → fire ON_VERIFICATION_REQUIRED (SYNC), which holds the
        event (the default), passes it or blocks it (§11.7.3)
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-042", "kind": "behavior", "applies": "§10.1 step 5a, when a `needs_lock = false` hook fires (§9.5.1): the room's admission ticket. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 5a. OFF-LOCK CHECK (only when a `needs_lock = false` hook fires, §9.5.1)
     ├── Take the room's admission ticket
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-043", "kind": "behavior", "applies": "§10.1 step 5a, when a `needs_lock = false` hook fires (§9.5.1): the off-lock BEFORE_BROADCAST SYNC hooks, and one with no usable result. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     ├── Run the off-lock BEFORE_BROADCAST SYNC hooks, off the lock; report
     │   one that produced no usable result now (hook_error, §9.5.1)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-044", "kind": "behavior", "applies": "§10.1 step 5a, when a `needs_lock = false` hook fires (§9.5.1): the room's earlier tickets and the release of the message's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     └── Wait for the earlier tickets of the room; release ours after the
         room lock's release (step 13)
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-045", "kind": "behavior", "applies": "§10.1 step 6: the room's due timers and status, read under the room lock. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 6. ACQUIRE ROOM LOCK, THEN CHECK THE ROOM STILL ACCEPTS EVENTS
    ├── Apply the room's due timer transitions, then re-read its status
    │   under the lock (§5.1)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-046", "kind": "behavior", "applies": "§10.1 step 6: a room whose status refuses new events (CLOSED, ARCHIVED) under the lock. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    ├── If the status refuses new events (CLOSED, ARCHIVED):
    │   └── Return InboundResult(blocked=true, reason=room_closed)
    │       # Nothing is stored: a refused event is not appended to the
@@ -6915,6 +7079,10 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
        # Under the lock because close_room() takes the same one. Checked
        # earlier, the answer can be stale by the time the event commits.
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-047", "kind": "behavior", "applies": "§10.1 step 7: a message with an idempotency key the room holds from the same source channel (§13.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 7. IDEMPOTENCY CHECK
    ├── If idempotency_key exists and the room holds an event from the same
    │   source channel with that key (§13.4) → return the result the first
@@ -6924,13 +7092,25 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
    │   blocked result instead; neither answer reprocesses.
    └── Otherwise → continue
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-048", "kind": "behavior", "applies": "§10.1 step 8: the index the event is given. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 8. ASSIGN EVENT INDEX
    ├── event.index = room.event_count
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-049", "kind": "behavior", "applies": "§10.1 step 8: the thread parent the event names. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    └── The event's thread is rooted: the event its parent_event_id names
        is read, and a parent naming a reply is replaced by that reply's own
        parent, its thread's root (§5.2). A parent that, once rooted, names
        no event of the room (none, another room's, one a hard delete
        removed) is dropped, the event posted at the top level
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-138", "kind": "behavior", "applies": "§10.1 step 8: every path that commits an event, and the thread parent it roots. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
        # Every path that commits an event roots its parent so, at this step
        # or at its own commit: an inbound message, a direct injection
        # (§10.5), a response (step 14), an event a hook injects (§9.4), a
@@ -6945,6 +7125,10 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
        # (cascade_replies false), may name a reply or a removed event; an
        # answer to it is rooted as above
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-050", "kind": "behavior", "applies": "§10.1 step 8a: an EDIT or a DELETE, or an event holding a change elsewhere, that fails §10.3 Validation. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 8a. VALIDATE EDIT/DELETE (an EDIT or a DELETE, and an event holding a change
     elsewhere — §10.3 Validation; on every pass that commits an event)
     ├── If validation fails → Return InboundResult(blocked=true, reason=
@@ -6956,26 +7140,58 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   # waits for step 12, once the hooks have allowed the event.
     └── Otherwise → continue
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-051", "kind": "behavior", "applies": "§10.1 step 9, after a step 5a off-lock check: its outcome, applied first. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 9. RUN BEFORE_BROADCAST SYNC HOOKS
    ├── Apply the step 5a outcome first, when there was one (§9.5.1)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-052", "kind": "behavior", "applies": "§10.1 step 9: the order the BEFORE_BROADCAST SYNC hooks run in. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    ├── Execute the remaining hooks in priority order
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-053", "kind": "behavior", "applies": "§10.1 step 9: the result of the BEFORE_BROADCAST SYNC hooks, and what a modify may change. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
    └── Collect result: allow / block / modify
        # A modify rewrites what the event says, never which event it is:
        # its id, source, index, chain depth and the other fields §9.4
        # protects are kept from the original. A thread parent it sets is
        # rooted as at step 8, on every pass
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-054", "kind": "behavior", "applies": "§10.1 step 9a, when a hook ran under the lock (§9.5.1): the index the event takes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 9a. RE-READ THE ROOM (only when a hook ran under the lock, §9.5.1 Reentrance)
     ├── The event takes the room's next index: an entry committed ahead of
     │   it during its hooks took the one step 8 showed them
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-055", "kind": "behavior", "applies": "§10.1 step 9a, when a hook ran under the lock (§9.5.1): a room a hook closed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     ├── A room no longer accepting events (a hook closed it) refuses the
     │   event as step 6 does: nothing stored, its injected events dropped
     │   (§5.1)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-056", "kind": "behavior", "applies": "§10.1 step 9a, when a hook ran under the lock (§9.5.1): the source binding step 11 reads. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     ├── Step 11 reads the source's binding as the hooks left it
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-057", "kind": "behavior", "applies": "§10.1 step 9a, when a hook ran under the lock (§9.5.1): an EDIT or a DELETE, validated again. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     └── An EDIT or a DELETE has its target read and validated again (step
         8a): a delete an entry committed ahead of an edit refuses the edit
         (target_event_not_found) rather than be undone by it
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-058", "kind": "behavior", "applies": "§10.1 step 10: an event a BEFORE_BROADCAST hook blocked, committed as a BLOCKED record. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 10. IF BLOCKED BY HOOK:
     ├── Commit event with status=BLOCKED, blocked_by=hook_name, in the
     │   same atomic transaction as step 12: the event takes its index,
@@ -6983,17 +7199,37 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   visibility is the one step 12 would store (§7.3). It is no
     │   activity: last_activity_at does not move, and a PAUSED room stays
     │   paused (§5.1)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-139", "kind": "behavior", "applies": "§10.1 step 10: the BLOCKED record of an event a hook blocked, at delivery, in reconstructed context and in a default timeline read. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     │   # An audit record: it reaches no channel, at delivery or as
     │   # reconstructed context one turn later (§7.5 rule 8), and a
     │   # default timeline read skips it (§14.1)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-059", "kind": "behavior", "applies": "§10.1 step 10, an event a hook blocked: the events its hooks injected. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     ├── Queue the injected events of every hook result (allow and modify
     │   included), each committed after this event as a pass of the
     │   cascade (§9.4)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-060", "kind": "behavior", "applies": "§10.1 step 10, an event a hook blocked: its hooks' tasks and observations. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     ├── Persist tasks and observations from hook result
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-061", "kind": "behavior", "applies": "§10.1 step 10, an event a hook blocked: the lock's release, its injected events and the call's result. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     └── Release the room lock (step 13), run the queued injected events
         as at step 14, and return InboundResult(blocked=true, event=the
         BLOCKED record)
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-062", "kind": "behavior", "applies": "§10.1 step 11: a source with no binding in the room, or whose binding does not write or is muted; the BLOCKED record. An event a hook injected, or one the framework writes, takes no source check (RK-10.1-067). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 11. CHECK SOURCE CAN WRITE
     ├── If the source has no binding in the room (step 2) OR
     │   source_binding.access ∉ {READ_WRITE, WRITE_ONLY} OR source_binding.muted:
@@ -7001,20 +7237,48 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   │   source_unbound with no binding; else source_read_only when the
     │   │   access does not write, NONE included, muted or not; else
     │   │   source_muted (§7.5 rule 2)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-063", "kind": "behavior", "applies": "§10.1 step 11, a source that cannot write: the events its hooks injected. An event a hook injected, or one the framework writes, takes no source check (RK-10.1-067). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     │   ├── Queue the injected events of every hook result, as at step 10
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-064", "kind": "behavior", "applies": "§10.1 step 11, a source that cannot write: its hooks' tasks and observations. An event a hook injected, or one the framework writes, takes no source check (RK-10.1-067). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     │   ├── Persist tasks and observations (side effects ALWAYS collected, §7.5)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-065", "kind": "behavior", "applies": "§10.1 step 11, a source that cannot write: the lock's release, its injected events and the call's result. An event a hook injected, or one the framework writes, takes no source check (RK-10.1-067). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     │   └── Release the room lock (step 13), run the queued injected
     │       events as at step 14, and return InboundResult(blocked=true,
     │       event=the BLOCKED record)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-066", "kind": "behavior", "applies": "§10.1 step 11: a source that can write, and a DELIVERED event from a source that cannot. An event a hook injected, or one the framework writes, takes no source check (RK-10.1-067). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     └── Otherwise → continue
         # A source that cannot write MUST NOT inject a DELIVERED event.
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-067", "kind": "behavior", "applies": "§10.1 step 11: an event a hook injected, or one the framework writes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
         # An event a hook injected, or one the framework itself writes,
         # takes no source check: it is not a channel's (§7.5 rule 2, §9.4).
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-068", "kind": "behavior", "applies": "§10.1 step 12: an EDIT's or a DELETE's target state update. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 12. COMMIT EVENT — the commit point (§13.6, §14.3):
     ├── For EDIT/DELETE: apply the target state update now (§10.3), in the
     │   commit's transaction below — deferred to this point so a hook that
     │   blocks the edit/delete leaves the target unmutated
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-069", "kind": "behavior", "applies": "§10.1 step 12: the author record of an event whose author has a name, and the room's author register. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     ├── Record the author (§6.4): when the event's author has a name, the
     │   │   room's register of the sources and names it has seen fixes the
     │   │   rank of this source among those whose names read like its own,
@@ -7056,22 +7320,50 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   │   ranks again. Only the runtime writes that key of the metadata
     │   │   (§5.1), so no other writer plants a register whose ranks the
     │   │   merge would take
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-070", "kind": "behavior", "applies": "§10.1 step 12: the event stored DELIVERED in one transaction, and its visibility. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     ├── Commit atomically, as ONE logical transaction:
     │   ├── Store event with status=DELIVERED and, as its visibility, the
     │   │   intersection of its own and its source binding's (§7.3), an
     │   │   EDIT's or a DELETE's narrowed again to its target's (§10.3)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-071", "kind": "behavior", "applies": "§10.1 step 12: the room's counters, activity and PAUSED status, updated in the commit's transaction. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     │   └── Update room state: latest_index = event.index; event_count += 1;
     │       timers.last_activity_at = the commit's instant; a PAUSED room
     │       resumes, ACTIVE with paused_at null (§5.1)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-072", "kind": "behavior", "applies": "§10.1 step 12: a committed event's status after the commit (§13.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     │   # After this transaction returns, the event is durably part of the
     │   # timeline. It MUST NOT be retroactively re-marked BLOCKED or FAILED
     │   # (e.g. by process_timeout, §13.6) — the timeline is authoritative.
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-073", "kind": "behavior", "applies": "§10.1 step 12: room-state writes after the commit (§14.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     │   # No separate, non-atomic room-state write ever follows this commit:
     │   # the timeline and the counters can never diverge (§14.3).
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-074", "kind": "behavior", "applies": "§10.1 step 12, an event committed DELIVERED: the events its hooks injected. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     ├── Queue the injected events of every hook result, as at step 10
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-075", "kind": "behavior", "applies": "§10.1 step 12: a message that carries a session (a voice session). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     ├── IF message.session is set:
     │   └── Call channel.connect_session(session, room_id, binding)
     │       # Connects the voice session (starts realtime AI, etc.)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-076", "kind": "behavior", "applies": "§10.1 step 12: the event's delivery set, planned under the lock. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     └── PLAN BROADCAST — resolve the event's delivery set under the lock:
         └── Eligible target bindings (access, mute, visibility — §7) and
             their capability snapshot, appended to the room's delivery
@@ -7079,13 +7371,25 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
             target set is consistent with the committed timeline;
             EXECUTION does not require the lock.
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-077", "kind": "behavior", "applies": "§10.1 step 13: what the room lock covers, and delivery outside it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 13. RELEASE ROOM LOCK
     # The lock covers steps 6–12: room-status gate, idempotency, index
     # assignment, hooks, permission, commit, broadcast planning. External
     # delivery executes outside it (§10.2 delivery lanes) — a slow
     # provider MUST NOT extend the room's critical section (§13.5).
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-078", "kind": "behavior", "applies": "§10.1 step 13: a release of the room lock that fails (§13.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     # A release that fails changes nothing steps 6–12 decided or wrote
     # (§13.5).
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-079", "kind": "behavior", "applies": "§10.1 step 13: when a pass's BEFORE_BROADCAST observers (ASYNC hooks, §9.2) start. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     └── As the pass ends, its BEFORE_BROADCAST observers start (§9.2): the
         hooks registered ASYNC observe the event its chain allowed, as its
         SYNC hooks left it, in the context they were handed. They MUST NOT
@@ -7097,18 +7401,38 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
         still start then, on an event that may never have been stored. A
         pass the framework's close cuts starts none: nothing new starts
         once the close began (§12.10.4).
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-080", "kind": "behavior", "applies": "§10.1 step 13: the passes whose BEFORE_BROADCAST observers start so. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
         The same holds on every pass that runs the chain: an inbound
         message, a direct injection (§10.5), a response's pass, an injected
         event's, a streamed segment's. An event its chain blocked has none.
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-081", "kind": "behavior", "applies": "§10.1 step 14: the order of a room's delivery sets. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 14. EXECUTE DELIVERY LANE (§10.2) — per-room FIFO, after lock release:
     ├── An event's delivery set MUST complete before the next event's
     │   begins — per room, in index order. Executing delivery under the
     │   room lock (the pre-lane behavior) trivially satisfies this
     │   ordering and remains conformant.
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-082", "kind": "behavior", "applies": "§10.1 step 14: each target's delivery. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     ├── Each target: transcode → rate limit → on_event() / deliver()
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-140", "kind": "behavior", "applies": "§10.1 step 14: the timeout of each target's external call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     │   # The framework sets no timeout of its own: each external call is
     │   # bounded by its channel's or its provider's own timeout.
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-083", "kind": "behavior", "applies": "§10.1 step 14: the events steps 10 to 12 queued. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     ├── INJECTED EVENTS: the events steps 10–12 queued re-enter the
     │   locked section (steps 6–12) as passes of the same cascade, after
     │   the event whose hooks injected them (§9.4): each takes the room
@@ -7116,11 +7440,19 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   another event may commit between them, counts against the
     │   reentry budget (§8.3), and its delivery set joins the same lane
     │   in FIFO order
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-084", "kind": "behavior", "applies": "§10.1 step 14: the response events of intelligence channels, each committed as its own pass. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     └── REENTRY: response events emitted here (intelligence channels)
         re-enter the pipeline's locked section (steps 6–12) as new
         passes — each response takes the room lock for ITS OWN commit
         (index assignment, chain depth §8.3, the same atomic shape as
         step 12), and its delivery set joins the same lane in FIFO order.
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-085", "kind": "behavior", "applies": "§10.1 step 14: the passes that re-enter their responses, the order a trigger's responses are read in, and the reentry budget they draw on. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
         Every pass re-enters its responses: a reentry pass, a streamed
         segment, a greeting and a regenerated answer are an agent's
         output like the trigger's response (§19.3.1). The trigger's
@@ -7132,6 +7464,10 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
         same reentry budget as a buffered response. Every response that
         re-enters counts against that budget, a muted or read-only
         source's included, whose pass stores it BLOCKED (§7.5 rule 2).
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-086", "kind": "behavior", "applies": "§10.1 step 14: streamed answers and the order of a room's answers. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
         Answers read from streams are not kept in their events' order:
         a turn whose response is a stream returns it as the stream is
         read, once its event's delivery set is over (§10.2), and the
@@ -7143,11 +7479,19 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
         whole ends within its event's set, which the next event's set
         waits for (§10.2). Only a channel that takes a room's turns one
         at a time keeps streamed answers in their events' order (§6.4).
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-087", "kind": "behavior", "applies": "§10.1 step 14: a concurrent inbound event between a trigger and its response. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
+```
         # Relaxation vs pre-lane implementations: a concurrent inbound
         # event MAY commit between a trigger and its response. Ordering
         # guarantees are per-room index monotonicity and parent linkage —
         # never timeline adjacency.
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-088", "kind": "behavior", "applies": "§10.1 step 15: the tasks and observations a delivery set stores. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 15. PERSIST SIDE EFFECTS
     ├── Store all tasks and observations from hooks + channels: of a
     │   channel's outputs, those of on_event(); a transport's deliver()
@@ -7155,6 +7499,10 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   deliver_stream() nothing but its failure (§12.2 step 13s); a set
     │   whose room is gone, deleted or created again under its id, writes
     │   none of its side effects (§13.5)
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-089", "kind": "behavior", "applies": "§10.1 step 15: the room metadata updates of a cascade's channel outputs. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     ├── Apply the room metadata updates of the cascade's channel outputs
     │   (§6.1), from on_event() and deliver() alike: merged key by key in
     │   the order the targets answered, and written once per delivery set,
@@ -7162,11 +7510,19 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   §14.1); a key of the implementation's namespace, or one a key of
     │   the room's private state reserves (§5.1, §14.1), is dropped with a
     │   warning, the rest applied
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-090", "kind": "behavior", "applies": "§10.1 step 15: ON_TASK_CREATED for each task stored. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     ├── Then fire `ON_TASK_CREATED` (§9.2) for each task stored, its
     │   payload an internal `task_created` event of the room carrying the
     │   source and the content of the event the task was made for (the
     │   event a hook ran on, or the one a channel's output answered), the
     │   task's `task_id` and `task_title` in its metadata
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-091", "kind": "behavior", "applies": "§10.1 step 15: a side effect the store fails to write. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     ├── Each task and each observation is written on its own: a write the
     │   store fails, a task's, an observation's or the metadata updates',
     │   is logged at ERROR (§15.2) naming the task, the observation or the
@@ -7175,6 +7531,10 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
     │   task the store did not write fires no `ON_TASK_CREATED`. A
     │   delegated task's child room writes its turns' side effects so
     │   (§23.3).
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-092", "kind": "behavior", "applies": "§10.1 step 15: a delivery set the room's lane drops before it ran, its room not gone. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     └── A delivery set the room's lane drops before it ran (the kit's close,
         §12.10.4; an index another process declared lost, §13.5), its room
         not gone (§13.5), stores what its event's hooks gave all the same,
@@ -7183,18 +7543,30 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
         returns, or a deferred call's completion handle answers its wait
         (step 18): a task a hook decided is not lost with the delivery.
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-093", "kind": "behavior", "applies": "§10.1 step 16: when AFTER_BROADCAST hooks run. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 16. RUN AFTER_BROADCAST ASYNC HOOKS
     ├── After the event's delivery set completes — "all channels have
     │   processed the event" (§9.2) is unchanged; only the timing may be
     │   later than under pre-lane implementations. Non-blocking,
     │   exceptions swallowed (§9.3) — a slow observer hook MUST NOT hold
     │   the room lock.
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-094", "kind": "behavior", "applies": "§10.1 step 16: what the call and the room wait for, and event_processed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     ├── Neither the call nor the room waits for them, nor for a change's
     │   mutation trigger (§10.3), `ON_TASK_CREATED` or an agent's
     │   `ON_ERROR`: the call returns once its delivery set and its
     │   responses' passes are done (step 18), and the room's next delivery
     │   and a response's go on while they run. `event_processed` comes once
     │   the event's `AFTER_BROADCAST` hooks have ended (§8.2).
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-095", "kind": "behavior", "applies": "§10.1 step 16: the room work of an AFTER_BROADCAST hook's or a mutation trigger's body (§9.5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
     └── Each hook's body, and that of a change's mutation trigger (§10.3),
         is the cascade's work while it runs: a call it makes into the room
         is a new arrival drawing one of the cascade's hook calls, and so is
@@ -7202,9 +7574,17 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
         the hook runs for (§8.3, §9.5.1, §10.3). Work it starts that calls
         once the body has returned begins fresh.
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-096", "kind": "behavior", "applies": "§10.1 step 17: the framework events of a pass. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 17. EMIT FRAMEWORK EVENTS
     └── event_processed, delivery_succeeded/failed, etc.
 
+```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-097", "kind": "behavior", "applies": "§10.1 step 18: when the call returns, and detached completion where an implementation offers it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+```
 18. RETURN InboundResult
     └── The caller observes its event's delivery-set completion, so
         delivery_results reports executed deliveries. An implementation
@@ -7227,74 +7607,74 @@ process_inbound(message: InboundMessage, room_id: string | null) → InboundResu
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.1-003", "kind": "behavior", "applies": "§10.1 Inbound Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.1-098", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation: cancelling a call's delivery cascade. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 **Explicit delivery cancellation:** An implementation MAY expose cancellation
-of a call's delivery cascade. Cancelling it stops the cascade's turns, not its
+of a call's delivery cascade. <!-- /rfc --><!-- rfc: {"id": "RK-10.1-099", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation, where an implementation offers it: the cascade's turns. A turn another process runs, or one its owner gave up as it closed, is cancelled as RK-10.1-121 says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Cancelling it stops the cascade's turns, not its
 delivery: a turn the cascade has not started MUST NOT start, a turn being
 handed to its executor (§10.6.2) MUST be cut, never left running, a running
-turn MUST be cut (§10.6.8), and no reentry belonging to the cascade follows. The committed event is still delivered: its delivery set executes for
+turn MUST be cut (§10.6.8), and no reentry belonging to the cascade follows. <!-- /rfc --><!-- rfc: {"id": "RK-10.1-100", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation, where an implementation offers it: the committed event's delivery. A turn another process runs, or one its owner gave up as it closed, is cancelled as RK-10.1-121 says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The committed event is still delivered: its delivery set executes for
 every target but the intelligence channels it would have asked, and its
 AFTER_BROADCAST hooks fire, whether its plan had executed, was executing or
-still waited in the room's lane, where it keeps its place. Cancellation MUST
-NOT change the committed timeline event's status (§13.6). It MUST join the
+still waited in the room's lane, where it keeps its place. <!-- /rfc --><!-- rfc: {"id": "RK-10.1-101", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation, where an implementation offers it: the committed event's status. A turn another process runs, or one its owner gave up as it closed, is cancelled as RK-10.1-121 says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Cancellation MUST
+NOT change the committed timeline event's status (§13.6). <!-- /rfc --><!-- rfc: {"id": "RK-10.1-102", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation, where an implementation offers it: what the cancellation joins before it reports its cleanup. A turn another process runs, or one its owner gave up as it closed, is cancelled as RK-10.1-121 says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It MUST join the
 cascade's running generation, tool handlers and stream consumers (including
 their finalizers), and report a terminal cancellation outcome before claiming
 cleanup has completed; neither the event's delivery to its other targets,
 which goes on, nor a plan still waiting in the lane, whose delivery follows in
-lane order, is the turns' work to join. A stream a turn of the cascade
+lane order, is the turns' work to join. <!-- /rfc --><!-- rfc: {"id": "RK-10.1-103", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation, where an implementation offers it: a stream a turn answered with that no consumer has begun to read. A turn another process runs, or one its owner gave up as it closed, is cancelled as RK-10.1-121 says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A stream a turn of the cascade
 answered with that no consumer has begun to read is closed, and its `end`
 joined as after any `close` (§10.6.8), with no bound of its own: a turn whose
 `end` never comes leaves the cleanup incomplete, and the awaited path returns,
 as a detached-completion handle's wait reports, only once that close is over;
-until then the handle is not done. A stream the cascade is handed
+until then the handle is not done. <!-- /rfc --><!-- rfc: {"id": "RK-10.1-104", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation, where an implementation offers it: a stream the cascade is handed once cancelled. A turn another process runs, or one its owner gave up as it closed, is cancelled as RK-10.1-121 says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A stream the cascade is handed
 once cancelled, by a delivery set still running at the cut, is closed unread
-and not joined. Other cascades, the other turns of the
-room among them, and shared providers MUST remain usable. The next call MAY
-resume after that cleanup. Cancellation cannot revoke external effects already
-committed by a handler, nor implicitly own tasks detached by application code.
+and not joined. <!-- /rfc --><!-- rfc: {"id": "RK-10.1-105", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation, where an implementation offers it: other cascades and shared providers. A turn another process runs, or one its owner gave up as it closed, is cancelled as RK-10.1-121 says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Other cascades, the other turns of the
+room among them, and shared providers MUST remain usable. <!-- /rfc --><!-- rfc: {"id": "RK-10.1-106", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation, where an implementation offers it: the next call after the cleanup. A turn another process runs, or one its owner gave up as it closed, is cancelled as RK-10.1-121 says. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->The next call MAY
+resume after that cleanup. <!-- /rfc --><!-- rfc: {"id": "RK-10.1-107", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation, where an implementation offers it: external effects a handler committed, and tasks application code detached. A turn another process runs, or one its owner gave up as it closed, is cancelled as RK-10.1-121 says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Cancellation cannot revoke external effects already
+committed by a handler, nor implicitly own tasks detached by application code.<!-- /rfc --><!-- rfc: {"id": "RK-10.1-108", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation: the awaited path when its caller is cancelled. A turn another process runs, or one its owner gave up as it closed, is cancelled as RK-10.1-121 says. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 
 The awaited path SHOULD propagate caller cancellation after draining its own
 cascade: its turns stop as above, and its committed events are still
-delivered. A caller gone before the call's decision expires the call, and
+delivered. <!-- /rfc --><!-- rfc: {"id": "RK-10.1-109", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation: a caller gone before or after the call's decision (§13.6). A turn another process runs, or one its owner gave up as it closed, is cancelled as RK-10.1-121 says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A caller gone before the call's decision expires the call, and
 one gone after it leaves the delivery running (§13.6, A caller that stops
-waiting). A detached-completion handle SHOULD provide explicit cancellation;
-cancelling a mere completion waiter SHOULD leave detached work running. An
+waiting). <!-- /rfc --><!-- rfc: {"id": "RK-10.1-110", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation, where an implementation offers detached completion: the handle's cancellation, and a completion waiter's. A turn another process runs, or one its owner gave up as it closed, is cancelled as RK-10.1-121 says. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->A detached-completion handle SHOULD provide explicit cancellation;
+cancelling a mere completion waiter SHOULD leave detached work running. <!-- /rfc --><!-- rfc: {"id": "RK-10.1-111", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation: a key the caller names a message's delivery by (InboundMessage.delivery_key). A turn another process runs, or one its owner gave up as it closed, is cancelled as RK-10.1-121 says. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->An
 implementation MAY let the caller name a message's delivery by a key of its own
 (`InboundMessage.delivery_key`), so code that holds no handle, another task or
-a tool an agent calls with the key as text, cancels it. The key names every
+a tool an agent calls with the key as text, cancels it. <!-- /rfc --><!-- rfc: {"id": "RK-10.1-112", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation, where an implementation offers delivery keys: the deliveries a key names. A turn another process runs, or one its owner gave up as it closed, is cancelled as RK-10.1-121 says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The key names every
 delivery in flight that carries it, from the call's start until its delivery
-is over. A delivery cancelled before its event is committed (while the call
+is over. <!-- /rfc --><!-- rfc: {"id": "RK-10.1-113", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation, where an implementation offers delivery keys: a delivery cancelled before its event is committed. A turn another process runs, or one its owner gave up as it closed, is cancelled as RK-10.1-121 says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A delivery cancelled before its event is committed (while the call
 routes the message, builds its event or resolves its sender, steps 1 to 5b)
 is cancelled all the same: the event is committed and delivered as the
-paragraph above says, and none of its turns starts. The delivery of a message
+paragraph above says, and none of its turns starts. <!-- /rfc --><!-- rfc: {"id": "RK-10.1-114", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation, where an implementation offers delivery keys: the delivery of a message held for verification (§11.7.3). A turn another process runs, or one its owner gave up as it closed, is cancelled as RK-10.1-121 says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The delivery of a message
 held for verification (§11.7.3) is over only once its release is answered
 (§11.7.6): the key names it past its delivery set, until its release or the
 policy's bound of age for releasing it, then names the turns its release
-starts; cancelled at any of these points, it is released with no answer. A
+starts; cancelled at any of these points, it is released with no answer. <!-- /rfc --><!-- rfc: {"id": "RK-10.1-115", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation, where an implementation offers delivery keys: what a cancellation by key answers, and when it returns. A turn another process runs, or one its owner gave up as it closed, is cancelled as RK-10.1-121 says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 cancellation by key answers how many deliveries it cancelled (none for a key
 naming nothing) and returns without waiting for their cleanup, which
 each delivery's caller reads on its result (a call refused before its commit
 reports its refusal instead); it returns at once from the room's lane or under
-its lock.
+its lock.<!-- /rfc --><!-- rfc: {"id": "RK-10.1-116", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation, where an implementation offers delivery keys: who may cancel, and an implementation that scopes operations to an organization (§17.2). A turn another process runs, or one its owner gave up as it closed, is cancelled as RK-10.1-121 says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A key names a delivery and grants nothing: the host checks who may cancel
 before it cancels, and an implementation that scopes operations to an
 organization (§17.2) scopes a cancellation by key alike, reaching only the
 deliveries of that organization's rooms, so two tenants that chose the same
-key never cancel each other's. A delivery whose call named no organization
+key never cancel each other's. <!-- /rfc --><!-- rfc: {"id": "RK-10.1-117", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation, where an implementation offers delivery keys and scopes operations to an organization: a delivery whose call named none. A turn another process runs, or one its owner gave up as it closed, is cancelled as RK-10.1-121 says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A delivery whose call named no organization
 belongs to none until the call reads its room (step 3), a call the room's own
 work adopted (§9.5.1, *Reentrance*) as any: a scoped cancellation
 reaching it before then takes effect once the room proves the organization's,
 and is not counted, since counting it would tell one tenant of a delivery
-another may own.
-Repeated cancellation MUST NOT interrupt cleanup already in progress. A
+another may own.<!-- /rfc --><!-- rfc: {"id": "RK-10.1-118", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation, where an implementation offers it: a repeated cancellation. A turn another process runs, or one its owner gave up as it closed, is cancelled as RK-10.1-121 says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+Repeated cancellation MUST NOT interrupt cleanup already in progress. <!-- /rfc --><!-- rfc: {"id": "RK-10.1-119", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation, where an implementation offers it: a bounded cleanup that expires. A turn another process runs, or one its owner gave up as it closed, is cancelled as RK-10.1-121 says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 bounded cleanup that expires MUST report incomplete drainage, not success;
-resources still in use MUST be retained. An implementation MUST refuse a drain
+resources still in use MUST be retained. <!-- /rfc --><!-- rfc: {"id": "RK-10.1-120", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation, where an implementation offers it: a drain from a context the delivery lane cannot progress past. A turn another process runs, or one its owner gave up as it closed, is cancelled as RK-10.1-121 says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An implementation MUST refuse a drain
 from a context the delivery lane cannot progress past (its room lock, its
-delivery lane, §10.2). These guarantees cover execution owned by the local
+delivery lane, §10.2). <!-- /rfc --><!-- rfc: {"id": "RK-10.1-121", "kind": "behavior", "applies": "§10.1 Explicit delivery cancellation, where an implementation offers it: a turn another process runs, and one its owner gave up as it closed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->These guarantees cover execution owned by the local
 process;
 a turn another process runs is cancelled, and its drainage reported, as
 §10.6.8 says, and so is a turn its owner gave up as it closed, which is not
-joined even when its executor runs in the owner's process.
+joined even when its executor runs in the owner's process.<!-- /rfc --><!-- rfc: {"id": "RK-10.1-122", "kind": "behavior", "applies": "§10.1: the kit's close, which is no explicit cancellation (§12.10.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The kit's close is no explicit cancellation: as it starts it cancels the
 turns of every cascade under way with the reason `kit_closed` and drops every
 delivery queued behind another, never executed (one placed in its idle lane
@@ -7302,7 +7682,7 @@ runs from its placement), and once its grace is over it cuts the deliveries
 still running too (§12.10.4).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.1-004", "kind": "behavior", "applies": "§10.1 Inbound Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.1-123", "kind": "behavior", "applies": "§10.1 InboundResult: the fields of the result process_inbound() returns. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **InboundResult:**
 
 ```
@@ -7324,110 +7704,112 @@ InboundResult
 ├── delivery: CompletionHandle | null       # Detached completion only (step 18)
 └── delivery_results: map<string, DeliveryResult>
 ```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.1-124", "kind": "behavior", "applies": "§10.1 InboundResult: the event a result carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 `event` is what the message committed: the event stored DELIVERED, or the
 record stored `BLOCKED` when a hook or its source's permissions blocked it
 (steps 10, 11), so that the caller can trace a refused message by its id and
-index. A replay of the message returns the same, with the record's
-`blocked_by` as its `reason` (§13.4). `event` is null only when nothing was
+index. <!-- /rfc --><!-- rfc: {"id": "RK-10.1-125", "kind": "behavior", "applies": "§10.1 InboundResult: the result of a replayed message (§13.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A replay of the message returns the same, with the record's
+`blocked_by` as its `reason` (§13.4). <!-- /rfc --><!-- rfc: {"id": "RK-10.1-126", "kind": "behavior", "applies": "§10.1 InboundResult: a result with no event, and an instruction's (§10.1.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`event` is null only when nothing was
 committed, as when the room refused the message (§5.1); an instruction,
 which is never committed, is the exception once its pass decided it,
 allowed or blocked, and an instruction the room's status refused has no
-event (§10.1.1). A failure after the decision leaves `event` as it is and
+event (§10.1.1). <!-- /rfc --><!-- rfc: {"id": "RK-10.1-127", "kind": "behavior", "applies": "§10.1 InboundResult: a failure after the decision (§13.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A failure after the decision leaves `event` as it is and
 is reported on `error` (§13.6, post-commit phase), but a side effect the
-store fails to write, which is logged (§10.1 step 15). `error` carries a
-failed release of the room lock only when no earlier error was met (§13.5).
+store fails to write, which is logged (§10.1 step 15). <!-- /rfc --><!-- rfc: {"id": "RK-10.1-128", "kind": "behavior", "applies": "§10.1 InboundResult: a failed release of the room lock (§13.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`error` carries a
+failed release of the room lock only when no earlier error was met (§13.5).<!-- /rfc --><!-- rfc: {"id": "RK-10.1-129", "kind": "behavior", "applies": "§10.1 InboundResult: the response metadata of the caller's root delivery set. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 `response_metadata` MUST merge the response-metadata records produced by the
-intelligence channels in the caller's root delivery set. It is the final state
+intelligence channels in the caller's root delivery set. <!-- /rfc --><!-- rfc: {"id": "RK-10.1-130", "kind": "behavior", "applies": "§10.1 InboundResult: when the response metadata is collected, streaming or not. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It is the final state
 of each record: the non-streaming path collects it after generation, and the
-streaming path after consuming the response stream. A deferred call MAY return
+streaming path after consuming the response stream. <!-- /rfc --><!-- rfc: {"id": "RK-10.1-131", "kind": "behavior", "applies": "§10.1 InboundResult, where an implementation offers detached completion: a deferred call's result and its wait. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A deferred call MAY return
 with the record still empty, but `delivery.wait()` MUST backfill it together with
 `delivery_results` and `error`, so the waited result reads like the ordinary
 waiting path, save a wait from a context the lane cannot progress past (the
-room lock, the lane's own work), which returns with what it has (step 18). A
-call that ran no response turn returns an empty record. When several channels
+room lock, the lane's own work), which returns with what it has (step 18). <!-- /rfc --><!-- rfc: {"id": "RK-10.1-132", "kind": "behavior", "applies": "§10.1 InboundResult: a call that ran no response turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
+call that ran no response turn returns an empty record. <!-- /rfc --><!-- rfc: {"id": "RK-10.1-133", "kind": "behavior", "applies": "§10.1 InboundResult: response metadata several channels contribute. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->When several channels
 contribute metadata they SHOULD namespace their top-level keys; the merge
 order for colliding keys is unspecified.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.1-005", "kind": "behavior", "applies": "§10.1 Inbound Pipeline; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.1-134", "kind": "behavior", "applies": "§10.1: the metadata keys only the runtime writes, removed from a message's event whether a sender, its caller or a channel's parse wrote them; code the host runs keeps what it passes (RK-10.1-136). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Keys a sender never supplies (normative).** The inbound pipeline removes
 from a message's event, whatever a sender, its caller or a channel's parse
 wrote, the metadata keys only the runtime writes: `runtime_record` (Section
 6.4), the mark of a message held for verification (Section 11.7.3), the key a
 response to an instruction records (Section 10.1.1) and
 `_orchestration_internal` (Section 19.6); and, before the `BEFORE_BROADCAST`
-hooks run, the routing stamps `_routed_to` and `_always_process` (Section 19.4).
-A dropped `_orchestration_internal` or routing stamp is logged as a warning.
+hooks run, the routing stamps `_routed_to` and `_always_process` (Section 19.4).<!-- /rfc --><!-- rfc: {"id": "RK-10.1-135", "kind": "behavior", "applies": "§10.1: a dropped `_orchestration_internal` key or routing stamp. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+A dropped `_orchestration_internal` or routing stamp is logged as a warning.<!-- /rfc --><!-- rfc: {"id": "RK-10.1-136", "kind": "behavior", "applies": "§10.1: what code the host runs passes (send_event, §10.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Code the host runs (`send_event`) is no sender: what it passes is kept.
 <!-- /rfc -->
 
 #### 10.1.1 Instructions
 
-<!-- rfc: {"id": "RK-10.1.1-001", "kind": "behavior", "applies": "§10.1.1 Instructions; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.1.1-003", "kind": "behavior", "applies": "§10.1.1 Instructions: what an INSTRUCTION event is, and the pipeline it goes through. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An application sometimes needs an agent to speak because of something nobody in
 the room said: a handoff asking the new agent to introduce itself, a scheduled
 nudge. Committed as an inbound MESSAGE, that direction is stored as a
 participant's words, shown in the transcript as theirs, and read by the model
 as a user turn. An `INSTRUCTION` event carries it through the same pipeline —
 the same hooks, lane and addressing — without either. It is the `system`
-intent of §12.4, for every kind of intelligence channel. Only the
+intent of §12.4, for every kind of intelligence channel. <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-004", "kind": "behavior", "applies": "§10.1.1 Instructions: who issues an instruction; one a hook injects, and a response typed INSTRUCTION. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Only the
 application issues one, through `process_inbound()` or direct injection
 (§10.5): an instruction a hook injects is dropped (§9.4), and a channel's
-response typed `INSTRUCTION` does not re-enter (§8.5).
+response typed `INSTRUCTION` does not re-enter (§8.5).<!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-005", "kind": "behavior", "applies": "§10.1.1 rule 1: the channels an instruction's addressed_to names, checked against the registry. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 `process_inbound()` with `event_type = INSTRUCTION` (normative):
 
 1. **It is addressed.** `addressed_to` MUST name at least one channel the
    framework registers as an intelligence channel (§19.3), which is checked
-   against the registry before anything is read. An unaddressed or
+   against the registry before anything is read. <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-006", "kind": "behavior", "applies": "§10.1.1 rule 1: an instruction that names no registered intelligence channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An unaddressed or
    empty-addressed instruction, or one that names no registered intelligence
    channel, is refused, before anything is written, with
    `InboundResult(blocked=true, reason=instruction_unaddressed)`: a direction
-   meant for one agent does not make every agent in the room speak. The
+   meant for one agent does not make every agent in the room speak. <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-007", "kind": "behavior", "applies": "§10.1.1 rule 1: the other names of an instruction's address. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
    address's other names ask nobody, as a name the room does not bind (§19.3
    rule 2): a registered agent the room does not bind is asked nowhere, and
-   the instruction goes on.
+   the instruction goes on.<!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-008", "kind": "behavior", "applies": "§10.1.1 rule 2: an instruction that carries an idempotency key. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 2. **It carries no idempotency key.** Step 7 finds a duplicate through the
    stored event, and an instruction is never stored. One that carries a key
    is refused, before anything is written, with
-   `reason=instruction_not_idempotent`.
+   `reason=instruction_not_idempotent`.<!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-009", "kind": "behavior", "applies": "§10.1.1 rule 2: an instruction injected directly (§10.5) through an API whose contract is the committed event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
    Direct injection (§10.5) takes the same event, and an API whose contract
    is the committed event cannot report either refusal by returning one: it
-   MUST raise instead, before anything is written.
+   MUST raise instead, before anything is written.<!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-010", "kind": "behavior", "applies": "§10.1.1 rule 3: an instruction's visibility. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 3. **Intelligence channels only see it.** The pipeline sets its visibility to
    `"intelligence"` whatever the caller asked: no transport delivers it, and a
-   voice channel never speaks it.
+   voice channel never speaks it.<!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-011", "kind": "behavior", "applies": "§10.1.1 rule 4: steps 1 to 11 on an instruction, its hooks included; a blocked instruction is not stored (RK-10.1.1-014). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 4. **Steps 1–11 apply unchanged.** Identity, the room-status gate and the
    source write check hold, and `BEFORE_BROADCAST` hooks run on it and MAY
-   block or modify it. The caller's `metadata` rides the instruction, whatever
+   block or modify it. <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-012", "kind": "behavior", "applies": "§10.1.1 rule 4: the caller's metadata on an instruction. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The caller's `metadata` rides the instruction, whatever
    the transport's parser keeps: the pipeline applies it to the event (a key
    the parser set keeps its value, and `standalone` is the typed field's word,
    step 7), so a hook reads what the caller attached to it, a delegation's
-   hand-back its task (§23.3 step 8). A hook — and an `AFTER_BROADCAST` one — MUST NOT treat
-   it as something a participant said: its author is the application. A
+   hand-back its task (§23.3 step 8). <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-013", "kind": "behavior", "applies": "§10.1.1 rule 4: what a hook reads an instruction as. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A hook — and an `AFTER_BROADCAST` one — MUST NOT treat
+   it as something a participant said: its author is the application. <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-014", "kind": "behavior", "applies": "§10.1.1 rule 4: an instruction a hook or the source check blocks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
    blocked instruction is not stored (the BLOCKED commit of §10.1 steps 10–11
    does not apply) and the result reports the block (step 5); `event_blocked`
    is still emitted, and the injected events, tasks and observations of its
-   hooks are still processed. An instruction its hooks let through,
+   hooks are still processed. <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-015", "kind": "behavior", "applies": "§10.1.1 rule 4: an instruction let through to an agent of the discussion holding the room (§19.7.5), and its hooks' tasks and observations. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An instruction its hooks let through,
    addressed to an agent of the discussion holding the room (§19.7.5 rule
    7), has no delivery set to store their tasks and observations with
    (§10.1 step 15): they are stored once the discussion is handed it,
    whether it queues the turn or reports the instruction dropped (§19.7.5
    rule 16), before the room lock is released, as a blocked instruction's
-   are (§10.1 step 10), and each task stored fires `ON_TASK_CREATED` then.
+   are (§10.1 step 10), and each task stored fires `ON_TASK_CREATED` then.<!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-016", "kind": "behavior", "applies": "§10.1.1 rule 5: an instruction at step 12. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 5. **It is not committed.** At step 12 nothing is stored, no index is
    consumed (the one step 8 assigned is provisional, for the hooks), and no
    room counter moves (§14.3 holds trivially); the copy an AI channel keeps
-   of it is a record of its own (The instruction a turn read, below). It is
+   of it is a record of its own (The instruction a turn read, below). <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-017", "kind": "behavior", "applies": "§10.1.1 rule 5: an instruction and the room's activity (§5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It is
    no activity: neither
    `last_activity_at` nor a PAUSED room's status moves, and a committed
-   response resumes the room (§5.1).
+   response resumes the room (§5.1).<!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-018", "kind": "behavior", "applies": "§10.1.1 rule 5: an instruction's delivery set in the room's lane. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
    Its delivery set joins the room's delivery lane without an index, behind
    the room's latest committed event, so it keeps its place in the room's
-   order (§10.2). The result reports what its pass decided;
+   order (§10.2). <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-019", "kind": "behavior", "applies": "§10.1.1 rule 5: the result of an instruction (InboundResult). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The result reports what its pass decided;
    `InboundResult.event` is the uncommitted instruction once decided:
 
    ```
@@ -7442,12 +7824,14 @@ response typed `INSTRUCTION` does not re-enter (§8.5).
        the block's reason, event = the instruction, status BLOCKED with
        its blocked_by, never stored
    ```
+   <!-- /rfc -->
+   <!-- rfc: {"id": "RK-10.1.1-020", "kind": "behavior", "applies": "§10.1.1 rule 5: the index an allowed or a blocked instruction carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
    An allowed or a blocked instruction carries the index the room's next
    event takes once its hooks are over: step 8's, or step 9a's when a hook
-   ran under the lock. Once decided, the instruction stays the result's
+   ran under the lock. <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-021", "kind": "behavior", "applies": "§10.1.1 rule 5: a failure of an instruction's cascade once decided. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Once decided, the instruction stays the result's
    event, and a later failure of its cascade is reported on the result's
-   `error` (§13.6, post-commit phase).
+   `error` (§13.6, post-commit phase).<!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-022", "kind": "behavior", "applies": "§10.1.1 rule 6: the turn an instruction opens, its input, and the memory provider. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 6. **An intelligence channel takes it as a directive for one turn.** The text
    is the turn's input after the rebuilt history (unless it stands alone, step
    7), marked as the application's instruction and never attributed to a
@@ -7456,74 +7840,74 @@ response typed `INSTRUCTION` does not re-enter (§8.5).
    turns (The instruction a turn read, below). (A system-role message after
    the history is not portable: several model APIs refuse one, others
    silently turn it into a user turn, and a request that ends on the
-   assistant's last reply reads as a continuation of it.) The response is an ordinary response event:
-   committed, broadcast, subject to reentry and chain depth. The pipeline
+   assistant's last reply reads as a continuation of it.) <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-023", "kind": "behavior", "applies": "§10.1.1 rule 6: the response to an instruction. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The response is an ordinary response event:
+   committed, broadcast, subject to reentry and chain depth. <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-024", "kind": "behavior", "applies": "§10.1.1 rule 6: the instruction's fingerprint on the responses its delivery set returns. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The pipeline
    MUST record the instruction that produced it in its metadata as a
    fingerprint, `instruction = {sha256, length}`, as it writes a response's
    source and depth (§8.5): on every response event the instruction's
    delivery set returns, one stored past the reentry budget included,
    replacing whatever the channel wrote under that key, since the pipeline
-   cannot check an integrator's channel's write. `sha256` is the lowercase
+   cannot check an integrator's channel's write. <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-025", "kind": "behavior", "applies": "§10.1.1 rule 6: what the instruction's fingerprint holds. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`sha256` is the lowercase
    hex SHA-256 of the UTF-8 text form of the instruction's content (§6.6),
    as its hooks left it, and `length` that text's length in Unicode code
-   points. A hook's modify of the response keeps the fingerprint (§9.4). An
+   points. <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-026", "kind": "behavior", "applies": "§10.1.1 rule 6: a hook's modify of a response to an instruction. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A hook's modify of the response keeps the fingerprint (§9.4). <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-027", "kind": "behavior", "applies": "§10.1.1 rule 6: an answer to a response to an instruction, and a record at the chain-depth limit (§8.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An
    answer to that response, and the record of an agent not asked at the
-   chain-depth limit (§8.3), carry none. A response MUST NOT carry a copy of
+   chain-depth limit (§8.3), carry none. <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-028", "kind": "behavior", "applies": "§10.1.1 rule 6: the instruction's text on a response. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A response MUST NOT carry a copy of
    the text: the metadata rides on every response event and every segment
    of it, so a copy would store an instruction the room never stores — a
    summary's transcript, a long prompt — once per reply, and deliver it to
    every transport. The timeline still records that an instruction produced
-   the reply and which one; an application that shows its text keeps it.
+   the reply and which one; an application that shows its text keeps it.<!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-029", "kind": "behavior", "applies": "§10.1.1 rule 7: a standalone instruction's turn, its history and its memory provider. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 7. **It MAY stand alone.** `standalone = true` asks that the turn it opens
    read nothing of the room: its input is the instruction alone, with no
    rebuilt history, and the channel MUST NOT call the memory provider for it —
    an empty view is not enough, since a provider MAY return `messages` of its
-   own (a summary, a minimum it always keeps). Nor does it read the room's
+   own (a summary, a minimum it always keeps). <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-030", "kind": "behavior", "applies": "§10.1.1 rule 7: a standalone instruction's turn and the room's working memories. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Nor does it read the room's
    working memories, which are its past in another form: skills activated in
    the room, the room's plan, the room's background tasks, and the rounds of
-   tool calls its earlier turns made there, with their results. The one read is the record
+   tool calls its earlier turns made there, with their results. <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-031", "kind": "behavior", "applies": "§10.1.1 rule 7: the room's active skills, read by a standalone turn (§24.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The one read is the record
    of the room's active skills, from its stored rows, none of it reaching its prompt
-   (Section 24.4). The channel's own system
+   (Section 24.4). <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-032", "kind": "behavior", "applies": "§10.1.1 rule 7: a standalone turn's system prompt, tools and skill catalogue. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The channel's own system
    prompt, tools and skill catalogue are unchanged. It is for a pass that must start from a
    blank page, such as a summary re-run that would otherwise read, and copy,
-   its previous answer.
+   its previous answer.<!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-033", "kind": "behavior", "applies": "§10.1.1 rule 7: what the pipeline hands a standalone instruction's targets and hooks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
    For a standalone instruction too, the pipeline does not empty what it
    hands the instruction's targets: they receive the room's context as for
    any event (the room, its bindings, its participants and its recent
    events), and so do its hooks. Reading none of it is the turn's duty, as
    above: the history it rebuilds, its memory provider and its working
-   memories are the channel's own reads.
+   memories are the channel's own reads.<!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-034", "kind": "behavior", "applies": "§10.1.1 rule 7, a channel whose conversation lives in a session it does not rebuild (an ACP agent, §19.3.2): the session a standalone turn runs in. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
    A channel whose conversation lives in a session it does not rebuild (an
    ACP agent, §19.3.2) cannot empty that session, so it MUST run a
    standalone turn in a session opened for that turn and retired after it:
    no catch-up is sent, the room's session is neither prompted nor told, and
-   its catch-up cursor does not move. The reply is the room's like any
+   its catch-up cursor does not move. <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-035", "kind": "behavior", "applies": "§10.1.1 rule 7, a channel whose conversation lives in a session it does not rebuild (an ACP agent, §19.3.2): the room session's next catch-up after a standalone turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The reply is the room's like any
    other, and the room's session did not produce it: its next catch-up MUST
    carry it, as the channel's own words from a separate turn, or the agent
    would answer later questions about a message it appears to have posted
-   from a history that lacks it (§19.3.2). The channel MUST declare the turn
+   from a history that lacks it (§19.3.2). <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-036", "kind": "behavior", "applies": "§10.1.1 rule 7, a channel whose conversation lives in a session it does not rebuild (an ACP agent, §19.3.2): the scope a standalone turn's session is declared with. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The channel MUST declare the turn
    session as the turn's, not the room's, to whatever carries it (for ACP,
    the `session/new` metadata): a transport that files sessions by room
    would otherwise hand the turn the room's session and close that one after
-   it. Retired means the channel MUST NOT prompt the turn session again
+   it. <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-037", "kind": "behavior", "applies": "§10.1.1 rule 7, a channel whose conversation lives in a session it does not rebuild (an ACP agent, §19.3.2): a standalone turn's session after the turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Retired means the channel MUST NOT prompt the turn session again
    after the turn, and closes it where the agent announces it can: closing
    is optional in ACP (`session/close` is announced in the agent's
    capabilities), and an agent that does not announce it keeps the session
-   until its connection ends. The turn session MUST take the Room's session
+   until its connection ends. <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-038", "kind": "behavior", "applies": "§10.1.1 rule 7, a channel whose conversation lives in a session it does not rebuild (an ACP agent, §19.3.2): a standalone turn's session setup and configuration. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The turn session MUST take the Room's session
    setup as the Room's next session would (the ACP agent channel's *Session
    setup*, a refused value failing the turn), then the room session's
    current configuration (model, mode) where the agent accepts it;
-   host-contributed context is the channel's own and still applies. Such a
+   host-contributed context is the channel's own and still applies. <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-039", "kind": "behavior", "applies": "§10.1.1 rule 7, a channel whose conversation lives in a session it does not rebuild (an ACP agent, §19.3.2): an ordinary instruction the session keeps. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Such a
    channel also keeps an ordinary instruction in its session once prompted
    with it — nothing is rebuilt there — which is why the step 6 marker
-   matters on it as much as the history rule does elsewhere.
+   matters on it as much as the history rule does elsewhere.<!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-040", "kind": "behavior", "applies": "§10.1.1 rule 7: `standalone` set on an event that is no instruction. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
    `standalone` is a property of an instruction only: set
    on any other event type it MUST be refused before anything is written
    (raised, since the event would otherwise land as a participant's line
-   without the requested isolation).
+   without the requested isolation).<!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-041", "kind": "behavior", "applies": "§10.1.1 rule 8: a channel hosting a realtime model (§12.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 8. **A realtime session is not reached this way.** A channel hosting a
    realtime model (a realtime voice or audio-video channel, a conference with
    a realtime model plugged in) is a transport and never sees an
@@ -7531,7 +7915,7 @@ response typed `INSTRUCTION` does not re-enter (§8.5).
    on the model's session (§12.4).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.1.1-002", "kind": "behavior", "applies": "§10.1.1 Instructions; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.1.1-042", "kind": "behavior", "applies": "§10.1.1 The instruction a turn read: the INSTRUCTION_READ row an AI channel keeps of a turn an instruction opened, unless it stands alone. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **The instruction a turn read (normative).** An AI channel whose turn an
 instruction opened, unless it stands alone, MUST keep its text as the turn
 read it (its text form, step 6) as a row of its own, `INSTRUCTION_READ`,
@@ -7541,23 +7925,23 @@ or the kit closes: the
 channel's source, a text content, its visibility the channel alone, the
 turn's correlation id, which its later turns read its turn by, `responds_to`
 the instruction, and the instruction's fingerprint, as the turn's tool rows
-carry it (step 6). It takes the room's next index; no hook reads
+carry it (step 6). <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-043", "kind": "behavior", "applies": "§10.1.1 The instruction a turn read: the index and the readers of an INSTRUCTION_READ row. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It takes the room's next index; no hook reads
 it, no channel is delivered it, no reader of the turn's stream is handed it,
 it is no activity (Section 5.1) and none of the turn's response events, and
-no other agent's history reads it. Its later turns replay it where the turn read it, a user message marked
+no other agent's history reads it. <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-044", "kind": "behavior", "applies": "§10.1.1 The instruction a turn read: its replay in the channel's later turns. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its later turns replay it where the turn read it, a user message marked
 as the application's exactly as the turn read it, before what that turn
 wrote: one after the history's first turn, or one whose turn the history
 holds, which may then open the history. A later turn's request thus opens
-with the instructed turn's (Section 6.4, The prompt from turn to turn). It
+with the instructed turn's (Section 6.4, The prompt from turn to turn). <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-045", "kind": "behavior", "applies": "§10.1.1 The instruction a turn read: a kept instruction in a memory's window, the history's cost and a summary. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It
 opens no turn and is no message: a memory's window does not count it, it
 costs the history with the event it reads with (Section 20), and a summary
-quotes it as the application's, never as a participant's. Its turn's rounds of
+quotes it as the application's, never as a participant's. <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-046", "kind": "behavior", "applies": "§10.1.1 The instruction a turn read: the instructed turn's rounds of tool calls. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its turn's rounds of
 tool calls read after it, the turn whose instruction opened the room
-included. The instruction itself stays
+included. <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-047", "kind": "behavior", "applies": "§10.1.1 The instruction a turn read: the row and the uncommitted instruction. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The instruction itself stays
 uncommitted (step 5): the row is the channel's, takes an index and counts
 among the room's events as any record (Section 10.5), and is no copy a
-response carries (step 6), being no response. An instruction a channel never
-kept, one from before the channel kept them, is not replayed. A standalone instruction is not kept:
+response carries (step 6), being no response. <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-048", "kind": "behavior", "applies": "§10.1.1 The instruction a turn read: an instruction a channel never kept. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An instruction a channel never
+kept, one from before the channel kept them, is not replayed. <!-- /rfc --><!-- rfc: {"id": "RK-10.1.1-049", "kind": "behavior", "applies": "§10.1.1 The instruction a turn read: a standalone instruction. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A standalone instruction is not kept:
 its turn reads nothing of the room, and its text, often long (a summary to run
 again), would double the history.
 <!-- /rfc -->
