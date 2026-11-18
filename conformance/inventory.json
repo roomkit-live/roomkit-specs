@@ -123,93 +123,93 @@
     },
     {
       "section": "5",
-      "sha256": "8e6bf1612f198294ed24171906fc16efc99277b2bce2a5a80701e8fb77315a8d",
+      "sha256": "c2fa9bb6e6846a006d109ed10c0e498552f8d7668925fe359369844bf32a1cc6",
       "classification": "normative",
-      "review": "Source inventory: Data Models. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Data Models, reviewed for one obligation per unit (RMK-1782). Its one unit, the rule that an id the models hold is a non-empty string, is a single obligation and keeps its id; it carries its level."
     },
     {
       "section": "5.1",
-      "sha256": "9e8dfc901504c8ae268d9b7499f628bf3af4ee02a7e628587734d036ba973498",
+      "sha256": "dc689ef8790759235e2f4efcd2bc5497cb6f8c94a45a060051f2c3c5dbda8854",
       "classification": "normative",
-      "review": "Source inventory: Room. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the timer-context clarification against Python and Rust concurrent-greeting tests: the final stored context may already be ACTIVE. Existing blocks retain their conditions and exceptions; no unannotated normative content was introduced."
+      "review": "Source inventory: Room, split to one obligation per unit (RMK-1782). The Room block keeps its id. The RoomStatus table is one unit; the refusal paragraphs are split by sentence, and the MAY that lets a lifecycle record or an identity challenge be refused without a framework event stays with the rule it excepts. The permission to write lifecycle records is may; the record it describes is must where an implementation writes one. The RoomTimers block is a structural unit; the sentence that obliges the timers' transitions, then activity, pause, resume, close, setting and when are split by list item and sentence. An integrator's MAY the implementation honours (reopen, resume, set_room_timers) is must; the stream's single status read around its rows' hooks is may. Every unit carries its level."
     },
     {
       "section": "5.2",
-      "sha256": "9cd131f5e9c762f380410716e92add38c2a31414dff3917b705149b4e21da113",
+      "sha256": "7ed8b7d80d7a7f3f6c6b558481ec1e1dba0514d450c4d0ae0ef315c81e4e1f44",
       "classification": "normative",
-      "review": "Source inventory: RoomEvent. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: RoomEvent, split to one obligation per unit (RMK-1782). The RoomEvent and EventSource blocks, the EventType and EventStatus tables and the reserved metadata.instruction key are single obligations and keep their ids. The EventDirection table stays with the sentence that excludes any other direction; the preservation of raw_payload, the provider field's MUST, SHOULDs and MAY, and the reserved idempotency namespace are split by sentence, the refusal by send_event() and commit_event() conditioned on an implementation offering them. Every unit carries its level."
     },
     {
       "section": "5.3",
-      "sha256": "67fba4846895064b3fa3c863e6f5a09aea812680dfc8505644b83cc567a0c5c4",
+      "sha256": "5bd851f64381490476a4cb4124b56a1ee52e312824a117243ebffeef9c8a13b2",
       "classification": "normative",
-      "review": "Source inventory: Event Content. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Event Content, split to one obligation per unit (RMK-1782). Each content type's block is one unit and keeps its id. The union's opening paragraph splits into one content per event with every type supported, and the type discriminator. CompositeContent splits into its block, the nesting limit with how levels count, an edit's new content, where a sixth level is refused, and the boundaries that refuse it, one sentence kept whole. Every unit carries its level."
     },
     {
       "section": "5.4",
-      "sha256": "60b6d89e9ca788701759c54b431b5f169f34580a92a33b10ce0a245ad7669e5a",
+      "sha256": "8ba09a486d8d8b0e1060df1a92ce71abe18cdd53cab0398f73c2d06e321ba68d",
       "classification": "normative",
-      "review": "Source inventory: Channel Data (Typed, Per-Channel). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Channel Data, split to one obligation per unit (RMK-1782): the MAY that lets a channel type define typed data, with its examples; the SHOULD to define it for each supported type; the MUST to preserve unknown data. Every unit carries its level."
     },
     {
       "section": "5.5",
-      "sha256": "f45458c7108bf08c9c79d3b92e0b7327f75baaf5d22c15f0fbe8be1474d8ef86",
+      "sha256": "aa26437bb7fbc9f9f01d3dc3e7e74bc10e7967b310404db12ab1f8fc50792c9e",
       "classification": "normative",
-      "review": "Source inventory: Participant. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Participant, split to one obligation per unit (RMK-1782). The Participant block and the status, identification and verification tables keep their ids. The role table is split from the two sentences on who takes part. Joining and leaving, renaming, resolving, one record per participant and who a sender is are split by sentence and list item; rename_member's SHOULD keeps its level, and what it does once offered is must, conditioned on an implementation offering it. Every unit carries its level."
     },
     {
       "section": "5.6",
-      "sha256": "c9b31e1814bc2235a87b4b85135fc4b4b8fa96e050304c3ad2504713c15bdfd5",
+      "sha256": "8ae3407d157a2d06d1527880106f4ca3d56a3cbf8d5d238af66f0f08fbde99a5",
       "classification": "normative",
-      "review": "Source inventory: Identity. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Identity, split to one obligation per unit (RMK-1782): the Identity block as a structural unit, then one unit per sentence on address ownership, resolution scope, link_address, unlink_address, what an unlink leaves, and the form addresses compare in. Every unit carries its level."
     },
     {
       "section": "5.7",
-      "sha256": "00f40c8260b9f1ca642e23c112a3c238b38e8d814b1eb4b84149053ccefeba1b",
+      "sha256": "a800ec547ddb67e32a5cf9358d4f4c91f6d92ceecb615a5590b2ad45d723db63",
       "classification": "normative",
-      "review": "Source inventory: ChannelBinding. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: ChannelBinding, split to one obligation per unit (RMK-1782). The ChannelBinding block, with the sentence that introduces it, is a structural unit; the addresses table, with its introduction, is one unit, and a declaration's MAY (other keys, or none) is a choice the implementation honours, so must. The correspondent, recipient, chat and group rules are split by sentence; a rationale or an example stays with the rule it explains, and an exception with the rule it excepts. The phone number rules are one unit per list item. Every unit carries its level."
     },
     {
       "section": "5.8",
-      "sha256": "fb0d1730ca8925433e2479b642c8f6c8d5ffbfa9023d45857fa8db24c8f60887",
+      "sha256": "a20c9d4000dc997093ac7bd312b42d26515feda8830eb7d1abe4d8ae3aa60ac8",
       "classification": "normative",
-      "review": "Source inventory: ChannelCapabilities. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: ChannelCapabilities, split to one obligation per unit (RMK-1782). The ChannelCapabilities block keeps its id. The ChannelMediaType table is one unit; what media_types decides, the two flags that take part in transcoding, the flags that do not, a channel's file limits and their defaults are split by sentence. Every unit carries its level."
     },
     {
       "section": "5.9",
-      "sha256": "40451f48adbd9e9e9b18ec9246b5a961ab8265ad6baa423e447c6c38c3119080",
+      "sha256": "4d35450382353f9c16801f5142cab14b8d9b35b7f0d570d3c8c71cb8055aa17b",
       "classification": "normative",
-      "review": "Source inventory: Three Levels of Channel Metadata. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Three Levels of Channel Metadata, reviewed for one obligation per unit (RMK-1782): its one unit, the three levels kept apart, is a single obligation and keeps its id; it carries its level."
     },
     {
       "section": "5.10",
-      "sha256": "1444be1efe36958ea9670a3f45653ffeb13ffae090b05dd57bd0605c2cd54bef",
+      "sha256": "1dc17f7a692d046b088df8d9fd253a73a0a2d280c1e9c4c111477334007458fc",
       "classification": "normative",
-      "review": "Source inventory: Task. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Task, reviewed for one obligation per unit (RMK-1782): the Task block and the TaskStatus enumeration are single definitions and keep their ids; each carries its level."
     },
     {
       "section": "5.11",
-      "sha256": "08d4781bb075fc10dda6de5f57a961e106fa89e5be5faab024a251de401ea287",
+      "sha256": "1cbfad9187fce63581f0b6b5edd968dd23a765125787654ba1959cde9bf8e841",
       "classification": "normative",
-      "review": "Source inventory: Observation. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Observation, reviewed for one obligation per unit (RMK-1782): the Observation block is a single definition and keeps its id; it carries its level."
     },
     {
       "section": "5.12",
-      "sha256": "448f035e8d03feac36e226186ce0fac244d413cc8872c4ddd6a2a31c59a6c24b",
+      "sha256": "c306588a8e67daf61d904e32bb33ff32da50c6c211c90f0ff63a20e86fea8b64",
       "classification": "normative",
-      "review": "Source inventory: Inbound Message. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Inbound Message, split to one obligation per unit (RMK-1782): the InboundMessage block as a structural unit; the room and the channel type a message does not carry; the response scope, kept whole with the integrator's way to scope other work; the voice session's connection; parse_voice_session's SHOULD, and the block of what it returns as a must unit where an implementation offers it. Every unit carries its level."
     },
     {
       "section": "5.13",
-      "sha256": "728cb633a7cb937e9ac7cefc30aed042a79341ebe0e067135b766620f010b8a7",
+      "sha256": "13787dad129700c62ee31eb159b4244841cc4464c3d50a6faa2fee8b959e2279",
       "classification": "normative",
-      "review": "Source inventory: Delivery Result. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Delivery Result, split to one obligation per unit (RMK-1782): the DeliveryResult, DeliveryError and ProviderResult block as a structural unit, then one unit per sentence on a failed target's code and retryable, an agent's error across the turn backend, and the record of a delivery set. Every unit carries its level."
     },
     {
       "section": "5.14",
-      "sha256": "3adaa5e6875832dd2151b79c83ce8fccddccbe3dec0b2aed86b48baa554dc405",
+      "sha256": "20af26a451b457be7fdb5f50dd9af59336ebcefea52143d59697a40a8a64fb5c",
       "classification": "normative",
-      "review": "Source inventory: Protocol Trace. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Protocol Trace, split to one obligation per unit (RMK-1782): the SHOULD to emit traces, the ProtocolTrace block as a structural unit, immutability, raw payloads (SHOULD, with its MAY exception) and the pointer to Section 15.6, which untested.json explains. Every unit carries its level."
     },
     {
       "section": "6",

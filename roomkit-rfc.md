@@ -474,7 +474,7 @@ room events but CAN produce tasks ("customer at risk of churning") and observati
 
 ## 5. Data Models
 
-<!-- rfc: {"id": "RK-5-001", "kind": "behavior", "applies": "§5 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5-001", "kind": "behavior", "applies": "§5 Data Models; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 An id the models below hold, a room's, a channel's, an event's, a
 participant's or an identity's, is a non-empty string: an empty one MUST be
 refused, since it names nothing a later read could find again.
@@ -482,7 +482,7 @@ refused, since it names nothing a later read could find again.
 
 ### 5.1 Room
 
-<!-- rfc: {"id": "RK-5.1-001", "kind": "structural", "applies": "§5.1 Room; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.1-001", "kind": "structural", "applies": "§5.1 Room; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 ```
 Room
 ├── id: string                              # Unique identifier
@@ -504,7 +504,7 @@ Room
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.1-002", "kind": "behavior", "applies": "§5.1 Room; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.1-007", "kind": "behavior", "applies": "§5.1 Room, RoomStatus enumeration: the four statuses, and which of them accept a new event; the transition's own record is not refused (RK-5.1-013). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **RoomStatus** enumeration:
 
 | Value | Meaning | Accepts new events |
@@ -514,6 +514,8 @@ Room
 | CLOSED | Room is closed | **MUST be refused** |
 | ARCHIVED | Room is archived; read-only historical access | **MUST be refused** |
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-5.1-008", "kind": "behavior", "applies": "§5.1 Room, a CLOSED or ARCHIVED room: the refusal enforced at every point where the timeline can grow; the transition's own record is not refused (RK-5.1-013). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A room's status governs whether it will accept another event, and
 implementations MUST enforce that at **every** point where the timeline can
 grow — an inbound message, direct injection (§10.5), a hook's injected event,
@@ -521,20 +523,20 @@ the framework's own re-injection, and a record committed outside the pipeline
 (§10.5) alike. Enforcing it only where an
 inbound router happens to look is not conformant: a caller that names the room
 explicitly bypasses the router entirely, and so does the framework when it
-re-injects into a room it already knows.
+re-injects into a room it already knows.<!-- /rfc --><!-- rfc: {"id": "RK-5.1-009", "kind": "behavior", "applies": "§5.1 Room, a streamed row's commit (§10.2): the room's status read under the room lock. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 A streamed row's commit reads the room under its lock, its status included
-(§10.2). Around a row's `BEFORE_BROADCAST` hooks, which run without the room
+(§10.2). <!-- /rfc --><!-- rfc: {"id": "RK-5.1-010", "kind": "behavior", "applies": "§5.1 Room, a stream's rows: where an implementation reads the status once around the rows' unlocked hooks, a status changed elsewhere is seen at the next row's commit (RK-5.1-009). Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->Around a row's `BEFORE_BROADCAST` hooks, which run without the room
 lock, a stream MAY read the status once, before its first row, and again only
 once the framework instance running it has changed a room's status since, or a
 row's commit found it refusing. A status changed elsewhere (another process,
 another framework instance sharing the store, a direct write to the store) is
-then seen at the next row's commit, that row's hooks having run.
+then seen at the next row's commit, that row's hooks having run.<!-- /rfc --><!-- rfc: {"id": "RK-5.1-011", "kind": "behavior", "applies": "§5.1 Room, an event a CLOSED or ARCHIVED room refuses: nothing of it written or broadcast; the transition's own record is the exception (RK-5.1-013). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 A refused event MUST NOT be appended to the timeline, MUST NOT be broadcast,
 and MUST NOT be stored as a `BLOCKED` event: a closed room accepts nothing,
 and an audit record written into it would be the very thing the status
-forbids. The framework MUST return a blocked result naming the refusal
+forbids. <!-- /rfc --><!-- rfc: {"id": "RK-5.1-012", "kind": "behavior", "applies": "§5.1 Room, an event a CLOSED or ARCHIVED room refuses: the blocked result and the room_refused_event framework event, with the lifecycle records and identity challenge events it may refuse silently. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The framework MUST return a blocked result naming the refusal
 (`reason = room_closed`) and, when what it turned away is an inbound event, a
 response re-entering the room, a hook's injected event, a record the room
 would store in place of a turn or a response it refuses (§8.3), or a
@@ -543,52 +545,52 @@ the condition is observable — a room that has gone quiet because it closed
 is otherwise indistinguishable from one whose integration has broken. The
 framework's own lifecycle records (`SystemContent`, §5.3) and the events an
 identity challenge injects (§11) MAY be refused without an event: neither is
-a message a subscriber could be waiting for.
+a message a subscriber could be waiting for.<!-- /rfc --><!-- rfc: {"id": "RK-5.1-013", "kind": "behavior", "applies": "§5.1 Room, a room's status transition: its own lifecycle hook, framework event and timeline record are not refused by RK-5.1-011. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 One exception, and only one: the framework's own record of the transition —
 the lifecycle hook, the framework event, and any timeline entry an
 implementation chooses to write to mark it — is produced by the transition
-itself rather than through the pipeline, and is not subject to this refusal.
+itself rather than through the pipeline, and is not subject to this refusal.<!-- /rfc --><!-- rfc: {"id": "RK-5.1-014", "kind": "behavior", "applies": "§5.1 Room, a room's close: observable through its own record of the transition (RK-5.1-013). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Closing a room MUST remain observable: a room that simply goes quiet, with no
 signal of why, is indistinguishable from one whose integration has broken.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.1-003", "kind": "behavior", "applies": "§5.1 Room; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.1-015", "kind": "behavior", "applies": "§5.1 Room, lifecycle records: whether an implementation writes a timeline record for a lifecycle change. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 **Lifecycle records.** An implementation MAY write a record in the timeline
 when a lifecycle change happens: a channel's attach, detach, mute, unmute or
-binding update, a participant's change, a timer's transition. When it does,
+binding update, a participant's change, a timer's transition. <!-- /rfc --><!-- rfc: {"id": "RK-5.1-016", "kind": "behavior", "applies": "§5.1 Room, lifecycle records, where an implementation writes them (RK-5.1-015): the record's type, content, source and visibility. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When it does,
 the record is the framework's. Its type is the lifecycle type that names the
 change (§5.2: `CHANNEL_ATTACHED`, `CHANNEL_MUTED`, ...), or `SYSTEM` for a
 change no type names; its content a `SystemContent` (§5.3); its source the
-framework's (`channel_id = "system"`); its visibility `internal` (§7.3). It
+framework's (`channel_id = "system"`); its visibility `internal` (§7.3). <!-- /rfc --><!-- rfc: {"id": "RK-5.1-017", "kind": "behavior", "applies": "§5.1 Room, lifecycle records, where an implementation writes them (RK-5.1-015): the record's index, delivery, hooks and activity. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It
 takes the room's next index and counts in `event_count`, is never delivered,
 runs no hook of its own (a member operation's trigger carries it as its
 payload, §5.5), and is no activity (below): a mute does not restart a room's
 inactivity timer. The indexes of Appendix B assume an implementation that
-writes none.
+writes none.<!-- /rfc --><!-- rfc: {"id": "RK-5.1-018", "kind": "behavior", "applies": "§5.1 Room, CLOSED and ARCHIVED rooms: they refuse alike, and the integrator may reopen a CLOSED room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 CLOSED and ARCHIVED refuse identically; they differ in intent. CLOSED is a
 conversation that has ended and that the integrator MAY reopen by returning
-the room to ACTIVE. ARCHIVED is a terminal storage state.
+the room to ACTIVE. <!-- /rfc --><!-- rfc: {"id": "RK-5.1-019", "kind": "behavior", "applies": "§5.1 Room, an ARCHIVED room: no status follows it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ARCHIVED is a terminal storage state.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.1-004", "kind": "behavior", "applies": "§5.1 Room; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.1-020", "kind": "behavior", "applies": "§5.1 Room, an integrator's pause, resume, close or archive of a room already in the status it leads to. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A transition from a status it does not leave from.** An integrator's pause,
 resume, close or archive of a room already in the status it leads to MUST do
 nothing: no write, no hook, no framework event. A pause of a PAUSED room, a
 resume of an ACTIVE one, a close of a CLOSED one and an archive of an
 ARCHIVED one are such; a reopen has none, since an ACTIVE room was never
-closed. A transition on a room in any other status it does not leave from
+closed. <!-- /rfc --><!-- rfc: {"id": "RK-5.1-021", "kind": "behavior", "applies": "§5.1 Room, an integrator's transition from a status it does not leave from, other than the status it leads to (RK-5.1-020). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A transition on a room in any other status it does not leave from
 MUST fail with nothing written: a pause or a resume of a CLOSED or ARCHIVED
 room, a reopen of a room that is not CLOSED, and a close of an ARCHIVED room.
-No call takes a room out of ARCHIVED. A transition names the organization its
+No call takes a room out of ARCHIVED. <!-- /rfc --><!-- rfc: {"id": "RK-5.1-022", "kind": "behavior", "applies": "§5.1 Room, an integrator's transition of a room of another organization, or of none when the call names one (§17.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A transition names the organization its
 caller acts for: a room of another organization, or of none when the call
 names one, is not found, and nothing is written in it, its due timers
-included (§17.2).
+included (§17.2).<!-- /rfc --><!-- rfc: {"id": "RK-5.1-023", "kind": "behavior", "applies": "§5.1 Room, reads of a room's history, participants and bindings at every status. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 Reading is unaffected by status: history, participants and bindings remain
 readable at every status, and an implementation MUST NOT make a closed room
-unreadable.
+unreadable.<!-- /rfc --><!-- rfc: {"id": "RK-5.1-024", "kind": "behavior", "applies": "§5.1 Room, what stays attached to a closed room: whatever close_room() leaves, no path appends to the room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 Closing a room does not, by itself, sever what is attached to it. Whether
 `close_room()` detaches channels, ends voice sessions or leaves them in place
@@ -596,7 +598,7 @@ is an implementation's choice; what it MUST NOT do is leave a path by which a
 still-attached channel can append to the closed room.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.1-005", "kind": "behavior", "applies": "§5.1 Room; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.1-025", "kind": "behavior", "applies": "§5.1 Room, room metadata keys that start with `roomkit:`: only the framework writes them; a room's creation, an integrator's metadata update, a TurnHost verb or a channel's metadata_updates that names one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **The implementation's metadata keys.** The keys of a room's `metadata` that
 start with `roomkit:` are the implementation's own namespace: what the
 framework keeps for the room, such as a detach's revocation (§7.5 rule 7) or
@@ -604,13 +606,13 @@ the state the host sets for a channel (§10.6.2). Only the framework writes
 them. A room's creation, an integrator's metadata update (a hook's body's
 included), a `TurnHost` verb (§10.6.5) and a channel's `metadata_updates`
 (§10.1 step 15) that name such a key have it dropped with a warning, the
-rest written, so a write that copies the room's metadata back still works.
+rest written, so a write that copies the room's metadata back still works.<!-- /rfc --><!-- rfc: {"id": "RK-5.1-026", "kind": "behavior", "applies": "§5.1 Room, room metadata keys an implementation keeps as the room's private state (§14.1), whatever their prefix: the rule of RK-5.1-025. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A key the implementation keeps as a room's
 private state (§14.1) reserves the same key of the metadata, whatever its
 prefix, and falls under the same rule: only the framework writes it there.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.1-006", "kind": "behavior", "applies": "§5.1 Room; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.1-027", "kind": "structural", "applies": "§5.1 Room, RoomTimers: its fields. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **RoomTimers:**
 
 ```
@@ -620,59 +622,61 @@ RoomTimers
 └── last_activity_at: datetime | null       # Instant of the room's last activity (below)
 ```
 
-Implementations MUST enforce timer transitions when configured:
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-5.1-028", "kind": "behavior", "applies": "§5.1 Room, room timers when configured: their transitions enforced, the pause (RK-5.1-031) and the close (RK-5.1-037). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+Implementations MUST enforce timer transitions when configured:<!-- /rfc --><!-- rfc: {"id": "RK-5.1-045", "kind": "behavior", "applies": "§5.1 Room, room timers: a DELIVERED commit through the pipeline is activity and moves last_activity_at in its transaction; what is no activity is RK-5.1-029. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 - **Activity.** A room's activity is the events it stores DELIVERED through
   the pipeline: each such commit moves `last_activity_at` to its instant, in
-  the commit's transaction (§10.1 step 12). A record stored `BLOCKED`, a
+  the commit's transaction (§10.1 step 12). <!-- /rfc --><!-- rfc: {"id": "RK-5.1-029", "kind": "behavior", "applies": "§5.1 Room, room timers: the records that are no activity. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A record stored `BLOCKED`, a
   lifecycle record (above), an instruction, which is never stored
   (§10.1.1), and a record committed outside the pipeline (§10.5) are no
-  activity. Inactivity counts from `last_activity_at`, or from `created_at`
-  while the room has had none.
+  activity. <!-- /rfc --><!-- rfc: {"id": "RK-5.1-030", "kind": "behavior", "applies": "§5.1 Room, room timers: the instant inactivity counts from. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Inactivity counts from `last_activity_at`, or from `created_at`
+  while the room has had none.<!-- /rfc --><!-- rfc: {"id": "RK-5.1-031", "kind": "behavior", "applies": "§5.1 Room, room timers: an ACTIVE room whose inactive_after_seconds elapses without activity. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **Pause.** When `inactive_after_seconds` elapses without activity, an
   ACTIVE room MUST transition to PAUSED, and `paused_at` records the
-  instant.
+  instant.<!-- /rfc --><!-- rfc: {"id": "RK-5.1-032", "kind": "behavior", "applies": "§5.1 Room, room timers: a PAUSED room a DELIVERED commit resumes, and what is no activity resuming nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **Resume.** A DELIVERED commit resumes a PAUSED room in the commit's
   transaction: the room is ACTIVE again, `paused_at` null. What is no
-  activity resumes nothing. A sender who writes again is routed to their
+  activity resumes nothing. <!-- /rfc --><!-- rfc: {"id": "RK-5.1-033", "kind": "behavior", "applies": "§5.1 Room, room timers: a sender's or a group's next message routed to its PAUSED room (§10.4 steps 1 and 3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A sender who writes again is routed to their
   PAUSED conversation as to an ACTIVE one, and a group's next message to its
-  PAUSED room (§10.4 steps 1 and 3), which the delivered message resumes.
+  PAUSED room (§10.4 steps 1 and 3), which the delivered message resumes.<!-- /rfc --><!-- rfc: {"id": "RK-5.1-034", "kind": "behavior", "applies": "§5.1 Room, room timers: an integrator's resume of a PAUSED room or reopen of a CLOSED one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
   The integrator MAY resume a PAUSED room, as it MAY reopen a CLOSED one
   (above), and either moves `last_activity_at` to its instant, which
-  restarts the inactivity timer. A resume, by a commit or by the integrator,
-  and a reopen fire no hook and emit no framework event. A reopened room
-  holds no strategy: its close took it back out (Section 19.7).
+  restarts the inactivity timer. <!-- /rfc --><!-- rfc: {"id": "RK-5.1-035", "kind": "behavior", "applies": "§5.1 Room, room timers: a resume, by a commit or by the integrator, and a reopen. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A resume, by a commit or by the integrator,
+  and a reopen fire no hook and emit no framework event. <!-- /rfc --><!-- rfc: {"id": "RK-5.1-036", "kind": "behavior", "applies": "§5.1 Room, a reopened room: the strategy its close took back out (Section 19.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A reopened room
+  holds no strategy: its close took it back out (Section 19.7).<!-- /rfc --><!-- rfc: {"id": "RK-5.1-037", "kind": "behavior", "applies": "§5.1 Room, room timers: a PAUSED room whose closed_after_seconds elapses from paused_at without a resume. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **Close.** When `closed_after_seconds` elapses from `paused_at` without a
-  resume, the room MUST transition to CLOSED.
+  resume, the room MUST transition to CLOSED.<!-- /rfc --><!-- rfc: {"id": "RK-5.1-038", "kind": "behavior", "applies": "§5.1 Room, room timers: an integrator's set_room_timers, under the room lock, for the caller's organization (§17.2); the last_activity_at it writes is RK-5.1-039. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **Setting.** The integrator MAY replace a room's timers
   (`set_room_timers(room_id, timers)`): under the room lock, the room read
   for the caller's organization (§17.2), a missing room, or another
   organization's, not found, its `timers` written whole and the room
-  returned. `last_activity_at` is the one the call gives, else the room's
+  returned. <!-- /rfc --><!-- rfc: {"id": "RK-5.1-039", "kind": "behavior", "applies": "§5.1 Room, room timers: the last_activity_at set_room_timers writes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`last_activity_at` is the one the call gives, else the room's
   own, so a room with no activity keeps none and its inactivity still
-  counts from `created_at`. Unlike the sections of **When.** below, the
+  counts from `created_at`. <!-- /rfc --><!-- rfc: {"id": "RK-5.1-040", "kind": "behavior", "applies": "§5.1 Room, room timers: set_room_timers on a room already past a bound it sets or removes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Unlike the sections of **When.** below, the
   call applies no transition that fell due before it writes: a room
   already past a bound it sets transitions at the next section that reads
   its status, or the next check, and one past a bound it removes never
-  takes that transition.
+  takes that transition.<!-- /rfc --><!-- rfc: {"id": "RK-5.1-041", "kind": "behavior", "applies": "§5.1 Room, room timers: every locked section that reads the room's status, once the room proves to be the caller's (§17.2); set_room_timers applies none (RK-5.1-040). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **When.** Every locked section that reads the room's status (the gate of
   §10.1 step 6, an integrator's transition, an attach or a binding change, a
   direct mutation, a record's commit) first applies the transitions due at its
   instant, once the room proves to be the caller's (§17.2), so an event that
-  arrives after its room fell due is refused as if the timer had run on time.
+  arrives after its room fell due is refused as if the timer had run on time.<!-- /rfc --><!-- rfc: {"id": "RK-5.1-042", "kind": "behavior", "applies": "§5.1 Room, room timers: a room nobody writes to, at the host's timer check or an implementation's sweeper. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
   A room nobody writes to transitions when the host checks its timers, or on
   the period of a sweeper the implementation runs; a check of every room
   reaches every ACTIVE and PAUSED room, however many there are, never the
   first page of a store read only; a room whose check fails (deleted since it
   was listed, a store's failure on it, an id its lock refuses, §13.5) is logged
-  and passed over, and only the kit's close stops the check. A transition takes the
+  and passed over, and only the kit's close stops the check. <!-- /rfc --><!-- rfc: {"id": "RK-5.1-043", "kind": "behavior", "applies": "§5.1 Room, room timers: a timer transition applied late, its instant, its write and its hooks' context (§9.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A transition takes the
   instant it fell due, however late it is applied: a check long after both
   fell due pauses the room at the first instant and closes it at the second,
   in one write, and both its hooks receive one context read after the
   transition records have been handled (§9.2). The room is then CLOSED unless
   an intervening external write changed it. That context includes activity
   committed outside the room lock in the meantime: after a pause alone, a
-  delivered commit may already have resumed the room to ACTIVE. Each
+  delivered commit may already have resumed the room to ACTIVE. <!-- /rfc --><!-- rfc: {"id": "RK-5.1-044", "kind": "behavior", "applies": "§5.1 Room, room timers: a timer transition's framework event and its ASYNC trigger (§10.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Each
   transition emits its framework event once stored
   (`room_paused`, `room_closed`, with `reason = timer`), before anything the
   section decides next, so a message a close that fell due refuses reports
@@ -683,7 +687,7 @@ Implementations MUST enforce timer transitions when configured:
 
 ### 5.2 RoomEvent
 
-<!-- rfc: {"id": "RK-5.2-001", "kind": "structural", "applies": "§5.2 RoomEvent; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.2-001", "kind": "structural", "applies": "§5.2 RoomEvent; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 ```
 RoomEvent
 ├── id: string                              # Unique event identifier (§8.1)
@@ -720,7 +724,7 @@ RoomEvent
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.2-002", "kind": "behavior", "applies": "§5.2 RoomEvent; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.2-002", "kind": "behavior", "applies": "§5.2 RoomEvent; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **EventType** enumeration:
 
 | Value | Category | Description |
@@ -756,7 +760,7 @@ RoomEvent
 | INSTRUCTION_READ | Activity | The instruction an AI channel's turn read, kept by that channel alone, visible to it alone (§10.1.1) |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.2-003", "kind": "behavior", "applies": "§5.2 RoomEvent; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.2-003", "kind": "behavior", "applies": "§5.2 RoomEvent; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **EventStatus** enumeration:
 
 | Value | Meaning |
@@ -768,7 +772,7 @@ RoomEvent
 | BLOCKED | Event refused: by a sync hook, a source that cannot write or has no binding in the room (§7.5 rule 2), the chain-depth limit or the reentry budget (§8.3) |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.2-004", "kind": "behavior", "applies": "§5.2 RoomEvent; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.2-004", "kind": "behavior", "applies": "§5.2 RoomEvent; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **EventSource:**
 
 ```
@@ -787,7 +791,7 @@ EventSource
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.2-005", "kind": "behavior", "applies": "§5.2 RoomEvent; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.2-009", "kind": "behavior", "applies": "§5.2 RoomEvent, EventDirection enumeration: the two directions an event travels. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **EventDirection** enumeration, the way an event travelled:
 
 | Value | Meaning |
@@ -797,23 +801,23 @@ EventSource
 
 An event travels one way: unlike a channel's direction (§4.2), the type has no
 BIDIRECTIONAL value, and a source with any other direction is not a valid
-`EventSource`.
+`EventSource`.<!-- /rfc --><!-- rfc: {"id": "RK-5.2-010", "kind": "behavior", "applies": "§5.2 RoomEvent, EventSource.raw_payload. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 Implementations MUST preserve `raw_payload` unmodified. This is the audit trail
 and the source of truth for provider-specific data.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.2-006", "kind": "behavior", "applies": "§5.2 RoomEvent; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.2-011", "kind": "behavior", "applies": "§5.2 RoomEvent, EventSource.provider on an event a channel builds; a system-generated event may leave it null (RK-5.2-014). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **EventSource.provider population:** Every channel MUST populate the `provider`
-field when constructing an EventSource. The value SHOULD be the name of the
+field when constructing an EventSource. <!-- /rfc --><!-- rfc: {"id": "RK-5.2-012", "kind": "behavior", "applies": "§5.2 RoomEvent, the value of EventSource.provider. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->The value SHOULD be the name of the
 underlying provider or backend — for example, `"SIP"` for a SIP voice backend,
 `"SIPRealtimeTransport"` for a SIP realtime transport, `"AcmeSMS"` for an SMS
-provider. The channel SHOULD expose a `provider_name` property that returns the
-appropriate name. System-generated events (`channel_id="system"`) MAY leave
+provider. <!-- /rfc --><!-- rfc: {"id": "RK-5.2-013", "kind": "behavior", "applies": "§5.2 RoomEvent, a channel's provider_name property. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->The channel SHOULD expose a `provider_name` property that returns the
+appropriate name. <!-- /rfc --><!-- rfc: {"id": "RK-5.2-014", "kind": "behavior", "applies": "§5.2 RoomEvent, EventSource.provider on a system-generated event (channel_id \"system\"). Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->System-generated events (`channel_id="system"`) MAY leave
 `provider` as null.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.2-007", "kind": "behavior", "applies": "§5.2 RoomEvent; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.2-007", "kind": "behavior", "applies": "§5.2 RoomEvent; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **A key the pipeline reserves.** `metadata.instruction` is the pipeline's
 alone: it writes it on a response to an instruction (§10.1.1 step 6) and
 removes it from every other event it commits, whoever wrote it (a parser,
@@ -821,15 +825,15 @@ the caller's metadata, a channel, a hook), so that no event claims an
 instruction that did not produce it.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.2-008", "kind": "behavior", "applies": "§5.2 RoomEvent; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.2-015", "kind": "behavior", "applies": "§5.2 RoomEvent, idempotency keys under the prefix roomkit:publication:: reserved to the pipeline, written by a proactive delivery alone (§22.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A key namespace the pipeline reserves.** Of the idempotency keys, only the
 prefix `roomkit:publication:` is reserved: an `idempotency_key` that starts
 with it is the pipeline's alone. A proactive delivery stores its publication
 under `roomkit:publication:<key>`, `<key>` being the application's (§22.1),
-and no other door writes it. A message's key in the namespace is no key,
+and no other door writes it. <!-- /rfc --><!-- rfc: {"id": "RK-5.2-016", "kind": "behavior", "applies": "§5.2 RoomEvent, an inbound message whose idempotency key is in the reserved namespace (§10.1 step 4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A message's key in the namespace is no key,
 whoever wrote it (the sender, the channel's parser): the message MUST be
-processed as one that carries none (§10.1 step 4). `send_event()` and
-`commit_event()` MUST refuse one before anything is read or written (§10.5).
+processed as one that carries none (§10.1 step 4). <!-- /rfc --><!-- rfc: {"id": "RK-5.2-017", "kind": "behavior", "applies": "§5.2 RoomEvent, send_event() and commit_event() (§10.5), where an implementation offers them, given a key in the reserved namespace. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`send_event()` and
+`commit_event()` MUST refuse one before anything is read or written (§10.5).<!-- /rfc --><!-- rfc: {"id": "RK-5.2-018", "kind": "behavior", "applies": "§5.2 RoomEvent, the idempotency key of a response, a hook's injected event and a hook's modify (§8.5, §9.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A response and a hook's injected event carry no key at all (§8.5, §9.4), and
 a hook's modify keeps the original's (§9.4). So only an event a proactive
 delivery published counts as an earlier copy of it (§22.1).
@@ -837,15 +841,15 @@ delivery published counts as an earlier copy of it (§22.1).
 
 ### 5.3 Event Content
 
-<!-- rfc: {"id": "RK-5.3-001", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.3-015", "kind": "behavior", "applies": "§5.3 Event Content: one content per event, and every content type of this section supported. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Event content is a **discriminated union** — each event carries exactly one content
-type. Implementations MUST support all content types defined here. Each content
+type. Implementations MUST support all content types defined here. <!-- /rfc --><!-- rfc: {"id": "RK-5.3-016", "kind": "behavior", "applies": "§5.3 Event Content: the type field that names each content type. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Each content
 type carries a `type` field that names it and discriminates the union: `text`,
 `rich`, `media`, `location`, `audio`, `video`, `composite`, `system`,
 `template`, `edit`, `delete` or `tool_call`.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.3-002", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.3-002", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **TextContent** — Plain text message:
 
 ```
@@ -855,7 +859,7 @@ TextContent
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.3-003", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.3-003", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **RichContent** — Formatted text with interactive elements:
 
 ```
@@ -869,7 +873,7 @@ RichContent
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.3-004", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.3-004", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **MediaContent** — File, image, or document:
 
 ```
@@ -882,7 +886,7 @@ MediaContent
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.3-005", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.3-005", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **LocationContent** — Geographic coordinates:
 
 ```
@@ -894,7 +898,7 @@ LocationContent
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.3-006", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.3-006", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **AudioContent** — Audio message or voice note:
 
 ```
@@ -906,7 +910,7 @@ AudioContent
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.3-007", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.3-007", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **VideoContent** — Video message:
 
 ```
@@ -918,7 +922,7 @@ VideoContent
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.3-008", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.3-017", "kind": "behavior", "applies": "§5.3 Event Content, CompositeContent: its ordered parts, at least one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **CompositeContent** — Multi-part message (e.g., text + image + audio):
 
 ```
@@ -926,17 +930,19 @@ CompositeContent
 └── parts: list<EventContent>               # Ordered list of content parts, at least one
 ```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-5.3-018", "kind": "behavior", "applies": "§5.3 Event Content, CompositeContent: the nesting limit of five levels and how levels count; an edit's new content counts in the edit's place (RK-5.3-019). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Implementations MUST enforce a maximum nesting depth of 5 levels for
 CompositeContent. The outermost composite is level 1, and a composite among
 the parts of a level-n composite is level n + 1; content that holds a sixth
 level MUST be refused. A part that is not a composite adds no level, so a
-composite of text parts has one level. An edit's new content (EditContent,
+composite of text parts has one level. <!-- /rfc --><!-- rfc: {"id": "RK-5.3-019", "kind": "behavior", "applies": "§5.3 Event Content, a composite that is an edit's new content: its level. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An edit's new content (EditContent,
 below) stands in the edit's place: a composite that is an edit's new content
-has the level a composite in the edit's place would have.
+has the level a composite in the edit's place would have.<!-- /rfc --><!-- rfc: {"id": "RK-5.3-020", "kind": "behavior", "applies": "§5.3 Event Content, content holding a sixth composite level: refused before anything of its event is written. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 Content that holds a sixth level is refused where it is built, before
 anything of its event is written, and no event that holds one is ever
-committed. Each boundary content crosses refuses it: an inbound message fails
+committed. <!-- /rfc --><!-- rfc: {"id": "RK-5.3-021", "kind": "behavior", "applies": "§5.3 Event Content, content holding a sixth composite level, at each boundary it crosses; send_event() and commit_event() where an implementation offers them (§10.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Each boundary content crosses refuses it: an inbound message fails
 before anything is read, no room routed or created, and the event a channel
 builds from it (§10.1 step 4) fails the message with nothing stored; a hook's
 replacement or injected event (§9.4) is an unusable result (§9.3), nothing of
@@ -952,7 +958,7 @@ its levels in the edit's place (above), which is its target's place once the
 commit writes it there (§10.3).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.3-009", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.3-009", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **SystemContent** — Framework-generated message:
 
 ```
@@ -963,7 +969,7 @@ SystemContent
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.3-010", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.3-010", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **TemplateContent** — Pre-approved template (WhatsApp, RCS):
 
 ```
@@ -975,7 +981,7 @@ TemplateContent
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.3-011", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.3-011", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **EditContent** — Edit of a previously sent message:
 
 ```
@@ -986,7 +992,7 @@ EditContent
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.3-012", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.3-012", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **DeleteContent** — Deletion of a previously sent message:
 
 ```
@@ -997,7 +1003,7 @@ DeleteContent
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.3-013", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.3-013", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **DeleteType** enumeration: SENDER | SYSTEM | ADMIN
 
 | Value | Description |
@@ -1007,7 +1013,7 @@ DeleteContent
 | ADMIN | Administrative deletion by a room administrator or operator |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.3-014", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.3-014", "kind": "behavior", "applies": "§5.3 Event Content; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **ToolCallContent** — A tool call, carried by TOOL_CALL_START and TOOL_CALL_END
 events:
 
@@ -1038,7 +1044,7 @@ ToolCallContent
 
 ### 5.4 Channel Data (Typed, Per-Channel)
 
-<!-- rfc: {"id": "RK-5.4-001", "kind": "behavior", "applies": "§5.4 Channel Data (Typed, Per-Channel); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.4-002", "kind": "behavior", "applies": "§5.4 Channel Data: a channel type's typed ChannelData structure, and the common examples. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 Each channel type MAY define a typed ChannelData structure to carry
 channel-specific metadata on events. Common examples:
 
@@ -1071,13 +1077,15 @@ AIChannelData
 └── latency_ms: float | null
 ```
 
-Implementations SHOULD define typed ChannelData for each supported channel type.
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-5.4-003", "kind": "behavior", "applies": "§5.4 Channel Data: typed ChannelData for each channel type an implementation supports. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
+Implementations SHOULD define typed ChannelData for each supported channel type.<!-- /rfc --><!-- rfc: {"id": "RK-5.4-004", "kind": "behavior", "applies": "§5.4 Channel Data: channel data no typed structure names. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Unknown channel data MUST be preserved in a generic map structure.
 <!-- /rfc -->
 
 ### 5.5 Participant
 
-<!-- rfc: {"id": "RK-5.5-001", "kind": "structural", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.5-001", "kind": "structural", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 ```
 Participant
 ├── id: string                              # Unique identifier
@@ -1098,7 +1106,7 @@ Participant
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.5-002", "kind": "behavior", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.5-011", "kind": "behavior", "applies": "§5.5 Participant, ParticipantRole enumeration. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **ParticipantRole** enumeration:
 
 | Value | Description |
@@ -1109,13 +1117,15 @@ Participant
 | OBSERVER | Read-only participant (supervisor, auditor) |
 | BOT | Automated system participant |
 
-An AGENT is a person: the people who take part (Section 6.4) include them.
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-5.5-012", "kind": "behavior", "applies": "§5.5 Participant, a participant of role AGENT: one of the people who take part (Section 6.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+An AGENT is a person: the people who take part (Section 6.4) include them.<!-- /rfc --><!-- rfc: {"id": "RK-5.5-013", "kind": "behavior", "applies": "§5.5 Participant, an AI agent and an automated participant the host records: no person who takes part (Section 6.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An AI agent takes part through an intelligence channel (Section 6.4), not as
 a participant; an automated participant the host records in the room, an AI
 one included, is a BOT.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.5-003", "kind": "behavior", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.5-003", "kind": "behavior", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **ParticipantStatus** enumeration:
 
 | Value | Description |
@@ -1126,7 +1136,7 @@ one included, is a BOT.
 | BANNED | Removed and blocked |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.5-004", "kind": "behavior", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.5-004", "kind": "behavior", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **IdentificationStatus** enumeration:
 
 | Value | Description |
@@ -1139,7 +1149,7 @@ one included, is a BOT.
 | REJECTED | Identity challenge failed or was rejected |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.5-005", "kind": "behavior", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.5-005", "kind": "behavior", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **VerificationStatus** enumeration (Section 11.7): whether an identified
 sender has proven who they are.
 
@@ -1152,33 +1162,33 @@ sender has proven who they are.
 | REVOKED | Ended by the integrator before its time |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.5-006", "kind": "behavior", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.5-014", "kind": "behavior", "applies": "§5.5 Participant, add_member: a new member, a member not ACTIVE, and a member already ACTIVE. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Joining and leaving:** a deliberate join is the operation `add_member`. It
 creates the participant ACTIVE, or reactivates an existing record that is not
 ACTIVE (a re-join keeps `joined_at`), then fires `ON_PARTICIPANT_JOINED` with
 a `PARTICIPANT_JOINED` event as its payload; on a member already ACTIVE it
-only records a newly reached channel, with no event. With an `identity_id` the
+only records a newly reached channel, with no event. <!-- /rfc --><!-- rfc: {"id": "RK-5.5-015", "kind": "behavior", "applies": "§5.5 Participant, add_member: the identification of a new member and of a re-join, with or without an identity_id. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->With an `identity_id` the
 participant is IDENTIFIED; a new member without one is PENDING, and a re-join
-without one keeps the identification and the identity the record had. Leaving is `remove_member`: it
+without one keeps the identification and the identity the record had. <!-- /rfc --><!-- rfc: {"id": "RK-5.5-016", "kind": "behavior", "applies": "§5.5 Participant, remove_member: a member's leave or ban, and an unknown participant. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Leaving is `remove_member`: it
 sets the participant's status to LEFT, or to BANNED when asked, keeping the
 record, then fires `ON_PARTICIPANT_LEFT` with a `PARTICIPANT_LEFT` event as
-its payload; an unknown participant is an error. Both hooks are ASYNC; their
+its payload; an unknown participant is an error. <!-- /rfc --><!-- rfc: {"id": "RK-5.5-017", "kind": "behavior", "applies": "§5.5 Participant, add_member and remove_member: ON_PARTICIPANT_JOINED and ON_PARTICIPANT_LEFT, their execution and their payload's data. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Both hooks are ASYNC; their
 payload is a system event whose data carries `participant_id` and, on a join,
-`identity_id`, on a leave, the new `status`. An implementation that writes
+`identity_id`, on a leave, the new `status`. <!-- /rfc --><!-- rfc: {"id": "RK-5.5-018", "kind": "behavior", "applies": "§5.5 Participant, add_member and remove_member: their system event stored only by an implementation that writes lifecycle records (RK-5.1-015). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An implementation that writes
 lifecycle records (§5.1) stores that event; one that does not stores nothing.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.5-007", "kind": "behavior", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.5-019", "kind": "behavior", "applies": "§5.5 Participant, rename_member: the update operation that changes display_name and fires ON_PARTICIPANT_UPDATED. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 **Renaming (normative):** a member's presentation can change while they are
 present — their display name above all. Implementations SHOULD provide an
 update operation (`rename_member`) that changes `display_name` in place and
 fires `ON_PARTICIPANT_UPDATED` with a `PARTICIPANT_UPDATED` event as its
 payload (stored as a lifecycle record only by an implementation that writes
 them, §5.1), so an interface reflecting the room learns of the change the same
-way it learned of the join. `id` and `identity_id` are not presentation and
+way it learned of the join. <!-- /rfc --><!-- rfc: {"id": "RK-5.5-020", "kind": "behavior", "applies": "§5.5 Participant, rename_member, where an implementation offers it (RK-5.5-019): id and identity_id. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`id` and `identity_id` are not presentation and
 MUST NOT be changed through it: they are what attribution, correlation
-(Section 12.10.2) and moderation stand on. A rename that changes nothing is a
-no-op — no write, no event. The record's text quotes the new name as
+(Section 12.10.2) and moderation stand on. <!-- /rfc --><!-- rfc: {"id": "RK-5.5-021", "kind": "behavior", "applies": "§5.5 Participant, rename_member, where an implementation offers it (RK-5.5-019): a rename that changes nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A rename that changes nothing is a
+no-op — no write, no event. <!-- /rfc --><!-- rfc: {"id": "RK-5.5-022", "kind": "behavior", "applies": "§5.5 Participant, rename_member, where an implementation offers it (RK-5.5-019): the PARTICIPANT_UPDATED record's text and data. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The record's text quotes the new name as
 Python's `repr` writes a string: every character `str.isprintable` refuses (a
 control, format, separator other than the space, private-use or unassigned
 character) is escaped, a tab, a newline and a carriage return as `\t`, `\n`
@@ -1187,12 +1197,12 @@ and `\r`, any other `\xNN` below U+0100, `\uNNNN` below U+10000,
 reverse what a reader of the record sees; its data keeps the name as given.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.5-008", "kind": "behavior", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.5-023", "kind": "behavior", "applies": "§5.5 Participant, resolve_participant (Appendix B.3): the participant set IDENTIFIED as an identity the store holds. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Resolving:** an advisor's identification of a participant
 (`resolve_participant`, Appendix B.3) sets it IDENTIFIED as an identity the
 store holds: its `identity_id`, `resolved_by` (`manual` when the caller names
 no one) and `resolved_at` set, its candidates dropped, the identity's
-display name taken when the identity has one. The binding of the
+display name taken when the identity has one. <!-- /rfc --><!-- rfc: {"id": "RK-5.5-024", "kind": "behavior", "applies": "§5.5 Participant, resolve_participant: the binding of the participant's primary channel, unless it is someone else's conversation (§5.7, §10.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The binding of the
 participant's primary channel names the identity from then on, unless it is
 someone else's conversation: it names another correspondent (the framework's
 own name included, §10.4), or names none and routing reads its recipient
@@ -1204,75 +1214,75 @@ and the address whose own record they are (§11.2); a `group` binding names no
 correspondent, and one delivering to no one is no one's. The advisor
 identifies a person and does not choose whom the room
 answers: a binding left so keeps its correspondent, and a message from the
-participant is admitted through it no more than before (§10.4). Either way
+participant is admitted through it no more than before (§10.4). <!-- /rfc --><!-- rfc: {"id": "RK-5.5-025", "kind": "behavior", "applies": "§5.5 Participant, resolve_participant: ON_PARTICIPANT_IDENTIFIED and its payload. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Either way
 `ON_PARTICIPANT_IDENTIFIED` fires with a `PARTICIPANT_IDENTIFIED` event as its
 payload, whose data carries `participant_id` and `identity_id` (stored as a
-lifecycle record only by an implementation that writes them, §5.1). A
+lifecycle record only by an implementation that writes them, §5.1). <!-- /rfc --><!-- rfc: {"id": "RK-5.5-026", "kind": "behavior", "applies": "§5.5 Participant, resolve_participant: a participant the room does not have, an identity the store does not hold or of another organization (§17.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 participant the room does not have, an identity the store does not hold or
 one of another organization than the caller acts for (§17.2), is an error,
-and nothing is written. A host's get-or-create (`ensure_participant`) that
+and nothing is written. <!-- /rfc --><!-- rfc: {"id": "RK-5.5-027", "kind": "behavior", "applies": "§5.5 Participant, ensure_participant creating a record. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A host's get-or-create (`ensure_participant`) that
 creates a record writes no `PARTICIPANT_JOINED` record and fires no hook:
 it is bookkeeping, as recording a channel is.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.5-009", "kind": "behavior", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.5-028", "kind": "behavior", "applies": "§5.5 Participant: one record per room and participant id, shared by every channel the participant is reached through. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **One record, several channels (normative):** a Participant is one record
 per (`room_id`, `id`). Section 4.4 says a participant is connected via one
 or more channels, and this is the record all of them share — the same
 person reached by SMS and then by email is one participant, not two.
 `channel_id` is their *primary* channel; `connected_via` is every channel
-the room has reached them through, the primary included. A store refuses to
+the room has reached them through, the primary included. <!-- /rfc --><!-- rfc: {"id": "RK-5.5-029", "kind": "behavior", "applies": "§5.5 Participant, a store's add of a participant under an id the room has (§14.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A store refuses to
 add a participant under an id the room has (participant exists, §14.3) and
 keeps the record it holds; a record is rewritten by `update_participant`.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.5-010", "kind": "behavior", "applies": "§5.5 Participant; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.5-030", "kind": "behavior", "applies": "§5.5 Participant, an event's participant_id: the channels it names a participant on. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Who a sender is (normative):** an event's `participant_id` names a
 Participant only on a channel that participant was reached through
-(`connected_via`): an id one transport gives says nothing of another's. A
+(`connected_via`): an id one transport gives says nothing of another's. <!-- /rfc --><!-- rfc: {"id": "RK-5.5-031", "kind": "behavior", "applies": "§5.5 Participant: how a channel is reached, and what an identity's id and a sender's address name on it (Section 11). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 channel is reached by a deliberate join (a member added, a session joined),
 and by the identity pipeline, which records the channel it resolved a sender
 on (Section 11); an identity's id names its person on a channel one of their
 records was reached through; and a sender's address names, on its channel,
 the record of their own the identity pipeline left them pending under there
-(Section 11.2). A sender whose id names nobody on its channel is
+(Section 11.2). <!-- /rfc --><!-- rfc: {"id": "RK-5.5-032", "kind": "behavior", "applies": "§5.5 Participant, a sender whose id names no participant on its channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A sender whose id names nobody on its channel is
 no participant of the room: it carries no participant's name, role,
-authority, identification nor verification. Every reading of who a sender is
+authority, identification nor verification. <!-- /rfc --><!-- rfc: {"id": "RK-5.5-033", "kind": "behavior", "applies": "§5.5 Participant: every reading of who a sender is (Sections 6.4, 10.3, 11.6, 11.7.3, 21.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Every reading of who a sender is
 follows this one rule: the label a transcript gives them (Section 6.4), the
 role a tool policy's override is chosen by (Section 21.1), the authority and
 the authorship an edit or a delete is checked against (Section 10.3), the
 identification that spares resolution (Section 11.6) and the verification a
 message is labelled with (Section 11.7.3). Linking one person's channels is
 the host's deliberate join or the identity pipeline's resolution, never two
-transports' ids that happen to be equal.
+transports' ids that happen to be equal.<!-- /rfc --><!-- rfc: {"id": "RK-5.5-034", "kind": "behavior", "applies": "§5.5 Participant, a lazy materialisation's get-or-create of a sender: an existing record. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 - A **lazy materialisation** — the get-or-create that materialises a sender
   the first time they speak — MUST NOT re-home an existing record: the
   `channel_id` it is given applies to a record being created, and to no
-  other. Nor does the identity pipeline create a record under the id a
+  other. <!-- /rfc --><!-- rfc: {"id": "RK-5.5-035", "kind": "behavior", "applies": "§5.5 Participant, a sender the identity pipeline leaves pending (Section 11.2): the record it is sent under. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Nor does the identity pipeline create a record under the id a
   sender's channel gave: a sender it leaves pending (Section 11.2) stays on
   the room's record of that id when one was reached through the channel (a
   member the host added), and otherwise gets a record of their own, one per
   sender and channel; the event is sent under that record's id, so their
   next message finds it and a later resolution of it (resolving, above) is
-  theirs. A host's own
+  theirs. <!-- /rfc --><!-- rfc: {"id": "RK-5.5-036", "kind": "behavior", "applies": "§5.5 Participant, ensure_participant: a deliberate reach of the channel it names. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A host's own
   get-or-create (`ensure_participant`) is a deliberate reach, as a join is: the
-  host vouches for the sender, and the channel it names is recorded. A
+  host vouches for the sender, and the channel it names is recorded. <!-- /rfc --><!-- rfc: {"id": "RK-5.5-037", "kind": "behavior", "applies": "§5.5 Participant, a deliberate join: the primary channel it may set, and the one it replaces. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
   **deliberate join** MAY set `channel_id` to the channel joined through,
   which is what "primary channel used to join" means; the channel it
-  replaces MUST remain in `connected_via`.
+  replaces MUST remain in `connected_via`.<!-- /rfc --><!-- rfc: {"id": "RK-5.5-038", "kind": "behavior", "applies": "§5.5 Participant, a lazy materialisation or a deliberate join: connected_via. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - Either way, the channel named by the caller MUST be added to
   `connected_via` when absent from it, and implementations MUST persist
   `connected_via`. A channel reached once and never recorded is a channel
-  the room cannot afterwards say it reached.
+  the room cannot afterwards say it reached.<!-- /rfc --><!-- rfc: {"id": "RK-5.5-039", "kind": "behavior", "applies": "§5.5 Participant, a participant reached through a channel that is not its primary one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - Being reached through a channel that is not the primary one is legitimate
-  and MUST NOT fail. It is, however, invisible in the record handed back,
+  and MUST NOT fail. <!-- /rfc --><!-- rfc: {"id": "RK-5.5-040", "kind": "behavior", "applies": "§5.5 Participant, a participant reached through a channel that is not its primary one: the warning. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->It is, however, invisible in the record handed back,
   whose `channel_id` still names another channel: implementations SHOULD
   log it at warning level **naming both channels**, because a caller that
   goes on to keep per-channel state on that record — a lifecycle, a
   presence, a status — is driving another channel's record without having
   been told. That silence is what lets one channel's departure erase
-  another channel's membership.
+  another channel's membership.<!-- /rfc --><!-- rfc: {"id": "RK-5.5-041", "kind": "behavior", "applies": "§5.5 Participant, a channel that observes presence on a record it does not home: the record's status. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - `status` follows the primary channel's lifecycle. A channel that observes
   presence on a record it does not home — a conference seeing a member
   connect and disconnect — MUST NOT write that record's `status`: an arrival
@@ -1280,14 +1290,14 @@ transports' ids that happen to be equal.
   who hangs up on its call is still a member of the room. What such a channel
   owes the record is the bookkeeping above (`connected_via`); what it owes
   everyone else is its own events and hooks, which report the arrival and the
-  departure whether or not the status moved.
+  departure whether or not the status moved.<!-- /rfc --><!-- rfc: {"id": "RK-5.5-042", "kind": "behavior", "applies": "§5.5 Participant, recording a channel in connected_via. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - Recording a channel is bookkeeping, not presentation: it writes no
   `PARTICIPANT_UPDATED` record and does not fire `ON_PARTICIPANT_UPDATED`.
 <!-- /rfc -->
 
 ### 5.6 Identity
 
-<!-- rfc: {"id": "RK-5.6-001", "kind": "behavior", "applies": "§5.6 Identity; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.6-002", "kind": "structural", "applies": "§5.6 Identity: its fields. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 Identity
 ├── id: string                              # Unique identifier
@@ -1302,28 +1312,30 @@ Identity
 └── metadata: map<string, any>              # Integrator-defined data
 ```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-5.6-003", "kind": "behavior", "applies": "§5.6 Identity, an address another identity of the organization holds, on a creation or a link_address (§14.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An address belongs to one identity per organization and channel type, so a
 resolution never chooses: creating an identity, or linking an address
 (`link_address`, §14.1), with an address another identity of the organization
 holds MUST be refused, and moving an address is an explicit unlink
 (`unlink_address`, §14.1) followed by a link, never a silent re-home of
-someone's conversations. Identity resolution is scoped to the organization it
+someone's conversations. <!-- /rfc --><!-- rfc: {"id": "RK-5.6-004", "kind": "behavior", "applies": "§5.6 Identity, identity resolution for an organization, or for none (§17.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Identity resolution is scoped to the organization it
 names (§17.2); for none, it resolves the identities of no organization only,
-never an organization's. `link_address` links to an identity of the
+never an organization's. <!-- /rfc --><!-- rfc: {"id": "RK-5.6-005", "kind": "behavior", "applies": "§5.6 Identity, link_address (§14.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`link_address` links to an identity of the
 organization it names, and refuses an unknown identity or another
-organization's; linking an address the identity already holds changes nothing.
+organization's; linking an address the identity already holds changes nothing.<!-- /rfc --><!-- rfc: {"id": "RK-5.6-006", "kind": "behavior", "applies": "§5.6 Identity, unlink_address (§14.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `unlink_address` removes an address from the identity it names, in the
 organization it names, under the same refusals; an address the identity does
-not hold changes nothing. An unlink changes which identity a later message
+not hold changes nothing. <!-- /rfc --><!-- rfc: {"id": "RK-5.6-007", "kind": "behavior", "applies": "§5.6 Identity, unlink_address: what it changes and what it leaves. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An unlink changes which identity a later message
 resolves to, never a stored conversation: the rooms, bindings and participants
-that named the address stay as they are. Addresses compare as stored: the
+that named the address stay as they are. <!-- /rfc --><!-- rfc: {"id": "RK-5.6-008", "kind": "behavior", "applies": "§5.6 Identity, a sender's address resolved in its channel's form (§5.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Addresses compare as stored: the
 framework resolves a sender's address in its channel's form (§5.7), so a host
 links addresses in that form (E.164 on a channel addressed by phone number).
 <!-- /rfc -->
 
 ### 5.7 ChannelBinding
 
-<!-- rfc: {"id": "RK-5.7-001", "kind": "behavior", "applies": "§5.7 ChannelBinding; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.7-003", "kind": "structural", "applies": "§5.7 ChannelBinding: the binding a channel's attach creates, and its fields. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When a channel is attached to a Room, a ChannelBinding is created:
 
 ```
@@ -1353,14 +1365,16 @@ ChannelBinding
 └── metadata: map<string, any>              # Binding-specific data (recipient_id, persona, etc.)
 ```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-5.7-004", "kind": "behavior", "applies": "§5.7 ChannelBinding, an attach that names no category. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A binding's category is the channel's own unless the attachment names one:
 an intelligence channel attached without a category takes part as an
-intelligence channel, a transport as a transport.
+intelligence channel, a transport as a transport.<!-- /rfc --><!-- rfc: {"id": "RK-5.7-005", "kind": "behavior", "applies": "§5.7 ChannelBinding, a binding not declared group: its correspondent (§10.1 step 2, §10.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 A binding carries one correspondent's conversation unless it is declared
 `group`. The framework records on it the sender a room was created for, or the
 first sender routed to it (`participant_id`, §10.1 step 2), and the default
-router admits no one else through it (§10.4). On a transport channel whose
+router admits no one else through it (§10.4). <!-- /rfc --><!-- rfc: {"id": "RK-5.7-006", "kind": "behavior", "applies": "§5.7 ChannelBinding, a transport channel whose replies go to the address the correspondent writes from: the recipient the framework writes when it records the sender. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->On a transport channel whose
 replies go to the address the correspondent writes from (a phone number, an
 email address: SMS, MMS, RCS, WhatsApp, email, Messenger), the binding's
 recipient and its correspondent are one address. When the framework records
@@ -1368,30 +1382,30 @@ the sender, or finds a binding naming the sender (by their address, their
 identity, or a participant they are) with no value under the recipient key, it
 writes the address the message came from as the binding's recipient, under the
 channel's recipient key (below); a recipient the binding already has
-is kept, and so is a value that is not a recipient (below).
+is kept, and so is a value that is not a recipient (below).<!-- /rfc --><!-- rfc: {"id": "RK-5.7-007", "kind": "behavior", "applies": "§5.7 ChannelBinding, a binding the integrator gives a recipient and no correspondent (§10.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Conversely, a binding the integrator gives a recipient and no correspondent
 names that recipient as its correspondent: the room is that person's
-conversation, and the router admits no one else through it (§10.4). An attach
+conversation, and the router admits no one else through it (§10.4). <!-- /rfc --><!-- rfc: {"id": "RK-5.7-008", "kind": "behavior", "applies": "§5.7 ChannelBinding, an attach and an update of a binding's metadata: the addresses written and the correspondent named. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An attach
 and an update of a binding's metadata write the addresses the integrator gives
 in the channel's form and name the correspondent so; a `group` binding's
 recipient names no one, and a channel the implementation no longer holds writes
-nothing. On a
+nothing. <!-- /rfc --><!-- rfc: {"id": "RK-5.7-009", "kind": "behavior", "applies": "§5.7 ChannelBinding, a transport that delivers to a chat or a conversation: routing, the correspondent recorded, admission and replies by the chat. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->On a
 transport that delivers to a chat or a conversation (Telegram, Teams,
 Discord), the chat a message was posted in is its conversation: a private chat
 is its user's, a group chat the group's, shared by all its members. The
 framework routes the message, records the binding's correspondent and admits a
 sender by the chat, and a room opened for the message replies there; the
-message's author stays its sender. The chat a binding delivers to names its
+message's author stays its sender. <!-- /rfc --><!-- rfc: {"id": "RK-5.7-010", "kind": "behavior", "applies": "§5.7 ChannelBinding, a room the integrator opens for a chat. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The chat a binding delivers to names its
 conversation as a phone number names its correspondent: a room the integrator
 opens for a chat admits no one else. A user who writes to the bot privately
 and in a group holds two conversations, and a room found by the sender would
-answer one in the other. A channel that carries both private chats and groups
+answer one in the other. <!-- /rfc --><!-- rfc: {"id": "RK-5.7-011", "kind": "behavior", "applies": "§5.7 ChannelBinding, a channel that carries both private chats and groups: a message's conversation. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel that carries both private chats and groups
 (WhatsApp Personal) takes a group message's group as its conversation and a
-private message's sender. On a transport that delivers to a URL (an HTTP
+private message's sender. <!-- /rfc --><!-- rfc: {"id": "RK-5.7-012", "kind": "behavior", "applies": "§5.7 ChannelBinding, a transport that delivers to a URL: the recipient. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->On a transport that delivers to a URL (an HTTP
 webhook), nothing of the message is written as the recipient.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.7-002", "kind": "behavior", "applies": "§5.7 ChannelBinding; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.7-013", "kind": "behavior", "applies": "§5.7 ChannelBinding, addresses by channel type: the recipient and chat keys a channel's declaration names, and the defaults. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Addresses by channel type.** A channel's type decides how its addresses
 are written and compared. Its declaration names the binding metadata key its
 recipient is written under and, on a channel that answers chats, the
@@ -1410,9 +1424,11 @@ name other keys, or none. The defaults:
 | WEBHOOK | As written | — (it posts to its configured URL) | — |
 | Any other type | As written | — | — |
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-5.7-014", "kind": "behavior", "applies": "§5.7 ChannelBinding, a channel with no recipient key (§10.2 step 3d). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A channel with no recipient key delivers to a destination of its own (a
 WebSocket's connections, a webhook's URL, a voice or video session) and needs
-no recipient (§10.2 step 3d). A recipient is a value under the key that is a
+no recipient (§10.2 step 3d). <!-- /rfc --><!-- rfc: {"id": "RK-5.7-015", "kind": "behavior", "applies": "§5.7 ChannelBinding, a value under a recipient key: a recipient, no value, or a value that is not a recipient, at every read. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A recipient is a value under the key that is a
 string, neither empty nor blank, or an integer, for a chat id written as one
 (Telegram's). The key absent, null and a blank string are no value: the
 binding has no recipient. Any other value (a boolean, a float, a whole one
@@ -1421,18 +1437,18 @@ value either: it is a value no one is reached at, and a float has no single
 written form, so it cannot be compared as an address. A store whose JSON form
 cannot tell a whole float from an integer (Postgres `jsonb` reads `1e16` back
 as `10000000000000000`) reads such a value as an integer. Every read of a
-recipient takes this rule. Routing reads a binding's recipient as its channel
+recipient takes this rule. <!-- /rfc --><!-- rfc: {"id": "RK-5.7-016", "kind": "behavior", "applies": "§5.7 ChannelBinding, routing's read of a binding's recipient: the channel's answer, else the key, a value that is not a recipient first; step 1 and the store's lookup read the key as stored (RK-5.7-018). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Routing reads a binding's recipient as its channel
 answers it (`recipient_address`, which may read elsewhere than the key), and
 where the channel answers none, as the key holds it, in the channel's form: a
 channel that declares a recipient key and keeps the default answer delivers to
 that value all the same, so its binding is no more open to a stranger than one
 whose channel answers. A value under the key that is not a recipient is read
-first, whatever the channel answers. An attach and an update of a binding's
-metadata read the recipient the same way. Step 1 alone, and the store's lookup
+first, whatever the channel answers. <!-- /rfc --><!-- rfc: {"id": "RK-5.7-017", "kind": "behavior", "applies": "§5.7 ChannelBinding, an attach and an update of a binding's metadata: the recipient read as routing reads it (RK-5.7-016). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An attach and an update of a binding's
+metadata read the recipient the same way. <!-- /rfc --><!-- rfc: {"id": "RK-5.7-018", "kind": "behavior", "applies": "§5.7 ChannelBinding, step 1 of the default routing strategy and the store's lookup it rests on (§10.4, §14.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Step 1 alone, and the store's lookup
 it rests on (§14.1), read the key as stored: a binding whose channel reads its
 recipient elsewhere is found through the correspondent its attach names, or at
-step 3 as the one room bound to the channel. A delivery is refused for no value
-and for a value that is not a recipient alike (§10.2 step 3d). Routing reads no value as no
+step 3 as the one room bound to the channel. <!-- /rfc --><!-- rfc: {"id": "RK-5.7-019", "kind": "behavior", "applies": "§5.7 ChannelBinding, a delivery to a binding with no recipient or a value that is not one (§10.2 step 3d). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A delivery is refused for no value
+and for a value that is not a recipient alike (§10.2 step 3d). <!-- /rfc --><!-- rfc: {"id": "RK-5.7-020", "kind": "behavior", "applies": "§5.7 ChannelBinding, routing's read of no value and of a value that is not a recipient (§10.1 step 2, §10.4); a binding naming its correspondent, and a group binding, excepted. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Routing reads no value as no
 correspondent, and a value that is not a recipient as the address of someone
 other than the sender, whoever writes (§10.1 step 2, §10.4): no sender is
 found through it at step 1; on a binding naming no participant and not
@@ -1440,51 +1456,51 @@ found through it at step 1; on a binding naming no participant and not
 message's under the lock whatever strategy chose it; the record of a routed
 sender never writes over it, on a binding naming the sender too. A binding
 naming its correspondent still routes them there, and routing does not read a
-`group` binding's recipient. An implementation SHOULD log a warning naming the
+`group` binding's recipient. <!-- /rfc --><!-- rfc: {"id": "RK-5.7-021", "kind": "behavior", "applies": "§5.7 ChannelBinding, routing reading a value that is not a recipient: the warning. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->An implementation SHOULD log a warning naming the
 binding when routing reads such a value, with the value's type and never the
-value, which may be a person's address. Routing and the record of a sender
+value, which may be a person's address. <!-- /rfc --><!-- rfc: {"id": "RK-5.7-022", "kind": "behavior", "applies": "§5.7 ChannelBinding, routing and the record of a sender: a recipient and a chat compared in their written form. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Routing and the record of a sender
 compare a recipient, and a chat, in its written form: the integer `12345` and
-the string `"12345"` are one address. The framework writes the addresses it
-records as strings, a chat id included. A chat message is its chat's, whatever
+the string `"12345"` are one address. <!-- /rfc --><!-- rfc: {"id": "RK-5.7-023", "kind": "behavior", "applies": "§5.7 ChannelBinding, the addresses the framework records, a chat id included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The framework writes the addresses it
+records as strings, a chat id included. <!-- /rfc --><!-- rfc: {"id": "RK-5.7-024", "kind": "behavior", "applies": "§5.7 ChannelBinding, a message on a channel that answers chats, carrying its chat under the chat key (§10.1 step 2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A chat message is its chat's, whatever
 its sender, an empty or blank one included: it is
 routed by the chat its chat key carries, and a room opened for it binds the channel naming the chat
-as correspondent and recipient (§10.1 step 2). The chat under a chat key
+as correspondent and recipient (§10.1 step 2). <!-- /rfc --><!-- rfc: {"id": "RK-5.7-025", "kind": "behavior", "applies": "§5.7 ChannelBinding, a chat key holding no value or a value that is not a recipient. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The chat under a chat key
 takes the recipient's rule, no value and a value that is not a recipient
 alike: either is no chat, and a message that carries only such a value does
-not carry its chat. On a channel
+not carry its chat. <!-- /rfc --><!-- rfc: {"id": "RK-5.7-026", "kind": "behavior", "applies": "§5.7 ChannelBinding, a channel that carries private chats and groups: a message with and without its group under the key. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->On a channel
 that carries private chats and groups, a message that carries its group under
-the key is its group's, any other its sender's. On a channel whose replies go
+the key is its group's, any other its sender's. <!-- /rfc --><!-- rfc: {"id": "RK-5.7-027", "kind": "behavior", "applies": "§5.7 ChannelBinding, a channel whose replies go to a chat only: a message that does not carry its chat (§10.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->On a channel whose replies go
 to a chat only, a message that does not carry its chat has no address: it
 records no one, and a room routing opens for it names no recipient and no
 sender (§10.4), so its deliveries are refused `no_recipient` until the
-integrator names one. Its author is the message's sender either way.
+integrator names one. Its author is the message's sender either way.<!-- /rfc --><!-- rfc: {"id": "RK-5.7-028", "kind": "behavior", "applies": "§5.7 ChannelBinding, a channel addressed by phone number: the inbound sender, a binding's correspondent and recipient, and a participant's id given on it, in E.164. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 A channel addressed by phone number compares and stores numbers in one form,
 E.164 (`+15550000001`). The inbound sender, a binding's correspondent and
 recipient, and a participant's id given on that channel are written in that
 form before they are compared or recorded; the message's raw payload keeps
-the provider's own spelling. A number is written as follows:
+the provider's own spelling. <!-- /rfc --><!-- rfc: {"id": "RK-5.7-029", "kind": "behavior", "applies": "§5.7 ChannelBinding, a channel addressed by phone number: URI schemes, separators and the (0) trunk prefix, and what is a number. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A number is written as follows:
 
 - A URI scheme (`whatsapp:`, `tel:`) and the separators people type (spaces,
   `-`, `.`, `(`, `)`) are dropped, and so is the trunk prefix written `(0)`
   after a country code: `+33 (0)6 12 34 56 78` is `+33612345678`. What is
   left is a number when it is digits, after a `+` or not; anything else (an
-  email address, a group's id) is kept as written.
+  email address, a group's id) is kept as written.<!-- /rfc --><!-- rfc: {"id": "RK-5.7-030", "kind": "behavior", "applies": "§5.7 ChannelBinding, a channel addressed by phone number: a number written with + or 00. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A number written with `+`, or with the international prefix `00`, is
-  international: `+` and its digits.
+  international: `+` and its digits.<!-- /rfc --><!-- rfc: {"id": "RK-5.7-031", "kind": "behavior", "applies": "§5.7 ChannelBinding, a channel addressed by phone number that declares a country code: digits written without + or 00. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - Digits without either, on a channel with a country code declared: a
   number that starts with the code and has more than 10 digits already
   carries it (`15550000001` is `+15550000001` for the code 1); any other
   takes the code in place of its trunk prefix `0`, or before its digits
   (`0612345678` is `+33612345678` for the code 33). Six digits or fewer are
-  a short code, kept as written.
+  a short code, kept as written.<!-- /rfc --><!-- rfc: {"id": "RK-5.7-032", "kind": "behavior", "applies": "§5.7 ChannelBinding, a channel addressed by phone number that declares no country code: digits written without + or 00 (§10.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - Digits without either, on a channel that declares no country code, are
   kept as written. The digits alone cannot tell `13800138000`, a national
   number in China, from `+1 380 013 8000`, and a router MUST NOT guess
   (§10.4): a missed match opens a new room, while a wrong merge discloses
-  one person's conversation to another.
+  one person's conversation to another.<!-- /rfc --><!-- rfc: {"id": "RK-5.7-033", "kind": "behavior", "applies": "§5.7 ChannelBinding, a channel addressed by phone number: a result of more than 15 digits or starting with 0. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A result of more than 15 digits, or one whose first digit is `0`, which no
-  country code is, is kept as written.
+  country code is, is kept as written.<!-- /rfc --><!-- rfc: {"id": "RK-5.7-034", "kind": "behavior", "applies": "§5.7 ChannelBinding, the country code a channel declares, as the channel is configured or a number is written with it; the example after it, one person written three ways, illustrates RK-5.7-029 to RK-5.7-031. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 The country code a channel declares is one to three digits, the first not
 `0`, written with or without its `+` (`1`, `+33`). An implementation MUST
@@ -1493,9 +1509,9 @@ it: a code that is none would leave every national number as written, and
 the mistake unseen.
 
 So, on a channel declaring the country code 1, `whatsapp:+15550000001`,
-`15550000001` and `+1 (555) 000-0001` are one person. An email channel
+`15550000001` and `+1 (555) 000-0001` are one person. <!-- /rfc --><!-- rfc: {"id": "RK-5.7-035", "kind": "behavior", "applies": "§5.7 ChannelBinding, an email channel's addresses. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An email channel
 compares and stores an address lower-case and without a display name
-(`Alice <Alice@Example.com>` is `alice@example.com`).
+(`Alice <Alice@Example.com>` is `alice@example.com`).<!-- /rfc --><!-- rfc: {"id": "RK-5.7-036", "kind": "behavior", "applies": "§5.7 ChannelBinding, a binding declared group by the integrator. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 A binding declared `group` holds
 a conversation of several senders, such as a group chat on a channel dedicated
@@ -1507,7 +1523,7 @@ correspondents.
 
 ### 5.8 ChannelCapabilities
 
-<!-- rfc: {"id": "RK-5.8-001", "kind": "behavior", "applies": "§5.8 ChannelCapabilities; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.8-001", "kind": "behavior", "applies": "§5.8 ChannelCapabilities; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 Each channel declares what it supports:
 
 ```
@@ -1550,7 +1566,7 @@ ChannelCapabilities
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.8-002", "kind": "behavior", "applies": "§5.8 ChannelCapabilities; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.8-003", "kind": "behavior", "applies": "§5.8 ChannelCapabilities, ChannelMediaType enumeration. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **ChannelMediaType** enumeration:
 
 | Value | Description |
@@ -1563,22 +1579,24 @@ ChannelCapabilities
 | LOCATION | Geographic coordinates |
 | TEMPLATE | Pre-approved message templates |
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-5.8-004", "kind": "behavior", "applies": "§5.8 ChannelCapabilities, media_types: what a channel receives unchanged, transcoded, or as text (Section 6.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `media_types` decides what the channel receives: a content of a category it
 names is delivered unchanged (a file, within the limits below), one of a
 category it does not name is transcoded, and text is the fallback every
-channel takes, whatever it declares (Section 6.6). Of the `supports_*`
+channel takes, whatever it declares (Section 6.6). <!-- /rfc --><!-- rfc: {"id": "RK-5.8-005", "kind": "behavior", "applies": "§5.8 ChannelCapabilities, supports_edit and supports_delete: an edit or a delete delivered natively (Section 10.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Of the `supports_*`
 flags, only `supports_edit` and `supports_delete` take part in transcoding:
 they decide whether an edit or a delete is delivered natively (Section
-10.3). The others describe the channel and do not decide transcoding: a
+10.3). <!-- /rfc --><!-- rfc: {"id": "RK-5.8-006", "kind": "behavior", "applies": "§5.8 ChannelCapabilities, the supports_* flags other than supports_edit and supports_delete. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The others describe the channel and do not decide transcoding: a
 channel whose `media_types` names RICH receives a rich content unchanged
 whatever `supports_rich_text` says, and one whose `media_types` does not
-name RICH receives its text form even when `supports_rich_text` is true.
+name RICH receives its text form even when `supports_rich_text` is true.<!-- /rfc --><!-- rfc: {"id": "RK-5.8-007", "kind": "behavior", "applies": "§5.8 ChannelCapabilities, a channel whose media_types names MEDIA: a file outside its supported_media_types or over its max_media_size_bytes (Section 6.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 A channel whose `media_types` names MEDIA receives a file only when it takes
 that file: a MediaContent whose `mime_type` is absent from a non-empty
 `supported_media_types`, or whose known size (`size_bytes`) is over
 `max_media_size_bytes`, is delivered as its text form (Section 6.6), as for
-a channel that does not name MEDIA. An empty `supported_media_types` takes
+a channel that does not name MEDIA. <!-- /rfc --><!-- rfc: {"id": "RK-5.8-008", "kind": "behavior", "applies": "§5.8 ChannelCapabilities, an empty supported_media_types, a null max_media_size_bytes and a file of unknown size. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An empty `supported_media_types` takes
 every type, and a null `max_media_size_bytes`, or a file of unknown size,
 any size. A provider's refusal of a file it cannot carry would lose the
 whole message; its text form keeps it.
@@ -1586,7 +1604,7 @@ whole message; its text form keeps it.
 
 ### 5.9 Three Levels of Channel Metadata
 
-<!-- rfc: {"id": "RK-5.9-001", "kind": "behavior", "applies": "§5.9 Three Levels of Channel Metadata; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.9-001", "kind": "behavior", "applies": "§5.9 Three Levels of Channel Metadata; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 Channel-specific information lives at three levels. Implementations MUST maintain
 all three and MUST NOT conflate them:
 
@@ -1599,7 +1617,7 @@ all three and MUST NOT conflate them:
 
 ### 5.10 Task
 
-<!-- rfc: {"id": "RK-5.10-001", "kind": "structural", "applies": "§5.10 Task; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.10-001", "kind": "structural", "applies": "§5.10 Task; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 ```
 Task
 ├── id: string                              # Unique identifier
@@ -1613,13 +1631,13 @@ Task
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.10-002", "kind": "behavior", "applies": "§5.10 Task; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.10-002", "kind": "behavior", "applies": "§5.10 Task; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **TaskStatus** enumeration: PENDING, IN_PROGRESS, COMPLETED, FAILED, CANCELLED
 <!-- /rfc -->
 
 ### 5.11 Observation
 
-<!-- rfc: {"id": "RK-5.11-001", "kind": "structural", "applies": "§5.11 Observation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.11-001", "kind": "structural", "applies": "§5.11 Observation; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 ```
 Observation
 ├── id: string                              # Unique identifier
@@ -1635,7 +1653,7 @@ Observation
 
 ### 5.12 Inbound Message
 
-<!-- rfc: {"id": "RK-5.12-001", "kind": "behavior", "applies": "§5.12 Inbound Message; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.12-004", "kind": "structural", "applies": "§5.12 Inbound Message: its fields. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The normalized representation of a message arriving from outside the framework:
 
 ```
@@ -1674,12 +1692,14 @@ InboundMessage
                                             # (Section 10.1); never stored
 ```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-5.12-005", "kind": "behavior", "applies": "§5.12 Inbound Message: the room a caller names (Section 10.1), and the message's channel type. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The room, when the caller knows it, is passed to `process_inbound()` (Section
 10.1), not carried by the message; the channel type is the registered
 channel's.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.12-002", "kind": "behavior", "applies": "§5.12 Inbound Message; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.12-002", "kind": "behavior", "applies": "§5.12 Inbound Message; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **The response scope.** A message's `response_visibility` scopes its cascade
 (Section 8.5), and that cascade only. Work that leaves the cascade is a new
 cascade, which the scope does not follow: a background delegation's hand-back
@@ -1688,15 +1708,15 @@ answer to the channels it shares with the room (Section 23.3). An integrator
 that wants such work scoped passes a `response_visibility` itself.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.12-003", "kind": "behavior", "applies": "§5.12 Inbound Message; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.12-006", "kind": "behavior", "applies": "§5.12 Inbound Message, an inbound message whose session field is set (Section 10.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Unified voice inbound:** When the `session` field is set, `process_inbound()`
 connects the voice session to the channel after successful hook processing. This
 allows voice calls and text messages to flow through the same entry point, same
-hooks, and same pipeline. See Section 10.1 for the additional step.
+hooks, and same pipeline. See Section 10.1 for the additional step.<!-- /rfc --><!-- rfc: {"id": "RK-5.12-007", "kind": "behavior", "applies": "§5.12 Inbound Message, parse_voice_session: the helper that converts a voice session into an inbound message. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 
 A convenience helper `parse_voice_session(session, channel_id)` SHOULD be
 provided to convert a `VoiceSession` into an `InboundMessage` with a
-`SystemContent(code="session_started")` content and the session pre-attached:
+`SystemContent(code="session_started")` content and the session pre-attached:<!-- /rfc --><!-- rfc: {"id": "RK-5.12-008", "kind": "behavior", "applies": "§5.12 Inbound Message, parse_voice_session, where an implementation offers it (RK-5.12-007): the message it returns. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 ```
 parse_voice_session(session: VoiceSession, channel_id: string) → InboundMessage
@@ -1713,7 +1733,7 @@ parse_voice_session(session: VoiceSession, channel_id: string) → InboundMessag
 
 ### 5.13 Delivery Result
 
-<!-- rfc: {"id": "RK-5.13-001", "kind": "behavior", "applies": "§5.13 Delivery Result; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.13-002", "kind": "structural", "applies": "§5.13 Delivery Result: DeliveryResult, DeliveryError and ProviderResult, and their fields. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 DeliveryResult
 ├── channel_id: string                      # Target channel
@@ -1735,29 +1755,31 @@ ProviderResult                              # What a provider's send() returns
 └── metadata: map<string, any>              # Provider-specific data
 ```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-5.13-003", "kind": "behavior", "applies": "§5.13 Delivery Result, a target whose call raised an error, or whose provider refused explicitly: its DeliveryError's code and retryable. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A target whose call raised an error reads, in its `DeliveryError`, the
 `code` the error declares (its type when it declares none) and whether it
 declares a retry may succeed (`retryable` true when it says nothing), each
 on its own; a provider's explicit refusal declares them in its result's
-metadata. An agent's error keeps them across the turn backend (§10.6.8),
-its provider's message id and answer left out.
+metadata. <!-- /rfc --><!-- rfc: {"id": "RK-5.13-004", "kind": "behavior", "applies": "§5.13 Delivery Result, an agent's error across the turn backend (§10.6.8). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An agent's error keeps them across the turn backend (§10.6.8),
+its provider's message id and answer left out.<!-- /rfc --><!-- rfc: {"id": "RK-5.13-005", "kind": "behavior", "applies": "§5.13 Delivery Result, the delivery set of a message or of an event the host sends, with a failure in it (§10.1 step 18, §14.3); a turn the kit's close cuts leaves no outcome (RK-5.13-007). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 The delivery set of a message or of an event the host sends, with a failure in
 it (§10.1 step 18), is recorded on its event (§14.3), every target's outcome,
 successes included, under the room's lock, after its delivery framework events
-and before its `AFTER_BROADCAST` hooks. A set that all succeeded writes nothing,
-nor does a response's, a greeting's, a hook's injected event's or a rerun's. A
+and before its `AFTER_BROADCAST` hooks. <!-- /rfc --><!-- rfc: {"id": "RK-5.13-006", "kind": "behavior", "applies": "§5.13 Delivery Result, a delivery set that all succeeded, and the sets of a response, a greeting, a hook's injected event and a rerun. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A set that all succeeded writes nothing,
+nor does a response's, a greeting's, a hook's injected event's or a rerun's. <!-- /rfc --><!-- rfc: {"id": "RK-5.13-007", "kind": "behavior", "applies": "§5.13 Delivery Result, a delivery set the kit's close cuts (§12.10.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 turn the kit's close cuts leaves no outcome, and what else failed in its set is
-recorded; past the close's grace nothing is recorded (§12.10.4). A record that
+recorded; past the close's grace nothing is recorded (§12.10.4). <!-- /rfc --><!-- rfc: {"id": "RK-5.13-008", "kind": "behavior", "applies": "§5.13 Delivery Result, a delivery set's record that cannot be written. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A record that
 cannot be written is logged, and changes nothing the call reports.
 <!-- /rfc -->
 
 ### 5.14 Protocol Trace
 
-<!-- rfc: {"id": "RK-5.14-001", "kind": "behavior", "applies": "§5.14 Protocol Trace; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.14-005", "kind": "behavior", "applies": "§5.14 Protocol Trace: channels that interact with signaling protocols emit traces of significant protocol events. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 An immutable record of a transport-level protocol exchange, used for
 observability and debugging. Channels that interact with signaling protocols
-(SIP, RTP, SMTP, etc.) SHOULD emit traces for significant protocol events.
+(SIP, RTP, SMTP, etc.) SHOULD emit traces for significant protocol events.<!-- /rfc --><!-- rfc: {"id": "RK-5.14-006", "kind": "structural", "applies": "§5.14 Protocol Trace: its fields. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 ```
 ProtocolTrace (frozen)
@@ -1773,11 +1795,11 @@ ProtocolTrace (frozen)
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.14-002", "kind": "behavior", "applies": "§5.14 Protocol Trace; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.14-002", "kind": "behavior", "applies": "§5.14 Protocol Trace; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **Immutability:** ProtocolTrace MUST be frozen (immutable) after construction.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.14-003", "kind": "behavior", "applies": "§5.14 Protocol Trace; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.14-003", "kind": "behavior", "applies": "§5.14 Protocol Trace; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "should"} -->
 **Raw payloads:** When available, the `raw` field SHOULD contain the complete
 serialized protocol message. For SIP, this is the full SIP request/response as
 returned by the SIP library's `serialize()` method. For protocols where the raw
@@ -1785,7 +1807,7 @@ payload is not available (e.g., outbound requests where the library does not
 expose the serialized form), `raw` MAY be null.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-5.14-004", "kind": "behavior", "applies": "§5.14 Protocol Trace; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-5.14-004", "kind": "behavior", "applies": "§5.14 Protocol Trace; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **Trace emission and routing:** See Section 15.6 for the trace emission
 infrastructure, including channel-level APIs, framework hook wiring, and
 pre-room buffering.
