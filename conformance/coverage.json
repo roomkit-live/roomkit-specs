@@ -4731,9 +4731,9 @@
       "section": "10.6",
       "title": "Turn Execution",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 8,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 8
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -4744,9 +4744,9 @@
       "section": "10.6.1",
       "title": "Scope and the one path",
       "review": "normative",
-      "requirements": 2,
+      "requirements": 14,
       "mapping": {
-        "unmapped": 2
+        "unmapped": 14
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -4764,10 +4764,10 @@
       "section": "10.6.2",
       "title": "Channels on each side",
       "review": "normative",
-      "requirements": 4,
+      "requirements": 39,
       "mapping": {
-        "mapped_partial": 2,
-        "unmapped": 2
+        "mapped_partial": 4,
+        "unmapped": 35
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -4807,10 +4807,10 @@
       "section": "10.6.3",
       "title": "Messages",
       "review": "normative",
-      "requirements": 8,
+      "requirements": 36,
       "mapping": {
-        "mapped_partial": 1,
-        "unmapped": 7
+        "mapped_partial": 2,
+        "unmapped": 34
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -4950,9 +4950,9 @@
       "section": "10.6.4",
       "title": "The stream: pulled, never pushed",
       "review": "normative",
-      "requirements": 1,
+      "requirements": 16,
       "mapping": {
-        "unmapped": 1
+        "unmapped": 16
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -4975,9 +4975,9 @@
       "section": "10.6.5",
       "title": "What a turn asks of the owner",
       "review": "normative",
-      "requirements": 5,
+      "requirements": 60,
       "mapping": {
-        "unmapped": 5
+        "unmapped": 60
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -5069,10 +5069,10 @@
       "section": "10.6.6",
       "title": "Hooks",
       "review": "normative",
-      "requirements": 4,
+      "requirements": 21,
       "mapping": {
         "mapped_partial": 1,
-        "unmapped": 3
+        "unmapped": 20
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -5096,10 +5096,10 @@
       "section": "10.6.7",
       "title": "Placement",
       "review": "normative",
-      "requirements": 2,
+      "requirements": 33,
       "mapping": {
         "mapped_partial": 1,
-        "unmapped": 1
+        "unmapped": 32
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -5148,10 +5148,10 @@
       "section": "10.6.8",
       "title": "Liveness, cancellation and errors",
       "review": "normative",
-      "requirements": 5,
+      "requirements": 45,
       "mapping": {
-        "mapped_partial": 3,
-        "unmapped": 2
+        "mapped_partial": 2,
+        "unmapped": 43
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -5192,9 +5192,9 @@
       "section": "10.6.9",
       "title": "Telemetry and prerequisites",
       "review": "normative",
-      "requirements": 4,
+      "requirements": 8,
       "mapping": {
-        "unmapped": 4
+        "unmapped": 8
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
@@ -56596,37 +56596,313 @@
       "links": []
     },
     {
-      "id": "RK-10.6-001",
+      "id": "RK-10.6-002",
       "section": "10.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-10.6.1-001",
+      "id": "RK-10.6-003",
+      "section": "10.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6-004",
+      "section": "10.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6-005",
+      "section": "10.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6-006",
+      "section": "10.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6-007",
+      "section": "10.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6-008",
+      "section": "10.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6-009",
+      "section": "10.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.1-003",
       "section": "10.6.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-10.6.1-002",
+      "id": "RK-10.6.1-004",
       "section": "10.6.1",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-10.6.2-001",
+      "id": "RK-10.6.1-005",
+      "section": "10.6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.1-006",
+      "section": "10.6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.1-007",
+      "section": "10.6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.1-008",
+      "section": "10.6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.1-009",
+      "section": "10.6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.1-010",
+      "section": "10.6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.1-011",
+      "section": "10.6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.1-012",
+      "section": "10.6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.1-013",
+      "section": "10.6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.1-014",
+      "section": "10.6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.1-015",
+      "section": "10.6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.1-016",
+      "section": "10.6.1",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-005",
       "section": "10.6.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-10.6.2-002",
+      "id": "RK-10.6.2-006",
       "section": "10.6.2",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-10.6.2-003",
+      "id": "RK-10.6.2-007",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-008",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-009",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-010",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-011",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-012",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-013",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-014",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-015",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-016",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-017",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-018",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-019",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-020",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-021",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-022",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-023",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-024",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-025",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-026",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-027",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-028",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-029",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-030",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-031",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-032",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-033",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-034",
       "section": "10.6.2",
       "mapping": "mapped_partial",
       "links": [
@@ -56638,7 +56914,14 @@
             "Channel calls, post-handover failures, process restarts and other per-room state transitions are not established by this test."
           ],
           "executions": []
-        },
+        }
+      ]
+    },
+    {
+      "id": "RK-10.6.2-035",
+      "section": "10.6.2",
+      "mapping": "mapped_partial",
+      "links": [
         {
           "id": "channel-call-previous-state",
           "scope": "Channel-call to turn continuity, post-handover cancellation, bounded local state and retry of failed or interrupted stale-state cleanup.",
@@ -57077,7 +57360,387 @@
       ]
     },
     {
-      "id": "RK-10.6.2-004",
+      "id": "RK-10.6.2-036",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-037",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-038",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-039",
+      "section": "10.6.2",
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "channel-call-overlapping-state-reports",
+          "scope": "A verb restoring its initial empty or nonempty state reports the reversal of a concurrent setter already stored by the owner, on success and failure.",
+          "coverage": "partial",
+          "missing": [
+            "No guarantee of ordering, delivery or durability of remote backend replies is established. This link proves the previously omitted state report under the gated ordering asserted by each scenario.",
+            "Native direct-channel/read-only and lifecycle checks supplement these assertions without becoming formal execution receipts."
+          ],
+          "executions": [
+            {
+              "execution": "python-acp-recovery-4b32474-memory",
+              "implementation": "python",
+              "commit": "4b3247416f107964b6679a0ca230f0ac2c213580",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-recovery-4b32474-sqlite",
+              "implementation": "python",
+              "commit": "4b3247416f107964b6679a0ca230f0ac2c213580",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-rebuild-158fe28-memory",
+              "implementation": "python",
+              "commit": "158fe2847db3b0c9530a55ab0836f8df457bf513",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-rebuild-158fe28-sqlite",
+              "implementation": "python",
+              "commit": "158fe2847db3b0c9530a55ab0836f8df457bf513",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-lifecycle-78ddda9-memory",
+              "implementation": "python",
+              "commit": "78ddda9aac7cc892a84175f18919256505a6d7b8",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-lifecycle-78ddda9-sqlite",
+              "implementation": "python",
+              "commit": "78ddda9aac7cc892a84175f18919256505a6d7b8",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-detach-5262357-memory",
+              "implementation": "python",
+              "commit": "5262357fee22e6ab6f4a11fdcdc718f0b89daae9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-detach-5262357-sqlite",
+              "implementation": "python",
+              "commit": "5262357fee22e6ab6f4a11fdcdc718f0b89daae9",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-steering-843e13a-memory",
+              "implementation": "python",
+              "commit": "843e13abdde461483e9c1100c979786f625a96b7",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-steering-843e13a-sqlite",
+              "implementation": "python",
+              "commit": "843e13abdde461483e9c1100c979786f625a96b7",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-directories-09666ea-memory",
+              "implementation": "python",
+              "commit": "09666ea60010ff96042d19d06f519913beb74a3a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-directories-09666ea-sqlite",
+              "implementation": "python",
+              "commit": "09666ea60010ff96042d19d06f519913beb74a3a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-mcp-e979b14-memory",
+              "implementation": "python",
+              "commit": "e979b1434710c060a51983d4ca3109ade74c7848",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-mcp-e979b14-sqlite",
+              "implementation": "python",
+              "commit": "e979b1434710c060a51983d4ca3109ade74c7848",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-thinking-926888e-memory",
+              "implementation": "python",
+              "commit": "926888ef927c808893b1217dc7b4a7211c89f4a5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-thinking-926888e-sqlite",
+              "implementation": "python",
+              "commit": "926888ef927c808893b1217dc7b4a7211c89f4a5",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-tools-7920d13-memory",
+              "implementation": "python",
+              "commit": "7920d13ae89c17fdc2e43a780ec80fc30a841b1c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-tools-7920d13-sqlite",
+              "implementation": "python",
+              "commit": "7920d13ae89c17fdc2e43a780ec80fc30a841b1c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-record-f3415d5-memory",
+              "implementation": "python",
+              "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-record-f3415d5-sqlite",
+              "implementation": "python",
+              "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-postgres-scenarios-6dc6edb-postgres",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "postgres",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-redis-turns-6dc6edb-memory-redis-turns",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory+redis-turns",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-redis-turns-6dc6edb-sqlite-redis-turns",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "sqlite+redis-turns",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-external-handler-5a7a968-memory",
+              "implementation": "python",
+              "commit": "5a7a9683cd8c74bac850002cd4adfcc5a6e3dd25",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-external-handler-5a7a968-sqlite",
+              "implementation": "python",
+              "commit": "5a7a9683cd8c74bac850002cd4adfcc5a6e3dd25",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-postgres-scenarios-5a7a968-postgres",
+              "implementation": "python",
+              "commit": "5a7a9683cd8c74bac850002cd4adfcc5a6e3dd25",
+              "backend": "postgres",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-redis-turns-5a7a968-memory-redis-turns",
+              "implementation": "python",
+              "commit": "5a7a9683cd8c74bac850002cd4adfcc5a6e3dd25",
+              "backend": "memory+redis-turns",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-redis-turns-5a7a968-sqlite-redis-turns",
+              "implementation": "python",
+              "commit": "5a7a9683cd8c74bac850002cd4adfcc5a6e3dd25",
+              "backend": "sqlite+redis-turns",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-context-97304f7-memory",
+              "implementation": "python",
+              "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-context-97304f7-sqlite",
+              "implementation": "python",
+              "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-postgres-scenarios-97304f7-postgres",
+              "implementation": "python",
+              "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
+              "backend": "postgres",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-redis-turns-97304f7-memory-redis-turns",
+              "implementation": "python",
+              "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
+              "backend": "memory+redis-turns",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
+              "implementation": "python",
+              "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
+              "backend": "sqlite+redis-turns",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "stale"
+            },
+            {
+              "execution": "python-rule-links-98a547a-memory",
+              "implementation": "python",
+              "commit": "98a547aab38e5bf1686d9fe0cf6bc5a011568924",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-rule-links-98a547a-sqlite",
+              "implementation": "python",
+              "commit": "98a547aab38e5bf1686d9fe0cf6bc5a011568924",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "rust-f91889a-memory-current-thread",
+              "implementation": "rust",
+              "commit": "f91889a6056921e0984316dc29d585f613bc001d",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "stale"
+            },
+            {
+              "execution": "rust-f91889a-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "f91889a6056921e0984316dc29d585f613bc001d",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "stale"
+            },
+            {
+              "execution": "rust-f91889a-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "f91889a6056921e0984316dc29d585f613bc001d",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "stale"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "RK-10.6.2-040",
       "section": "10.6.2",
       "mapping": "mapped_partial",
       "links": [
@@ -57514,363 +58177,26 @@
               "state": "stale"
             }
           ]
-        },
-        {
-          "id": "channel-call-overlapping-state-reports",
-          "scope": "A verb restoring its initial empty or nonempty state reports the reversal of a concurrent setter already stored by the owner, on success and failure.",
-          "coverage": "partial",
-          "missing": [
-            "No guarantee of ordering, delivery or durability of remote backend replies is established. This link proves the previously omitted state report under the gated ordering asserted by each scenario.",
-            "Native direct-channel/read-only and lifecycle checks supplement these assertions without becoming formal execution receipts."
-          ],
-          "executions": [
-            {
-              "execution": "python-acp-recovery-4b32474-memory",
-              "implementation": "python",
-              "commit": "4b3247416f107964b6679a0ca230f0ac2c213580",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-recovery-4b32474-sqlite",
-              "implementation": "python",
-              "commit": "4b3247416f107964b6679a0ca230f0ac2c213580",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-rebuild-158fe28-memory",
-              "implementation": "python",
-              "commit": "158fe2847db3b0c9530a55ab0836f8df457bf513",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-rebuild-158fe28-sqlite",
-              "implementation": "python",
-              "commit": "158fe2847db3b0c9530a55ab0836f8df457bf513",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-lifecycle-78ddda9-memory",
-              "implementation": "python",
-              "commit": "78ddda9aac7cc892a84175f18919256505a6d7b8",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-lifecycle-78ddda9-sqlite",
-              "implementation": "python",
-              "commit": "78ddda9aac7cc892a84175f18919256505a6d7b8",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-detach-5262357-memory",
-              "implementation": "python",
-              "commit": "5262357fee22e6ab6f4a11fdcdc718f0b89daae9",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-detach-5262357-sqlite",
-              "implementation": "python",
-              "commit": "5262357fee22e6ab6f4a11fdcdc718f0b89daae9",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-steering-843e13a-memory",
-              "implementation": "python",
-              "commit": "843e13abdde461483e9c1100c979786f625a96b7",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-steering-843e13a-sqlite",
-              "implementation": "python",
-              "commit": "843e13abdde461483e9c1100c979786f625a96b7",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-directories-09666ea-memory",
-              "implementation": "python",
-              "commit": "09666ea60010ff96042d19d06f519913beb74a3a",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-directories-09666ea-sqlite",
-              "implementation": "python",
-              "commit": "09666ea60010ff96042d19d06f519913beb74a3a",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-mcp-e979b14-memory",
-              "implementation": "python",
-              "commit": "e979b1434710c060a51983d4ca3109ade74c7848",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-mcp-e979b14-sqlite",
-              "implementation": "python",
-              "commit": "e979b1434710c060a51983d4ca3109ade74c7848",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-thinking-926888e-memory",
-              "implementation": "python",
-              "commit": "926888ef927c808893b1217dc7b4a7211c89f4a5",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-thinking-926888e-sqlite",
-              "implementation": "python",
-              "commit": "926888ef927c808893b1217dc7b4a7211c89f4a5",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-tools-7920d13-memory",
-              "implementation": "python",
-              "commit": "7920d13ae89c17fdc2e43a780ec80fc30a841b1c",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-tools-7920d13-sqlite",
-              "implementation": "python",
-              "commit": "7920d13ae89c17fdc2e43a780ec80fc30a841b1c",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-record-f3415d5-memory",
-              "implementation": "python",
-              "commit": "f3415d597011232464acd47128d413f325c83344",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-record-f3415d5-sqlite",
-              "implementation": "python",
-              "commit": "f3415d597011232464acd47128d413f325c83344",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-permissions-6dc6edb-memory",
-              "implementation": "python",
-              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-permissions-6dc6edb-sqlite",
-              "implementation": "python",
-              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-postgres-scenarios-6dc6edb-postgres",
-              "implementation": "python",
-              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
-              "backend": "postgres",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-redis-turns-6dc6edb-memory-redis-turns",
-              "implementation": "python",
-              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
-              "backend": "memory+redis-turns",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-redis-turns-6dc6edb-sqlite-redis-turns",
-              "implementation": "python",
-              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
-              "backend": "sqlite+redis-turns",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-external-handler-5a7a968-memory",
-              "implementation": "python",
-              "commit": "5a7a9683cd8c74bac850002cd4adfcc5a6e3dd25",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-external-handler-5a7a968-sqlite",
-              "implementation": "python",
-              "commit": "5a7a9683cd8c74bac850002cd4adfcc5a6e3dd25",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-postgres-scenarios-5a7a968-postgres",
-              "implementation": "python",
-              "commit": "5a7a9683cd8c74bac850002cd4adfcc5a6e3dd25",
-              "backend": "postgres",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-redis-turns-5a7a968-memory-redis-turns",
-              "implementation": "python",
-              "commit": "5a7a9683cd8c74bac850002cd4adfcc5a6e3dd25",
-              "backend": "memory+redis-turns",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-redis-turns-5a7a968-sqlite-redis-turns",
-              "implementation": "python",
-              "commit": "5a7a9683cd8c74bac850002cd4adfcc5a6e3dd25",
-              "backend": "sqlite+redis-turns",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-context-97304f7-memory",
-              "implementation": "python",
-              "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-context-97304f7-sqlite",
-              "implementation": "python",
-              "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-postgres-scenarios-97304f7-postgres",
-              "implementation": "python",
-              "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
-              "backend": "postgres",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-redis-turns-97304f7-memory-redis-turns",
-              "implementation": "python",
-              "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
-              "backend": "memory+redis-turns",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
-              "implementation": "python",
-              "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
-              "backend": "sqlite+redis-turns",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "rust-b085289-memory-current-thread",
-              "implementation": "rust",
-              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
-              "backend": "memory",
-              "runtime": "current_thread",
-              "state": "stale"
-            },
-            {
-              "execution": "rust-b085289-memory-multi-thread-4",
-              "implementation": "rust",
-              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
-              "backend": "memory",
-              "runtime": "multi_thread_4",
-              "state": "stale"
-            },
-            {
-              "execution": "rust-b085289-sqlite-current-thread",
-              "implementation": "rust",
-              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
-              "backend": "sqlite",
-              "runtime": "current_thread",
-              "state": "stale"
-            },
-            {
-              "execution": "python-rule-links-98a547a-memory",
-              "implementation": "python",
-              "commit": "98a547aab38e5bf1686d9fe0cf6bc5a011568924",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-rule-links-98a547a-sqlite",
-              "implementation": "python",
-              "commit": "98a547aab38e5bf1686d9fe0cf6bc5a011568924",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "rust-f91889a-memory-current-thread",
-              "implementation": "rust",
-              "commit": "f91889a6056921e0984316dc29d585f613bc001d",
-              "backend": "memory",
-              "runtime": "current_thread",
-              "state": "stale"
-            },
-            {
-              "execution": "rust-f91889a-memory-multi-thread-4",
-              "implementation": "rust",
-              "commit": "f91889a6056921e0984316dc29d585f613bc001d",
-              "backend": "memory",
-              "runtime": "multi_thread_4",
-              "state": "stale"
-            },
-            {
-              "execution": "rust-f91889a-sqlite-current-thread",
-              "implementation": "rust",
-              "commit": "f91889a6056921e0984316dc29d585f613bc001d",
-              "backend": "sqlite",
-              "runtime": "current_thread",
-              "state": "stale"
-            }
-          ]
         }
       ]
+    },
+    {
+      "id": "RK-10.6.2-041",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-042",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.2-043",
+      "section": "10.6.2",
+      "mapping": "unmapped",
+      "links": []
     },
     {
       "id": "RK-10.6.3-001",
@@ -57897,7 +58223,13 @@
       "links": []
     },
     {
-      "id": "RK-10.6.3-005",
+      "id": "RK-10.6.3-009",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-010",
       "section": "10.6.3",
       "mapping": "unmapped",
       "links": []
@@ -57909,445 +58241,64 @@
       "links": []
     },
     {
-      "id": "RK-10.6.3-007",
+      "id": "RK-10.6.3-011",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-012",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-013",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-014",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-015",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-016",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-017",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-018",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-019",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-020",
       "section": "10.6.3",
       "mapping": "mapped_partial",
       "links": [
-        {
-          "id": "channel-call-local-control",
-          "scope": "Local attached-channel verbs: JSON result, null, typed errors, validation, organization scope, changed state before error, detach and closed executor/kit refusal.",
-          "coverage": "partial",
-          "missing": [
-            "Distributed placement, executor factories, replacement and process transport remain deferred in Rust.",
-            "Committed-event delivery and channel release are distinct controls, not established by these scenarios."
-          ],
-          "executions": [
-            {
-              "execution": "python-channel-call-77889b4-memory",
-              "implementation": "python",
-              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-channel-call-77889b4-sqlite",
-              "implementation": "python",
-              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-channel-call-fbc87b6-memory",
-              "implementation": "python",
-              "commit": "fbc87b6ab1489cba5068cc46102506d69f7da17f",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-channel-call-fbc87b6-sqlite",
-              "implementation": "python",
-              "commit": "fbc87b6ab1489cba5068cc46102506d69f7da17f",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-postgres-contracts-ec7d228-memory",
-              "implementation": "python",
-              "commit": "ec7d22830fe062e87b8031f3e0015be99cc65c79",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-postgres-contracts-ec7d228-sqlite",
-              "implementation": "python",
-              "commit": "ec7d22830fe062e87b8031f3e0015be99cc65c79",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-delegation-preparation-97e7459-memory",
-              "implementation": "python",
-              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-delegation-preparation-97e7459-sqlite",
-              "implementation": "python",
-              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-config-17e1157-memory",
-              "implementation": "python",
-              "commit": "17e115711d8014064dd820d2b0bcd352a4b2076d",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-config-17e1157-sqlite",
-              "implementation": "python",
-              "commit": "17e115711d8014064dd820d2b0bcd352a4b2076d",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-recovery-4b32474-memory",
-              "implementation": "python",
-              "commit": "4b3247416f107964b6679a0ca230f0ac2c213580",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-recovery-4b32474-sqlite",
-              "implementation": "python",
-              "commit": "4b3247416f107964b6679a0ca230f0ac2c213580",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-rebuild-158fe28-memory",
-              "implementation": "python",
-              "commit": "158fe2847db3b0c9530a55ab0836f8df457bf513",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-rebuild-158fe28-sqlite",
-              "implementation": "python",
-              "commit": "158fe2847db3b0c9530a55ab0836f8df457bf513",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-lifecycle-78ddda9-memory",
-              "implementation": "python",
-              "commit": "78ddda9aac7cc892a84175f18919256505a6d7b8",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-lifecycle-78ddda9-sqlite",
-              "implementation": "python",
-              "commit": "78ddda9aac7cc892a84175f18919256505a6d7b8",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-detach-5262357-memory",
-              "implementation": "python",
-              "commit": "5262357fee22e6ab6f4a11fdcdc718f0b89daae9",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-detach-5262357-sqlite",
-              "implementation": "python",
-              "commit": "5262357fee22e6ab6f4a11fdcdc718f0b89daae9",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-steering-843e13a-memory",
-              "implementation": "python",
-              "commit": "843e13abdde461483e9c1100c979786f625a96b7",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-steering-843e13a-sqlite",
-              "implementation": "python",
-              "commit": "843e13abdde461483e9c1100c979786f625a96b7",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-directories-09666ea-memory",
-              "implementation": "python",
-              "commit": "09666ea60010ff96042d19d06f519913beb74a3a",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-directories-09666ea-sqlite",
-              "implementation": "python",
-              "commit": "09666ea60010ff96042d19d06f519913beb74a3a",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-mcp-e979b14-memory",
-              "implementation": "python",
-              "commit": "e979b1434710c060a51983d4ca3109ade74c7848",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-mcp-e979b14-sqlite",
-              "implementation": "python",
-              "commit": "e979b1434710c060a51983d4ca3109ade74c7848",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-thinking-926888e-memory",
-              "implementation": "python",
-              "commit": "926888ef927c808893b1217dc7b4a7211c89f4a5",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-thinking-926888e-sqlite",
-              "implementation": "python",
-              "commit": "926888ef927c808893b1217dc7b4a7211c89f4a5",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-tools-7920d13-memory",
-              "implementation": "python",
-              "commit": "7920d13ae89c17fdc2e43a780ec80fc30a841b1c",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-tools-7920d13-sqlite",
-              "implementation": "python",
-              "commit": "7920d13ae89c17fdc2e43a780ec80fc30a841b1c",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-record-f3415d5-memory",
-              "implementation": "python",
-              "commit": "f3415d597011232464acd47128d413f325c83344",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-record-f3415d5-sqlite",
-              "implementation": "python",
-              "commit": "f3415d597011232464acd47128d413f325c83344",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-permissions-6dc6edb-memory",
-              "implementation": "python",
-              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-permissions-6dc6edb-sqlite",
-              "implementation": "python",
-              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-postgres-scenarios-6dc6edb-postgres",
-              "implementation": "python",
-              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
-              "backend": "postgres",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-redis-turns-6dc6edb-memory-redis-turns",
-              "implementation": "python",
-              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
-              "backend": "memory+redis-turns",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-redis-turns-6dc6edb-sqlite-redis-turns",
-              "implementation": "python",
-              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
-              "backend": "sqlite+redis-turns",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-external-handler-5a7a968-memory",
-              "implementation": "python",
-              "commit": "5a7a9683cd8c74bac850002cd4adfcc5a6e3dd25",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-external-handler-5a7a968-sqlite",
-              "implementation": "python",
-              "commit": "5a7a9683cd8c74bac850002cd4adfcc5a6e3dd25",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-postgres-scenarios-5a7a968-postgres",
-              "implementation": "python",
-              "commit": "5a7a9683cd8c74bac850002cd4adfcc5a6e3dd25",
-              "backend": "postgres",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-redis-turns-5a7a968-memory-redis-turns",
-              "implementation": "python",
-              "commit": "5a7a9683cd8c74bac850002cd4adfcc5a6e3dd25",
-              "backend": "memory+redis-turns",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-redis-turns-5a7a968-sqlite-redis-turns",
-              "implementation": "python",
-              "commit": "5a7a9683cd8c74bac850002cd4adfcc5a6e3dd25",
-              "backend": "sqlite+redis-turns",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-context-97304f7-memory",
-              "implementation": "python",
-              "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-acp-context-97304f7-sqlite",
-              "implementation": "python",
-              "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-postgres-scenarios-97304f7-postgres",
-              "implementation": "python",
-              "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
-              "backend": "postgres",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-redis-turns-97304f7-memory-redis-turns",
-              "implementation": "python",
-              "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
-              "backend": "memory+redis-turns",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
-              "implementation": "python",
-              "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
-              "backend": "sqlite+redis-turns",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "rust-b085289-memory-current-thread",
-              "implementation": "rust",
-              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
-              "backend": "memory",
-              "runtime": "current_thread",
-              "state": "stale"
-            },
-            {
-              "execution": "rust-b085289-memory-multi-thread-4",
-              "implementation": "rust",
-              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
-              "backend": "memory",
-              "runtime": "multi_thread_4",
-              "state": "stale"
-            },
-            {
-              "execution": "rust-b085289-sqlite-current-thread",
-              "implementation": "rust",
-              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
-              "backend": "sqlite",
-              "runtime": "current_thread",
-              "state": "stale"
-            },
-            {
-              "execution": "python-rule-links-98a547a-memory",
-              "implementation": "python",
-              "commit": "98a547aab38e5bf1686d9fe0cf6bc5a011568924",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "python-rule-links-98a547a-sqlite",
-              "implementation": "python",
-              "commit": "98a547aab38e5bf1686d9fe0cf6bc5a011568924",
-              "backend": "sqlite",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "rust-f91889a-memory-current-thread",
-              "implementation": "rust",
-              "commit": "f91889a6056921e0984316dc29d585f613bc001d",
-              "backend": "memory",
-              "runtime": "current_thread",
-              "state": "stale"
-            },
-            {
-              "execution": "rust-f91889a-memory-multi-thread-4",
-              "implementation": "rust",
-              "commit": "f91889a6056921e0984316dc29d585f613bc001d",
-              "backend": "memory",
-              "runtime": "multi_thread_4",
-              "state": "stale"
-            },
-            {
-              "execution": "rust-f91889a-sqlite-current-thread",
-              "implementation": "rust",
-              "commit": "f91889a6056921e0984316dc29d585f613bc001d",
-              "backend": "sqlite",
-              "runtime": "current_thread",
-              "state": "stale"
-            }
-          ]
-        },
         {
           "id": "channel-release-local-registry",
           "scope": "Local live channels: release preserves the asserted per-room page values, succeeds after closing only the local executor, and rejects unknown ids while the kit is open.",
@@ -58858,61 +58809,1079 @@
       ]
     },
     {
-      "id": "RK-10.6.3-008",
+      "id": "RK-10.6.3-021",
       "section": "10.6.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-10.6.4-001",
+      "id": "RK-10.6.3-022",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-023",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-024",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-025",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-026",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-027",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-028",
+      "section": "10.6.3",
+      "mapping": "mapped_partial",
+      "links": [
+        {
+          "id": "channel-call-local-control",
+          "scope": "Local attached-channel verbs: JSON result, null, typed errors, validation, organization scope, changed state before error, detach and closed executor/kit refusal.",
+          "coverage": "partial",
+          "missing": [
+            "Distributed placement, executor factories, replacement and process transport remain deferred in Rust.",
+            "Committed-event delivery and channel release are distinct controls, not established by these scenarios."
+          ],
+          "executions": [
+            {
+              "execution": "python-channel-call-77889b4-memory",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-77889b4-sqlite",
+              "implementation": "python",
+              "commit": "77889b401fa1cdc8243604fca1932c60d448e4c9",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-fbc87b6-memory",
+              "implementation": "python",
+              "commit": "fbc87b6ab1489cba5068cc46102506d69f7da17f",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-channel-call-fbc87b6-sqlite",
+              "implementation": "python",
+              "commit": "fbc87b6ab1489cba5068cc46102506d69f7da17f",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-postgres-contracts-ec7d228-memory",
+              "implementation": "python",
+              "commit": "ec7d22830fe062e87b8031f3e0015be99cc65c79",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-postgres-contracts-ec7d228-sqlite",
+              "implementation": "python",
+              "commit": "ec7d22830fe062e87b8031f3e0015be99cc65c79",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-memory",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-delegation-preparation-97e7459-sqlite",
+              "implementation": "python",
+              "commit": "97e7459acc7996ded1a5dc386b7250dcd605b2d3",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-config-17e1157-memory",
+              "implementation": "python",
+              "commit": "17e115711d8014064dd820d2b0bcd352a4b2076d",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-config-17e1157-sqlite",
+              "implementation": "python",
+              "commit": "17e115711d8014064dd820d2b0bcd352a4b2076d",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-recovery-4b32474-memory",
+              "implementation": "python",
+              "commit": "4b3247416f107964b6679a0ca230f0ac2c213580",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-recovery-4b32474-sqlite",
+              "implementation": "python",
+              "commit": "4b3247416f107964b6679a0ca230f0ac2c213580",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-rebuild-158fe28-memory",
+              "implementation": "python",
+              "commit": "158fe2847db3b0c9530a55ab0836f8df457bf513",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-rebuild-158fe28-sqlite",
+              "implementation": "python",
+              "commit": "158fe2847db3b0c9530a55ab0836f8df457bf513",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-lifecycle-78ddda9-memory",
+              "implementation": "python",
+              "commit": "78ddda9aac7cc892a84175f18919256505a6d7b8",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-lifecycle-78ddda9-sqlite",
+              "implementation": "python",
+              "commit": "78ddda9aac7cc892a84175f18919256505a6d7b8",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-detach-5262357-memory",
+              "implementation": "python",
+              "commit": "5262357fee22e6ab6f4a11fdcdc718f0b89daae9",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-detach-5262357-sqlite",
+              "implementation": "python",
+              "commit": "5262357fee22e6ab6f4a11fdcdc718f0b89daae9",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-steering-843e13a-memory",
+              "implementation": "python",
+              "commit": "843e13abdde461483e9c1100c979786f625a96b7",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-steering-843e13a-sqlite",
+              "implementation": "python",
+              "commit": "843e13abdde461483e9c1100c979786f625a96b7",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-directories-09666ea-memory",
+              "implementation": "python",
+              "commit": "09666ea60010ff96042d19d06f519913beb74a3a",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-directories-09666ea-sqlite",
+              "implementation": "python",
+              "commit": "09666ea60010ff96042d19d06f519913beb74a3a",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-mcp-e979b14-memory",
+              "implementation": "python",
+              "commit": "e979b1434710c060a51983d4ca3109ade74c7848",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-mcp-e979b14-sqlite",
+              "implementation": "python",
+              "commit": "e979b1434710c060a51983d4ca3109ade74c7848",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-thinking-926888e-memory",
+              "implementation": "python",
+              "commit": "926888ef927c808893b1217dc7b4a7211c89f4a5",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-thinking-926888e-sqlite",
+              "implementation": "python",
+              "commit": "926888ef927c808893b1217dc7b4a7211c89f4a5",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-tools-7920d13-memory",
+              "implementation": "python",
+              "commit": "7920d13ae89c17fdc2e43a780ec80fc30a841b1c",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-tools-7920d13-sqlite",
+              "implementation": "python",
+              "commit": "7920d13ae89c17fdc2e43a780ec80fc30a841b1c",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-record-f3415d5-memory",
+              "implementation": "python",
+              "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-record-f3415d5-sqlite",
+              "implementation": "python",
+              "commit": "f3415d597011232464acd47128d413f325c83344",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-memory",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-permissions-6dc6edb-sqlite",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-postgres-scenarios-6dc6edb-postgres",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "postgres",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-redis-turns-6dc6edb-memory-redis-turns",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "memory+redis-turns",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-redis-turns-6dc6edb-sqlite-redis-turns",
+              "implementation": "python",
+              "commit": "6dc6edb3f58722247ff9f851b686f73bf124f543",
+              "backend": "sqlite+redis-turns",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-external-handler-5a7a968-memory",
+              "implementation": "python",
+              "commit": "5a7a9683cd8c74bac850002cd4adfcc5a6e3dd25",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-external-handler-5a7a968-sqlite",
+              "implementation": "python",
+              "commit": "5a7a9683cd8c74bac850002cd4adfcc5a6e3dd25",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-postgres-scenarios-5a7a968-postgres",
+              "implementation": "python",
+              "commit": "5a7a9683cd8c74bac850002cd4adfcc5a6e3dd25",
+              "backend": "postgres",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-redis-turns-5a7a968-memory-redis-turns",
+              "implementation": "python",
+              "commit": "5a7a9683cd8c74bac850002cd4adfcc5a6e3dd25",
+              "backend": "memory+redis-turns",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-redis-turns-5a7a968-sqlite-redis-turns",
+              "implementation": "python",
+              "commit": "5a7a9683cd8c74bac850002cd4adfcc5a6e3dd25",
+              "backend": "sqlite+redis-turns",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-context-97304f7-memory",
+              "implementation": "python",
+              "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-acp-context-97304f7-sqlite",
+              "implementation": "python",
+              "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-postgres-scenarios-97304f7-postgres",
+              "implementation": "python",
+              "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
+              "backend": "postgres",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-redis-turns-97304f7-memory-redis-turns",
+              "implementation": "python",
+              "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
+              "backend": "memory+redis-turns",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-redis-turns-97304f7-sqlite-redis-turns",
+              "implementation": "python",
+              "commit": "97304f75780ad5862faba722dd3c7b2083b9c0c4",
+              "backend": "sqlite+redis-turns",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "stale"
+            },
+            {
+              "execution": "python-rule-links-98a547a-memory",
+              "implementation": "python",
+              "commit": "98a547aab38e5bf1686d9fe0cf6bc5a011568924",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "python-rule-links-98a547a-sqlite",
+              "implementation": "python",
+              "commit": "98a547aab38e5bf1686d9fe0cf6bc5a011568924",
+              "backend": "sqlite",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "rust-f91889a-memory-current-thread",
+              "implementation": "rust",
+              "commit": "f91889a6056921e0984316dc29d585f613bc001d",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "stale"
+            },
+            {
+              "execution": "rust-f91889a-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "f91889a6056921e0984316dc29d585f613bc001d",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "stale"
+            },
+            {
+              "execution": "rust-f91889a-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "f91889a6056921e0984316dc29d585f613bc001d",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "stale"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "RK-10.6.3-029",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-030",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-031",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-032",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-033",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-034",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-035",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-036",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-037",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-038",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.3-039",
+      "section": "10.6.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.4-002",
       "section": "10.6.4",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-10.6.5-001",
+      "id": "RK-10.6.4-003",
+      "section": "10.6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.4-004",
+      "section": "10.6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.4-005",
+      "section": "10.6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.4-006",
+      "section": "10.6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.4-007",
+      "section": "10.6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.4-008",
+      "section": "10.6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.4-009",
+      "section": "10.6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.4-010",
+      "section": "10.6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.4-011",
+      "section": "10.6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.4-012",
+      "section": "10.6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.4-013",
+      "section": "10.6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.4-014",
+      "section": "10.6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.4-015",
+      "section": "10.6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.4-016",
+      "section": "10.6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.4-017",
+      "section": "10.6.4",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-006",
       "section": "10.6.5",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-10.6.5-002",
+      "id": "RK-10.6.5-007",
       "section": "10.6.5",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-10.6.5-005",
+      "id": "RK-10.6.5-008",
       "section": "10.6.5",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-10.6.5-003",
+      "id": "RK-10.6.5-009",
       "section": "10.6.5",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-10.6.5-004",
+      "id": "RK-10.6.5-010",
       "section": "10.6.5",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-10.6.6-001",
+      "id": "RK-10.6.5-011",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-012",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-013",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-014",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-015",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-016",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-017",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-018",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-019",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-020",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-021",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-022",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-023",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-024",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-025",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-026",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-027",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-028",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-029",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-030",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-031",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-032",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-033",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-034",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-035",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-036",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-037",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-038",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-039",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-040",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-041",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-042",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-043",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-044",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-045",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-046",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-047",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-048",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-049",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-050",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-051",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-052",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-053",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-054",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-055",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-056",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-057",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-058",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-059",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-060",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-061",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-062",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-063",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-064",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.5-065",
+      "section": "10.6.5",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.6-005",
       "section": "10.6.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-10.6.6-002",
+      "id": "RK-10.6.6-006",
       "section": "10.6.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-10.6.6-003",
+      "id": "RK-10.6.6-007",
+      "section": "10.6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.6-008",
+      "section": "10.6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.6-009",
+      "section": "10.6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.6-010",
+      "section": "10.6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.6-011",
+      "section": "10.6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.6-012",
+      "section": "10.6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.6-013",
+      "section": "10.6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.6-014",
+      "section": "10.6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.6-015",
+      "section": "10.6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.6-016",
       "section": "10.6.6",
       "mapping": "mapped_partial",
       "links": [
@@ -59170,13 +60139,175 @@
       ]
     },
     {
-      "id": "RK-10.6.6-004",
+      "id": "RK-10.6.6-017",
       "section": "10.6.6",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-10.6.7-001",
+      "id": "RK-10.6.6-018",
+      "section": "10.6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.6-019",
+      "section": "10.6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.6-020",
+      "section": "10.6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.6-021",
+      "section": "10.6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.6-022",
+      "section": "10.6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.6-023",
+      "section": "10.6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.6-024",
+      "section": "10.6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.6-025",
+      "section": "10.6.6",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-003",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-004",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-005",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-006",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-007",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-008",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-009",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-010",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-011",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-012",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-013",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-014",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-015",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-016",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-017",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-018",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-019",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-020",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-021",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-022",
       "section": "10.6.7",
       "mapping": "mapped_partial",
       "links": [
@@ -59425,28 +60556,227 @@
       ]
     },
     {
-      "id": "RK-10.6.7-002",
+      "id": "RK-10.6.7-023",
       "section": "10.6.7",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-10.6.8-001",
+      "id": "RK-10.6.7-024",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-025",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-026",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-027",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-028",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-029",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-030",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-031",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-032",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-033",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-034",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.7-035",
+      "section": "10.6.7",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-006",
       "section": "10.6.8",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-10.6.8-002",
+      "id": "RK-10.6.8-007",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-008",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-009",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-010",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-011",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-012",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-013",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-014",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-015",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-016",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-017",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-018",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-019",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-020",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-021",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-022",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-023",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-024",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-025",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-026",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-027",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-028",
       "section": "10.6.8",
       "mapping": "mapped_partial",
       "links": [
         {
-          "id": "executor-close-cancellation",
-          "scope": "Independent executor closure ends an admitted generation or streaming tool; self-spared work survives owner cancellation but a later external close still cuts it.",
+          "id": "executor-close-local-lifecycle",
+          "scope": "Closing the kit's local executor: admission, active work, borrowed channels, own and ancestor turns, independent deliveries, repeated closes and later owner cancellation.",
           "coverage": "partial",
           "missing": [
-            "Other cancellation sources, arbitrary external executors and every distributed drainage condition of the broad clause are not established by this link."
+            "Remote executor construction, transport shutdown and executor-owned channel factories remain deferred in Rust and are not established by these local scenarios.",
+            "Native source references complement the scenarios; they are not additional shared-scenario execution receipts."
           ],
           "executions": [
             {
@@ -59682,21 +61012,13 @@
               "state": "stale"
             }
           ]
-        }
-      ]
-    },
-    {
-      "id": "RK-10.6.8-005",
-      "section": "10.6.8",
-      "mapping": "mapped_partial",
-      "links": [
+        },
         {
-          "id": "executor-close-local-lifecycle",
-          "scope": "Closing the kit's local executor: admission, active work, borrowed channels, own and ancestor turns, independent deliveries, repeated closes and later owner cancellation.",
+          "id": "executor-close-cancellation",
+          "scope": "Independent executor closure ends an admitted generation or streaming tool; self-spared work survives owner cancellation but a later external close still cuts it.",
           "coverage": "partial",
           "missing": [
-            "Remote executor construction, transport shutdown and executor-owned channel factories remain deferred in Rust and are not established by these local scenarios.",
-            "Native source references complement the scenarios; they are not additional shared-scenario execution receipts."
+            "Other cancellation sources, arbitrary external executors and every distributed drainage condition of §10.6.8 are not established by this link."
           ],
           "executions": [
             {
@@ -60370,7 +61692,67 @@
       ]
     },
     {
-      "id": "RK-10.6.8-003",
+      "id": "RK-10.6.8-029",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-030",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-031",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-032",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-033",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-034",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-035",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-036",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-037",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-038",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-039",
       "section": "10.6.8",
       "mapping": "mapped_partial",
       "links": [
@@ -60543,7 +61925,67 @@
       ]
     },
     {
-      "id": "RK-10.6.8-004",
+      "id": "RK-10.6.8-040",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-041",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-042",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-043",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-044",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-045",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-046",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-047",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-048",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-049",
+      "section": "10.6.8",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.8-050",
       "section": "10.6.8",
       "mapping": "unmapped",
       "links": []
@@ -60555,13 +61997,37 @@
       "links": []
     },
     {
-      "id": "RK-10.6.9-002",
+      "id": "RK-10.6.9-005",
       "section": "10.6.9",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-10.6.9-003",
+      "id": "RK-10.6.9-006",
+      "section": "10.6.9",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.9-007",
+      "section": "10.6.9",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.9-008",
+      "section": "10.6.9",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.9-009",
+      "section": "10.6.9",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-10.6.9-010",
       "section": "10.6.9",
       "mapping": "unmapped",
       "links": []
