@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rfc_sha256": "1e85d50b437540bea3f99539642ab857346034162ec811d75a3f5f56a331eca4",
-  "corpus_sha256": "48ad513529158c72ff9cf3cf17898dc3bf04bb4dd054493def2de06ce5af7e79",
+  "rfc_sha256": "baeb5d5893c97e4fa52bd23183f0d7afbf39f215aaa810a196dc1a5c7c752390",
+  "corpus_sha256": "8e39b2ef83ee68a93500cb8bb4de88ca3c8eb42b29eab1b19412554c27b7e271",
   "python_commit": "98a547aab38e5bf1686d9fe0cf6bc5a011568924",
-  "scenario_count": 3084,
+  "scenario_count": 3085,
   "sections": [
     {
       "section": "0",
@@ -2806,6 +2806,7 @@
         "acp/tool-publication-opt-in",
         "executors/a-room-hook-no-executor-defines-takes-its-agent-offline-in-that-room",
         "executors/an-agent-s-presence-is-published-in-its-rooms-on-attach-and-when-its-coverage-changes",
+        "streaming/a-directly-wired-prompt-rechecks-its-room-audience",
         "streaming/a-narrowed-binding-s-turn-publishes-no-reasoning",
         "streaming/a-read-only-binding-s-turn-publishes-no-reasoning",
         "streaming/a-scoped-trigger-s-turn-publishes-no-reasoning",
@@ -32151,7 +32152,8 @@
           "coverage": "partial",
           "missing": [
             "Binding changes during the turn, writes after the turn, and other access/mute variants are not exercised here.",
-            "Tools, hooks and other ephemeral families retain their separate contracts."
+            "Tools, hooks and other ephemeral families retain their separate contracts.",
+            "Direct channel calls and a revocation during model generation are outside these two ACP scenarios."
           ],
           "executions": [
             {
@@ -32283,6 +32285,15 @@
               "state": "stale"
             }
           ]
+        },
+        {
+          "id": "direct-ai-prompt-tool-audience",
+          "scope": "Tool start and end publications from a directly wired scripted AI channel, for an unrestricted trigger, a private trigger and a binding narrowed after admission.",
+          "coverage": "partial",
+          "missing": [
+            "A bound turn and work continuing after the prompt, a deleted or recreated room, other permission changes and other ephemeral event families remain outside this scenario."
+          ],
+          "executions": []
         }
       ]
     },

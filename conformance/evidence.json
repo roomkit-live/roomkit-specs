@@ -19898,12 +19898,13 @@
       ],
       "missing": [
         "Binding changes during the turn, writes after the turn, and other access/mute variants are not exercised here.",
-        "Tools, hooks and other ephemeral families retain their separate contracts."
+        "Tools, hooks and other ephemeral families retain their separate contracts.",
+        "Direct channel calls and a revocation during model generation are outside these two ACP scenarios."
       ],
-      "clause_sha256": "0f4a63b7bb4b26ce6e33a2f8ab5af11510d1953a0fe5f7ad5220ea4585372e9f",
+      "clause_sha256": "a176d7d55e4901a7f53ebb798ee91394f035660ee6bce5b9b66a8d019bf0dc85",
       "coverage": "partial",
       "tests": [],
-      "review": "Independent full review reads the Python source tests, shared scenarios, RFC and Rust port together. A baseline Rust run fails on the missing marker, report thought and ephemeral events. Review found the preview case did not enable publication; it now enables the actual option and asserts its 1000-character Unicode preview, full 1001-character marker/report and length. Python passes before Rust. Rust passes on one and four workers."
+      "review": "Independent full review reads the Python source tests, shared scenarios, RFC and Rust port together. A baseline Rust run fails on the missing marker, report thought and ephemeral events. Review found the preview case did not enable publication; it now enables the actual option and asserts its 1000-character Unicode preview, full 1001-character marker/report and length. Python passes before Rust. Rust passes on one and four workers. Both scenarios submit their events through process_inbound. Their static binding and triggering-event restrictions still exercise the owner-issued turn path in the current clause."
     },
     {
       "id": "acp-active-tool-markers-and-response",
@@ -25901,6 +25902,34 @@
       "review": "Reviewed the two executable ACP subscriber scenarios, the typed source and target consumers, and their separate tool-report and stored-row paths. Native checks cover actual key omission. Assertion links do not record an execution.",
       "missing": [
         "This scenario does not cover answer-text publications, reasoning, hook modifications or other channels."
+      ]
+    },
+    {
+      "id": "direct-ai-prompt-tool-audience",
+      "requirement": "RK-8.4-002",
+      "clause_sha256": "a176d7d55e4901a7f53ebb798ee91394f035660ee6bce5b9b66a8d019bf0dc85",
+      "coverage": "partial",
+      "scope": "Tool start and end publications from a directly wired scripted AI channel, for an unrestricted trigger, a private trigger and a binding narrowed after admission.",
+      "assertions": [
+        {
+          "scenario": "streaming/a-directly-wired-prompt-rechecks-its-room-audience",
+          "pointer": "/expect/tool_events",
+          "sha256": "674349962f7fb1377ba7e1b524b43eb4f7accc9750340b1f07a3e868bbf8aaea",
+          "scenario_sha256": "6f8186b72a8004d687274edb33fddf85e32e7c6e39359c37dea45197f8f9185e",
+          "proves": "An unrestricted prompt produces a start and an end for room subscribers. Neither event reaches the private room or the room whose binding was narrowed while the model waited."
+        },
+        {
+          "scenario": "streaming/a-directly-wired-prompt-rechecks-its-room-audience",
+          "pointer": "/expect/models",
+          "sha256": "c22d4b699cb533595901e463496e74b0fceb5bfadd5d84962124e83e4b1da7b4",
+          "scenario_sha256": "6f8186b72a8004d687274edb33fddf85e32e7c6e39359c37dea45197f8f9185e",
+          "proves": "In all three rooms the model receives the completed lookup result in its following round. The two empty subscriber traces therefore follow successful tool execution."
+        }
+      ],
+      "tests": [],
+      "review": "The runner calls the wired channel directly using its current room context and binding. The held model announces that the prompt started before set_visibility changes its audience, then returns the scripted call after the gate opens.",
+      "missing": [
+        "A bound turn and work continuing after the prompt, a deleted or recreated room, other permission changes and other ephemeral event families remain outside this scenario."
       ]
     }
   ],
