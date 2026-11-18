@@ -313,8 +313,10 @@ def main() -> int:
         "--pin",
         nargs="+",
         metavar="NAME",
-        help="record the citations of these units or scenarios as read against the "
-        "current RFC text in links.lock.json, and drop their pins with no citation",
+        help="record the named citations as read against the current RFC text in "
+        "links.lock.json, and drop the named pins with no citation: a unit names its "
+        "citations, a scenario its own, both the citations of those units by those "
+        "scenarios",
     )
     parser.add_argument(
         "--changed-units",

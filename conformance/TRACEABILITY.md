@@ -149,8 +149,9 @@ at the current text, drops the named entries no citation holds any more, and
 moves nothing else. Naming a scenario alone records it as reread against every
 unit it cites, changed ones included: the checker's own advice names the unit
 too. A pin needs at least one name, refuses a name that selects nothing, and
-pins nothing while the check reports an error. It changes the lock column of
-`rules/`, so run `--traceability --update-traceability` after it.
+pins nothing while a scenario, citation or lock check reports an error (the
+`--traceability` and `--changed-units` checks run after it). It changes the
+lock column of `rules/`, so run `--traceability --update-traceability` after it.
 
 ### The process rule
 
@@ -205,8 +206,8 @@ writes receipts.
 ## Reviewed links
 
 Each link pins the clause, a JSON pointer into an actual expectation, and the
-whole scenario but its `requirements` citations. A setup change invalidates its review even when the expected
-value remains the same. `scope`, `proves`, `review` and `missing` describe what
+whole scenario but its `requirements` citations. A setup change invalidates its
+review even when the expected value remains the same. `scope`, `proves`, `review` and `missing` describe what
 was checked. A partial link must name its gaps; a complete link cannot list gaps.
 A section citation in `rules` is useful navigation, never coverage credit.
 
