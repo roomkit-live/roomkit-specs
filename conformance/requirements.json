@@ -370,7 +370,7 @@
       "section": "7",
       "title": "Permission Model",
       "line": 4545,
-      "sha256": "a93c19a4df402a7413cf3d04e9e8b9ec3a79e495cb1ad5fa3cfe45e870befb32",
+      "sha256": "0d419084c31643804e9bf175e071a5d78ccf08c11006a6573425faea4c179e1d",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -378,7 +378,7 @@
       "section": "7.1",
       "title": "Access",
       "line": 4552,
-      "sha256": "cb755a8b704567372a7ab655ac31e9055459e98aafc9976fab6d1c3fa91686ff",
+      "sha256": "f956d06c61e073d4807e6b27527edceedc12a8c4dcadc83f703c59305dfdf993",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -386,7 +386,7 @@
       "section": "7.2",
       "title": "Muting",
       "line": 4565,
-      "sha256": "b53ff30be562d22a786cab1544398097b9f9a3f8e5047184a9587f7647056f1b",
+      "sha256": "24be8da28fd15ca63603b19eab86ffc471073982e20ac6548e9ce238d2ad2a25",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -394,7 +394,7 @@
       "section": "7.3",
       "title": "Visibility",
       "line": 4599,
-      "sha256": "291a2096a37da5c880c7163623993b4bc97f15c0bb8a7c00d49429676819f4f9",
+      "sha256": "07a24a1103d4fbe5870ecd6dfa8a90ebc3eabac012e3fefb5dfd2b5e559a45db",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -402,7 +402,7 @@
       "section": "7.4",
       "title": "Named Patterns",
       "line": 4691,
-      "sha256": "010b44646ebe36ea7de8d3e9b760d5f37704264cf679f36bd45f95a47a7455e4",
+      "sha256": "731703c4129c1e69dfcc5a67792e33583f165e373643f1b1f5474437cce502de",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -410,7 +410,7 @@
       "section": "7.5",
       "title": "Permission Rules",
       "line": 4706,
-      "sha256": "30bcd3410070f02d30084cd0004f654a0c8db1a5f8e40ba36701dbd303105858",
+      "sha256": "53e8598514326c1772650307e921eabdae23b0d90392bd0d215bac6f3b303704",
       "unannotated_keyword_lines": [],
       "unannotated_content_lines": []
     },
@@ -4160,51 +4160,237 @@
       "id": "RK-7-001",
       "kind": "behavior",
       "applies": "§7 Permission Model; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "level": "must",
       "section": "7",
       "line": 4547,
       "text": "The permission model consists of three orthogonal primitives. The framework\nprovides the primitives; the integrator decides when and how to use them.",
       "sha256": "df41655f76b7102c74190cb556f4a0d8687080c8613a18608ac6ab29eb060e5e"
     },
     {
-      "id": "RK-7.1-001",
+      "id": "RK-7.1-002",
       "kind": "behavior",
-      "applies": "§7.1 Access; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "§7.1 Access (its header), the READ_WRITE row: what a binding's access controls, and READ_WRITE, which reads and writes. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
       "section": "7.1",
       "line": 4554,
-      "text": "Controls whether a channel can read events, write events, or both within a room.\n\n| Value | Can Read | Can Write | Description |\n|---|---|---|---|\n| READ_WRITE | Yes | Yes | Full participation |\n| READ_ONLY | Yes | No | Observe only (events via `on_event()`) |\n| WRITE_ONLY | No | Yes | Blind sender (unusual, but valid) |\n| NONE | No | No | Fully disconnected (binding exists but inactive) |",
-      "sha256": "4d4b36fe3d71f3d05f7e7e15272ff282f2add52ee7677cc73edc76a5a0c1c433"
+      "text": "Controls whether a channel can read events, write events, or both within a room.\n\n| Value | Can Read | Can Write | Description |\n|---|---|---|---|\n| READ_WRITE | Yes | Yes | Full participation |\n|",
+      "sha256": "09e15544fea0657bef56fbca15075385d6cd074a82f5f472f02ac5c31fb5fe92"
     },
     {
-      "id": "RK-7.2-001",
+      "id": "RK-7.1-003",
       "kind": "behavior",
-      "applies": "§7.2 Muting; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "§7.1 Access, the READ_ONLY row: a channel that reads events through on_event() and writes none. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.1",
+      "line": 4560,
+      "text": "READ_ONLY | Yes | No | Observe only (events via `on_event()`) |\n|",
+      "sha256": "99f18018def90777dac2f0d603ae27d98a454f7122d11faa761786249fa15728"
+    },
+    {
+      "id": "RK-7.1-004",
+      "kind": "behavior",
+      "applies": "§7.1 Access, the WRITE_ONLY row: a channel that writes and reads no event. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.1",
+      "line": 4561,
+      "text": "WRITE_ONLY | No | Yes | Blind sender (unusual, but valid) |\n|",
+      "sha256": "fb7a9f67eb6e03c98c4d2438a0c2d77b2568b1f91961e5ebb7e2fba4dde3c72b"
+    },
+    {
+      "id": "RK-7.1-005",
+      "kind": "behavior",
+      "applies": "§7.1 Access, the NONE row: a binding that stays in the room and neither reads nor writes. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.1",
+      "line": 4562,
+      "text": "NONE | No | No | Fully disconnected (binding exists but inactive) |",
+      "sha256": "22b96418ac9611bc7c3d02cf45f50542f2fdd51ebd114f936292dbbc0971a05a"
+    },
+    {
+      "id": "RK-7.2-003",
+      "kind": "behavior",
+      "applies": "§7.2 Muting: the muted flag of a binding, and a muted channel still reading events through on_event(). Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
       "section": "7.2",
       "line": 4567,
-      "text": "A boolean flag on the binding. When `muted = true`:\n\n- The channel STILL receives events via `on_event()` (reading is preserved).\n- The channel's response events are not broadcast (writing is blocked):\n  each re-enters and its commit pass stores it `BLOCKED` with\n  `source_muted` (`source_read_only` when its access does not write either),\n  after its hooks (§7.5 rule 2); a streamed one MAY be closed unread instead.\n  A mute that lands while the response streams holds from the next row it\n  commits: that row and the ones after are stored `BLOCKED`, and the\n  streaming target reads nothing more of the stream (§7.5 rule 2).\n- Side effects (tasks, observations) are STILL collected.\n\nMuting is temporary. The integrator calls `mute()` and `unmute()` as needed.\n\nA binding's `output_muted` (§5.7) is no mute: the integrator sets it with\n`mute_output()` and `unmute_output()`, which fire no trigger and write no\nlifecycle record, and the channel still receives every event.",
-      "sha256": "45c9219beb29f0b06606cfe6c8a4bba529e017ffc801a3fd8fc6e0528ccaa2d7"
+      "text": "A boolean flag on the binding. When `muted = true`:\n\n- The channel STILL receives events via `on_event()` (reading is preserved).",
+      "sha256": "c85108ef322ad92aae143356def7e1b0269191dcb4dad4fe2f0a31b5022a6e5c"
     },
     {
-      "id": "RK-7.2-002",
+      "id": "RK-7.2-004",
       "kind": "behavior",
-      "applies": "§7.2 Muting; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "§7.2 Muting, a binding with muted = true: its channel's response stored BLOCKED with source_muted, or source_read_only when its access does not write, after its hooks (§7.5 rule 2); a streamed one may be closed unread instead. The paths RK-7.5-010 leaves out are not refused. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.2",
+      "line": 4570,
+      "text": "- The channel's response events are not broadcast (writing is blocked):\n  each re-enters and its commit pass stores it `BLOCKED` with\n  `source_muted` (`source_read_only` when its access does not write either),\n  after its hooks (§7.5 rule 2); a streamed one MAY be closed unread instead.",
+      "sha256": "bcee080f28364623f3c022a4aa8eb9693e98251c6d45a735420066588b4d9680"
+    },
+    {
+      "id": "RK-7.2-005",
+      "kind": "behavior",
+      "applies": "§7.2 Muting: a mute that lands while the channel's response streams, from the next row it commits (§7.5 rule 2). Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.2",
+      "line": 4574,
+      "text": "A mute that lands while the response streams holds from the next row it\n  commits: that row and the ones after are stored `BLOCKED`, and the\n  streaming target reads nothing more of the stream (§7.5 rule 2).",
+      "sha256": "e7a68ae17f6cc0b2ce6eac28c9236d199f53a5168170c4b78989c23c6d9d8a0a"
+    },
+    {
+      "id": "RK-7.2-006",
+      "kind": "behavior",
+      "applies": "§7.2 Muting, a binding with muted = true: the tasks and observations of its channel still collected (§7.5 rule 3). Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.2",
+      "line": 4577,
+      "text": "- Side effects (tasks, observations) are STILL collected.",
+      "sha256": "6c3d5cd92756e88818e37852860644e71abf35e8e49f72ace44ea79b1a36db5f"
+    },
+    {
+      "id": "RK-7.2-007",
+      "kind": "behavior",
+      "applies": "§7.2 Muting: mute() and unmute(), the integrator's calls that set and clear a binding's muted flag. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.2",
+      "line": 4578,
+      "text": "Muting is temporary. The integrator calls `mute()` and `unmute()` as needed.",
+      "sha256": "c0c785ed8e05acf5669e3f420e1ee555227a5991270c3412695be0118ff06c91"
+    },
+    {
+      "id": "RK-7.2-008",
+      "kind": "behavior",
+      "applies": "§7.2 Muting: a binding's output_muted (§5.7), set by mute_output() and unmute_output(), against a mute. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.2",
+      "line": 4580,
+      "text": "A binding's `output_muted` (§5.7) is no mute: the integrator sets it with\n`mute_output()` and `unmute_output()`, which fire no trigger and write no\nlifecycle record, and the channel still receives every event.",
+      "sha256": "982d6ca671dc05da17ca7037880f99ee0ed230979b7ef8811d8484f6a81208c0"
+    },
+    {
+      "id": "RK-7.2-009",
+      "kind": "behavior",
+      "applies": "§7.2 A binding change that changes nothing: a detach or a binding update for a channel the room does not bind. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
       "section": "7.2",
       "line": 4587,
-      "text": "**A binding change that changes nothing.** Detaching or updating a channel\nthe room does not bind fails, with nothing written. An update applies to the\nbinding as stored, carrying over every field it does not name (§7.5 rule 6),\nand one that changes nothing writes nothing and fires nothing, so a retried\ncall duplicates no hook and no record. `ON_CHANNEL_MUTED` and\n`ON_CHANNEL_UNMUTED` fire when `muted` changes, and only then: muting a\nmuted channel fires nothing. A change of access, visibility or metadata\nfires no trigger and emits no framework event. A binding changes whatever\nthe room's status, which governs what the timeline accepts (§5.1).",
-      "sha256": "856aaee9c632cb3585bc9c8919f326913f86c326e0a44c5487dd6db5ce145748"
+      "text": "**A binding change that changes nothing.** Detaching or updating a channel\nthe room does not bind fails, with nothing written.",
+      "sha256": "661abd5d74e52e762637b339c2be7e592833759bb15c64c870f2755dbb8f2f4d"
     },
     {
-      "id": "RK-7.3-001",
+      "id": "RK-7.2-010",
       "kind": "behavior",
-      "applies": "§7.3 Visibility; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "§7.2 A binding change that changes nothing: a binding update, applied to the binding as stored; one that changes nothing. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.2",
+      "line": 4589,
+      "text": "An update applies to the\nbinding as stored, carrying over every field it does not name (§7.5 rule 6),\nand one that changes nothing writes nothing and fires nothing, so a retried\ncall duplicates no hook and no record.",
+      "sha256": "2a8742ce72ccbdb79e6d615091c43095a7caeb49db0c4ba3d914f41820b4ff4c"
+    },
+    {
+      "id": "RK-7.2-011",
+      "kind": "behavior",
+      "applies": "§7.2 A binding change that changes nothing: when ON_CHANNEL_MUTED and ON_CHANNEL_UNMUTED fire on a binding change. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.2",
+      "line": 4592,
+      "text": "`ON_CHANNEL_MUTED` and\n`ON_CHANNEL_UNMUTED` fire when `muted` changes, and only then: muting a\nmuted channel fires nothing.",
+      "sha256": "72f6bf0da70e16298ed1890a75be7100a528d93caa7c1b67773b68d31fd9080c"
+    },
+    {
+      "id": "RK-7.2-012",
+      "kind": "behavior",
+      "applies": "§7.2 A binding change that changes nothing: a binding change of access, visibility or metadata. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.2",
+      "line": 4594,
+      "text": "A change of access, visibility or metadata\nfires no trigger and emits no framework event.",
+      "sha256": "ba29e91ec2819ec840d11a1636b8d23c63933a97d0746e7acd3ed8343ac251da"
+    },
+    {
+      "id": "RK-7.2-013",
+      "kind": "behavior",
+      "applies": "§7.2 A binding change that changes nothing: a binding change in a room of any status (§5.1). Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.2",
+      "line": 4595,
+      "text": "A binding changes whatever\nthe room's status, which governs what the timeline accepts (§5.1).",
+      "sha256": "76c1e76b2c1345aba43ff644057ce3fdfbe64e18b7a23b5fe50e453f258b2284"
+    },
+    {
+      "id": "RK-7.3-012",
+      "kind": "behavior",
+      "applies": "§7.3 Visibility (its header), the all row: a visibility set on the binding and carried by each event (§5.2), and all, which every channel of the room sees. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
       "section": "7.3",
       "line": 4601,
-      "text": "Controls which channels see events produced by the source channel. Set on the\nbinding as a string value, and carried by each event (§5.2):\n\n| Value | Meaning |\n|---|---|\n| `\"all\"` | All channels in the room see the event |\n| `\"none\"` | No channels see the event (stored in timeline only) |\n| `\"internal\"` | No channels see the event, as with `\"none\"`; marks a record the framework wrote (§6.4) |\n| `\"transport\"` | Only transport channels see the event |\n| `\"intelligence\"` | Only intelligence channels see the event |\n| `\"channel_a,channel_b\"` | Comma-separated list of specific channel IDs |\n| `\"channel_a\"` | Single channel ID |",
-      "sha256": "8bbce89a0c998754e14908885f7f07375b6ddd045f08bc4acaeb0886f98d212f"
+      "text": "Controls which channels see events produced by the source channel. Set on the\nbinding as a string value, and carried by each event (§5.2):\n\n| Value | Meaning |\n|---|---|\n| `\"all\"` | All channels in the room see the event |\n|",
+      "sha256": "c69511a960fd5dc244b61c5b409be7bc524141090b10ff75c30c07fa619e1dfa"
+    },
+    {
+      "id": "RK-7.3-013",
+      "kind": "behavior",
+      "applies": "§7.3 Visibility, the none row: an event no channel sees, stored in the timeline only. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.3",
+      "line": 4608,
+      "text": "`\"none\"` | No channels see the event (stored in timeline only) |\n|",
+      "sha256": "0b7ba7ab506e39a91caa541623d6a454bb30fbd6f341aa6f9883b9c009345cde"
+    },
+    {
+      "id": "RK-7.3-014",
+      "kind": "behavior",
+      "applies": "§7.3 Visibility, the internal row: an event no channel sees, which marks a record the framework wrote (§6.4). Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.3",
+      "line": 4609,
+      "text": "`\"internal\"` | No channels see the event, as with `\"none\"`; marks a record the framework wrote (§6.4) |\n|",
+      "sha256": "664450814964c507114b793f32ca95ef6d48a9ae17d5da4b0b96a33eedfd4090"
+    },
+    {
+      "id": "RK-7.3-015",
+      "kind": "behavior",
+      "applies": "§7.3 Visibility, the transport row: an event only the room's transport channels see. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.3",
+      "line": 4610,
+      "text": "`\"transport\"` | Only transport channels see the event |\n|",
+      "sha256": "150a2dfe2c4cb2c681f7af7127fe5b7850dfde1896ef447951a691e5f9971874"
+    },
+    {
+      "id": "RK-7.3-016",
+      "kind": "behavior",
+      "applies": "§7.3 Visibility, the intelligence row: an event only the room's intelligence channels see. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.3",
+      "line": 4611,
+      "text": "`\"intelligence\"` | Only intelligence channels see the event |\n|",
+      "sha256": "ccc47e31aa6b568f58e68c94991cda91d0db834d03a308768fdd8488632fddb8"
+    },
+    {
+      "id": "RK-7.3-017",
+      "kind": "behavior",
+      "applies": "§7.3 Visibility, the list row: an event only the channels a comma-separated list names see. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.3",
+      "line": 4612,
+      "text": "`\"channel_a,channel_b\"` | Comma-separated list of specific channel IDs |\n|",
+      "sha256": "c2b447dcd2ef5bfde938025e3033abcc1a1ea8c7b938609b9aeb0c2131c5d7dd"
+    },
+    {
+      "id": "RK-7.3-018",
+      "kind": "behavior",
+      "applies": "§7.3 Visibility, the single id row: an event only the channel the id names sees. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.3",
+      "line": 4613,
+      "text": "`\"channel_a\"` | Single channel ID |",
+      "sha256": "2719bc75715746ba68be75512b2666243fc0fa8ee34fe7ad8fd8424844e562d1"
     },
     {
       "id": "RK-7.3-005",
       "kind": "behavior",
       "applies": "§7.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under §7.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
       "section": "7.3",
       "line": 4616,
       "text": "**Grammar.** A visibility is one of the five keywords `all`, `none`,\n`internal`, `transport` and `intelligence`, or a list of one or more channel\nids separated by commas. A keyword is written exactly as above, in lowercase\n(`\"All\"` is a channel id, not the keyword).",
@@ -4214,6 +4400,7 @@
       "id": "RK-7.3-006",
       "kind": "behavior",
       "applies": "§7.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under §7.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
       "section": "7.3",
       "line": 4620,
       "text": "The keywords are reserved: a\nchannel whose id is one of them MUST be refused when it is registered, and so\nMUST a channel whose id contains a comma or starts or ends with whitespace, so\nthat every channel id can be written in a list.",
@@ -4223,6 +4410,7 @@
       "id": "RK-7.3-007",
       "kind": "behavior",
       "applies": "§7.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under §7.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
       "section": "7.3",
       "line": 4623,
       "text": "Whitespace around the whole\nvalue and around each id is ignored (`\" sms , ws \"` is `\"sms,ws\"`).",
@@ -4232,6 +4420,7 @@
       "id": "RK-7.3-008",
       "kind": "behavior",
       "applies": "§7.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under §7.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
       "section": "7.3",
       "line": 4624,
       "text": "An empty\nvalue and an empty item (`\"\"`, `\"sms,,ws\"`, `\"sms,\"`) MUST be refused, a\n`response_visibility` at the doors included (an inbound message, §5.12, a\ndirect injection, §10.5).",
@@ -4241,6 +4430,7 @@
       "id": "RK-7.3-009",
       "kind": "behavior",
       "applies": "§7.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under §7.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
       "section": "7.3",
       "line": 4627,
       "text": "An empty value that reaches an event any other way\n(a hook's modify, a custom store) reads as `none`, so that it restricts rather\nthan opens.",
@@ -4250,6 +4440,7 @@
       "id": "RK-7.3-010",
       "kind": "behavior",
       "applies": "§7.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under §7.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
       "section": "7.3",
       "line": 4629,
       "text": "An id listed twice counts once, and a list is written back with\neach id once, sorted by code point.",
@@ -4259,46 +4450,561 @@
       "id": "RK-7.3-011",
       "kind": "behavior",
       "applies": "§7.3 Visibility grammar; keywords are all, none, internal, transport and intelligence. The internal value is framework-only under §7.3 Who writes internal; public doors include attach, binding update, inbound visibility/response_visibility and direct injection visibility/response_visibility. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
       "section": "7.3",
       "line": 4630,
       "text": "An id that names no channel bound to the\nroom is allowed and matches nothing.",
       "sha256": "e49015e2698588a4cf5d210744aca8884abe1e0e29182ed2822ce348726c41af"
     },
     {
-      "id": "RK-7.3-003",
+      "id": "RK-7.3-019",
       "kind": "behavior",
-      "applies": "§7.3 Visibility; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "§7.3 Who writes internal: the framework alone writes internal, on the records it writes itself (§6.4). Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
       "section": "7.3",
       "line": 4634,
-      "text": "**Who writes `internal`.** Only the framework writes `internal`, on the\nrecords it writes itself (an interruption record, §6.4): a value that marks\nthe framework's record is not the integrator's to give. An implementation\nMUST refuse it, before anything is read or written, on an attach and a\nbinding update, on an inbound message, as its `visibility` and as its\n`response_visibility` alike (§5.12), and on a direct injection, its\nvisibility and its response visibility alike (§10.5); a hook's modify that\nwrites it, or that changes the visibility of an event that holds it (a\nframework record), has the event's visibility put back from the original,\nand one that writes it as a response visibility has it read as `none`\n(§9.4); a channel's response that carries it is committed with `none`, and\none a channel gives its response as a response visibility reads as `none`\n(§8.5). A record committed outside the pipeline (§10.5) is stored as its\ncaller gives it, and reaches no channel. An event the integrator wants stored\nand shown to no channel takes `none`.",
-      "sha256": "1f0a8a458b59d2dc9191abb555609611015638370e48824131a5a7f9918580f2"
+      "text": "**Who writes `internal`.** Only the framework writes `internal`, on the\nrecords it writes itself (an interruption record, §6.4): a value that marks\nthe framework's record is not the integrator's to give.",
+      "sha256": "bdd5f9691f727f41715aab3cb6243251e504af3f2e2a82ec82e8f8f9858f9f61"
     },
     {
-      "id": "RK-7.3-004",
+      "id": "RK-7.3-020",
       "kind": "behavior",
-      "applies": "§7.3 Visibility; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "§7.3 Who writes internal: internal given at a public door (attach, binding update, inbound message, direct injection), by a hook's modify (§9.4) or by a channel's response (§8.5). Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.3",
+      "line": 4637,
+      "text": "An implementation\nMUST refuse it, before anything is read or written, on an attach and a\nbinding update, on an inbound message, as its `visibility` and as its\n`response_visibility` alike (§5.12), and on a direct injection, its\nvisibility and its response visibility alike (§10.5); a hook's modify that\nwrites it, or that changes the visibility of an event that holds it (a\nframework record), has the event's visibility put back from the original,\nand one that writes it as a response visibility has it read as `none`\n(§9.4); a channel's response that carries it is committed with `none`, and\none a channel gives its response as a response visibility reads as `none`\n(§8.5).",
+      "sha256": "8115add142ea9b1397f50be22ddc1bf90e7c27a37557a8cd6d6419195dd0f6ae"
+    },
+    {
+      "id": "RK-7.3-021",
+      "kind": "behavior",
+      "applies": "§7.3 Who writes internal: a record committed outside the pipeline (§10.5), whatever visibility its caller gives it. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.3",
+      "line": 4647,
+      "text": "A record committed outside the pipeline (§10.5) is stored as its\ncaller gives it, and reaches no channel.",
+      "sha256": "5c65e9297ff6c5511fb44d336df2a522c6b8341fc348de57b0fa46858b1fa436"
+    },
+    {
+      "id": "RK-7.3-022",
+      "kind": "non_testable",
+      "applies": "§7.3 Who writes internal: the visibility an integrator gives an event to be stored and shown to no channel; the integrator's choice, which no implementation can keep for it. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.3",
+      "line": 4648,
+      "text": "An event the integrator wants stored\nand shown to no channel takes `none`.",
+      "sha256": "230657fba68208de8ce90d4e5dbd44623aff848e2fd5ec95de01a61ceaaa23b8"
+    },
+    {
+      "id": "RK-7.3-023",
+      "kind": "behavior",
+      "applies": "§7.3 An event's visibility: the visibility an event carries, all unless the caller sets one, beside its source binding's. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
       "section": "7.3",
       "line": 4652,
-      "text": "**An event's visibility.** An event carries a visibility of its own (an\ninbound message's `visibility`, §5.12, `\"all\"` unless the caller sets one),\nand its source binding has one. A channel sees an event whose source is\nbound to the room only when both include it. The framework MUST compute the\nvisibility that includes exactly those channels when it commits the event,\nDELIVERED (§10.1 step 12) or `BLOCKED` in its place (steps 10 and 11, §8.3),\nand store it as the event's `visibility`: delivery (§10.2) and every history\nrebuilt for a channel (§7.5 rule 8) read that field alone, so a binding\nchanged or removed later changes no past event. An accepted EDIT or DELETE\nis narrowed once more, to its target's visibility (§10.3). A record stored\n`BLOCKED` takes the visibility its event would have been delivered with, so\nthat a reader shown it later (a host's view of the room) sees no more of it\nthan it would have seen of the event: a hook's block and a source refusal,\nof an inbound message, a direct injection or a response; the record of an\nagent not asked at the chain-depth limit, and a response stored past the\nreentry budget (§8.3). An event whose source has no binding keeps its own.\nAn event a hook injects is no channel's and keeps its own (§9.4), blocked or\nstored past the budget. The intersection of two visibilities is:\n\n- `all` with any value: that value;\n- `internal` with any value: `internal`, which keeps the mark of a record\n  the framework wrote;\n- `none` with any value other than `internal`: `none`;\n- a category with itself: that category; `transport` with `intelligence`:\n  `none`;\n- two lists: the ids both name;\n- a category with a list: the listed channels of that category, read from\n  the room's bindings at commit; a listed id that no binding of the room\n  holds is dropped.\n\nAn intersection that leaves no id is `none`.\n\n\"See\" is not \"be delivered to\". `\"none\"` reads *stored in timeline only*, and it\nmeans it: an event a channel was not allowed to see at delivery MUST NOT reach\nthat channel later through history the framework rebuilds for it either. Rule 8\nin §7.5 states that half.",
-      "sha256": "28a775f564fd35db15431f7f870c8bab9de0fbf970cff069a0b0c9d6526b3287"
+      "text": "**An event's visibility.** An event carries a visibility of its own (an\ninbound message's `visibility`, §5.12, `\"all\"` unless the caller sets one),\nand its source binding has one.",
+      "sha256": "67c98895f1a875b9f12a19c712f550136d12b0b31a05e8b15527b380a830ce4a"
+    },
+    {
+      "id": "RK-7.3-024",
+      "kind": "behavior",
+      "applies": "§7.3 An event's visibility: which channels see an event whose source the room binds. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.3",
+      "line": 4655,
+      "text": "A channel sees an event whose source is\nbound to the room only when both include it.",
+      "sha256": "7376bf27a114f219b5934bcffcc192392d281d4a50faf686b16bc2113a48d884"
+    },
+    {
+      "id": "RK-7.3-025",
+      "kind": "behavior",
+      "applies": "§7.3 An event's visibility: the visibility computed when an event commits, DELIVERED or BLOCKED, and stored as its visibility; the exceptions are RK-7.3-026 to 029. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.3",
+      "line": 4656,
+      "text": "The framework MUST compute the\nvisibility that includes exactly those channels when it commits the event,\nDELIVERED (§10.1 step 12) or `BLOCKED` in its place (steps 10 and 11, §8.3),\nand store it as the event's `visibility`: delivery (§10.2) and every history\nrebuilt for a channel (§7.5 rule 8) read that field alone, so a binding\nchanged or removed later changes no past event.",
+      "sha256": "4810528d2e602f2527d05a84ba5afffa635bf555e94a58bd5d78a8c08612915e"
+    },
+    {
+      "id": "RK-7.3-026",
+      "kind": "behavior",
+      "applies": "§7.3 An event's visibility: an accepted EDIT or DELETE, narrowed to its target's visibility (§10.3). Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.3",
+      "line": 4661,
+      "text": "An accepted EDIT or DELETE\nis narrowed once more, to its target's visibility (§10.3).",
+      "sha256": "d35363b443c5a6ae7a01536e0a451c2a01fe717ee6c8de589b4836131ae2b4e2"
+    },
+    {
+      "id": "RK-7.3-027",
+      "kind": "behavior",
+      "applies": "§7.3 An event's visibility: a record stored BLOCKED, by a hook's block, a source refusal, the chain-depth limit or the reentry budget (§8.3). Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.3",
+      "line": 4662,
+      "text": "A record stored\n`BLOCKED` takes the visibility its event would have been delivered with, so\nthat a reader shown it later (a host's view of the room) sees no more of it\nthan it would have seen of the event: a hook's block and a source refusal,\nof an inbound message, a direct injection or a response; the record of an\nagent not asked at the chain-depth limit, and a response stored past the\nreentry budget (§8.3).",
+      "sha256": "da104010c7aa08279de48851f30d1714cfe0e676ec039b586d0156a633e75262"
+    },
+    {
+      "id": "RK-7.3-028",
+      "kind": "behavior",
+      "applies": "§7.3 An event's visibility: an event whose source the room does not bind. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.3",
+      "line": 4668,
+      "text": "An event whose source has no binding keeps its own.",
+      "sha256": "3f93953c403de83246bb278de25e697eb14df9cf0043b4029a4da5753597fcae"
+    },
+    {
+      "id": "RK-7.3-029",
+      "kind": "behavior",
+      "applies": "§7.3 An event's visibility: an event a hook injects (§9.4), blocked or stored past the budget. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.3",
+      "line": 4668,
+      "text": "An event a hook injects is no channel's and keeps its own (§9.4), blocked or\nstored past the budget.",
+      "sha256": "bcdcc19c1076d70ab981272d78d717ed35a7d946c93dcff0622aecd8a42c41b2"
+    },
+    {
+      "id": "RK-7.3-030",
+      "kind": "behavior",
+      "applies": "§7.3 An event's visibility, the intersection of two visibilities: all with any value. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.3",
+      "line": 4670,
+      "text": "The intersection of two visibilities is:\n\n- `all` with any value: that value;",
+      "sha256": "270e1e082a146a3e54778a70559e9ecc0209c89323c8d51be7150ec0700b5a21"
+    },
+    {
+      "id": "RK-7.3-031",
+      "kind": "behavior",
+      "applies": "§7.3 An event's visibility, the intersection of two visibilities: internal with any value. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.3",
+      "line": 4672,
+      "text": "- `internal` with any value: `internal`, which keeps the mark of a record\n  the framework wrote;",
+      "sha256": "803ab212b809484cb232e4adb097e5d5f79de329dc9d0804eaf22c4f640d6869"
+    },
+    {
+      "id": "RK-7.3-032",
+      "kind": "behavior",
+      "applies": "§7.3 An event's visibility, the intersection of two visibilities: none with any value but internal. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.3",
+      "line": 4674,
+      "text": "- `none` with any value other than `internal`: `none`;",
+      "sha256": "94361e36d36068671f62d8162956ca763330e0e5c6b08cb9419dac8e4625419f"
+    },
+    {
+      "id": "RK-7.3-033",
+      "kind": "behavior",
+      "applies": "§7.3 An event's visibility, the intersection of two visibilities: two categories. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.3",
+      "line": 4675,
+      "text": "- a category with itself: that category; `transport` with `intelligence`:\n  `none`;",
+      "sha256": "19390e4d6915e9e5273b0ca3f9dd05606326a540610d649bfeb541966914840c"
+    },
+    {
+      "id": "RK-7.3-034",
+      "kind": "behavior",
+      "applies": "§7.3 An event's visibility, the intersection of two visibilities: two lists of channel ids. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.3",
+      "line": 4677,
+      "text": "- two lists: the ids both name;",
+      "sha256": "a3d3006971f1fae71b70bf591b9ee8e8212034a2a34233868d39c3273e1bc01b"
+    },
+    {
+      "id": "RK-7.3-035",
+      "kind": "behavior",
+      "applies": "§7.3 An event's visibility, the intersection of two visibilities: a category with a list, read from the room's bindings at commit. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.3",
+      "line": 4678,
+      "text": "- a category with a list: the listed channels of that category, read from\n  the room's bindings at commit; a listed id that no binding of the room\n  holds is dropped.",
+      "sha256": "b50a7dd5f2099f9855b50ae2d1ba5465e8728f3830caa0de69a9d844bab54a3b"
+    },
+    {
+      "id": "RK-7.3-036",
+      "kind": "behavior",
+      "applies": "§7.3 An event's visibility: an intersection of two visibilities that leaves no channel id. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.3",
+      "line": 4681,
+      "text": "An intersection that leaves no id is `none`.",
+      "sha256": "91dda72edbeeccc5e95eff074dd2f07f195498c135f6d04484fa64070481d903"
+    },
+    {
+      "id": "RK-7.3-037",
+      "kind": "behavior",
+      "applies": "§7.3 An event's visibility: an event a channel was not allowed to see at delivery, in the history the framework rebuilds for that channel (§7.5 rule 8); a channel's own accepted events stay in its context (RK-7.5-032). Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.3",
+      "line": 4683,
+      "text": "\"See\" is not \"be delivered to\". `\"none\"` reads *stored in timeline only*, and it\nmeans it: an event a channel was not allowed to see at delivery MUST NOT reach\nthat channel later through history the framework rebuilds for it either. Rule 8\nin §7.5 states that half.",
+      "sha256": "18592fc2f579df645d5e97a405730af2021a2d67f43bd3f09303d95bfbb80267"
     },
     {
       "id": "RK-7.4-001",
       "kind": "behavior",
       "applies": "§7.4 Named Patterns; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "level": "must",
       "section": "7.4",
       "line": 4693,
       "text": "These are vocabulary for common configurations, NOT framework concepts. The\nframework only knows access, muted, and visibility.\n\n| Pattern | Configuration | Use Case |\n|---|---|---|\n| **Direct** | `access=READ_WRITE, visibility=\"all\"` | AI speaks to everyone in the room |\n| **Assistant** | `access=READ_WRITE, visibility=\"ws_advisor\"` | AI whispers only to the advisor |\n| **Observer** | `access=READ_ONLY` | Sentiment analyzer watches, produces side effects only |\n| **Muted** | `muted=true` | AI temporarily silenced but still tracking |\n| **Internal** | `access=READ_WRITE, visibility=\"none\"` | Writes stored in timeline but never broadcast; not the `internal` keyword, which marks a framework record (§7.3) |",
       "sha256": "4f31e5d3ea7a12eaa2a22c1ce7cea133e43648e9a93623fe5615ad6e1af0bd41"
     },
     {
-      "id": "RK-7.5-001",
+      "id": "RK-7.5-002",
       "kind": "behavior",
-      "applies": "§7.5 Permission Rules; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.",
+      "applies": "§7.5 Permission Rules, rule 1 (Reading): which channels receive an event through on_event(); a channel's own events are skipped (rule 5, RK-7.5-021). Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
       "section": "7.5",
       "line": 4708,
-      "text": "Implementations MUST enforce these rules:\n\n1. **Reading:** A channel receives events via `on_event()` if and only if its\n   binding has `access` ∈ {READ_WRITE, READ_ONLY} AND the event's visibility\n   includes this channel.\n2. **Writing:** A channel's response events are broadcast if and only if its\n   binding has `access` ∈ {READ_WRITE, WRITE_ONLY} AND `muted = false`.\n   Likewise, an inbound or directly-injected event whose source binding cannot\n   write (`access` ∉ {READ_WRITE, WRITE_ONLY} OR `muted = true`) MUST be stored\n   with status `BLOCKED` rather than `DELIVERED`, and MUST NOT be broadcast.\n   Its `blocked_by` is `source_read_only` when the access does not write,\n   `NONE` included and whether the binding is muted or not, since the access\n   is the lasting cause; it is `source_muted` when the source could write but\n   is muted. An event whose source has no binding in the room, such as a\n   channel the integrator detached (rule 7), MUST be stored `BLOCKED` with\n   `blocked_by` = `source_unbound` and MUST NOT be broadcast either; the\n   channel of an inbound message still parses it (§10.1 step 4), with a\n   context that holds no event of the room. A direct injection that names\n   such a channel raises instead, with nothing written (§10.5). A response\n   re-enters like any other event (§10.1 step 14) and meets this check after its\n   `BEFORE_BROADCAST` hooks (step 11 after step 9), on each path that commits\n   a response: a buffered response, a streamed row, a regenerated answer. The\n   check reads the source's binding as the hooks left it, so a hook that\n   mutes the source of the event it reads blocks that event. The greeting,\n   and the trace a delegation writes into a child room no transport is\n   shared into (§23.3), and a record an integrator commits outside the\n   pipeline (§10.5), are committed by paths of their own and are not\n   covered here; a child room with a shared transport commits its agent's\n   response as a room does, and is covered. A muted or\n   read-only source's response is therefore stored `BLOCKED` with what its\n   hooks decided collected (rule 3), and a hook that blocks it names the\n   block. A streamed response from a source that cannot write is piped live\n   to no channel: a read-only source's stream is read to its end and each row\n   stored `BLOCKED`; a muted source's MAY be closed unread, the reply never\n   generated. Each row of a streamed response reads the room's bindings at\n   its commit, under the room lock, and is checked and planned with them: a\n   binding changed while the response streams (its source muted, made\n   read-only or detached; a transport made write-only or detached) holds from\n   the next row. Once the room no longer lets the streaming target read the\n   response (its source can no longer write, the room refuses the row,\n   §5.1, the target is no longer one the answer reaches, §12.2 step\n   11s, or a message's hooks narrowed its visibility away from the target,\n   §7.3), the target is handed nothing more of\n   the stream, neither text nor rows, and the rows after are delivered as\n   their plans say. A tool-call row whose hooks narrowed it away from the\n   target is not handed to the target, and the stream goes on. A source\n   both read-only and muted is refused as read-only, so\n   its stream is read to its end. An event a hook injects takes no source\n   check: it is the hook's, not a channel's (§9.4). Nor does an event the\n   framework itself writes through the pipeline, such as a delegation's task\n   description (§23.3): it is the framework's, not a channel's.\n3. **Side effects:** Tasks and observations are ALWAYS collected regardless of\n   access or mute status — including for events blocked by rule 2.\n4. **Visibility filtering:** When broadcasting an event, the framework MUST\n   deliver only to channels that both the event's own visibility and its\n   source binding's include: the intersection the event carries from its\n   commit (§7.3).\n5. **Self-skip:** A channel MUST NOT receive its own events via `on_event()`.\n6. **A binding is never widened implicitly.** Wherever the framework creates a\n   binding from an existing one — sharing a channel into a delegated room\n   (§23.3), copying a template, re-attaching a channel it detached earlier — the\n   new binding MUST NOT grant more than the one it derives from. Carrying over\n   a binding's category and metadata while letting `access`, `visibility` and\n   `muted` fall back to defaults silently promotes a read-only observer into a\n   full participant, in a room the integrator never configured. Widening a\n   binding is an explicit act: it MUST come from an integrator call that says\n   so, never from a default filling a gap.\n7. **Attaching a channel is a decision, not a repair.** An implementation MAY\n   attach a channel automatically when a message arrives for a room the\n   channel is not yet bound to. It MUST NOT do so when the channel was\n   previously detached from that room, and MUST NOT use such an attach to\n   replace a binding that already exists — detaching is how an integrator\n   revokes a channel's access, and an automatic re-attach at default\n   permissions undoes exactly that.\n8. **Reconstructed context obeys the same rule as delivery.** Rule 1 governs\n   `on_event()`; this one governs everything the implementation rebuilds from\n   the timeline *for* a channel — the history handed to a memory provider, the\n   turns assembled into a model prompt, any per-channel replay of what was said.\n   A channel MUST NOT obtain there an event visibility withheld from it at\n   delivery. Withholding an event at broadcast and returning it one turn later\n   as context is not a partial enforcement of visibility; it is none.\n\n   The same holds for an event delivered to nobody. An event stored `BLOCKED`\n   — refused by a hook (§10.1 step 10), written by a source that could not\n   write, read-only or muted, or that has no binding in the room (step 11,\n   rule 2), stopped by the chain-depth cap or the reentry cap (§8.3) —\n   MUST NOT reach any channel's reconstructed context, its own source's\n   included: the room\n   refused that turn, and a model that reads its own refused answer as\n   history continues from a turn nobody received. The record stays in the\n   timeline for host code and audit (the point on host code below applies to\n   it unchanged), behind an explicit request: a timeline read serves the rows\n   the room received by default and the `BLOCKED` rows only when asked\n   (§14.1), a read by id is unconditional, and the history rebuilt for hooks\n   stays whole.\n\n   An event deleted by an accepted DELETE stays in the history rebuilt for a\n   channel, with its content withheld: an empty text in place of what was\n   said, and nothing of the provider's original payload; its stored record,\n   and the history rebuilt for hooks, keep the content (§10.3).\n\n   The filter is per reader, so it MUST be applied where the reader is known —\n   a single `RoomContext` shared by every channel of a broadcast cannot be\n   filtered once for all of them. An implementation MUST apply it before the\n   history reaches a component that can transform it (a summarizing or\n   compacting memory provider re-emits hidden content as a summary otherwise),\n   and SHOULD expose the per-reader view so host code can ask for it.\n\n   Three points the rule does NOT cover:\n\n   - **A channel always sees its own accepted events.** Rule 5 skips a\n     channel's own event at delivery because it produced it, not because it\n     may not know it. A rule that dropped an agent's own turns from its own\n     prompt would erase the assistant pattern of §7.4\n     (`visibility=\"ws_advisor\"`) from the inside. Its own *refused* turns are\n     the exception stated above: an answer nobody received, a muted channel's\n     included, is not history the channel may continue from. A channel with\n     no binding in the room is handed none of its events, its own included\n     (rule 2).\n   - **Host code reads the timeline whole.** Hooks, scorers and framework\n     machinery run in the integrator's process and hold the store already;\n     filtering their `recent_events` would forbid nothing and would break\n     legitimate readers. Visibility is a rule between the room and its\n     channels.\n   - **Visibility is stamped at commit.** The event's own `visibility` field\n     is the whole answer: the intersection stored at its commit (§7.3), or\n     what a later write of the event set (a held message's release,\n     §11.7.6), never the source's binding as it stands when the history is\n     read. Widening or\n     narrowing a binding changes what the source's later events reach, not\n     what its past ones reached. The same holds when the source binding no\n     longer exists: an implementation MUST NOT treat an unresolvable source\n     as a reason to hide ordinary history, which would empty a room's context\n     the moment a transport detaches.",
-      "sha256": "5f1dc6d2d39dc8b38df16947abbae9282a1c6171863fca5658f2cb290c44efa2"
+      "text": "Implementations MUST enforce these rules:\n\n1. **Reading:** A channel receives events via `on_event()` if and only if its\n   binding has `access` ∈ {READ_WRITE, READ_ONLY} AND the event's visibility\n   includes this channel.",
+      "sha256": "3f2a21e87a87f28758af82fb2bf812068b42efdf00eb77ce3854e9df20fc8e37"
+    },
+    {
+      "id": "RK-7.5-003",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 2 (Writing): whether a channel's response events are broadcast; the paths rule 2 does not cover are RK-7.5-010, 017 and 018. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4713,
+      "text": "2. **Writing:** A channel's response events are broadcast if and only if its\n   binding has `access` ∈ {READ_WRITE, WRITE_ONLY} AND `muted = false`.",
+      "sha256": "16d02503aa6ec522adf75fdadd266f2bc60fe712d545927e64954091847eb7d1"
+    },
+    {
+      "id": "RK-7.5-004",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 2: an inbound or directly injected event whose source binding cannot write. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4715,
+      "text": "Likewise, an inbound or directly-injected event whose source binding cannot\n   write (`access` ∉ {READ_WRITE, WRITE_ONLY} OR `muted = true`) MUST be stored\n   with status `BLOCKED` rather than `DELIVERED`, and MUST NOT be broadcast.",
+      "sha256": "ff2689ad2de912119ebe026d9f09fa19521e7d01f11f33d24c853a69265e37cd"
+    },
+    {
+      "id": "RK-7.5-005",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 2: the blocked_by of an event whose source binding cannot write, read-only or muted. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4718,
+      "text": "Its `blocked_by` is `source_read_only` when the access does not write,\n   `NONE` included and whether the binding is muted or not, since the access\n   is the lasting cause; it is `source_muted` when the source could write but\n   is muted.",
+      "sha256": "417443b22fc004f0afe6c998a74df018bda776b28503ab82e3c1650422a89e3b"
+    },
+    {
+      "id": "RK-7.5-006",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 2: an event whose source has no binding in the room, a detached channel's included; a direct injection naming one raises instead (RK-7.5-007), and the paths RK-7.5-010, 017 and 018 leave out are not refused. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4722,
+      "text": "An event whose source has no binding in the room, such as a\n   channel the integrator detached (rule 7), MUST be stored `BLOCKED` with\n   `blocked_by` = `source_unbound` and MUST NOT be broadcast either; the\n   channel of an inbound message still parses it (§10.1 step 4), with a\n   context that holds no event of the room.",
+      "sha256": "4fe9a478734b985ca3eb9a3a9e92bbdf8a1882b99a10ba769c2d79a4d25cdb8c"
+    },
+    {
+      "id": "RK-7.5-007",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 2: a direct injection (§10.5) whose source has no binding in the room. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4726,
+      "text": "A direct injection that names\n   such a channel raises instead, with nothing written (§10.5).",
+      "sha256": "862746c06f9faaee1f43f9cfd2246a0f983f310830cb80c86e622df5ffb20854"
+    },
+    {
+      "id": "RK-7.5-008",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 2: a response, checked after its BEFORE_BROADCAST hooks on each path that commits one, but the paths RK-7.5-010 leaves out. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4727,
+      "text": "A response\n   re-enters like any other event (§10.1 step 14) and meets this check after its\n   `BEFORE_BROADCAST` hooks (step 11 after step 9), on each path that commits\n   a response: a buffered response, a streamed row, a regenerated answer.",
+      "sha256": "940b9ad1b6c10df351a1526d33cd4b693d6af7b8c328d2fd34ec047e298073a9"
+    },
+    {
+      "id": "RK-7.5-009",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 2: the source binding the check reads, as the event's hooks left it. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4730,
+      "text": "The\n   check reads the source's binding as the hooks left it, so a hook that\n   mutes the source of the event it reads blocks that event.",
+      "sha256": "6faf5e940946cb78f8016bd95b2d707911651c5aa697b4b10b39b1ad1f5bbd1f"
+    },
+    {
+      "id": "RK-7.5-010",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 2: the paths it does not cover (the greeting, a delegation's trace in a child room no transport is shared into, a record committed outside the pipeline) and a child room with a shared transport, which it covers. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4732,
+      "text": "The greeting,\n   and the trace a delegation writes into a child room no transport is\n   shared into (§23.3), and a record an integrator commits outside the\n   pipeline (§10.5), are committed by paths of their own and are not\n   covered here; a child room with a shared transport commits its agent's\n   response as a room does, and is covered.",
+      "sha256": "0e9ff5891ac8139615adc06d9b22a3f6cf3127bee1d24f9c2a48781ed2ad7855"
+    },
+    {
+      "id": "RK-7.5-011",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 2: the response of a muted or read-only source, stored BLOCKED with what its hooks decided (rule 3); the paths RK-7.5-010 leaves out are not refused. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4737,
+      "text": "A muted or\n   read-only source's response is therefore stored `BLOCKED` with what its\n   hooks decided collected (rule 3), and a hook that blocks it names the\n   block.",
+      "sha256": "d911f59d706b68f352a9174c208490a313515f7d9d51725b4ea921c554569e1b"
+    },
+    {
+      "id": "RK-7.5-012",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 2: a streamed response from a source that cannot write, read-only or muted; the paths RK-7.5-010 leaves out are not refused. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4740,
+      "text": "A streamed response from a source that cannot write is piped live\n   to no channel: a read-only source's stream is read to its end and each row\n   stored `BLOCKED`; a muted source's MAY be closed unread, the reply never\n   generated.",
+      "sha256": "f5b74d8819a455d79f4bfff7d0d7b6f3aec2b88641783b7e468db3c72ad1b784"
+    },
+    {
+      "id": "RK-7.5-013",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 2: the bindings each row of a streamed response is checked and planned with, a binding changed while it streams included. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4743,
+      "text": "Each row of a streamed response reads the room's bindings at\n   its commit, under the room lock, and is checked and planned with them: a\n   binding changed while the response streams (its source muted, made\n   read-only or detached; a transport made write-only or detached) holds from\n   the next row.",
+      "sha256": "895acb82b10b2c2a5edb24b9a7d7d7e0b9bc348c07be5a0e90ec7da066a357b9"
+    },
+    {
+      "id": "RK-7.5-014",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 2: the streaming target once the room no longer lets it read the response. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4747,
+      "text": "Once the room no longer lets the streaming target read the\n   response (its source can no longer write, the room refuses the row,\n   §5.1, the target is no longer one the answer reaches, §12.2 step\n   11s, or a message's hooks narrowed its visibility away from the target,\n   §7.3), the target is handed nothing more of\n   the stream, neither text nor rows, and the rows after are delivered as\n   their plans say.",
+      "sha256": "5ba31626cbeaefeaa97a0b87561b0d92b5deb498c535970a879b4509ecbfb753"
+    },
+    {
+      "id": "RK-7.5-015",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 2: a streamed tool-call row whose hooks narrowed it away from the streaming target. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4753,
+      "text": "A tool-call row whose hooks narrowed it away from the\n   target is not handed to the target, and the stream goes on.",
+      "sha256": "c4280f087fb4f56f48f0b409e4d18baaa062395fc245a45a65b0dc0a4d77e675"
+    },
+    {
+      "id": "RK-7.5-016",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 2: a source both read-only and muted, and its streamed response. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4754,
+      "text": "A source\n   both read-only and muted is refused as read-only, so\n   its stream is read to its end.",
+      "sha256": "ff04e90594f0003dac52faf1a1116113495065ee3fdc05e292f069fa9ffdc765"
+    },
+    {
+      "id": "RK-7.5-017",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 2: an event a hook injects (§9.4). Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4756,
+      "text": "An event a hook injects takes no source\n   check: it is the hook's, not a channel's (§9.4).",
+      "sha256": "8e05bd9b8b1e190c7c319401308409807bd276a742e2d15b4294e371553e8579"
+    },
+    {
+      "id": "RK-7.5-018",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 2: an event the framework itself writes through the pipeline, such as a delegation's task description (§23.3). Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4757,
+      "text": "Nor does an event the\n   framework itself writes through the pipeline, such as a delegation's task\n   description (§23.3): it is the framework's, not a channel's.",
+      "sha256": "8dd1b9078c17114ffd4281c75235548fb51604965d502d2be991be81fcf2c6e6"
+    },
+    {
+      "id": "RK-7.5-019",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 3 (Side effects): the tasks and observations of an event, whatever access or mute status, rule 2's refusals included. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4759,
+      "text": "3. **Side effects:** Tasks and observations are ALWAYS collected regardless of\n   access or mute status — including for events blocked by rule 2.",
+      "sha256": "f670111d80435d3b7315f5b9a40cddc180ec741c7d3dbaee0c222cedd6b7f7d3"
+    },
+    {
+      "id": "RK-7.5-020",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 4 (Visibility filtering): the channels an event is delivered to. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4761,
+      "text": "4. **Visibility filtering:** When broadcasting an event, the framework MUST\n   deliver only to channels that both the event's own visibility and its\n   source binding's include: the intersection the event carries from its\n   commit (§7.3).",
+      "sha256": "6a55675d945b1119ae94c6df886f50d98e44d29df329a82d02444715164d634b"
+    },
+    {
+      "id": "RK-7.5-021",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 5 (Self-skip): a channel's own events. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4765,
+      "text": "5. **Self-skip:** A channel MUST NOT receive its own events via `on_event()`.",
+      "sha256": "beba8cd2274b179c5c4af335380435f9455bffe51a95635b3434b975136e8a16"
+    },
+    {
+      "id": "RK-7.5-022",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 6: a binding the framework creates from an existing one (sharing a channel into a delegated room, copying a template, re-attaching a detached channel). Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4766,
+      "text": "6. **A binding is never widened implicitly.** Wherever the framework creates a\n   binding from an existing one — sharing a channel into a delegated room\n   (§23.3), copying a template, re-attaching a channel it detached earlier — the\n   new binding MUST NOT grant more than the one it derives from. Carrying over\n   a binding's category and metadata while letting `access`, `visibility` and\n   `muted` fall back to defaults silently promotes a read-only observer into a\n   full participant, in a room the integrator never configured.",
+      "sha256": "ffc24d52ffe81d9710174e3006501ef50d7ad3f60c520a02f64fed2a95b08428"
+    },
+    {
+      "id": "RK-7.5-023",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 6: what widens a binding. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4773,
+      "text": "Widening a\n   binding is an explicit act: it MUST come from an integrator call that says\n   so, never from a default filling a gap.",
+      "sha256": "a9b4cd51e0a77e9ee442d5a18f4fca4095d803fd631ff71979976daa002c4847"
+    },
+    {
+      "id": "RK-7.5-024",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 7: attaching a channel automatically when a message arrives for a room it is not bound to; what such an attach must not do is RK-7.5-025. Enclosing capability conditions and §26 levels still apply.",
+      "level": "may",
+      "section": "7.5",
+      "line": 4775,
+      "text": "7. **Attaching a channel is a decision, not a repair.** An implementation MAY\n   attach a channel automatically when a message arrives for a room the\n   channel is not yet bound to.",
+      "sha256": "ddf057ecfab368cd32bf81af71ead04fe2c291afdbad11c8ed2deaa515c236e2"
+    },
+    {
+      "id": "RK-7.5-025",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 7, where an implementation attaches a channel automatically (RK-7.5-024): a channel detached from the room earlier, and a binding that already exists. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4778,
+      "text": "It MUST NOT do so when the channel was\n   previously detached from that room, and MUST NOT use such an attach to\n   replace a binding that already exists — detaching is how an integrator\n   revokes a channel's access, and an automatic re-attach at default\n   permissions undoes exactly that.",
+      "sha256": "4c1fffe6926826f00163cafb3ba0092e0e7c1ea85353677847d71b0b1bff9ee1"
+    },
+    {
+      "id": "RK-7.5-026",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 8: everything rebuilt from the timeline for a channel (memory history, model prompt, per-channel replay), against the visibility withheld at delivery; a channel's own accepted events stay in its context (RK-7.5-032), and host code reads the history whole (RK-7.5-034). Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4782,
+      "text": "8. **Reconstructed context obeys the same rule as delivery.** Rule 1 governs\n   `on_event()`; this one governs everything the implementation rebuilds from\n   the timeline *for* a channel — the history handed to a memory provider, the\n   turns assembled into a model prompt, any per-channel replay of what was said.\n   A channel MUST NOT obtain there an event visibility withheld from it at\n   delivery. Withholding an event at broadcast and returning it one turn later\n   as context is not a partial enforcement of visibility; it is none.",
+      "sha256": "f6881896eae9e31c55cacd338e66e197bc9196d10a08569a78da161341a05743"
+    },
+    {
+      "id": "RK-7.5-027",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 8: an event stored BLOCKED, in the context rebuilt for any channel, its own source's included. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4789,
+      "text": "The same holds for an event delivered to nobody. An event stored `BLOCKED`\n   — refused by a hook (§10.1 step 10), written by a source that could not\n   write, read-only or muted, or that has no binding in the room (step 11,\n   rule 2), stopped by the chain-depth cap or the reentry cap (§8.3) —\n   MUST NOT reach any channel's reconstructed context, its own source's\n   included: the room\n   refused that turn, and a model that reads its own refused answer as\n   history continues from a turn nobody received.",
+      "sha256": "e5f132080ad6e3908e47de72cc0ca0ce4dc2fbec34cfe0d0cc3b042389f375a9"
+    },
+    {
+      "id": "RK-7.5-028",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 8: a BLOCKED record in the timeline reads (§14.1) and in the history rebuilt for hooks. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4798,
+      "text": "The record stays in the\n   timeline for host code and audit (the point on host code below applies to\n   it unchanged), behind an explicit request: a timeline read serves the rows\n   the room received by default and the `BLOCKED` rows only when asked\n   (§14.1), a read by id is unconditional, and the history rebuilt for hooks\n   stays whole.",
+      "sha256": "46983490cc131a4e7f553a52db531dfedee57e9cc7b540372133e20142e16ddd"
+    },
+    {
+      "id": "RK-7.5-029",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 8: an event deleted by an accepted DELETE (§10.3), in the history rebuilt for a channel and for hooks. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4803,
+      "text": "An event deleted by an accepted DELETE stays in the history rebuilt for a\n   channel, with its content withheld: an empty text in place of what was\n   said, and nothing of the provider's original payload; its stored record,\n   and the history rebuilt for hooks, keep the content (§10.3).",
+      "sha256": "bdfa0617047fb1437147715520b3bf0f1199bb4477ebb9ea22be7e1c6d496cb4"
+    },
+    {
+      "id": "RK-7.5-030",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 8: where the per-reader filter is applied, against a context shared by every channel of a broadcast. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4808,
+      "text": "The filter is per reader, so it MUST be applied where the reader is known —\n   a single `RoomContext` shared by every channel of a broadcast cannot be\n   filtered once for all of them.",
+      "sha256": "03b286503ba46bc172f569e4b487225de2fc7f5966532a81335d61624421cc40"
+    },
+    {
+      "id": "RK-7.5-031",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 8: the filter applied before a component that can transform the history (a summarizing memory provider), and a per-reader view host code can ask for. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4812,
+      "text": "An implementation MUST apply it before the\n   history reaches a component that can transform it (a summarizing or\n   compacting memory provider re-emits hidden content as a summary otherwise),\n   and SHOULD expose the per-reader view so host code can ask for it.",
+      "sha256": "eab75aa9101ac318cd8156e828e11bc9e31ab8ab73edd95bbb7080af724f91a3"
+    },
+    {
+      "id": "RK-7.5-032",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 8, the first point it does not cover: a channel's own accepted events in its rebuilt context; its refused ones stay out (RK-7.5-027). Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4815,
+      "text": "Three points the rule does NOT cover:\n\n   - **A channel always sees its own accepted events.** Rule 5 skips a\n     channel's own event at delivery because it produced it, not because it\n     may not know it. A rule that dropped an agent's own turns from its own\n     prompt would erase the assistant pattern of §7.4\n     (`visibility=\"ws_advisor\"`) from the inside. Its own *refused* turns are\n     the exception stated above: an answer nobody received, a muted channel's\n     included, is not history the channel may continue from.",
+      "sha256": "1948bdefbb8467e3a365b117af5009ba0f6f99630c43e2ebbb3d850c0f7184f6"
+    },
+    {
+      "id": "RK-7.5-033",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 8: a channel with no binding in the room, handed none of its events (rule 2). Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4825,
+      "text": "A channel with\n     no binding in the room is handed none of its events, its own included\n     (rule 2).",
+      "sha256": "116bc830402445aed571e19225cafcc7f09c68e75bc7a77079512f5b09b0efb0"
+    },
+    {
+      "id": "RK-7.5-034",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 8, the second point it does not cover: the history read by host code (hooks, scorers, framework machinery). Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4827,
+      "text": "- **Host code reads the timeline whole.** Hooks, scorers and framework\n     machinery run in the integrator's process and hold the store already;\n     filtering their `recent_events` would forbid nothing and would break\n     legitimate readers. Visibility is a rule between the room and its\n     channels.",
+      "sha256": "4c7f3f55b53075cd700dfb1da9a455ceaebf5186316d30d88e083352da9b0199"
+    },
+    {
+      "id": "RK-7.5-035",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 8, the third point: the visibility a rebuilt history reads, the one stored at the event's commit or by a later write of it (§11.7.6). Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4832,
+      "text": "- **Visibility is stamped at commit.** The event's own `visibility` field\n     is the whole answer: the intersection stored at its commit (§7.3), or\n     what a later write of the event set (a held message's release,\n     §11.7.6), never the source's binding as it stands when the history is\n     read. Widening or\n     narrowing a binding changes what the source's later events reach, not\n     what its past ones reached.",
+      "sha256": "c8549e5ea7e8564205febbbd575bea8fe0601bb629a09f5bf7e30b08a4e5a730"
+    },
+    {
+      "id": "RK-7.5-036",
+      "kind": "behavior",
+      "applies": "§7.5 Permission Rules, rule 8: an event whose source binding no longer exists, in the history rebuilt for a channel. Enclosing capability conditions and §26 levels still apply.",
+      "level": "must",
+      "section": "7.5",
+      "line": 4839,
+      "text": "The same holds when the source binding no\n     longer exists: an implementation MUST NOT treat an unresolvable source\n     as a reason to hide ordinary history, which would empty a room's context\n     the moment a transport detaches.",
+      "sha256": "8af53666b2a3a8182f3a6494f8300aa2e4ebe7033ff695d4c27e232594f3f914"
     },
     {
       "id": "RK-8.1-001",

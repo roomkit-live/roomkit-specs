@@ -24,7 +24,7 @@ proof: a scenario can cite a unit without covering all of it.
 | [§4 Core Concepts](section-4.md) | 11 | 0 | 0 | 0 | 11 | 0 | 0 | 0 |
 | [§5 Data Models](section-5.md) | 57 | 0 | 0 | 0 | 57 | 0 | 0 | 0 |
 | [§6 Channel System](section-6.md) | 72 | 0 | 0 | 0 | 72 | 0 | 0 | 0 |
-| [§7 Permission Model](section-7.md) | 16 | 0 | 0 | 0 | 16 | 0 | 0 | 0 |
+| [§7 Permission Model](section-7.md) | 85 | 84 | 0 | 1 | 0 | 78 | 333 | 0 |
 | [§8 Event System](section-8.md) | 20 | 0 | 0 | 0 | 20 | 1 | 1 | 0 |
 | [§9 Hook System](section-9.md) | 350 | 343 | 3 | 4 | 0 | 227 | 989 | 0 |
 | [§10 Processing Pipelines](section-10.md) | 646 | 626 | 7 | 13 | 0 | 409 | 1911 | 0 |
