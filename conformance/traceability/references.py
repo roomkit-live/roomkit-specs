@@ -9,7 +9,7 @@ from collections.abc import Callable
 from pathlib import Path, PurePosixPath
 from typing import Any
 
-from .source import digest, text_digest
+from .source import digest, scenario_digest, text_digest
 
 COMMIT = re.compile(r"[0-9a-f]{40}")
 ASSERTION = re.compile(r"/(?:expect(?:/|$)|steps/[0-9]+/expect(?:/|$))")
@@ -49,7 +49,7 @@ def check_assertion(reference: dict[str, Any], scenarios: dict[str, Any]) -> lis
         return [f"{name}: {error}"]
     if reference["sha256"] != digest(expected):
         return [f"{name}:{path}: assertion changed; review its requirement link"]
-    if reference["scenario_sha256"] != digest(scenarios[name]):
+    if reference["scenario_sha256"] != scenario_digest(scenarios[name]):
         return [f"{name}: scenario changed; review its requirement link"]
     return []
 

@@ -1485,9 +1485,10 @@ or a skip to a passing result.
     changes, `check.py --strict` names the scenarios to reread:
     `lock: RK-10.4-003 changed since routing/x read it: reread it, then run
     python3 conformance/check.py --pin RK-10.4-003`;
-  - re-pin by name once read, a unit or a scenario:
-    `python3 conformance/check.py --pin routing/x`; a new citation is pinned
-    the same way;
+  - pin a citation by name once it is read, a unit, a scenario or both:
+    `python3 conformance/check.py --pin RK-10.4-003 routing/x` pins that one
+    citation, new or changed; then regenerate the report
+    (`--traceability --update-traceability`);
   - the process rule, `check.py --changed-units --base-ref <full sha>`: a
     `must` unit added or changed since needs a citing scenario or a reason in
     `untested.json` (`{"RK-10.4-008": "Needs a carrier's number lookup."}`

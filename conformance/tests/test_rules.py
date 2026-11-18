@@ -9,7 +9,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from test_source import marked
 from traceability.rules import artifacts, pages
-from traceability.source import digest, extract
+from traceability.source import digest, extract, scenario_digest
 
 
 def receipt(implementation: str, backend: str, rfc: str, *results: tuple) -> dict:
@@ -41,7 +41,8 @@ class RulesReportTests(unittest.TestCase):
         }
 
     def test_each_unit_shows_its_citations_lock_and_latest_results(self) -> None:
-        a, b = (digest(self.scenarios[name]) for name in ("routing/a", "routing/b"))
+        a, b = (scenario_digest(self.scenarios[name]) for name in ("routing/a", "routing/b"))
+        self.assertEqual(a, digest({"title": "a"}), "a receipt taken before the citation")
         executions = [
             receipt("python", "memory", "old", ("routing/a", a, "failed")),
             receipt("python", "memory", "new", ("routing/a", a, "passed")),

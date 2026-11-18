@@ -21,7 +21,7 @@ from . import layout
 from .evidence import validate_executions
 from .receipts import PROFILES, junit, outcomes
 from .references import git_text
-from .source import digest, extract
+from .source import extract, scenario_digest
 
 # The attributes a retained report keeps; every other one (hostname, timestamp,
 # time, file, line, ...) and every other element (properties, system-out,
@@ -236,10 +236,16 @@ def receipt(
     for scenario in sorted(found):
         if scenario not in corpus:
             raise ValueError(f"{scenario}: not in the corpus at {template['corpus_commit']}")
-        if scenario not in copied or digest(copied[scenario]) != digest(corpus[scenario]):
+        if scenario not in copied or scenario_digest(copied[scenario]) != scenario_digest(
+            corpus[scenario]
+        ):
             raise ValueError(f"{scenario}: the implementation's copy differs from the corpus")
         results.append(
-            {"scenario": scenario, "sha256": digest(corpus[scenario]), "outcome": found[scenario]}
+            {
+                "scenario": scenario,
+                "sha256": scenario_digest(corpus[scenario]),
+                "outcome": found[scenario],
+            }
         )
     run = {"id": f"{prefix}-{backend.replace('+', '-')}", "backend": backend, "results": results}
     return {key: run[key] if key in run else template[key] for key in _RECEIPT_KEYS}

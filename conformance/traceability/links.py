@@ -63,11 +63,17 @@ UNTESTED_SCHEMA = {
 Lock = dict[str, dict[str, str]]
 
 
+def cited_by(scenario: dict[str, Any]) -> list[str]:
+    """The units a scenario cites; a malformed list is the schema's error."""
+    units = scenario.get("requirements", [])
+    return [unit for unit in units if isinstance(unit, str)] if isinstance(units, list) else []
+
+
 def citations(scenarios: dict[str, dict[str, Any]]) -> dict[str, set[str]]:
     """Each cited unit and the scenarios citing it."""
     cited: dict[str, set[str]] = defaultdict(set)
     for name, scenario in scenarios.items():
-        for unit in scenario.get("requirements", []):
+        for unit in cited_by(scenario):
             cited[unit].add(name)
     return dict(cited)
 
@@ -81,7 +87,7 @@ def check_citations(
     units = {item["id"]: item for item in registry["requirements"]}
     errors = []
     for name, scenario in sorted(scenarios.items()):
-        for unit in scenario.get("requirements", []):
+        for unit in cited_by(scenario):
             if unit in retired:
                 errors.append(
                     f"{name}: requirement {unit}: retired; cite the units that replace it"
@@ -111,14 +117,16 @@ def read(directory: Path, name: str, schema: dict[str, Any], empty: Any) -> Any:
 
 
 def read_lock(directory: Path) -> Lock:
-    """The lock's citations; ValueError when it is malformed or not in its layout."""
+    """The lock's citations; ValueError when it is malformed."""
+    return read(directory, LOCK, LOCK_SCHEMA, {"version": 1, "links": {}})["links"]
+
+
+def lock_layout_errors(directory: Path, lock: Lock) -> list[str]:
+    """A lock out of its sorted layout, as a hand-merged one can be."""
     path = directory / LOCK
-    value = read(directory, LOCK, LOCK_SCHEMA, {"version": 1, "links": {}})
-    if path.exists() and path.read_text(encoding="utf-8") != lock_layout(
-        value["links"]
-    ):
-        raise ValueError(f"{LOCK}: not in its sorted layout; any --pin rewrites it")
-    return value["links"]
+    if path.exists() and path.read_text(encoding="utf-8") != lock_layout(lock):
+        return [f"{LOCK}: not in its sorted layout; any --pin rewrites it"]
+    return []
 
 
 def read_untested(directory: Path) -> dict[str, str]:
@@ -189,8 +197,9 @@ def unpinned(cited: dict[str, set[str]], lock: Lock) -> list[str]:
         for name in names - lock.get(unit, {}).keys():
             found[name].append(unit)
     return [
-        f"{name} cites {', '.join(sorted(found[name]))} with no lock entry: "
-        f"once it is read against them, run {PIN} {name}"
+        f"{name} cites {', '.join(sorted(found[name]))} with no lock entry: once "
+        f"it is read against {'it' if len(found[name]) == 1 else 'them'}, run "
+        f"{PIN} {' '.join(sorted(found[name]))} {name}"
         for name in sorted(found)
     ]
 
@@ -202,8 +211,8 @@ def orphans(cited: dict[str, set[str]], lock: Lock) -> list[str]:
         for name in pinned.keys() - cited.get(unit, set()):
             found[name].append(unit)
     return [
-        f"{LOCK} pins {name} to {', '.join(sorted(found[name]))}, "
-        f"which it does not cite: run {PIN} {name}"
+        f"{LOCK} pins {name} to {', '.join(sorted(found[name]))}, which it does "
+        f"not cite: run {PIN} {' '.join(sorted(found[name]))} {name}"
         for name in sorted(found)
     ]
 
@@ -226,32 +235,39 @@ def pin(
     registry: dict[str, Any],
     lock: Lock,
 ) -> tuple[Lock, list[str]]:
-    """Record the named units' or scenarios' citations as read against the
-    current text, and drop their pins with no citation. Nothing else moves."""
+    """Record the named citations as read against the current text, and drop
+    the named entries no citation holds any more. A unit names its citations,
+    a scenario its own; naming both names the citations of those units by
+    those scenarios. Nothing else moves."""
     fingerprints = {item["id"]: item["sha256"] for item in registry["requirements"]}
-    pinned_names = {name for entries in lock.values() for name in entries}
+    cited = citations(scenarios)
+    pairs = {
+        (unit, name)
+        for unit, citing in cited.items()
+        if unit in fingerprints
+        for name in citing
+    } | {(unit, name) for unit, entries in lock.items() for name in entries}
     units = {name for name in names if ID.fullmatch(name)}
     named = set(names) - units
     errors = [
-        f"--pin {name}: names no unit of the RFC or of {LOCK}"
-        for name in sorted(units - fingerprints.keys() - lock.keys())
+        f"--pin {name}: names no citation or entry of {LOCK}"
+        for name in sorted(units | named)
+        if not any(name in pair for pair in pairs)
     ]
-    errors += [
-        f"--pin {name}: names no scenario or entry of {LOCK}"
-        for name in sorted(named - scenarios.keys() - pinned_names)
-    ]
+    selected = {
+        (unit, name)
+        for unit, name in pairs
+        if (not units or unit in units) and (not named or name in named)
+    }
+    if not errors and not selected:
+        errors.append(f"--pin {' '.join(names)}: these name no citation together")
     if errors:
         return lock, errors
-
-    def chosen(unit: str, name: str) -> bool:
-        return unit in units or name in named
-
     updated: Lock = {
-        unit: {name: sha for name, sha in entries.items() if not chosen(unit, name)}
+        unit: {name: sha for name, sha in entries.items() if (unit, name) not in selected}
         for unit, entries in lock.items()
     }
-    for unit, citing in citations(scenarios).items():
-        for name in citing:
-            if chosen(unit, name):
-                updated.setdefault(unit, {})[name] = fingerprints[unit]
+    for unit, name in sorted(selected):
+        if name in cited.get(unit, ()):
+            updated.setdefault(unit, {})[name] = fingerprints[unit]
     return {unit: entries for unit, entries in updated.items() if entries}, []

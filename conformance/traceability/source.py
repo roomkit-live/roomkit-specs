@@ -27,6 +27,15 @@ def digest(value: Any) -> str:
     return hashlib.sha256(encoded.encode()).hexdigest()
 
 
+def scenario_digest(scenario: Any) -> str:
+    """Fingerprint a scenario as the runners execute it. Its `requirements`
+    citations are left out: citing a unit reopens no evidence link and no
+    execution receipt, and leaves every fingerprint taken before the field."""
+    if isinstance(scenario, dict):
+        scenario = {key: value for key, value in scenario.items() if key != "requirements"}
+    return digest(scenario)
+
+
 def text_digest(text: str) -> str:
     """Fingerprint source text, including conditions and punctuation."""
     return hashlib.sha256(text.encode()).hexdigest()

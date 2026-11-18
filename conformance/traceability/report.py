@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from .evidence import requirement_status
-from .source import digest
+from .source import digest, scenario_digest
 
 
 def build(
@@ -70,7 +70,7 @@ def build(
             }
         )
     corpus = digest(
-        {name: digest(scenario) for name, scenario in sorted(scenarios.items())}
+        {name: scenario_digest(scenario) for name, scenario in sorted(scenarios.items())}
     )
     return {
         "version": 1,

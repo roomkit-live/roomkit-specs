@@ -9,7 +9,7 @@ from typing import Any
 
 from .receipts import validate_artifact
 from .references import GitText, git_text
-from .source import digest, extract
+from .source import extract, scenario_digest
 
 
 def copied_scenarios(
@@ -23,7 +23,7 @@ def copied_scenarios(
         copied = json.loads(
             read(repo, commit, f"{prefix}/scenarios/{result['scenario']}.json")
         )
-        if digest(copied) != result["sha256"]:
+        if scenario_digest(copied) != result["sha256"]:
             errors.append(
                 f"{run['id']}: {result['scenario']}: implementation's copy differs"
             )
@@ -79,7 +79,7 @@ def provenance(
             for result in run["results"]:
                 path = f"conformance/scenarios/{result['scenario']}.json"
                 scenario = json.loads(read(root, run["corpus_commit"], path))
-                if digest(scenario) != result["sha256"]:
+                if scenario_digest(scenario) != result["sha256"]:
                     errors.append(
                         f"{run['id']}: {result['scenario']}: corpus provenance mismatch"
                     )

@@ -10,9 +10,11 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from check import CELLS
 from test_source import marked
 from traceability import links, process
-from traceability.source import extract
+from traceability.references import check_assertion
+from traceability.source import digest, extract, scenario_digest
 
 HERE = Path(__file__).resolve().parents[1]
 
@@ -86,9 +88,9 @@ class LockTests(unittest.TestCase):
             links.lock_problems(self.scenarios, self.registry, self.lock, {}),
             [
                 "routing/a cites RK-10.4-002 with no lock entry: once it is read "
-                "against them, run python3 conformance/check.py --pin routing/a",
+                "against it, run python3 conformance/check.py --pin RK-10.4-002 routing/a",
                 "links.lock.json pins routing/gone to RK-10.4-001, which it does not "
-                "cite: run python3 conformance/check.py --pin routing/gone",
+                "cite: run python3 conformance/check.py --pin RK-10.4-001 routing/gone",
             ],
         )
 
@@ -117,34 +119,84 @@ class LockTests(unittest.TestCase):
         self.assertEqual(updated["RK-10.4-002"], {"routing/a": self.sha["RK-10.4-002"]})
         self.assertEqual(updated["RK-10.4-001"], self.lock["RK-10.4-001"])
 
-    def test_a_pin_refuses_a_name_that_names_nothing(self) -> None:
+    def test_a_unit_and_a_scenario_together_name_one_citation(self) -> None:
+        # routing/a's citation of RK-10.4-001 changed since it was read: pinning
+        # routing/a's new citation alone must not record that one as reread.
+        self.lock["RK-10.4-001"]["routing/a"] = "2" * 64
+        del self.lock["RK-10.4-002"]
         updated, errors = links.pin(
-            ["RK-10.4-007", "routing/z"], self.scenarios, self.registry, self.lock
+            ["RK-10.4-002", "routing/a"], self.scenarios, self.registry, self.lock
         )
-        self.assertEqual(updated, self.lock)
-        self.assertEqual(
-            errors,
-            [
-                "--pin RK-10.4-007: names no unit of the RFC or of links.lock.json",
-                "--pin routing/z: names no scenario or entry of links.lock.json",
-            ],
-        )
+        self.assertEqual(errors, [])
+        self.assertEqual(updated["RK-10.4-002"], {"routing/a": self.sha["RK-10.4-002"]})
+        self.assertEqual(updated["RK-10.4-001"], self.lock["RK-10.4-001"])
 
-    def test_the_lock_is_read_only_in_its_sorted_layout(self) -> None:
+    def test_a_pin_refuses_a_name_that_names_nothing(self) -> None:
+        registry = rfc(
+            marked("Route it.", "RK-10.4-001"),
+            marked("Refuse it.", "RK-10.4-002"),
+            marked("Log it.", "RK-10.4-003"),
+        )
+        for names, error in (
+            (["RK-10.4-007"], "--pin RK-10.4-007: names no citation or entry of links.lock.json"),
+            (["RK-10.4-003"], "--pin RK-10.4-003: names no citation or entry of links.lock.json"),
+            (["routing/z"], "--pin routing/z: names no citation or entry of links.lock.json"),
+            (
+                ["RK-10.4-002", "routing/b"],
+                "--pin RK-10.4-002 routing/b: these name no citation together",
+            ),
+        ):
+            with self.subTest(names=names):
+                updated, errors = links.pin(names, self.scenarios, registry, self.lock)
+                self.assertEqual(updated, self.lock)
+                self.assertEqual(errors, [error])
+
+    def test_the_lock_keeps_its_sorted_layout(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             directory = Path(temp)
             self.assertEqual(links.read_lock(directory), {})
             path = directory / links.LOCK
             path.write_text(links.lock_layout(self.lock))
             self.assertEqual(links.read_lock(directory), self.lock)
+            self.assertEqual(links.lock_layout_errors(directory, self.lock), [])
             value = json.loads(path.read_text())
             value["links"] = dict(reversed(value["links"].items()))
             path.write_text(json.dumps(value, indent=2) + "\n")
-            with self.assertRaisesRegex(ValueError, "sorted layout"):
-                links.read_lock(directory)
+            self.assertEqual(links.read_lock(directory), self.lock)
+            self.assertEqual(
+                links.lock_layout_errors(directory, self.lock),
+                ["links.lock.json: not in its sorted layout; any --pin rewrites it"],
+            )
             path.write_text(json.dumps({"version": 1, "links": {"RK-10.4-001": {}}}))
             with self.assertRaisesRegex(ValueError, "links.lock.json"):
                 links.read_lock(directory)
+
+    def test_a_malformed_citation_list_is_left_to_the_schema(self) -> None:
+        for requirements, cited in (
+            (None, {}),
+            ("RK-10.4-001", {}),
+            ([1, "RK-10.4-001"], {"RK-10.4-001": {"routing/a"}}),
+        ):
+            with self.subTest(requirements=requirements):
+                scenarios = {"routing/a": {"requirements": requirements}}
+                self.assertEqual(links.check_citations(scenarios, self.registry, []), [])
+                self.assertEqual(links.citations(scenarios), cited)
+
+
+class FingerprintTests(unittest.TestCase):
+    def test_a_citation_reopens_no_evidence_link_or_receipt(self) -> None:
+        scenario = {"id": "routing/a", "expect": {"value": 1}}
+        cited = {**scenario, "requirements": ["RK-10.4-001"]}
+        self.assertEqual(scenario_digest(scenario), digest(scenario))
+        self.assertEqual(scenario_digest(cited), digest(scenario))
+        self.assertNotEqual(scenario_digest({**scenario, "notes": "n"}), digest(scenario))
+        reference = {
+            "scenario": "routing/a",
+            "pointer": "/expect/value",
+            "sha256": digest(1),
+            "scenario_sha256": digest(scenario),
+        }
+        self.assertEqual(check_assertion(reference, {"routing/a": cited}), [])
 
 
 class ProcessRuleTests(unittest.TestCase):
@@ -208,11 +260,7 @@ class CommandTests(unittest.TestCase):
         scenario["id"] = "routing/a"
         scenario["rules"] = ["§10.4"]
         scenario["requirements"] = ["RK-10.4-001"]
-        scenario["reentrancy"] = [
-            f"{row}@{column}"
-            for row in ("inject", "routed", "commit", "change")
-            for column in ("locked", "admitted", "cascade", "outside")
-        ]
+        scenario["reentrancy"] = CELLS
         self.write("scenarios/routing/a.json", scenario)
         self.rfc = self.root / "roomkit-rfc.md"
         self.rfc.write_text("### 10.4 Routing\n" + marked("Route it.", "RK-10.4-001"))
@@ -235,7 +283,7 @@ class CommandTests(unittest.TestCase):
         self.assertEqual(run.returncode, 1, run.stdout)
         self.assertIn(
             "lock: routing/a cites RK-10.4-001 with no lock entry: once it is read "
-            "against them, run python3 conformance/check.py --pin routing/a",
+            "against it, run python3 conformance/check.py --pin RK-10.4-001 routing/a",
             run.stdout,
         )
         self.assertEqual(self.check("--pin", "routing/a").returncode, 0)
@@ -258,17 +306,34 @@ class CommandTests(unittest.TestCase):
         self.assertIn("expected at least one argument", run.stderr)
         self.assertFalse((self.directory / links.LOCK).exists())
 
-    def test_a_wrong_citation_is_an_error_and_pins_nothing(self) -> None:
-        scenario = json.loads((self.directory / "scenarios/routing/a.json").read_text())
-        scenario["requirements"] = ["RK-10.4-009"]
-        self.write("scenarios/routing/a.json", scenario)
-        run = self.check("--pin", "routing/a")
+    def test_a_scenario_in_error_pins_nothing(self) -> None:
+        for change, error in (
+            ({"requirements": ["RK-10.4-009"]}, "requirement RK-10.4-009: no such unit"),
+            ({"requirements": None}, "schema: requirements: None is not of type 'array'"),
+            ({"unknown": 1}, "schema: : Additional properties are not allowed"),
+        ):
+            with self.subTest(change=change):
+                path = self.directory / "scenarios/routing/a.json"
+                scenario = {**json.loads(path.read_text()), **change}
+                self.write("scenarios/routing/a.json", scenario)
+                run = self.check("--pin", "routing/a")
+                self.assertEqual(run.returncode, 1, run.stderr)
+                self.assertIn(f"error: routing/a: {error}", run.stdout)
+                self.assertIn("error: --pin: nothing pinned", run.stdout)
+                self.assertFalse((self.directory / links.LOCK).exists())
+                scenario.pop("unknown", None)
+                scenario["requirements"] = ["RK-10.4-001"]
+                self.write("scenarios/routing/a.json", scenario)
+
+    def test_a_pin_rewrites_a_lock_out_of_its_layout(self) -> None:
+        self.assertEqual(self.check("--pin", "routing/a").returncode, 0)
+        lock = self.directory / links.LOCK
+        lock.write_text(json.dumps(json.loads(lock.read_text()), indent=4) + "\n")
+        run = self.check()
         self.assertEqual(run.returncode, 1)
-        self.assertIn(
-            "error: routing/a: requirement RK-10.4-009: no such unit in the RFC",
-            run.stdout,
-        )
-        self.assertFalse((self.directory / links.LOCK).exists())
+        self.assertIn("error: links.lock.json: not in its sorted layout", run.stdout)
+        self.assertEqual(self.check("--pin", "RK-10.4-001").returncode, 0)
+        self.assertEqual(self.check("--strict").returncode, 0)
 
     def git(self, *args: str) -> str:
         return subprocess.check_output(
@@ -306,6 +371,21 @@ class CommandTests(unittest.TestCase):
         run = self.check("--changed-units", "--base-ref", base[:12])
         self.assertEqual(run.returncode, 2)
         self.assertIn("full 40-character sha", run.stderr)
+
+    def test_the_process_rule_does_not_hold_back_the_traceability_check(self) -> None:
+        self.write(
+            "evidence.json",
+            {"version": 1, "python_commit": "a" * 40, "retired": [], "links": [], "executions": []},
+        )
+        self.write("inventory.json", {"version": 1, "sections": []})
+        shutil.copy(HERE / "evidence.schema.json", self.directory)
+        self.test_the_process_rule_reads_the_base_commit()
+        self.write("untested.json", {"version": 1, "units": {}})
+        base = self.git("rev-list", "--max-parents=0", "HEAD")
+        run = self.check("--traceability", "--changed-units", "--base-ref", base)
+        self.assertEqual(run.returncode, 1)
+        self.assertIn("error: RK-10.4-002 (must, added since", run.stdout)
+        self.assertIn("error: requirements.json: generated artifact differs", run.stdout)
 
 
 if __name__ == "__main__":

@@ -19,8 +19,9 @@ Add `--update-traceability` only to regenerate the derived artifacts
 (`requirements.json`, `coverage.json`, `coverage.md` and the pages of `rules/`).
 This never updates review records or proof fingerprints. `--base-ref <full SHA>`
 checks ID removals and retirement history against a previous specs commit.
-The historical `--strict` check still uses `RFC_COMMIT`; traceability uses the
-current RFC file by default. Neither repins the other.
+The historical `--strict` check still resolves `rules` at `RFC_COMMIT`, and
+reads `requirements` and the lock against the current RFC file, as traceability
+does by default. Neither repins the other.
 
 ## Inventory and stable IDs
 
@@ -80,7 +81,9 @@ citations in `rules`, which stay for navigation:
 The checker refuses an ID that names no unit of the current RFC, a retired ID
 (cite the units that replace it) and a `non_testable` unit. A citation says the
 scenario tests the unit; it is not a reviewed link, and a scenario can cite a
-unit it covers only in part.
+unit it covers only in part. Runners ignore `requirements`, and a scenario's
+fingerprint leaves it out: citing a unit reopens none of the scenario's
+reviewed links or execution receipts.
 
 ### Level
 
@@ -120,10 +123,14 @@ change to the RFC changes no scenario and needs no sync. `check.py` prints a
   `RK-10.4-003 changed since routing/x read it: reread it, then run python3
   conformance/check.py --pin RK-10.4-003`;
 - a citation has no entry: `routing/x cites RK-10.4-003 with no lock entry:
-  once it is read against them, run python3 conformance/check.py --pin
-  routing/x`;
+  once it is read against it, run python3 conformance/check.py --pin
+  RK-10.4-003 routing/x`;
 - an entry has no citation: `links.lock.json pins routing/x to RK-10.4-004,
-  which it does not cite: run python3 conformance/check.py --pin routing/x`.
+  which it does not cite: run python3 conformance/check.py --pin RK-10.4-004
+  routing/x`.
+
+A lock out of its sorted layout (a merge resolved by hand) is an error that any
+`--pin` repairs.
 
 ### Re-pinning
 
@@ -132,12 +139,18 @@ what the unit says, then pin by name:
 
 ```sh
 python3 conformance/check.py --pin RK-10.4-003            # every citation of this unit
-python3 conformance/check.py --pin routing/x routing/y    # every citation of these scenarios
+python3 conformance/check.py --pin RK-10.4-003 routing/x  # this one citation
+python3 conformance/check.py --pin routing/x              # every citation of this scenario
 ```
 
-A pin records the named units' or scenarios' citations at the current text,
-drops their entries that no citation holds any more, and moves nothing else.
-It needs at least one name, and pins nothing while a citation is wrong.
+A unit names its citations and a scenario its own; naming both names the
+citations of those units by those scenarios. A pin records the named citations
+at the current text, drops the named entries no citation holds any more, and
+moves nothing else. Naming a scenario alone records it as reread against every
+unit it cites, changed ones included: the checker's own advice names the unit
+too. A pin needs at least one name, refuses a name that selects nothing, and
+pins nothing while the check reports an error. It changes the lock column of
+`rules/`, so run `--traceability --update-traceability` after it.
 
 ### The process rule
 
@@ -192,7 +205,7 @@ writes receipts.
 ## Reviewed links
 
 Each link pins the clause, a JSON pointer into an actual expectation, and the
-whole scenario. A setup change invalidates its review even when the expected
+whole scenario but its `requirements` citations. A setup change invalidates its review even when the expected
 value remains the same. `scope`, `proves`, `review` and `missing` describe what
 was checked. A partial link must name its gaps; a complete link cannot list gaps.
 A section citation in `rules` is useful navigation, never coverage credit.

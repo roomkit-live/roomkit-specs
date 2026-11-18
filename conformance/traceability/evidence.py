@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from .references import GitText, check_assertion, check_test, git_text
-from .source import digest
+from .source import scenario_digest
 
 
 def validate(
@@ -107,7 +107,8 @@ def execution_status(
         if any(item["outcome"] != "passed" for item in selected.values()):
             state = "not_passed"
         if run["rfc_sha256"] != rfc_sha256 or any(
-            item["sha256"] != digest(scenarios[name]) for name, item in selected.items()
+            item["sha256"] != scenario_digest(scenarios[name])
+            for name, item in selected.items()
         ):
             state = "stale"
         if (

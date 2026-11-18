@@ -38,7 +38,7 @@ import re
 import subprocess
 import sys
 from pathlib import Path
-from typing import Any
+from typing import Any, NamedTuple
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
@@ -362,8 +362,8 @@ def main() -> int:
                 errors.append(f"{name}: rule {reference!r}: {why}")
     by_id = {scenario.get("id", ""): scenario for scenario in scenarios}
     current = Path(rfc) if rfc is not None else ROOT / "roomkit-rfc.md"
-    citation_errors, drift, notes = citation_checks(args, by_id, current)
-    errors += citation_errors
+    found = citation_checks(args, by_id, current, blocked=bool(errors))
+    errors += found.errors
     cells: set[str] = set()
     for scenario in scenarios:
         cells |= set(scenario.get("reentrancy", []))
@@ -385,26 +385,41 @@ def main() -> int:
             update=args.update_traceability,
             base_ref=args.base_ref,
         )
+    # The process rule's errors never hold back the traceability check.
+    errors += found.process
     print(f"{len(scenarios)} scenarios, rules resolved against {source}")
-    for line in notes:
+    for line in found.notes:
         print(line)
     for line in errors:
         print(f"error: {line}")
-    for line in drift:
+    for line in found.drift:
         print(f"lock: {line}")
     for line in gaps:
         print(f"gap: {line}")
-    if errors or (args.strict and (gaps or drift)):
+    if errors or (args.strict and (gaps or found.drift)):
         return 1
     return 0
 
 
+class Citations(NamedTuple):
+    """What the scenarios' `requirements` come to."""
+
+    errors: list[str]
+    drift: list[str]  # lock problems: errors under --strict
+    notes: list[str]  # what --pin did, the process rule's warnings and unreviewed units
+    process: list[str]  # the process rule's errors
+
+
 def citation_checks(
-    args: argparse.Namespace, scenarios: dict[str, dict[str, Any]], rfc: Path
-) -> tuple[list[str], list[str], list[str]]:
-    """The scenarios' `requirements` against the current RFC: errors, lock
-    drift (an error under --strict), and the notes --pin and --changed-units
-    print. --pin rewrites the lock only when nothing else is wrong."""
+    args: argparse.Namespace,
+    scenarios: dict[str, dict[str, Any]],
+    rfc: Path,
+    *,
+    blocked: bool,
+) -> Citations:
+    """The scenarios' `requirements` against the current RFC, the lock, and the
+    process rule. --pin rewrites the lock only when the check finds no error
+    (`blocked` says whether the earlier checks did)."""
     from traceability import links, process, source
 
     try:
@@ -413,31 +428,32 @@ def citation_checks(
         untested = links.read_untested(HERE)
         lock = links.read_lock(HERE)
     except (OSError, ValueError, KeyError) as error:
-        return [f"requirements: {error}"], [], []
+        return Citations([f"requirements: {error}"], [], [], [])
     errors = links.check_citations(scenarios, registry, retired)
     errors += links.check_untested(untested, registry, retired)
     notes = []
-    if args.pin and errors:
-        errors.append("--pin: nothing pinned while a citation is wrong")
+    if args.pin and (blocked or errors):
+        errors.append("--pin: nothing pinned while the check reports an error")
     elif args.pin:
         lock, pin_errors = links.pin(args.pin, scenarios, registry, lock)
         errors += pin_errors
         if not pin_errors:
             (HERE / links.LOCK).write_text(links.lock_layout(lock), encoding="utf-8")
             notes.append(f"{links.LOCK}: pinned {' '.join(args.pin)}")
+    errors += links.lock_layout_errors(HERE, lock)  # after --pin, which rewrites it
     drift = links.lock_problems(scenarios, registry, lock, untested)
-    if args.changed_units:
-        try:
-            base = source.extract(git_show(args.base_ref, "roomkit-rfc.md"))
-        except (subprocess.CalledProcessError, ValueError) as error:
-            return errors + [f"--base-ref {args.base_ref}: {error}"], drift, notes
-        failed, warned, unreviewed = process.process_rule(
-            registry, base, scenarios, untested, args.base_ref
-        )
-        errors += failed
-        notes += [f"warning: {line}" for line in warned]
-        notes += [f"unreviewed: {line}" for line in unreviewed]
-    return errors, drift, notes
+    if not args.changed_units:
+        return Citations(errors, drift, notes, [])
+    try:
+        base = source.extract(git_show(args.base_ref, "roomkit-rfc.md"))
+    except (subprocess.CalledProcessError, ValueError) as error:
+        return Citations(errors, drift, notes, [f"--base-ref {args.base_ref}: {error}"])
+    failed, warned, unreviewed = process.process_rule(
+        registry, base, scenarios, untested, args.base_ref
+    )
+    notes += [f"warning: {line}" for line in warned]
+    notes += [f"unreviewed: {line}" for line in unreviewed]
+    return Citations(errors, drift, notes, failed)
 
 
 if __name__ == "__main__":
