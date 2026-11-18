@@ -8,7 +8,7 @@ from typing import Any
 
 from jsonschema import Draft202012Validator
 
-from . import evidence, report, source
+from . import evidence, links, report, rules, source
 from ._git import GitReader
 from .provenance import provenance
 
@@ -110,6 +110,14 @@ def check(
             ("coverage.md", report.markdown(coverage)),
         ]:
             errors += report.artifact(directory / name, value, update)
+        pages = rules.pages(
+            registry,
+            by_id,
+            links.read_lock(directory),
+            links.read_untested(directory),
+            document["executions"],
+        )
+        errors += rules.artifacts(directory, pages, update)
         return errors
     except (OSError, ValueError) as error:
         return [f"traceability: {error}"]

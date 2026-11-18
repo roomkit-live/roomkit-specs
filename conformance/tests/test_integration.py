@@ -49,6 +49,17 @@ class IntegrationTests(unittest.TestCase):
         self.assertTrue(check(self.root, self.text, [], update=True))
         self.assertEqual((self.directory / "requirements.json").read_bytes(), old)
 
+    def test_the_rules_report_is_generated_and_checked(self) -> None:
+        scenarios = [{"id": "hooks/a", "requirements": ["RK-9.3-001"]}]
+        self.assertEqual(check(self.root, self.text, scenarios, update=True), [])
+        page = (self.directory / "rules/section-9.md").read_text()
+        self.assertIn("| RK-9.3-001 | behavior | — | `hooks/a` | unpinned |", page)
+        (self.directory / "rules/section-9.md").write_text("edited")
+        self.assertEqual(
+            check(self.root, self.text, scenarios),
+            ["rules/section-9.md: generated page differs; run --update-traceability"],
+        )
+
     def git(self, *args: str) -> str:
         return subprocess.check_output(
             ["git", "-C", str(self.root), *args], text=True
