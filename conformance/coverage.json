@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rfc_sha256": "f8cfc0af6cbfb097a0f5450f937716f95932d6d44cac938d9456d34f48ca6ab2",
+  "rfc_sha256": "3f9d9a62a7dd1e52a8c7cda0759951bfc56ffbaf2fa89ad6bde3eb30b8246e24",
   "corpus_sha256": "95757e9fa0266066d14a8f8c496d7379bdded88565e7ec12b8e8bcaeb846fdcf",
   "python_commit": "b50c50a782668fc1681e21bcec52a3d83bc0d8c0",
   "scenario_count": 3083,
@@ -6131,9 +6131,9 @@
       "section": "12.8.5",
       "title": "Pipeline Stage Providers",
       "review": "normative",
-      "requirements": 7,
+      "requirements": 6,
       "mapping": {
-        "unmapped": 7
+        "unmapped": 6
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
@@ -6153,9 +6153,9 @@
       "section": "12.8.7",
       "title": "VisionProvider",
       "review": "normative",
-      "requirements": 6,
+      "requirements": 5,
       "mapping": {
-        "unmapped": 6
+        "unmapped": 5
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
@@ -6186,9 +6186,9 @@
       "section": "12.8.10",
       "title": "Video Recording",
       "review": "normative",
-      "requirements": 4,
+      "requirements": 3,
       "mapping": {
-        "unmapped": 4
+        "unmapped": 3
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": []
@@ -53396,12 +53396,6 @@
       "links": []
     },
     {
-      "id": "RK-12.8.5-007",
-      "section": "12.8.5",
-      "mapping": "unmapped",
-      "links": []
-    },
-    {
       "id": "RK-12.8.6-001",
       "section": "12.8.6",
       "mapping": "unmapped",
@@ -53444,12 +53438,6 @@
       "links": []
     },
     {
-      "id": "RK-12.8.7-005",
-      "section": "12.8.7",
-      "mapping": "unmapped",
-      "links": []
-    },
-    {
       "id": "RK-12.8.7-006",
       "section": "12.8.7",
       "mapping": "unmapped",
@@ -53487,12 +53475,6 @@
     },
     {
       "id": "RK-12.8.10-002",
-      "section": "12.8.10",
-      "mapping": "unmapped",
-      "links": []
-    },
-    {
-      "id": "RK-12.8.10-003",
       "section": "12.8.10",
       "mapping": "unmapped",
       "links": []

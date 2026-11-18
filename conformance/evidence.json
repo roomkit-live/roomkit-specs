@@ -4,6 +4,9 @@
   "retired": [
     "RK-12.10.4-010",
     "RK-12.10.4-011",
+    "RK-12.8.10-003",
+    "RK-12.8.5-007",
+    "RK-12.8.7-005",
     "RK-7.3-002"
   ],
   "links": [
@@ -13617,7 +13620,7 @@
     {
       "id": "discussion-instruction-boundaries",
       "requirement": "RK-19.7.5-002",
-      "clause_sha256": "9f957200c380aafa136d8b3068ff79083c0b79ff838bac9a476234483be4599c",
+      "clause_sha256": "72597ebed793610cd66d7466d73b2060b02c1d5070dd1e30df157eb85c5ffd08",
       "scope": "Local instruction admission and turn boundaries, including a first read of a stored discussion that ended (rules 7, 8, 11, 15 and 16).",
       "coverage": "partial",
       "review": "Compared eight Python source tests with existing scenarios. Adds six shared cases and makes the stored-over instruction use a fresh kit. Local kits share a store; this is not proof of separate processes, external services or distributed leases. A rejected stored configuration was already covered and is referenced rather than duplicated.",
@@ -13821,7 +13824,7 @@
     {
       "id": "discussion-regeneration-turns",
       "requirement": "RK-19.7.5-002",
-      "clause_sha256": "9f957200c380aafa136d8b3068ff79083c0b79ff838bac9a476234483be4599c",
+      "clause_sha256": "72597ebed793610cd66d7466d73b2060b02c1d5070dd1e30df157eb85c5ffd08",
       "scope": "Regenerated discussion turns: target selection, fallback, deduplication, queue priority, waiting/listening, depth and stored state (rule 7 and associated queue rules).",
       "coverage": "partial",
       "review": "Existing pure queue tests are reused, not duplicated. Shared scenarios drive the public API on memory and SQLite. Native lifecycle tests cover cuts and uninstall races. These are local kits sharing storage, not separate-process or distributed-lease proofs. Model context ordering and signed markers remain a separate audit.",
@@ -14296,7 +14299,7 @@
     {
       "id": "discussion-turn-context",
       "requirement": "RK-19.7.5-002",
-      "clause_sha256": "9f957200c380aafa136d8b3068ff79083c0b79ff838bac9a476234483be4599c",
+      "clause_sha256": "72597ebed793610cd66d7466d73b2060b02c1d5070dd1e30df157eb85c5ffd08",
       "scope": "Discussion context at turn start: answered-event order, runtime notes, own tool replay and issued-mark boundaries (rule 9).",
       "coverage": "partial",
       "review": "Shared scenarios run actual AI channels through Discussion and regeneration. Native Python tests retain precise low-level instruction-index, empty-input and issued/retired mark cases; existing Rust transcript and AI channel tests mirror these technical boundaries. No public test-only mark API is introduced. The default memory is used: windowing, compaction, external agents and distributed execution are not proven here.",
@@ -14463,7 +14466,7 @@
     {
       "id": "speaking-policy-recent-context",
       "requirement": "RK-19.7.5-002",
-      "clause_sha256": "9f957200c380aafa136d8b3068ff79083c0b79ff838bac9a476234483be4599c",
+      "clause_sha256": "72597ebed793610cd66d7466d73b2060b02c1d5070dd1e30df157eb85c5ffd08",
       "scope": "SpeakTurn.recent includes later visible messages already in the turn context, excluding the answered event (Discussion rule 9).",
       "coverage": "partial",
       "review": "The parametrized native Python test drives the AI channel with a supplied room context, with and without a message after the answered event. It checks the exact recent event IDs, the answered event and the people. It does not itself queue a Discussion turn. Rust does not yet expose SpeakPolicy/SpeakTurn, so no cross-language parity is claimed.",
@@ -21331,7 +21334,7 @@
     {
       "id": "acp-standing-instruction-mark-copies",
       "requirement": "RK-6.4-020",
-      "clause_sha256": "dc4778bab8fcc77463cd84237f630f36f2b18ddc41f756ee75e105705801ae40",
+      "clause_sha256": "ba5219e32049f2773ac5a2bdc00ac573b9668ae86d4ef02c9e01abf4bf8028cb",
       "coverage": "partial",
       "scope": "Replacement of literal copies of the standing-instructions header and its recognized bracketed opening in a participant request.",
       "assertions": [
@@ -24192,7 +24195,7 @@
     {
       "id": "phase4-ai-result-carriers",
       "requirement": "RK-6.7-002",
-      "clause_sha256": "9e121e3cf54b044a632f6bc322e00f73afbbc8f1c0c9db491fb9e7db79477c19",
+      "clause_sha256": "520ff6703d82ff6b8f57559ae348a10289639343c2a9c46f7215d552d9c471a6",
       "scope": "Four public AI result fields and their text-turn boundaries: response tasks/observations, tool structured copy/outcome, next-round reads, outcome replay and compaction retention.",
       "coverage": "partial",
       "review": "Independent review accepted the Python source assertions and native Rust counterparts, including actual provider requests, after missing outcomes and lost empty copies were reproduced and corrected. The shared fixture does not expose these provider-part fields. This link records source evidence only, not native execution receipts.",
@@ -24253,7 +24256,7 @@
     {
       "id": "phase4-ai-provider-room-context",
       "requirement": "RK-6.7-002",
-      "clause_sha256": "9e121e3cf54b044a632f6bc322e00f73afbbc8f1c0c9db491fb9e7db79477c19",
+      "clause_sha256": "520ff6703d82ff6b8f57559ae348a10289639343c2a9c46f7215d552d9c471a6",
       "coverage": "partial",
       "scope": "AIContext room snapshots and outgoing target capability metadata, including empty targets, selection, intersections and preservation through hooks and interleaved tool rounds.",
       "review": "Independent source and full Rust reviews accepted the 32 shared scenarios and native twins. Distinct per-room capabilities and distinct per-field limits prevent false-positive isolation and minimum checks. Full room snapshots and independent hook replacements are native proofs; no object-identity promise is added.",
@@ -25515,7 +25518,7 @@
     {
       "id": "phase4-extract-tools-definitions",
       "requirement": "RK-6.7-002",
-      "clause_sha256": "9e121e3cf54b044a632f6bc322e00f73afbbc8f1c0c9db491fb9e7db79477c19",
+      "clause_sha256": "520ff6703d82ff6b8f57559ae348a10289639343c2a9c46f7215d552d9c471a6",
       "scope": "The public extract_tools helper projects ordered tool definitions and a mixed schema/object channel sends their observed fields to its provider.",
       "coverage": "partial",
       "review": "Independent source and full code reviews accepted the public helper, existing composition counterparts and the standalone channel witness. Native Rust counterparts and final gate logs are retained separately; this link is source mapping only.",
@@ -25681,7 +25684,7 @@
     {
       "id": "phase4-public-named-blocks",
       "requirement": "RK-6.4-025",
-      "clause_sha256": "a6070596183f41c9802bbb665ede16a562a4a5ec336ae54ea6bb6e9e0d8d48fc",
+      "clause_sha256": "722c34cd01562ffee5fc407c819e97868c65e097311443ca1a6c2c2216ff9182",
       "scope": "The public block-naming helper replaces selected framed blocks with their names, retaining surrounding text and caller-selected tag behavior.",
       "coverage": "partial",
       "review": "Independent source and full code reviews accepted the public helper and existing native algorithm counterparts. Native execution and final gate logs are retained separately; this link maps Python source assertions only.",
