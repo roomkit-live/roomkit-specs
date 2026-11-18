@@ -87,6 +87,30 @@ unit it covers only in part. Runners ignore `requirements`, and a scenario's
 fingerprint leaves it out: citing a unit reopens none of the scenario's
 reviewed links or execution receipts.
 
+### When a scenario cites a unit
+
+- It cites a unit when its assertions check what the unit obliges:
+  `delivery/a-status-naming-no-recipient-gets-no-room-among-several` asserts
+  that a status on a channel bound to several rooms reaches none, and cites
+  RK-10.4-048.
+- It does not cite a unit whose mechanism only brings it to the state under
+  test: `discussion/a-routed-first-message-in-a-process-that-follows-reads-handles`
+  routes its message only to reach the room whose discussion it tests, and
+  cites no §10.4 unit.
+- When it shows that a unit does not apply, it cites the unit that states the
+  exclusion, not the excluded one:
+  - `routing/an-explicit-room-bypasses-the-custom-router` names its room, so
+    nothing routes it: it cites the unit of §10.1 step 2 for a room the caller
+    names, never RK-10.4-008, which routes a message that names none;
+  - `routing/every-sender-on-a-group-binding-shares-its-room` cites
+    RK-10.4-025, which admits every sender of a `group` binding, not
+    RK-10.4-039, which records the sender on a binding that is not `group`.
+- When it covers part of a unit, it cites the unit, and the change that adds
+  the citation names the part left uncovered:
+  `routing/a-hook-refusal-keeps-the-routed-correspondent` cites RK-10.4-040
+  for the sender recorded before the message is processed, not for two first
+  messages racing to one room.
+
 ### Level
 
 The reviewer of a unit sets its level in the annotation, whatever its keywords:
