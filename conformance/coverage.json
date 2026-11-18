@@ -3155,10 +3155,10 @@
       "section": "9.3",
       "title": "Hook Execution Modes",
       "review": "normative",
-      "requirements": 17,
+      "requirements": 105,
       "mapping": {
-        "mapped_partial": 9,
-        "unmapped": 8
+        "mapped_partial": 12,
+        "unmapped": 93
       },
       "unannotated_keyword_lines": [],
       "candidate_scenarios": [
@@ -34224,7 +34224,13 @@
       ]
     },
     {
-      "id": "RK-9.3-001",
+      "id": "RK-9.3-018",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-019",
       "section": "9.3",
       "mapping": "unmapped",
       "links": []
@@ -34801,13 +34807,49 @@
       ]
     },
     {
-      "id": "RK-9.3-006",
+      "id": "RK-9.3-020",
       "section": "9.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-9.3-007",
+      "id": "RK-9.3-021",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-022",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-023",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-024",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-025",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-026",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-027",
       "section": "9.3",
       "mapping": "mapped_partial",
       "links": [
@@ -34913,7 +34955,13 @@
       ]
     },
     {
-      "id": "RK-9.3-008",
+      "id": "RK-9.3-028",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-029",
       "section": "9.3",
       "mapping": "mapped_partial",
       "links": [
@@ -35466,7 +35514,13 @@
       ]
     },
     {
-      "id": "RK-9.3-009",
+      "id": "RK-9.3-030",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-031",
       "section": "9.3",
       "mapping": "mapped_partial",
       "links": [
@@ -36019,7 +36073,19 @@
       ]
     },
     {
-      "id": "RK-9.3-010",
+      "id": "RK-9.3-032",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-033",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-034",
       "section": "9.3",
       "mapping": "unmapped",
       "links": []
@@ -36578,13 +36644,55 @@
       ]
     },
     {
-      "id": "RK-9.3-012",
+      "id": "RK-9.3-035",
       "section": "9.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-9.3-013",
+      "id": "RK-9.3-036",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-037",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-038",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-039",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-040",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-041",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-042",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-043",
       "section": "9.3",
       "mapping": "mapped_partial",
       "links": [
@@ -36669,7 +36777,79 @@
       ]
     },
     {
-      "id": "RK-9.3-014",
+      "id": "RK-9.3-044",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-045",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-046",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-047",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-048",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-049",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-050",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-051",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-052",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-053",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-054",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-055",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-056",
       "section": "9.3",
       "mapping": "mapped_partial",
       "links": [
@@ -36904,6 +37084,91 @@
           ]
         },
         {
+          "id": "phase4-provider-served-original-reports",
+          "scope": "Text provider-owned outcomes remain reports: blocking or clearing SYNC hooks cannot change the original outcome observed after them.",
+          "coverage": "partial",
+          "missing": [
+            "AIChannel.external_tool_handler integration and its source-test variants remain open; the three excluded source functions receive no credit.",
+            "Media/realtime execution, remote executors and vendor gateways remain outside this text slice.",
+            "Cancellation before report context loads is reviewed by code reading only; the gated runtime test cuts during SYNC after the context has loaded.",
+            "The broad RFC source unit remains partial; local-handler result override rules and unrelated tool paths are not completed by provider-owned reports.",
+            "Native Rust logs are retained separately; no aggregate Rust/backend/runtime execution receipt is synthesized."
+          ],
+          "executions": [
+            {
+              "execution": "python-provider-served-470903e-memory",
+              "implementation": "python",
+              "commit": "470903e10cf5fff7c1213fe3ec65aecd119bbdd1",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "stale"
+            },
+            {
+              "execution": "rust-b085289-memory-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-b085289-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "python-rule-links-98a547a-memory",
+              "implementation": "python",
+              "commit": "98a547aab38e5bf1686d9fe0cf6bc5a011568924",
+              "backend": "memory",
+              "runtime": "asyncio",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-f91889a-memory-current-thread",
+              "implementation": "rust",
+              "commit": "f91889a6056921e0984316dc29d585f613bc001d",
+              "backend": "memory",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-f91889a-memory-multi-thread-4",
+              "implementation": "rust",
+              "commit": "f91889a6056921e0984316dc29d585f613bc001d",
+              "backend": "memory",
+              "runtime": "multi_thread_4",
+              "state": "incomplete"
+            },
+            {
+              "execution": "rust-f91889a-sqlite-current-thread",
+              "implementation": "rust",
+              "commit": "f91889a6056921e0984316dc29d585f613bc001d",
+              "backend": "sqlite",
+              "runtime": "current_thread",
+              "state": "incomplete"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "RK-9.3-057",
+      "section": "9.3",
+      "mapping": "mapped_partial",
+      "links": [
+        {
           "id": "tool-structured-handler-copies",
           "scope": "Local AI handler copies reach result hooks and persisted end rows. Shared cases cover replacement, clearing, text-only rewrite, invalid copy normalization, withholding, unsuccessful outcomes, parallel calls and cancellation after a handler write.",
           "coverage": "partial",
@@ -36987,89 +37252,95 @@
               "state": "recorded_pass"
             }
           ]
-        },
-        {
-          "id": "phase4-provider-served-original-reports",
-          "scope": "Text provider-owned outcomes remain reports: blocking or clearing SYNC hooks cannot change the original outcome observed after them.",
-          "coverage": "partial",
-          "missing": [
-            "AIChannel.external_tool_handler integration and its source-test variants remain open; the three excluded source functions receive no credit.",
-            "Media/realtime execution, remote executors and vendor gateways remain outside this text slice.",
-            "Cancellation before report context loads is reviewed by code reading only; the gated runtime test cuts during SYNC after the context has loaded.",
-            "The broad RFC source unit remains partial; local-handler result override rules and unrelated tool paths are not completed by provider-owned reports.",
-            "Native Rust logs are retained separately; no aggregate Rust/backend/runtime execution receipt is synthesized."
-          ],
-          "executions": [
-            {
-              "execution": "python-provider-served-470903e-memory",
-              "implementation": "python",
-              "commit": "470903e10cf5fff7c1213fe3ec65aecd119bbdd1",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "stale"
-            },
-            {
-              "execution": "rust-b085289-memory-current-thread",
-              "implementation": "rust",
-              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
-              "backend": "memory",
-              "runtime": "current_thread",
-              "state": "incomplete"
-            },
-            {
-              "execution": "rust-b085289-memory-multi-thread-4",
-              "implementation": "rust",
-              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
-              "backend": "memory",
-              "runtime": "multi_thread_4",
-              "state": "incomplete"
-            },
-            {
-              "execution": "rust-b085289-sqlite-current-thread",
-              "implementation": "rust",
-              "commit": "b085289744732833d9fa94bd3921e85b0b0d8cba",
-              "backend": "sqlite",
-              "runtime": "current_thread",
-              "state": "incomplete"
-            },
-            {
-              "execution": "python-rule-links-98a547a-memory",
-              "implementation": "python",
-              "commit": "98a547aab38e5bf1686d9fe0cf6bc5a011568924",
-              "backend": "memory",
-              "runtime": "asyncio",
-              "state": "incomplete"
-            },
-            {
-              "execution": "rust-f91889a-memory-current-thread",
-              "implementation": "rust",
-              "commit": "f91889a6056921e0984316dc29d585f613bc001d",
-              "backend": "memory",
-              "runtime": "current_thread",
-              "state": "incomplete"
-            },
-            {
-              "execution": "rust-f91889a-memory-multi-thread-4",
-              "implementation": "rust",
-              "commit": "f91889a6056921e0984316dc29d585f613bc001d",
-              "backend": "memory",
-              "runtime": "multi_thread_4",
-              "state": "incomplete"
-            },
-            {
-              "execution": "rust-f91889a-sqlite-current-thread",
-              "implementation": "rust",
-              "commit": "f91889a6056921e0984316dc29d585f613bc001d",
-              "backend": "sqlite",
-              "runtime": "current_thread",
-              "state": "incomplete"
-            }
-          ]
         }
       ]
     },
     {
-      "id": "RK-9.3-015",
+      "id": "RK-9.3-058",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-059",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-060",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-061",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-062",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-063",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-064",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-065",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-066",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-067",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-068",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-069",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-070",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-071",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-072",
       "section": "9.3",
       "mapping": "mapped_partial",
       "links": [
@@ -37187,7 +37458,20 @@
               "state": "recorded_pass"
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "id": "RK-9.3-073",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-074",
+      "section": "9.3",
+      "mapping": "mapped_partial",
+      "links": [
         {
           "id": "acp-handler-outcome-reports",
           "scope": "Recorded ACP outcomes and hook callback counts for configured decisions and report overrides, including fixed failure envelopes, refused_but_ran, fallback when reporting raises before delegation, and no duplicate after delegation.",
@@ -37286,7 +37570,80 @@
               "state": "recorded_pass"
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "id": "RK-9.3-075",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-076",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-077",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-078",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-079",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-080",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-081",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-082",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-083",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-084",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-085",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-086",
+      "section": "9.3",
+      "mapping": "mapped_partial",
+      "links": [
         {
           "id": "phase4-local-script-failures",
           "scope": "Script unknown-skill and policy refusals, raised executor failures, plus AI shutdown reports preserving executed arguments and distinguishing unstarted calls.",
@@ -37299,13 +37656,157 @@
       ]
     },
     {
-      "id": "RK-9.3-016",
+      "id": "RK-9.3-087",
       "section": "9.3",
       "mapping": "unmapped",
       "links": []
     },
     {
-      "id": "RK-9.3-017",
+      "id": "RK-9.3-088",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-089",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-090",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-091",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-092",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-093",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-094",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-095",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-096",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-097",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-098",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-099",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-100",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-101",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-102",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-103",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-104",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-105",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-106",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-107",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-108",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-109",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-110",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-111",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-112",
       "section": "9.3",
       "mapping": "mapped_partial",
       "links": [
@@ -37824,6 +38325,36 @@
           ]
         }
       ]
+    },
+    {
+      "id": "RK-9.3-113",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-114",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-115",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-116",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
+    },
+    {
+      "id": "RK-9.3-117",
+      "section": "9.3",
+      "mapping": "unmapped",
+      "links": []
     },
     {
       "id": "RK-9.4-001",
