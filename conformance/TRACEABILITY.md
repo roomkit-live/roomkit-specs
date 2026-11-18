@@ -15,7 +15,8 @@ python conformance/check.py --strict --traceability --python-repo ../roomkit
 python -m unittest discover -s conformance/tests -v
 ```
 
-Add `--update-traceability` only to regenerate the three derived artifacts.
+Add `--update-traceability` only to regenerate the derived artifacts
+(`requirements.json`, `coverage.json`, `coverage.md` and the pages of `rules/`).
 This never updates review records or proof fingerprints. `--base-ref <full SHA>`
 checks ID removals and retirement history against a previous specs commit.
 The historical `--strict` check still uses `RFC_COMMIT`; traceability uses the
@@ -65,6 +66,128 @@ without normative keywords and inside a model's code block. Candidate scenarios
 in the report come from existing `rules` citations only; they guide review and
 carry no coverage credit. Unmapped units can already have tests, whose assertion
 links have not been reviewed yet.
+
+## Citing units
+
+A scenario cites the units it tests in `requirements`, beside its section
+citations in `rules`, which stay for navigation:
+
+```json
+"rules": ["§10.4"],
+"requirements": ["RK-10.4-003"]
+```
+
+The checker refuses an ID that names no unit of the current RFC, a retired ID
+(cite the units that replace it) and a `non_testable` unit. A citation says the
+scenario tests the unit; it is not a reviewed link, and a scenario can cite a
+unit it covers only in part.
+
+### Level
+
+The reviewer of a unit sets its level in the annotation, whatever its keywords:
+
+```markdown
+<!-- rfc: {"id":"RK-10.4-003","kind":"behavior","applies":"Inbound routing","level":"must"} -->
+```
+
+The level is `must`, `should` or `may`, and `requirements.json` carries it. A
+unit with no level has not been reviewed for one: the report shows `—`, and
+nothing blocks on it. The level stays out of the unit's fingerprint, so setting
+it reopens no link or lock entry; it edits the annotation, so the section's
+inventory review is recorded again, as for any annotation change.
+
+### The lock
+
+`links.lock.json` pins each citation to the unit's fingerprint when the scenario
+was last read against it, units then scenarios, sorted:
+
+```json
+{
+  "version": 1,
+  "links": {
+    "RK-10.4-003": {
+      "routing/a-message-from-an-unknown-address-opens-a-room": "5f0c…"
+    }
+  }
+}
+```
+
+The lock lives here only: the implementations' copies never hold it, so a
+change to the RFC changes no scenario and needs no sync. `check.py` prints a
+`lock:` line, which fails `--strict`, when:
+
+- a cited unit's text, kind or applicability changed since a scenario read it:
+  `RK-10.4-003 changed since routing/x read it: reread it, then run python3
+  conformance/check.py --pin RK-10.4-003`;
+- a citation has no entry: `routing/x cites RK-10.4-003 with no lock entry:
+  once it is read against them, run python3 conformance/check.py --pin
+  routing/x`;
+- an entry has no citation: `links.lock.json pins routing/x to RK-10.4-004,
+  which it does not cite: run python3 conformance/check.py --pin routing/x`.
+
+### Re-pinning
+
+Reread the scenario against the unit's new text, fix it if it no longer tests
+what the unit says, then pin by name:
+
+```sh
+python3 conformance/check.py --pin RK-10.4-003            # every citation of this unit
+python3 conformance/check.py --pin routing/x routing/y    # every citation of these scenarios
+```
+
+A pin records the named units' or scenarios' citations at the current text,
+drops their entries that no citation holds any more, and moves nothing else.
+It needs at least one name, and pins nothing while a citation is wrong.
+
+### The process rule
+
+`check.py --changed-units --base-ref <full sha>` reads the units added since
+that commit, or whose text, kind, applicability or level changed:
+
+- `must`: a scenario cites it, or `untested.json` gives the reason none does;
+  otherwise an error;
+- `should`: without either, a warning;
+- `may`: nothing;
+- no level: listed as unreviewed, never blocking.
+
+A `non_testable` unit is exempt: its kind is its reason. CI does not run the
+rule yet.
+
+```text
+$ python3 conformance/check.py --changed-units --base-ref 2f35a764a425fe69453e22bdba378482673c7e34
+error: RK-10.4-008 (must, added since 2f35a764a425): no scenario cites it and untested.json gives no reason
+```
+
+`untested.json` maps a current unit to its reason; a unit scenarios cite cannot
+keep an entry (`--strict` says so):
+
+```json
+{
+  "version": 1,
+  "units": {
+    "RK-10.4-008": "Needs a carrier's number lookup, which no runner reaches."
+  }
+}
+```
+
+### The per-rule report
+
+[rules/](rules/README.md) holds an index and one page per top-level section,
+generated and checked with the other artifacts. Each unit's row gives its kind,
+its level, the scenarios citing it (or its untested reason), each citation's
+lock state (`pinned`, `reread` after the unit changed, `unpinned`), and each
+citing scenario's latest Python and Rust outcome per backend:
+
+```markdown
+| Unit | Kind | Level | Scenario | Lock | Python | Rust |
+|---|---|---|---|---|---|---|
+| RK-10.4-003 | behavior | must | `routing/x` | pinned | memory passed, sqlite passed |  |
+```
+
+An outcome counts when its receipt ran the scenario's current text (the same
+hash), whatever its RFC commit. Receipts are appended as they are recorded, so
+the last one listed is the latest. Rust's column stays empty until its runner
+writes receipts.
 
 ## Reviewed links
 

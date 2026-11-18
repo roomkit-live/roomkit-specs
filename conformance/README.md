@@ -20,6 +20,8 @@ a passing scenario suite alone certifies no conformance level.
 | `check.py` | The checker (below) |
 | `requirements.json`, `coverage.json`, `coverage.md` | Generated inventory and evidence report |
 | `evidence.json`, `inventory.json` | Reviewed links, execution receipts and source inventory reviews |
+| `links.lock.json`, `untested.json` | Each scenario citation pinned to its unit's text; the reason a unit has no scenario |
+| `rules/` | Generated per-rule report: each unit, its citing scenarios and their latest results |
 | `TRACEABILITY.md` | Update and review procedure |
 | `RFC_COMMIT` | The roomkit-specs commit whose `roomkit-rfc.md` the scenarios' `rules` are checked against |
 
@@ -49,7 +51,9 @@ roomkit-specs checkout sits beside it, as in CI.
 python3 conformance/check.py            # check; exit 1 on an error
 python3 conformance/check.py --fix      # rewrite each file in the suite's layout first
 python3 conformance/check.py --rfc roomkit-rfc.md   # resolve the rules against a file
-python3 conformance/check.py --strict   # coverage gaps are errors too
+python3 conformance/check.py --strict   # coverage gaps and lock drift are errors too
+python3 conformance/check.py --pin RK-10.4-003   # re-pin a unit's citations after reading them
+python3 conformance/check.py --changed-units --base-ref <full sha>   # the process rule
 ```
 
 It needs `jsonschema`. For each scenario it checks that:
@@ -64,7 +68,10 @@ It needs `jsonschema`. For each scenario it checks that:
   - `§7.5 rule 2`: the numbered item of the section's prose, which must be
     the only one so numbered;
   - `§9.5.1 Reentrance`, `§10.3 Validation rule 4`: a paragraph that opens
-    with that bold label, and the numbered item after it.
+    with that bold label, and the numbered item after it;
+- each entry of its `requirements` names a unit of the current `roomkit-rfc.md`
+  that is neither retired nor `non_testable`, and `links.lock.json` pins it to
+  the unit's current text ([TRACEABILITY.md](TRACEABILITY.md), "Citing units").
 
 It then lists, as gaps, what of the §26.1 trigger and framework-event table no
 scenario asserts. A trigger is asserted by a scenario that expects calls of a
@@ -1469,6 +1476,23 @@ or a skip to a passing result.
   member out.
 - Cite each rule the scenario relies on in `rules`, as precisely as the RFC
   allows; `check.py` must resolve it.
+- Cite the units the scenario tests in `requirements`, by their IDs in
+  `requirements.json`: `"requirements": ["RK-10.4-003"]`. An unknown, retired or
+  `non_testable` unit is refused. TRACEABILITY.md, "Citing units", has the rest:
+  - a unit's `level` (`must`, `should`, `may`) is set in its annotation by its
+    reviewer: `<!-- rfc: {"id":"RK-10.4-003",…,"level":"must"} -->`;
+  - `links.lock.json` pins each citation to the unit's text; after the unit
+    changes, `check.py --strict` names the scenarios to reread:
+    `lock: RK-10.4-003 changed since routing/x read it: reread it, then run
+    python3 conformance/check.py --pin RK-10.4-003`;
+  - re-pin by name once read, a unit or a scenario:
+    `python3 conformance/check.py --pin routing/x`; a new citation is pinned
+    the same way;
+  - the process rule, `check.py --changed-units --base-ref <full sha>`: a
+    `must` unit added or changed since needs a citing scenario or a reason in
+    `untested.json` (`{"RK-10.4-008": "Needs a carrier's number lookup."}`
+    under `units`); a `should` one warns, a unit with no level is listed as
+    unreviewed.
 - Give every member you assert in a template, and a reason to every block.
 - Hold on every runtime: a runner on one thread and one on several
   (roomkit-rs runs the suite on both) give the same outcomes. Two things
