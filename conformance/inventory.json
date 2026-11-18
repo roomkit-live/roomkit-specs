@@ -411,7 +411,7 @@
     },
     {
       "section": "10.3",
-      "sha256": "ab8274e138144e2a17da122bb6b3b078cf70d2d779e26cd9ca73083b9e7782a9",
+      "sha256": "c0da423792bfe2c7b63926450c5202984cc4aa3ac02085d84d48e8385171cbba",
       "classification": "normative",
       "review": "Source inventory: Edit and Delete Processing, split to one obligation per unit (RMK-1777): a validation rule, a state update or a broadcast item per unit, or one sentence of it. Each unit keeps its conditions, exceptions and rationale; the delete_event block stays with the sentence that introduces it. The direct mutation calls are should (RK-10.3-049); what they do once offered is must. Every unit carries its level."
     },
@@ -423,7 +423,7 @@
     },
     {
       "section": "10.5",
-      "sha256": "c544c3d746a6228e4ca4fb82c05045f34bd68de8d6ce6c818c83515230d5d567",
+      "sha256": "cb3fd7d7f7a226a7132d707653e67935265bdc8002c6b87ace985706778f703b",
       "classification": "normative",
       "review": "Source inventory: Direct Event Injection, split to one obligation per unit (RMK-1777). Each unit keeps its conditions, exceptions and rationale; each call's signature block stays with the sentence that introduces it. send_event and commit_event are may for the integrator (RK-10.5-004, RK-10.5-042) and post() should (RK-10.5-026); what each does once offered is must. Every unit carries its level."
     },

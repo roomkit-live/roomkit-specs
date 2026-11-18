@@ -100,13 +100,14 @@ reviewed links or execution receipts.
 - When it shows that a unit does not apply, it cites the unit that states the
   exclusion, not the excluded one:
   - `routing/an-explicit-room-bypasses-the-custom-router` names its room, so
-    nothing routes it: it cites the unit of §10.1 step 2 for a room the caller
-    names, never RK-10.4-008, which routes a message that names none;
+    nothing routes it: it cites no §10.4 unit, never RK-10.4-008, which routes
+    a message that names none, and cites the unit of §10.1 step 2 for a room
+    the caller names once that section is split;
   - `routing/every-sender-on-a-group-binding-shares-its-room` cites
     RK-10.4-025, which admits every sender of a `group` binding, not
     RK-10.4-039, which records the sender on a binding that is not `group`.
-- When it covers part of a unit, it cites the unit, and the change that adds
-  the citation names the part left uncovered:
+- When it covers part of a unit, it cites the unit, and the report of the work
+  that adds the citation names the part left uncovered:
   `routing/a-hook-refusal-keeps-the-routed-correspondent` cites RK-10.4-040
   for the sender recorded before the message is processed, not for two first
   messages racing to one room.

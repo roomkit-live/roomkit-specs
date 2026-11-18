@@ -9,8 +9,7 @@
   ],
   "requirements": [
     "RK-10.3-054",
-    "RK-10.3-055",
-    "RK-10.3-061"
+    "RK-10.3-055"
   ],
   "reentrancy": [
     "change@locked"
