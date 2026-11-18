@@ -77,7 +77,7 @@ citations in `rules`, which stay for navigation:
 
 ```json
 "rules": ["§10.4"],
-"requirements": ["RK-10.4-003"]
+"requirements": ["RK-10.4-022"]
 ```
 
 The checker refuses an ID that names no unit of the current RFC, a retired ID
@@ -92,7 +92,7 @@ reviewed links or execution receipts.
 The reviewer of a unit sets its level in the annotation, whatever its keywords:
 
 ```markdown
-<!-- rfc: {"id":"RK-10.4-003","kind":"behavior","applies":"Inbound routing","level":"must"} -->
+<!-- rfc: {"id":"RK-10.4-022","kind":"behavior","applies":"Inbound routing","level":"must"} -->
 ```
 
 The level is `must`, `should` or `may`, and `requirements.json` carries it. A
@@ -110,7 +110,7 @@ was last read against it, units then scenarios, sorted:
 {
   "version": 1,
   "links": {
-    "RK-10.4-003": {
+    "RK-10.4-022": {
       "routing/a-message-from-an-unknown-address-opens-a-room": "5f0c…"
     }
   }
@@ -122,13 +122,13 @@ change to the RFC changes no scenario and needs no sync. `check.py` prints a
 `lock:` line, which fails `--strict`, when:
 
 - a cited unit's text, kind or applicability changed since a scenario read it:
-  `RK-10.4-003 changed since routing/x read it: reread it, then run python3
-  conformance/check.py --pin RK-10.4-003`;
-- a citation has no entry: `routing/x cites RK-10.4-003 with no lock entry:
+  `RK-10.4-022 changed since routing/x read it: reread it, then run python3
+  conformance/check.py --pin RK-10.4-022`;
+- a citation has no entry: `routing/x cites RK-10.4-022 with no lock entry:
   once it is read against it, run python3 conformance/check.py --pin
-  RK-10.4-003 routing/x`;
-- an entry has no citation: `links.lock.json pins routing/x to RK-10.4-004,
-  which it does not cite: run python3 conformance/check.py --pin RK-10.4-004
+  RK-10.4-022 routing/x`;
+- an entry has no citation: `links.lock.json pins routing/x to RK-10.4-023,
+  which it does not cite: run python3 conformance/check.py --pin RK-10.4-023
   routing/x`.
 
 A lock out of its sorted layout (a merge resolved by hand) is an error that any
@@ -140,8 +140,8 @@ Reread the scenario against the unit's new text, fix it if it no longer tests
 what the unit says, then pin by name:
 
 ```sh
-python3 conformance/check.py --pin RK-10.4-003            # every citation of this unit
-python3 conformance/check.py --pin RK-10.4-003 routing/x  # this one citation
+python3 conformance/check.py --pin RK-10.4-022            # every citation of this unit
+python3 conformance/check.py --pin RK-10.4-022 routing/x  # this one citation
 python3 conformance/check.py --pin routing/x              # every citation of this scenario
 ```
 
@@ -171,7 +171,7 @@ rule yet.
 
 ```text
 $ python3 conformance/check.py --changed-units --base-ref 2f35a764a425fe69453e22bdba378482673c7e34
-error: RK-10.4-008 (must, added since 2f35a764a425): no scenario cites it and untested.json gives no reason
+error: RK-10.4-999 (must, added since 2f35a764a425): no scenario cites it and untested.json gives no reason
 ```
 
 `untested.json` maps a current unit to its reason; a unit scenarios cite cannot
@@ -181,7 +181,7 @@ keep an entry (`--strict` says so):
 {
   "version": 1,
   "units": {
-    "RK-10.4-008": "Needs a carrier's number lookup, which no runner reaches."
+    "RK-10.4-999": "Needs a carrier's number lookup, which no runner reaches."
   }
 }
 ```
@@ -197,7 +197,7 @@ citing scenario's latest Python and Rust outcome per backend:
 ```markdown
 | Unit | Kind | Level | Scenario | Lock | Python | Rust |
 |---|---|---|---|---|---|---|
-| RK-10.4-003 | behavior | must | `routing/x` | pinned | memory passed, sqlite passed |  |
+| RK-10.4-022 | behavior | must | `routing/x` | pinned | memory passed, sqlite passed |  |
 ```
 
 An outcome counts when its receipt ran the scenario's current text (the same

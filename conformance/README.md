@@ -52,7 +52,7 @@ python3 conformance/check.py            # check; exit 1 on an error
 python3 conformance/check.py --fix      # rewrite each file in the suite's layout first
 python3 conformance/check.py --rfc roomkit-rfc.md   # resolve the rules against a file
 python3 conformance/check.py --strict   # coverage gaps and lock drift are errors too
-python3 conformance/check.py --pin RK-10.4-003   # re-pin a unit's citations after reading them
+python3 conformance/check.py --pin RK-10.4-022   # re-pin a unit's citations after reading them
 python3 conformance/check.py --changed-units --base-ref <full sha>   # the process rule
 ```
 
@@ -1477,21 +1477,21 @@ or a skip to a passing result.
 - Cite each rule the scenario relies on in `rules`, as precisely as the RFC
   allows; `check.py` must resolve it.
 - Cite the units the scenario tests in `requirements`, by their IDs in
-  `requirements.json`: `"requirements": ["RK-10.4-003"]`. An unknown, retired or
+  `requirements.json`: `"requirements": ["RK-10.4-022"]`. An unknown, retired or
   `non_testable` unit is refused. TRACEABILITY.md, "Citing units", has the rest:
   - a unit's `level` (`must`, `should`, `may`) is set in its annotation by its
-    reviewer: `<!-- rfc: {"id":"RK-10.4-003",…,"level":"must"} -->`;
+    reviewer: `<!-- rfc: {"id":"RK-10.4-022",…,"level":"must"} -->`;
   - `links.lock.json` pins each citation to the unit's text; after the unit
     changes, `check.py --strict` names the scenarios to reread:
-    `lock: RK-10.4-003 changed since routing/x read it: reread it, then run
-    python3 conformance/check.py --pin RK-10.4-003`;
+    `lock: RK-10.4-022 changed since routing/x read it: reread it, then run
+    python3 conformance/check.py --pin RK-10.4-022`;
   - pin a citation by name once it is read, a unit, a scenario or both:
-    `python3 conformance/check.py --pin RK-10.4-003 routing/x` pins that one
+    `python3 conformance/check.py --pin RK-10.4-022 routing/x` pins that one
     citation, new or changed; then regenerate the report
     (`--traceability --update-traceability`);
   - the process rule, `check.py --changed-units --base-ref <full sha>`: a
     `must` unit added or changed since needs a citing scenario or a reason in
-    `untested.json` (`{"RK-10.4-008": "Needs a carrier's number lookup."}`
+    `untested.json` (`{"RK-10.4-999": "Needs a carrier's number lookup."}`
     under `units`); a `should` one warns, a unit with no level is listed as
     unreviewed.
 - Give every member you assert in a template, and a reason to every block.

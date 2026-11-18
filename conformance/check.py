@@ -24,7 +24,7 @@ table (README, "Reentrancy cells").
     python3 conformance/check.py --fix      # rewrite the layout first
     python3 conformance/check.py --rfc roomkit-rfc.md   # against a file
     python3 conformance/check.py --strict   # coverage gaps and lock drift are errors too
-    python3 conformance/check.py --pin RK-10.4-003 routing/x   # re-pin after reading
+    python3 conformance/check.py --pin RK-10.4-022 routing/x   # re-pin after reading
     python3 conformance/check.py --changed-units --base-ref <sha>   # the process rule
 
 It needs `jsonschema` (pip install jsonschema).

@@ -1,4 +1,429 @@
 {
   "version": 1,
-  "links": {}
+  "links": {
+    "RK-10.4-008": {
+      "routing/a-routed-sender-is-recorded": "e467c87d8712a8a0ce0e882d7962c967b58a9d2f8d3da56b8300696ad1c99b1c",
+      "routing/a-sender-returns-to-their-room": "e467c87d8712a8a0ce0e882d7962c967b58a9d2f8d3da56b8300696ad1c99b1c",
+      "routing/the-router-does-not-guess": "e467c87d8712a8a0ce0e882d7962c967b58a9d2f8d3da56b8300696ad1c99b1c",
+      "routing/two-customers-on-one-number-keep-a-conversation-each": "e467c87d8712a8a0ce0e882d7962c967b58a9d2f8d3da56b8300696ad1c99b1c"
+    },
+    "RK-10.4-009": {
+      "routing/a-custom-router-receives-null-for-an-empty-or-blank-address": "d38e1a282eb5389b7c30f34db451cc7facfc84c8c8987e4bd235430b7295bd2b",
+      "routing/a-custom-router-receives-the-chat-address": "d38e1a282eb5389b7c30f34db451cc7facfc84c8c8987e4bd235430b7295bd2b",
+      "routing/a-custom-router-receives-the-scoped-identity-and-metadata": "d38e1a282eb5389b7c30f34db451cc7facfc84c8c8987e4bd235430b7295bd2b"
+    },
+    "RK-10.4-010": {
+      "routing/the-newest-binding-room-is-selected-deterministically": "327fdf7989c01b8983726600742d0d3acb1381a471301b6c98f161c32240dec7",
+      "routing/the-newest-participant-room-is-selected-deterministically": "327fdf7989c01b8983726600742d0d3acb1381a471301b6c98f161c32240dec7",
+      "tenancy/routing-stays-within-the-organization": "327fdf7989c01b8983726600742d0d3acb1381a471301b6c98f161c32240dec7"
+    },
+    "RK-10.4-011": {
+      "routing/a-foreign-custom-room-is-refused-before-attach": "b19a3400fdae5043794536bb08b51b4136f787d94f116ba8cae51f100d3dc831",
+      "routing/a-missing-custom-room-is-created-under-the-caller": "b19a3400fdae5043794536bb08b51b4136f787d94f116ba8cae51f100d3dc831",
+      "routing/a-missing-room-a-router-names-for-a-message-with-no-address-takes-in-no-one-else": "b19a3400fdae5043794536bb08b51b4136f787d94f116ba8cae51f100d3dc831"
+    },
+    "RK-10.4-012": {
+      "locks/a-message-refused-room-taken-carries-its-claim-s-failed-release": "6f76193b4373953e48c2e82cd1fb0b37ddfec87cebe7446a2da26214b0b8dbad",
+      "routing/a-channel-attached-with-no-address-takes-in-no-one-else": "6f76193b4373953e48c2e82cd1fb0b37ddfec87cebe7446a2da26214b0b8dbad",
+      "routing/a-router-answering-another-s-room-twice-gives-the-message-a-new-room": "6f76193b4373953e48c2e82cd1fb0b37ddfec87cebe7446a2da26214b0b8dbad",
+      "routing/a-stored-recipient-names-its-correspondent-when-claimed": "6f76193b4373953e48c2e82cd1fb0b37ddfec87cebe7446a2da26214b0b8dbad",
+      "routing/the-record-names-the-sender-on-an-attach-whatever-the-channel-wrote": "6f76193b4373953e48c2e82cd1fb0b37ddfec87cebe7446a2da26214b0b8dbad"
+    },
+    "RK-10.4-014": {
+      "identity/a-sender-s-own-record-names-them-on-its-channel": "a4bbb933f8a135c1b707ac7e3f7d632453dbb0a9666c67a1ef6133c73c773f2c",
+      "routing/a-binding-match-precedes-a-newer-participant-room": "a4bbb933f8a135c1b707ac7e3f7d632453dbb0a9666c67a1ef6133c73c773f2c",
+      "routing/a-member-is-found-past-a-newer-binding-of-another-number": "a4bbb933f8a135c1b707ac7e3f7d632453dbb0a9666c67a1ef6133c73c773f2c",
+      "routing/a-sender-returns-to-their-room": "a4bbb933f8a135c1b707ac7e3f7d632453dbb0a9666c67a1ef6133c73c773f2c",
+      "routing/the-newest-binding-room-is-selected-deterministically": "a4bbb933f8a135c1b707ac7e3f7d632453dbb0a9666c67a1ef6133c73c773f2c",
+      "routing/the-newest-participant-room-is-selected-deterministically": "a4bbb933f8a135c1b707ac7e3f7d632453dbb0a9666c67a1ef6133c73c773f2c",
+      "routing/two-customers-on-one-number-keep-a-conversation-each": "a4bbb933f8a135c1b707ac7e3f7d632453dbb0a9666c67a1ef6133c73c773f2c",
+      "routing/two-rooms-the-host-opened-each-take-their-own-correspondent": "a4bbb933f8a135c1b707ac7e3f7d632453dbb0a9666c67a1ef6133c73c773f2c"
+    },
+    "RK-10.4-015": {
+      "identity/a-sender-s-own-record-names-them-on-its-channel": "3be073c4dfd59f278509b7c9f2d20d5964096aa03ce72ac303afcc361e42e846",
+      "members/a-resolved-pending-sender-keeps-their-room": "3be073c4dfd59f278509b7c9f2d20d5964096aa03ce72ac303afcc361e42e846",
+      "routing/a-binding-naming-an-identity-is-answered-at-the-number-its-correspondent-writes-from": "3be073c4dfd59f278509b7c9f2d20d5964096aa03ce72ac303afcc361e42e846",
+      "routing/a-binding-with-a-recipient-alone-names-its-recipient": "3be073c4dfd59f278509b7c9f2d20d5964096aa03ce72ac303afcc361e42e846",
+      "routing/a-channel-reading-no-recipient-keeps-a-stranger-out": "3be073c4dfd59f278509b7c9f2d20d5964096aa03ce72ac303afcc361e42e846",
+      "routing/a-provider-s-spelling-of-a-number-reaches-the-room-of-its-channel-form": "3be073c4dfd59f278509b7c9f2d20d5964096aa03ce72ac303afcc361e42e846",
+      "routing/a-sender-identified-in-the-room-is-found-again": "3be073c4dfd59f278509b7c9f2d20d5964096aa03ce72ac303afcc361e42e846",
+      "routing/a-value-under-the-key-in-another-form-finds-its-room-on-a-channel-reading-no-recipient": "3be073c4dfd59f278509b7c9f2d20d5964096aa03ce72ac303afcc361e42e846",
+      "routing/an-advisor-s-resolution-names-the-identity-on-the-binding-delivering-to-the-participant": "3be073c4dfd59f278509b7c9f2d20d5964096aa03ce72ac303afcc361e42e846",
+      "routing/an-integer-under-the-key-of-a-channel-reading-no-recipient-names-its-conversation": "3be073c4dfd59f278509b7c9f2d20d5964096aa03ce72ac303afcc361e42e846",
+      "routing/the-channel-s-recipient-wins-over-its-declared-key": "3be073c4dfd59f278509b7c9f2d20d5964096aa03ce72ac303afcc361e42e846",
+      "routing/two-rooms-the-host-opened-each-take-their-own-correspondent": "3be073c4dfd59f278509b7c9f2d20d5964096aa03ce72ac303afcc361e42e846",
+      "routing/what-names-the-sender-s-identity-is-their-own": "3be073c4dfd59f278509b7c9f2d20d5964096aa03ce72ac303afcc361e42e846"
+    },
+    "RK-10.4-016": {
+      "routing/the-newest-binding-room-is-selected-deterministically": "ccbaf11d70ca2e61a620fdfb110ebe76c1a98168a1558e76cab1ec00c6873129",
+      "routing/the-newest-participant-room-is-selected-deterministically": "ccbaf11d70ca2e61a620fdfb110ebe76c1a98168a1558e76cab1ec00c6873129"
+    },
+    "RK-10.4-017": {
+      "routing/the-newest-binding-room-is-selected-deterministically": "9538a4b86fde45e5afab7cf37f56d16d086e21943f4648376fe0638bbe1a0d09",
+      "routing/the-newest-participant-room-is-selected-deterministically": "9538a4b86fde45e5afab7cf37f56d16d086e21943f4648376fe0638bbe1a0d09"
+    },
+    "RK-10.4-018": {
+      "routing/the-default-router-places-no-sender-it-cannot-name-a-room-for": "3eeeab4a05944167c42cd0b4ff7f144dfa932a98da1a8b39e1805c94614d79ee"
+    },
+    "RK-10.4-019": {
+      "routing/the-newest-binding-room-is-selected-deterministically": "c7ebb5b7797e230a21753646d46042303f9fa03042d3f90a05abf9fb493f4f7d",
+      "routing/the-newest-participant-room-is-selected-deterministically": "c7ebb5b7797e230a21753646d46042303f9fa03042d3f90a05abf9fb493f4f7d"
+    },
+    "RK-10.4-020": {
+      "routing/a-chat-message-is-its-chat-s-whatever-its-sender": "fd7f7310576144ee761be2504244368819a92c9ab7c89bb774bca501bcdeab34",
+      "routing/a-chat-under-the-framework-s-name-is-refused": "fd7f7310576144ee761be2504244368819a92c9ab7c89bb774bca501bcdeab34",
+      "routing/a-custom-router-receives-the-chat-address": "fd7f7310576144ee761be2504244368819a92c9ab7c89bb774bca501bcdeab34",
+      "routing/a-message-is-routed-by-the-channel-s-conversation": "fd7f7310576144ee761be2504244368819a92c9ab7c89bb774bca501bcdeab34",
+      "routing/a-post-with-no-author-is-answered-in-its-chat": "fd7f7310576144ee761be2504244368819a92c9ab7c89bb774bca501bcdeab34",
+      "routing/a-room-prepared-for-a-chat-takes-no-one-else": "fd7f7310576144ee761be2504244368819a92c9ab7c89bb774bca501bcdeab34",
+      "routing/a-sender-under-the-framework-s-name-in-a-chat-of-another-name-is-refused": "fd7f7310576144ee761be2504244368819a92c9ab7c89bb774bca501bcdeab34",
+      "routing/a-user-s-private-chat-and-a-group-are-two-conversations": "fd7f7310576144ee761be2504244368819a92c9ab7c89bb774bca501bcdeab34"
+    },
+    "RK-10.4-021": {
+      "routing/a-sender-returns-to-their-room": "ff272a6c78808eea5bbc44e06682e0559431bce518f39b325999a3a923d59286",
+      "routing/two-customers-on-one-number-keep-a-conversation-each": "ff272a6c78808eea5bbc44e06682e0559431bce518f39b325999a3a923d59286"
+    },
+    "RK-10.4-022": {
+      "routing/a-hook-refusal-keeps-the-routed-correspondent": "2687721a569e062e55ee517a76d1c9102ead9cbf3287e562582cc1554e0f03b2",
+      "routing/a-paused-room-counts-among-the-channel-s-rooms-only-as-a-group": "2687721a569e062e55ee517a76d1c9102ead9cbf3287e562582cc1554e0f03b2",
+      "routing/a-routed-sender-is-recorded": "2687721a569e062e55ee517a76d1c9102ead9cbf3287e562582cc1554e0f03b2",
+      "routing/a-webhook-s-recipient-names-no-correspondent": "2687721a569e062e55ee517a76d1c9102ead9cbf3287e562582cc1554e0f03b2",
+      "routing/the-default-router-places-no-sender-it-cannot-name-a-room-for": "2687721a569e062e55ee517a76d1c9102ead9cbf3287e562582cc1554e0f03b2",
+      "routing/the-default-router-skips-a-closed-room": "2687721a569e062e55ee517a76d1c9102ead9cbf3287e562582cc1554e0f03b2"
+    },
+    "RK-10.4-023": {
+      "routing/a-paused-room-counts-among-the-channel-s-rooms-only-as-a-group": "062edd4c0ae5b2f27c111143c623f8dae08be8b34f1c316ffce8a4ece61b92cb",
+      "routing/the-default-router-skips-a-closed-room": "062edd4c0ae5b2f27c111143c623f8dae08be8b34f1c316ffce8a4ece61b92cb"
+    },
+    "RK-10.4-024": {
+      "routing/a-sender-returns-to-their-room": "8b3a787dd301091fef26f76b9ad95232b8d869c642cab290d1e00417ad13df1e",
+      "routing/the-default-router-places-no-sender-it-cannot-name-a-room-for": "8b3a787dd301091fef26f76b9ad95232b8d869c642cab290d1e00417ad13df1e",
+      "routing/the-router-does-not-guess": "8b3a787dd301091fef26f76b9ad95232b8d869c642cab290d1e00417ad13df1e",
+      "routing/two-customers-on-one-number-keep-a-conversation-each": "8b3a787dd301091fef26f76b9ad95232b8d869c642cab290d1e00417ad13df1e"
+    },
+    "RK-10.4-025": {
+      "routing/a-group-binding-s-value-under-the-key-names-no-one": "b76f6675c0cfc318540de2df8b92a4a931a8ecd24d3aa7e11ac6feb4a52b1f3e",
+      "routing/a-hook-s-group-binding-takes-the-sender-who-created-the-room": "b76f6675c0cfc318540de2df8b92a4a931a8ecd24d3aa7e11ac6feb4a52b1f3e",
+      "routing/every-sender-on-a-group-binding-shares-its-room": "b76f6675c0cfc318540de2df8b92a4a931a8ecd24d3aa7e11ac6feb4a52b1f3e",
+      "routing/the-default-router-reads-what-a-room-holds-for-its-channel": "b76f6675c0cfc318540de2df8b92a4a931a8ecd24d3aa7e11ac6feb4a52b1f3e"
+    },
+    "RK-10.4-026": {
+      "routing/a-room-the-host-opened-for-a-number-admits-no-one-else": "155d488d5998a9cbf551b81b2740728d296adc1537d4c1100c02791d107c29b7",
+      "routing/a-sender-returns-to-their-room": "155d488d5998a9cbf551b81b2740728d296adc1537d4c1100c02791d107c29b7",
+      "routing/a-stranger-is-kept-out-of-the-conversation-a-channel-s-key-names": "155d488d5998a9cbf551b81b2740728d296adc1537d4c1100c02791d107c29b7",
+      "routing/the-default-router-reads-what-a-room-holds-for-its-channel": "155d488d5998a9cbf551b81b2740728d296adc1537d4c1100c02791d107c29b7",
+      "routing/two-customers-on-one-number-keep-a-conversation-each": "155d488d5998a9cbf551b81b2740728d296adc1537d4c1100c02791d107c29b7"
+    },
+    "RK-10.4-027": {
+      "routing/a-channel-reading-no-recipient-keeps-a-stranger-out": "4d9c3e60c3e995a82492a6b850a66597fb9bab73458afd95cceb2e2a00c5b750",
+      "routing/a-member-known-by-no-address-does-not-hide-the-recipient": "4d9c3e60c3e995a82492a6b850a66597fb9bab73458afd95cceb2e2a00c5b750",
+      "routing/a-recipient-naming-the-sender-s-identity-is-recorded-as-the-channel-reads-it": "4d9c3e60c3e995a82492a6b850a66597fb9bab73458afd95cceb2e2a00c5b750",
+      "routing/a-room-opened-for-no-one-keeps-its-first-sender": "4d9c3e60c3e995a82492a6b850a66597fb9bab73458afd95cceb2e2a00c5b750",
+      "routing/a-room-prepared-for-a-chat-takes-no-one-else": "4d9c3e60c3e995a82492a6b850a66597fb9bab73458afd95cceb2e2a00c5b750",
+      "routing/a-stored-recipient-names-its-correspondent-when-claimed": "4d9c3e60c3e995a82492a6b850a66597fb9bab73458afd95cceb2e2a00c5b750",
+      "routing/a-stranger-is-kept-out-of-the-conversation-a-channel-s-key-names": "4d9c3e60c3e995a82492a6b850a66597fb9bab73458afd95cceb2e2a00c5b750",
+      "routing/a-value-that-is-not-a-recipient-wins-over-the-channel-s-answer": "4d9c3e60c3e995a82492a6b850a66597fb9bab73458afd95cceb2e2a00c5b750",
+      "routing/a-value-under-the-key-naming-the-sender-s-identity-is-recorded-as-written": "4d9c3e60c3e995a82492a6b850a66597fb9bab73458afd95cceb2e2a00c5b750",
+      "routing/a-value-under-the-key-that-is-not-a-recipient-admits-no-one": "4d9c3e60c3e995a82492a6b850a66597fb9bab73458afd95cceb2e2a00c5b750",
+      "routing/a-webhook-s-recipient-names-no-correspondent": "4d9c3e60c3e995a82492a6b850a66597fb9bab73458afd95cceb2e2a00c5b750",
+      "routing/an-advisor-s-resolution-does-not-open-the-room-of-the-key-s-recipient": "4d9c3e60c3e995a82492a6b850a66597fb9bab73458afd95cceb2e2a00c5b750",
+      "routing/an-advisor-s-resolution-on-an-unregistered-channel-does-not-open-the-room-of-the-key-s-recipient": "4d9c3e60c3e995a82492a6b850a66597fb9bab73458afd95cceb2e2a00c5b750",
+      "routing/an-attach-keeps-a-value-that-is-not-a-recipient-whatever-the-channel-answers": "4d9c3e60c3e995a82492a6b850a66597fb9bab73458afd95cceb2e2a00c5b750",
+      "routing/an-integer-under-the-key-in-another-form-is-read-in-the-channel-s-form": "4d9c3e60c3e995a82492a6b850a66597fb9bab73458afd95cceb2e2a00c5b750",
+      "routing/an-integer-under-the-key-of-a-channel-reading-no-recipient-names-its-conversation": "4d9c3e60c3e995a82492a6b850a66597fb9bab73458afd95cceb2e2a00c5b750",
+      "routing/step-three-reads-a-recipient-by-the-channel-s-own-method": "4d9c3e60c3e995a82492a6b850a66597fb9bab73458afd95cceb2e2a00c5b750",
+      "routing/the-channel-s-answer-naming-the-sender-admits-her-whatever-the-key-holds": "4d9c3e60c3e995a82492a6b850a66597fb9bab73458afd95cceb2e2a00c5b750",
+      "routing/the-channel-s-recipient-wins-over-its-declared-key": "4d9c3e60c3e995a82492a6b850a66597fb9bab73458afd95cceb2e2a00c5b750",
+      "routing/the-lock-names-the-recipient-the-channel-reads": "4d9c3e60c3e995a82492a6b850a66597fb9bab73458afd95cceb2e2a00c5b750",
+      "routing/the-lock-reads-a-binding-s-recipient-by-the-channel-s-own-method": "4d9c3e60c3e995a82492a6b850a66597fb9bab73458afd95cceb2e2a00c5b750",
+      "routing/the-lock-reads-a-value-that-is-not-a-recipient-whatever-the-channel-answers": "4d9c3e60c3e995a82492a6b850a66597fb9bab73458afd95cceb2e2a00c5b750",
+      "routing/the-lock-reads-the-key-of-a-channel-reading-no-recipient": "4d9c3e60c3e995a82492a6b850a66597fb9bab73458afd95cceb2e2a00c5b750"
+    },
+    "RK-10.4-028": {
+      "routing/a-hook-s-member-on-the-channel-sends-the-message-to-a-new-room": "041b336c126a24fd979d59dca4d4dc999c87acf2d8d5da406214e0d8e07c9928",
+      "routing/a-member-added-since-the-route-keeps-the-sender-out": "041b336c126a24fd979d59dca4d4dc999c87acf2d8d5da406214e0d8e07c9928",
+      "routing/a-room-the-host-opened-for-its-member-keeps-out-a-stranger-writing-after-her": "041b336c126a24fd979d59dca4d4dc999c87acf2d8d5da406214e0d8e07c9928",
+      "routing/a-room-the-host-opened-for-its-member-keeps-out-a-stranger-writing-first": "041b336c126a24fd979d59dca4d4dc999c87acf2d8d5da406214e0d8e07c9928",
+      "routing/the-default-router-reads-what-a-room-holds-for-its-channel": "041b336c126a24fd979d59dca4d4dc999c87acf2d8d5da406214e0d8e07c9928",
+      "routing/what-names-the-sender-s-identity-is-their-own": "041b336c126a24fd979d59dca4d4dc999c87acf2d8d5da406214e0d8e07c9928"
+    },
+    "RK-10.4-029": {
+      "routing/a-message-with-no-address-is-held-to-step-three-under-the-lock": "a5e953c6e8a36ec2e7854b89388109de03c28c46540dc455ca23777008890c82",
+      "routing/a-room-that-heard-another-sender-long-ago-is-not-the-sender-s": "a5e953c6e8a36ec2e7854b89388109de03c28c46540dc455ca23777008890c82",
+      "routing/a-room-that-heard-two-people-admits-no-newcomer": "a5e953c6e8a36ec2e7854b89388109de03c28c46540dc455ca23777008890c82",
+      "routing/someone-heard-in-the-room-since-the-route-keeps-the-sender-out": "a5e953c6e8a36ec2e7854b89388109de03c28c46540dc455ca23777008890c82",
+      "routing/the-default-router-reads-what-a-room-holds-for-its-channel": "a5e953c6e8a36ec2e7854b89388109de03c28c46540dc455ca23777008890c82",
+      "routing/the-default-router-reads-who-the-room-heard": "a5e953c6e8a36ec2e7854b89388109de03c28c46540dc455ca23777008890c82",
+      "routing/the-framework-s-own-message-is-no-other-sender": "a5e953c6e8a36ec2e7854b89388109de03c28c46540dc455ca23777008890c82",
+      "routing/what-names-the-sender-s-identity-is-their-own": "a5e953c6e8a36ec2e7854b89388109de03c28c46540dc455ca23777008890c82"
+    },
+    "RK-10.4-030": {
+      "identity/a-sender-s-own-record-names-them-on-its-channel": "3118db709d99e34738038fa1aeb00fb940c197c148a99fdd11efbc49b446b411",
+      "members/a-resolved-pending-sender-keeps-their-room": "3118db709d99e34738038fa1aeb00fb940c197c148a99fdd11efbc49b446b411"
+    },
+    "RK-10.4-031": {
+      "members/a-resolved-pending-sender-keeps-their-room": "486315f86e56ee7cae218a6dc8e84d82b8c628d2e26f835577acf2569546691b",
+      "routing/an-advisor-s-resolution-names-the-identity-on-the-binding-delivering-to-the-participant": "486315f86e56ee7cae218a6dc8e84d82b8c628d2e26f835577acf2569546691b"
+    },
+    "RK-10.4-032": {
+      "delivery/a-delivery-enters-the-room-as-the-framework-s-message": "2b6f4f243bc17deb32925f18ad2cb98662b764793cc4984cae430082a6e0be65",
+      "routing/a-message-of-the-framework-s-name-naming-its-room-enters-a-free-room": "2b6f4f243bc17deb32925f18ad2cb98662b764793cc4984cae430082a6e0be65",
+      "routing/a-room-named-for-the-framework-s-sender-names-no-one": "2b6f4f243bc17deb32925f18ad2cb98662b764793cc4984cae430082a6e0be65",
+      "routing/the-default-router-reads-what-a-room-holds-for-its-channel": "2b6f4f243bc17deb32925f18ad2cb98662b764793cc4984cae430082a6e0be65",
+      "routing/the-framework-names-the-room-it-writes-to": "2b6f4f243bc17deb32925f18ad2cb98662b764793cc4984cae430082a6e0be65",
+      "routing/the-framework-s-own-message-is-no-other-sender": "2b6f4f243bc17deb32925f18ad2cb98662b764793cc4984cae430082a6e0be65"
+    },
+    "RK-10.4-033": {
+      "routing/a-chat-under-the-framework-s-name-is-refused": "39cb783084d4991f09e3da6c1eb043a90fc2e58653f951cbaedc9caee7dca1b7",
+      "routing/a-group-room-refuses-a-message-routed-under-the-framework-s-name": "39cb783084d4991f09e3da6c1eb043a90fc2e58653f951cbaedc9caee7dca1b7",
+      "routing/a-refused-name-leaves-nothing-for-the-next-sender": "39cb783084d4991f09e3da6c1eb043a90fc2e58653f951cbaedc9caee7dca1b7",
+      "routing/a-routed-message-under-the-framework-s-name-is-refused": "39cb783084d4991f09e3da6c1eb043a90fc2e58653f951cbaedc9caee7dca1b7",
+      "routing/a-sender-under-the-framework-s-name-in-a-chat-of-another-name-is-refused": "39cb783084d4991f09e3da6c1eb043a90fc2e58653f951cbaedc9caee7dca1b7"
+    },
+    "RK-10.4-034": {
+      "routing/a-group-room-refuses-a-message-routed-under-the-framework-s-name": "ee0dfd55c24bc18c856441337ec7f340a4274bb879e91435197eaa6794c72f79",
+      "routing/a-message-of-the-framework-s-name-naming-its-room-enters-a-free-room": "ee0dfd55c24bc18c856441337ec7f340a4274bb879e91435197eaa6794c72f79",
+      "routing/a-room-named-for-the-framework-s-sender-names-no-one": "ee0dfd55c24bc18c856441337ec7f340a4274bb879e91435197eaa6794c72f79"
+    },
+    "RK-10.4-035": {
+      "routing/a-status-under-the-framework-s-name-finds-no-room": "b0596d25c960b85574df3d50b9692b815f82969f3f6b654b6fd4d5b1f9fac172",
+      "routing/an-identity-of-the-framework-s-name-enters-no-room-a-router-answers": "b0596d25c960b85574df3d50b9692b815f82969f3f6b654b6fd4d5b1f9fac172",
+      "routing/an-identity-under-the-framework-s-name-is-no-one-s": "b0596d25c960b85574df3d50b9692b815f82969f3f6b654b6fd4d5b1f9fac172",
+      "routing/the-default-router-finds-no-room-by-the-framework-s-name": "b0596d25c960b85574df3d50b9692b815f82969f3f6b654b6fd4d5b1f9fac172",
+      "routing/the-default-router-reads-no-one-under-the-framework-s-name": "b0596d25c960b85574df3d50b9692b815f82969f3f6b654b6fd4d5b1f9fac172",
+      "routing/the-name-on-a-binding-is-never-rewritten": "b0596d25c960b85574df3d50b9692b815f82969f3f6b654b6fd4d5b1f9fac172"
+    },
+    "RK-10.4-036": {
+      "routing/a-member-known-by-no-address-does-not-hide-the-recipient": "c57a460f85de5003918209c3aa745acf178337666de804a0585c120042deaea1"
+    },
+    "RK-10.4-037": {
+      "routing/a-blank-sender-has-no-address": "3f83f102c41dfea18f05e1c2fb0c0c917fe57d520053a7b2a94290fcdbdd91f4",
+      "routing/a-group-room-takes-a-message-with-no-address": "3f83f102c41dfea18f05e1c2fb0c0c917fe57d520053a7b2a94290fcdbdd91f4",
+      "routing/a-hook-s-group-binding-keeps-the-message-when-a-newer-room-waits": "3f83f102c41dfea18f05e1c2fb0c0c917fe57d520053a7b2a94290fcdbdd91f4",
+      "routing/a-hook-s-group-binding-takes-the-message-with-no-address-that-created-the-room": "3f83f102c41dfea18f05e1c2fb0c0c917fe57d520053a7b2a94290fcdbdd91f4",
+      "routing/a-message-with-no-address-is-held-to-step-three-under-the-lock": "3f83f102c41dfea18f05e1c2fb0c0c917fe57d520053a7b2a94290fcdbdd91f4",
+      "routing/a-message-with-no-address-is-refused-when-every-new-room-names-another": "3f83f102c41dfea18f05e1c2fb0c0c917fe57d520053a7b2a94290fcdbdd91f4",
+      "routing/a-message-with-no-address-leaves-a-room-that-heard-no-one": "3f83f102c41dfea18f05e1c2fb0c0c917fe57d520053a7b2a94290fcdbdd91f4",
+      "routing/a-message-with-no-address-leaves-a-room-the-host-prepared": "3f83f102c41dfea18f05e1c2fb0c0c917fe57d520053a7b2a94290fcdbdd91f4",
+      "routing/a-message-with-no-address-leaves-a-room-the-second-was-recorded-on": "3f83f102c41dfea18f05e1c2fb0c0c917fe57d520053a7b2a94290fcdbdd91f4",
+      "routing/a-room-a-blank-sender-opens-takes-in-no-one-else": "3f83f102c41dfea18f05e1c2fb0c0c917fe57d520053a7b2a94290fcdbdd91f4",
+      "routing/a-room-opened-with-no-address-takes-in-no-one-else": "3f83f102c41dfea18f05e1c2fb0c0c917fe57d520053a7b2a94290fcdbdd91f4",
+      "routing/someone-heard-in-the-room-since-the-route-keeps-a-message-with-no-address-out": "3f83f102c41dfea18f05e1c2fb0c0c917fe57d520053a7b2a94290fcdbdd91f4",
+      "routing/the-default-router-reads-a-blank-as-no-one": "3f83f102c41dfea18f05e1c2fb0c0c917fe57d520053a7b2a94290fcdbdd91f4",
+      "routing/the-default-router-reads-who-the-room-heard": "3f83f102c41dfea18f05e1c2fb0c0c917fe57d520053a7b2a94290fcdbdd91f4"
+    },
+    "RK-10.4-038": {
+      "routing/a-blank-sender-has-no-address": "f1c55d2c54f506ed098cc015e3095300c9e55c17c06b78369b85c81295ee59e4",
+      "routing/a-channel-attached-with-no-address-takes-in-no-one-else": "f1c55d2c54f506ed098cc015e3095300c9e55c17c06b78369b85c81295ee59e4",
+      "routing/a-custom-router-receives-null-for-an-empty-or-blank-address": "f1c55d2c54f506ed098cc015e3095300c9e55c17c06b78369b85c81295ee59e4",
+      "routing/a-first-message-leaves-a-room-a-message-with-no-address-took": "f1c55d2c54f506ed098cc015e3095300c9e55c17c06b78369b85c81295ee59e4",
+      "routing/a-hook-s-binding-the-channel-s-own-method-reads-keeps-its-recipient": "f1c55d2c54f506ed098cc015e3095300c9e55c17c06b78369b85c81295ee59e4",
+      "routing/a-hook-s-binding-under-the-key-of-a-channel-reading-no-recipient-keeps-its-recipient": "f1c55d2c54f506ed098cc015e3095300c9e55c17c06b78369b85c81295ee59e4",
+      "routing/a-hook-s-binding-with-a-recipient-keeps-its-correspondent": "f1c55d2c54f506ed098cc015e3095300c9e55c17c06b78369b85c81295ee59e4",
+      "routing/a-message-with-no-address-leaves-a-room-that-heard-no-one": "f1c55d2c54f506ed098cc015e3095300c9e55c17c06b78369b85c81295ee59e4",
+      "routing/a-message-with-no-address-leaves-a-room-the-host-prepared": "f1c55d2c54f506ed098cc015e3095300c9e55c17c06b78369b85c81295ee59e4",
+      "routing/a-message-with-no-address-routed-away-opens-a-closed-room": "f1c55d2c54f506ed098cc015e3095300c9e55c17c06b78369b85c81295ee59e4",
+      "routing/a-missing-room-a-router-names-for-a-message-with-no-address-takes-in-no-one-else": "f1c55d2c54f506ed098cc015e3095300c9e55c17c06b78369b85c81295ee59e4",
+      "routing/a-room-a-blank-sender-opens-takes-in-no-one-else": "f1c55d2c54f506ed098cc015e3095300c9e55c17c06b78369b85c81295ee59e4",
+      "routing/a-room-opened-with-no-address-takes-in-no-one-else": "f1c55d2c54f506ed098cc015e3095300c9e55c17c06b78369b85c81295ee59e4",
+      "routing/two-messages-with-no-address-on-one-missing-room-hold-a-room-each": "f1c55d2c54f506ed098cc015e3095300c9e55c17c06b78369b85c81295ee59e4"
+    },
+    "RK-10.4-039": {
+      "routing/a-group-binding-s-value-under-the-key-names-no-one": "dec9c7eb493a04d2fe10627151474ff96c7ad728ddeaff63c36990948778d2d8",
+      "routing/a-hook-refusal-keeps-the-routed-correspondent": "dec9c7eb493a04d2fe10627151474ff96c7ad728ddeaff63c36990948778d2d8",
+      "routing/a-recipient-naming-the-sender-s-identity-is-recorded-as-the-channel-reads-it": "dec9c7eb493a04d2fe10627151474ff96c7ad728ddeaff63c36990948778d2d8",
+      "routing/a-room-opened-for-no-one-keeps-its-first-sender": "dec9c7eb493a04d2fe10627151474ff96c7ad728ddeaff63c36990948778d2d8",
+      "routing/a-routed-sender-is-recorded": "dec9c7eb493a04d2fe10627151474ff96c7ad728ddeaff63c36990948778d2d8",
+      "routing/a-value-under-the-key-naming-the-sender-s-identity-is-recorded-as-written": "dec9c7eb493a04d2fe10627151474ff96c7ad728ddeaff63c36990948778d2d8",
+      "routing/an-integer-under-the-key-in-another-form-is-read-in-the-channel-s-form": "dec9c7eb493a04d2fe10627151474ff96c7ad728ddeaff63c36990948778d2d8",
+      "routing/the-channel-s-answer-naming-the-sender-admits-her-whatever-the-key-holds": "dec9c7eb493a04d2fe10627151474ff96c7ad728ddeaff63c36990948778d2d8"
+    },
+    "RK-10.4-040": {
+      "routing/a-first-message-leaves-a-room-the-second-was-recorded-on": "57b336fb39986e508353f6cc8a69a03de9b51829c030d694ea1fc0e5fa02a445",
+      "routing/a-hook-refusal-keeps-the-routed-correspondent": "57b336fb39986e508353f6cc8a69a03de9b51829c030d694ea1fc0e5fa02a445"
+    },
+    "RK-10.4-041": {
+      "locks/a-message-refused-room-taken-carries-its-claim-s-failed-release": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c",
+      "locks/a-room-kept-by-its-message-carries-its-attach-s-failed-release": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c",
+      "locks/a-room-taken-from-its-message-leaves-its-failed-release-out": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c",
+      "routing/a-first-message-leaves-a-room-a-message-with-no-address-took": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c",
+      "routing/a-first-message-leaves-a-room-the-second-was-recorded-on": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c",
+      "routing/a-hook-binding-every-new-room-to-another-refuses-the-message": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c",
+      "routing/a-hook-binding-the-first-room-to-another-gives-the-message-a-new-one": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c",
+      "routing/a-hook-closing-a-room-another-was-routed-into-refuses-the-first-message": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c",
+      "routing/a-hook-s-binding-naming-the-sender-keeps-the-message-in-the-room": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c",
+      "routing/a-hook-s-binding-the-channel-s-own-method-reads-keeps-its-recipient": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c",
+      "routing/a-hook-s-binding-under-the-key-of-a-channel-reading-no-recipient-keeps-its-recipient": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c",
+      "routing/a-hook-s-binding-with-a-recipient-keeps-its-correspondent": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c",
+      "routing/a-hook-s-group-binding-keeps-the-message-when-a-newer-room-waits": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c",
+      "routing/a-hook-s-group-binding-takes-the-message-with-no-address-that-created-the-room": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c",
+      "routing/a-hook-s-group-binding-takes-the-sender-who-created-the-room": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c",
+      "routing/a-hook-s-member-on-the-channel-sends-the-message-to-a-new-room": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c",
+      "routing/a-message-past-its-deadline-in-its-room-s-hooks-is-not-routed-again": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c",
+      "routing/a-message-with-no-address-leaves-a-room-the-second-was-recorded-on": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c",
+      "routing/a-message-with-no-address-takes-no-paused-new-room": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c",
+      "routing/a-room-its-first-message-left-starts-no-session-for-it": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c",
+      "routing/a-sender-takes-no-paused-new-room": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c",
+      "routing/an-organization-s-message-leaves-a-room-another-took-for-one-of-its-own": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c",
+      "routing/two-messages-with-no-address-on-one-missing-room-hold-a-room-each": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c"
+    },
+    "RK-10.4-042": {
+      "locks/a-message-refused-room-taken-carries-its-claim-s-failed-release": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/a-channel-attached-with-no-address-takes-in-no-one-else": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/a-first-message-leaves-a-room-the-second-was-recorded-on": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/a-hook-binding-every-new-room-to-another-refuses-the-message": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/a-member-added-since-the-route-keeps-the-sender-out": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/a-member-on-a-binding-naming-another-is-routed-elsewhere": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/a-message-with-no-address-is-held-to-step-three-under-the-lock": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/a-message-with-no-address-is-refused-when-every-new-room-names-another": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/a-message-with-no-address-routed-away-opens-a-closed-room": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/a-message-with-no-address-takes-no-paused-new-room": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/a-missing-room-a-router-names-for-a-message-with-no-address-takes-in-no-one-else": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/a-room-closed-since-the-route-gives-the-message-a-new-room": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/a-room-that-heard-another-sender-long-ago-is-not-the-sender-s": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/a-router-answering-another-s-room-twice-gives-the-message-a-new-room": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/a-sender-s-paused-room-due-to-close-is-closed-before-the-check": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/a-sender-takes-no-paused-new-room": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/a-stored-recipient-names-its-correspondent-when-claimed": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/an-identity-of-the-framework-s-name-enters-no-room-a-router-answers": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/an-organization-s-message-leaves-a-room-another-took-for-one-of-its-own": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/someone-heard-in-the-room-since-the-route-keeps-a-message-with-no-address-out": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/someone-heard-in-the-room-since-the-route-keeps-the-sender-out": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/the-channel-s-recipient-wins-over-its-declared-key": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/the-lock-reads-a-binding-s-recipient-by-the-channel-s-own-method": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/the-lock-reads-a-value-that-is-not-a-recipient-whatever-the-channel-answers": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/the-lock-reads-the-key-of-a-channel-reading-no-recipient": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d"
+    },
+    "RK-10.4-043": {
+      "routing/a-message-past-its-deadline-in-its-room-s-hooks-is-not-routed-again": "1cdf5ef55df7ef9d4c888615d928f1a4021df78c6a216642e9978e1bf629db9a"
+    },
+    "RK-10.4-044": {
+      "routing/a-hook-refusal-keeps-the-routed-correspondent": "b33964d288d8bf07ae7a019c9e5490e3515361dd7c2ec159f4978a881f0c2158"
+    },
+    "RK-10.4-045": {
+      "delivery/a-status-for-the-key-s-value-is-not-the-room-the-channel-reads-another-in": "efdd0b724a6b72edeb8c9f6094a60475a3133e53d0d68772f5c414f292039a8a",
+      "delivery/a-status-for-the-key-s-value-reaches-no-room-past-the-newest": "efdd0b724a6b72edeb8c9f6094a60475a3133e53d0d68772f5c414f292039a8a",
+      "delivery/a-status-is-not-given-another-correspondent-s-room": "efdd0b724a6b72edeb8c9f6094a60475a3133e53d0d68772f5c414f292039a8a",
+      "delivery/a-status-naming-no-recipient-gets-no-room-among-several": "efdd0b724a6b72edeb8c9f6094a60475a3133e53d0d68772f5c414f292039a8a",
+      "delivery/a-status-naming-no-recipient-on-an-unregistered-channel-reaches-the-one-room": "efdd0b724a6b72edeb8c9f6094a60475a3133e53d0d68772f5c414f292039a8a",
+      "delivery/a-status-naming-no-recipient-reaches-the-one-room": "efdd0b724a6b72edeb8c9f6094a60475a3133e53d0d68772f5c414f292039a8a",
+      "delivery/a-status-picks-the-newest-eligible-active-room": "efdd0b724a6b72edeb8c9f6094a60475a3133e53d0d68772f5c414f292039a8a",
+      "delivery/a-status-picks-the-newest-eligible-paused-room": "efdd0b724a6b72edeb8c9f6094a60475a3133e53d0d68772f5c414f292039a8a",
+      "delivery/a-status-reaches-its-tenant-s-room-only": "efdd0b724a6b72edeb8c9f6094a60475a3133e53d0d68772f5c414f292039a8a",
+      "delivery/a-status-reaches-the-paused-room-of-its-recipient": "efdd0b724a6b72edeb8c9f6094a60475a3133e53d0d68772f5c414f292039a8a",
+      "delivery/a-status-reaches-the-room-of-its-recipient": "efdd0b724a6b72edeb8c9f6094a60475a3133e53d0d68772f5c414f292039a8a",
+      "delivery/a-status-recipient-is-found-through-a-binding-naming-no-correspondent": "efdd0b724a6b72edeb8c9f6094a60475a3133e53d0d68772f5c414f292039a8a",
+      "delivery/a-status-recipient-is-read-as-step-one-reads-a-sender": "efdd0b724a6b72edeb8c9f6094a60475a3133e53d0d68772f5c414f292039a8a",
+      "delivery/the-one-room-delivering-by-its-key-on-a-channel-reading-no-recipient-is-not-the-status": "efdd0b724a6b72edeb8c9f6094a60475a3133e53d0d68772f5c414f292039a8a",
+      "delivery/the-one-room-delivering-to-another-number-is-not-the-status": "efdd0b724a6b72edeb8c9f6094a60475a3133e53d0d68772f5c414f292039a8a",
+      "delivery/the-one-room-delivering-to-no-one-takes-the-status": "efdd0b724a6b72edeb8c9f6094a60475a3133e53d0d68772f5c414f292039a8a",
+      "delivery/the-one-room-holding-a-float-under-its-recipient-key-is-not-the-status": "efdd0b724a6b72edeb8c9f6094a60475a3133e53d0d68772f5c414f292039a8a",
+      "delivery/the-one-room-holding-a-list-under-its-recipient-key-is-not-the-status": "efdd0b724a6b72edeb8c9f6094a60475a3133e53d0d68772f5c414f292039a8a",
+      "delivery/the-one-room-holding-a-value-that-is-not-a-recipient-is-not-the-status": "efdd0b724a6b72edeb8c9f6094a60475a3133e53d0d68772f5c414f292039a8a",
+      "delivery/the-one-room-holding-an-object-under-its-recipient-key-is-not-the-status": "efdd0b724a6b72edeb8c9f6094a60475a3133e53d0d68772f5c414f292039a8a",
+      "delivery/the-one-room-holding-null-under-its-recipient-key-takes-the-status": "efdd0b724a6b72edeb8c9f6094a60475a3133e53d0d68772f5c414f292039a8a",
+      "delivery/the-one-room-the-channel-s-own-method-delivers-to-is-its-recipient-s-status": "efdd0b724a6b72edeb8c9f6094a60475a3133e53d0d68772f5c414f292039a8a"
+    },
+    "RK-10.4-046": {
+      "delivery/a-status-naming-no-recipient-on-an-unregistered-channel-reaches-the-one-room": "63d0281cb8a551b986d0671787734692cb67a13855638cc3ad4adf58167069b8",
+      "delivery/a-status-on-an-unregistered-channel-is-not-the-room-of-the-key-s-recipient": "63d0281cb8a551b986d0671787734692cb67a13855638cc3ad4adf58167069b8",
+      "delivery/a-status-on-an-unregistered-channel-reaches-the-room-naming-its-recipient": "63d0281cb8a551b986d0671787734692cb67a13855638cc3ad4adf58167069b8"
+    },
+    "RK-10.4-047": {
+      "delivery/a-status-picks-the-newest-eligible-active-room": "3dac5653a421727a958476c259f6ae1f7f6886a002af6496bbbd8059f3490239",
+      "delivery/a-status-picks-the-newest-eligible-paused-room": "3dac5653a421727a958476c259f6ae1f7f6886a002af6496bbbd8059f3490239",
+      "delivery/a-status-reaches-the-paused-room-of-its-recipient": "3dac5653a421727a958476c259f6ae1f7f6886a002af6496bbbd8059f3490239",
+      "delivery/an-explicit-status-preserves-its-payload-in-every-room-state": "3dac5653a421727a958476c259f6ae1f7f6886a002af6496bbbd8059f3490239"
+    },
+    "RK-10.4-048": {
+      "delivery/a-status-for-the-key-s-value-reaches-no-room-past-the-newest": "d1b9ecc1b86c5e3c5f53ca51a63385422d350bb16dc5c0828a6d04da018866ad",
+      "delivery/a-status-naming-no-recipient-gets-no-room-among-several": "d1b9ecc1b86c5e3c5f53ca51a63385422d350bb16dc5c0828a6d04da018866ad"
+    },
+    "RK-10.4-049": {
+      "delivery/a-status-is-handled-while-its-hooks-run": "6783e29889283334b831711af8d6f93c6d2bc2601ed31ba7e45cebb188f52745",
+      "delivery/a-status-reaches-the-room-of-its-recipient": "6783e29889283334b831711af8d6f93c6d2bc2601ed31ba7e45cebb188f52745",
+      "delivery/an-explicit-status-preserves-its-payload-in-every-room-state": "6783e29889283334b831711af8d6f93c6d2bc2601ed31ba7e45cebb188f52745",
+      "delivery/observers-start-in-firing-order-while-earlier-bodies-wait": "6783e29889283334b831711af8d6f93c6d2bc2601ed31ba7e45cebb188f52745"
+    },
+    "RK-10.4-050": {
+      "delivery/a-status-naming-its-room-reaches-it": "f34f3c1d4cd2d5a4dcee53854e5fdf86f22a5900e8b772fdd5ea38129ad4b68f",
+      "delivery/a-status-reaches-its-tenant-s-room-only": "f34f3c1d4cd2d5a4dcee53854e5fdf86f22a5900e8b772fdd5ea38129ad4b68f",
+      "delivery/an-explicit-status-preserves-its-payload-in-every-room-state": "f34f3c1d4cd2d5a4dcee53854e5fdf86f22a5900e8b772fdd5ea38129ad4b68f"
+    },
+    "RK-10.4-051": {
+      "delivery/a-status-reaches-its-tenant-s-room-only": "3b0b7337574840e8139ace549434fc06f0278aca602c6490b4aa0ddf9de15864",
+      "delivery/a-webhook-is-a-message-a-status-or-nothing": "3b0b7337574840e8139ace549434fc06f0278aca602c6490b4aa0ddf9de15864"
+    },
+    "RK-10.4-052": {
+      "routing/a-member-is-found-past-a-newer-binding-of-another-number": "b78a741432bb111db788c17e8ef00da20299ff620ee51ffe35172661877be35b"
+    },
+    "RK-10.4-053": {
+      "routing/a-member-is-found-past-a-newer-binding-of-another-number": "f61674d95ac5abd33e3745f6d23a7c8d9269826edf47e650e8e9540bae41df8f",
+      "routing/a-member-on-a-binding-naming-another-is-routed-elsewhere": "f61674d95ac5abd33e3745f6d23a7c8d9269826edf47e650e8e9540bae41df8f",
+      "routing/an-advisor-s-resolution-does-not-open-the-room-of-another-correspondent": "f61674d95ac5abd33e3745f6d23a7c8d9269826edf47e650e8e9540bae41df8f",
+      "routing/an-advisor-s-resolution-does-not-open-the-room-of-the-key-s-recipient": "f61674d95ac5abd33e3745f6d23a7c8d9269826edf47e650e8e9540bae41df8f",
+      "routing/an-advisor-s-resolution-on-an-unregistered-channel-does-not-open-the-room-of-the-key-s-recipient": "f61674d95ac5abd33e3745f6d23a7c8d9269826edf47e650e8e9540bae41df8f"
+    },
+    "RK-10.4-054": {
+      "routing/a-room-opened-for-no-one-keeps-its-first-sender": "5d05e495709bccfcc9d71585b71f4bf97629eeaff5f51da4b97e5cde5a75c955",
+      "routing/a-room-the-host-opened-for-a-number-admits-no-one-else": "5d05e495709bccfcc9d71585b71f4bf97629eeaff5f51da4b97e5cde5a75c955",
+      "routing/a-room-the-host-opened-for-its-member-keeps-out-a-stranger-writing-after-her": "5d05e495709bccfcc9d71585b71f4bf97629eeaff5f51da4b97e5cde5a75c955",
+      "routing/a-room-the-host-opened-for-its-member-keeps-out-a-stranger-writing-first": "5d05e495709bccfcc9d71585b71f4bf97629eeaff5f51da4b97e5cde5a75c955",
+      "routing/a-sender-returns-to-their-room": "5d05e495709bccfcc9d71585b71f4bf97629eeaff5f51da4b97e5cde5a75c955",
+      "routing/every-sender-on-a-group-binding-shares-its-room": "5d05e495709bccfcc9d71585b71f4bf97629eeaff5f51da4b97e5cde5a75c955",
+      "routing/two-customers-on-one-number-keep-a-conversation-each": "5d05e495709bccfcc9d71585b71f4bf97629eeaff5f51da4b97e5cde5a75c955"
+    },
+    "RK-10.4-055": {
+      "routing/a-message-with-no-address-leaves-a-room-the-host-prepared": "08b465a3f3c27ede8b1be170fa81898b6c44e0a07901bd887371f1e0b171812e",
+      "routing/a-paused-room-counts-among-the-channel-s-rooms-only-as-a-group": "08b465a3f3c27ede8b1be170fa81898b6c44e0a07901bd887371f1e0b171812e",
+      "routing/the-default-router-places-no-sender-it-cannot-name-a-room-for": "08b465a3f3c27ede8b1be170fa81898b6c44e0a07901bd887371f1e0b171812e",
+      "routing/the-default-router-skips-a-closed-room": "08b465a3f3c27ede8b1be170fa81898b6c44e0a07901bd887371f1e0b171812e",
+      "routing/the-router-does-not-guess": "08b465a3f3c27ede8b1be170fa81898b6c44e0a07901bd887371f1e0b171812e"
+    },
+    "RK-10.4-057": {
+      "routing/the-default-router-places-no-sender-it-cannot-name-a-room-for": "6dc8250ff8ab1a1800cc80613c4687e158a10292569db8dfe074ca09f13093a2",
+      "routing/the-newest-binding-room-is-selected-deterministically": "6dc8250ff8ab1a1800cc80613c4687e158a10292569db8dfe074ca09f13093a2",
+      "routing/the-newest-participant-room-is-selected-deterministically": "6dc8250ff8ab1a1800cc80613c4687e158a10292569db8dfe074ca09f13093a2"
+    },
+    "RK-10.4-058": {
+      "routing/a-custom-router-receives-null-for-an-empty-or-blank-address": "561aa525c1efc42d0fabbf0876695eff90d360a6023bf0506404db1a9aec4014",
+      "routing/a-custom-router-receives-the-chat-address": "561aa525c1efc42d0fabbf0876695eff90d360a6023bf0506404db1a9aec4014",
+      "routing/a-custom-router-receives-the-scoped-identity-and-metadata": "561aa525c1efc42d0fabbf0876695eff90d360a6023bf0506404db1a9aec4014"
+    },
+    "RK-10.4-059": {
+      "routing/a-binding-with-a-recipient-alone-names-its-recipient": "59279e08f16c2feb9b0c151e848405616c1097fb3caef796e2c2e3b63c72299a",
+      "routing/a-missing-custom-room-is-created-under-the-caller": "59279e08f16c2feb9b0c151e848405616c1097fb3caef796e2c2e3b63c72299a",
+      "routing/a-stored-recipient-names-its-correspondent-when-claimed": "59279e08f16c2feb9b0c151e848405616c1097fb3caef796e2c2e3b63c72299a",
+      "routing/the-lock-names-the-recipient-the-channel-reads": "59279e08f16c2feb9b0c151e848405616c1097fb3caef796e2c2e3b63c72299a",
+      "routing/the-record-names-the-sender-on-an-attach-whatever-the-channel-wrote": "59279e08f16c2feb9b0c151e848405616c1097fb3caef796e2c2e3b63c72299a"
+    },
+    "RK-10.4-060": {
+      "routing/a-binding-a-hook-made-in-a-room-opened-with-no-address-takes-in-no-one-else": "2d4a2e372963153cdf9be5c1add4dc77ef95f17c7e21f89a6f3cd7a236430c26",
+      "routing/a-hook-s-binding-the-channel-s-own-method-reads-keeps-its-recipient": "2d4a2e372963153cdf9be5c1add4dc77ef95f17c7e21f89a6f3cd7a236430c26",
+      "routing/a-hook-s-binding-under-the-key-of-a-channel-reading-no-recipient-keeps-its-recipient": "2d4a2e372963153cdf9be5c1add4dc77ef95f17c7e21f89a6f3cd7a236430c26",
+      "routing/a-hook-s-binding-with-a-recipient-keeps-its-correspondent": "2d4a2e372963153cdf9be5c1add4dc77ef95f17c7e21f89a6f3cd7a236430c26"
+    },
+    "RK-10.4-061": {
+      "routing/a-message-with-no-address-leaves-a-room-the-host-prepared": "09ab3cbaf2a77bce1612dbf6d2bd2e2ddeb04b713dff920f2f6c32d1da908d3e"
+    },
+    "RK-10.4-062": {
+      "routing/a-blank-sender-has-no-address": "78d3f909140f794ac14f9f6011cd3803a87ab18867fc12cf19f8d8fce3e17492",
+      "routing/a-room-a-blank-sender-opens-takes-in-no-one-else": "78d3f909140f794ac14f9f6011cd3803a87ab18867fc12cf19f8d8fce3e17492",
+      "routing/a-room-opened-with-no-address-takes-in-no-one-else": "78d3f909140f794ac14f9f6011cd3803a87ab18867fc12cf19f8d8fce3e17492",
+      "routing/two-messages-with-no-address-on-one-missing-room-hold-a-room-each": "78d3f909140f794ac14f9f6011cd3803a87ab18867fc12cf19f8d8fce3e17492"
+    },
+    "RK-10.4-063": {
+      "routing/a-recipient-given-to-a-room-opened-with-no-address-replaces-the-name-on-a-channel-reading-no-recipient": "a5dd7deffb1e00bbf71cd995b9d51b8e86fbaf44e75a50e03c88f35e0abd80f3",
+      "routing/a-room-named-for-a-message-with-no-address-names-no-one": "a5dd7deffb1e00bbf71cd995b9d51b8e86fbaf44e75a50e03c88f35e0abd80f3",
+      "routing/a-room-opened-with-no-address-is-named-by-the-integrator": "a5dd7deffb1e00bbf71cd995b9d51b8e86fbaf44e75a50e03c88f35e0abd80f3"
+    },
+    "RK-10.4-064": {
+      "routing/a-binding-a-hook-made-in-a-room-opened-with-no-address-takes-in-no-one-else": "c0526c1d9ec0eae5526431918881f6bf1e99d70c5b0eb87b176a1bf15ac3faf4",
+      "routing/a-custom-router-receives-null-for-an-empty-or-blank-address": "c0526c1d9ec0eae5526431918881f6bf1e99d70c5b0eb87b176a1bf15ac3faf4",
+      "routing/a-hook-s-binding-naming-no-one-records-the-sender-of-the-room-it-is-in": "c0526c1d9ec0eae5526431918881f6bf1e99d70c5b0eb87b176a1bf15ac3faf4",
+      "routing/a-routed-sender-is-recorded-where-the-channel-replies": "c0526c1d9ec0eae5526431918881f6bf1e99d70c5b0eb87b176a1bf15ac3faf4",
+      "routing/a-sender-returns-to-their-room": "c0526c1d9ec0eae5526431918881f6bf1e99d70c5b0eb87b176a1bf15ac3faf4",
+      "routing/two-customers-on-one-number-keep-a-conversation-each": "c0526c1d9ec0eae5526431918881f6bf1e99d70c5b0eb87b176a1bf15ac3faf4"
+    }
+  }
 }
