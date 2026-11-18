@@ -429,63 +429,63 @@
     },
     {
       "section": "10.6",
-      "sha256": "bf8d07efb47d746acf52e27702755f6861f7082d5fd5b1d91e4f5ddaeb28d4ee",
+      "sha256": "bcb62ca6e528b59d97dc521ede76190cc27f654fe9dfd4781072951a76b4a486",
       "classification": "normative",
-      "review": "Source inventory: Turn Execution. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Turn Execution, split to one obligation per unit (RMK-1780): the turn, the room owner's and the turn executor's roles, the default kit's in-memory executor, and the TurnBackend interface, which stays whole as one block (RK-10.6-009). Each unit keeps its conditions, exceptions and rationale. Running executors in any process is may (RK-10.6-008). Every unit carries its level."
     },
     {
       "section": "10.6.1",
-      "sha256": "124f203679a7dbbf5dcc495480a2dd60f793b6a21a7564674f6a989ae5c9649a",
+      "sha256": "84c0a12930fbdc835fd0c278f4a30176960d0acbcd4412dfe03fd3f9c817fa69",
       "classification": "normative",
-      "review": "Source inventory: Scope and the one path. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Scope and the one path, split to one obligation per unit (RMK-1780): what runs through the backend, what does not, and the one path every backend carries. Each unit keeps its conditions, exceptions and rationale; context a unit needs from its neighbours is in its applies. The in-memory backend handing a request's events as they are is may (RK-10.6.1-014). Every unit carries its level."
     },
     {
       "section": "10.6.2",
-      "sha256": "0b338b45975d81a3065b2bb6a0ba0f82c73bca681de44dcb124e835c85cbdea4",
+      "sha256": "de70c17f03ad1a33d4db1ac01945a1825b4c1072bdf3a387b4a5a97fca2b153c",
       "classification": "normative",
-      "review": "Source inventory: Channels on each side. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Channels on each side, split to one obligation per unit (RMK-1780): the owner's declaration, the executor's factory and what it gives a channel, per-room state and the previous turn, and the state the host sets for the room. The ChannelDeclaration block stays whole (RK-10.6.2-006); each item of what the executor gives a channel is a unit. A bound on the builds an executor keeps and a channel keeping per-room state are may (RK-10.6.2-015, RK-10.6.2-025); what follows once bounded is must. Every unit carries its level."
     },
     {
       "section": "10.6.3",
-      "sha256": "728cce396067eca314c035ffb0ea8a06161c33e0684bf903612beb2d2ea33e82",
+      "sha256": "f30a5453990072ddffe15d556b2157a3f80825a7bad91e02cf32265da64bd63c",
       "classification": "normative",
-      "review": "Source inventory: Messages. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Messages, split to one obligation per unit (RMK-1780). The request block and the tables of frames, control, calls, channel control and messages outside a turn each stay whole as one unit (RK-10.6.3-002, RK-10.6.3-003, RK-10.6.3-004, RK-10.6.3-006, RK-10.6.3-011, RK-10.6.3-034); the prose after each is cut by sentence. Each unit keeps its conditions, exceptions and rationale; context a unit needs from its neighbours is in its applies. Every unit carries its level."
     },
     {
       "section": "10.6.4",
-      "sha256": "b032dec58245cd0008db74b40af039482e8040908b251fef92a428be8b9a6a8f",
+      "sha256": "419c4f9d8b5dec003c05b81acf71a07c5334af15ee136431c6fc22a430f30a18",
       "classification": "normative",
-      "review": "Source inventory: The stream: pulled, never pushed. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: The stream: pulled, never pushed, split to one obligation per unit (RMK-1780): the output, the reader's pace and pull grants, close, what the consumer reads in frames, and when the record is compared. Joining text deltas into one item and checking only for key writes before a delta are may (RK-10.6.4-008, RK-10.6.4-017). Every unit carries its level."
     },
     {
       "section": "10.6.5",
-      "sha256": "e29a45d59b439850f4152028327019dc684c6530aa12b90a317420a9e20a9d10",
+      "sha256": "433e7919ea7a7cbb2f4c787addb17b7579dc571aca576116383c6dd8fdf890f1",
       "classification": "normative",
-      "review": "Source inventory: What a turn asks of the owner. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: What a turn asks of the owner, split to one obligation per unit (RMK-1780): owner-served tools, TurnHost, what a turn reads of its room, the turn's record on the owner, the in-memory backend's execution context and human input. The TurnHost block stays with the sentence that introduces it (RK-10.6.5-026). Host-declared verbs are should (RK-10.6.5-028); what they do once offered is must. A host keeping its other kit from an executor's turns binds the host alone and is non_testable (RK-10.6.5-042). Every unit carries its level."
     },
     {
       "section": "10.6.6",
-      "sha256": "3152850efb13842233943c901cb4481759e84b526bb334147749d96299067b98",
+      "sha256": "aeb6d0e4a9666926eb25868a91104406e45e9035aee4bc1c4edbed53f0e20bd3",
       "classification": "normative",
-      "review": "Source inventory: Hooks. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Re-read after HITL c1206a93: repeating an existing named activation preserves its order; collisions with another room-hook registration are refused."
+      "review": "Source inventory: Hooks, split to one obligation per unit (RMK-1780): where a trigger fires, registration, room hooks and the context a hook on the executor receives. The trigger table stays whole (RK-10.6.6-005). Enabling a name already enabled is a no-op that keeps its place, and a name another registration holds is refused (HITL c1206a93; RK-10.6.6-020, RK-10.6.6-021). A host's setup of its turn hooks binds the host alone and is non_testable (RK-10.6.6-011). Every unit carries its level."
     },
     {
       "section": "10.6.7",
-      "sha256": "6ac8b8bce3e722df5f13adafc0eed3061742e23f450352a58d3d9810655f2c01",
+      "sha256": "b5c6b64a4fb4b6970aa768cfa4b12f953f9a9c754761ce55d8d63b71090e1c8d",
       "classification": "normative",
-      "review": "Source inventory: Placement. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Placement, split to one obligation per unit (RMK-1780): what an executor declares, its channel and organization entries, the owner's own executor, one executor per request, the room's state holder, and which agents can answer. Each unit keeps its conditions, exceptions and rationale; context a unit needs from its neighbours is in its applies. A deployment's executor pool binds the deployment alone and is non_testable (RK-10.6.7-008); who may reach the backend's transport shares its sentence with what organizations keep apart and stays behavior (RK-10.6.7-016). Every unit carries its level."
     },
     {
       "section": "10.6.8",
-      "sha256": "e6434e80fc0c6b1a0c36d7e6e751fca89ebd7cf54f4fae9ec0c31160ab8179f0",
+      "sha256": "30b5d33db6558356f6561cb575a02923053150ad43a90ecdf922030d8c87c27f",
       "classification": "normative",
-      "review": "Source inventory: Liveness, cancellation and errors. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Re-read after adding RK-10.6.8-005: independent executor closure distinguishes turn ancestry, per-call exemptions, later owner cancellation and a later external close. Its new evidence links remain partial; remote executors and owned channel factories are not certified by the local scenarios."
+      "review": "Source inventory: Liveness, cancellation and errors, split to one obligation per unit (RMK-1780): heartbeats and timeouts, cancellation, closing an executor, steering, and error records. Each unit keeps its conditions, exceptions and rationale; context a unit needs from its neighbours is in its applies. A beat outside the turn's numbered messages is may (RK-10.6.8-011). A host declaring its error classes on each side shares its sentence with what each side reads and stays behavior (RK-10.6.8-045). Independent executor closure (RK-10.6.8-028 to RK-10.6.8-034) keeps its evidence partial: remote executors and owned channel factories are not certified by the local scenarios. Every unit carries its level."
     },
     {
       "section": "10.6.9",
-      "sha256": "037c94e48b030f2cf43c47eb28d1a412cdb17e8aebc1348c67f8a816146612ef",
+      "sha256": "22fc022a1465bc6be025f026f1fe13d60af03f1e8c19700da92e45aa3c927e0b",
       "classification": "normative",
-      "review": "Source inventory: Telemetry and prerequisites. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Telemetry and prerequisites, split to one obligation per unit (RMK-1780). The same timeouts in every process of a backend and the transport's trust boundary bind the deployment alone and are non_testable (RK-10.6.9-007, RK-10.6.9-010). Every unit carries its level."
     },
     {
       "section": "11",

@@ -8853,29 +8853,35 @@ members must receive is injected with `send_event` instead.
 
 ### 10.6 Turn Execution
 
-<!-- rfc: {"id": "RK-10.6-001", "kind": "behavior", "applies": "§10.6 Turn Execution; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6-002", "kind": "behavior", "applies": "§10.6 Turn Execution: every intelligence turn, one on_event() call on an INTELLIGENCE binding to the end of the stream it returns, whichever call starts it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An **intelligence turn** (a *turn* in this section) is one call of
 `on_event()` on a binding of category `INTELLIGENCE`, from that call to the
 end of the response stream it returns, when it returns one. Every turn MUST
 run through a **turn backend**, which carries it between two roles:
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6-003", "kind": "behavior", "applies": "§10.6 Turn Execution: the room owner's role: what it plans, commits and broadcasts, and how it reads a turn's output. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - The **room owner** is the process that runs the delivery set the turn is a
   target of: the room's delivery lane (§10.2), or a delegation's worker run
   (§23.3). It plans, commits and broadcasts, and it reads the turn's output as
-  the channel's `ChannelOutput`. The lane is the only runner of a room's
+  the channel's `ChannelOutput`. <!-- /rfc --><!-- rfc: {"id": "RK-10.6-004", "kind": "behavior", "applies": "§10.6 Turn Execution: who runs a room's delivery sets, and a delegation's worker run in its child room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The lane is the only runner of a room's
   delivery sets, in index order (§10.1, §13.5); a delegation's worker run is
-  its child room's. A turn is one target of a delivery set.
+  its child room's. A turn is one target of a delivery set.<!-- /rfc --><!-- rfc: {"id": "RK-10.6-005", "kind": "behavior", "applies": "§10.6 Turn Execution: the turn executor's role: building the channel, running on_event(), advancing the stream as the owner reads it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A **turn executor** builds the channel the turn needs, runs its `on_event()`,
   advances its response stream as the owner reads it, and sends what it reads
-  as frames. An executor MUST NOT commit to the store, deliver to a transport
+  as frames. <!-- /rfc --><!-- rfc: {"id": "RK-10.6-006", "kind": "behavior", "applies": "§10.6 Turn Execution: every executor, the in-memory one included: what a turn produces reaches the room through the owner. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An executor MUST NOT commit to the store, deliver to a transport
   or broadcast: what a turn produces reaches the room through the owner, as
   its output or as an owner call (§10.6.5).
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6-007", "kind": "behavior", "applies": "§10.6 Turn Execution: a kit configured with no backend or executor. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An implementation's default kit MUST own an in-memory executor, so a
 deployment that configures nothing runs every turn in the owner's process,
-through the in-memory backend. Any process MAY run executors, the owner's
+through the in-memory backend. <!-- /rfc --><!-- rfc: {"id": "RK-10.6-008", "kind": "behavior", "applies": "§10.6 Turn Execution: where an executor may run. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->Any process MAY run executors, the owner's
 included.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6-009", "kind": "behavior", "applies": "§10.6 Turn Execution: the TurnBackend interface, owner side and executor side, and what close() does on each. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 TurnBackend (interface)
 ├── submit(request: TurnRequest) → TurnLink
@@ -8898,56 +8904,60 @@ TurnBackend (interface)
 
 #### 10.6.1 Scope and the one path
 
-<!-- rfc: {"id": "RK-10.6.1-001", "kind": "behavior", "applies": "§10.6.1 Scope and the one path; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.1-003", "kind": "behavior", "applies": "§10.6.1 Scope: every turn, whichever call starts it, the solicited target of §10.2 step 3c included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Scope.** Every turn runs through the backend, whichever call starts it, the
-solicited target of §10.2 step 3c among them. An event a hook injects starts
-no turn: it asks no agent (§9.4). Every intelligence channel is in scope: an
+solicited target of §10.2 step 3c among them. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.1-004", "kind": "behavior", "applies": "§10.6.1 Scope: an event a hook injects (§9.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An event a hook injects starts
+no turn: it asks no agent (§9.4). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.1-005", "kind": "behavior", "applies": "§10.6.1 Scope: the intelligence channels the backend carries: AI, ACP agent and the integrator's own; a speech-to-speech channel is out of scope (RK-10.6.1-010). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Every intelligence channel is in scope: an
 AI channel, an ACP agent channel and a channel of the integrator's own.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.1-006", "kind": "behavior", "applies": "§10.6.1 Scope: a turn runner of Section 19.7 (a loop, a supervisor's passes) and where it runs. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A strategy that takes an agent's turns in a room (a turn runner, Section 19.7:
 a loop's produce and review, a supervisor's delegation passes) runs on the
-owner, as the target the delivery set would otherwise have given the agent.
+owner, as the target the delivery set would otherwise have given the agent.<!-- /rfc --><!-- rfc: {"id": "RK-10.6.1-007", "kind": "behavior", "applies": "§10.6.1 Scope: each generation a turn runner asks of an agent, submitted as a strategy turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Each generation it asks of an agent (the producer's answer, a supervisor's
 first pass, its presentation of the results) is a turn of its own, submitted
 through the backend as a strategy turn (`strategy_turn`, §10.6.3) with the
 event and the binding the runner gives it (an instruction for one call rides
-that binding, §19.7.3). What Section 19.7 sets
+that binding, §19.7.3). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.1-008", "kind": "behavior", "applies": "§10.6.1 Scope: what Section 19.7 sets up for a room on a shared agent (turn runner, tools, configuration). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->What Section 19.7 sets
 up for a room on a shared agent (its turn runner, its tools, their
 configuration) is kept by the owner per channel and room and travels in each
-request: nothing is installed on a live channel object. A delegation's worker
+request: nothing is installed on a live channel object. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.1-009", "kind": "behavior", "applies": "§10.6.1 Scope: a delegation's worker (§23.3) and a discussion's turn (§19.7.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A delegation's worker
 answers in its child room (§23.3) and a discussion's turn is a rerun planned
 for one agent (§19.7.5): both are delivery sets whose intelligence targets are
 turns.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.1-010", "kind": "behavior", "applies": "§10.6.1 Scope: what the backend does not carry: a speech-to-speech channel (§12.4) and the fan-out of an event to live connections of another process. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Out of scope: a speech-to-speech channel (§12.4), whose model holds the
 conversation in the owner's process, and the fan-out of an event to live
 connections held by another process.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.1-002", "kind": "behavior", "applies": "§10.6.1 Scope and the one path; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.1-011", "kind": "behavior", "applies": "§10.6.1 One path: every turn backend, in-memory and distributed: the messages it carries (§10.6.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **One path (normative).** Every backend MUST carry the same serialized
-messages (§10.6.3), written in the serialized form of Section 1.4. The
+messages (§10.6.3), written in the serialized form of Section 1.4. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.1-012", "kind": "behavior", "applies": "§10.6.1 One path: the in-memory backend: each message serialized and parsed, no object of the turn shared; the events a request carries are the exception RK-10.6.1-013 and RK-10.6.1-014 state. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
 in-memory backend
 MUST serialize each message and parse it on the other side, for two reasons.
 Every test run against it then checks the exact messages a distributed
 backend carries. And no object of the turn is shared between the owner and
 the executor: neither the channel's stream, its response-metadata record, its
-tool-call markers nor an exception crosses as a live object. One part of a
+tool-call markers nor an exception crosses as a live object. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.1-013", "kind": "behavior", "applies": "§10.6.1 One path: the events a turn_request carries (its event and its context's history), once the request is submitted: the owner, the executor, its channel and its hooks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->One part of a
 message is exempt: the events a `turn_request` carries (its `event` and its
 context's history) are records nothing changes once made, committed events
 the store shares with every reader (§14.4) or ones the owner made for the
 turn (an instruction, a strategy's stand-in event). The owner, once it
 submitted the request, and the executor, its channel and its hooks MUST NOT
-change them. The in-memory backend MAY hand them to the executor as they
+change them. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.1-014", "kind": "behavior", "applies": "§10.6.1 One path: the in-memory backend handing a request's events as they are, and a metadata value JSON has no form for, in process and across a distributed backend. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->The in-memory backend MAY hand them to the executor as they
 are, the rest of the request serialized and parsed. A history is most of a
 request, so its parse is most of the cost of carrying one. A value of an
 event's metadata that JSON has no form for then reaches an executor in the
 owner's process as itself, and one reached across a distributed backend's
 transport as its text; a suite that checks the wire runs against such a
-backend. An
+backend. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.1-015", "kind": "behavior", "applies": "§10.6.1 One path: every implementation and every distributed backend: no second path for the owner to reach the channel's objects. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An
 implementation MUST NOT keep a local shortcut that hands the owner the
 channel's objects; a distributed backend carries the in-memory backend's
-messages on another transport, never a second path. The behaviour
+messages on another transport, never a second path. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.1-016", "kind": "behavior", "applies": "§10.6.1 One path: the behaviour the RFC gives intelligence channels, and an implementation's conformance suite for them. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The behaviour
 this document gives intelligence channels MUST hold through the in-memory
 backend: an implementation's conformance suite for intelligence channels MUST
 be runnable against it, and SHOULD run against it by default.
@@ -8955,13 +8965,15 @@ be runnable against it, and SHOULD run against it by default.
 
 #### 10.6.2 Channels on each side
 
-<!-- rfc: {"id": "RK-10.6.2-001", "kind": "behavior", "applies": "§10.6.2 Channels on each side; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.2-005", "kind": "behavior", "applies": "§10.6.2 On the owner, a declaration: how the owner knows an intelligence channel, and the one case that needs its live object (a strategy driving a realtime session). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **On the owner, a declaration.** The owner knows each intelligence channel by
 its declaration, registered as a channel is. It needs no live object of the
 channel to plan, broadcast, run a strategy or read a turn, except a strategy
 that drives a realtime session, which runs each agent's own prompt (Section
 19.5, Section 19.6).
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.2-006", "kind": "behavior", "applies": "§10.6.2 On the owner, a declaration: the ChannelDeclaration and AgentIdentity records. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 ChannelDeclaration
 ├── channel_id: string
@@ -8997,126 +9009,132 @@ AgentIdentity                               # an Agent's identity fields (§19.1
                                             # default true
 ```
 
-A channel the host registers on the kit as a live object is declared by it.
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.2-007", "kind": "behavior", "applies": "§10.6.2 On the owner, a declaration: a channel the host registers on the kit as a live object. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+A channel the host registers on the kit as a live object is declared by it.<!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-008", "kind": "behavior", "applies": "§10.6.2 On the owner, a declaration: registering a declaration, and every place the owner looks a channel up. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A declaration registers as a channel does, through the same door, and the
 owner finds it wherever it looks a channel up: routing, delivery, a binding's
-creation, a delegation. Its binding is an intelligence binding: a declared
+creation, a delegation. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-009", "kind": "behavior", "applies": "§10.6.2 On the owner, a declaration: binding a declared channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its binding is an intelligence binding: a declared
 channel has no object in the owner's process to deliver to or take a message
-from, and the owner MUST refuse binding it otherwise. The owner's own
+from, and the owner MUST refuse binding it otherwise. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-010", "kind": "behavior", "applies": "§10.6.2 On the owner, a declaration: a channel the owner holds by its declaration alone, and the owner's own executor. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The owner's own
 executor MUST NOT build a channel the owner holds by declaration alone: its
 turns run on an executor whose host builds it, and fail with `no_executor`
-when none takes them (§10.6.7). A channel declared and the same channel
-registered live MUST read alike on the owner, its greeting included.
+when none takes them (§10.6.7). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-011", "kind": "behavior", "applies": "§10.6.2 On the owner, a declaration: a channel declared, and the same channel registered live, as the owner reads them. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel declared and the same channel
+registered live MUST read alike on the owner, its greeting included.<!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-012", "kind": "behavior", "applies": "§10.6.2 On the owner, a declaration: what Section 19.7 and Section 23.4 set up for a channel (turn runner, tools, a delegation's result tool). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 What Section 19.7 and Section 23.4 set up for a channel (its turn runner,
 its tools, a delegation's result tool) is kept by the owner, per channel and
 room, beside the declaration.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.2-002", "kind": "behavior", "applies": "§10.6.2 Channels on each side; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.2-013", "kind": "behavior", "applies": "§10.6.2 On the executor, a factory: how the executor builds a channel: through the host's factory. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **On the executor, a factory.** The executor builds the channel through a
 factory the host gives it: an agent holds live objects (its provider, its MCP
-clients, its memory). A factory that builds nothing for a channel the executor
+clients, its memory). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-014", "kind": "behavior", "applies": "§10.6.2 On the executor, a factory: a factory that builds nothing for a channel the executor declares: its turns and channel calls. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A factory that builds nothing for a channel the executor
 declares fails that channel's turns and channel calls with `no_executor`
-(§10.6.7). An executor MAY keep a bounded number of channels built: past its
+(§10.6.7). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-015", "kind": "behavior", "applies": "§10.6.2 On the executor, a factory: a bound on the channels an executor keeps built, and the build it lets go past it. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->An executor MAY keep a bounded number of channels built: past its
 bound, it lets go of the build it used least recently that nothing runs on
 (a turn, a channel call, a committed event, a room's attach or detach), as
 `channel_released` lets a build go (§10.6.3), and its next turn builds the
-channel anew, its request carrying what the turn reads (§10.6.5). A turn or
+channel anew, its request carrying what the turn reads (§10.6.5). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-016", "kind": "behavior", "applies": "§10.6.2 On the executor, where an executor bounds the channels it keeps built: what uses a build, and a build begun for a committed event alone. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn or
 a channel call uses a build; a committed event does not, and a build begun
-for a committed event alone is the least recent. What the build held for its
+for a committed event alone is the least recent. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-017", "kind": "behavior", "applies": "§10.6.2 On the executor, where an executor bounds the channels it keeps built: what a build let go held for its rooms that the room does not keep. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->What the build held for its
 rooms that the room does not keep (an ACP session, a speak policy's listening
 state) starts anew, as after the executor's restart; a bound below the number
-of agents an executor serves at once makes that routine. The kit's own
+of agents an executor serves at once makes that routine. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-018", "kind": "behavior", "applies": "§10.6.2 On the executor, a factory: the kit's own executor and the live channels the host registered on the kit, open or closed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The kit's own
 executor reads the live channels the host registered on the kit, and declares
 them; it alone runs them, closed or not: once it closed, their turns fail
-with `no_executor` rather than run on another executor's copy (§10.6.7). The
+with `no_executor` rather than run on another executor's copy (§10.6.7). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-019", "kind": "behavior", "applies": "§10.6.2 On the executor, what the executor gives a channel it builds, as the kit gives a channel it registers: the hooks the channel fires, the after-response hook included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
 executor gives the channel what the kit gives a channel it registers, each
 on the executor's side:
 
 - the hooks the channel fires, against the executor's own registry
-  (§10.6.6), the after-response hook every intelligence channel gets included;
-- its realtime publications, turned into `ephemeral` frames;
-- the framework events it emits (§8.2), turned into `framework_event` frames;
+  (§10.6.6), the after-response hook every intelligence channel gets included;<!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-020", "kind": "behavior", "applies": "§10.6.2 On the executor, what the executor gives a channel it builds, as the kit gives a channel it registers: its realtime publications. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- its realtime publications, turned into `ephemeral` frames;<!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-021", "kind": "behavior", "applies": "§10.6.2 On the executor, what the executor gives a channel it builds, as the kit gives a channel it registers: the framework events it emits (§8.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- the framework events it emits (§8.2), turned into `framework_event` frames;<!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-022", "kind": "behavior", "applies": "§10.6.2 On the executor, what the executor gives a channel it builds, as the kit gives a channel it registers: its readers of state that lives in the owner's process (background tasks, a vision provider's last frame). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - its readers of state that lives in the owner's process (the room's
   background tasks, §23.4; what a vision provider last saw, §12.8.7), turned
-  into owner calls;
+  into owner calls;<!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-023", "kind": "behavior", "applies": "§10.6.2 On the executor, what the executor gives a channel it builds, as the kit gives a channel it registers: the host's media resolver and attached-media reader (§6.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - the host's media resolver and attached-media reader (§6.4), which the host
-  gives the executor as it gives the kit;
+  gives the executor as it gives the kit;<!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-024", "kind": "behavior", "applies": "§10.6.2 On the executor, what the executor gives a channel it builds, as the kit gives a channel it registers: what its turn reads of the room, and the room's context for its hooks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - what its turn reads of the room, which comes with the turn (§10.6.5), and
   the room's context for its hooks, which the owner gives (§10.6.6).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.2-003", "kind": "behavior", "applies": "§10.6.2 Channels on each side; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.2-025", "kind": "behavior", "applies": "§10.6.2 Per-room state: a channel keeping state per room between two turns on its executor. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 **Per-room state.** A channel MAY keep state per room between two turns on its
-executor. An AI channel keeps a room's thought and its speak policy's
+executor. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-026", "kind": "behavior", "applies": "§10.6.2 Per-room state: the per-room state an AI channel and an ACP agent channel keep. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An AI channel keeps a room's thought and its speak policy's
 listening state (§6.4), its plan, the results it evicted and reads back, the
 skills it activated, the approvals to run a served skill's code given there
 (§24.7), and the tools Tool Search revealed or it used;
-an ACP agent channel keeps the room's session. That state is the executor's,
+an ACP agent channel keeps the room's session. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-027", "kind": "behavior", "applies": "§10.6.2 Per-room state: whose a channel's per-room state is, and a cache rebuilt when absent; the state the host sets for the room is the room's (RK-10.6.2-039). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->That state is the executor's,
 not the room's, and is one of two kinds, which an implementation documents per
 state:
 
 - a **cache**, rebuilt from the timeline and the store when absent (the tools
-  it used, reseeded from its rows, §6.4);
+  it used, reseeded from its rows, §6.4);<!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-028", "kind": "behavior", "applies": "§10.6.2 Per-room state: session state, which starts empty when absent, and the session state the room needs (an ACP session, a speak policy's listening state). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **session state**, which starts empty when absent, as after a restart (a
   plan, a thought). Some of it the room needs: an ACP session, whose agent
   holds the conversation, and a speak policy's listening state, a request to
   stay quiet that is a state of the room (§6.4).
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.2-029", "kind": "behavior", "applies": "§10.6.2 Per-room state: one build of a channel and the rooms it serves, two turns at once included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 One build of a channel serves every room the channel is attached to, two
-turns at once included. What a turn reads comes with its request, its own
+turns at once included. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-030", "kind": "behavior", "applies": "§10.6.2 Per-room state: what a turn reads, and what a build keeps per room, across the rooms of one build; a host verb naming another room or organization. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->What a turn reads comes with its request, its own
 room's (§10.6.5), and what the channel keeps it keeps per room: nothing the
 build keeps for one room reaches another room's turn. A host verb naming
-another room or organization is refused (§10.6.5). What the host adds to a
+another room or organization is refused (§10.6.5). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-031", "kind": "behavior", "applies": "§10.6.2 Per-room state: what the host adds to a build (a memory provider, a tool handler, a skill's executor), and what it sets on the channel itself. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->What the host adds to a
 build (a memory provider, a tool handler, a skill's executor) keys what it
 keeps by the turn's room in the same way, and what the host sets on the
 channel itself (its system prompt, its tool handler) is the channel's in all
 its rooms.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.2-032", "kind": "behavior", "applies": "§10.6.2 Per-room state: each request's previous_turn: the room's previous turn of the channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Each request names the room's previous turn of the channel (`previous_turn`,
-§10.6.3): the one the owner sent last, ended or not. The owner records it as
-it sends it, so a turn sent while the previous one runs names it. A backend
+§10.6.3): the one the owner sent last, ended or not. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-033", "kind": "behavior", "applies": "§10.6.2 Per-room state: when the owner records a turn as the room's previous one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The owner records it as
+it sends it, so a turn sent while the previous one runs names it. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-034", "kind": "behavior", "applies": "§10.6.2 Per-room state: which turns a backend marks handed, and so names as previous: one that failed before, one handed, a refusal that applied nothing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A backend
 marks a request handed as it gives it to an executor, before any wait on
 the executor's answer: a turn that failed before (no executor declares it,
 the backend closed, it cannot be serialized, its placement failed) is never
 named, while one handed stays named whatever followed (a cancel, a timeout),
 since its executor may have begun it; a refusal that applied nothing (a
-closing process's) takes the mark back. A channel call (§10.6.3) leaves the
+closing process's) takes the mark back. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-035", "kind": "behavior", "applies": "§10.6.2 Per-room state: a channel call (§10.6.3) and the previous turn it names and leaves. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel call (§10.6.3) leaves the
 room's state as a turn does: it names the previous turn or call too, and the next
-turn names it. An executor that holds state for the channel and room not left
+turn names it. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-036", "kind": "behavior", "applies": "§10.6.2 Per-room state: an executor holding state for the channel and room that the previous turn or call did not leave, before it runs the turn or the call's verb. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An executor that holds state for the channel and room not left
 by that turn or call MUST discard it before running the turn or the call's
 verb: the turns of a room may have run elsewhere since, and a state they made
 obsolete (a speak policy told to talk again, a plan revised) MUST NOT come
-back. It discards it as the channel lets go of a room it is detached from
+back. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-037", "kind": "behavior", "applies": "§10.6.2 Per-room state: how an executor discards a room's state: every state, a cache rebuilt afterwards. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It discards it as the channel lets go of a room it is detached from
 (§6.4), every state it keeps for the room included, a cache rebuilt
-afterwards. An executor that can no longer vouch for the state it holds
+afterwards. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-038", "kind": "behavior", "applies": "§10.6.2 Per-room state: an executor that stops keeping its record of which turn left a room's state, and a discard that failed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An executor that can no longer vouch for the state it holds
 treats it as not left by the previous turn: when it stops keeping its record
 of which turn left a room's state (a bounded record), it discards that state,
 and a discard that failed is attempted again at the room's next turn.
 Placement (§10.6.7) keeps a room's turns where its state is.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.2-004", "kind": "behavior", "applies": "§10.6.2 Channels on each side; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.2-039", "kind": "behavior", "applies": "§10.6.2 State the host sets for the room: per-room state the host sets through a channel call (an ACP session's configuration values), and a channel's result that reports it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **State the host sets for the room.** Some per-room state is set by the host
 through a channel call and is needed again on another executor (an ACP
 session's configuration values, §6.4). That state is the room's, not the
-executor's. A channel's result reports it when the verb changed it. The owner
+executor's. A channel's result reports it when the verb changed it. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-040", "kind": "behavior", "applies": "§10.6.2 State the host sets for the room: where the owner stores it, and any other write of that key (a room's creation or metadata update, a TurnHost verb). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The owner
 MUST store it in the room's metadata (§5.1), under a key of the
 implementation's own namespace (`roomkit:`), and MUST drop that key, with a
 warning, from any other write (a room's creation or metadata update, a
-`TurnHost` verb, §5.1). It
+`TurnHost` verb, §5.1). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-041", "kind": "behavior", "applies": "§10.6.2 State the host sets for the room: each request and each channel call, before the turn or the verb runs. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It
 hands it to the executor with each request, in the room its `RoomContext`
-carries, and with each channel call, before the turn or the verb runs. The
-channel takes it back when it holds none for the room. A detach forgets it.
+carries, and with each channel call, before the turn or the verb runs. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-042", "kind": "behavior", "applies": "§10.6.2 State the host sets for the room: a channel holding none for the room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
+channel takes it back when it holds none for the room. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.2-043", "kind": "behavior", "applies": "§10.6.2 State the host sets for the room: a detach of the channel from the room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A detach forgets it.
 <!-- /rfc -->
 
 #### 10.6.3 Messages
 
-<!-- rfc: {"id": "RK-10.6.3-001", "kind": "behavior", "applies": "§10.6.3 Messages; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.3-001", "kind": "behavior", "applies": "§10.6.3 Messages: the five families of messages a backend carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Five families, each message a record in the serialized form of Section 1.4.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.3-002", "kind": "behavior", "applies": "§10.6.3 Messages; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.3-002", "kind": "behavior", "applies": "§10.6.3 Messages: the TurnRequest record and its OwnerTool entries, owner to executor. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **The request**, owner → executor:
 
 ```
@@ -9155,7 +9173,7 @@ OwnerTool
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.3-003", "kind": "behavior", "applies": "§10.6.3 Messages; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.3-003", "kind": "behavior", "applies": "§10.6.3 Messages: the frames an executor sends the owner on a turn's link, and what each carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Frames**, executor → owner, each carrying the turn id:
 
 | Frame | Carries |
@@ -9177,7 +9195,7 @@ OwnerTool
 | `end` | The turn ended; nothing follows |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.3-004", "kind": "behavior", "applies": "§10.6.3 Messages; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.3-004", "kind": "behavior", "applies": "§10.6.3 Messages: the control messages the owner sends on a turn's link, and what each carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Control**, owner → executor, on a turn's link:
 
 | Message | Carries |
@@ -9190,15 +9208,15 @@ OwnerTool
 | `heartbeat` | Nothing: the owner still reads the turn (§10.6.8) |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.3-005", "kind": "behavior", "applies": "§10.6.3 Messages; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.3-009", "kind": "behavior", "applies": "§10.6.3 Messages: every message of a turn's link, both ways: its sequence number, delivered exactly once and in order. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Delivery.** Every message of a turn's link, in both directions (frames,
 control, calls and their results), carries a sequence number and MUST reach
-the other side exactly once and in order. A side MUST drop a duplicate and
+the other side exactly once and in order. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.3-010", "kind": "behavior", "applies": "§10.6.3 Messages: a duplicate or a gap in a link's sequence, and a message of a turn that ended or failed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A side MUST drop a duplicate and
 fail the turn with `frame_lost` on a gap in the sequence; the owner MUST drop
 a message of a turn that ended or failed.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.3-006", "kind": "behavior", "applies": "§10.6.3 Messages; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.3-006", "kind": "behavior", "applies": "§10.6.3 Messages: the calls an executor makes on the owner during a turn, each answered once by its result. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Calls**, executor → owner, each answered once by its result:
 
 | Call | Result | Serves |
@@ -9208,7 +9226,7 @@ a message of a turn that ended or failed.
 | `host_call` | `host_result` | A verb of `TurnHost`, or a reader of owner-process state (§10.6.5) |
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.3-007", "kind": "behavior", "applies": "§10.6.3 Messages; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.3-011", "kind": "behavior", "applies": "§10.6.3 Channel control: the channel control messages, owner to executor outside any turn, and what each carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Channel control**, owner → executor, outside any turn, about a channel's
 per-room state, or its build:
 
@@ -9220,74 +9238,84 @@ per-room state, or its build:
 | `channel_released` | The channel's build is stale (its host changed what it is built from): an executor holding a build lets it go, answered by nothing |
 | `channel_call` | A per-room verb of the channel, answered by `channel_result` (an ACP session's `set_config_option` or `close_session`, §6.4); an implementation documents each channel's set. It carries its `call_id`, its channel and room, the verb and its arguments, what the room keeps for the channel as the owner stores it (§10.6.2), and `previous_turn`; a later request's `previous_turn` names the call by its `call_id`. Cutting a running turn is never a channel call: it is the turn's `cancel` or `steer` |
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.3-012", "kind": "behavior", "applies": "§10.6.3 Channel control: the room's organization on room_attached, room_detached, committed_event and channel_call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `room_attached`, `room_detached`, `committed_event` and `channel_call` carry
 the room's organization (§17.2), null for a room without one; a turn's
-request carries it in its context's room. `room_attached` and
+request carries it in its context's room. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.3-013", "kind": "behavior", "applies": "§10.6.3 Channel control: which executors room_attached and room_detached reach. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`room_attached` and
 `room_detached` reach every executor that may run the channel's turns: the
 owner's own executor alone for a channel the owner holds live (§10.6.7);
 every executor that declares the channel and serves the room's organization
-otherwise. They
+otherwise. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.3-014", "kind": "behavior", "applies": "§10.6.3 Channel control: how an executor applies room_attached and room_detached, with a build of the channel or none; a backend that cannot carry room_attached is RK-10.6.3-015's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->They
 need no result: an executor holding a build of the channel applies them as
 the channel's own attach and detach would for a channel the kit holds, and
 logs what the channel raises; one holding no build has nothing to apply and
 builds none for them, so a channel is built at its first turn, channel call
-or committed event on an executor (§10.6.2). A binding of category
+or committed event on an executor (§10.6.2). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.3-015", "kind": "behavior", "applies": "§10.6.3 Channel control: an INTELLIGENCE binding whose channel raises on room_attached, a detach whose channel raises, and a backend that cannot carry room_attached. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A binding of category
 `INTELLIGENCE` (§5.7) is therefore kept when its channel raises on
 `room_attached`, and a detach does not report what
 the channel raised; only a backend that cannot carry `room_attached` fails
-the attachment, which is then undone. After `room_detached`, the owner names
+the attachment, which is then undone. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.3-016", "kind": "behavior", "applies": "§10.6.3 Channel control: the room's previous turn of the channel, and what the room kept for it, after room_detached, sent or not. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->After `room_detached`, the owner names
 no previous turn for the channel in the room (`previous_turn` is null), so an
 executor that missed the message still discards the room's state at its next
 turn (§10.6.2), and the owner forgets what the room kept for the channel,
 even when the message could not be sent.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.3-017", "kind": "behavior", "applies": "§10.6.3 Channel control: which executors channel_released reaches. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `channel_released`, the channel's in all its rooms, reaches every executor
 that declares the channel, whatever organizations it serves, or the owner's
-own alone for a channel the owner holds live. One that built the channel
+own alone for a channel the owner holds live. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.3-018", "kind": "behavior", "applies": "§10.6.3 Channel control: an executor that built the channel, on channel_released: the build let go, its running turns, its close and the provider its factory handed it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->One that built the channel
 lets the build go: the next turn, channel call or committed event of the
 channel builds it anew, and the build let go is closed once the turns running
 on it, or still getting it, end, which it never cuts for this; its close
 leaves open the provider the factory handed it (Section 6.4), which the
-factory may hand every build. One that holds
-no build builds none for the message. For a channel the owner holds live it
+factory may hand every build. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.3-019", "kind": "behavior", "applies": "§10.6.3 Channel control: an executor holding no build of the channel, on channel_released. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->One that holds
+no build builds none for the message. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.3-020", "kind": "behavior", "applies": "§10.6.3 Channel control: channel_released for a channel the owner holds live. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->For a channel the owner holds live it
 changes nothing: that channel is the owner's registry's, and its host
-replaces it there. A host sends it through the kit's
+replaces it there. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.3-021", "kind": "behavior", "applies": "§10.6.3 Channel control: the kit's release_channel(channel_id). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A host sends it through the kit's
 `release_channel(channel_id)`, which fails when the kit holds no channel of
 that id.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.3-022", "kind": "behavior", "applies": "§10.6.3 Channel control: which executor a committed_event reaches; one a closed executor refuses is placed again (RK-10.6.3-033). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A `committed_event` reaches one executor: the owner's own for a channel the
 owner holds live (§10.6.7), else the one that holds the room's state for the
 channel, else one that would take the room's turns (the room's hooks and
-organization it carries included, §10.6.6, §10.6.7). It never makes that executor
+organization it carries included, §10.6.6, §10.6.7). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.3-023", "kind": "behavior", "applies": "§10.6.3 Channel control: the room's state holder and previous turn, after a committed_event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It never makes that executor
 the holder: it leaves the room's state as it is and names no
-previous turn. The executor hands the event to the channel (an AI channel's
+previous turn. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.3-024", "kind": "behavior", "applies": "§10.6.3 Channel control: an executor given a committed_event: the channel's memory, what it raises, and the order against the owner's later requests. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The executor hands the event to the channel (an AI channel's
 memory, §20), logs what the channel raises, and applies it before any later
-request of the owner for that channel and room. One no executor takes is
+request of the owner for that channel and room. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.3-025", "kind": "behavior", "applies": "§10.6.3 Channel control: a committed_event no executor takes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->One no executor takes is
 dropped and logged by the owner.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.3-026", "kind": "behavior", "applies": "§10.6.3 Channel control: a channel_call: the channel attached to the room, in the room's organization. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A `channel_call` is made for a channel attached to the room, in the room's
-organization (§17.2). It reaches one executor: the owner's own for a channel
+organization (§17.2). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.3-027", "kind": "behavior", "applies": "§10.6.3 Channel control: which executor a channel_call reaches; one a closed executor refuses is placed again (RK-10.6.3-033). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It reaches one executor: the owner's own for a channel
 the owner holds live (§10.6.7), else the one that holds the room's state for
 the channel, else one that declares the channel and serves the room's
-organization. Its
+organization. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.3-028", "kind": "behavior", "applies": "§10.6.3 Channel control: what a channel_result carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its
 `channel_result` is that executor's: the verb's result as data or its error
 record, what the room keeps for the channel when the verb changed it, and
-the executor's id. A backend answers a call on the call's own exchange, so
-the result names no call. A `channel_call` no executor takes fails with
+the executor's id. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.3-029", "kind": "behavior", "applies": "§10.6.3 Channel control: how a backend answers a channel_call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A backend answers a call on the call's own exchange, so
+the result names no call. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.3-030", "kind": "behavior", "applies": "§10.6.3 Channel control: a channel_call no executor takes, and the previous turn the owner names after it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A `channel_call` no executor takes fails with
 `no_executor`, at once from a backend that knows every executor (§10.6.7),
 else within `accept_timeout`; the owner then names the previous turn it
-named before the call. A host makes one through the kit's `channel_call`,
+named before the call. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.3-031", "kind": "behavior", "applies": "§10.6.3 Channel control: the kit's channel_call, and a verb the channel does not have. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A host makes one through the kit's `channel_call`,
 naming the channel, the room, the verb and the verb's arguments; a verb the
-channel does not have fails with the channel's own error. An executor closes the channels it built when it
+channel does not have fails with the channel's own error. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.3-032", "kind": "behavior", "applies": "§10.6.3 Channel control: an executor's close and the kit's close: the channels each closes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An executor closes the channels it built when it
 closes; the kit's close closes its own executor's.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.3-033", "kind": "behavior", "applies": "§10.6.3 Channel control: a committed_event or a channel_call reaching an executor that closed or a process that is closing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A `committed_event` or a `channel_call` that reaches an executor that closed,
 or a process that is closing, is refused unapplied, as a request is
 (§10.6.7): the owner places it again, never on the executor that refused it,
 and one no other executor takes is dropped and logged, or fails, as above.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.3-008", "kind": "behavior", "applies": "§10.6.3 Messages; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.3-034", "kind": "behavior", "applies": "§10.6.3 Outside a turn: the messages an executor sends the owner outside a turn (room_call, room_publication), and what each carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Outside a turn**, executor → owner, through the port to the owner the
 backend gives each executor it serves:
 
@@ -9296,76 +9324,84 @@ backend gives each executor it serves:
 | `room_call` | `host_result` | A `TurnHost` verb made after its turn ended (§10.6.5): its `call_id`, the channel and room, the executor's id, the id of the turn the work began in, the verb and its arguments; the turn being over, the verb is a new arrival at its own event's depth (§10.6.5) |
 | `room_publication` | — | A realtime publication or a framework event made after its turn ended, as `ephemeral` and `framework_event` carry them, with the channel, room, executor and turn |
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.3-035", "kind": "behavior", "applies": "§10.6.3 Outside a turn: which executor the owner accepts a room_call or a room_publication from, an owner that restarted included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The owner accepts one only from the executor of the last turn it sent for
 the channel and room (`previous_turn`, §10.6.2), and anything else is
-refused, an owner that restarted included, until its next turn. A
+refused, an owner that restarted included, until its next turn. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.3-036", "kind": "behavior", "applies": "§10.6.3 Outside a turn: the turn a room_call names. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 `room_call` MUST also name that very turn: work an earlier turn began writes
-nothing once a later turn was sent. A `room_publication` may name an earlier
+nothing once a later turn was sent. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.3-037", "kind": "behavior", "applies": "§10.6.3 Outside a turn: the turn a room_publication names, an external agent's update (§6.4) included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A `room_publication` may name an earlier
 turn of that executor, which still holds the room's state: an external
 agent's update (§6.4) is handled under the turn prompting its session, or
-outside any turn when none is. It publishes what it accepts as it
+outside any turn when none is. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.3-038", "kind": "behavior", "applies": "§10.6.3 Outside a turn: how the owner publishes a room_publication it accepts, and the ephemerals §8.4 allows for the turn it names. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It publishes what it accepts as it
 publishes a turn's `ephemeral` and `framework_event` frames, for the room
 and kinds a turn may publish, and publishes its ephemerals only as §8.4
 allows for the turn it names: that turn's trigger, as it was sent, and the
-binding as the room holds it then. A turn the owner no longer knows, or a
+binding as the room holds it then. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.3-039", "kind": "behavior", "applies": "§10.6.3 Outside a turn: a room_publication naming a turn the owner no longer knows, or a channel call, and a later turn's scope. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn the owner no longer knows, or a
 channel call, which has no answer, publishes none; a publication never
 takes a later turn's scope.
 <!-- /rfc -->
 
 #### 10.6.4 The stream: pulled, never pushed
 
-<!-- rfc: {"id": "RK-10.6.4-001", "kind": "behavior", "applies": "§10.6.4 The stream: pulled, never pushed; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
-The owner hands its reader a `ChannelOutput` built from the `output` frame.
+<!-- rfc: {"id": "RK-10.6.4-002", "kind": "behavior", "applies": "§10.6.4 The stream: the ChannelOutput the owner hands its reader, from the output frame. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+The owner hands its reader a `ChannelOutput` built from the `output` frame.<!-- /rfc --><!-- rfc: {"id": "RK-10.6.4-003", "kind": "behavior", "applies": "§10.6.4 The stream: a turn whose output a stream follows: the items the owner's stream yields, and its consumer and streaming targets. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When a stream follows, its response stream yields the items the `item` frames
 carry, so the consumer that stores segments and the streaming targets that
 render them (§10.2, Appendix A.9) read it as they read a local stream.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.4-004", "kind": "behavior", "applies": "§10.6.4 The stream: the reader's pace: when a model round and a tool call run, a reader that stops, a stream closed unread. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The reader sets the pace, as it does locally: a model round and a tool call run
 only as the stream is read, a reader that stops leaves no call started after
 that point (§12.2), and a stream closed unread makes no provider call (a muted
-binding, §7.5). The owner's reads of its stream send
+binding, §7.5). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.4-005", "kind": "behavior", "applies": "§10.6.4 The stream: pull messages and how far an executor advances the channel's stream; reading ahead within a grant is RK-10.6.4-007's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The owner's reads of its stream send
 `pull` messages, each granting a number of items: the executor advances the
 channel's stream by at most the items granted, and MUST NOT advance past an
 item other than a text or reasoning delta or what a generation used (a call's
 start, a segment break, a loop's end) until a later `pull` grants it, so a call
-or a round starts only once the reader asked for what follows it. A later `pull` is one the owner
+or a round starts only once the reader asked for what follows it. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.4-006", "kind": "behavior", "applies": "§10.6.4 The stream: what a later pull is, and a pull that says fewer items read than the executor read. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A later `pull` is one the owner
 sent once its reader read that item: each `pull` says how many items the
 reader read, and the executor takes one that says fewer than it had read
-through that item as granting nothing. Within a grant the executor reads
+through that item as granting nothing. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.4-007", "kind": "behavior", "applies": "§10.6.4 The stream: what an executor reads ahead of the reader within a grant. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Within a grant the executor reads
 deltas, and what a generation used, ahead of the reader, so a round is decided
-as its generation ends, whatever its reader is still showing. Text deltas the channel yields without waiting
+as its generation ends, whatever its reader is still showing. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.4-008", "kind": "behavior", "applies": "§10.6.4 The stream: text deltas a channel yields without waiting between them, crossing as one item, and the grant they count against. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->Text deltas the channel yields without waiting
 between them MAY cross as one `item` holding their joined text and their
 number, which counts as that many items against the grant: the text is kept,
 not where it was cut, so a reader that decides between deltas decides on the
-text (a sentence budget reads it a sentence at a time, §12.2 step 12s.e).
+text (a sentence budget reads it a sentence at a time, §12.2 step 12s.e).<!-- /rfc --><!-- rfc: {"id": "RK-10.6.4-009", "kind": "behavior", "applies": "§10.6.4 The stream: closing the owner's stream; a close that finds the executor reading ahead is RK-10.6.4-010's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Closing the owner's stream sends `close`, and the executor closes the
 channel's stream as a local reader's close would: it is the reader's close,
-not a cancellation (§10.6.8). A close that finds the executor reading ahead,
+not a cancellation (§10.6.8). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.4-010", "kind": "behavior", "applies": "§10.6.4 The stream: a close that finds the executor reading ahead, and a read only a later pull let start. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A close that finds the executor reading ahead,
 past a delta, cuts that read at once, since a local reader's close would have
 found the stream waiting at the item it yielded; a read only a later `pull`
-let start (a call running past its start) finishes first. Items read ahead
+let start (a call running past its start) finishes first. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.4-011", "kind": "behavior", "applies": "§10.6.4 The stream: items read ahead that the owner had not read when its stream was closed or the turn cut. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Items read ahead
 that the owner had not read when its stream was closed or the turn cut are
 dropped: what the consumer stores is what its readers read (§10.2).
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.4-012", "kind": "behavior", "applies": "§10.6.4 The stream, what the consumer reads in frames: the record each stored segment is stored with. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The consumer reads in frames what the channel changes after yielding it:
 
 - each segment is stored with the record of the last `record` frame received
   before the `item` that ended it: a tool handler's write mid-loop reaches the
-  segments that follow (§6.7);
+  segments that follow (§6.7);<!-- /rfc --><!-- rfc: {"id": "RK-10.6.4-013", "kind": "behavior", "applies": "§10.6.4 The stream, what the consumer reads in frames: a call's arguments. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - a call's arguments are its `tool_args` frame's when it has one, its start's
-  otherwise;
+  otherwise;<!-- /rfc --><!-- rfc: {"id": "RK-10.6.4-014", "kind": "behavior", "applies": "§10.6.4 The stream, what the consumer reads in frames: a call's end and its start, two calls under one id included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - a call's end names its start's frame, so two calls under one id stay two
-  calls (§6.4);
+  calls (§6.4);<!-- /rfc --><!-- rfc: {"id": "RK-10.6.4-015", "kind": "behavior", "applies": "§10.6.4 The stream, what the consumer reads in frames: a call that ended before the stream was closed or the turn cut, and a call no end was sent for. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - a call that ended before the stream was closed or the turn cut is closed
   with its own outcome: the executor sends its end once, before the next
   item it sends and so before the turn's `end`, and the owner closes as
   cancelled only a call no end was sent for, a reader that stops between a
   round's end items included.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.4-016", "kind": "behavior", "applies": "§10.6.4 The stream: when the executor compares the turn's record with the last one it sent: before each item that is no delta, before a failed stream's error, once the stream is closed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The executor compares the record with the last one it sent before each `item`
 that is no delta (the stream's end included), before the `error` a failed
 stream ends with, and once the stream is closed, so each of those reaches
-the owner after every change written before it.
+the owner after every change written before it.<!-- /rfc --><!-- rfc: {"id": "RK-10.6.4-017", "kind": "behavior", "applies": "§10.6.4 The stream: an executor checking only for a write to one of the record's keys before a delta, and when a change inside a value then reaches the owner. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->
 Before a text or reasoning delta it MAY look only for a write to one of the
 record's keys, so that a delta costs nothing for the record's size: a change
 made inside a value the record already holds then reaches the owner before
@@ -9374,72 +9410,78 @@ the next `item` that is no delta, the one ending the segment stored with it.
 
 #### 10.6.5 What a turn asks of the owner
 
-<!-- rfc: {"id": "RK-10.6.5-001", "kind": "behavior", "applies": "§10.6.5 What a turn asks of the owner; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.5-006", "kind": "behavior", "applies": "§10.6.5 Owner-served tools: which tools the owner serves: those orchestration sets up for a room and those the implementation binds to the kit. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Owner-served tools.** A tool runs where the live objects it needs live. The
 tools that read or change the owner's state are served by the owner: the tools
 orchestration sets up for a room (handoff, Section 19.6; the strategies' tools,
 Section 19.7; a delegation's result tool, Section 23.3) and the tools the
 implementation binds to the kit (a delegation's status and cancel tools,
 Section 23.4), which a host attaches on the owner, to the channel's
-declaration (§10.6.2), never through the executor's factory. The owner lists
+declaration (§10.6.2), never through the executor's factory. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-007", "kind": "behavior", "applies": "§10.6.5 Owner-served tools: the request's owner_tools and the order the channel declares them to its model. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The owner lists
 them in the request's
 `owner_tools`, and the executor's channel declares them to its model with its
 other tools, in the order the request lists them, whether or not a tool waits
 by design; the owner lists those it set up for every room the channel serves
-in the order it set them up. Their gate (`BEFORE_TOOL_USE`) and their report
+in the order it set them up. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-008", "kind": "behavior", "applies": "§10.6.5 Owner-served tools: where an owner-served tool's gate, report and handler run. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Their gate (`BEFORE_TOOL_USE`) and their report
 (`ON_TOOL_CALL`) run on the executor, as for every call of the turn; only the
 handler runs on the owner:
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.5-009", "kind": "behavior", "applies": "§10.6.5 Owner-served tools: the per-call context a tool_call carries (§21.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - `tool_call` carries the per-call context the implementation keeps for the
   call (§21.4), at least: its id, its name, the arguments its gate left, the
   turn's room, chain depth, actor and allowed names, who asked for the turn
   (the author label a strategy heads a task with, §19.7), and the id of the
-  voice session it serves when it has one. The owner installs that context
-  around the handler, so the handler reads what it reads locally.
+  voice session it serves when it has one. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-010", "kind": "behavior", "applies": "§10.6.5 Owner-served tools: the context the owner installs around the handler. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The owner installs that context
+  around the handler, so the handler reads what it reads locally.<!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-011", "kind": "behavior", "applies": "§10.6.5 Owner-served tools: what a tool_result carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - `tool_result` carries the handler's answer as §21.4 reads it, its outcome
   (served, refused, failed, served by nothing, §9.3), the failure's class and
-  the structured copy.
+  the structured copy.<!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-012", "kind": "behavior", "applies": "§10.6.5 Owner-served tools: a tool_call or a host_call the executor withdraws (its turn cut, or its bound expired, §21.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - A `tool_call` or a `host_call` the executor withdraws (its turn cut, or the
   tool or hook that made it cut by its bound, §21.6) sends `call_cancel`, and
-  the owner cancels the handler or the verb. The owner also cancels every
-  call of a turn it cuts or loses itself. Unless the turn is cut, the
+  the owner cancels the handler or the verb. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-013", "kind": "behavior", "applies": "§10.6.5 Owner-served tools: the calls of a turn the owner cuts or loses. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The owner also cancels every
+  call of a turn it cuts or loses itself. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-014", "kind": "behavior", "applies": "§10.6.5 Owner-served tools: a turn's end and the calls it sent, unless the turn is cut. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Unless the turn is cut, the
   executor sends `end` only once each call it sent was answered.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.5-015", "kind": "behavior", "applies": "§10.6.5 Owner-served tools: an executor whose channel already declares a tool under the name of one of the request's owner_tools. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An executor whose channel already declares a tool under the name of one of
 the request's `owner_tools` MUST refuse the turn, with an error naming the
 tool: which of the two handlers a call reaches would otherwise depend on the
-executor. The owner refuses the same clash when it sets up the tool on a
-channel it holds live, and cannot for one it holds by declaration alone. The
+executor. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-016", "kind": "behavior", "applies": "§10.6.5 Owner-served tools: the owner setting up a tool on a channel it holds live whose name the channel already declares; it cannot for a channel held by declaration. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The owner refuses the same clash when it sets up the tool on a
+channel it holds live, and cannot for one it holds by declaration alone. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-017", "kind": "behavior", "applies": "§10.6.5 Owner-served tools: a channel whose declaration says its turns do not take the owner's tools, and a delegation's result tool for it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
 owner MUST refuse to set up a tool for a channel whose declaration says its
 turns do not take the owner's tools; a delegation's result tool is not set up
 for it, and its result is its text.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.5-018", "kind": "behavior", "applies": "§10.6.5 Owner-served tools: the tools the implementation installs that hold the channel's state (a plan, the human-input tools). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The tools the implementation installs that hold the channel's state (a plan,
-§6.4; the human-input tools, §9.3) run on the executor. The host's tools need
+§6.4; the human-input tools, §9.3) run on the executor. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-019", "kind": "behavior", "applies": "§10.6.5 Owner-served tools: the host's own tools. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The host's tools need
 the host's live objects (its MCP clients, its sandbox, its database): they run
 on the executor.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.5-002", "kind": "behavior", "applies": "§10.6.5 What a turn asks of the owner; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.5-020", "kind": "behavior", "applies": "§10.6.5 TurnHost: how a host tool or hook on the executor reaches a room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **TurnHost.** A host tool or hook on the executor reaches a room only through
-`TurnHost`, which it reads with `current_turn_host()` (§21.4). It is bound to
+`TurnHost`, which it reads with `current_turn_host()` (§21.4). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-021", "kind": "behavior", "applies": "§10.6.5 TurnHost: where TurnHost is bound and where it is empty, and a verb called after its turn ended; between turns is RK-10.6.5-022's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It is bound to
 the turn's room inside a tool call of a turn and inside a hook the executor
 fires while the turn runs, and, after the turn, in work the turn began (a task
 or an `ASYNC` hook that outlives it) for the verbs below; it is empty anywhere
-else, and any other verb called on it after its turn ended is refused. Between
+else, and any other verb called on it after its turn ended is refused. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-022", "kind": "behavior", "applies": "§10.6.5 TurnHost: between turns, in work a turn began: send_event, post_status, update_room_metadata and add_observation, their budget and depth. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Between
 turns (a background thinker's thought, §6.4) it is bound to the room of the
 turn the work began in: `send_event`, `post_status`, `update_room_metadata`
 and `add_observation` cross as `room_call` (§10.6.3), each a new arrival with
 a budget of its own and the depth of its own event, the turn being over
 (§9.5.1); a `send_event` made from the body of a hook run asynchronously names at least
-the depth that body runs at (§8.3), which the owner keeps. `delegate`,
+the depth that body runs at (§8.3), which the owner keeps. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-023", "kind": "behavior", "applies": "§10.6.5 TurnHost: between turns: delegate, wait_task and the readers of owner-process state. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`delegate`,
 `wait_task` and the readers of owner-process state are
-refused there, with an error naming the verb. What work a turn began publishes
+refused there, with an error naming the verb. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-024", "kind": "behavior", "applies": "§10.6.5 TurnHost: what work a turn began publishes after the turn (realtime publications, framework events). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->What work a turn began publishes
 after the turn (realtime publications, framework events) crosses as
 `room_publication`: an executor never publishes it on the owner's realtime
-backend or bus itself, and never writes the owner's store. Its surface is
+backend or bus itself, and never writes the owner's store. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-025", "kind": "behavior", "applies": "§10.6.5 TurnHost: TurnHost's surface: one host_call per verb, arguments as data. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its surface is
 minimal and enumerated: each verb is one `host_call`, every argument is data
-(no callable crosses), and an implementation documents the set. It MUST carry:
+(no callable crosses), and an implementation documents the set. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-026", "kind": "behavior", "applies": "§10.6.5 TurnHost: the verbs every TurnHost carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It MUST carry:
 
 ```
 TurnHost
@@ -9449,92 +9491,102 @@ TurnHost
 └── room_context() → RoomContext                                 # as the owner builds it now (§10.6.6)
 ```
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.5-027", "kind": "behavior", "applies": "§10.6.5 TurnHost: the verbs an implementation adds for its own tools and hooks to write. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An implementation adds the verbs its own tools and hooks need to write (a
 status post, §19.8; a room-metadata update; an observation, §5.11), each
 documented as one `host_call`.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.5-028", "kind": "behavior", "applies": "§10.6.5 TurnHost: a host declaring verbs of its own on the owner. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->
 A host's own code may need what only the owner's process holds (a person's live
 connection, a service the owner runs). An implementation SHOULD let the host
 declare verbs of its own on the owner, each served by name as one `host_call`,
-its arguments and its result data. The owner runs a declared verb under what
+its arguments and its result data. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-029", "kind": "behavior", "applies": "§10.6.5 TurnHost, where an implementation lets the host declare verbs of its own: what a declared verb runs under, and a name its own verbs or another declared verb hold, or no host declared. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The owner runs a declared verb under what
 the turn gave the call (its room, the actor of its turn, the requester, its
 chain depth, the tool call it is made from), which the accessors a tool handler
 reads answer for it (§21.4), and MUST refuse a name its own verbs or another
-declared verb hold, and a verb no host declared. A declared verb needs its
+declared verb hold, and a verb no host declared. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-030", "kind": "behavior", "applies": "§10.6.5 TurnHost, where an implementation lets the host declare verbs of its own: a declared verb the host declared to be served between turns. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A declared verb needs its
 turn unless the host declared it to be served between turns: work the turn
 began then still sends it after the turn, as a `room_call`, and the owner runs
 it for the turn's room and channel, with no actor nor tool call, as work that
-starts fresh (§8.3). The owner MUST refuse, between turns, a declared verb not
+starts fresh (§8.3). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-031", "kind": "behavior", "applies": "§10.6.5 TurnHost, where an implementation lets the host declare verbs of its own: between turns, a declared verb not declared to be served then. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The owner MUST refuse, between turns, a declared verb not
 declared so.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.5-032", "kind": "behavior", "applies": "§10.6.5 TurnHost: a verb naming another room or organization than its turn's room's, and an argument the verb does not take. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A `TurnHost` acts for its turn's room, in that room's organization: the owner
 MUST refuse a verb that names another room or another organization than the
-room's, and an argument the verb does not take. A status post it makes names
-the turn's room (§19.8). An event it sends while the turn runs is at least as
+room's, and an argument the verb does not take. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-033", "kind": "behavior", "applies": "§10.6.5 TurnHost: a status post made through it (§19.8). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A status post it makes names
+the turn's room (§19.8). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-034", "kind": "behavior", "applies": "§10.6.5 TurnHost: the depth of an event it sends and of a task it delegates, while the turn runs and once it is over. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An event it sends while the turn runs is at least as
 deep as the turn's response (§8.3), and a task it delegates inherits the
 turn's depth (§23.3), so a chain of turns writing through it stops at the
 chain-depth limit as a local one does; an event that work the turn began sends
-once the turn is over has the depth of its own event (§9.5.1). `wait_task`
+once the turn is over has the depth of its own event (§9.5.1). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-035", "kind": "behavior", "applies": "§10.6.5 TurnHost: wait_task, for a task of the turn's room and for any other. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`wait_task`
 answers for a task a `TurnHost` of the turn's room delegated, and answers null
-for any other, as it does past its timeout. A room-metadata update through it
+for any other, as it does past its timeout. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-036", "kind": "behavior", "applies": "§10.6.5 TurnHost: a room-metadata update through it, and the implementation's own namespace (§5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room-metadata update through it
 MUST NOT write a key of the implementation's own namespace (§5.1: a detach's
 revocation, §7.5; what the room keeps for a channel, §10.6.2).
 
-An executor holds no store. What a turn reads of its room comes with the
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.5-037", "kind": "behavior", "applies": "§10.6.5 What a turn reads of its room: every executor. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+An executor holds no store. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-038", "kind": "behavior", "applies": "§10.6.5 What a turn reads of its room: what a request carries for its turn to read: its context, and channel_rows for a channel run on an executor other than the owner's own. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->What a turn reads of its room comes with the
 request: its context, and, for a channel run on an executor other than the
 owner's own, `channel_rows`, which the owner reads for the turn: the channel's
 own tool-call rows and the instructions it read, each once, those its history
 replays and its latest calls, which rebuild
-its tool memory and the skills it activated (§6.4, §24.4). A deleted row is
+its tool memory and the skills it activated (§6.4, §24.4). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-039", "kind": "behavior", "applies": "§10.6.5 What a turn reads of its room: a deleted row (§7.5 rule 8), and a store that fails to read channel_rows. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A deleted row is
 withheld (§7.5 rule 8), and a store that fails costs the turn those rows, not
-the turn. Every write goes through `TurnHost`. Each call carries the room and the turn it is made from, and the
+the turn. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-040", "kind": "behavior", "applies": "§10.6.5 What a turn reads of its room: every write a turn makes to its room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Every write goes through `TurnHost`. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-041", "kind": "behavior", "applies": "§10.6.5 What a turn reads of its room: the reentrancy the owner applies to a call from a turn, and a call that would wait on the room's own delivery. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Each call carries the room and the turn it is made from, and the
 owner applies to it the reentrancy of its own task waiting on that turn when
 the call arrives (the delivery-set target awaiting `output`, or the reader
 awaiting an `item`): a call that would wait on the room's own delivery from a
 task that delivery needs returns with its completion detached (§10.1 step 18),
-as it does locally, rather than wait on the delivery set that runs the turn.
+as it does locally, rather than wait on the delivery set that runs the turn.<!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-042", "kind": "non_testable", "applies": "§10.6.5 What a turn reads of its room: a host running a kit beside an executor of another process; only the host can keep it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An implementation cannot keep a host's code from committing through another
 kit it holds: a host that runs a kit beside an executor of another process
 MUST NOT let that executor's turns reach a room through it.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.5-005", "kind": "behavior", "applies": "§10.6.5 What a turn asks of the owner; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.5-043", "kind": "behavior", "applies": "§10.6.5 The turn's record on the owner: whose the turn's response-metadata record is, and what a handler the owner runs for the turn learns of it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **The turn's record on the owner.** The turn's response-metadata record
 (§6.7) is the executor's, and a handler the owner runs for the turn learns
 facts of the turn as a local one does: a document its tool read, a value its
-tool protected. A `tool_call` and a `host_call` made while the turn runs carry
+tool protected. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-044", "kind": "behavior", "applies": "§10.6.5 The turn's record on the owner: the record a tool_call or a host_call made while the turn runs carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A `tool_call` and a `host_call` made while the turn runs carry
 the record as the call leaves the executor, in the form a `record` message
-carries it (§10.6.4). The owner runs the handler, or the declared verb, on a
+carries it (§10.6.4). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-045", "kind": "behavior", "applies": "§10.6.5 The turn's record on the owner: the record the owner runs a handler or a declared verb on, as current_response_metadata() answers it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The owner runs the handler, or the declared verb, on a
 record holding that copy, which `current_response_metadata()` answers there
-(§21.4). The handler works on a copy of its own, nothing of it shared with
+(§21.4). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-046", "kind": "behavior", "applies": "§10.6.5 The turn's record on the owner: the handler's own copy, and the changes its tool_result or host_result carries, whether it answered, refused or failed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The handler works on a copy of its own, nothing of it shared with
 the record the call carried, and its `tool_result` or `host_result` carries
 what it changed, measured against what the call carried: each key it set to
 another value, and each key the call carried that it removed, whether the
-handler answered, refused or failed. The executor applies those changes to
+handler answered, refused or failed. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-047", "kind": "behavior", "applies": "§10.6.5 The turn's record on the owner, the changes a call's result brings back: a key removed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The executor applies those changes to
 the turn's record before the call returns:
 
-- a key removed is removed;
+- a key removed is removed;<!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-048", "kind": "behavior", "applies": "§10.6.5 The turn's record on the owner, the changes a call's result brings back: a key whose new value is a mapping, where the call carried a mapping or nothing and the turn's record holds one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - a key whose new value is a mapping, where the call carried a mapping or
   nothing and the turn's record holds a mapping, takes the handler's change
   entry by entry: the entries it set are set, the entries the call carried
-  that it removed are removed, and the others the turn's record holds stay;
+  that it removed are removed, and the others the turn's record holds stay;<!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-049", "kind": "behavior", "applies": "§10.6.5 The turn's record on the owner, the changes a call's result brings back: any other key set. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - any other key set takes the value the handler wrote.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.5-050", "kind": "behavior", "applies": "§10.6.5 The turn's record on the owner, the changes a call's result brings back: two calls of one turn served at once adding entries to one mapping, a key a concurrent call wrote, a call served alone. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 So two calls of one turn served at once that each add entries to one mapping
 keep both, a key a concurrent call wrote is never removed by a call that did
 not carry it, and a call served alone leaves the record as a local handler
-would. Two calls that each set a key to a value other than a mapping leave the
+would. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-051", "kind": "behavior", "applies": "§10.6.5 The turn's record on the owner, the changes a call's result brings back: two calls each setting a key to a value other than a mapping. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Two calls that each set a key to a value other than a mapping leave the
 value of the one answered last: a host that has concurrent calls contribute to
 one fact writes each contribution under an entry of its own. The whole record
-crosses with each call, and only what the handler changed comes back. A call
+crosses with each call, and only what the handler changed comes back. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-052", "kind": "behavior", "applies": "§10.6.5 The turn's record on the owner: a call made outside the turn: a declared verb served between turns, and work the turn began once it ended. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call
 made outside the turn carries no record: a declared verb the owner serves
 between turns, and work the turn began once it ended, read the empty value
 from `current_response_metadata()`, as a realtime tool call does, and what
-they write reaches no message. A call or an answer without these fields reads
+they write reaches no message. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-053", "kind": "behavior", "applies": "§10.6.5 The turn's record on the owner: a call or an answer without the record fields. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call or an answer without these fields reads
 as one that carries no record and changed nothing.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.5-003", "kind": "behavior", "applies": "§10.6.5 What a turn asks of the owner; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.5-054", "kind": "behavior", "applies": "§10.6.5 The in-memory backend's execution context: the execution context a turn's work and its stream run in, and the reentrancy guards that hold for the turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **The in-memory backend's execution context.** The in-memory backend runs in
 the owner's process, where a host's tool holds the kit itself and may call it
 from a turn. It therefore runs a turn's work in a copy of the execution
@@ -9543,50 +9595,50 @@ stream in a copy of the context of the task that first reads it, kept for the
 stream's life: the reentrancy guards that task holds (its room's delivery
 lane, a room lock, a kit-held run) hold for the turn as they hold in the
 owner's own code, and a tool that waits on the delivery of the event it sent
-gets its completion detached rather than wait on itself. That context is the
+gets its completion detached rather than wait on itself. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-055", "kind": "behavior", "applies": "§10.6.5 The in-memory backend's execution context: what the in-memory backend carries beside the messages. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->That context is the
 only thing the in-memory backend carries beside the messages, and it is no
-object of the turn. A turn's code also knows the turns it runs under, so a
+object of the turn. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-056", "kind": "behavior", "applies": "§10.6.5 The in-memory backend's execution context: a close called from a turn's code, and the depth of what it sends while its turns run. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn's code also knows the turns it runs under, so a
 close called from one of them cuts them without cutting the call that awaits
 it, nor waiting for it (§12.10.4), and what it sends into a room while they
-run is at least as deep as the deepest of their responses (§8.3).
+run is at least as deep as the deepest of their responses (§8.3).<!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-057", "kind": "behavior", "applies": "§10.6.5 The in-memory backend's execution context: an executor of another process. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An executor of another process has no such context: its turns reach a room
 through `TurnHost`, whose verbs carry the depth.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.5-004", "kind": "behavior", "applies": "§10.6.5 What a turn asks of the owner; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.5-058", "kind": "behavior", "applies": "§10.6.5 Human input: where a tool waiting for a human runs, and the owner's answer_input and reject_input. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Human input.** A tool waiting for a human's answer runs on the executor, and
 the answer may arrive on the owner, which keeps the open requests of its
 rooms' turns and offers their answer (`answer_input(request_id, value)`) and
-their rejection (`reject_input(request_id, reason)`). It also offers each open
+their rejection (`reject_input(request_id, reason)`). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-059", "kind": "behavior", "applies": "§10.6.5 Human input: the owner's read of an open request by its id, a request no longer open, and one of another organization's room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It also offers each open
 request as `ON_USER_INPUT_REQUIRED` reads it, by its id (`input_request`): its
 room, channel, tool call and the actor of its turn, which `input_request`
 carries, so the host's door can tell who was asked before it answers, and
 nothing for a request that is no longer open or, given an organization, whose
-room is another organization's (§17.2). The request settles
+room is another organization's (§17.2). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-060", "kind": "behavior", "applies": "§10.6.5 Human input: how a request settles: once, first come first served, never retracted. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The request settles
 where its tool waits, once, first come first served: an answer the
 human-input handler the host gave the channel takes, a hook's block, its
 bound, a release, or the owner's outcome, whichever comes first; a later one
-never retracts it (§9.3). The executor MUST send `input_request` before it
+never retracts it (§9.3). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-061", "kind": "behavior", "applies": "§10.6.5 Human input: the order of input_request and ON_USER_INPUT_REQUIRED, and an answer for an id the owner does not know yet. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The executor MUST send `input_request` before it
 fires `ON_USER_INPUT_REQUIRED`, and the owner MUST hold an answer for an id
 it does not know yet until the request arrives or `input_hold_timeout`
 (default 60 seconds) passes, so a request is answerable from its creation
-(§9.3); an implementation bounds how many answers it holds. The owner's
+(§9.3); an implementation bounds how many answers it holds. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-062", "kind": "behavior", "applies": "§10.6.5 Human input: the owner's outcome reaching the executor as input_answer, and input_taken. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The owner's
 outcome reaches the executor as `input_answer`, which settles the request only
 while it is still open: an answer the tool reads, or a rejection it reads as a
 refusal (§9.3); the executor answers `input_taken`, and the owner's door
-answers whether the waiting tool read its outcome. A request settled on the
-executor otherwise sends `input_closed`, and the owner closes its record. A
+answers whether the waiting tool read its outcome. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-063", "kind": "behavior", "applies": "§10.6.5 Human input: a request settled on the executor other than by input_answer. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A request settled on the
+executor otherwise sends `input_closed`, and the owner closes its record. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-064", "kind": "behavior", "applies": "§10.6.5 Human input: a request still open when its turn ends, and a detached one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 request belongs to the turn that opened it; one still open when its turn ends
 is withdrawn on both sides, its waiter reading it released, but a detached
 one (a request no tool waits on, which its creator alone releases): the
 owner's record goes with the turn while the request stays open on the
-executor, answerable there. One a task opens after its
+executor, answerable there. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.5-065", "kind": "behavior", "applies": "§10.6.5 Human input: a request a task opens after its turn ended. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->One a task opens after its
 turn ended is the host's handler's alone.
 <!-- /rfc -->
 
 #### 10.6.6 Hooks
 
-<!-- rfc: {"id": "RK-10.6.6-001", "kind": "behavior", "applies": "§10.6.6 Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.6-005", "kind": "behavior", "applies": "§10.6.6 Hooks, where a trigger fires: the triggers that fire on the executor hosting the channel, during a turn or between turns. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A trigger fires where the work it observes runs. These triggers fire on the
 executor that hosts the channel, during a turn or between turns (a thinker's
 thought, a human-input request's notification):
@@ -9606,6 +9658,8 @@ thought, a human-input request's notification):
 | `ON_PLAN_UPDATED` | Executor |
 | Every other trigger of §9.2 | Owner |
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.6-006", "kind": "behavior", "applies": "§10.6.6 Hooks, where a trigger fires: the triggers that fire on the owner. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 On the owner fire, among others, `ON_ERROR` (from the turn's `error` frame,
 §9.2), `ON_TASK_CREATED` (from the output's tasks), `BEFORE_BROADCAST` on each
 stored segment (§9.5), `AFTER_BROADCAST`, and the triggers that owner-served
@@ -9613,295 +9667,307 @@ tools and discussions fire (`ON_HANDOFF`, `ON_TASK_DELEGATED`,
 `ON_STATUS_POSTED`, `ON_SPEAK_QUEUE`, `ON_DISPATCH_DECISION`).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.6-002", "kind": "behavior", "applies": "§10.6.6 Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.6-007", "kind": "behavior", "applies": "§10.6.6 Hooks, registration: a hook on an executor trigger. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Registration.** A hook on an executor trigger registers on the executor
-that runs the turns it observes. Registered on the kit, it is a registration
+that runs the turns it observes. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.6-008", "kind": "behavior", "applies": "§10.6.6 Hooks, registration: a hook on an executor trigger registered on the kit. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Registered on the kit, it is a registration
 on the kit's own executor: it fires for the turns of the channels the kit
-holds live, and for the calls outside any turn below. A channel the kit holds
+holds live, and for the calls outside any turn below. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.6-009", "kind": "behavior", "applies": "§10.6.6 Hooks, registration: a kit hook on an executor trigger that a channel held by declaration alone could fire, and such a channel's declaration while one is registered. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel the kit holds
 by its declaration alone (§10.6.2) runs its turns on another executor, where
 such a hook would never fire. An implementation MUST therefore refuse a hook
 on an executor trigger registered on the kit that such a channel could fire
 (its channel filter does not leave the channel out), and the declaration of
 such a channel while such a hook is registered, naming the executor where the
-hook registers instead. A room hook on an executor trigger registered on the
+hook registers instead. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.6-010", "kind": "behavior", "applies": "§10.6.6 Hooks, registration: a room hook on an executor trigger registered on the kit while the kit holds a channel by declaration alone. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room hook on an executor trigger registered on the
 kit is refused while the kit holds any channel by its declaration alone: the
-room's channels are not known when it registers. A host registers its turn
+room's channels are not known when it registers. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.6-011", "kind": "non_testable", "applies": "§10.6.6 Hooks, registration: a host's setup of its turn hooks, which only the host keeps. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A host registers its turn
 hooks with one function it runs on every executor, the kit's own included, so
-its setup takes one path too. The implementation's own hooks on these triggers (a scorer of turns, a
+its setup takes one path too. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.6-012", "kind": "behavior", "applies": "§10.6.6 Hooks, registration: the implementation's own hooks on executor triggers (a scorer, a console's view). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The implementation's own hooks on these triggers (a scorer of turns, a
 console's view of tool calls) register on executors the same way, and one that
 writes (a scorer recording an observation) writes through `TurnHost`.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.6-013", "kind": "behavior", "applies": "§10.6.6 Hooks, registration: an executor trigger fired in the owner's process outside any turn (speech-to-speech, a conference). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A trigger of the table that fires in the owner's process outside any turn (a
 speech-to-speech session's tool calls and its reasoning delegations, §12.4 and
 §12.4.1; a conference's tool calls, §12.10) fires the hooks registered on the
 kit's own executor: one registration covers both.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.6-003", "kind": "behavior", "applies": "§10.6.6 Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.6-014", "kind": "behavior", "applies": "§10.6.6 Room hooks: a room hook on an executor trigger the kit registers for a room, for its own executor. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Room hooks.** A room hook on an executor trigger the kit registers for a
 room (above) is its own executor's hook for that room, and no request names
-it. One for a channel other executors run (§9.1) is registered on the
-executors under a name. The owner keeps which names a room has, as it keeps
+it. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.6-015", "kind": "behavior", "applies": "§10.6.6 Room hooks: a room hook for a channel other executors run. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->One for a channel other executors run (§9.1) is registered on the
+executors under a name. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.6-016", "kind": "behavior", "applies": "§10.6.6 Room hooks: the names a room has, forgotten with the room, and the request's room_hooks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The owner keeps which names a room has, as it keeps
 the room's other hooks, forgetting them with the room (§9.1), and the request
 carries them in `room_hooks`: the
-executor runs the hooks registered under those names for that turn. An
+executor runs the hooks registered under those names for that turn. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.6-017", "kind": "behavior", "applies": "§10.6.6 Room hooks: an executor that has not registered every name a request carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An
 executor that has not registered every name a request carries does not take
-it (§10.6.7), so a turn never runs without one of its room's hooks. On an
+it (§10.6.7), so a turn never runs without one of its room's hooks. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.6-018", "kind": "behavior", "applies": "§10.6.6 Room hooks: a name on an executor, and a hook registered again under a name and trigger it carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->On an
 executor a name carries at most one hook per trigger, and a hook registered
-again under a name and a trigger it already carries replaces the first. A
-name the room enables joins the room's scope (§9.1). Enabling a name already
+again under a name and a trigger it already carries replaces the first. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.6-019", "kind": "behavior", "applies": "§10.6.6 Room hooks: a name the room enables (§9.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
+name the room enables joins the room's scope (§9.1). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.6-020", "kind": "behavior", "applies": "§10.6.6 Room hooks: enabling a name already enabled for that room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Enabling a name already
 enabled for that room MUST be a no-op: it creates no duplicate activation and
-preserves its place in the activation order. Enabling a name held by another
+preserves its place in the activation order. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.6-021", "kind": "behavior", "applies": "§10.6.6 Room hooks: enabling a name another hook registration of the room holds. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Enabling a name held by another
 hook registration of the room MUST be refused, so that a room never holds
 two different hooks of one name.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.6-004", "kind": "behavior", "applies": "§10.6.6 Hooks; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.6-022", "kind": "behavior", "applies": "§10.6.6 Hooks, context: the RoomContext a hook on the executor receives during a turn, and once its turn is over or a cut leaves the owner no longer answering. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Context.** A hook on the executor receives the `RoomContext` its room's
 owner builds when the hook fires, asked as the `host_call` verb `room_context`,
 as a hook on the owner does; once its turn is over, or when a cut leaves the
-owner no longer answering it, the context the turn started with. Outside any
+owner no longer answering it, the context the turn started with. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.6-023", "kind": "behavior", "applies": "§10.6.6 Hooks, context: a hook on the executor outside any turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Outside any
 turn (an external agent's own activity between two prompts) it receives the
 context of the last turn the executor ran in that room, and none when it ran
 no turn there or once every channel whose turns it ran there was detached
 from the room (a room created again under its id reads nothing of the
-earlier one). A context the owner fails to build is one the hook does not
-get, as on the owner. A hook
+earlier one). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.6-024", "kind": "behavior", "applies": "§10.6.6 Hooks, context: a context the owner fails to build. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A context the owner fails to build is one the hook does not
+get, as on the owner. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.6-025", "kind": "behavior", "applies": "§10.6.6 Hooks, context: how a hook on the executor changes a room, during a turn and between turns. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A hook
 changes a room only through `TurnHost` (§10.6.5); between turns, where
 `TurnHost` is empty, it changes none.
 <!-- /rfc -->
 
 #### 10.6.7 Placement
 
-<!-- rfc: {"id": "RK-10.6.7-001", "kind": "behavior", "applies": "§10.6.7 Placement; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.7-003", "kind": "behavior", "applies": "§10.6.7 Placement: what an executor declares. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An executor declares the channels it can host, the organizations whose rooms
-it serves, and the names of the room hooks it registered. The backend MUST
+it serves, and the names of the room hooks it registered. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-004", "kind": "behavior", "applies": "§10.6.7 Placement: which executor a backend delivers a request to, and one no executor accepts; the channels the owner holds live are RK-10.6.7-021's, and a backend that knows every executor fails a request none declares at once (RK-10.6.7-020). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The backend MUST
 deliver a request only to an executor that declares the request's channel,
 serves its room's organization and registered every name of its `room_hooks`;
-a request no executor accepts within `accept_timeout` fails (§10.6.8). An
+a request no executor accepts within `accept_timeout` fails (§10.6.8). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-005", "kind": "behavior", "applies": "§10.6.7 Placement: an executor's channel entries: ids, prefixes, `*`, and an entry with a `*` elsewhere. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An
 executor declares its channels as ids and prefixes: an entry ending in `*`
 declares every channel whose id starts with what precedes it (`acme-*`), and
 `*` alone every channel; an entry with a `*` anywhere else is refused when the
-executor is built. A distributed backend tells these entries to the other
-processes as they are. An executor given a predicate, or given no
-declaration at all (every channel), takes the turns of its own process only.
+executor is built. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-006", "kind": "behavior", "applies": "§10.6.7 Placement: a distributed backend and the channel entries it tells other processes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A distributed backend tells these entries to the other
+processes as they are. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-007", "kind": "behavior", "applies": "§10.6.7 Placement: an executor given a predicate or no declaration. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An executor given a predicate, or given no
+declaration at all (every channel), takes the turns of its own process only.<!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-008", "kind": "non_testable", "applies": "§10.6.7 Placement: a deployment's pool of executors building an organization's agents; only the deployment keeps it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A pool of executors that build an organization's agents from its
 configuration declares the organization's prefix, so an agent created after
-the pool started needs no executor told of it. An executor declares its
+the pool started needs no executor told of it. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-009", "kind": "behavior", "applies": "§10.6.7 Placement: an executor's organization entries, an empty declaration and an entry holding a `*` with anything else. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An executor declares its
 organizations (§17.2) as exact ids, and `*` alone for every organization; an
 empty declaration, or an entry holding a `*` with anything else, is refused
-when the executor is built. `*` serves the rooms of every organization and
+when the executor is built. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-010", "kind": "behavior", "applies": "§10.6.7 Placement: the rooms `*` and exact organization ids serve. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`*` serves the rooms of every organization and
 the rooms without one; exact ids serve those organizations' rooms alone, not
-the rooms without an organization. One that declares none serves the rooms
+the rooms without an organization. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-011", "kind": "behavior", "applies": "§10.6.7 Placement: an executor that declares no organization. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->One that declares none serves the rooms
 without an organization alone, so an executor started without a declaration
-never takes the turns of a room that has one. A room's turns, channel calls and
+never takes the turns of a room that has one. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-012", "kind": "behavior", "applies": "§10.6.7 Placement: a room's turns, channel calls and committed events, and a room no executor serves. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room's turns, channel calls and
 committed events go only to an executor serving the room's organization, and
-one none serves fails with `no_executor`. An executor MUST refuse the work of
+one none serves fails with `no_executor`. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-013", "kind": "behavior", "applies": "§10.6.7 Placement: work an executor receives for a room of an organization it does not serve, whatever placed it there. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An executor MUST refuse the work of
 a room of an organization it does not serve, whatever placed it there: a
 turn or a channel call fails with `no_executor`, and a `room_attached` or a
-`committed_event` is dropped, nothing built for it. The kit's own executor
+`committed_event` is dropped, nothing built for it. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-014", "kind": "behavior", "applies": "§10.6.7 Placement, the owner's own executor: the organizations the kit's own executor serves, and an owner given an executor of the host's as its own. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The kit's own executor
 serves every organization; an owner given an executor of the host's as its
-own runs the channels it holds live only in the rooms that executor serves. A declaration names no room: the owner already
-ties a room to the executor holding it. Organizations keep apart the
+own runs the channels it holds live only in the rooms that executor serves. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-015", "kind": "behavior", "applies": "§10.6.7 Placement: what a declaration names. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A declaration names no room: the owner already
+ties a room to the executor holding it. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-016", "kind": "behavior", "applies": "§10.6.7 Placement: the organizations executors declare, and who may reach the backend's transport to declare them, which the host controls. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Organizations keep apart the
 executors that declare them honestly; a process that reaches the backend's
 transport can declare any, so who may reach it is the host's to control
-(§10.6.9). A turn or channel call
+(§10.6.9). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-017", "kind": "behavior", "applies": "§10.6.7 Placement: a turn or channel call placed on an executor whose factory builds nothing for its channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn or channel call
 placed on an executor whose factory builds nothing for its channel fails with
-`no_executor`, and is not placed again (§10.6.2). That executor still holds
+`no_executor`, and is not placed again (§10.6.2). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-018", "kind": "behavior", "applies": "§10.6.7 Placement: the room's next turns after one an executor's factory built nothing for. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->That executor still holds
 the room for the channel, so the room's next turns go to it while it lives
 and takes them: a host gives every executor a factory that builds every
-channel its entries cover.
+channel its entries cover.<!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-019", "kind": "behavior", "applies": "§10.6.7 Placement: how a turn crosses: in the owner's process, or over the backend's transport. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A turn placed on an executor of the owner's own process is carried in that
 process, as the in-memory backend carries it; one placed elsewhere crosses
-the backend's transport. A backend that knows every executor alive (the
+the backend's transport. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-020", "kind": "behavior", "applies": "§10.6.7 Placement: a backend that knows every executor alive (the in-memory one, a distributed one with a registry), and a request none declares. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A backend that knows every executor alive (the
 in-memory one; a distributed one keeping a registry of the executors alive and
 what they declare) fails at once, with `no_executor`, a request none of them
-declares. The owner's own executor, the one that runs the channels the owner
+declares. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-021", "kind": "behavior", "applies": "§10.6.7 Placement, the owner's own executor: the turns, channel calls and committed events of the channels the owner holds live, whatever else declares the channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The owner's own executor, the one that runs the channels the owner
 holds live, takes their turns, channel calls and committed events: a backend
 MUST place them on it and on no other executor, whatever else declares the
 channel, and one it does not take (a room hook it does not define) fails with
-`no_executor`. Once the owner's own executor closed (a host closing it while
+`no_executor`. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-022", "kind": "behavior", "applies": "§10.6.7 Placement, the owner's own executor: the work of the channels the owner holds live once its own executor closed, and their room_attached and room_detached. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Once the owner's own executor closed (a host closing it while
 the owner runs), they fail with `no_executor` too: they are never placed on
 another executor, whose copy of the channel would run without the live
 channel's state. The channel's `room_attached` and `room_detached`
-(§10.6.3) reach that executor alone, for the same reason. An agent a host
+(§10.6.3) reach that executor alone, for the same reason. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-023", "kind": "behavior", "applies": "§10.6.7 Placement: an agent a host runs on an executor of its own. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An agent a host
 runs on an executor of its own is one the owner holds by its declaration
-(§10.6.2). A request MUST reach one executor at
+(§10.6.2). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-024", "kind": "behavior", "applies": "§10.6.7 Placement: how many executors a request reaches: a process that refuses it, one that does not answer within accept_timeout. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A request MUST reach one executor at
 most: a process that refuses it
 (its executor closed) has it placed again; one that does not answer it within
 `accept_timeout` loses the turn (`executor_lost`), which is never handed to
-another. A
+another. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-025", "kind": "behavior", "applies": "§10.6.7 Placement: a room's turns of a channel and the executor that ran its previous one, while it lives and takes the turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 backend MUST place a room's turns of a channel on the executor that ran its
 previous one while that executor lives and takes the turn, so its caches stay
 warm and its session state stays, the session state the room needs among it
 (an ACP session, a speak policy's listening state, §10.6.2): "the same
 executor for the session's life" is the case where one executor holds the
-room. The executor that holds a room's state for a channel is the one that
+room. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-026", "kind": "behavior", "applies": "§10.6.7 Placement: which executor holds a room's state for a channel; channel control is placed as §10.6.3 says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The executor that holds a room's state for a channel is the one that
 took its last turn or channel call, while it serves and declares the
 channel. A channel control message is placed as §10.6.3 says.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.7-002", "kind": "behavior", "applies": "§10.6.7 Placement; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.7-027", "kind": "behavior", "applies": "§10.6.7 Which agents can answer: the executors a backend lists, the owner's own aside, what each entry carries, and a closed or silent executor. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Which agents can answer.** A backend lists the executors it carries turns
 to, the owner's own aside: each one's id, process, declared entries,
 organizations, room hook names, last beat, and whether it is online, that is not closed and beating
 within `heartbeat_timeout` (§10.6.8); a closed executor is not listed, and a
-silent one stays listed, offline, until its process's entry is forgotten. An
+silent one stays listed, offline, until its process's entry is forgotten. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-028", "kind": "behavior", "applies": "§10.6.7 Which agents can answer: when an agent is online in a room, held by declaration or live. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An
 agent is online in a room while an executor online covers it there, declaring
 its channel, serving the room's organization and defining the room's enabled
 hooks; an agent the owner holds
-live, while the owner's own executor takes its turns there. The owner answers
+live, while the owner's own executor takes its turns there. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-029", "kind": "behavior", "applies": "§10.6.7 Which agents can answer: the owner's answer of a room's agent presence. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The owner answers
 a room's agent presence, each agent with the executors covering it, sorted by
-channel id. It publishes an agent's presence in a room as the presence
+channel id. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-030", "kind": "behavior", "applies": "§10.6.7 Which agents can answer: when the owner publishes an agent's presence ephemerals in a room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It publishes an agent's presence in a room as the presence
 ephemerals of §8.4 (`presence_online` / `presence_offline`, `user_id` the
 agent's channel id): as the agent is attached there, and, for an agent it
 holds by its declaration, in each active or paused room the agent is attached
-to when the executors covering it change. It looks at the executors at each
+to when the executors covering it change. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-031", "kind": "behavior", "applies": "§10.6.7 Which agents can answer: when the owner looks at the executors, and an executor's silence. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It looks at the executors at each
 heartbeat interval, and at once when an executor of its process other than its
 own is served or closes, so an executor's silence turns its agents offline at
-`heartbeat_timeout`, never at one late beat. A backend keeps the presence last
+`heartbeat_timeout`, never at one late beat. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-032", "kind": "behavior", "applies": "§10.6.7 Which agents can answer: the presence a backend keeps per agent and room, the owners that see one change, an owner restarting. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A backend keeps the presence last
 published per agent and room, and each change is published by the owner that
 records it there first: of the owners that see the same change, one alone
 publishes it, and, where the backend keeps it beyond the owner's process (a
 distributed backend), an owner restarting publishes nothing that did not
-change. A publication, or a claim, that fails is tried again at a later look
+change. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-033", "kind": "behavior", "applies": "§10.6.7 Which agents can answer: a publication or a claim that fails, and an owner closing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A publication, or a claim, that fails is tried again at a later look
 of the owner that made it, while that owner runs; closing, it lets go of the
 claims it could not publish, which the room's next change or attach, or an
-owner that starts, then publishes. A detach, and a room's close, forget what
-was published for the agent in the room. A backend that cannot list its
+owner that starts, then publishes. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-034", "kind": "behavior", "applies": "§10.6.7 Which agents can answer: a detach and a room's close. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A detach, and a room's close, forget what
+was published for the agent in the room. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.7-035", "kind": "behavior", "applies": "§10.6.7 Which agents can answer: a backend that cannot list its executors. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A backend that cannot list its
 executors has the owner publish nothing for the agents it holds by
 declaration, whose presence it cannot tell.
 <!-- /rfc -->
 
 #### 10.6.8 Liveness, cancellation and errors
 
-<!-- rfc: {"id": "RK-10.6.8-001", "kind": "behavior", "applies": "§10.6.8 Liveness, cancellation and errors; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.8-006", "kind": "behavior", "applies": "§10.6.8 Liveness: the messages each side sends on a running turn's link, the in-memory backend included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Liveness, both ways.** While a turn runs, each side MUST send a message on
 its link at least every `heartbeat_interval` (default 2 seconds), a
 `heartbeat` when it has nothing else to send, the in-memory backend included.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.8-007", "kind": "behavior", "applies": "§10.6.8 Liveness: the owner failing a turn: accepted not within accept_timeout, an executor silent for heartbeat_timeout; silence and the beat are counted as RK-10.6.8-009 and RK-10.6.8-011 say, and a backend that knows every executor fails a request none declares at once (RK-10.6.7-020). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - The owner MUST fail the turn when `accepted` does not come within
   `accept_timeout` (default 10 seconds), with `no_executor` when no executor
   that could take the request (§10.6.7) ran meanwhile and `executor_lost`
   otherwise, and when the executor stays silent for `heartbeat_timeout`
-  (default 10 seconds), with `executor_lost`.
+  (default 10 seconds), with `executor_lost`.<!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-008", "kind": "behavior", "applies": "§10.6.8 Liveness: the executor cutting a turn whose owner stays silent; silence is counted as RK-10.6.8-009 says. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - The executor MUST cut the turn as `owner_lost` when the owner stays silent
   for `heartbeat_timeout`, and stop sending its frames: its tools stop acting
   for an owner that no longer reads them, and an ACP session's next prompt is
   not held behind a turn nobody reads (§6.4).
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.8-009", "kind": "behavior", "applies": "§10.6.8 Liveness: how silence is counted, and a busy turn in memory. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Silence is counted only while the side that counts it runs: a stall of its own
 event loop is not the other side's silence. In memory, where the executor's
 CPU is the owner's stall, a busy turn is therefore never lost.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.8-010", "kind": "behavior", "applies": "§10.6.8 Liveness: an executor in a process of its own and the context it beats from. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An executor in a process of its own MUST beat from a context the turn's work
 cannot stall (a thread of its own), so a turn busy with its CPU, the case the
-backend exists for, still beats. That beat MAY travel outside the turn's
+backend exists for, still beats. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-011", "kind": "behavior", "applies": "§10.6.8 Liveness: a beat that travels outside the turn's numbered messages, and what the owner counts before and after accepted. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->That beat MAY travel outside the turn's
 numbered messages (a record of the executor alive that its thread refreshes,
 on the transport's clock): once an executor took the turn, the owner counts
 it as a message from that executor while that executor's process still runs
 the turn, which it does until the turn's `end` is written (a turn whose work
 ended without its `end` is then lost, not waited for); before, only `accepted` counts, so a turn no executor takes still fails
-within `accept_timeout`. An executor beats as one process's: the same id
-restarted in another process beats for none of the first one's turns. A slow
+within `accept_timeout`. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-012", "kind": "behavior", "applies": "§10.6.8 Liveness: an executor id restarted in another process. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An executor beats as one process's: the same id
+restarted in another process beats for none of the first one's turns. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-013", "kind": "behavior", "applies": "§10.6.8 Liveness: a slow turn that keeps beating, and the framework's own timeout around on_event() (§13.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A slow
 turn that keeps beating is never
 failed by the owner: the framework sets no timeout of its own around
 `on_event()` (§13.6), and the heartbeat tells a slow turn from a lost executor
-without one. A turn that failed ends as an
+without one. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-014", "kind": "behavior", "applies": "§10.6.8 Liveness: a turn that failed through its backend or its executor (no_executor, executor_lost, frame_lost, a drainage not complete, its executor closed under it), not one whose on_event() raised itself (§10.1 step 18): its target, ON_ERROR, the caller's error, a stream already read and its stored segments. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn that failed ends as an
 `on_event()` that raised: its target is recorded failed in the delivery set,
 `ON_ERROR` fires, and the caller reads the error (§10.1 step 18); a stream
 already read ends as a stream that raised (§12.2 step 13s), its stored
-segments kept. The owner cancels the turn's owner-served calls and sends
-`cancel` to the executor it lost, best effort. The turn commits nothing by
+segments kept. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-015", "kind": "behavior", "applies": "§10.6.8 Liveness: a turn whose executor the owner lost: its owner-served calls and the cancel sent. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The owner cancels the turn's owner-served calls and sends
+`cancel` to the executor it lost, best effort. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-016", "kind": "behavior", "applies": "§10.6.8 Liveness: a turn that failed through its backend or its executor, as RK-10.6.8-014 reads it: the room's index and its lane. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The turn commits nothing by
 itself, so its failure leaves no index unaccounted for, and the lane moves on.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.8-002", "kind": "behavior", "applies": "§10.6.8 Liveness, cancellation and errors; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.8-017", "kind": "behavior", "applies": "§10.6.8 Cancellation: a reader that stops reading the turn's stream. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Cancellation.** The owner's ways of ending a turn early keep their local
 meaning, each its own message:
 
-- the reader stops reading: `close` (§10.6.4), a reader's close;
+- the reader stops reading: `close` (§10.6.4), a reader's close;<!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-018", "kind": "behavior", "applies": "§10.6.8 Cancellation: a turn whose cascade is cancelled (§10.1 Explicit delivery cancellation, the kit's close): the cancel message and the executor's local cancellation. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - the turn's cascade is cancelled (§10.1, *Explicit delivery cancellation*;
   the kit's close, as it starts, with the reason `kit_closed`, §12.10.4):
   `cancel`, with the cascade's reason; the executor cancels
   the turn's work as its own process would cancel it locally, its running
-  tool handlers included (§21.6). A turn its cascade would start once
+  tool handlers included (§21.6). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-019", "kind": "behavior", "applies": "§10.6.8 Cancellation: a turn its cancelled cascade would start, and a submission the cancellation interrupts after its hand-over. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn its cascade would start once
   cancelled is never submitted, and a submission the cancellation interrupts
   after its hand-over gives the turn up: the backend releases it, and its
-  executor cuts it as it would cut one whose owner was lost;
+  executor cuts it as it would cut one whose owner was lost;<!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-020", "kind": "behavior", "applies": "§10.6.8 Cancellation: a steering Cancel (§21.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - a steering `Cancel` (§21.3): `steer`.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.8-021", "kind": "behavior", "applies": "§10.6.8 Cancellation: a close and a cancel reaching the executor, in either order. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An executor cancels a turn's work once: a `close` and a `cancel` that reach it
 in either order let the cleanup the first one started, the channel's
 finalizers included, run to its end before `end`.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.8-022", "kind": "behavior", "applies": "§10.6.8 Cancellation: how a cut turn ends: its loop's end, its open calls, then end. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The turn then ends with what such an end produces locally (its loop's end with
 reason `cancelled`, its open calls closed, §6.4 *A turn cut short*), then
-`end`. An `end` that does not come within `cancel_timeout` (default 5 seconds)
+`end`. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-023", "kind": "behavior", "applies": "§10.6.8 Cancellation: an end not received within cancel_timeout after cancel; a steering Cancel the owner waits for without it is RK-10.6.8-038's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An `end` that does not come within `cancel_timeout` (default 5 seconds)
 after `cancel` is reported as incomplete drainage (§10.1): the turn ends
 failed, the owner drops its later frames, and nothing reports its cleanup
-done. After `close`, the owner waits for `end` while the executor keeps
+done. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-024", "kind": "behavior", "applies": "§10.6.8 Cancellation: the owner after close, and a call already running. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->After `close`, the owner waits for `end` while the executor keeps
 beating: a call already running is let finish (§12.2 step 13s), within its
-own bound (§21.6). A turn still open when its owner itself closes (the kit's
+own bound (§21.6). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-025", "kind": "behavior", "applies": "§10.6.8 Cancellation: a turn still open when its owner itself closes (the kit's close once its grace is over): its end, its later frames, backend_closed, and the call the kit's close cut. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn still open when its owner itself closes (the kit's
 close, once the grace it gives its running work is over, §12.10.4) is given
 up and owes no `end`:
 the owner waits for nothing more from its executor and drops its later
 frames, and its reader fails it with `backend_closed`, a reason of its own (the
 owner's backend closed; its executor is not lost, so never `executor_lost`),
 which a host reads on the error a turn link raises; the call the kit's close
-cut reads its cut (`kit_closed`), never that failure as its error. The
+cut reads its cut (`kit_closed`), never that failure as its error. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-026", "kind": "behavior", "applies": "§10.6.8 Cancellation: a turn its owner gave up as it closed: its release, its executor's cut, the turns the close runs under, the cascade that read it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
 backend releases the turn, and its executor cuts it as it would
 cut one whose owner was lost, at once when the release reaches it, else after
 `heartbeat_timeout` of silence, except the turns the close runs under, those
 of every `close()` the kit's shutdown answers (§10.6.5, §12.10.4); a cascade
-that read it counts its cleanup done. A turn already over
+that read it counts its cleanup done. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-027", "kind": "behavior", "applies": "§10.6.8 Cancellation: a turn already over when its owner closes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn already over
 keeps what its end reported: one whose `end` is owed stays incomplete.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.8-005", "kind": "behavior", "applies": "§10.6.8 Independent executor closure; local and remote executors, subject to their supported capabilities. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.8-028", "kind": "behavior", "applies": "§10.6.8 Closing an executor: TurnExecutor.close(): new turns, running turns, and the turns the closing call runs under. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Closing an executor.** `TurnExecutor.close()` refuses new turns, cancels
 its running turns and waits for their end, except the turns the closing call
-runs under. That exemption applies to this call: a later close from outside
-those turns cancels them too. A turn spared by its own close can finish its
+runs under. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-029", "kind": "behavior", "applies": "§10.6.8 Closing an executor: a later close from outside the turns an earlier close spared. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->That exemption applies to this call: a later close from outside
+those turns cancels them too. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-030", "kind": "behavior", "applies": "§10.6.8 Closing an executor: a turn spared by its own close that its owner later cancels. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A turn spared by its own close can finish its
 work if its owner later cancels it: the executor ends the owner's wait and
-carries no further output on that turn's link. A later external executor close
-still cancels that work. The executor closes only channels it owns
-(§10.6.3). The kit's local executor borrows its registered channels; closing
+carries no further output on that turn's link. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-031", "kind": "behavior", "applies": "§10.6.8 Closing an executor: a later external close of the executor, after the owner cancelled a spared turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A later external executor close
+still cancels that work. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-032", "kind": "behavior", "applies": "§10.6.8 Closing an executor: the channels an executor closes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The executor closes only channels it owns
+(§10.6.3). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-033", "kind": "behavior", "applies": "§10.6.8 Closing an executor: closing the kit's local executor: the kit, its backend, its registered channels and their later turns. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The kit's local executor borrows its registered channels; closing
 it leaves the kit, its backend and its registered channels open, and their later
-intelligence turns fail with `no_executor` (§10.6.7). A separate room delivery
+intelligence turns fail with `no_executor` (§10.6.7). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-034", "kind": "behavior", "applies": "§10.6.8 Closing an executor: a separate room delivery, and a process_inbound called by a turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A separate room delivery
 has its own turn scope; a `process_inbound` called by a turn does not make
 that turn an ancestor in the new delivery's executor scope.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.8-003", "kind": "behavior", "applies": "§10.6.8 Liveness, cancellation and errors; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.8-035", "kind": "behavior", "applies": "§10.6.8 Steering: the owner's steer() call and what it answers. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Steering.** The owner offers the host an asynchronous `steer(room_id,
 channel_id, directive, turn_id | null)` that answers the number of loops it
-reached; across the backend a turn's id names its loop. The room is always
+reached; across the backend a turn's id names its loop. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-036", "kind": "behavior", "applies": "§10.6.8 Steering: the room steer() names, and a turn id that narrows it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The room is always
 named: a turn id narrows the steer to that turn of the room, and a turn of
-another room is reached by nothing. It resolves the target turns from the
+another room is reached by nothing. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-037", "kind": "behavior", "applies": "§10.6.8 Steering: how steer() resolves its target turns and sums their steer_result. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It resolves the target turns from the
 turns it submitted, in the order it started them, under the rules of §21.3 (a
 room's most recent loop is the loop of its most recently started turn still
 running), sends `steer` on each target's link, and
-sums their `steer_result`. A channel without steering, or one whose steering
+sums their `steer_result`. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-038", "kind": "behavior", "applies": "§10.6.8 Steering: a channel without steering, or one whose steering cannot reach the turn yet, given a Cancel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A channel without steering, or one whose steering
 cannot reach the turn yet (it answers none), receives a `Cancel` as the
 turn's `cancel`: the owner then waits for `end` as after `close`, without
-`cancel_timeout`, and the turn counts as one loop reached. An ACP agent
+`cancel_timeout`, and the turn counts as one loop reached. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-039", "kind": "behavior", "applies": "§10.6.8 Steering: an ACP agent channel given a Cancel, before and once the turn holds its room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An ACP agent
 channel steers a `Cancel` alone, for the turn it names, as its own
 cancellation (§6.4 item 7): it answers one once the turn holds its Room
 (§6.4 item 7), its session being opened or its prompt out; before that it
-answers none, and the owner cuts the turn. A discussion that holds the room cuts its turns this way
-(§19.7.5). The turns a host can steer are those the process it
+answers none, and the owner cuts the turn. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-040", "kind": "behavior", "applies": "§10.6.8 Steering: a discussion that holds the room (§19.7.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A discussion that holds the room cuts its turns this way
+(§19.7.5). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-041", "kind": "behavior", "applies": "§10.6.8 Steering: the turns a host can steer, with several owner processes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The turns a host can steer are those the process it
 steers from submitted: with several owner processes, it steers from the one
 running the room's delivery (§10.2), and another reaches none of them.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.8-004", "kind": "behavior", "applies": "§10.6.8 Liveness, cancellation and errors; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.8-042", "kind": "behavior", "applies": "§10.6.8 Errors: what an error record carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Errors.** An error record carries the error's kind (the implementation's
 name of its class), its message, its arguments and the attributes JSON
 carries (what classifies it: a provider's status code and whether it is
 retryable, a cut turn's reason, an application's own code), the kinds of the
 classes its class derives from, nearest first, and its causes, each a record
-of its own, in order. The side that reads a record (the owner for a turn's
+of its own, in order. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-043", "kind": "behavior", "applies": "§10.6.8 Errors: the side that reads an error record (the owner for a turn's error, the executor for an owner-served call's or a host verb's), and an error of a class it rebuilds. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The side that reads a record (the owner for a turn's
 error, the executor for what an owner-served call or a host verb raised)
 rebuilds one error per record, its causes chained, so what reads it
 (`ON_ERROR`'s `error_type`, a task's failure, §23.3, a reader that compares
@@ -9909,58 +9975,60 @@ the error it holds with the turn's, the host's own classification) reads it
 as it reads a local one:
 
 - an error of a class the side rebuilds comes back of that class, with its
-  arguments and attributes. A side rebuilds the implementation's own classes,
+  arguments and attributes. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-044", "kind": "behavior", "applies": "§10.6.8 Errors: the classes a side rebuilds. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A side rebuilds the implementation's own classes,
   the language's built-in ones, and the classes its host declares, each with
   its subclasses, a class nested in another or defined in a function
-  included. Each side reads what the other raised, so a host declares its
+  included. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-045", "kind": "behavior", "applies": "§10.6.8 Errors: what each side reads of what the other raised, and a host declaring its error classes to the owner and to each of its executors. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Each side reads what the other raised, so a host declares its
   classes to the owner and to each of its executors, an executor in another
-  process included. One that cannot be rebuilt so that it gives back its
+  process included. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-046", "kind": "behavior", "applies": "§10.6.8 Errors: an error of a class the side rebuilds that cannot be rebuilt so that it gives back its message. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->One that cannot be rebuilt so that it gives back its
   message (a field its message reads did not cross) comes back as the generic
-  turn error below, also of that class, its message kept;
+  turn error below, also of that class, its message kept;<!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-047", "kind": "behavior", "applies": "§10.6.8 Errors: an error of a class the side does not rebuild. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - any other comes back as a generic turn error that keeps the kind, the
   classes it derives from and the attributes, and that is also of the nearest
   of those classes the side rebuilds: a host's subclass of a provider error
-  still reads as a provider error (its log line, §15.3; `ON_ERROR`);
+  still reads as a provider error (its log line, §15.3; `ON_ERROR`);<!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-048", "kind": "behavior", "applies": "§10.6.8 Errors: a generic turn error that crosses again. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - a generic turn error that crosses again crosses as the error it stands
   for, its kind and classes unchanged.
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-10.6.8-049", "kind": "behavior", "applies": "§10.6.8 Errors: how a side resolves a kind or a class a record names. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A side MUST NOT import a module, nor run a module's code (an attribute hook,
 a lazy loader), to resolve a kind or a class a record names: it looks the name up among the
 classes already loaded, and one it does not find there is a class it does not
-rebuild. The message is for logs and hooks, never for a model (§9.3).
+rebuild. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.8-050", "kind": "behavior", "applies": "§10.6.8 Errors: the message of an error record. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The message is for logs and hooks, never for a model (§9.3).
 <!-- /rfc -->
 
 #### 10.6.9 Telemetry and prerequisites
 
-<!-- rfc: {"id": "RK-10.6.9-001", "kind": "behavior", "applies": "§10.6.9 Telemetry and prerequisites; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.9-001", "kind": "behavior", "applies": "§10.6.9 Telemetry and prerequisites: the trace context a request carries, and the spans an executor records for the turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Telemetry.** The request carries the trace context of the broadcast span;
 the spans the executor records for the turn (its generations, its tool calls,
 its hooks) are its children, so a tracing backend shows one trace across the
 processes.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.9-002", "kind": "behavior", "applies": "§10.6.9 Telemetry and prerequisites; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.9-005", "kind": "behavior", "applies": "§10.6.9 Telemetry and prerequisites: an executor in another process and the store. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Prerequisites.** An executor in another process needs no store (§10.6.5):
 the store is the room owner's, and several owner processes share theirs
-(Section 14). The distributed lock manager of §13.5 is what several owner processes need among themselves; an
-executor takes no room lock. Every process of a backend keeps the same
+(Section 14). <!-- /rfc --><!-- rfc: {"id": "RK-10.6.9-006", "kind": "behavior", "applies": "§10.6.9 Telemetry and prerequisites: the lock manager several owner processes share, and an executor. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The distributed lock manager of §13.5 is what several owner processes need among themselves; an
+executor takes no room lock. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.9-007", "kind": "non_testable", "applies": "§10.6.9 Telemetry and prerequisites: the timeouts of every process of a backend; only the deployment keeps them. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Every process of a backend keeps the same
 timeouts (§10.6.8).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.9-003", "kind": "behavior", "applies": "§10.6.9 Telemetry and prerequisites; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.9-008", "kind": "behavior", "applies": "§10.6.9 Telemetry and prerequisites: work a turn began that reaches the owner after the turn, with one or several owner processes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Addressing and trust.** Work a turn began that reaches the owner after the
 turn (§10.6.3) goes to the owner process that submitted the turn, which the
 backend records as it carries the request, and is waited for while that
-process lives; with several owner processes, the others do not see it. A
+process lives; with several owner processes, the others do not see it. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.9-009", "kind": "behavior", "applies": "§10.6.9 Telemetry and prerequisites: a channel control a distributed backend carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 channel control a distributed backend carries is applied on the executor
-before the owner goes on, as in memory. A distributed backend's transport is its trust
+before the owner goes on, as in memory. <!-- /rfc --><!-- rfc: {"id": "RK-10.6.9-010", "kind": "non_testable", "applies": "§10.6.9 Telemetry and prerequisites: a distributed backend's transport, who can write to or read it, and how it is restricted; only the deployment keeps it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A distributed backend's transport is its trust
 boundary: the executor ids and owner addresses its messages carry are not
 authenticated beyond it, so whoever can write to the transport can act as an
 executor or an owner, as whoever can read it reads the rooms' turns. It is
 restricted as the rooms are (credentials, encryption in transit).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.6.9-004", "kind": "behavior", "applies": "§10.6.9 Telemetry and prerequisites; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.6.9-004", "kind": "behavior", "applies": "§10.6.9 Telemetry and prerequisites: what the owner keeps, read off the frames: ordering, reentry, chain depth, streamed segments, streaming targets, the turn record and the caller's turns. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **On the owner.** Ordering (per room, in index order), the reentry of response
 events as commit passes, chain depth (§8.3), the persistence of streamed
 segments and their hooks, the delivery to streaming targets, the turn record
