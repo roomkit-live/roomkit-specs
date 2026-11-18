@@ -149,6 +149,23 @@ class EvidenceTests(unittest.TestCase):
             )
         )
 
+    def test_a_receipt_may_name_a_scenario_renamed_since_its_run(self) -> None:
+        # The receipt's provenance is read at its corpus_commit (provenance.py);
+        # only a link has to name a scenario of the current corpus.
+        renamed = copy.deepcopy(self.run)
+        renamed["results"][0]["scenario"] = "old-name"
+        document = {"links": [], "python_commit": "p", "executions": [renamed]}
+        registry = {"requirements": [{"id": "RK-9.3-001", "sha256": "c"}]}
+        self.assertEqual(validate(document, registry, self.scenarios, None), [])
+        self.link["assertions"][0]["scenario"] = "old-name"
+        document["links"] = [self.link]
+        self.assertTrue(
+            any(
+                "unknown scenario old-name" in error
+                for error in validate(document, registry, self.scenarios, None)
+            )
+        )
+
     def test_junit_skip_cannot_be_declared_as_a_pass(self) -> None:
         xml = b'<testsuite><testcase classname="tests.conformance.test_conformance" name="test_scenario[a]"><skipped/></testcase></testsuite>'
         self.assertIn("JUnit says skipped", junit(self.run, xml)[0])

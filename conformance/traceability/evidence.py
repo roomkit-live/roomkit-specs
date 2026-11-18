@@ -56,13 +56,11 @@ def validate(
                         reference, python_repo, document["python_commit"], read=read
                     )
                 ]
-    errors += validate_executions(document, scenarios)
+    errors += validate_executions(document)
     return errors
 
 
-def validate_executions(
-    document: dict[str, Any], scenarios: dict[str, Any]
-) -> list[str]:
+def validate_executions(document: dict[str, Any]) -> list[str]:
     """A receipt records results; it cannot silently upgrade a skip to a pass."""
     errors = []
     ids = set()
@@ -78,10 +76,10 @@ def validate_executions(
             if name in seen:
                 errors.append(f"{run['id']}: duplicate result {name}")
             seen.add(name)
-            if name not in scenarios:
-                errors.append(f"{run['id']}: unknown scenario {name}")
-            # A historical receipt is retained even when its scenario changed.
-            # execution_status marks it stale rather than applying it to new data.
+            # A historical receipt is retained even when its scenario changed or
+            # was renamed since: provenance() reads each result at the receipt's
+            # corpus_commit, and execution_status marks it stale rather than
+            # applying it to new data. Only a link names a current scenario.
     return errors
 
 

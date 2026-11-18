@@ -149,14 +149,6 @@ def scenarios_at(repo: Path, commit: str, directory: str) -> dict[str, Any]:
     return found
 
 
-def current_scenarios(specs: Path) -> dict[str, Any]:
-    directory = specs / "conformance" / "scenarios"
-    return {
-        path.relative_to(directory).with_suffix("").as_posix(): json.loads(path.read_text())
-        for path in directory.glob("**/*.json")
-    }
-
-
 def revisions(specs: Path, python_repo: Path, commit: str) -> dict[str, Any]:
     """The revisions a receipt at *commit* names: the corpus its copy was synced
     from, and the last commit of the RFC, whose text must be the checkout's."""
@@ -213,9 +205,7 @@ def prepare(
         receipt(template, f"{name}-{commit[:7]}", backend, content, corpus, copied)
         for backend in backends
     ]
-    errors = validate_executions(
-        {"executions": document["executions"] + receipts}, current_scenarios(specs)
-    )
+    errors = validate_executions({"executions": document["executions"] + receipts})
     for run in receipts:
         errors += junit(run, content)
     if errors:

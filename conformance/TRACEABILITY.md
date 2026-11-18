@@ -124,3 +124,5 @@ The hooks pilot and static access/mute matrices have partial mappings and
 Python memory receipts. The specialized wrong-payload test remains source-only;
 Rust execution is not recorded here.
 Historical runs are not silently relabeled as current results.
+A receipt may name a scenario renamed or removed since its run: its results
+are read at its corpus commit, and only a link has to name a current scenario.
