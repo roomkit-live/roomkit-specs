@@ -384,11 +384,13 @@ class CommandTests(unittest.TestCase):
 
     def test_ci_reports_each_changed_unit_by_its_level(self) -> None:
         """Errors and warnings of the process rule are GitHub annotations, and
-        only its errors fail the run."""
+        only its errors fail the run. Section 10 has a level on every unit,
+        section 11 on none."""
         route = marked("Route it.", "RK-10.4-001", level="must")
         log = marked("Log it.", "RK-10.4-002", level="may")
         keep = marked("Keep it.", "RK-10.4-003", level="must")
-        self.rfc.write_text("### 10.4 Routing\n" + route + log + keep)
+        name = "### 11.1 Identity\n" + marked("Name it.", "RK-11.1-001")
+        self.rfc.write_text("### 10.4 Routing\n" + route + log + keep + name)
         self.assertEqual(self.check("--pin", "routing/a").returncode, 0)
         base = self.commit()
         since = base[:12]
@@ -397,7 +399,8 @@ class CommandTests(unittest.TestCase):
         kept = {path: path.read_text() for path in files}
 
         def added(**metadata: str) -> str:
-            return route + log + keep + marked("Trace it.", "RK-10.4-004", **metadata)
+            trace = marked("Trace it.", "RK-10.4-004", **metadata)
+            return route + log + keep + trace + name
 
         def reason() -> None:
             self.write("untested.json", {"version": 1, "units": {"RK-10.4-004": "a trace"}})
@@ -413,6 +416,7 @@ class CommandTests(unittest.TestCase):
 
         error = "::error title=Process rule::"
         missing = "no scenario cites it and untested.json gives no reason"
+        unlevelled = "no level, in §10 where every unit has one"
         cases = [
             (
                 "a must unit added with neither",
@@ -441,20 +445,41 @@ class CommandTests(unittest.TestCase):
                 0,
                 [],
             ),
-            ("a unit retired", route + log, retire, 0, []),
+            ("a unit retired", route + log + name, retire, 0, []),
             (
                 "a unit's level raised",
-                route + marked("Log it.", "RK-10.4-002", level="must") + keep,
+                route + marked("Log it.", "RK-10.4-002", level="must") + keep + name,
                 None,
                 1,
                 [f"{error}RK-10.4-002 (must, changed since {since}): {missing}"],
             ),
             (
                 "a must unit reworded",
-                route + log + marked("Keep it whole.", "RK-10.4-003", level="must"),
+                route + log + marked("Keep it whole.", "RK-10.4-003", level="must") + name,
                 None,
                 1,
                 [f"{error}RK-10.4-003 (must, changed since {since}): {missing}"],
+            ),
+            (
+                "a unit added with no level in a levelled section",
+                added(),
+                None,
+                1,
+                [f"{error}RK-10.4-004 (added since {since}): {unlevelled}"],
+            ),
+            (
+                "a unit's level dropped in a levelled section",
+                route + marked("Log it.", "RK-10.4-002") + keep + name,
+                None,
+                1,
+                [f"{error}RK-10.4-002 (changed since {since}): {unlevelled}"],
+            ),
+            (
+                "a unit added with no level in a section with none",
+                route + log + keep + name + marked("Spell it.", "RK-11.1-002"),
+                None,
+                0,
+                [f"unreviewed: RK-11.1-002 (added since {since}): no level yet"],
             ),
         ]
         for case, units, prepare, code, annotations in cases:
@@ -468,7 +493,11 @@ class CommandTests(unittest.TestCase):
                 run = self.ci(base)
                 self.assertEqual(run.returncode, code, run.stdout + run.stderr)
                 self.assertEqual(
-                    [line for line in run.stdout.splitlines() if line.startswith("::")],
+                    [
+                        line
+                        for line in run.stdout.splitlines()
+                        if line.startswith(("::", "unreviewed: "))
+                    ],
                     annotations,
                 )
                 self.assertNotIn("error: RK-", run.stdout)

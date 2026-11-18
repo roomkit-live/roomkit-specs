@@ -189,7 +189,10 @@ that commit, or whose text, kind, applicability or level changed:
   otherwise an error;
 - `should`: without either, a warning;
 - `may`: nothing;
-- no level: listed as unreviewed, never blocking.
+- no level: listed as unreviewed, never blocking; but in a section every unit
+  of which had a level at the base, its subsections' included, an error. A
+  unit added there, or whose level is dropped, gets its level in the same
+  change.
 
 A `non_testable` unit is exempt: its kind is its reason. A unit's text is
 read as written, so rewording it, or only rewrapping its lines, changes it.
@@ -214,7 +217,9 @@ When it fires on a `must` unit, either:
   RK-10.4-999 routing/x`);
 - or, when no scenario can test it, give the reason in `untested.json`.
 
-A `should` warning asks for a scenario or a reason without blocking. Before pushing, run the rule
+When it fires on a unit with no level, give the unit its level in its
+annotation; the rule then reads it by that level. A `should` warning asks for
+a scenario or a reason without blocking. Before pushing, run the rule
 against the commit your change starts from: `--base-ref "$(git merge-base
 origin/main HEAD)"`.
 

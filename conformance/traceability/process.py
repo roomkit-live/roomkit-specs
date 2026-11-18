@@ -6,6 +6,7 @@ rule"). The rule compares the current RFC with a base commit's.
 
 from __future__ import annotations
 
+from collections import Counter
 from typing import Any
 
 from .links import UNTESTED, citations
@@ -27,6 +28,25 @@ def changed_units(
     return found
 
 
+def enclosing(section: str) -> list[str]:
+    """A section and the sections around it, outermost first: 10.6.3 gives
+    10, 10.6 and 10.6.3."""
+    parts = section.split(".")
+    return [".".join(parts[:end]) for end in range(1, len(parts) + 1)]
+
+
+def levelled_sections(base: dict[str, Any]) -> set[str]:
+    """The sections every unit of which, its subsections' included, had a
+    level at the base."""
+    units: Counter[str] = Counter()
+    levelled: Counter[str] = Counter()
+    for item in base["requirements"]:
+        for section in enclosing(item["section"]):
+            units[section] += 1
+            levelled[section] += item.get("level") is not None
+    return {section for section, count in units.items() if levelled[section] == count}
+
+
 def process_rule(
     registry: dict[str, Any],
     base: dict[str, Any],
@@ -37,14 +57,23 @@ def process_rule(
     """Errors, warnings and unreviewed units among the units changed since the
     base: a must unit needs a citing scenario or a reason in untested.json, a
     should unit without either warns, a may unit passes, a unit with no level
-    is unreviewed. A non_testable unit is exempt: its kind is its reason."""
+    is unreviewed, or an error in a section every unit of which had a level
+    at the base. A non_testable unit is exempt: its kind is its reason."""
     cited = citations(scenarios)
+    levelled = levelled_sections(base)
     errors, warnings, unreviewed = [], [], []
     since = base_ref[:12]
     for item, how in changed_units(registry, base):
         unit, level = item["id"], item.get("level")
         if level is None:
-            unreviewed.append(f"{unit} ({how} since {since}): no level yet")
+            around = [part for part in enclosing(item["section"]) if part in levelled]
+            if around:
+                errors.append(
+                    f"{unit} ({how} since {since}): no level, in §{around[0]} "
+                    "where every unit has one"
+                )
+            else:
+                unreviewed.append(f"{unit} ({how} since {since}): no level yet")
             continue
         if item["kind"] == "non_testable" or unit in cited or unit in untested:
             continue
