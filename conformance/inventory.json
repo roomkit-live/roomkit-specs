@@ -417,9 +417,9 @@
     },
     {
       "section": "10.4",
-      "sha256": "0f27058ed2e6ab87c4ce9dac2c1887b22d4cb90cc3ea9f8af2628241b8386bfe",
+      "sha256": "ead78a8546dfd011f67a51b6e3e6ed245a1d713d834754ddaf27fdedf4f72aba",
       "classification": "normative",
-      "review": "Source inventory: Inbound Room Routing. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Inbound Room Routing, split to one obligation per unit (RMK-1775). Each unit keeps its conditions, exceptions, rationale and examples; the interface block stays with the router inputs it describes, the alice and bob example with the group declaration it illustrates. Two clauses only an integrator or a deployment can meet stand alone and are non_testable; two integrator clauses share a sentence with the framework behaviour they follow from and stay in its behavior unit (RK-10.4-034, RK-10.4-059). Every unit carries its level."
     },
     {
       "section": "10.5",

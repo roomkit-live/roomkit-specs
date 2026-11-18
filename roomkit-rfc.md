@@ -7989,10 +7989,12 @@ During broadcast, for each target channel:
 
 ### 10.4 Inbound Room Routing
 
-<!-- rfc: {"id": "RK-10.4-001", "kind": "behavior", "applies": "§10.4 Inbound Room Routing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.4-008", "kind": "behavior", "applies": "§10.4 Inbound Room Routing: an inbound message that arrives without a room_id. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When an inbound message arrives without a pre-determined room_id, the framework
 MUST route it to an appropriate room.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.4-009", "kind": "behavior", "applies": "§10.4 InboundRoomRouter interface: the inputs every routing strategy is given, default or custom. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 InboundRoomRouter (interface)
 └── route(channel_id, channel_type, sender_id, metadata,
@@ -8006,58 +8008,58 @@ identity, which the framework reads once per message before the first route,
 scoped to that organization (`resolve_identity`, §14.1, §17.2), so that the
 router and the check made when the sender is recorded (§10.1 step 2) name
 the sender alike; a message with no address reads none, and its router is told
-null for its sender. The default strategy
+null for its sender. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-010", "kind": "behavior", "applies": "§10.4 default routing strategy: the organization the call names, or none. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The default strategy
 searches that organization's rooms only, every room when the call names
-none. A router answers a room id, or null; the id is held to step 2's rules
+none. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-011", "kind": "behavior", "applies": "§10.4: the room id a routing strategy answers, default or custom, for a message that named no room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A router answers a room id, or null; the id is held to step 2's rules
 whoever gave it: another organization's room fails the message, and a room
-missing from the store is created with the id. A custom router's answer is the
+missing from the store is created with the id. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-012", "kind": "behavior", "applies": "§10.4: a custom routing strategy's answer, held as a provided room_id is (§10.1 step 2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A custom router's answer is the
 host's decision, as a provided `room_id` is: a room that binds the channel is
 held to the conditions below under the lock, and one that does not has the
 channel attached, whoever writes (§10.1 step 2), which is how a new channel joins
-a conversation. A router SHOULD NOT route on a field the sender chooses without
+a conversation. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-013", "kind": "non_testable", "applies": "§10.4: any routing strategy, a custom one above all, and the fields a sender chooses; whether a field is authenticated is the deployment's, which needs operational review. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->A router SHOULD NOT route on a field the sender chooses without
 authenticating it.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.4-002", "kind": "behavior", "applies": "§10.4 Inbound Room Routing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.4-014", "kind": "behavior", "applies": "§10.4 default routing strategy, step 1: the newest ACTIVE or PAUSED room where the sender is, on this channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Default routing strategy:**
 
 1. Find the newest ACTIVE or PAUSED room whose binding of this channel names
    the sender (§5.7); otherwise, the newest ACTIVE or PAUSED room where a
    participant who is the sender was reached through this channel (its
    `connected_via` names the channel, whatever the participant's status: a LEFT
-   or BANNED record still says whose conversation the room is). Within each
+   or BANNED record still says whose conversation the room is). <!-- /rfc --><!-- rfc: {"id": "RK-10.4-015", "kind": "behavior", "applies": "§10.4 default routing strategy, step 1: the binding and participant lookups, and the names the sender is known by in each. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Within each
    lookup the sender is named by their address or by their identity: a binding
    names them when its correspondent is either, or, naming none and not
    `group`, when its recipient is their address (§5.7); a participant record,
    when its id or its `identity_id` is either, or when it is the record of
    their own the identity pipeline left them pending under on this channel
-   (§11.2). The newest room either name
+   (§11.2). <!-- /rfc --><!-- rfc: {"id": "RK-10.4-016", "kind": "behavior", "applies": "§10.4 default routing strategy, step 1: a sender named by their address and by their identity. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The newest room either name
    finds wins, so an older room found by the address does not hide a newer one
    found by the identity; a member the integrator added under their identity is
-   found by an address linked to it. The newest is the most recently created,
+   found by an address linked to it. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-017", "kind": "behavior", "applies": "§10.4 default routing strategy, step 1: the newest of several rooms. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The newest is the most recently created,
    and of rooms created at the same instant the one with the greatest id, so
-   the answer never depends on the order rooms are read in. An id names its
+   the answer never depends on the order rooms are read in. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-018", "kind": "behavior", "applies": "§10.4 default routing strategy, step 1: a room found through a participant record, by address or identity. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An id names its
    participant only on a channel they are reached through (Section 5.5), and an
    identity reaches every channel its person uses: a room found through a
    participant record, by the address or the identity, is the sender's only
    when that participant was reached through this channel, so a message is not
    carried into a room of another channel, whose messages would then go out on
-   this one. A PAUSED room is the sender's conversation as an ACTIVE one is:
+   this one. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-019", "kind": "behavior", "applies": "§10.4 default routing strategy, step 1: a PAUSED room where the sender is. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A PAUSED room is the sender's conversation as an ACTIVE one is:
    its timer paused it for inactivity, and the message's delivered commit
-   resumes it (§5.1); the newest room wins whatever its status. On a chat
+   resumes it (§5.1); the newest room wins whatever its status. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-020", "kind": "behavior", "applies": "§10.4 default routing strategy, steps 1 and 3: a chat channel (§5.7). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->On a chat
    channel the address routed by is the chat the message was posted in, not its
-   sender (§5.7), here and in step 3.
-2. If found → return that room.
+   sender (§5.7), here and in step 3.<!-- /rfc --><!-- rfc: {"id": "RK-10.4-021", "kind": "behavior", "applies": "§10.4 default routing strategy, step 2: a room step 1 found. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+2. If found → return that room.<!-- /rfc --><!-- rfc: {"id": "RK-10.4-022", "kind": "behavior", "applies": "§10.4 default routing strategy, step 3: a sender step 1 finds no room for. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 3. Otherwise, if the channel is bound to exactly **one** room step 3 reads, and
-   that room admits the sender (below) → return that room. Step 3 reads the
+   that room admits the sender (below) → return that room. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-023", "kind": "behavior", "applies": "§10.4 default routing strategy, step 3: the rooms bound to the channel that step 3 counts. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Step 3 reads the
    ACTIVE rooms, and the PAUSED rooms whose binding of the channel is declared
    `group` (§5.7): a group's conversation is the channel's, and its next
    delivered message resumes it (§5.1). Any other PAUSED room is no one's to be
-   admitted into, and does not count among the rooms the channel is bound to.
+   admitted into, and does not count among the rooms the channel is bound to.<!-- /rfc --><!-- rfc: {"id": "RK-10.4-024", "kind": "behavior", "applies": "§10.4 default routing strategy, step 4: a sender steps 1 and 3 find no room for. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 4. If not found → return null (framework creates a new room).
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.4-003", "kind": "behavior", "applies": "§10.4 Inbound Room Routing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.4-025", "kind": "behavior", "applies": "§10.4 default routing strategy, step 3: whether a room admits the sender. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Step 3 admits one conversation.** Step 3 is what routes a channel dedicated
 to a single conversation. It is deliberately narrower than "the channel is
 bound to some room": on a number shared by many correspondents, the one ACTIVE
@@ -8066,71 +8068,79 @@ into it would be stored there, answered with that conversation as context, and
 answered at that conversation's address. The room admits the sender only when
 its binding of the channel is declared `group` (§5.7), or when all of the
 following hold:
+<!-- /rfc -->
 
-- the binding names no participant, or names the sender;
+<!-- rfc: {"id": "RK-10.4-026", "kind": "behavior", "applies": "§10.4 step 3: a room whose binding of the channel is not declared group admits the sender only when this condition holds with the others of its list (the binding's participant). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- the binding names no participant, or names the sender;<!-- /rfc --><!-- rfc: {"id": "RK-10.4-027", "kind": "behavior", "applies": "§10.4 step 3: a room whose binding of the channel is not declared group admits the sender only when this condition holds with the others of its list (the binding's recipient). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - on a channel with a recipient (§5.7), the binding holds none as §5.7 reads
   it, or its recipient names the sender (their address, or the identity it
   resolves to): a room that delivers to someone else is their conversation, and
   a value that is not a recipient (§5.7) is someone else's address, so a room
-  the integrator opened with its recipient written `true` admits no sender;
+  the integrator opened with its recipient written `true` admits no sender;<!-- /rfc --><!-- rfc: {"id": "RK-10.4-028", "kind": "behavior", "applies": "§10.4 step 3: a room whose binding of the channel is not declared group admits the sender only when this condition holds with the others of its list (the participants reached through the channel). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - no participant of the room other than the sender was reached through this
   channel (its `connected_via`, whatever its status): a member the
   integrator added on the channel says whose conversation the room is before
-  they have written;
+  they have written;<!-- /rfc --><!-- rfc: {"id": "RK-10.4-029", "kind": "behavior", "applies": "§10.4 step 3: a room whose binding of the channel is not declared group admits the sender only when this condition holds with the others of its list (what the room received on the channel). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - the room has received nothing on this channel from another sender: no
   stored event of the channel, a `BLOCKED` one excepted, whose source names a
   participant other than the sender.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.4-030", "kind": "behavior", "applies": "§10.4 step 3 and the check under the room lock (§10.1 step 2): the names the sender is known by. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The sender is known to the room by their address, by the identity the store
 resolves that address to (`resolve_identity`, §14.1), and on the channel by
 the record of their own the identity pipeline left them pending under
-(§11.2): a participant or an event named by any of them is the sender's own.
+(§11.2): a participant or an event named by any of them is the sender's own.<!-- /rfc --><!-- rfc: {"id": "RK-10.4-031", "kind": "behavior", "applies": "§10.4: the check made when the sender is recorded under the room lock (§10.1 step 2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When the sender is recorded under the lock (§10.1 step 2), a binding naming
 the identity of a participant reached through the channel who is the sender,
-as an advisor's resolution names it (§5.5), names the sender too. A message the framework writes
+as an advisor's resolution names it (§5.5), names the sender too. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-032", "kind": "behavior", "applies": "§10.4: a message the framework writes itself under the sender system. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A message the framework writes
 itself, under the sender `system` (a `deliver()` to the room, an
 orchestration cue), names the room it writes to and no correspondent: it is
-never recorded on a binding, and it counts as no one heard. A message that
+never recorded on a binding, and it counts as no one heard. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-033", "kind": "behavior", "applies": "§10.4: a message to be routed under the sender system (§10.1 step 2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A message that
 would be routed by that name is therefore a sender borrowing it, on a channel
 whose senders choose their id, and it is refused before it is routed (§10.1
-step 2): nothing is written and no room opened. Under that sender a message
+step 2): nothing is written and no room opened. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-034", "kind": "behavior", "applies": "§10.4: a message under the sender system that names its room, and the host that names it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Under that sender a message
 naming its room is the caller's, and enters: the room is the host's choice, so
 a host naming the room MUST set the sender itself, never from what a client
-sent. No sender is known by that name:
+sent. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-035", "kind": "behavior", "applies": "§10.4: the name system, as a router, an identity, a binding and a delivery status read it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->No sender is known by that name:
 a router asked about it directly finds nothing at step 1, and step 3 admits it
 through a `group` binding only; an identity with that id names no sender, a
 channel's form does not rewrite the name on a binding, and a delivery status
-for it finds no room. A member added under an id that
+for it finds no room. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-036", "kind": "behavior", "applies": "§10.4 step 3: a room whose member's id is neither an address nor a resolvable identity. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A member added under an id that
 is neither the address nor a resolvable identity cannot be told from a
 stranger, so the room is closed to step 3: its correspondent's messages are
 routed by `room_id`, or the address is linked to the identity
 (`link_address`, §14.1), unless the binding's recipient names them (§5.7),
 in which case step 1 finds them through it.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.4-037", "kind": "behavior", "applies": "§10.4 step 3: a message with no sender address, whichever strategy chose the room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A message with no sender address, its id empty or blank, is admitted by step 3
 through a `group` binding only, whichever strategy chose the room: what it wrote
-counts as no one heard, so a later sender admitted to that room would read it.
+counts as no one heard, so a later sender admitted to that room would read it.<!-- /rfc --><!-- rfc: {"id": "RK-10.4-038", "kind": "behavior", "applies": "§10.4: the binding step 2 makes for a message with no sender address, in a room created or on a channel attached for it (§10.1 step 2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The binding step 2 makes for it when it is routed, in a room created for it or on
 a channel attached for it, names `system` as its correspondent and no
-recipient: that name is no sender's, so no one else is admitted through it. A
+recipient: that name is no sender's, so no one else is admitted through it. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-060", "kind": "behavior", "applies": "§10.4: a binding naming no one and holding no recipient that an ON_ROOM_CREATED hook made in the room a message with no sender address opened. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 binding naming no one and holding no recipient that an ON_ROOM_CREATED hook made
-in that room takes the name too. Such a room counts among the channel's rooms, so
+in that room takes the name too. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-061", "kind": "behavior", "applies": "§10.4 step 3: the channel's rooms once a message with no sender address has opened one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Such a room counts among the channel's rooms, so
 a room the host prepared for the channel's first sender is no longer the one room
 step 3 reads once such a message has come: no one reads the other's words, and
-the next sender gets a room of their own. Two such messages hold a room each. A
+the next sender gets a room of their own. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-062", "kind": "behavior", "applies": "§10.4: two messages with no sender address. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Two such messages hold a room each. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-063", "kind": "behavior", "applies": "§10.4: the name on the binding of a message with no sender address, when the integrator gives a recipient or the caller names the room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 recipient the integrator gives replaces the name, as on a binding naming no one
 (§5.7), and a room the caller named for such a message names no one.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.4-039", "kind": "behavior", "applies": "§10.4: a sender step 3 admits through a binding that names no participant and is not declared group (§10.1 step 2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 When step 3 admits a sender through a binding that names no participant and is
 not `group`, the framework records the sender on it (§10.1 step 2): step 1
-then finds them on their next message, and step 3 admits no one else. A room
+then finds them on their next message, and step 3 admits no one else. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-064", "kind": "behavior", "applies": "§10.4: a room the framework creates for an inbound message. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room
 the framework creates for an inbound message is bound to its sender from the
-start. The sender is recorded when the message is routed, under the room lock,
+start. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-040", "kind": "behavior", "applies": "§10.4: when, and under which lock, the sender is recorded (§10.1 step 2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The sender is recorded when the message is routed, under the room lock,
 before anything of the message is processed: two first messages arriving
 together cannot both be admitted, since the second finds the binding naming
-the first and is routed again. A room created for a routed message is held to
+the first and is routed again. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-041", "kind": "behavior", "applies": "§10.4: a room created for a routed message, once its creation hooks are over. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room created for a routed message is held to
 the same check once its creation hooks are over, so the first message leaves it
-when another sender was recorded there while the hooks ran. Under that lock the
+when another sender was recorded there while the hooks ran. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-042", "kind": "behavior", "applies": "§10.4: the check made under the room lock before the sender is recorded (§10.1 step 2), whichever strategy chose the room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Under that lock the
 framework checks again the admission that chose the room, not only the binding
 (§10.1 step 2): someone
 else may have been heard on the channel, or reached through it, since the
@@ -8141,33 +8151,35 @@ channel, refused events set aside, however long ago it was written, as step
 neither the sender's conversation by step 1 nor bound to the channel as
 `group`, or one no longer admitting the sender, is no longer the message's:
 nothing is written, and the message is routed once more, a second failure
-giving it a new room. The wait for that lock is bounded by `process_timeout`
+giving it a new room. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-043", "kind": "behavior", "applies": "§10.4: the wait for the room lock a routed message takes (§13.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The wait for that lock is bounded by `process_timeout`
 (§13.6); past it the message is refused as a process timeout, never let in
-unrecorded. A message a hook later refuses has been routed all the same:
+unrecorded. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-044", "kind": "behavior", "applies": "§10.4: a routed message a hook refuses afterwards. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A message a hook later refuses has been routed all the same:
 routing decides which conversation a message belongs to, a hook what becomes
 of it.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.4-004", "kind": "behavior", "applies": "§10.4 Inbound Room Routing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.4-045", "kind": "behavior", "applies": "§10.4: a provider's delivery status that names no room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A delivery status follows its message.** A provider's delivery status that
 names no room is routed by the same rule: the newest ACTIVE or PAUSED room
 whose binding of the status's channel names its recipient, as step 1 finds a
 sender's, unless it names no participant and its channel reads it as delivering
 to someone else; else the one ACTIVE room bound to the channel unless its
 binding names another correspondent (its participant, else its recipient, a
-value that is not a recipient included, §5.7); else none. On a channel not
+value that is not a recipient included, §5.7); else none. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-046", "kind": "behavior", "applies": "§10.4: a delivery status that names no room, on a channel not registered. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->On a channel not
 registered nothing reads a binding's recipient: a status naming a
 recipient finds the room of a binding naming them as its participant, and none
 through a binding naming no participant and not declared `group`, whatever its
-metadata holds. A status is no
-activity, and resumes no room (§5.1). It is never dispatched with the context of one room among
+metadata holds. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-047", "kind": "behavior", "applies": "§10.4: a delivery status and the room it reaches (§5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A status is no
+activity, and resumes no room (§5.1). <!-- /rfc --><!-- rfc: {"id": "RK-10.4-048", "kind": "behavior", "applies": "§10.4: a delivery status that names no room, with several candidate rooms. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It is never dispatched with the context of one room among
 several.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.4-049", "kind": "behavior", "applies": "§10.4: the ON_DELIVERY_STATUS hooks of a dispatched delivery status. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Every `ON_DELIVERY_STATUS` hook runs in that room, its filter unread, a status
-being no event; the call that dispatched the status returns while they run. A
+being no event; the call that dispatched the status returns while they run. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-050", "kind": "behavior", "applies": "§10.4: a delivery status that names its room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 status naming a room is dispatched in it if it exists and, for a caller acting
 for an organization, is that organization's; one naming a room that is missing
-or another organization's is dispatched nowhere. A provider's webhook, once
+or another organization's is dispatched nowhere. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-051", "kind": "behavior", "applies": "§10.4: a provider's webhook, once read. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A provider's webhook, once
 read, is a message received unless its direction says `outbound` or its event
 type `message.sent` or `message.finalized` (a direction `inbound` wins),
 processed as an inbound message keyed by the provider's message id; else a
@@ -8176,13 +8188,13 @@ type `message.sent`, `message.delivered`, `message.failed` or
 `message.finalized`; and it is acknowledged and ignored otherwise.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.4-005", "kind": "behavior", "applies": "§10.4 Inbound Room Routing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.4-052", "kind": "behavior", "applies": "§10.4 default routing strategy: a correspondent recorded on another channel's binding. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A binding speaks for its own channel.** The sender a binding names is found
 through it on that channel only. A correspondent recorded on one number's
 binding, writing to another number of the same type, is not taken to the first
 number's room: on a kit serving a bank and a clinic, each on its own SMS
 number, a customer the bank's number recorded writing to the clinic lands in
-the clinic's conversation. A participant record is another matter: a member
+the clinic's conversation. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-053", "kind": "behavior", "applies": "§10.4 default routing strategy: a member the integrator added, writing on another channel of the room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A participant record is another matter: a member
 the integrator added to the bank's room is found by step 1 on whatever number
 of the room's they were reached through and write to, unless that number's
 binding names another correspondent: a binding not declared `group` is one
@@ -8190,7 +8202,9 @@ correspondent's conversation, whose answers go to their address, and the
 member then gets a room of their own (§10.1 step 2). Merging or separating a
 person's conversations across channels is decided for participants, not by
 bindings.
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-10.4-054", "kind": "behavior", "applies": "§10.4 default routing strategy: several senders on one channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 Example, on one SMS number with no room yet: alice writes first, and the room
 created for her has a binding naming her. Bob's first message finds no room of
 his at step 1; at step 3 the binding names alice, so null, and bob gets a room
@@ -8207,7 +8221,7 @@ default router routes its second speaker to a room of their own, which is the
 safe answer: nothing in the store tells a group channel from a shared number.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.4-006", "kind": "behavior", "applies": "§10.4 Inbound Room Routing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.4-055", "kind": "behavior", "applies": "§10.4: any routing strategy given inputs that match more than one room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A router MUST NOT guess.** When the inputs it was given match more than one
 room and nothing in them tells which conversation the message belongs to — for
 the default strategy, a channel bound to several rooms step 3 reads — it MUST
@@ -8223,19 +8237,21 @@ creates a new room, which is recoverable, whereas a wrong room is not.
 This is not a hypothetical configuration. An implementation that lets a
 channel be shared across rooms (§19, delegation) creates it as a matter of
 course, and a channel re-attached after its room closed accumulates the same
-shape over time. An integrator whose deployment genuinely needs a shared
+shape over time. <!-- /rfc --><!-- rfc: {"id": "RK-10.4-056", "kind": "non_testable", "applies": "§10.4: an integrator whose deployment needs a channel shared across rooms routed by something else; the integrator's choice needs operational review. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An integrator whose deployment genuinely needs a shared
 channel routed by something else MUST name the room explicitly (§10.1 step 2)
 or supply a custom strategy.
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-10.4-007", "kind": "behavior", "applies": "§10.4 Inbound Room Routing; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-10.4-057", "kind": "behavior", "applies": "§10.4: any routing strategy's answer, against every storage backend. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Routing MUST be deterministic.** The same inputs against the same stored
 state MUST select the same room, whatever the storage backend. An
 implementation whose answer depends on insertion order in one store and on the
 query planner in another does not satisfy this, and its behaviour cannot be
 reasoned about from the specification.
+<!-- /rfc -->
 
-Implementations MUST allow integrators to provide a custom routing strategy.
+<!-- rfc: {"id": "RK-10.4-058", "kind": "behavior", "applies": "§10.4: the routing strategy an integrator provides. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+Implementations MUST allow integrators to provide a custom routing strategy.<!-- /rfc --><!-- rfc: {"id": "RK-10.4-059", "kind": "behavior", "applies": "§10.4: the room any routing strategy returns (§10.1 step 2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The framework records the sender on the binding of the room any strategy
 returns (§10.1 step 2): a custom strategy that sends several senders to one
 room declares that room's binding `group`.
