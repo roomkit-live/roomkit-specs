@@ -5821,190 +5821,187 @@ the stored room at the final read, not an intermediate transition snapshot.
 
 **SYNC hooks:**
 
-- <!-- rfc: {"id": "RK-9.3-001", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply."} -->Run sequentially, ordered by priority (lower number = first). At equal
+- <!-- rfc: {"id": "RK-9.3-018", "kind": "behavior", "applies": "§9.3 SYNC hooks: the order a SYNC chain runs in. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Run sequentially, ordered by priority (lower number = first).<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-019", "kind": "behavior", "applies": "§9.3 SYNC hooks: hooks of equal priority, the kit's and the room's, and on BEFORE_BROADCAST an off-lock hook and one that needs the lock (§9.5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->At equal
   priority the kit's hooks run before the room's, and hooks of one scope run
   in the order they were registered (§9.1); on BEFORE_BROADCAST an off-lock
   hook still runs before a hook of equal priority that needs the lock
   (§9.5.1).<!-- /rfc -->
-- <!-- rfc: {"id": "RK-9.3-002", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply."} -->Each hook receives the event and room context.<!-- /rfc -->
-- <!-- rfc: {"id": "RK-9.3-003", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply."} -->Each hook MUST return a HookResult, except the identity hooks that decide
+- <!-- rfc: {"id": "RK-9.3-002", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply.", "level": "must"} -->Each hook receives the event and room context.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-003", "kind": "non_testable", "applies": "§9.3 SYNC hooks: what a hook returns, which only its author keeps; how the framework reads a result that is not a HookResult is the unusable-result rule below, and an identity hook's result is Section 11.2's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Each hook MUST return a HookResult, except the identity hooks that decide
   ON_IDENTITY_AMBIGUOUS and ON_IDENTITY_UNKNOWN, which are registered apart and
   return an IdentityHookResult or null (Section 11.2).<!-- /rfc -->
-- <!-- rfc: {"id": "RK-9.3-004", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply."} -->A BLOCK result stops the pipeline — no further hooks run.<!-- /rfc -->
-- <!-- rfc: {"id": "RK-9.3-005", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply."} -->A hook that does not produce a usable result MUST be treated as ALLOW with an
+- <!-- rfc: {"id": "RK-9.3-004", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply.", "level": "must"} -->A BLOCK result stops the pipeline — no further hooks run.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-005", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply.", "level": "must"} -->A hook that does not produce a usable result MUST be treated as ALLOW with an
   error logged, so that a broken hook cannot take a room down. This covers a
   hook that raises, one that exceeds its timeout, one that returns something
   other than a HookResult, a MODIFY that carries no payload, and a MODIFY
   whose payload is not of the type the trigger passed in.<!-- /rfc -->
-- <!-- rfc: {"id": "RK-9.3-006", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply."} -->**Except on three triggers, which fail closed: BEFORE_TTS, ON_TRANSCRIPTION
+- <!-- rfc: {"id": "RK-9.3-020", "kind": "behavior", "applies": "§9.3 SYNC hooks: an unusable outcome of a hook (raised, timed out, not a HookResult, a MODIFY with no payload or a payload of the wrong type) on BEFORE_TTS, ON_TRANSCRIPTION and BEFORE_TOOL_USE, and on every other trigger. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->**Except on three triggers, which fail closed: BEFORE_TTS, ON_TRANSCRIPTION
   and BEFORE_TOOL_USE**, where every one of those outcomes MUST block instead.
   Every other trigger, BEFORE_BROADCAST and ON_TOOL_CALL included, is fail-open
-  unless a hook declares itself fail-closed (below). BEFORE_TTS and
+  unless a hook declares itself fail-closed (below).<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-021", "kind": "behavior", "applies": "§9.3 SYNC hooks: a BEFORE_TTS or ON_TRANSCRIPTION hook that fails, times out or returns something unusable, on a whole response and on each sentence of a streamed one (Section 12.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->BEFORE_TTS and
   ON_TRANSCRIPTION carry content a hook may exist to withhold: a
   redaction hook that fails, times out, or returns something unusable must not
   let the original through, and allowing would publish exactly what the hook
   was there to suppress. On a streamed TTS response BEFORE_TTS runs on each
   sentence (Section 12.2, step 12s.b), so this applies to every sentence: a
-  streamed response is never a way around the hook. BEFORE_TOOL_USE carries
+  streamed response is never a way around the hook.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-022", "kind": "behavior", "applies": "§9.3 SYNC hooks: a BEFORE_TOOL_USE hook that cannot answer, and every unusable outcome on a trigger that fails closed, timeouts included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->BEFORE_TOOL_USE carries
   an action a hook may exist to prevent: it is the gate of a tool call, where
   an approval hook sits, and an approval hook that cannot answer must not let
   the call run. A partial rule
   is no rule — an
   implementation that blocks on exceptions but allows on timeouts leaks through
   the timeout.<!-- /rfc -->
-- <!-- rfc: {"id": "RK-9.3-007", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply."} -->**A BEFORE_TOOL_USE that failed closed refuses the call before execution**,
-  as its BLOCK does, on every channel. A BLOCK's reason is the hook's own words
+- <!-- rfc: {"id": "RK-9.3-023", "kind": "behavior", "applies": "§9.3 SYNC hooks: a BEFORE_TOOL_USE chain that failed closed, on every channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->**A BEFORE_TOOL_USE that failed closed refuses the call before execution**,
+  as its BLOCK does, on every channel.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-024", "kind": "behavior", "applies": "§9.3 SYNC hooks: the reason of a BEFORE_TOOL_USE BLOCK, on every channel and every entry of one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A BLOCK's reason is the hook's own words
   for the model, and the model reads them (`{"error": "<reason>"}`) on every
   channel and every entry of one, as it reads the reason of an ON_TOOL_CALL
-  block. A BLOCK with no reason, and a hook that failed closed, give the fixed
+  block.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-025", "kind": "behavior", "applies": "§9.3 SYNC hooks: a BEFORE_TOOL_USE BLOCK with no reason, and a BEFORE_TOOL_USE hook that failed closed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A BLOCK with no reason, and a hook that failed closed, give the fixed
   refusal (`{"error": "Tool 'x' denied by pre-execution hook."}`), never the
-  hook's error, whose message can hold anything the hook held. The hook's name
+  hook's error, whose message can hold anything the hook held.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-026", "kind": "behavior", "applies": "§9.3 SYNC hooks: a call a BEFORE_TOOL_USE BLOCK or a failed-closed BEFORE_TOOL_USE hook refused. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The hook's name
   and error go to the log and to ON_TOOL_CALL's observers, on the refused
-  call's `error_detail`. An external tool handler decides and reports its calls
+  call's `error_detail`.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-027", "kind": "behavior", "applies": "§9.3 SYNC hooks: a BEFORE_TOOL_USE refusal of a call an external tool handler decides. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An external tool handler decides and reports its calls
   itself: the refusal reaches it as a denied decision that carries the
   hook's error for it alone, and what the agent reads, and what it reports,
   are the handler's; a handler that hands that error on with its decision has
   it reported on the refusal's `error_detail`, as on the channel's own doors.<!-- /rfc -->
-- <!-- rfc: {"id": "RK-9.3-008", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply."} -->**A hook MAY declare itself fail-closed** (`fail_closed = true`), on any
+- <!-- rfc: {"id": "RK-9.3-028", "kind": "behavior", "applies": "§9.3 SYNC hooks: a hook on any trigger whose SYNC hooks run as a chain (Section 9.2). Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->**A hook MAY declare itself fail-closed** (`fail_closed = true`), on any
   trigger whose SYNC hooks run as a chain (Section 9.2): a content check on
   `BEFORE_BROADCAST` (PII, moderation) is exactly such a hook, while the
   trigger as a whole stays fail-open so that a broken
-  logging hook cannot take every room down. Every unusable outcome of a
+  logging hook cannot take every room down.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-029", "kind": "behavior", "applies": "§9.3 SYNC hooks: a hook that declared itself fail-closed (fail_closed = true). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Every unusable outcome of a
   fail-closed hook MUST block, and the block MUST name the hook and the
   outcome so the sender can be told why: `blocked_by` is the hook name and
   the reason is `hook_timeout:<name>`, `hook_error:<name>` or
   `hook_invalid_result:<name>`.<!-- /rfc -->
-- <!-- rfc: {"id": "RK-9.3-009", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply."} -->A MODIFY result replaces the payload with the one it carries, including a
+- <!-- rfc: {"id": "RK-9.3-030", "kind": "behavior", "applies": "§9.3 SYNC hooks: a MODIFY result that carries a payload, a falsy one included. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A MODIFY result replaces the payload with the one it carries, including a
   falsy one. Redacting a string to empty is a modification; treating it as
-  absent would pass the original to the next hook. A MODIFY that carries no
+  absent would pass the original to the next hook.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-031", "kind": "behavior", "applies": "§9.3 SYNC hooks: a MODIFY result that carries no payload, as one whose payload is of the wrong type. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A MODIFY that carries no
   payload replaces nothing: it is an unusable result, which the trigger's or
   the hook's fail-open or fail-closed rule decides, as it decides a payload
   of the wrong type.<!-- /rfc -->
-- <!-- rfc: {"id": "RK-9.3-010", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply."} -->**The arguments a BEFORE_TOOL_USE chain leaves are the call's.** The call
+- <!-- rfc: {"id": "RK-9.3-032", "kind": "behavior", "applies": "§9.3 SYNC hooks: the arguments a BEFORE_TOOL_USE chain hands from hook to hook and leaves to the call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->**The arguments a BEFORE_TOOL_USE chain leaves are the call's.** The call
   runs with those the chain ended with: a MODIFY's payload, or the payload a
-  hook edited in place, each read by the next hook. A hook may instead
+  hook edited in place, each read by the next hook.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-033", "kind": "behavior", "applies": "§9.3 SYNC hooks: a BEFORE_TOOL_USE hook that returns arguments in its result's metadata. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A hook may instead
   return arguments under `metadata["arguments"]`, which no later hook reads
   and which has the last word over the chain's, the last such rewrite
-  winning. Either way the arguments are validated again before the call
+  winning.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-034", "kind": "behavior", "applies": "§9.3 SYNC hooks: the arguments a BEFORE_TOOL_USE chain leaves, whichever way a hook gave them (§21.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Either way the arguments are validated again before the call
   runs (§21.1); arguments that are not an object refuse it.<!-- /rfc -->
-- <!-- rfc: {"id": "RK-9.3-011", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply."} -->An unusable result's tasks and observations are collected, as side
+- <!-- rfc: {"id": "RK-9.3-011", "kind": "behavior", "applies": "SYNC hook chains; trigger-specific and per-hook exceptions in §9.3 apply.", "level": "must"} -->An unusable result's tasks and observations are collected, as side
   effects always are (§7.5 rule 3), save a result holding a sixth composite
   level (§5.3), of which nothing is collected; the events it would inject are
   not.<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-9.3-012", "kind": "behavior", "applies": "§9.3 Hook Execution Modes; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-9.3-035", "kind": "behavior", "applies": "§9.3 ASYNC hooks: when they run and whether the triggering operation waits for them; the three triggers it awaits follow. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **ASYNC hooks:**
 
 - Run concurrently after the triggering operation completes, which does not
   wait for them, but for three, which it awaits, each hook within its own
-  timeout:
-  - ON_ROOM_CREATED: every creation, the integrator's and §10.1 step 2's
+  timeout:<!-- /rfc -->
+  - <!-- rfc: {"id": "RK-9.3-036", "kind": "behavior", "applies": "§9.3 ASYNC hooks: ON_ROOM_CREATED, on every room creation, the integrator's and §10.1 step 2's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_ROOM_CREATED: every creation, the integrator's and §10.1 step 2's
     alike, returns once its hooks have finished or timed out, so that a hook
     that attaches the room's agent (Appendix B.1) has done so before anything
-    is sent into the room.
-  - ON_RECORDING_STARTED, a room's, a voice session's or a conference
+    is sent into the room.<!-- /rfc -->
+  - <!-- rfc: {"id": "RK-9.3-037", "kind": "behavior", "applies": "§9.3 ASYNC hooks: ON_RECORDING_STARTED, a room's, a voice session's or a conference track's (Section 12.11). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_RECORDING_STARTED, a room's, a voice session's or a conference
     track's: the recording's start is the consent point no media reaches it
     before (Section 12.11), so its hooks have finished before the first frame
-    is recorded.
-  - The triggers a session's media stream fires (a voice, speech-to-speech,
+    is recorded.<!-- /rfc -->
+  - <!-- rfc: {"id": "RK-9.3-038", "kind": "behavior", "applies": "§9.3 ASYNC hooks: the triggers a voice, speech-to-speech, conference or video session's media stream fires. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The triggers a session's media stream fires (a voice, speech-to-speech,
     conference or video session's: its start, its speech and turn edges,
     partial transcriptions, barge-ins, DTMF, levels, `AFTER_TTS`, vision and
     detection results): the stream awaits them in order, so that each is
     observed before the stream's next trigger, a SYNC one included. A
     partial transcription observed after its final would bring back an
-    utterance the final closed.
-- The framework event that reports the operation (§8.2: `event_processed`,
+    utterance the final closed.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-039", "kind": "behavior", "applies": "§9.3 ASYNC hooks: the framework event (§8.2) that reports the operation an ASYNC trigger follows. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The framework event that reports the operation (§8.2: `event_processed`,
   `ai_response`, `feedback`, `recording_started`, `recording_stopped`) comes
-  once the trigger's hooks have ended, the operation not waiting for them.
-- Cannot block or modify events.
-- Exceptions MUST be caught and logged, never propagated.
-- Used for observability, logging, side effects.
-<!-- /rfc -->
+  once the trigger's hooks have ended, the operation not waiting for them.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-040", "kind": "behavior", "applies": "§9.3 ASYNC hooks: an ASYNC hook's result. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Cannot block or modify events.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-041", "kind": "behavior", "applies": "§9.3 ASYNC hooks: an ASYNC hook that raises. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Exceptions MUST be caught and logged, never propagated.
+- Used for observability, logging, side effects.<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-9.3-013", "kind": "behavior", "applies": "§9.3 Hook Execution Modes; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-9.3-042", "kind": "behavior", "applies": "§9.3 Who serves a call: an AI channel's tool calls. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Who serves a call.** An AI channel decides it call by call, not turn by
-turn. A call the provider already ran is reported: the provider says so on the
+turn.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-043", "kind": "behavior", "applies": "§9.3 Who serves a call: a call the provider already ran, and a key a model writes in any call's arguments. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call the provider already ran is reported: the provider says so on the
 call, with its result and whether it failed, never in its arguments, which are
 the model's text: a key a model writes there (`_result`) is an argument like any
-other, and its call is judged as any call. A
+other, and its call is judged as any call.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-044", "kind": "behavior", "applies": "§9.3 Who serves a call: a call an external tool handler is configured to decide, and any other call of an AI channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 call an external tool handler is configured to decide is that handler's; any
 other call is the channel's own, through the pre-execution gate, then its
-handler, and is a call nothing served when no handler takes it. A call the
+handler, and is a call nothing served when no handler takes it.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-045", "kind": "behavior", "applies": "§9.3 Who serves a call: a call the provider ran, and a BEFORE_TOOL_USE BLOCK on a call the channel serves, with or without a handler. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call the
 provider ran therefore never reaches the channel's handler because the channel
 has tools of its own, and a BEFORE_TOOL_USE BLOCK refuses every call the
-channel serves, a channel without a handler included. A tool a
+channel serves, a channel without a handler included.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-046", "kind": "behavior", "applies": "§9.3 Who serves a call: a call to a tool a BEFORE_AI_GENERATION hook withdrew from the turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A tool a
 BEFORE_AI_GENERATION hook withdrew is gone from the turn: a call to it is the
-channel's to refuse, never an external handler's to decide. A round that mixes
+channel's to refuse, never an external handler's to decide.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-047", "kind": "behavior", "applies": "§9.3 Who serves a call: a round with calls served outside the channel and calls the channel serves. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A round that mixes
 both kinds hands the next round every call it made, each with its result: the
-model reads the calls served outside the channel beside its own. A call the
+model reads the calls served outside the channel beside its own.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-048", "kind": "behavior", "applies": "§9.3 Who serves a call: a call the turn cut before its report (its cancellation, a transport that stopped reading), whoever was to serve it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call the
 turn cut before its report (the turn's cancellation, a transport that stopped
 reading before the call was decided) is reported once, cancelled, to
 ON_TOOL_CALL's observers alone, whoever was to serve it: an external handler
 hears of it through `on_tool_cancelled`, which reports it so by default, and
 never through `on_tool_result`, which reports an outcome. The handler may
 never have been asked about the call; a decision of its still pending is its
-own to withdraw. The channel's close is such a cut: an AI channel that
+own to withdraw.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-049", "kind": "behavior", "applies": "§9.3 Who serves a call: an AI channel that closes while its turns execute calls. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The channel's close is such a cut: an AI channel that
 closes cancels the calls its running turns execute, each reported once,
 cancelled, its end row too, asks no further round, and each such turn ends
 `cancelled`, as a speech-to-speech channel's close interrupts its calls
-(Section 12.4). A handler that raises while it decides fails the call, as a
-tool handler that raises does. A call whose outcome the model already read
+(Section 12.4).<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-050", "kind": "behavior", "applies": "§9.3 Who serves a call: an external tool handler that raises while it decides a call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A handler that raises while it decides fails the call, as a
+tool handler that raises does.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-051", "kind": "behavior", "applies": "§9.3 Who serves a call: a call whose outcome the model already read, its report interrupted by a cut. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call whose outcome the model already read
 (the provider ran it, an external handler decided it, its realtime result
 went out) is still owed its report when a cut interrupts that report: it is
-reported once, to ON_TOOL_CALL's observers alone, with that outcome. A
+reported once, to ON_TOOL_CALL's observers alone, with that outcome.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-052", "kind": "behavior", "applies": "§9.3 Who serves a call: where a call's report is claimed, and an ACP call's end once closed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 report is claimed where the observers hear it, past the SYNC chain and once
 their context is built, so a report a cut interrupted is still owed and one
 the observers heard is never made twice; an ACP call's end, once closed,
-reaches its report even when the task carrying it is cut. A call issued once
-its session ended runs no gate and is reported once, cancelled. A call cut
+reaches its report even when the task carrying it is cut.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-053", "kind": "behavior", "applies": "§9.3 Who serves a call: a call issued once its session ended. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call issued once
+its session ended runs no gate and is reported once, cancelled.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-054", "kind": "behavior", "applies": "§9.3 Who serves a call: a call cut after its report, its turn ended before the model read its result. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call cut
 after its report keeps its stored end row `cancelled` when the turn ended
 before the model read its result: the row says what the turn delivered, the
-report what ran.
-<!-- /rfc -->
+report what ran.<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-9.3-014", "kind": "behavior", "applies": "§9.3 Hook Execution Modes; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-9.3-055", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL, a served call: where the rules below hold, and a firing that reports a call that ran outside the channel or whose outcome the model already read. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **ON_TOOL_CALL, where the call was served:**
 
 These hold where the channel's own tool loop serves the call. An external
 handler's firing is a report on a call that ran outside the channel, and so is
 a firing on any call whose outcome the model already read (a call the
 provider ran itself): its override is discarded, and the display payload an external agent attaches
-(ACP's tool content) is that agent's. No hook can rewrite or withhold what the
+(ACP's tool content) is that agent's.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-056", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL, a served call: a firing that reports a call whose outcome the agent already read (an external handler's, a call the provider ran). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->No hook can rewrite or withhold what the
 agent already read, so its observers see the provider's outcome and the
-provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
+provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.<!-- /rfc -->
 
-- A SYNC hook sees the call's result and its structured copy (the payload a
+- <!-- rfc: {"id": "RK-9.3-057", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL, a served call: a call the channel's own tool loop served, and its SYNC hooks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A SYNC hook sees the call's result and its structured copy (the payload a
   tool publishes for UI surfaces beside its result, such as MCP
-  `structuredContent`). It MAY replace the result, and MAY replace or clear
-  the structured copy. A result replaced alone keeps the copy: a hook that
-  rewrites text, such as PII re-tokenisation, is not withholding the payload.
-- A BLOCK withholds the result: the model reads the block's reason as a
+  `structuredContent`).<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-058", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL, a served call: a SYNC hook on a call the channel's own tool loop served. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->It MAY replace the result, and MAY replace or clear
+  the structured copy.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-059", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL, a served call: a SYNC hook that replaces a served call's result and not its structured copy. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A result replaced alone keeps the copy: a hook that
+  rewrites text, such as PII re-tokenisation, is not withholding the payload.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-060", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL, a served call: a SYNC hook's BLOCK on a call the channel's own tool loop served. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A BLOCK withholds the result: the model reads the block's reason as a
   failed call, and the tool-call event carries the failure marker and no
   structured copy. An event that kept the payload while the text was
   withheld would publish, to every surface that renders it, what the hook
-  was there to withhold.
-- A call that failed or was refused carries no structured copy either.
-- SYNC hooks apply in turn to one outcome: each sees the result and the
+  was there to withhold.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-061", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: a call that failed or was refused, and its structured copy. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call that failed or was refused carries no structured copy either.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-062", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL, a served call: several SYNC hooks on one served call, whatever form each replacement takes. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->SYNC hooks apply in turn to one outcome: each sees the result and the
   structured copy as the previous hook left them, whichever form its
   replacement took (a MODIFY whose event carries a new result, or the result
   override). The model reads what the last one left. A second hook handed the
   original would undo the first: "redact", then "cite the source", would
-  publish what the redaction removed. A MODIFY whose payload is not a tool-call
+  publish what the redaction removed.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-063", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL, a served call: a SYNC hook's MODIFY whose payload is not a tool-call event (§9.3 SYNC hooks). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A MODIFY whose payload is not a tool-call
   event replaces nothing, as the general rule above has it: the chain carries
   on from the outcome the previous hook left, that hook's own override
-  included.
-- A replacement counts whatever its value: a hook that clears a served result
+  included.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-064", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL, a served call: a SYNC hook that clears a served call's result, on every channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A replacement counts whatever its value: a hook that clears a served result
   (replaces it with no value) has the model read that empty value, serialized
-  as any other result (JSON `null`), on every channel, never the original.
-- ASYNC observers run after the SYNC hooks, on the final outcome: the result
+  as any other result (JSON `null`), on every channel, never the original.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-065", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL, a served call: its ASYNC observers. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ASYNC observers run after the SYNC hooks, on the final outcome: the result
   the model reads, as it reads it (a replacement serialized), never one a hook
-  replaced. A BLOCK does not spare them, nor
+  replaced.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-066", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL, a served call: the ASYNC observers of a call a SYNC hook blocked, or whose result a fail-closed hook withheld by failing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A BLOCK does not spare them, nor
   does the failure of a fail-closed hook that withheld the result: they fire
   with the failure marker and the reason the model reads, since every call
-  MUST fire ON_TOOL_CALL with its outcome (below).
-<!-- /rfc -->
+  MUST fire ON_TOOL_CALL with its outcome (below).<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-9.3-015", "kind": "behavior", "applies": "§9.3 Hook Execution Modes; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-9.3-067", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: every tool call, whatever its outcome. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **ON_TOOL_CALL, where the call was refused or failed:**
 
 - Every tool call MUST fire ON_TOOL_CALL with its outcome, whether it was
@@ -6012,40 +6009,40 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   policy, skill gating, a BLOCK from BEFORE_TOOL_USE), failed during execution
   (a handler that raised), or reached no servant at all. A trigger that fires
   only for the calls that succeeded cannot support an audit trail: a refused
-  agent and an idle one produce the same record, which is none.
-- Every report of a call, on every door, carries the arguments the call ran
+  agent and an idle one produce the same record, which is none.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-068", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: every report of a call, on every door. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Every report of a call, on every door, carries the arguments the call ran
   with, or those the gate had when it stopped it (repaired, rewritten by
   BEFORE_TOOL_USE); the model's own only for a call stopped before its
-  arguments were read. A call its turn or its session cut while it ran is
-  reported with the arguments it ran with.
-- Such a firing MUST NOT be able to serve the call. Where the trigger's SYNC
+  arguments were read.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-069", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: a call its turn or its session cut while it ran. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call its turn or its session cut while it ran is
+  reported with the arguments it ran with.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-070", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: the firing for a call refused before execution, failed during execution or that reached no servant, where the trigger's SYNC hooks serve tools (the AI tool loop, the realtime channel). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Such a firing MUST NOT be able to serve the call. Where the trigger's SYNC
   hooks do serve tools — the AI tool loop, the realtime channel — that means
   dispatching to **the hooks registered ASYNC only**: a refused call reaching a
   servant would let the refusal hide the side effect instead of preventing it,
   and the pre-execution gate of Section 12.4 would hold under some
-  configurations and not others. Where the tool already ran outside the channel
+  configurations and not others.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-071", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: a firing that reports a call that ran outside the channel (an external tool handler relaying its provider's outcome). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Where the tool already ran outside the channel
   and the firing is a report by construction — an external tool handler
   relaying its provider's outcome — it MAY reach every hook, and any result
-  such a hook offers MUST be discarded. A call that never ran is no such
+  such a hook offers MUST be discarded.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-072", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: a call that never ran: refused on any door, failed by a handler that raised deciding it, or cancelled. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call that never ran is no such
   report: a refusal on every door (the pre-execution gate's, an external
   handler's, a call the external door refuses itself, a rejected ACP
   permission, a refusal ACP imposes on an approval it cannot apply), a
   handler that raised while it decided, and a cancellation reach the ASYNC
   observers only, marked
   `refused` or `cancelled` beside `is_error`, so an audit tells a refusal from
-  a failure and from a cancellation. An external handler hears its own refusal
+  a failure and from a cancellation.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-073", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: an external tool handler's own refusal, and a handler that raises while it decides. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An external handler hears its own refusal
   through `on_tool_refused`, which reports it so by default, and never through
   `on_tool_result`; a handler that raises while it decides fails the call,
   which the channel reports itself, with what failed (`error_detail`), as it
-  reports a call it refused itself. A handler that raises while it reports a
+  reports a call it refused itself.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-074", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: a handler that raises while it reports a call, on every door that hands a call's report to a handler (an AI channel's external door, ACP). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A handler that raises while it reports a
   call (its outcome, its refusal, its cancellation) is logged and does not
   fail the turn: the channel reports the call itself, once, as it ended,
   unless the handler's report had already reached ON_TOOL_CALL's observers,
   on every door that hands a call's report to a handler (an AI channel's
   external door, ACP); an override that cannot take the arguments the door
-  hands it raises the same way. An ACP
+  hands it raises the same way.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-075", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: an ACP call, with or without an external handler. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An ACP
   call reports the same body with an external handler as without one: a
-  cancellation's envelope, a failure's bounded error. An ACP call whose
+  cancellation's envelope, a failure's bounded error.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-076", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: an ACP call whose permission RoomKit rejected, run anyway by the agent and closed completed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An ACP call whose
   permission RoomKit rejected (it refused the call, or its handler raised
   deciding it) that the agent ran anyway and closed completed is reported as
   it ended, served, its markers those of a served call, and MUST carry a
@@ -6054,70 +6051,69 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   failed in the rejection (`error_detail`) when something did, whether the
   handler or the channel makes it, but for a handler whose override cannot
   take it, which reports the call without it and is logged, as a refusal's
-  detail is.
-- The outcome MUST be carried on the event as a discrete marker, not left to
+  detail is.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-077", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: every tool call's outcome, on its event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The outcome MUST be carried on the event as a discrete marker, not left to
   be inferred from the result body. A refusal's body is a body like any other:
   one implementation's refusals are JSON error envelopes, another's are the
   prose the model is meant to read, and an external provider's are whatever it
   printed. An observer that has to recognise a failure in the text will read a
   refused call as a completed one, and a tool whose own output resembles a
-  refusal as a failure.
-- That obligation covers every outcome the channel itself determines: a refusal
+  refusal as a failure.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-078", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: the outcomes the channel itself determines, and a refusal a handler returns in its body (Section 15.8.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->That obligation covers every outcome the channel itself determines: a refusal
   by the pre-execution gate, a tool not available in the turn, a guard the
   channel applies to the call (a repeat of the same call with the same
   arguments), a handler that raised, a call nothing served, and the verdict an
   external tool handler received from its provider. A handler
   that instead *returns* a refusal has stated it in its body, where only its
-  own convention can be read — Section 15.8.1 governs that reading. A producer
+  own convention can be read — Section 15.8.1 governs that reading.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-079", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: a producer of a tool call's outcome that can state it structurally. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->A producer
   that can state the outcome structurally SHOULD do so rather than leave it to
-  be recognised.
-- The body MUST travel verbatim beside that marker: it is what the model is
-  told, and its wording answers to that reader alone. An oversized body reaches
+  be recognised.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-080", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: the body of a call's outcome, beside its marker. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The body MUST travel verbatim beside that marker: it is what the model is
+  told, and its wording answers to that reader alone.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-081", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: an oversized body (Section 21.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An oversized body reaches
   the model through the bound of Section 21.5 like any tool result; the event
-  carries it as the tool produced it.
-- A call whose handler raised MUST read the same on every channel: the tool's
+  carries it as the tool produced it.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-082", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: a call whose handler raised, on every channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call whose handler raised MUST read the same on every channel: the tool's
   failure, named by the exception's class and nothing more (`{"error": "Tool
   'x' failed (<ExceptionClass>)"}`), with the failure marker. The exception's
   message can hold anything the failing code held (a connection string with
   its password, a path, a record), and neither the model nor its provider's
-  logs are a place for it. The message goes to the log and to ON_TOOL_CALL's
+  logs are a place for it.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-083", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: the exception's message, for a call whose handler raised. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The message goes to the log and to ON_TOOL_CALL's
   observers, on the event's `error_detail`, never to the model nor to the
-  stored TOOL_CALL_END. A handler that wants the model to read its words
+  stored TOOL_CALL_END.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-084", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: a handler that raises a refusal (ToolRefusedError) or a failure (ToolFailedError) for the model to read its words. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A handler that wants the model to read its words
   says which outcome they carry: a refusal (`ToolRefusedError`, nothing ran)
   or a failure (`ToolFailedError`, the tool ran and could not do it), whose
-  text passes as it is, the failure's also as the event's `error_detail`. An
+  text passes as it is, the failure's also as the event's `error_detail`.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-085", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: an MCP tool whose result says isError, on every channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An
   MCP tool whose result says `isError` ran and failed: it is a failure, never
-  a refusal, on every channel. A tool the channel
+  a refusal, on every channel.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-086", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: a tool the channel serves itself (a skill script, a sandbox command), and work a tool hands off whose failure the model reads, when what it runs raises. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A tool the channel
   serves itself (a skill script, a sandbox command) reads the same when what
   it runs raises, and so does any work a tool hands off whose failure the
-  model reads (a delegated task, a reasoning backend's tool). A call nothing
+  model reads (a delegated task, a reasoning backend's tool).<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-087", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: a call nothing served whose SYNC hooks raised. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call nothing
   served whose hooks raised reads as any call nothing served: the hooks'
-  messages go to `error_detail`.
-- A result override supplied on such a firing MUST be ignored. Nothing ran, so
-  there is no result to correct.
-- A call that no handler and no hook served MUST report a failure, not a
+  messages go to `error_detail`.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-088", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: a result override on the firing of a call refused before execution, failed during execution or that reached no servant. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A result override supplied on such a firing MUST be ignored. Nothing ran, so
+  there is no result to correct.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-089", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: a call no handler and no hook served. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call that no handler and no hook served MUST report a failure, not a
   success. Reporting one — `{"status": "ok"}` and its kin — tells the model
   work was done that nobody did, and records a completed call for a tool that
-  was never reached. A declared tool that no handler serves reaches the SYNC
+  was never reached.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-090", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: a declared tool no handler serves, and the SYNC hooks it reaches. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A declared tool that no handler serves reaches the SYNC
   hooks with no result: a hook MAY serve it by supplying one, and that result
-  is then the call's. If none does, the call is reported once, as failed; the
-  firing that offered it to the hooks was a chance to serve it, not a report.
-- A hook that empties a served call's result (an override of null) leaves the
+  is then the call's.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-091", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: a declared tool no handler serves and no SYNC hook serves. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->If none does, the call is reported once, as failed; the
+  firing that offered it to the hooks was a chance to serve it, not a report.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-092", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: a SYNC hook that empties a served call's result (an override of null), and the hooks after it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A hook that empties a served call's result (an override of null) leaves the
   call served, with a null result: the next hook in the chain reads a served
   call whose result is null, never a call nothing served, and does not get to
-  serve it. Every channel applies a verdict through the same reading (a
-  block, an override, a bare override, an emptied result).
-- When the context the hooks need cannot be built, the hooks do not run and
+  serve it.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-093", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: a SYNC hook's verdict on a call, on every channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Every channel applies a verdict through the same reading (a
+  block, an override, a bare override, an emptied result).<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-094", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: a call whose hooks' context cannot be built, on every channel. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->When the context the hooks need cannot be built, the hooks do not run and
   the call keeps the outcome its handler gave it, on every channel: a context
-  that fails is not the tool's failure. The ASYNC observers need that context
+  that fails is not the tool's failure.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-095", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL: a call whose observers' context cannot be built: served, refused, failed, cancelled, or run by an external handler. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The ASYNC observers need that context
   and do not run either; the call is still reported once, by the `tool_call`
   framework event for a served call, and as the failure it is for a call
   nothing served. So for a refused, failed or cancelled call whose observers'
   context fails, and for a call an external handler ran: its `tool_call`
-  framework event still reports it once.
-<!-- /rfc -->
+  framework event still reports it once.<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-9.3-016", "kind": "behavior", "applies": "§9.3 Hook Execution Modes; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-9.3-096", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL, an abandoned call: a speech-to-speech model interrupted while a call is outstanding, and its provider (Section 12.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **ON_TOOL_CALL, where the model abandoned the call:**
 
 - A speech-to-speech model interrupted while a call is outstanding MAY discard
@@ -6126,65 +6122,64 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   connection-scoped and the new socket never issued them). A provider that
   learns of it MUST tell the channel (`on_tool_call_cancelled`, Section 12.4).
   A provider whose protocol carries no such event fires nothing: its calls
-  stay in the conversation and their results are still read.
-- The channel MUST interrupt the handler still running for such a call and
+  stay in the conversation and their results are still read.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-097", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL, an abandoned call: a call the model abandoned whose handler still runs. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The channel MUST interrupt the handler still running for such a call and
   MUST NOT send its result. The model will not read it, and a result sent for
   an id the provider no longer knows is an error the application never asked
-  for.
-- The call MUST fire ON_TOOL_CALL's observers with a discrete *cancelled*
+  for.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-098", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL, an abandoned call: a call the model abandoned. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The call MUST fire ON_TOOL_CALL's observers with a discrete *cancelled*
   marker beside the failure marker. An abandoned call is neither a refusal nor
   a failure, and an audit counting refusals must not count it as one; it is
   still not a served call, so a consumer reading the failure marker alone
   reads it correctly as work that did not complete. The firing is
-  observational, as above.
-- A call the channel no longer holds when the cancellation arrives (its result
+  observational, as above.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-099", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL, an abandoned call: a cancellation that arrives once the call's result already left. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call the channel no longer holds when the cancellation arrives (its result
   already left) has no outcome left to report: the provider drops the stale
-  result and the channel reports nothing.
-- A reconnect the call's own handler caused (it reconfigured its session and
+  result and the channel reports nothing.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-100", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL, an abandoned call: a reconnect the call's own handler caused (it reconfigured its session). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A reconnect the call's own handler caused (it reconfigured its session and
   the provider reconnected to apply it) is not the model abandoning that
   call. The channel MUST NOT interrupt that handler, which still has work to
   do on the new connection (a handoff greets as the new agent next), and MUST
-  NOT send its result, since the new socket never issued the id. The call's
+  NOT send its result, since the new socket never issued the id.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-101", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL, an abandoned call: the call whose own handler caused the reconnect. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The call's
   outcome is reported as it would be otherwise, served when the handler
-  returns a result, and never as cancelled. The reconnect is the call's own
+  returns a result, and never as cancelled.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-102", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL, an abandoned call: a reconnect caused by a call's handler, a task it started, or work that does not descend from it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The reconnect is the call's own
   when it runs within the handler's execution, the handler itself or a task
   it started while the call was outstanding; a reconfiguration handed to work
-  that does not descend from the handler is not, and abandons the call. Every
-  other call the same reconnect orphaned is abandoned as above.
-<!-- /rfc -->
+  that does not descend from the handler is not, and abandons the call.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-103", "kind": "behavior", "applies": "§9.3 ON_TOOL_CALL, an abandoned call: the other calls orphaned by a reconnect one call's handler caused. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Every
+  other call the same reconnect orphaned is abandoned as above.<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-9.3-017", "kind": "behavior", "applies": "§9.3 Hook Execution Modes; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-9.3-104", "kind": "behavior", "applies": "§9.3 ON_USER_INPUT_REQUIRED: a human-input request, from its creation. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **ON_USER_INPUT_REQUIRED, where the other party is a human:**
 
-- A human-input request MUST be answerable from the moment it is created. The
+- A human-input request MUST be answerable from the moment it is created.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-105", "kind": "behavior", "applies": "§9.3 ON_USER_INPUT_REQUIRED: a human-input request whose notification is still running. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
   notification MUST NOT gate whether an answer can be recorded, and an answer
   arriving while the notification is still running MUST be honoured. The human
   is not inside the implementation's timing: they answer the question they were
   shown, and a notification that fans out slowly, or a hook that spends its
-  whole timeout, is not a reason to lose their answer.
-- These hooks keep every SYNC property that matters to their authors — priority
-  order, and a BLOCK that rejects the request. What a BLOCK does not do is
+  whole timeout, is not a reason to lose their answer.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-106", "kind": "behavior", "applies": "§9.3 ON_USER_INPUT_REQUIRED: its SYNC hooks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->These hooks keep every SYNC property that matters to their authors — priority
+  order, and a BLOCK that rejects the request.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-107", "kind": "behavior", "applies": "§9.3 ON_USER_INPUT_REQUIRED: a SYNC hook's BLOCK on a request already answered. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->What a BLOCK does not do is
   retract an answer already recorded; a request that has been answered is
-  settled. A MODIFY hands the next hook and the ASYNC observers the request
+  settled.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-108", "kind": "behavior", "applies": "§9.3 ON_USER_INPUT_REQUIRED: a SYNC hook's MODIFY of a request. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A MODIFY hands the next hook and the ASYNC observers the request
   as it left it, and changes nothing else: the request stays the tool's, and
-  `user_input_required` names it as the tool asked it.
-- Implementations MUST NOT report an answer that was recorded as a failure to
-  the caller that asked for it. An outcome already delivered SHOULD stay
+  `user_input_required` names it as the tool asked it.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-109", "kind": "behavior", "applies": "§9.3 ON_USER_INPUT_REQUIRED: an answer recorded for a human-input request, and the caller that asked for it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Implementations MUST NOT report an answer that was recorded as a failure to
+  the caller that asked for it.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-110", "kind": "behavior", "applies": "§9.3 ON_USER_INPUT_REQUIRED: a human-input request's outcome once delivered. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->An outcome already delivered SHOULD stay
   readable for long enough that a second read, or a caller that lost track of
-  the request, reads the outcome rather than an error.
+  the request, reads the outcome rather than an error.<!-- /rfc --><!-- rfc: {"id": "RK-9.3-111", "kind": "behavior", "applies": "§9.3 ON_USER_INPUT_REQUIRED: a request object a human-input handler returns, once settled. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
   A request object returned by a human-input handler MUST keep exposing its
   recorded status, answer and rejection reason after settlement, including
-  after it leaves the handler's active set.
-- A human-input tool call follows the line between a refusal and a failure:
+  after it leaves the handler's active set.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-112", "kind": "behavior", "applies": "§9.3 ON_USER_INPUT_REQUIRED: the outcome of a human-input tool call: rejected, unanswered in time, given up by the handler, or another error. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A human-input tool call follows the line between a refusal and a failure:
   a request a human or a BLOCK rejected is a refusal, the model reading why;
   one nobody answered in time is a failure, the tool having run without an
   answer; one the handler gave up on before an answer (its close, a release),
   whether before the call or while it waits, and any other error take the
-  generic failure path, the message withheld from the model. A request whose
+  generic failure path, the message withheld from the model.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-113", "kind": "behavior", "applies": "§9.3 ON_USER_INPUT_REQUIRED: a request whose waiting call is cut, or still open when the turn that opened it ends (§10.6.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A request whose
   waiting call is cut (a turn cancelled, a session ended, a call abandoned),
   or still open when the turn that opened it ends (§10.6.5), is withdrawn as
-  a release withdraws it: no answer is taken for it after.
-- Human-input tools have these rules on every channel that serves them (an
+  a release withdraws it: no answer is taken for it after.<!-- /rfc -->
+- <!-- rfc: {"id": "RK-9.3-114", "kind": "behavior", "applies": "§9.3 ON_USER_INPUT_REQUIRED: human-input tools on every channel that serves them and every door of it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Human-input tools have these rules on every channel that serves them (an
   AI channel, a speech-to-speech channel, a conference) and on every door of
   that channel (a speech-to-speech session's provider calls, the calls it
   recovers from speech, a reasoning backend's): the channel declares and
@@ -6193,14 +6188,13 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.
   each request fires ON_USER_INPUT_REQUIRED and names the channel type of
   the door it was asked on; the requests still open are settled when the
   channel closes, or when what asked them is taken out (a conference's
-  speech-to-speech provider unplugged). Tool Search never hides them, and a
+  speech-to-speech provider unplugged).<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-115", "kind": "behavior", "applies": "§9.3 ON_USER_INPUT_REQUIRED: human-input tools under Tool Search, and a human-input definition given twice or under a name the channel serves itself (Section 21.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Tool Search never hides them, and a
   human-input definition given twice, or under a name the channel serves
   itself, is refused when the handler is given, as a host tool is (Section
-  21.1). A human-input handler given as a plain tool handler is a host
-  handler, bound by none of these rules. A realtime pipeline's agent never
+  21.1).<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-116", "kind": "behavior", "applies": "§9.3 ON_USER_INPUT_REQUIRED: a human-input handler given as a plain tool handler. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A human-input handler given as a plain tool handler is a host
+  handler, bound by none of these rules.<!-- /rfc --> <!-- rfc: {"id": "RK-9.3-117", "kind": "behavior", "applies": "§9.3 ON_USER_INPUT_REQUIRED: a realtime pipeline's agent (Section 19.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A realtime pipeline's agent never
   carries human-input tools of its own: the session serves the channel's
-  (Section 19.5).
-<!-- /rfc -->
+  (Section 19.5).<!-- /rfc -->
 
 ### 9.4 HookResult
 

@@ -357,9 +357,9 @@
     },
     {
       "section": "9.3",
-      "sha256": "5e95fc51efdd3827ee26e9b0ddd80db75dbbdc78e5c560bc1d9dccd5bde1f9c7",
+      "sha256": "a243321af4db0fa37e3eaba27476f22f231fa82dfacee283bf5a4d973be0aa7e",
       "classification": "normative",
-      "review": "Source inventory: Hook Execution Modes. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Re-reviewed after the live human-input request clarification (RMK-1637); no execution-mode or capability condition changed."
+      "review": "Source inventory: Hook Execution Modes, split to one obligation per unit (RMK-1779): a SYNC or ASYNC rule, a rule of who serves a call, an ON_TOOL_CALL rule or a human-input rule per unit, or one sentence of it. Each unit keeps its conditions, exceptions and rationale; context a unit needs from its neighbours is in its applies. What a hook returns binds its author alone and is non_testable (RK-9.3-003). A hook declaring itself fail-closed and a hook replacing a served result or its copy are may (RK-9.3-028, RK-9.3-058); a producer stating an outcome structurally and a delivered human-input outcome staying readable are should (RK-9.3-079, RK-9.3-110). Where a MAY only grants a hook or a model a choice in a sentence that states what the implementation does, the unit is must. Every unit carries its level."
     },
     {
       "section": "9.4",

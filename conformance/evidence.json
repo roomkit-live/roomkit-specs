@@ -29,7 +29,19 @@
     "RK-12.8.10-003",
     "RK-12.8.5-007",
     "RK-12.8.7-005",
-    "RK-7.3-002"
+    "RK-7.3-002",
+    "RK-9.3-001",
+    "RK-9.3-006",
+    "RK-9.3-007",
+    "RK-9.3-008",
+    "RK-9.3-009",
+    "RK-9.3-010",
+    "RK-9.3-012",
+    "RK-9.3-013",
+    "RK-9.3-014",
+    "RK-9.3-015",
+    "RK-9.3-016",
+    "RK-9.3-017"
   ],
   "links": [
     {
@@ -104,8 +116,8 @@
     },
     {
       "id": "pilot-fail-closed",
-      "requirement": "RK-9.3-008",
-      "clause_sha256": "ef7289866c7288c1dc5919bd9c0c35437f2221557c24e32c7c89f75d3bf00353",
+      "requirement": "RK-9.3-029",
+      "clause_sha256": "da147205b1a92ed357a9f46c3ad69579e716f75f43cf9cec1b2ad233ebc0a8e9",
       "scope": "BEFORE_BROADCAST through process_inbound, including fail-open/fail-closed behavior where configured.",
       "coverage": "partial",
       "review": "The scenario expectations were read against this clause; this mapping does not cover every trigger or invalid payload.",
@@ -195,8 +207,8 @@
     },
     {
       "id": "pilot-missing-payload",
-      "requirement": "RK-9.3-009",
-      "clause_sha256": "f9e37ad2e4a38931b163f696de14c223e3e1478d217b8cde32d637ac1ea91c5b",
+      "requirement": "RK-9.3-031",
+      "clause_sha256": "e7ab87bfac41ee9079203183e3febc905a7973c025e18b4f8eca97df9806bd35",
       "scope": "BEFORE_BROADCAST through process_inbound, including fail-open/fail-closed behavior where configured.",
       "coverage": "partial",
       "review": "The scenario expectations were read against this clause; this mapping does not cover every trigger or invalid payload.",
@@ -13334,8 +13346,8 @@
     },
     {
       "id": "human-input-answer-and-timeout",
-      "requirement": "RK-9.3-017",
-      "clause_sha256": "429529bc568fcdf03788636c667de6a662cbd5b38124c0da9a5f31c1ce4b0980",
+      "requirement": "RK-9.3-112",
+      "clause_sha256": "a88d1a092c254b82d4243e7e390df03729db9d6de8e02aa18b93d74c7ef5995b",
       "scope": "AI text-channel human input: notification-independent answers, timeout precedence and refusal versus failure.",
       "coverage": "partial",
       "review": "Reviewed against the Python human-input tests and Rust channel tests. The held notification is released only after the next model generation is reached. Voice/conference doors and native handler lifecycle proofs are not claimed by these shared scenarios. Live request transitions have Python source references and native Rust proofs (RMK-1637).",
@@ -20017,7 +20029,7 @@
     },
     {
       "id": "acp-external-tool-report-chain",
-      "requirement": "RK-9.3-014",
+      "requirement": "RK-9.3-056",
       "scope": "No-handler external reports: SYNC chaining and ASYNC original outcome, including a report interrupted after its completed result.",
       "assertions": [
         {
@@ -20088,7 +20100,7 @@
         "ExternalToolHandler policy and permission decisions are not covered.",
         "This link does not credit local tool result replacement, structured-copy clearing or every hook error mode."
       ],
-      "clause_sha256": "46c8987a6f44c6c30fca691daf0e6c4762220e5013732f1593a3447fc33904b0",
+      "clause_sha256": "da32797fdff24cd86c0a28f9a87559c57bbcfe62c9f075f6eb3501a8ddf4fcf0",
       "coverage": "partial",
       "tests": [],
       "review": "Full independent review read Python source tests, scenarios, RFC and Rust. Missing tool output first failed on Rust, then passed after the port. Review additionally reproduced unbounded binary rows/errors and a stale hook room context; fixes have separate red/green evidence. Final gate and receipt status is recorded separately, not inferred from this review statement."
@@ -20392,8 +20404,8 @@
     },
     {
       "id": "acp-default-permission-outcomes",
-      "requirement": "RK-9.3-015",
-      "clause_sha256": "57749e14c9f99287b547a59ee42456e3de129d4f566250ee53b0a2c3b04a3d49",
+      "requirement": "RK-9.3-072",
+      "clause_sha256": "58df257a2971efccc871a5b774fd5c7c3f7c5d9fad0337162909d8576c158e03",
       "coverage": "partial",
       "scope": "Active ACP room calls refused without a handler, including unannounced calls and a call completed despite refusal.",
       "assertions": [
@@ -20689,8 +20701,8 @@
     },
     {
       "id": "acp-handler-failed-approval-hook",
-      "requirement": "RK-9.3-007",
-      "clause_sha256": "6cb9b6f41ded3ecd8938c04708397a098d863e6e7109af6bc3e24940576afeb5",
+      "requirement": "RK-9.3-027",
+      "clause_sha256": "48e467709489418be5495c39cd1ce4d43a3ab1c2d31c30ae519191df54c5dea6",
       "coverage": "partial",
       "scope": "Projected hook reports and stored ends after an approval-hook failure: a call left open is refused; a call completed by the agent is served with refused_but_ran. Observer error_detail is checked by substring.",
       "assertions": [
@@ -20732,8 +20744,8 @@
     },
     {
       "id": "acp-handler-outcome-reports",
-      "requirement": "RK-9.3-015",
-      "clause_sha256": "57749e14c9f99287b547a59ee42456e3de129d4f566250ee53b0a2c3b04a3d49",
+      "requirement": "RK-9.3-074",
+      "clause_sha256": "45bf93fdeb429272ff0c808f705e1173882690cb9368d131331c3c261cb4ddc4",
       "coverage": "partial",
       "scope": "Recorded ACP outcomes and hook callback counts for configured decisions and report overrides, including fixed failure envelopes, refused_but_ran, fallback when reporting raises before delegation, and no duplicate after delegation.",
       "assertions": [
@@ -21055,8 +21067,8 @@
     },
     {
       "id": "acp-handler-report-chain",
-      "requirement": "RK-9.3-014",
-      "clause_sha256": "46c8987a6f44c6c30fca691daf0e6c4762220e5013732f1593a3447fc33904b0",
+      "requirement": "RK-9.3-056",
+      "clause_sha256": "da32797fdff24cd86c0a28f9a87559c57bbcfe62c9f075f6eb3501a8ddf4fcf0",
       "coverage": "partial",
       "scope": "Report-only SYNC rewrites reach the next SYNC hook while ASYNC observes the provider result.",
       "assertions": [
@@ -21692,8 +21704,8 @@
     },
     {
       "id": "tool-structured-handler-copies",
-      "requirement": "RK-9.3-014",
-      "clause_sha256": "46c8987a6f44c6c30fca691daf0e6c4762220e5013732f1593a3447fc33904b0",
+      "requirement": "RK-9.3-057",
+      "clause_sha256": "f37863bd39721c1c4f5b89be39ed836743c095abc8f6945fb6372f252c5330a0",
       "coverage": "partial",
       "scope": "Local AI handler copies reach result hooks and persisted end rows. Shared cases cover replacement, clearing, text-only rewrite, invalid copy normalization, withholding, unsuccessful outcomes, parallel calls and cancellation after a handler write.",
       "review": "Python source tests and shared scenarios passed first. Rust witnesses use the actual current_tool_call record, not an adapter-only payload. Independent review verified per-call identity, successful-result snapshot and MCP publication. Object patches do not establish exact key equality: empty-object identity is proven separately by native tests and is not execution credit here.",
@@ -23578,8 +23590,8 @@
     },
     {
       "id": "phase4-local-script-failures",
-      "requirement": "RK-9.3-015",
-      "clause_sha256": "57749e14c9f99287b547a59ee42456e3de129d4f566250ee53b0a2c3b04a3d49",
+      "requirement": "RK-9.3-086",
+      "clause_sha256": "0aa9db433042290a1e751a9e82673e0c6cfb0a21f1fc8e0514e9ee0fa38e9318",
       "scope": "Script unknown-skill and policy refusals, raised executor failures, plus AI shutdown reports preserving executed arguments and distinguishing unstarted calls.",
       "coverage": "partial",
       "review": "Independent code/scenario review accepted the local ScriptExecutor port after reproducing and fixing discovery and activation-hint regressions. Python scenarios passed before Rust. Native symlink, helper failure and shutdown tests complement the shared corpus; source references are not execution receipts.",
@@ -24558,7 +24570,7 @@
     },
     {
       "id": "phase4-provider-served-text-calls",
-      "requirement": "RK-9.3-013",
+      "requirement": "RK-9.3-043",
       "scope": "Provider-owned text call markers, pending controls, local-name collisions, per-occurrence reporting, mixed replay, bounded copies and stopped/cut report boundaries.",
       "tests": [
         {
@@ -24627,7 +24639,7 @@
           "proves": "The provider-served branch publishes one tool end when the reader stops on END; the native kit/transport/subscriber test also checks the exact cut boundary and duration distinction. Local-tool variants are not newly covered."
         }
       ],
-      "clause_sha256": "de409f03d37a2c55f2a2e3e5fdb807c24cb1e10f839db6501966d4f5cd663fb6",
+      "clause_sha256": "0c9cb7fecaafabf7f2f7f476b4d1413269a9c87af1071524b68a4fa2e6a022ba",
       "coverage": "partial",
       "review": "Independent source and full product reviews accepted 44 shared scenarios and separate native conversion, marker and cancellation boundaries. The review retains the no-handler/text limitations and does not assign unobserved fields or execution backends.",
       "assertions": [
@@ -25342,7 +25354,7 @@
     },
     {
       "id": "phase4-provider-served-original-reports",
-      "requirement": "RK-9.3-014",
+      "requirement": "RK-9.3-056",
       "scope": "Text provider-owned outcomes remain reports: blocking or clearing SYNC hooks cannot change the original outcome observed after them.",
       "tests": [
         {
@@ -25356,7 +25368,7 @@
           "proves": "Text modes preserve the original success or failure marker and one report; realtime backend variants are outside this slice."
         }
       ],
-      "clause_sha256": "46c8987a6f44c6c30fca691daf0e6c4762220e5013732f1593a3447fc33904b0",
+      "clause_sha256": "da32797fdff24cd86c0a28f9a87559c57bbcfe62c9f075f6eb3501a8ddf4fcf0",
       "coverage": "partial",
       "review": "Independent source and full product reviews accepted 44 shared scenarios and separate native conversion, marker and cancellation boundaries. The review retains the no-handler/text limitations and does not assign unobserved fields or execution backends.",
       "assertions": [
