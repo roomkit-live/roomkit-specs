@@ -65,6 +65,11 @@
     "RK-12.8.5-007",
     "RK-12.8.7-005",
     "RK-7.3-002",
+    "RK-9.1-001",
+    "RK-9.2-001",
+    "RK-9.2-002",
+    "RK-9.2-003",
+    "RK-9.2-004",
     "RK-9.3-001",
     "RK-9.3-006",
     "RK-9.3-007",
@@ -76,7 +81,14 @@
     "RK-9.3-014",
     "RK-9.3-015",
     "RK-9.3-016",
-    "RK-9.3-017"
+    "RK-9.3-017",
+    "RK-9.4-001",
+    "RK-9.4-002",
+    "RK-9.4-004",
+    "RK-9.4-005",
+    "RK-9.4-006",
+    "RK-9.5.1-001",
+    "RK-9.6-001"
   ],
   "links": [
     {
@@ -1893,8 +1905,8 @@
     },
     {
       "id": "response-hook-scope-restoration",
-      "requirement": "RK-9.4-002",
-      "clause_sha256": "61c5d22a05f6f05e6e28732fe9edb08078bdb1e4aae1d936165ccaa94973ed3c",
+      "requirement": "RK-9.4-016",
+      "clause_sha256": "3b68ece9a18e380dcc6087bdc71e29d8a52977631086737ae9ee25ff6da4e59a",
       "scope": "BEFORE_BROADCAST cannot widen or clear an answer scope, write internal visibility or widen a framework internal record.",
       "coverage": "partial",
       "review": "Read each scenario assertion and each named Python test against this exact clause. Lists assert cardinality and order; object fields assert only the named contract. Shared execution and specialized source evidence remain distinct.",
@@ -2147,8 +2159,8 @@
     },
     {
       "id": "core-hook-injection-passes",
-      "requirement": "RK-9.4-004",
-      "clause_sha256": "ea7ab507e9b3a01ffcd4438139b66ac896a28e378fc7f94f0ca354eec6d33472",
+      "requirement": "RK-9.4-021",
+      "clause_sha256": "5d2c35e4758cfaaee060a9443fa9a490912a76b05e0aac786acb49160da168e7",
       "scope": "Injection pass ordering, off-lock collection, refusal before storage, authority and mutation recipients, next-turn history, plus specialized cancellation, late-failure and Python model-transport evidence.",
       "coverage": "partial",
       "review": "Read the exact assertions against §9.4 and their Python reference tests. Event aliases in mutation injections are resolved before return, so a missing target cannot masquerade as an authorization refusal. The forced Python _name_held failure after a blocked decision has no fallible counterpart in Rust: delivery_keys::Named::decided returns immediately for result.blocked; driver::inbound::Record::decide then records the decision without a user callback. Existing failed-lock-release scenarios are not asserted to exercise that private fault point. Re-read after making the two interleaving fixtures' lock manager explicit: the same steps and assertions establish separate locked passes with a controlled FIFO queue; the backing store remains the runner's store.",
@@ -2403,8 +2415,8 @@
     },
     {
       "id": "core-hook-injection-triggers",
-      "requirement": "RK-9.4-006",
-      "clause_sha256": "d81c6da5cc14e2eeb56f7e4a6f7db9c890ee264e3f52178895d020f0a04d585a",
+      "requirement": "RK-9.4-039",
+      "clause_sha256": "80a8035092cad895093c02b131cf3dccbaaedb370ae3bfe757e8aa4f261b2e52",
       "scope": "All fourteen Python SYNC trigger names in the generic engine, BEFORE_DELIVER and ON_VERIFICATION_REQUIRED end-to-end, and identity challenge exceptions. Rust implements ten of these trigger names.",
       "coverage": "partial",
       "review": "Read both generic engine tests and the actual caller tests; the Python matrix checks fourteen trigger names and decisions. Rust tests the ten it implements. Neither matrix invokes every typed caller with its own payload.",
@@ -2461,8 +2473,8 @@
     },
     {
       "id": "core-hook-injected-instruction",
-      "requirement": "RK-9.4-005",
-      "clause_sha256": "7efde505e7065cd2a01ba0fbcb19d38ef3b9f4188fa1646b44e88463bda16561",
+      "requirement": "RK-9.4-036",
+      "clause_sha256": "c01272fc121d7e3da653bce743bcaeb4bcd88f7134a69f77e8455378944e9bf8",
       "scope": "An INSTRUCTION returned by BEFORE_BROADCAST is dropped before its own pass; ordinary injections, tasks and observations remain.",
       "coverage": "complete",
       "review": "The exact hook list excludes the instruction, timelines and deliveries exclude it, and the notice, task and observation survive. The specialized Python test asserts the warning; Rust has the matching targeted warning test. No aggregate Rust execution receipt is fabricated.",
@@ -5997,8 +6009,8 @@
     },
     {
       "id": "core-room-timer-hook-context",
-      "requirement": "RK-9.2-004",
-      "clause_sha256": "2d70185a5d00a5381e22abb0558256fa197f361ef1c00b7d37ccc9eceebfe5a9",
+      "requirement": "RK-9.2-115",
+      "clause_sha256": "420852d650bd69f87385946e273f0d25add64ad3b55754672a1904e6fb255c76",
       "scope": "Timer hooks receive one final stored context, including activity committed after the status write.",
       "coverage": "partial",
       "review": "Reviewed each source method, scenario fixture and assertion against the named clause. Public calls forward to the framework API, not the store. Optional lifecycle rows are normalized out; specialized tests cover their exact counts, conditional writes and cancellation. The streamed pre-hook status cache is MAY in §5.1, so its exact read count and the first externally-refused row hook are not treated as mandatory. This link complements earlier room transition evidence; it does not certify unrelated capabilities or every store transaction.",
@@ -15479,8 +15491,8 @@
     },
     {
       "id": "kit-executor-registration",
-      "requirement": "RK-9.1-001",
-      "clause_sha256": "e5eedebd118b5dd3e144a9447657c64e02d4f220728d3a3ce585edebeb3bd36b",
+      "requirement": "RK-9.1-017",
+      "clause_sha256": "19842baf8132a2a3885563265c11ddc6390307f78a95056dbdced18e19edd3d6",
       "scope": "Named executor hooks: refusal of invalid names/modes and collisions, stable equal-priority activation order and per-trigger replacement.",
       "coverage": "partial",
       "review": "Read the Python contracts, the RFC and the paired Rust implementation. Each successful turn explicitly checks its outcome and model call count; rejected operations and hook sequences are asserted separately. Independent code review found and corrected the registration return and previous-turn record defects. HITL c1206a93 approved clarifying repeated activation as a no-op; its assertion and the collision refusals are unchanged. Native source links are not scenario execution receipts.",

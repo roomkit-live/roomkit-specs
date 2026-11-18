@@ -5529,14 +5529,14 @@ and no consumption.
 
 ## 9. Hook System
 
-<!-- rfc: {"id": "RK-9-001", "kind": "behavior", "applies": "§9 Hook System; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-9-001", "kind": "behavior", "applies": "§9 Hook System; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 Hooks are the primary extensibility mechanism. They allow integrators to
 intercept, block, modify, and react to events in the pipeline.
 <!-- /rfc -->
 
 ### 9.1 Hook Registration
 
-<!-- rfc: {"id": "RK-9.1-001", "kind": "behavior", "applies": "§9.1 Hook Registration; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-9.1-002", "kind": "behavior", "applies": "§9.1: the fields of a hook registration, their defaults and their filters. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 HookRegistration
 ├── trigger: HookTrigger                    # When this hook fires
@@ -5552,26 +5552,29 @@ HookRegistration
 └── needs_lock: bool = true                 # BEFORE_BROADCAST SYNC only: false runs
                                             # the hook off the room lock (§9.5.1)
 ```
+<!-- /rfc -->
 
-Hooks MAY be registered globally (apply to all rooms) or per-room. A room's
+<!-- rfc: {"id": "RK-9.1-003", "kind": "behavior", "applies": "§9.1: where an integrator registers a hook, on the kit for every room or for one room; the implementation honours either choice. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+Hooks MAY be registered globally (apply to all rooms) or per-room.<!-- /rfc --> <!-- rfc: {"id": "RK-9.1-004", "kind": "behavior", "applies": "§9.1: the payloads a room's hook fires for, and the chains it joins (§9.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room's
 hook fires for that room's payloads alone, its turns' tool calls among them,
-in the room's chains beside the global hooks (§9.3). Registered through the
+in the room's chains beside the global hooks (§9.3).<!-- /rfc --> <!-- rfc: {"id": "RK-9.1-005", "kind": "behavior", "applies": "§9.1: a room hook registered through the kit for a room id no room holds yet. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Registered through the
 kit for a room id no room holds yet, the hook is held for that room and fires
 once a room of that id is created: the kit's registration reads the room with
 the organization the caller names (§17.2), or, naming none, whether a room of
-any organization holds the id. A level below the kit that holds no store
+any organization holds the id.<!-- /rfc --> <!-- rfc: {"id": "RK-9.1-006", "kind": "behavior", "applies": "§9.1: a room hook registered below the kit (on a hook engine, or given to an executor), which holds no store. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A level below the kit that holds no store
 reads none (§17.2): a hook registered there, on a hook engine or given
-straight to an executor, counts as one registered while a room held the id.
+straight to an executor, counts as one registered while a room held the id.<!-- /rfc --><!-- rfc: {"id": "RK-9.1-007", "kind": "behavior", "applies": "§9.1: the channel filters of a hook on a trigger that fires on the turn executor (§10.6.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 On a
 trigger that fires on the turn executor (§10.6.6), the channel filters read the
 turn's agent: `channel_ids` its id, `channel_types` its type when the trigger's
-payload carries it. A hook on such a trigger registered on the kit is a
+payload carries it.<!-- /rfc --> <!-- rfc: {"id": "RK-9.1-008", "kind": "behavior", "applies": "§9.1: a hook on a trigger that fires on the turn executor, registered on the kit (§10.6.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A hook on such a trigger registered on the kit is a
 registration on the kit's own executor; implementations MUST refuse one that a
 channel the kit holds by its declaration alone could fire, whose turns run on
-another executor (§10.6.6). A room hook on such a trigger for those channels
+another executor (§10.6.6).<!-- /rfc --> <!-- rfc: {"id": "RK-9.1-009", "kind": "behavior", "applies": "§9.1: a room hook on a trigger that fires on the turn executor, for channels whose turns run on other executors (§10.6.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room hook on such a trigger for those channels
 is registered on the executors under a name, which the room's owner keeps for
-the room (§10.6.6).
+the room (§10.6.6).<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.1-010", "kind": "behavior", "applies": "§9.1: the kit that creates a room again under the id of one the store no longer holds; the hooks registered while no room held the id are RK-9.1-011's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A room's hooks end with the room. Once the store no longer holds a room
 (deleted from the store, which is the only way a room ends without its id
 staying taken, §14.3), a room created again under its id is another room,
@@ -5580,40 +5583,43 @@ the room hooks registered while the earlier room held the id, and the names
 enabled for that room (§10.6.6), before anything announces the new room
 (the start of its recordings, §12.11, and its creation), as it forgets the
 strategy recorded for the id (§19.7), so that none of them runs for the new
-room and their names are free in its scope. Those registered
+room and their names are free in its scope.<!-- /rfc --> <!-- rfc: {"id": "RK-9.1-011", "kind": "behavior", "applies": "§9.1: the room hooks registered for an id while no room held it, once a room of that id is created again. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Those registered
 while no room held the id are held for the new room, fire for its creation,
-and end with it in turn.
+and end with it in turn.<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.1-012", "kind": "behavior", "applies": "§9.1: a kit holding room hooks or enabled names for a room id, which another process may create again. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 So in every process, another process may create the room again: a kit
 MUST keep the creation mark (`created_at`) of the room an id's room hooks
 and enabled names are registered for, and compare it with the room in hand
 each time they fire, ASYNC hooks started apart from their operation
-included, a turn starts or a registration reads the room. A later mark
+included, a turn starts or a registration reads the room.<!-- /rfc --> <!-- rfc: {"id": "RK-9.1-013", "kind": "behavior", "applies": "§9.1: room hooks and enabled names registered for a room whose creation mark is earlier than the room in hand's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A later mark
 means the room they were registered for is gone: they are forgotten first,
 as the kit that creates the room forgets them, and an operation that read
-them before runs none of them. An earlier mark is a room gone already:
+them before runs none of them.<!-- /rfc --> <!-- rfc: {"id": "RK-9.1-014", "kind": "behavior", "applies": "§9.1: the work of a room gone already, whose creation mark is earlier than the one the id's room hooks are registered for. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An earlier mark is a room gone already:
 its work, still running, runs none of the id's room hooks and forgets
-none. Those registered while no room held the id, and those registered
-below the kit, which read no room, are the first room's they are read with.
+none.<!-- /rfc --> <!-- rfc: {"id": "RK-9.1-015", "kind": "behavior", "applies": "§9.1: room hooks registered while no room held the id, or below the kit, which read no creation mark. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Those registered while no room held the id, and those registered
+below the kit, which read no room, are the first room's they are read with.<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.1-016", "kind": "behavior", "applies": "§9.1: a hook's name in its scope, the kit's or one room's, at registration; named room hooks on the turn executors are RK-9.1-017's exception. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A hook's `name` is unique within its scope: the kit's hooks, registered
 globally, or the hooks of one room. Implementations MUST refuse at
 registration a hook whose name a hook of the same scope already holds, so
-that a block names one hook of its scope (`blocked_by`, §9.3). A room hook
+that a block names one hook of its scope (`blocked_by`, §9.3).<!-- /rfc --> <!-- rfc: {"id": "RK-9.1-017", "kind": "behavior", "applies": "§9.1: a room hook registered on the turn executors under a name (§10.6.6), the exception to RK-9.1-016. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room hook
 registered on the turn executors under a name is the exception: on an
 executor a name carries one hook per trigger, and registering it again
 replaces it, since every executor runs the host's one setup function
-(§10.6.6); the name a room enables joins the room's scope. An
+(§10.6.6); the name a room enables joins the room's scope.<!-- /rfc --> <!-- rfc: {"id": "RK-9.1-018", "kind": "behavior", "applies": "§9.1: an implementation that names a hook the integrator left unnamed. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An
 implementation that gives a hook a default name, when the integrator gives
-none, MUST make that name unique within its scope. A hook MUST NOT be named
+none, MUST make that name unique within its scope.<!-- /rfc --> <!-- rfc: {"id": "RK-9.1-019", "kind": "behavior", "applies": "§9.1: a hook's name at registration, against the values the framework writes in blocked_by. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A hook MUST NOT be named
 after a value the framework writes in `blocked_by` (`source_read_only`,
 `source_muted`, `source_unbound`, `event_chain_depth_limit`,
-`reentry_loop_cap`): its block would read as the framework's refusal.
+`reentry_loop_cap`): its block would read as the framework's refusal.<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.1-020", "kind": "behavior", "applies": "§9.1: a registration with needs_lock = false. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `needs_lock = false` is only meaningful on a SYNC `BEFORE_BROADCAST` hook;
 implementations MUST reject it on any other trigger or execution mode at
-registration. Likewise `fail_closed = true` MUST be rejected on an ASYNC hook,
-which cannot block. A room's `BEFORE_BROADCAST` SYNC hooks MUST satisfy one ordering
+registration.<!-- /rfc --> <!-- rfc: {"id": "RK-9.1-021", "kind": "behavior", "applies": "§9.1: a registration with fail_closed = true. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Likewise `fail_closed = true` MUST be rejected on an ASYNC hook,
+which cannot block.<!-- /rfc --> <!-- rfc: {"id": "RK-9.1-022", "kind": "behavior", "applies": "§9.1: the priorities of a room's BEFORE_BROADCAST SYNC hooks, locked and off-lock (§9.5.1), at registration. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room's `BEFORE_BROADCAST` SYNC hooks MUST satisfy one ordering
 rule: no hook that needs the lock may have a lower priority than a hook that
 does not. Off-lock hooks run first (§9.5.1), so a locked hook ordered before
 an off-lock one could not run in its declared place; implementations MUST
@@ -5623,7 +5629,7 @@ than silently reorder.
 
 ### 9.2 Hook Triggers
 
-<!-- rfc: {"id": "RK-9.2-001", "kind": "behavior", "applies": "§9.2 Hook Triggers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-9.2-005", "kind": "behavior", "applies": "§9.2: which triggers an implementation must fire (Section 26.1 and each feature's section), which the table's Status column does not say. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **HookTrigger** enumeration. The **Status** column distinguishes triggers the
 reference implementation emits today (**Implemented** — 83 as of this revision)
 from those specified for a forthcoming capability but not yet emitted
@@ -5632,169 +5638,172 @@ has moved elsewhere (**Superseded**). The column tells what one
 implementation emits and is not the conformance list: the triggers an
 implementation MUST fire are those Section 26.1 lists for Level 0, per step,
 and, for a feature it provides, those the feature's section names. Planned
-rows are normative design intent for the named capability.
+rows are normative design intent for the named capability.<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.2-006", "kind": "behavior", "applies": "§9.2: a hook's declared mode, SYNC or ASYNC, at registration on any trigger; the implementation honours either. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 The **Execution** column says how the framework runs the trigger; it does not
 restrict registration, and a hook may be registered SYNC or ASYNC on any
-trigger. On a SYNC trigger the hooks registered SYNC run as the chain of
+trigger.<!-- /rfc --> <!-- rfc: {"id": "RK-9.2-007", "kind": "behavior", "applies": "§9.2: the hooks registered SYNC and ASYNC on a SYNC trigger; how ON_TOOL_CALL's observers hear a block is §9.3's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->On a SYNC trigger the hooks registered SYNC run as the chain of
 Section 9.3, which may block or modify; then, unless the chain blocked, the
 hooks registered ASYNC run as observers on the payload it left (ON_TOOL_CALL
 tells its observers of a block too, Section 9.3), as the work of the cascade
-that fired the trigger (§8.3, §9.5.1). BEFORE_BROADCAST's observers start
+that fired the trigger (§8.3, §9.5.1).<!-- /rfc --> <!-- rfc: {"id": "RK-9.2-008", "kind": "behavior", "applies": "§9.2: the ASYNC hooks registered on BEFORE_BROADCAST. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->BEFORE_BROADCAST's observers start
 once the event's pass is over, its delivery set placed in the room's lane
-(§10.1 step 13). On an ASYNC trigger every
+(§10.1 step 13).<!-- /rfc --> <!-- rfc: {"id": "RK-9.2-009", "kind": "behavior", "applies": "§9.2: the hooks registered on an ASYNC trigger, whatever their declared mode. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->On an ASYNC trigger every
 registered hook runs, concurrently, whatever its declared mode, and what it
-returns is discarded. ON_IDENTITY_AMBIGUOUS and ON_IDENTITY_UNKNOWN are decided
+returns is discarded.<!-- /rfc --> <!-- rfc: {"id": "RK-9.2-010", "kind": "behavior", "applies": "§9.2: a hook registered on ON_IDENTITY_AMBIGUOUS or ON_IDENTITY_UNKNOWN, beside the identity hooks of Section 11.2. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_IDENTITY_AMBIGUOUS and ON_IDENTITY_UNKNOWN are decided
 by the identity hooks of Section 11.2, registered apart; a hook registered on
-them as above runs after those as an observer. The triggers of the table of
+them as above runs after those as an observer.<!-- /rfc --> <!-- rfc: {"id": "RK-9.2-011", "kind": "behavior", "applies": "§9.2: where a trigger fires, on the turn executor that hosts the channel (§10.6.6) or on the room's owner. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The triggers of the table of
 §10.6.6 fire on the turn executor that hosts the channel, every other trigger
-on the room's owner.
+on the room's owner.<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.2-012", "kind": "behavior", "applies": "§9.2 HookTrigger table (its header), the BEFORE_BROADCAST row: when BEFORE_BROADCAST fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 | Trigger | Execution | Status | When It Fires |
 |---|---|---|---|
 | BEFORE_BROADCAST | SYNC | Implemented | Before event reaches channels — can block/modify; its ASYNC observers start once the event's pass is over (§10.1 step 13) |
-| AFTER_BROADCAST | ASYNC | Implemented | After all channels have processed the event |
-| ON_EVENT_UPDATED | ASYNC | Implemented | A persisted event's stored state was mutated (an EDIT committed, §10.3, or direct `update_event()`) |
-| ON_EVENT_DELETED | ASYNC | Implemented | A persisted event was deleted (a soft DELETE committed, §10.3, or direct hard `delete_event()`, once per event removed) |
-| ON_CHANNEL_ATTACHED | ASYNC | Implemented | Channel attached to a room |
-| ON_CHANNEL_DETACHED | ASYNC | Implemented | Channel detached from a room |
-| ON_CHANNEL_MUTED | ASYNC | Implemented | Channel muted in a room: its binding's `muted` changed to true (§7.2) |
-| ON_CHANNEL_UNMUTED | ASYNC | Implemented | Channel unmuted in a room: its binding's `muted` changed to false (§7.2) |
-| ON_ROOM_CREATED | ASYNC | Implemented | New room created; the creation awaits its hooks (§9.3) |
-| ON_ROOM_PAUSED | ASYNC | Implemented | Room transitioned to PAUSED |
-| ON_ROOM_CLOSED | ASYNC | Implemented | Room transitioned to CLOSED |
-| ON_IDENTITY_AMBIGUOUS | SYNC | Implemented | Multiple identity candidates found |
-| ON_IDENTITY_UNKNOWN | SYNC | Implemented | No identity match found |
-| ON_PARTICIPANT_IDENTIFIED | ASYNC | Implemented | Participant identity resolved |
-| ON_VERIFICATION_REQUIRED | SYNC | Implemented | An identified sender's message arrives while the identity is not verified — the hook holds, passes or blocks it (§11.7.3) |
-| ON_VERIFICATION_COMPLETED | ASYNC | Implemented | A verification request completed (§11.7.2) |
-| ON_VERIFICATION_ENDED | ASYNC | Implemented | A verification or a request ended: expired, revoked, failed (§11.7.5) |
-| ON_PARTICIPANT_JOINED | ASYNC | Implemented | Explicit member join via `add_member` |
-| ON_PARTICIPANT_LEFT | ASYNC | Implemented | Explicit member leave via `remove_member` |
-| ON_PARTICIPANT_UPDATED | ASYNC | Implemented | Member presentation changed via `rename_member` |
-| ON_TASK_CREATED | ASYNC | Implemented | A task was created |
-| ON_DELIVERY_STATUS | ASYNC | Implemented | Delivery status webhook from provider |
-| ON_ERROR | ASYNC | Implemented | A turn failed, or a speech-to-speech provider reported an error; payload and categories below the table |
-| ON_SPEECH_START | ASYNC | Implemented | Audio pipeline detected speech start (voice; per conference lane) |
-| ON_SPEECH_END | ASYNC | Implemented | Audio pipeline detected speech end (voice; per conference lane) |
-| ON_TRANSCRIPTION | SYNC | Implemented | After STT transcription (voice) — can modify |
-| BEFORE_TTS | SYNC | Implemented | Before TTS synthesis (voice) — can block or modify the text; once per sentence on a streamed response |
-| AFTER_TTS | ASYNC | Implemented | After TTS synthesis (voice) |
-| ON_BARGE_IN | ASYNC | Implemented | User interrupted TTS playback (voice) |
-| ON_TTS_CANCELLED | ASYNC | Implemented | TTS was cancelled (voice) |
-| ON_PARTIAL_TRANSCRIPTION | ASYNC | Implemented | Streaming partial STT result (voice) |
-| ON_VAD_SILENCE | ASYNC | Implemented | Audio pipeline detected silence (voice) |
-| ON_VAD_AUDIO_LEVEL | ASYNC | Implemented | Audio pipeline audio level update (voice) |
-| ON_INPUT_AUDIO_LEVEL | ASYNC | Implemented | Per-frame inbound audio level, throttled to ~10/sec (voice) |
-| ON_OUTPUT_AUDIO_LEVEL | ASYNC | Implemented | Per-frame outbound audio level, throttled to ~10/sec (voice) |
-| ON_SPEAKER_CHANGE | ASYNC | Implemented | Audio pipeline or a diarizing STT detected a speaker change (Section 12.2.3) |
-| ON_DTMF | ASYNC | Implemented | Audio pipeline detected a DTMF tone |
-| ON_TURN_COMPLETE | ASYNC | Implemented | Turn detector determined user turn is complete |
-| ON_TURN_INCOMPLETE | ASYNC | Implemented | Turn detector determined user is still speaking (for logging) |
-| ON_BACKCHANNEL | ASYNC | Implemented | Backchannel detector classified speech as backchannel |
-| ON_SESSION_STARTED | ASYNC | Implemented | Session started on any channel type (voice: audio path live; text: room auto-created) |
-| ON_RECORDING_STARTED | ASYNC | Implemented | Recording started for a voice session, a conference track (Section 12.10.8) or a room (Section 12.11); the start awaits its hooks (§9.3) |
-| ON_RECORDING_STOPPED | ASYNC | Implemented | Recording stopped for a voice session, a conference track or a room, result available |
-| ON_REALTIME_TOOL_CALL | SYNC | Superseded | Speech-to-speech tool call — superseded by `ON_TOOL_CALL` (unified across AI and realtime channels) |
-| ON_REALTIME_TEXT_INJECTED | ASYNC | Implemented | Text injected into realtime session |
-| ON_REALTIME_DELEGATION | ASYNC | Implemented | Speech-to-speech model handed reasoning or tool use to a backend, hosted or integrator-side (Section 12.4.1); carries the delegation id and its target |
-| ON_PROTOCOL_TRACE | ASYNC | Implemented | Transport-level protocol trace emitted (SIP, RTP, etc.) |
-| BEFORE_BRIDGE_AUDIO | SYNC | Implemented | Before an audio frame is forwarded via bridge — can block/modify (voice) |
-| | | | |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-013", "kind": "behavior", "applies": "§9.2 HookTrigger table, the AFTER_BROADCAST row: when AFTER_BROADCAST fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->AFTER_BROADCAST | ASYNC | Implemented | After all channels have processed the event |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-014", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_EVENT_UPDATED row: when ON_EVENT_UPDATED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_EVENT_UPDATED | ASYNC | Implemented | A persisted event's stored state was mutated (an EDIT committed, §10.3, or direct `update_event()`) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-015", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_EVENT_DELETED row: when ON_EVENT_DELETED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_EVENT_DELETED | ASYNC | Implemented | A persisted event was deleted (a soft DELETE committed, §10.3, or direct hard `delete_event()`, once per event removed) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-016", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_CHANNEL_ATTACHED row: when ON_CHANNEL_ATTACHED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_CHANNEL_ATTACHED | ASYNC | Implemented | Channel attached to a room |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-017", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_CHANNEL_DETACHED row: when ON_CHANNEL_DETACHED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_CHANNEL_DETACHED | ASYNC | Implemented | Channel detached from a room |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-018", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_CHANNEL_MUTED row: when ON_CHANNEL_MUTED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_CHANNEL_MUTED | ASYNC | Implemented | Channel muted in a room: its binding's `muted` changed to true (§7.2) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-019", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_CHANNEL_UNMUTED row: when ON_CHANNEL_UNMUTED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_CHANNEL_UNMUTED | ASYNC | Implemented | Channel unmuted in a room: its binding's `muted` changed to false (§7.2) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-020", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_ROOM_CREATED row: when ON_ROOM_CREATED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_ROOM_CREATED | ASYNC | Implemented | New room created; the creation awaits its hooks (§9.3) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-021", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_ROOM_PAUSED row: when ON_ROOM_PAUSED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_ROOM_PAUSED | ASYNC | Implemented | Room transitioned to PAUSED |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-022", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_ROOM_CLOSED row: when ON_ROOM_CLOSED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_ROOM_CLOSED | ASYNC | Implemented | Room transitioned to CLOSED |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-023", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_IDENTITY_AMBIGUOUS row: when ON_IDENTITY_AMBIGUOUS fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_IDENTITY_AMBIGUOUS | SYNC | Implemented | Multiple identity candidates found |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-024", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_IDENTITY_UNKNOWN row: when ON_IDENTITY_UNKNOWN fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_IDENTITY_UNKNOWN | SYNC | Implemented | No identity match found |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-025", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_PARTICIPANT_IDENTIFIED row: when ON_PARTICIPANT_IDENTIFIED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_PARTICIPANT_IDENTIFIED | ASYNC | Implemented | Participant identity resolved |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-026", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_VERIFICATION_REQUIRED row: when ON_VERIFICATION_REQUIRED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_VERIFICATION_REQUIRED | SYNC | Implemented | An identified sender's message arrives while the identity is not verified — the hook holds, passes or blocks it (§11.7.3) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-027", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_VERIFICATION_COMPLETED row: when ON_VERIFICATION_COMPLETED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_VERIFICATION_COMPLETED | ASYNC | Implemented | A verification request completed (§11.7.2) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-028", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_VERIFICATION_ENDED row: when ON_VERIFICATION_ENDED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_VERIFICATION_ENDED | ASYNC | Implemented | A verification or a request ended: expired, revoked, failed (§11.7.5) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-029", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_PARTICIPANT_JOINED row: when ON_PARTICIPANT_JOINED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_PARTICIPANT_JOINED | ASYNC | Implemented | Explicit member join via `add_member` |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-030", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_PARTICIPANT_LEFT row: when ON_PARTICIPANT_LEFT fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_PARTICIPANT_LEFT | ASYNC | Implemented | Explicit member leave via `remove_member` |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-031", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_PARTICIPANT_UPDATED row: when ON_PARTICIPANT_UPDATED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_PARTICIPANT_UPDATED | ASYNC | Implemented | Member presentation changed via `rename_member` |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-032", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_TASK_CREATED row: when ON_TASK_CREATED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_TASK_CREATED | ASYNC | Implemented | A task was created |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-033", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_DELIVERY_STATUS row: when ON_DELIVERY_STATUS fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_DELIVERY_STATUS | ASYNC | Implemented | Delivery status webhook from provider |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-034", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_ERROR row: when ON_ERROR fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_ERROR | ASYNC | Implemented | A turn failed, or a speech-to-speech provider reported an error; payload and categories below the table |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-035", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_SPEECH_START row: when ON_SPEECH_START fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_SPEECH_START | ASYNC | Implemented | Audio pipeline detected speech start (voice; per conference lane) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-036", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_SPEECH_END row: when ON_SPEECH_END fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_SPEECH_END | ASYNC | Implemented | Audio pipeline detected speech end (voice; per conference lane) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-037", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_TRANSCRIPTION row: when ON_TRANSCRIPTION fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_TRANSCRIPTION | SYNC | Implemented | After STT transcription (voice) — can modify |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-038", "kind": "behavior", "applies": "§9.2 HookTrigger table, the BEFORE_TTS row: when BEFORE_TTS fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->BEFORE_TTS | SYNC | Implemented | Before TTS synthesis (voice) — can block or modify the text; once per sentence on a streamed response |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-039", "kind": "behavior", "applies": "§9.2 HookTrigger table, the AFTER_TTS row: when AFTER_TTS fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->AFTER_TTS | ASYNC | Implemented | After TTS synthesis (voice) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-040", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_BARGE_IN row: when ON_BARGE_IN fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_BARGE_IN | ASYNC | Implemented | User interrupted TTS playback (voice) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-041", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_TTS_CANCELLED row: when ON_TTS_CANCELLED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_TTS_CANCELLED | ASYNC | Implemented | TTS was cancelled (voice) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-042", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_PARTIAL_TRANSCRIPTION row: when ON_PARTIAL_TRANSCRIPTION fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_PARTIAL_TRANSCRIPTION | ASYNC | Implemented | Streaming partial STT result (voice) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-043", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_VAD_SILENCE row: when ON_VAD_SILENCE fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_VAD_SILENCE | ASYNC | Implemented | Audio pipeline detected silence (voice) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-044", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_VAD_AUDIO_LEVEL row: when ON_VAD_AUDIO_LEVEL fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_VAD_AUDIO_LEVEL | ASYNC | Implemented | Audio pipeline audio level update (voice) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-045", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_INPUT_AUDIO_LEVEL row: when ON_INPUT_AUDIO_LEVEL fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_INPUT_AUDIO_LEVEL | ASYNC | Implemented | Per-frame inbound audio level, throttled to ~10/sec (voice) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-046", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_OUTPUT_AUDIO_LEVEL row: when ON_OUTPUT_AUDIO_LEVEL fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_OUTPUT_AUDIO_LEVEL | ASYNC | Implemented | Per-frame outbound audio level, throttled to ~10/sec (voice) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-047", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_SPEAKER_CHANGE row: when ON_SPEAKER_CHANGE fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_SPEAKER_CHANGE | ASYNC | Implemented | Audio pipeline or a diarizing STT detected a speaker change (Section 12.2.3) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-048", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_DTMF row: when ON_DTMF fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_DTMF | ASYNC | Implemented | Audio pipeline detected a DTMF tone |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-049", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_TURN_COMPLETE row: when ON_TURN_COMPLETE fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_TURN_COMPLETE | ASYNC | Implemented | Turn detector determined user turn is complete |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-050", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_TURN_INCOMPLETE row: when ON_TURN_INCOMPLETE fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_TURN_INCOMPLETE | ASYNC | Implemented | Turn detector determined user is still speaking (for logging) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-051", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_BACKCHANNEL row: when ON_BACKCHANNEL fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_BACKCHANNEL | ASYNC | Implemented | Backchannel detector classified speech as backchannel |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-052", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_SESSION_STARTED row: when ON_SESSION_STARTED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_SESSION_STARTED | ASYNC | Implemented | Session started on any channel type (voice: audio path live; text: room auto-created) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-053", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_RECORDING_STARTED row: when ON_RECORDING_STARTED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_RECORDING_STARTED | ASYNC | Implemented | Recording started for a voice session, a conference track (Section 12.10.8) or a room (Section 12.11); the start awaits its hooks (§9.3) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-054", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_RECORDING_STOPPED row: when ON_RECORDING_STOPPED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_RECORDING_STOPPED | ASYNC | Implemented | Recording stopped for a voice session, a conference track or a room, result available |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-055", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_REALTIME_TOOL_CALL row: when ON_REALTIME_TOOL_CALL fires and how the framework runs it (Execution column); Superseded (Status column): no implementation fires it, and a speech-to-speech tool call fires ON_TOOL_CALL (§9.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_REALTIME_TOOL_CALL | SYNC | Superseded | Speech-to-speech tool call — superseded by `ON_TOOL_CALL` (unified across AI and realtime channels) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-056", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_REALTIME_TEXT_INJECTED row: when ON_REALTIME_TEXT_INJECTED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_REALTIME_TEXT_INJECTED | ASYNC | Implemented | Text injected into realtime session |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-057", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_REALTIME_DELEGATION row: when ON_REALTIME_DELEGATION fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_REALTIME_DELEGATION | ASYNC | Implemented | Speech-to-speech model handed reasoning or tool use to a backend, hosted or integrator-side (Section 12.4.1); carries the delegation id and its target |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-058", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_PROTOCOL_TRACE row: when ON_PROTOCOL_TRACE fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_PROTOCOL_TRACE | ASYNC | Implemented | Transport-level protocol trace emitted (SIP, RTP, etc.) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-059", "kind": "behavior", "applies": "§9.2 HookTrigger table, the BEFORE_BRIDGE_AUDIO row: when BEFORE_BRIDGE_AUDIO fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->BEFORE_BRIDGE_AUDIO | SYNC | Implemented | Before an audio frame is forwarded via bridge — can block/modify (voice) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-060", "kind": "behavior", "applies": "§9.2 HookTrigger table, the BEFORE_DELIVER row, first under the table's Delivery heading: when BEFORE_DELIVER fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->| | | |
 | **Delivery:** | | | |
 | BEFORE_DELIVER | SYNC | Implemented | Before proactive delivery strategy executes — can block/modify |
-| AFTER_DELIVER | ASYNC | Implemented | After proactive delivery completes |
-| ON_CONSUMPTION | ASYNC | Planned | A response's consumption changed on a delivering channel: consumed, partial or unconsumed (Section 8.5) |
-| | | | |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-061", "kind": "behavior", "applies": "§9.2 HookTrigger table, the AFTER_DELIVER row: when AFTER_DELIVER fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->AFTER_DELIVER | ASYNC | Implemented | After proactive delivery completes |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-062", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_CONSUMPTION row: when ON_CONSUMPTION fires and how the framework runs it (Execution column); Planned (Status column): normative intent for an implementation that provides the capability, which no implementation emits yet. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_CONSUMPTION | ASYNC | Planned | A response's consumption changed on a delivering channel: consumed, partial or unconsumed (Section 8.5) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-063", "kind": "behavior", "applies": "§9.2 HookTrigger table, the BEFORE_AI_CONTEXT_BUILD row, first under the table's AI Generation heading: when BEFORE_AI_CONTEXT_BUILD fires and how the framework runs it (Execution column); Planned and required by nothing today, so an implementation may offer it, and offered it fires as the row says. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->| | | |
 | **AI Generation:** | | | |
 | BEFORE_AI_CONTEXT_BUILD | SYNC | Planned | Before an AI channel builds a turn's context (before memory retrieval and tool resolution) — can block the turn cheaply (Section 6.4, Anatomy of an AI turn); required by nothing today |
-| ON_SPEAK_DECISION | SYNC | Implemented | An AI channel's speak policy decided whether the agent speaks, offers or stays silent on an event — can change the decision (MODIFY) or leave the agent silent (BLOCK) (Section 6.4) |
-| ON_THOUGHT | ASYNC | Implemented | An AI channel's thinker came back with what the agent has in mind in a room (Section 6.4) |
-| ON_SPEAK_QUEUE | ASYNC | Implemented | A discussion's speak queue changed: an agent queued, a turn given, ended or skipped (its agent offline), an agent listening only or talking again, the discussion waiting for a person or over (Section 19.7.5) |
-| ON_DISPATCH_DECISION | ASYNC | Implemented | A discussion's dispatch policy decided which agents take a person's message that names none (Section 19.7.5 rule 18) |
-| BEFORE_AI_GENERATION | SYNC | Implemented | Before AI provider generate() — can modify context; a turn's (`answer`) or a thinker's (`thought`, Section 6.4) |
-| ON_AI_THINKING | ASYNC | Implemented | A block of the AI model's extended reasoning closed: once per block, with its text (Section 8.4) |
-| ON_AI_RESPONSE | ASYNC | Implemented | A turn of intelligence completed (observability). Fired by any channel of category `INTELLIGENCE`, whether the turn ran in-process or in an external agent (Section 6.4) |
-| BEFORE_TOOL_USE | SYNC | Implemented | Before a tool executes — can block or override the call |
-| AFTER_TOOL_ROUND | SYNC | Implemented | After a round of an AI channel's tool loop ran its calls, before the next round is built — can withdraw tools for the rest of the turn and add messages for the next round (Section 6.4) |
-| ON_TOOL_CALL | SYNC | Implemented | A tool call reached its outcome — served, refused before execution, failed during it, or abandoned by the model before its result (unified across AI and realtime channels; Section 9.3) |
-| ON_USER_INPUT_REQUIRED | SYNC | Implemented | Human-in-the-loop: a tool paused, waiting for user input |
-| | | | |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-064", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_SPEAK_DECISION row: when ON_SPEAK_DECISION fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_SPEAK_DECISION | SYNC | Implemented | An AI channel's speak policy decided whether the agent speaks, offers or stays silent on an event — can change the decision (MODIFY) or leave the agent silent (BLOCK) (Section 6.4) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-065", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_THOUGHT row: when ON_THOUGHT fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_THOUGHT | ASYNC | Implemented | An AI channel's thinker came back with what the agent has in mind in a room (Section 6.4) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-066", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_SPEAK_QUEUE row: when ON_SPEAK_QUEUE fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_SPEAK_QUEUE | ASYNC | Implemented | A discussion's speak queue changed: an agent queued, a turn given, ended or skipped (its agent offline), an agent listening only or talking again, the discussion waiting for a person or over (Section 19.7.5) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-067", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_DISPATCH_DECISION row: when ON_DISPATCH_DECISION fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_DISPATCH_DECISION | ASYNC | Implemented | A discussion's dispatch policy decided which agents take a person's message that names none (Section 19.7.5 rule 18) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-068", "kind": "behavior", "applies": "§9.2 HookTrigger table, the BEFORE_AI_GENERATION row: when BEFORE_AI_GENERATION fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->BEFORE_AI_GENERATION | SYNC | Implemented | Before AI provider generate() — can modify context; a turn's (`answer`) or a thinker's (`thought`, Section 6.4) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-069", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_AI_THINKING row: when ON_AI_THINKING fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_AI_THINKING | ASYNC | Implemented | A block of the AI model's extended reasoning closed: once per block, with its text (Section 8.4) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-070", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_AI_RESPONSE row: when ON_AI_RESPONSE fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_AI_RESPONSE | ASYNC | Implemented | A turn of intelligence completed (observability). Fired by any channel of category `INTELLIGENCE`, whether the turn ran in-process or in an external agent (Section 6.4) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-071", "kind": "behavior", "applies": "§9.2 HookTrigger table, the BEFORE_TOOL_USE row: when BEFORE_TOOL_USE fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->BEFORE_TOOL_USE | SYNC | Implemented | Before a tool executes — can block or override the call |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-072", "kind": "behavior", "applies": "§9.2 HookTrigger table, the AFTER_TOOL_ROUND row: when AFTER_TOOL_ROUND fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->AFTER_TOOL_ROUND | SYNC | Implemented | After a round of an AI channel's tool loop ran its calls, before the next round is built — can withdraw tools for the rest of the turn and add messages for the next round (Section 6.4) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-073", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_TOOL_CALL row: when ON_TOOL_CALL fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_TOOL_CALL | SYNC | Implemented | A tool call reached its outcome — served, refused before execution, failed during it, or abandoned by the model before its result (unified across AI and realtime channels; Section 9.3) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-074", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_USER_INPUT_REQUIRED row: when ON_USER_INPUT_REQUIRED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_USER_INPUT_REQUIRED | SYNC | Implemented | Human-in-the-loop: a tool paused, waiting for user input |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-075", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_PHASE_TRANSITION row, first under the table's Orchestration heading: when ON_PHASE_TRANSITION fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->| | | |
 | **Orchestration:** | | | |
 | ON_PHASE_TRANSITION | ASYNC | Implemented | Conversation phase changed (e.g., triage → specialist) |
-| ON_HANDOFF | ASYNC | Implemented | Agent handoff accepted and executed |
-| ON_HANDOFF_REJECTED | ASYNC | Implemented | Agent handoff was rejected |
-| ON_STATUS_POSTED | ASYNC | Implemented | Status posted to the inter-agent StatusBus |
-| | | | |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-076", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_HANDOFF row: when ON_HANDOFF fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_HANDOFF | ASYNC | Implemented | Agent handoff accepted and executed |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-077", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_HANDOFF_REJECTED row: when ON_HANDOFF_REJECTED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_HANDOFF_REJECTED | ASYNC | Implemented | Agent handoff was rejected |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-078", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_STATUS_POSTED row: when ON_STATUS_POSTED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_STATUS_POSTED | ASYNC | Implemented | Status posted to the inter-agent StatusBus |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-079", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_TASK_DELEGATED row, first under the table's Delegation heading: when ON_TASK_DELEGATED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->| | | |
 | **Delegation:** | | | |
 | ON_TASK_DELEGATED | ASYNC | Implemented | Background task delegated to a child room |
-| ON_TASK_COMPLETED | ASYNC | Implemented | Delegated task ended: completed with its result, failed with its error, or cancelled |
-| | | | |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-080", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_TASK_COMPLETED row: when ON_TASK_COMPLETED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_TASK_COMPLETED | ASYNC | Implemented | Delegated task ended: completed with its result, failed with its error, or cancelled |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-081", "kind": "behavior", "applies": "§9.2 HookTrigger table, the BEFORE_BRIDGE_VIDEO row, first under the table's Video heading: when BEFORE_BRIDGE_VIDEO fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->| | | |
 | **Video:** | | | |
 | BEFORE_BRIDGE_VIDEO | SYNC | Implemented | Before video frame is forwarded via bridge — can block/modify |
-| ON_VIDEO_SESSION_STARTED | ASYNC | Implemented | Video session became active |
-| ON_VIDEO_SESSION_ENDED | ASYNC | Implemented | Video session ended |
-| ON_VIDEO_TRACK_ADDED | ASYNC | Planned | Video track added to session |
-| ON_VIDEO_TRACK_REMOVED | ASYNC | Planned | Video track removed from session |
-| ON_VISION_RESULT | SYNC | Implemented | VisionProvider returned an analysis result — can block it, or modify its description, labels, confidence, text or faces |
-| ON_SCREEN_SHARE_STARTED | ASYNC | Implemented | Screen sharing started: a conference participant published a screen-share track (Section 12.10.4) |
-| ON_SCREEN_SHARE_STOPPED | ASYNC | Implemented | Screen sharing stopped: a conference screen-share track was unpublished (Section 12.10.4) |
-| ON_VIDEO_DETECTION | ASYNC | Implemented | Video detection event (object, face, etc.) |
-| | | | |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-082", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_VIDEO_SESSION_STARTED row: when ON_VIDEO_SESSION_STARTED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_VIDEO_SESSION_STARTED | ASYNC | Implemented | Video session became active |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-083", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_VIDEO_SESSION_ENDED row: when ON_VIDEO_SESSION_ENDED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_VIDEO_SESSION_ENDED | ASYNC | Implemented | Video session ended |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-084", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_VIDEO_TRACK_ADDED row: when ON_VIDEO_TRACK_ADDED fires and how the framework runs it (Execution column); Planned (Status column): normative intent for an implementation that provides the capability, which no implementation emits yet. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_VIDEO_TRACK_ADDED | ASYNC | Planned | Video track added to session |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-085", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_VIDEO_TRACK_REMOVED row: when ON_VIDEO_TRACK_REMOVED fires and how the framework runs it (Execution column); Planned (Status column): normative intent for an implementation that provides the capability, which no implementation emits yet. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_VIDEO_TRACK_REMOVED | ASYNC | Planned | Video track removed from session |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-086", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_VISION_RESULT row: when ON_VISION_RESULT fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_VISION_RESULT | SYNC | Implemented | VisionProvider returned an analysis result — can block it, or modify its description, labels, confidence, text or faces |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-087", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_SCREEN_SHARE_STARTED row: when ON_SCREEN_SHARE_STARTED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_SCREEN_SHARE_STARTED | ASYNC | Implemented | Screen sharing started: a conference participant published a screen-share track (Section 12.10.4) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-088", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_SCREEN_SHARE_STOPPED row: when ON_SCREEN_SHARE_STOPPED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_SCREEN_SHARE_STOPPED | ASYNC | Implemented | Screen sharing stopped: a conference screen-share track was unpublished (Section 12.10.4) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-089", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_VIDEO_DETECTION row: when ON_VIDEO_DETECTION fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_VIDEO_DETECTION | ASYNC | Implemented | Video detection event (object, face, etc.) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-090", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_CONFERENCE_PARTICIPANT_JOINED row, first under the table's Conference heading: when ON_CONFERENCE_PARTICIPANT_JOINED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->| | | |
 | **Conference:** (SFU) | | | |
 | ON_CONFERENCE_PARTICIPANT_JOINED | ASYNC | Implemented | Participant joined the conference media session |
-| ON_CONFERENCE_PARTICIPANT_LEFT | ASYNC | Implemented | Participant left the conference media session |
-| ON_CONFERENCE_TRACK_PUBLISHED | ASYNC | Implemented | Conference participant published a track (audio, video, screen share) |
-| ON_CONFERENCE_TRACK_UNPUBLISHED | ASYNC | Implemented | Conference track unpublished |
-| ON_CONFERENCE_TRACK_MUTED | ASYNC | Implemented | Publisher muted their track — "camera off" included |
-| ON_CONFERENCE_TRACK_UNMUTED | ASYNC | Implemented | Publisher unmuted their track |
-| ON_ACTIVE_SPEAKER_CHANGED | ASYNC | Implemented | SFU reported a dominant-speaker change |
-| ON_CONNECTION_QUALITY_CHANGED | ASYNC | Implemented | SFU reported a participant's connection quality |
-| | | | |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-091", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_CONFERENCE_PARTICIPANT_LEFT row: when ON_CONFERENCE_PARTICIPANT_LEFT fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_CONFERENCE_PARTICIPANT_LEFT | ASYNC | Implemented | Participant left the conference media session |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-092", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_CONFERENCE_TRACK_PUBLISHED row: when ON_CONFERENCE_TRACK_PUBLISHED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_CONFERENCE_TRACK_PUBLISHED | ASYNC | Implemented | Conference participant published a track (audio, video, screen share) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-093", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_CONFERENCE_TRACK_UNPUBLISHED row: when ON_CONFERENCE_TRACK_UNPUBLISHED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_CONFERENCE_TRACK_UNPUBLISHED | ASYNC | Implemented | Conference track unpublished |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-094", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_CONFERENCE_TRACK_MUTED row: when ON_CONFERENCE_TRACK_MUTED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_CONFERENCE_TRACK_MUTED | ASYNC | Implemented | Publisher muted their track — "camera off" included |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-095", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_CONFERENCE_TRACK_UNMUTED row: when ON_CONFERENCE_TRACK_UNMUTED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_CONFERENCE_TRACK_UNMUTED | ASYNC | Implemented | Publisher unmuted their track |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-096", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_ACTIVE_SPEAKER_CHANGED row: when ON_ACTIVE_SPEAKER_CHANGED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_ACTIVE_SPEAKER_CHANGED | ASYNC | Implemented | SFU reported a dominant-speaker change |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-097", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_CONNECTION_QUALITY_CHANGED row: when ON_CONNECTION_QUALITY_CHANGED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_CONNECTION_QUALITY_CHANGED | ASYNC | Implemented | SFU reported a participant's connection quality |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-098", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_PLAN_UPDATED row, first under the table's Other heading: when ON_PLAN_UPDATED fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->| | | |
 | **Other:** | | | |
 | ON_PLAN_UPDATED | ASYNC | Implemented | An AI channel's `plan_tasks` tool stored a new task plan for the room; the payload carries the room, the channel, the plan's tasks (`title`, `status`) and a timestamp |
-| ON_FEEDBACK | ASYNC | Implemented | `submit_feedback` recorded a rating (0.0–1.0, clamped) as an Observation of the room (Section 15.9); the payload is that Observation, carrying the rating, its dimension (default `overall`), the comment and the rated event |
-<!-- /rfc -->
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-099", "kind": "behavior", "applies": "§9.2 HookTrigger table, the ON_FEEDBACK row: when ON_FEEDBACK fires and how the framework runs it (Execution column). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->ON_FEEDBACK | ASYNC | Implemented | `submit_feedback` recorded a rating (0.0–1.0, clamped) as an Observation of the room (Section 15.9); the payload is that Observation, carrying the rating, its dimension (default `overall`), the comment and the rated event |
 
-<!-- rfc: {"id": "RK-9.2-002", "kind": "behavior", "applies": "§9.2 Hook Triggers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
-**ON_ERROR payload.** ON_ERROR receives a RoomEvent that is never stored. Its
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-9.2-100", "kind": "behavior", "applies": "§9.2 ON_ERROR payload: whether the event ON_ERROR receives is stored. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+**ON_ERROR payload.** ON_ERROR receives a RoomEvent that is never stored.<!-- /rfc --> <!-- rfc: {"id": "RK-9.2-101", "kind": "behavior", "applies": "§9.2 ON_ERROR payload: the event's source, content and error metadata. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its
 source is the channel that failed (on a realtime channel, with the session's
 participant), its content is a text whose body is the error message, and its
 metadata carries `error` (the same message), `error_type` (the error's type
-name, or the provider's error code) and `error_category`:
+name, or the provider's error code) and `error_category`:<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.2-102", "kind": "behavior", "applies": "§9.2 ON_ERROR payload, its category table (its header) and the generation row: when a firing carries that category. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 | `error_category` | Fired when |
 |---|---|
 | `generation` | An intelligence channel failed to respond to a broadcast event |
-| `streaming` | A streamed response raised, a delegated task's turn included |
-| `realtime_provider` | A speech-to-speech provider reported an error, fatal or not, or a conference's lazy connect to it failed (Section 12.10.12) |
-| `reasoning` | A reasoning backend's turn raised (Section 12.4.1) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-103", "kind": "behavior", "applies": "§9.2 ON_ERROR payload, the streaming row: when a firing carries that category. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`streaming` | A streamed response raised, a delegated task's turn included |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-104", "kind": "behavior", "applies": "§9.2 ON_ERROR payload, the realtime_provider row: when a firing carries that category. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`realtime_provider` | A speech-to-speech provider reported an error, fatal or not, or a conference's lazy connect to it failed (Section 12.10.12) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.2-105", "kind": "behavior", "applies": "§9.2 ON_ERROR payload, the reasoning row: when a firing carries that category. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->`reasoning` | A reasoning backend's turn raised (Section 12.4.1) |
 
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-9.2-106", "kind": "behavior", "applies": "§9.2 ON_ERROR payload: the event's chain depth and visibility, on a room turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 On a room turn the event's `chain_depth` is the triggering event's plus one,
 and its `visibility` is the triggering event's response visibility (§8.5),
-`all` when it has none. The event is a `message`, its source with the default
+`all` when it has none.<!-- /rfc --> <!-- rfc: {"id": "RK-9.2-107", "kind": "behavior", "applies": "§9.2 ON_ERROR payload: the event's type, its direction, the event it answers and its thread. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The event is a `message`, its source with the default
 direction (`inbound`); it answers the triggering event (`responds_to`) in that
-event's thread (its `parent_event_id`). A failed stream's carries the stream's
+event's thread (its `parent_event_id`).<!-- /rfc --> <!-- rfc: {"id": "RK-9.2-108", "kind": "behavior", "applies": "§9.2 ON_ERROR payload: the correlation id of a failed stream's event, and of a turn that raised. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A failed stream's carries the stream's
 `correlation_id`, the one its rows carry, whether it wrote any; a turn that
-raised carries none. A transport's delivery failure does not fire ON_ERROR.
-<!-- /rfc -->
+raised carries none.<!-- /rfc --> <!-- rfc: {"id": "RK-9.2-109", "kind": "behavior", "applies": "§9.2 ON_ERROR: a transport's delivery failure. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A transport's delivery failure does not fire ON_ERROR.<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-9.2-003", "kind": "behavior", "applies": "§9.2 Hook Triggers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-9.2-110", "kind": "behavior", "applies": "§9.2: the payload of ON_EVENT_UPDATED and ON_EVENT_DELETED, and what their hooks' filters read. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **The payload and context of a mutation hook.** ON_EVENT_UPDATED and
 ON_EVENT_DELETED carry the event whose stored state changed, and their
 hooks' filters read that event: its source, and its type where an
-implementation filters on types. Fired for an EDIT or a
+implementation filters on types.<!-- /rfc --> <!-- rfc: {"id": "RK-9.2-111", "kind": "behavior", "applies": "§9.2: ON_EVENT_UPDATED and ON_EVENT_DELETED fired for an EDIT or a DELETE the pipeline committed (§10.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Fired for an EDIT or a
 DELETE the pipeline committed, the payload is its target, never the change
 itself, and their context holds the room's history and counters as that
 commit left them, the target rewritten and the change in its history (§10.3,
-Mutation triggers). Fired by
+Mutation triggers).<!-- /rfc --> <!-- rfc: {"id": "RK-9.2-112", "kind": "behavior", "applies": "§9.2: ON_EVENT_UPDATED and ON_EVENT_DELETED fired by a direct update_event() or delete_event(), where an implementation offers them (§10.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Fired by
 a direct `update_event()` or `delete_event()`, the payload is the event
 updated, or each event removed, and their context the room's, read once the
 call has released the room lock, or the context the call held under the lock
-when that read fails (§10.3, Direct mutation).
-<!-- /rfc -->
+when that read fails (§10.3, Direct mutation).<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-9.2-004", "kind": "behavior", "applies": "§9.2 Hook Triggers; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-9.2-113", "kind": "behavior", "applies": "§9.2: the room context of a hook on a lifecycle trigger. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **The context of a lifecycle hook.** A hook on a lifecycle trigger
 (ON_ROOM_CREATED, ON_ROOM_PAUSED, ON_ROOM_CLOSED, ON_CHANNEL_ATTACHED,
 ON_CHANNEL_DETACHED, ON_CHANNEL_MUTED, ON_CHANNEL_UNMUTED) receives the room
@@ -5804,11 +5813,12 @@ when one write paused and closed it, §5.1), its bindings and participants as
 the change read them under the room lock (on ON_CHANNEL_ATTACHED, the
 attached binding among them, in place of any it replaces; on
 ON_CHANNEL_DETACHED, without the detached one), and its recent events, so that a hook on
-a room's closing can read its conversation. A room just created has the
+a room's closing can read its conversation.<!-- /rfc --> <!-- rfc: {"id": "RK-9.2-114", "kind": "behavior", "applies": "§9.2: the context of ON_ROOM_CREATED's hooks, the bindings of a room just created. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room just created has the
 bindings its creation made, such as the agents an orchestration attached
 (Section 19.7); the channel whose message created it is attached after the
-hook (§10.1 step 2).
+hook (§10.1 step 2).<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.2-115", "kind": "behavior", "applies": "§9.2: the context of the lifecycle hooks of a timer transition (§5.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 For timer transitions, the shared context is read after their records have
 been handled (§5.1). A commit made outside the room lock between the status
 write and that read is included. In particular, a delivered commit that
@@ -6198,9 +6208,10 @@ provider's own failure marker, whatever a SYNC hook returned, a BLOCK included.<
 
 ### 9.4 HookResult
 
-<!-- rfc: {"id": "RK-9.4-001", "kind": "behavior", "applies": "§9.4 HookResult; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
-Sync hooks MUST return a HookResult, the identity hooks of Section 11.2 aside:
+<!-- rfc: {"id": "RK-9.4-007", "kind": "non_testable", "applies": "§9.4: what a SYNC hook returns, which only its author keeps, the identity hooks of Section 11.2 aside; how the framework reads a result that is not a HookResult is RK-9.3-005's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+Sync hooks MUST return a HookResult, the identity hooks of Section 11.2 aside:<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.4-040", "kind": "behavior", "applies": "§9.4: the fields of a HookResult the framework reads, with what each carries. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 ```
 HookResult
 ├── action: "allow" | "block" | "modify"
@@ -6212,23 +6223,24 @@ HookResult
 ├── observations: list<Observation>         # Observations to record (side effects)
 └── metadata: map<string, any>              # Additional hook metadata
 ```
+<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.4-008", "kind": "behavior", "applies": "§9.4: the type of a MODIFY result's payload, trigger by trigger. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 `event` carries the replacement payload for a "modify" result, and its type is
 whatever the trigger passed in. Only BEFORE_BROADCAST and BEFORE_DELIVER
 (Section 22.3) pass a RoomEvent: the
 TTS trigger receives a string, the bridge triggers receive media frames, and the
-tool and generation triggers receive their own event types. Typing this field as
+tool and generation triggers receive their own event types.<!-- /rfc --> <!-- rfc: {"id": "RK-9.4-009", "kind": "behavior", "applies": "§9.4: a MODIFY payload, before the framework substitutes it, whose type may not be the one its trigger expects. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Typing this field as
 a RoomEvent would make "modify" unusable for every trigger but one, so consumers
-MUST check the type they expect before substituting it. A "modify" result MUST
-carry its payload: one whose `event` is null is an unusable result (§9.3).
-<!-- /rfc -->
+MUST check the type they expect before substituting it.<!-- /rfc --> <!-- rfc: {"id": "RK-9.4-010", "kind": "behavior", "applies": "§9.4: a MODIFY result whose event is null (§9.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A "modify" result MUST
+carry its payload: one whose `event` is null is an unusable result (§9.3).<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-9.4-002", "kind": "behavior", "applies": "§9.4 HookResult; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-9.4-011", "kind": "behavior", "applies": "§9.4: what a MODIFY on BEFORE_BROADCAST may change in the event; the implementation honours it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **A `BEFORE_BROADCAST` replacement.** A MODIFY on BEFORE_BROADCAST replaces
 what the event says and whom it asks, never which event it is. The replacement
 MAY change the event's `content`, its address (`addressed_to`), its
 `visibility`, its thread (`parent_event_id`), its `correlation_id` and its
-`metadata`, and its `channel_data`. Implementations MUST keep the original's
+`metadata`, and its `channel_data`.<!-- /rfc --> <!-- rfc: {"id": "RK-9.4-012", "kind": "behavior", "applies": "§9.4: the fields and passed checks a MODIFY on BEFORE_BROADCAST cannot change. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Implementations MUST keep the original's
 `id`, `room_id`, `type`, `source`, `index`, `chain_depth`, `responds_to`,
 `idempotency_key`, `created_at`, `status`, `blocked_by` and
 `delivery_results` on it, and with them the checks already passed: the event
@@ -6238,26 +6250,25 @@ new content (checked at §10.1 step 8a, §10.3; an edit's replacement by another
 kind of content is its new content), an INSTRUCTION's visibility, address and
 `standalone` word (§10.1.1), and the fingerprint the pipeline wrote on a
 response to an instruction (`metadata.instruction`, §10.1.1 step 6), or its
-absence. A field of these that the hook changed is put back from the original
-before the next hook reads the event, and the hook's other changes stand. The
+absence.<!-- /rfc --> <!-- rfc: {"id": "RK-9.4-013", "kind": "behavior", "applies": "§9.4: a MODIFY on BEFORE_BROADCAST that changed a field RK-9.4-012 keeps. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A field of these that the hook changed is put back from the original
+before the next hook reads the event, and the hook's other changes stand.<!-- /rfc --> <!-- rfc: {"id": "RK-9.4-014", "kind": "behavior", "applies": "§9.4: the source's write check and the chain-depth limit, after the BEFORE_BROADCAST hooks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
 source's write check (§10.1 step 11) and the chain-depth limit (§8.3) read
 these fields after the hooks: no hook can commit an event under another
-source, at another index or chain depth, or as the answer to another event. A
+source, at another index or chain depth, or as the answer to another event.<!-- /rfc --> <!-- rfc: {"id": "RK-9.4-015", "kind": "behavior", "applies": "§9.4: an event's visibility a MODIFY on BEFORE_BROADCAST changed, and the internal mark (§7.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 visibility the hook changed is still narrowed at commit by the source
 binding's visibility (§7.3), and the original's is put back whenever either
 visibility is `internal`, which only the framework writes (§7.3): a hook can
 neither give an event that mark nor change the visibility of a framework
-record that has it. The replacement MAY narrow the event's
+record that has it.<!-- /rfc --> <!-- rfc: {"id": "RK-9.4-016", "kind": "behavior", "applies": "§9.4: an event's response_visibility a MODIFY on BEFORE_BROADCAST changed (§5.12); the implementation honours a narrowing. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The replacement MAY narrow the event's
 `response_visibility` (§5.12), never widen or clear it: the event keeps the
 intersection of the original's and the hook's (§7.3), a null on either side
 giving the other's, and `internal` from a hook reads as `none`, as it does
-from a channel on its response (§8.5). A response's visibility a hook changed
-is narrowed to its cascade's scope again once its hooks are over (§8.5). A
+from a channel on its response (§8.5).<!-- /rfc --> <!-- rfc: {"id": "RK-9.4-017", "kind": "behavior", "applies": "§9.4: a response's visibility a MODIFY on BEFORE_BROADCAST changed (§8.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A response's visibility a hook changed
+is narrowed to its cascade's scope again once its hooks are over (§8.5).<!-- /rfc --> <!-- rfc: {"id": "RK-9.4-018", "kind": "behavior", "applies": "§9.4: a router hook that addresses an event (Section 19.4), by its address or its routing metadata, which the rules of a BEFORE_BROADCAST replacement (RK-9.4-011 to 017) leave free. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A
 router hook that addresses an event (Section 19.4), by its address or its
-routing metadata, is unaffected.
-<!-- /rfc -->
+routing metadata, is unaffected.<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-9.4-003", "kind": "behavior", "applies": "§9.4 HookResult; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-9.4-003", "kind": "behavior", "applies": "§9.4 HookResult; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 **InjectedEvent:**
 
 ```
@@ -6267,74 +6278,74 @@ InjectedEvent
 ```
 <!-- /rfc -->
 
-<!-- rfc: {"id": "RK-9.4-004", "kind": "behavior", "applies": "§9.4 HookResult; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-9.4-019", "kind": "behavior", "applies": "§9.4 Injected events: the events a BEFORE_BROADCAST chain's results carry, however the event ends; the refusals of RK-9.4-020 aside. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Injected events.** The events every result of an event's `BEFORE_BROADCAST`
 chain carries are collected, whatever its action (allow, modify or block),
 off the lock and under it (§9.5.1), and MUST be committed whichever way the
 event ends: blocked by a hook, blocked by its source's permissions, or delivered
 (§10.1 steps 10 to 12). A hook that lets an event through can still notify
-someone. An event refused with nothing stored once its hooks have run (its
+someone.<!-- /rfc --> <!-- rfc: {"id": "RK-9.4-020", "kind": "behavior", "applies": "§9.4 Injected events: an event refused with nothing stored once its hooks have run. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An event refused with nothing stored once its hooks have run (its
 room closed under them, §10.1 step 9a; a gate before step 9, §9.5.1; an
-expired `process_timeout`, §13.6) drops them with it.
+expired `process_timeout`, §13.6) drops them with it.<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.4-021", "kind": "behavior", "applies": "§9.4 Injected events: when an injected event commits, against its cause; one code under the lock injects directly is RK-9.4-024's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An injected event is committed as a pass of the cascade (§8.3), after the
 event whose hooks injected it:
 
 - It commits after its cause, in a pass and a locked section of its own,
   once the cause's section has released the room lock: another event may
-  commit between the cause and it. It takes the room lock for its own
+  commit between the cause and it.<!-- /rfc --> <!-- rfc: {"id": "RK-9.4-022", "kind": "behavior", "applies": "§9.4 Injected events: the lock and the hooks an injected event's pass takes and runs. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It takes the room lock for its own
   commit and runs the `BEFORE_BROADCAST` chain, every hook under the lock
-  (§9.5.1). A hook may block it, which stores it `BLOCKED`, and the events
-  its own hooks inject are committed the same way. An event that code under
+  (§9.5.1).<!-- /rfc --> <!-- rfc: {"id": "RK-9.4-023", "kind": "behavior", "applies": "§9.4 Injected events: an injected event its own hooks block, and the events they inject. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A hook may block it, which stores it `BLOCKED`, and the events
+  its own hooks inject are committed the same way.<!-- /rfc --> <!-- rfc: {"id": "RK-9.4-024", "kind": "behavior", "applies": "§9.4 Injected events: an event code under the lock injects directly (§10.5), against a hook-injected one. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An event that code under
   the lock injects directly (§10.5) is another path: it commits ahead of the
-  cause, within the cause's section (§9.5.1, Reentrance).
+  cause, within the cause's section (§9.5.1, Reentrance).<!-- /rfc --><!-- rfc: {"id": "RK-9.4-025", "kind": "behavior", "applies": "§9.4 Injected events: the reentry budget an injected event draws on (§8.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - It counts against the cascade's reentry budget, which bounds injections of
-  injections (§8.3).
+  injections (§8.3).<!-- /rfc --><!-- rfc: {"id": "RK-9.4-026", "kind": "behavior", "applies": "§9.4 Injected events: an injected event's chain depth and source. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - It keeps the `chain_depth` of the event whose hooks injected it, and the
-  source the hook gave it. Its visibility names those of its targets the
+  source the hook gave it.<!-- /rfc --> <!-- rfc: {"id": "RK-9.4-027", "kind": "behavior", "applies": "§9.4 Injected events: an injected event's visibility, set from its targets. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its visibility names those of its targets the
   room binds, whatever visibility it came with, and is `none` when it names
   none or is stored only: a target the room does not bind would otherwise
-  read the event once attached. No source binding narrows it, and the hooks
+  read the event once attached.<!-- /rfc --> <!-- rfc: {"id": "RK-9.4-028", "kind": "behavior", "applies": "§9.4 Injected events: what narrows an injected event's visibility (§7.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->No source binding narrows it, and the hooks
   of its own chain may narrow it, never widen it: the visibility a modify
-  gives it is intersected with the one it had (§7.3). The pipeline clears
-  its idempotency key (§13.4).
-- It takes no source check (§7.5 rule 2): it is the hook's, not a channel's.
+  gives it is intersected with the one it had (§7.3).<!-- /rfc --> <!-- rfc: {"id": "RK-9.4-029", "kind": "behavior", "applies": "§9.4 Injected events: an injected event's idempotency key (§13.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The pipeline clears
+  its idempotency key (§13.4).<!-- /rfc --><!-- rfc: {"id": "RK-9.4-030", "kind": "behavior", "applies": "§9.4 Injected events: the source check of an injected event (§7.5 rule 2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
+- It takes no source check (§7.5 rule 2): it is the hook's, not a channel's.<!-- /rfc --><!-- rfc: {"id": "RK-9.4-031", "kind": "behavior", "applies": "§9.4 Injected events: an injected EDIT or DELETE at §10.1 step 8a (§10.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
   An EDIT or a DELETE it carries is the hook's change whatever source it
-  names, and takes step 8a with the system's authority only (§10.3).
+  names, and takes step 8a with the system's authority only (§10.3).<!-- /rfc --><!-- rfc: {"id": "RK-9.4-032", "kind": "behavior", "applies": "§9.4 Injected events: whom an injected event is delivered to (§10.2 step 3, §7.5 rule 5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - It is delivered to its transport targets only, under the rules of any
-  delivery (§10.2 step 3), and never to its own source (§7.5 rule 5). Its
-  delivery set fires `AFTER_BROADCAST` like any other (§10.1 step 16).
+  delivery (§10.2 step 3), and never to its own source (§7.5 rule 5).<!-- /rfc --> <!-- rfc: {"id": "RK-9.4-033", "kind": "behavior", "applies": "§9.4 Injected events: the AFTER_BROADCAST hooks of an injected event's delivery set. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its
+  delivery set fires `AFTER_BROADCAST` like any other (§10.1 step 16).<!-- /rfc -->
 
+<!-- rfc: {"id": "RK-9.4-034", "kind": "behavior", "applies": "§9.4 Injected events: an intelligence channel among an injected event's targets. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 An injected event asks no agent. An intelligence channel among its targets
 is not called: the event's visibility names it, and the agent reads the
-event in its history at its next turn. A transport hosting a model (a
+event in its history at its next turn.<!-- /rfc --> <!-- rfc: {"id": "RK-9.4-035", "kind": "behavior", "applies": "§9.4 Injected events: a transport hosting a model among an injected event's targets (§12.4); an integrator who wants an answer injects directly (§10.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A transport hosting a model (a
 realtime voice channel, a conference with a realtime model plugged in,
 §12.4) is an agent too: it takes the event into the model's context
 silently, and asks no answer. An integrator who wants an agent to answer
-injects the event directly (§10.5).
-<!-- /rfc -->
+injects the event directly (§10.5).<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-9.4-005", "kind": "behavior", "applies": "§9.4 HookResult; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-9.4-036", "kind": "behavior", "applies": "§9.4: an INSTRUCTION among a hook result's injected events (§10.1.1). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **No injected instruction.** A hook MUST NOT inject an INSTRUCTION
 (§10.1.1). One among a result's injected events is dropped with a warning
 before any pass: no hook runs on it, and nothing of it is stored or
-delivered. The rest of the result stands, its other injected events, tasks
+delivered.<!-- /rfc --> <!-- rfc: {"id": "RK-9.4-037", "kind": "behavior", "applies": "§9.4: the rest of a hook result whose injected INSTRUCTION is dropped; a hook that wants an agent directed injects directly (§10.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The rest of the result stands, its other injected events, tasks
 and observations included. A hook that wants an agent directed injects the
-instruction directly (§10.5), which takes it through §10.1.1.
-<!-- /rfc -->
+instruction directly (§10.5), which takes it through §10.1.1.<!-- /rfc -->
 
-<!-- rfc: {"id": "RK-9.4-006", "kind": "behavior", "applies": "§9.4 HookResult; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-9.4-038", "kind": "behavior", "applies": "§9.4: the results whose injected events are committed, BEFORE_BROADCAST's and an identity challenge's (§11.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 **Which triggers commit injected events.** The injected events of
 `BEFORE_BROADCAST` results are committed as above, and so is the event an
 identity challenge injects (`inject`, §11.3), which takes the same pass in a
-cascade of its own. On every other SYNC trigger (`BEFORE_DELIVER`,
+cascade of its own.<!-- /rfc --> <!-- rfc: {"id": "RK-9.4-039", "kind": "behavior", "applies": "§9.4: the injected events of a result on any SYNC trigger but BEFORE_BROADCAST. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->On every other SYNC trigger (`BEFORE_DELIVER`,
 `ON_VERIFICATION_REQUIRED` and the rest) a result's injected events are not
 committed: they are dropped with a warning logged, never silently.
 <!-- /rfc -->
 
 ### 9.5 Hook Pipeline (BEFORE_BROADCAST)
 
-<!-- rfc: {"id": "RK-9.5-001", "kind": "behavior", "applies": "§9.5 Hook Pipeline (BEFORE_BROADCAST); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-9.5-001", "kind": "behavior", "applies": "§9.5 Hook Pipeline (BEFORE_BROADCAST); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26.", "level": "must"} -->
 ```
 Inbound Event
       │
@@ -6369,7 +6380,7 @@ Inbound Event
 
 #### 9.5.1 Off-lock checks (`needs_lock = false`)
 
-<!-- rfc: {"id": "RK-9.5.1-001", "kind": "behavior", "applies": "§9.5.1 Off-lock checks (`needs_lock = false`); the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-9.5.1-002", "kind": "behavior", "applies": "§9.5.1: a SYNC BEFORE_BROADCAST hook registered with needs_lock = false, on the inbound pipeline (§10.1 step 5a) and on direct injection (§10.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 A check that only reads the event — a PII scan, a moderation call — does not
 need the room lock, and running its I/O under the lock makes every other event
 of the room wait behind it (§13.5). A SYNC `BEFORE_BROADCAST` hook registered
@@ -6389,139 +6400,141 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
     └── Release the ticket once the locked section has decided and
         committed, after the room lock's release (step 13)
 ```
+<!-- /rfc -->
+<!-- rfc: {"id": "RK-9.5.1-003", "kind": "behavior", "applies": "§9.5.1 Order: events that took a ticket, within one process. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 
 - **Order.** Events that took a ticket commit in ticket order, so two events
   from one sender keep their arrival order even when the second one's check
   finishes first. The ticket is held in process memory: the guarantee holds
-  within one process. An event takes a ticket only when an off-lock hook
+  within one process.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-004", "kind": "behavior", "applies": "§9.5.1 Order: the events that take a ticket. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An event takes a ticket only when an off-lock hook
   fires for it, the hook's filters applied: events that match no off-lock
   hook take no ticket and are not ordered against ticketed ones — a system
-  notice does not wait for a scan it has nothing to do with. An event the
+  notice does not wait for a scan it has nothing to do with.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-005", "kind": "behavior", "applies": "§9.5.1 Order: an event the off-lock hooks blocked. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An event the
   off-lock hooks blocked still waits for its turn, so a blocked record keeps
-  the ticket order too.
+  the ticket order too.<!-- /rfc --><!-- rfc: {"id": "RK-9.5.1-006", "kind": "behavior", "applies": "§9.5.1 Release: an event's ticket, on every path. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **Release.** A ticket MUST be released on every path: committed, blocked by
-  a hook or a gate, refused, timed out, failed, or cancelled. It is released
+  a hook or a gate, refused, timed out, failed, or cancelled.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-007", "kind": "behavior", "applies": "§9.5.1 Release: when a ticket is released. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It is released
   after the room lock, once the locked section is over. A ticket left held
-  stalls every later ticketed event of the room.
+  stalls every later ticketed event of the room.<!-- /rfc --><!-- rfc: {"id": "RK-9.5.1-008", "kind": "behavior", "applies": "§9.5.1 Bound: an event's wait for its ticket's turn, against process_timeout (§13.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **Bound.** Waiting for a turn adds nothing to `process_timeout` (§13.6): it
-  counts against the same pre-commit budget. The wait is bounded by the
+  counts against the same pre-commit budget.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-009", "kind": "behavior", "applies": "§9.5.1 Bound: what bounds an event's wait for its turn. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The wait is bounded by the
   earlier holders' hook timeouts and locked sections, never by a separate
-  setting.
+  setting.<!-- /rfc --><!-- rfc: {"id": "RK-9.5.1-010", "kind": "behavior", "applies": "§9.5.1 Decision: the off-lock hooks within the event's one chain. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **Decision.** The off-lock hooks are the first hooks of the event's one
   chain (§9.1): a block among them stops the chain, and a modify hands its
-  payload on. Their BLOCK or MODIFY is applied at step 9, after the status,
+  payload on.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-011", "kind": "behavior", "applies": "§9.5.1 Decision: where the off-lock hooks' BLOCK or MODIFY applies, after the gates before step 9. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Their BLOCK or MODIFY is applied at step 9, after the status,
   idempotency and EDIT/DELETE gates, which keep their order and still decide
-  first; a block there runs none of the hooks that need the lock. The side
+  first; a block there runs none of the hooks that need the lock.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-012", "kind": "behavior", "applies": "§9.5.1 Decision: the side effects of the off-lock and the locked hooks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The side
   effects (injected events, tasks, observations) of both phases are collected
-  together, in hook order. An event a gate refuses before step 9 drops the
-  off-lock outcome, its side effects included, as it runs no locked hook.
+  together, in hook order.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-013", "kind": "behavior", "applies": "§9.5.1 Decision: an event a gate refuses before step 9, and its off-lock outcome. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An event a gate refuses before step 9 drops the
+  off-lock outcome, its side effects included, as it runs no locked hook.<!-- /rfc --><!-- rfc: {"id": "RK-9.5.1-014", "kind": "behavior", "applies": "§9.5.1 Errors: an off-lock hook that produces no usable result (§9.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **Errors.** An off-lock hook that produces no usable result (§9.3) is
   reported when it is met, before the lock: `hook_timeout` when it timed
-  out, and `hook_error`, whatever the gates decide next.
+  out, and `hook_error`, whatever the gates decide next.<!-- /rfc --><!-- rfc: {"id": "RK-9.5.1-015", "kind": "behavior", "applies": "§9.5.1 Context: the context an off-lock hook receives. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **Context.** An off-lock hook receives the context built before the lock
   (§10.1 step 3), the room as step 2 left it: what an attach or the record
-  of a routed sender wrote there included. Its history can be stale by the
+  of a routed sender wrote there included.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-016", "kind": "non_testable", "applies": "§9.5.1 Context: an integrator's hook that reads the room's state rather than the event, which only its author keeps. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its history can be stale by the
   time the event commits; a hook that reads the room's state rather than the
-  event MUST keep `needs_lock = true`.
+  event MUST keep `needs_lock = true`.<!-- /rfc --><!-- rfc: {"id": "RK-9.5.1-017", "kind": "behavior", "applies": "§9.5.1 Reentrance: a call into the room by a caller that already stands in the room's admission order. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **Reentrance.** A call into the room (an event injected, §10.5, or a
   message that names the room, §10.1) made by a caller that already stands in
-  the room's admission order takes no ticket in that room. The caller stands
+  the room's admission order takes no ticket in that room.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-018", "kind": "behavior", "applies": "§9.5.1 Reentrance: the callers that stand in a room's admission order. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The caller stands
   in it while it holds the room lock (a locked hook, code under the lock),
   and in the work an event's admission runs before the lock: an off-lock
   hook's body, a handler the check's report of a `hook_error` or a
   `hook_timeout` awaits (§8.2), and the message's parse (a channel's
-  `handle_inbound()`, §10.1 step 4). It stands there only while that work
-  runs: a task the work spawned that outlives it stands in no order. So does
+  `handle_inbound()`, §10.1 step 4).<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-019", "kind": "behavior", "applies": "§9.5.1 Reentrance: how long work stands in the admission order, and a task it spawned that outlives it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It stands there only while that work
+  runs: a task the work spawned that outlives it stands in no order.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-020", "kind": "behavior", "applies": "§9.5.1 Reentrance: a locked hook's body and the tasks it spawns, in the admission order. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->So does
   a locked hook, only while its body runs, though its section holds the lock
   longer: a task the body spawned acts for it while the body runs, awaited or
   not, and once the body has returned its calls are new arrivals, which wait
-  for the lock. A call that work makes
+  for the lock.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-021", "kind": "behavior", "applies": "§9.5.1 Reentrance: a call made by work that stands in the room's admission order. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call that work makes
   is adopted by that work: it would otherwise wait for the ticket its own
   caller holds or, made from a parse, open a cascade of its own for every
-  message. It runs every hook under the lock and commits ahead of the event
-  whose processing made it. An adopted call has no place in the ticket order
-  (Order, above): it is ordered only ahead of the event that adopted it. Made
+  message.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-022", "kind": "behavior", "applies": "§9.5.1 Reentrance: an adopted call's hooks and its commit, against the event whose processing made it. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It runs every hook under the lock and commits ahead of the event
+  whose processing made it.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-023", "kind": "behavior", "applies": "§9.5.1 Reentrance: an adopted call in the ticket order. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An adopted call has no place in the ticket order
+  (Order, above): it is ordered only ahead of the event that adopted it.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-024", "kind": "behavior", "applies": "§9.5.1 Reentrance: the reentry budget an adopted call draws on, and the events its own hooks inject (§8.3, §9.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Made
   under the lock, it MUST draw on the reentry budget of the cascade whose
   section holds the lock (§8.3), and the events its own hooks inject join
   that section's queue, committed once the section has released the lock
   (§9.4); made in the admission order, it MUST draw on the budget of the
   cascade of the event that work is for, so that a hook or a parse that sends
-  into the room on every event stops at the cap. Code under a room lock the
+  into the room on every event stops at the cap.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-025", "kind": "behavior", "applies": "§9.5.1 Reentrance: a call made by code under a room lock the host holds outside any pass (§13.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Code under a room lock the
   host holds outside any pass (a host serialising its own changes, §13.5)
   belongs to no cascade: its call draws on a budget of its own, and the
   events its hooks inject commit once the host has released the lock, after
-  the call returns. An adopted call answers at its commit, with its
-  completion detached (§10.1 step 18) and no delivery results. Made in an
+  the call returns.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-026", "kind": "behavior", "applies": "§9.5.1 Reentrance: when an adopted call answers, and what. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An adopted call answers at its commit, with its
+  completion detached (§10.1 step 18) and no delivery results.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-027", "kind": "behavior", "applies": "§9.5.1 Reentrance: when a call adopted by an event's admission work answers, against the events its hooks inject. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Made in an
   event's admission work, it answers only once the events its own hooks
   injected, and those their hooks injected, are committed too, each in a
   section of its own (§9.4), with those the hooks of a call nested in any
   of these sections, its own included, injected, which join that
   section's queue: committed, not delivered, their passes waiting for no
-  delivery set in the lane. A message held for its sender (§10.1 step 5)
+  delivery set in the lane.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-028", "kind": "behavior", "applies": "§9.5.1 Reentrance: an adopted message held for its sender (§10.1 step 5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A message held for its sender (§10.1 step 5)
   answers once its challenge, a cascade of its own with what the
-  challenge's section queued, is committed and delivered. An adopted
+  challenge's section queued, is committed and delivered.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-029", "kind": "behavior", "applies": "§9.5.1 Reentrance: the first failed release of an adopted call's sections, and which result reports it (§13.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An adopted
   message's result then carries
   the first failed release of their sections as its error when it met none
   before (§13.5), and the event that adopted it does not; an adopted
   injection (§10.5) returns its event, and that failure is the error of the
-  event that adopted it.
+  event that adopted it.<!-- /rfc --><!-- rfc: {"id": "RK-9.5.1-030", "kind": "behavior", "applies": "§9.5.1 Reentrance: the delivery of a call adopted under the lock. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
   Made under
   the lock, its delivery waits in the lane behind the work that made it, and
-  a wait on it there returns unwaited (§10.1 step 18). Made in an event's
+  a wait on it there returns unwaited (§10.1 step 18).<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-031", "kind": "behavior", "applies": "§9.5.1 Reentrance: the delivery of a call adopted by an event's admission work. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Made in an event's
   admission work, its delivery does not wait for that work: it runs at its
   turn in the lane, ahead of the event's, so a wait on it from that work
   returns with its delivery results, its answers and its turns' ends, and
-  the event commits and is delivered after it. The event's caller is
+  the event commits and is delivered after it.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-032", "kind": "behavior", "applies": "§9.5.1 Reentrance: when the caller of an event whose work made an adopted call is answered. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The event's caller is
   answered once the event's own work is over, blocked or delivered, and
   does not wait for an adopted call that work did not wait for: that
-  call's answers, and the reading of their streams, are its own. A wait
+  call's answers, and the reading of their streams, are its own.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-033", "kind": "behavior", "applies": "§9.5.1 Reentrance: a wait on the handle of an event that deferred its delivery (§10.1 step 18) and whose work made an adopted call. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A wait
   on the handle of an event that deferred its delivery (§10.1 step 18)
   is answered the same way, without waiting for that call, and reads the
-  event's own end even once the kit's close has cut that call.
+  event's own end even once the kit's close has cut that call.<!-- /rfc --><!-- rfc: {"id": "RK-9.5.1-034", "kind": "behavior", "applies": "§9.5.1 Reentrance: a wait whose delivery calls into the room and needs the ticket the event holds. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
   A wait whose delivery calls
   into the room and needs the ticket that event holds ends at the event's
   `process_timeout` (§13.6): the event is refused with nothing of it
-  stored, and the wait ends with the work. The delivery's call, bound by its
+  stored, and the wait ends with the work.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-035", "kind": "behavior", "applies": "§9.5.1 Reentrance: the delivery's call in such a wait. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The delivery's call, bound by its
   own `process_timeout`, which started later, commits only if it takes the
-  released ticket before that expires; otherwise it is refused too. An
+  released ticket before that expires; otherwise it is refused too.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-036", "kind": "behavior", "applies": "§9.5.1 Reentrance: an adopted call that committed, when the event's process_timeout passes (§13.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->An
   adopted call that committed is not the event's work: when the event's
   `process_timeout` passes, in its off-lock check or under the room's lock,
   while that call's answer is still to come or still being read (a
   streaming target that reads on), the call runs on to its end, its answers
   stored and its handle reading them, and the event is refused on time,
   without waiting for it; the event's delivery key then names no delivery,
-  and the handle of an event that deferred its delivery waits for nothing.
+  and the handle of an event that deferred its delivery waits for nothing.<!-- /rfc --><!-- rfc: {"id": "RK-9.5.1-037", "kind": "behavior", "applies": "§9.5.1 Reentrance: an adopted call's own process_timeout (§13.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
   An adopted call has a `process_timeout` of its own, from its start, as any
   call has (§13.6): not committed when it passes, it is refused
   `process_timeout` and reports it, naming its channel before the room lock
-  and its event under it. It also follows the code that waits for its
+  and its event under it.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-038", "kind": "behavior", "applies": "§9.5.1 Reentrance: an adopted call its hook's body or its parse waits for, not committed when that code ends. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It also follows the code that waits for its
   answer. A call its hook's body or its parse makes and waits for
   (awaited, deferred until its decision, or nested under the lock), not
   committed yet when that code ends, ends with it, nothing of it stored, and
   nothing reports it but what ended that code: the event's
   `process_timeout`, the hook's own timeout (§9.3), or the event's caller
-  gone (§13.6). A call made beside the event's work by a task that work
+  gone (§13.6).<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-039", "kind": "behavior", "applies": "§9.5.1 Reentrance: a call made by a task the event's work started and does not wait for. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call made beside the event's work by a task that work
   started and does not wait for (an off-lock hook's, a parse's) outlives
   the work: its own `process_timeout` bounds it, and it ends only with the
   task that waits for it, the event refused at its own deadline meanwhile
-  without waiting for it, even while it holds the room's lock. A call a
+  without waiting for it, even while it holds the room's lock.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-040", "kind": "behavior", "applies": "§9.5.1 Reentrance: a call a locked hook's task makes, while the body runs or once it has returned. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call a
   locked hook's task makes while the hook's body runs is nested under the
   hook's section, as any call made under the lock, and holds that section:
   the hook's result is used once the call is decided, however the body
   ended, its own timeout included, so that the call commits ahead of the
   event; a call the task makes once the body has returned is a new
-  arrival, as above. It is bounded by the event's `process_timeout`, as
+  arrival, as above.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-041", "kind": "behavior", "applies": "§9.5.1 Reentrance: a call nested under a locked hook's section, against the event's process_timeout. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->It is bounded by the event's `process_timeout`, as
   the section is: not committed when that passes, it is refused
   `process_timeout` with the event, nothing of either stored and nothing
   reported of it, the hook's own timeout, if it timed out, reported ahead
-  of the event's `process_timeout`. A section with no deadline of its own
+  of the event's `process_timeout`.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-042", "kind": "behavior", "applies": "§9.5.1 Reentrance: a call nested under a section with no deadline of its own (an injected event's pass). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A section with no deadline of its own
   (an injected event's pass) waits for it up to the call's own
-  `process_timeout`, past which the call is refused and reports it. The
+  `process_timeout`, past which the call is refused and reports it.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-043", "kind": "behavior", "applies": "§9.5.1 Reentrance: a call nested under a locked hook's section once the event's caller is gone (§13.6). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The
   event's caller gone, it goes on, the lock held for it until it is over
   or the event's deadline passes, where, not committed, it is refused
   `process_timeout`, nothing of it stored and nothing reported of it, nor
   the event's `process_timeout`; whether the caller returns at once or
-  once the call is over is left to the implementation.
+  once the call is over is left to the implementation.<!-- /rfc --><!-- rfc: {"id": "RK-9.5.1-044", "kind": "behavior", "applies": "§9.5.1 The room's work outside the lock: a call into the room from its deliveries, its turns and the bodies of its ASYNC hooks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **The room's work outside the lock.** A call into the room from its work
   outside the lock and outside its admission order (a delivery set's
   deliveries and turns: a transport's `deliver()`, an agent's turn, a tool
@@ -6532,101 +6545,101 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
   fires once per event, §9.2, an observer of a trigger fired outside any
   cascade having a budget of its own, §8.3) is a new arrival: it takes a
   ticket when an off-lock hook fires for its event, and `process_timeout`
-  bounds it (§13.6). While that delivery, turn or hook body runs, a call into
+  bounds it (§13.6).<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-045", "kind": "behavior", "applies": "§9.5.1 The room's work outside the lock: the reentry budget a call into its own room draws on while that work runs (§8.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->While that delivery, turn or hook body runs, a call into
   its own room MUST draw on the reentry budget of the cascade that delivers,
   the one whose delivery set runs it or that
   fired the hook, and so does the cascade the call starts, so that a
   transport whose delivery sends into its room, or a hook that posts after
-  every event, stops at the cap. A delivery's or a turn's call draws one of
+  every event, stops at the cap.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-046", "kind": "behavior", "applies": "§9.5.1 The room's work outside the lock: what a delivery's, a turn's or a hook body's call draws, and the depth of a hook body's (§8.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A delivery's or a turn's call draws one of
   the cascade's passes; a hook body's call draws one of its hook calls, a
   counter kept apart (§8.3) that all the cascade's hooks share, only while
   that body runs, and is at least one deeper than the event the hook runs
   for (§8.3): a hook that posts once per event draws one hook call per event,
   and a task the body starts and does not wait for draws nothing of it once
-  the body has returned. So MUST a call it makes that
+  the body has returned.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-047", "kind": "behavior", "applies": "§9.5.1 The room's work outside the lock: a call from that work that creates a room (§10.1 step 2, §10.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->So MUST a call it makes that
   creates a room, whether a routed message opens it or the call names a room
   the store does not hold, which step 2 creates with the id (§10.1 step 2,
   §10.4): the room is that cascade's own work, and the call is charged once,
-  before the room is created. Only a call into another room that exists
-  already has a budget of its own. A routed message is charged once its final
+  before the room is created.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-048", "kind": "behavior", "applies": "§9.5.1 The room's work outside the lock: a call from that work into another room that exists. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Only a call into another room that exists
+  already has a budget of its own.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-049", "kind": "behavior", "applies": "§9.5.1 The room's work outside the lock: a routed message from that work, once step 2 knows its room (§10.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A routed message is charged once its final
   room is known, after step 2 has routed it once more where the first room
   was no longer the message's (§10.4): one that lands in the room the work
   delivers in draws on that work's budget, wherever the router first placed
-  it, and one that lands in another room that exists has a budget of its own.
+  it, and one that lands in another room that exists has a budget of its own.<!-- /rfc --><!-- rfc: {"id": "RK-9.5.1-050", "kind": "behavior", "applies": "§9.5.1 The room's work outside the lock: a call whose room another call creates first. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
   When step 2 reads a call's room absent and another call creates it first,
   the call stays charged and goes on into that room as into one that
-  exists; its cascade has a budget of its own. A message already charged is
-  not charged again, wherever routing places it once more. A call into any
+  exists; its cascade has a budget of its own.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-051", "kind": "behavior", "applies": "§9.5.1 The room's work outside the lock: a message already charged that routing places once more. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A message already charged is
+  not charged again, wherever routing places it once more.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-052", "kind": "behavior", "applies": "§9.5.1 The room's work outside the lock: the depth of a call made while a turn, a tool call outside a turn, or a hook on a model's words, delegation or speech runs (§8.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A call into any
   room made while a turn runs is at least as deep as the response of the
   deepest turn it runs within, one made while a tool call outside a turn
   runs (a realtime or a conference tool call, §12.4) at least as deep as the
   answer that issued it, and one made from a hook on a model's words or
   delegation, or on what a voice agent says, at least as deep as the answer
-  it hears, delegated or speaks (§8.3). Once the turn, the tool call or the hook's
+  it hears, delegated or speaks (§8.3).<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-053", "kind": "behavior", "applies": "§9.5.1 The room's work outside the lock: work a turn, a tool call or a hook's body began, once it is over. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Once the turn, the tool call or the hook's
   body is over, work it began (a task it spawned) calls into a room as a new
   arrival at the depth of its own event, 0 for a message it creates, or the
   depth the call names (a `chain_depth` it passes to continue a chain,
   §10.5); it draws on the budget of the room's delivery it was started
   within while that delivery runs, as any of the delivery's work does, and
-  on a budget of its own once the delivery is over. The body of a hook run
+  on a budget of its own once the delivery is over.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-054", "kind": "behavior", "applies": "§9.5.1 The room's work outside the lock: the depth floor of an ASYNC hook's body and of the handler of a framework event a turn emits (§8.3). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->The body of a hook run
   asynchronously keeps the floor its trigger fired under for as long as it
   runs, and a handler of a framework event a turn emits keeps the turn's
   (§8.3); once it has returned, what it began calls at the depth of its
   own event, whatever the work that fired the hook or emitted the event
-  still does. Such a call that would
+  still does.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-055", "kind": "behavior", "applies": "§9.5.1 The room's work outside the lock: a call that would wait on its own delivery from a context the delivery lane cannot progress past (§10.1 step 18). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Such a call that would
   wait on its own delivery from a context the delivery lane cannot progress
-  past returns with its completion detached (§10.1 step 18). Only a call into
+  past returns with its completion detached (§10.1 step 18).<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-056", "kind": "behavior", "applies": "§9.5.1 The room's work outside the lock: a call into another room from a delivery, and two rooms' deliveries that call into each other. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Only a call into
   its caller's own room is detached so: a call into another room waits for
   that room's delivery, so a delivery of room A that calls into room B while a
   delivery of B calls into A waits for B's lane, and B's for A's, and the two
   wait for each other. Such a cycle is outside step 18's guarantee (§10.1): an
   implementation need not detect it, and it lasts until a caller stops waiting
-  (§13.6). An integrator SHOULD make a call into another room from a delivery
-  with detached completion, or from outside that delivery.
+  (§13.6).<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-057", "kind": "non_testable", "applies": "§9.5.1 The room's work outside the lock: an integrator's call into another room from a delivery, which only the integrator keeps. Enclosing capability conditions and §26 levels still apply.", "level": "should"} -->An integrator SHOULD make a call into another room from a delivery
+  with detached completion, or from outside that delivery.<!-- /rfc --><!-- rfc: {"id": "RK-9.5.1-058", "kind": "behavior", "applies": "§9.5.1 Past the cap: a direct injection whose key its channel already holds in the room (§13.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **Past the cap.** A direct injection whose key its channel already holds
   in the room is a replay (§13.4): its key is read as the call starts,
   before its budget, and it returns the original result and draws nothing.
   Only an injection reads its key first: a message past the cap stores
   nothing, while an injection past it would store a record whose key
-  collides with the event it replays. Each other call into the room,
+  collides with the event it replays.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-059", "kind": "behavior", "applies": "§9.5.1 Past the cap: when every other call into the room draws its pass. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Each other call into the room,
   adopted or a new arrival from its work, draws one pass on its budget as it
-  starts, a routed message once its room is known. Past the budget, an
+  starts, a routed message once its room is known.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-060", "kind": "behavior", "applies": "§9.5.1 Past the cap: an injected event and a message past the reentry budget; where a message is refused is RK-9.5.1-061 to 063's. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Past the budget, an
   injected event is stored `BLOCKED` with `reentry_loop_cap`, no hook run,
   with the visibility its pass would have committed it with (§7.3), and
   `send_event()` returns that record (§10.5); a message is refused with no
   event, nothing of it stored
-  (`InboundResult(blocked=true, reason=reentry_loop_cap)`):
+  (`InboundResult(blocked=true, reason=reentry_loop_cap)`):<!-- /rfc --><!-- rfc: {"id": "RK-9.5.1-061", "kind": "behavior", "applies": "§9.5.1 Past the cap: a message past the budget that names its room. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
   - one that names its room, first thing at §10.1 step 1, once a call
     acting for an organization has had the room read with it (§17.2),
-    nothing created;
+    nothing created;<!-- /rfc --><!-- rfc: {"id": "RK-9.5.1-062", "kind": "behavior", "applies": "§9.5.1 Past the cap: a message past the budget that names a room the store does not hold. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
   - one that names a room the store does not hold, at step 2, before
-    creating it;
+    creating it;<!-- /rfc --><!-- rfc: {"id": "RK-9.5.1-063", "kind": "behavior", "applies": "§9.5.1 Past the cap: a routed message past the budget (§10.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
   - a routed one, at step 2: before creating a new room, or, when it lands
     in the room the work delivers in, after the locked check, what step 2
     wrote to route it (the channel's attach, the sender's record) kept, as
     for a message a hook refuses (§10.4). One that lands in another room
-    that exists has a budget of its own and is not refused.
+    that exists has a budget of its own and is not refused.<!-- /rfc --><!-- rfc: {"id": "RK-9.5.1-064", "kind": "behavior", "applies": "§9.5.1 A message routed back: a message that names no room, which routing lands in the room whose lock its caller holds or in whose admission order it stands. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **A message routed back.** A message that names no room and that routing
   lands in the room whose lock its caller holds, or in whose admission order
   it stands, fails at once with nothing written rather than wait for its own
   caller: its room known only once routed, it cannot be adopted, and
   committed it would come ahead of the event its caller works for, outside
-  every order (§10.1 step 2). One routed back into the room from its work
-  outside the lock is a new arrival, as above.
+  every order (§10.1 step 2).<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-065", "kind": "behavior", "applies": "§9.5.1 A message routed back: one routed back from the room's work outside the lock. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->One routed back into the room from its work
+  outside the lock is a new arrival, as above.<!-- /rfc --><!-- rfc: {"id": "RK-9.5.1-066", "kind": "behavior", "applies": "§9.5.1 Other commit paths: reentry passes, regeneration and hook-injected events, and the off-lock hooks. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 - **Other commit paths** (reentry passes, regeneration, hook-injected events)
   run every `BEFORE_BROADCAST` SYNC hook under the lock, the off-lock ones
   included. `needs_lock = false` permits a hook to run off the lock; it never
-  lets an event skip it. A streamed row is the exception (§4): it runs every
+  lets an event skip it.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-067", "kind": "behavior", "applies": "§9.5.1 Other commit paths: a streamed row's hooks and its commit (§4, §10.2). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A streamed row is the exception (§4): it runs every
   hook, the `needs_lock = true` ones included, without the room lock, then
-  takes the lock for its commit, which reads the room (§10.2). Its hooks,
+  takes the lock for its commit, which reads the room (§10.2).<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-068", "kind": "behavior", "applies": "§9.5.1 Other commit paths: the room a streamed row's hooks, its observers and its blocked record read. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Its hooks,
   its observers and the record of a row they block read the room as it
   stands when the row comes, read just before its hooks, with the row at
   the room's next index as read then (an event committed meanwhile gives
   the row a later one at its commit): never the room as it stood when its
-  stream began. A room that read finds gone, or created again under its
-  id, refuses the row before its hooks (§5.1, §13.5). An implementation
+  stream began.<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-069", "kind": "behavior", "applies": "§9.5.1 Other commit paths: a streamed row whose room is gone or created again (§5.1, §13.5). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->A room that read finds gone, or created again under its
+  id, refuses the row before its hooks (§5.1, §13.5).<!-- /rfc --> <!-- rfc: {"id": "RK-9.5.1-070", "kind": "behavior", "applies": "§9.5.1 Other commit paths: the room read of a streamed row no BEFORE_BROADCAST hook or observer applies to. Enclosing capability conditions and §26 levels still apply.", "level": "may"} -->An implementation
   MAY skip that read for a row no hook and no observer of
-  `BEFORE_BROADCAST` applies to.
+  `BEFORE_BROADCAST` applies to.<!-- /rfc --><!-- rfc: {"id": "RK-9.5.1-071", "kind": "behavior", "applies": "§9.5.1 Other commit paths: the events a streamed row's hooks inject (§9.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
   The events a streamed row's hooks inject
   take the room lock for their own commit, as every injected event does
   (§9.4).
@@ -6634,15 +6647,15 @@ inbound pipeline (§10.1 step 5a) and on direct injection (§10.5):
 
 ### 9.6 When to Use What
 
-<!-- rfc: {"id": "RK-9.6-001", "kind": "behavior", "applies": "§9.6 When to Use What; the source unit and enclosing sections retain their capability conditions, defaults, exceptions and planned status. Conformance levels are declared in §26."} -->
+<!-- rfc: {"id": "RK-9.6-002", "kind": "behavior", "applies": "§9.6 When to Use What (its header), the block row: which of a SYNC hook, an ASYNC hook and a read-only channel can block an event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->
 | | Sync Hook | Async Hook | Read-Only Channel |
 |---|---|---|---|
 | Can **block** events | Yes | No | No |
-| Can **modify** events | Yes | No | No |
-| Can **inject** targeted events | Yes (any action, on BEFORE_BROADCAST, §9.4) | No | No |
-| Can produce **tasks/observations** | Yes | No | Yes |
-| Can produce **response messages** | No | No | No (read-only) |
-| Runs | Before broadcast | After broadcast | During broadcast |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.6-003", "kind": "behavior", "applies": "§9.6 When to Use What, the modify row: which of them can modify an event. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Can **modify** events | Yes | No | No |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.6-004", "kind": "behavior", "applies": "§9.6 When to Use What, the inject row: which of them can inject targeted events (§9.4). Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Can **inject** targeted events | Yes (any action, on BEFORE_BROADCAST, §9.4) | No | No |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.6-005", "kind": "behavior", "applies": "§9.6 When to Use What, the tasks and observations row: which of them can produce tasks and observations. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Can produce **tasks/observations** | Yes | No | Yes |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.6-006", "kind": "behavior", "applies": "§9.6 When to Use What, the response messages row: which of them can produce a response message. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Can produce **response messages** | No | No | No (read-only) |
+| <!-- /rfc --><!-- rfc: {"id": "RK-9.6-007", "kind": "behavior", "applies": "§9.6 When to Use What, the Runs and Typical use rows: when each runs, and the use each typically serves. Enclosing capability conditions and §26 levels still apply.", "level": "must"} -->Runs | Before broadcast | After broadcast | During broadcast |
 | Typical use | Rule-based filtering | Logging, analytics | AI-powered analysis |
 
 <!-- /rfc -->

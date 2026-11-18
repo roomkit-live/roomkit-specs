@@ -339,21 +339,21 @@
     },
     {
       "section": "9",
-      "sha256": "e0e6ed8b12b287b083afe2f02b829816a8da1c4cddca36d938609db205b6d24d",
+      "sha256": "f4d8dc5937a45a4d43a4ed2c0410c994cbf2b2bbe3aaeacb9a6d87506f21d6c7",
       "classification": "normative",
-      "review": "Source inventory: Hook System. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Hook System. Its one overview unit carries its level (RMK-1781)."
     },
     {
       "section": "9.1",
-      "sha256": "bc8ab876412d596fe1ff8364086dc70bde662e315785a6059c7a49aa1593678b",
+      "sha256": "9c4b4794770859b97b3a1d60d9a8ba2831281d7a59097cd723b6d44263f66dce",
       "classification": "normative",
-      "review": "Source inventory: Hook Registration. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Hook Registration, split to one obligation per unit (RMK-1781). The HookRegistration interface block stays whole; each registration rule, room-hook lifetime rule and naming rule is a unit, with its conditions, exceptions and rationale; context a unit needs from its neighbours is in its applies. Where a MAY only grants the integrator a choice the implementation honours (global or per-room hooks), the unit is must. Every unit carries its level."
     },
     {
       "section": "9.2",
-      "sha256": "542895ed679da3253c8aa5a6920a293b62feb3f26f831497276c67789999d184",
+      "sha256": "88cd4e0187a5916a86bdadd4a614aaf1fb3cb89e4edd4b73b7483c13f40f605d",
       "classification": "normative",
-      "review": "Source inventory: Hook Triggers. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage. Reviewed the timer-context clarification against Python and Rust concurrent-greeting tests: the final stored context may already be ACTIVE. Existing blocks retain their conditions and exceptions; no unannotated normative content was introduced."
+      "review": "Source inventory: Hook Triggers, split to one obligation per unit (RMK-1781). The paragraph on the Status column, which names the triggers an implementation must fire, is one unit; each sentence on the Execution column and on where a trigger fires is a unit. The trigger table is split one row per unit, with the markers inside its cells so that it renders as before; its header goes with the first row, each group heading with the first row under it. A Planned row is must for an implementation that provides its capability, and untested.json says why no scenario cites it; BEFORE_AI_CONTEXT_BUILD, required by nothing today, is may; the Superseded row is must and untested.json says why. The ON_ERROR payload, the mutation hooks' payload and the lifecycle hooks' context are one unit a sentence, the error categories one a row. Every unit carries its level."
     },
     {
       "section": "9.3",
@@ -363,27 +363,27 @@
     },
     {
       "section": "9.4",
-      "sha256": "ffcd925dc343ff947ccea5ff211a3385b89b086d53c70205bc541e662172f6c7",
+      "sha256": "49347e02ffd47c52554d4fbdb464fa28db1df3b1687766b7ae4adc37a3fe4ca8",
       "classification": "normative",
-      "review": "Source inventory: HookResult. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: HookResult, split to one obligation per unit (RMK-1781). What a SYNC hook returns binds its author alone and is non_testable (RK-9.4-007), as RK-9.3-003 is; the HookResult interface block that sentence introduces is a unit of its own (RK-9.4-040), and the InjectedEvent block stays with its title (RK-9.4-003). Each rule of a BEFORE_BROADCAST replacement, of injected events and of the triggers that commit them is a unit, with its conditions, exceptions and rationale. Where a MAY only grants a hook a change the implementation honours (RK-9.4-011, RK-9.4-016), the unit is must. Every unit carries its level."
     },
     {
       "section": "9.5",
-      "sha256": "3aed4ce07cad163675e71228455d125ce6ca87c6c5277ddd5ce65b4fbb9b1d14",
+      "sha256": "51afbee66f1f430591e23adf32672debc1faa11930995645efb544da97194660",
       "classification": "normative",
-      "review": "Source inventory: Hook Pipeline (BEFORE_BROADCAST). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Hook Pipeline (BEFORE_BROADCAST). Its one diagram states one procedure and stays one unit, which carries its level (RMK-1781)."
     },
     {
       "section": "9.5.1",
-      "sha256": "3a51f2e32271e031526bff7247db7a0d7cc41d1ccab17527ca18c6d12e8bef70",
+      "sha256": "14805092cba54af535a76f8ca4aead6ee1fc4d988a07e1c14c32875043423faf",
       "classification": "normative",
-      "review": "Source inventory: Off-lock checks (`needs_lock = false`). Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: Off-lock checks (`needs_lock = false`), split to one obligation per unit (RMK-1781). The step 5a block stays with the sentence that introduces it (RK-9.5.1-002); each sentence of the Order, Release, Bound, Decision, Errors, Context, Reentrance, the room's work outside the lock, Past the cap, a message routed back and other commit paths rules is a unit, or one list item. Two clauses only an integrator keeps stand alone and are non_testable (RK-9.5.1-016, RK-9.5.1-057). Skipping a streamed row's room read is may (RK-9.5.1-070). Every unit carries its level."
     },
     {
       "section": "9.6",
-      "sha256": "571232cfc1c20d2340a3ac8069642cd27302de4027207b871dbfcaf115286ba4",
+      "sha256": "b9e9d4e9b95dc5bc1aefec0223b3519b9df620967c9aaed3387362703cec3f6d",
       "classification": "normative",
-      "review": "Source inventory: When to Use What. Complete source blocks are retained, including tables, interfaces/defaults, conditions, exceptions and examples. This is a contextual inventory, not an atomic obligation count or a review of implementation coverage; split a block before claiming narrower complete coverage."
+      "review": "Source inventory: When to Use What, split one table row per unit (RMK-1781), with the markers inside its cells so that it renders as before; the header goes with the first row, the typical use with the row of when each runs. Every unit carries its level."
     },
     {
       "section": "10",
