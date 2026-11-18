@@ -1,6 +1,291 @@
 {
   "version": 1,
   "links": {
+    "RK-10.2-001": {
+      "broadcast/one-event-reaches-twelve-transports": "70601b2670209646c5e50daa8477bc43e292474f706b0e2a5b67755ba92c2a7f",
+      "inbound/a-message-reaches-the-other-transports": "70601b2670209646c5e50daa8477bc43e292474f706b0e2a5b67755ba92c2a7f"
+    },
+    "RK-10.2-003": {
+      "appendix-b/b4-agent-chain": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e",
+      "broadcast/an-agent-is-asked-and-never-delivered-to": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e",
+      "broadcast/an-agent-s-observations-are-kept": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e",
+      "broadcast/an-inbound-only-transport-is-not-delivered-to": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e",
+      "broadcast/one-event-reaches-twelve-transports": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e",
+      "delivery/a-retried-delivery-keeps-its-successful-provider-receipt": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e",
+      "delivery/a-successful-provider-receipt-reaches-the-caller": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e",
+      "inbound/a-failed-delivery-is-reported": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e",
+      "inbound/a-failed-turn-fires-on-error": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e",
+      "inbound/a-message-reaches-the-other-transports": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e",
+      "inbound/a-transport-s-failure-fires-no-on-error": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e",
+      "inbound/an-agent-s-provider-refusal-keeps-its-retryability": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e",
+      "inbound/an-unregistered-target-is-skipped-or-reported": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e",
+      "permissions/a-muted-agent-reads-but-its-answer-is-blocked": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e",
+      "permissions/a-source-bound-for-no-one-reaches-no-target": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e",
+      "permissions/an-outbound-only-agent-is-still-asked": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e",
+      "permissions/targets-by-access-and-self": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e",
+      "permissions/the-agent-whispers-to-the-advisor": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e",
+      "streaming/a-stream-reaches-an-outbound-only-transport-and-no-inbound-only-one": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e",
+      "streaming/a-streaming-target-made-write-only-mid-stream-reads-no-more": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e",
+      "streaming/a-transport-made-write-only-mid-stream-is-delivered-no-later-row": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e",
+      "transcoding/a-long-text-is-cut-with-a-marker": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e",
+      "transcoding/rich-text-reaches-a-text-channel-as-its-plain-text": "4397542c8db99841c98727bf9cdcce33f5564451aa80e27b88138cb861c0188e"
+    },
+    "RK-10.2-005": {
+      "broadcast/a-partial-failure-is-reported-before-its-deliveries": "b9ee0a9ae3a58df8b130c8e9c59414cc3c6ed426fa3606891f0d2de9e5596f58",
+      "inbound/a-failed-delivery-is-reported": "b9ee0a9ae3a58df8b130c8e9c59414cc3c6ed426fa3606891f0d2de9e5596f58",
+      "inbound/a-failed-turn-fires-on-error": "b9ee0a9ae3a58df8b130c8e9c59414cc3c6ed426fa3606891f0d2de9e5596f58"
+    },
+    "RK-10.2-009": {
+      "streaming/a-streaming-target-detached-mid-stream-reads-no-more": "b28a66e8d9f7efd91a7c9a61337a7c11c9e6fb54ecd7d530afe104d8d3357c10",
+      "streaming/a-streaming-target-made-write-only-mid-stream-reads-no-more": "b28a66e8d9f7efd91a7c9a61337a7c11c9e6fb54ecd7d530afe104d8d3357c10",
+      "streaming/a-transport-made-write-only-mid-stream-is-delivered-no-later-row": "b28a66e8d9f7efd91a7c9a61337a7c11c9e6fb54ecd7d530afe104d8d3357c10"
+    },
+    "RK-10.2-010": {
+      "delivery/a-call-cancelled-at-the-room-lock-waits-for-no-turn": "da09ac9af7f035b3409d4c173e013bac2603d5c7b9b44ba6bbe21a8584893ece",
+      "delivery/a-greeting-keeps-its-cursor-behind-its-held-delivery": "da09ac9af7f035b3409d4c173e013bac2603d5c7b9b44ba6bbe21a8584893ece",
+      "delivery/a-later-event-runs-after-a-held-greeting": "da09ac9af7f035b3409d4c173e013bac2603d5c7b9b44ba6bbe21a8584893ece",
+      "delivery/a-streamed-segment-keeps-its-cursor-behind-delivery": "da09ac9af7f035b3409d4c173e013bac2603d5c7b9b44ba6bbe21a8584893ece",
+      "delivery/an-awaited-call-cancelled-before-its-commit-waits-for-no-turn": "da09ac9af7f035b3409d4c173e013bac2603d5c7b9b44ba6bbe21a8584893ece",
+      "delivery/an-awaited-call-cancelled-during-identity-waits-for-no-turn": "da09ac9af7f035b3409d4c173e013bac2603d5c7b9b44ba6bbe21a8584893ece",
+      "delivery/an-awaited-call-cancelled-during-routing-waits-for-no-turn": "da09ac9af7f035b3409d4c173e013bac2603d5c7b9b44ba6bbe21a8584893ece",
+      "locks/a-blocked-message-of-a-deleted-room-leaves-the-cursor-of-the-room-created-again-unmoved": "da09ac9af7f035b3409d4c173e013bac2603d5c7b9b44ba6bbe21a8584893ece",
+      "locks/a-room-created-again-after-its-deletion-mid-delivery-delivers-each-message": "da09ac9af7f035b3409d4c173e013bac2603d5c7b9b44ba6bbe21a8584893ece",
+      "locks/a-room-created-again-before-a-set-of-the-deleted-room-ends-delivers-each-message": "da09ac9af7f035b3409d4c173e013bac2603d5c7b9b44ba6bbe21a8584893ece",
+      "locks/a-room-created-again-delivers-each-message-sent-while-a-set-of-the-deleted-room-runs": "da09ac9af7f035b3409d4c173e013bac2603d5c7b9b44ba6bbe21a8584893ece",
+      "locks/a-room-created-again-with-an-earlier-created-at-delivers-each-message": "da09ac9af7f035b3409d4c173e013bac2603d5c7b9b44ba6bbe21a8584893ece",
+      "locks/a-set-another-process-queued-in-a-deleted-room-takes-its-turn-once-the-room-is-created-again": "da09ac9af7f035b3409d4c173e013bac2603d5c7b9b44ba6bbe21a8584893ece",
+      "locks/a-set-queued-behind-a-delivery-takes-its-turn-once-its-room-is-deleted": "da09ac9af7f035b3409d4c173e013bac2603d5c7b9b44ba6bbe21a8584893ece",
+      "locks/a-set-queued-in-a-deleted-room-takes-its-turn-once-the-room-is-created-again": "da09ac9af7f035b3409d4c173e013bac2603d5c7b9b44ba6bbe21a8584893ece",
+      "locks/the-first-set-another-process-ran-in-a-deleted-room-leaves-the-cursor-of-the-room-created-again-unmoved": "da09ac9af7f035b3409d4c173e013bac2603d5c7b9b44ba6bbe21a8584893ece",
+      "locks/the-first-set-of-a-deleted-room-leaves-the-cursor-of-the-room-created-again-unmoved": "da09ac9af7f035b3409d4c173e013bac2603d5c7b9b44ba6bbe21a8584893ece",
+      "resilience/concurrent-messages-take-their-own-index": "da09ac9af7f035b3409d4c173e013bac2603d5c7b9b44ba6bbe21a8584893ece",
+      "store/the-persistence-policy-stores-the-types-it-names-but-those-it-excludes": "da09ac9af7f035b3409d4c173e013bac2603d5c7b9b44ba6bbe21a8584893ece"
+    },
+    "RK-10.2-011": {
+      "delivery/a-later-event-s-answer-ready-first-is-stored-first": "ad77c23e63cb0e08c06f38171777bd95c94f99a6038632ca289040aacb8eae7c",
+      "delivery/an-ai-cascade-has-advanced-its-cursor-when-the-call-returns": "ad77c23e63cb0e08c06f38171777bd95c94f99a6038632ca289040aacb8eae7c",
+      "delivery/the-next-event-s-turn-runs-while-the-turn-before-it-is-held": "ad77c23e63cb0e08c06f38171777bd95c94f99a6038632ca289040aacb8eae7c",
+      "inbound/two-overlapping-calls-each-return-their-own-answer": "ad77c23e63cb0e08c06f38171777bd95c94f99a6038632ca289040aacb8eae7c"
+    },
+    "RK-10.2-012": {
+      "broadcast/a-delivery-s-context-holds-its-event": "00008b8d5eee8c493ed1d60ab9de30695fb226126474b88b6f53bd5456d0e690",
+      "streaming/a-row-s-delivery-reads-the-room-at-its-commit": "00008b8d5eee8c493ed1d60ab9de30695fb226126474b88b6f53bd5456d0e690"
+    },
+    "RK-10.2-013": {
+      "streaming/a-row-s-delivery-reads-the-room-at-its-commit": "3ae2c2f2f5b0b826a2b3dd28ccd57c543876d5a45d830dd4b5044bb897381098"
+    },
+    "RK-10.2-015": {
+      "injection/an-injection-from-a-bound-unregistered-channel-raises": "cd30c6ba12c5e1b721e7bed699ad89c9cbf70259688d3efec55c5fbb887ab92d"
+    },
+    "RK-10.2-016": {
+      "inbound/an-unregistered-target-is-skipped-or-reported": "b34ff1234649b96a1a38735ede7fd418497c515f56586064729fb60fc7e60861"
+    },
+    "RK-10.2-017": {
+      "greeting/a-channel-unregistered-greets-no-more": "bc087046864ea2f20ab26b3376e78ca72e097572bcb2e7a0764f37732acaf7f8"
+    },
+    "RK-10.2-018": {
+      "broadcast/one-event-reaches-twelve-transports": "5c4f4e59072f4cd28b3e79e92d02c725c7a16563ec19006d58aad0372b20528a",
+      "orchestration/a-host-s-words-are-a-person-s-message-to-a-pipeline-s-routing": "5c4f4e59072f4cd28b3e79e92d02c725c7a16563ec19006d58aad0372b20528a"
+    },
+    "RK-10.2-021": {
+      "discussion/names-are-read-after-every-host-hook": "ae5d93d09063111ec3e6030c302cc367fdf3bb8dd8c8173c6b8d2403b6cbcfec"
+    },
+    "RK-10.3-009": {
+      "appendix-b/b6-edit-with-fallback": "d5cdd6f2a093d30dd6c509b1583c3628cc6ca66e2c48388af952594932d148ef",
+      "appendix-b/b7-delete-with-fallback": "d5cdd6f2a093d30dd6c509b1583c3628cc6ca66e2c48388af952594932d148ef",
+      "edits/an-edit-by-another-sender-is-refused": "d5cdd6f2a093d30dd6c509b1583c3628cc6ca66e2c48388af952594932d148ef"
+    },
+    "RK-10.3-010": {
+      "edits/an-injected-change-s-refusal-raises": "23e5bd721d85cf1afa42b2a3518e6b81cdc8c8834c7e167ba832037767814ea5",
+      "hooks/a-hook-delete-requires-system-authority-admin": "23e5bd721d85cf1afa42b2a3518e6b81cdc8c8834c7e167ba832037767814ea5",
+      "hooks/a-hook-delete-requires-system-authority-sender": "23e5bd721d85cf1afa42b2a3518e6b81cdc8c8834c7e167ba832037767814ea5",
+      "hooks/a-hook-delete-requires-system-authority-system": "23e5bd721d85cf1afa42b2a3518e6b81cdc8c8834c7e167ba832037767814ea5",
+      "hooks/a-hook-edit-requires-system-authority-absent": "23e5bd721d85cf1afa42b2a3518e6b81cdc8c8834c7e167ba832037767814ea5",
+      "hooks/a-hook-edit-requires-system-authority-sender": "23e5bd721d85cf1afa42b2a3518e6b81cdc8c8834c7e167ba832037767814ea5",
+      "hooks/a-hook-edit-requires-system-authority-system": "23e5bd721d85cf1afa42b2a3518e6b81cdc8c8834c7e167ba832037767814ea5"
+    },
+    "RK-10.3-012": {
+      "edits/an-edit-of-a-missing-target-is-refused": "90d3fd9bf0c4919d699edf21d6d65f85e519562b868d802d03cd51be33d2d415",
+      "edits/the-side-effects-of-a-hook-on-an-edit-its-re-read-refuses-are-not-stored": "90d3fd9bf0c4919d699edf21d6d65f85e519562b868d802d03cd51be33d2d415"
+    },
+    "RK-10.3-014": {
+      "inbound/a-channel-s-echo-of-its-own-output-speaks-as-no-participant": "2c0596a05e287b2f2f880150b5c0f4b26a38be5d48adff4df5ac116dc5c166ba"
+    },
+    "RK-10.3-016": {
+      "appendix-b/b6-edit-with-fallback": "4a1ef50b5d46865ffa2052c1057de42f2d91d1ca161da0aabdb2bf49d2ca0e1f",
+      "appendix-b/b7-delete-with-fallback": "4a1ef50b5d46865ffa2052c1057de42f2d91d1ca161da0aabdb2bf49d2ca0e1f",
+      "edits/an-edit-by-another-sender-is-refused": "4a1ef50b5d46865ffa2052c1057de42f2d91d1ca161da0aabdb2bf49d2ca0e1f",
+      "inbound/a-channel-s-echo-of-its-own-output-speaks-as-no-participant": "4a1ef50b5d46865ffa2052c1057de42f2d91d1ca161da0aabdb2bf49d2ca0e1f"
+    },
+    "RK-10.3-021": {
+      "hooks/a-hook-delete-requires-system-authority-admin": "7b3b8963faa02532ae14d556668b48584b2dda240b15fe2a087f60dad22feb9b",
+      "hooks/a-hook-delete-requires-system-authority-sender": "7b3b8963faa02532ae14d556668b48584b2dda240b15fe2a087f60dad22feb9b",
+      "hooks/a-hook-delete-requires-system-authority-system": "7b3b8963faa02532ae14d556668b48584b2dda240b15fe2a087f60dad22feb9b",
+      "hooks/a-hook-edit-requires-system-authority-absent": "7b3b8963faa02532ae14d556668b48584b2dda240b15fe2a087f60dad22feb9b",
+      "hooks/a-hook-edit-requires-system-authority-sender": "7b3b8963faa02532ae14d556668b48584b2dda240b15fe2a087f60dad22feb9b",
+      "hooks/a-hook-edit-requires-system-authority-system": "7b3b8963faa02532ae14d556668b48584b2dda240b15fe2a087f60dad22feb9b"
+    },
+    "RK-10.3-022": {
+      "edits/an-edit-by-another-sender-is-refused": "5cb52579d5b3eb195c3c53a1f664b4fa7cec233adf6a480374ad78d555a866a7",
+      "edits/an-edit-of-a-missing-target-is-refused": "5cb52579d5b3eb195c3c53a1f664b4fa7cec233adf6a480374ad78d555a866a7",
+      "edits/an-injected-change-s-refusal-raises": "5cb52579d5b3eb195c3c53a1f664b4fa7cec233adf6a480374ad78d555a866a7",
+      "edits/the-side-effects-of-a-hook-on-an-edit-its-re-read-refuses-are-not-stored": "5cb52579d5b3eb195c3c53a1f664b4fa7cec233adf6a480374ad78d555a866a7"
+    },
+    "RK-10.3-023": {
+      "edits/an-edit-by-another-sender-is-refused": "e1f471f2bf632707b335496d91fa72d0166f57ca7a056db9ed446bdaa6f0173c",
+      "edits/an-injected-change-s-refusal-raises": "e1f471f2bf632707b335496d91fa72d0166f57ca7a056db9ed446bdaa6f0173c"
+    },
+    "RK-10.3-028": {
+      "edits/a-blocked-edit-leaves-its-target": "dde2f421c880fbbbf02945d879c7204c6cad89c7241e5a3baca494685f079f40"
+    },
+    "RK-10.3-029": {
+      "appendix-b/b6-edit-with-fallback": "9ce3d20b49598672032e564e3a394065a1642024f9fca781b20209494ed87a79",
+      "edits/an-edit-the-persistence-policy-keeps-out-still-rewrites-its-target": "9ce3d20b49598672032e564e3a394065a1642024f9fca781b20209494ed87a79",
+      "hooks/a-hook-edit-requires-system-authority-system": "9ce3d20b49598672032e564e3a394065a1642024f9fca781b20209494ed87a79",
+      "memory/a-summary-ends-once-a-turn-it-covers-is-edited": "9ce3d20b49598672032e564e3a394065a1642024f9fca781b20209494ed87a79",
+      "permissions/model-history-withholds-deleted-text-and-keeps-live-edits": "9ce3d20b49598672032e564e3a394065a1642024f9fca781b20209494ed87a79",
+      "regenerate/a-regeneration-skips-an-edit-row": "9ce3d20b49598672032e564e3a394065a1642024f9fca781b20209494ed87a79"
+    },
+    "RK-10.3-030": {
+      "appendix-b/b6-edit-with-fallback": "a79775a36abc6696d9ff8293998b0c9c6e094cfe1a98fd8bf53d3fe7cd05f8fc"
+    },
+    "RK-10.3-031": {
+      "appendix-b/b7-delete-with-fallback": "b3d7c1afafdb7988555ae1853a6205cd6e4424a70ec42f013b0ebbf951aecf87",
+      "edits/a-delete-the-persistence-policy-keeps-out-still-marks-its-target-and-edits": "b3d7c1afafdb7988555ae1853a6205cd6e4424a70ec42f013b0ebbf951aecf87",
+      "hooks/a-hook-delete-requires-system-authority-system": "b3d7c1afafdb7988555ae1853a6205cd6e4424a70ec42f013b0ebbf951aecf87"
+    },
+    "RK-10.3-032": {
+      "appendix-b/b7-delete-with-fallback": "f139f11372a1d94000bdc508b96ad807cfd1641e8057d91e00fd2a8770338ab8"
+    },
+    "RK-10.3-034": {
+      "store/a-delivery-record-alone-writes-an-event-s-results": "7cae28840ed63367f542c76996b175f52f4c175785870544dfdd22f890a7a290"
+    },
+    "RK-10.3-035": {
+      "hooks/an-injected-change-keeps-the-target-s-readers": "4613c275cb6e0635d4afeda11b4b9055ceb4c372229243a4f4abbd24d35f23fa"
+    },
+    "RK-10.3-036": {
+      "hooks/an-injected-change-keeps-the-target-s-readers": "c8282392f6822dcdc797d3722a3ff81888a41747d0b95edb4238759349bc44f9"
+    },
+    "RK-10.3-038": {
+      "edits/a-delete-the-persistence-policy-keeps-out-still-marks-its-target-and-edits": "027ca02b3906f6ce298235fd9579e04639e326b47e051a86979e68033f012c2d",
+      "edits/an-edit-the-persistence-policy-keeps-out-still-rewrites-its-target": "027ca02b3906f6ce298235fd9579e04639e326b47e051a86979e68033f012c2d",
+      "store/a-change-s-target-written-alone-marks-its-edits-once-deleted": "027ca02b3906f6ce298235fd9579e04639e326b47e051a86979e68033f012c2d"
+    },
+    "RK-10.3-039": {
+      "author-images/a-deleted-event-s-attached-image-stays-withheld": "5da006262ba439dc273582cda72e6e3c767dbb7f5e3ef57f7825e67d58886d7f",
+      "memory/a-summary-ends-once-a-turn-it-covers-is-deleted": "5da006262ba439dc273582cda72e6e3c767dbb7f5e3ef57f7825e67d58886d7f",
+      "memory/a-summary-ends-once-its-sender-deletes-a-turn-it-covers": "5da006262ba439dc273582cda72e6e3c767dbb7f5e3ef57f7825e67d58886d7f",
+      "permissions/model-history-withholds-deleted-text-and-keeps-live-edits": "5da006262ba439dc273582cda72e6e3c767dbb7f5e3ef57f7825e67d58886d7f",
+      "regenerate/a-regeneration-skips-a-deleted-message": "5da006262ba439dc273582cda72e6e3c767dbb7f5e3ef57f7825e67d58886d7f"
+    },
+    "RK-10.3-040": {
+      "discussion/the-recent-conversation-withholds-what-a-delete-removed": "365f2264ba0745249589e6dd9493763ba83f559b8e83138fb43dfb711601b453",
+      "permissions/model-history-withholds-deleted-text-and-keeps-live-edits": "365f2264ba0745249589e6dd9493763ba83f559b8e83138fb43dfb711601b453"
+    },
+    "RK-10.3-041": {
+      "permissions/model-history-withholds-deleted-text-and-keeps-live-edits": "2f1ab1ecba5938043efb0d00bb8e7769e58c9e3cb557db5df47b9acb485a5147"
+    },
+    "RK-10.3-042": {
+      "discussion/the-recent-conversation-withholds-what-a-delete-removed": "a97f8ded7a346af781791abd5243ac914313dfa5e2bb8b3b1771522eb215b0ca"
+    },
+    "RK-10.3-043": {
+      "appendix-b/b7-delete-with-fallback": "4ef067011343b346e7bfd91988a90985c637d2d3901044b0076fcd4bc5a12d20",
+      "permissions/model-history-withholds-deleted-text-and-keeps-live-edits": "4ef067011343b346e7bfd91988a90985c637d2d3901044b0076fcd4bc5a12d20"
+    },
+    "RK-10.3-044": {
+      "appendix-b/b6-edit-with-fallback": "fa0b516e226867604c53414cf90d5a378213f320d10ee4f1069be2f761809ce4",
+      "appendix-b/b7-delete-with-fallback": "fa0b516e226867604c53414cf90d5a378213f320d10ee4f1069be2f761809ce4",
+      "edits/a-delete-the-persistence-policy-keeps-out-still-marks-its-target-and-edits": "fa0b516e226867604c53414cf90d5a378213f320d10ee4f1069be2f761809ce4",
+      "edits/an-edit-the-persistence-policy-keeps-out-still-rewrites-its-target": "fa0b516e226867604c53414cf90d5a378213f320d10ee4f1069be2f761809ce4",
+      "hooks/a-hook-delete-requires-system-authority-system": "fa0b516e226867604c53414cf90d5a378213f320d10ee4f1069be2f761809ce4",
+      "hooks/a-hook-edit-requires-system-authority-system": "fa0b516e226867604c53414cf90d5a378213f320d10ee4f1069be2f761809ce4"
+    },
+    "RK-10.3-046": {
+      "edits/a-blocked-edit-leaves-its-target": "d34821ec90d5a0ad62fed24a7ed91e8112b2a1886d0d472d863f911a4c2329e2",
+      "hooks/a-hook-delete-requires-system-authority-admin": "d34821ec90d5a0ad62fed24a7ed91e8112b2a1886d0d472d863f911a4c2329e2",
+      "hooks/a-hook-delete-requires-system-authority-sender": "d34821ec90d5a0ad62fed24a7ed91e8112b2a1886d0d472d863f911a4c2329e2",
+      "hooks/a-hook-edit-requires-system-authority-absent": "d34821ec90d5a0ad62fed24a7ed91e8112b2a1886d0d472d863f911a4c2329e2",
+      "hooks/a-hook-edit-requires-system-authority-sender": "d34821ec90d5a0ad62fed24a7ed91e8112b2a1886d0d472d863f911a4c2329e2"
+    },
+    "RK-10.3-048": {
+      "appendix-b/b6-edit-with-fallback": "53e953ee93878467969cdff2d71a6f48e8c36d741c8ca6ae0b68f26988d1486f",
+      "appendix-b/b7-delete-with-fallback": "53e953ee93878467969cdff2d71a6f48e8c36d741c8ca6ae0b68f26988d1486f",
+      "edits/a-delete-the-persistence-policy-keeps-out-still-marks-its-target-and-edits": "53e953ee93878467969cdff2d71a6f48e8c36d741c8ca6ae0b68f26988d1486f",
+      "edits/an-edit-the-persistence-policy-keeps-out-still-rewrites-its-target": "53e953ee93878467969cdff2d71a6f48e8c36d741c8ca6ae0b68f26988d1486f",
+      "hooks/a-hook-delete-requires-system-authority-system": "53e953ee93878467969cdff2d71a6f48e8c36d741c8ca6ae0b68f26988d1486f",
+      "hooks/a-hook-edit-requires-system-authority-system": "53e953ee93878467969cdff2d71a6f48e8c36d741c8ca6ae0b68f26988d1486f"
+    },
+    "RK-10.3-049": {
+      "edits/direct-update-and-hard-delete": "1eb8fc304fc2712e339c3941fcfee7f2370a716cda2e158ac9b26351b96460a4"
+    },
+    "RK-10.3-050": {
+      "edits/direct-update-and-hard-delete": "4cd8670e030f98f41cb08716ee28b46e3ab6f849a5d2900c8c54bed349796597"
+    },
+    "RK-10.3-051": {
+      "discussion/a-message-deleted-before-its-decision-is-not-decided": "207c14c56efcd67f416231963e4e54fa108f31dac321f0585a4e3bb533893f66",
+      "edits/a-hard-delete-leaves-the-index-it-took": "207c14c56efcd67f416231963e4e54fa108f31dac321f0585a4e3bb533893f66",
+      "edits/direct-update-and-hard-delete": "207c14c56efcd67f416231963e4e54fa108f31dac321f0585a4e3bb533893f66",
+      "verification/a-held-message-deleted-before-the-release-is-not-answered": "207c14c56efcd67f416231963e4e54fa108f31dac321f0585a4e3bb533893f66"
+    },
+    "RK-10.3-053": {
+      "edits/direct-update-and-hard-delete": "a6082f4b3aa94a5cf64278d55d43aa17cb8b7ff7ac85e58217c3d19b64bce23b"
+    },
+    "RK-10.3-054": {
+      "reentrancy/a-locked-hook-updates-an-earlier-event": "6fc15fbe0138a1530d7dea1cf5d5e5b33b0a59beb7328dc491d2d85d9fc891c4",
+      "reentrancy/an-off-lock-hook-updates-an-earlier-event": "6fc15fbe0138a1530d7dea1cf5d5e5b33b0a59beb7328dc491d2d85d9fc891c4",
+      "rooms/a-due-pause-is-applied-by-delete": "6fc15fbe0138a1530d7dea1cf5d5e5b33b0a59beb7328dc491d2d85d9fc891c4",
+      "rooms/a-due-pause-is-applied-by-update": "6fc15fbe0138a1530d7dea1cf5d5e5b33b0a59beb7328dc491d2d85d9fc891c4"
+    },
+    "RK-10.3-055": {
+      "edits/direct-update-and-hard-delete": "7cae7e7e7259c8d210d6b24f9d58f72757eb09882c2b5e8a971989ef9664ca53",
+      "reentrancy/a-locked-hook-updates-an-earlier-event": "7cae7e7e7259c8d210d6b24f9d58f72757eb09882c2b5e8a971989ef9664ca53"
+    },
+    "RK-10.3-057": {
+      "edits/direct-update-and-hard-delete": "7f39f7d30a5550cb2d081c854a3c556da3bd7080c7b8f225ee28540f3c2c946d"
+    },
+    "RK-10.3-058": {
+      "tenancy/another-organization-s-room-is-not-found": "9bab683c02cec95ec593bb7a2c78b0f77944189c36c054d82292f8d9b7a01fdf"
+    },
+    "RK-10.3-060": {
+      "reentrancy/a-direct-delete-past-the-hook-budget-writes-nothing": "bdec84ed3c072a7aeab770efd26e8e29529eb2eac2174a2206e6d8bf11de9ee1",
+      "reentrancy/a-direct-regenerate-past-the-hook-budget-writes-nothing": "bdec84ed3c072a7aeab770efd26e8e29529eb2eac2174a2206e6d8bf11de9ee1",
+      "reentrancy/a-direct-update-past-the-hook-budget-writes-nothing": "bdec84ed3c072a7aeab770efd26e8e29529eb2eac2174a2206e6d8bf11de9ee1",
+      "reentrancy/hook-bodies-that-update-stop-at-the-hook-calls": "bdec84ed3c072a7aeab770efd26e8e29529eb2eac2174a2206e6d8bf11de9ee1",
+      "verification/a-hook-updating-a-released-message-again-stops-at-the-cap": "bdec84ed3c072a7aeab770efd26e8e29529eb2eac2174a2206e6d8bf11de9ee1"
+    },
+    "RK-10.3-061": {
+      "reentrancy/a-locked-hook-updates-an-earlier-event": "4e9823c804a68733f62229a10af2daf930a08e91309f3c4baf03d7731c765b47",
+      "reentrancy/an-off-lock-hook-updates-an-earlier-event": "4e9823c804a68733f62229a10af2daf930a08e91309f3c4baf03d7731c765b47"
+    },
+    "RK-10.3-062": {
+      "verification/a-hook-updating-a-released-message-again-stops-at-the-cap": "9b9807dbe663d9d7d41c19401af61659cc10f58e4d7f309144f84ef5a61584e2"
+    },
+    "RK-10.3-063": {
+      "reentrancy/a-hook-regenerating-every-answer-stops-at-the-depth-limit": "bfa60d123536c2fa34a8e11d2a220e1391675e9983ede7116d69e81d9de17ced"
+    },
+    "RK-10.3-064": {
+      "verification/a-hook-updating-a-released-message-again-stops-at-the-cap": "4c8ae527b227c8b95887e0bfd9de7b1e42de79b0ae6f2db9cef916c72346780e"
+    },
+    "RK-10.3-065": {
+      "appendix-b/b6-edit-with-fallback": "8795476330dddc5df521cf2e3b447418c39f3912e7fde81578cc6ecc2bec90c0",
+      "appendix-b/b7-delete-with-fallback": "8795476330dddc5df521cf2e3b447418c39f3912e7fde81578cc6ecc2bec90c0"
+    },
+    "RK-10.3-066": {
+      "appendix-b/b6-edit-with-fallback": "ffe0770fe6b86193726d4b84dd8a1a363b0b5ae7ff4df34ef1e9cd0d59a07664",
+      "appendix-b/b7-delete-with-fallback": "ffe0770fe6b86193726d4b84dd8a1a363b0b5ae7ff4df34ef1e9cd0d59a07664"
+    },
+    "RK-10.3-067": {
+      "discussion/a-message-its-sender-deleted-before-its-decision-is-not-decided": "847f0a88bc709a7242501bb7aab4cba18e73c0cf70d41b651d10d865690bdad7",
+      "inbound/a-deletion-opens-no-agent-turn": "847f0a88bc709a7242501bb7aab4cba18e73c0cf70d41b651d10d865690bdad7",
+      "inbound/an-edit-opens-no-agent-turn": "847f0a88bc709a7242501bb7aab4cba18e73c0cf70d41b651d10d865690bdad7"
+    },
+    "RK-10.3-069": {
+      "discussion/a-message-its-sender-deleted-before-its-decision-is-not-decided": "38b55e2b6aec72b27d20c7f5637f8e15c24c767ee61a0f7acb50bb5cd22fc117"
+    },
+    "RK-10.3-070": {
+      "inbound/a-deletion-opens-no-agent-turn": "f7c26186e1b92625c0ae4a4e4565378add2d32bc6a3b941f491a12ecd292009f",
+      "inbound/an-edit-opens-no-agent-turn": "f7c26186e1b92625c0ae4a4e4565378add2d32bc6a3b941f491a12ecd292009f"
+    },
     "RK-10.4-008": {
       "routing/a-routed-sender-is-recorded": "e467c87d8712a8a0ce0e882d7962c967b58a9d2f8d3da56b8300696ad1c99b1c",
       "routing/a-sender-returns-to-their-room": "e467c87d8712a8a0ce0e882d7962c967b58a9d2f8d3da56b8300696ad1c99b1c",
@@ -428,6 +713,130 @@
       "routing/a-sender-returns-to-their-room": "c0526c1d9ec0eae5526431918881f6bf1e99d70c5b0eb87b176a1bf15ac3faf4",
       "routing/two-customers-on-one-number-keep-a-conversation-each": "c0526c1d9ec0eae5526431918881f6bf1e99d70c5b0eb87b176a1bf15ac3faf4",
       "routing/two-first-messages-arriving-together-land-apart": "c0526c1d9ec0eae5526431918881f6bf1e99d70c5b0eb87b176a1bf15ac3faf4"
+    },
+    "RK-10.5-004": {
+      "injection/an-injection-is-delivered": "bdf45695b9692813cfd9bed1126bc92c28ee87a9efda8e86c8d5f6515a59c39e"
+    },
+    "RK-10.5-005": {
+      "inbound/a-sent-event-s-failed-set-is-recorded": "871c418903dac54bc8ca9a658d50b6cd5575b2ebff857d7ca61c0361378ac92e",
+      "injection/an-injection-is-delivered": "871c418903dac54bc8ca9a658d50b6cd5575b2ebff857d7ca61c0361378ac92e",
+      "permissions/all-source-access-and-mute-combinations": "871c418903dac54bc8ca9a658d50b6cd5575b2ebff857d7ca61c0361378ac92e",
+      "permissions/visibility-intersections-on-inbound-and-injection": "871c418903dac54bc8ca9a658d50b6cd5575b2ebff857d7ca61c0361378ac92e"
+    },
+    "RK-10.5-006": {
+      "reentrancy/a-locked-hook-s-injection-commits-ahead": "59bcdd1d94350527b4ab928725b2321e3519e9649372410a9b56813586539de4",
+      "reentrancy/an-off-lock-hook-s-injection-commits-ahead": "59bcdd1d94350527b4ab928725b2321e3519e9649372410a9b56813586539de4"
+    },
+    "RK-10.5-007": {
+      "hooks/recursive-send-event-from-a-locked-hook-stops-at-the-cap": "51f2ffb2af2f40f1fe3d2afa50c5df091299b9f65985360e45f56a04e9356550",
+      "hooks/recursive-send-event-from-an-off-lock-hook-stops-at-the-cap": "51f2ffb2af2f40f1fe3d2afa50c5df091299b9f65985360e45f56a04e9356550"
+    },
+    "RK-10.5-008": {
+      "chain/the-hook-calls-stop-a-before-broadcast-observer-loop": "0ce875672e6926b1640930ad36d92f681414acf60225ec066cffa1579e34484b",
+      "chain/the-hook-calls-stop-an-after-broadcast-loop": "0ce875672e6926b1640930ad36d92f681414acf60225ec066cffa1579e34484b",
+      "chain/the-reentry-budget-stops-a-delivery-loop": "0ce875672e6926b1640930ad36d92f681414acf60225ec066cffa1579e34484b",
+      "hooks/a-delivery-s-send-event-into-another-room-has-its-own-budget": "0ce875672e6926b1640930ad36d92f681414acf60225ec066cffa1579e34484b",
+      "reentrancy/a-turn-s-framework-event-handler-sends-while-it-runs": "0ce875672e6926b1640930ad36d92f681414acf60225ec066cffa1579e34484b",
+      "reentrancy/a-turn-s-injection-is-a-new-arrival": "0ce875672e6926b1640930ad36d92f681414acf60225ec066cffa1579e34484b"
+    },
+    "RK-10.5-009": {
+      "chain/the-hook-calls-stop-a-before-broadcast-observer-loop": "5ae2f26af4188c6b7d25c76ca85ca929d6c26f4c341586cbf9158b4c7fcdf13d",
+      "chain/the-hook-calls-stop-an-after-broadcast-loop": "5ae2f26af4188c6b7d25c76ca85ca929d6c26f4c341586cbf9158b4c7fcdf13d",
+      "chain/the-reentry-budget-stops-a-delivery-loop": "5ae2f26af4188c6b7d25c76ca85ca929d6c26f4c341586cbf9158b4c7fcdf13d",
+      "hooks/recursive-send-event-from-a-locked-hook-stops-at-the-cap": "5ae2f26af4188c6b7d25c76ca85ca929d6c26f4c341586cbf9158b4c7fcdf13d",
+      "hooks/recursive-send-event-from-an-off-lock-hook-stops-at-the-cap": "5ae2f26af4188c6b7d25c76ca85ca929d6c26f4c341586cbf9158b4c7fcdf13d",
+      "reentrancy/replays-draw-nothing-on-a-hook-s-budget": "5ae2f26af4188c6b7d25c76ca85ca929d6c26f4c341586cbf9158b4c7fcdf13d"
+    },
+    "RK-10.5-010": {
+      "delivery/the-doors-refuse-the-publication-namespace": "e70837bb9e551a38474e4de42723ff5a076fc2c219b6cef3c258bd4159df6aa0",
+      "injection/an-injection-from-a-bound-unregistered-channel-raises": "e70837bb9e551a38474e4de42723ff5a076fc2c219b6cef3c258bd4159df6aa0",
+      "injection/an-injection-from-an-unregistered-channel-raises": "e70837bb9e551a38474e4de42723ff5a076fc2c219b6cef3c258bd4159df6aa0",
+      "instructions/an-injected-instruction-s-refusals-raise": "e70837bb9e551a38474e4de42723ff5a076fc2c219b6cef3c258bd4159df6aa0",
+      "instructions/standalone-is-the-typed-field-s-word-alone": "e70837bb9e551a38474e4de42723ff5a076fc2c219b6cef3c258bd4159df6aa0",
+      "permissions/internal-is-the-framework-s-own": "e70837bb9e551a38474e4de42723ff5a076fc2c219b6cef3c258bd4159df6aa0",
+      "permissions/invalid-visibility-is-refused-at-every-door": "e70837bb9e551a38474e4de42723ff5a076fc2c219b6cef3c258bd4159df6aa0"
+    },
+    "RK-10.5-011": {
+      "injection/a-post-s-refusals": "a2aefd9034df6aaf3e1daffc073dc2f9a5004ce8377df60cd4490d48937347a3",
+      "injection/an-injection-into-no-room-raises": "a2aefd9034df6aaf3e1daffc073dc2f9a5004ce8377df60cd4490d48937347a3",
+      "tenancy/another-organization-s-room-is-not-found": "a2aefd9034df6aaf3e1daffc073dc2f9a5004ce8377df60cd4490d48937347a3"
+    },
+    "RK-10.5-012": {
+      "permissions/an-injection-from-an-unbound-channel-raises": "61d2d277edf16542467c176a1cf8f9cbd39df12a3e920fe1f26b59f93e757253"
+    },
+    "RK-10.5-014": {
+      "injection/a-sent-event-keeps-its-answer-scope": "0e037d59e0211dc90b6e15bcd076d3553945adbdd949d5d7d14b75682fbe9b5b"
+    },
+    "RK-10.5-015": {
+      "injection/an-agent-s-injection-goes-out": "083ec9f7b929a161b8bcdf17caadb28bd7a62c66fb31d8b76eae20857ddc9fea"
+    },
+    "RK-10.5-016": {
+      "edits/an-injected-change-s-refusal-raises": "032717d9002445f9632dcfc84bb245bcd1047b6730a4bf231803b2256068f311",
+      "instructions/an-injected-instruction-s-refusals-raise": "032717d9002445f9632dcfc84bb245bcd1047b6730a4bf231803b2256068f311",
+      "rooms/closed-room-refuses-an-injection": "032717d9002445f9632dcfc84bb245bcd1047b6730a4bf231803b2256068f311"
+    },
+    "RK-10.5-017": {
+      "injection/an-injection-replay-by-key": "1811ff851f23b2a3c563926e873da33e57fe807cb743438a91e05e849702d108"
+    },
+    "RK-10.5-018": {
+      "injection/a-post-speaks-through-the-host-channel": "1013504f5f771048ad021e074840bc6408cc646bb68e271e8dcf188deca793ca"
+    },
+    "RK-10.5-019": {
+      "injection/a-post-speaks-through-the-host-channel": "86feb5fb85140c240bff019592dd12703e69e7ffd9939f1e0b91b9c3753d2efe",
+      "orchestration/a-host-s-words-are-a-person-s-message-to-a-pipeline-s-routing": "86feb5fb85140c240bff019592dd12703e69e7ffd9939f1e0b91b9c3753d2efe"
+    },
+    "RK-10.5-026": {
+      "injection/a-post-speaks-through-the-host-channel": "6c2b72bb4477fe436db2eefb162ec2de489083e178acc7ebaa0178741680cdd7"
+    },
+    "RK-10.5-027": {
+      "injection/a-post-s-refusals": "04a5ae79c0af899732d0e43fff5540af2e24932c9d4ac5ada200e6c572890ad6",
+      "injection/a-post-speaks-through-the-host-channel": "04a5ae79c0af899732d0e43fff5540af2e24932c9d4ac5ada200e6c572890ad6"
+    },
+    "RK-10.5-028": {
+      "delivery/the-doors-refuse-the-publication-namespace": "12d4cb395ece7f8129dfdebabf0de42dd353e9c8a5e5eef6bbfa0bee43ffc2b5",
+      "injection/a-post-s-refusals": "12d4cb395ece7f8129dfdebabf0de42dd353e9c8a5e5eef6bbfa0bee43ffc2b5"
+    },
+    "RK-10.5-029": {
+      "injection/a-post-speaks-through-the-host-channel": "83c65fd540f7e1d4947d8c654d25454cfed98ecddd58c78e09e7ebdf92475098"
+    },
+    "RK-10.5-035": {
+      "injection/a-post-speaks-through-the-host-channel": "f5bc90c8168e39fa6220b919046b618750b4442f1e3066558e5d5f829844d99f",
+      "orchestration/a-host-s-words-are-a-person-s-message-to-a-pipeline-s-routing": "f5bc90c8168e39fa6220b919046b618750b4442f1e3066558e5d5f829844d99f"
+    },
+    "RK-10.5-036": {
+      "injection/a-post-s-refusals": "826587187bdef9d8539a999edc067038ffcdbde5b15102d4063b92f63395a822"
+    },
+    "RK-10.5-042": {
+      "injection/a-record-outside-the-pipeline": "529b063d87651f20e6a65819aa9f6a676d02af20bf3381766319c5ca50d34a0b",
+      "permissions/model-history-withholds-deleted-text-and-keeps-live-edits": "529b063d87651f20e6a65819aa9f6a676d02af20bf3381766319c5ca50d34a0b"
+    },
+    "RK-10.5-043": {
+      "delivery/the-doors-refuse-the-publication-namespace": "f17ec3b3fb1462db8865af92fc365de8fc1bd0367591611cf6f8e25ee7b4a07e"
+    },
+    "RK-10.5-044": {
+      "tenancy/another-organization-s-room-is-not-found": "f99b56fb9eacbb89667aa8af994c00bdb4451a0df01723dd2f0e8ddf094fd408"
+    },
+    "RK-10.5-045": {
+      "rooms/closed-room-refuses-a-record": "101b0c8d96fd68ba7f3c7e32efddcad0c0990db105ea3e942249f349ecf34a92"
+    },
+    "RK-10.5-046": {
+      "idempotency/a-record-under-a-held-key-is-refused-without-taking-an-index": "9ff8784d69895bb77dda1228536b7c98548f3bfe87f21f024b4ae1c888a7cde4"
+    },
+    "RK-10.5-047": {
+      "idempotency/a-muted-sources-record-is-stored-as-given-but-for-its-author": "a025fdf353c015fa541ba39f45edaaa3cdf89fd32f510c42903cc36690cda969",
+      "idempotency/a-record-behind-a-delivery-passes-the-lane-at-its-turn": "a025fdf353c015fa541ba39f45edaaa3cdf89fd32f510c42903cc36690cda969",
+      "injection/a-record-outside-the-pipeline": "a025fdf353c015fa541ba39f45edaaa3cdf89fd32f510c42903cc36690cda969",
+      "instructions/an-agent-s-copy-of-an-instruction-runs-no-hook-and-is-no-activity": "a025fdf353c015fa541ba39f45edaaa3cdf89fd32f510c42903cc36690cda969",
+      "reentrancy/a-locked-hook-commits-a-record": "a025fdf353c015fa541ba39f45edaaa3cdf89fd32f510c42903cc36690cda969"
+    },
+    "RK-10.5-048": {
+      "injection/a-record-outside-the-pipeline": "69c6d7f2c4ffc423d90dcdb6c0cbb7184ecaeebe53f1abcf21315068132c993d",
+      "instructions/an-agent-s-copy-of-an-instruction-runs-no-hook-and-is-no-activity": "69c6d7f2c4ffc423d90dcdb6c0cbb7184ecaeebe53f1abcf21315068132c993d",
+      "rooms/a-direct-record-does-not-resume-or-refresh-a-paused-room": "69c6d7f2c4ffc423d90dcdb6c0cbb7184ecaeebe53f1abcf21315068132c993d"
+    },
+    "RK-10.5-049": {
+      "idempotency/a-muted-sources-record-is-stored-as-given-but-for-its-author": "96d5a8932f6ac45efc6b4220251c188f1924b5fde290fc5585693e0c8576b399",
+      "injection/a-record-outside-the-pipeline": "96d5a8932f6ac45efc6b4220251c188f1924b5fde290fc5585693e0c8576b399"
     }
   }
 }

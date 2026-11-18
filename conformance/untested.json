@@ -1,4 +1,6 @@
 {
   "version": 1,
-  "units": {}
+  "units": {
+    "RK-10.2-007": "BroadcastResult is what the pipeline's own broadcast() returns: no public call hands it out, so a scenario reads its members only through the units that produce them (deliveries, reentry events, tasks, observations, per-channel errors)."
+  }
 }

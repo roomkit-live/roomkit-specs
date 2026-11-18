@@ -5,6 +5,9 @@
   "rules": [
     "§19.1"
   ],
+  "requirements": [
+    "RK-10.2-017"
+  ],
   "notes": "Its auto-greet goes with it: registered again with auto_greet off, it says nothing; the second message's room gets the greeting of the agent registered after it.",
   "setup": {
     "channels": [
