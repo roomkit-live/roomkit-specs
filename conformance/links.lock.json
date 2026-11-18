@@ -89,7 +89,8 @@
       "routing/a-routed-sender-is-recorded": "2687721a569e062e55ee517a76d1c9102ead9cbf3287e562582cc1554e0f03b2",
       "routing/a-webhook-s-recipient-names-no-correspondent": "2687721a569e062e55ee517a76d1c9102ead9cbf3287e562582cc1554e0f03b2",
       "routing/the-default-router-places-no-sender-it-cannot-name-a-room-for": "2687721a569e062e55ee517a76d1c9102ead9cbf3287e562582cc1554e0f03b2",
-      "routing/the-default-router-skips-a-closed-room": "2687721a569e062e55ee517a76d1c9102ead9cbf3287e562582cc1554e0f03b2"
+      "routing/the-default-router-skips-a-closed-room": "2687721a569e062e55ee517a76d1c9102ead9cbf3287e562582cc1554e0f03b2",
+      "routing/two-first-messages-arriving-together-land-apart": "2687721a569e062e55ee517a76d1c9102ead9cbf3287e562582cc1554e0f03b2"
     },
     "RK-10.4-023": {
       "routing/a-paused-room-counts-among-the-channel-s-rooms-only-as-a-group": "062edd4c0ae5b2f27c111143c623f8dae08be8b34f1c316ffce8a4ece61b92cb",
@@ -235,11 +236,13 @@
       "routing/a-routed-sender-is-recorded": "dec9c7eb493a04d2fe10627151474ff96c7ad728ddeaff63c36990948778d2d8",
       "routing/a-value-under-the-key-naming-the-sender-s-identity-is-recorded-as-written": "dec9c7eb493a04d2fe10627151474ff96c7ad728ddeaff63c36990948778d2d8",
       "routing/an-integer-under-the-key-in-another-form-is-read-in-the-channel-s-form": "dec9c7eb493a04d2fe10627151474ff96c7ad728ddeaff63c36990948778d2d8",
-      "routing/the-channel-s-answer-naming-the-sender-admits-her-whatever-the-key-holds": "dec9c7eb493a04d2fe10627151474ff96c7ad728ddeaff63c36990948778d2d8"
+      "routing/the-channel-s-answer-naming-the-sender-admits-her-whatever-the-key-holds": "dec9c7eb493a04d2fe10627151474ff96c7ad728ddeaff63c36990948778d2d8",
+      "routing/two-first-messages-arriving-together-land-apart": "dec9c7eb493a04d2fe10627151474ff96c7ad728ddeaff63c36990948778d2d8"
     },
     "RK-10.4-040": {
       "routing/a-first-message-leaves-a-room-the-second-was-recorded-on": "57b336fb39986e508353f6cc8a69a03de9b51829c030d694ea1fc0e5fa02a445",
-      "routing/a-hook-refusal-keeps-the-routed-correspondent": "57b336fb39986e508353f6cc8a69a03de9b51829c030d694ea1fc0e5fa02a445"
+      "routing/a-hook-refusal-keeps-the-routed-correspondent": "57b336fb39986e508353f6cc8a69a03de9b51829c030d694ea1fc0e5fa02a445",
+      "routing/two-first-messages-arriving-together-land-apart": "57b336fb39986e508353f6cc8a69a03de9b51829c030d694ea1fc0e5fa02a445"
     },
     "RK-10.4-041": {
       "locks/a-message-refused-room-taken-carries-its-claim-s-failed-release": "52b958bbd65030ceabb9dbedb3498e6201db08a7bdb0233842a276febecd4d3c",
@@ -291,7 +294,8 @@
       "routing/the-channel-s-recipient-wins-over-its-declared-key": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
       "routing/the-lock-reads-a-binding-s-recipient-by-the-channel-s-own-method": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
       "routing/the-lock-reads-a-value-that-is-not-a-recipient-whatever-the-channel-answers": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
-      "routing/the-lock-reads-the-key-of-a-channel-reading-no-recipient": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d"
+      "routing/the-lock-reads-the-key-of-a-channel-reading-no-recipient": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d",
+      "routing/two-first-messages-arriving-together-land-apart": "c399636e905b6e7c275ced4f1590b162925bcb881b3c4cb1585440f21f34b14d"
     },
     "RK-10.4-043": {
       "routing/a-message-past-its-deadline-in-its-room-s-hooks-is-not-routed-again": "1cdf5ef55df7ef9d4c888615d928f1a4021df78c6a216642e9978e1bf629db9a"
@@ -422,7 +426,8 @@
       "routing/a-hook-s-binding-naming-no-one-records-the-sender-of-the-room-it-is-in": "c0526c1d9ec0eae5526431918881f6bf1e99d70c5b0eb87b176a1bf15ac3faf4",
       "routing/a-routed-sender-is-recorded-where-the-channel-replies": "c0526c1d9ec0eae5526431918881f6bf1e99d70c5b0eb87b176a1bf15ac3faf4",
       "routing/a-sender-returns-to-their-room": "c0526c1d9ec0eae5526431918881f6bf1e99d70c5b0eb87b176a1bf15ac3faf4",
-      "routing/two-customers-on-one-number-keep-a-conversation-each": "c0526c1d9ec0eae5526431918881f6bf1e99d70c5b0eb87b176a1bf15ac3faf4"
+      "routing/two-customers-on-one-number-keep-a-conversation-each": "c0526c1d9ec0eae5526431918881f6bf1e99d70c5b0eb87b176a1bf15ac3faf4",
+      "routing/two-first-messages-arriving-together-land-apart": "c0526c1d9ec0eae5526431918881f6bf1e99d70c5b0eb87b176a1bf15ac3faf4"
     }
   }
 }
