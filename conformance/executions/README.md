@@ -546,3 +546,34 @@ room-timer test injects one more callback, and the composition test opts in to
 tool-call text, its assertions unchanged. These receipts give no credit to
 PostgreSQL, the Redis turn mode or specialized tests. The 145 earlier execution
 receipts are unchanged.
+
+## Core rule links: Python and roomkit-rs passes (2026-11-18)
+
+`python-rule-links-0512777.xml` retains the memory and SQLite cases of one run
+of clean, published Python `05127770f2c6ed6070c92afc825cc8ea747ff440`, on Linux
+with Python 3.14.9, pytest 9.1.1, pytest-asyncio 1.4.0 and pytest-xdist 3.8.0
+(four workers), the memory and SQLite stores and in-process turns. The receipt
+records the pytest invocation, omitting the suite-lock and CPU-affinity
+wrappers used for the local run. All 3085 memory cases and all 632 SQLite
+cases passed.
+
+`rust-1e9c1b4-memory-current-thread.xml`,
+`rust-1e9c1b4-memory-multi-thread-4.xml` and
+`rust-1e9c1b4-sqlite-current-thread.xml` retain the three passes of roomkit-rs
+`1e9c1b4d4ab18239234d33001a7ca637f0ab92ac`, a clean commit of its main, run
+with Rust 1.99.1 by the two commands of "roomkit-rs memory and SQLite passes
+(2026-11-17)", through a local wrapper that waits for a free build slot and
+memory, then sets cargo's build variables, its priority and its CPU affinity.
+Each holds the 3085 scenarios of the copy: 3034 passed, 51 skipped (RFC
+§10.6.7), none failed.
+
+Both copies are corpus `426538a95ab0c52aa393a32c4a05ae405666311c`, where the
+scenarios testing the core sections (5, 7, 9 and 10) cite their units
+(RMK-1784); the RFC is `7862465e8e83ca752335b11089cd4571392ebc91`. The
+evidence's `python_commit` moved to the Python commit first; one specialized
+test changed since the previous one, and its link was reread before its hash
+was pinned again: the local executor's query test also checks that a
+declaration-only channel is neither hosted, declared nor taken, and what it
+proves for its link is unchanged. These receipts give no credit to PostgreSQL,
+the Redis turn mode or specialized tests. The 150 earlier execution receipts
+are unchanged.
